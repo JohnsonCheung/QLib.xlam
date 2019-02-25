@@ -1,0 +1,56 @@
+Attribute VB_Name = "MIde_Cmp_Op_Cpy"
+Option Explicit
+Const CMod$ = "MIde_Md_Op_Cpy."
+Sub ThwNotCls(A As CodeModule, Fun$)
+If A.Parent.Type = vbext_ct_ClassModule Then Thw Fun, "Should be a Cls", "ShtCmpTy", ShtCmpTy(A.Parent.Type)
+End Sub
+Sub ThwEqObj(A, B, Fun$, Optional Msg$ = "Two given object cannot be same")
+If IsEqObj(A, B) Then Thw Fun, Msg
+End Sub
+Private Sub CpyCls(A As CodeModule, ToPj As VBProject)
+Const CSub$ = CMod & "CpyCls"
+ThwNotCls A, CSub
+ThwEqObj ToPj, PjzMd(A), CSub, "From Md's Pj cannot eq to ToPj"
+Dim T$: T = TmpFt(Fnn:=A.Name)
+A.Parent.Export T
+ToPj.VBComponents.Import T
+Kill T
+End Sub
+Sub CpyModAyToPj(ModAy() As CodeModule, ToPj As VBProject)
+Dim I
+For Each I In Itr(ModAy)
+    CpyMod CvMd(I), ToPj
+Next
+End Sub
+
+Sub CpyClsAyToPj(ClsAy() As CodeModule, ToPj As VBProject)
+Dim I
+For Each I In Itr(ClsAy)
+    CpyCls CvMd(I), ToPj
+Next
+End Sub
+
+Sub CpyCmp(A As VBComponent, ToPj As VBProject)
+If IsClsCmp(A) Then
+    CpyCls A.CodeModule, ToPj 'If ClassModule need to export and import due to the Public/Private class property can only the set by Export/Import
+Else
+    CpyMod A.CodeModule, ToPj
+End If
+End Sub
+Sub ThwNotMod(A As CodeModule, Fun$)
+If A.Parent.Type <> vbext_ct_StdModule Then Thw Fun, "Should be Mod", "Type", ShtCmpTy(A.Parent.Type)
+End Sub
+Sub CpyMod(A As CodeModule, ToPj As VBProject)
+AddCmpzLinesPj ToPj, A.Name, LinesMd(A)
+End Sub
+
+Private Sub ZZ()
+Dim A As VBComponent
+Dim B As VBProject
+Dim D As CodeModule
+CpyCmp A, B
+CpyMod D, B
+End Sub
+
+Private Sub Z()
+End Sub

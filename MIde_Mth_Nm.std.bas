@@ -1,0 +1,185 @@
+Attribute VB_Name = "MIde_Mth_Nm"
+Option Explicit
+Const CMod$ = "MIde_Mth_Nm."
+Type MdMth
+    Md As CodeModule
+    MthNm As String
+End Type
+Property Get MdQNm$()
+MdQNm = MdQNmMd(CurMd)
+End Property
+Property Get MthDNm$()
+MthDNm = MthDNmLin(CurMthLin)
+End Property
+Function MthDNmLin$(MthLin)
+MthDNmLin = MthDNmMthNm3(MthNm3(MthLin))
+End Function
+Property Get MthQDNm$()
+MthQDNm = MdQNm & "." & MthDNm
+End Property
+
+Function MthNyzPub(Src$()) As String()
+Dim Ix, N$, B As MthNm3
+For Each Ix In MthIxItr(Src)
+    B = MthNm3(Src(Ix))
+    If B.Nm <> "" Then
+        If B.ShtMdy = "" Or B.ShtMdy = "Pub" Then
+            PushI MthNyzPub, B.Nm
+        End If
+    End If
+Next
+End Function
+
+Function MthNyzMthLinAy(MthLinAy$()) As String()
+Const CSub$ = CMod & "MthNyzMthLinAy"
+Dim I, Nm$, J%
+For Each I In Itr(MthLinAy)
+    Nm = MthNm(I)
+    If Nm = "" Then Thw CSub, "Given MthLinAy does not have MthNm", "[MthLin with error] Ix MthLinAy", I, J, AyAddIxPfx(MthLinAy)
+    PushI MthNyzMthLinAy, Nm
+    J = J + 1
+Next
+End Function
+Function Ens1Dot(S) As StrRslt
+Select Case DotCnt(S)
+Case 0: Ens1Dot = StrRslt("." & S)
+Case 1: Ens1Dot = StrRslt(S)
+End Select
+End Function
+Function Ens2Dot(S) As StrRslt
+Select Case DotCnt(S)
+Case 0: Ens2Dot = StrRslt(".." & S)
+Case 1: Ens2Dot = StrRslt("." & S)
+Case 2: Ens2Dot = StrRslt(S)
+End Select
+End Function
+
+Function MdMth(MthQNm) As MdMth
+Const CSub$ = CMod & "MdMthOpt"
+Dim Ny$()
+With Ens2Dot(MthQNm)
+    If Not .Som Then Thw CSub, "MthQNm should have 2 or less dot", "MthQNm", MthQNm
+    Ny = SplitDot(.Str)
+End With
+Set MdMth.Md = Md(Ny(0) & "." & Ny(1))
+MdMth.MthNm = Ny(2)
+End Function
+
+Function RmvMthMdy$(L)
+RmvMthMdy = RmvTermAy(L, MthMdyAy)
+End Function
+Function MthDNmMthNm3$(A As MthNm3)
+If A.Nm = "" Then Exit Function
+MthDNmMthNm3 = A.Nm & "." & A.ShtTy & "." & A.ShtMdy
+End Function
+Function RmvMthNm3$(Lin)
+Dim L$: L = Lin
+RmvMthMdy L
+If ShfMthTy(L) = "" Then Exit Function
+If ShfNm(L) = "" Then Thw CSub, "Not as SrcLin", "Lin", Lin
+RmvMthNm3 = L
+End Function
+Function MthNm3(Lin, Optional B As WhMth) As MthNm3
+Dim L$: L = Lin
+Dim O As New MthNm3
+With O
+    .MthMdy = ShfMthMdy(L)
+    .MthTy = ShfMthTy(L)
+    If .MthTy = "" Then Set MthNm3 = O: Exit Function
+    .Nm = TakNm(L)
+End With
+If HitMthNm3(O, B) Then
+    Set MthNm3 = O
+Else
+    Set MthNm3 = New MthNm3
+End If
+End Function
+Function MthNm$(Lin, Optional B As WhMth)
+MthNm = MthNm3(Lin, B).Nm
+End Function
+Function MthNmLin$(Lin)
+Dim L$
+L = RmvMthMdy(Lin)
+If ShfMthTy(L) = "" Then Exit Function
+MthNmLin = TakNm(L)
+End Function
+
+Function PrpNm$(Lin)
+Dim L$
+L = RmvMdy(Lin)
+If ShfKd(L) <> "Property" Then Exit Function
+PrpNm = TakNm(L)
+End Function
+
+Function MthNmzDNm$(MthNm)
+Dim Ay$(): Ay = Split(MthNm, ".")
+Dim Nm$
+Select Case Sz(Ay)
+Case 1: Nm = Ay(0)
+Case 2: Nm = Ay(1)
+Case 3: Nm = Ay(2)
+Case Else: Stop
+End Select
+MthNmzDNm = Nm
+End Function
+Private Sub Z_MthNm()
+GoTo ZZ
+Dim A$
+A = "Function MthNm$(A)": Ept = "MthNm.Fun.": GoSub Tst
+Exit Sub
+Tst:
+    Act = MthNm(A)
+    C
+    Return
+ZZ:
+    Dim O$(), L
+    For Each L In SrczVbe(CurVbe)
+        PushNonBlankStr O, MthNm(L)
+    Next
+    Brw O
+End Sub
+
+Function MthMdy$(Lin)
+MthMdy = FstEleEv(MthMdyAy, T1(Lin))
+End Function
+
+Function MthKd$(Lin)
+MthKd = TakMthKd(RmvMdy(Lin))
+End Function
+
+Function MthTy$(Lin)
+MthTy = TermLinAy(RmvMdy(Lin), MthTyAy)
+End Function
+
+Private Sub Z_MthTy()
+Dim O$(), L
+For Each L In SrcMdNm("Fct")
+    Push O, MthTy(L) & "." & L
+Next
+BrwAy O
+End Sub
+
+
+
+Private Sub Z_MthKd()
+Dim A$
+Ept = "Property": A = "Private Property Get": GoSub Tst
+Ept = "Property": A = "Property Get":         GoSub Tst
+Ept = "Property": A = " Property Get":        GoSub Tst
+Ept = "Property": A = "Friend Property Get":  GoSub Tst
+Ept = "Property": A = "Friend  Property Get": GoSub Tst
+Ept = "":         A = "FriendProperty Get":   GoSub Tst
+Exit Sub
+Tst:
+    Act = MthKd(A)
+    C
+    Return
+End Sub
+
+
+Private Sub Z()
+Z_MthKd
+Z_MthTy
+MIde_Mth_Lin_XX:
+End Sub
+
