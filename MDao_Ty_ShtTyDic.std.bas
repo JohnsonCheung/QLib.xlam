@@ -9,7 +9,7 @@ End Select
 End Function
 
 Private Function ShtTyDiczFbt(Fb, T) As Dictionary
-Dim F As DAO.Field
+Dim F As Dao.Field
 Set ShtTyDiczFbt = New Dictionary
 For Each F In Db(Fb).TableDefs(T).Fields
     ShtTyDiczFbt.Add F.Name, ShtTyzDao(F.Type)

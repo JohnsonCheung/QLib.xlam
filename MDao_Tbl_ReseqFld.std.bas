@@ -35,7 +35,7 @@ End Function
 
 Sub ReSeqFldzFny(A As Database, T, ByFny$())
 Dim F, J%
-For Each F In AyReSeq(Fnyz(A, T), ByFny)
+For Each F In AyReSeq(Fny(A, T), ByFny)
     J = J + 1
     A.TableDefs(T).Fields(F).OrdinalPosition = J
 Next

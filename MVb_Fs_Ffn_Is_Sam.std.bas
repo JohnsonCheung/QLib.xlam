@@ -39,7 +39,7 @@ If Msg <> "" Then Push O, Msg
 MsgSamFfn = O
 End Function
 
-Sub Z_FfnBlk()
+Private Sub Z_FfnBlk()
 Dim T$, S$, A$
 S = "sllksdfj lsdkjf skldfj skldfj lk;asjdf lksjdf lsdkfjsdkflj "
 T = TmpFt

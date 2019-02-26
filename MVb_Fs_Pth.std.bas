@@ -4,9 +4,12 @@ Const CMod$ = "MVb_Fs_Pth."
 Private Function AddFdrzOne$(Pth, Fdr)
 AddFdrzOne = PthEnsSfx(Pth) & Fdr & "\"
 End Function
-Function AddFdrEns$(Pth, ParamArray FdrAp())
 
+Function AddFdrEns$(Pth, ParamArray FdrAp())
+Dim Av(): Av = FdrAp
+AddFdrEns = PthEnsAll(AddFdrAv(Pth, Av))
 End Function
+
 Private Function AddFdrAv$(Pth, FdrAv())
 Dim O$: O = Pth
 Dim I

@@ -24,3 +24,10 @@ End Sub
 Sub AsgTT(Lin, O1, O2)
 AsgApAy Sy2TRst(Lin), O1, O2
 End Sub
+
+Sub AsgT1FldLikAy(OT1$, OFldLikAy$(), Lin)
+Dim Rst$
+AsgTRst Lin, OT1, Rst
+OFldLikAy = SySsl(Rst)
+End Sub
+

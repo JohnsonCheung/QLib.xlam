@@ -8,6 +8,10 @@ Function SplitCrLf(A) As String()
 SplitCrLf = Split(Replace(A, vbCr, ""), vbLf)
 End Function
 
+Function SplitTab(A) As String()
+SplitTab = Split(A, vbTab)
+End Function
+
 Function SplitDot(A) As String()
 SplitDot = Split(A, ".")
 End Function

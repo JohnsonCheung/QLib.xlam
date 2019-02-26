@@ -2,10 +2,10 @@ Attribute VB_Name = "MIde_Mth_Drs_Cache"
 Option Explicit
 
 Function CacheDtevPjf(Pjf) As Date
-CacheDtevPjf = ValzDbq(MthDb, FmtQQ("Select PjDte from Mth where Pjf='?'", Pjf))
+CacheDtevPjf = ValzQ(MthDb, FmtQQ("Select PjDte from Mth where Pjf='?'", Pjf))
 End Function
 
-Function MthDrszPjfzFmCache(Pjf, Optional WhStr$) As Drs
+Function MthDrszPjfzFmCache(Pjf, Optional WhStr$) As DRs
 Dim Sql$: Sql = FmtQQ("Select * from MthCache where Pjf='?'", Pjf)
 Set MthDrszPjfzFmCache = DrszFbq(MthDb, Sql)
 End Function

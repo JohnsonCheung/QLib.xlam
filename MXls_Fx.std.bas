@@ -37,7 +37,7 @@ If HasFxw(A, Wsn) Then
 End If
 End Sub
 
-Function DrsFxq(A, Sql) As Drs
+Function DrsFxq(A, Sql) As DRs
 Set DrsFxq = DrsArs(CnzFx(A).Execute(Sql))
 End Function
 

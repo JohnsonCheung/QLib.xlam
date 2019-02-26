@@ -132,7 +132,7 @@ End Function
 
 Function AtAddSq(At As Range, Sq()) As Range
 Dim O As Range
-Set O = RgzReSz(At, Sq)
+Set O = RgzResz(At, Sq)
 O.Value = Sq
 Set AtAddSq = O
 End Function

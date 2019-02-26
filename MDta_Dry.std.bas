@@ -72,7 +72,7 @@ Tst:
     StopNE
     Return
 End Sub
-Function DrsJnFldKKFld(Drs As Drs, KK, JnFld, Optional Sep$ = " ") As Drs
+Function DrsJnFldKKFld(DRs As DRs, KK, JnFld, Optional Sep$ = " ") As DRs
 
 End Function
 

@@ -31,7 +31,7 @@ Property Get AutoExec()
 '
 'EnsTblSpec
 
-LnkCcmz CDb, IsDev
+LnkCcm CurrentDb, IsDev
 'D "-After LnkCcm: CnSy--------------------------"
 'D CnSy
 'D "-After LnkCcm: Srcy--------------------------"
@@ -93,11 +93,11 @@ PgmDb_DtaFb A
 End Sub
 
 Property Let ApnzDb(A As Database, V$)
-ValzDbq(A, SqlSel_F("Apn")) = V
+ValzQ(A, SqlSel_F("Apn")) = V
 End Property
 
 Property Get ApnzDb$(A As Database)
-ApnzDb = ValzDbq(A, "Select Apn from Apn")
+ApnzDb = ValzQ(A, "Select Apn from Apn")
 End Property
 
 Property Get AppFbAy() As String()

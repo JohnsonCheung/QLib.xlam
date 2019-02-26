@@ -1,17 +1,17 @@
 Attribute VB_Name = "MDao_Ccm"
 Option Explicit
 Const CMod$ = "MDao__Ccm."
-Private Sub Z_LnkCcmz()
-Dim CDb As Database, IsLcl As Boolean
-Set CDb = Db(SampFbzShpRate)
+Private Sub Z_LnkCcm()
+Dim D As Database, IsLcl As Boolean
+Set D = Db(SampFbzShpRate)
 IsLcl = True
 GoSub Tst
 Exit Sub
 Tst:
-    LnkCcmz CDb, IsLcl
+    LnkCcm D, IsLcl
     Return
 End Sub
-Sub LnkCcmz(Db As Database, IsLcl As Boolean)
+Sub LnkCcm(Db As Database, IsLcl As Boolean)
 'Ccm stands for Space-[C]ir[c]umflex-accent
 'CcmTbl is ^xxx table in Db (pgm-database),
 '          which should be same stru as N:\..._Data.accdb @ xxx
@@ -28,12 +28,21 @@ Sub LnkCcmz(Db As Database, IsLcl As Boolean)
 'This Sub is to re-link the xxx in given [Db] to
 '  1. [Db] if [TarFb] is not given
 '  2. [TarFb] if [TarFb] is given.
-Const CSub$ = CMod & "LnkCcmz"
+Const CSub$ = CMod & "LnkCcm"
 Dim T$()  ' All ^xxx
-    T = CcmTnyzDb(Db)
+    T = CcmTny(Db)
     If Sz(T) = 0 Then Thw CSub, "No ^xxx table in [Db]", Db.Name 'Assume always
 Chk Db, T, IsLcl ' Chk if all T after rmv ^ is in TarFb
-LnkCcm Db, T, IsLcl
+LnkCcmzTny Db, T, IsLcl
+End Sub
+
+Private Sub LnkCcmzTny(Db As Database, CcmTny$(), IsLcl As Boolean)
+Dim CcmTbl, TarFb$
+TarFb = Db.Name
+For Each CcmTbl In CcmTny
+    If FstChr(CcmTbl) <> "^" Then Thw CSub, "All table in CcmTny must begin ^", "Tbl-without-^ CcmTny", CcmTbl, CcmTny
+    LnkFb Db, RmvFstChr(CcmTbl), TarFb, CcmTbl
+Next
 End Sub
 Private Sub Chk(Db As Database, CcmTny$(), IsLcl As Boolean)
 Const CSub$ = CMod & "Chk"
@@ -44,9 +53,9 @@ Dim Mis$(): Mis = Chk1(Db, CcmTny)
 If Sz(Mis) = 0 Then Exit Sub
 Thw CSub, "[Some-Missing-Tar-Tbl] in [Db] cannot be found according to given [CcmTny] in [Db]", Mis, Db.Name, CcmTny, Db.Name
 End Sub
-Private Function Chk1(CDb As Database, CcmTnyzDb$()) As String()
-Dim N1$(): 'N1 = TnyzDb(CDb)
-Dim N2$(): 'N2 = AyRmvFstChr(CcmTnyzDb)
+Private Function Chk1(A As Database, CcmTny$()) As String()
+Dim N1$(): N1 = Tny(A)
+Dim N2$(): N2 = AyRmvFstChr(CcmTny)
 Chk1 = AyMinus(N2, N1)
 End Function
 
@@ -69,33 +78,25 @@ Case Not HasFbt(TarFb, RmvFstChr(CcmTbl)):
 End Select
 End Function
 
-Private Sub LnkCcm(Db As Database, CcmTny$(), IsLcl As Boolean)
-Dim CcmTbl, TarFb$
-TarFb = Db.Name
-For Each CcmTbl In CcmTny
-    If FstChr(CcmTbl) <> "^" Then Thw CSub, "All table in CcmTny must begin ^", "Tbl-without-^ CcmTny", CcmTbl, CcmTny
-    LnkFb Db, RmvFstChr(CcmTbl), TarFb, CcmTbl
-Next
-End Sub
-Private Function CcmTnyzDb(Db As Database) As String()
-CcmTnyzDb = AywPfx(Tnyz(Db), "^")
+Private Function CcmTny(Db As Database) As String()
+CcmTny = AywPfx(Tny(Db), "^")
 End Function
 
-Private Sub Z_CcmTnyzDb()
-Dim CDb As Database
+Private Sub Z_CcmTny()
+Dim D As Database
 '
-Set CDb = Db(SampFbzShpRate)
+Set D = Db(SampFbzShpRate)
 Ept = SySsl("^CurYM ^IniRate ^IniRateH ^InvD ^InvH ^YM ^YMGR ^YMGRnoIR ^YMOH ^YMRate")
 GoSub Tst
 Exit Sub
 Tst:
-    Act = CcmTnyzDb(CDb)
+    Act = CcmTny(D)
     C
     Return
 End Sub
 
 Private Sub Z()
-Z_LnkCcmz
-Z_CcmTnyzDb
+Z_LnkCcm
+Z_CcmTny
 MDao__Ccm:
 End Sub

@@ -9,7 +9,7 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
 Private A_Fny$(), A_Dry()
-Friend Property Get Init(Fny0, Dry()) As Drs
+Friend Property Get Init(Fny0, Dry()) As DRs
 A_Fny = CvNy(Fny0)
 A_Dry = Dry
 Set Init = Me

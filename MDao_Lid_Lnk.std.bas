@@ -12,7 +12,7 @@ Sub LnkTblz(Db As Database, A() As LtPm)
 Dim J%
 For J = 0 To UB(A)
     With A(J)
-        LnkTblzDbtSrcCn Db, .T, .S, .Cn
+        LnkTblzTSCn Db, .T, .S, .Cn
     End With
 Next
 End Sub
@@ -44,21 +44,22 @@ PushObjAy O, LtPmAyFb(A.Fb, D)
 PushObjAy O, LtPmAyFx(A.Fx, D)
 LtPm = O
 End Function
-Function TdTSrcCn(T, Src, Cn) As DAO.TableDef
-Set TdTSrcCn = New DAO.TableDef
-With TdTSrcCn
+Function TdzTSCn(T, Src, Cn) As Dao.TableDef
+Set TdzTSCn = New Dao.TableDef
+With TdzTSCn
     .Connect = Cn
     .Name = T
     .SourceTableName = Src
 End With
 End Function
-Sub LnkTblzDbtSrcCn(Db As Database, T, S, Cn)
-Drpz Db, T
-Db.TableDefs.Append TdTSrcCn(T, S, Cn)
+
+Sub LnkTblzTSCn(Db As Database, T, S, Cn)
+DrpT Db, T
+Db.TableDefs.Append TdzTSCn(T, S, Cn)
 End Sub
 
-Sub LnkWsz(A As Database, T, Fx, Wsn)
-LnkTblzDbtSrcCn A, T, Wsn & "$", CnStrzFxDAO(Fx)
+Sub LnkFxw(A As Database, T, Fx, Wsn)
+LnkTblzTSCn A, T, Wsn & "$", CnStrzFxDAO(Fx)
 End Sub
 
 Sub LnkFbztt(Db As Database, TTCrt$, Fb$, Optional Fbtt$)
@@ -70,7 +71,7 @@ If Sz(TnyzFb) <> Sz(TnyCrt) Then
 End If
 Dim Cn$: Cn = CnStrzFbDao(Fb)
 For J = 0 To UB(TnyCrt)
-    LnkTblzDbtSrcCn Db, TnyCrt(J), TnyzFb(J), Cn
+    LnkTblzTSCn Db, TnyCrt(J), TnyzFb(J), Cn
 Next
 End Sub
 

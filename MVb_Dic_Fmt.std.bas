@@ -1,8 +1,8 @@
 Attribute VB_Name = "MVb_Dic_Fmt"
 Option Explicit
 Private Sub Z_BrwDic()
-Dim R As DAO.Recordset
-Set R = Rsz(SampDb_DutyDta, "Select Sku,BchNo from PermitD where BchNo<>''")
+Dim R As Dao.Recordset
+Set R = Rs(SampDb_DutyDta, "Select Sku,BchNo from PermitD where BchNo<>''")
 BrwDic JnStrDicTwoFldRs(R), True
 End Sub
 Sub BrwDic(A As Dictionary, Optional InclDicValOptTy As Boolean)

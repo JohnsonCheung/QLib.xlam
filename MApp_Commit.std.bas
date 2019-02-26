@@ -1,108 +1,71 @@
 Attribute VB_Name = "MApp_Commit"
 Option Explicit
-Sub Cmit(Optional Msg$ = "Commit")
-CmitzPth SrcPthPj, Msg
+
+Sub GitCmit(Optional Msg$ = "commit", Optional ReInit As Boolean)
+RunFcmdWait FcmdWaitzCdLines(GitCmitCdLines(SrcPth(CurPj), Msg, ReInit))
 End Sub
 
-Private Sub CmitzPth(CmitgPth, Msg$)
-EnsGitPth CmitgPth
-RunFcmdWait CmitFcmd(CmitgPth, Msg), DftWaitOpt
+Sub GitPush()
+RunFcmdWait FcmdWaitzCdLines(GitPushCdLines(SrcPth(CurPj)))
 End Sub
 
-Private Sub EnsGitPth(CmitgPth)
-If HasGit(CmitgPth) Then Exit Sub
-RunFcmdWait InitFcmd(CmitgPth), DftWaitOpt
-End Sub
-
-Private Function HasGit(Pth) As Boolean
-HasGit = HasPth(AddFdr(Pth, ".git"))
-End Function
-
-Private Property Get GitPushFcmd$()
-GitPushFcmd = TmpPth & "Pushing.Cmd"
-End Property
-
-Sub GitPushApp()
-EnsGitGitPushFcmdCxt
-RunFcmdWait GitPushFcmdCxt, DftWaitOpt
-End Sub
-
-Private Function InitFcmd$(CmitgPth)
-Dim T$: T = TmpCmd
-InitFcmd = WrtStr(InitCd(CmitgPth, T), T)
-End Function
-
-Private Function InitCd$(CmitgPth, Fcmd$)
+Private Function GitCmitCdLines$(CmitgPth, Msg$, ReInit As Boolean)
 Erase XX
+Dim Pj$: Pj = PjNm(CmitgPth)
 X "Cd """ & CmitgPth & """"
-X "Git Init"
-X "Echo Time >""" & WaitFfnzFcmd(Fcmd) & """"
-InitCd = JnCrLf(XX)
-Erase XX
-End Function
-
-Private Function CmitFcmd$(CmitgPth, Msg$)
-Dim T$: T = TmpCmd
-CmitFcmd = WrtStr(CmitCd(CmitgPth, Msg, T), T)
-End Function
-
-Private Sub EnsGitGitPushFcmdCxt()
-WrtStr GitPushFcmdCxt, GitPushFcmd
-End Sub
-
-Private Function CmitCd$(CmitgPth, Msg$, Fcmd$)
-Erase XX
-X FmtQQ("Cd ""?""", CmitgPth)
+If ReInit Then X "Rd .git /s/q"
+X "git init"
 X "git add -A"
-X FmtQQ("git commit --message=""?""", Msg)
-X "Echo Time >""" & WaitFfn(Fcmd) & """"
-CmitCd = JnCrLf(XX)
+X FmtQQ("git commit -m ""?""", Msg)
+X "Pause"
+GitCmitCdLines = JnCrLf(XX)
 Erase XX
+End Function
+Private Sub Z_FcmdWaitzCdLines()
+Debug.Print FtLines(FcmdWaitzCdLines("Dir"))
+End Sub
+Private Function FcmdWaitzCdLines$(CdLines)
+Dim T$: T = TmpCmd
+Dim EchoLin$: EchoLin = FmtQQ("Echo > ""?""", WaitFfnzFcmd(T))
+Dim S$: S = CdLines & vbCrLf & EchoLin
+FcmdWaitzCdLines = WrtStr(S, T)
 End Function
 
 Function HasInternet() As Boolean
 Stop
 End Function
 
-Private Property Get GitPushFcmdCxt$()
+Private Property Get GitPushCdLines$(CmitgPth)
 Dim O$(), Cd$, GitPush, T
-'Cd = FmtQQ("Cd ""?""", SrcPth)
-Push O, Cd
-Push O, "git push -u https://johnsoncheung@github.com/johnsoncheung/StockShipRate.git master"
+Push O, FmtQQ("Cd ""?""", CmitgPth)
+Push O, FmtQQ("git push -u https://johnsoncheung@github.com/johnsoncheung/?.git master", PjNm(CmitgPth))
 Push O, "Pause"
-GitPushFcmdCxt = JnCrLf(O)
+GitPushCdLines = JnCrLf(O)
 End Property
 
 Sub Exp()
 ExpzPj CurPj
 End Sub
 
-Sub BrwInitFcmd()
-BrwFt InitFcmd("PthA")
+Sub BrwGitCmitCdLines()
+BrwFt GitCmitCdLines("PthA", "Msg", ReInit:=True)
 End Sub
 
-Sub BrwCmitFcmd()
-BrwFt CmitFcmd("PthA", "Commit")
+Sub BrwGitPushCdLines()
+BrwFt GitPushCdLines("A")
 End Sub
-
-Sub BrwGitPushFcmd()
-EnsGitGitPushFcmdCxt
-BrwFt GitPushFcmd
-End Sub
-
-Private Sub XXX()
-Dim O$()
-Push O, "echo ""# QLib"" >> README.md"
-Push O, "git Init"
-Push O, "git add README.md"
-Push O, "git commit -m ""first commit"""
-Push O, "git remote add origin https://github.com/JohnsonCheung/QLib.git"
-Push O, "git push -u origin master"
-
-End Sub
+Private Function PjNm$(CmitgPth)
+If Fdr(ParPth(CmitgPth)) <> ".source" Then Thw CSub, "Not source path", "CmitgPth", CmitgPth
+PjNm = Fdr(CmitgPth)
+End Function
 
 Private Sub XX1()
-'git remote add origin https://github.com/JohnsonCheung/QLib.git
+'…or create a new repository on the command line
+'echo "# QLib.xlam" >> README.md
+'git Init
+'git add README.md
+'git commit -m "first commit"
+'git remote add origin https://github.com/JohnsonCheung/QLib.xlam.git
 'git push -u origin master
 End Sub
 

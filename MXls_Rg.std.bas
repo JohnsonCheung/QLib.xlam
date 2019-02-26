@@ -73,10 +73,6 @@ End If
 End Sub
 
 Sub BdrRgRight(A As Range)
-BdrRgRightight A
-End Sub
-
-Sub BdrRgRightight(A As Range)
 BdrRg A, xlEdgeRight
 If A.Column < MaxWsCol Then
     BdrRg RgC(A, A.Column + 1), xlEdgeLeft
@@ -167,7 +163,7 @@ Function RgzMoreBelow(A As Range, Optional N% = 1)
 Set RgzMoreBelow = RgRR(A, 1, A.Rows.Count + N)
 End Function
 
-Function RgzMoreTop(A As Range, Optional N% = 1)
+Function RgzMoreTop(A As Range, Optional N = 1)
 Dim O As Range
 Set O = RgRR(A, 1 - N, A.Rows.Count)
 Set RgzMoreTop = O
@@ -180,17 +176,22 @@ End Function
 Function RgR(A As Range, R)
 Set RgR = RgRR(A, R, R)
 End Function
-Function CellBelow(Cell As Range, Below%) As Range
-Set CellBelow = RgRC(Cell, 1 + Below, 1)
+
+Function CellBelow(Cell As Range, Optional N = 1) As Range
+Set CellBelow = RgRC(Cell, 1 + N, 1)
 End Function
-Function CellAbove(Cell As Range, Above%) As Range
+
+Sub SwapValzRg(Cell1 As Range, Cell2 As Range)
+Dim A: A = RgRC(Cell1, 1, 1).Value
+RgRC(Cell1, 1, 1).Value = RgRC(Cell2, 1, 1).Value
+RgRC(Cell2, 1, 1).Value = A
+End Sub
+Function CellAbove(Cell As Range, Optional Above = 1) As Range
 Set CellAbove = RgRC(Cell, 1 - Above, 1)
 End Function
-Function NxtCellBelow(A As Range) As Range
-Set NxtCellBelow = RgRC(A, 2, 1)
-End Function
-Function NxtCellRight(A As Range) As Range
-Set NxtCellRight = RgRC(A, 1, 2)
+
+Function CellRight(A As Range, Optional Right = 1) As Range
+Set CellRight = RgRC(A, 1, 1 + Right)
 End Function
 Function RgRC(A As Range, R, C) As Range
 Set RgRC = A.Cells(R, C)
@@ -208,8 +209,8 @@ Function RgRR(A As Range, R1, R2) As Range
 Set RgRR = RgRCRC(A, R1, 1, R2, NColRg(A))
 End Function
 
-Function RgzReSz(A As Range, Sq) As Range
-Set RgzReSz = RgRCRC(A, 1, 1, UBound(Sq, 1), UBound(Sq, 2))
+Function RgzResz(At As Range, Sq) As Range
+Set RgzResz = RgRCRC(At, 1, 1, NRowSq(Sq), NColSq(Sq))
 End Function
 
 Function SqzRg(A As Range) As Variant()

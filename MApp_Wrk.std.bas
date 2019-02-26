@@ -1,17 +1,27 @@
 Attribute VB_Name = "MApp_Wrk"
 Option Explicit
-Function WDb(Apn$) As Database
-Static X As Boolean, Y As Database
-Dim Fb$: Fb = WFb(Apn)
-If Not X Then
-    X = True
-    DltFfnIf Fb
-    EnsFb Fb
-    Set Y = Db(Fb)
+Private A As Database, Apn1$
+Property Get W() As Database
+Set W = A
+End Property
+Sub ClsWDb()
+Apn1 = ""
+On Error Resume Next
+A.Close
+End Sub
+Sub OpnWDb(Apn$)
+If Apn1 <> Apn Then
+    Apn1 = Apn
+    Set A = Db(WFb(Apn))
 End If
-Set WDb = Y
-End Function
-
+End Sub
+Sub WRun(QQ, ParamArray Ap())
+Dim Av(): Av = Ap
+RunQQ A, QQ, Av
+End Sub
+Sub WDrp(TT)
+DrpTT W, TT
+End Sub
 Sub WBrw(Apn$)
 OpnFbz WAcs, WFb(Apn)
 WAcs.Visible = True

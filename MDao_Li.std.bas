@@ -1,18 +1,17 @@
 Attribute VB_Name = "MDao_Li"
 Option Explicit
-Private Sub Z_LnkImpDb()
+Private Sub Z_LnkImp()
 Dim Db As Database
-Set Db = LnkImpDb(SampLiPm)
+Set Db = LnkImp(SampLiPm)
 BrwFb Db.Name
 Stop
 End Sub
-Function LnkImpDb(A As LiPm) As Database
+Function LnkImp(A As LiPm) As Database
 ThwEr ChkColzLiPm(A), CSub
-Dim W As Database
-Set W = WDb(A.Apn)
+OpnWDb A.Apn
 LnkTblz W, LtPm(A)
-RunSqyz W, ImpSqyzLi(A)
-Set LnkImpDb = W
+RunSqy W, ImpSqyzLi(A)
+Set LnkImp = W
 End Function
 Private Sub Z_ChkColzLiPm()
 Brw ChkColzLiPm(ShpCstLiPm)

@@ -17,13 +17,13 @@ Option Explicit
 ' 2      SK    1     "Expression"  "={FunNm}()"
 ' 3      SK    1     "Library"     "|ACCDIDR\{fba}"
 Sub CrtTblzUSysRegInfo()
-RunQz CDb, "Create Table [USysRegInfo] (Subky Text,Type Long,ValName Text,Value Text)"
+RunQ CDb, "Create Table [USysRegInfo] (Subky Text,Type Long,ValName Text,Value Text)"
 End Sub
 Sub CrtTblzUSysRegInfoDb(A As Database)
-RunQz A, "Create Table [USysRegInfo] (Subky Text,Type Long,ValName Text,Value Text)"
+RunQ A, "Create Table [USysRegInfo] (Subky Text,Type Long,ValName Text,Value Text)"
 End Sub
 Sub EnsTblzUSysRegInfoz(A As Database)
-If HasTblz(A, "USysRegInfo") Then CrtTblzUSysRegInfo
+If HasTbl(A, "USysRegInfo") Then CrtTblzUSysRegInfo
 End Sub
 
 Sub InstallAddIn(A As Database, Fb$, Optional AutoFunNm$ = "AutoExec")
@@ -31,7 +31,7 @@ Dim Sk$: Sk = "HKEY_CURRENT_ACCESS_PROFILE\Menu Add-Ins\&NameOfYourAdd-inHere"
 Dim Fba$: Fba = ""
 Dim FunNm$
 Stop '
-RunQQz A, "Insert into [USysRegInfo] Values('?',0,'','')"
-RunQQz A, "Insert into [USysRegInfo] Values('?',1,'Expression','?')", Sk, FunNm
-RunQQz A, "Insert into [USysRegInfo] Values('?',1,'Library','?')", Sk, Fba
+RunQQ A, "Insert into [USysRegInfo] Values('?',0,'','')"
+RunQQ A, "Insert into [USysRegInfo] Values('?',1,'Expression','?')", Sk, FunNm
+RunQQ A, "Insert into [USysRegInfo] Values('?',1,'Library','?')", Sk, Fba
 End Sub

@@ -196,7 +196,7 @@ Private Sub Z_InfoObjPP()
 Dim Fun$, Msg$, Obj, PP$
 Fun = "XXX"
 Msg = "MsgABC"
-Set Obj = New DAO.Field
+Set Obj = New Dao.Field
 PP = "Name Type Size"
 GoSub Tst
 Exit Sub

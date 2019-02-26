@@ -28,7 +28,7 @@ Set CT = Cat.Tables(T)
 FnyCatTbl = Itn(Cat.Tables(T).Columns)
 End Function
 
-Function DrsFxw(Fx, Wsn) As Drs
+Function DrsFxw(Fx, Wsn) As DRs
 Set DrsFxw = DrsArs(ArsFxw(Fx, Wsn))
 End Function
 Function ArsFxw(Fx, Wsn) As ADODB.Recordset
@@ -51,11 +51,11 @@ Function ArsCnq(A As ADODB.Connection, Q) As ADODB.Recordset
 Set ArsCnq = A.Execute(Q)
 End Function
 
-Function DrsCnq(A As ADODB.Connection, Q) As Drs
+Function DrsCnq(A As ADODB.Connection, Q) As DRs
 Set DrsCnq = DrsArs(ArsCnq(A, Q))
 End Function
-Function DrsFbqAdo(A$, Q$) As Drs
-Set DrsFbqAdo = DrsArs(ArsFbq(A, Q))
+Function DrsFbqAdo(A$, Q$) As DRs
+Set DrsFbqAdo = DrsArs(ARsFbq(A, Q))
 End Function
 
 Private Sub Z_DrsFbqAdo()
@@ -64,12 +64,12 @@ Const Q$ = "Select * from Permit"
 BrwDrs DrsFbqAdo(Fb, Q)
 End Sub
 
-Function ArsFbq(Fb$, Q$) As ADODB.Recordset
-Set ArsFbq = CnzFb(Fb).Execute(Q)
+Function ARsFbq(Fb$, Q$) As ADODB.Recordset
+Set ARsFbq = CnzFb(Fb).Execute(Q)
 End Function
 
-Function DrsArs(A As ADODB.Recordset) As Drs
-Set DrsArs = Drs(FnyArs(A), DryArs(A))
+Function DrsArs(A As ADODB.Recordset) As DRs
+Set DrsArs = DRs(FnyArs(A), DryArs(A))
 End Function
 
 Function DryArs(A As ADODB.Recordset) As Variant()
@@ -223,8 +223,11 @@ Function CnStrzFxAdo$(A)
 CnStrzFxAdo = FmtQQ("Provider=Microsoft.ACE.OLEDB.16.0;Data Source=?;Extended Properties=""Excel 12.0 Xml;HDR=YES;IMEX=1""", A) 'Ok
 End Function
 
-Function DtaSrczTdCn$(TdConnect$)
-DtaSrczTdCn = TakBet(TdConnect, "Data Source=", ";")
+Function DtaSrczScl(DtaSrcScl$)
+DtaSrczScl = TakBet(DtaSrcScl, "Data Source=", ";")
+End Function
+Function DtaSrc$(A As Database, T)
+DtaSrc = DtaSrczScl(A.TableDefs(T).Connect)
 End Function
 
 Function CnzFx(Fx) As ADODB.Connection

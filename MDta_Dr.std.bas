@@ -20,6 +20,7 @@ Function DrTLinShtTyLis(TLin, ShtTyLis$) As Variant()
 DrTLinShtTyLis = DrTLinzbTyAy(TLin, VbTyAyShtTyLis(ShtTyLis))
 End Function
 
-Function DrzDrs(A As Drs, Optional CC, Optional Row&)
+Function DrzDrs(A As DRs, Optional CC, Optional Row&)
 DrzDrs = AywIxAy(A.Dry()(Row), IxAy(A.Fny, FnyzFF(CC)))
 End Function
+

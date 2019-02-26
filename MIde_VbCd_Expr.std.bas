@@ -127,7 +127,7 @@ With Term
     .S = S
 End With
 End Function
-Sub Z_ExprLyzStr()
+Private Sub Z_ExprLyzStr()
 Dim S$
 GoSub ZZ1
 GoSub ZZ2
@@ -196,7 +196,7 @@ Case Else
     Stop
 End Select
 End Function
-Sub Z_BrkAyzPrintable()
+Private Sub Z_BrkAyzPrintable()
 Brw BrkAyzPrintable(StrzCurPjf)
 End Sub
 

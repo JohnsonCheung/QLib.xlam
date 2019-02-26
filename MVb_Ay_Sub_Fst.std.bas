@@ -48,15 +48,15 @@ For Each X In Itr(A)
 Next
 End Function
 
-Function FstEleT1$(A, T1Val, Optional IgnCas As Boolean)
-Dim L
-For Each L In Itr(A)
-    If IsEqStr(T1(L), T1Val, IgnCas) Then FstEleT1 = L: Exit Function
-Next
+Function FstEleRmvT1$(Ay, T1Val, Optional IgnCas As Boolean)
+FstEleRmvT1 = RmvT1(FstEleT1(Ay, T1Val, IgnCas))
 End Function
 
-Function FstEleRmvT1$(A, T1)
-FstEleRmvT1 = RmvT1(FstEleT1(A, T1))
+Function FstEleT1$(Ay, T1Val, Optional IgnCas As Boolean)
+Dim L
+For Each L In Itr(Ay)
+    If IsEqStr(T1(L), T1Val, IgnCas) Then FstEleT1 = L: Exit Function
+Next
 End Function
 
 Function FstEleT2$(A, T2)

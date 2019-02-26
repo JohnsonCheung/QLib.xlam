@@ -449,7 +449,7 @@ Function SqlSel_FF_Fm_Bexpr$(FF, T, Bexpr$)
 
 End Function
 
-Function QAddCol$(T, Fny0, F As Drs, E As Dictionary)
+Function QAddCol$(T, Fny0, F As DRs, E As Dictionary)
 Dim O$(), Fld
 For Each Fld In CvNy(Fny0)
 '    PushI O, Fld & " " & QAddCol1(Fld, F, E)
@@ -457,8 +457,8 @@ Next
 QAddCol = FmtQQ("Alter Table [?] add column ?", T, JnComma(O))
 End Function
 
-Function SqlCrtPk_T$(T)
-SqlCrtPk_T = FmtQQ("Create Index PrimaryKey on [?] (?Id) with Primary", T, T)
+Function SqlCrtPkzT$(T)
+SqlCrtPkzT = FmtQQ("Create Index PrimaryKey on [?] (?Id) with Primary", T, T)
 End Function
 
 Function QCrtSk_T_SkFF$(T, SkFF)
@@ -709,10 +709,10 @@ Function SqlSelCnt_T$(Fm, Optional Bexpr$)
 SqlSelCnt_T = "Select Count(*) " & SqpFm(Fm) & SqpWh(Bexpr)
 End Function
 
-Function SqyCrtPk_Tny(A$()) As String()
+Function SqyCrtPkzTny(A$()) As String()
 Dim T
 For Each T In A
-    PushI SqyCrtPk_Tny, SqlCrtPk_T(T)
+    PushI SqyCrtPkzTny, SqlCrtPkzT(T)
 Next
 End Function
 
@@ -727,3 +727,7 @@ End Function
 Function Bexpr$(F, Ev)
 Bexpr = QuoteSq(F) & "=" & QuoteSql(Ev)
 End Function
+Function SqlCrtSk$(T, SkFF)
+SqlCrtSk = FmtQQ("Create Unique Index SecondaryKey on ? (?)", T, JnCommaSpcFF(SkFF))
+End Function
+

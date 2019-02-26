@@ -3,10 +3,8 @@ Option Explicit
 Property Get RptAppFb$()
 RptAppFb = "C:\Users\user\Documents\Projects\Vba\ShpCst\ShpCstApp.accdb"
 End Property
-Property Get LnkImpDbzRpt() As Database
-Set LnkImpDbzRpt = LnkImpDbzLidPm(RptLidPm)
-End Property
-Sub Z_RptLidPrmSrc()
+
+Private Sub Z_RptLidPrmSrc()
 Brw AyAlignPm(RptLidPmSrc, "[LidPm Apn AppFb Fil Ws WsCol] [2:LidPm AppFb Fil] [3:Ws] 4:WsCol")
 End Sub
 Property Get RptLidPmSrc() As String()
@@ -75,7 +73,7 @@ D.Close
 End Function
 
 Private Function LidFilLin$(AppDb As Database, Itm$)
-Dim Ffn$: Ffn = PnmFfnz(AppDb, Itm)
+Dim Ffn$: Ffn = PnmFfn(AppDb, Itm)
 LidFilLin = FmtQQ("Fil ? ?", Itm, Ffn)
 End Function
 

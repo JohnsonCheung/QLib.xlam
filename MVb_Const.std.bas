@@ -59,15 +59,15 @@ Property Get SampDb_ShpCst() As Database
 Set SampDb_ShpCst = Db(SampFbzShpCst)
 End Property
 Property Get DbEng() As DBEngine
-Set DbEng = DAO.DBEngine
+Set DbEng = Dao.DBEngine
 End Property
-Private Function Db(A) As DAO.Database
+Private Function Db(A) As Dao.Database
 Set Db = DbEng.OpenDatabase(A)
 End Function
 Property Get SampCn_DutyDta() As ADODB.Connection
 Set SampCn_DutyDta = CnzFb(SampFbzDutyDta)
 End Property
-Property Get SampDb() As DAO.Database
+Property Get SampDb() As Dao.Database
 Set SampDb = SampDb_DutyDta
 End Property
 Property Get SampDb_DutyDta() As Database

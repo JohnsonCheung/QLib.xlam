@@ -15,10 +15,10 @@ Dim O()
 DrExpLinesCol = O
 End Function
 
-Function DrsExpLinesCol(A As Drs, LinesColNm$) As Drs
+Function DrsExpLinesCol(A As DRs, LinesColNm$) As DRs
 Dim Dry(): Dry = A.Dry
 If Sz(Dry) = 0 Then
-    Set DrsExpLinesCol = Drs(A.Fny, Dry)
+    Set DrsExpLinesCol = DRs(A.Fny, Dry)
     Exit Function
 End If
 Dim Ix%
@@ -28,5 +28,5 @@ Dim O()
     For Each Dr In Dry
         PushAy Dry, DrExpLinesCol(Dr, Ix)
     Next
-Set DrsExpLinesCol = Drs(A.Fny, O)
+Set DrsExpLinesCol = DRs(A.Fny, O)
 End Function

@@ -9,12 +9,12 @@ Function WszFbq(Fb, Sql, Optional Wsn$, Optional Vis As Boolean) As Worksheet
 Set WszFbq = WszDrs(DrszFbq(Fb, Sql), Wsn:=Wsn, Vis:=Vis)
 End Function
 
-Function DrszDbq(A As Database, Q) As Drs
-Set DrszDbq = DrszRs(Rsz(A, Q))
+Function DrszDbq(A As Database, Q) As DRs
+Set DrszDbq = DrszRs(Rs(A, Q))
 End Function
 
-Function DrszFbq(Fb, Q) As Drs
-Set DrszFbq = DrszRs(Rsz(Db(Fb), Q))
+Function DrszFbq(Fb, Q) As DRs
+Set DrszFbq = DrszRs(Rs(Db(Fb), Q))
 End Function
 
 Function ArszFbq(A, Sql) As ADODB.Recordset

@@ -63,7 +63,7 @@ End Function
 
 
 Function RffPjNm$(A As VBProject, RfNm$)
-RffPjNm = PthPj(A) & RfNm & ".xlam"
+RffPjNm = PjPth(A) & RfNm & ".xlam"
 End Function
 
 Function PjRfNy(A As VBProject) As String()

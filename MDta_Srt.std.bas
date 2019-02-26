@@ -1,7 +1,7 @@
 Attribute VB_Name = "MDta_Srt"
 Option Explicit
 
-Function SrtDrs(A As Drs, FF, Optional Des As Boolean) As Drs
+Function SrtDrs(A As DRs, FF, Optional Des As Boolean) As DRs
 'Set DrsSrt = Drs(A.Fny, SrtDry(A.Dry, IxAy(A.Fny, FF), IsDes))
 End Function
 

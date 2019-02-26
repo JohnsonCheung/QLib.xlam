@@ -6,8 +6,8 @@ End Sub
 Sub DmpPjRf(A As VBProject)
 DmpDrs PjRfDrs(A)
 End Sub
-Function PjRfDrs(A As VBProject) As Drs
-Set PjRfDrs = Drs(PjRfFny, PjRfDry(A))
+Function PjRfDrs(A As VBProject) As DRs
+Set PjRfDrs = DRs(PjRfFny, PjRfDry(A))
 End Function
 Property Get PjRfFny() As String()
 PjRfFny = AyItmAddAy("Pj", RfFny)
@@ -28,7 +28,7 @@ Property Get RfFny() As String()
 RfFny = SySsl(RmvDotComma(".Name, .GUID, .Major, .Minor, .FullPath, .Description, .BuiltIn, .Type, .IsBroken"))
 End Property
 
-Function PjAyRfDrs(A() As VBProject) As Drs
+Function PjAyRfDrs(A() As VBProject) As DRs
 Dim P
 For Each P In Itr(A)
     PushDrs PjAyRfDrs, PjRfDrs(CvPj(P))

@@ -1,9 +1,9 @@
 Attribute VB_Name = "MDta_Col_Get"
 Option Explicit
-Function ColzDrs(A As Drs, ColNm$) As Variant()
+Function ColzDrs(A As DRs, ColNm$) As Variant()
 ColzDrs = ColzDry(A.Dry, IxzAy(A.Fny, ColNm))
 End Function
-Function StrColzDrs(A As Drs, ColNm$) As String()
+Function StrColzDrs(A As DRs, ColNm$) As String()
 StrColzDrs = StrColzDry(A.Dry, IxzAy(A.Fny, ColNm))
 End Function
 

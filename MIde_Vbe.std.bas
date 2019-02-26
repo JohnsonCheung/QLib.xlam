@@ -13,8 +13,8 @@ For Each I In A.VBProjects
     PushI PjIsSavDryzbe, Array(I.Saved, I.Name, I.BuildFileName)
 Next
 End Function
-Function PjIsSavDRszbe(A As Vbe) As Drs
-Set PjIsSavDRszbe = Drs("IsSav PjNm BldFfn", PjIsSavDryzbe(A))
+Function PjIsSavDRszbe(A As Vbe) As DRs
+Set PjIsSavDRszbe = DRs("IsSav PjNm BldFfn", PjIsSavDryzbe(A))
 End Function
 
 Function Vbe_Pj(A As Vbe, PjNm$) As VBProject

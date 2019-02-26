@@ -15,18 +15,3 @@ With Access.Application
 End With
 End Sub
 
-Sub EnsLnkDef()
-Static A$
-If CDb.Name <> A Then
-    'SchmEns Schm
-End If
-End Sub
-
-Private Sub Z_EnsLnkDef()
-EnsLnkDef
-End Sub
-
-Private Sub Z()
-Z_EnsLnkDef
-MApp_Def_Lnk:
-End Sub

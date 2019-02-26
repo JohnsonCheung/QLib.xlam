@@ -15,7 +15,7 @@ Dim SamTim As Boolean
 Dim DifSz As Boolean
 Dim SamSz As Boolean
 Dim DifFt As Boolean
-Dim Rs As DAO.Recordset
+Dim Rs As Dao.Recordset
     Q = FmtQQ("Select SpecNm,Ft,Lines,Tim,Sz,LTimStr_Dte from Spec where SpecNm = '?'", Spnm)
     Set Rs = CDb.OpenRecordset(Q)
     NoCur = Not HasFfn(Ft)
@@ -93,11 +93,11 @@ SpecSchm = SplitVBar(SpecSchmVbl)
 End Property
 
 Sub EnsSpecTblz(A As Database)
-'If Not HasTblz(A, "Spec") Then CrtSpecTbl A
+'If Not HasTbl(A, "Spec") Then CrtSpecTbl A
 End Sub
 
 Sub CrtSpecTblz(A As Database)
-CrtSchmz A, SpecSchm
+CrtSchm A, SpecSchm
 End Sub
 
 Sub EnsSpecTbl()
@@ -116,7 +116,7 @@ Property Get SpecNy() As String()
 SpecNy = SpecNyDb(CDb)
 End Property
 
-Function SpecNyDb(A As DAO.Database) As String()
+Function SpecNyDb(A As Dao.Database) As String()
 'SpecNyDb = SyDbtf(A, "Spec", "SpecNm")
 End Function
 

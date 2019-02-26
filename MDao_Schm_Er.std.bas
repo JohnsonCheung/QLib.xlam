@@ -2,6 +2,36 @@ Attribute VB_Name = "MDao_Schm_Er"
 Option Explicit
 Const MD_NTermShouldBe3OrMore$ = "Should have 3 or more terms"
 
+Function ErzSchm(Schm$()) As String()
+'========================================
+Dim E() As Lnx
+Dim F() As Lnx
+Dim D() As Lnx
+Dim T() As Lnx
+    Dim X()  As Lnx
+    X = ClnLnxAy(Schm)
+    T = LnxAywRmvT1(X, "Tbl")
+    D = LnxAywRmvT1(X, "Des")
+    E = LnxAywRmvT1(X, "Ele")
+    F = LnxAywRmvT1(X, "Fld")
+
+Dim Tny$(), Eny$()
+    Eny = AyTakT1(LyzLnxAy(E))
+    Tny = AyTakT1(LyzLnxAy(T))
+'========================================
+Dim AllFny$()
+Dim AllEny$()
+    AllFny = FnyzTdLy(LyzLnxAy(T))
+    AllEny = AyTakT1(LyzLnxAy(E))
+Dim Er$(), mT$(), mF$(), mEle$(), mDes$()
+    Er = LnxAyT1Chk(X, "Des Ele Fld Tbl")
+    mT = ErT(Tny, T, E)
+    mF = ErF(AllFny, F)
+    'mEle = ErE
+    'mDes = ErD
+ErzSchm = AyAddAp(Er, mT, mF, mEle, mDes)
+End Function
+
 Private Function ErD_DLnxAy(A() As Lnx) As String()
 Dim I
 For Each I In Itr(A)
@@ -299,67 +329,23 @@ Private Function MsgTyEr$(A As Lnx, Ty$)
 MsgTyEr = MsgLnxMsg(A, FmtQQ("Invalid DaoTy[?].  Valid Ty[?]", Ty, ShtTyzDaosl))
 End Function
 
-Property Get SampSchm() As String()
-SampSchm = SplitCrLf(SampSchmLines)
-End Property
 
-Property Get SampSchmLines$()
-Const A_1$ = "Tbl $Lo_FmtWs  Wsn |" & _
-vbCrLf & "Tbl $Lo_FmtWdt     Wsn Seq Wdt ColNmss Er" & _
-vbCrLf & "Tbl $Lo_FmtLvl | Wsn" & _
-vbCrLf & "Tbl $Lnk" & _
-vbCrLf & "Fld " & _
-vbCrLf & "Fld $"
-
-SampSchmLines = A_1
-End Property
-
-Function ErSchm(Schm$()) As String()
-'========================================
-Dim E() As Lnx
-Dim F() As Lnx
-Dim D() As Lnx
-Dim T() As Lnx
-    Dim X()  As Lnx
-    X = ClnLnxAy(Schm)
-    T = LnxAywRmvT1(X, "Tbl")
-    D = LnxAywRmvT1(X, "Des")
-    E = LnxAywRmvT1(X, "Ele")
-    F = LnxAywRmvT1(X, "Fld")
-
-Dim Tny$(), Eny$()
-    Eny = AyTakT1(LyzLnxAy(E))
-    Tny = AyTakT1(LyzLnxAy(T))
-'========================================
-Dim AllFny$()
-Dim AllEny$()
-    AllFny = FnyzTdStrAy(LyzLnxAy(T))
-    AllEny = AyTakT1(LyzLnxAy(E))
-Dim Er$(), mT$(), mF$(), mEle$(), mDes$()
-    Er = LnxAyT1Chk(X, "Des Ele Fld Tbl")
-    mT = ErT(Tny, T, E)
-    mF = ErF(AllFny, F)
-    'mEle = ErE
-    'mDes = ErD
-ErSchm = AyAddAp(Er, mT, mF, mEle, mDes)
-End Function
-
-Function ErD_(Tny$(), T() As Lnx, D() As Lnx) As String()
+Private Function ErD_(Tny$(), T() As Lnx, D() As Lnx) As String()
 ErD_ = AyAddAp( _
     ErD_DLnxAy(D), _
     ErD_TblEr(D, Tny), _
     ErD_FldEr(D, T))
 End Function
 
-Function ErE(Eny$(), E() As Lnx) As String()
+Private Function ErE(Eny$(), E() As Lnx) As String()
 ErE = AyAdd(ErE_ELnxAy(E), ErE_DupE(E, Eny))
 End Function
 
-Function ErF(AllEny$(), F() As Lnx) As String()
+Private Function ErF(AllEny$(), F() As Lnx) As String()
 ErF = AyAdd(ErF_FLnxAy(F), ErF_EleHasNoDef(F, AllEny))
 End Function
 
-Function ErT(Tny$(), T() As Lnx, E() As Lnx) As String()
+Private Function ErT(Tny$(), T() As Lnx, E() As Lnx) As String()
 ErT = AyAddAp( _
 ErT_TLnxAy(T), _
 ErT_NoTLin(T), _
@@ -432,3 +418,4 @@ Exit Sub
 'AAAA
 'SchmLyEr
 End Sub
+

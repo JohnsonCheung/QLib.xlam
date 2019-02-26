@@ -21,7 +21,7 @@ End Function
 Function MthCmlWsBase(Optional Vis As Boolean) As Worksheet
 Dim Dry()
 Dry = DryzSslAy(MthCmlVbe)
-Set MthCmlWsBase = WszDrs(Drs(MthCmlFny(NColDry(Dry)), Dry), Vis:=Vis)
+Set MthCmlWsBase = WszDrs(DRs(MthCmlFny(NColDry(Dry)), Dry), Vis:=Vis)
 End Function
 
 Sub MthCmlAyVbeBrw()

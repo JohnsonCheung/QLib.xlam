@@ -8,31 +8,6 @@ Set O = Lo.ListColumns.Add
 O.Name = ColNm
 O.DataBodyRange.Formula = Fml
 End Sub
-Function RgvResz(At As Range, Sq) As Range
-Set RgvResz = RgRCRC(At, 1, 1, NRowSq(Sq), NColSq(Sq))
-End Function
-Function RgvSq(Sq, At As Range) As Range
-Dim O As Range: Set O = RgvResz(At, Sq)
-O.Value = Sq
-Set RgvSq = O
-End Function
-Sub PutSq(Sq, At As Range)
-RgvResz(At, Sq).Value = Sq
-End Sub
-Sub PutAyH(Ay, At As Range)
-'RgzSq SqzAyH(At), At
-End Sub
-Sub PutAyz(Ay, At As Range)
-'RgzSq SqzAyV(Ay), At
-End Sub
-Function RgvSqH(SqzAyH(), At As Range) As Range
-Dim O As Range
-Set O = RgvResz(At, SqzAyH)
-O.Value = SqzAyH
-Set RgvSqH = O
-End Function
-
-
 Function LoNm$(T)
 LoNm = "T_" & RmvFstNonLetter(T)
 End Function
@@ -103,8 +78,8 @@ A.QueryTable.Delete
 WsRCRC(Ws, R1, C1, R2, C2).ClearContents
 End Sub
 
-Function DrszLo(A As ListObject) As Drs
-Set DrszLo = Drs(FnyzLo(A), DryLo(A))
+Function DrszLo(A As ListObject) As DRs
+Set DrszLo = DRs(FnyzLo(A), DryLo(A))
 End Function
 Function DryLo(A As ListObject) As Variant()
 DryLo = DryzSq(SqzLo(A))

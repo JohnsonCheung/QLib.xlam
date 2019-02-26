@@ -2,29 +2,31 @@ Attribute VB_Name = "MDao_Fb"
 Option Explicit
 
 Sub CrtFb(Fb)
-DAO.DBEngine.CreateDatabase Fb, dbLangGeneral
+Dao.DBEngine.CreateDatabase Fb, dbLangGeneral
 End Sub
 
 Function DbCrt(Fb) As Database
-Set DbCrt = DAO.DBEngine.CreateDatabase(Fb, dbLangGeneral)
+Set DbCrt = Dao.DBEngine.CreateDatabase(Fb, dbLangGeneral)
 End Function
 
 Private Sub Z_BrwFb()
 BrwFb SampFbzDutyDta
 End Sub
 
+Function DbzFb(Fb) As Database
+Set DbzFb = Dao.DBEngine.OpenDatabase(Fb)
+End Function
 
 Function Db(Fb) As Database
-Set Db = DAO.DBEngine.OpenDatabase(Fb)
+Set Db = Dao.DBEngine.OpenDatabase(Fb)
 End Function
 
 Sub EnsFb(Fb)
 If Not HasFfn(Fb) Then CrtFb Fb
 End Sub
 
-
 Function OupTnyzFb(Fb) As String()
-OupTnyzFb = OupTny
+OupTnyzFb = OupTny(Db(Fb))
 End Function
 
 Sub AsgFbtStr(FbtStr$, OFb$, OT$)

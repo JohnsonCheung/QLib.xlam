@@ -1,8 +1,6 @@
-Attribute VB_Name = "MXls_Lo_Lof_Er"
+Attribute VB_Name = "MXls_Lo_Fmtr_Er"
 Option Explicit
 Const CMod$ = ""
-Private A_Lo As ListObject
-Private A_Fny$()
 Public Const M_Val_IsNonNum$ = "Lx(?) has Val(?) should be a number"
 Public Const M_Val_IsNonLng$ = "Lx(?) has Val(?) should be a 'Long' number"
 Public Const M_Val_ShouldBet$ = "Lx(?) has Val(?) should be between [?] and [?]"
@@ -25,7 +23,17 @@ Const M_Fld_IsCnt_FndInAvg$ = "Lin(?)-Fld(?), which is TCnt-Fld, but also found 
 Const M_Bet_Should2Term = "Lin(?)-Fld(?) is Bet-Line.  It should have 2 terms"
 Const M_Bet_InvalidTerm = "Lin(?)-Fld(?) is Bet-Line.  It has invalid term(?)"
 Const M_Dup$ = "Lin(?)-Fld(?) is duplicated.  The line is skipped"
-Private A As Dictionary
+Private A$(), A_Fny$()
+Function ErzLoFmtr(LoFmtr$(), Fny$()) As String()
+Const CSub$ = CMod & "LofEr"
+A = LoFmtrDic
+A_Fny = Fny
+ErzLoFmtr = AyAddAp( _
+    WErzAli, WErzBdr, WErzTot, _
+    WErzWdt, WErzFmt, WErzLvl, WErzCor, _
+    WErzFml, WErzLbl, WErzTit, WErzBet)
+End Function
+
 
 Private Property Get WErzAli() As String()
 WErzAli = Sy(WErzAlignLin, WErzAlignFny)
@@ -196,15 +204,6 @@ Dim Lc As ListColumn
     'If LcFmtSpecLy_WAny_Tot(Lc, FmtSpecLy) Then WAny_Tot = True: Exit Function
 'Next
 End Property
-Function LofEr(LoFmtrDic As Dictionary) As String()
-Const CSub$ = CMod & "LofEr"
-Set A = LoFmtrDic
-LofEr = AyAddAp( _
-    WErzAli, WErzBdr, WErzTot, _
-    WErzWdt, WErzFmt, WErzLvl, WErzCor, _
-    WErzFml, WErzLbl, WErzTit, WErzBet)
-End Function
-
 
 Private Function WMsgzAliLin(Ly$()) As String()
 If Sz(Ly) Then Exit Function

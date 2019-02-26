@@ -52,17 +52,17 @@ Function DtDrpCol(A As Dt, CC, Optional DtNm$) As Dt
 Set DtDrpCol = DtDrsDtnm(DrsDrpCC(DrszDt(A), CC), Dft(DtNm, A.DtNm))
 End Function
 
-Function DrszDt(A As Dt) As Drs
-Set DrszDt = Drs(A.Fny, A.Dry)
+Function DrszDt(A As Dt) As DRs
+Set DrszDt = DRs(A.Fny, A.Dry)
 End Function
-Function DtzDrs(A As Drs, Optional DtNm$ = "Dt") As Dt
+Function DtzDrs(A As DRs, Optional DtNm$ = "Dt") As Dt
 Set DtzDrs = Dt(DtNm, A.Fny, A.Dry)
 End Function
 
 Function NRowzDt&(A As Dt)
 NRowzDt = Sz(A.Dry)
 End Function
-Function NRowzDrs&(A As Drs)
+Function NRowzDrs&(A As DRs)
 NRowzDrs = Sz(A.Dry)
 End Function
 Sub DmpDt(A As Dt)

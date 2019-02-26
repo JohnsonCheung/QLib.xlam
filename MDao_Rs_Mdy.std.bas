@@ -1,7 +1,7 @@
 Attribute VB_Name = "MDao_Rs_Mdy"
 Option Explicit
 
-Sub InsRszDry(A As DAO.Recordset, Dry())
+Sub InsRszDry(A As Dao.Recordset, Dry())
 Dim Dr
 With A
     For Each Dr In Itr(Dry)
@@ -11,7 +11,7 @@ End With
 End Sub
 
 
-Property Let ValzRsFld(Rs As DAO.Recordset, Fld, V)
+Property Let ValzRsFld(Rs As Dao.Recordset, Fld, V)
 With Rs
     .Edit
     .Fields(Fld).Value = V
@@ -19,14 +19,14 @@ With Rs
 End With
 End Property
 
-Property Get ValzRsFld(Rs As DAO.Recordset, Fld)
+Property Get ValzRsFld(Rs As Dao.Recordset, Fld)
 With Rs
     If .EOF Then Exit Property
     If .BOF Then Exit Property
     ValzRsFld = .Fields(Fld).Value
 End With
 End Property
-Sub SetRs(Rs As DAO.Recordset, Dr)
+Sub SetRs(Rs As Dao.Recordset, Dr)
 If Sz(Dr) = Rs.Fields.Count Then
     Thw CSub, "Sz of Rs & Dr are diff", _
         "Sz-Rs and Sz-Dr Rs-Fny Dr", Rs.Fields.Count, Sz(Dr), Itn(Rs.Fields), Dr
@@ -43,24 +43,24 @@ Next
 End Sub
 
 
-Sub InsRszAp(Rs As DAO.Recordset, ParamArray Ap())
+Sub InsRszAp(Rs As Dao.Recordset, ParamArray Ap())
 Dim Dr(): Dr = Ap
 InsRs Rs, Dr
 End Sub
 
-Sub InsRs(Rs As DAO.Recordset, Dr)
+Sub InsRs(Rs As Dao.Recordset, Dr)
 Rs.AddNew
-UpdRs Rs, Dr
+SetRs Rs, Dr
 Rs.Update
 End Sub
 
-Sub UpdRszAp(Rs As DAO.Recordset, ParamArray Ap())
+Sub UpdRszAp(Rs As Dao.Recordset, ParamArray Ap())
 Dim Dr(): Dr = Ap
 UpdRs Rs, Dr
 End Sub
 
 
-Sub DltRs(A As DAO.Recordset)
+Sub DltRs(A As Dao.Recordset)
 With A
     While Not .EOF
         .Delete

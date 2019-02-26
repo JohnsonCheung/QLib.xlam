@@ -15,10 +15,11 @@ Sub ImpTp(Apn)
 Const CSub$ = CMod & "ImpTp"
 Dim Tp1$: Tp1 = Tp(Apn)
 If Tp1 = "" Then
-    Info CSub, "Tp not exist, no Import", "Tp", Tp1
+    Info CSub, "Tp not exist AppFb, no Import", "AppFb Tp", AppFb(Apn), Tp1
     Exit Sub
 End If
-If IsOldAttz(AppDb(Apn), "Tp", Tp1) Then ImpAtt "Tp", Tp1 '<== Import
+Dim D As Database: Set D = AppDb(Apn)
+If IsOldAtt(D, "Tp", Tp1) Then ImpAtt D, "Tp", Tp1 '<== Import
 End Sub
 
 '===============================================
@@ -67,13 +68,10 @@ Set X = Nothing
 End Function
 
 Sub ExpTpzFb(Fb$, ToFfn$)
-ExpTpz Db(Fb), ToFfn
+ExpTp Db(Fb), ToFfn
 End Sub
 
-Sub ExpTpz(Db As Database, ToFfn$)
-ExpAttz Db, "Tp", ToFfn
+Sub ExpTp(Db As Database, ToFfn$)
+ExpAtt Db, "Tp", ToFfn
 End Sub
 
-Sub ExpTp(ToFfn$)
-ExpAtt "Tp", ToFfn
-End Sub

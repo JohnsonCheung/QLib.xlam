@@ -1,6 +1,6 @@
 Attribute VB_Name = "MDao_Lid_Brw"
 Option Explicit
-Sub Z_BrwLidPm()
+Private Sub Z_BrwLidPm()
 BrwLidPm RptLidPm
 End Sub
 

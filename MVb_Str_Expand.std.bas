@@ -10,7 +10,20 @@ Expand = JnCrLf(O)
 End Function
 Private Sub Z_Expand()
 Dim QVbl$
-QVbl = "Function ?() As Lof?(): ? = A_?: End Function"
-Brw Expand(QVbl, LofKK)
+Erase XX
+X "Sub Push?(O() As ?, M As ?)"
+X "Dim N&"
+X "N = ?Sz(O)"
+X "ReDim Preserve O(N)"
+X "O(N) = M"
+X "End Sub"
+X ""
+X "Function ?Sz&(A() As ?)"
+X "On Error Resume Next"
+X "?Sz = Ubound(A) + 1"
+X "End Function"
+X ""
+QVbl = JnVBar(XX)
+Brw Expand(QVbl, "S1S2 XX")
 End Sub
 

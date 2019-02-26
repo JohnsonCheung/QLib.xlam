@@ -100,13 +100,18 @@ While A <> ""
 X:
 Wend
 End Sub
+Function FnnAy(A, Optional Spec$ = "*.*", Optional Atr As FileAttribute) As String()
+Dim Fn
+For Each Fn In FnAy(A, Spec)
+    PushI FnnAy, RmvExt(Fn)
+Next
+End Function
 
-Function FnAy(A, Optional Spec$ = "*.*", Optional Atr As FileAttribute) As String()
-ThwNotHasPth A, CSub
-If Atr And vbDirectory Then Stop
+Function FnAy(Pth, Optional Spec$ = "*.*") As String()
+ThwNotHasPth Pth, CSub
 Dim O$()
 Dim M$
-M = Dir(PthEnsSfx(A) & Spec, Atr)
+M = Dir(PthEnsSfx(Pth) & Spec)
 While M <> ""
    PushI FnAy, M
    M = Dir
@@ -129,9 +134,8 @@ Wend
 FxAy = O
 End Function
 
-
-Function FfnAy(Pth, Optional Spec$ = "*.*", Optional Atr As FileAttribute) As String()
-FfnAy = AyAddPfx(FnAy(Pth, Spec, Atr), Pth)
+Function FfnAy(Pth, Optional Spec$ = "*.*") As String()
+FfnAy = AyAddPfx(FnAy(Pth, Spec), Pth)
 End Function
 
 Private Sub Z_SubPthAy()

@@ -1,8 +1,8 @@
 Attribute VB_Name = "MDao_Chk_PkSk"
 Option Explicit
-Property Get ChkPkz$(A As Database, T)
+Property Get ChkPk$(A As Database, T)
 Dim S%, K$(), O
-K = FnyzIdx(PkIdxz(A, T))
+K = FnyzIdx(PkIdx(A, T))
 S = Sz(K)
 Select Case True
 Case S = 0: O = FmtQQ("T[?] has no Pk", T)
@@ -13,41 +13,41 @@ Case S = 1:
 Case Else
     O = FmtQQ("T[?] has primary key.  It should have single field and name eq to table, but now it has Pk[?].  Db[?]", T, JnSpc(K), DbNm(A))
 End Select
-ChkPkz = O
+ChkPk = O
 End Property
 
-Function ChkSskz$(A As Database, T)
-Dim O$, Sk$(): Sk = SkFnyz(A, T)
-O = ChkSkz(A, T): If O <> "" Then ChkSskz = O: Exit Function
+Function ChkSsk$(A As Database, T)
+Dim O$, Sk$(): Sk = SkFny(A, T)
+O = ChkSk(A, T): If O <> "" Then ChkSsk = O: Exit Function
 If Sz(Sk) <> 1 Then
-    ChkSskz = FmtQQ("Secondary is not single field. Tbl[?] Db[?] SkFfn[?]", T, DbNm(A), JnTermAy(Sk))
+    ChkSsk = FmtQQ("Secondary is not single field. Tbl[?] Db[?] SkFfn[?]", T, DbNm(A), JnTermAy(Sk))
 End If
 End Function
-Function ChkPkSkz(A As Database) As String()
+Function ChkPkSk(A As Database) As String()
 Dim T
-For Each T In Tnyz(A)
-    PushIAy ChkPkSkz, ChkPkSkzT(A, T)
+For Each T In Tny(A)
+    PushIAy ChkPkSk, ChkPkSkzT(A, T)
 Next
 End Function
 Function ChkPkSkzT(A As Database, T) As String()
-PushNonBlankStr ChkPkSkzT, ChkPkz(A, T)
-PushNonBlankStr ChkPkSkzT, ChkSkz(A, T)
+PushNonBlankStr ChkPkSkzT, ChkPk(A, T)
+PushNonBlankStr ChkPkSkzT, ChkSk(A, T)
 End Function
 
-Function ChkSkz$(A As Database, T)
-Dim SkIdx As DAO.Index, I As DAO.Index
-If Not HasIdxz(A, T, C_SkNm) Then
-    ChkSkz = FmtQQ("Not SecondaryKey for Table[?] in Db[?]", T, DbNm(A))
+Function ChkSk$(A As Database, T)
+Dim SkIdx As Dao.Index, I As Dao.Index
+If Not HasIdx(A, T, C_SkNm) Then
+    ChkSk = FmtQQ("Not SecondaryKey for Table[?] in Db[?]", T, DbNm(A))
     Exit Function
 End If
 Set SkIdx = A.TableDefs(T).Indexes(C_SkNm)
 Select Case True
 Case Not SkIdx.Unique
-    ChkSkz = FmtQQ("SecondaryKey is not unique for Table[?] in Db[?]", T, DbNm(A))
+    ChkSk = FmtQQ("SecondaryKey is not unique for Table[?] in Db[?]", T, DbNm(A))
 Case Else
-    Set I = FstUniqIdxz(A, T)
+    Set I = FstUniqIdx(A, T)
     If Not IsNothing(I) Then
-        ChkSkz = FmtQQ("No SecondaryKey, but there is uniq idx, it should name as SecondaryKey for Table[?] Db[?] UniqIdxNm[?] IdxFny[?]", _
+        ChkSk = FmtQQ("No SecondaryKey, but there is uniq idx, it should name as SecondaryKey for Table[?] Db[?] UniqIdxNm[?] IdxFny[?]", _
             T, DbNm(A), I.Name, JnTermAy(FnyzIdx(I)))
     End If
 End Select

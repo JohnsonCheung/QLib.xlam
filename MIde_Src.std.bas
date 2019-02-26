@@ -31,7 +31,7 @@ Dim ODry()
         Push ODry, Dr
         Lx = Lx + 1
     Next
-BrwDrs Drs("Mth RmkLx Lin", ODry)
+BrwDrs DRs("Mth RmkLx Lin", ODry)
 End Sub
 
 Private Property Get ZZSrc() As String()

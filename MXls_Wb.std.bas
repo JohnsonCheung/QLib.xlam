@@ -34,9 +34,8 @@ LoItr = Itr(LoAy(A))
 End Function
 
 Function LozAyH(Ay, Wb As Workbook, Optional Wsn$, Optional LoNm$) As ListObject
-Set LozAyH = LozRg(RgvSqH(SqzAyV(Ay), A1Wb(Wb, Wsn)), LoNm)
+Set LozAyH = LozRg(RgzSq(SqzAyV(Ay), A1Wb(Wb, Wsn)), LoNm)
 End Function
-
 
 Function MainLo(A As Workbook) As ListObject
 Dim O As Worksheet, Lo As ListObject

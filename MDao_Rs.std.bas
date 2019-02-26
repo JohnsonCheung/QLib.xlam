@@ -1,7 +1,7 @@
 Attribute VB_Name = "MDao_Rs"
 Option Explicit
 Const CMod$ = "MDao_Rs."
-Sub UpdRs(Rs As DAO.Recordset, Dr)
+Sub UpdRs(Rs As Dao.Recordset, Dr)
 Rs.Edit
 SetRs Rs, Dr
 Rs.Update
@@ -12,21 +12,21 @@ Dim Y As Byte, M As Byte
 'AsgRs TblRs("YM"), Y, M
 Stop
 End Sub
-Function CvRs(A) As DAO.Recordset
+Function CvRs(A) As Dao.Recordset
 Set CvRs = A
 End Function
-Function NoRec(A As DAO.Recordset) As Boolean
+Function NoRec(A As Dao.Recordset) As Boolean
 NoRec = Not HasReczRs(A)
 End Function
 
-Function HasReczRs(A As DAO.Recordset) As Boolean
+Function HasReczRs(A As Dao.Recordset) As Boolean
 If Not A.EOF Then Exit Function
 If Not A.BOF Then Exit Function
 HasReczRs = True
 End Function
 
-Sub AsgRs(A As DAO.Recordset, ParamArray OAp())
-Dim F As DAO.Field, J%, U%
+Sub AsgRs(A As Dao.Recordset, ParamArray OAp())
+Dim F As Dao.Field, J%, U%
 Dim Av(): Av = OAp
 U = UB(Av)
 For Each F In A.Fields
@@ -36,15 +36,15 @@ For Each F In A.Fields
 Next
 End Sub
 
-Sub BrwRs(A As DAO.Recordset)
+Sub BrwRs(A As Dao.Recordset)
 BrwDrs DrszRs(A)
 End Sub
 
-Sub BrwSngRec(A As DAO.Recordset)
+Sub BrwSngRec(A As Dao.Recordset)
 BrwAy FmtRec(A)
 End Sub
 
-Sub RsDlt(A As DAO.Recordset)
+Sub RsDlt(A As Dao.Recordset)
 With A
     If .EOF Then Exit Sub
     If .BOF Then Exit Sub
@@ -52,12 +52,12 @@ With A
 End With
 End Sub
 
-Function CsvLinzRs$(A As DAO.Recordset)
+Function CsvLinzRs$(A As Dao.Recordset)
 CsvLinzRs = CsvzFds(A.Fields)
 End Function
 
-Function CsvLyzRs1(A As DAO.Recordset) As String()
-Dim O$(), J&, I%, UFld%, Dr(), F As DAO.Field
+Function CsvLyzRs1(A As Dao.Recordset) As String()
+Dim O$(), J&, I%, UFld%, Dr(), F As Dao.Field
 UFld = A.Fields.Count - 1
 While Not A.EOF
     J = J + 1
@@ -69,7 +69,7 @@ While Not A.EOF
 Wend
 End Function
 
-Function CsvLyzRs(A As DAO.Recordset, Optional FF) As String()
+Function CsvLyzRs(A As Dao.Recordset, Optional FF) As String()
 Dim Fny$(), Flds As Fields, F
 Dim O$(), J&, I%, UFld%, Dr()
 Fny = CvNy(FF)
@@ -90,7 +90,7 @@ While Not A.EOF
 Wend
 CsvLyzRs = O
 End Function
-Function AsetzRs(Rs As DAO.Recordset, Optional Fld = 0) As Aset
+Function AsetzRs(Rs As Dao.Recordset, Optional Fld = 0) As Aset
 Set AsetzRs = New Aset
 With Rs
     While Not .EOF
@@ -99,7 +99,7 @@ With Rs
     Wend
 End With
 End Function
-Function RsMovFst(Rs As DAO.Recordset) As DAO.Recordset
+Function RsMovFst(Rs As Dao.Recordset) As Dao.Recordset
 Rs.MoveFirst
 Set RsMovFst = Rs
 End Function
@@ -109,14 +109,14 @@ DmpAy CsvLyzRs(A, FF)
 A.MoveFirst
 End Sub
 
-Function DrzRs(A As DAO.Recordset, Optional FF = "") As Variant()
+Function DrzRs(A As Dao.Recordset, Optional FF = "") As Variant()
 DrzRs = DrzFds(A.Fields, FF)
 End Function
-Function DrszRs(A As DAO.Recordset) As Drs
-Set DrszRs = Drs(FnyzRs(A), DryzRs(A))
+Function DrszRs(A As Dao.Recordset) As DRs
+Set DrszRs = DRs(FnyzRs(A), DryzRs(A))
 End Function
 
-Function DryzRs(A As DAO.Recordset, Optional InclFldNm As Boolean) As Variant()
+Function DryzRs(A As Dao.Recordset, Optional InclFldNm As Boolean) As Variant()
 'If Not HasRec(A) Then Exit Function
 If InclFldNm Then
     PushI DryzRs, FnyzRs(A)
@@ -131,11 +131,11 @@ With A
 End With
 End Function
 
-Function FnyzRs(A As DAO.Recordset) As String()
+Function FnyzRs(A As Dao.Recordset) As String()
 FnyzRs = Itn(A.Fields)
 End Function
 
-Function HasReczFEv(Rs As DAO.Recordset, F, Ev) As Boolean
+Function HasReczFEv(Rs As Dao.Recordset, F, Ev) As Boolean
 With Rs
     If .BOF Then
         If .EOF Then Exit Function
@@ -148,23 +148,23 @@ With Rs
 End With
 End Function
 
-Function IntAyzRs(A As DAO.Recordset, Optional Fld = 0) As Integer()
+Function IntAyzRs(A As Dao.Recordset, Optional Fld = 0) As Integer()
 IntAyzRs = IntozRs(IntAyzRs, A, Fld)
 End Function
 
-Function ShouldBrkvRs(A As DAO.Recordset, GpKy$(), LasVy()) As Boolean
+Function ShouldBrkvRs(A As Dao.Recordset, GpKy$(), LasVy()) As Boolean
 ShouldBrkvRs = Not IsEqAy(DrzRs(A, GpKy), LasVy)
 End Function
 
-Function RsLin$(A As DAO.Recordset, Optional Sep$ = " ")
+Function RsLin$(A As Dao.Recordset, Optional Sep$ = " ")
 RsLin = Join(DrzRs(A), Sep)
 End Function
 
-Function LngAyzRs(A As DAO.Recordset, Optional Fld = 0) As Long()
+Function LngAyzRs(A As Dao.Recordset, Optional Fld = 0) As Long()
 LngAyzRs = IntozRs(LngAyzRs, A, Fld = 0)
 End Function
 
-Property Let ValzRs(A As DAO.Recordset, V)
+Property Let ValzRs(A As Dao.Recordset, V)
 If NoRec(A) Then
     A.AddNew
 Else
@@ -174,14 +174,14 @@ A.Fields(0).Value = V
 A.Update
 End Property
 
-Property Get ValzRs(A As DAO.Recordset)
+Property Get ValzRs(A As Dao.Recordset)
 If NoRec(A) Then Exit Property
 Dim V: V = A.Fields(0).Value
 If IsNull(V) Then Exit Property
 ValzRs = V
 End Property
 
-Function RsLy(A As DAO.Recordset, Optional Sep$ = " ") As String()
+Function RsLy(A As Dao.Recordset, Optional Sep$ = " ") As String()
 Dim O$()
 With A
     Push O, Join(FnyzRs(A), Sep)
@@ -193,11 +193,11 @@ End With
 RsLy = O
 End Function
 
-Function FmtRec(A As DAO.Recordset)
+Function FmtRec(A As Dao.Recordset)
 FmtRec = LyzNyAv(FnyzRs(A), DrzRs(A))
 End Function
 
-Function NReczRs&(A As DAO.Recordset)
+Function NReczRs&(A As Dao.Recordset)
 Dim O&
 With A
     .MoveFirst
@@ -210,12 +210,12 @@ End With
 NReczRs = O
 End Function
 
-Sub SetSqrzRs(OSq, R, A As DAO.Recordset, Optional NoTxtSngQ As Boolean)
+Sub SetSqrzRs(OSq, R, A As Dao.Recordset, Optional NoTxtSngQ As Boolean)
 SetSqrzDr OSq, R, DrzRs(A), NoTxtSngQ
 End Sub
 
 
-Function SyzRsFld(A As DAO.Recordset, Optional F = 0) As String()
+Function SyzRsFld(A As Dao.Recordset, Optional F = 0) As String()
 Dim O$()
 With A
     While Not .EOF
@@ -226,8 +226,8 @@ End With
 SyzRsFld = O
 End Function
 
-Function RsStru$(A As DAO.Recordset)
-Dim O$(), F As DAO.Field2
+Function RsStru$(A As Dao.Recordset)
+Dim O$(), F As Dao.Field2
 For Each F In A.Fields
     PushI O, FdStr(F)
 Next
@@ -237,7 +237,7 @@ End Function
 Function NzEmpty(A)
 NzEmpty = IIf(IsNull(A), Empty, A)
 End Function
-Function DrzRsFny(Fny$(), Rs As DAO.Recordset) As Variant()
+Function DrzRsFny(Fny$(), Rs As Dao.Recordset) As Variant()
 Dim F
 For Each F In Fny
     PushI DrzRsFny, NzEmpty(Rs.Fields(F).Value)
@@ -250,15 +250,15 @@ While Not Rs.EOF
     Rs.MoveNext
 Wend
 End Function
-Function AvRsCol(A As DAO.Recordset, Optional Fld = 0) As Variant()
+Function AvRsCol(A As Dao.Recordset, Optional Fld = 0) As Variant()
 AvRsCol = IntozRs(EmpAv, A, Fld)
 End Function
-Function SyzRs(A As DAO.Recordset, Optional Fld = 0) As String()
+Function SyzRs(A As Dao.Recordset, Optional Fld = 0) As String()
 SyzRs = IntozRs(EmpSy, A, Fld)
 End Function
 
 
-Function ColSetzRs(A As DAO.Recordset, Optional Fld = 0) As Aset
+Function ColSetzRs(A As Dao.Recordset, Optional Fld = 0) As Aset
 Set ColSetzRs = New Aset
 With A
     While Not .EOF
@@ -268,7 +268,7 @@ With A
 End With
 End Function
 
-Function SqzRs(A As DAO.Recordset, Optional InclFldNm As Boolean) As Variant()
+Function SqzRs(A As Dao.Recordset, Optional InclFldNm As Boolean) As Variant()
 SqzRs = SqzDry(DryzRs(A, InclFldNm))
 End Function
 

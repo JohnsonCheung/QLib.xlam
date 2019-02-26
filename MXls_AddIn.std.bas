@@ -1,7 +1,7 @@
 Attribute VB_Name = "MXls_AddIn"
 Option Explicit
 
-Function XlsAddInDrs(A As Excel.Application) As Drs
+Function XlsAddInDrs(A As Excel.Application) As DRs
 'Set XlsAddInDrs = ItrDrs(A.AddIns, "Name FullName Installed IsOpen ProgId CLSID")
 End Function
 

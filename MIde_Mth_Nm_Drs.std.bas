@@ -1,28 +1,28 @@
 Attribute VB_Name = "MIde_Mth_Nm_Drs"
 Option Explicit
 
-Function MthNmDrsVbe(Optional WhStr$) As Drs
-Set MthNmDrsVbe = MthNmDrszVbe(CurVbe, WhStr)
+Function MthNmDRsVbe(Optional WhStr$) As DRs
+Set MthNmDRsVbe = MthNmDrszVbe(CurVbe, WhStr)
 End Function
 
-Function MthNmDrsPj(Optional WhStr$) As Drs
-Set MthNmDrsPj = MthNmDrszPj(CurPj, WhStr)
+Function MthNmDRsPj(Optional WhStr$) As DRs
+Set MthNmDRsPj = MthNmDrszPj(CurPj, WhStr)
 End Function
 
-Function MthNmDrsMd(Optional WhStr$) As Drs
-Set MthNmDrsMd = MthNmDrszMd(CurMd, WhStr)
+Function MthNmDRsMd(Optional WhStr$) As DRs
+Set MthNmDRsMd = MthNmDrszMd(CurMd, WhStr)
 End Function
 
-Private Function MthNmDrszMd(M As CodeModule, Optional WhStr$) As Drs
-Set MthNmDrszMd = Drs(MthNmFny, MthNmDryzMd(M, WhMthzStr(WhStr)))
+Private Function MthNmDrszMd(M As CodeModule, Optional WhStr$) As DRs
+Set MthNmDrszMd = DRs(MthNmFny, MthNmDryzMd(M, WhMthzStr(WhStr)))
 End Function
 
-Private Function MthNmDrszVbe(A As Vbe, Optional WhStr$) As Drs
-Set MthNmDrszVbe = Drs(MthNmFny, MthNmDryzVbe(A, WhStr))
+Private Function MthNmDrszVbe(A As Vbe, Optional WhStr$) As DRs
+Set MthNmDrszVbe = DRs(MthNmFny, MthNmDryzVbe(A, WhStr))
 End Function
 
 Function MthNmDrszPj(A As VBProject, Optional WhStr$)
-Set MthNmDrszPj = Drs(MthNmFny, MthNmDryzPj(A, WhStr))
+Set MthNmDrszPj = DRs(MthNmFny, MthNmDryzPj(A, WhStr))
 End Function
 
 Private Function MthNmDryzMd(M As CodeModule, Optional B As WhMth) As Variant()

@@ -2,8 +2,8 @@ Attribute VB_Name = "MXls_Dao"
 Option Explicit
 
 Function RplLoCnzDbt(A As ListObject, Db As Database, T) As ListObject
-Dim Sq(), Drs As Drs, R As DAO.Recordset
-Set R = Rsz(Db, T)
+Dim Sq(), DRs As DRs, R As Dao.Recordset
+Set R = Rs(Db, T)
 If Not IsEqAy(FnyzRs(R), FnyzLo(A)) Then
     Debug.Print "--"
     Debug.Print "Rs"
@@ -48,13 +48,13 @@ With Lo.QueryTable
 End With
 End Sub
 
-Function WbzDbtt(Db As Database, TT) As Workbook
+Function WbzTT(A As Database, TT) As Workbook
 Dim O As Workbook, T
 Set O = NewWb
 For Each T In TermAy(TT)
-    AddWszDbt O, Db, T
+    AddWszT O, A, T
 Next
-Set WbzDbtt = O
+Set WbzTT = O
 End Function
 Function SetWsn(Ws As Worksheet, Nm$) As Worksheet
 If Nm = "" Then Exit Function
@@ -62,18 +62,14 @@ Ws.Name = Nm
 Set SetWsn = Ws
 End Function
 
-Sub AddWszDbt(Wb As Workbook, Db As Database, T, Optional Wsn0$)
+Sub AddWszT(Wb As Workbook, A As Database, T, Optional Wsn0$)
 Dim Wsn$: Wsn = Dft(Wsn0, T)
 AddWs Wb, Wsn
-PutDbtAt Db, T, A1zWs(LasWs(Wb))
+PutDbtAt A, T, A1zWs(LasWs(Wb))
 End Sub
 
-Sub AddWszT(Wb As Workbook, T, Optional Wsn0$)
-AddWszDbt Wb, CDb, T, Wsn0$
-End Sub
-
-Function WbzOupTblDb(Db As Database) As Workbook
-Set WbzOupTblDb = WbzDbtt(Db, OupTnyz(Db))
+Function WbzOupTbl(Db As Database) As Workbook
+Set WbzOupTbl = WbzTT(Db, OupTny(Db))
 End Function
 
 Function WbzT(Db As Database, T, Optional Wsn$ = "Data", Optional LoNm$, Optional Vis As Boolean) As Workbook
@@ -132,7 +128,7 @@ CrtFxDbtt Fx, CDb, TT
 End Sub
 
 Function WszDbt(Db As Database, T, Optional Wsn$) As Worksheet
-Dim Sq(): Sq = SqzDbt(Db, T)
+Dim Sq(): Sq = SqzT(Db, T)
 Dim A1 As Range: Set A1 = NewA1(Wsn)
 Set WszDbt = WsLo(LozSq(Sq, A1))
 End Function

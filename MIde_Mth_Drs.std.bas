@@ -36,13 +36,13 @@ O.ShtKd = ShtMthKd(ShfMthTy(L))
 Set MthInfMdzPjSrcFm = O
 End Function
 
-Function MthDrs(Optional WhStr$) As Drs
+Function MthDrs(Optional WhStr$) As DRs
 Set MthDrs = MthDrszPjfAy(PjfAy, WhStr)
 End Function
 
 
-Function MthDrsMd(A As CodeModule, Optional B As WhMth) As Drs
-Set MthDrsMd = Drs(MthFny, MthDryzMd(A, B))
+Function MthDrsMd(A As CodeModule, Optional B As WhMth) As DRs
+Set MthDrsMd = DRs(MthFny, MthDryzMd(A, B))
 End Function
 
 Function MthLinDryzMd(A As CodeModule, Optional WhStr$) As Variant()
@@ -83,12 +83,12 @@ Property Get MthWs() As Worksheet
 Set MthWs = MthWsPjfAy(PjfAy)
 End Property
 
-Function MthDrsFb(Fb, Optional WhStr$) As Drs
+Function MthDrsFb(Fb, Optional WhStr$) As DRs
 Set MthDrsFb = MthDrszVbe(VbePjf(Fb), WhStr)
 ClsPjf Fb
 End Function
 
-Function MthDrszFxa(Fxa, Optional WhStr$, Optional Xls As Excel.Application) As Drs
+Function MthDrszFxa(Fxa, Optional WhStr$, Optional Xls As Excel.Application) As DRs
 Dim A As Excel.Application: Set A = DftXls(Xls)
 Set MthDrszFxa = MthDrszPj(PjzFxa(Fxa, A), WhStr)
 If IsNothing(Xls) Then XlsQuit Xls
@@ -99,7 +99,7 @@ Set MthWbPjfAy = MthWbFmt(WbzWs(MthWsPjfAy(PjfAy, WhStr)))
 End Function
 
 Function MthWsPjfAy(PjfAy, Optional WhStr$) As Worksheet
-Dim O As Drs
+Dim O As DRs
 Set O = MthDrszPjfAy(PjfAy, WhStr)
 Set O = AddColzValIdzCntzDrs(O, "Nm", "Vbe_Mth")
 Set O = AddColzValIdzCntzDrs(O, "Lines", "Vbe")
@@ -107,7 +107,7 @@ Set O = AddColzValIdzCntzDrs(O, "Lines", "Vbe")
 End Function
 
 
-Function MthDrszPjf(Pjf, Optional WhStr$) As Drs
+Function MthDrszPjf(Pjf, Optional WhStr$) As DRs
 Dim V As Vbe, App, P As VBProject, PjDte As Date
 OpnPjf Pjf ' Either Excel.Application or Access.Application
 Set V = VbePjf(Pjf)
@@ -124,9 +124,9 @@ End If
 End Function
 
 
-Function MthDrszPj(A As VBProject, Optional WhStr$) As Drs
-Dim O As Drs
-Set O = Drs(MthFny, MthDryzPj(A, WhStr))
+Function MthDrszPj(A As VBProject, Optional WhStr$) As DRs
+Dim O As DRs
+Set O = DRs(MthFny, MthDryzPj(A, WhStr))
 Set O = AddColzValIdzCntzDrs(O, "Lines", "Pj")
 Set O = AddColzValIdzCntzDrs(O, "Nm", "PjMth")
 Set MthDrszPj = O
@@ -159,7 +159,7 @@ MthWbFmt WbVis(WbzFx(Fx))
 Stop
 End Sub
 
-Function MthDrszPjfAy(PjfAy, Optional WhStr$) As Drs
+Function MthDrszPjfAy(PjfAy, Optional WhStr$) As DRs
 Dim I
 For Each I In PjfAy
     PushDrs MthDrszPjfAy, MthDrszPjf(I, WhStr)
@@ -172,12 +172,12 @@ Pjf = PjfAy()(0)
 ShwWs WszDrs(MthDrszPjf(Pjf))
 End Sub
 
-Function MthDrszVbe(A As Vbe, Optional WhStr$) As Drs
+Function MthDrszVbe(A As Vbe, Optional WhStr$) As DRs
 Dim P, Dry()
 For Each P In PjItr(A, WhStr)
     PushIAy Dry, MthDryzPj(CvPj(P), WhStr)
 Next
-Set MthDrszVbe = Drs(MthFny, Dry)
+Set MthDrszVbe = DRs(MthFny, Dry)
 End Function
 
 Function MthWszVbe(A As Vbe, Optional WhStr$) As Worksheet
@@ -211,11 +211,13 @@ X_Pt1:
     Return
 X_Lo1:
     Set Lo1 = PtCpyToLo(Pt1, Ws1.Range("G1"))
-    SetLoNm Lo1, "T_MthLines"
-    SetLcWdt Lo1, "Nm", 30
-    SetLcWdt Lo1, "Lines", 100
-    SetLcLvl Lo1, "Lines", 2
-    
+    Erase XX
+    X "Nm T_MthLines"
+    X "Wdt 30 Nm"
+    X "Wdt 100 Lines"
+    X "Lvl 2 Lines"
+    FmtLo Lo1, XX
+    Erase XX
     Return
 X_Pt2:
     Set Pt2 = NewPtLoAtRDCP(Lo1, Ws1.Range("M1"), "MdTy Nm", "Lines")
@@ -276,8 +278,8 @@ Property Get MthFny() As String()
 MthFny = SySsl("Mdy Ty Nm Prm Ret LinRmk Lno Cnt Lines TopRmk")
 End Property
 
-Function VbeAyMthDrs(A() As Vbe) As Drs
-Dim I, R%, M As Drs
+Function VbeAyMthDrs(A() As Vbe) As DRs
+Dim I, R%, M As DRs
 For Each I In Itr(A)
     Set M = DrsInsCV(MthDrszVbe(CvVbe(I)), "Vbe", R)
     If R = 0 Then

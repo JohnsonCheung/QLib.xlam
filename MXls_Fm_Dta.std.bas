@@ -1,12 +1,12 @@
-Attribute VB_Name = "MXls_Dta"
+Attribute VB_Name = "MXls_Fm_Dta"
 Option Explicit
 
-Function RgzDrs(A As Drs, At As Range) As Range
+Function RgzDrs(A As DRs, At As Range) As Range
 Set RgzDrs = RgzSq(SqzDrs(A), At)
 End Function
 
-Function LozDrs(Drs As Drs, At As Range, Optional LoNm$) As ListObject
-Set LozDrs = LozRg(RgzDrs(Drs, At), LoNm)
+Function LozDrs(DRs As DRs, At As Range, Optional LoNm$) As ListObject
+Set LozDrs = LozRg(RgzDrs(DRs, At), LoNm)
 End Function
 
 Function WszAy(Ay, Optional Wsn$ = "Sheet1") As Worksheet
@@ -18,17 +18,19 @@ LozRg RgzMoreTop(R)
 Set WszAy = O
 End Function
 
-Function WszDrs(Drs As Drs, Optional Wsn$ = "Sheet1", Optional Vis As Boolean) As Worksheet
+Function WszDrs(DRs As DRs, Optional Wsn$ = "Sheet1", Optional Vis As Boolean) As Worksheet
 Dim O As Worksheet: Set O = NewWs(Wsn)
-LozDrs Drs, O.Range("A1")
+LozDrs DRs, O.Range("A1")
 Set WszDrs = SetWsVis(O, Vis)
 End Function
+
 Function RgzAyV(Ay, At As Range) As Range
 Set RgzAyV = RgzSq(SqzAyV(Ay), At)
 End Function
 Function RgzAyH(Ay, At As Range) As Range
 Set RgzAyH = RgzSq(SqzAyH(Ay), At)
 End Function
+
 Function RgzDry(Dry(), At As Range) As Range
 Set RgzDry = RgzSq(SqzDry(Dry), At)
 End Function
@@ -63,7 +65,7 @@ For Each I In Itr(A.DtAy)
     Set Dt = I
     LozDt Dt, At
     BelowN = 2 + Sz(Dt.Dry)
-    Set At = CellBelowN(At, BelowN)
+    Set At = CellBelow(At, BelowN)
 Next
 Set WszDs = O
 End Function
@@ -71,11 +73,7 @@ End Function
 Function RgzDt(A As Dt, At As Range, Optional DtIx%)
 Dim Pfx$: If DtIx > 0 Then Pfx = QuoteBkt(DtIx)
 At.Value = Pfx & A.DtNm
-RgzSq SqzDrs(DrszDt(A)), CellBelowN(At)
-End Function
-
-Function CellBelowN(Cell As Range, Optional N = 1) As Range
-Set CellBelowN = RgRC(Cell, 1 + N, 1)
+RgzSq SqzDrs(DrszDt(A)), CellBelow(At)
 End Function
 
 Function LozDt(A As Dt, At As Range) As ListObject
@@ -98,7 +96,7 @@ End Function
 
 Function RgzSq(Sq, At As Range) As Range
 Dim O As Range
-Set O = RgzReSz(At, Sq)
+Set O = RgzResz(At, Sq)
 O.MergeCells = False
 O.Value = Sq
 Set RgzSq = O
@@ -126,7 +124,7 @@ Wb.Close False
 End Sub
 
 Private Sub ZZ()
-Dim A As Drs
+Dim A As DRs
 Dim B As Range
 Dim C$()
 Dim D$

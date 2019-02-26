@@ -1,62 +1,36 @@
 Attribute VB_Name = "MDao_Tbl_Upd_SeqFld"
 Option Explicit
 
-Sub UpdSeqFldzRs(Rs As DAO.Recordset, SelFld$, KK)
-Rs.MoveFirst
-Dim Fny$(): Fny = FnyzFF(KK)
-Dim Las(): 'Las = DrzFnyzRs(Rs, Fny)
-While Not Rs.EOF
-'    Cur = DrzFnyzRs(Rs, Fny)
-    Rs.Edit
-'    Rs.Fields(SelFld).Value = Seq
-    Rs.Update
-'    If IsEqAy(Cur, Las) Then
-'        Seq = Seq + 1
-'    Else
-'        Las = Cur
-'        Seq = 0
-'    End If
-    Rs.MoveNext
-Wend
-End Sub
-
-
-Sub UpdSeqFldvRs(Rs As DAO.Recordset)
-If NoRec(Rs) Then Exit Sub
+Sub UpdSeqFld(A As Database, T, SeqFld$, GpFF, OrdFFMinus$)
+Dim Q$: Q = SqlSel_FF_Fm_Ord(SeqFld & " " & GpFF, T, OrdFFMinus)
+Dim R As Recordset: Set R = Rs(A, Q)
+If NoRec(R) Then Exit Sub
 Dim Seq&, Las(), Cur(), N%
-With Rs
+With R
     N = .Fields.Count - 1
     .MoveNext
-    Las = DrzRs(Rs)
+    Las = DrzRs(R)
     While Not .EOF
-        Cur = DrzSqr(Rs, N)
+        Cur = DrzSqr(R, N)
         If Not IsEqAy(Cur, Las) Then
             Cur = Las
             Seq = 0
         End If
         Seq = Seq + 1
-        UpdRs Rs, Array(Seq)
+        UpdRs R, Array(Seq)
         .MoveNext
     Wend
 End With
-End Sub
-Function SqlvUpdSeqFld$(T, SeqFld$, GpFF, OrdFFMinus$)
-SqlvUpdSeqFld = SqlSel_FF_Fm_Ord(SeqFld & " " & GpFF, T, OrdFFMinus)
-End Function
-Sub UpdSeqFld(T, SeqFld$, GpFF, OrdFFMinus$)
-UpdSeqFldz CDb, T, SeqFld, GpFF, OrdFFMinus
-End Sub
-Sub UpdSeqFldz(Db As Database, T, SeqFld$, GpFF, OrdFFMinus$)
-UpdSeqFldvRs Rsz(Db, SqlvUpdSeqFld(T, SeqFld, GpFF, OrdFFMinus))
 End Sub
 
 
 Private Sub ZZ_UpdSeqFld()
 Dim Db As Database, T
-RunQ "Select * into [#A] from ZZ_UpdSeqFld order by Sku,PermitDate"
-RunQ "Update [#A] set BchRateSeq=0, Rate=Round(Rate,0)"
-UpdSeqFld T, "BchRateSeq", "Sku", "Sku Rate"
+Set Db = TmpDb
+RunQ Db, "Select * into [#A] from [T] order by Sku,PermitDate"
+RunQ Db, "Update [#A] set BchRateSeq=0, Rate=Round(Rate,0)"
+UpdSeqFld Db, T, "BchRateSeq", "Sku", "Sku Rate"
 Stop
-Drp "#A"
+DrpT Db, "#A"
 End Sub
 

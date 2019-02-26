@@ -1,7 +1,7 @@
 Attribute VB_Name = "MDta_S1S2"
 Option Explicit
-Function S1S2DrszAy(A() As S1S2) As Drs
-Set S1S2DrszAy = Drs("S1 S2", S1S2AyDry(A))
+Function S1S2DrszAy(A() As S1S2) As DRs
+Set S1S2DrszAy = DRs("S1 S2", S1S2AyDry(A))
 End Function
 
 Function S1S2AyDry(A() As S1S2) As Variant()

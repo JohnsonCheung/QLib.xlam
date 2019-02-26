@@ -1,14 +1,13 @@
 Attribute VB_Name = "MDao_Lid"
 Option Explicit
 
-Function LnkImpDbzLidPm(A As LidPm) As Database
+Sub LnkImpzLidPm(A As LidPm)
 ThwEr ChkColzLidPm(A), CSub
-Dim W As Database
-Set W = WDb(A.Apn)
+OpnWDb A.Apn
 ThwEr ChkLnkTbl(W, LtPmzLid(A)), CSub
-RunSqyz W, ImpSqyzLidPm(A)
-Set LnkImpDbzLidPm = W
-End Function
+RunSqy W, ImpSqyzLidPm(A)
+ClsWDb
+End Sub
 
 Private Function ChkColzLidPm(A As LidPm) As String()
 ChkColzLidPm = MsgzLidMis(LidMis(A))

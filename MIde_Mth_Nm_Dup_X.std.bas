@@ -1,7 +1,7 @@
 Attribute VB_Name = "MIde_Mth_Nm_Dup_X"
 Option Explicit
 
-Function SamMthLinesMthQDNmDry(MthQNmLDrs As Drs, Vbe As Vbe) As Variant()
+Function SamMthLinesMthQDNmDry(MthQNmLDrs As DRs, Vbe As Vbe) As Variant()
 Dim Gp(): 'Gp = DupMthQDNy_GpAy(A)
 Dim O$(), N, Ny
 For Each Ny In Gp

@@ -2,12 +2,8 @@ Attribute VB_Name = "MDao_Att_Op_Imp"
 Option Explicit
 Const CMod$ = "MDao_Att_Op_Imp."
 
-Sub ImpAtt(Att, FmFfn$)
-ImpAttz CDb, Att, FmFfn
-End Sub
-
-Private Sub ImpAttvRs(A As Attd, Ffn$)
-Const CSub$ = CMod & "ImpAttvRs"
+Private Sub ImpAttzAttd(A As Attd, Ffn$)
+Const CSub$ = CMod & "ImpAttzAttd"
 Dim F2 As Field2
 Dim S&, T As Date
 S = FfnSz(Ffn)
@@ -33,15 +29,15 @@ With A
 End With
 End Sub
 
-Sub ImpAttz(Db As Database, Att, FmFfn$)
-ImpAttvRs Attdz(Db, Att), FmFfn
+Sub ImpAtt(Db As Database, Att, FmFfn$)
+ImpAttzAttd Attd(Db, Att), FmFfn
 End Sub
 
 Private Sub Z_ImpAtt()
-Dim T$
+Dim T$, D As Database
 T = TmpFt
 WrtStr "sdfdf", T
-ImpAtt "AA", T
+ImpAtt D, "AA", T
 Kill T
 'T = TmpFt
 'ExpAttToFfn "AA", T

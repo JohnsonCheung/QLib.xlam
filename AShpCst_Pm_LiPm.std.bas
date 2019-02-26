@@ -1,8 +1,11 @@
 Attribute VB_Name = "AShpCst_Pm_LiPm"
 Option Explicit
+Private Db As Database
 Property Get ShpCstLiPm() As LiPm
+Set Db = AppDb("ShpCst")
 Set ShpCstLiPm = New LiPm
 ShpCstLiPm.Init "ShpCst", LiFilAy, LiFxAy, LiFbAy
+Db.Close
 End Property
 Property Get ShpCstLtPm() As LtPm()
 ShpCstLtPm = LtPm(ShpCstLiPm)
@@ -10,7 +13,7 @@ End Property
 Private Function LiFil(Itm$) As LiFil
 Set LiFil = New LiFil
 LiFil.FilNm = Itm
-LiFil.Ffn = PnmFfn(Itm)
+LiFil.Ffn = PnmFfn(Db, Itm)
 End Function
 
 Private Property Get LiFilAy() As LiFil()

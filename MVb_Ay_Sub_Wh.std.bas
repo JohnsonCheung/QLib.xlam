@@ -298,8 +298,12 @@ Function ItrzAywRmvT1(A, T1$)
 Asg Itr(AywRmvT1(A, T1)), ItrzAywRmvT1
 End Function
 
-Function AywRmvT1(A, T1$) As String()
-AywRmvT1 = AyRmvT1(AywT1(A, T1))
+Function ItrzRmvT1(Ay, T1$)
+Asg Itr(AywRmvT1(Ay, T1)), ItrzRmvT1
+End Function
+
+Function AywRmvT1(Ay, T1$) As String()
+AywRmvT1 = AyRmvT1(AywT1(Ay, T1))
 End Function
 
 Function AywRmvTT(A, T1$, T2$) As String()

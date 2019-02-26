@@ -5,7 +5,7 @@ Option Explicit
 Sub PutAyColAt(A, At As Range)
 Dim Sq()
 Sq = SqzAyV(A)
-RgzReSz(At, Sq).Value = Sq
+RgzResz(At, Sq).Value = Sq
 End Sub
 
 Sub PutAyRgzLc(A, Lo As ListObject, ColNm$)
@@ -21,7 +21,7 @@ End Sub
 Sub PutAyRowAt(Ay, At As Range)
 Dim Sq()
 Sq = SqzAyH(Ay)
-RgzReSz(At, Sq).Value = Sq
+RgzResz(At, Sq).Value = Sq
 End Sub
 
 Function AyabWs(A, B, Optional N1$ = "Ay1", Optional N2$ = "Ay2", Optional LoNm$ = "AyAB") As Worksheet

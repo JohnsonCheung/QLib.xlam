@@ -2,39 +2,30 @@ Attribute VB_Name = "MDao_Att_Op_Exp"
 Option Explicit
 Const CMod$ = "MDao_Att_Op_Exp."
 
-Function ExpAtt$(Att, ToFfn)
-'Exporting the only file in Att & Return ToFfn
-ExpAtt = ExpAttz(CDb, Att, ToFfn)
-End Function
-
-Function ExpAttvFn$(Att$, AttFn$, ToFfn)
-ExpAttvFn = ExpAttzFn(CDb, Att, AttFn, ToFfn)
-End Function
-
-Private Function ExpAttvRs$(A As Attd, ToFfn)
+Private Function ExpAttzAttd$(A As Attd, ToFfn)
 'Export the only File in {Attds} {ToFfn}
-Dim Fn$, T$, F2 As DAO.Field2
+Dim Fn$, T$, F2 As Dao.Field2
 With A.ARs
     If Ext(!Filename) <> Ext(ToFfn) Then Thw CSub, "The Ext in the Att should be same", "Att-Ext ToFfn-Ext", Ext(!Filename), Ext(ToFfn)
     Set F2 = !FileData
 End With
 F2.SaveToFile ToFfn
-ExpAttvRs = ToFfn
+ExpAttzAttd = ToFfn
 End Function
 
-Function ExpAttz$(Db As Database, Att, ToFfn)
+Function ExpAtt$(Db As Database, Att, ToFfn)
 'Exporting the first File in Att.
 'If no or more than one file in att, error
 'If any, export and return ToFfn
 Const CSub$ = CMod & "ExptAttz"
 Dim N%
-N = AttFilCntz(Db, Att)
+N = AttFilCnt(Db, Att)
 If N <> 1 Then
     Thw CSub, "AttNm should have only one file, no export.", _
         "AttNm FilCnt ExpToFile Db", _
         Att, N, ToFfn, DbNm(Db)
 End If
-ExpAttz = ExpAttvRs(Attdz(Db, Att), ToFfn)
+ExpAtt = ExpAttzAttd(Attd(Db, Att), ToFfn)
 Info CSub, "Att is exported", "Att ToFfn FmDb", Att, ToFfn, DbNm(Db)
 End Function
 
@@ -51,19 +42,19 @@ If HasFfn(ToFfn) Then
         "Db AttNm AttFn ToFfn", _
         DbNm(A), Att, AttFn, ToFfn
 End If
-Dim Fd2 As DAO.Field2
+Dim Fd2 As Dao.Field2
     Set Fd2 = AttFd2(A, Att, AttFn$)
 
 If IsNothing(Fd2) Then
     Thw CSub, "In record of AttNm there is no given AttFn, but only Act-AttFnAy", _
         "Db Given-AttNm Given-AttFn Act-AttFny ToFfn", _
-        DbNm(A), Att, AttFn, AttFnAyz(A, Att), ToFfn
+        DbNm(A), Att, AttFn, AttFnAy(A, Att), ToFfn
 End If
 Fd2.SaveToFile ToFfn
 ExpAttzFn = ToFfn
 End Function
-Private Function AttFd2(A As Database, Att, AttFn) As DAO.Field2
-With Attdz(A, Att)
+Private Function AttFd2(A As Database, Att, AttFn) As Dao.Field2
+With Attd(A, Att)
     With .ARs
         .MoveFirst
         While Not .EOF
@@ -76,10 +67,10 @@ With Attdz(A, Att)
 End With
 End Function
 
-Private Sub ZZ_ExpAttz()
-Dim T$
+Private Sub ZZ_ExpAtt()
+Dim T$, D As Database
 T = TmpFx
-ExpAttzFn CDb, "Tp", "TaxRateAlert(Template).xlsm", T
+ExpAttzFn D, "Tp", "TaxRateAlert(Template).xlsm", T
 Debug.Assert HasFfn(T)
 Kill T
 End Sub
@@ -93,6 +84,6 @@ Dim B
 Dim C As Attd
 Dim D As Database
 Dim XX
-ExpAttvFn A, A, B
-ExpAttvRs C, B
+ExpAttzFn D, A, A, B
+ExpAttzAttd C, B
 End Sub

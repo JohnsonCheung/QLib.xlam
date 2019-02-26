@@ -1,18 +1,18 @@
 Attribute VB_Name = "MDta_Fmt"
 Option Explicit
-Sub BrwDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional Fnn$)
+Sub BrwDrs(A As DRs, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional Fnn$)
 BrwAy FmtDrs(A, MaxColWdt, BrkColNm$), Fnn
 End Sub
 
-Function FmtDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional ShwZer As Boolean, Optional HidIxCol As Boolean) As String()
+Function FmtDrs(A As DRs, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional ShwZer As Boolean, Optional HidIxCol As Boolean) As String()
 'If BrkColNm changed, insert a break line if BrkColNm is given
-Dim Drs As Drs
-    Set Drs = DrsAddIxCol(A, HidIxCol)
+Dim DRs As DRs
+    Set DRs = DrsAddIxCol(A, HidIxCol)
 Dim BrkColIx%
     BrkColIx = IxzAy(A.Fny, BrkColNm)
 Dim Dry()
-    Dry = Drs.Dry
-    PushI Dry, Drs.Fny
+    Dry = DRs.Dry
+    PushI Dry, DRs.Fny
 
 Dim Ay$()
     Ay = FmtDry(Dry, MaxColWdt, BrkColIx, ShwZer) '<== Will insert break line if BrkColIx>=0
@@ -38,7 +38,7 @@ PushIAy FmtDt, FmtDrs(DrszDt(A), MaxColWdt, BrkColNm, ShwZer, HidIxCol)
 End Function
 
 Private Sub Z_FmtDrs()
-Dim A As Drs, MaxColWdt%, DtBrkLinMapStr$, NoIxCol As Boolean
+Dim A As DRs, MaxColWdt%, DtBrkLinMapStr$, NoIxCol As Boolean
 Set A = SampDrs
 GoSub Tst
 Exit Sub
@@ -64,7 +64,7 @@ Tst:
 End Sub
 
 Private Sub ZZ()
-Dim A As Drs
+Dim A As DRs
 Dim B%
 Dim C$
 Dim D As Boolean

@@ -9,5 +9,5 @@ With A
     Tbl = .CommandText
     CnStr = .Connection
 End With
-FbtStrQt = FmtQQ("[?].[?]", DtaSrczTdCn(CnStr), Tbl)
+FbtStrQt = FmtQQ("[?].[?]", DtaSrczScl(CnStr), Tbl)
 End Function
