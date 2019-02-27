@@ -6,7 +6,7 @@ Fny = SySsl(Tit): If InclDicValOptTy Then Push Fny, "Val-TypeName"
 Set DrszDic = DRs(Fny, DryzDic(A, InclDicValOptTy))
 End Function
 
-Function DtzDic(A As Dictionary, Optional DtNm$ = "Dic", Optional InclDicValOptTy As Boolean) As Dt
+Function DtzDic(A As Dictionary, Optional DtNm$ = "Dic", Optional InclDicValOptTy As Boolean) As DT
 Dim Dry()
 Dry = DryzDic(A, InclDicValOptTy)
 Dim F$
@@ -15,7 +15,7 @@ Dim F$
     Else
         F = "Key Val"
     End If
-Set DtzDic = Dt(DtNm, F, Dry)
+Set DtzDic = DT(DtNm, F, Dry)
 End Function
 
 Function FnyzDic(Optional InclValTy As Boolean) As String()

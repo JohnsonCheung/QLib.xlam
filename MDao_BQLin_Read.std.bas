@@ -1,6 +1,6 @@
 Attribute VB_Name = "MDao_BQLin_Read"
 Option Explicit
-Sub Z_CrtTTzPth()
+Private Sub Z_CrtTTzPth()
 Dim A As Database: Set A = TmpDb
 Dim P$: P = TmpPth
 WrtFbqzDb P, SampDb_DutyDta
@@ -19,7 +19,7 @@ For Each T In TnyzTT(TT)
     CrtTblzFbq A, T, Fbq
 Next
 End Sub
-Sub Z_CrtTblzFbq()
+Private Sub Z_CrtTblzFbq()
 Dim Fbq$: Fbq = TmpFt
 WrtFbqzT Fbq, SampDb_DutyDta, "PermitD"
 Dim D As Database: Set D = TmpDb

@@ -15,7 +15,7 @@ Next
 SrtDry = O
 End Function
 
-Function SrtDt(A As Dt, FF, Optional IsDes As Boolean) As Dt
+Function SrtDt(A As DT, FF, Optional IsDes As Boolean) As DT
 'Set Dt_Srt = Dt(A.DtNm, A.Fny, DrsSrt(DrszDt(A), FF, IsDes).Dry)
 End Function
 

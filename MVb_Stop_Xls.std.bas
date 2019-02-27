@@ -4,9 +4,11 @@ Declare Function GetCurrentProcessId& Lib "Kernel32.dll" ()
 'Declare Function GetProcessId& Lib "Kernel32.dll" (ProcessHandle&)
 'Const Ps1Str$ = "function Get-ExcelProcessId { try { (Get-Process -Name Excel).Id } finally { @() } }" & vbCrLf & _
 '"Stop-Process -Id (Get-ExcelProcessId)"
-Sub AAAAAA()
+
+Private Sub AAAAAA()
 Debug.Print GetCurrentProcessId, Shell("Cmd")
 End Sub
+
 Sub StopXls()
 Const Ps1Str$ = "Stop-Process -Id{try{(Get-Process -Name Excel).Id}finally{@()}}.invoke()"
 Dim F$: F = TmpHom & "StopXls.ps1"

@@ -65,6 +65,7 @@ Case eNoThwNoInfo:
 Case Else:   ThwNav Fun, Msg, Nav
 End Select
 End Sub
+
 Sub Thw(Fun$, Msg$, ParamArray Nap())
 Dim Nav(): Nav = Nap
 ThwNav Fun, Msg, Nav

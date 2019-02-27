@@ -12,7 +12,7 @@ OLin = LTrim(RmvPfx(OLin, O))
 End Function
 
 Sub ShfMthTyAsg(A, OMthTy, ORst$)
-AsgApAy ShfMthTy(A), OMthTy, ORst
+AsgAp ShfMthTy(A), OMthTy, ORst
 End Sub
 
 Function ShfAs(A) As Variant()

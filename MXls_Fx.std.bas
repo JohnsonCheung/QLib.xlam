@@ -74,7 +74,7 @@ WsCdNyzFx = WsCdNyWb(Wb)
 Wb.Close False
 End Function
 
-Function DtzFxw(Fx, Optional Wsn0$) As Dt
+Function DtzFxw(Fx, Optional Wsn0$) As DT
 Dim N$: N = FxDftWsn(Fx, Wsn0)
 Dim Sql$: Sql = FmtQQ("Select * from [?$]", N)
 Set DtzFxw = DtDrsDtnm(DrsFxq(Fx, Sql), N)

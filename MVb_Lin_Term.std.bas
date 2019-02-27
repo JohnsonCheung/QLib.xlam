@@ -55,7 +55,7 @@ End Function
 
 Private Function ShfTerm1$(O)
 Dim A$
-AsgApAy BrkBkt(O, "["), A, ShfTerm1, O
+AsgAp BrkBkt(O, "["), A, ShfTerm1, O
 End Function
 
 Function ShfTerm$(O)

@@ -1,6 +1,13 @@
-Attribute VB_Name = "MDao_Def_Td_Str"
+Attribute VB_Name = "MDao_Def_ToStr"
 Option Explicit
 Const CMod$ = "MDao_Td_Str."
+
+Function FdStrAyFds(A As Dao.Fields) As String()
+Dim F As Dao.Field
+For Each F In A
+    PushI FdStrAyFds, FdStr(F)
+Next
+End Function
 
 Function TdStr$(A As Dao.TableDef)
 Dim T$, Id$, Sk$, Rst$
@@ -19,18 +26,8 @@ Next
 FnyzTdLy = AywDistSy(O)
 End Function
 
-Function FdStrAyzTdStr(TdStr) As String()
-Dim F
-For Each F In FnyzTdLin(TdStr)
-    PushI FdStrAyzTdStr, FdStr(FdzStd(F))
-Next
-End Function
-Function SampTdStr$()
-
-End Function
-
-Function TdStrz$(A As Database, T)
-TdStrz = TdStr(A.TableDefs(T))
+Function TdStrzT$(A As Database, T)
+TdStrzT = TdStr(A.TableDefs(T))
 End Function
 
 Function FnyzTdLin(TdLin) As String()
@@ -64,4 +61,18 @@ End Sub
 
 Private Sub Z()
 End Sub
+
+
+Function FdStr$(A As Dao.Field2)
+Dim D$, R$, Z$, VTxt$, VRul, E$, S$
+If A.Type = Dao.DataTypeEnum.dbText Then S = " TxtSz=" & A.Size
+'If A.DefaultValue <> "" Then D = " " & QuoteSq("Dft=" & A.DefaultValue)
+If A.Required Then R = " Req"
+If A.AllowZeroLength Then Z = " AlwZLen"
+'If A.Expression <> "" Then E = " " & QuoteSq("Expr=" & A.Expression)
+'If A.ValidationRule <> "" Then VRul = " " & QuoteSq("VRul=" & A.ValidationRule)
+'If A.ValidationText <> "" Then VRul = " " & QuoteSq("VTxt=" & A.ValidationText)
+FdStr = A.Name & " " & ShtTyzDao(A.Type) & R & Z & S & VTxt & VRul & D & E
+End Function
+
 

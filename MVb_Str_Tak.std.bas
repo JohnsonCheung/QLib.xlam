@@ -83,7 +83,7 @@ If P2 > P1 And P1 > 0 And P2 > 0 Then
 End If
 End Function
 Sub TakP123Asg(A, S1, S2, O1, O2, O3)
-AsgApAy TakP123(A, S1, S2), O1, O2, O3
+AsgAp TakP123(A, S1, S2), O1, O2, O3
 End Sub
 Private Sub Z_Tak_BefFstLas()
 Dim S, Fst, Las
@@ -192,7 +192,7 @@ Lin = "lkjsdf;dkfjl;Data Source=Johnson;lsdfjldf  | Data Source= | ; | Johnson":
 Exit Sub
 Tst:
     Dim FmStr$, ToStr$
-    AsgApAy AyTrim(SplitVBar(Lin)), Lin, FmStr, ToStr, Ept
+    AsgAp AyTrim(SplitVBar(Lin)), Lin, FmStr, ToStr, Ept
     Act = TakBet(Lin, FmStr, ToStr)
     C
     Return

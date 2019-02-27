@@ -25,7 +25,7 @@ Private Sub Z_DrsSel()
 'BrwDrs Vmd.MthDrs
 End Sub
 
-Function DtSel(A As Dt, FF) As Dt
+Function DtSel(A As DT, FF) As DT
 Set DtSel = DtzDrs(DrsSel(DrszDt(A), FF), A.DtNm)
 End Function
 

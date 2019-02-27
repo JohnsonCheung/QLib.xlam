@@ -1,13 +1,6 @@
 Attribute VB_Name = "MDao_Def_Lin"
 Option Explicit
 
-Function FdStrAyFds(A As Dao.Fields) As String()
-Dim F As Dao.Field
-For Each F In A
-    PushI FdStrAyFds, FdStr(F)
-Next
-End Function
-
 Function IdxStr$(A As Dao.Index)
 Dim X$, F$
 With A

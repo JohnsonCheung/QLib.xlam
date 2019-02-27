@@ -1,4 +1,5 @@
 Attribute VB_Name = "MDao_Schm_Samp"
+Option Explicit
 Property Get SampSchm() As String()
 Erase XX
 X "Tbl LoFmt   *Id LoNm"

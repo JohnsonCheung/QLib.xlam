@@ -1,7 +1,15 @@
 Attribute VB_Name = "MDao_Schm_Er"
 Option Explicit
-Const MD_NTermShouldBe3OrMore$ = "Should have 3 or more terms"
-
+'MDF 'M.sg D.es of F.ld
+'MDT 'M.sg D.es of T.bl
+Const M000$ = "Lno#[?] ?"
+Const M001$ = "Lno#? ?"
+Const MDF_NTermShouldBe3OrMore$ = "Should have 3 or more terms"
+Const MDF_InvalidFld$ = "Invalid-Fld[?] Vdt-Fld[?]"
+Const MDT_$ = ""
+Const CDT_Tbl_NotIn_Tny$ = "T[?] is invalid.  Valid T[?]"
+Const MDupE$ = "This E[?] is dup"
+Const CM_LinTyEr$ = "Invalid DaoTy[?].  Valid Ty[?]"
 Function ErzSchm(Schm$()) As String()
 '========================================
 Dim E() As Lnx
@@ -9,7 +17,7 @@ Dim F() As Lnx
 Dim D() As Lnx
 Dim T() As Lnx
     Dim X()  As Lnx
-    X = ClnLnxAy(Schm)
+    X = LnxAyzCln(Schm)
     T = LnxAywRmvT1(X, "Tbl")
     D = LnxAywRmvT1(X, "Des")
     E = LnxAywRmvT1(X, "Ele")
@@ -23,42 +31,42 @@ Dim AllFny$()
 Dim AllEny$()
     AllFny = FnyzTdLy(LyzLnxAy(T))
     AllEny = AyTakT1(LyzLnxAy(E))
-Dim Er$(), mT$(), mF$(), mEle$(), mDes$()
-    Er = LnxAyT1Chk(X, "Des Ele Fld Tbl")
-    mT = ErT(Tny, T, E)
-    mF = ErF(AllFny, F)
-    'mEle = ErE
-    'mDes = ErD
-ErzSchm = AyAddAp(Er, mT, mF, mEle, mDes)
+ErzSchm = AyAddAp( _
+    LnxAyT1Chk(X, "Des Ele Fld Tbl"), _
+    ErT(Tny, T, E), _
+    ErF(AllFny, F), _
+    ErE(E), _
+    ErD(Tny, T, D))
 End Function
 
-Private Function ErD_DLnxAy(A() As Lnx) As String()
+Private Function ErD_LinEr(A() As Lnx) As String()
 Dim I
 For Each I In Itr(A)
-    If RmvTT(CvLnx(I).Lin) = "" Then PushI ErD_DLnxAy, MsgD_NTermShouldBe3OrMore(CvLnx(I))
+    If RmvTT(CvLnx(I).Lin) = "" Then PushI ErD_LinEr, MsgD_NTermShouldBe3OrMore(CvLnx(I))
 Next
 End Function
 
-Private Function ErD_F_FnyNotIn_Fny(D() As Lnx, T$, Fny$()) As String()
+Private Function ErDT_InvalidFld(D() As Lnx, T$, Fny$()) As String()
 'Fny$ is the fields in T$.
 'D-Lnx.Lin is Des $T $F $D.  For the T$=$T line, the $F not in Fny$(), it is error
 Dim I
 For Each I In Itr(D)
-    PushNonBlankStr ErD_F_FnyNotIn_Fny, ErD_F_FnyNotIn_Fny1(CvLnx(I), T, Fny)
+    PushNonBlankStr ErDT_InvalidFld, ErDT_InvalidFld1(CvLnx(I), T, Fny)
 Next
 End Function
 
-Private Function ErD_F_FnyNotIn_Fny1$(D As Lnx, T$, Fny$())
+Private Function ErDT_InvalidFld1$(D As Lnx, T$, Fny$())
 Dim Tbl$, Fld$, Des$, X$
 Asg3TRst D.Lin, X, Tbl, Fld, Des
 If X <> "Des" Then Stop
 If Tbl <> T Then Exit Function
+
 If Not HasEle(Fny, Fld) Then
-    ErD_F_FnyNotIn_Fny1 = MsgD_FldNotIn_Fny()
+    ErDT_InvalidFld1 = MsgDF_InvalidFld(D, Fld, Fny)
 End If
 End Function
 
-Private Function ErD_FldEr(A() As Lnx, T() As Lnx) As String() _
+Private Function ErDF_Er(A() As Lnx, T() As Lnx) As String() _
 'Given A is D-Lnx having fmt = $Tbl $Fld $D, _
 'This Sub checks if $Fld is in Fny
 Dim J%, Fld$, Tbl$, Tny$(), FnyAy$()
@@ -66,31 +74,29 @@ Dim J%, Fld$, Tbl$, Tny$(), FnyAy$()
 For J = 0 To UB(A)
     AsgTT A(J).Lin, Tbl, Fld
     If Tbl <> "." Then
-        PushIAy ErD_FldEr, ErD_FldEr1(A(J), Tny, FnyAy)
+        PushIAy ErDF_Er, ErDF_Er1(A(J), Tny, FnyAy)
     End If
 Next
 End Function
 
-Private Function ErD_FldEr1(A As Lnx, Tny$(), FnyAy$()) As String()
-
+Private Function ErDF_Er1(A As Lnx, Tny$(), FnyAy$()) As String()
 End Function
 
-Private Function ErD_T_Tbl_NotIn_Tny1$(D As Lnx, Tny$())
-
+Private Function ErDT_Tbl_NotIn_Tny1$(D As Lnx, Tny$())
 End Function
 
-Private Function ErD_TblEr(D() As Lnx, Tny$()) As String()
+Private Function ErDT_Tbl_NotIn_Tny(D() As Lnx, Tny$()) As String()
 'D-Lnx.Lin is Des $T $F $D. If $T<>"." and not in Tny, it is error
 Dim J%
 For J = 0 To UB(D)
-    PushNonBlankStr ErD_TblEr, ErD_T_Tbl_NotIn_Tny1(D(J), Tny)
+    PushNonBlankStr ErDT_Tbl_NotIn_Tny, ErDT_Tbl_NotIn_Tny1(D(J), Tny)
 Next
 End Function
 
 Private Function ErE_DupE(E() As Lnx, Eny$()) As String()
 Dim Ele
 For Each Ele In Itr(AywDup(Eny))
-    Push ErE_DupE, MsgE_DupE(FndELnoAy(E, Ele), Ele)
+    Push ErE_DupE, MsgE_DupE(LnoAyzEle(E, Ele), Ele)
 Next
 End Function
 
@@ -98,7 +104,7 @@ Private Function ErE_ELnx(A As Lnx) As String()
 Dim L$, Ty$
 Dim E$  ' EleNm of the Ele-Lin
 L = A.Lin
-'    AsgApAy ShfVal(L, "*Nm *Ty ?Req ?ZLen TxtSz VTxt Dft VRul Expr"), _
+'    AsgAp VyzLinLbl(L, "*Nm *Ty ?Req ?ZLen TxtSz VTxt Dft VRul Expr"), _
                      .E, Ty, .Req, .ZLen, .TxtSz, .VTxt, .Dft, .VRul, .Expr
     '.Ty = DaoTy(Ty)
     If L <> "" Then
@@ -106,7 +112,7 @@ L = A.Lin
         Push ErE_ELnx, MsgE_ExcessEleItm(A, ExcessEle)
     End If
 '    If .Ty = 0 Then
-'        Push OEr, MsgTyEr(A.Ix, Ty)
+'        Push OEr, Msg_LinTyEr(A.Ix, Ty)
 '    End If
 End Function
 
@@ -133,23 +139,23 @@ Private Function ErF_EleHasNoDef(F() As Lnx, AllEny$()) As String() _
 
 End Function
 
-Private Function ErF_FLnx(F As Lnx) As String()
+Private Function Er_1_OneLiner(F As Lnx) As String()
 Dim LikFF$, A$, V$
-'    AsgApAy Sy43TRst(F.Lin), .E, .LikT, V, A
+'    AsgAp Sy43TRst(F.Lin), .E, .LikT, V, A
 '    .LikFny = SySsl(LikFF)
 End Function
 
-Private Function ErF_FLnxAy(A() As Lnx) As String()
+Private Function ErF_1_LinEr(A() As Lnx) As String()
 Dim J%
 For J = 0 To UB(A)
-    PushIAy ErF_FLnxAy, ErF_FLnx(A(J))
+    PushIAy ErF_1_LinEr, Er_1_OneLiner(A(J))
 Next
 End Function
 
-Private Function ErT_DupT(T() As Lnx, Tny$()) As String()
+Private Function ErT_DupTbl(T() As Lnx, Tny$()) As String()
 Dim Tbl
 For Each Tbl In Itr(AywDup(Tny))
-    Push ErT_DupT, MsgT_DupT(FndTLnoAy(T, Tbl), Tbl)
+    Push ErT_DupTbl, MsgT_DupT(LnoAyzTbl(T, Tbl), Tbl)
 Next
 End Function
 
@@ -158,7 +164,7 @@ If Sz(A) > 0 Then Exit Function
 PushI ErT_NoTLin, MsgT_NoTLin
 End Function
 
-Private Function ErT_TLnx(T As Lnx) As String()
+Private Function ErT_1_OneLinEr(T As Lnx) As String()
 Dim L$
 Dim Tbl$
     L = T.Lin
@@ -166,13 +172,13 @@ Dim Tbl$
     L = Replace(L, "*", Tbl)
 '1
 Select Case SubStrCnt(L, "|")
-Case 0, 2
-Case Else: PushI ErT_TLnx, MsgT_VBar_Cnt(T): Exit Function
+Case 0, 1
+Case Else: PushI ErT_1_OneLinEr, MsgT_VBar_Cnt(T): Exit Function
 End Select
 
 '2
 If Not IsNm(Tbl) Then
-    PushI ErT_TLnx, MsgT_TblIsNotNm(T)
+    PushI ErT_1_OneLinEr, MsgT_TblIsNotNm(T)
     Exit Function
 End If
 '
@@ -184,12 +190,12 @@ If HasSubStr(L, "|") Then
     Dim IdFld$
     IdFld = Trim(TakBef(L, "|"))
     If IdFld <> Tbl & "Id" Then
-        PushI ErT_TLnx, MsgT_IdFld(T)
+        PushI ErT_1_OneLinEr, MsgT_IdFld(T)
         Exit Function
     End If
 '4
     If Trim(TakBet(L, "|", "|")) = "" Then
-        PushI ErT_TLnx, MsgT_NoFLdBetVV(T)
+        PushI ErT_1_OneLinEr, MsgT_NoFLdBetVV(T)
         Exit Function
     End If
 End If
@@ -197,115 +203,115 @@ End If
     Dim Dup$()
     Dup = AywDup(Fny)
     If Sz(Dup) > 0 Then
-        PushI ErT_TLnx, MsgT_DupF(T, Tbl, Dup)
+        PushI ErT_1_OneLinEr, MsgT_DupF(T, Tbl, Dup)
         Exit Function
     End If
 '6
 If Sz(Fny) = 0 Then
-    PushI ErT_TLnx, MsgT_NoFld(T)
+    PushI ErT_1_OneLinEr, MsgT_NoFld(T)
     Exit Function
 End If
 '7
 Dim F
 For Each F In Itr(Fny)
     If Not IsNm(F) Then
-        PushI ErT_TLnx, MsgT_FldIsNotANmEr(T, F)
+        PushI ErT_1_OneLinEr, MsgT_FldIsNotANmEr(T, F)
     End If
 Next
 End Function
 
-Private Function ErT_TLnxAy(A() As Lnx) As String()
+Private Function ErT_1_LinEr(A() As Lnx) As String()
 Dim I
 For Each I In Itr(A)
-    PushIAy ErT_TLnxAy, ErT_TLnx(CvLnx(I))
+    PushIAy ErT_1_LinEr, ErT_1_OneLinEr(CvLnx(I))
 Next
 End Function
 
-Private Function FndELnoAy(E() As Lnx, Ele) As Long()
+Private Function LnoAyzEle(E() As Lnx, Ele) As Long()
 Dim J%
 For J = 0 To UBound(E)
     If T1(E(J).Lin) = Ele Then
-        PushI FndELnoAy, E(J).Ix + 1
+        PushI LnoAyzEle, E(J).Ix + 1
     End If
 Next
 End Function
 
-Private Function FndTLnoAy(A() As Lnx, T) As Long()
+Private Function LnoAyzTbl(A() As Lnx, T) As Long()
 Dim J%
 For J = 0 To UB(A)
     If T1(A(J).Lin) = T Then
-        PushI FndTLnoAy, A(J).Ix + 1
+        PushI LnoAyzTbl, A(J).Ix + 1
     End If
 Next
 End Function
 
-Private Function Msg_LnoAyMsg(LnoAy&(), M$)
-Msg_LnoAyMsg = FmtQQ("--- #[?] ?", JnSpc(LnoAy), M)
+Private Function WMsgMultiLno(LnoAy&(), M$)
+WMsgMultiLno = FmtQQ(M000, JnSpc(LnoAy), M)
 End Function
 
-Private Function MsgLnxMsg$(A As Lnx, M$)
-MsgLnxMsg = FmtQQ("--- #?[?] ?", A.Ix + 1, A.Lin, M)
+Private Function WMsg$(Ix, M$)
+WMsg = FmtQQ(M001, Ix, M)
 End Function
 
-Private Property Get MsgD_FldNotIn_Fny$()
-
-End Property
+Private Function MsgDF_InvalidFld$(ErLin As Lnx, ErFld$, VdtFny$())
+MsgDF_InvalidFld = WMsg(ErLin, FmtQQ(MDF_InvalidFld, ErFld, TLin(VdtFny)))
+End Function
 
 Private Function MsgD_NTermShouldBe3OrMore$(D As Lnx)
-MsgD_NTermShouldBe3OrMore = MsgLnxMsg(D, MD_NTermShouldBe3OrMore)
+MsgD_NTermShouldBe3OrMore = WMsg(D, MDF_NTermShouldBe3OrMore)
 End Function
 
-Private Function MsgD_T_Tbl_NotIn_Tny$(A As Lnx, T, Tblss$)
-MsgD_T_Tbl_NotIn_Tny = MsgLnxMsg(A, FmtQQ("T[?] is invalid.  Valid T[?]", T, Tblss))
+Private Function MsgDT_Tbl_NotIn_Tny$(A As Lnx, T, Tblss$)
+MsgDT_Tbl_NotIn_Tny = WMsg(A, FmtQQ(CDT_Tbl_NotIn_Tny, T, Tblss))
 End Function
 
 Private Function MsgE_DupE$(LnoAy&(), E)
-MsgE_DupE = Msg_LnoAyMsg(LnoAy, FmtQQ("This E[?] is dup", E))
+MsgE_DupE = WMsgMultiLno(LnoAy, FmtQQ(M000, E))
 End Function
 
 Private Function MsgT_DupT$(LnoAy&(), T)
-MsgT_DupT = Msg_LnoAyMsg(LnoAy, FmtQQ("This Tbl[?] is dup", T))
+MsgT_DupT = WMsgMultiLno(LnoAy, FmtQQ("This Tbl[?] is dup", T))
 End Function
 
 Private Function MsgE_ExcessEleItm$(A As Lnx, ExcessEle$)
-MsgE_ExcessEleItm = MsgLnxMsg(A, FmtQQ("Excess Ele Item [?]", ExcessEle))
+MsgE_ExcessEleItm = WMsg(A, FmtQQ("Excess Ele Item [?]", ExcessEle))
 End Function
 
 Private Function MsgF_ExcessTxtSz$(A As Lnx)
-MsgF_ExcessTxtSz = MsgLnxMsg(A, "Non-Txt-Ty should not have TxtSz")
+MsgF_ExcessTxtSz = WMsg(A, "Non-Txt-Ty should not have TxtSz")
 End Function
 
 Private Function MsgF_Ele_NotIn_Eny$(A As Lnx, E$, Eless$)
-MsgF_Ele_NotIn_Eny = MsgLnxMsg(A, FmtQQ("Ele of is not in F-Lin not in Eny", E, Eless))
+MsgF_Ele_NotIn_Eny = WMsg(A, FmtQQ("Ele of is not in F-Lin not in Eny", E, Eless))
 End Function
 
 Private Function MsgE_FldEleEr$(A As Lnx, E$, Eless$)
-MsgE_FldEleEr = MsgLnxMsg(A, FmtQQ("E[?] is invalid.  Valid E is [?]", E, Eless))
+MsgE_FldEleEr = WMsg(A, FmtQQ("E[?] is invalid.  Valid E is [?]", E, Eless))
 End Function
 
 Private Function MsgFzDLy_NotIn_Fny$(A As Lnx, T$, F$, Fssl$)
-MsgFzDLy_NotIn_Fny = MsgLnxMsg(A, FmtQQ("F[?] is invalid in T[?].  Valid F[?]", F, T, Fssl))
+MsgFzDLy_NotIn_Fny = WMsg(A, FmtQQ("F[?] is invalid in T[?].  Valid F[?]", F, T, Fssl))
 End Function
 
 Private Function MsgT_DupF$(A As Lnx, T$, Fny$())
-MsgT_DupF = MsgLnxMsg(A, FmtQQ("F[?] is dup in T[?]", JnSpc(Fny), T))
+MsgT_DupF = WMsg(A, FmtQQ("F[?] is dup in T[?]", JnSpc(Fny), T))
 End Function
 
 Private Function MsgT_FldIsNotANmEr$(A As Lnx, F)
-MsgT_FldIsNotANmEr = MsgLnxMsg(A, FmtQQ("FldNm[?] is not a name", F))
+MsgT_FldIsNotANmEr = WMsg(A, FmtQQ("FldNm[?] is not a name", F))
 End Function
 
 Private Function MsgT_IdFld$(A As Lnx)
 Const M$ = "The field before first | must be *Id field"
-MsgT_IdFld = MsgLnxMsg(A, M)
+MsgT_IdFld = WMsg(A, M)
 End Function
 
 Private Function MsgT_NoFld(A As Lnx)
-MsgT_NoFld = MsgLnxMsg(A, "No field")
+MsgT_NoFld = WMsg(A, "No field")
 End Function
 
 Private Function MsgT_NoFLdBetVV$(A As Lnx)
-MsgT_NoFLdBetVV = MsgLnxMsg(A, "No field between | |")
+MsgT_NoFLdBetVV = WMsg(A, "No field between | |")
 End Function
 
 Private Property Get MsgT_NoTLin$()
@@ -313,47 +319,48 @@ MsgT_NoTLin = "No T-Line"
 End Property
 
 Private Function MsgT_TblIsNotNm$(A As Lnx)
-MsgT_TblIsNotNm = MsgLnxMsg(A, "Tbl is not a name")
+MsgT_TblIsNotNm = WMsg(A, "Tbl is not a name")
 End Function
 
 Private Function MsgT_VBar_Cnt$(A As Lnx)
-Const M$ = "The T-Lin should have 0 or 2 VBar only"
-MsgT_VBar_Cnt = MsgLnxMsg(A, M)
+Const M$ = "The T-Lin should have 0 or 1 VBar only"
+MsgT_VBar_Cnt = WMsg(A, M)
 End Function
 
 Private Function MsgT_FldEr$(A As Lnx, F$)
-MsgT_FldEr = MsgLnxMsg(A, FmtQQ("Fld[?] cannot be found in any Ele-Lines"))
+MsgT_FldEr = WMsg(A, FmtQQ("Fld[?] cannot be found in any Ele-Lines"))
 End Function
 
-Private Function MsgTyEr$(A As Lnx, Ty$)
-MsgTyEr = MsgLnxMsg(A, FmtQQ("Invalid DaoTy[?].  Valid Ty[?]", Ty, ShtTyzDaosl))
+Private Function Msg_LinTyEr$(A As Lnx, Ty$)
+Msg_LinTyEr = WMsg(A, FmtQQ(CM_LinTyEr, Ty, ShtTyzDaosl))
 End Function
 
+Private Function ErD(Tny$(), T() As Lnx, D() As Lnx) As String()
+ErD = AyAddAp( _
+    ErD_LinEr(D))
+    'ErD_FldEr(D, T))
+    '    ErDT_InvalidFld(D, Tny), _
 
-Private Function ErD_(Tny$(), T() As Lnx, D() As Lnx) As String()
-ErD_ = AyAddAp( _
-    ErD_DLnxAy(D), _
-    ErD_TblEr(D, Tny), _
-    ErD_FldEr(D, T))
 End Function
 
-Private Function ErE(Eny$(), E() As Lnx) As String()
+Private Function ErE(E() As Lnx) As String()
+Dim Eny$()
 ErE = AyAdd(ErE_ELnxAy(E), ErE_DupE(E, Eny))
 End Function
 
 Private Function ErF(AllEny$(), F() As Lnx) As String()
-ErF = AyAdd(ErF_FLnxAy(F), ErF_EleHasNoDef(F, AllEny))
+ErF = AyAdd(ErF_1_LinEr(F), ErF_EleHasNoDef(F, AllEny))
 End Function
 
 Private Function ErT(Tny$(), T() As Lnx, E() As Lnx) As String()
 ErT = AyAddAp( _
-ErT_TLnxAy(T), _
+ErT_1_LinEr(T), _
 ErT_NoTLin(T), _
 ErT_FldHasNoEle(T, E), _
-ErT_DupT(T, Tny))
+ErT_DupTbl(T, Tny))
 End Function
 
-Private Sub Z_ErT_TLnx()
+Private Sub Z_ErT_1_OneLinEr()
 GoSub Cas0
 Stop
 GoSub Cas1
@@ -407,13 +414,13 @@ Cas6:
     Push EptEr, "should have fields after |"
     GoTo Tst
 Tst:
-    Act = ErT_TLnx(TLnx)
+    Act = ErT_1_OneLinEr(TLnx)
     C
     Return
 End Sub
 
 Private Sub Z()
-Z_ErT_TLnx
+Z_ErT_1_OneLinEr
 Exit Sub
 'AAAA
 'SchmLyEr

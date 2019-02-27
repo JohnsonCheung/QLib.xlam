@@ -9,18 +9,26 @@ Type EF
     EleLy() As String
     FldLy() As String
 End Type
-
+Private Type FdRslt
+    Som As Boolean
+    Fd As Dao.Field2
+End Type
 Sub CrtSchm(A As Database, Schm$())
 Const CSub$ = CMod & "CrtSchm"
-ThwErMsg ErzSchm(Schm), CSub, "there is error in the Schm", "Schm Db", AyAddIxPfx(Schm, 1), DbNm(A)
-Dim TdLy$(): TdLy = AywRmvT1(Schm, C_Tbl)
-Dim EF As EF
-    EF = EFzSchm(Schm)
-AppTdAyz A, TdAy(TdLy, EF)
-RunSqy A, SqyCrtPkzTny(PkTny(TdLy))
-RunSqy A, SqyCrtSk(TdLy)
-Set TblDesDic(A) = Dic(AywRmvTT(Schm, C_Des, C_Tbl))
-Set FldDesDic(A) = Dic(AywRmvTT(Schm, C_Des, C_Fld))
+'ThwErMsg ErzSchm(Schm), CSub, "there is error in the Schm", "Schm Db", AyAddIxPfx(Schm, 1), DbNm(A)
+Dim TdLy$():          TdLy = AywRmvT1(Schm, C_Tbl)
+Dim EF As EF:           EF = EFzSchm(Schm)
+Dim T() As Dao.TableDef: T = TdAy(TdLy, EF)
+Dim P$():                P = SqyCrtPkzTny(PkTny(TdLy))
+Dim S$():                S = SqyCrtSk(TdLy)
+Dim DT As Dictionary: Set DT = Dic(AywRmvTT(Schm, C_Des, C_Tbl))
+Dim DF As Dictionary: Set DF = Dic(AywRmvTT(Schm, C_Des, C_Fld))
+Stop
+                      AppTdAy A, T
+                      RunSqy A, P
+                      RunSqy A, S
+   Set TblDesDic(A) = DT
+   Set FldDesDic(A) = DF
 End Sub
 
 Private Function EFzSchm(Schm$()) As EF
@@ -57,29 +65,23 @@ SkFny = SySsl(Rst)
 End Function
 
 Private Function TdAy(TdLy$(), A As EF) As Dao.TableDef()
-Dim T
-For Each T In T1Ay(TdLy)
-    PushObj TdAy, Td(T, A)
+Dim TdLin
+For Each TdLin In TdLy
+    PushObj TdAy, Td(TdLin, A)
 Next
-End Function
-Private Function HasPk(TdLin) As Boolean
-HasPk = HasSubStr(TdLin, " *Id ")
 End Function
 
 Private Function Td(TdLin, A As EF) As Dao.TableDef
 'FDic is FDicSmf
-Dim O As Dao.TableDef
-Dim IsPk As Boolean
+Dim O As New Dao.TableDef: O.Name = T1(TdLin)
+Dim T: T = O.Name
 Dim F
 For Each F In FnyzTdLin(TdLin)
-    If HasPk(TdLin) Then
-        O.Fields.Append FdzPk(F)
-    Else
-        O.Fields.Append FdzEF(F, A)
-    End If
+    O.Fields.Append FdzEF(F, T, A)
 Next
-O.Name = T1(TdLin)
+Set Td = O
 End Function
+
 Function T1z_Itm_T1LikssAy$(Itm, T1LikssAy$())
 Dim L, Likss$, T1$
 For Each L In T1LikssAy
@@ -88,69 +90,62 @@ For Each L In T1LikssAy
 Next
 End Function
 
-Private Function FdStr$(F, A As EF)
-Dim E$, EStr$
-E = T1z_Itm_T1LikssAy(F, A.FldLy)
-EStr = FstEleT1(A.EleLy, E)
-FdStr = F & " " & EStr
+Private Function FdzEF(F, T, A As EF) As Dao.Field2
+Dim Ele$: Ele = T1z_Itm_T1LikssAy(F, A.FldLy)
+If Ele <> "" Then Set FdzEF = FdzEle(Ele, A.EleLy, F): Exit Function
+Set FdzEF = FdzStdFld(F)
+If Not IsNothing(FdzEF) Then Exit Function
+Thw CSub, FmtQQ("Fld(?) not in EF and not StdFld", F)
 End Function
 
-Private Function FdzEF(F, A As EF) As Dao.Field2
-Set FdzEF = FdzFdStr(FdStr(F, A))
+Private Function FdzEle(Ele$, EleLy$(), F) As Dao.Field2
+Dim EStr$: EStr = EleStr(EleLy, Ele)
+If EStr <> "" Then Set FdzEle = FdzFdStr(F & " " & EStr): Exit Function
+Set FdzEle = FdzStdEle(Ele, F): If Not IsNothing(FdzEle) Then Exit Function
+EStr = FdzStdEle(F, F)
+If EStr <> "" Then Set FdzEle = FdzFdStr(F & " " & EStr): Exit Function
+Dim EleNy$(): EleNy = T1Ay(EleLy)
+Thw CSub, FmtQQ("Fld(?) of Ele(?) not found in EleLy-of-EleAy(?) and not StdEle", F, Ele, TLin(EleNy))
 End Function
 
-Private Sub Z_CrtSchm()
-Dim Schm$(), Db As Database
-Set Db = TmpDb
-Schm = SampSchm
-GoSub Tst
-Exit Sub
-Tst:
-    CrtSchm Db, Schm
-'    Debug.Assert HasDbt(Db, "A")
-'    Debug.Assert HasDbt(Db, "B")
-'    Debug.Assert IsEqAy(FnyDbt(Db, "A"), SySsl("AId ANm ADte AATy Loc Expr Rmk"))
-'    Debug.Assert IsEqAy(FnyDbt(Db, "B"), SySsl("BId ANm BNm BDte"))
-    Brw Db
-    Stop
-    Return
-End Sub
+Private Function EleStr$(EleLy$(), Ele$)
+EleStr = FstEleT1(EleLy, Ele)
+End Function
 
-Private Property Get Z_CrtSchm1$()
-Const A_1$ = "Tbl A *Id | *Nm     | *Dte AATy Loc Expr Rmk" & _
-vbCrLf & "Fld B *Id | AId *Nm | *Dte" & _
-vbCrLf & "Fld Txt AATy" & _
-vbCrLf & "Fld Mem Rmk" & _
-vbCrLf & "Ele Loc Txt Rq Dft=ABC [VTxt=Loc must cannot be blank] [VRul=IsNull([Loc]) or Trim(Loc)='']" & _
-vbCrLf & "Ele Expr Txt [Expr=Loc & 'abc']" & _
-vbCrLf & "Des Tbl  A     AA BB " & _
-vbCrLf & "Des Tbl  A     CC DD " & _
-vbCrLf & "Des Fld  ANm   AA BB " & _
-vbCrLf & "Des Fld  A.ANm TF_Des-AA-BB"
+Private Function EleStrzStd$(Ele)
 
-Z_CrtSchm1 = A_1
+End Function
+
+Private Function FdzStdFldNm(F) As Dao.Field2
+
+End Function
+
+Private Property Get Schm1() As String()
+Erase XX
+X "Tbl A *Id *Nm     | *Dte AATy Loc Expr Rmk"
+X "Tbl B *Id  AId *Nm | *Dte"
+X "Fld Txt AATy"
+X "Fld Mem Rmk"
+X "Ele Loc Txt Rq Dft=ABC [VTxt=Loc must cannot be blank] [VRul=IsNull([Loc]) or Trim(Loc)='']"
+X "Ele Expr Txt [Expr=Loc & 'abc']"
+X "Des Tbl  A     AA BB "
+X "Des Tbl  A     CC DD "
+X "Des Fld  ANm   AA BB "
+X "Des Fld  A.ANm TF_Des-AA-BB"
+Schm1 = XX
+Erase XX
 End Property
 
-Private Sub Z_CrtSchm2()
-Dim Td As Dao.TableDef
-Dim B As Dao.Field2
-GoSub X_Td
-GoSub Tst
+Private Sub Z_CrtSchm()
+Dim D As Database, Schm$()
+GoSub T1
 Exit Sub
+
+T1:
+    Schm = Schm1
+    GoTo Tst
 Tst:
-    Debug.Print ObjPtr(Td)
-    CDb.TableDefs.Append Td
-    Debug.Print ObjPtr(Td)
-    Set B = CDb.TableDefs("#Tmp").Fields("B")
-    CDb.TableDefs("#Tmp").Fields("B").Properties.Append CDb.CreateProperty(C_Des, dbText, "ABC")
-    Return
-X_Td:
-    Dim FdAy() As Dao.Field
-    Set B = Fd("B", dbInteger)
-    PushObj FdAy, FdzId("#Tmp")
-    PushObj FdAy, Fd("A", dbInteger)
-    PushObj FdAy, B
-    Set Td = NewTd("#Tmp", FdAy, "A B")
+    CrtSchm D, Schm
     Return
 End Sub
 
@@ -160,3 +155,11 @@ End Sub
 Private Sub Z()
 Z_CrtSchm
 End Sub
+
+Private Sub AppTdAy(A As Database, TdAy() As Dao.TableDef)
+Dim T
+For Each T In Itr(TdAy)
+    A.TableDefs.Append T
+Next
+End Sub
+

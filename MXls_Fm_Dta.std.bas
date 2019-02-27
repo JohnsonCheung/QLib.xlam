@@ -60,23 +60,23 @@ Dim O As Worksheet: Set O = NewWs
 A1zWs(O).Value = "*Ds " & A.DsNm
 Dim At As Range, J%
 Set At = WsRC(O, 2, 1)
-Dim I, BelowN&, Dt As Dt
+Dim I, BelowN&, DT As DT
 For Each I In Itr(A.DtAy)
-    Set Dt = I
-    LozDt Dt, At
-    BelowN = 2 + Sz(Dt.Dry)
+    Set DT = I
+    LozDt DT, At
+    BelowN = 2 + Sz(DT.Dry)
     Set At = CellBelow(At, BelowN)
 Next
 Set WszDs = O
 End Function
 
-Function RgzDt(A As Dt, At As Range, Optional DtIx%)
+Function RgzDt(A As DT, At As Range, Optional DtIx%)
 Dim Pfx$: If DtIx > 0 Then Pfx = QuoteBkt(DtIx)
 At.Value = Pfx & A.DtNm
 RgzSq SqzDrs(DrszDt(A)), CellBelow(At)
 End Function
 
-Function LozDt(A As Dt, At As Range) As ListObject
+Function LozDt(A As DT, At As Range) As ListObject
 Dim R As Range
 If At.Row = 1 Then
     Set R = RgRC(At, 2, 1)
@@ -87,10 +87,10 @@ Set LozDt = LozDrs(DrszDt(A), R)
 RgRC(R, 0, 1).Value = A.DtNm
 End Function
 
-Function AddWszDt(Wb As Workbook, Dt As Dt) As Worksheet
+Function AddWszDt(Wb As Workbook, DT As DT) As Worksheet
 Dim O As Worksheet
-Set O = AddWs(Wb, Dt.DtNm)
-LozDrs DrszDt(Dt), A1zWs(O)
+Set O = AddWs(Wb, DT.DtNm)
+LozDrs DrszDt(DT), A1zWs(O)
 Set AddWszDt = O
 End Function
 
@@ -130,7 +130,7 @@ Dim C$()
 Dim D$
 Dim E As Variant
 Dim F As Ds
-Dim G As Dt
+Dim G As DT
 Dim H%
 Dim I As Workbook
 RgzDrs A, B

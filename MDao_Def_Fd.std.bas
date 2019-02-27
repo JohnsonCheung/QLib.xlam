@@ -15,29 +15,10 @@ With FdClone
 End With
 End Function
 
-Function StdFldFdStr$(F)
-StdFldFdStr = FdStr(FdzStd(F))
-End Function
-
-Function FdStr$(A As Dao.Field2)
-Dim D$, R$, Z$, VTxt$, VRul, E$, S$
-If A.Type = Dao.DataTypeEnum.dbText Then S = " TxtSz=" & A.Size
-'If A.DefaultValue <> "" Then D = " " & QuoteSq("Dft=" & A.DefaultValue)
-If A.Required Then R = " Req"
-If A.AllowZeroLength Then Z = " AlwZLen"
-'If A.Expression <> "" Then E = " " & QuoteSq("Expr=" & A.Expression)
-'If A.ValidationRule <> "" Then VRul = " " & QuoteSq("VRul=" & A.ValidationRule)
-'If A.ValidationText <> "" Then VRul = " " & QuoteSq("VTxt=" & A.ValidationText)
-FdStr = A.Name & " " & ShtTyzDao(A.Type) & R & Z & S & VTxt & VRul & D & E
-End Function
-
 Function FdVal(A As Dao.Field)
 FdVal = A.Value
 End Function
 
-Function FdSqlTy$(A As Dao.Field)
-Stop '
-End Function
 Function IsEqFd(A As Dao.Field2, B As Dao.Field2) As Boolean
 With A
     If .Name <> B.Name Then Exit Function
@@ -53,6 +34,7 @@ With A
 End With
 IsEqFd = True
 End Function
+
 Function CvFd(A) As Dao.Field
 Set CvFd = A
 End Function

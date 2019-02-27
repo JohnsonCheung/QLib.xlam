@@ -1,35 +1,13 @@
 Attribute VB_Name = "MVb_Ay"
 Option Explicit
 
-Sub AsgApAy(A, ParamArray OAp())
+Sub AsgAp(Ay, ParamArray OAp())
 Dim Av(): Av = OAp
 Dim J%
-For J = 0 To Min(UB(Av), UB(A))
-    OAp(J) = A(J)
+For J = 0 To Min(UB(Av), UB(Ay))
+    OAp(J) = Ay(J)
 Next
 End Sub
-
-Function AyAsgAy(A, Into)
-If TypeName(A) = TypeName(Into) Then
-    Into = A
-    AyAsgAy = Into
-    Exit Function
-End If
-If Sz(A) = 0 Then
-    Erase Into
-    AyAsgAy = Into
-    Exit Function
-End If
-Dim U&
-    U = UB(A)
-ReDim Into(U)
-Dim I, J&
-For Each I In A
-    Asg I, Into(J)
-    J = J + 1
-Next
-AyAsgAy = Into
-End Function
 
 Sub AyAsgT1AyRestAy(A, OT1Ay$(), ORestAy$())
 Dim U&, J&
@@ -454,13 +432,6 @@ End Function
 
 Function AyItmAddAy(Itm, Ay)
 AyItmAddAy = AyInsItm(Ay, Itm)
-End Function
-
-Function SSSyzAy(SSAy) As String()
-Dim SS
-For Each SS In Itr(SSAy)
-    PushIAy SSSyzAy, SySsl(SS)
-Next
 End Function
 
 Function SubDrFnySel(Dr(), DrFny$(), SelFF) As Variant()

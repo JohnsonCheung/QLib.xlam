@@ -1,7 +1,6 @@
 Attribute VB_Name = "MVb_Ay_FmTo_To_Into"
 Option Explicit
 
-
 Function IntozAy(Into, Ay)
 If TypeName(Ay) = TypeName(Into) Then
     IntozAy = Ay
@@ -13,8 +12,6 @@ For Each I In Itr(Ay)
     Push IntozAy, I
 Next
 End Function
-
-
 
 Function IntozItrNy(Into, Itr, Ny$())
 Dim O: O = Into: Erase O

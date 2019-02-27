@@ -8,12 +8,12 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
-Private A_LnxAy() As Lnx
-
-Property Let LnxAy(A() As Lnx)
-A_LnxAy = A
-End Property
+Private A() As Lnx
+Friend Function Init(LnxAy() As Lnx) As Gp
+A = LnxAy
+Set Init = Me
+End Function
 
 Property Get LnxAy() As Lnx()
-LnxAy = A_LnxAy
+LnxAy = A
 End Property

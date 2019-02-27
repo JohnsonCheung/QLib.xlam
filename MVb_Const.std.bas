@@ -74,7 +74,7 @@ Property Get SampDb_DutyDta() As Database
 Set SampDb_DutyDta = Db(SampFbzDutyDta)
 End Property
 
-Sub AAAAA()
+Private Sub AAAAA()
 Dim A
 '{00024500-0000-0000-C000-000000000046}
 Set A = Interaction.CreateObject("{00024500-0000-0000-C000-000000000046}", "Excel.Application")

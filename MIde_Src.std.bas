@@ -46,7 +46,7 @@ BrwAy MthNyzSrc(SrcMdNm("AAAMod"))
 End Sub
 
 Sub AsgMthDr(MthDr, OMdy$, OTy$, ONm$, OPrm$, ORet$, OLinRmk$, OLines$, OTopRmk$)
-AsgApAy MthDr, OMdy, OTy, ONm, OPrm, ORet, OLinRmk, OLines, OTopRmk
+AsgAp MthDr, OMdy, OTy, ONm, OPrm, ORet, OLinRmk, OLines, OTopRmk
 End Sub
 
 Function MthSrtKeyAy(Src$()) As String()

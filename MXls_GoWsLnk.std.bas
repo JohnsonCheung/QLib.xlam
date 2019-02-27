@@ -17,9 +17,9 @@ Dim WsNy$():     WsNy = WsNyzRg(R)
 Dim J%, Wsn$
 While R.Value = "Go"
     J = J + 1: If J = 1000 Then ThwLoopingTooMuch CSub
-    Wsn = NxtCellRight(R).Value
+    Wsn = CellRight(R).Value
     If HasEle(WsNy, Wsn) Then PushObj CellWsnItmAy, CellWsnItm(R, Wsn)
-    Set R = NxtCellBelow(R)
+    Set R = CellBelow(R)
 Wend
 End Function
 Private Function CellWsnItm(Cell As Range, Wsn$) As CellWsnItm
@@ -38,7 +38,7 @@ For Each I In Itr(CellWsnItmAy(FstGoCell))
 Next
 End Sub
 Private Function IsOkToFill(A As Range) As Boolean
-IsOkToFill = IsEmpty(A.Value) And IsEmpty(NxtCellRight(A))
+IsOkToFill = IsEmpty(A.Value) And IsEmpty(CellRight(A))
 End Function
 Sub FillGoWs(FstGoCell As Range)
 Dim R As Range:     Set FstGoCell = R
@@ -47,7 +47,7 @@ Dim IsFill As Boolean:     IsFill = IsOkToFill(R)
 Dim I%
 While IsFill
     R.Value = "Go"
-    NxtCellRight(R).Value = WsNy(I)
+    CellRight(R).Value = WsNy(I)
     I = I + 1
 Wend
 End Sub

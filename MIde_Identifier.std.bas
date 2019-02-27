@@ -17,9 +17,7 @@ End Function
 Function DimNyLin(Lin) As String()
 
 End Function
-Sub AA()
-Z_IdentifierAset
-End Sub
+
 Private Sub Z_IdentifierAset()
 Dim A As Aset
 Set A = IdentifierAset(LinesPj(CurPj))

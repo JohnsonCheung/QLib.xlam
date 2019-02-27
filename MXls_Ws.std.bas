@@ -106,11 +106,7 @@ Function WsVis(A As Worksheet) As Worksheet
 XlsVis A.Application
 Set WsVis = A
 End Function
-Sub AAA()
-Dim Sq()
-'Sq = Dbt(SampDb_DutyDta, "KE24").Sq
-Stop
-End Sub
+
 Function A1zWs(A As Worksheet) As Range
 Set A1zWs = A.Range("A1")
 End Function

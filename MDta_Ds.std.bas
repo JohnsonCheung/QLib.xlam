@@ -1,9 +1,9 @@
 Attribute VB_Name = "MDta_Ds"
 Option Explicit
-Function DsAddDt(A As Ds, T As Dt) As Ds
+Function DsAddDt(A As Ds, T As DT) As Ds
 If DsHasDt(A, T.DtNm) Then Err.Raise 1, , FmtQQ("DsAddDt: Ds[?] already has Dt[?]", A.DsNm, T.DtNm)
 Dim N%: N = Sz(A.DtAy)
-Dim Ay() As Dt
+Dim Ay() As DT
     Ay = A.DtAy
 ReDim Preserve Ay(N)
 Set Ay(N) = T
@@ -12,7 +12,7 @@ End Function
 Function CvDs(A) As Ds
 Set CvDs = A
 End Function
-Function DsAddDtAy(A As Ds, B() As Dt) As Ds
+Function DsAddDtAy(A As Ds, B() As DT) As Ds
 Dim I, O As Ds
 Set O = A
 For Each I In B
@@ -21,20 +21,20 @@ Next
 Set DsAddDtAy = O
 End Function
 
-Function DsDt(A As Ds, Ix%) As Dt
-Dim DtAy() As Dt
+Function DsDt(A As Ds, Ix%) As DT
+Dim DtAy() As DT
 DtAy = A.DtAy
 Set DsDt = DtAy(Ix)
 End Function
-Function Ds(A() As Dt, Optional DsNm$ = "Ds") As Ds
+Function Ds(A() As DT, Optional DsNm$ = "Ds") As Ds
 Dim O As New Ds
 Set Ds = O.Init(A, DsNm)
 End Function
 
 Function DsHasDt(A As Ds, DtNm) As Boolean
-Dim Dt
-For Each Dt In Itr(A.DtAy)
-    If CvDt(Dt).DtNm = DtNm Then DsHasDt = True: Exit Function
+Dim DT
+For Each DT In Itr(A.DtAy)
+    If CvDt(DT).DtNm = DtNm Then DsHasDt = True: Exit Function
 Next
 End Function
 

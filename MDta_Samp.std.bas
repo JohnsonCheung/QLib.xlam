@@ -62,10 +62,10 @@ Property Get SampDs() As Ds
 'Set SampDs = Ds(DtAy(SampDt1, SampDt2), "SampDs")
 End Property
 
-Property Get SampDt1() As Dt
-Set SampDt1 = Dt("SampDt1", "A B C", SampDry1)
+Property Get SampDt1() As DT
+Set SampDt1 = DT("SampDt1", "A B C", SampDry1)
 End Property
 
-Property Get SampDt2() As Dt
-Set SampDt2 = Dt("SampDt2", "A B C", SampDry2)
+Property Get SampDt2() As DT
+Set SampDt2 = DT("SampDt2", "A B C", SampDry2)
 End Property

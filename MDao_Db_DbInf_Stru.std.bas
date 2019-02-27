@@ -1,7 +1,7 @@
 Attribute VB_Name = "MDao_Db_DbInf_Stru"
 Option Explicit
 
-Function DbInfDtStru(A As Database) As Dt
+Function DbInfDtStru(A As Database) As DT
 Dim T$, TT, Dry(), Des$, NRec&, Stru$
 'For Each TT In TnyDb(A)
     T = TT
@@ -10,7 +10,7 @@ Dim T$, TT, Dry(), Des$, NRec&, Stru$
 '    NRec = NRecDT(A, T)
     PushI Dry, Array(T, NRec, Des, Stru)
 'Next
-Set DbInfDtStru = Dt("Tbl", "Tbl NRec Des", Dry)
+Set DbInfDtStru = DT("Tbl", "Tbl NRec Des", Dry)
 End Function
 
 Sub DmpStru(A As Database)

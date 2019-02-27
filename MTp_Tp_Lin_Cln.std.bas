@@ -14,21 +14,21 @@ For Each L In A
         Push O(Ix), T2 '<----
     End If
 Next
-Push O, ClnT1Chk(A, Ny)
+Push O, ErzT1(A, Ny)
 ClnBrk1 = O
 End Function
 
-Function ClnT1Chk(A$(), T1Ay0) As String()
+Function ErzT1(Ly$(), T1ss) As String()
 Dim T1Ay$(), L, O$()
-T1Ay = CvNy(T1Ay0)
-For Each L In A
+T1Ay = SySsl(T1ss)
+For Each L In Ly
     If Not HasEle(T1Ay, T1(L)) Then Push O, L
 Next
 If Sz(O) > 0 Then
     O = AyAddPfx(AyQuoteSq(O), Space(4))
     O = AyInsItm(O, FmtQQ("Following lines have invalid T1.  Valid T1 are [?]", JnSpc(T1Ay)))
 End If
-ClnT1Chk = O
+ErzT1 = O
 End Function
 
 Function ClnLin$(Lin)
@@ -39,14 +39,7 @@ If IsDDLin(Lin) Then Exit Function
 ClnLin = TakBefDD(Lin)
 End Function
 
-Function ClnLy(Ly$()) As String()
-Dim L, S$
-For Each L In Itr(Ly)
-    PushI ClnLy, L
-Next
-End Function
-
-Function ClnLnxAy(Ly$()) As Lnx()
+Function LnxAyzCln(Ly$()) As Lnx()
 Dim O()  As Lnx, L$, J%
 For J = 0 To UB(Ly)
     L = ClnLin(Ly(J))
@@ -58,5 +51,5 @@ For J = 0 To UB(Ly)
         Push O, M
     End If
 Next
-ClnLnxAy = O
+LnxAyzCln = O
 End Function

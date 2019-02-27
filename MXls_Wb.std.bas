@@ -152,10 +152,10 @@ DoAyPPXP CvNy(TT), "WbAddDbt", A, Db, UseWc
 Set AddWczWbDbtt = A
 End Function
 
-Function AddWszDt(A As Workbook, Dt As Dt) As Worksheet
+Function AddWszDt(A As Workbook, DT As DT) As Worksheet
 Dim O As Worksheet
-Set O = AddWs(A, Dt.DtNm)
-LozDrs DrszDt(Dt), A1(O)
+Set O = AddWs(A, DT.DtNm)
+LozDrs DrszDt(DT), A1(O)
 Set AddWszDt = O
 End Function
 
@@ -293,7 +293,7 @@ Dim C As Workbook
 Dim D$
 Dim E As Database
 Dim F As Boolean
-Dim G As Dt
+Dim G As DT
 Dim H$()
 Dim I()
 Dim XX

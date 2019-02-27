@@ -15,14 +15,14 @@ SqyRsltzEr.Er = Er
 SqyRsltzEr.Sqy = Sqy
 End Function
 
-Function SqyRsltzSqTp(SqTp$) As SqyRslt
+Function SqyRslt(SqTp$) As SqyRslt
 Dim B() As Blk:            B = BlkAy(SqTp)
 Dim PmR As PmRslt:       PmR = PmRsltzLnxAy(LnxAyzBlk(B, "PM"))
 Dim Pm As Dictionary: Set Pm = PmR.Pm
 Dim SwR As SwRslt:       SwR = SwRsltzLnxAy(LnxAyzBlk(B, "SW"), Pm)
 Dim SqR As SqyRslt:      SqR = SqyRsltzGpAy(GpAyzBlkTy(B, "SQ"), Pm, SwR.StmtSw, SwR.FldSw)
 Dim Er$():                Er = AyAddAp(ErzBlkAy(B), PmR.Er, SwR.Er, SqR.Er)
-                SqyRsltzSqTp = SqyRsltzEr(SqR.Sqy, Er)
+                     SqyRslt = SqyRsltzEr(SqR.Sqy, Er)
 End Function
 
 Private Function LnxAyzBlk(A() As Blk, BlkTy$) As Lnx()

@@ -20,7 +20,7 @@ Property Get Fny() As String()
 Fny = A_Fny
 End Property
 
-Friend Property Get Init(DtNm, Fny0, Dry()) As Dt
+Friend Property Get Init(DtNm, Fny0, Dry()) As DT
 A_Dry = Dry
 A_Fny = CvNy(Fny0)
 Me.DtNm = DtNm

@@ -14,9 +14,7 @@ End Function
 
 Function Gp(A() As Lnx) As Gp
 Set Gp = New Gp
-With Gp
-    .LnxAy = A
-End With
+Gp.Init A
 End Function
 
 Function GpAyzBlkTy(A() As Blk, BlkTy$) As Gp()

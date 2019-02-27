@@ -69,7 +69,7 @@ Else
         Thw CSub, "Given MthDNm SplitDot should be 3 elements", "NEle-SplitDot MthDNm", Sz(B), MthDNm
     End If
     Dim ShtMdy$, ShtTy$
-    AsgApAy B, Nm, ShtTy, ShtMdy
+    AsgAp B, Nm, ShtTy, ShtMdy
     Ty = MthTySht(ShtTy)
     Mdy = MthMdySht(ShtMdy)
 End If

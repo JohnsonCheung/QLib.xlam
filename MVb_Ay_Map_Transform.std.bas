@@ -24,12 +24,9 @@ AyIncEleN = O
 End Function
 
 Function T1Ay(Ay) As String()
-Dim O$(), L, J&, N&
-N = Sz(Ay)
-ReszAyN O, N
+Dim L
 For Each L In Itr(Ay)
-    AsgBrk L, " ", O(J)
-    J = J + 1
+    PushI T1Ay, T1(L)
 Next
 End Function
 

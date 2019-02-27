@@ -78,8 +78,8 @@ For Each Dr In Itr(Dry)
     PushI DrySelColIxAy, AywIxAy(Dr, IxAy)
 Next
 End Function
-Function DtDrsDtnm(A As DRs, DtNm$) As Dt
-Set DtDrsDtnm = Dt(DtNm, A.Fny, A.Dry)
+Function DtDrsDtnm(A As DRs, DtNm$) As DT
+Set DtDrsDtnm = DT(DtNm, A.Fny, A.Dry)
 End Function
 
 Function DrsInsCV(A As DRs, C$, V) As DRs

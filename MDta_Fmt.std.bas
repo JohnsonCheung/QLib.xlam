@@ -32,7 +32,7 @@ For Each I In A.DtAy
 Next
 End Function
 
-Function FmtDt(A As Dt, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional ShwZer As Boolean, Optional HidIxCol As Boolean) As String()
+Function FmtDt(A As DT, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional ShwZer As Boolean, Optional HidIxCol As Boolean) As String()
 PushI FmtDt, "*Tbl " & A.DtNm
 PushIAy FmtDt, FmtDrs(DrszDt(A), MaxColWdt, BrkColNm, ShwZer, HidIxCol)
 End Function
@@ -50,7 +50,7 @@ Tst:
 End Sub
 
 Private Sub Z_FmtDt()
-Dim A As Dt, MaxColWdt%, BrkColNm$, ShwZer As Boolean
+Dim A As DT, MaxColWdt%, BrkColNm$, ShwZer As Boolean
 '--
 Set A = SampDt1
 'Ept = Z_DteTimStrpt1
@@ -69,7 +69,7 @@ Dim B%
 Dim C$
 Dim D As Boolean
 Dim E As Ds
-Dim F As Dt
+Dim F As DT
 FmtDrs A, B, C, D, D
 FmtDt F, B, C, D, D
 End Sub

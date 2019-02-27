@@ -122,17 +122,23 @@ Function FdzSng(F) As Dao.Field2
 Set FdzSng = Fd(F, dbSingle, True, Dft:="0")
 End Function
 
-Function FdzStd(StdFldNm, Optional T$) As Dao.Field2
-Dim R2$, R3$: R2 = Right(StdFldNm, 2): R3 = Right(StdFldNm, 3)
+Function FdzStdEle(StdEle, Fld) As Dao.Field2
+Select Case StdEle
+Case "Txt": Set FdzStdEle = FdzTxt(Fld)
+End Select
+End Function
+
+Function FdzStdFld(StdFld, Optional T$) As Dao.Field2
+Dim R2$, R3$: R2 = Right(StdFld, 2): R3 = Right(StdFld, 3)
 Select Case True
-Case StdFldNm = "CrtDte": Set FdzStd = FdzCrtDte(StdFldNm)
-Case T & "Id" = StdFldNm: Set FdzStd = FdzPk(StdFldNm)
-Case R2 = "Id":    Set FdzStd = FdzId(StdFldNm)
-Case R2 = "Ty":    Set FdzStd = FdzTy(StdFldNm)
-Case R2 = "Nm":    Set FdzStd = FdzNm(StdFldNm)
-Case R3 = "Dte":   Set FdzStd = FdzDte(StdFldNm)
-Case R3 = "Amt":   Set FdzStd = FdzCur(StdFldNm)
-Case R3 = "Att":   Set FdzStd = FdzAtt(StdFldNm)
+Case StdFld = "CrtDte": Set FdzStdFld = FdzCrtDte(StdFld)
+Case T & "Id" = StdFld: Set FdzStdFld = FdzPk(StdFld)
+Case R2 = "Id":    Set FdzStdFld = FdzId(StdFld)
+Case R2 = "Ty":    Set FdzStdFld = FdzTy(StdFld)
+Case R2 = "Nm":    Set FdzStdFld = FdzNm(StdFld)
+Case R3 = "Dte":   Set FdzStdFld = FdzDte(StdFld)
+Case R3 = "Amt":   Set FdzStdFld = FdzCur(StdFld)
+Case R3 = "Att":   Set FdzStdFld = FdzAtt(StdFld)
 End Select
 End Function
 
@@ -166,6 +172,7 @@ GoSub Tst
 Exit Sub
 Tst:
     Set Act = FdzFdStr(FdStr)
+    Stop
     Return
 End Sub
 
@@ -173,8 +180,8 @@ Function FdzFdStr(FdStr) As Dao.Field2
 Const EleLblss$ = "*Fld *Ty ?Req ?AlwZLen Dft VTxt VRul TxtSz Expr"
 Dim Fld$, TyStr$, Req As Boolean, AlwZLen As Boolean, Dft$, VTxt$, VRul$, TxtSz As Byte, Expr$
 Dim L$: L = FdStr
-Dim VyzDicKK(): VyzDicKK = ShfVal(L, EleLblss)
-AsgApAy VyzDicKK, _
+Dim Vy(): Vy = VyzLinLbl(L, EleLblss)
+AsgAp Vy, _
     Fld, TyStr, Req, AlwZLen, Dft, VTxt, VRul, TxtSz, Expr
 Set FdzFdStr = Fd( _
     Fld, DaoTyzShtTy(TyStr), Req, TxtSz, AlwZLen, Expr, Dft, VRul, VTxt)
@@ -202,7 +209,6 @@ FdzFk A
 FdzId A
 FdzNm A
 FdzPk A
-FdzStd A, E
 FdzFdStr A
 FdzTxt A, D, C, E, E, C, E, E
 FdzTy A

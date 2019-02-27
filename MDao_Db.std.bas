@@ -88,7 +88,7 @@ Set DszDb = DszTT(A, Tny(A), Nm)
 End Function
 
 Function DszTT(A As Database, TT, Optional DsNm$) As Ds
-Dim DtAy() As Dt
+Dim DtAy() As DT
     Dim U%, Tny$()
     Tny = DftTny(TT, A.Name)
     U = UB(Tny)
@@ -285,14 +285,11 @@ Sub BrwTT(A As Database, TT)
 BrwTTzAcs CAcs, TT
 End Sub
 
-Function TdStrAyz(A As Database, TT) As String()
+Function TdStrAy(A As Database, TT) As String()
 Dim T
 For Each T In ItrTT(TT)
-    PushI TdStrAyz, TdStrz(A, T)
+    PushI TdStrAy, TdStrzT(A, T)
 Next
-End Function
-Function TdStrAy(TT) As String()
-TdStrAy = TdStrAyz(CDb, TT)
 End Function
 
 Sub CrtTblzTmp(A As Database)
@@ -384,14 +381,6 @@ Function JnStrDiczTwoColSql(TwoColSql) As Dictionary _
 'Return a dictionary of Ay with Fst-Fld as Key and Snd-Fld as Sy
 'Set JnStrDiczTwoColSql = JnStrDicTwoFldRs(RszSql(TwoColSql))
 End Function
-
-
-Sub AppTdAyz(A As Database, TdAy() As Dao.TableDef)
-Dim T
-For Each T In Itr(TdAy)
-    A.TableDefs.Append T
-Next
-End Sub
 
 Private Sub ZZ_BrwTbl()
 Dim D As Database

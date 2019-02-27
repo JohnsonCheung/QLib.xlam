@@ -1,55 +1,113 @@
 Attribute VB_Name = "MXls_Lo_Fmtr_Er"
 Option Explicit
 Const CMod$ = ""
-Public Const M_Val_IsNonNum$ = "Lx(?) has Val(?) should be a number"
-Public Const M_Val_IsNonLng$ = "Lx(?) has Val(?) should be a 'Long' number"
-Public Const M_Val_ShouldBet$ = "Lx(?) has Val(?) should be between [?] and [?]"
-Public Const M_Fld_IsInValid$ = "Lx(?) Fld(?) is invalid.  Not found in Fny"
-Public Const M_Fld_IsDup$ = "Lx(?) Fld(?) is found duplicated in Lx(?).  This item is ignored"
-Public Const M_Nm_LinHasNoVal$ = "Lx(?) is Nm-Lin, it has no value"
-Public Const M_Nm_NoNmLin$ = "Nm-Lin is Missing"
-Public Const M_Nm_ExcessLin$ = "LX(?) is excess due to Nm-Lin is found above"
-Public Const M_Should_Lng$ = "Lx(?) Fld(?) should have val(?) be a long number"
-Public Const M_Should_Num$ = "Lx(?) Fld(?) should have val(?) be a number"
-Public Const M_Should_Bet$ = "Lx(?) Fld(?) should have val(?) be between (?) and (?)"
-
-Const M_Fny$ = "Lin_Ty(?) has these Fld(?) in not Fny"
-Const M_Bdr_ExcessFld$ = "These Fld(?) in [Bdr ?] already Has in [Bdr ?], they are skipped in setting border"
-Const M_Bdr_ExcessLin$ = "These Fld(?) in [Bdr ?] already Has in [Bdr ?], they are skipped in setting border"
-Const M_CorVal$ = "In Lin(?)-Color(?), color cannot convert to long"
-Const M_Fld_IsAvg_FndInSum$ = "Lin(?)-Fld(?), which is TAvg-Fld, but also found in TSum-Lx(?)"
-Const M_Fld_IsCnt_FndInSum$ = "Lin(?)-Fld(?), which is TCnt-Fld, but also found in TSum-Lx(?)"
-Const M_Fld_IsCnt_FndInAvg$ = "Lin(?)-Fld(?), which is TCnt-Fld, but also found in TAvg-Lx(?)"
-Const M_Bet_Should2Term = "Lin(?)-Fld(?) is Bet-Line.  It should have 2 terms"
-Const M_Bet_InvalidTerm = "Lin(?)-Fld(?) is Bet-Line.  It has invalid term(?)"
-Const M_Dup$ = "Lin(?)-Fld(?) is duplicated.  The line is skipped"
+Const Fmtiss$ = "Ali Bdr Tot Wdt Fmt Lvl Cor Fml Lbl Tit Bet" ' Fmt. i.tm s.pace s.eparated string
+Const FmtissSng$ = "                            Fml Lbl Tit Bet" ' Sng.sigle field per line
+Const FmtissMul$ = "Ali Bdr Tot Wdt Fmt Lvl Cor                " ' Mul.tiple field per line
+Const M01$ = "Lno#? is [?] line having Val(?) which should be a number" 'For Wdt Lvl
+Const M02$ = "Lno#? is [?] line having Val(?) which between (?) and (?)" 'For Wdt Lvl
+Const M03$ = "Lno#? is [?] line having invalid Val(?).  See valid-value-?"  'For Ali Bdr Tot Cor
+Const M04$ = "Lno#? is [Fml] line having invalid Fml(?) due to invalid Fny{?}.  Valid-Fny are [?]." 'For Fml
+Const M05$ = "Lno#? is [?] line having Fld(?) which should one of the Fny value.  See [Fny-Value]" 'For Fml Lbl Tit Bet
+Const M06$ = "Lno#? is [?] line having Fld(?) which is duplicated and ignored due to it has defined in Lno#?" 'For
+Const M07$ = "Lno#? is [?] line having Fldss(?) which should select one for Fny value.  See [Fny-Value]"
+Const M08$ = "Lno#? is LoNm line having value(?) which is not a good name"
+Const M09$ = "LoNm line is missing"
+Const M10$ = "Lno#? is LoNm line which is duplicated and ignored due to there is already a LoNm in Lno#?"
+Const M11$ = "Lno#? is [Bdr ?] line having Fld(?) which is duplicated and ignored due to it is alredy defined in Lno#? as [?]"
+Const M12$ = "Lno#? is [Bdr ?] line which is duplicated and ignore due to there is already a [Bdr ?] line in Lno#?"
+Const M13$ = "Lno#? is [Tot ?] line. It has selected more than one fields: [?].  [?] is used, the rest is ignored"
+Const M14$ = "Lno#? is [] line having Val(?) which in invalid.  Valid value is one of (Tot Avg Sum)"
+Const M15$ = "Lno#? is [?] line with Fld(?), which is already defined as (?)-Fld in same line and is ignored."
+Const M16$ = "Lno#? is [?] line with Fld(?), which is already defined as (?)-Fld in Lno#? and is ignored"
+Const M17$ = "Lno#? is [Bet] line.  It should have 3 fields, but now it has (?) fields of [?]"
+Const M18$ = "Lno#? is [Bet] line and ignored due to FmFld(?) and ToFld(?) are equal."
+Const M19$ = "Lno#? is [Bet] line and ignored due to Fld(?), FmFld(?) and ToFld(?) are not in order.  See order the Fld, FmFld and ToFld in [Fny-Value]"
+Const MVal_IsNotNum$ = M01
+Const MVal_IsNotBet$ = M02
+Const MVal_IsNotInLis$ = M03
+Const MVal_Fml$ = M04
+Const MFld_Mis$ = M05
+Const MFld_Dup$ = M06
+Const MFldss_NotSelAnyFld$ = M07
+Const MLoNm_NoVal$ = M08
+Const MLoNm_NoLin$ = M09
+Const MLoNm_Excess$ = M10
+Const MBdr_ExcessFld$ = M11
+Const MBdr_ExcessLin$ = M12
+Const MTot_DupFld$ = M13
+Const MTot_MoreThanOneFldIsCnt$ = M14
+Const MTot_Fld_AlreadyDefinedSamLin$ = M15
+Const MTot_Fld_AlreadyDefinedInLno$ = M16
+Const MBet_TermCntEr = M17
+Const MBet_FmToEq = M18
+Const MBet_Bet = M19
 Private A$(), A_Fny$()
-Function ErzLoFmtr(LoFmtr$(), Fny$()) As String()
+
+Function ErzLoFmtr(LoFmtr$(), Fny$()) As String() 'Er.ror z.of L.ist o.bject Fmtr.formatter
 Const CSub$ = CMod & "LofEr"
-A = LoFmtrDic
 A_Fny = Fny
 ErzLoFmtr = AyAddAp( _
+    WErzVal, WErzFld, WErzFldss, WErzLoNm, _
     WErzAli, WErzBdr, WErzTot, _
     WErzWdt, WErzFmt, WErzLvl, WErzCor, _
     WErzFml, WErzLbl, WErzTit, WErzBet)
 End Function
 
+'WErzFnySng W.ork Er.rro z.for Fny. for those fmt line with Sng.single  fld -------------------------------------------
+'W-pfx function means the function will use scope variables
+Private Property Get WErzVal() As String()
+WErzVal = SyAddAp(WErzValzNotNum, WErzValzNotInLis, WErzValzFml)
+End Property
+Private Function WErzValzNotInLis() As String()
 
-Private Property Get WErzAli() As String()
-WErzAli = Sy(WErzAlignLin, WErzAlignFny)
+End Function
+Private Function WErzValzFml() As String()
+
+End Function
+Private Function WErzValzNotNum() As String()
+End Function
+
+Private Function WErzValzNotBet() As String()
+End Function
+
+Private Property Get WErzFld() As String()
+
 End Property
 
-Private Property Get WErzAlignFny() As String()
+Private Function WErzMisFnyzFmti(Fmti) As String()
+'LnxAyzT1 (Fmti)
+End Function
+
+'WErzFnyMul W.ork Er.rro z.for Fny. for those fmt line with Mul.tiple fld ------
+'DupFny
+Private Property Get WErzDupFny() As String()
 Dim WErzFny$()
     Dim AlignFny$()
 '    AlignFny = AywDist(SSSyzAy(AyRmvTT(Ali)))
-'    WErzFny = AyMinus(AlignFny, A_Fny)
+'    WErzAli_Fny = AyMinus(AlignFny, A_Fny)
+End Property
+'Fldss
+Private Property Get WErzFldss() As String()
+
 End Property
 
-Private Property Get WErzAlignLin() As String()
-'WErzAlignLin = WMsgzAliLin(AyeT1Ay(Ali, "Left Right Center"))
+'LoNm----------------------------------------------------------
+Private Property Get WErzLoNm() As String()
+WErzLoNm = Sy()
+'1Sy(WAli_LeftRightCenter)
 End Property
 
+'Ali-----------------------------------------------------------
+Private Property Get WErzAli() As String()
+WErzAli = Sy(WAli_LeftRightCenter)
+End Property
+
+Private Property Get WAli_LeftRightCenter() As String()
+'WErzAli_LinEr = WMsgzAliLin(AyeT1Ay(Ali, "Left Right Center"))
+End Property
+
+'Bdr-----------------------------------------------------------
 Private Function WErzBdr1(X$) As String()
 'Return FldAy from Bdr & X
 'Dim FldssAy$(): FldssAy = SSSyzAy(AywRmvT1(Bdr, X))
@@ -68,15 +126,15 @@ Dim LFny$(), RfNy$(), CFny$()
 LFny = WErzBdr1("Left")
 RfNy = WErzBdr1("Right")
 CFny = WErzBdr1("Center")
-PushIAy WErzBdrExcessFld, FmtQQ(M_Dup, AyMinus(CFny, LFny), "Center", "Left")
-PushIAy WErzBdrExcessFld, FmtQQ(M_Dup, AyMinus(CFny, RfNy), "Center", "Right")
-PushIAy WErzBdrExcessFld, FmtQQ(M_Dup, AyMinus(LFny, RfNy), "Left", "Right")
+'PushIAy WErzBdrExcessFld, FmtQQ(M_Dup, AyMinus(CFny, LFny), "Center", "Left")
+'PushIAy WErzBdrExcessFld, FmtQQ(M_Dup, AyMinus(CFny, RfNy), "Center", "Right")
+'PushIAy WErzBdrExcessFld, FmtQQ(M_Dup, AyMinus(LFny, RfNy), "Left", "Right")
 End Property
 
 Private Property Get WErzBdrExcessLin() As String()
 Dim L
 'For Each L In Itr(AyeT1Ay(Bdr, "Left Right Center"))
-    PushI WErzBdrExcessLin, FmtQQ(M_Bdr_ExcessLin, L)
+'    PushI WErzBdrExcessLin, FmtQQ(M_Bdr_ExcessLin, L)
 'Next
 End Property
 
@@ -205,25 +263,15 @@ Dim Lc As ListColumn
 'Next
 End Property
 
-Private Function WMsgzAliLin(Ly$()) As String()
-If Sz(Ly) Then Exit Function
-End Function
-
 Private Function WMsgzBetTermCnt$(L, NTerm%)
 
 End Function
 
-Private Function WMsgzDup1(N, Ly$()) As String()
-Dim L
-For Each L In Ly
-    If T1(L) = N Then PushI WMsgzDup1, FmtQQ(M_Dup, L, N)
-Next
-End Function
-
-Private Function WMsgzDup(DupNy$(), Ly$()) As String()
-Dim N
+Private Function WMsgzDupNy(DupNy$(), LnoStrAy$()) As String()
+Dim N, J&
 For Each N In Itr(DupNy)
-    PushIAy WMsgzDup, WMsgzDup1(N, Ly)
+'    PushIAy WMsgzDupNy, FmtQQ(M_Dup, N, LnoStrAy(J))
+    J = J + 1
 Next
 End Function
 
@@ -231,10 +279,8 @@ Private Function WMsgzFny(Fny$(), Lin_Ty$) As String()
 'Return Msg if given-Fny has some field not in A_Fny
 Dim WErzFny$(): WErzFny = AyMinus(Fny, A_Fny)
 If Sz(WErzFny) = 0 Then Exit Function
-PushI WMsgzFny, FmtQQ(M_Fny, WErzFny, Lin_Ty)
+'PushI WMsgzFny, FmtQQ(M_Fny, WErzFny, Lin_Ty)
 End Function
-
-
 
 Private Sub Z_WErzBet()
 '---------------
@@ -252,5 +298,20 @@ Tst:
     C
     Return
 End Sub
+
+Function NyzTLinAy(TLinAy$()) As String()
+Dim I
+For Each I In Itr(TLinAy)
+    PushIAy NyzTLinAy, SySsl(I)
+Next
+End Function
+
+Function FnywLikssAy(Fny$(), LikssAy$()) As String()
+Dim F, LikAy$()
+LikAy = NyzTLinAy(LikssAy)
+For Each F In Itr(Fny)
+    If HitLikAy(F, LikAy) Then PushI FnywLikssAy, F
+Next
+End Function
 
 

@@ -30,6 +30,7 @@ For J = 0 To UB(Ly)
 Next
 LnxAy = O
 End Function
+
 Function HasMajPfx(Ly$(), MajPfx$) As Boolean
 Dim Cnt%, J%
 For J = 0 To UB(Ly)

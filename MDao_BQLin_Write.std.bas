@@ -1,17 +1,18 @@
 Attribute VB_Name = "MDao_BQLin_Write"
 Option Explicit
-Sub Z_WrtFbqzDb()
+Private Sub Z_WrtFbqzDb()
 Dim P$: P = TmpPth
 WrtFbqzDb P, SampDb_DutyDta
 BrwPth P
 Stop
 End Sub
 
-Sub Z_WrtFbqzT()
+Private Sub Z_WrtFbqzT()
 Dim T$: T = TmpFt
 WrtFbqzT T, SampDb_DutyDta, "PermitD"
 BrwFt T
 End Sub
+
 Sub WrtFbqzDb(Pth, Db As Database)
 WrtFbqzTT Pth, Db, Tny(Db)
 End Sub

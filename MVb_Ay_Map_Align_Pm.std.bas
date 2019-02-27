@@ -1,4 +1,5 @@
 Attribute VB_Name = "MVb_Ay_Map_Align_Pm"
+Option Explicit
 Function AyAlignPm(Ay, PmStr$) As String() 'PmStr [FF..] [AlignNCol:FF..] ..
 Dim T1, D As Dictionary
 Set D = T1ToAlignNColDic(PmStr)
@@ -26,7 +27,7 @@ Set T1ToAlignNColDic = New Dictionary
 End Function
 
 Private Function T1ToAlignNColDiczNoSrt(PmLy$()) As Dictionary
-Dim J%, W%
+Dim J%, W%, F
 Set T1ToAlignNColDiczNoSrt = New Dictionary
 For J = 2 To UB(PmLy)
     With Brk(PmLy(J), ":")

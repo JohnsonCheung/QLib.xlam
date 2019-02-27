@@ -81,8 +81,8 @@ Function DryzT(A As Database, T) As Variant()
 DryzT = DryzRs(RszT(A, T))
 End Function
 
-Function DtzT(A As Database, T) As Dt
-Set DtzT = Dt(T, Fny(A, T), DryzT(A, T))
+Function DtzT(A As Database, T) As DT
+Set DtzT = DT(T, Fny(A, T), DryzT(A, T))
 End Function
 
 Function FdStrAy(A As Database, T) As String()

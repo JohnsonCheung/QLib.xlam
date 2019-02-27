@@ -22,10 +22,6 @@ End Function
 Function MthNyPj(Optional WhStr$) As String()
 MthNyPj = MthNyzPj(CurPj, WhStr$)
 End Function
-Sub AA()
-Dim A As WhMth
-Set A = WhMthzStr("-Pub")
-End Sub
 
 Function MthNyPubVbe(Optional WhStr$) As String()
 MthNyPubVbe = MthNyzVbe(CurVbe, WhStr & " -Pub")
