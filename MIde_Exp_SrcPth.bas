@@ -25,7 +25,7 @@ IsSrcPth = Fdr(Pth) = "Src"
 End Function
 
 Function SrcFn$(A As VBComponent)
-SrcFn = A.Name & SrcExt(A)
+SrcFn = A.Name & ".bas"
 End Function
 
 Sub ThwNotSrcPth(SrcPth)
