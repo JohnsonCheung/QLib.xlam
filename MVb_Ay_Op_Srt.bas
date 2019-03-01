@@ -199,9 +199,9 @@ End Function
 Private Sub ZZ_AySrt()
 Dim Exp, Act
 Dim A
-A = Array(1, 2, 3, 4, 5): Exp = A:                    Act = AySrt(A):        ThwNE Exp, Act
-A = Array(1, 2, 3, 4, 5): Exp = Array(5, 4, 3, 2, 1): Act = AySrt(A, True): ThwNE Exp, Act
-A = Array(":", "~", "P"): Exp = Array(":", "P", "~"): Act = AySrt(A):       ThwNE Exp, Act
+A = Array(1, 2, 3, 4, 5): Exp = A:                    Act = AySrt(A):        ThwIfNE Exp, Act
+A = Array(1, 2, 3, 4, 5): Exp = Array(5, 4, 3, 2, 1): Act = AySrt(A, True): ThwIfNE Exp, Act
+A = Array(":", "~", "P"): Exp = Array(":", "P", "~"): Act = AySrt(A):       ThwIfNE Exp, Act
 '-----------------
 Erase A
 Push A, ":PjUpdTm:Sub"
@@ -222,13 +222,13 @@ Push Exp, "Private:SrcMthLx_ToLx:Function"
 Push Exp, "~Private:JnContinueLin:Sub"
 Push Exp, "~~:Tst:Sub"
 Act = AySrt(A)
-ThwNE Exp, Act
+ThwIfNE Exp, Act
 End Sub
 
 Private Sub ZZ_AySrtInToIxAy()
 Dim A: A = Array("A", "B", "C", "D", "E")
-ThwNE Array(0, 1, 2, 3, 4), AySrtIntoIxAy(A)
-ThwNE Array(4, 3, 2, 1, 0), AySrtIntoIxAy(A, True)
+ThwIfNE Array(0, 1, 2, 3, 4), AySrtIntoIxAy(A)
+ThwIfNE Array(4, 3, 2, 1, 0), AySrtIntoIxAy(A, True)
 End Sub
 
 

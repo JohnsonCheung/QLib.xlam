@@ -18,5 +18,5 @@ Next
 End Function
 
 Function SepLinzSepDr$(SepDr$(), Fmt As eDryFmt)
-SepLinzSepDr = "|-" & Join(SepDr, SepChr(Fmt)) & "-|"
+SepLinzSepDr = "|" & Join(SepDr, SepChr(Fmt)) & "|"
 End Function

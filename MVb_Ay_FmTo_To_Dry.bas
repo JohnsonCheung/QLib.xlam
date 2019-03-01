@@ -16,3 +16,14 @@ For Each I In Itr(A)
     PushI DryzCAddAy, Array(C, I)
 Next
 End Function
+
+Function DryzAyzTyNmVal(Ay) As Variant()
+Dim I
+For Each I In Itr(Ay)
+    PushI DryzAyzTyNmVal, Array(TypeName(I), I)
+Next
+End Function
+
+Sub DmpAyzTyNmVal(Ay)
+DmpDry DryzAyzTyNmVal(Ay)
+End Sub

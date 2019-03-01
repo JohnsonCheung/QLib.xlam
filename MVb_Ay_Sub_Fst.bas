@@ -1,5 +1,9 @@
 Attribute VB_Name = "MVb_Ay_Sub_Fst"
 Option Explicit
+Function ShfFstEle(OAy)
+ShfFstEle = FstEle(OAy)
+OAy = AyeFstNEle(OAy)
+End Function
 
 Function FstEle(Ay)
 If Sz(Ay) = 0 Then Exit Function

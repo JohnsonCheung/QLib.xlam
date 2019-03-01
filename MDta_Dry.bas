@@ -204,7 +204,7 @@ For Each Dr In A
 Next
 End Function
 
-Sub ThwNEDry(A(), B())
+Sub ThwIfNEDry(A(), B())
 If Not IsEqDry(A, B) Then Stop
 End Sub
 

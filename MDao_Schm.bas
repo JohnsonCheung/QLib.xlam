@@ -13,6 +13,7 @@ Private Type FdRslt
     Som As Boolean
     Fd As Dao.Field2
 End Type
+
 Sub CrtSchm(A As Database, Schm$())
 Const CSub$ = CMod & "CrtSchm"
 'ThwErMsg ErzSchm(Schm), CSub, "there is error in the Schm", "Schm Db", AyAddIxPfx(Schm, 1), DbNm(A)
@@ -93,8 +94,8 @@ End Function
 Private Function FdzEF(F, T, A As EF) As Dao.Field2
 Dim Ele$: Ele = T1z_Itm_T1LikssAy(F, A.FldLy)
 If Ele <> "" Then Set FdzEF = FdzEle(Ele, A.EleLy, F): Exit Function
-Set FdzEF = FdzStdFld(F)
-If Not IsNothing(FdzEF) Then Exit Function
+Set FdzEF = FdzStdFld(F):                 If Not IsNothing(FdzEF) Then Exit Function
+Set FdzEF = FdzEle(CStr(F), A.EleLy, F):  If Not IsNothing(FdzEF) Then Exit Function
 Thw CSub, FmtQQ("Fld(?) not in EF and not StdFld", F)
 End Function
 
@@ -109,15 +110,13 @@ Thw CSub, FmtQQ("Fld(?) of Ele(?) not found in EleLy-of-EleAy(?) and not StdEle"
 End Function
 
 Private Function EleStr$(EleLy$(), Ele$)
-EleStr = FstEleT1(EleLy, Ele)
+EleStr = RmvT1(FstEleT1(EleLy, Ele))
 End Function
 
 Private Function EleStrzStd$(Ele)
-
 End Function
 
 Private Function FdzStdFldNm(F) As Dao.Field2
-
 End Function
 
 Private Property Get Schm1() As String()
@@ -136,7 +135,7 @@ Schm1 = XX
 Erase XX
 End Property
 
-Private Sub Z_CrtSchm()
+Sub Z_CrtSchm()
 Dim D As Database, Schm$()
 GoSub T1
 Exit Sub
@@ -152,6 +151,7 @@ End Sub
 Sub AA()
 Z
 End Sub
+
 Private Sub Z()
 Z_CrtSchm
 End Sub

@@ -20,29 +20,21 @@ For Each L In Itr(SySsl(Lblss))
     Select Case FstChr(L)
     Case "*":
         Select Case SndChr(L)
-        Case "?":  With ShfBoolOpt(Ay, L)
-                        If Not .Som Then Thw CSub, FmtQQ("Must BoolLbl(?) not found in Lin(?). Lblss=(?)", L, Lin, Lblss)
-                        PushI O, .Bool
-                   End With
-        Case Else: With ShfTxtOpt(Ay, L)
-                        If Not .Som Then Thw CSub, FmtQQ("Must TxtLbl(?) not found in Lin(?), Lblss=(?)", L, Lin, Lblss)
-                        PushI O, .Str
-                   End With
+        Case "?":  If Sz(Ay) = 0 Then Thw CSub, "Must BoolLbl of Lblss not found in Lin", "Must-Bool-Lbl Lin Lblss", L, Lin, Lblss
+                   PushI O, CBool(ShfFstEle(Ay))
+        Case Else: PushI O, ShfFstEle(Ay)
         End Select
-    Case "?": PushI VyzLinLbl, ShfBool(Ay, L)
-    Case Else: PushI VyzLinLbl, ShfTxt(Ay, L)
+    Case "?": PushI O, ShfBool(Ay, L)
+    Case Else: PushI O, ShfTxt(Ay, L)
     End Select
 Next
-End Function
-
-Private Function ShfBoolOpt(OAy$(), Lbl) As BoolRslt
-If Sz(OAy) = 0 Then Exit Function
-
+VyzLinLbl = O
 End Function
 
 Private Function ShfTxtOpt(OAy$(), Lbl) As StrRslt
 If Sz(OAy) = 0 Then Exit Function
-
+Dim S$: S = ShfTxt(OAy, Lbl)
+If S = "" Then ShfTxtOpt = StrRslt(S)
 End Function
 
 Private Function ShfBool(OAy$(), Lbl) As Boolean
@@ -77,33 +69,35 @@ Next
 End Function
 
 Private Sub Z_VyzLinLbl()
-GoSub Cas1
-GoSub Cas2
-GoSub Cas3
+GoSub T0
+'GoSub T1
+'GoSub T2
+'GoSub T3
 Exit Sub
-Dim Lin$, Lblss$, EptLin$
-Cas1:
+Dim Lin$, Lblss$, Act(), Ept()
+T0:
+    Lin = "Loc Txt Req Dft=ABC AlwZLen [VTxt=Loc cannot be blank] [VRul=IsNull([Loc]) or Trim(Loc)='']"
+    Lblss = EleLblss ' "*Fld *Ty ?Req ?AlwZLen Dft VTxt VRul TxtSz Expr"
+    Ept = Array("Loc", "Txt", True, True, "ABC", "Loc cannot be blank", "IsNull([Loc]) or Trim(Loc)=''", "", "")
+    GoTo Tst
+T1:
     Lin = "1 Req"
-    EptLin = ""
     Lblss = "*XX ?Req"
     Ept = Array("1", True)
     GoTo Tst
-Cas2:
+T2:
     Lin = "A B C=123 D=XYZ"
     Lblss = "?B"
     Ept = Array(True)
-    EptLin = "A C=123 D=XYZ"
     GoTo Tst
-Cas3:
+T3:
     Lin = "Txt VTxt=XYZ [Dft=A 1] VRul=123 Req"
-    Lblss = "*Ty ?Req ?AlwZLen Dft VTxt VRul"
+    Lblss = "*Fld *Ty ?Req ?AlwZLen Dft VTxt VRul"
     Ept = Array("Txt", True, False, "A 1", "XYZ", "123")
-    EptLin = ""
     GoTo Tst
 Tst:
     Act = VyzLinLbl(Lin, Lblss)
-    C
-    Ass Lin = EptLin
+    C Act, Ept
     Return
 End Sub
 

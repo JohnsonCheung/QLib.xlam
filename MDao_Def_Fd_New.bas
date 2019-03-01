@@ -1,5 +1,6 @@
 Attribute VB_Name = "MDao_Def_Fd_New"
 Option Explicit
+Public Const EleLblss$ = "*Fld *Ty ?Req ?AlwZLen Dft VTxt VRul TxtSz Expr"
 Function FdzStr(FdStr$) As Dao.Field2
 
 End Function
@@ -177,7 +178,6 @@ Tst:
 End Sub
 
 Function FdzFdStr(FdStr) As Dao.Field2
-Const EleLblss$ = "*Fld *Ty ?Req ?AlwZLen Dft VTxt VRul TxtSz Expr"
 Dim Fld$, TyStr$, Req As Boolean, AlwZLen As Boolean, Dft$, VTxt$, VRul$, TxtSz As Byte, Expr$
 Dim L$: L = FdStr
 Dim Vy(): Vy = VyzLinLbl(L, EleLblss)

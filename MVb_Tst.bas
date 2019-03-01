@@ -4,8 +4,12 @@ Public Act, Ept, Dbg As Boolean, Trc As Boolean
 Sub StopNE()
 If Not IsEq(Act, Ept) Then Stop
 End Sub
-Sub C()
-ThwNE Act, Ept
+Sub C(Optional A, Optional E)
+If IsMissing(A) Then
+    ThwIfNE Act, Ept, "Act", "Ept"
+Else
+    ThwIfNE A, E, "Act", "Ept"
+End If
 End Sub
 
 Sub BrwTstPth(Fun$, Cas$)

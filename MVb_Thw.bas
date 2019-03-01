@@ -2,8 +2,8 @@ Attribute VB_Name = "MVb_Thw"
 Option Explicit
 Const CMod$ = "MVb_Thw."
 
-Sub ThwNegEle(Ay, Fun$)
-Const CSub$ = CMod & "ThwNegEle"
+Sub ThwIfNEgEle(Ay, Fun$)
+Const CSub$ = CMod & "ThwIfNEgEle"
 Dim I, J&, O$()
 For Each I In Itr(Ay)
     If I < 0 Then
@@ -16,19 +16,19 @@ If Sz(O) > 0 Then
 End If
 End Sub
 
-Sub ThwNESz(A, B, Fun$)
+Sub ThwIfNESz(A, B, Fun$)
 If Sz(A) <> Sz(B) Then Thw Fun, "Sz-A <> Sz-B", "Sz-A Sz-B", Sz(A), Sz(B)
 End Sub
 
-Sub ThwNE(A, B)
-Const CSub$ = CMod & "ThwNE"
-ThwDifTy A, B
+Sub ThwIfNE(A, B, Optional ANm$ = "A", Optional BNm$ = "B")
+Const CSub$ = CMod & "ThwIfNE"
+ThwDifTy A, B, ANm, BNm
 Select Case True
-Case IsLines(A) Or IsLines(B):  If A <> B Then CmpStr A, B, Hdr:="A B not eq.  They are lines": Stop: Exit Sub
-Case IsStr(A):                  If A <> B Then CmpStr A, B, Hdr:="A B not eq.  They are string": Stop: Exit Sub
-Case IsDic(A):                  If Not IsEqDic(CvDic(A), CvDic(B)) Then BrwCmpDicAB CvDic(A), CvDic(B): Stop: Exit Sub
-Case IsArray(A):                If Not IsEqAy(A, B) Then Thw CSub, "A B NE", "Ty-A Ty-B A B", TypeName(A), TypeName(B), A, B
-Case IsObject(A):               If ObjPtr(A) <> ObjPtr(B) Then Thw CSub, "Two object are diff", "A-&-B-TypeName", TypeName(A)
+Case IsLines(A) Or IsLines(B): If A <> B Then CmpStr A, B, Hdr:=FmtQQ("Lines ? ? not eq.", ANm, BNm): Stop: Exit Sub
+Case IsStr(A):                 If A <> B Then CmpStr A, B, Hdr:=FmtQQ("String ? ? not eq.", ANm, BNm): Stop: Exit Sub
+Case IsDic(A):                 If Not IsEqDic(CvDic(A), CvDic(B)) Then BrwCmpDicAB CvDic(A), CvDic(B): Stop: Exit Sub
+Case IsArray(A):               ThwIfNEAy A, B, ANm, BNm
+Case IsObject(A):              If ObjPtr(A) <> ObjPtr(B) Then Thw CSub, "Two object are diff", FmtQQ("Ty-? Ty-?", ANm, BNm), TypeName(A), TypeName(B)
 Case Else:
     If A <> B Then
         Thw CSub, "A B NE", "A B", A, B
@@ -36,14 +36,24 @@ Case Else:
     End If
 End Select
 End Sub
-
-Sub ThwDifTy(A, B)
-'B) Then XDmp_Lin_Stop Fun, "Type Diff", "A-Ty B-Ty A B", TypeName(A), TypeName(B), A, B: Exit Sub
+Private Sub ThwIfNEAy(AyA, AyB, ANm$, BNm$)
+ThwDifSz AyA, AyB, ANm, BNm
+Dim J&, X
+For Each X In Itr(AyA)
+    If Not IsEq(X, AyB(J)) Then Thw CSub, "2 ay ele are diff", "[Ty / Sz / Dif-At] Ay-?-Ele-Ty Ay-?-Ele-Ty Ay-?-Ele Ay-?-Ele", ANm, BNm, ANm, BNm, TypeName(AyA), Sz(AyA), J
+    J = J + 1
+Next
+End Sub
+Sub ThwDifTy(A, B, Optional ANm$ = "A", Optional BNm$ = "B")
+If TypeName(A) = TypeName(B) Then Exit Sub
+Dim NN$
+NN = FmtQQ("?-TyNm ?-TyNm", ANm, BNm)
+Thw CSub, "Type Diff", NN, TypeName(A), TypeName(B)
 End Sub
 
-Sub ThwDifSz(A, B, Fun$)
+Sub ThwDifSz(A, B, Optional ANm$ = "A", Optional BNm$ = "B")
 If Sz(A) = Sz(B) Then Exit Sub
-Thw Fun, "Two ay has dif sz", "SzA SzB TyA TyB AyA AyB", Sz(A), Sz(B), TypeName(A), TypeName(B), A, B
+Thw CSub, "Two ay has dif sz", "AyNm Sz Ty Ay-? Ay-?", ANm & " / " & BNm, Sz(A) & " / " & Sz(B), TypeName(A) & " / " & TypeName(B), A, B
 End Sub
 
 Sub ThwNotExistFfn(Ffn$, Fun$, Optional FilKd$ = "file")
@@ -87,7 +97,7 @@ Sub ThwNotAy(A, Fun$)
 If IsArray(A) Then Exit Sub
 Thw Fun, "Given parameter should be array, but now TypeName=" & TypeName(A)
 End Sub
-Sub ThwNever(Fun$, Optional Msg$ = "Program should not reach here")
+Sub ThwIfNEver(Fun$, Optional Msg$ = "Program should not reach here")
 Thw Fun, Msg
 End Sub
 

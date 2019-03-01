@@ -17,7 +17,7 @@ Dim O$(), J%
         PushI O, AlignL(Dr1(J), W)
         J = J + 1
     Next
-FmtDr = "| " & Join(O, SepChr(Fmt)) & " |"
+FmtDr = "|" & Join(O, SepChr(Fmt)) & "|"
 End Function
 
 Function DryzAySepSS(Ay, SepSS$) As Variant()

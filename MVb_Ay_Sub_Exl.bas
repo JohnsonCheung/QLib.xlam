@@ -111,9 +111,9 @@ Function AyeFstEle(A)
 AyeFstEle = AyeEleAt(A)
 End Function
 
-Function AyeFstNEle(A, N)
+Function AyeFstNEle(A, Optional N = 1)
 Dim O: O = A
-ReDim O(N - 1)
+ReDim O(Sz(A) - 1)
 Dim J&
 For J = 0 To UB(A) - N
     O(J) = A(N + J)

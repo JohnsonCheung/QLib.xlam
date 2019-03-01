@@ -62,7 +62,7 @@ End Select
 End With
 End Function
 
-Sub ThwNETd(A As Dao.TableDef, B As Dao.TableDef)
+Sub ThwIfNETd(A As Dao.TableDef, B As Dao.TableDef)
 Dim A1$(): A1 = TdFdLy(A)
 Dim B1$(): B1 = TdFdLy(B)
 If Not IsEqAy(A, B) Then Thw CSub, "Two 2 Td as diff", "Td-A Td-B", TdFdLy(A), TdFdLy(B)
@@ -125,7 +125,7 @@ TdAddTxtFld B, A, E, F
 TdFdScly B
 TdFny B
 IsEqTd B, B
-ThwNETd B, B
+ThwIfNETd B, B
 SclzTd B
 SclzTdLy B
 End Sub

@@ -81,9 +81,9 @@ Ay1 = Array(1, 2, 2, 2, 4, 5)
 Ay2 = Array(2, 2)
 Act = AyAdd(Ay1, Ay2)
 Exp = Array(1, 2, 2, 2, 4, 5, 2, 2)
-ThwNE Exp, Act
-ThwNE Ay1, Array(1, 2, 2, 2, 4, 5)
-ThwNE Ay2, Array(2, 2)
+ThwIfNE Exp, Act
+ThwIfNE Ay1, Array(1, 2, 2, 2, 4, 5)
+ThwIfNE Ay2, Array(2, 2)
 End Sub
 
 Private Sub ZZ_AyAddPfx()

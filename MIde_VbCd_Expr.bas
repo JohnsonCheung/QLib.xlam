@@ -48,7 +48,7 @@ While LasLen > 0
         OvrFlwTerm = .OvrFlwTerm
     End With
     CurLen = Len(S)
-    If CurLen >= LasLen Then ThwNever CSub, "Str is not shifted by ShfLin"
+    If CurLen >= LasLen Then ThwIfNEver CSub, "Str is not shifted by ShfLin"
     LasLen = CurLen
 Wend
 End Function

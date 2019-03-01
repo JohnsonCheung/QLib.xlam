@@ -68,8 +68,8 @@ Stop '
 'Rel_IsEq = True
 End Function
 
-Sub ThwNE(A As Rel, Optional Msg$ = "Two rel are diff", Optional ANm$ = "Rel-B")
-Const CSub$ = CMod & "ThwNE"
+Sub ThwIfNE(A As Rel, Optional Msg$ = "Two rel are diff", Optional ANm$ = "Rel-B")
+Const CSub$ = CMod & "ThwIfNE"
 If IsEq(A) Then Exit Sub
 Dim O$()
 PushI O, Msg

@@ -1,6 +1,15 @@
 Attribute VB_Name = "MVb_Ay"
 Option Explicit
 
+Sub Asg_ValTo_VarVarible_and_EleOfVariantAy_and_Ap()
+Dim A: A = CByte(0): A = ""
+Dim B(): ReDim B(0): B(0) = CByte(0): B(0) = ""
+Dim C As Byte
+WAsg C
+End Sub
+Private Sub WAsg(ParamArray C())
+C(0) = ""
+End Sub
 Sub AsgAp(Ay, ParamArray OAp())
 Dim Av(): Av = OAp
 Dim J%
@@ -473,11 +482,11 @@ Ay1 = Array(1, 2, 2, 2, 4, 5)
 Ay2 = Array(2, 2)
 Act = AyMinus(Ay1, Ay2)
 Exp = Array(1, 2, 4, 5)
-ThwNE Exp, Act
+ThwIfNE Exp, Act
 '
 Act = AyMinusAp(Array(1, 2, 2, 2, 4, 5), Array(2, 2), Array(5))
 Exp = Array(1, 2, 4)
-ThwNE Exp, Act
+ThwIfNE Exp, Act
 End Sub
 
 Private Sub ZZ_AyeEmpEleAtEnd()

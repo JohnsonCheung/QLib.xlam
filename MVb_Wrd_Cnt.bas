@@ -29,7 +29,7 @@ Set A = RegExp(WrdReStr).Execute(S)
 Select Case A.Count
 Case 0: Exit Function
 Case 1: FstWrd = CvMch(A.Item(0)).Value
-Case Else: ThwNever CSub
+Case Else: ThwIfNEver CSub
 End Select
 End Function
 
