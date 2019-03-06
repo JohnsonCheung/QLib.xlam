@@ -112,8 +112,8 @@ End Sub
 Function DrzRs(A As Dao.Recordset, Optional FF = "") As Variant()
 DrzRs = DrzFds(A.Fields, FF)
 End Function
-Function DrszRs(A As Dao.Recordset) As DRs
-Set DrszRs = DRs(FnyzRs(A), DryzRs(A))
+Function DrszRs(A As Dao.Recordset) As Drs
+Set DrszRs = Drs(FnyzRs(A), DryzRs(A))
 End Function
 
 Function DryzRs(A As Dao.Recordset, Optional InclFldNm As Boolean) As Variant()
@@ -161,25 +161,8 @@ RsLin = Join(DrzRs(A), Sep)
 End Function
 
 Function LngAyzRs(A As Dao.Recordset, Optional Fld = 0) As Long()
-LngAyzRs = IntozRs(LngAyzRs, A, Fld = 0)
+LngAyzRs = IntozRs(LngAyzRs, A, Fld)
 End Function
-
-Property Let ValzRs(A As Dao.Recordset, V)
-If NoRec(A) Then
-    A.AddNew
-Else
-    A.Edit
-End If
-A.Fields(0).Value = V
-A.Update
-End Property
-
-Property Get ValzRs(A As Dao.Recordset)
-If NoRec(A) Then Exit Property
-Dim V: V = A.Fields(0).Value
-If IsNull(V) Then Exit Property
-ValzRs = V
-End Property
 
 Function RsLy(A As Dao.Recordset, Optional Sep$ = " ") As String()
 Dim O$()
@@ -214,8 +197,7 @@ Sub SetSqrzRs(OSq, R, A As Dao.Recordset, Optional NoTxtSngQ As Boolean)
 SetSqrzDr OSq, R, DrzRs(A), NoTxtSngQ
 End Sub
 
-
-Function SyzRsFld(A As Dao.Recordset, Optional F = 0) As String()
+Function SyzRs(A As Dao.Recordset, Optional F = 0) As String()
 Dim O$()
 With A
     While Not .EOF
@@ -223,7 +205,7 @@ With A
         .MoveNext
     Wend
 End With
-SyzRsFld = O
+SyzRs = O
 End Function
 
 Function RsStru$(A As Dao.Recordset)
@@ -250,13 +232,10 @@ While Not Rs.EOF
     Rs.MoveNext
 Wend
 End Function
+
 Function AvRsCol(A As Dao.Recordset, Optional Fld = 0) As Variant()
 AvRsCol = IntozRs(EmpAv, A, Fld)
 End Function
-Function SyzRs(A As Dao.Recordset, Optional Fld = 0) As String()
-SyzRs = IntozRs(EmpSy, A, Fld)
-End Function
-
 
 Function ColSetzRs(A As Dao.Recordset, Optional Fld = 0) As Aset
 Set ColSetzRs = New Aset

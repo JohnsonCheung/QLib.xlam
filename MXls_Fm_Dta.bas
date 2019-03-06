@@ -1,12 +1,12 @@
 Attribute VB_Name = "MXls_Fm_Dta"
 Option Explicit
 
-Function RgzDrs(A As DRs, At As Range) As Range
+Function RgzDrs(A As Drs, At As Range) As Range
 Set RgzDrs = RgzSq(SqzDrs(A), At)
 End Function
 
-Function LozDrs(DRs As DRs, At As Range, Optional LoNm$) As ListObject
-Set LozDrs = LozRg(RgzDrs(DRs, At), LoNm)
+Function LozDrs(Drs As Drs, At As Range, Optional LoNm$) As ListObject
+Set LozDrs = LozRg(RgzDrs(Drs, At), LoNm)
 End Function
 
 Function WszAy(Ay, Optional Wsn$ = "Sheet1") As Worksheet
@@ -18,15 +18,16 @@ LozRg RgzMoreTop(R)
 Set WszAy = O
 End Function
 
-Function WszDrs(DRs As DRs, Optional Wsn$ = "Sheet1", Optional Vis As Boolean) As Worksheet
+Function WszDrs(Drs As Drs, Optional Wsn$ = "Sheet1", Optional Vis As Boolean) As Worksheet
 Dim O As Worksheet: Set O = NewWs(Wsn)
-LozDrs DRs, O.Range("A1")
+LozDrs Drs, O.Range("A1")
 Set WszDrs = SetWsVis(O, Vis)
 End Function
 
 Function RgzAyV(Ay, At As Range) As Range
 Set RgzAyV = RgzSq(SqzAyV(Ay), At)
 End Function
+
 Function RgzAyH(Ay, At As Range) As Range
 Set RgzAyH = RgzSq(SqzAyH(Ay), At)
 End Function
@@ -50,7 +51,7 @@ With FstWs(O)
 End With
 Dim I
 For Each I In Itr(A.DtAy)
-    AddWszDt O, CvDt(I)
+    WszWbDt O, CvDt(I)
 Next
 Set WbzDs = O
 End Function
@@ -60,23 +61,23 @@ Dim O As Worksheet: Set O = NewWs
 A1zWs(O).Value = "*Ds " & A.DsNm
 Dim At As Range, J%
 Set At = WsRC(O, 2, 1)
-Dim I, BelowN&, DT As DT
+Dim I, BelowN&, Dt As Dt
 For Each I In Itr(A.DtAy)
-    Set DT = I
-    LozDt DT, At
-    BelowN = 2 + Sz(DT.Dry)
+    Set Dt = I
+    LozDt Dt, At
+    BelowN = 2 + Sz(Dt.Dry)
     Set At = CellBelow(At, BelowN)
 Next
 Set WszDs = O
 End Function
 
-Function RgzDt(A As DT, At As Range, Optional DtIx%)
+Function RgzDt(A As Dt, At As Range, Optional DtIx%)
 Dim Pfx$: If DtIx > 0 Then Pfx = QuoteBkt(DtIx)
 At.Value = Pfx & A.DtNm
 RgzSq SqzDrs(DrszDt(A)), CellBelow(At)
 End Function
 
-Function LozDt(A As DT, At As Range) As ListObject
+Function LozDt(A As Dt, At As Range) As ListObject
 Dim R As Range
 If At.Row = 1 Then
     Set R = RgRC(At, 2, 1)
@@ -87,11 +88,11 @@ Set LozDt = LozDrs(DrszDt(A), R)
 RgRC(R, 0, 1).Value = A.DtNm
 End Function
 
-Function AddWszDt(Wb As Workbook, DT As DT) As Worksheet
+Function WszWbDt(Wb As Workbook, Dt As Dt) As Worksheet
 Dim O As Worksheet
-Set O = AddWs(Wb, DT.DtNm)
-LozDrs DrszDt(DT), A1zWs(O)
-Set AddWszDt = O
+Set O = AddWs(Wb, Dt.DtNm)
+LozDrs DrszDt(Dt), A1zWs(O)
+Set WszWbDt = O
 End Function
 
 Function RgzSq(Sq, At As Range) As Range
@@ -102,35 +103,18 @@ O.Value = Sq
 Set RgzSq = O
 End Function
 
-Private Sub ZZ_WbDs()
-Dim Wb As Workbook
-Stop '
-'Set Wb = WbDs(DsDb(CDb, "Permit PermitD"))
-WbVis Wb
-Stop
-Wb.Close False
-End Sub
-
 Private Sub ZZ_WszDs()
 WsVis WszDs(SampDs)
 End Sub
 
-Private Sub Z_WbzDs()
-Dim Wb As Workbook
-'Set Wb = WbzDs(DtDbt(CDb, "Permit PermitD"))
-WbVis Wb
-Stop
-Wb.Close False
-End Sub
-
 Private Sub ZZ()
-Dim A As DRs
+Dim A As Drs
 Dim B As Range
 Dim C$()
 Dim D$
 Dim E As Variant
 Dim F As Ds
-Dim G As DT
+Dim G As Dt
 Dim H%
 Dim I As Workbook
 RgzDrs A, B

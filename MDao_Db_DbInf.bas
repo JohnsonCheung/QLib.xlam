@@ -30,42 +30,42 @@ Stop
 DmpDt XTbl(D, Tny(D))
 End Sub
 
-Private Function XTbl(A As Database, Tny$()) As DT
+Private Function XTbl(A As Database, Tny$()) As Dt
 Dim T, Dry()
 For Each T In Tny
-    Push Dry, Array(T, NReczT(A, T), TblDesz(A, T), StruzT(A, T))
+    Push Dry, Array(T, NReczT(A, T), TblDes(A, T), StruzT(A, T))
 Next
-Set XTbl = DT("DbTbl", "Tbl RecCnt Des Stru", Dry)
+Set XTbl = Dt("DbTbl", "Tbl RecCnt Des Stru", Dry)
 End Function
 
-Private Function XLnk(A As Database, Tny$()) As DT
+Private Function XLnk(A As Database, Tny$()) As Dt
 Dim T, Dry(), C$
 For Each T In Tni(A)
    C = A.TableDefs(T).Connect
    If C <> "" Then Push Dry, Array(T, C)
 Next
-Dim O As DT
-Set XLnk = DT("DbLnk", "Tbl Connect", Dry)
+Dim O As Dt
+Set XLnk = Dt("DbLnk", "Tbl Connect", Dry)
 End Function
 
-Private Function XPrp(A As Database) As DT
+Private Function XPrp(A As Database) As Dt
 Dim Dry()
-Set XPrp = DT("DbPrp", "Prp Ty Val", Dry)
+Set XPrp = Dt("DbPrp", "Prp Ty Val", Dry)
 End Function
-Private Function XFld(A As Database, Tny$()) As DT
+Private Function XFld(A As Database, Tny$()) As Dt
 Dim Dry(), T
 For Each T In Tni(A)
 Next
-Set XFld = DT("DbFld", "Tbl Fld Pk Ty Sz Dft Req Des", Dry)
+Set XFld = Dt("DbFld", "Tbl Fld Pk Ty Sz Dft Req Des", Dry)
 End Function
 
-Private Function XTblF(D As Database, Tny$()) As DT
+Private Function XTblF(D As Database, Tny$()) As Dt
 Dim Dry()
 Dim T
 For Each T In Tni(D)
     PushIAy Dry, XTblFDry(D, T)
 Next
-Set XTblF = DT("TblFld", "Tbl Seq Fld Ty Sz ", Dry)
+Set XTblF = Dt("TblFld", "Tbl Seq Fld Ty Sz ", Dry)
 End Function
 
 Private Function XTblFDry(D As Database, T) As Variant()

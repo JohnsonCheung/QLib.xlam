@@ -2,8 +2,8 @@ Attribute VB_Name = "MDao_Spec"
 Option Explicit
 Const CMod$ = "MDao_Spec."
 
-Sub DbSPnmImp(A As Database, Spnm)
-Const CSub$ = CMod & "DbSPnmImp"
+Sub ImpSpec(A As Database, Spnm)
+Const CSub$ = CMod & "ImpSpec"
 Dim Ft$
 '    Ft = SpnmFt(Spnm)
     
@@ -17,7 +17,7 @@ Dim SamSz As Boolean
 Dim DifFt As Boolean
 Dim Rs As Dao.Recordset
     Q = FmtQQ("Select SpecNm,Ft,Lines,Tim,Sz,LTimStr_Dte from Spec where SpecNm = '?'", Spnm)
-    Set Rs = CDb.OpenRecordset(Q)
+    Set Rs = A.OpenRecordset(Q)
     NoCur = Not HasFfn(Ft)
     'NoLas = HasRec(Rs)
     
@@ -88,36 +88,24 @@ Sub ClrSpecPth(Apn$)
 ClrPth SpecPth(Apn)
 End Sub
 
-Property Get SpecSchm() As String()
-SpecSchm = SplitVBar(SpecSchmVbl)
-End Property
-
-Sub EnsSpecTblz(A As Database)
+Sub EnsTblSpec(A As Database)
 'If Not HasTbl(A, "Spec") Then CrtSpecTbl A
 End Sub
 
-Sub CrtSpecTblz(A As Database)
-CrtSchm A, SpecSchm
+Sub CrtTblSpec(A As Database)
+CrtSchm A, SplitVBar(SpecSchmVbl)
 End Sub
 
-Sub EnsSpecTbl()
-EnsSpecTblz CDb
-End Sub
-
-Sub ExpSpecz(A As Database)
-'ClrSpecPth A
+Sub ExpSpec(Apn$)
+ClrSpecPth Apn
 Dim N
-For Each N In Itr(SpecNy)
-'    ExpSpnm N
+For Each N In Itr(SpecNy(Apn))
+    'ExpSpnm N
 Next
 End Sub
 
-Property Get SpecNy() As String()
-SpecNy = SpecNyDb(CDb)
-End Property
-
-Function SpecNyDb(A As Dao.Database) As String()
-'SpecNyDb = SyDbtf(A, "Spec", "SpecNm")
+Function SpecNy(Apn$) As String()
+SpecNy = SyzTF(AppDb(Apn), "Spec", "SpecNm")
 End Function
 
 

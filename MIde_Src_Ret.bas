@@ -4,6 +4,11 @@ Option Explicit
 Function Src(A As CodeModule) As String()
 Src = SplitCrLf(LinesMd(A))
 End Function
+
+Function SrczMdNm(MdNm$) As String()
+SrczMdNm = Src(Md(MdNm))
+End Function
+
 Function SrcVbe() As String()
 SrcVbe = SrczVbe(CurVbe)
 End Function

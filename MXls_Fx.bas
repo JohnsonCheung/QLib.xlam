@@ -6,7 +6,7 @@ WbVis WbzFx(Fx)
 End Function
 
 Sub CrtFx(A)
-SavWbAs(NewWb, A).Close
+WbSavAs(NewWb, A).Close
 End Sub
 
 Function FxEns$(Fx)
@@ -31,13 +31,13 @@ End Sub
 Sub FxRmvWsIfHas(A, Wsn)
 If HasFxw(A, Wsn) Then
    Dim B As Workbook: Set B = WbzFx(A)
-   WsWb(B, Wsn).Delete
+   WszWb(B, Wsn).Delete
    WbSav B
    ClsWbNoSav B
 End If
 End Sub
 
-Function DrsFxq(A, Sql) As DRs
+Function DrsFxq(A, Sql) As Drs
 Set DrsFxq = DrsArs(CnzFx(A).Execute(Sql))
 End Function
 
@@ -60,7 +60,7 @@ Set WbzFx = Xls.Workbooks.Open(Fx)
 End Function
 
 Function WszFxw(Fx, Optional Wsn$ = "Data") As Worksheet
-Set WszFxw = WsWb(WbzFx(Fx), Wsn)
+Set WszFxw = WszWb(WbzFx(Fx), Wsn)
 End Function
 
 Function ArsFxwf(A, W, F) As ADODB.Recordset
@@ -70,11 +70,11 @@ End Function
 Function WsCdNyzFx(Fx) As String()
 Dim Wb As Workbook
 Set Wb = WbzFx(Fx)
-WsCdNyzFx = WsCdNyWb(Wb)
+WsCdNyzFx = WsCdNy(Wb)
 Wb.Close False
 End Function
 
-Function DtzFxw(Fx, Optional Wsn0$) As DT
+Function DtzFxw(Fx, Optional Wsn0$) As Dt
 Dim N$: N = FxDftWsn(Fx, Wsn0)
 Dim Sql$: Sql = FmtQQ("Select * from [?$]", N)
 Set DtzFxw = DtDrsDtnm(DrsFxq(Fx, Sql), N)

@@ -37,7 +37,7 @@ Set WsCRR = WsRCRC(A, R1, C, R2, C)
 End Function
 
 Function DltWs(A As Workbook, WsIx) As Boolean
-If HasWbzWs(A, WsIx) Then WsWb(A, WsIx).Delete: Exit Function
+If HasWbzWs(A, WsIx) Then WszWb(A, WsIx).Delete: Exit Function
 DltWs = True
 End Function
 

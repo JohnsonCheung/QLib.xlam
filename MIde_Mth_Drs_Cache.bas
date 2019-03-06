@@ -5,7 +5,7 @@ Function CacheDtevPjf(Pjf) As Date
 CacheDtevPjf = ValzQ(MthDb, FmtQQ("Select PjDte from Mth where Pjf='?'", Pjf))
 End Function
 
-Function MthDrszPjfzFmCache(Pjf, Optional WhStr$) As DRs
+Function MthDrszPjfzFmCache(Pjf, Optional WhStr$) As Drs
 Dim Sql$: Sql = FmtQQ("Select * from MthCache where Pjf='?'", Pjf)
 Set MthDrszPjfzFmCache = DrszFbq(MthDb, Sql)
 End Function

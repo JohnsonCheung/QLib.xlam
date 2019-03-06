@@ -1,10 +1,13 @@
 Attribute VB_Name = "MDao_Db_Get_Col"
 Option Explicit
 
-Function IntAyzDbq(A As Database, Q) As Integer()
+Function IntAyzQ(A As Database, Q) As Integer()
 End Function
 
-Function IntAyzQ(Q) As Integer()
-'IntAyzSql = IntAyzRs(RszSql(Q))
+Function SyzTF(A As Database, T, F) As String()
+SyzTF = IntozRs(EmpSy, RszTF(A, T, F))
 End Function
 
+Function IntozTF(OInto, A As Database, T, F)
+IntozTF = IntozRs(OInto, RszTF(A, T, F))
+End Function

@@ -13,6 +13,9 @@ Function Fn$(Ffn)
 Fn = CutPth(Ffn)
 End Function
 
+Function FfnUp$(Ffn)
+FfnUp = ParPth(Pth(Ffn)) & Fn(Ffn)
+End Function
 
 Function Fnn$(Ffn)
 Fnn = RmvExt(Fn(Ffn))
@@ -30,7 +33,6 @@ End If
 RmvExt = Pth(A) & C
 End Function
 
-
 Function Ext$(A)
 Dim B$, P%
 B = Fn(A)
@@ -38,6 +40,7 @@ P = InStrRev(B, ".")
 If P = 0 Then Exit Function
 Ext = Mid(B, P)
 End Function
+
 Function FfnPth$(Ffn)
 FfnPth = Pth(Ffn)
 End Function

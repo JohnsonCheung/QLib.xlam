@@ -117,33 +117,30 @@ For Each K In A.Keys
 Next
 X: Set DicIntersect = O
 End Function
-
-
 Sub ThwDifDic(A As Dictionary, B As Dictionary, Fun$, Optional N1$ = "A", Optional N2$ = "B")
 If Not IsEqDic(A, B) Then Thw Fun, "2 given dic are diff", FmtQQ("[?] [?]", N1, N2), FmtDic(A), FmtDic(B)
 End Sub
 
-
-Function DicKeySy(A As Dictionary) As String()
-DicKeySy = SyzAy(A.Keys)
+Function KeySyzDic(A As Dictionary) As String()
+KeySyzDic = SyzAy(A.Keys)
 End Function
 
-Function DicKyJnVal$(A As Dictionary, Ky, Optional Sep$ = vbCrLf & vbCrLf)
+Function ValzDicKyJn$(A As Dictionary, Ky, Optional Sep$ = vbCrLf & vbCrLf)
 Dim O$(), K
 For Each K In Itr(Ky)
     If A.Exists(K) Then
         PushI O, A(K)
     End If
 Next
-DicKyJnVal = Join(O, Sep)
+ValzDicKyJn = Join(O, Sep)
 End Function
 
-Function SyDicKy(Dic As Dictionary, Ky$()) As String()
-Const CSub$ = CMod & "SyDicKy"
+Function SyzDicKy(Dic As Dictionary, Ky$()) As String()
+Const CSub$ = CMod & "SyzDicKy"
 Dim K
 For Each K In Itr(Ky)
     If Dic.Exists(K) Then Thw CSub, "K of Ky not in Dic", "K Ky Dic", K, Ky, Dic
-    PushI SyDicKy, Dic(K)
+    PushI SyzDicKy, Dic(K)
 Next
 End Function
 
@@ -302,8 +299,8 @@ IsDiczEmp B
 ThwDifDic B, B, D, D, D
 IsDiczLines B
 IsDiczStr B
-DicKyJnVal B, A, D
-SyDicKy B, E
+ValzDicKyJn B, A, D
+SyzDicKy B, E
 DicLblLy B, D
 LinesDic B
 FmtDic2 B

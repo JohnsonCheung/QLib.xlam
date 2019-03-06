@@ -1,12 +1,12 @@
 Attribute VB_Name = "MDta_Ay"
 Option Explicit
 
-Function AyDt(A, Optional FldNm$ = "Itm", Optional DtNm$ = "Ay") As DT
+Function AyDt(A, Optional FldNm$ = "Itm", Optional DtNm$ = "Ay") As Dt
 Dim O(), J&
 For J = 0 To UB(A)
     Push O, Array(A(J))
 Next
-Set AyDt = DT(DtNm, FldNm, O)
+Set AyDt = Dt(DtNm, FldNm, O)
 End Function
 
 Function GpCntDryzAy(A) As Variant()

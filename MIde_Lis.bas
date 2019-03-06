@@ -1,6 +1,6 @@
 Attribute VB_Name = "MIde_Lis"
 Option Explicit
-Function MdzPjLisDt(A As VBProject, Optional B As WhMd) As DT
+Function MdzPjLisDt(A As VBProject, Optional B As WhMd) As Dt
 Stop '
 End Function
 

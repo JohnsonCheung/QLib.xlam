@@ -3,7 +3,7 @@ Option Explicit
 Property Get TmpTd() As Dao.TableDef
 Dim O() As Dao.Field2
 PushObj O, FdzTxt("F1")
-'Set TmpTd = NewTd("Tmp", O)
+'Set TmpTd = TdzFdAy("Tmp", O)
 End Property
 Property Get TmpDbPth$()
 TmpDbPth = PthEns(TmpHom & "Db\")

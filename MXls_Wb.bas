@@ -8,11 +8,6 @@ Function CvWb(A) As Workbook
 Set CvWb = A
 End Function
 
-Function TxtCnWc(A As WorkbookConnection) As TextConnection
-On Error Resume Next
-Set TxtCnWc = A.TextConnection
-End Function
-
 Function FstWs(A As Workbook) As Worksheet
 Set FstWs = A.Sheets(1)
 End Function
@@ -50,7 +45,7 @@ Set MainQt = Lo.QueryTable
 End Function
 
 Function MainWs(A As Workbook) As Worksheet
-Set MainWs = WbzWsCdNm(A, "WsOMain")
+Set MainWs = WszCdNm(A, "WsOMain")
 End Function
 
 Function OupLoAy(A As Workbook) As ListObject()
@@ -69,14 +64,9 @@ Next
 End Function
 
 Function TxtWc(A As Workbook) As TextConnection
-Dim N%: N = TxtWcCnt(A)
-If N <> 1 Then
-    Stop
-    Exit Function
-End If
 Dim C As WorkbookConnection
 For Each C In A.Connections
-    If Not IsNothing(TxtCnWc(C)) Then
+    If Not IsNothing(TxtCnzWc(C)) Then
         Set TxtWc = C.TextConnection
         Exit Function
     End If
@@ -88,7 +78,7 @@ End Function
 Function TxtWcCnt%(A As Workbook)
 Dim C As WorkbookConnection, Cnt%
 For Each C In A.Connections
-    If Not IsNothing(TxtCnWc(C)) Then Cnt = Cnt + 1
+    If Not IsNothing(TxtCnzWc(C)) Then Cnt = Cnt + 1
 Next
 TxtWcCnt = Cnt
 End Function
@@ -116,8 +106,8 @@ Function WcStrAyWbOLE(A As Workbook) As String()
 WcStrAyWbOLE = SyOyP(OleWcAy(A), "Connection")
 End Function
 
-Function WsWb(A As Workbook, Wsn) As Worksheet
-Set WsWb = A.Sheets(Wsn)
+Function WszWb(A As Workbook, Wsn) As Worksheet
+Set WszWb = A.Sheets(Wsn)
 End Function
 
 Function WsNyzRg(A As Range) As String()
@@ -128,39 +118,39 @@ Function WsNy(A As Workbook) As String()
 WsNy = Itn(A.Sheets)
 End Function
 
-Function WbzWsCdNm(A As Workbook, CdNm$) As Worksheet
+Function WszCdNm(A As Workbook, WsCdNm$) As Worksheet
 Dim Ws As Worksheet
 For Each Ws In A.Sheets
-    If Ws.CodeName = CdNm Then Set WbzWsCdNm = Ws: Exit Function
+    If Ws.CodeName = WsCdNm Then Set WszCdNm = Ws: Exit Function
 Next
 End Function
 
-Function WsCdNyWb(A As Workbook) As String()
-WsCdNyWb = SyItrPrp(A.Sheets, "CodeName")
+Function WsCdNy(A As Workbook) As String()
+WsCdNy = SyItrPrp(A.Sheets, "CodeName")
 End Function
 
-Function WbAddDbt(A As Workbook, Db As Database, T$, Optional UseWc As Boolean) As Workbook
-'Set WbAddDbt = WbLo(RplLoCnzDbt(Db, T, A1zWs(A, T), UseWc))
-End Function
 Function WbFullNm$(A As Workbook)
 On Error Resume Next
 WbFullNm = A.FullName
 End Function
 
-Function AddWczWbDbtt(A As Workbook, Db As Database, TT, Optional UseWc As Boolean) As Workbook
-DoAyPPXP CvNy(TT), "WbAddDbt", A, Db, UseWc
-Set AddWczWbDbtt = A
+Function WbAddTT(A As Workbook, Db As Database, TT, Optional UseWc As Boolean) As Workbook
+Dim T
+For Each T In TnyzTT(TT)
+    WszT Db, T
+Next
+Set WbAddTT = A
 End Function
 
-Function AddWszDt(A As Workbook, DT As DT) As Worksheet
+Function WszWbDt(A As Workbook, Dt As Dt) As Worksheet
 Dim O As Worksheet
-Set O = AddWs(A, DT.DtNm)
-LozDrs DrszDt(DT), A1(O)
-Set AddWszDt = O
+Set O = AddWs(A, Dt.DtNm)
+LozDrs DrszDt(Dt), A1(O)
+Set WszWbDt = O
 End Function
 
-Function AddWczWbFb(A As Workbook, LnkToFb$, WcNm) As WorkbookConnection
-Set AddWczWbFb = A.Connections.Add2(WcNm, WcNm, CnStrzFbForWbCn(LnkToFb), WcNm, XlCmdType.xlCmdTable)
+Function WczWbFb(A As Workbook, LnkToFb$, WcNm) As WorkbookConnection
+Set WczWbFb = A.Connections.Add2(WcNm, WcNm, CnStrzFbForWbCn(LnkToFb), WcNm, XlCmdType.xlCmdTable)
 End Function
 
 Function AddWs(A As Workbook, Optional Wsn$, Optional AtBeg As Boolean, Optional AtEnd As Boolean, Optional BefWsn$, Optional AftWsn$) As Worksheet
@@ -177,12 +167,12 @@ Set AddWs = SetWsNm(O, Wsn)
 End Function
 
 Sub ThwWbMisOupNy(A As Workbook, OupNy$())
-Dim O$(), N$, B$(), WsCdNy$()
-WsCdNy = WsCdNyWb(A)
-O = AyMinus(AyAddPfx(OupNy, "WsO"), WsCdNy)
+Dim O$(), N$, B$(), Wny$()
+Wny = WsCdNy(A)
+O = AyMinus(AyAddPfx(OupNy, "WsO"), Wny)
 If Sz(O) > 0 Then
     N = "OupNy":  B = OupNy:  GoSub Dmp
-    N = "WbCdNy": B = WsCdNy: GoSub Dmp
+    N = "WbCdNy": B = Wny: GoSub Dmp
     N = "Mssing": B = O:      GoSub Dmp
     Stop
     Exit Sub
@@ -210,7 +200,7 @@ End Sub
 Sub DltWs(A As Workbook, Wsn)
 If HasWbzWs(A, Wsn) Then
     A.Application.DisplayAlerts = False
-    WsWb(A, Wsn).Delete
+    WszWb(A, Wsn).Delete
     A.Application.DisplayAlerts = True
 End If
 End Sub
@@ -237,13 +227,13 @@ A.Application.DisplayAlerts = Y
 Set WbSav = A
 End Function
 
-Function SavWbAs(A As Workbook, Fx, Optional Fmt As XlFileFormat = xlOpenXMLWorkbook) As Workbook
+Function WbSavAs(A As Workbook, Fx, Optional Fmt As XlFileFormat = xlOpenXMLWorkbook) As Workbook
 Dim Y As Boolean
 Y = A.Application.DisplayAlerts
 A.Application.DisplayAlerts = False
 A.SaveAs Fx, Fmt
 A.Application.DisplayAlerts = Y
-Set SavWbAs = A
+Set WbSavAs = A
 End Function
 
 Sub SetWbFcsvCn(A As Workbook, Fcsv$)
@@ -293,12 +283,12 @@ Dim C As Workbook
 Dim D$
 Dim E As Database
 Dim F As Boolean
-Dim G As DT
+Dim G As Dt
 Dim H$()
 Dim I()
 Dim XX
 CvWb A
-TxtCnWc B
+TxtCnzWc B
 FstWs C
 FxWb C
 LasWs C
@@ -310,19 +300,19 @@ TxtWc C
 TxtWcCnt C
 TxtWcStr C
 OleWcAy C
-WsCdNyWb C
+WsCdNy C
 WcStrAyWbOLE C
-WsWb C, A
+WszWb C, A
 WsNy C
-WbzWsCdNm C, D
-WbzWsCdNm C, D
-AddWczWbFb C, D, D
+WszCdNm C, D
+WszCdNm C, D
+WczWbFb C, D, D
 AddWs C, D, F, F, D, D
 ThwWbMisOupNy C, H
 ClsWbNoSav C
 DltWc C
 DltWs C, A
-SavWbAs C, A
+WbSavAs C, A
 SetWbFcsvCn C, D
 WbVis C
 HasWbzWs C, A

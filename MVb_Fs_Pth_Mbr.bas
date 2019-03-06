@@ -27,7 +27,6 @@ Nxt:
 Wend
 End Function
 
-
 Function EntAy(Pth) As String()
 'Function EntAy(A$, Optional FilSpec$ = "*.*", Optional Atr As FileAttribute) As String()
 Dim A$: A$ = PthDir(Pth)
@@ -81,7 +80,6 @@ Function SubPthAyz(Pth, Optional Spec$ = "*.*", Optional Atr As FileAttribute) A
 SubPthAyz = AyAddPfxSfx(FdrAyz(Pth, Spec, Atr), Pth, PthSep)
 End Function
 
-
 Sub AsgEnt(OFdrAy$(), OFnAy$(), Pth$)
 Erase OFdrAy
 Erase OFnAy
@@ -100,6 +98,7 @@ While A <> ""
 X:
 Wend
 End Sub
+
 Function FnnAy(A, Optional Spec$ = "*.*", Optional Atr As FileAttribute) As String()
 Dim Fn
 For Each Fn In FnAy(A, Spec)
@@ -155,4 +154,3 @@ Dim A$()
 A = FxAy(CurDir)
 DmpAy A
 End Sub
-

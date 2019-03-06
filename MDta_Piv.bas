@@ -60,7 +60,7 @@ End Function
 Private Function KKCntMulItmColDryD(KKDrToItmAyDualColDry()) As Variant()
 
 End Function
-Function GpDicDKG(A As DRs, KK, G$) As Dictionary
+Function GpDicDKG(A As Drs, KK, G$) As Dictionary
 Dim Fny$()
 Dim KeyIxAy&(), GIx%
     Fny = FnyzFF(KK)
@@ -101,10 +101,10 @@ Const CSub$ = CMod & "DryGpDic"
 'Next
 'Set DryGpDic = O
 End Function
-Function DrszFbt(Fb, T) As DRs
+Function DrszFbt(Fb, T) As Drs
 Set DrszFbt = DrszT(Db(Fb), T)
 End Function
-Function KE24Drs() As DRs
+Function KE24Drs() As Drs
 Set KE24Drs = DrszFbt(SampFbzDutyDta, "KE24")
 End Function
 

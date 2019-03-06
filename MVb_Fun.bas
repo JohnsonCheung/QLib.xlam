@@ -157,6 +157,7 @@ Case IsArray(A): BrwAy A, Fnn
 Case IsAset(A): CvAset(A).Brw Fnn
 Case IsDrs(A): BrwDrs CvDrs(A)
 Case IsDic(A): BrwDic CvDic(A)
+Case IsEmpty(A): Debug.Print "Empty"
 Case Else: Stop
 End Select
 End Sub

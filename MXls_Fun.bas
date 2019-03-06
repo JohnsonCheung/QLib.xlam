@@ -46,7 +46,7 @@ Function NewWsVisDic(A As Dictionary, Optional InclDicValOptTy As Boolean) As Wo
 Set NewWsVisDic = WsVis(NewWsDic(A, InclDicValOptTy))
 End Function
 
-Function NewWsDt(A As DT, Optional Vis As Boolean) As Worksheet
+Function NewWsDt(A As Dt, Optional Vis As Boolean) As Worksheet
 Dim O As Worksheet
 Set O = NewWs(A.DtNm)
 LozDrs DrszDt(A), A1zWs(O)

@@ -32,7 +32,7 @@ Fxi.Init Fxn, Wsn, T, FxcAy(T), Bexpr
 End Function
 Private Function FxcAy(T$) As LidFxc()
 Dim L
-For Each L In Itr(LyWsCol(T))
+For Each L In Itr(LyzWsCol(T))
     PushObj FxcAy, Fxc(L)
 Next
 End Function
@@ -44,8 +44,8 @@ Set Fxc = New LidFxc
 Fxc.Init ColNm, ShtTyLis, ExtNm
 End Function
 
-Private Function LyWsCol(TblNm$)
-LyWsCol = AywRmvTT(A, "WsCol", TblNm)
+Private Function LyzWsCol(TblNm$)
+LyzWsCol = AywRmvTT(A, "WsCol", TblNm)
 End Function
 
 Private Function FfnDic() As Dictionary

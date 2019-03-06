@@ -1,4 +1,4 @@
-Attribute VB_Name = "MApp_Commit"
+Attribute VB_Name = "MApp_Git"
 Option Explicit
 
 Sub GitCmit(Optional Msg$ = "commit", Optional ReInit As Boolean)

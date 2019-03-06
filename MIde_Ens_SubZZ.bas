@@ -186,10 +186,10 @@ vbCrLf & "IsEqDic B, B" & _
 vbCrLf & "ThwDifDic B, B, D, D, D" & _
 vbCrLf & "IsDiczLines B" & _
 vbCrLf & "IsDiczStr B" & _
-vbCrLf & "DicKeySy B" & _
+vbCrLf & "KeySyzDic B" & _
 vbCrLf & "FmtDic1 B" & _
-vbCrLf & "DicKyJnVal B, A, D" & _
-vbCrLf & "SyDicKy B, E" & _
+vbCrLf & "ValzDicKyJn B, A, D" & _
+vbCrLf & "SyzDicKy B, E" & _
 vbCrLf & "DicLblLy B, D" & _
 vbCrLf & "LinesDic B" & _
 vbCrLf & "FmtDic11 B" & _

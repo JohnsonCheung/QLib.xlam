@@ -1,6 +1,7 @@
 Attribute VB_Name = "AShpCst_Pm_LiPm"
 Option Explicit
 Private Db As Database
+
 Property Get ShpCstLiPm() As LiPm
 Set Db = AppDb("ShpCst")
 Set ShpCstLiPm = New LiPm

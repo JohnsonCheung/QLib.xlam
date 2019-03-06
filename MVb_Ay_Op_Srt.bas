@@ -106,15 +106,15 @@ Next
 AySrt__Ix = O
 End Function
 
-Function AySrtIntoIxAy(Ay, Optional Des As Boolean) As Long()
+Function IxAyzAySrt(Ay, Optional Des As Boolean) As Long()
 If Sz(Ay) = 0 Then Exit Function
 Dim Ix&, V, J&
 Dim O&():
 Push O, 0
 For J = 1 To UB(Ay)
-    O = AyInsItm(O, J, AySrtInToIxAy_Ix(O, Ay, Ay(J), Des))
+    O = AyInsItm(O, J, IxAyzAySrt_Ix(O, Ay, Ay(J), Des))
 Next
-AySrtIntoIxAy = O
+IxAyzAySrt = O
 End Function
 
 Private Sub Z_AySrt()
@@ -146,27 +146,27 @@ Act = AySrt(A)
 ThwAyabNE Exp, Act
 End Sub
 
-Private Function AySrtInToIxAy_Ix&(Ix&(), A, V, Des As Boolean)
+Private Function IxAyzAySrt_Ix&(Ix&(), A, V, Des As Boolean)
 Dim I, O&
 If Des Then
     For Each I In Ix
-        If V > A(I) Then AySrtInToIxAy_Ix& = O: Exit Function
+        If V > A(I) Then IxAyzAySrt_Ix& = O: Exit Function
         O = O + 1
     Next
-    AySrtInToIxAy_Ix& = O
+    IxAyzAySrt_Ix& = O
     Exit Function
 End If
 For Each I In Ix
-    If V < A(I) Then AySrtInToIxAy_Ix& = O: Exit Function
+    If V < A(I) Then IxAyzAySrt_Ix& = O: Exit Function
     O = O + 1
 Next
-AySrtInToIxAy_Ix& = O
+IxAyzAySrt_Ix& = O
 End Function
 
-Private Sub Z_AySrtInToIxAy()
+Private Sub Z_IxAyzAySrt()
 Dim A: A = Array("A", "B", "C", "D", "E")
-ThwAyabNE Array(0, 1, 2, 3, 4), AySrtIntoIxAy(A)
-ThwAyabNE Array(4, 3, 2, 1, 0), AySrtIntoIxAy(A, True)
+ThwAyabNE Array(0, 1, 2, 3, 4), IxAyzAySrt(A)
+ThwAyabNE Array(4, 3, 2, 1, 0), IxAyzAySrt(A, True)
 End Sub
 
 Private Function AySrtInToIxIxAy&(Ix&(), A, V, Des As Boolean)
@@ -225,15 +225,15 @@ Act = AySrt(A)
 ThwIfNE Exp, Act
 End Sub
 
-Private Sub ZZ_AySrtInToIxAy()
+Private Sub ZZ_IxAyzAySrt()
 Dim A: A = Array("A", "B", "C", "D", "E")
-ThwIfNE Array(0, 1, 2, 3, 4), AySrtIntoIxAy(A)
-ThwIfNE Array(4, 3, 2, 1, 0), AySrtIntoIxAy(A, True)
+ThwIfNE Array(0, 1, 2, 3, 4), IxAyzAySrt(A)
+ThwIfNE Array(4, 3, 2, 1, 0), IxAyzAySrt(A, True)
 End Sub
 
 
 Private Sub Z()
 Z_AySrt
-Z_AySrtInToIxAy
+Z_IxAyzAySrt
 MVb__Srt:
 End Sub

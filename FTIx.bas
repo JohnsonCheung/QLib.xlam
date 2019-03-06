@@ -15,14 +15,14 @@ End Property
 Property Get ToIx&()
 ToIx = A_ToIx
 End Property
-Friend Property Get Init(FmIx, ToIx) As FTIx
+Friend Function Init(FmIx, ToIx) As FTIx
 If FmIx < 0 Then Stop
 If ToIx < 0 Then Stop
 If FmIx > ToIx Then Stop
 A_FmIx = FmIx
 A_ToIx = ToIx
 Set Init = Me
-End Property
+End Function
 Property Get IsEmp() As Boolean
 IsEmp = Cnt <= 0
 End Property

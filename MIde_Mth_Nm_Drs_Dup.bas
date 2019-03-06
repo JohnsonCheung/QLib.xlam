@@ -1,25 +1,24 @@
 Attribute VB_Name = "MIde_Mth_Nm_Drs_Dup"
 Option Explicit
 
-Function DupMthDRsPj() As DRs
-Set DupMthDRsPj = DupMthDrszPj(CurPj)
+Function DupMthDrsPj() As Drs
+Set DupMthDrsPj = DrsSrt(DupMthDrszPj(CurPj))
 End Function
 
-Private Function DupMthDrszPj(A As VBProject) As DRs
-Dim B As DRs: Set B = MthNmDrszPj(A, "-Mod -Pub")
-Dim C As DRs: Set C = DrswDup(B, "MthNm")
-Dim D As DRs: Set D = DrseDup(C, "MthNm Md") '<==
-Dim E As DRs: Set E = AddColzMthLines(D)
-Dim F As DRs: Set F = AddColzValIdzCntzDrs(E, "MthLines")
+Private Function DupMthDrszPj(A As VBProject) As Drs
+Dim B As Drs: Set B = MthNmDrszPj(A, "-Mod -Pub")
+Dim C As Drs: Set C = DrswDup(B, "MthNm")
+Dim D As Drs: Set D = DrseDup(C, "MthNm Md") '<==
+Dim E As Drs: Set E = AddColzMthLines(D)
+Dim F As Drs: Set F = AddColzValIdzCntzDrs(E, "MthLines")
 Set DupMthDrszPj = F
 End Function
 
 
-Private Function AddColzMthLines(MthNmDrs As DRs) As DRs
-Stop
+Private Function AddColzMthLines(MthNmDrs As Drs) As Drs
 Dim A():  A = DrsSel(MthNmDrs, "Md MthNm Ty").Dry
 Dim B$(): B = MthLinesAyzDry_Md_MthNm_ShtMthTy(A)
-Dim C As DRs: Set C = AddColzColVyDrs(MthNmDrs, "MthLines", B)
+Dim C As Drs: Set C = DrsAddColzNmVy(MthNmDrs, "MthLines", B)
 Set AddColzMthLines = C
 End Function
 

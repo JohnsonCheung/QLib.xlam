@@ -36,13 +36,13 @@ O.ShtKd = ShtMthKd(ShfMthTy(L))
 Set MthInfMdzPjSrcFm = O
 End Function
 
-Function MthDrs(Optional WhStr$) As DRs
+Function MthDrs(Optional WhStr$) As Drs
 Set MthDrs = MthDrszPjfAy(PjfAy, WhStr)
 End Function
 
 
-Function MthDrsMd(A As CodeModule, Optional B As WhMth) As DRs
-Set MthDrsMd = DRs(MthFny, MthDryzMd(A, B))
+Function MthDrsMd(A As CodeModule, Optional B As WhMth) As Drs
+Set MthDrsMd = Drs(MthFny, MthDryzMd(A, B))
 End Function
 
 Function MthLinDryzMd(A As CodeModule, Optional WhStr$) As Variant()
@@ -52,7 +52,7 @@ Ffn$ = Pjf(P)
 Pj = P.Name
 MdTy = ShtCmpTyzMd(A)
 Md = MdNm(A)
-MthLinDryzMd = DryIns4V(MthLinDryzSrc(Src(A)), Ffn, Pj, MdTy, Md)
+MthLinDryzMd = InsColzDry4V(MthLinDryzSrc(Src(A)), Ffn, Pj, MdTy, Md)
 End Function
 Function MthLinDryzSrc(Src$(), Optional WhStr$) As Variant()
 Dim MthLin, W As WhMth
@@ -69,7 +69,7 @@ Ffn$ = Pjf(P)
 Pj = P.Name
 MdTy = ShtCmpTyzMd(A)
 Md = MdNm(A)
-MthDryzMd = DryIns4V(MthDryzSrc(Src(A)), Ffn, Pj, MdTy, Md)
+MthDryzMd = InsColzDry4V(MthDryzSrc(Src(A)), Ffn, Pj, MdTy, Md)
 End Function
 
 Property Get PjfAy() As String()
@@ -83,12 +83,12 @@ Property Get MthWs() As Worksheet
 Set MthWs = MthWsPjfAy(PjfAy)
 End Property
 
-Function MthDrsFb(Fb, Optional WhStr$) As DRs
+Function MthDrsFb(Fb, Optional WhStr$) As Drs
 Set MthDrsFb = MthDrszVbe(VbePjf(Fb), WhStr)
 ClsPjf Fb
 End Function
 
-Function MthDrszFxa(Fxa, Optional WhStr$, Optional Xls As Excel.Application) As DRs
+Function MthDrszFxa(Fxa, Optional WhStr$, Optional Xls As Excel.Application) As Drs
 Dim A As Excel.Application: Set A = DftXls(Xls)
 Set MthDrszFxa = MthDrszPj(PjzFxa(Fxa, A), WhStr)
 If IsNothing(Xls) Then XlsQuit Xls
@@ -99,7 +99,7 @@ Set MthWbPjfAy = MthWbFmt(WbzWs(MthWsPjfAy(PjfAy, WhStr)))
 End Function
 
 Function MthWsPjfAy(PjfAy, Optional WhStr$) As Worksheet
-Dim O As DRs
+Dim O As Drs
 Set O = MthDrszPjfAy(PjfAy, WhStr)
 Set O = AddColzValIdzCntzDrs(O, "Nm", "Vbe_Mth")
 Set O = AddColzValIdzCntzDrs(O, "Lines", "Vbe")
@@ -107,7 +107,7 @@ Set O = AddColzValIdzCntzDrs(O, "Lines", "Vbe")
 End Function
 
 
-Function MthDrszPjf(Pjf, Optional WhStr$) As DRs
+Function MthDrszPjf(Pjf, Optional WhStr$) As Drs
 Dim V As Vbe, App, P As VBProject, PjDte As Date
 OpnPjf Pjf ' Either Excel.Application or Access.Application
 Set V = VbePjf(Pjf)
@@ -124,9 +124,9 @@ End If
 End Function
 
 
-Function MthDrszPj(A As VBProject, Optional WhStr$) As DRs
-Dim O As DRs
-Set O = DRs(MthFny, MthDryzPj(A, WhStr))
+Function MthDrszPj(A As VBProject, Optional WhStr$) As Drs
+Dim O As Drs
+Set O = Drs(MthFny, MthDryzPj(A, WhStr))
 Set O = AddColzValIdzCntzDrs(O, "Lines", "Pj")
 Set O = AddColzValIdzCntzDrs(O, "Nm", "PjMth")
 Set MthDrszPj = O
@@ -159,7 +159,7 @@ MthWbFmt WbVis(WbzFx(Fx))
 Stop
 End Sub
 
-Function MthDrszPjfAy(PjfAy, Optional WhStr$) As DRs
+Function MthDrszPjfAy(PjfAy, Optional WhStr$) As Drs
 Dim I
 For Each I In PjfAy
     PushDrs MthDrszPjfAy, MthDrszPjf(I, WhStr)
@@ -172,12 +172,12 @@ Pjf = PjfAy()(0)
 ShwWs WszDrs(MthDrszPjf(Pjf))
 End Sub
 
-Function MthDrszVbe(A As Vbe, Optional WhStr$) As DRs
+Function MthDrszVbe(A As Vbe, Optional WhStr$) As Drs
 Dim P, Dry()
 For Each P In PjItr(A, WhStr)
     PushIAy Dry, MthDryzPj(CvPj(P), WhStr)
 Next
-Set MthDrszVbe = DRs(MthFny, Dry)
+Set MthDrszVbe = Drs(MthFny, Dry)
 End Function
 
 Function MthWszVbe(A As Vbe, Optional WhStr$) As Worksheet
@@ -187,7 +187,7 @@ End Function
 
 Function MthWbFmt(A As Workbook) As Workbook
 Dim Ws As Worksheet, Lo As ListObject
-Set Ws = WbzWsCdNm(A, "MthLoc"): If IsNothing(Ws) Then Stop
+Set Ws = WszCdNm(A, "MthLoc"): If IsNothing(Ws) Then Stop
 Set Lo = LozWs(Ws, "T_MthLoc"): If IsNothing(Lo) Then Stop
 Dim Ws1 As Worksheet:  GoSub X_Ws1
 Dim Pt1 As PivotTable: GoSub X_Pt1
@@ -278,8 +278,8 @@ Property Get MthFny() As String()
 MthFny = SySsl("Mdy Ty Nm Prm Ret LinRmk Lno Cnt Lines TopRmk")
 End Property
 
-Function VbeAyMthDrs(A() As Vbe) As DRs
-Dim I, R%, M As DRs
+Function VbeAyMthDrs(A() As Vbe) As Drs
+Dim I, R%, M As Drs
 For Each I In Itr(A)
     Set M = DrsInsCV(MthDrszVbe(CvVbe(I)), "Vbe", R)
     If R = 0 Then

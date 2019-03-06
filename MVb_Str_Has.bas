@@ -4,20 +4,21 @@ Enum eIgnCas
     eIgnCas = 0
     eCasSen = 1
 End Enum
-Function HasSubStr(A, SubStr, Optional IgnCas As Boolean) As Boolean
+
+Function HasDot(Str) As Boolean
+HasDot = HasSubStr(Str, ".")
+End Function
+
+Function HasSubStr(Str, SubStr, Optional IgnCas As Boolean) As Boolean
 If IgnCas Then
-    HasSubStr = InStr(1, A, SubStr, vbTextCompare) > 0
+    HasSubStr = InStr(1, Str, SubStr, vbTextCompare) > 0
 Else
-    HasSubStr = InStr(1, A, SubStr, vbBinaryCompare) > 0
+    HasSubStr = InStr(1, Str, SubStr, vbBinaryCompare) > 0
 End If
 End Function
 
 Function HasCrLf(A) As Boolean
 HasCrLf = HasSubStr(A, vbCrLf)
-End Function
-
-Function HasDot(A) As Boolean
-HasDot = InStr(A, ".") > 0
 End Function
 
 Function HasHyphen(A) As Boolean

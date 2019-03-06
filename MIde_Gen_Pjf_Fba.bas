@@ -11,7 +11,7 @@ Dim Pj As VBProject: Set Pj = A.Vbe.ActiveVBProject
 AddRfzPj Pj
 LoadBas Pj
 LoadFrm Pj
-ClsDb A
+ClsDbzAcs A
 CpyFilzToPth Fba, AddFdrEns(ParPth(ParPth(Pth(Fba))), "Dist"), OvrWrt:=True
 If IsNothing(A) Then AcsQuit A
 End Sub

@@ -14,11 +14,12 @@ Erase O
 A_Spec = FilSpec
 EntAyR1 Pth
 EntAyR = O
+Erase O
 End Function
 
 Private Sub EntAyR1(Pth)
 Ass HasPth(Pth)
-If Sz(O) Mod 1000 = 0 Then Debug.Print "PthPthAyR1: (Each 1000): " & Pth
+If Sz(O) Mod 1000 = 0 Then Debug.Print "EntAyR1: (Each 1000): " & Pth
 PushI O, Pth
 PushIAy O, FfnAy(Pth, A_Spec)
 Dim I, P$()

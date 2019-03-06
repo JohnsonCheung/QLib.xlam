@@ -15,12 +15,15 @@ Const KwOr$ = "or"
 Const KwOrd$ = "order by"
 Const KwLeftJn$ = "left join"
 Public FmtSql As Boolean
+
 Private Property Get C_Fm$()
 C_Fm = C_NLT & KwFm & C_T
 End Property
+
 Private Property Get C_Into$()
 C_Into = C_NLT & KwInto & C_T
 End Property
+
 Private Property Get C_NL$() ' New Line
 If FmtSql Then
     C_NL = vbCrLf
@@ -28,6 +31,7 @@ Else
     C_NL = " "
 End If
 End Property
+
 Private Property Get C_T$()
 If FmtSql Then
     C_T = vbTab
@@ -35,6 +39,7 @@ Else
     C_T = " "
 End If
 End Property
+
 Private Property Get C_NLT$() ' New Line Tabe
 If FmtSql Then
     C_NLT = C_NL & C_T
@@ -42,6 +47,7 @@ Else
     C_NLT = " "
 End If
 End Property
+
 Private Property Get C_NLTT$() ' New Line Tabe
 If FmtSql Then
     C_NLTT = C_NLT & C_T
@@ -66,19 +72,9 @@ Function SqpInto_T$(T)
 SqpInto_T = C_Into & "[" & T & "]"
 End Function
 
-Function AddColSqp$(Fny0, FldDfnDic As Dictionary)
-Dim Fny$(), O$(), J%
-Fny = CvNy(Fny0)
-ReDim O(UB(Fny))
-For J = 0 To UB(Fny)
-    O(J) = Fny(J) & " " & FldDfnDic(Fny(J))
-Next
-'AddColSqp = NxtLin & "Add Column " & JnComma(O)
-End Function
 Function BexprRecId$(T, RecId)
 BexprRecId = FmtQQ("?Id=?", T, RecId)
 End Function
-
 
 Function SqpSet_Fny_Vy$(Fny$(), Vy())
 Dim F$(): F = AyQuoteSq(Fny)
@@ -99,9 +95,11 @@ Private Function ExprInLis_InLisBexpr$(Expr$, InLis$)
 If InLis = "" Then Exit Function
 ExprInLis_InLisBexpr = FmtQQ("? in (?)", Expr, InLis)
 End Function
+
 Function SqpSel_F$(F)
 SqpSel_F = "Select [" & F & "]"
 End Function
+
 Function SqpSel_X$(X, Optional Dis As Boolean)
 SqpSel_X = SqpSel_Dis(Dis) & X
 End Function
@@ -121,9 +119,11 @@ Dim ExprVblAy$()
     Push ExprVblAy, "3sldkfjsdf"
 DmpAy SplitVBar(SqpGp_ExprVblAy(ExprVblAy))
 End Sub
+
 Function WdtLines%(Lines)
 WdtLines = WdtzAy(SplitCrLf(Lines))
 End Function
+
 Function WdtzLinesAy%(LinesAy)
 Dim O%, Lines
 For Each Lines In Itr(LinesAy)
@@ -131,6 +131,7 @@ For Each Lines In Itr(LinesAy)
 Next
 WdtzLinesAy = O
 End Function
+
 Function LinesAyAlignL(LinesAy$()) As String()
 If Sz(LinesAy) = 0 Then Exit Function
 Dim W%: W = WdtzLinesAy(LinesAy)
@@ -174,12 +175,15 @@ Dim P1$()
 Dim P2$(): If FmtSql Then P2 = AyAlignL(Fny) Else P2 = Fny
 SqpSelX_FF_ExtNy = KwSel & C_T & JnComma(AyAddPfx(JnAyab(P1, P2), C_NLTT))
 End Function
+
 Function SqpSel_FF_Ey$(FF, ExprAy$())
 SqpSel_FF_Ey = SqpSel_X(SqpSelX_FF_ExtNy(FF, ExprAy))
 End Function
+
 Function JnCommaSpcFF$(FF)
 JnCommaSpcFF = JnCommaSpc(FnyzFF(FF))
 End Function
+
 Function SqpSel_FF$(FF, Optional Dis As Boolean)
 SqpSel_FF = SqpSel_Dis(Dis) & JnCommaSpcFF(FF)
 End Function
@@ -247,12 +251,15 @@ Push ExprVblAy, "4sf| sdf"
     Act = SqpSet_FF_Evy(Fny, ExprVblAy)
 'Debug.Print LineszVbl(Act)
 End Sub
+
 Function SqpSet_FF_Evy$(FF, EqVy)
 
 End Function
+
 Private Function QNm$(T)
 QNm = QuoteSq(T)
 End Function
+
 Function SqpUpd_T$(T)
 SqpUpd_T = KwUpd & C_T & QNm(T)
 End Function
@@ -260,6 +267,7 @@ End Function
 Function SqpWhfv(F, V) ' Ssk is single-Sk-value
 SqpWhfv = C_Wh & QNm(F) & "=" & QV(V)
 End Function
+
 Function SqpWhK$(K&, T)
 SqpWhK = SqpWhfv(T & "Id", K)
 End Function
@@ -271,6 +279,7 @@ End Function
 Private Function QV$(V)
 QV = QuoteSql(V)
 End Function
+
 Private Property Get C_And$()
 If FmtSql Then
     C_And = C_NLT & KwAnd & C_T
@@ -278,12 +287,15 @@ Else
     C_And = " " & KwAnd & " "
 End If
 End Property
+
 Private Property Get C_Wh$()
 C_Wh = C_NLT & KwWh & C_NLT
 End Property
+
 Function SqpWh_F_InVy$(F, InVy)
 SqpWh_F_InVy = C_Wh & FldInVy_Str(F, InVy)
 End Function
+
 Private Sub Z_SqpWhFldInVy_Str()
 Dim Fny$(), Vy()
 Fny = SySsl("A B C")
@@ -376,8 +388,9 @@ VblAyAlignAsLy = O
 End Function
 
 Function SqlSel_FF_EDic_Fm$(FF, EDic As Dictionary, T, Optional IsDis As Boolean)
-SqlSel_FF_EDic_Fm = SqlSel_FF_Ey_Fm(FF, SyDicKy(EDic, FnyzFF(FF)), T, IsDis)
+SqlSel_FF_EDic_Fm = SqlSel_FF_Ey_Fm(FF, SyzDicKy(EDic, FnyzFF(FF)), T, IsDis)
 End Function
+
 Function SqlSel_FF_Fm$(FF, T, Optional IsDis As Boolean, Optional Bexpr$)
 SqlSel_FF_Fm = SqpSel_FF(FF, IsDis) & SqpFm(T) & SqpWh(Bexpr)
 End Function
@@ -389,6 +402,7 @@ End Function
 Function ItrTT(TT)
 ItrTT = Itr(TermAyzTT(TT))
 End Function
+
 Function FnyzPfxN(Pfx$, N%) As String()
 Dim J%
 For J = 1 To N
@@ -440,16 +454,16 @@ End Function
 Function SqpWh_FF_Eqvy$(FF, EqVy)
 
 End Function
+
 Function SqpSet_FF_EqDr$(FF, EqDr)
 
 End Function
-
 
 Function SqlSel_FF_Fm_Bexpr$(FF, T, Bexpr$)
 
 End Function
 
-Function QAddCol$(T, Fny0, F As DRs, E As Dictionary)
+Function QAddCol$(T, Fny0, F As Drs, E As Dictionary)
 Dim O$(), Fld
 For Each Fld In CvNy(Fny0)
 '    PushI O, Fld & " " & QAddCol1(Fld, F, E)
@@ -461,8 +475,8 @@ Function SqlCrtPkzT$(T)
 SqlCrtPkzT = FmtQQ("Create Index PrimaryKey on [?] (?Id) with Primary", T, T)
 End Function
 
-Function QCrtSk_T_SkFF$(T, SkFF)
-QCrtSk_T_SkFF = FmtQQ("Create unique Index SecondaryKey on [?] (?)", T, JnComma(AyQuoteSq(CvNy(SkFF))))
+Function SqlCrtSk_T_SkFF$(T, SkFF)
+SqlCrtSk_T_SkFF = FmtQQ("Create unique Index SecondaryKey on [?] (?)", T, JnComma(AyQuoteSq(CvNy(SkFF))))
 End Function
 
 Function SqlCrtTbl_T_X$(T, X$)
@@ -550,8 +564,6 @@ X_Fny1_Dr1_SkVy:
     Return
 End Function
 
-
-
 Function Fnyzy_SetSqp$(Fny$(), Vy())
 Dim A$: GoSub X_A
 Fnyzy_SetSqp = "  Set " & A
@@ -566,10 +578,10 @@ X_A:
     A = JnComma(O)
     Return
 End Function
+
 Function FnyAlignQuote(Fny$()) As String()
 FnyAlignQuote = AyAlignL(AyQuoteSq(Fny))
 End Function
-
 
 Private Sub Z_SqlDtlTWhfInAset()
 Dim T$, F$, S As Aset, SqlWdt%
@@ -588,6 +600,7 @@ End Sub
 Function SqlDlt_Fm$(T)
 SqlDlt_Fm = "Delete * from [" & T & "]"
 End Function
+
 Function SqlDlt_Fm_Wh$(T, Bexpr$)
 SqlDlt_Fm_Wh = SqlDlt_Fm(T) & SqpWh(Bexpr)
 End Function
@@ -615,9 +628,11 @@ End Function
 Function LyJnSqlCommaAsetW(A As Aset, W%) As String()
 
 End Function
+
 Function SqpBexpr_F_Ev$(F, Ev)
 
 End Function
+
 Function SqpBktFF$(FF)
 'SqpBktFF = QuoteBkt(JnCommaFF(FF))
 End Function
@@ -630,9 +645,11 @@ Function SqlIns_T_FF_Valap$(T, FF, ParamArray ValAp())
 Dim Av(): Av = ValAp
 SqlIns_T_FF_Valap = SqpIns_T(T) & SqpBktFF(FF) & " Values" & SqpBktAv(Av)
 End Function
+
 Function SqpIns_T$(T)
 SqpIns_T = "Insert into [" & T & "]"
 End Function
+
 Function SqpBktAv$(Av())
 Dim O$(), I
 For Each I In Av
@@ -662,9 +679,11 @@ End Function
 Function SqlSel_Fm_WhId$(T, Id)
 SqlSel_Fm_WhId = SqpSel_Fm(T) & " " & SqpWh_T_Id(T, Id)
 End Function
+
 Function SqpSel_Fm$(T)
 SqpSel_Fm = KwSel & C_T & "*" & SqpFm(T)
 End Function
+
 Function SqpWh_T_Id$(T, Id)
 SqpWh_T_Id = SqpWh(FmtQQ("[?]Id=?", T, Id))
 End Function
@@ -720,14 +739,11 @@ Function SqlSel_F_Fm_F_Ev$(F, Fm, WhFld, Ev)
 SqlSel_F_Fm_F_Ev = SqlSel_F_Fm(F, Fm, Bexpr(WhFld, Ev))
 End Function
 
-Function BexprvFny$(Fny$(), Av())
+Function BexprzFnyVy$(Fny$(), Vy())
 
 End Function
 
 Function Bexpr$(F, Ev)
 Bexpr = QuoteSq(F) & "=" & QuoteSql(Ev)
-End Function
-Function SqlCrtSk$(T, SkFF)
-SqlCrtSk = FmtQQ("Create Unique Index SecondaryKey on ? (?)", T, JnCommaSpcFF(SkFF))
 End Function
 

@@ -17,19 +17,18 @@ End Type
 Sub CrtSchm(A As Database, Schm$())
 Const CSub$ = CMod & "CrtSchm"
 'ThwErMsg ErzSchm(Schm), CSub, "there is error in the Schm", "Schm Db", AyAddIxPfx(Schm, 1), DbNm(A)
-Dim TdLy$():          TdLy = AywRmvT1(Schm, C_Tbl)
-Dim EF As EF:           EF = EFzSchm(Schm)
-Dim T() As Dao.TableDef: T = TdAy(TdLy, EF)
-Dim P$():                P = SqyCrtPkzTny(PkTny(TdLy))
-Dim S$():                S = SqyCrtSk(TdLy)
-Dim DT As Dictionary: Set DT = Dic(AywRmvTT(Schm, C_Des, C_Tbl))
+Dim TdLy$():            TdLy = AywRmvT1(Schm, C_Tbl)
+Dim EF As EF:             EF = EFzSchm(Schm)
+Dim T() As Dao.TableDef:   T = TdAy(TdLy, EF)
+Dim P$():                  P = SqyCrtPkzTny(PkTny(TdLy))
+Dim S$():                  S = SqyCrtSk(TdLy)
+Dim Dt As Dictionary: Set Dt = Dic(AywRmvTT(Schm, C_Des, C_Tbl))
 Dim DF As Dictionary: Set DF = Dic(AywRmvTT(Schm, C_Des, C_Fld))
-Stop
-                      AppTdAy A, T
-                      RunSqy A, P
-                      RunSqy A, S
-   Set TblDesDic(A) = DT
-   Set FldDesDic(A) = DF
+                   AppTdAy A, T
+                   RunSqy A, P
+                   RunSqy A, S
+Set TblDesDic(A) = Dt
+Set FldDesDic(A) = DF
 End Sub
 
 Private Function EFzSchm(Schm$()) As EF
@@ -51,7 +50,7 @@ Dim TdLin, Sk$()
 For Each TdLin In Itr(TdLy)
     Sk = SkFny(TdLin)
     If Sz(Sk) > 0 Then
-        PushI SqyCrtSk, SqlCrtSk(T1(TdLin), Sk)
+        PushI SqyCrtSk, SqlCrtSk_T_SkFF(T1(TdLin), AyRpl(Sk, "*", T1(TdLin)))
     End If
 Next
 End Function
@@ -68,19 +67,24 @@ End Function
 Private Function TdAy(TdLy$(), A As EF) As Dao.TableDef()
 Dim TdLin
 For Each TdLin In TdLy
-    PushObj TdAy, Td(TdLin, A)
+    PushObj TdAy, TdzLin(TdLin, A)
 Next
 End Function
 
-Private Function Td(TdLin, A As EF) As Dao.TableDef
-'FDic is FDicSmf
-Dim O As New Dao.TableDef: O.Name = T1(TdLin)
-Dim T: T = O.Name
-Dim F
+Private Function TdzLin(TdLin, A As EF) As Dao.TableDef
+Dim T: T = T1(TdLin)
+Dim O As Dao.TableDef: Set O = New Dao.TableDef
+O.Name = T
+Dim F, Fd As Dao.Field2
 For Each F In FnyzTdLin(TdLin)
-    O.Fields.Append FdzEF(F, T, A)
+    If F = T & "Id" Then
+        Set Fd = FdzPk(F)
+    Else
+        Set Fd = FdzEF(F, A)
+    End If
+    O.Fields.Append Fd
 Next
-Set Td = O
+Set TdzLin = O
 End Function
 
 Function T1z_Itm_T1LikssAy$(Itm, T1LikssAy$())
@@ -91,7 +95,8 @@ For Each L In T1LikssAy
 Next
 End Function
 
-Private Function FdzEF(F, T, A As EF) As Dao.Field2
+Private Function FdzEF(F, A As EF) As Dao.Field2
+If Left(F, 2) = "Id" Then Stop
 Dim Ele$: Ele = T1z_Itm_T1LikssAy(F, A.FldLy)
 If Ele <> "" Then Set FdzEF = FdzEle(Ele, A.EleLy, F): Exit Function
 Set FdzEF = FdzStdFld(F):                 If Not IsNothing(FdzEF) Then Exit Function
@@ -102,9 +107,10 @@ End Function
 Private Function FdzEle(Ele$, EleLy$(), F) As Dao.Field2
 Dim EStr$: EStr = EleStr(EleLy, Ele)
 If EStr <> "" Then Set FdzEle = FdzFdStr(F & " " & EStr): Exit Function
-Set FdzEle = FdzStdEle(Ele, F): If Not IsNothing(FdzEle) Then Exit Function
-EStr = FdzStdEle(F, F)
+Set FdzEle = FdzShtTys(ShtTys:=Ele, Fld:=F): If Not IsNothing(FdzEle) Then Exit Function
+EStr = EleStr(EleLy, CStr(F))
 If EStr <> "" Then Set FdzEle = FdzFdStr(F & " " & EStr): Exit Function
+Set FdzEle = FdzShtTys(ShtTys:=F, Fld:=F)
 Dim EleNy$(): EleNy = T1Ay(EleLy)
 Thw CSub, FmtQQ("Fld(?) of Ele(?) not found in EleLy-of-EleAy(?) and not StdEle", F, Ele, TLin(EleNy))
 End Function
@@ -114,9 +120,6 @@ EleStr = RmvT1(FstEleT1(EleLy, Ele))
 End Function
 
 Private Function EleStrzStd$(Ele)
-End Function
-
-Private Function FdzStdFldNm(F) As Dao.Field2
 End Function
 
 Private Property Get Schm1() As String()
@@ -141,10 +144,12 @@ GoSub T1
 Exit Sub
 
 T1:
+    Set D = TmpDb
     Schm = Schm1
     GoTo Tst
 Tst:
     CrtSchm D, Schm
+    Dmp TdLyzDb(D)
     Return
 End Sub
 

@@ -16,14 +16,11 @@ Option Explicit
 ' 1      SK    0     ""            ""
 ' 2      SK    1     "Expression"  "={FunNm}()"
 ' 3      SK    1     "Library"     "|ACCDIDR\{fba}"
-Sub CrtTblzUSysRegInfo()
-RunQ CDb, "Create Table [USysRegInfo] (Subky Text,Type Long,ValName Text,Value Text)"
-End Sub
-Sub CrtTblzUSysRegInfoDb(A As Database)
+Sub CrtTblzUSysRegInfo(A As Database)
 RunQ A, "Create Table [USysRegInfo] (Subky Text,Type Long,ValName Text,Value Text)"
 End Sub
-Sub EnsTblzUSysRegInfoz(A As Database)
-If HasTbl(A, "USysRegInfo") Then CrtTblzUSysRegInfo
+Sub EnsTblzUSysRegInfo(A As Database)
+If HasTbl(A, "USysRegInfo") Then CrtTblzUSysRegInfo A
 End Sub
 
 Sub InstallAddIn(A As Database, Fb$, Optional AutoFunNm$ = "AutoExec")

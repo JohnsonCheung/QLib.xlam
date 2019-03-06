@@ -12,18 +12,18 @@ Function DszLidPm(A As LidPm) As Ds
 Set DszLidPm = Ds(DtAy(FilDt(A.Fil), FxColDt(A.Fx), FbColDt(A.Fb)), "LiPm-" & A.Apn)
 End Function
 
-Private Function FbColDt(A() As LidFb) As DT
+Private Function FbColDt(A() As LidFb) As Dt
 Dim Dry(), J%
 For J = 0 To UB(A)
     With A(J)
         PushI Dry, Array(.Fbn, .T, .Fset.TermLin, .Bexpr)
     End With
 Next
-Set FbColDt = DT("FbCol", "Fbn T FF Bexpr", Dry)
+Set FbColDt = Dt("FbCol", "Fbn T FF Bexpr", Dry)
 End Function
 
-Private Function FilDt(A() As LidFil) As DT
-Set FilDt = DT("LnkFil", "FilNm Ffn Exist", FilDry(A))
+Private Function FilDt(A() As LidFil) As Dt
+Set FilDt = Dt("LnkFil", "FilNm Ffn Exist", FilDry(A))
 End Function
 
 Private Function FilDry(A() As LidFil) As Variant()
@@ -35,8 +35,8 @@ For J = 0 To UB(A)
 Next
 End Function
 
-Private Function FxColDt(A() As LidFx) As DT
-Set FxColDt = DT("FxCol", "Fxn Wsn T ColNm ShtTyLis ExtNm", FxColDry(A))
+Private Function FxColDt(A() As LidFx) As Dt
+Set FxColDt = Dt("FxCol", "Fxn Wsn T ColNm ShtTyLis ExtNm", FxColDry(A))
 End Function
 
 Private Function FxColDry(A() As LidFx) As Variant()

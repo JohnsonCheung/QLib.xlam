@@ -37,6 +37,7 @@ End Function
 Function ExistFfnAset(FfnAy$()) As Aset
 Set ExistFfnAset = AsetzAy(ExistFfnAy(FfnAy))
 End Function
+
 Function MisFfnAset(FfnAy$()) As Aset
 Set MisFfnAset = AsetzAy(MisFfnAy(FfnAy))
 End Function

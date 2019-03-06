@@ -1,10 +1,6 @@
 Attribute VB_Name = "MDao_Db"
 Option Explicit
-Public CDb As Database
 Public Q$
-Sub OpnCDb(Fb)
-Set CDb = Db(Fb)
-End Sub
 
 Property Get IsOkDb(A As Database) As Boolean
 On Error GoTo X
@@ -12,11 +8,6 @@ IsOkDb = A.Name = A.Name
 Exit Property
 X:
 End Property
-
-Function AddTd(A As Database, Td As Dao.TableDef) As Dao.TableDef
-A.TableDefs.Append Td
-Set AddTd = Td
-End Function
 
 Sub AddTmpTbl(A As Database)
 A.TableDefs.Append TmpTd
@@ -88,7 +79,7 @@ Set DszDb = DszTT(A, Tny(A), Nm)
 End Function
 
 Function DszTT(A As Database, TT, Optional DsNm$) As Ds
-Dim DtAy() As DT
+Dim DtAy() As Dt
     Dim U%, Tny$()
     Tny = DftTny(TT, A.Name)
     U = UB(Tny)
@@ -104,9 +95,6 @@ If HasTbl(A, "#Tmp") Then Exit Sub
 A.Execute "Create Table [#Tmp] (AA Int, BB Text 10)"
 End Sub
 
-Sub EnsTmpTbl()
-EnsTmpTblz CDb
-End Sub
 Sub RunQ(A As Database, Q)
 On Error GoTo X
 A.Execute Q
@@ -236,17 +224,13 @@ ZZ2:
     Stop
 End Sub
 
-Private Sub Z_Qny()
-'DmpAy Qny(CDb)
-End Sub
-
 Private Sub ZZ()
 Dim A As Database
 Dim B As Dao.TableDef
 Dim C$()
 Dim D As Variant
 Dim E$
-Dim F As DRs
+Dim F As Drs
 Dim G As Dictionary
 'AddTd A, B
 'ChkPk A, C
@@ -260,29 +244,11 @@ Dim G As Dictionary
 'HasDbt A, D
 End Sub
 
-Sub RenTblzAddPfx(TT, Pfx$)
-RenTblzAddPfxDb CDb, TT, Pfx
-End Sub
-Sub RenTblzAddPfxDb(A As Database, TT, Pfx$)
+Sub RenTblzAddPfx(A As Database, TT, Pfx$)
 Dim T
 For Each T In ItrTT(TT)
     RenTblzAddPfxDbt A, T, Pfx
 Next
-End Sub
-
-Sub BrwTblz(A As Access.Application, T)
-A.DoCmd.OpenTable T
-End Sub
-
-Sub BrwTTzAcs(A As Access.Application, TT)
-Dim T
-For Each T In ItrTT(TT)
-    BrwTblz A, T
-Next
-End Sub
-
-Sub BrwTT(A As Database, TT)
-BrwTTzAcs CAcs, TT
 End Sub
 
 Function TdStrAy(A As Database, TT) As String()
@@ -300,9 +266,9 @@ Sub RenTbl(A As Database, T, ToNm$)
 A.TableDefs(T).Name = ToNm
 End Sub
 
-Sub RenTblzFmPfx(FmPfx$, ToPfx$)
+Sub RenTblzFmPfx(A As Database, FmPfx$, ToPfx$)
 Dim T As TableDef
-For Each T In CDb.TableDefs
+For Each T In A.TableDefs
     If HasPfx(T.Name, FmPfx) Then
         T.Name = RplPfx(T.Name, FmPfx, ToPfx)
     End If
@@ -317,35 +283,26 @@ Dim Av(): Av = TblAp
 DrpzTT Av
 End Sub
 
-Property Get TblDesz$(A As Database, T)
-
+Property Get TblDes$(A As Database, T)
+TblDes = PrpVal(A.TableDefs(T).Properties, C_Des)
 End Property
 
-Property Let TblDesz(A As Database, T, Des$)
-
+Property Let TblDes(A As Database, T, Des$)
+PrpVal(A.TableDefs(T).Properties, C_Des) = Des
 End Property
 
-Property Get TblAttDesz$()
-TblAttDesz = TblDesz(CDb, "Att")
+Property Get TblAttDes$(A As Dao.Database)
+TblAttDes = TblDes(A, "Att")
 End Property
 
-Property Let TblAttDesz(Des$)
-TblDesz(CDb, "Att") = Des
-End Property
-
-Property Get TblAttDes$()
-TblAttDes = TblAttDesz()
-End Property
-
-Property Let TblAttDes(Des$)
-TblAttDesz = Des
+Property Let TblAttDes(A As Dao.Database, Des$)
+TblDes(A, "Att") = Des
 End Property
 
 Property Set TblDesDic(A As Database, D As Dictionary)
-Dim I, F$, T$
-For Each I In D.Keys
-    AsgBrkDot1 I, T, F
-    FldDes(A, T, F) = D(I)
+Dim T
+For Each T In D.Keys
+    TblDes(A, T) = D(T)
 Next
 End Property
 
@@ -359,23 +316,36 @@ For Each T In Tni(A)
     Next
 Next
 End Property
+
 Property Set FldDesDic(A As Database, D As Dictionary)
-Dim T$, F$, Des$, TDotF
+Dim T, F$, Des$, TDotF
 For Each TDotF In D.Keys
-    AsgBrkDot TDotF, T, F
     Des = D(TDotF)
-    FldDes(A, T, F) = Des
+    If HasDot(TDotF) Then
+        AsgBrkDot TDotF, T, F
+        FldDes(A, T, F) = Des
+    Else
+        For Each T In Tny(A)
+            If HasFld(A, T, F) Then
+                FldDes(A, T, F) = Des
+            End If
+        Next
+    End If
 Next
 End Property
+
+Sub ClsDb(Db As Database)
+On Error Resume Next
+Db.Close
+End Sub
 
 Property Get TblDesDic(A As Database) As Dictionary
 Dim T, O As New Dictionary
 For Each T In Tni(A)
-    AddDiczNonBlankStr O, T, TblDesz(A, T)
+    AddDiczNonBlankStr O, T, TblDes(A, T)
 Next
 Set TblDesDic = O
 End Property
-
 
 Function JnStrDiczTwoColSql(TwoColSql) As Dictionary _
 'Return a dictionary of Ay with Fst-Fld as Key and Snd-Fld as Sy

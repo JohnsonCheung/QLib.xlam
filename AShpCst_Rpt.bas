@@ -1,22 +1,49 @@
 Attribute VB_Name = "AShpCst_Rpt"
 Option Explicit
-Private A As Database ' AppDb
-Public Const ShpCstApn$ = "ShpCst"
-Sub ShpCstGenSamp()
-End Sub
-
+Public Const RptApn$ = "ShpCst"
+Function RptAppDb() As Database
+Set RptAppDb = AppDb(RptApn)
+End Function
 Sub GenRpt()
 Dim P As LidPm: Set P = RptLidPm
 LnkImpzLidPm P
-GenOup P.Apn
-Dim OupFx$: OupFx = TmpFx
-GenOupFx P.Apn, OupFx
+GenOupTbl P.Apn
+ClsOupWbInst P.Apn
+Dim Wb As Workbook: Set Wb = GenOupWbInst(P.Apn)
+Dim OInstFx$: OInstFx = Wb.FullName
+CpyWszLidPm P, Wb
+WbVis Wb
+'If IsInstFfn(OInstFx) Then Thw CSub, "Program error.  OInstFx is not instance file", "OInstFx", OInstFx
+'If DltFfnIfPrompt(OInstFx, "Only file is generated in [" & OInstFx & "]") Then
+'    BrwFx OInstFx
+'    Exit Sub
+'End If
+'CpyFilUp OInstFx
+'BrwFx FfnUp(OInstFx)
 End Sub
 
-Sub ShpCstBrwPm()
+Sub BrwRptPm()
 ShpCstLiPm.Brw
 End Sub
+Private Sub ClsOupWbInst(Apn$)
+Dim Wb As Workbook, F$
+F = Fn(OupFx(Apn))
+For Each Wb In Xls.Workbooks
+    If IsInstFfn(Wb.FullName) And Wb.Name = F Then
+        Wb.Close False
+    End If
+Next
+End Sub
+Private Function GenOupWbInst(Apn$) As Workbook
+Dim OFx$: OFx = OupFxInst(Apn)
+ExpTpzFb AppFb(Apn), OFx
+Dim OWb As Workbook: Set OWb = WbzFx(OFx)
+RfhWb(OWb, WFb(Apn)).Save
+Set GenOupWbInst = OWb
+End Function
 
+Sub CpyWszLidPm(A As LidPm, ToOupWb As Workbook)
+End Sub
 
 Sub DocUOM _
 (A, _
@@ -40,12 +67,14 @@ B)
 ' "SC              as SC_U," & _  no need
 ' "[COL per case]  as AC_B," & _ no need
 End Sub
-Sub GenOup(Apn$)
-OpnWDb Apn
+
+Sub GenOupTbl(Apn$)
+WOpn Apn
 GenORate
 GenOMain
-ClsWDb
+WCls
 End Sub
+
 Private Sub GenOMain()
 'Inp: #IMB52
 '     #IUom
@@ -105,7 +134,6 @@ WRun "Select Whs,ZHT1,RateSc into [@Rate] from [#Cpy]"
 WDrp "#Cpy #Cpy1 #Cpy2"
 End Sub
 
-
 Private Property Get MB52_8601_8701_Missing() As String()
 'Const CSub$ = CMod & "MB52_8601_8701_Missing"
 'Const M$ = "Column-[Plant] must have value 8601 or 8701"
@@ -119,13 +147,14 @@ Private Property Get MB52_8601_8701_Missing() As String()
 ''End If
 'WDrp "#A"
 End Property
-Property Get PnmStkDte(AppDb As Database) As Date
-PnmStkDte = CDate(Mid(PnmVal(AppDb, "MB52Fn"), 6, 10))
-End Property
 
-Property Get PnmStkYYMD$(AppDb As Database)
+Function PnmStkDte(AppDb As Database) As Date
+PnmStkDte = CDate(Mid(PnmVal(AppDb, "MB52Fn"), 6, 10))
+End Function
+
+Function PnmStkYYMD$(AppDb As Database)
 PnmStkYYMD = Format(PnmStkDte(AppDb), "YYYY-MM-DD")
-End Property
+End Function
 
 Sub ShpCstBrwLiAct()
 BrwLiAct ShpCstLiAct
@@ -134,5 +163,4 @@ End Sub
 Property Get ShpCstLiAct() As LiAct
 Set ShpCstLiAct = LiAct(ShpCstLiPm)
 End Property
-
 

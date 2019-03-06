@@ -1,18 +1,18 @@
 Attribute VB_Name = "MDta_Fmt"
 Option Explicit
-Sub BrwDrs(A As DRs, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional Fnn$)
+Sub BrwDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional Fnn$)
 BrwAy FmtDrs(A, MaxColWdt, BrkColNm$), Fnn
 End Sub
 
-Function FmtDrs(A As DRs, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional ShwZer As Boolean, Optional HidIxCol As Boolean) As String()
+Function FmtDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional ShwZer As Boolean, Optional HidIxCol As Boolean) As String()
 'If BrkColNm changed, insert a break line if BrkColNm is given
-Dim DRs As DRs
-    Set DRs = DrsAddIxCol(A, HidIxCol)
+Dim Drs As Drs
+    Set Drs = DrsAddIxCol(A, HidIxCol)
 Dim BrkColIx%
     BrkColIx = IxzAy(A.Fny, BrkColNm)
 Dim Dry()
-    Dry = DRs.Dry
-    PushI Dry, DRs.Fny
+    Dry = Drs.Dry
+    PushI Dry, Drs.Fny
 
 Dim Ay$()
     Ay = FmtDry(Dry, MaxColWdt, BrkColIx, ShwZer) '<== Will insert break line if BrkColIx>=0
@@ -32,13 +32,13 @@ For Each I In A.DtAy
 Next
 End Function
 
-Function FmtDt(A As DT, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional ShwZer As Boolean, Optional HidIxCol As Boolean) As String()
+Function FmtDt(A As Dt, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional ShwZer As Boolean, Optional HidIxCol As Boolean) As String()
 PushI FmtDt, "*Tbl " & A.DtNm
 PushIAy FmtDt, FmtDrs(DrszDt(A), MaxColWdt, BrkColNm, ShwZer, HidIxCol)
 End Function
 
 Private Sub Z_FmtDrs()
-Dim A As DRs, MaxColWdt%, DtBrkLinMapStr$, NoIxCol As Boolean
+Dim A As Drs, MaxColWdt%, DtBrkLinMapStr$, NoIxCol As Boolean
 Set A = SampDrs
 GoSub Tst
 Exit Sub
@@ -50,7 +50,7 @@ Tst:
 End Sub
 
 Private Sub Z_FmtDt()
-Dim A As DT, MaxColWdt%, BrkColNm$, ShwZer As Boolean
+Dim A As Dt, MaxColWdt%, BrkColNm$, ShwZer As Boolean
 '--
 Set A = SampDt1
 'Ept = Z_DteTimStrpt1
@@ -64,12 +64,12 @@ Tst:
 End Sub
 
 Private Sub ZZ()
-Dim A As DRs
+Dim A As Drs
 Dim B%
 Dim C$
 Dim D As Boolean
 Dim E As Ds
-Dim F As DT
+Dim F As Dt
 FmtDrs A, B, C, D, D
 FmtDt F, B, C, D, D
 End Sub

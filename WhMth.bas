@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 Option Explicit
 Dim X_Nm As WhNm, X_ShtMdy$(), X_ShtKd$()
 Dim X_IsEmp As Boolean
-Property Get Init(ShtMdy$(), ShtKd$(), Nm As WhNm) As WhMth
+Function Init(ShtMdy$(), ShtKd$(), Nm As WhNm) As WhMth
 Set X_Nm = Nm
 X_ShtMdy = ShtMdy
 X_ShtKd = ShtKd
@@ -18,7 +18,7 @@ Set X_Nm = Nm
 If IsNothing(Nm) Then Thw CSub, "Nm cannot be nothing"
 If Nm.IsEmp And (Sz(ShtMdy) = 0) And (Sz(ShtKd) = 0) Then X_IsEmp = True
 Set Init = Me
-End Property
+End Function
 
 Property Get WhNm() As WhNm
 Set WhNm = X_Nm

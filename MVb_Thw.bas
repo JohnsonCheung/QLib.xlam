@@ -230,3 +230,7 @@ BrwAy Er
 Stop
 End Sub
 
+Sub ThwEqObj(A, B, Fun$, Optional Msg$ = "Two given object cannot be same")
+If IsEqObj(A, B) Then Thw Fun, Msg
+End Sub
+

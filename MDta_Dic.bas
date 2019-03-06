@@ -1,12 +1,12 @@
 Attribute VB_Name = "MDta_Dic"
 Option Explicit
-Function DrszDic(A As Dictionary, Optional InclDicValOptTy As Boolean, Optional Tit$ = "Key Val") As DRs
+Function DrszDic(A As Dictionary, Optional InclDicValOptTy As Boolean, Optional Tit$ = "Key Val") As Drs
 Dim Fny$()
 Fny = SySsl(Tit): If InclDicValOptTy Then Push Fny, "Val-TypeName"
-Set DrszDic = DRs(Fny, DryzDic(A, InclDicValOptTy))
+Set DrszDic = Drs(Fny, DryzDic(A, InclDicValOptTy))
 End Function
 
-Function DtzDic(A As Dictionary, Optional DtNm$ = "Dic", Optional InclDicValOptTy As Boolean) As DT
+Function DtzDic(A As Dictionary, Optional DtNm$ = "Dic", Optional InclDicValOptTy As Boolean) As Dt
 Dim Dry()
 Dry = DryzDic(A, InclDicValOptTy)
 Dim F$
@@ -15,7 +15,7 @@ Dim F$
     Else
         F = "Key Val"
     End If
-Set DtzDic = DT(DtNm, F, Dry)
+Set DtzDic = Dt(DtNm, F, Dry)
 End Function
 
 Function FnyzDic(Optional InclValTy As Boolean) As String()

@@ -4,13 +4,6 @@ Function Xls() As Excel.Application
 Set Xls = Excel.Application
 End Function
 
-Function AddInz(A As Excel.Application, FxaNm) As Excel.AddIn
-Dim I As Excel.AddIn
-For Each I In A.AddIns
-    If I.Name = FxaNm & ".xlam" Then Set AddInz = I
-Next
-End Function
-
 Function HasAddInFn(A As Excel.Application, AddInFn) As Boolean
 HasAddInFn = HasItn(A.AddIns, AddInFn)
 End Function

@@ -9,6 +9,7 @@ For Each C In Pj.VBComponents
     End If
 Next
 End Sub
+
 Sub RplModPfx(FmPfx$, ToPfx$)
 RplModPfxzPj CurPj, FmPfx, ToPfx
 End Sub
@@ -20,6 +21,7 @@ Else
     A.Name = NewNm
 End If
 End Sub
+
 Sub RplModPfxzPj(Pj As VBProject, FmPfx$, ToPfx$)
 Dim C As VBComponent, N$
 For Each C In Pj.VBComponents
@@ -30,7 +32,6 @@ For Each C In Pj.VBComponents
     End If
 Next
 End Sub
-
 
 Sub AddCmpSfxPj(Sfx)
 AddCmpSfx CurPj, Sfx

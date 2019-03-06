@@ -12,13 +12,25 @@ For Each I In Ay
 Next
 RmvTermAy = Lin
 End Function
+
 Function TLin$(TermAy$())
 TLin = JnTermAy(TermAy)
 End Function
 
-Function JnTermAy$(TermAy$())
-JnTermAy = JnSpc(AyQuoteSqIf(TermAy))
+Function TLinzAp$(ParamArray TermAp())
+Dim Av(): Av = TermAp
+TLinzAp = JnTermAy(SyzAv(Av))
 End Function
+
+Function JnTermAp$(ParamArray Ap())
+Dim Av(): Av = Ap
+JnTermAp = JnTermAy(SyzAv(Av))
+End Function
+
+Function JnTermAy$(TermAy$())
+JnTermAy = JnSpc(AyQuoteSqIf(SyRmvBlank(TermAy)))
+End Function
+
 Function TermAyzTT(TT) As String()
 Const CSub$ = CMod & "TermAyzTT"
 Select Case True
@@ -27,9 +39,11 @@ Case IsSy(TT): TermAyzTT = TT
 Case Else: Thw CSub, "Given TT must be Str or Sy", "TypeName TT", TypeName(TT), TT
 End Select
 End Function
+
 Function LinzTermAy$(TermAy)
 LinzTermAy = JnSpc(AyQuoteSqIf(TermAy))
 End Function
+
 Function TermAset(Lin) As Aset
 Set TermAset = AsetzAy(TermAy(Lin))
 End Function
@@ -98,3 +112,4 @@ Private Sub Z()
 Z_ShfT
 MVb_Lin_Term:
 End Sub
+

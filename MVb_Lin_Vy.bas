@@ -37,7 +37,7 @@ Dim S$: S = ShfTxt(OAy, Lbl)
 If S = "" Then ShfTxtOpt = StrRslt(S)
 End Function
 
-Private Function ShfBool(OAy$(), Lbl) As Boolean
+Private Function ShfBool(OAy$(), Lbl)
 If Sz(OAy) = 0 Then Exit Function
 Dim J%, L$, Ay$()
 Ay = OAy
@@ -51,7 +51,7 @@ For J = 0 To UB(Ay)
 Next
 End Function
 
-Private Function ShfTxt$(OAy$(), Lbl)
+Private Function ShfTxt(OAy$(), Lbl)
 If Sz(OAy) = 0 Then Exit Function
 'Return either string or ""
 Dim I, J%, Ay$()

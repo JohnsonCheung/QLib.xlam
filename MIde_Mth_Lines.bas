@@ -15,7 +15,7 @@ End Property
 Function MthLineszPub$(PubMthNm)
 Const CSub$ = CMod & "MthLineszPub"
 Dim A$: A = PubMthNm
-Dim B$(): B = ModNyPubMthNm(A)
+Dim B$(): B = ModNyzPubMthNm(A)
 If Sz(B) <> 1 Then
     Thw CSub, "Should be 1 module found", "PubMthNm [#Mod having PubMthNm] ModNy-Found", PubMthNm, Sz(B), B
 End If

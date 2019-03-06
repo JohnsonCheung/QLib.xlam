@@ -13,13 +13,14 @@ End Function
 Function AvzAp(ParamArray Ap()) As Variant()
 AvzAp = Ap
 End Function
+Function SyzApNonBlank(ParamArray Ap()) As String()
+Dim Av(): Av = Ap: SyzApNonBlank = SyRmvBlank(SyzAv(Av))
+End Function
+
 Function SyzAp(ParamArray Ap()) As String()
 Dim Av(): Av = Ap: SyzAp = SyzAv(Av)
-Dim O$(), I
-For Each I In Av
-    PushI Sy, I
-Next
 End Function
+
 Function Sy(ParamArray Ap()) As String()
 Dim Av(): Av = Ap: Sy = SyzAv(Av)
 End Function

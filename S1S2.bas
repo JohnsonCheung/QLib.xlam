@@ -10,11 +10,11 @@ Attribute VB_Exposed = True
 Option Explicit
 Public S1$, S2$
 
-Friend Property Get Init(S1, S2) As S1S2
+Friend Function Init(S1, S2) As S1S2
 Me.S1 = S1
 Me.S2 = S2
 Set Init = Me
-End Property
+End Function
 
 Property Get ToStr$()
 ToStr = "S1S2(S1(" & S1 & ") S2(" & S2 & "))"

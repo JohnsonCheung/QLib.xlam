@@ -2,28 +2,6 @@ Attribute VB_Name = "MVb_Str_Nm"
 Option Explicit
 Public Const C_Dbl$ = """"
 Public Const C_Sng$ = "'"
-Function NmSeqNo%(A)
-Dim B$: B = TakAftRev(A, "_")
-If B = "" Then Exit Function
-If Not IsNumeric(B) Then Exit Function
-NmSeqNo = B
-End Function
-
-Sub DDNmAsgBrk(A, O1$, O2$, O3$)
-Dim Ay$(): Ay = Split(A, ".")
-Select Case Sz(Ay)
-Case 1: O1 = "":    O2 = "":    O3 = Ay(0)
-Case 2: O1 = "":    O2 = Ay(0): O3 = Ay(1)
-Case 3: O1 = Ay(0): O2 = Ay(1): O3 = Ay(2)
-Case Else: Stop
-End Select
-End Sub
-
-
-Function DDNmThird$(A)
-Dim Ay$(): Ay = Split(A, "."): If Sz(Ay) <> 3 Then Stop
-DDNmThird = Ay(2)
-End Function
 
 Function IsNm(A) As Boolean
 If Not IsLetter(FstChr(A)) Then Exit Function
@@ -50,12 +28,15 @@ End Function
 Function ChrQuote$(S, Chr$)
 ChrQuote = Chr & S & Chr
 End Function
+
 Function SpcQuote$(S)
 SpcQuote = ChrQuote(S, " ")
 End Function
+
 Function DblQuote$(S)
 DblQuote = ChrQuote(S, vbDblQuote)
 End Function
+
 Function SngQuote$(S)
 SngQuote = ChrQuote(S, vbSngQuote)
 End Function

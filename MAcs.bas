@@ -1,31 +1,39 @@
 Attribute VB_Name = "MAcs"
 Option Explicit
 Const CMod$ = "MAcs."
-Function CAcs() As Access.Application
+Sub BrwTbl(D As Database, T)
+CAcs(D).DoCmd.OpenTable T
+End Sub
+
+Sub BrwTT(D As Database, TT)
+Dim T
+For Each T In ItrTT(TT)
+    BrwTbl D, T
+Next
+End Sub
+
+Function CAcs(D As Database) As Access.Application
 Static A As New Access.Application
-OpnFbz A, CDb.Name
+OpnFb A, D.Name
 End Function
+
 Sub SavRec()
 DoCmd.RunCommand acCmdSaveRecord
 End Sub
+
 Function AcsFb$(A As Access.Application)
 On Error Resume Next
 AcsFb = A.CurrentDb.Name
 End Function
 
-Sub ClsDb(A As Access.Application)
+Sub ClsDbzAcs(A As Access.Application)
 On Error Resume Next
 A.CloseCurrentDatabase
-End Sub
-Sub OpnFbz(A As Access.Application, Fb)
-If FbzAcs(A) = Fb Then Exit Sub
-ClsDb A
-A.OpenCurrentDatabase Fb
 End Sub
 
 Sub BrwFb(Fb)
 Static Acs As New Access.Application
-OpnFbz Acs, Fb
+OpnFb Acs, Fb
 Acs.Visible = True
 End Sub
 
@@ -51,7 +59,7 @@ FbzAcs = AcsFb(A)
 End Function
 
 Sub QuitzA(A As Access.Application)
-ClsDb A
+ClsDbzAcs A
 A.Quit
 Set A = Nothing
 End Sub
@@ -182,20 +190,24 @@ Stamp "AcsQuit: Quit":        A.Quit
 Stamp "AcsQuit: Set Nothing": Set A = Nothing
 Stamp "AcsQuit: End"
 End Sub
+
 Function NewAcs(Optional Shw As Boolean) As Access.Application
 Dim O As Access.Application: Set O = CreateObject("Access.Application")
 If Shw Then O.Visible = True
 Set NewAcs = O
 End Function
+
 Function DbNmzAcs$(A As Access.Application)
 On Error Resume Next
 DbNmzAcs = A.CurrentDb.Name
 End Function
+
 Sub OpnFb(A As Access.Application, Fb)
 If DbNmzAcs(A) = Fb Then Exit Sub
-ClsDb A
+ClsDbzAcs A
 A.OpenCurrentDatabase Fb
 End Sub
+
 Function DftAcs(A As Access.Application) As Access.Application
 If IsNothing(A) Then
     Set DftAcs = NewAcs

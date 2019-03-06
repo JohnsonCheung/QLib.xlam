@@ -13,11 +13,11 @@ Dim IxAy(): IxAy = IxAp
 DrySelIxAp = DrySel(A, IxAy)
 End Function
 
-Function DrsSel(A As DRs, FF) As DRs
+Function DrsSel(A As Drs, FF) As Drs
 Dim Fny$(): Fny = CvNy(FF)
 If IsEqAy(A.Fny, Fny) Then Set DrsSel = A: Exit Function
 ThwNotSuperAy A.Fny, Fny
-Set DrsSel = DRs(Fny, DrySel(A.Dry, IxAy(A.Fny, Fny)))
+Set DrsSel = Drs(Fny, DrySel(A.Dry, IxAy(A.Fny, Fny)))
 End Function
 
 Private Sub Z_DrsSel()
@@ -25,7 +25,7 @@ Private Sub Z_DrsSel()
 'BrwDrs Vmd.MthDrs
 End Sub
 
-Function DtSel(A As DT, FF) As DT
+Function DtSel(A As Dt, FF) As Dt
 Set DtSel = DtzDrs(DrsSel(DrszDt(A), FF), A.DtNm)
 End Function
 

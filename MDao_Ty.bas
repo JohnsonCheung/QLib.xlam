@@ -1,24 +1,24 @@
 Attribute VB_Name = "MDao_Ty"
 Option Explicit
 Const CMod$ = "MDao__Ty."
-Public Const VdtShtTyLis$ = "ABytChrDteDecILMSTim"
-Property Get MsgzVdtShtTy() As String()
-Erase XX
-X " Byt"
-X " Chr"
-X " Dec"
-X " Dte"
-X " Tim"
-X "A   Att"
-X "B   Bool"
-X "C   Ccy"
-X "D   Dbl"
-X "I   Int"
-X "L   Lng"
-X "M   Mem"
-X "T   Txt"
-Erase XX
+Public Const VdtShtTyLis$ = "AAttBBoolBytCChrDDteDecIIntLLngMMemSTTimTxt"
+
+Property Get VdtShtTyAy() As String()
+VdtShtTyAy = CmlAy(VdtShtTyLis)
 End Property
+
+Property Get VdtShtTyDtaTyAy() As String()
+Dim O$(), I
+For Each I In VdtShtTyAy
+    PushI O, I & " " & DtaTyzShtTy(I)
+Next
+VdtShtTyDtaTyAy = AyAlign2T(O)
+End Property
+
+Property Get VdtDtaTyAy() As String()
+VdtDtaTyAy = DtaTyAyzShtTyAy(VdtShtTyAy)
+End Property
+
 Function IsShtTy(A) As Boolean
 Select Case Len(A)
 Case 1, 3: If Not IsAscUCase(Asc(A)) Then Exit Function
@@ -29,21 +29,21 @@ End Function
 Function DaoTyzShtTy(ShtTy) As Dao.DataTypeEnum
 Dim O As Dao.DataTypeEnum
 Select Case ShtTy
-Case "A":   O = dbAttachment
-Case "B":   O = dbBoolean
+Case "A", "Att":  O = dbAttachment
+Case "B", "Bool":  O = dbBoolean
 Case "Byt": O = dbByte
-Case "C":   O = dbCurrency
+Case "C", "Cur":  O = dbCurrency
 Case "Chr": O = dbChar
 Case "Dte": O = dbDate
 Case "Dec": O = dbDecimal
-Case "D":   O = dbDouble
-Case "I":   O = dbInteger
-Case "L":   O = dbLong
-Case "M":   O = dbCurrency
-Case "S":   O = dbMemo
-Case "T":   O = dbText
+Case "D", "Dbl":  O = dbDouble
+Case "I", "Int":  O = dbInteger
+Case "L", "Lng":  O = dbLong
+Case "M", "Mem":  O = dbMemo
+Case "S", "Sng":  O = dbSingle
+Case "T", "Txt":  O = dbText
 Case "Tim": O = dbTime
-Case Else: Thw CSub, "Invalid ShtTy", "The-Invalid-ShtTy Valid-ShtTy", ShtTy, MsgzVdtShtTy
+Case Else: ThwShtTyEr CSub, ShtTy
 End Select
 DaoTyzShtTy = O
 End Function
@@ -74,6 +74,10 @@ End Select
 ShtTyzDao = O
 End Function
 
+Function DtaTyzTF$(A As Database, T, F)
+DtaTyzTF = DtaTy(FdzTF(A, T, F).Type)
+End Function
+
 Function DtaTy$(T As Dao.DataTypeEnum)
 Dim O$
 Select Case T
@@ -89,6 +93,8 @@ Case Dao.DataTypeEnum.dbLong:       O = "Long"
 Case Dao.DataTypeEnum.dbMemo:       O = "Memo"
 Case Dao.DataTypeEnum.dbSingle:     O = "Single"
 Case Dao.DataTypeEnum.dbText:       O = "Text"
+Case Dao.DataTypeEnum.dbChar:       O = "Char"
+Case Dao.DataTypeEnum.dbTime:       O = "Time"
 Case Else: Stop
 End Select
 DtaTy = O
@@ -115,6 +121,7 @@ Case Else: Thw CSub, "Invalid ShtTyzDao", "ShtTyzDao Valid", DtaTy, _
 End Select
 DaoTyzDtaTy = O
 End Function
+
 Function DaoTyzVbTy(A As VbVarType) As Dao.DataTypeEnum
 Dim O As Dao.DataTypeEnum
 Select Case A
@@ -127,25 +134,36 @@ End Select
 DaoTyzVbTy = O
 End Function
 
-Function DaoTyVal(V) As Dao.DataTypeEnum
-DaoTyVal = DaoTyzVbTy(VarType(V))
+Function DaoTyzVal(V) As Dao.DataTypeEnum
+Dim T As VbVarType: T = VarType(V)
+If T = vbString Then
+    If Len(V) > 255 Then
+        DaoTyzVal = dbMemo
+    Else
+        DaoTyzVal = dbText
+    End If
+    Exit Function
+End If
+DaoTyzVal = DaoTyzVbTy(T)
 End Function
+
 Function CvDaoTy(A) As Dao.DataTypeEnum
 CvDaoTy = A
 End Function
-Function DaoTyAyzShtTyLis$(A() As DataTypeEnum)
+
+Function ShtTyLiszDaoTyAy$(A() As DataTypeEnum)
 Dim O$, I
 For Each I In A
     O = O & ShtTyzDao(CvDaoTy(I))
 Next
-DaoTyAyzShtTyLis = O
+ShtTyLiszDaoTyAy = O
 End Function
 
-Function ShtTyAyErzShtTyLis(ShtTyLis$) As String()
+Function ErzShtTyLis(ShtTyLis$) As String()
 Dim O$(), ShtTy
 For Each ShtTy In CmlAy(ShtTyLis)
     If Not IsVdtShtTy(ShtTy) Then
-        PushI ShtTyAyErzShtTyLis, ShtTy
+        PushI ErzShtTyLis, ShtTy
     End If
 Next
 End Function
@@ -167,6 +185,7 @@ End Function
 Function DtaTyzShtTy$(ShtTy)
 DtaTyzShtTy = DtaTy(DaoTyzShtTy(ShtTy))
 End Function
+
 Function ShtTyzAdo$(A As ADODB.DataTypeEnum)
 Dim O$
 Select Case A
@@ -194,3 +213,8 @@ End Function
 Function ShtTyAyzShtTyLis(ShtTyLis$) As String()
 ShtTyAyzShtTyLis = CmlAy(ShtTyLis)
 End Function
+
+Sub ThwShtTyEr(Fun$, ShtTy)
+Thw Fun, "Invalid ShtTy", "The-Invalid-ShtTy Valid-ShtTy", ShtTy, VdtShtTyDtaTyAy
+End Sub
+

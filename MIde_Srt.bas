@@ -80,6 +80,7 @@ With MthNm3zDNm
     .MthTy = Ty
 End With
 End Function
+
 Function MthSrtKeyzDNm$(MthDNm) ' MthDNm is Nm.Ty.Mdy
 MthSrtKeyzDNm = MthSrtKeyzNm3(MthNm3zDNm(MthDNm))
 End Function
@@ -125,9 +126,8 @@ Function SrtedSrcDic(Src$()) As Dictionary
 Dim K, D As Dictionary, O As New Dictionary
 Set D = MthDic(Src)
 For Each K In D.Keys
-    O.Add MthSrtKey(K), D(K)
+    O.Add MthSrtKeyzDNm(K), D(K)
 Next
-Stop
 Set SrtedSrcDic = O
 End Function
 
@@ -172,7 +172,7 @@ GoSub T1
 Exit Sub
 T1:
 
-    Dim Ay1$(): Ay1 = MthDNySrc(SrcMd)
+    Dim Ay1$(): Ay1 = MthDNyzSrc(SrcMd)
     Dim Ay2$(): Ay2 = MthSrcKeyAyzDNm(Ay1)
     BrwS1S2Ay S1S2AyAyab(Ay2, Ay1)
     Return

@@ -138,7 +138,7 @@ Private Function LyzFunMsg(Fun$, Msg$) As String()
 Dim O$(), MsgL1$, MsgRst$
 AsgBrkDot1 Msg, MsgL1, MsgRst
 PushI LyzFunMsg, SfxDotEns(MsgL1) & IIf(Fun = "", "", "  @" & Fun)
-PushIAy LyzFunMsg, AyIndent(LyWrap(MsgRst))
+PushIAy LyzFunMsg, AyIndent(LyWrap(SplitCrLf(MsgRst)))
 End Function
 
 

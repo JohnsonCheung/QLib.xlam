@@ -1,11 +1,7 @@
 Attribute VB_Name = "MDao_Db_Brw"
 Option Explicit
 
-Sub BrwQz(A As Database, Q)
-BrwDrs DrszFbq(A, Q)
-End Sub
-
-Sub BrwQ(Q)
-BrwQz CDb, Q
+Sub BrwQ(A As Database, Q)
+BrwDrs DrszQ(A, Q)
 End Sub
 

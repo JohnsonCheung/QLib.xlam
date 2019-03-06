@@ -5,8 +5,8 @@ Sub BrwLiAct(A As LiAct)
 BrwDrs LiActDrs(A)
 End Sub
 
-Function LiActDrs(A As LiAct) As DRs
-Set LiActDrs = DRs("FilNm Wsn Fld ShtTy T FF Ffn", LiActDry(A))
+Function LiActDrs(A As LiAct) As Drs
+Set LiActDrs = Drs("FilNm Wsn Fld ShtTy T FF Ffn", LiActDry(A))
 End Function
 
 Private Function LiActDry(A As LiAct) As Variant()

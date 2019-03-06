@@ -1,7 +1,7 @@
 Attribute VB_Name = "MApp_Pm"
 Option Explicit
 Property Get PnmOupPth$(A As Database)
-PnmOupPth = PnmVal(A, "OupPth")
+PnmOupPth = PthEnsAll(PnmVal(A, "OupPth"))
 End Property
 
 Function PnmPth$(Db As Database, Pnm)
@@ -30,8 +30,8 @@ With Db.TableDefs("Pm").OpenRecordset
 End With
 End Property
 
-Sub BrwTblPm()
-'Tbl_Opn "Pm"
+Sub BrwTblPm(Apn$)
+BrwTbl AppDb(Apn), "Pm"
 End Sub
 
 Private Sub ZZ()

@@ -1,8 +1,18 @@
 Attribute VB_Name = "MXls_Dao"
 Option Explicit
+Sub RplLoCn(Wb As Workbook, Fb)
+Dim I, Lo As ListObject, D As Database
+Set D = Db(Fb)
+For Each I In OupLoAy(Wb)
+    Set Lo = I
+    RplLoCnzT Lo, D, "@" & Mid(Lo.Name, 3)
+Next
+D.Close
+Set D = Nothing
+End Sub
 
-Function RplLoCnzDbt(A As ListObject, Db As Database, T) As ListObject
-Dim Sq(), DRs As DRs, R As Dao.Recordset
+Function RplLoCnzT(A As ListObject, Db As Database, T) As ListObject
+Dim Sq(), Drs As Drs, R As Dao.Recordset
 Set R = Rs(Db, T)
 If Not IsEqAy(FnyzRs(R), FnyzLo(A)) Then
     Debug.Print "--"
@@ -18,15 +28,17 @@ End If
 Sq = SqAddSngQuote(SqzRs(R))
 MinxLo A
 'RgzSq Sq, A.DataBodyRange
-Set RplLoCnzDbt = A
+Set RplLoCnzT = A
 End Function
 
 Function CvCn(A) As ADODB.Connection
 Set CvCn = A
 End Function
+
 Sub RplOleWcFb(Wc As WorkbookConnection, Fb)
 CvCn(Wc.OLEDBConnection.ADOConnection).ConnectionString = CnStrzFbAdo(Fb)
 End Sub
+
 Sub RplLoCnzFbt(Lo As ListObject, Fb As Database, T)
 With Lo.QueryTable
     RplOleWcFb .Connection, Fb '<==
@@ -48,14 +60,14 @@ With Lo.QueryTable
 End With
 End Sub
 
-Function WbzTT(A As Database, TT) As Workbook
-Dim O As Workbook, T
+Function WbzTT(Db As Database, TT, Optional UseWc As Boolean) As Workbook
+Dim O As Workbook
 Set O = NewWb
-For Each T In TermAy(TT)
-    AddWszT O, A, T
-Next
+Set WbzTT = WbAddTT(O, Db, TT, UseWc)
+WszWb(O, "Sheet1").Delete
 Set WbzTT = O
 End Function
+
 Function SetWsn(Ws As Worksheet, Nm$) As Worksheet
 If Nm = "" Then Exit Function
 Ws.Name = Nm
@@ -111,27 +123,20 @@ Set O = WszRg(At).ListObjects.Add(SourceType:=XlSourceType.xlSourceWorkbook, Des
 SetLoNm O, Dft(LoNm0, LoNm(T))
 SetQtFbt O.QueryTable, Fb, T
 End Sub
-Sub CrtFxDbtt(Fx$, Db As Database, TT)
-WbDbtt(Db, TT).SaveAs Fx
+Sub FxzTT(Fx$, Db As Database, TT)
+WbzTT(Db, TT).SaveAs Fx
 End Sub
 
-Function WbDbtt(Db As Database, TT, Optional UseWc As Boolean) As Workbook
-Dim O As Workbook
-Set O = NewWb
-Set WbDbtt = AddWczWbDbtt(O, Db, TT, UseWc)
-WsWb(O, "Sheet1").Delete
-Set WbDbtt = O
+Function WszWbT(Wb As Workbook, Db As Database, T, Wsn$) As Worksheet
+Dim Sq(): Sq = SqzT(Db, T)
+Dim A1 As Range: Set A1 = A1zWs(WsAdd(Wb, Wsn))
+Set WszWbT = WsLo(LozSq(Sq, A1))
 End Function
 
-Sub CrtFxTT(Fx$, TT$)
-CrtFxDbtt Fx, CDb, TT
-End Sub
-
-Function WszDbt(Db As Database, T, Optional Wsn$) As Worksheet
+Function WszT(Db As Database, T, Optional Wsn$) As Worksheet
+'set Wszt = WszT(NewWb(
 Dim Sq(): Sq = SqzT(Db, T)
 Dim A1 As Range: Set A1 = NewA1(Wsn)
-Set WszDbt = WsLo(LozSq(Sq, A1))
+Set WszT = WsLo(LozSq(Sq, A1))
 End Function
-Function WszT(T, Optional Wsn$ = "Data") As Worksheet
-Set WszT = WszDbt(CDb, T, Wsn)
-End Function
+

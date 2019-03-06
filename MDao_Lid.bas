@@ -2,15 +2,15 @@ Attribute VB_Name = "MDao_Lid"
 Option Explicit
 
 Sub LnkImpzLidPm(A As LidPm)
-ThwEr ChkColzLidPm(A), CSub
-OpnWDb A.Apn
+ThwEr ErzLidPmzV1(A), CSub
+WIniOpn A.Apn
 ThwEr ChkLnkTbl(W, LtPmzLid(A)), CSub
 RunSqy W, ImpSqyzLidPm(A)
-ClsWDb
+WCls
 End Sub
 
-Private Function ChkColzLidPm(A As LidPm) As String()
-ChkColzLidPm = MsgzLidMis(LidMis(A))
+Private Function ErzLidPm(A As LidPm) As String()
+ErzLidPm = MsgzLidMis(LidMis(A))
 End Function
 
 Private Function ImpSqyzLidPm(A As LidPm) As String()
@@ -75,8 +75,8 @@ FmtSql = True
 Brw ImpSqyzLidPm(RptLidPm)
 End Sub
 
-Private Sub Z_ChkColzLidPm()
-Brw ChkColzLidPm(RptLidPm)
+Private Sub Z_ErzLidPm()
+Brw ErzLidPm(RptLidPm)
 End Sub
 Private Sub Z()
 

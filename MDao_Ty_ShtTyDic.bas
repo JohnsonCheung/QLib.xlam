@@ -1,10 +1,10 @@
 Attribute VB_Name = "MDao_Ty_ShtTyDic"
 Option Explicit
-Function ShtTyDic(Ffn, TblNm) As Dictionary
+Function ShtTyDic(FxOrFb, TblNm) As Dictionary
 Select Case True
-Case IsFb(Ffn): Set ShtTyDic = ShtTyDiczFbt(Ffn, TblNm)
-Case IsFx(Ffn): Set ShtTyDic = ShtTyDiczFxw(Ffn, TblNm)
-Case Else: Thw CSub, "Ffn should be Fx or Fb", "Ffn TblNm", Ffn, TblNm
+Case IsFb(FxOrFb): Set ShtTyDic = ShtTyDiczFbt(FxOrFb, TblNm)
+Case IsFx(FxOrFb): Set ShtTyDic = ShtTyDiczFxw(FxOrFb, TblNm)
+Case Else: Thw CSub, "FxOrFb should be Fx or Fb", "FxOrFb TblNm", FxOrFb, TblNm
 End Select
 End Function
 
@@ -16,7 +16,7 @@ For Each F In Db(Fb).TableDefs(T).Fields
 Next
 End Function
 
-Function ShtTyDiczFxw(Fx, W) As Dictionary
+Private Function ShtTyDiczFxw(Fx, W) As Dictionary
 Dim C As Column, Cat As Catalog, I
 Set Cat = CatzFx(Fx)
 For Each I In Cat.Tables(CatT(W)).Columns

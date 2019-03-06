@@ -8,7 +8,7 @@ Stop
 End Sub
 Function LnkImp(A As LiPm) As Database
 ThwEr ChkColzLiPm(A), CSub
-OpnWDb A.Apn
+WOpn A.Apn
 LnkTblz W, LtPm(A)
 RunSqy W, ImpSqyzLi(A)
 Set LnkImp = W

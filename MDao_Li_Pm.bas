@@ -1,4 +1,4 @@
-Attribute VB_Name = "MDao_Lid_LiPm"
+Attribute VB_Name = "MDao_Li_Pm"
 Option Explicit
 Private A$()
 Sub BrwSampLiPm()

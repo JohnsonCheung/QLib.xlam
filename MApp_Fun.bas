@@ -5,6 +5,14 @@ Private X_Acs As New Access.Application
 Function AppDb(Apn) As Database
 Set AppDb = Db(AppFb(Apn))
 End Function
+
+Function OupFxInst$(Apn)
+OupFxInst = FfnInst(OupFx(Apn))
+End Function
+
+Function OupFx$(Apn)
+OupFx = PnmOupPth(AppDb(Apn)) & Apn & ".xlsx"
+End Function
 Function AppFb$(Apn)
 AppFb = AppHom & Apn & ".app.accdb"
 End Function

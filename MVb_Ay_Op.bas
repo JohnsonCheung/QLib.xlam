@@ -41,6 +41,16 @@ Next
 MinAy = O
 End Function
 
+Function AyMinusAp(Ay, ParamArray Ap())
+Dim IAy, O
+O = Ay
+For Each IAy In Ap
+    O = AyMinus(Ay, IAy)
+    If Sz(O) = 0 Then AyMinusAp = O: Exit Function
+Next
+AyMinusAp = O
+End Function
+
 Function AyMinus(A, B)
 If Sz(B) = 0 Then AyMinus = A: Exit Function
 AyMinus = AyCln(A)
@@ -51,18 +61,6 @@ For Each V In A
         PushI AyMinus, V
     End If
 Next
-End Function
-
-Function AyMinusAp(Ay, ParamArray AyAp())
-Dim O: O = Ay
-Dim AyAv(): AyAv = AyAp
-Dim Ayi
-For Each Ayi In AyAv
-    If Sz(O) = 0 Then GoTo X
-    O = AyMinus(O, Ayi)
-Next
-X:
-AyMinusAp = O
 End Function
 
 Function MaxAy(A)

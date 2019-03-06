@@ -28,7 +28,7 @@ Set CT = Cat.Tables(T)
 FnyCatTbl = Itn(Cat.Tables(T).Columns)
 End Function
 
-Function DrsFxw(Fx, Wsn) As DRs
+Function DrsFxw(Fx, Wsn) As Drs
 Set DrsFxw = DrsArs(ArsFxw(Fx, Wsn))
 End Function
 Function ArsFxw(Fx, Wsn) As ADODB.Recordset
@@ -51,10 +51,10 @@ Function ArsCnq(A As ADODB.Connection, Q) As ADODB.Recordset
 Set ArsCnq = A.Execute(Q)
 End Function
 
-Function DrsCnq(A As ADODB.Connection, Q) As DRs
+Function DrsCnq(A As ADODB.Connection, Q) As Drs
 Set DrsCnq = DrsArs(ArsCnq(A, Q))
 End Function
-Function DrsFbqAdo(A$, Q$) As DRs
+Function DrsFbqAdo(A$, Q$) As Drs
 Set DrsFbqAdo = DrsArs(ARsFbq(A, Q))
 End Function
 
@@ -68,8 +68,8 @@ Function ARsFbq(Fb$, Q$) As ADODB.Recordset
 Set ARsFbq = CnzFb(Fb).Execute(Q)
 End Function
 
-Function DrsArs(A As ADODB.Recordset) As DRs
-Set DrsArs = DRs(FnyArs(A), DryArs(A))
+Function DrsArs(A As ADODB.Recordset) As Drs
+Set DrsArs = Drs(FnyArs(A), DryArs(A))
 End Function
 
 Function DryArs(A As ADODB.Recordset) As Variant()

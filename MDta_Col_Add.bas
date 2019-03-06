@@ -1,14 +1,14 @@
 Attribute VB_Name = "MDta_Col_Add"
 Option Explicit
 
-Function AddColzColVyDrs(A As DRs, ColNm$, ColVy) As DRs
+Function DrsAddColzNmVy(A As Drs, ColNm$, ColVy) As Drs
 Dim Fny$(): Fny = AyAddItm(A.Fny, ColNm)
 Dim AtIx&: AtIx = UB(Fny)
-Dim Dry(): Dry = AddColzColVyDry(A.Dry, ColVy, AtIx)
-Set AddColzColVyDrs = DRs(Fny, Dry)
+Dim Dry(): Dry = DryAddColzColVy(A.Dry, ColVy, AtIx)
+Set DrsAddColzNmVy = Drs(Fny, Dry)
 End Function
 
-Private Function AddColzColVyDry(Dry(), ColVy, AtIx&) As Variant()
+Private Function DryAddColzColVy(Dry(), ColVy, AtIx&) As Variant()
 Dim Dr, J&, O(), U&
 U = UB(ColVy)
 If U = -1 Then Exit Function
@@ -22,10 +22,10 @@ For Each Dr In Itr(Dry)
     O(J) = Dr
     J = J + 1
 Next
-AddColzColVyDry = O
+DryAddColzColVy = O
 End Function
 
-Function AddColzMap(A As DRs, NewFldEqFunQuoteFmFldSsl$) As DRs
+Function DrsAddColzMap(A As Drs, NewFldEqFunQuoteFmFldSsl$) As Drs
 Dim NewColVy(), FmVy()
 Dim I, NewFld$, Fun$, FmFld$
 For Each I In SySsl(NewFldEqFunQuoteFmFldSsl)

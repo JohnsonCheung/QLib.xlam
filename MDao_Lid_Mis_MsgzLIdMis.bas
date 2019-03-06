@@ -1,4 +1,4 @@
-Attribute VB_Name = "MDao_Lid_Er_MsgzLIdMis"
+Attribute VB_Name = "MDao_Lid_Mis_MsgzLIdMis"
 Option Explicit
 
 Function MsgzLidMis(A As LidMis) As String()

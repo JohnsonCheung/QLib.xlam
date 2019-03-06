@@ -78,8 +78,8 @@ A.QueryTable.Delete
 WsRCRC(Ws, R1, C1, R2, C2).ClearContents
 End Sub
 
-Function DrszLo(A As ListObject) As DRs
-Set DrszLo = DRs(FnyzLo(A), DryLo(A))
+Function DrszLo(A As ListObject) As Drs
+Set DrszLo = Drs(FnyzLo(A), DryLo(A))
 End Function
 Function DryLo(A As ListObject) As Variant()
 DryLo = DryzSq(SqzLo(A))

@@ -1,17 +1,20 @@
 Attribute VB_Name = "MDta_ObjPrp"
 Option Explicit
-Function DrszItrPP(Itr, PP_MayWith_NewFldEqQuoteFmFld$) As DRs
+Function DrszItrPP(Itr, PP_MayWith_NewFldEqQuoteFmFld$) As Drs
 Dim A$(): A = SySsl(PP_MayWith_NewFldEqQuoteFmFld)
 Dim PPzPrp$()
 Dim PPzFml$()
 Dim PPzAll$()
 WAsg3PP PP_MayWith_NewFldEqQuoteFmFld, PPzPrp, PPzFml, PPzAll
 ThwEr WFmlEr(PPzPrp, PPzFml), CSub
-Dim Drs1 As DRs: Set Drs1 = DrszItrPPzPure(Itr, PPzPrp)
-Dim Drs2 As DRs: Set Drs2 = WAddFml(Drs1, PPzFml)
+Dim Drs1 As Drs: Set Drs1 = DrszItrPPzPure(Itr, PPzPrp)
+Stop
+Dim Drs2 As Drs: Set Drs2 = DrsAddFml(Drs1, PPzFml)
 Set DrszItrPP = DrsSel(Drs2, PPzAll)
+Stop
 End Function
-Function DrszOyPP(Oy, PP_MayWith_NewFldEqQuoteFmFld$) As DRs
+
+Function DrszOyPP(Oy, PP_MayWith_NewFldEqQuoteFmFld$) As Drs
 Set DrszOyPP = DrszItrPP(Itr(Oy), PP_MayWith_NewFldEqQuoteFmFld)
 End Function
 
@@ -25,6 +28,7 @@ Next
 If Sz(O) > 0 Then PushI O, FmtQQ("Valid-Pm[?]", JnSpc(PrpAy))
 WFmlEr = O
 End Function
+
 Private Sub WAsg3PP(PP_with_NewFldEqQuoteFmFld$, OPPzPrp$(), OPPzFml$(), OPPzAll$())
 Dim I
 For Each I In SySsl(PP_with_NewFldEqQuoteFmFld)
@@ -37,8 +41,9 @@ For Each I In SySsl(PP_with_NewFldEqQuoteFmFld)
     End If
 Next
 End Sub
-Private Function WAddFml(A As DRs, PPzFml$()) As DRs
-Dim O As DRs: Set O = A
+
+Private Function DrsAddFml(A As Drs, PPzFml$()) As Drs
+Dim O As Drs: Set O = A
 Dim NewFld$, FunNm$, PmAy$(), Fml
 For Each Fml In Itr(PPzFml)
     NewFld = TakBef(Fml, "=")
@@ -47,7 +52,8 @@ For Each Fml In Itr(PPzFml)
     Set O = AddColzFmlDrs(O, NewFld, FunNm, PmAy)
 Next
 End Function
-Function AddColzFmlDrs(A As DRs, NewFld, FunNm$, PmAy$()) As DRs
+
+Function AddColzFmlDrs(A As Drs, NewFld, FunNm$, PmAy$()) As Drs
 Dim Dry(): Dry = A.Dry
 If Sz(Dry) = 0 Then Set AddColzFmlDrs = A: Exit Function
 Dim Dr, U&, IxAy1&(), Av()
@@ -58,10 +64,11 @@ For Each Dr In Dry
     Av = AywIxAy(Dr, IxAy1)
     Push Dr, RunAv(FunNm, Av)
 Next
-Set AddColzFmlDrs = DRs(AyAddItm(A.Fny, NewFld), Dry)
+Set AddColzFmlDrs = Drs(AyAddItm(A.Fny, NewFld), Dry)
 End Function
-Private Function DrszItrPPzPure(Oy, PP) As DRs
-Set DrszItrPPzPure = DRs(PP, DryzItrPPzPure(Oy, PP))
+
+Private Function DrszItrPPzPure(Oy, PP) As Drs
+Set DrszItrPPzPure = Drs(PP, DryzItrPPzPure(Oy, PP))
 End Function
 
 Private Function DryzItrPPzPure(Itr, PP) As Variant()

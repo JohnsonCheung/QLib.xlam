@@ -7,7 +7,9 @@ Function FfnSz&(Ffn)
 If Not HasFfn(Ffn) Then FfnSz = -1: Exit Function
 FfnSz = FileLen(Ffn)
 End Function
-
+Function FfnFdr$(Ffn)
+FfnFdr = Fdr(Pth(Ffn))
+End Function
 Function TimFfn(Ffn) As Date
 If HasFfn(Ffn) Then TimFfn = FfnDte(Ffn)
 End Function

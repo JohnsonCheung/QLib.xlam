@@ -5,17 +5,22 @@ Type MdMth
     Md As CodeModule
     MthNm As String
 End Type
+Sub AsgDNm(DNm$, O1$, O2$, O3$)
+Dim Ay$(): Ay = Split(DNm, ".")
+Select Case Sz(Ay)
+Case 1: O1 = "":    O2 = "":    O3 = Ay(0)
+Case 2: O1 = "":    O2 = Ay(0): O3 = Ay(1)
+Case 3: O1 = Ay(0): O2 = Ay(1): O3 = Ay(2)
+Case Else: Stop
+End Select
+End Sub
+
 Property Get MdQNm$()
-MdQNm = MdQNmMd(CurMd)
+MdQNm = MdQNmzMd(CurMd)
 End Property
-Property Get MthDNm$()
-MthDNm = MthDNmLin(CurMthLin)
-End Property
-Function MthDNmLin$(MthLin)
-MthDNmLin = MthDNmMthNm3(MthNm3(MthLin))
-End Function
-Property Get MthQDNm$()
-MthQDNm = MdQNm & "." & MthDNm
+
+Property Get MthQNm$()
+MthQNm = MdQNm & "." & MthDNmzLin(CurMthLin)
 End Property
 
 Function MthNyzPub(Src$()) As String()
@@ -68,10 +73,12 @@ End Function
 Function RmvMthMdy$(L)
 RmvMthMdy = RmvTermAy(L, MthMdyAy)
 End Function
-Function MthDNmMthNm3$(A As MthNm3)
+
+Function MthDNmzMthNm3$(A As MthNm3)
 If A.Nm = "" Then Exit Function
-MthDNmMthNm3 = A.Nm & "." & A.ShtTy & "." & A.ShtMdy
+MthDNmzMthNm3 = A.Nm & "." & A.ShtTy & "." & A.ShtMdy
 End Function
+
 Function RmvMthNm3$(Lin)
 Dim L$: L = Lin
 RmvMthMdy L
@@ -147,6 +154,14 @@ Function MthKd$(Lin)
 MthKd = TakMthKd(RmvMdy(Lin))
 End Function
 
+Function ModNyzPubMthNm(PubMthNm) As String()
+Dim I, A$
+A = PubMthNm
+For Each I In ModItr
+    If HasEle(MthNyzPub(Src(CvMd(I))), A) Then PushI ModNyzPubMthNm, MdNm(CvMd(I))
+Next
+End Function
+
 Function MthTy$(Lin)
 MthTy = TermLinAy(RmvMdy(Lin), MthTyAy)
 End Function
@@ -158,8 +173,6 @@ For Each L In SrcMdNm("Fct")
 Next
 BrwAy O
 End Sub
-
-
 
 Private Sub Z_MthKd()
 Dim A$

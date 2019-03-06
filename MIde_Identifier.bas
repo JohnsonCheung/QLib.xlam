@@ -24,9 +24,11 @@ Set A = IdentifierAset(LinesPj(CurPj))
 Debug.Print A.Cnt
 A.Srt.Brw
 End Sub
+
 Function IdentifierAset(S) As Aset
 Set IdentifierAset = AsetzAy(IdentifierAy(S))
 End Function
+
 Function RmvPun$(S)
 If S = "" Then Exit Function
 Dim J&, O$(), C$, A%
@@ -42,6 +44,7 @@ For J = 1 To Len(S)
 Next
 RmvPun = Jn(O, "")
 End Function
+
 Function IdentifierAy(S) As String()
 Dim I
 For Each I In Itr(SySsl(RmvPun(S)))

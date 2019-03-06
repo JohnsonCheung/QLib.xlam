@@ -1,6 +1,35 @@
 Attribute VB_Name = "MDao_Ssk"
 Option Explicit
 Const CMod$ = "MDao_DML_SngFldSkTbl_Operation."
+Public Const C_SkNm$ = "SecondaryKey"
+Public Const C_PkNm$ = "PrimaryKey"
+
+Function SkFnyzTd(T As Dao.TableDef) As String()
+SkFnyzTd = FnyzIdx(SkIdxzTd(T))
+End Function
+
+Function SkFny(A As Database, T) As String()
+SkFny = SkFnyzTd(A.TableDefs(T))
+End Function
+
+Function Sskv(A As Database, T) As Aset
+'SSskv is [S]ingleFielded [S]econdKey [K]ey [V]alue [Aset], which is always a Value-Aset.
+'and Ssk is a field-name from , which assume there is a Unique-Index with name "SecordaryKey" which is unique and and have only one field
+'Set Sskv = ColSet(SskFld)
+End Function
+
+Function SkIdxzTd(T As Dao.TableDef) As Dao.Index
+Set SkIdxzTd = IdxzTd(T, C_SkNm)
+End Function
+
+Function SkIdx(A As Database, T) As Dao.Index
+Set SkIdx = Idx(A, T, C_SkNm)
+End Function
+
+Function SskFld$(Db As Database, T)
+Dim Sk$(): Sk = SkFny(Db, T): If Sz(Sk) = 1 Then SskFld = Sk(0): Exit Function
+Thw CSub, "SkFny-Sz<>1", "Db T, SkFny-Sz SkFny", DbNm(Db), T, Sz(Sk), Sk
+End Function
 
 Sub DltRecNotInSskv(Db As Database, SskTbl, NotInSSskv As Aset) _
 'Delete Db-T record for those record's Sk not in NotInSSskv, _
@@ -12,6 +41,7 @@ Set Excess = SskVset(Db, SskTbl).Minus(NotInSSskv)
 If Excess.IsEmp Then Exit Sub
 'RunSqy Db, SqyDlt_Fm_WhFld_InAset(SskTbl, SskFld_Dbt(Db, SskTbl), Excess)
 End Sub
+
 Function AsetzDbtf(A As Database, T, F) As Aset
 Set AsetzDbtf = AsetzRs(Rs(A, SqlSel_F_Fm(F, T)))
 End Function
@@ -41,3 +71,4 @@ End Sub
 Private Sub Z()
 MDao_DML_SngFldSkTbl_Operation:
 End Sub
+

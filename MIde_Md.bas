@@ -10,7 +10,7 @@ Ass CurMd.Parent.Name = "Cur_d"
 End Sub
 
 Property Get CurMdDNm$()
-CurMdDNm = MdQNmMd(CurMd)
+CurMdDNm = MdQNmzMd(CurMd)
 End Property
 
 
@@ -50,11 +50,11 @@ A.CodePane.Window.Close
 End Sub
 
 Sub CmpMdAB(A As CodeModule, B As CodeModule)
-BrwCmpDicAB MthDiczMd(A), MthDiczMd(B), MdQNmMd(A), MdQNmMd(B)
+BrwCmpDicAB MthDiczMd(A), MthDiczMd(B), MdQNmzMd(A), MdQNmzMd(B)
 End Sub
 
-Function MdQNmMd$(A As CodeModule)
-MdQNmMd = PjNmzMd(A) & "." & MdNm(A)
+Function MdQNmzMd$(A As CodeModule)
+MdQNmzMd = PjNmzMd(A) & "." & MdNm(A)
 End Function
 Sub RmvMdLno(A As CodeModule, Lno&)
 A.DeleteLines Lno, 1

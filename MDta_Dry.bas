@@ -72,7 +72,7 @@ Tst:
     StopNE
     Return
 End Sub
-Function DrsJnFldKKFld(DRs As DRs, KK, JnFld, Optional Sep$ = " ") As DRs
+Function DrsJnFldKKFld(Drs As Drs, KK, JnFld, Optional Sep$ = " ") As Drs
 
 End Function
 
@@ -169,12 +169,12 @@ If A(DrIx)(BrkColIx) = A(DrIx - 1)(BrkColIx) Then Exit Function
 IsBrkDryIxC = True
 End Function
 
-Function NColDry%(A)
+Function NColzDry%(A)
 Dim O%, Dr
 For Each Dr In Itr(A)
     O = Max(O, Sz(Dr))
 Next
-NColDry = O
+NColzDry = O
 End Function
 
 
@@ -208,7 +208,6 @@ Sub ThwIfNEDry(A(), B())
 If Not IsEqDry(A, B) Then Stop
 End Sub
 
-
 Function DrywColEq(A, C%, V) As Variant()
 Dim Dr
 For Each Dr In A
@@ -223,13 +222,22 @@ For Each Dr In Itr(A)
 Next
 End Function
 
-Function DrywDup(A(), C) As Variant()
-Dim Dup, Dr, O()
-Dup = AywDup(ColzDry(A, C))
+Function DrywDup(A(), CC) As Variant()
+If Not IsArray(CC) Then DrywDup = DrywDupCol(A, CInt(CC)): Exit Function
+Dim Dup, Dr, Chr0$
+Chr0 = Chr(0)
+Dup = AywDup(SyzDry(A, CC))
 For Each Dr In Itr(A)
-    If HasEle(Dup, Dr(C)) Then Push O, Dr
+    If HasEle(Dup, Jn(AywIxAy(Dr, CC), vbFldSep)) Then Push DrywDup, Dr
 Next
-DrywDup = O
+End Function
+
+Private Function DrywDupCol(Dry(), ColIx%) As Variant()
+Dim Dup$(), Dr, O()
+Dup = CvSy(AywDup(StrColzDry(Dry, ColIx)))
+For Each Dr In Itr(Dry)
+    If HasEle(Dup, Dr(ColIx)) Then PushI DrywDupCol, Dr
+Next
 End Function
 
 Function DrywIxAyzy(A, IxAy, EqVy) As Variant()

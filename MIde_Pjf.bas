@@ -8,7 +8,7 @@ Sub ClsPjf(Pjf)
 Const CSub$ = CMod & "ClsPjf"
 Select Case True
 Case IsFxa(Pjf): RmvPjzXlsPjf PjfXls, Pjf
-Case IsFb(Pjf):  ClsDb PjfAcs
+Case IsFb(Pjf):  ClsDbzAcs PjfAcs
 Case Else: Thw CSub, "Invalid Pjf, should be Fxa or Fb", "Pjf", Pjf
 End Select
 End Sub
@@ -24,7 +24,7 @@ End Function
 Sub OpnPjf(Pjf)  ' Return either Xls.Application (Xls) or Acs.Application (Function-static)
 Select Case True
 Case IsFxa(Pjf): PjfXls.Workbooks.Open Pjf
-Case IsFb(Pjf):  OpnFbz PjfAcs, Pjf
+Case IsFb(Pjf):  OpnFb PjfAcs, Pjf
 Case Else: Stop
 End Select
 End Sub

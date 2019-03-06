@@ -24,16 +24,16 @@ Property Get SampDr6() As Variant()
 SampDr6 = Array(63, 64, 65)
 End Property
 
-Property Get SampDrs1() As DRs
-Set SampDrs1 = DRs("A B C", SampDry1)
+Property Get SampDrs1() As Drs
+Set SampDrs1 = Drs("A B C", SampDry1)
 End Property
 
-Property Get SampDrs2() As DRs
-Set SampDrs2 = DRs("A B C", SampDry2)
+Property Get SampDrs2() As Drs
+Set SampDrs2 = Drs("A B C", SampDry2)
 End Property
 
-Property Get SampDrs() As DRs
-Set SampDrs = DRs("A B C D E G H I J K", SampDry)
+Property Get SampDrs() As Drs
+Set SampDrs = Drs("A B C D E G H I J K", SampDry)
 End Property
 
 Property Get SampDFnyRs() As String()
@@ -62,10 +62,10 @@ Property Get SampDs() As Ds
 'Set SampDs = Ds(DtAy(SampDt1, SampDt2), "SampDs")
 End Property
 
-Property Get SampDt1() As DT
-Set SampDt1 = DT("SampDt1", "A B C", SampDry1)
+Property Get SampDt1() As Dt
+Set SampDt1 = Dt("SampDt1", "A B C", SampDry1)
 End Property
 
-Property Get SampDt2() As DT
-Set SampDt2 = DT("SampDt2", "A B C", SampDry2)
+Property Get SampDt2() As Dt
+Set SampDt2 = Dt("SampDt2", "A B C", SampDry2)
 End Property

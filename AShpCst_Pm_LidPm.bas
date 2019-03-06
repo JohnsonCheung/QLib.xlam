@@ -1,4 +1,4 @@
-Attribute VB_Name = "AShpCst_Pm_ShpCstLidPm"
+Attribute VB_Name = "AShpCst_Pm_LidPm"
 Option Explicit
 Property Get RptAppFb$()
 RptAppFb = "C:\Users\user\Documents\Projects\Vba\ShpCst\ShpCstApp.accdb"

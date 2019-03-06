@@ -68,7 +68,6 @@ DoItrFunXP Wb.Connections, "RfhWc", Fb
 DoItrFun Wb.PivotCaches, "RfhPc"
 DoItrFun Wb.Sheets, "RfhWs"
 'FmtLozWb Wb
-Stop
 Dim Wc As WorkbookConnection
 For Each Wc In Wb.Connections
     DltWc Wb

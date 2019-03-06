@@ -95,7 +95,7 @@ BrwAy FmtDry(A, MaxColWdt, BrkColIx, ShwZer, Fmt)
 End Sub
 Private Function WdtAyzDry(A()) As Integer()
 Dim J%
-For J = 0 To NColDry(A) - 1
+For J = 0 To NColzDry(A) - 1
     Push WdtAyzDry, WdtzAy(ColzDry(A, J))
 Next
 End Function

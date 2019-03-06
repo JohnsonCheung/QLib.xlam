@@ -53,10 +53,10 @@ End Function
 Function HitFilAtr(A As VbFileAttribute, Wh As VbFileAttribute) As Boolean
 HitFilAtr = True
 End Function
+
 Function Fdr$(Pth)
 Fdr = TakAftRev(RmvLasChr(PthEnsSfx(Pth)), PthSep)
 End Function
-
 
 Sub ThwNotFdr(A)
 Const CSub$ = CMod & "ThwNotFdr"

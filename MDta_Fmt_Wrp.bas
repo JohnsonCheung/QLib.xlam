@@ -57,7 +57,7 @@ Function WrpDryWdt(WrpDry(), WrpWdt%) As Integer() _
 'otherwise use WrpWdt
 If Sz(WrpDry) = 0 Then Exit Function
 Dim J%, Col()
-For J = 0 To NColDry(WrpDry) - 1
+For J = 0 To NColzDry(WrpDry) - 1
     Col = ColzDry(WrpDry, J)
     If IsArray(Col(0)) Then
         Push WrpDryWdt, WdtzAy(AyFlat(Col))

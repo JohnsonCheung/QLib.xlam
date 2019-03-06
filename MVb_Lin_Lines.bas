@@ -18,29 +18,25 @@ Tst:
     C
     Return
 End Sub
-Function LyWrap(Lines, Optional Wdt% = 80) As String()
-LyWrap = SplitCrLf(LinesWrap(Lines, Wdt))
+Function LinesWrap$(Lines, Optional Wdt% = 80)
+LinesWrap = Lines: Exit Function
+LinesWrap = JnCrLf(LyWrap(SplitCrLf(Lines), Wdt))
 End Function
 
-Function LinesWrap$(Lines, Optional Wdt% = 80)
+Function LyWrap(Ly$(), Optional Wdt% = 80) As String()
 Const CSub$ = CMod & "LinesWrap"
-Dim L$, W%, O$, J%
+Dim L$(), W%, J%, A$
 W = Wdt
-If W < 10 Then W = 10: Info CSub, "Given Wdt is too small, 10 is used", "Wdt Lines", Wdt, Lines
-O = Lines
-While Len(L) > 0
+If W < 10 Then W = 10: Info CSub, "Given Wdt is too small, 10 is used", "Wdt Ly", Wdt, Ly
+L = Ly
+While Sz(L) > 0
     J = J + 1: If J >= 1000 Then Stop
-    O = LinesWrJnSpcAp(O, W)
-    L = LinesWrapRst(O, W)
-    PushI LinesWrap, L
+    PushI LyWrap, ShfWrapLin(L, W)
 Wend
 End Function
-Private Function LinesWrJnSpcAp$(A$, W%)
-LinesWrJnSpcAp = Left(A, W)
-End Function
 
-Private Function LinesWrapRst$(A$, W%)
-LinesWrapRst = Mid(A, W + 1)
+Private Function ShfWrapLin$(OLy$(), W%)
+Stop
 Exit Function
 Dim O$, L$
     If FstChr(O) = " " Then

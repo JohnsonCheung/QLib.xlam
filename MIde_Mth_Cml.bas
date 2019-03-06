@@ -21,7 +21,7 @@ End Function
 Function MthCmlWsBase(Optional Vis As Boolean) As Worksheet
 Dim Dry()
 Dry = DryzSslAy(MthCmlVbe)
-Set MthCmlWsBase = WszDrs(DRs(MthCmlFny(NColDry(Dry)), Dry), Vis:=Vis)
+Set MthCmlWsBase = WszDrs(Drs(MthCmlFny(NColzDry(Dry)), Dry), Vis:=Vis)
 End Function
 
 Sub MthCmlAyVbeBrw()
@@ -35,7 +35,7 @@ MthCmlAyVbe = MthCmlAyzVbe(CurVbe)
 End Function
 Function MthCmlAyzVbe(A As Vbe) As String()
 Dim L
-For Each L In Itr(MthDNyVbe(A))
+For Each L In Itr(MthDNyzVbe(A))
     PushI MthCmlAyzVbe, MthCml(L)
 Next
 End Function

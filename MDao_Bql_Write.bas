@@ -1,35 +1,35 @@
-Attribute VB_Name = "MDao_BQLin_Write"
+Attribute VB_Name = "MDao_Bql_Write"
 Option Explicit
-Private Sub Z_WrtFbqzDb()
+Private Sub Z_WrtFbqlzDb()
 Dim P$: P = TmpPth
-WrtFbqzDb P, SampDb_DutyDta
+WrtFbqlzDb P, SampDb_DutyDta
 BrwPth P
 Stop
 End Sub
 
-Private Sub Z_WrtFbqzT()
+Private Sub Z_WrtFbqlzT()
 Dim T$: T = TmpFt
-WrtFbqzT T, SampDb_DutyDta, "PermitD"
+WrtFbql T, SampDb_DutyDta, "PermitD"
 BrwFt T
 End Sub
 
-Sub WrtFbqzDb(Pth, Db As Database)
-WrtFbqzTT Pth, Db, Tny(Db)
+Sub WrtFbqlzDb(Pth, Db As Database)
+WrtFbqlzTT Pth, Db, Tny(Db)
 End Sub
 
-Sub WrtFbqzTT(Pth, Db As Database, TT)
+Sub WrtFbqlzTT(Pth, Db As Database, TT)
 Dim T, P$
 P = PthEnsSfx(Pth)
 For Each T In TnyzTT(TT)
-    WrtFbqzT P & T & ".txt", Db, T
+    WrtFbql P & T & ".txt", Db, T
 Next
 End Sub
 
-Sub WrtFbqzT(Fbq, Db As Database, T)
-Dim F%: F = FnoOup(Fbq)
+Sub WrtFbql(Fbql, Db As Database, T)
+Dim F%: F = FnoOup(Fbql)
 Dim R As Dao.Recordset
 Set R = RszT(Db, T)
-Dim L$: L = ShtTysColonFldNmBQLinzFds(R.Fields)
+Dim L$: L = ShtTysColonFldNmBqlzT(Db, T)
 Print #F, L
 With R
     While Not .EOF

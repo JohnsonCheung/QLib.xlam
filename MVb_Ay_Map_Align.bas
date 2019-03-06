@@ -18,7 +18,7 @@ End Function
 Private Function AyAlignNTerm1$(A, W%())
 Dim Ay$(), J%, N%, O$(), I
 N = Sz(W)
-Ay = SyNTermRst(A, N)
+Ay = SyzNTermRst(A, N)
 If Sz(Ay) <> N + 1 Then Stop
 For J = 0 To N - 1
     PushI O, AlignL(Ay(J), W(J))

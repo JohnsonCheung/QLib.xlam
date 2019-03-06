@@ -15,13 +15,13 @@ Dim X_IsEmp As Boolean
 Property Get IsEmp() As Boolean
 IsEmp = X_IsEmp
 End Property
-Friend Property Get Init(Patn$, LikAy$(), ExlLikAy$()) As WhNm
+Friend Function Init(Patn$, LikAy$(), ExlLikAy$()) As WhNm
 If Patn = "" Then
     If Sz(LikAy) = 0 Then
         If Sz(ExlLikAy) = 0 Then
             X_IsEmp = True
             Set Init = Me
-            Exit Property
+            Exit Function
         End If
     End If
     
@@ -31,7 +31,7 @@ Set X_Re = RegExp(Patn)
 X_ExlLikAy = ExlLikAy
 X_LikAy = LikAy
 Set Init = Me
-End Property
+End Function
 Property Get Re() As RegExp
 Set Re = X_Re
 End Property

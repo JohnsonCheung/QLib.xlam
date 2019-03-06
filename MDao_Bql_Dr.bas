@@ -1,4 +1,4 @@
-Attribute VB_Name = "MDao_BQLin_Dr"
+Attribute VB_Name = "MDao_Bql_Dr"
 Option Explicit
 Sub InsRszBql(R As Dao.Recordset, Bql)
 R.AddNew

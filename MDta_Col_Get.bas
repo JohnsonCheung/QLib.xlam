@@ -1,14 +1,19 @@
 Attribute VB_Name = "MDta_Col_Get"
 Option Explicit
-Function ColzDrs(A As DRs, ColNm$) As Variant()
+Public Const vbFldSep$ = vbNullChar & "`" & vbNullChar
+Function ColzDrs(A As Drs, ColNm$) As Variant()
 ColzDrs = ColzDry(A.Dry, IxzAy(A.Fny, ColNm))
 End Function
-Function StrColzDrs(A As DRs, ColNm$) As String()
+Function StrColzDrs(A As Drs, ColNm$) As String()
 StrColzDrs = StrColzDry(A.Dry, IxzAy(A.Fny, ColNm))
 End Function
 
-Function SyzDry(Dry(), C) As String()
-SyzDry = StrColzDry(Dry, C)
+Function SyzDry(Dry(), CC, Optional FldSep$ = vbFldSep) As String()
+If Not IsArray(CC) Then SyzDry = StrColzDry(Dry, CC): Exit Function
+Dim Dr
+For Each Dr In Itr(Dry)
+    PushI SyzDry, Jn(AywIxAy(Dr, CC), FldSep)
+Next
 End Function
 
 Function SqzDry(A()) As Variant()
@@ -19,11 +24,10 @@ Function StrColzDry(Dry(), C) As String()
 StrColzDry = IntoColzDry(EmpSy, Dry, C)
 End Function
 
-
 Function SqzDrySkip(A(), SkipNRow%)
 Dim O(), C%, R&, Dr
 Dim NC%, NR&
-NC = NColDry(A)
+NC = NColzDry(A)
 NR = Sz(A) + SkipNRow
 ReDim O(1 To NR, 1 To NC)
 Dim DryIx&

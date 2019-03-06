@@ -11,21 +11,6 @@ End With
 End Sub
 
 
-Property Let ValzRsFld(Rs As Dao.Recordset, Fld, V)
-With Rs
-    .Edit
-    .Fields(Fld).Value = V
-    .Update
-End With
-End Property
-
-Property Get ValzRsFld(Rs As Dao.Recordset, Fld)
-With Rs
-    If .EOF Then Exit Property
-    If .BOF Then Exit Property
-    ValzRsFld = .Fields(Fld).Value
-End With
-End Property
 Sub SetRs(Rs As Dao.Recordset, Dr)
 If Sz(Dr) = Rs.Fields.Count Then
     Thw CSub, "Sz of Rs & Dr are diff", _

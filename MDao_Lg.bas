@@ -123,7 +123,9 @@ End Sub
 Sub LgBrw()
 BrwFt LgFt
 End Sub
-
+Property Get LgFt$()
+Stop '
+End Property
 Sub LgCls()
 On Error GoTo Er
 X_L.Close
@@ -131,11 +133,6 @@ Er:
 Set X_L = Nothing
 End Sub
 
-Private Function Db(A) As Database
-Stop '
-End Function
-Private Sub TdAddId(A As Dao.TableDef)
-End Sub
 Sub LgCrt()
 CrtFb LgFb
 Dim Db As Database, T As Dao.TableDef
@@ -143,31 +140,31 @@ Set Db = Db(LgFb)
 '
 Set T = New Dao.TableDef
 T.Name = "Sess"
-TdAddId T
-TdAppTimStampFld T, "Dte"
+AddFldId T
+AddFldTimStmp T, "Dte"
 Db.TableDefs.Append T
 '
 Set T = New Dao.TableDef
 T.Name = "Msg"
-TdAddId T
-TdAddTxtFld T, "Fun"
-TdAddTxtFld T, "MsgTxt"
-TdAppTimStampFld T, "Dte"
+AddFldId T
+AddFldTxtFF T, "Fun"
+AddFldTxtFF T, "MsgTxt"
+AddFldTimStmp T, "Dte"
 Db.TableDefs.Append T
 '
 Set T = New Dao.TableDef
 T.Name = "Lg"
-TdAddId T
-TdAppLngFld T, "Sess"
-TdAppLngFld T, "Msg"
-TdAppTimStampFld T, "Dte"
+AddFldId T
+AddFldLng T, "Sess"
+AddFldLng T, "Msg"
+AddFldTimStmp T, "Dte"
 Db.TableDefs.Append T
 '
 Set T = New Dao.TableDef
 T.Name = "LgV"
-TdAddId T
-TdAppLngFld T, "Lg"
-TdAppLngTxt T, "Val"
+AddFldId T
+AddFldLng T, "Lg"
+AddFldLngFF T, "Val"
 Db.TableDefs.Append T
 
 'CrtPkDTT Db, "Sess Msg Lg LgV"
@@ -198,9 +195,6 @@ Property Get LgFn$()
 LgFn = "Lg.accdb"
 End Property
 
-Property Get LgFt$()
-Stop '
-End Property
 Private Sub X(A$)
 PushI XSchm, A
 End Sub

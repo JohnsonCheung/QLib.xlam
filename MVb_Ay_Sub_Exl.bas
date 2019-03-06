@@ -294,3 +294,14 @@ Z_AyeFTIx1
 Z_AyeIxAy
 MVb_AySub_Exl:
 End Sub
+
+Function SyRmvBlank(Ay$()) As String()
+Dim I
+For Each I In Itr(Ay)
+    If Trim(I) <> "" Then
+        PushI SyRmvBlank, I
+    End If
+Next
+End Function
+
+

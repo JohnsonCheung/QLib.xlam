@@ -53,14 +53,14 @@ Function MthDicMd() As Dictionary
 Set MthDicMd = MthDiczMd(CurMd)
 End Function
 Function MthDiczMd(A As CodeModule) As Dictionary
-Set MthDiczMd = AddDicKeyPfx(MthDic(Src(A)), MdQNmMd(A) & ".")
+Set MthDiczMd = AddDicKeyPfx(MthDic(Src(A)), MdQNmzMd(A) & ".")
 End Function
 
 Function MthDic(Src$()) As Dictionary
 Dim Ix, O As New Dictionary
 O.Add "*Dcl", DclLines(Src)
 For Each Ix In MthIxItr(Src)
-    O.Add MthDNmLin(Src(Ix)), MthLineszSrcFm(Src, Ix, WithTopRmk:=True)
+    O.Add MthDNmzLin(Src(Ix)), MthLineszSrcFm(Src, Ix, WithTopRmk:=True)
 Next
 Set MthDic = O
 End Function

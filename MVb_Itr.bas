@@ -90,6 +90,9 @@ For Each O In Itr
 Next
 Set FstItrPEv = Nothing
 End Function
+Function FstItn(Itr, Nm) 'Return first element in Itr with its PrpNm=Nm being true
+Set FstItn = FstItrPEv(Itr, "Name", Nm)
+End Function
 
 Function FstItrTrueP(Itr, TruePrp) 'Return first element in Itr with its Prp-P being true
 Set FstItrTrueP = FstItrPEv(Itr, TruePrp, True)

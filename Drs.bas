@@ -9,11 +9,11 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
 Private A_Fny$(), A_Dry()
-Friend Property Get Init(Fny0, Dry()) As DRs
+Friend Function Init(Fny0, Dry()) As Drs
 A_Fny = CvNy(Fny0)
 A_Dry = Dry
 Set Init = Me
-End Property
+End Function
 
 Property Get Fny() As String()
 Fny = A_Fny

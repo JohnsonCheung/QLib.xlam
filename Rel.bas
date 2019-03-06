@@ -12,13 +12,13 @@ Const CMod$ = "Rel."
 Public Nm$
 Private Dic As New Dictionary    ' Key is Par, Val is Dic of chd
 
-Friend Property Get Init(RelLy$()) As Rel
+Friend Function Init(RelLy$()) As Rel
 Dim O As New Rel, L
 For Each L In Itr(RelLy)
     O.PushRelLin L
 Next
 Set Init = O
-End Property
+End Function
 Sub PushParChd(P, C)
 Dim S As Aset
 If Dic.Exists(P) Then

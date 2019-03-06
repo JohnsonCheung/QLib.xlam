@@ -117,7 +117,7 @@ RmvSngQuote = RmvFstLasChr(A)
 End Function
 
 Function RmvT1$(A)
-RmvT1 = SyTRst(A)(1)
+RmvT1 = SyzTRst(A)(1)
 End Function
 
 Function RmvTT$(A)

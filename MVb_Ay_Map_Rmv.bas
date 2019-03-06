@@ -67,6 +67,12 @@ For Each I In Itr(A)
 Next
 End Function
 
+Function AyRpl(Ay, Fm$, By$) As String()
+Dim I
+For Each I In Itr(Ay)
+    PushI AyRpl, Replace(I, Fm, By)
+Next
+End Function
 Function AyRmv2Dash(Ay) As String()
 If Sz(Ay) = 0 Then Exit Function
 Dim O$(), I

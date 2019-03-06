@@ -10,12 +10,14 @@ Next
 End Function
 
 Function TdStr$(A As Dao.TableDef)
-Dim T$, Id$, Sk$, Rst$
-'    Dim RstAy$(): RstAy = AyeEle(AyMinus(Fny, SkFny), Id)
-'    Dim UseStar$(): UseStar = AyRpl(RstAy, "*", T)
-'    Rst = StrApp(JnSpc(UseStar))
-'TdStrTd = T & Id & Sk & Rst
-'See also Stru$.  How should they
+Dim T$, Id$, S$, R$
+    T = A.Name
+    If HasStdPkzTd(A) Then Id = "*Id"
+    Dim Pk$(): Pk = Sy(T & "Id")
+    Dim Sk$(): Sk = SkFnyzTd(A)
+    If HasStdSkzTd(A) Then S = TLin(AyRpl(Sk, T, "*")) & " |"
+    R = TLin(CvSy(AyMinusAp(FnyzTd(A), Pk, Sk)))
+TdStr = JnSpc(SyzApNonBlank(T, Id, S, R))
 End Function
 
 Function FnyzTdLy(TdLy$()) As String()
@@ -66,13 +68,13 @@ End Sub
 Function FdStr$(A As Dao.Field2)
 Dim D$, R$, Z$, VTxt$, VRul, E$, S$
 If A.Type = Dao.DataTypeEnum.dbText Then S = " TxtSz=" & A.Size
-'If A.DefaultValue <> "" Then D = " " & QuoteSq("Dft=" & A.DefaultValue)
-If A.Required Then R = " Req"
-If A.AllowZeroLength Then Z = " AlwZLen"
-'If A.Expression <> "" Then E = " " & QuoteSq("Expr=" & A.Expression)
-'If A.ValidationRule <> "" Then VRul = " " & QuoteSq("VRul=" & A.ValidationRule)
-'If A.ValidationText <> "" Then VRul = " " & QuoteSq("VTxt=" & A.ValidationText)
-FdStr = A.Name & " " & ShtTyzDao(A.Type) & R & Z & S & VTxt & VRul & D & E
+If A.DefaultValue <> "" Then D = "Dft=" & A.DefaultValue
+If A.Required Then R = "Req"
+If A.AllowZeroLength Then Z = "AlwZLen"
+If A.Expression <> "" Then E = "Expr=" & A.Expression
+If A.ValidationRule <> "" Then VRul = "VRul=" & A.ValidationRule
+If A.ValidationText <> "" Then VTxt = "VTxt=" & A.ValidationText
+FdStr = TLinzAp(A.Name, ShtTyzDao(A.Type), R, Z, VTxt, VRul, D, E, IIf((A.Attributes And Dao.FieldAttributeEnum.dbAutoIncrField) <> 0, "Auto", ""))
 End Function
 
 

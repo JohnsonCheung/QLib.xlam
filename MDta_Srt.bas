@@ -1,21 +1,29 @@
 Attribute VB_Name = "MDta_Srt"
 Option Explicit
 
-Function SrtDrs(A As DRs, FF, Optional Des As Boolean) As DRs
-'Set DrsSrt = Drs(A.Fny, SrtDry(A.Dry, IxAy(A.Fny, FF), IsDes))
+Function DrsSrt(A As Drs, Optional SrtByFF = "", Optional IsDes As Boolean) As Drs
+Dim Fny$(): If SrtByFF = "" Then Fny = Sy(A.Fny()(0)) Else Fny = FnyzFF(SrtByFF)
+Set DrsSrt = Drs(A.Fny, DrySrt(A.Dry, IxAy(A.Fny, Fny), IsDes))
 End Function
 
-Function SrtDry(A(), Optional ColIxAy, Optional IsDes As Boolean) As Variant()
-Dim Col: Col = ColzDry(A, ColIxAy)
-Dim Ix&(): Ix = AySrtIntoIxAy(Col, IsDes)
-Dim J%, O()
+Function DrySrt(Dry(), Optional CC = 0, Optional IsDes As Boolean) As Variant()
+If IsArray(CC) Then DrySrt = DrySrtzColIxAy(Dry, CC): Exit Function
+DrySrt = DrySrtzCol(Dry, CC, IsDes)
+End Function
+
+Function DrySrtzCol(Dry(), ColIx, Optional IsDes As Boolean) As Variant()
+Dim Col: Col = ColzDry(Dry, ColIx)
+Dim Ix&(): Ix = IxAyzAySrt(Col, IsDes)
+Dim J%
 For J = 0 To UB(Ix)
-   Push O, A(Ix(J))
+   Push DrySrtzCol, Dry(Ix(J))
 Next
-SrtDry = O
+End Function
+Function DrySrtzColIxAy(Dry(), ColIxAy, Optional IsDes As Boolean) As Variant()
+Stop
 End Function
 
-Function SrtDt(A As DT, FF, Optional IsDes As Boolean) As DT
-'Set Dt_Srt = Dt(A.DtNm, A.Fny, DrsSrt(DrszDt(A), FF, IsDes).Dry)
+Function DtSrt(A As Dt, FF, Optional IsDes As Boolean) As Dt
+Set DtSrt = Dt(A.DtNm, A.Fny, DrsSrt(DrszDt(A), FF, IsDes).Dry)
 End Function
 

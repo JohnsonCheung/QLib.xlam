@@ -4,9 +4,6 @@ Const CMod$ = "MIde_Md_Op_Cpy."
 Sub ThwNotCls(A As CodeModule, Fun$)
 If A.Parent.Type = vbext_ct_ClassModule Then Thw Fun, "Should be a Cls", "ShtCmpTy", ShtCmpTy(A.Parent.Type)
 End Sub
-Sub ThwEqObj(A, B, Fun$, Optional Msg$ = "Two given object cannot be same")
-If IsEqObj(A, B) Then Thw Fun, Msg
-End Sub
 Private Sub CpyCls(A As CodeModule, ToPj As VBProject)
 Const CSub$ = CMod & "CpyCls"
 ThwNotCls A, CSub

@@ -16,7 +16,7 @@ Option Explicit
 '    For Each K In O.Keys
 '        If IsNull(K) Then Stop
 '        MthNy = CvSy(O(K)) ' The value of the dic is MthNy
-'        O(K) = DicKyJnVal(MthNmDic, MthNy) ' return a LinesMd from MthNmDic using MthNy to look MthNmDic
+'        O(K) = ValzDicKyJn(MthNmDic, MthNy) ' return a LinesMd from MthNmDic using MthNy to look MthNmDic
 '    Next
 'Set AAAModDic = O
 'End Property
