@@ -1,19 +1,18 @@
 Attribute VB_Name = "MIde_Dcl_Lines"
 Option Explicit
-
 Private Sub Z_DclLinCnt()
 Dim B1$(): B1 = SrcMd
-Dim B2$(): B2 = SrtedSrcz(B1)
+Dim B2$(): B2 = SrtedSrc(B1)
 Dim A1%: A1 = DclLinCnt(B1)
-Dim A2%: A2 = DclLinCnt(SrtedSrcz(B1))
+Dim A2%: A2 = DclLinCnt(SrtedSrc(B1))
 End Sub
-Sub BrwDclLinCntDryz()
-BrwDry DclLinCntDryz(CurPj)
+Sub BrwDclLinCntDryPj()
+BrwDry DclLinCntDryzPj(CurPj)
 End Sub
-Function DclLinCntDryz(A As VBProject) As Variant()
+Function DclLinCntDryzPj(A As VBProject) As Variant()
 Dim C As VBComponent
 For Each C In A.VBComponents
-    PushI DclLinCntDryz, Array(C.Name, DclLinCntzMd(C.CodeModule))
+    PushI DclLinCntDryzPj, Array(C.Name, DclLinCntzMd(C.CodeModule))
 Next
 End Function
 

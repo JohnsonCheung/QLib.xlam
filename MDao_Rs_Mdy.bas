@@ -5,14 +5,14 @@ Sub InsRszDry(A As Dao.Recordset, Dry())
 Dim Dr
 With A
     For Each Dr In Itr(Dry)
-        UpdRs A, Dr
+        InsRs A, Dr
     Next
 End With
 End Sub
 
 
 Sub SetRs(Rs As Dao.Recordset, Dr)
-If Sz(Dr) = Rs.Fields.Count Then
+If Sz(Dr) <> Rs.Fields.Count Then
     Thw CSub, "Sz of Rs & Dr are diff", _
         "Sz-Rs and Sz-Dr Rs-Fny Dr", Rs.Fields.Count, Sz(Dr), Itn(Rs.Fields), Dr
 End If

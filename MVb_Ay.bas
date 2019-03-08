@@ -31,12 +31,15 @@ For J = 0 To U
     AsgBrk A(J), " ", OT1Ay(J), ORestAy(J)
 Next
 End Sub
+Function VcAy(A, Optional Fnn$)
+BrwAy A, Fnn, UseVc:=True
+End Function
 
-Function BrwAy(A, Optional Fnn$)
+Function BrwAy(A, Optional Fnn$, Optional UseVc As Boolean)
 Dim T$
 T = TmpFt("BrwAy", Fnn)
 WrtAy A, T
-BrwFt T
+BrwFt T, UseVc
 BrwAy = A
 End Function
 
@@ -188,9 +191,7 @@ For J = 1 To MaxN
 Next
 Stop
 End Function
-Function ItrNz(A)
-If IsNothing(A) Then Set ItrNz = New Collection Else Set ItrNz = A
-End Function
+
 Function Itr(A)
 If Sz(A) = 0 Then Set Itr = New Collection Else Itr = A
 End Function

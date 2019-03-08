@@ -1,14 +1,14 @@
 Attribute VB_Name = "MVb_Ay_Run_Pred"
 Option Explicit
 
-Function IsAllTrue_ItrPred_AyPred(A, Pred$) As Boolean
+Function IsAllTruezItrPred_AyPred(A, Pred$) As Boolean
 If Sz(A) = 0 Then Exit Function
-IsAllTrue_ItrPred_AyPred = IsAllTrue_ItrPred(A, Pred)
+IsAllTruezItrPred_AyPred = IsAllTruezItrPred(A, Pred)
 End Function
 
-Function IsSomTrue_AyPred(A, Pred$) As Boolean
+Function IsSomeTruezAyPred(A, Pred$) As Boolean
 If Sz(A) = 0 Then Exit Function
-IsSomTrue_AyPred = IsSomFalse_ItrPred(A, Pred)
+IsSomeTruezAyPred = IsSomFalsezItrPred(A, Pred)
 End Function
 
 Sub AyPredSplitAsg(A, Pred$, OTrueAy, OFalseAy)
@@ -26,7 +26,7 @@ Next
 End Sub
 
 
-Function IsAllFalse_ItrPred_AyPred(A, Pred$) As Boolean
+Function IsAllFalsezItrPred_AyPred(A, Pred$) As Boolean
 If Sz(A) = 0 Then Exit Function
-IsAllFalse_ItrPred_AyPred = IsAllFalse_ItrPred(A, Pred)
+IsAllFalsezItrPred_AyPred = IsAllFalsezItrPred(A, Pred)
 End Function

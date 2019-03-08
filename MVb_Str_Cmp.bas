@@ -59,7 +59,6 @@ If Not IsStr(A) Then Stop
 If Not IsStr(B) Then Stop
 If A = B Then Exit Sub
 Brw CmpStrFmt(A, B, N1, N2, Hdr)
-Stop
 End Sub
 
 Function CmpStrFmt(A, B, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$) As String()

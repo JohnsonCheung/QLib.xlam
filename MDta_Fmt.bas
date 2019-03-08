@@ -1,7 +1,11 @@
 Attribute VB_Name = "MDta_Fmt"
 Option Explicit
-Sub BrwDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional Fnn$)
-BrwAy FmtDrs(A, MaxColWdt, BrkColNm$), Fnn
+Sub VcDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional Fnn$)
+BrwDrs A, MaxColWdt, BrkColNm, Fnn, UseVc:=True
+End Sub
+
+Sub BrwDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional Fnn$, Optional UseVc As Boolean)
+BrwAy FmtDrs(A, MaxColWdt, BrkColNm$), Fnn, UseVc
 End Sub
 
 Function FmtDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional ShwZer As Boolean, Optional HidIxCol As Boolean) As String()

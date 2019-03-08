@@ -400,7 +400,7 @@ SqlSel_FF_Ey_Fm = SqpSel_X(SqpSelX_FF_ExtNy(FF, Ey), IsDis) & SqpFm(T) & SqpWh(B
 End Function
 
 Function ItrTT(TT)
-ItrTT = Itr(TermAyzTT(TT))
+Asg Itr(TermAyzTT(TT)), ItrTT
 End Function
 
 Function FnyzPfxN(Pfx$, N%) As String()

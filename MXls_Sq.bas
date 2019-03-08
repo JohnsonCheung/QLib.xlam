@@ -7,7 +7,6 @@ ReDim O(1 To R, 1 To C)
 NewSq = O
 End Function
 
-
 Function SqAddSngQuote(A)
 Dim NC%, C%, R&, O
 O = A
@@ -195,9 +194,6 @@ NColSq B
 NRowSq B
 DrzSqr B, B
 SqTranspose B
-End Sub
-
-Private Sub Z()
 End Sub
 
 Property Get SampSq() As Variant()

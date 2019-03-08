@@ -1,4 +1,4 @@
-Attribute VB_Name = "MId_Src_Lin_Tak_VbStr"
+Attribute VB_Name = "MIde_Src_Lin_Tak_VbStr"
 Option Explicit
 Function TakVbStr$(S)
 If FstChr(S) <> """" Then Exit Function

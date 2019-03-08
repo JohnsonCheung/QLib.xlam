@@ -184,41 +184,42 @@ For Each I In Itr
 Next
 End Function
 
-Function IsAllFalse_ItrPred(Itr, Pred$) As Boolean
+Function IsAllFalsezItrPred(Itr, Pred$) As Boolean
 Dim I
 For Each I In Itr
     If Run(Pred, I) Then Exit Function
 Next
-IsAllFalse_ItrPred = True
+IsAllFalsezItrPred = True
 End Function
 
-Function IsAllTrue_ItrPred(A, Pred$) As Boolean
+Function IsAllTruezItrPred(A, Pred$) As Boolean
 Dim I
 For Each I In A
     If Not Run(Pred, I) Then Exit Function
 Next
-IsAllTrue_ItrPred = True
+IsAllTruezItrPred = True
 End Function
 
-Function IsSomFalse_ItrPred(Itr, Pred$) As Boolean
+Function IsSomFalsezItrPred(Itr, Pred$) As Boolean
 Dim I
 For Each I In Itr
-    If Not Run(Pred, I) Then IsSomFalse_ItrPred = True: Exit Function
+    If Not Run(Pred, I) Then IsSomFalsezItrPred = True: Exit Function
 Next
 End Function
 
-Function IsSomTrue_ItrPred(Itr, Pred$) As Boolean
+Function IsSomeTruezItrPred(Itr, Pred$) As Boolean
 Dim I
 For Each I In Itr
-    If Run(Pred, I) Then IsSomTrue_ItrPred = True: Exit Function
+    If Run(Pred, I) Then IsSomeTruezItrPred = True: Exit Function
 Next
 End Function
-Function SyItrPrp(Itr, P) As String()
+Function SyzItrPrp(Itr, P) As String()
 Stop
-SyItrPrp = IntozItrPrp(Itr, P, EmpSy)
+SyzItrPrp = IntozItrPrp(Itr, P, EmpSy)
 End Function
-Function AvItrPrp(Itr, P) As Variant()
-AvItrPrp = IntozItrPrp(Itr, P, EmpAv)
+
+Function AvzItrPrp(Itr, P) As Variant()
+AvzItrPrp = IntozItrPrp(Itr, P, EmpAv)
 End Function
 Function IntozItrPrpTrue(Into, Itr, P)
 IntozItrPrpTrue = AyCln(Into)
@@ -245,7 +246,7 @@ Next
 End Function
 
 Function AvItrValue(A) As Variant()
-AvItrValue = AvItrPrp(A, "Value")
+AvItrValue = AvzItrPrp(A, "Value")
 End Function
 
 Function ItrPrp_WhTrue_Into(A, P, Into)
@@ -305,10 +306,10 @@ FstItr A
 SyzItrMap A, B
 MaxItrPrp A, A
 Itn A
-IsAllFalse_ItrPred A, B
-IsAllTrue_ItrPred A, B
-IsSomFalse_ItrPred A, B
-IsSomTrue_ItrPred A, B
+IsAllFalsezItrPred A, B
+IsAllTruezItrPred A, B
+IsSomFalsezItrPred A, B
+IsSomeTruezItrPred A, B
 ItrwPrpTrue A, A
 End Sub
 

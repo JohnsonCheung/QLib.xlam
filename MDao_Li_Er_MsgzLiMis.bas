@@ -19,12 +19,12 @@ For J = 0 To UB(A)
 Next
 End Function
 
-Private Property Get MisMsgTy(A() As LiMisTy) As String()
+Private Function MisMsgTy(A() As LiMisTy) As String()
 Dim J%, O$()
 For J = 0 To UB(A)
     PushIAy O, A(J).MisMsg
 Next
-End Property
+End Function
 
 
 Private Sub Z_ChkCol()

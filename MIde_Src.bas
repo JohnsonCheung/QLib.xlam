@@ -49,16 +49,9 @@ Sub AsgMthDr(MthDr, OMdy$, OTy$, ONm$, OPrm$, ORet$, OLinRmk$, OLines$, OTopRmk$
 AsgAp MthDr, OMdy, OTy, ONm, OPrm, ORet, OLinRmk, OLines, OTopRmk
 End Sub
 
-Function MthSrtKeyAy(Src$()) As String()
-Dim Ix
-For Each Ix In MthIxItr(Src)
-    PushI MthSrtKeyAy, MthSrtKey(Src(Ix))
-Next
-End Function
 Private Sub Z_MthLinDryzSrc()
 BrwDry MthLinDryzSrc(SrcMd)
 End Sub
-
 
 Function MthLinDryzSrc(Src$()) As Variant()
 Dim L

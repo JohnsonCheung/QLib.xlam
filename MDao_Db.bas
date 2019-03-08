@@ -2,12 +2,12 @@ Attribute VB_Name = "MDao_Db"
 Option Explicit
 Public Q$
 
-Property Get IsOkDb(A As Database) As Boolean
+Function IsOkDb(A As Database) As Boolean
 On Error GoTo X
 IsOkDb = A.Name = A.Name
-Exit Property
+Exit Function
 X:
-End Property
+End Function
 
 Sub AddTmpTbl(A As Database)
 A.TableDefs.Append TmpTd
@@ -59,7 +59,9 @@ For Each T In ItrTT(TT)
     DrpT A, T
 Next
 End Sub
-
+Sub DrpTmp(A As Database)
+DrpTT A, TmpTny(A)
+End Sub
 Sub DrpT(A As Database, T, Optional NoReOpn As Boolean)
 If HasTbl(A, T, NoReOpn) Then A.TableDefs.Delete T
 End Sub
@@ -122,7 +124,7 @@ X: Thw CSub, "Error in opening Rs", "Er Sql Db", Err.Description, Q, DbNm(A)
 End Function
 
 Function HasReczQ(A As Database, Q) As Boolean
-HasReczQ = HasReczRs(Rs(A, Q))
+HasReczQ = HasRec(Rs(A, Q))
 End Function
 
 Function HasQryz(A As Database, Q) As Boolean
@@ -134,7 +136,7 @@ HasTbl = HasItn(ReOpnDb(A, ReOpn).TableDefs, T)
 End Function
 
 Function HasTblzMSysObjDb(A As Database, T) As Boolean
-HasTblzMSysObjDb = HasReczRs(Rs(A, FmtQQ("Select Name from MSysObjects where Type in (1,6) and Name='?'", T)))
+HasTblzMSysObjDb = HasRec(Rs(A, FmtQQ("Select Name from MSysObjects where Type in (1,6) and Name='?'", T)))
 End Function
 
 Function IsDbOk(A As Database) As Boolean

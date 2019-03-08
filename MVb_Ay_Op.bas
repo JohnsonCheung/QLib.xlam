@@ -111,6 +111,10 @@ Case Else: Thw CSub, "Given Ny0 must be Missing | Empty | Str | Sy | Ay", "TypeN
 End Select
 End Function
 
+Function CvBytAy(A) As Byte()
+CvBytAy = A
+End Function
+
 Function CvAv(A) As Variant()
 CvAv = A
 End Function

@@ -4,7 +4,7 @@ Function CvTd(A) As Dao.TableDef
 Set CvTd = A
 End Function
 
-Sub TdAppFdAy(A As Dao.TableDef, FdAy() As Dao.Field2)
+Sub AppFdAy(A As Dao.TableDef, FdAy() As Dao.Field2)
 Dim I
 For Each I In FdAy
     A.Fields.Append I
@@ -16,11 +16,11 @@ A.Fields.Append FdzId(A.Name)
 End Sub
 
 Sub AddFldLng(A As Dao.TableDef, FF)
-TdAppFdAy A, ZFdAy(FF, dbLong)
+AppFdAy A, ZFdAy(FF, dbLong)
 End Sub
 
 Sub AddFldLngFF(A As Dao.TableDef, FF)
-TdAppFdAy A, ZFdAy(FF, dbText)
+AppFdAy A, ZFdAy(FF, dbText)
 End Sub
 
 Sub AddFldTimStmp(A As Dao.TableDef, F$)
@@ -100,7 +100,7 @@ Dim E As Boolean
 Dim F As Byte
 Dim G As Dao.TableDefAttributeEnum
 CvTd A
-TdAppFdAy B, C
+AppFdAy B, C
 AddFldId B
 AddFldLng B, A
 AddFldLngFF B, A

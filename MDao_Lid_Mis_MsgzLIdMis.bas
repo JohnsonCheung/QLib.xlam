@@ -19,12 +19,12 @@ For J = 0 To UB(A)
 Next
 End Function
 
-Private Property Get Ty(A() As LidMisTy) As String()
+Private Function Ty(A() As LidMisTy) As String()
 Dim J%
 For J = 0 To UB(A)
     PushIAy Ty, A(J).MisMsg
 Next
-End Property
+End Function
 
 Private Sub Z_MsgzLidMis()
 Dim LidMis As LidMis

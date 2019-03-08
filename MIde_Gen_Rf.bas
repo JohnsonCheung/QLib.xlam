@@ -52,7 +52,7 @@ BrwAy FmtRf
 End Sub
 
 Function RffAyPj(A As VBProject) As String()
-RffAyPj = SyItrPrp(A.References, "FullPath")
+RffAyPj = SyzItrPrp(A.References, "FullPath")
 End Function
 
 Function RfLin$(A As VBIDE.Reference)

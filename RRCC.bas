@@ -9,7 +9,7 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
 Public R1&, R2&, C1%, C2%
-Friend Function Init(R1&, R2&, C1%, C2%) As RRCC
+Friend Function Init(R1, R2, C1, C2) As RRCC
 With Me
     .R1 = R1
     .R2 = R2

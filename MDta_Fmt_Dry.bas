@@ -28,7 +28,7 @@ Dim Dry2()
     Else
         Dry2 = Dry1
     End If
-Dim SepLin$: SepLin = SepLinzSepDr(SepDr1, Fmt)
+Dim SepLin$: SepLin = SepLinzSepDr(SepDr1, SepChrzDryFmt(Fmt))
 Push FmtDry, SepLin
     For Each Dr In Dry2
         PushI FmtDry, FmtDr(Dr, W, Fmt)

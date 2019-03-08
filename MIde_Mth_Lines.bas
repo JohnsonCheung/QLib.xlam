@@ -26,6 +26,31 @@ Property Get MthLines$()
 MthLines = MthLineszMd(CurMd, CurMthNm$, WithTopRmk:=True)
 End Property
 
+Sub BrwMthLinesAyPj()
+Vc FmtCntDic(MthLinesAyPj(WithTopRmk:=True))
+End Sub
+Function MthLinesAyPj(Optional WithTopRmk As Boolean) As String()
+MthLinesAyPj = MthLinesAyzPj(CurPj, WithTopRmk)
+End Function
+
+Function MthLinesAyzPj(A As VBProject, Optional WithTopRmk As Boolean) As String()
+Dim I
+For Each I In MdItrzPj(A)
+    PushIAy MthLinesAyzPj, MthLinesAyzMd(CvMd(I), WithTopRmk)
+Next
+End Function
+
+Function MthLinesAyzMd(A As CodeModule, Optional WithTopRmk As Boolean) As String()
+MthLinesAyzMd = MthLinesAyzSrc(Src(A), WithTopRmk)
+End Function
+
+Function MthLinesAyzSrc(Src$(), Optional WithTopRmk As Boolean) As String()
+Dim I
+For Each I In Itr(MthIxAy(Src))
+    PushI MthLinesAyzSrc, MthLineszSrcFm(Src, I, WithTopRmk)
+Next
+End Function
+
 Function MthLineszMd$(Md As CodeModule, MthNm, Optional WithTopRmk As Boolean)
 MthLineszMd = MthLineszSrcNm(Src(Md), MthNm, WithTopRmk)
 End Function

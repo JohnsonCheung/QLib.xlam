@@ -12,30 +12,35 @@ End Sub
 Function AywDist(A, Optional IgnCas As Boolean)
 AywDist = IntozAy(AyCln(A), CntDic(A, IgnCas).Keys)
 End Function
-
-Function AywDistFmt(A) As String()
-Dim D As Dictionary
-Set D = CntDic(A)
-AywDistFmt = FmtDic(D)
+Sub Z_FmtCntDic()
+Dim Ay
+GoSub ZZ
+Exit Sub
+ZZ:
+    Ay = Array(1, 2, 2, 2, 3, "skldflskdfsdklf" & vbCrLf & "ksdlfj")
+    Brw FmtCntDic(Ay)
+    
+End Sub
+Function FmtCntDic(Ay, Optional IgnCas As Boolean, Optional Opt As eCntOpt) As String()
+FmtCntDic = FmtDic(CntDic(Ay, IgnCas, Opt))
 End Function
 
-Function AywDistSy(A) As String()
-AywDistSy = CvSy(AywDist(A))
+Function SyzDistAy(Ay) As String()
+SyzDistAy = CvSy(AywDist(Ay))
 End Function
 
 Function AywDistT1(A) As String()
 AywDistT1 = AywDist(AyTakT1(A))
 End Function
-
-Function AywDup(A, Optional IgnCas As Boolean)
-Dim D As Dictionary, I
-AywDup = AyCln(A)
-Set D = CntDic(A, IgnCas)
-For Each I In Itr(A)
-    If D(I) > 1 Then
-        Push AywDup, I
-    End If
+Function AyAddDicKey(Ay, Dic As Dictionary)
+Dim K
+AyAddDicKey = AyCln(Ay)
+For Each K In Dic.Keys
+    Push AyAddDicKey, K
 Next
+End Function
+Function AywDup(A, Optional IgnCas As Boolean)
+AywDup = AyAddDicKey(AyCln(A), CntDic(A, IgnCas, eDupCnt))
 End Function
 
 Function AywFmIx(A, FmIx)
@@ -415,8 +420,8 @@ Dim H()
 Dim I As RegExp
 AyDupAss A, B
 AywDist A, C
-AywDistFmt A
-AywDistSy A
+FmtCntDic A
+SyzDistAy A
 AywDistT1 A
 AywDup A
 AywFTIx A, E

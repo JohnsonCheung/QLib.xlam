@@ -3,28 +3,21 @@ Option Explicit
 Function SrtedMdDic(A As VBProject) As Dictionary
 Dim C As VBComponent, O As New Dictionary
 For Each C In A.VBComponents
-    O.Add C.Name, SrtedSrcLinzMd(C.CodeModule)
+    O.Add C.Name, SrtedSrcLineszMd(C.CodeModule)
 Next
 Set SrtedMdDic = O
 End Function
 Sub BrwSrtedMdDic()
 BrwDic SrtedMdDic(CurPj)
 End Sub
-Function SrtedSrcLinesz$(Src$())
-SrtedSrcLinesz = JnDblCrLf(SrtedSrcDic(Src).Items)
-End Function
 
-Property Get SrtedSrcLines$()
-SrtedSrcLines = SrtedSrcLinzMd(CurMd)
-End Property
-
-Function MthSrtKey$(Lin)
-MthSrtKey = MthSrtKeyzNm3(MthNm3(Lin))
+Function SrtedSrcLines$(Src$())
+SrtedSrcLines = JnDblCrLf(SrtedSrcDic(Src).Items)
 End Function
 
 Sub BrwSrtRptzMd(A As CodeModule)
 Dim Old$: Old = LinesMd(A)
-Dim NewLines$: NewLines = SrtedSrcLinzMd(A)
+Dim NewLines$: NewLines = SrtedSrcLineszMd(A)
 Dim O$: O = IIf(Old = NewLines, "(Same)", "<====Diff")
 Debug.Print MdNm(A), O
 End Sub
@@ -35,7 +28,7 @@ End Sub
 Sub SrtMd(A As CodeModule)
 Dim Nm$: Nm = MdNm(A)
 Debug.Print "Sorting: "; AlignL(Nm, 20); " ";
-Dim LinesN$: LinesN = SrtedSrcLinzMd(A)
+Dim LinesN$: LinesN = SrtedSrcLineszMd(A)
 Dim LinesO$: LinesO = LinesMd(A)
 'Exit if same
     If LinesO = LinesN Then
@@ -50,14 +43,12 @@ Dim LinesO$: LinesO = LinesMd(A)
     Debug.Print "<----Sorted Lines added...."
 End Sub
 
-Function SrtedSrcLinzMd$(A As CodeModule)
-SrtedSrcLinzMd = SrtedSrcLinesz(Src(A))
+Function SrtedSrcLineszMd$(A As CodeModule)
+SrtedSrcLineszMd = SrtedSrcLines(Src(A))
 End Function
-Property Get SrtedSrc() As String()
-SrtedSrc = SrtedSrczMd(CurMd)
-End Property
-Function SrtedSrczMd(A As CodeModule) As String()
-SrtedSrczMd = SrtedSrcz(Src(A))
+
+Function SrtedMd(A As CodeModule) As String()
+SrtedMd = SrtedSrc(Src(A))
 End Function
 Function MthNm3zDNm(MthDNm) As MthNm3
 Dim Nm$, Ty$, Mdy$
@@ -81,37 +72,6 @@ With MthNm3zDNm
 End With
 End Function
 
-Function MthSrtKeyzDNm$(MthDNm) ' MthDNm is Nm.Ty.Mdy
-MthSrtKeyzDNm = MthSrtKeyzNm3(MthNm3zDNm(MthDNm))
-End Function
-
-Function MthSrcKeyAyzDNm(MthDNy$()) As String() ' MthDNm is Nm.Ty.Mdy
-Dim I
-For Each I In Itr(MthDNy)
-    PushI MthSrcKeyAyzDNm, MthSrtKey(I)
-Next
-End Function
-
-Function MthSrtKeyzNm3$(A As MthNm3)
-Dim Mdy$, Ty$, Nm$
-With A
-    Nm = .Nm
-    Ty = .ShtTy
-    Mdy = .ShtMdy
-End With
-Dim P% 'Priority
-    Select Case True
-    Case HasPfx(Nm, "Init"): P = 1
-    Case Nm = "Z":           P = 9
-    Case Nm = "ZZ":          P = 8
-    Case HasPfx(Nm, "Z_"):   P = 7
-    Case HasPfx(Nm, "ZZ_"):  P = 6
-    Case HasPfx(Nm, "Z"):    P = 5
-    Case Else:               P = 2
-    End Select
-MthSrtKeyzNm3 = P & ":" & Nm & ":" & Ty & ":" & Mdy
-End Function
-
 Sub SrtPj(A As VBProject)
 Dim MdNm, D As Dictionary
 Set D = SrtedMdDic(A)
@@ -123,16 +83,11 @@ Next
 End Sub
 
 Function SrtedSrcDic(Src$()) As Dictionary
-Dim K, D As Dictionary, O As New Dictionary
-Set D = MthDic(Src)
-For Each K In D.Keys
-    O.Add MthSrtKeyzDNm(K), D(K)
-Next
-Set SrtedSrcDic = O
+Set SrtedSrcDic = DicSrt(MthDic(Src))
 End Function
 
-Function SrtedSrcz(Src$()) As String()
-SrtedSrcz = SplitCrLf(SrtedSrcLinesz(Src))
+Function SrtedSrc(Src$()) As String()
+SrtedSrc = SplitCrLf(SrtedSrcLines(Src))
 End Function
 
 Private Sub ZZ_Dcl_BefAndAft_Srt()
@@ -142,59 +97,21 @@ Dim B$() ' Src->Srt
 Dim A1$() 'Src->Dcl
 Dim B1$() 'Src->Src->Dcl
 A = Src(Md(MdNm))
-B = SrtedSrcz(A)
+B = SrtedSrc(A)
 A1 = DclLy(A)
 B1 = DclLy(B)
 Stop
 End Sub
 
-Private Sub Z_MthSrtKey()
-GoTo ZZ
-Dim A$
-'
-Ept = "2:MthSrtKey_Lin:Function:": A = "Function MthSrtKey_Lin$(A)": GoSub Tst
-Ept = "2:YYA:Function:":           A = "Function YYA()":            GoSub Tst
-Exit Sub
-Tst:
-    Act = MthSrtKey(A)
-    C
-    Return
-ZZ:
-    Dim Ay1$(): Ay1 = MthLinAyzSrc(SrczVbe(CurVbe))
-    Dim Ay2$(): Ay2 = MthSrtKeyAy(Ay1)
-    Stop
-    BrwS1S2Ay S1S2AyAyab(Ay2, Ay1)
-End Sub
-
-Private Sub Z_MthSrtKeyzDNm()
-GoSub T1
-'GoSub T2
-Exit Sub
-T1:
-
-    Dim Ay1$(): Ay1 = MthDNyzSrc(SrcMd)
-    Dim Ay2$(): Ay2 = MthSrcKeyAyzDNm(Ay1)
-    BrwS1S2Ay S1S2AyAyab(Ay2, Ay1)
-    Return
-T2:
-    Const A$ = "YYA.Fun."
-    Debug.Print MthSrtKeyzDNm(A)
-    Return
-End Sub
-
-Private Sub Z_SrtedSrcLinesz()
-Brw SrtedSrcLinesz(SrcMd)
+Private Sub Z_SrtedSrcLines()
+Brw SrtedSrcLines(SrcMd)
 End Sub
 
 Private Sub ZZ()
 End Sub
 
-Private Sub Z()
-Z_MthSrtKey
-End Sub
-
-Private Sub ZZ_SrtedSrcLinzMd()
-BrwStr SrtedSrcLinzMd(Md("MIde_Md"))
+Private Sub ZZ_SrtedSrcLineszMd()
+BrwStr SrtedSrcLineszMd(Md("MIde_Md"))
 End Sub
 
 
@@ -217,7 +134,7 @@ Ass:
     Debug.Print MdNm(Md); vbTab;
     Dim BefSrt$(), AftSrt$()
     BefSrt = Src(Md)
-    AftSrt = SplitCrLf(SrtedSrcLinzMd(Md))
+    AftSrt = SplitCrLf(SrtedSrcLineszMd(Md))
     If JnCrLf(BefSrt) = JnCrLf(AftSrt) Then
         Debug.Print "Is Same of before and after sorting ......"
         Return

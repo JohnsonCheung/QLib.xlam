@@ -137,14 +137,9 @@ Next
 VbeDupMthCmpLy = O
 End Function
 
-
-
 Private Sub ZZ_VbeDupMthCmpLy()
 'Brw VbeDupMthCmpLy(CurVbe, WhEmpPjMth)
 End Sub
-
-
-
 
 Private Sub Z()
 Z_FunCmp

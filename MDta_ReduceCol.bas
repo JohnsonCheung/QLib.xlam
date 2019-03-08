@@ -1,4 +1,4 @@
-Attribute VB_Name = "Module3"
+Attribute VB_Name = "MDta_ReduceCol"
 Option Explicit
 Type ReduceCol
     Drs As Drs

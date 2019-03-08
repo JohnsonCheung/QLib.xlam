@@ -21,45 +21,36 @@ End With
 End Sub
 
 Sub LnxBrwAy(A() As Lnx)
-BrwAy LnxFmtAySepSS(A)
+BrwAy LyzLnxAyzWithLno(A)
 End Sub
-
-Function LnxFmtAySepSS(A() As Lnx) As String()
-Dim I
-For Each I In Itr(A)
-    With CvLnx(I)
-        PushI LnxFmtAySepSS, "L#(" & .Ix & ") " & .Lin
-    End With
-Next
-End Function
 
 Function LyzLnxAy(A() As Lnx) As String()
 LyzLnxAy = SyOyP(A, "Lin")
 End Function
-Function LnxAyeT1Ay(A() As Lnx, T1Ay0) As Lnx()
-Dim T1Ay$(), L
-T1Ay = CvNy(T1Ay0)
+
+Function LnxAyeT1Ay(A() As Lnx, T1Ay$()) As Lnx()
+Dim L
 For Each L In A
     If Not HasEle(T1Ay, T1(CvLnx(L).Lin)) Then PushObj LnxAyeT1Ay, L
 Next
 End Function
 
-Function LnxAyT1Chk(A() As Lnx, T1Ay0) As String()
-Dim A1() As Lnx: A1 = LnxAyeT1Ay(A, T1Ay0)
-If Sz(A1) = 0 Then Exit Function
-Stop
-Exit Function
-Dim T1Ay$(), mT1$, L, O$()
-T1Ay = CvNy(T1Ay0)
-For Each L In A
-    If Not HasEle(T1Ay, T1(CvLnx(L).Lin)) Then PushI O, L
-   
+Function LyzLnxAyzWithLno(A() As Lnx) As String()
+Dim I, O$()
+For Each I In Itr(A)
+    With CvLnx(I)
+    Push O, FmtQQ("Lno#?:[?]", .Ix, .Lin)
+    End With
 Next
-If Sz(O) > 0 Then
-    O = AyAddPfx(AyQuoteSq(O), Space(4))
-    O = AyInsItm(O, FmtQQ("Following lines have invalid T1.  Valid T1 are [?]", JnSpc(T1Ay)))
-End If
-LnxAyT1Chk = O
+LyzLnxAyzWithLno = FmtAyzSepSS(O, ":")
+End Function
+
+Function ErzLnxAyT1ss(A() As Lnx, T1ss) As String()
+Dim T1Ay$(): T1Ay = SySsl(T1ss)
+If Sz(T1Ay) = 0 Then Exit Function
+Dim Er() As Lnx: Er = LnxAyeT1Ay(A, T1Ay)
+If Sz(Er) = 0 Then Exit Function
+ErzLnxAyT1ss = LyzMsgNap("There are lines have invalid T1", "Lines Valid-Ty", LyzLnxAyzWithLno(Er), T1Ay)
 End Function
 
 Function LnxAywRmvT1(A() As Lnx, T) As Lnx()

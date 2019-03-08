@@ -26,7 +26,6 @@ Public Const SampReSeqSpec$ = _
 " Las LasBchNo LasPermitDate LasPermit |" & _
 " GL GLDocNo GLDocDte GLAsg GLDocTy GLLin GLPstKy GLPc GLAc GLBusA GLRef |" & _
 " Uom Des StkUom Ac_U"
-Public Const ShtTyzDaosl$ = "Byt Mem Lng Int Dte Txt Yes Dbl Sng Cur"
 Public Const LgSchmNm$ = "LgSchm" ' The LgSchm-Spnm
 
 Private Property Get LnkSpecTp$()

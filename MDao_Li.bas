@@ -9,7 +9,7 @@ End Sub
 Function LnkImp(A As LiPm) As Database
 ThwEr ChkColzLiPm(A), CSub
 WOpn A.Apn
-LnkTblz W, LtPm(A)
+LnkTblzLtPm W, LtPm(A)
 RunSqy W, ImpSqyzLi(A)
 Set LnkImp = W
 End Function

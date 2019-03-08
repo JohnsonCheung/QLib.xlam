@@ -4,11 +4,11 @@ Function ChkLnkTbl(Db As Database, A() As LtPm) As String()
 Dim J%
 For J = 0 To UB(A)
     With A(J)
-        PushIAy ChkLnkTbl, ChkLnkTblzDbtSrcCn(Db, .T, .S, .Cn)
+        PushIAy ChkLnkTbl, ChkLnkTblzTSrcCn(Db, .T, .S, .Cn)
     End With
 Next
 End Function
-Sub LnkTblz(Db As Database, A() As LtPm)
+Sub LnkTblzLtPm(Db As Database, A() As LtPm)
 Dim J%
 For J = 0 To UB(A)
     With A(J)
@@ -16,34 +16,6 @@ For J = 0 To UB(A)
     End With
 Next
 End Sub
-Private Function LtPmAyFx(A() As LiFx, FfnDic As Dictionary) As LtPm()
-Dim J%, Fx$, M As LtPm
-For J = 0 To UB(A)
-    Set M = New LtPm
-    With A(J)
-        Fx = FfnDic(.Fxn)
-        PushObj LtPmAyFx, M.Init(">" & .T, .Wsn & "$", CnStrzFxDAO(Fx))
-    End With
-Next
-End Function
-Private Function LtPmAyFb(A() As LiFb, FfnDic As Dictionary) As LtPm()
-Dim J%, Fb$, M As LtPm
-For J = 0 To UB(A)
-    Set M = New LtPm
-    With A(J)
-        Fb = FfnDic(.Fbn)
-        PushObj LtPmAyFb, M.Init(">" & .T, .T, CnStrzFxAdo(Fb))
-    End With
-Next
-End Function
-
-Function LtPm(A As LiPm) As LtPm()
-Dim O() As LtPm, D As Dictionary
-Set D = A.FilNmToFfnDic
-PushObjAy O, LtPmAyFb(A.Fb, D)
-PushObjAy O, LtPmAyFx(A.Fx, D)
-LtPm = O
-End Function
 Function TdzTSCn(T, Src, Cn) As Dao.TableDef
 Set TdzTSCn = New Dao.TableDef
 With TdzTSCn
@@ -86,7 +58,7 @@ End Function
 
 Sub LnkFb(A As Database, T, Fb$, Optional Fbt)
 Dim Cn$: Cn = CnStrzFbDao(Fb)
-ThwEr ChkLnkTblzDbtSrcCn(A, T, IIf(Fbt = "", T, Fbt), Cn), CSub
+ThwEr ChkLnkTblzTSrcCn(A, T, IIf(Fbt = "", T, Fbt), Cn), CSub
 End Sub
 
 

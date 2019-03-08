@@ -1,4 +1,5 @@
 Attribute VB_Name = "MIde_Gen_Push"
+Option Explicit
 Sub GenPushMd()
 GenPushzMd CurMd
 End Sub

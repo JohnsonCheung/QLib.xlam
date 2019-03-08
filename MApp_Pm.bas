@@ -1,8 +1,8 @@
 Attribute VB_Name = "MApp_Pm"
 Option Explicit
-Property Get PnmOupPth$(A As Database)
+Function PnmOupPth$(A As Database)
 PnmOupPth = PthEnsAll(PnmVal(A, "OupPth"))
-End Property
+End Function
 
 Function PnmPth$(Db As Database, Pnm)
 PnmPth = PthEnsSfx(PnmVal(Db, Pnm & "Pth"))

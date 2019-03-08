@@ -1,6 +1,5 @@
 Attribute VB_Name = "MIde_Md_Emp"
 Option Explicit
-
 Function IsEmpMd(A As CodeModule) As Boolean
 If A.CountOfLines = 0 Then IsEmpMd = True: Exit Function
 Dim J&, L$
@@ -34,15 +33,18 @@ End Function
 
 Private Sub Z_IsEmpMd()
 Dim M As CodeModule
-'GoSub Tst1
-GoSub Tst2
+'GoSub T1
+'GoSub T2
+GoSub T3
 Exit Sub
-Tst2:
+T3:
+    Debug.Assert IsEmpMd(Md("Dic"))
+    Return
+T2:
     Set M = Md("Module2")
     Ept = True
-    GoSub Tst
-    Return
-Tst1:
+    GoTo Tst
+T1:
     '-----
     Dim T$, P As VBProject
         Set P = CurPj
@@ -90,5 +92,4 @@ For J = A.CountOfDeclarationLines + 1 To A.CountOfLines
 Next
 IsNoMthMd = True
 End Function
-
 

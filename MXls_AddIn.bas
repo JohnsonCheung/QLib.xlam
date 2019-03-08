@@ -12,9 +12,9 @@ Sub DmpAddIns(A As Excel.Application)
 DmpDrs AddInsDrs(A)
 End Sub
 
-Property Get AddInsWs(A As Excel.Application) As Worksheet
+Function AddInsWs(A As Excel.Application) As Worksheet
 Set AddInsWs = WsVis(WszDrs(AddInsDrs(A)))
-End Property
+End Function
 
 Function AddIn(A As Excel.Application, FxaNm) As Excel.AddIn
 Dim I As Excel.AddIn

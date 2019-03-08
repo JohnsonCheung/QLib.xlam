@@ -14,21 +14,25 @@ Private Type FdRslt
     Fd As Dao.Field2
 End Type
 
+Sub CrtSchmzVbl(A As Database, SchmVbl$)
+CrtSchm A, SplitVBar(SchmVbl)
+End Sub
+
 Sub CrtSchm(A As Database, Schm$())
 Const CSub$ = CMod & "CrtSchm"
-'ThwErMsg ErzSchm(Schm), CSub, "there is error in the Schm", "Schm Db", AyAddIxPfx(Schm, 1), DbNm(A)
+ThwErMsg ErzSchm(Schm), CSub, "there is error in the Schm", "Schm Db", AyAddIxPfx(Schm, 1), DbNm(A)
 Dim TdLy$():            TdLy = AywRmvT1(Schm, C_Tbl)
 Dim EF As EF:             EF = EFzSchm(Schm)
 Dim T() As Dao.TableDef:   T = TdAy(TdLy, EF)
 Dim P$():                  P = SqyCrtPkzTny(PkTny(TdLy))
 Dim S$():                  S = SqyCrtSk(TdLy)
-Dim Dt As Dictionary: Set Dt = Dic(AywRmvTT(Schm, C_Des, C_Tbl))
-Dim DF As Dictionary: Set DF = Dic(AywRmvTT(Schm, C_Des, C_Fld))
+Dim DicT As Dictionary: Set DicT = Dic(AywRmvTT(Schm, C_Des, C_Tbl))
+Dim DicF As Dictionary: Set DicF = Dic(AywRmvTT(Schm, C_Des, C_Fld))
                    AppTdAy A, T
                    RunSqy A, P
                    RunSqy A, S
-Set TblDesDic(A) = Dt
-Set FldDesDic(A) = DF
+Set TblDesDic(A) = DicT
+Set FldDesDic(A) = DicF
 End Sub
 
 Private Function EFzSchm(Schm$()) As EF
@@ -99,7 +103,7 @@ Private Function FdzEF(F, A As EF) As Dao.Field2
 If Left(F, 2) = "Id" Then Stop
 Dim Ele$: Ele = T1z_Itm_T1LikssAy(F, A.FldLy)
 If Ele <> "" Then Set FdzEF = FdzEle(Ele, A.EleLy, F): Exit Function
-Set FdzEF = FdzStdFld(F):                 If Not IsNothing(FdzEF) Then Exit Function
+Set FdzEF = FdzFld(F):                    If Not IsNothing(FdzEF) Then Exit Function
 Set FdzEF = FdzEle(CStr(F), A.EleLy, F):  If Not IsNothing(FdzEF) Then Exit Function
 Thw CSub, FmtQQ("Fld(?) not in EF and not StdFld", F)
 End Function
@@ -138,7 +142,7 @@ Schm1 = XX
 Erase XX
 End Property
 
-Sub Z_CrtSchm()
+Private Sub Z_CrtSchm()
 Dim D As Database, Schm$()
 GoSub T1
 Exit Sub
@@ -161,10 +165,23 @@ Private Sub Z()
 Z_CrtSchm
 End Sub
 
-Private Sub AppTdAy(A As Database, TdAy() As Dao.TableDef)
+Sub AppTdAy(A As Database, TdAy() As Dao.TableDef)
 Dim T
 For Each T In Itr(TdAy)
     A.TableDefs.Append T
 Next
 End Sub
+
+
+Function FnyzTdLin(TdLin) As String()
+Dim T$, Rst$
+AsgTRst TdLin, T, Rst
+If HasSfx(T, "*") Then
+    T = RmvSfx(T, "*")
+    Rst = T & "Id " & Rst
+End If
+Rst = Replace(Rst, "*", T)
+Rst = Replace(Rst, "|", " ")
+FnyzTdLin = SySsl(Rst)
+End Function
 

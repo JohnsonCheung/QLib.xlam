@@ -1,6 +1,9 @@
 Attribute VB_Name = "MIde_Md"
 Option Explicit
 Const CMod$ = "MIde_Md."
+Property Get CurSrc() As String()
+CurSrc = Src(CurMd)
+End Property
 Property Get CurMd() As CodeModule
 Set CurMd = CurCdPne.CodeModule
 End Property

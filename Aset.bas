@@ -25,9 +25,11 @@ End Property
 Sub Dmp()
 D Aset.Keys
 End Sub
-
-Sub Brw(Optional Fnn$)
-MVb_Fun.Brw Aset.Keys, Fnn
+Sub Vc()
+Brw UseVc:=True
+End Sub
+Sub Brw(Optional Fnn$, Optional UseVc As Boolean)
+MVb_Fun.Brw Aset.Keys, DftStr(Fnn, "Aset"), UseVc
 End Sub
 Function Srt() As Aset
 Set Srt = AsetzAy(AyQSrt(Itms))

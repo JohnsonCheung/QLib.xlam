@@ -27,8 +27,8 @@ Property Get NCmp%()
 NCmp = NMod + NCls + NDoc + NOth
 End Property
 
-Property Get Lin$(Optional Hdr As eHdr)
+Function Lin$(Optional Hdr As eHdr)
 Dim Pfx$
 If Hdr = eWithHdr Then Pfx = "Cmp Mod Cls Doc Oth "
 Lin = Pfx & NCmp & " " & NMod & " " & NCls & " " & NDoc & " " & NOth
-End Property
+End Function

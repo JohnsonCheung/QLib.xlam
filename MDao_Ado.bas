@@ -3,7 +3,14 @@ Option Explicit
 Function CvTc(A) As ADOX.Table
 Set CvTc = A
 End Function
-
+Function NoReczAdo(A As ADODB.Recordset) As Boolean
+If Not A.EOF Then Exit Function
+If Not A.BOF Then Exit Function
+NoReczAdo = True
+End Function
+Function HasReczAdo(A As ADODB.Recordset) As Boolean
+HasReczAdo = Not NoReczAdo(A)
+End Function
 Function TnyzCat(A As Catalog) As String()
 TnyzCat = Itn(A.Tables)
 End Function

@@ -29,7 +29,7 @@ Sub WrtFbql(Fbql, Db As Database, T)
 Dim F%: F = FnoOup(Fbql)
 Dim R As Dao.Recordset
 Set R = RszT(Db, T)
-Dim L$: L = ShtTysColonFldNmBqlzT(Db, T)
+Dim L$: L = ShtTyscFldNmBqlzT(Db, T)
 Print #F, L
 With R
     While Not .EOF
@@ -43,7 +43,7 @@ End Sub
 Private Function DoczFbq() As String()
 Erase XX
 X "Fbq is Full file name of back quote (`) separated lines"
-X "Fbq has first line as ShtTysColonFldNmQBLin"
+X "Fbq has first line as ShtTyscFldNmQBLin"
 X "Fbq rest of lines are records"
 DoczFbq = XX
 Erase XX

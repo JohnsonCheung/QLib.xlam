@@ -150,14 +150,18 @@ Case Else: NDig = 10
 End Select
 End Function
 
-Sub Brw(A, Optional Fnn$)
+Sub Vc(A, Optional Fnn$)
+Brw A, Fnn, UseVc:=True
+End Sub
+Sub Brw(A, Optional Fnn$, Optional UseVc As Boolean)
 Select Case True
-Case IsStr(A): BrwStr A, Fnn
-Case IsArray(A): BrwAy A, Fnn
+Case IsStr(A): BrwStr A, Fnn, UseVc
+Case IsArray(A): BrwAy A, Fnn, UseVc
 Case IsAset(A): CvAset(A).Brw Fnn
-Case IsDrs(A): BrwDrs CvDrs(A)
-Case IsDic(A): BrwDic CvDic(A)
+Case IsDrs(A): BrwDrs CvDrs(A), Fnn:=Fnn, UseVc:=UseVc
+Case IsDic(A): BrwDic CvDic(A), UseVc:=UseVc, InclDicValOptTy:=True
 Case IsEmpty(A): Debug.Print "Empty"
+Case IsNothing(A): Debug.Print "Nothing"
 Case Else: Stop
 End Select
 End Sub

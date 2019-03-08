@@ -1,5 +1,6 @@
 Attribute VB_Name = "MDao_Ty_ShtTyDic"
 Option Explicit
+
 Function ShtTyDic(FxOrFb, TblNm) As Dictionary
 Select Case True
 Case IsFb(FxOrFb): Set ShtTyDic = ShtTyDiczFbt(FxOrFb, TblNm)

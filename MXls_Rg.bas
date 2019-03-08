@@ -75,14 +75,14 @@ End Sub
 Sub BdrRgRight(A As Range)
 BdrRg A, xlEdgeRight
 If A.Column < MaxWsCol Then
-    BdrRg RgC(A, A.Column + 1), xlEdgeLeft
+    BdrRg RgC(A, A.Columns.Count + 1), xlEdgeLeft
 End If
 End Sub
 
 Sub BdrRgTop(A As Range)
 BdrRg A, xlEdgeTop
 If A.Row > 1 Then
-    BdrRg RgC(A, A.Row + 1), xlEdgeBottom
+    BdrRg RgR(A, 0), xlEdgeBottom
 End If
 End Sub
 

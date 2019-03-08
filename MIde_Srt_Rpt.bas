@@ -4,7 +4,7 @@ Private Function SrtRptz(Src$()) As String()
 Dim X As Dictionary
 Dim Y As Dictionary
 Set X = MthDic(Src)
-Set Y = MthDic(SrtedSrcz(Src))
+Set Y = MthDic(SrtedSrc(Src))
 SrtRptz = FmtCmpDic(X, Y, "BefSrt", "AftSrt")
 End Function
 

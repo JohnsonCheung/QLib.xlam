@@ -5,8 +5,9 @@ Dim R As Dao.Recordset
 Set R = Rs(SampDb_DutyDta, "Select Sku,BchNo from PermitD where BchNo<>''")
 BrwDic JnStrDicTwoFldRs(R), True
 End Sub
-Sub BrwDic(A As Dictionary, Optional InclDicValOptTy As Boolean)
-BrwAy FmtDic(A, InclDicValOptTy)
+
+Sub BrwDic(A As Dictionary, Optional InclDicValOptTy As Boolean, Optional UseVc As Boolean)
+BrwAy FmtDic(A, InclDicValOptTy), UseVc:=True
 End Sub
 
 Sub DmpDic(A As Dictionary, Optional InclDicValOptTy As Boolean, Optional Tit$ = "Key Val")
@@ -23,7 +24,7 @@ If IsNothing(A) Then Exit Function
 Select Case True
 Case IsDiczSy(A):    FmtDic = FmtS1S2Ay(S1S2AyzSyDic(A), Nm1, Nm2)
 Case IsDiczLines(A): FmtDic = FmtS1S2Ay(S1S2AyzDic(A), Nm1, Nm2)
-Case Else:          FmtDic = FmtDic1(A)
+Case Else:           FmtDic = FmtDic1(A)
 End Select
 End Function
 

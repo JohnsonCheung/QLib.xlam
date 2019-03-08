@@ -14,10 +14,14 @@ Function Pad0$(N, NDig%)
 Pad0 = Format(N, Dup("0", NDig))
 End Function
 
-Sub BrwStr(A, Optional Fnn$)
+Sub BrwStr(A, Optional Fnn$, Optional UseVc As Boolean)
 Dim T$: T = TmpFt("BrwStr", Fnn$)
 WrtStr A, T
-BrwFt T
+BrwFt T, UseVc
+End Sub
+
+Sub VcStr(A, Optional Fnn$)
+BrwStr A, Fnn, UseVc:=True
 End Sub
 
 Function StrDft$(A, B)
@@ -52,7 +56,9 @@ Brw Ft
 End Sub
 Function WrtStr$(Str, Ft, Optional OvrWrt As Boolean)
 If OvrWrt Then DltFfnIf Ft
-Fso.CreateTextFile(Ft, True).Write Str
+Dim Fno%: Fno = FnoOup(Ft)
+Print #Fno, Str
+Close #Fno
 WrtStr = Ft
 End Function
 

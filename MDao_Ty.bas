@@ -1,10 +1,18 @@
 Attribute VB_Name = "MDao_Ty"
 Option Explicit
 Const CMod$ = "MDao__Ty."
-Public Const VdtShtTyLis$ = "AAttBBoolBytCChrDDteDecIIntLLngMMemSTTimTxt"
+Public Const ShtTyLis$ = "AAttBBoolBytCChrDDteDecIIntLLngMMemSTTimTxt"
+
+Property Get ShtTyDrs() As Drs
+Dim Dry(), I
+For Each I In CmlAy(ShtTyLis)
+    PushI Dry, Sy(I, DtaTyzShtTy(I))
+Next
+Set ShtTyDrs = Drs("ShtTy DtaTy", Dry)
+End Property
 
 Property Get VdtShtTyAy() As String()
-VdtShtTyAy = CmlAy(VdtShtTyLis)
+VdtShtTyAy = CmlAy(ShtTyLis)
 End Property
 
 Property Get VdtShtTyDtaTyAy() As String()
@@ -22,7 +30,7 @@ End Property
 Function IsShtTy(A) As Boolean
 Select Case Len(A)
 Case 1, 3: If Not IsAscUCase(Asc(A)) Then Exit Function
-    IsShtTy = HasSubStr(VdtShtTyLis, A, IgnCas:=True)
+    IsShtTy = HasSubStr(ShtTyLis, A, IgnCas:=True)
 End Select
 End Function
 
@@ -69,7 +77,7 @@ Case Dao.DataTypeEnum.dbMemo:       O = "Mem"
 Case Dao.DataTypeEnum.dbSingle:     O = "S"
 Case Dao.DataTypeEnum.dbText:       O = "T"
 Case Dao.DataTypeEnum.dbTime:       O = "Tim"
-Case Else: Thw CSub, "Unsupported DaoTy, cannot covert to ShtTy"
+Case Else: Thw CSub, "Unsupported DaoTy, cannot covert to ShtTy", "DaoTy", A
 End Select
 ShtTyzDao = O
 End Function
@@ -125,10 +133,16 @@ End Function
 Function DaoTyzVbTy(A As VbVarType) As Dao.DataTypeEnum
 Dim O As Dao.DataTypeEnum
 Select Case A
+Case vbBoolean: O = dbBoolean
+Case vbByte: O = dbByte
+Case VbVarType.vbCurrency: O = dbCurrency
+Case VbVarType.vbDate: O = dbDate
+Case VbVarType.vbDecimal: O = dbDecimal
+Case VbVarType.vbDouble: O = dbDouble
 Case VbVarType.vbInteger: O = dbInteger
 Case VbVarType.vbLong: O = dbLong
+Case VbVarType.vbSingle: O = dbSingle
 Case VbVarType.vbString: O = dbText
-Case VbVarType.vbDate: O = dbDate
 Case Else: Thw CSub, "VbTy cannot convert to DaoTy", "VbTy", A
 End Select
 DaoTyzVbTy = O
@@ -171,7 +185,7 @@ End Function
 Function IsVdtShtTy(A) As Boolean
 Select Case Len(A)
 Case 1, 3: If Not IsAscUCase(Asc(FstChr(A))) Then Exit Function
-    IsVdtShtTy = HasSubStr(VdtShtTyLis, A)
+    IsVdtShtTy = HasSubStr(ShtTyLis, A)
 End Select
 End Function
 

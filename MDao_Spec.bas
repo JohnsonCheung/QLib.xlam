@@ -76,9 +76,9 @@ Case Else: Stop
 End Select
 End Sub
 
-Property Get SpecPth$(Apn$)
+Function SpecPth$(Apn$)
 SpecPth = PthEns(WPth(Apn) & "Spec\")
-End Property
+End Function
 
 Sub BrwSpecPth(Apn$)
 BrwPth SpecPth(Apn)

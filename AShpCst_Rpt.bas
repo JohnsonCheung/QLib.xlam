@@ -134,19 +134,13 @@ WRun "Select Whs,ZHT1,RateSc into [@Rate] from [#Cpy]"
 WDrp "#Cpy #Cpy1 #Cpy2"
 End Sub
 
-Private Property Get MB52_8601_8701_Missing() As String()
-'Const CSub$ = CMod & "MB52_8601_8701_Missing"
-'Const M$ = "Column-[Plant] must have value 8601 or 8701"
-'Const Wh$ = "Plant in ('8601','8701')"
-'Dim Fx$
-'Fx = IFxMB52
-''LnkFxDb W, "#A", Fx
-''If NRecDT(W, "#A", Wh) = 0 Then
-'    MB52_8601_8701_Missing = _
-'        LyzFunMsgNap(CSub, M, "MB52-File Worksheet", Fx, "Sheet1")
-''End If
-'WDrp "#A"
-End Property
+Private Function ErzMB52MissingWhs8601Or8701(FxMB52$, Wsn$) As String()
+Const M$ = "Column-[Plant] must have value 8601 or 8701"
+If NReczFxw(FxMB52, Wsn, "Plant in ('8601','8701')") = 0 Then
+    ErzMB52MissingWhs8601Or8701 = _
+        LyzFunMsgNap(CSub, M, "MB52-File Worksheet", FxMB52, Wsn)
+End If
+End Function
 
 Function PnmStkDte(AppDb As Database) As Date
 PnmStkDte = CDate(Mid(PnmVal(AppDb, "MB52Fn"), 6, 10))
@@ -163,4 +157,3 @@ End Sub
 Property Get ShpCstLiAct() As LiAct
 Set ShpCstLiAct = LiAct(ShpCstLiPm)
 End Property
-

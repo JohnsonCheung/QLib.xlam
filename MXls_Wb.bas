@@ -126,7 +126,7 @@ Next
 End Function
 
 Function WsCdNy(A As Workbook) As String()
-WsCdNy = SyItrPrp(A.Sheets, "CodeName")
+WsCdNy = SyzItrPrp(A.Sheets, "CodeName")
 End Function
 
 Function WbFullNm$(A As Workbook)

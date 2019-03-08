@@ -118,18 +118,18 @@ HidColFm Ws, 2
 HidRowFm Ws, 2
 WsC(Ws, 1).AutoFit
 End Sub
-Private Property Get IsAction(Ws As Worksheet) As Boolean
+Private Function IsAction(Ws As Worksheet) As Boolean
 IsAction = True
-If IsActionWs(Ws) Then Exit Property
-If IsActionA1(A1(Ws)) Then Exit Property
+If IsActionWs(Ws) Then Exit Function
+If IsActionA1(A1(Ws)) Then Exit Function
 IsAction = False
-End Property
-Private Property Get IsActionWs(Ws As Worksheet) As Boolean
+End Function
+Private Function IsActionWs(Ws As Worksheet) As Boolean
 IsActionWs = Ws.Name = "TreeWs"
-End Property
+End Function
 
-Private Property Get IsActionA1(A1 As Range) As Boolean
+Private Function IsActionA1(A1 As Range) As Boolean
 Dim V: V = A1.Value
-If Not IsStr(V) Then Exit Property
+If Not IsStr(V) Then Exit Function
 IsActionA1 = HasPth(V)
-End Property
+End Function

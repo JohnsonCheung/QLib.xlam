@@ -28,6 +28,10 @@ Function IsByt(A) As Boolean
 IsByt = VarType(A) = vbByte
 End Function
 
+Function IsBytAy(A) As Boolean
+IsBytAy = VarType(A) = vbByte + vbArray
+End Function
+
 Function IsDic(A) As Boolean
 IsDic = TypeName(A) = "Dictionary"
 End Function

@@ -7,12 +7,7 @@ End Function
 Function IsDiczSy(A) As Boolean
 Dim D As Dictionary, I, V
 If Not IsDic(A) Then Exit Function
-Set D = A
-For Each I In D.Keys
-    V = D(I)
-    If Not IsSy(V) Then Exit Function
-Next
-IsDiczSy = True
+IsDiczSy = IsItrzSy(CvDic(A).Keys)
 End Function
 Function IsDiczLines2(A As Dictionary) As Boolean
 If Not IsAllStrAy(A.Keys) Then Exit Function
@@ -20,17 +15,19 @@ IsDiczLines2 = IsItrzLines(A.Items)
 End Function
 
 Function IsDiczLines(A As Dictionary) As Boolean
-If Not IsDiczStr(A) Then Exit Function
-If Not IsItrzLines(A.Items) Then Exit Function
+If Not IsDiczPrim(A) Then Exit Function
+IsDiczLines = True
+If IsItrzLines(A.Items) Then Exit Function
+If IsItrzLines(A.Keys) Then Exit Function
+IsDiczLines = False
 End Function
-
+Function IsDiczPrim(A As Dictionary) As Boolean
+If Not IsItrzPrim(A.Keys) Then Exit Function
+IsDiczPrim = IsItrzPrim(A.Items)
+End Function
 Function IsDiczStr(A As Dictionary) As Boolean
-If Not IsDiczStrKey(A) Then Exit Function
-IsDiczStr = IsItrzSy(A.Items)
-End Function
-
-Function IsDiczStrKey(A As Dictionary) As Boolean
-IsDiczStrKey = IsItrzStr(A.Keys)
+If Not IsItrzStr(A.Keys) Then Exit Function
+IsDiczStr = IsItrzStr(A.Items)
 End Function
 
 Private Function IsDiczLines1(A As Dictionary) As Boolean

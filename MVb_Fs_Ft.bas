@@ -1,11 +1,8 @@
 Attribute VB_Name = "MVb_Fs_Ft"
 Option Explicit
-Sub BrwFtVC(Ft)
-Shell "code.cmd """ & Ft & """", vbHide
-End Sub
 
-Sub BrwFt(Ft)
-Shell "notepad.exe """ & Ft & """", vbMaximizedFocus
+Sub BrwFt(Ft, Optional UseVc As Boolean)
+Shell IIf(UseVc, "code.cmd", "notepad.exe") & " """ & Ft & """", vbMaximizedFocus
 End Sub
 Function FtLines$(A)
 If FfnSz(A) <= 0 Then Exit Function

@@ -41,14 +41,15 @@ End Property
 Sub BrwTmpHom()
 BrwPth TmpHom
 End Sub
-Property Get TmpNmzWithSfx$(Optional Pfx$ = "N")
+
+Function TmpNmzWithSfx$(Optional Pfx$ = "N")
 Static X&
 TmpNmzWithSfx = TmpNm(Pfx) & "_" & X
-End Property
+End Function
 
-Property Get TmpNm$(Optional Pfx$ = "N")
+Function TmpNm$(Optional Pfx$ = "N")
 TmpNm = Pfx & Format(Now(), "YYYYMMDD_HHMMSS")
-End Property
+End Function
 
 Function TmpFdr$(Fdr$)
 Dim A$

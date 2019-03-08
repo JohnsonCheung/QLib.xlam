@@ -49,6 +49,16 @@ End Sub
 Private Sub Z_MthDic()
 BrwDic MthDic(Src(Md("AAAMod")))
 End Sub
+Function MthDicPj()
+Set MthDicPj = MthDiczPj(CurPj)
+End Function
+Function MthDiczPj(A As VBProject) As Dictionary
+Dim O As New Dictionary, I
+For Each I In MdItrzPj(A)
+    PushDic O, MthDiczMd(CvMd(I))
+Next
+Set MthDiczPj = O
+End Function
 Function MthDicMd() As Dictionary
 Set MthDicMd = MthDiczMd(CurMd)
 End Function

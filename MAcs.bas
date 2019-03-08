@@ -1,6 +1,7 @@
 Attribute VB_Name = "MAcs"
 Option Explicit
 Const CMod$ = "MAcs."
+
 Sub BrwTbl(D As Database, T)
 CAcs(D).DoCmd.OpenTable T
 End Sub
@@ -15,6 +16,8 @@ End Sub
 Function CAcs(D As Database) As Access.Application
 Static A As New Access.Application
 OpnFb A, D.Name
+Set CAcs = A
+A.Visible = True
 End Function
 
 Sub SavRec()

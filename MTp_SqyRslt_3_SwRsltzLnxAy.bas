@@ -3,6 +3,7 @@ Option Explicit
 Const CMod$ = "MTp_Sq_Sw."
 Private Samp As New SampSqt
 Type SwRslt: Er() As String: FldSw As Dictionary: StmtSw As Dictionary: End Type
+
 Private Function SwRsltzEr(FldSw As Dictionary, StmtSw As Dictionary, Er$()) As SwRslt
 With SwRsltzEr
     .Er = Er
@@ -205,11 +206,12 @@ Dim Stmt As Dictionary, Fld As Dictionary, Er$()
 Dim R As SwRslt
 R = SwRsltzLnxAy(Samp.SwLnxAy, Samp.Pm)
 Brw LyzNNAp("SwLnxAy Pm StmtSw FldSw", _
-    LnxFmtAySepSS(Samp.SwLnxAy), _
+    ErzLnxAyT1ss(Samp.SwLnxAy, ""), _
     Samp.Pm, _
     R.StmtSw, _
     R.FldSw)
 End Sub
+
 Private Sub ZZ()
 Dim A() As Lnx
 Dim B As Dictionary
@@ -220,7 +222,7 @@ End Sub
 Private Sub Z()
 Z_SwRslt
 End Sub
+
 Private Function CvSwBrk(A) As SwBrk
 Set CvSwBrk = A
 End Function
-

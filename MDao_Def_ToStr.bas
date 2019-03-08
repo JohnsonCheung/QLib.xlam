@@ -25,23 +25,11 @@ Dim O$(), TdStr
 For Each TdStr In Itr(TdLy)
     PushIAy O, FnyzTdLin(TdStr)
 Next
-FnyzTdLy = AywDistSy(O)
+FnyzTdLy = SyzDistAy(O)
 End Function
 
 Function TdStrzT$(A As Database, T)
 TdStrzT = TdStr(A.TableDefs(T))
-End Function
-
-Function FnyzTdLin(TdLin) As String()
-Dim T$, Rst$
-AsgTRst TdLin, T, Rst
-If HasSfx(T, "*") Then
-    T = RmvSfx(T, "*")
-    Rst = T & "Id " & Rst
-End If
-Rst = Replace(Rst, "*", T)
-Rst = Replace(Rst, "|", " ")
-FnyzTdLin = SySsl(Rst)
 End Function
 
 Function SkFnyzTdLin(A) As String()
@@ -53,17 +41,6 @@ T = RmvSfx(T, "*")
 Rst = Replace(Rst, "*", T)
 SkFnyzTdLin = SySsl(Rst)
 End Function
-
-Private Sub ZZ()
-Dim A As Dao.TableDef
-Dim B$()
-'FnyzTdLin C
-'SkFnyzTdLin C
-End Sub
-
-Private Sub Z()
-End Sub
-
 
 Function FdStr$(A As Dao.Field2)
 Dim D$, R$, Z$, VTxt$, VRul, E$, S$

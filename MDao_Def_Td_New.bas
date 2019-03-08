@@ -28,10 +28,10 @@ Next
 Set SkIdx = O
 End Function
 
-Function TdzFdAy(T, FdAy() As Dao.Field2, Optional SkFny0) As Dao.TableDef
+Function TdzFdAy(T, FdAy() As Field2, Optional SkFny0) As Dao.TableDef
 Dim O As New Dao.TableDef, F
 O.Name = T
-TdAppFdAy O, FdAy
+AppFdAy O, FdAy
 AddPk O ' add Pk
 AddSk O, SkFny0 ' add Sk
 Set TdzFdAy = O

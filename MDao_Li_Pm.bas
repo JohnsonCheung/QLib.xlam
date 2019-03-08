@@ -80,3 +80,33 @@ X "WsCol MB52 QBlk   D Blocked"
 SampLiPmSrc = XX
 Erase XX
 End Function
+Private Function LtPmAyFx(A() As LiFx, FfnDic As Dictionary) As LtPm()
+Dim J%, Fx$, M As LtPm
+For J = 0 To UB(A)
+    Set M = New LtPm
+    With A(J)
+        Fx = FfnDic(.Fxn)
+        PushObj LtPmAyFx, M.Init(">" & .T, .Wsn & "$", CnStrzFxDAO(Fx))
+    End With
+Next
+End Function
+Private Function LtPmAyFb(A() As LiFb, FfnDic As Dictionary) As LtPm()
+Dim J%, Fb$, M As LtPm
+For J = 0 To UB(A)
+    Set M = New LtPm
+    With A(J)
+        Fb = FfnDic(.Fbn)
+        PushObj LtPmAyFb, M.Init(">" & .T, .T, CnStrzFxAdo(Fb))
+    End With
+Next
+End Function
+
+Function LtPm(A As LiPm) As LtPm()
+Dim O() As LtPm, D As Dictionary
+Set D = A.FilNmToFfnDic
+PushObjAy O, LtPmAyFb(A.Fb, D)
+PushObjAy O, LtPmAyFx(A.Fx, D)
+LtPm = O
+End Function
+
+

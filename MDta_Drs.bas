@@ -1,7 +1,11 @@
 Attribute VB_Name = "MDta_Drs"
 Option Explicit
 Const CMod$ = "MDta_Drs."
-
+Enum eCntOpt
+    eAllCnt
+    eDupCnt
+    eSngCnt
+End Enum
 Function CvDrs(A) As Drs
 Set CvDrs = A
 End Function
@@ -112,8 +116,8 @@ If Not IsEqDry(A.Dry, B.Dry) Then Exit Function
 IsEqDrs = True
 End Function
 
-Function CntDic(Ay, Optional IgnCas As Boolean) As Dictionary
-Dim O As New Dictionary, I
+Function CntDic(Ay, Optional IgnCas As Boolean, Optional Opt As eCntOpt) As Dictionary
+Dim O As New Dictionary, I, C&
 If IgnCas Then O.CompareMode = TextCompare
 For Each I In Itr(Ay)
     If O.Exists(I) Then
@@ -122,7 +126,22 @@ For Each I In Itr(Ay)
         O.Add I, 1
     End If
 Next
-Set CntDic = O
+Dim K
+Select Case Opt
+Case eCntOpt.eDupCnt
+    Set CntDic = New Dictionary
+    For Each K In O.Keys
+        C = O(K)
+        If C > 1 Then CntDic.Add K, C
+    Next
+Case eCntOpt.eSngCnt
+    Set CntDic = New Dictionary
+    For Each K In O.Keys
+        C = O(K)
+        If C = 1 Then CntDic.Add K, C
+    Next
+Case Else: Set CntDic = O
+End Select
 End Function
 
 Function CntDiczDrs(A As Drs, C$) As Dictionary

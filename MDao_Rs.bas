@@ -15,14 +15,15 @@ End Sub
 Function CvRs(A) As Dao.Recordset
 Set CvRs = A
 End Function
-Function NoRec(A As Dao.Recordset) As Boolean
-NoRec = Not HasReczRs(A)
-End Function
 
-Function HasReczRs(A As Dao.Recordset) As Boolean
+Function NoRec(A As Dao.Recordset) As Boolean
 If Not A.EOF Then Exit Function
 If Not A.BOF Then Exit Function
-HasReczRs = True
+NoRec = True
+End Function
+
+Function HasRec(A As Dao.Recordset) As Boolean
+HasRec = Not NoRec(A)
 End Function
 
 Sub AsgRs(A As Dao.Recordset, ParamArray OAp())
@@ -208,12 +209,12 @@ End With
 SyzRs = O
 End Function
 
-Function RsStru$(A As Dao.Recordset)
+Function StruzRs$(A As Dao.Recordset)
 Dim O$(), F As Dao.Field2
 For Each F In A.Fields
     PushI O, FdStr(F)
 Next
-RsStru = JnCrLf(O)
+StruzRs = JnCrLf(O)
 End Function
 
 Function NzEmpty(A)

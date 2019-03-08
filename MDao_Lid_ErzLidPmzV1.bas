@@ -1,4 +1,5 @@
 Attribute VB_Name = "MDao_Lid_ErzLidPmzV1"
+Option Explicit
 Dim A As LidPm
 Private Type TycOpt
     Tyc As LidMisTyc
@@ -49,8 +50,8 @@ Dim L1$
         S = FmtQQ("? ?s", MisFfn.Cnt, FilKind)
     End If
     L1 = FmtQQ("Following ? not found", S)
-PushI MsgzMisFfnToFilKdDic, L1
-PushIAy MsgzMisFfnToFilKdDic, AyTab(LyzGpPth(MisFfn))
+PushI MsgzMisFfn, L1
+PushIAy MsgzMisFfn, AyTab(LyzGpPth(MisFfn))
 End Function
 
 Private Function MsgzMisFfnAy(FfnAy$(), Optional FilKind$ = "file") As String()
@@ -78,7 +79,6 @@ For I = 0 To UBound(T)
     With T(I)
         If Not .IsTblExist Then GoTo Nxt
         If .EptFset.Minus(.ActFset).Cnt > 0 Then
-            Set M = New LidMisCol
             PushIAy MsgzMisCol, MsgzMisCol1(T(I))
         End If
     End With

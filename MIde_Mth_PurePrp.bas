@@ -20,7 +20,7 @@ Function ImPurePrpLyzMd(A As CodeModule) As String()
 ImPurePrpLyzMd = ImPurePrpLyzSrc(Src(A))
 End Function
 
-Sub Z_ImPurePrpLyzSrc()
+Private Sub Z_ImPurePrpLyzSrc()
 Brw ImPurePrpLyzSrc(SrczMdNm("MXls_Lo_LofVbl"))
 End Sub
 

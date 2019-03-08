@@ -54,30 +54,30 @@ Function FdzDec(F) As Dao.Field2
 Set FdzDec = Fd(F, dbDecimal, True, Dft:="0")
 End Function
 
-Function FdzEleNmFld(EleNm, F) As Dao.Field2
+Function FdzEle(Ele, F) As Dao.Field2
 Dim O As Dao.Field2
-Set O = FdzEleNmFld_TNNN(F, EleNm): If Not IsNothing(O) Then Set FdzEleNmFld = O: Exit Function
-Select Case EleNm
-Case "Nm":  Set FdzEleNmFld = FdzNm(F)
-Case "Amt": Set FdzEleNmFld = FdzCur(F): FdzEleNmFld.DefaultValue = 0
-Case "Txt": Set FdzEleNmFld = FdzTxt(F, dbText, True): FdzEleNmFld.DefaultValue = """""": FdzEleNmFld.AllowZeroLength = True
-Case "Dte": Set FdzEleNmFld = FdzDte(F)
-Case "Int": Set FdzEleNmFld = FdzInt(F)
-Case "Lng": Set FdzEleNmFld = FdzLng(F)
-Case "Dbl": Set FdzEleNmFld = FdzDbl(F)
-Case "Sng": Set FdzEleNmFld = FdzSng(F)
-Case "Lgc": Set FdzEleNmFld = FdzBool(F)
-Case "Mem": Set FdzEleNmFld = FdzMem(F)
+Set O = FdzTnnn(F, Ele): If Not IsNothing(O) Then Set FdzEle = O: Exit Function
+Select Case Ele
+Case "Nm":  Set FdzEle = FdzNm(F)
+Case "Amt": Set FdzEle = FdzCur(F): FdzEle.DefaultValue = 0
+Case "Txt": Set FdzEle = FdzTxt(F, dbText, True): FdzEle.DefaultValue = """""": FdzEle.AllowZeroLength = True
+Case "Dte": Set FdzEle = FdzDte(F)
+Case "Int": Set FdzEle = FdzInt(F)
+Case "Lng": Set FdzEle = FdzLng(F)
+Case "Dbl": Set FdzEle = FdzDbl(F)
+Case "Sng": Set FdzEle = FdzSng(F)
+Case "Lgc": Set FdzEle = FdzBool(F)
+Case "Mem": Set FdzEle = FdzMem(F)
 End Select
 End Function
 
-Private Function FdzEleNmFld_TNNN(F, EleTnnn) As Dao.Field2
+Private Function FdzTnnn(F, EleTnnn) As Dao.Field2
 If Left(EleTnnn, 1) <> "T" Then Exit Function
 Dim A$
 A = Mid(EleTnnn, 2)
 If CStr(Val(A)) <> A Then Exit Function
-Set FdzEleNmFld_TNNN = Fd(F, dbText, True)
-With FdzEleNmFld_TNNN
+Set FdzTnnn = Fd(F, dbText, True)
+With FdzTnnn
     .Size = A
     .DefaultValue = """"""
     .AllowZeroLength = True
@@ -140,7 +140,7 @@ Set FdzTim = Fd(F, dbTime, True, Dft:="0")
 End Function
 
 Function FdzShtTys(ShtTys, Fld) As Dao.Field2
-'Public Const VdtShtTyLis$ = "ABBytCChrDDteDecILMSTTimTxt"
+'Public Const ShtTyLis$ = "ABBytCChrDDteDecILMSTTimTxt"
 Dim O As Dao.Field2
 Select Case ShtTys
 Case "Att", "A":  Set O = FdzAtt(Fld)
@@ -168,17 +168,17 @@ End Select
 Set FdzShtTys = O
 End Function
 
-Function FdzStdFld(StdFld, Optional T$) As Dao.Field2
+Function FdzFld(StdFld, Optional T$) As Dao.Field2
 Dim R2$, R3$: R2 = Right(StdFld, 2): R3 = Right(StdFld, 3)
 Select Case True
-Case StdFld = "CrtDte": Set FdzStdFld = FdzCrtDte(StdFld)
-Case T & "Id" = StdFld: Set FdzStdFld = FdzPk(StdFld)
-Case R2 = "Id":    Set FdzStdFld = FdzFk(StdFld)
-Case R2 = "Ty":    Set FdzStdFld = FdzTy(StdFld)
-Case R2 = "Nm":    Set FdzStdFld = FdzNm(StdFld)
-Case R3 = "Dte":   Set FdzStdFld = FdzDte(StdFld)
-Case R3 = "Amt":   Set FdzStdFld = FdzCur(StdFld)
-Case R3 = "Att":   Set FdzStdFld = FdzAtt(StdFld)
+Case StdFld = "CrtDte": Set FdzFld = FdzCrtDte(StdFld)
+Case T & "Id" = StdFld: Set FdzFld = FdzPk(StdFld)
+Case R2 = "Id":    Set FdzFld = FdzFk(StdFld)
+Case R2 = "Ty":    Set FdzFld = FdzTy(StdFld)
+Case R2 = "Nm":    Set FdzFld = FdzNm(StdFld)
+Case R3 = "Dte":   Set FdzFld = FdzDte(StdFld)
+Case R3 = "Amt":   Set FdzFld = FdzCur(StdFld)
+Case R3 = "Att":   Set FdzFld = FdzAtt(StdFld)
 End Select
 End Function
 
@@ -243,7 +243,7 @@ Dim E$
 FdzCrtDte A
 FdzCur A
 FdzDte A
-FdzEleNmFld A, A
+FdzEle A, A
 FdzFk A
 FdzId A
 FdzNm A

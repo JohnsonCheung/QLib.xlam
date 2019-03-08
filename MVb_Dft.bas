@@ -8,6 +8,6 @@ Else
 End If
 End Function
 
-Function DftStr$(A, Dft)
-DftStr = IIf(A = "", Dft, A)
+Function DftStr$(Str, Dft)
+DftStr = IIf(Str = "", Dft, Str)
 End Function

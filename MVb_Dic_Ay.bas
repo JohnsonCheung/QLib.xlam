@@ -1,6 +1,13 @@
 Attribute VB_Name = "MVb_Dic_Ay"
 Option Explicit
-Function DicAy_Add(DicAy() As Dictionary) As Dictionary
+Function DicAdd(A As Dictionary, B As Dictionary) As Dictionary
+Dim O As Dictionary
+Set O = DicClone(A)
+PushDic O, B
+Set DicAdd = O
+End Function
+
+Function DicAyAdd(DicAy() As Dictionary) As Dictionary
 'WarnLin if Key Has
 Dim I
 For Each I In DicAy

@@ -10,6 +10,7 @@ Const MDT_$ = ""
 Const CDT_Tbl_NotIn_Tny$ = "T[?] is invalid.  Valid T[?]"
 Const MDupE$ = "This E[?] is dup"
 Const CM_LinTyEr$ = "Invalid DaoTy[?].  Valid Ty[?]"
+
 Function ErzSchm(Schm$()) As String()
 '========================================
 Dim E() As Lnx
@@ -32,7 +33,7 @@ Dim AllEny$()
     AllFny = FnyzTdLy(LyzLnxAy(T))
     AllEny = AyTakT1(LyzLnxAy(E))
 ErzSchm = AyAddAp( _
-    LnxAyT1Chk(X, "Des Ele Fld Tbl"), _
+    ErzLnxAyT1ss(X, "Des Ele Fld Tbl"), _
     ErT(Tny, T, E), _
     ErF(AllFny, F), _
     ErE(E), _
@@ -332,7 +333,7 @@ MsgT_FldEr = WMsg(A, FmtQQ("Fld[?] cannot be found in any Ele-Lines"))
 End Function
 
 Private Function Msg_LinTyEr$(A As Lnx, Ty$)
-Msg_LinTyEr = WMsg(A, FmtQQ(CM_LinTyEr, Ty, ShtTyzDaosl))
+Msg_LinTyEr = WMsg(A, FmtQQ(CM_LinTyEr, Ty, FmtDrs(ShtTyDrs)))
 End Function
 
 Private Function ErD(Tny$(), T() As Lnx, D() As Lnx) As String()

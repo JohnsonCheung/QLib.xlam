@@ -1,14 +1,7 @@
 Attribute VB_Name = "MDta_Fmt_SepLin"
 Option Explicit
-Function SepChr$(A As eDryFmt)
-Select Case A
-Case eDryFmt.eSpcSep: SepChr = "-"
-Case eDryFmt.eVbarSep: SepChr = "|"
-Case Else: ThwPmEr "DryFmt", CSub
-End Select
-End Function
-Function SepLin$(W%(), Fmt As eDryFmt)
-SepLin = SepLinzSepDr(SepDr(W), Fmt)
+Function SepLin$(W%(), Sep$)
+SepLin = SepLinzSepDr(SepDr(W), Sep)
 End Function
 Function SepDr(W%()) As String()
 Dim I
@@ -17,6 +10,16 @@ For Each I In W
 Next
 End Function
 
-Function SepLinzSepDr$(SepDr$(), Fmt As eDryFmt)
-SepLinzSepDr = "|" & Join(SepDr, SepChr(Fmt)) & "|"
+Function SepLinzSepDr$(SepDr$(), Sep$)
+SepLinzSepDr = "|" & Join(SepDr, Sep) & "|"
+End Function
+
+Function SepChrzDryFmt$(A As eDryFmt)
+Dim O$
+Select Case A
+Case eDryFmt.eSpcSep: O = " "
+Case eDryFmt.eSpcSep: O = "|"
+Case Else: Thw CSub, "Invalid eDryFmt", "eDryFmt", A
+End Select
+SepChrzDryFmt = O
 End Function

@@ -35,13 +35,13 @@ Function HasInternet() As Boolean
 Stop
 End Function
 
-Private Property Get GitPushCdLines$(CmitgPth)
+Private Function GitPushCdLines$(CmitgPth)
 Dim O$(), Cd$, GitPush, T
 Push O, FmtQQ("Cd ""?""", CmitgPth)
 Push O, FmtQQ("git push -u https://johnsoncheung@github.com/johnsoncheung/?.git master", PjNm(CmitgPth))
 Push O, "Pause"
 GitPushCdLines = JnCrLf(O)
-End Property
+End Function
 
 Sub Exp()
 ExpzPj CurPj
