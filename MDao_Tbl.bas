@@ -1,7 +1,10 @@
 Attribute VB_Name = "MDao_Tbl"
 Option Explicit
 Const C_SkNm$ = "SecondaryKey"
-
+Public Const DoczShtTyscf$ = "Short-Type-Sz-Colon-FldNm:Sht.Ty.s.c.f: It is for one field optionally square bracket quoted if FldNm has space" & _
+"|It is format of [ShtTys][FldNm]"
+Public Const DoczShtTys$ = ""
+Const ShtTyBql$ = "Short-Type-Sz-Colon-FldNm-Bql:Sht.Ty.s.c.f.Bql: It is a [Bql] with each field is a [ShtTyscf]"
 Function Fny(A As Database, T, Optional NoReOpn As Boolean) As String()
 Fny = Itn(ReOpnDb(A, NoReOpn).TableDefs(T).Fields)
 End Function
@@ -326,14 +329,14 @@ For Each F In Drs.Fny
     End If
     C = C + 1
 Next
-CrtTblzShtTyscFldNmBql A, T, Jn(O, "`")
+CrtTblzShtTyBql A, T, Jn(O, "`")
 End Sub
 
 Sub CrtTblzDrszEmp(A As Database, T, Drs As Drs)
-CrtTblzShtTyscFldNmBql A, T, ShtTyscFldNmBqlzDrs(Drs)
+CrtTblzShtTyBql A, T, ShtTyBqlzDrs(Drs)
 End Sub
 
-Private Sub Z_ShtTyscFldNmBqlzDrs()
+Private Sub Z_ShtTyBqlzDrs()
 Dim Drs As Drs
 GoSub T0
 Exit Sub
@@ -342,29 +345,29 @@ T0:
     Ept = "A`B:B`Byt:C`I:D`L:E`D:G`S:H`C:I`Dte:J`M:K"
     GoTo Tst
 Tst:
-    Act = ShtTyscFldNmBqlzDrs(Drs)
+    Act = ShtTyBqlzDrs(Drs)
     C
     Return
 End Sub
 
-Function ShtTyscFldNmBqlzDrs$(Drs As Drs)
+Function ShtTyBqlzDrs$(Drs As Drs)
 Dim Dry(): Dry = Drs.Dry
-If Sz(Dry) = 0 Then ShtTyscFldNmBqlzDrs = Jn(Drs.Fny, "`"): Exit Function
+If Sz(Dry) = 0 Then ShtTyBqlzDrs = Jn(Drs.Fny, "`"): Exit Function
 Dim O$(), F, C%
 For Each F In Drs.Fny
-    PushI O, ShtTyscFldNmzCol(ColzDry(Dry, C), F)
+    PushI O, ShtTyscfzCol(ColzDry(Dry, C), F)
     C = C + 1
 Next
-ShtTyscFldNmBqlzDrs = Jn(O, "`")
+ShtTyBqlzDrs = Jn(O, "`")
 End Function
 
-Private Function ShtTyscFldNmzCol$(Col, F)
+Private Function ShtTyscfzCol$(Col, F)
 Dim ShtTysc$
 Select Case True
-Case IsColzBool(Col): ShtTyscFldNmzCol = "B:" & F
-Case IsColzDte(Col): ShtTyscFldNmzCol = "Dte:" & F
-Case IsColzNum(Col): ShtTyscFldNmzCol = ShtTyzNumCol(Col) & ":" & F
-Case IsColzStr(Col): ShtTyscFldNmzCol = IIf(IsColzMem(Col), "M:", "") & F
+Case IsColzBool(Col): ShtTyscfzCol = "B:" & F
+Case IsColzDte(Col): ShtTyscfzCol = "Dte:" & F
+Case IsColzNum(Col): ShtTyscfzCol = ShtTyzNumCol(Col) & ":" & F
+Case IsColzStr(Col): ShtTyscfzCol = IIf(IsColzMem(Col), "M:", "") & F
 Case Else: Thw CSub, "Col cannot determine its type: Not [Str* Num* Bool* Dte*:Col]", "Col", Col
 End Select
 End Function

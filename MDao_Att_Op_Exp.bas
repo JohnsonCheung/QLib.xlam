@@ -1,9 +1,9 @@
 Attribute VB_Name = "MDao_Att_Op_Exp"
 Option Explicit
 Const CMod$ = "MDao_Att_Op_Exp."
-
-Private Function ExpAttzAttd$(A As Attd, ToFfn)
-'Export the only File in {Attds} {ToFfn}
+Const DoczTblAtt$ = ""
+Const DoczAtt$ = "Attachment:It a Key-string of Table-Att in a database.  It can retrieve a record from Table-Att."
+Private Function ExpAttzAttd$(A As Attd, ToFfn) 'Export the only File in {Attds} {ToFfn}
 Dim Fn$, T$, F2 As Dao.Field2
 With A.ARs
     If Ext(!Filename) <> Ext(ToFfn) Then Thw CSub, "The Ext in the Att should be same", "Att-Ext ToFfn-Ext", Ext(!Filename), Ext(ToFfn)
@@ -13,10 +13,9 @@ F2.SaveToFile ToFfn
 ExpAttzAttd = ToFfn
 End Function
 
-Function ExpAtt$(Db As Database, Att, ToFfn)
-'Exporting the first File in Att.
-'If no or more than one file in att, error
-'If any, export and return ToFfn
+Function ExpAtt$(Db As Database, Att, ToFfn) 'Exporting the first File in [Att] to [ToFfn]. _
+|If no or more than one file in att, error _
+|If any, export and return ToFfn
 Const CSub$ = CMod & "ExptAttz"
 Dim N%
 N = AttFilCnt(Db, Att)

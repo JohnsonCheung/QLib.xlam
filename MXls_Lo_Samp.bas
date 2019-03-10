@@ -9,9 +9,13 @@ End Property
 
 Property Get SampLof() As String()
 Erase XX
-X "Lo Nam ABC"
+X "Bet A B C"
+X "Lo Nm ABC"
 X "Lo Fld A B C D E F G"
 X "Lo Hid B C X"
+X "Ali Left A B"
+X "Ali Right D E"
+X "Ali Center F"
 X "Wdt 10 A B X"
 X "Wdt 20 D C C"
 X "Wdt 3000 E F G C"

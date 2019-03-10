@@ -1,4 +1,5 @@
 Attribute VB_Name = "Module1"
+Option Explicit
 Function SetViszWb(A As Workbook, Vis As Boolean) As Workbook
 SetViszXls A.Application, Vis
 Set SetViszWb = A

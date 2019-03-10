@@ -68,8 +68,7 @@ Set W = Nothing
 X.Quit
 Set X = Nothing
 End Function
-
-Sub ExpTp(Db As Database, ToFfn$)
-ExpAtt Db, "Tp", ToFfn
+Sub ExpTp(Apn$, ToFfn$)
+ExpAtt AppDb(Apn), "Tp", ToFfn
 End Sub
 

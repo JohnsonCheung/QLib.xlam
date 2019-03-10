@@ -1,18 +1,18 @@
 Attribute VB_Name = "MDao_Bql_Read"
 Option Explicit
-Public Const DoczBql$ = "Back-Quote-Line:B.q.l:Back-Quote is (`) and it is a String|Each field is separated by (`)"
-Public Const DoczFbql$ = "Fullfilename-Bql:F.bql:it is a [Ft]|Each line is a [Bql]|Fst line is [ShtTyscFldNmBql]"
+Public Const DoczBql$ = "Back-Quote-Line:B.q.l:Back-Quote is (`) and it is a String.  Each field is separated by (`)"
+Public Const DoczFbql$ = "Fullfilename-Bql:F.bql:it is a [Ft]|Each line is a [Bql]|Fst line is [ShtTyBql]"
 Public Const DoczShtTys$ = "ShtTy-Sz:It is a [ShtTy] or (Tnnn) where nnn can 1 to 3 digits of value 1-255"
 Public Const DoczShtTyLis$ = "ShtTyLis Short-Type-List Sht.Ty.Lis (String)|is a Cml-String of each 1 to 3 char of ShtTy"
-Public Const DoczShtTyscFldNm$ = "ShtTyscFldNm Sht.Short Ty.Type s.sz c.colon FldNm|FldNm can have space, then ShtTyscFldNm should be sq bracket"
-Public Const DoczShtTyscFldNmBql$ = "ShtTyscFldNmBql Short-Type-Sz-Colon-FldNm-Bql (String)|It can used to create an empty table "
+Public Const DoczShtTyscf$ = "ShtTys-Colon-FldNm:ShtTys.c.f:FldNm can have space, then ShtTyscf should be sq bracket"
+Public Const DoczShtTyBql$ = "ShtTyscf-Bql:ShtTy.Bql:It is a [Bql] with each field is a [ShtTyscf].  It is used to create an empty table by CrtTblzShtTyBql"
+
 Private Sub Z_CrtTTzPth()
 Dim A As Database: Set A = TmpDb
 Dim P$: P = TmpPth
 WrtFbqlzDb P, SampDb_DutyDta
 CrtTTzPth A, P
 BrwDb A
-Stop
 End Sub
 
 Sub CrtTTzPth(A As Database, FbqlPth)
@@ -57,7 +57,7 @@ Sub CrtTblzFbql(A As Database, T, Fbq)
 Dim L$, F%, R As Dao.Recordset, J%
 F = FnoInp(Fbq)
 Line Input #F, L
-CrtTblzShtTyscFldNmBql A, T, L
+CrtTblzShtTyBql A, T, L
 Set R = RszT(A, T)
 While Not EOF(F)
     Line Input #F, L
@@ -67,17 +67,17 @@ Wend
 Close #F
 End Sub
 
-Sub CrtTblzShtTyscFldNmBql(A As Database, T, ShtTyscFldNmBql$)
+Sub CrtTblzShtTyBql(A As Database, T, ShtTyBql$)
 Dim Td As New Dao.TableDef
 Td.Name = T
 Dim I
-For Each I In Split(ShtTyscFldNmBql, "`")
-    Td.Fields.Append FdzShtTyscFldNm(I)
+For Each I In Split(ShtTyBql, "`")
+    Td.Fields.Append FdzShtTyscf(I)
 Next
 A.TableDefs.Append Td
 End Sub
 
-Private Function FdzShtTyscFldNm(A) As Dao.Field
+Private Function FdzShtTyscf(A) As Dao.Field
 Dim T As Dao.DataTypeEnum
 Dim S As Byte
 With Brk2(A, ":")
@@ -86,16 +86,16 @@ With Brk2(A, ":")
     Case FstChr(A) = "T":   T = dbText: S = RmvFstChr(.S1)
     Case Else:              T = DaoTyzShtTy(.S1)
     End Select
-    Set FdzShtTyscFldNm = Fd(.S2, T, TxtSz:=S)
+    Set FdzShtTyscf = Fd(.S2, T, TxtSz:=S)
 End With
 End Function
 
-Function ShtTyscFldNmBqlzT$(A As Database, T)
+Function ShtTyBqlzT$(A As Database, T)
 Dim Ay$(), F As Dao.Field
 For Each F In A.TableDefs(T).Fields
     PushI Ay, ShtTyszFd(F) & ":" & F.Name
 Next
-ShtTyscFldNmBqlzT = Jn(Ay, "`")
+ShtTyBqlzT = Jn(Ay, "`")
 End Function
 
 Private Function ShtTyszFd$(A As Dao.Field)

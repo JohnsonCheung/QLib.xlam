@@ -3,8 +3,8 @@ Option Explicit
 Const CMod$ = ""
 Const DoczLofValFld As Byte = 1 '
 
-Public Const LofT1nn$ = "Ali Bdr Tot Wdt Fmt Lvl Cor Fml Lbl Tit Bet" ' Fmt. i.tm s.pace s.eparated string
-Public Const FmtissSng$ = "                            Fml Lbl Tit Bet" ' Sng.sigle field per line
+Public Const LofT1nn$ = "Lo Ali Bdr Tot Wdt Fmt Lvl Cor Fml Lbl Tit Bet" ' Fmt. i.tm s.pace s.eparated string
+Public Const FmtissSng$ = "                             Fml Lbl Tit Bet" ' Sng.sigle field per line
 Const FmtissMul$ = "Ali Bdr Tot Wdt Fmt Lvl Cor                " ' Mul.tiple field per line
 Const M01$ = "Lno#? is [?] line having Val(?) which should be a number" 'For Wdt Lvl
 Const M02$ = "Lno#? is [?] line having Val(?) which between (?) and (?)" 'For Wdt Lvl

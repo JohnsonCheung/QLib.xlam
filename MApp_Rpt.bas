@@ -20,7 +20,7 @@ Private Function OupWbzInst(Apn$) As Workbook
 ClsOupWbInst Apn
 Dim OFx$
     OFx = OupFxInst(Apn)
-    ExpTp AppDb(Apn), OFx
+    ExpTp Apn, OFx
 Dim OWb As Workbook
     Set OWb = WbzFx(OFx)
     RfhWb(OWb, WFb(Apn)).Save
