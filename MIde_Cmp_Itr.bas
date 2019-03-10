@@ -154,8 +154,8 @@ Function CmpItrzPj(A As VBProject, Optional WhStr$)
 Asg Itr(CmpAyzPj(A, WhStr)), CmpItrzPj
 End Function
 
-Function MdItrzPj(A As VBProject, Optional WhStr$)
-Asg Itr(MdAyzPj(A, WhStr)), MdItrzPj
+Function MdItr(A As VBProject, Optional WhStr$)
+Asg Itr(MdAyzPj(A, WhStr)), MdItr
 End Function
 
 Function MdAyzPj(A As VBProject, Optional WhStr$) As CodeModule()

@@ -13,6 +13,7 @@ End Function
 Function OupFx$(Apn)
 OupFx = PnmOupPth(AppDb(Apn)) & Apn & ".xlsx"
 End Function
+
 Function AppFb$(Apn)
 AppFb = AppHom & Apn & ".app.accdb"
 End Function
@@ -108,10 +109,3 @@ Property Get ApnzDb$(A As Database)
 ApnzDb = ValzQ(A, "Select Apn from Apn")
 End Property
 
-Property Get AppFbAy() As String()
-Push AppFbAy, AppJJFb
-Push AppFbAy, AppStkShpCstFb
-Push AppFbAy, AppStkShpRateFb
-Push AppFbAy, AppTaxExpCmpFb
-Push AppFbAy, AppTaxRateAlertFb
-End Property

@@ -2,6 +2,10 @@ Attribute VB_Name = "MAcs"
 Option Explicit
 Const CMod$ = "MAcs."
 
+Sub DoFrm(A As Access.Application, FrmNm$)
+A.DoCmd.OpenForm FrmNm
+End Sub
+
 Sub BrwTbl(D As Database, T)
 CAcs(D).DoCmd.OpenTable T
 End Sub
@@ -42,7 +46,7 @@ End Sub
 
 Sub ClsTTz(A As Access.Application, TT)
 Dim T
-For Each T In FnyzFF(TT)
+For Each T In NyzNN(TT)
     ClsTblz A, T
 Next
 End Sub

@@ -7,7 +7,7 @@ Property Get SampLo() As ListObject
 Set SampLo = LozRg(RgzSq(SampSqWithHdr, NewA1), "Sample")
 End Property
 
-Property Get SampLoFmtr() As String()
+Property Get SampLof() As String()
 Erase XX
 X "Lo Nam ABC"
 X "Lo Fld A B C D E F G"
@@ -31,11 +31,11 @@ X "Fml F A + B"
 X "Fml C A * 2"
 X "Lbl A lksd flks dfj"
 X "Lbl B lsdkf lksdf klsdj f"
-SampLoFmtr = XX
+SampLof = XX
 Erase XX
 End Property
 
-Property Get SampLoFmtrTp() As String()
+Property Get SampLofTp() As String()
 Dim O$()
 PushI O, "Lo  Nm     *Nm"
 PushI O, "Lo  Fld    *Fld.."
@@ -56,7 +56,7 @@ PushI O, "Fml *Fld   *Formula"
 PushI O, "Bet *Fld   *Fld1 *Fld2"
 PushI O, "Tit *Fld   *Tit"
 PushI O, "Lbl *Fld   *Lbl"
-SampLoFmtrTp = O
+SampLofTp = O
 End Property
 
 

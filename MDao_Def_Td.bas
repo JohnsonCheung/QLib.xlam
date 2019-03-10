@@ -29,7 +29,7 @@ End Sub
 
 Sub AddFldTxtFF(A As Dao.TableDef, FF, Optional Req As Boolean, Optional Sz As Byte = 255)
 Dim F
-For Each F In FnyzFF(FF)
+For Each F In NyzNN(FF)
     A.Fields.Append Fd(F, dbText, Req, Sz)
 Next
 End Sub

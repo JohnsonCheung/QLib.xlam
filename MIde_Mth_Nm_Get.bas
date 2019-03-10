@@ -30,7 +30,7 @@ End Function
 Function MthNyzPj(A As VBProject, Optional WhStr$) As String()
 Dim M, W As WhMth
 Set W = WhMthzStr(WhStr)
-For Each M In MdItrzPj(A, WhStr)
+For Each M In MdItr(A, WhStr)
     PushIAy MthNyzPj, MthNyzMd(CvMd(M), W)
 Next
 End Function
@@ -65,7 +65,7 @@ End Function
 
 Function MthQNyzPj(A As VBProject, Optional WhStr$) As String()
 Dim I
-For Each I In MdItrzPj(A, WhStr)
+For Each I In MdItr(A, WhStr)
     PushAy MthQNyzPj, MthQNyzMd(CvMd(I), WhStr)
 Next
 End Function

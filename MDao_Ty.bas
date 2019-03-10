@@ -20,7 +20,7 @@ Dim O$(), I
 For Each I In VdtShtTyAy
     PushI O, I & " " & DtaTyzShtTy(I)
 Next
-VdtShtTyDtaTyAy = AyAlign2T(O)
+VdtShtTyDtaTyAy = FmtAy2T(O)
 End Property
 
 Property Get VdtDtaTyAy() As String()

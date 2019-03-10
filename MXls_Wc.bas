@@ -38,7 +38,7 @@ End Sub
 Sub AddWcFxFbtt(Fx, LnkFb$, TT)
 Dim Wb As Workbook, T
 Set Wb = WbzFx(Fx)
-For Each T In FnyzFF(TT)
+For Each T In NyzNN(TT)
     WczWbFb Wb, LnkFb, T
 Next
 Wb.Close True

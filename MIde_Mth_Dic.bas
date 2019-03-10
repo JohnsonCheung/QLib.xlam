@@ -54,7 +54,7 @@ Set MthDicPj = MthDiczPj(CurPj)
 End Function
 Function MthDiczPj(A As VBProject) As Dictionary
 Dim O As New Dictionary, I
-For Each I In MdItrzPj(A)
+For Each I In MdItr(A)
     PushDic O, MthDiczMd(CvMd(I))
 Next
 Set MthDiczPj = O

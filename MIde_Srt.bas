@@ -71,15 +71,20 @@ With MthNm3zDNm
     .MthTy = Ty
 End With
 End Function
-
-Sub SrtPj(A As VBProject)
-Dim MdNm, D As Dictionary
-Set D = SrtedMdDic(A)
-For Each MdNm In D.Keys
+Sub RplPj(A As VBProject, MdDic As Dictionary)
+Dim MdNm
+For Each MdNm In MdDic.Keys
     If MdNm <> "MIde_Srt" Then
-        RplMd MdzPj(A, MdNm), D(MdNm)
+        RplMd MdzPj(A, MdNm), MdDic(MdNm)
     End If
 Next
+End Sub
+Sub SrtPj()
+SrtzPj CurPj
+End Sub
+Sub SrtzPj(A As VBProject)
+Backup Pjf(A)
+RplPj A, SrtedMdDic(A)
 End Sub
 
 Function SrtedSrcDic(Src$()) As Dictionary

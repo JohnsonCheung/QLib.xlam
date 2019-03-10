@@ -223,6 +223,6 @@ Private Sub Z()
 Z_SwRslt
 End Sub
 
-Private Function CvSwBrk(A) As SwBrk
+Function CvSwBrk(A) As SwBrk
 Set CvSwBrk = A
 End Function

@@ -35,7 +35,7 @@ For Each K In A.Keys
     PushI O, J & " " & K & " " & TypeName(A(K)) & " " & LinzVal(A(K))
     J = J + 1
 Next
-FmtDic2 = AyAlign2T(O)
+FmtDic2 = FmtAy2T(O)
 End Function
 
 Function FmtDic1(A As Dictionary, Optional Sep$ = " ") As String()

@@ -63,7 +63,7 @@ End Function
 Function GpDicDKG(A As Drs, KK, G$) As Dictionary
 Dim Fny$()
 Dim KeyIxAy&(), GIx%
-    Fny = FnyzFF(KK)
+    Fny = NyzNN(KK)
     KeyIxAy = IxAy(A.Fny, Fny)
     PushI Fny, G & "_Gp"
     GIx = IxzAy(Fny, G)

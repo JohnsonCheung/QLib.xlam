@@ -35,7 +35,7 @@ BrwFb A.Name
 End Sub
 
 Function TnyzTT(TT) As String()
-TnyzTT = FnyzFF(TT)
+TnyzTT = NyzNN(TT)
 End Function
 
 Function StruzTT(A As Database, TT)

@@ -24,7 +24,7 @@ If FF = "" Then
         PushI O, F.Value
     Next
 Else
-    For Each N In FnyzFF(FF)
+    For Each N In NyzNN(FF)
         Push O, A(F).Value
     Next
 End If

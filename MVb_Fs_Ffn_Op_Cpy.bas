@@ -1,6 +1,6 @@
 Attribute VB_Name = "MVb_Fs_Ffn_Op_Cpy"
 Option Explicit
-Sub CpyPthzClr(FmPth, ToPth)
+Sub CpyPthzClr(FmPth, ToPth$)
 ThwNotPth ToPth
 ClrPthFil ToPth
 Dim Ffn
@@ -8,65 +8,65 @@ For Each Ffn In FfnAy(FmPth)
     CpyFilzToPth Ffn, ToPth
 Next
 End Sub
-Function CpyFilzToPth$(Ffn, ToPth, Optional OvrWrt As Boolean)
-ThwNotPth ToPth
-ThwNoFfn Ffn, CSub, "File-to-backup"
-Fso.CopyFile Ffn, ToPth, OvrWrt
-CpyFilzToPth = ToPth & Fn(Ffn)
-End Function
 
-Sub CpyFilUp(Ffn)
+Sub CpyFilzUp(Ffn)
 CpyFilzToPth Ffn, ParPth(Ffn)
 End Sub
 
-Function CpyFfnToNxt$(Ffn)
-Dim O$
-O = NxtFfn(Ffn)
-CpyFfnToFfn Ffn, O
-CpyFfnToNxt = O
-End Function
-
-
-Sub CpyFfnAyToPthIfDif(FfnAy$(), Pth$)
+Sub CpyFilzToNxtzAy(FfnAy$())
 Dim I
-For Each I In FfnAy
-    CpyFfnToPthIfDif I, Pth
+For Each I In Itr(FfnAy)
+    CpyFilzToNxt I
 Next
 End Sub
 
-Sub CpyFfnToFfn(FmFfn, ToFfn$, Optional OvrWrt As Boolean)
-If OvrWrt Then DltFfn ToFfn
-Dim F As File
-Set F = Fso.GetFile(FmFfn)
-F.Copy ToFfn
+Function CpyFilzToNxt$(Ffn)
+Dim O$
+O = NxtFfn(Ffn)
+CpyFilzToFfn Ffn, O
+CpyFilzToNxt = O
+End Function
+
+Sub CpyFilzIfDif(FfnAy_or_Ffn, Pth$, Optional UseEq As Boolean)
+Dim I
+For Each I In StrItr(FfnAy_or_Ffn)
+    CpyFilzIfDifzSng I, Pth, UseEq
+Next
 End Sub
 
-Sub CpyFfnToPth(FmFfn, ToPth$, Optional OvrWrt As Boolean)
-Dim ToFfn$: ToFfn = PthEnsSfx(ToPth) & Fn(FmFfn)
-CpyFfnToFfn FmFfn, ToFfn
+Sub CpyFilzToFfn(FmFfn, ToFfn$, Optional OvrWrt As Boolean)
+Fso.GetFile(FmFfn).Copy ToFfn, OvrWrt
 End Sub
 
-Sub CpyFfnToPthIfDif(A, Pth$)
-Dim B$, Msg$, IsSam As Boolean
+Function CpyFilzToPth$(FfnAy_or_Ffn, ToPth$, Optional OvrWrt As Boolean)
+Dim Ffn, P$, O$
+P = PthEnsSfx(ToPth)
+For Each Ffn In StrItr(FfnAy_or_Ffn)
+    O = P & Fn(Ffn)
+    CpyFilzToFfn Ffn, O, OvrWrt
+Next
+CpyFilzToPth = O
+End Function
+
+Sub CpyFilzIfDifzSng(Ffn, ToPth$, Optional UseEq As Boolean)
+Dim B$, Msg$, IsDif As Boolean
 Select Case True
-Case HasFfn(A)
-    B = Pth & Fn(A)
-    IsSam = IsSamFfn(B, A)
+Case HasFfn(Ffn)
+    B = ToPth & Fn(Ffn)
+    IsDif = IsDifFfn(B, Ffn, UseEq)
     Select Case True
-    Case IsSam:   Msg = "No Copy, file is same.": GoSub Prt
-    Case Else:
-        Fso.CopyFile A, B, True
-        Msg = "Fil copied": GoSub Prt
+    Case IsDif: Fso.CopyFile Ffn, B, True
+                Msg = "Fil copied": GoSub Prt
+    Case Else:  Msg = FmtQQ("No Copy, file is ?.", IIf(UseEq, "eq", "same")): GoSub Prt
     End Select
 Case Else
-    Thw CSub, "File not found", "FmFfn ToPth IsSam HasToFfn", A, Pth, IsSam, HasFfn(B)
+    Thw CSub, "File not found", "FmFfn ToPth IsDif HasToFfn UseEq", Ffn, ToPth, IsDif, HasFfn(B), UseEq
 End Select
 Exit Sub
 Prt:
-    Info CSub, Msg, "FmFfn ToPth IsSam HasToFfn", A, Pth, IsSam, HasFfn(B)
+    Info CSub, Msg, "Fil FmPth ToPth IsDif HasToFfn Sz Tim", Fn(Ffn), Pth(Ffn), ToPth, IsDif, HasFfn(B), FfnSz(Ffn), FfnTimStr(Ffn)
     Return
 End Sub
-
 
 Function NxtFfn$(Ffn)
 If Not HasFfn(Ffn) Then NxtFfn = Ffn: Exit Function

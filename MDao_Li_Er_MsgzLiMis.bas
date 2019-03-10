@@ -33,7 +33,7 @@ Dim WPth$, LiPm As LiPm, Act$(), Ept$()
 GoSub Tst
 Exit Sub
 Tst:
-'    CpyFfnAyToPthIfDif ExistFfnAy(FxAyLiFil(LiPm.Fil)), WPth
+'    CpyFilzIfDif ExistFfnAy(FxAyLiFil(LiPm.Fil)), WPth
 '    Act = ChkCol(LiPm, WPth)
     D Act
     Stop

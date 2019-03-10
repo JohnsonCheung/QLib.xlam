@@ -1,18 +1,18 @@
 Attribute VB_Name = "MXls_Rfh"
 Option Explicit
-Sub ClsWcvWc(A As WorkbookConnection)
+Private Sub ClsWc(A As WorkbookConnection)
 If IsNothing(A.OLEDBConnection) Then Exit Sub
 CvCn(A.ODBCConnection.Connection).Close
 End Sub
 
-Sub ClsWc(Wb As Workbook)
+Private Sub ClsWczWb(Wb As Workbook)
 Dim Wc As WorkbookConnection
 For Each Wc In Wb.Connections
-    ClsWcvWc Wc
+    ClsWc Wc
 Next
 End Sub
 
-Sub SetWcFb(A As WorkbookConnection, ToUseFb$)
+Private Sub SetWczFb(A As WorkbookConnection, ToUseFb)
 If IsNothing(A.OLEDBConnection) Then Exit Sub
 Dim Cn$
 #Const A = 2
@@ -26,56 +26,71 @@ Dim Cn$
 #End If
 A.OLEDBConnection.Connection = Cn
 End Sub
-Sub RfhWc(A As WorkbookConnection, ToUseFb$)
+
+Private Sub RfhWc(A As WorkbookConnection, ToUseFb)
 If IsNothing(A.OLEDBConnection) Then Exit Sub
-SetWcFb A, ToUseFb
+SetWczFb A, ToUseFb
 A.OLEDBConnection.BackgroundQuery = False
 A.OLEDBConnection.Refresh
 End Sub
 
-Sub RfhPc(A As PivotCache)
+Private Sub RfhPc(A As PivotCache)
 A.MissingItemsLimit = xlMissingItemsNone
 A.Refresh
 End Sub
 
 Sub RfhFx(Fx, Fb$)
-WbRfh(WbzFx(Fx), Fb).Close SaveChanges:=True
+RfhWb(WbzFx(Fx), Fb).Close SaveChanges:=True
 End Sub
 
-Sub RfhWs(A As Worksheet)
-DoItrFun A.QueryTables, "RfhQt"
-DoItrFun A.PivotTables, "RfhPt"
-DoItrFun A.ListObjects, "RfhLo"
+Private Sub RfhWs(A As Worksheet)
+Dim Q As QueryTable: For Each Q In A.QueryTables: Q.BackgroundQuery = False: Q.Refresh: Next
+Dim P As PivotTable: For Each P In A.PivotTables: P.Update: Next
+Dim L As ListObject: For Each L In A.ListObjects: L.Refresh: Next
 End Sub
-
-Sub RfhLo(A As ListObject)
-A.Refresh
-End Sub
-
-Sub RfhQt(A As Excel.QueryTable)
-A.BackgroundQuery = False
-A.Refresh
-End Sub
-
-Function WbRfh(Wb As Workbook, Fb$) As Workbook
-RfhWb Wb, Fb
-Set WbRfh = Wb
-End Function
 
 Function RfhWb(Wb As Workbook, Fb) As Workbook
-RplLoCn Wb, Fb
-DoItrFunXP Wb.Connections, "RfhWc", Fb
-DoItrFun Wb.PivotCaches, "RfhPc"
-DoItrFun Wb.Sheets, "RfhWs"
+RplLozFb Wb, Fb
+Dim C As WorkbookConnection
+Dim P As PivotCache:
+Dim W As Worksheet:
+For Each C In Wb.Connections:   RfhWc W, Fb: Next
+For Each P In Wb.PivotCaches:   P.MissingItemsLimit = xlMissingItemsNone: P.Refresh: Next
+For Each W In Wb.Sheets:        RfhWs W: Next
 'FmtLozWb Wb
-Dim Wc As WorkbookConnection
-For Each Wc In Wb.Connections
-    DltWc Wb
-Next
-ClsWc Wb
+ClsWczWb Wb
+DltWc Wb
 Set RfhWb = Wb
 End Function
 
-Sub RfhPt(A As Excel.PivotTable)
-A.Update
+Private Sub RplLozFb(Wb As Workbook, Fb)
+Dim I, Lo As ListObject, D As Database
+Set D = Db(Fb)
+For Each I In OupLoAy(Wb)
+    Set Lo = I
+    RplLozT Lo, D, "@" & Mid(Lo.Name, 3)
+Next
+D.Close
+Set D = Nothing
 End Sub
+
+Private Function RplLozT(A As ListObject, Db As Database, T) As ListObject
+Dim Fny1$(): Fny1 = Fny(Db, T)
+Dim Fny2$(): Fny2 = FnyzLo(A)
+If Not IsSamAy(Fny1, Fny2) Then
+    Thw CSub, "LoFny and TblFny are not same", "LoFny TblNm TblFny Db", Fny2, T, Fny1, DbNm(Db)
+End If
+Dim Sq()
+    Dim R As Dao.Recordset
+    Set R = Rs(Db, SqlSel_FF_Fm(Fny2, T))
+    Sq = SqAddSngQuote(SqzRs(R))
+MinxLo A
+RgzSq Sq, A.DataBodyRange
+Set RplLozT = A
+End Function
+
+Private Function OupLoAy(A As Workbook) As ListObject()
+OupLoAy = OywNmPfx(LoAy(A), "T_")
+End Function
+
+

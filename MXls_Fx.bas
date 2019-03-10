@@ -51,7 +51,7 @@ End Function
 Function TmpDbzFxww(Fx$, WW) As Database
 Dim O As Database
    Set O = TmpDb
-'LnkFx O, Fx, FnyzFF(WW)
+'LnkFx O, Fx, NyzNN(WW)
 Set TmpDbzFxww = O
 End Function
 

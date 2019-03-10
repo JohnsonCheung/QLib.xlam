@@ -1,6 +1,11 @@
 Attribute VB_Name = "MVb_Ay_Oy"
 Option Explicit
-
+Function SyzOyPrp(Oy, Prp) As String()
+Dim I
+For Each I In Itr(Oy)
+    PushI SyzOyPrp, ObjPrp(I, Prp)
+Next
+End Function
 Function OyAdd(A, B)
 Dim O, I
 O = A

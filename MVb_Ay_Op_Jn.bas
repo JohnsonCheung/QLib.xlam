@@ -12,11 +12,6 @@ Dim Av(): Av = Ap
 JnDollarAp = JnDollar(Av)
 End Function
 
-Function JnDotAp$(ParamArray Ap())
-Dim Av(): Av = Ap
-JnDotAp = JnDot(Av)
-End Function
-
 Function JnPthSepAp$(ParamArray Ap())
 Dim Av(): Av = Ap
 JnPthSepAp = JnPthSep(Av)

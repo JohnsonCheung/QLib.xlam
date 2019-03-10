@@ -28,7 +28,7 @@ End Sub
 Function FmtDic1(A As Dictionary) As String()
 If A.Count = 0 Then Exit Function
 Dim Key: Key = A.Keys
-Dim O$(): O = AyAlignL(Key)
+Dim O$(): O = FmtAyAlign(Key)
 Dim J&
 For J = 0 To UB(Key)
    O(J) = O(J) & " " & A(Key(J))

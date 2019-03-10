@@ -1,10 +1,10 @@
 Attribute VB_Name = "MDao_Lid_Lnk"
 Option Explicit
-Function ChkLnkTbl(Db As Database, A() As LtPm) As String()
+Function ErzLnkTblzLtPm(Db As Database, A() As LtPm) As String()
 Dim J%
 For J = 0 To UB(A)
     With A(J)
-        PushIAy ChkLnkTbl, ChkLnkTblzTSrcCn(Db, .T, .S, .Cn)
+        PushIAy ErzLnkTblzLtPm, ErzLnkTblzTSrcCn(Db, .T, .S, .Cn)
     End With
 Next
 End Function
@@ -34,9 +34,9 @@ Sub LnkFxw(A As Database, T, Fx, Wsn)
 LnkTblzTSCn A, T, Wsn & "$", CnStrzFxDAO(Fx)
 End Sub
 
-Sub LnkFbztt(Db As Database, TTCrt$, Fb$, Optional Fbtt$)
+Sub LnkFbzTT(Db As Database, TTCrt$, Fb$, Optional Fbtt$)
 Dim TnyCrt$(), TnyzFb$(), J%, T
-TnyCrt = FnyzFF(TTCrt)
+TnyCrt = NyzNN(TTCrt)
 TnyzFb = IIf(Fbtt = "", TnyCrt, TermAy(Fbtt))
 If Sz(TnyzFb) <> Sz(TnyCrt) Then
     Thw CSub, "[TTCrt] and [FbttSz] are diff", "TTCrtSz FbttSz TnyCrt TnyzFb GivenFbtt", Sz(TnyCrt), Sz(TnyzFb), TnyCrt, TnyzFb, Fbtt
@@ -58,7 +58,7 @@ End Function
 
 Sub LnkFb(A As Database, T, Fb$, Optional Fbt)
 Dim Cn$: Cn = CnStrzFbDao(Fb)
-ThwEr ChkLnkTblzTSrcCn(A, T, IIf(Fbt = "", T, Fbt), Cn), CSub
+ThwEr ErzLnkTblzTSrcCn(A, T, IIf(Fbt = "", T, Fbt), Cn), CSub
 End Sub
 
 

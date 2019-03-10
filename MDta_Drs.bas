@@ -12,7 +12,7 @@ End Function
 
 Function Drs(FF, Dry()) As Drs
 Dim O As New Drs
-Set Drs = O.Init(FnyzFF(FF), Dry)
+Set Drs = O.Init(NyzNN(FF), Dry)
 End Function
 
 Function DrsAddCol(A As Drs, ColNm$, ConstVal) As Drs
@@ -68,7 +68,7 @@ End Function
 
 Function DrsSelCC(A As Drs, CC) As Drs
 Const CSub$ = CMod & "DrsSelCC"
-Dim OFny$(): OFny = FnyzFF(CC)
+Dim OFny$(): OFny = NyzNN(CC)
 If Not IsAySub(A.Fny, OFny) Then Thw CSub, "Given FF has some field not in Drs.Fny", "CC Drs.Fny", CC, A.Fny
 Dim ODry()
     Dim IAy&()
@@ -115,6 +115,10 @@ If Not IsEqAy(A.Fny, B.Fny) Then Exit Function
 If Not IsEqDry(A.Dry, B.Dry) Then Exit Function
 IsEqDrs = True
 End Function
+
+Sub BrwCnt(Ay, Optional IgnCas As Boolean, Optional Opt As eCntOpt)
+Brw FmtCntDic(CntDic(Ay, IgnCas, Opt))
+End Sub
 
 Function CntDic(Ay, Optional IgnCas As Boolean, Optional Opt As eCntOpt) As Dictionary
 Dim O As New Dictionary, I, C&
@@ -170,7 +174,7 @@ For Each Dr In Itr(Dry)
 Next
 End Function
 Function DrsReOrdBy(A As Drs, BySubFF) As Drs
-Dim SubFny$(): SubFny = FnyzFF(BySubFF)
+Dim SubFny$(): SubFny = NyzNN(BySubFF)
 Dim OFny$(): OFny = AyReOrd(A.Fny, SubFny)
 Dim IAy&(): IAy = IxAy(A.Fny, OFny)
 Dim ODry(): ODry = DrySelIxAy(A.Dry, IAy)
@@ -206,7 +210,7 @@ Function SyDrsC(A As Drs, ColNm) As String()
 SyDrsC = IntoDrsC(EmpSy, A, ColNm)
 End Function
 Function PrpNy(PP) As String()
-PrpNy = FnyzFF(PP) 'Stop '
+PrpNy = NyzNN(PP) 'Stop '
 End Function
 
 Sub PushDrs(O As Drs, A As Drs)

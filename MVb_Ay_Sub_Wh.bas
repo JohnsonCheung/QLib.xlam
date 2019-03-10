@@ -21,8 +21,9 @@ ZZ:
     Brw FmtCntDic(Ay)
     
 End Sub
+
 Function FmtCntDic(Ay, Optional IgnCas As Boolean, Optional Opt As eCntOpt) As String()
-FmtCntDic = FmtDic(CntDic(Ay, IgnCas, Opt))
+FmtCntDic = FmtS1S2Ay(SwapS1S2Ay(S1S2AyzDic(CntDic(Ay, IgnCas, Opt))), Nm1:="Cnt", Nm2:="Mth")
 End Function
 
 Function SyzDistAy(Ay) As String()

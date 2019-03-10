@@ -2,11 +2,12 @@ Attribute VB_Name = "MXls_Lo_Fmt"
 Option Explicit
 Const CMod$ = "MXls_Lo_Fmt."
 Private A As ListObject, B$(), Fny$()
-Function FmtLo(Lo As ListObject, Fmtr$()) As ListObject
-Dim L
+Function FmtLo(Lo As ListObject, Lof$()) As ListObject
 Set A = Lo
 Fny = FnyzLo(Lo)
-B = Fmtr
+B = Lof
+ThwEr ErzLof(Lof, Fny), CSub
+Dim L
 For Each L In WItr("Ali"): WFmtAli L: Next
 For Each L In WItr("Bdr"): WFmtBdr L: Next
 For Each L In WItr("Bet"): WFmtBet L: Next
@@ -175,7 +176,7 @@ Private Sub Z_FmtLo()
 Dim Lo As ListObject, Fmtr() As String 'Lofr
 '------------
 Set Lo = SampLo
-Fmtr = SampLoFmtr
+Fmtr = SampLof
 GoSub Tst
 Exit Sub
 Tst:

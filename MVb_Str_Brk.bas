@@ -1,10 +1,6 @@
 Attribute VB_Name = "MVb_Str_Brk"
 Option Explicit
 Const CMod$ = "MVb_Str_Brk."
-Sub AsgS1S2(A As S1S2, O1, O2)
-O1 = A.S1
-O2 = A.S2
-End Sub
 Sub AsgBrkDot1(S, OA, OB, Optional NoTrim As Boolean)
 AsgS1S2 BrkDot1(S), OA, OB
 End Sub

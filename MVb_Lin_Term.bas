@@ -33,6 +33,10 @@ End Function
 
 Function TermAyzTT(TT) As String()
 Const CSub$ = CMod & "TermAyzTT"
+Dim T
+For Each T In TermItr(TT)
+    PushI TermAyzTT, T
+Next
 Select Case True
 Case IsStr(TT): TermAyzTT = TermAy(TT)
 Case IsSy(TT): TermAyzTT = TT
@@ -46,6 +50,18 @@ End Function
 
 Function TermAset(Lin) As Aset
 Set TermAset = AsetzAy(TermAy(Lin))
+End Function
+
+Function TermItr(NN)
+Asg TermAyzNN(NN), TermItr
+End Function
+
+Function TermAyzNN(NN) As String()
+Select Case True
+Case IsStr(NN): TermAyzNN = TermAy(NN)
+Case IsSy(NN): TermAyzNN = NN
+Case Else: Thw CSub, "NN must be String or Sy", "TypeName(NN)", TypeName(NN)
+End Select
 End Function
 Function TermAy(Lin) As String()
 Dim L$, J%

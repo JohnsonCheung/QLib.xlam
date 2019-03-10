@@ -117,9 +117,9 @@ Function DrszRs(A As Dao.Recordset) As Drs
 Set DrszRs = Drs(FnyzRs(A), DryzRs(A))
 End Function
 
-Function DryzRs(A As Dao.Recordset, Optional InclFldNm As Boolean) As Variant()
-'If Not HasRec(A) Then Exit Function
-If InclFldNm Then
+Function DryzRs(A As Dao.Recordset, Optional ExlFldNm As Boolean) As Variant()
+If Not HasRec(A) Then Exit Function
+If Not ExlFldNm Then
     PushI DryzRs, FnyzRs(A)
 End If
 With A
@@ -248,7 +248,7 @@ With A
 End With
 End Function
 
-Function SqzRs(A As Dao.Recordset, Optional InclFldNm As Boolean) As Variant()
-SqzRs = SqzDry(DryzRs(A, InclFldNm))
+Function SqzRs(A As Dao.Recordset, Optional ExlFldNm As Boolean) As Variant()
+SqzRs = SqzDry(DryzRs(A, ExlFldNm))
 End Function
 

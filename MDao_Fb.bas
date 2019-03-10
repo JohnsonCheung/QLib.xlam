@@ -16,7 +16,16 @@ End Sub
 Function DbzFb(Fb) As Database
 Set DbzFb = Dao.DBEngine.OpenDatabase(Fb)
 End Function
-
+Function CntrNyzFb(Fb) As String()
+CntrNyzFb = Itn(Db(Fb).Containers)
+End Function
+Function CntrItmNyzFb(Fb) As String()
+Dim D As Database: Set D = Db(Fb)
+Dim CntrNm
+For Each CntrNm In Itn(D.Containers)
+    PushIAy CntrItmNyzFb, AyAddPfx(Itn(D.Containers(CntrNm).Documents), CntrNm & ".")
+Next
+End Function
 Function Db(Fb) As Database
 Set Db = Dao.DBEngine.OpenDatabase(Fb)
 End Function

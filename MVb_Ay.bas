@@ -191,7 +191,11 @@ For J = 1 To MaxN
 Next
 Stop
 End Function
-
+Function StrItr(Str_or_Sy)
+If IsStr(Str_or_Sy) Then StrItr = Sy(Str_or_Sy): Exit Function
+If IsSy(Str_or_Sy) Then Asg Itr(Str_or_Sy), StrItr: Exit Function
+Thw CSub, "Str_or_Sy should be Str or Sy", "TypeName(Str_or_sy)", TypeName(Str_or_Sy)
+End Function
 Function Itr(A)
 If Sz(A) = 0 Then Set Itr = New Collection Else Itr = A
 End Function

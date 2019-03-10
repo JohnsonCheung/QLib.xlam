@@ -1,6 +1,13 @@
 Attribute VB_Name = "MVb_S1S2"
 Option Explicit
-
+Function SwapS1S2Ay(A() As S1S2) As S1S2()
+Dim I
+For Each I In Itr(A)
+    With CvS1S2(I)
+    PushObj SwapS1S2Ay, S1S2(.S2, .S1)
+    End With
+Next
+End Function
 Private Property Get ZZS1S2Ay1() As S1S2()
 Dim O() As S1S2
 PushObj O, S1S2("sldjflsdkjf", "lksdjf")

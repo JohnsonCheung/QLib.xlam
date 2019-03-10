@@ -135,7 +135,7 @@ End Function
 Function MthDryzPj(A As VBProject, Optional WhStr$) As Variant()
 Dim M, W As WhMth
 Set W = WhMthzStr(WhStr)
-For Each M In MdItrzPj(A, WhStr)
+For Each M In MdItr(A, WhStr)
     PushIAy MthDryzPj, MthDryzMd(CvMd(M), W)
 Next
 End Function
@@ -232,7 +232,7 @@ End Function
 
 Function MthLinDryzPj(A As VBProject, Optional WhStr$) As Variant()
 Dim M
-For Each M In MdItrzPj(A, WhStr)
+For Each M In MdItr(A, WhStr)
     PushAy MthLinDryzPj, MthLinDryzMd(CvMd(M), WhStr)
 Next
 End Function

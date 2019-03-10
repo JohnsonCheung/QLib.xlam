@@ -21,9 +21,6 @@ For Each I In Itr(A)
 Next
 End Function
 
-Private Function LinTit_N12W12$(N1$, N2$, W1%, W2%)
-LinTit_N12W12 = LinzS1S2(S1S2(N1, N2), W1, W2)
-End Function
 Private Function LyzS1S2(A As S1S2, W1%, W2%) As String()
 Dim Lines1$, Lines2$
     Lines1 = A.S1

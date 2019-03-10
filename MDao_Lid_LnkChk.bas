@@ -1,12 +1,12 @@
 Attribute VB_Name = "MDao_Lid_LnkChk"
 Option Explicit
 Const CMod$ = "MDao_Lnk_Tbl."
-Function ChkLnkTblzTSrcCn(A As Database, T, S$, Cn$) As String()
-Const CSub$ = CMod & "ChkLnkTblzTSrcCn"
+Function ErzLnkTblzTSrcCn(A As Database, T, S$, Cn$) As String()
+Const CSub$ = CMod & "ErzLnkTblzTSrcCn"
 On Error GoTo X:
 LnkTblzTSCn A, T, S, Cn
 Exit Function
-X: ChkLnkTblzTSrcCn = _
+X: ErzLnkTblzTSrcCn = _
     LyzFunMsgNap(CSub, "Cannot link", "Db Tbl SrcTbl CnStr Er", DbNm(A), T, S, Cn, Err.Description)
 End Function
 

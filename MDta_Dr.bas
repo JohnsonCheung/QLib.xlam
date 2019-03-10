@@ -21,6 +21,6 @@ DrzTLinShtTyLis = DrzTLinVbTyAy(TLin, VbTyAyzShtTyLis(ShtTyLis))
 End Function
 
 Function DrzDrs(A As Drs, Optional CC, Optional Row&)
-DrzDrs = AywIxAy(A.Dry()(Row), IxAy(A.Fny, FnyzFF(CC)))
+DrzDrs = AywIxAy(A.Dry()(Row), IxAy(A.Fny, NyzNN(CC)))
 End Function
 

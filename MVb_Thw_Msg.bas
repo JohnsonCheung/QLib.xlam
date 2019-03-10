@@ -79,7 +79,7 @@ End Sub
 Function LyzNyAv(Ny$(), Av(), Optional Sep$ = ": ") As String()
 Dim J%, O$(), N$()
 ReszAyabMax Ny, Av
-N = AyAlignL(Ny)
+N = FmtAyAlign(Ny)
 For J = 0 To UB(Ny)
     PushIAy LyzNyAv, LyzNv(N(J), Av(J), Sep)
 Next

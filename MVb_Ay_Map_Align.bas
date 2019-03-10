@@ -1,21 +1,14 @@
 Attribute VB_Name = "MVb_Ay_Map_Align"
 Option Explicit
-Function AyAlignNTerm(Ay, N%) As String()
+Function FmtAyNTerm(Ay, N%) As String()
 Dim W%(), L
 W = WdtAyNTermAy(N, Ay)
 For Each L In Itr(Ay)
-    PushI AyAlignNTerm, AyAlignNTerm1(L, W)
+    PushI FmtAyNTerm, FmtAyNTerm1(L, W)
 Next
 End Function
 
-Function AyAlignT1(A) As String()
-Dim T1$(), Rest$()
-    AyAsgT1AyRestAy A, T1, Rest
-T1 = AyAlignL(T1)
-AyAlignT1 = JnAyabSpc(T1, Rest)
-End Function
-
-Private Function AyAlignNTerm1$(A, W%())
+Private Function FmtAyNTerm1$(A, W%())
 Dim Ay$(), J%, N%, O$(), I
 N = Sz(W)
 Ay = SyzNTermRst(A, N)
@@ -24,7 +17,7 @@ For J = 0 To N - 1
     PushI O, AlignL(Ay(J), W(J))
 Next
 PushI O, Ay(N)
-AyAlignNTerm1 = RTrim(JnSpc(O))
+FmtAyNTerm1 = RTrim(JnSpc(O))
 End Function
 
 Private Function WdtAyNTermAy(NTerm%, Ay) As Integer()
@@ -54,7 +47,7 @@ Next
 WdtAyAB = O
 End Function
 
-Function AyAlignAtChr(Ay, AtChr$) As String()
+Function FmtAyAtChr(Ay, AtChr$) As String()
 Dim T1$(), Rst$(), I, P%
 For Each I In Itr(Ay)
     P = InStr(I, AtChr)
@@ -67,56 +60,57 @@ For Each I In Itr(Ay)
     End If
 Next
 Dim J&
-T1 = AyAlignR(T1)
+T1 = FmtAyR(T1)
 For Each I In Itr(T1)
-    PushI AyAlignAtChr, I & Rst(J)
+    PushI FmtAyAtChr, I & Rst(J)
     J = J + 1
 Next
 End Function
 
-Function AyAlignAtDot(A) As String()
-AyAlignAtDot = AyAlignAtChr(A, ".")
+Function FmtAyAtDot(A) As String()
+FmtAyAtDot = FmtAyAtChr(A, ".")
 End Function
-Function AyAlignColon(ColonAy) As String()
-AyAlignColon = FmtDry(DryColonAy(ColonAy))
+Function FmtAyColon(ColonAy) As String()
+FmtAyColon = FmtDry(DryColonAy(ColonAy))
 End Function
 
-Function AyAlignDot(DotAy) As String()
-AyAlignDot = FmtDry(DryDotAy(DotAy), Fmt:=eSpcSep)
+Function FmtAyDot(DotAy) As String()
+FmtAyDot = FmtDry(DryDotAy(DotAy), Fmt:=eSpcSep)
 End Function
+
 Function FmtAyT1(A) As String()
-FmtAyT1 = AyAlignNTerm(A, 1)
+FmtAyT1 = FmtAyNTerm(A, 1)
 End Function
 
-Function AyAlign2T(A) As String()
-AyAlign2T = AyAlignNTerm(A, 2)
+Function FmtAy2T(A) As String()
+FmtAy2T = FmtAyNTerm(A, 2)
 End Function
 
-Function AyAlign3T(A$()) As String()
-AyAlign3T = AyAlignNTerm(A, 3)
+Function FmtAy3T(A$()) As String()
+FmtAy3T = FmtAyNTerm(A, 3)
 End Function
 
-Function AyAlign4T(A$()) As String()
-AyAlign4T = AyAlignNTerm(A, 4)
+Function FmtAy4T(A$()) As String()
+FmtAy4T = FmtAyNTerm(A, 4)
 End Function
 
-Function AyAlignL(Ay) As String()
+Function FmtAyAlign(Ay) As String()
 Dim W%: W = WdtzAy(Ay) + 1
 Dim I
 For Each I In Itr(Ay)
-    Push AyAlignL, AlignL(I, W)
+    Push FmtAyAlign, AlignL(I, W)
 Next
 End Function
 
-Function AyAlignR(Ay) As String()
+Function FmtAyR(Ay) As String()
 Dim W%: W = WdtzAy(Ay)
 Dim I
 For Each I In Itr(Ay)
-    Push AyAlignR, AlignR(I, W)
+    Push FmtAyR, AlignR(I, W)
 Next
 End Function
 
-Private Sub Z_AyAlign2T()
+Private Sub Z_FmtAy2T()
 Dim Ly$()
 Ly = Sy("AAA B C D", "A BBB CCC")
 Ept = Sy("AAA B   C D", _
@@ -124,11 +118,11 @@ Ept = Sy("AAA B   C D", _
 GoSub Tst
 Exit Sub
 Tst:
-    Act = AyAlign2T(Ly)
+    Act = FmtAy2T(Ly)
     C
     Return
 End Sub
-Private Sub Z_AyAlign3T()
+Private Sub Z_FmtAy3T()
 Dim Ly$()
 Ly = Sy("AAA B C D", "A BBB CCC")
 Ept = Sy("AAA B   C   D", _
@@ -136,7 +130,7 @@ Ept = Sy("AAA B   C   D", _
 GoSub Tst
 Exit Sub
 Tst:
-    Act = AyAlign3T(Ly)
+    Act = FmtAy3T(Ly)
     C
     Return
 End Sub
@@ -145,7 +139,7 @@ End Sub
 
 
 Private Sub Z()
-Z_AyAlign2T
-Z_AyAlign3T
+Z_FmtAy2T
+Z_FmtAy3T
 MVb_Align_Ay:
 End Sub

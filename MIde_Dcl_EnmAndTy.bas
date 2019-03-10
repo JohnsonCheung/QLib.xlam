@@ -35,7 +35,7 @@ EnmNyMd = EnmNy(DclLyMd(A))
 End Function
 Function EnmNyPj(Pj As VBProject, Optional WhStr$) As String()
 Dim M
-For Each M In MdItrzPj(Pj, WhStr)
+For Each M In MdItr(Pj, WhStr)
     PushIAy EnmNyPj, EnmNyMd(CvMd(M))
 Next
 End Function
@@ -141,7 +141,7 @@ End Function
 Function UsrTyNyPj(A As VBProject, Optional WhStr$) As String()
 Dim I, M As CodeModule, O$(), W As WhNm
 Set W = WhNmzStr(WhStr)
-For Each I In MdItrzPj(A, WhStr)
+For Each I In MdItr(A, WhStr)
     Set M = CvMd(I)
     O = UsrTyNy(Src(M))
     O = AywNm(O, W)

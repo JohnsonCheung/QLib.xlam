@@ -2,7 +2,7 @@ Attribute VB_Name = "MDta_Srt"
 Option Explicit
 
 Function DrsSrt(A As Drs, Optional SrtByFF = "", Optional IsDes As Boolean) As Drs
-Dim Fny$(): If SrtByFF = "" Then Fny = Sy(A.Fny()(0)) Else Fny = FnyzFF(SrtByFF)
+Dim Fny$(): If SrtByFF = "" Then Fny = Sy(A.Fny()(0)) Else Fny = NyzNN(SrtByFF)
 Set DrsSrt = Drs(A.Fny, DrySrt(A.Dry, IxAy(A.Fny, Fny), IsDes))
 End Function
 

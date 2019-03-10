@@ -152,7 +152,7 @@ End Function
 
 Function LibDef() As String()
 LibDef = _
-AyAlign2T(AyAdd( _
+FmtAy2T(AyAdd( _
 AyAddPfx(C_MdNmToLibNmLy, "MdNm "), _
 AyAddPfx(C_MdPfxToLibNmLy, "MdPfx ")))
 End Function

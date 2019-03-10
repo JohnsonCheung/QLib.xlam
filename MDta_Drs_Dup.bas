@@ -10,7 +10,7 @@ Set DrseDup = DrseRowIxAy(A, RowIxAy)
 End Function
 
 Private Function RowIxAyzDupzDrs(A As Drs, FF) As Long()
-Dim Fny$(): Fny = FnyzFF(FF)
+Dim Fny$(): Fny = NyzNN(FF)
 If Sz(Fny) = 1 Then
     RowIxAyzDupzDrs = IxAyzDup(ColzDrs(A, Fny(0)))
     Exit Function

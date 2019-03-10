@@ -79,7 +79,7 @@ End Function
 
 Sub AsgColApzDrsFF(Drs As Drs, FF, ParamArray OColAp())
 Dim F, J%
-For Each F In FnyzFF(FF)
+For Each F In NyzNN(FF)
     OColAp(J) = ColzDrs(Drs, CStr(F))
     J = J + 1
 Next
@@ -494,7 +494,7 @@ Function CommaSpcSqAv$(Av())
 
 End Function
 Function JnCommaSpcFF$(FF)
-JnCommaSpcFF = JnQSqCommaSpc(FnyzFF(FF))
+JnCommaSpcFF = JnQSqCommaSpc(NyzNN(FF))
 End Function
 
 Sub CrtSk(A As Database, T, SkFF)
@@ -636,12 +636,12 @@ Function NReczT&(A As Database, T, Optional Bexpr$)
 NReczT = ValzQ(A, SqlSelCnt_T(T, Bexpr))
 End Function
 
-Property Get LoFmtrVblPrp$(A As Database, T)
-LoFmtrVblPrp = TblPrp(A, T, "LoFmtrVbl")
+Property Get LofVblPrp$(A As Database, T)
+LofVblPrp = TblPrp(A, T, "LofVbl")
 End Property
 
-Property Let LoFmtrVblPrp(A As Database, T, LoFmtrVbl$)
-TblPrp(A, T, "LoFmtrVbl") = LoFmtrVbl
+Property Let LofVblPrp(A As Database, T, LofVbl$)
+TblPrp(A, T, "LofVbl") = LofVbl
 End Property
 
 Function IsLnk(A As Database, T) As Boolean

@@ -67,8 +67,11 @@ End Function
 Property Get SampCn_DutyDta() As ADODB.Connection
 Set SampCn_DutyDta = CnzFb(SampFbzDutyDta)
 End Property
+Property Get SampFb$()
+SampFb = SampFbzDutyDta
+End Property
 Property Get SampDb() As Dao.Database
-Set SampDb = SampDb_DutyDta
+Set SampDb = Db(SampFb)
 End Property
 Property Get SampDb_DutyDta() As Database
 Set SampDb_DutyDta = Db(SampFbzDutyDta)

@@ -21,6 +21,11 @@ Function Lin$(Optional Hdr As eHdr)
 Dim Pfx$: If Hdr = eWithHdr Then Pfx = "Mdy Ty Nm: "
 Lin = Pfx & Appd(MthMdy, " ") & MthTy & " " & Nm
 End Function
+Property Get DNm$()
+If IsEmp Then Exit Property
+DNm = JnDotAp(Nm, ShtTy, ShtMdy)
+End Property
+Property Get IsEmp() As Boolean:  IsEmp = Nm = "":                              End Property
 Property Get ShtMdy$():          ShtMdy = ShtMthMdy(MthMdy):                    End Property
 Property Get ShtTy$():            ShtTy = ShtMthTy(MthTy):                      End Property
 Property Get ShtKd$():            ShtKd = ShtMthKd(T1(MthTy)):                  End Property

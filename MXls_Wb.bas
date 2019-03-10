@@ -48,10 +48,6 @@ Function MainWs(A As Workbook) As Worksheet
 Set MainWs = WszCdNm(A, "WsOMain")
 End Function
 
-Function OupLoAy(A As Workbook) As ListObject()
-OupLoAy = OywNmPfx(LoAy(A), "T_")
-End Function
-
 Function Wbs(A As Workbook) As Workbooks
 Set Wbs = A.Parent
 End Function
@@ -137,7 +133,7 @@ End Function
 Function WbAddTT(A As Workbook, Db As Database, TT, Optional UseWc As Boolean) As Workbook
 Dim T
 For Each T In TnyzTT(TT)
-    WszT Db, T
+    WszWbT A, Db, T
 Next
 Set WbAddTT = A
 End Function
@@ -294,7 +290,6 @@ FxWb C
 LasWs C
 LozWb C, D
 MainWs C
-OupLoAy C
 Wbs C
 TxtWc C
 TxtWcCnt C

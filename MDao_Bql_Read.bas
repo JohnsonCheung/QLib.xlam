@@ -1,5 +1,11 @@
 Attribute VB_Name = "MDao_Bql_Read"
 Option Explicit
+Public Const DoczBql$ = "Back-Quote-Line:B.q.l:Back-Quote is (`) and it is a String|Each field is separated by (`)"
+Public Const DoczFbql$ = "Fullfilename-Bql:F.bql:it is a [Ft]|Each line is a [Bql]|Fst line is [ShtTyscFldNmBql]"
+Public Const DoczShtTys$ = "ShtTy-Sz:It is a [ShtTy] or (Tnnn) where nnn can 1 to 3 digits of value 1-255"
+Public Const DoczShtTyLis$ = "ShtTyLis Short-Type-List Sht.Ty.Lis (String)|is a Cml-String of each 1 to 3 char of ShtTy"
+Public Const DoczShtTyscFldNm$ = "ShtTyscFldNm Sht.Short Ty.Type s.sz c.colon FldNm|FldNm can have space, then ShtTyscFldNm should be sq bracket"
+Public Const DoczShtTyscFldNmBql$ = "ShtTyscFldNmBql Short-Type-Sz-Colon-FldNm-Bql (String)|It can used to create an empty table "
 Private Sub Z_CrtTTzPth()
 Dim A As Database: Set A = TmpDb
 Dim P$: P = TmpPth
@@ -29,6 +35,22 @@ Dim D As Database: Set D = TmpDb
 CrtTblzFbql D, "PermitD", Fbql
 BrwDb D
 Stop
+End Sub
+
+Sub CrtFbzBqlPth(BqlPth, Optional Fb0$)
+Dim Fb$
+If Fb0 = "" Then
+    Fb = BqlPth & Fdr(BqlPth) & ".accdb"
+Else
+    Fb = Fb0
+End If
+DltFfnIf Fb
+CrtFb Fb
+Dim D As Database, Ffn, T$
+Set D = Db(Fb)
+For Each Ffn In FfnAy(BqlPth, "*.bql.txt")
+    CrtTblzFbql D, Fnn(Fnn(Ffn)), Ffn
+Next
 End Sub
 
 Sub CrtTblzFbql(A As Database, T, Fbq)
@@ -67,20 +89,6 @@ With Brk2(A, ":")
     Set FdzShtTyscFldNm = Fd(.S2, T, TxtSz:=S)
 End With
 End Function
-Function DoczBql() As String()
-Erase XX
-X "Bql Back Quote (`) Line (String)"
-X ". Each field is separated by (`)"
-DoczBql = XX
-Erase XX
-End Function
-Function DoczShtTyscFldNmBql() As String()
-Erase XX
-X "ShtTyscFldNmBql Short-Type-Sz-Colon-FldNm-Bql (String)"
-X ". It can used to create an empty table"
-DoczShtTyscFldNmBql = XX
-Erase XX
-End Function
 
 Function ShtTyscFldNmBqlzT$(A As Database, T)
 Dim Ay$(), F As Dao.Field
@@ -97,45 +105,6 @@ If A.Type = dbText Then
 End If
 ShtTyszFd = B
 End Function
-Function DoczShtTyLis() As String()
-Erase XX
-X "ShtTyLis Short-Type-List Sht.Ty.Lis (String)"
-X ". is a Cml-String of each 1 to 3 char of ShtTy"
-DoczShtTyLis = XX
-Erase XX
-End Function
 
-Function DoczShtTy() As String()
-Erase XX
-X "ShtTys Short-Type Sht.Ty (String)"
-X ". is a 1 to 3 char as described in ShtTyLis"
-DoczShtTy = XX
-Erase XX
-End Function
 
-Function DoczShtTys() As String()
-Erase XX
-X "ShtTys Short-Type-Size Sht.Ty.s (String)"
-X ". is a ShtTy variant, when it is first char is T following can 1 to 3 digits of TxtSz (max 255)"
-DoczShtTys = XX
-Erase XX
-End Function
-
-Function DoczShtTyscFldNm() As String()
-Erase XX
-X "ShtTyscFldNm Sht.Short Ty.Type s.sz c.colon FldNm"
-X ". FldNm can have space, then ShtTyscFldNm should be sq bracket"
-DoczShtTyscFldNm = XX
-Erase XX
-End Function
-
-Function DoczFbql() As String()
-Erase XX
-X "Bql  is b.ack q.uote (`) separated l.ines"
-X "Fbql is F.ull file name of b.ack q.uote (`) separated l.ines"
-X "Fbql fst line is ShtTyscFldNmBqlzT"
-X "Fbql is generated from Rs"
-DoczFbql = XX
-Erase XX
-End Function
 

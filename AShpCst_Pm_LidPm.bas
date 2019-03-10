@@ -5,7 +5,7 @@ RptAppFb = "C:\Users\user\Documents\Projects\Vba\ShpCst\ShpCstApp.accdb"
 End Property
 
 Private Sub Z_RptLidPrmSrc()
-Brw AyAlignPm(RptLidPmSrc, "[LidPm Apn AppFb Fil Ws WsCol] [2:LidPm AppFb Fil] [3:Ws] 4:WsCol")
+Brw FmtAyPm(RptLidPmSrc, "[LidPm Apn AppFb Fil Ws WsCol] [2:LidPm AppFb Fil] [3:Ws] 4:WsCol")
 End Sub
 Property Get RptLidPmSrc() As String()
 RptLidPmSrc = RptLidPmSrczAppFb(RptAppFb)

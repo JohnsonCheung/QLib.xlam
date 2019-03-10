@@ -31,6 +31,11 @@ Function JnDblCrLf$(A)
 JnDblCrLf = Jn(A, vbCrLf & vbCrLf)
 End Function
 
+Function JnDotAp$(ParamArray Ap())
+Dim Av(): Av = Ap
+JnDotAp = JnDot(Av)
+End Function
+
 Function JnDot$(A)
 JnDot = Jn(A, ".")
 End Function

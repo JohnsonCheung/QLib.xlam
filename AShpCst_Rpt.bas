@@ -1,48 +1,29 @@
 Attribute VB_Name = "AShpCst_Rpt"
 Option Explicit
 Public Const RptApn$ = "ShpCst"
+Function RptFb$()
+RptFb = WFb(RptApn)
+End Function
+Function RptDb() As Database
+Set RptDb = Db(RptFb)
+End Function
 Function RptAppDb() As Database
 Set RptAppDb = AppDb(RptApn)
 End Function
-Sub GenRpt()
-Dim P As LidPm: Set P = RptLidPm
-LnkImpzLidPm P
-GenOupTbl P.Apn
-ClsOupWbInst P.Apn
-Dim Wb As Workbook: Set Wb = GenOupWbInst(P.Apn)
-Dim OInstFx$: OInstFx = Wb.FullName
-CpyWszLidPm P, Wb
-WbVis Wb
-'If IsInstFfn(OInstFx) Then Thw CSub, "Program error.  OInstFx is not instance file", "OInstFx", OInstFx
-'If DltFfnIfPrompt(OInstFx, "Only file is generated in [" & OInstFx & "]") Then
-'    BrwFx OInstFx
-'    Exit Sub
-'End If
-'CpyFilUp OInstFx
-'BrwFx FfnUp(OInstFx)
+
+Sub GenOupTbl(Apn$)
+WOpn Apn
+GenORate
+GenOMain
+WCls
+End Sub
+
+Sub GenRptShpCst()
+GenRpt RptLidPm
 End Sub
 
 Sub BrwRptPm()
 ShpCstLiPm.Brw
-End Sub
-Private Sub ClsOupWbInst(Apn$)
-Dim Wb As Workbook, F$
-F = Fn(OupFx(Apn))
-For Each Wb In Xls.Workbooks
-    If IsInstFfn(Wb.FullName) And Wb.Name = F Then
-        Wb.Close False
-    End If
-Next
-End Sub
-Private Function GenOupWbInst(Apn$) As Workbook
-Dim OFx$: OFx = OupFxInst(Apn)
-ExpTpzFb AppFb(Apn), OFx
-Dim OWb As Workbook: Set OWb = WbzFx(OFx)
-RfhWb(OWb, WFb(Apn)).Save
-Set GenOupWbInst = OWb
-End Function
-
-Sub CpyWszLidPm(A As LidPm, ToOupWb As Workbook)
 End Sub
 
 Sub DocUOM _
@@ -66,13 +47,6 @@ B)
 
 ' "SC              as SC_U," & _  no need
 ' "[COL per case]  as AC_B," & _ no need
-End Sub
-
-Sub GenOupTbl(Apn$)
-WOpn Apn
-GenORate
-GenOMain
-WCls
 End Sub
 
 Private Sub GenOMain()

@@ -101,8 +101,12 @@ Else
     Set MthNm3 = New MthNm3
 End If
 End Function
+
 Function MthNm$(Lin, Optional B As WhMth)
 MthNm = MthNm3(Lin, B).Nm
+End Function
+Function MthDNm$(Lin, Optional B As WhMth)
+MthDNm = MthNm3(Lin, B).DNm
 End Function
 Function MthNmLin$(Lin)
 Dim L$

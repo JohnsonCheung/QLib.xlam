@@ -1,8 +1,11 @@
 Attribute VB_Name = "MVb_Lin_Lines"
 Option Explicit
 Const CMod$ = "MVb_Lin_Lines."
-Function LinesCntSzStr$(Lines$)
-LinesCntSzStr = FmtQQ("LinesCntSz(? ?)", LinCnt(Lines), Len(Lines))
+Function CntSzzLines$(Lines$)
+CntSzzLines = CntSz(LinCnt(Lines), Len(Lines))
+End Function
+Function CntSz$(Cnt&, Sz&)
+CntSz = FmtQQ("CntSz(? ?)", Cnt, Sz)
 End Function
 Private Sub Z_LinesWrap()
 Dim A$, W%

@@ -1,6 +1,8 @@
 Attribute VB_Name = "MApp_Tp"
 Option Explicit
 Const CMod$ = "MApp_Tp."
+Function TpFn$(Apn) 'Fst Fn in Tbl.Fld.Ssk-Att.Att.Tp
+End Function
 Function Tp$(Apn)
 Dim A$
 A = TpFxm(Apn): If HasFfn(A) Then Tp = A: Exit Function
@@ -66,10 +68,6 @@ Set W = Nothing
 X.Quit
 Set X = Nothing
 End Function
-
-Sub ExpTpzFb(Fb$, ToFfn$)
-ExpTp Db(Fb), ToFfn
-End Sub
 
 Sub ExpTp(Db As Database, ToFfn$)
 ExpAtt Db, "Tp", ToFfn

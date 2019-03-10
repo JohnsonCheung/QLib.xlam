@@ -30,6 +30,7 @@ HitMthLin = HitMthNm3(MthNm3(MthLin), B)
 End Function
 
 Function HitMthNm3(A As MthNm3, B As WhMth) As Boolean
+If A.IsEmp Then Exit Function
 If IsNothing(B) Then HitMthNm3 = True: Exit Function
 If B.IsEmp Then HitMthNm3 = True: Exit Function
 Select Case True

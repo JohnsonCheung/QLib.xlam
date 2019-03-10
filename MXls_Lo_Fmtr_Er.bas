@@ -1,8 +1,10 @@
 Attribute VB_Name = "MXls_Lo_Fmtr_Er"
 Option Explicit
 Const CMod$ = ""
-Const Fmtiss$ = "Ali Bdr Tot Wdt Fmt Lvl Cor Fml Lbl Tit Bet" ' Fmt. i.tm s.pace s.eparated string
-Const FmtissSng$ = "                            Fml Lbl Tit Bet" ' Sng.sigle field per line
+Const DoczLofValFld As Byte = 1 '
+
+Public Const LofT1nn$ = "Ali Bdr Tot Wdt Fmt Lvl Cor Fml Lbl Tit Bet" ' Fmt. i.tm s.pace s.eparated string
+Public Const FmtissSng$ = "                            Fml Lbl Tit Bet" ' Sng.sigle field per line
 Const FmtissMul$ = "Ali Bdr Tot Wdt Fmt Lvl Cor                " ' Mul.tiple field per line
 Const M01$ = "Lno#? is [?] line having Val(?) which should be a number" 'For Wdt Lvl
 Const M02$ = "Lno#? is [?] line having Val(?) which between (?) and (?)" 'For Wdt Lvl
@@ -44,19 +46,20 @@ Const MBet_FmToEq = M18
 Const MBet_Bet = M19
 Private A$(), A_Fny$()
 
-Function ErzLoFmtr(LoFmtr$(), Fny$()) As String() 'Er.ror z.of L.ist o.bject Fmtr.formatter
+Function ErzLof(Lof$(), Fny$()) As String() 'Error-of-ListObj-Formatter:Er.z.Lo.f
 Const CSub$ = CMod & "LofEr"
 A_Fny = Fny
-ErzLoFmtr = AyAddAp( _
+ErzLof = AyAddAp( _
     WErzVal, WErzFld, WErzFldss, WErzLoNm, _
     WErzAli, WErzBdr, WErzTot, _
     WErzWdt, WErzFmt, WErzLvl, WErzCor, _
     WErzFml, WErzLbl, WErzTit, WErzBet)
 End Function
 
-'WErzFnySng W.ork Er.rro z.for Fny. for those fmt line with Sng.single  fld -------------------------------------------
-'W-pfx function means the function will use scope variables
-Private Property Get WErzVal() As String()
+Private Property Get WErzVal() As String() 'W-Error-of-Val:W.Er.z.Val:W means working-value _
+|which is using the some Module-Lvl-variables and it is private _
+|Val here means the LofValFld of LofLin
+
 WErzVal = SyAddAp(WErzValzNotNum, WErzValzNotInLis, WErzValzFml)
 End Property
 Private Function WErzValzNotInLis() As String()

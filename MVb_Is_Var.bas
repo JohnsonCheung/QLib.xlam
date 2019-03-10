@@ -55,11 +55,11 @@ End Function
 
 Function IsEqDic(A As Dictionary, B As Dictionary) As Boolean
 If A.Count <> B.Count Then Exit Function
-If A.Count = 0 Then Exit Function
+If A.Count = 0 Then IsEqDic = True: Exit Function
 Dim K1, K2
 K1 = AyQSrt(A.Keys)
 K2 = AyQSrt(B.Keys)
-If IsEqAy(K1, K2) Then Exit Function
+If Not IsEqAy(K1, K2) Then Exit Function
 Dim K
 For Each K In K1
    If B(K) <> A(K) Then Exit Function

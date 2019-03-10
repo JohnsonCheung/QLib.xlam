@@ -1,5 +1,12 @@
 Attribute VB_Name = "MVb_Fs_Ffn_Is_Sam"
 Option Explicit
+Function IsDifFfn(A, B, Optional UseNotEq As Boolean) As Boolean
+If UseNotEq Then
+    IsDifFfn = Not IsEqFfn(A, B)
+Else
+    IsDifFfn = Not IsSamFfn(A, B)
+End If
+End Function
 Function IsEqFfn(A, B) As Boolean
 ThwNoFfn A, CSub, "Fst File"
 If A = B Then IsEqFfn = True: Exit Function
@@ -25,7 +32,7 @@ IsSamFfn = True
 End Function
 
 Function IsSamSzFfn(A, B) As Boolean
-IsSamSzFfn = FfnSz(A) <> FfnSz(B)
+IsSamSzFfn = FfnSz(A) = FfnSz(B)
 End Function
 
 Function MsgSamFfn(A, B, Sz&, Tim$, Optional Msg$) As String()

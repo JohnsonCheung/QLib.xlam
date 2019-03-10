@@ -33,7 +33,7 @@ Private Property Get Fb() As LiFb()
 Dim L, Fbn$, T$, FF$, Fset As Aset, Bexpr$
 For Each L In Itr(AywRmvT1(A, "FbTbl"))
     Asg2TRst L, T, FF, Bexpr
-    PushObj Fb, LiFb(Fbn, T, FsetFF(FF), Bexpr)
+    PushObj Fb, LiFb(Fbn, T, NsetzNN(FF), Bexpr)
 Next
 End Property
 

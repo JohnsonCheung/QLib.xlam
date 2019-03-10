@@ -18,16 +18,21 @@ For J = UB(B) To 0 Step -1
 Next
 End Sub
 
+Function CntSzzMd$(A As CodeModule)
+CntSzzMd = CntSzzLines(SrcLines(A))
+End Function
 Sub RplMd(A As CodeModule, NewMdLines$)
-Dim Old$: Old = LinesCntSzStr(LinesMd(A))
-Dim N%: N = A.CountOfLines
+Dim OldLines$: OldLines = SrcLines(A)
+Dim NewCntSz$: NewCntSz = CntSzzLines(NewMdLines)
+If OldLines = NewMdLines Then
+    InfoLin CSub, "No replace: Same", "MdNm LinesCnt", MdNm(A), NewCntSz
+    Exit Sub
+End If
+Dim OldCntSz$: OldCntSz = CntSzzLines(OldLines)
 ClrMd A
 A.AddFromString NewMdLines
-Info CSub, "Replaced", "MdNm Type OldLin NewLin", MdNm(A), Old, LinesCntSz(NewMdLines)
+InfoLin CSub, "Replaced", "MdNm Type OldLin NewLin", MdNm(A), OldLines, NewCntSz
 End Sub
-Function LinesCntSz$(Lines$)
-LinesCntSz = FmtQQ("#Lin(?) Sz(?)", NLines(Lines), Len(Lines))
-End Function
 
 Sub RmvMdFTIx(A As CodeModule, FTIx As FTIx)
 With FTIx

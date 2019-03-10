@@ -1,35 +1,5 @@
 Attribute VB_Name = "MXls_Dao"
 Option Explicit
-Sub RplLoCn(Wb As Workbook, Fb)
-Dim I, Lo As ListObject, D As Database
-Set D = Db(Fb)
-For Each I In OupLoAy(Wb)
-    Set Lo = I
-    RplLoCnzT Lo, D, "@" & Mid(Lo.Name, 3)
-Next
-D.Close
-Set D = Nothing
-End Sub
-
-Function RplLoCnzT(A As ListObject, Db As Database, T) As ListObject
-Dim Sq(), Drs As Drs, R As Dao.Recordset
-Set R = Rs(Db, T)
-If Not IsEqAy(FnyzRs(R), FnyzLo(A)) Then
-    Debug.Print "--"
-    Debug.Print "Rs"
-    Debug.Print "--"
-    DmpAy FnyzRs(R)
-    Debug.Print "--"
-    Debug.Print "A"
-    Debug.Print "--"
-    DmpAy FnyzLo(A)
-    Stop
-End If
-Sq = SqAddSngQuote(SqzRs(R))
-MinxLo A
-'RgzSq Sq, A.DataBodyRange
-Set RplLoCnzT = A
-End Function
 
 Function CvCn(A) As ADODB.Connection
 Set CvCn = A
@@ -39,7 +9,7 @@ Sub RplOleWcFb(Wc As WorkbookConnection, Fb)
 CvCn(Wc.OLEDBConnection.ADOConnection).ConnectionString = CnStrzFbAdo(Fb)
 End Sub
 
-Sub RplLoCnzFbt(Lo As ListObject, Fb As Database, T)
+Sub RplLozFbzFbt(Lo As ListObject, Fb As Database, T)
 With Lo.QueryTable
     RplOleWcFb .Connection, Fb '<==
     .CommandType = xlCmdTable
@@ -59,6 +29,11 @@ With Lo.QueryTable
     .Refresh BackgroundQuery:=False
 End With
 End Sub
+
+Function WbzFb(Fb, Optional Vis As Boolean) As Workbook
+Dim D As Database: Set D = Db(Fb)
+Set WbzFb = SetViszWb(WbzTT(D, Tny(D)), Vis)
+End Function
 
 Function WbzTT(Db As Database, TT, Optional UseWc As Boolean) As Workbook
 Dim O As Workbook
@@ -127,7 +102,8 @@ Sub FxzTT(Fx$, Db As Database, TT)
 WbzTT(Db, TT).SaveAs Fx
 End Sub
 
-Function WszWbT(Wb As Workbook, Db As Database, T, Wsn$) As Worksheet
+Function WszWbT(Wb As Workbook, Db As Database, T, Optional Wsn0$) As Worksheet
+Dim Wsn$: Wsn = DftStr(Wsn0, T)
 Dim Sq(): Sq = SqzT(Db, T)
 Dim A1 As Range: Set A1 = A1zWs(WsAdd(Wb, Wsn))
 Set WszWbT = WsLo(LozSq(Sq, A1))

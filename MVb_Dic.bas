@@ -46,6 +46,13 @@ Next
 DicAllKeyIsNm = True
 End Function
 
+Function DicAddKeyPfx(A As Dictionary, KeyPfx$) As Dictionary
+Set DicAddKeyPfx = New Dictionary
+Dim K
+For Each K In A.Keys
+    DicAddKeyPfx.Add KeyPfx & K, A(K)
+Next
+End Function
 Function DicAyKy(A() As Dictionary) As Variant()
 Dim I
 For Each I In Itr(A)

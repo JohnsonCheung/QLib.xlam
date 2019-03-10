@@ -65,7 +65,7 @@ FldInVy_Str = QNm(F) & "(" & JnComma(AyQ(InAy)) & ")"
 End Function
 
 Function FFJnComma$(FF)
-FFJnComma = JnComma(FnyzFF(FF))
+FFJnComma = JnComma(NyzNN(FF))
 End Function
 
 Function SqpInto_T$(T)
@@ -109,7 +109,7 @@ SqpFm = C_Fm & QuoteSq(T)
 End Function
 
 Function SqpGp_ExprVblAy$(ExprVblAy$())
-SqpGp_ExprVblAy = VblAyAlignAsLines(ExprVblAy, "|  Group By")
+SqpGp_ExprVblAy = VblFmtAyAsLines(ExprVblAy, "|  Group By")
 End Function
 
 Private Sub Z_SqpGp_ExprVblAy()
@@ -132,7 +132,7 @@ Next
 WdtzLinesAy = O
 End Function
 
-Function LinesAyAlignL(LinesAy$()) As String()
+Function LinesFmtAyL(LinesAy$()) As String()
 If Sz(LinesAy) = 0 Then Exit Function
 Dim W%: W = WdtzLinesAy(LinesAy)
 Dim O$()
@@ -142,11 +142,11 @@ For Each Lines In Itr(LinesAy)
     O(J) = LinesAlignL(Lines, W)
     J = J + 1
 Next
-LinesAyAlignL = O
+LinesFmtAyL = O
 End Function
 
 Function SqpSelX_FF_ExtNy$(FF, ExtNy$())
-Dim Fny$(): Fny = FnyzFF(FF)
+Dim Fny$(): Fny = NyzNN(FF)
 Dim P1$()
     Dim J%, M$
     For J = 0 To UB(Fny)
@@ -158,7 +158,7 @@ Dim P1$()
         PushI P1, M
     Next
     If FmtSql Then
-        P1 = LinesAyAlignL(P1)
+        P1 = LinesFmtAyL(P1)
         For J = 0 To UB(P1)
             If Trim(P1(J)) = "" Then
                 P1(J) = P1(J) & "    "
@@ -172,7 +172,7 @@ Dim P1$()
         Next
 
     End If
-Dim P2$(): If FmtSql Then P2 = AyAlignL(Fny) Else P2 = Fny
+Dim P2$(): If FmtSql Then P2 = FmtAyAlign(Fny) Else P2 = Fny
 SqpSelX_FF_ExtNy = KwSel & C_T & JnComma(AyAddPfx(JnAyab(P1, P2), C_NLTT))
 End Function
 
@@ -181,11 +181,11 @@ SqpSel_FF_Ey = SqpSel_X(SqpSelX_FF_ExtNy(FF, ExprAy))
 End Function
 
 Function JnCommaSpcFF$(FF)
-JnCommaSpcFF = JnCommaSpc(FnyzFF(FF))
+JnCommaSpcFF = JnCommaSpc(NyzNN(FF))
 End Function
 
 Function SqpSel_FF$(FF, Optional Dis As Boolean)
-SqpSel_FF = SqpSel_Dis(Dis) & JnCommaSpcFF(FF)
+SqpSel_FF = SqpSel_Dis(Dis) & C_NLTT & JnCommaSpcFF(FF)
 End Function
 
 Function SqpSel_Dis$(Dis As Boolean)
@@ -213,7 +213,7 @@ Dim Fny$(): Fny = SySsl(FF)
 Ass IsVblAy(Ey)
 If Sz(Fny) <> Sz(Ey) Then Thw CSub, "[FF-Sz} <> [Sz-Ey], where [FF],[Ey]", Sz(Fny), Sz(Ey), FF, Ey
 Dim AFny$()
-    AFny = AyAlignL(Fny)
+    AFny = FmtAyAlign(Fny)
     AFny = AyAddSfx(AFny, " = ")
 Dim W%
     'W = VblWdtAy(Ey)
@@ -322,7 +322,7 @@ If A = "" Then Exit Function
 SqpWh = C_Wh & A
 End Function
 
-Private Sub Z_Fnyzy_SetSqpFmt()
+Private Sub Z_SqpSet_Fny_VyFmt()
 Dim Fny$(), Vy()
 Ept = LineszVbl("|  Set|" & _
 "    [A xx] = 1                     ,|" & _
@@ -331,7 +331,7 @@ Ept = LineszVbl("|  Set|" & _
 Fny = TermAy("[A xx] B C"): Vy = Array(1, "2", #12/1/2018 12:34:56 PM#): GoSub Tst
 Exit Sub
 Tst:
-    Act = Fnyzy_SetSqp(Fny, Vy)
+    Act = SqpSet_Fny_Vy(Fny, Vy)
     C
     Return
 End Sub
@@ -340,18 +340,18 @@ Private Sub Z_SqpWhFldInVy_StrSqpAy()
 
 End Sub
 
-Function VblAyAlignAsLines$(ExprVblAy$(), Optional Pfx$, Optional IdentOpt%, Optional SfxAy, Optional Sep$ = ",")
-VblAyAlignAsLines = JnVBar(VblAyAlignAsLy(ExprVblAy, Pfx, IdentOpt, SfxAy, Sep))
+Function VblFmtAyAsLines$(ExprVblAy$(), Optional Pfx$, Optional IdentOpt%, Optional SfxAy, Optional Sep$ = ",")
+VblFmtAyAsLines = JnVBar(VblFmtAyAsLy(ExprVblAy, Pfx, IdentOpt, SfxAy, Sep))
 End Function
 
-Function VblAyAlignAsLy(ExprVblAy$(), Optional Pfx$, Optional IdentOpt%, Optional SfxAyOpt, Optional Sep$ = ",") As String()
+Function VblFmtAyAsLy(ExprVblAy$(), Optional Pfx$, Optional IdentOpt%, Optional SfxAyOpt, Optional Sep$ = ",") As String()
 Dim NoSfxAy As Boolean
 Dim SfxWdt%
 Dim SfxAy$()
     NoSfxAy = IsEmp(SfxAy)
     If Not NoSfxAy Then
         Ass IsSy(SfxAyOpt)
-        SfxAy = AyAlignL(SfxAyOpt)
+        SfxAy = FmtAyAlign(SfxAyOpt)
         Dim U%, J%: U = UB(SfxAy)
         For J = 0 To U
             If J <> U Then
@@ -384,11 +384,11 @@ For J = 0 To U
     End If
 '    Push O, VblAlign(ExprVblAy(J), IdentOpt:=Ident, Pfx:=P, WdtOpt:=W, Sfx:=S)
 Next
-VblAyAlignAsLy = O
+VblFmtAyAsLy = O
 End Function
 
 Function SqlSel_FF_EDic_Fm$(FF, EDic As Dictionary, T, Optional IsDis As Boolean)
-SqlSel_FF_EDic_Fm = SqlSel_FF_Ey_Fm(FF, SyzDicKy(EDic, FnyzFF(FF)), T, IsDis)
+SqlSel_FF_EDic_Fm = SqlSel_FF_Ey_Fm(FF, SyzDicKy(EDic, NyzNN(FF)), T, IsDis)
 End Function
 
 Function SqlSel_FF_Fm$(FF, T, Optional IsDis As Boolean, Optional Bexpr$)
@@ -410,21 +410,21 @@ For J = 1 To N
 Next
 End Function
 
-Function FsetFF(FF) As Aset
-Set FsetFF = AsetzAy(FnyzFF(FF))
+Function NsetzNN(FF) As Aset
+Set NsetzNN = AsetzAy(NyzNN(FF))
 End Function
 
-Function FnyzFFzDft(FF, DftFny$()) As String()
-Dim O: O = TermAyzTT(FF)
+Function NyzNNDft(NN, DftFny$()) As String()
+Dim O$(): O = NyzNN(NN)
 If Sz(O) = 0 Then
-    FnyzFFzDft = DftFny
+    NyzNNDft = DftFny
 Else
-    FnyzFFzDft = O
+    NyzNNDft = O
 End If
 End Function
 
-Function FnyzFF(FF) As String()
-FnyzFF = TermAyzTT(FF)
+Function NyzNN(NN) As String()
+NyzNN = TermAy(NN)
 End Function
 
 Function QuoteSql$(V)
@@ -492,7 +492,7 @@ SqlDrpTbl_T = "Drop Table [" & T & "]"
 End Function
 
 Function SqlIns_T_FF_Dr$(T, FF, Dr)
-Dim Fny$(): Fny = FnyzFF(FF)
+Dim Fny$(): Fny = NyzNN(FF)
 ThwDifSz Fny, Dr, CSub
 Dim A$, B$
 A = JnComma(AyQuoteSqIf(Fny))
@@ -537,7 +537,7 @@ Exit Function
 X_SqpUpd_T_Set_Wh:
     Dim Fny1$(), Dr1(), Skvy(): GoSub X_Fny1_Dr1_SkVy
     SqpUpd_T = "Update [" & T & "]"
-    Set_ = Fnyzy_SetSqp(Fny1, Dr1)
+    Set_ = SqpSet_Fny_Vy(Fny1, Dr1)
     Wh = SqpWh_FnyEqVy(Sk, Skvy)
     Return
 X_Ay:
@@ -564,9 +564,9 @@ X_Fny1_Dr1_SkVy:
     Return
 End Function
 
-Function Fnyzy_SetSqp$(Fny$(), Vy())
+Function SqpSet_Fny_Vy1$(Fny$(), Vy())
 Dim A$: GoSub X_A
-Fnyzy_SetSqp = "  Set " & A
+SqpSet_Fny_Vy1 = "  Set " & A
 Exit Function
 X_A:
     Dim L$(): L = AyQuoteSq(Fny)
@@ -580,7 +580,7 @@ X_A:
 End Function
 
 Function FnyAlignQuote(Fny$()) As String()
-FnyAlignQuote = AyAlignL(AyQuoteSq(Fny))
+FnyAlignQuote = FmtAyAlign(AyQuoteSq(Fny))
 End Function
 
 Private Sub Z_SqlDtlTWhfInAset()
@@ -638,7 +638,7 @@ Function SqpBktFF$(FF)
 End Function
 
 Function JnCommaFF$(FF)
-JnCommaFF = JnComma(FnyzFF(FF))
+JnCommaFF = JnComma(NyzNN(FF))
 End Function
 
 Function SqlIns_T_FF_Valap$(T, FF, ParamArray ValAp())

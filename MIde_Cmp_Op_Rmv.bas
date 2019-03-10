@@ -4,15 +4,24 @@ Sub DltCmpz(A As VBProject, MdNm$)
 If Not HasCmpz(A, MdNm) Then Exit Sub
 A.VBComponents.Remove A.VBComponents(MdNm)
 End Sub
-
+Sub RmvMdzPfx(Pfx$)
+Dim Ny$(): Ny = AywPfx(MdNyPj, Pfx)
+If Sz(Ny) = 0 Then InfoLin CSub, "no module begins with " & Pfx: Exit Sub
+Brw Ny
+Dim N
+If CFm("Rmv those Md as show in the notepad?") Then
+    For Each N In Ny
+        RmvMd Md(N)
+    Next
+End If
+End Sub
 Sub RmvMd(A As CodeModule)
-Dim M$, P$, Pj As VBProject
+Dim M$, P$
     M = MdNm(A)
-    'Set Pj = MdzPj(A)
-    P = Pj.Name
-Debug.Print FmtQQ("RmvMd: Before Md(?) is deleted from Pj(?)", M, P)
+    P = PjNmzMd(A)
+'Debug.Print FmtQQ("RmvMd: Before Md(?) is deleted from Pj(?)", M, P)
 A.Parent.Collection.Remove A.Parent
-Debug.Print FmtQQ("RmvMd: After Md(?) is deleted from Pj(?)", M, P)
+Debug.Print FmtQQ("RmvMd: Md(?) is deleted from Pj(?)", M, P)
 End Sub
 
 Sub RmvCmp(A As VBComponent)

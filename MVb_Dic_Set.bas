@@ -22,7 +22,7 @@ Set AsetzItr = EmpAset
 AsetzItr.PushItr Itr
 End Function
 Function AsetzFF(FF) As Aset
-Set AsetzFF = AsetzAy(FnyzFF(FF))
+Set AsetzFF = AsetzAy(NyzNN(FF))
 End Function
 Function AsetzAy(A) As Aset
 Set AsetzAy = EmpAset

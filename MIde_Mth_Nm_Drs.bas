@@ -39,7 +39,7 @@ End Function
 Private Function MthNmDryzPj(P As VBProject, Optional WhStr$) As Variant()
 Dim M, W As WhMth
 Set W = WhMthzStr(WhStr)
-For Each M In MdItrzPj(P, WhStr)
+For Each M In MdItr(P, WhStr)
     PushIAy MthNmDryzPj, MthNmDryzMd(CvMd(M), W)
 Next
 End Function

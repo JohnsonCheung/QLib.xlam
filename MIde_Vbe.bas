@@ -130,14 +130,14 @@ End Function
 Function HasPjfVbe(A As Vbe, Ffn) As Boolean
 Dim P As VBProject
 For Each P In A.VBProjects
-    'If Pjf(P) = Ffn Then HasPjfVbe = True: Exit Function
+    If Pjf(P) = Ffn Then HasPjfVbe = True: Exit Function
 Next
 End Function
 
 Sub SrtVbe(A As Vbe)
 Dim P As VBProject
 For Each P In A.VBProjects
-    SrtPj P
+    SrtzPj P
 Next
 End Sub
 

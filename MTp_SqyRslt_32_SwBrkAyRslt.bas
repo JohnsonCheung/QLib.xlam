@@ -17,9 +17,6 @@ End Function
 Private Function Msgz$(A As SwBrk, B$)
 Msgz = A.Lin & " --- " & B
 End Function
-Private Function CvSwBrk(A) As SwBrk
-Set CvSwBrk = A
-End Function
 Private Function MsgzDupNm(A() As SwBrk) As String()
 Dim I
 For Each I In Itr(A)

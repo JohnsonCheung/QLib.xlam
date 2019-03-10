@@ -35,7 +35,7 @@ End Function
 
 Function MthLinesAyzPj(A As VBProject, Optional WithTopRmk As Boolean) As String()
 Dim I
-For Each I In MdItrzPj(A)
+For Each I In MdItr(A)
     PushIAy MthLinesAyzPj, MthLinesAyzMd(CvMd(I), WithTopRmk)
 Next
 End Function

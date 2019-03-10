@@ -1,10 +1,15 @@
 Attribute VB_Name = "MDao_Lid"
 Option Explicit
 
+Private Sub CpyFilzToWPth(A As LidPm)
+CpyFilzIfDif SyzOyPrp(A.Fil, "Ffn"), WPth(A.Apn)
+End Sub
+
 Sub LnkImpzLidPm(A As LidPm)
 ThwEr ErzLidPmzV1(A), CSub
 WIniOpn A.Apn
-ThwEr ChkLnkTbl(W, LtPmzLid(A)), CSub
+CpyFilzIfDif SyzOyPrp(A.Fil, "Ffn"), WPth(A.Apn)
+ThwEr ErzLnkTblzLtPm(W, LtPmzLid(A)), CSub
 RunSqy W, ImpSqyzLidPm(A)
 WCls
 End Sub
