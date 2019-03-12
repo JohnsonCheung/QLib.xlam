@@ -74,7 +74,7 @@ End Function
 Private Function DryzItrPPzPure(Itr, PP) As Variant()
 Dim U%, I
 Dim PrpNy$()
-PrpNy = CvNy(PP)
+PrpNy = NyzNN(PP)
 For Each I In Itr
     Push DryzItrPPzPure, DrzObjPrpNy(I, PrpNy)
 Next

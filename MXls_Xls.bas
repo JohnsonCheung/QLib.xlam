@@ -8,9 +8,6 @@ Function HasAddInFn(A As Excel.Application, AddInFn) As Boolean
 HasAddInFn = HasItn(A.AddIns, AddInFn)
 End Function
 
-Sub XlsVis(A As Excel.Application)
-If Not A.Visible Then A.Visible = True
-End Sub
 Sub XlsQuit(A As Excel.Application)
 Stamp "XlsQuit: Start"
 Stamp "XlsQuit: ClsAllWb":    ClsAllWb A

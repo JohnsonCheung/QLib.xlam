@@ -91,7 +91,7 @@ End Function
 
 Sub LinesAsgBrk(A$, Ny0, ParamArray OLyAp())
 Dim Ny$(), L, T1$, T2$, NmDic As Dictionary
-Ny = CvNy(Ny0)
+Ny = NyzNN(Ny0)
 Set NmDic = IxDiczAy(Ny)
 For Each L In SplitCrLf(A)
     Select Case FstChr(L)

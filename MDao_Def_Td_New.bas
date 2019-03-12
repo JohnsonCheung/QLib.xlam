@@ -28,12 +28,12 @@ Next
 Set SkIdx = O
 End Function
 
-Function TdzFdAy(T, FdAy() As Field2, Optional SkFny0) As Dao.TableDef
+Function TdzFdAy(T, FdAy() As Field2, Optional SkFF) As Dao.TableDef
 Dim O As New Dao.TableDef, F
 O.Name = T
 AppFdAy O, FdAy
-AddPk O ' add Pk
-AddSk O, SkFny0 ' add Sk
+AddPk O
+AddSk O, SkFF
 Set TdzFdAy = O
 End Function
 
@@ -56,8 +56,8 @@ CvIdxFds(O.Fields).Append FdzId(T & "Id")
 Set PkIdxzT = O
 End Function
 
-Private Sub AddSk(A As Dao.TableDef, SkFny0)
-Dim Sk$(): Sk = CvNy(SkFny0): If Sz(Sk) = 0 Then Exit Sub
+Private Sub AddSk(A As Dao.TableDef, SkFF)
+Dim Sk$(): Sk = NyzNN(SkFF): If Sz(Sk) = 0 Then Exit Sub
 A.Indexes.Append SkIdx(A, Sk)
 End Sub
 

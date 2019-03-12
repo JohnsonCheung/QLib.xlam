@@ -9,12 +9,26 @@ End Enum
 Function IsEqObj(A, B) As Boolean
 IsEqObj = ObjPtr(A) = ObjPtr(B)
 End Function
+
 Function IntozOy(OInto, Oy)
 Erase OInto
 Dim O, I
 For Each I In Itr(Oy)
     PushObj OInto, I
 Next
+End Function
+
+Function LngAyzOyPrp(Oy, Prp) As Long()
+LngAyzOyPrp = CvLngAy(IntozOyPrp(EmpLngAy, Oy, Prp))
+End Function
+
+Function IntozOyPrp(OInto, Oy, Prp)
+Dim O, I
+O = AyCln(OInto)
+For Each I In Itr(Oy)
+    Push O, ObjPrp(I, Prp)
+Next
+IntozOyPrp = O
 End Function
 Function ObjAddAy(Obj, Oy)
 Dim O: O = Oy

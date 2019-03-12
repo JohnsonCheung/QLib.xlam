@@ -72,7 +72,7 @@ MdNm = A.Parent.Name
 End Function
 
 Function NUsrTyMd%(A As CodeModule)
-NUsrTyMd = NUsrTySrc(DclLyMd(A))
+NUsrTyMd = NUsrTySrc(DclLyzMd(A))
 End Function
 
 Function PjzMd(A As CodeModule) As VBProject
@@ -98,10 +98,6 @@ End Function
 
 Function MdTy(A As CodeModule) As vbext_ComponentType
 MdTy = A.Parent.Type
-End Function
-
-Function ShtCmpTyzMd$(A As CodeModule)
-ShtCmpTyzMd = ShtCmpTy(A.Parent.Type)
 End Function
 
 Private Property Get ZZMd() As CodeModule

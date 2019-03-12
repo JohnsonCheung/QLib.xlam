@@ -105,14 +105,17 @@ End Function
 Function MthNm$(Lin, Optional B As WhMth)
 MthNm = MthNm3(Lin, B).Nm
 End Function
+Function MthNmzMthDNm$(MthDNm)
+Dim A$()
+A = SplitDot(MthDNm)
+If Sz(A) <> 3 Then Thw CSub, "MthDNm should have 2 dot", "MthDNm", MthDNm
+MthNmzMthDNm = A(0)
+End Function
 Function MthDNm$(Lin, Optional B As WhMth)
 MthDNm = MthNm3(Lin, B).DNm
 End Function
-Function MthNmLin$(Lin)
-Dim L$
-L = RmvMthMdy(Lin)
-If ShfMthTy(L) = "" Then Exit Function
-MthNmLin = TakNm(L)
+Function MthNmzLin$(Lin, Optional B As WhMth)
+MthNmzLin = MthNm3(Lin, B).Nm
 End Function
 
 Function PrpNm$(Lin)

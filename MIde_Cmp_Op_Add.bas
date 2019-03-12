@@ -17,11 +17,15 @@ O.Name = CStr(Nm) ' no CStr will break
 Set AddCmpzPj = O
 End Function
 
+Function AddModzPj(A As VBProject, ModNm) As CodeModule
+AddCmpzPj A, ModNm, vbext_ct_StdModule
+End Function
+
 Sub AddMod(ModNN$)
 Dim Sy$(), ModNm
 Sy = SySsl(ModNN)
 For Each ModNm In Sy
-    AddCmp ModNm, vbext_ct_StdModule
+    AddModzPj CurPj, ModNm
 Next
 JmpCmp Sy(0)
 End Sub
@@ -40,7 +44,7 @@ Next
 JmpCmp Sy(0)
 End Sub
 
-Sub AppMdLines(A As CodeModule, Lines$)
+Sub AppLines(A As CodeModule, Lines)
 If Lines = "" Then Exit Sub
 Dim Bef&, Aft&, Exp&, Cnt&
 Bef = A.CountOfLines
@@ -54,12 +58,9 @@ If Exp <> Aft Then
 End If
 End Sub
 
-Sub AppLines(Lines$)
-AppMdLines CurMd, Lines
-End Sub
 
 Sub AddFun(FunNm$)
-AppLines EmpFunLines(FunNm)
+AppLines CurMd, EmpFunLines(FunNm)
 JmpMth FunNm
 End Sub
 Function CmpNew(Nm$, Ty As vbext_ComponentType) As VBComponent
@@ -74,7 +75,7 @@ Function EmpSubLines$(SubNm)
 EmpSubLines = FmtQQ("Sub ?()|End Sub", SubNm)
 End Function
 Sub AddSub(SubNm$)
-AppLines EmpSubLines(SubNm)
+AppLines CurMd, EmpSubLines(SubNm)
 JmpMth SubNm
 End Sub
 
@@ -93,7 +94,7 @@ End Function
 Function AddCmpzLinesPj(A As VBProject, Nm, Lines$) As VBComponent
 Dim O As VBComponent
 Set O = AddCmpzPj(A, Nm, vbext_ct_StdModule): If IsNothing(O) Then Stop
-AppMdLines O.CodeModule, Lines
+AppLines O.CodeModule, Lines
 Set AddCmpzLinesPj = O
 End Function
 Sub RenAddCmpPfx_CmpPfx(A As VBComponent, AddPfx$)

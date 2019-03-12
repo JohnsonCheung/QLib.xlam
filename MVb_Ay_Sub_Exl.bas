@@ -222,7 +222,7 @@ End Function
 
 Function AyeT1Ay(A, ExlT1Ay0) As String()
 'Exclude those Lin in Array-A its T1 in ExlT1Ay0
-Dim Exl$(): Exl = CvNy(ExlT1Ay0): If Sz(Exl) = 0 Then Stop
+Dim Exl$(): Exl = NyzNN(ExlT1Ay0): If Sz(Exl) = 0 Then Stop
 Dim L
 For Each L In Itr(A)
     If Not HasEle(Exl, T1(L)) Then

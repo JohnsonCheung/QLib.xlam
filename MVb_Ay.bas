@@ -191,9 +191,15 @@ For J = 1 To MaxN
 Next
 Stop
 End Function
-Function StrItr(Str_or_Sy)
-If IsStr(Str_or_Sy) Then StrItr = Sy(Str_or_Sy): Exit Function
-If IsSy(Str_or_Sy) Then Asg Itr(Str_or_Sy), StrItr: Exit Function
+Function ItrzSS(Ssl_or_Sy)
+If IsStr(Ssl_or_Sy) Then ItrzSS = SySsl(Ssl_or_Sy): Exit Function
+If IsSy(Ssl_or_Sy) Then Asg Itr(Ssl_or_Sy), ItrzSS: Exit Function
+Thw CSub, "Ssl_or_Sy should be Str or Sy", "TypeName(Ssl_or_sy)", TypeName(Ssl_or_Sy)
+End Function
+
+Function ItrzStr(Str_or_Sy)
+If IsStr(Str_or_Sy) Then ItrzStr = Sy(Str_or_Sy): Exit Function
+If IsSy(Str_or_Sy) Then Asg Itr(Str_or_Sy), ItrzStr: Exit Function
 Thw CSub, "Str_or_Sy should be Str or Sy", "TypeName(Str_or_sy)", TypeName(Str_or_Sy)
 End Function
 Function Itr(A)

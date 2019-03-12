@@ -19,13 +19,13 @@ Function MthDNmzLin$(MthLin)
 MthDNmzLin = MthDNmzMthNm3(MthNm3(MthLin))
 End Function
 
-Sub RplMthLines(Md As CodeModule, MthNm$, ByLines$)
-RmvMdMth Md, MthNm
-AppMdLines Md, ByLines
+Sub RplMth(Md As CodeModule, MthDNm, ByLines)
+RmvMdMth Md, MthDNm
+AppLines Md, ByLines
 End Sub
 
 Private Sub Z()
-Z_MthFTIxAyMdMth
+Z_MthFTixAyzMth
 MIde__Mth:
 End Sub
 
@@ -35,12 +35,12 @@ If OldMthLines = MthLines Then
     Debug.Print FmtQQ("EnsMth: Mth(?) in Md(?) is same", MthNm, MdNm(Md))
 End If
 RmvMdMth Md, MthNm
-AppMdLines Md, MthLines
+AppLines Md, MthLines
 Debug.Print FmtQQ("EnsMth: Mth(?) in Md(?) is replaced <=========", MthNm, MdNm(Md))
 End Function
 
-Private Sub Z_MthFTIxAyMdMth()
-Dim A() As FTIx: A = MthFTIxAyMdMth(Md("Md_"), "XX")
+Private Sub Z_MthFTixAyzMth()
+Dim A() As FTIx: A = MthFTIxAyzMth(Md("Md_"), "XX")
 Dim J%
 For J = 0 To UB(A)
     FTIxDmp A(J)

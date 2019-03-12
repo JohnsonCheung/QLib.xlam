@@ -73,7 +73,7 @@ End Function
 Function CsvLyzRs(A As Dao.Recordset, Optional FF) As String()
 Dim Fny$(), Flds As Fields, F
 Dim O$(), J&, I%, UFld%, Dr()
-Fny = CvNy(FF)
+Fny = NyzNN(FF)
 UFld = A.Fields.Count - 1
 While Not A.EOF
     J = J + 1

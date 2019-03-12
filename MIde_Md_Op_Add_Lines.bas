@@ -6,6 +6,6 @@ Debug.Print FmtQQ("MdIns_DclLin: Module(?) a DclLin is inserted", MdNm(A))
 End Sub
 
 Sub MdAppy_Ly(A As CodeModule, Ly$())
-AppMdLines A, JnCrLf(Ly)
+AppLines A, JnCrLf(Ly)
 End Sub
 

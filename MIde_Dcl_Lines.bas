@@ -6,9 +6,11 @@ Dim B2$(): B2 = SrtedSrc(B1)
 Dim A1%: A1 = DclLinCnt(B1)
 Dim A2%: A2 = DclLinCnt(SrtedSrc(B1))
 End Sub
+
 Sub BrwDclLinCntDryPj()
 BrwDry DclLinCntDryzPj(CurPj)
 End Sub
+
 Function DclLinCntDryzPj(A As VBProject) As Variant()
 Dim C As VBComponent
 For Each C In A.VBComponents
@@ -19,11 +21,11 @@ End Function
 Function DclLinCntzMd%(Md As CodeModule)
 Dim I&
     I = FstMthLnoMd(Md)
-    If I = -1 Then
-        I = Md.CountOfLines
-    Else
-        I = MthTopRmkLnoMdFm(Md, I)
+    If I <= 0 Then
+        DclLinCntzMd = Md.CountOfLines
+        Exit Function
     End If
+    I = MthTopRmkLnoMdFm(Md, I)
 Dim O&
     For I = I - 1 To 1 Step -1
          If IsCdLin(Md.Lines(I, 1)) Then O = I + 1: GoTo X
@@ -41,7 +43,6 @@ Dim Top&
         DclLinCnt = UB(Src) + 1
         Exit Function
     End If
-    
     Top = MthTopRmkIx(Src, Fm)
     If Top = -1 Then
         Top = Fm
@@ -75,8 +76,8 @@ If Cnt = 0 Then Exit Function
 DclLineszMd = A.Lines(1, Cnt)
 End Function
 
-Function DclLyMd(A As CodeModule) As String()
-DclLyMd = SplitCrLf(DclLineszMd(A))
+Function DclLyzMd(A As CodeModule) As String()
+DclLyzMd = SplitCrLf(DclLineszMd(A))
 End Function
 
 

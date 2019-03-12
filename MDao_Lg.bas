@@ -126,6 +126,7 @@ End Sub
 Property Get LgFt$()
 Stop '
 End Property
+
 Sub LgCls()
 On Error GoTo Er
 X_L.Close
@@ -140,31 +141,28 @@ Set Db = Db(LgFb)
 '
 Set T = New Dao.TableDef
 T.Name = "Sess"
-AddFldId T
-AddFldTimStmp T, "Dte"
+AddFldzId T
+AddFldzTimStmp T, "Dte"
 Db.TableDefs.Append T
 '
 Set T = New Dao.TableDef
 T.Name = "Msg"
-AddFldId T
-AddFldTxtFF T, "Fun"
-AddFldTxtFF T, "MsgTxt"
-AddFldTimStmp T, "Dte"
+AddFldzId T
+AddFldzTxt T, "Fun MsgTxt"
+AddFldzTimStmp T, "Dte"
 Db.TableDefs.Append T
 '
 Set T = New Dao.TableDef
 T.Name = "Lg"
-AddFldId T
-AddFldLng T, "Sess"
-AddFldLng T, "Msg"
-AddFldTimStmp T, "Dte"
+AddFldzId T
+AddFldzLng T, "Sess Msg"
+AddFldzTimStmp T, "Dte"
 Db.TableDefs.Append T
 '
 Set T = New Dao.TableDef
 T.Name = "LgV"
-AddFldId T
-AddFldLng T, "Lg"
-AddFldLngFF T, "Val"
+AddFldzId T
+AddFldzLng T, "Lg Val"
 Db.TableDefs.Append T
 
 'CrtPkDTT Db, "Sess Msg Lg LgV"

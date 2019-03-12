@@ -23,9 +23,20 @@ NowNm = Format(Now, "HHMMSS") & N
 N = N + 1
 End Function
 
+Sub RmvMth(A As CodeModule, MthNmNN)
+Dim MthNm
+For Each MthNm In NyzNN(MthNmNN)
+    RmvMthzNm A, MthNm
+Next
+End Sub
+
+Sub RmvMthzNm(A As CodeModule, MthNm, Optional WithTopRmk As Boolean)
+RmvMdFTIxAy A, MthFTIxAyzMth(A, MthNm, WithTopRmk)
+End Sub
+
 Sub RmvMdMth(Md As CodeModule, MthNm)
 Const CSub$ = CMod & "RmvMdMth"
-Dim X() As FTIx: X = MthFTIxAyMdMth(Md, MthNm)
+Dim X() As FTIx: X = MthFTIxAyzMth(Md, MthNm)
 Info CSub, "Remove method", "Md Mth FTIx-WithTopRmk", MdNm(Md), Md, FTIxAyLy(X)
 RmvMdFtLinesIxAy Md, X
 End Sub
@@ -42,7 +53,7 @@ Tst:
 Crt:
     Set Md = TmpMod
     RmvMd Md
-    AppMdLines Md, LineszVbl("Property Get ZZRmv1()||End Property||Function ZZRmv2()|End Function||'|Property Let ZZRmv1(V)|End Property")
+    AppLines Md, LineszVbl("Property Get ZZRmv1()||End Property||Function ZZRmv2()|End Function||'|Property Let ZZRmv1(V)|End Property")
     Return
 End Sub
 

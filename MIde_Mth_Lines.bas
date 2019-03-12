@@ -87,7 +87,7 @@ End Function
 
 Function MthLyzSrcNm(Src$(), N, Optional WithTopRmk As Boolean) As String()
 Dim I
-For Each I In Itr(MthIxAyMth(Src, N))
+For Each I In Itr(MthIxAyzNm(Src, N))
     PushI MthLyzSrcNm, MthLineszSrcFm(Src, I, WithTopRmk)
 Next
 End Function

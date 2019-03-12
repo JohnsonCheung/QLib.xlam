@@ -4,6 +4,10 @@ Function SplitComma(A) As String()
 SplitComma = Split(A, ",")
 End Function
 
+Function SplitCommaSpc(A) As String()
+SplitCommaSpc = Split(A, ", ")
+End Function
+
 Function SplitCrLf(A) As String()
 SplitCrLf = Split(Replace(A, vbCr, ""), vbLf)
 End Function

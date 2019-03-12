@@ -13,7 +13,6 @@ Dim O$(), J%
     For J = 1 To UB(Ay)
         Push O, TakBef(Ay(J), Q2)
     Next
-
 If InclBkt Then
     O = AyAddPfxSfx(O, Q1, Q2)
 End If

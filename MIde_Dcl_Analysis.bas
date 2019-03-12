@@ -15,5 +15,5 @@ For Each L In Itr(A)
 Next
 End Function
 Function Md_DclLinT1Ay(A As CodeModule) As String()
-Md_DclLinT1Ay = DclLy_T1Aset(DclLyMd(A))
+Md_DclLinT1Ay = DclLy_T1Aset(DclLyzMd(A))
 End Function

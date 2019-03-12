@@ -46,7 +46,7 @@ End Sub
 Function LinPosMth(MthNm$) As LinPos
 Dim MthLin$, Src$(), FmIx&
 Src = SrcMd
-FmIx = FstMthIxzMth(Src, MthNm)
+FmIx = MthIxzFst(Src, MthNm)
 If FmIx = -1 Then Exit Function
 MthLin = Src(FmIx)
 LinPosMth = LinPos(FmIx + 1, MthPos(MthLin))

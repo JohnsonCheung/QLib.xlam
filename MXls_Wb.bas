@@ -99,7 +99,7 @@ WcNyWb = Itn(A.Connections)
 End Function
 
 Function WcStrAyWbOLE(A As Workbook) As String()
-WcStrAyWbOLE = SyOyP(OleWcAy(A), "Connection")
+WcStrAyWbOLE = SyzOyPrp(OleWcAy(A), "Connection")
 End Function
 
 Function WszWb(A As Workbook, Wsn) As Worksheet
@@ -238,11 +238,6 @@ Dim T As TextConnection: Set T = TxtWc(A)
 Dim C$: C = T.Connection: If Not HasPfx(C, "TEXT;") Then Stop
 T.Connection = "TEXT;" & Fcsv
 End Sub
-
-Function WbVis(A As Workbook) As Workbook
-XlsVis A.Application
-Set WbVis = A
-End Function
 
 Function HasWbzWs(A As Workbook, Wsn) As Boolean
 HasWbzWs = HasItn(A.Sheets, Wsn)

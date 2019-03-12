@@ -66,26 +66,26 @@ Next
 Stop
 End Function
 
-Function MthIxAyMth(Src$(), MthNm) As Long()
+Function MthIxAyzNm(Src$(), MthNm) As Long()
 Dim Ix&
-Ix = FstMthIxzMth(Src, MthNm)
+Ix = MthIxzFst(Src, MthNm)
 If Ix = -1 Then Exit Function
-PushI MthIxAyMth, Ix
+PushI MthIxAyzNm, Ix
 If IsPrpLin(Src(Ix)) Then
-    Ix = FstMthIxzMth(Src, MthNm, Ix + 1)
-    If Ix > 0 Then Push MthIxAyMth, Ix
+    Ix = MthIxzFst(Src, MthNm, Ix + 1)
+    If Ix > 0 Then Push MthIxAyzNm, Ix
 End If
 End Function
 
-Function FstMthIxzMth&(Src$(), MthNm, Optional SrcFmIx& = 0)
+Function MthIxzFst&(Src$(), MthNm, Optional SrcFmIx& = 0)
 Dim I
 For I = SrcFmIx To UB(Src)
-    If MthNmLin(Src(I)) = MthNm Then
-        FstMthIxzMth = I
+    If MthNmzLin(Src(I)) = MthNm Then
+        MthIxzFst = I
         Exit Function
     End If
 Next
-FstMthIxzMth = -1
+MthIxzFst = -1
 End Function
 
 Function MthToIxAy(Src$(), FmIxAy&()) As Long()
@@ -121,11 +121,11 @@ FstMthIx = -1
 End Function
 
 Function MthLnoMdMth&(A As CodeModule, MthNm)
-MthLnoMdMth = 1 + FstMthIxzMth(Src(A), MthNm, 0)
+MthLnoMdMth = 1 + MthIxzFst(Src(A), MthNm, 0)
 End Function
 
 Function MthLnoAyMdMth(A As CodeModule, MthNm) As Long()
-MthLnoAyMdMth = AyIncEle1(MthIxAyMth(Src(A), MthNm))
+MthLnoAyMdMth = AyIncEle1(MthIxAyzNm(Src(A), MthNm))
 End Function
 
 Private Sub Z()

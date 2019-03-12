@@ -22,7 +22,7 @@ End Property
 
 Friend Function Init(DtNm, Fny0, Dry()) As Dt
 A_Dry = Dry
-A_Fny = CvNy(Fny0)
+A_Fny = NyzNN(Fny0)
 Me.DtNm = DtNm
 Set Init = Me
 End Function

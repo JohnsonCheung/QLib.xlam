@@ -424,7 +424,7 @@ End If
 End Function
 
 Function NyzNN(NN) As String()
-NyzNN = TermAy(NN)
+NyzNN = TermAyzNN(NN)
 End Function
 
 Function QuoteSql$(V)
@@ -465,7 +465,7 @@ End Function
 
 Function QAddCol$(T, Fny0, F As Drs, E As Dictionary)
 Dim O$(), Fld
-For Each Fld In CvNy(Fny0)
+For Each Fld In NyzNN(Fny0)
 '    PushI O, Fld & " " & QAddCol1(Fld, F, E)
 Next
 QAddCol = FmtQQ("Alter Table [?] add column ?", T, JnComma(O))
@@ -476,7 +476,7 @@ SqlCrtPkzT = FmtQQ("Create Index PrimaryKey on [?] (?Id) with Primary", T, T)
 End Function
 
 Function SqlCrtSk_T_SkFF$(T, SkFF)
-SqlCrtSk_T_SkFF = FmtQQ("Create unique Index SecondaryKey on [?] (?)", T, JnComma(AyQuoteSq(CvNy(SkFF))))
+SqlCrtSk_T_SkFF = FmtQQ("Create unique Index SecondaryKey on [?] (?)", T, JnComma(AyQuoteSq(NyzNN(SkFF))))
 End Function
 
 Function SqlCrtTbl_T_X$(T, X$)

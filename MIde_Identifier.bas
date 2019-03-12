@@ -5,18 +5,6 @@ Dim ArgA$(): ArgA = ArgNy(ContLin(Src, 0))
 Dim DimA$(): DimA = DimNy(Src)
 MthExtNy = AyMinusAp(IdentifierAy(JnSpc(Src)), DimA, ArgA)
 End Function
-Function DimNy(Lin) As String()
-
-End Function
-Function DimNyzSrc(Src$()) As String()
-Dim L
-For Each L In Itr(Src)
-    PushIAy DimNyzSrc, DimNy(L)
-Next
-End Function
-Function DimNyLin(Lin) As String()
-
-End Function
 
 Private Sub Z_IdentifierAset()
 Dim A As Aset

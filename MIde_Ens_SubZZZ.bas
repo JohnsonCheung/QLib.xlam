@@ -24,7 +24,7 @@ If Act = Ept Then Exit Sub
 RmvMdMth A, "Z"
 RmvMdMth A, "ZZ"
 If Ept <> "" Then
-    AppMdLines A, vbCrLf & Ept
+    AppLines A, vbCrLf & Ept
 End If
 End Sub
 

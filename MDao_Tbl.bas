@@ -234,7 +234,7 @@ Sub AddFd(A As Database, T, Fd As Dao.Fields)
 A.TableDefs(T).Fields.Append Fd
 End Sub
 
-Sub AddFld(A As Database, T, F, Ty As DataTypeEnum, Optional Sz%, Optional Precious%)
+Sub AddFldz(A As Database, T, F, Ty As DataTypeEnum, Optional Sz%, Optional Precious%)
 If HasFld(A, T, F) Then Exit Sub
 Dim S$, SqlTy$
 SqlTy = SqlTyzDao(Ty, Sz, Precious)
@@ -470,7 +470,7 @@ Dim Tar$, LisFld$
     Tar = T & "_Jn_" & JnFld
     LisFld = JnFld & "_Jn"
 RunQ A, SqlSel_FF_Into_Fm_WhFalse(KK, Tar, T)
-AddFld A, T, LisFld, dbMemo
+AddFldz A, T, LisFld, dbMemo
 InsTblzDry A, T, DryzJnFldKK(DryzT(A, T), KK, FldIx(A, T, JnFld))
 End Sub
 

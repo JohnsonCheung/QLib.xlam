@@ -3,8 +3,8 @@ Option Explicit
 Function T1zLin$(A)
 T1zLin = T1(A)
 End Function
-Function T1$(A)
-T1 = TermN(A, 1)
+Function T1$(Lin)
+T1 = TermN(Lin, 1)
 End Function
 Function T2zLin$(A)
 T2zLin = TermN(A, 2)

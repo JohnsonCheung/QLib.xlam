@@ -1,6 +1,6 @@
 Attribute VB_Name = "MIde_Mth_TopRmk"
 Option Explicit
-Private Sub Z_MthWTopRmkMthFTIxAyMth()
+Private Sub Z_MthWTopRmkMthFTixAyzSrcMth()
 Dim Src$(), MthNm, WithTopRmk As Boolean
 Dim Ept() As FTIx, Act() As FTIx
 
@@ -10,7 +10,7 @@ GoSub Tst
 
 Exit Sub
 Tst:
-    Act = MthFTIxAyMth(Src, MthNm, WithTopRmk)
+    Act = MthFTIxAyzSrcMth(Src, MthNm, WithTopRmk)
     If Not IsEqFTIxAy(Act, Ept) Then Stop
     Return
 End Sub

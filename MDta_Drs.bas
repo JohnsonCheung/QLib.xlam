@@ -275,7 +275,7 @@ Private Sub Z()
 End Sub
 Function DrsAddCC(A As Drs, FF, C1, C2) As Drs
 Dim Fny$(), Dry()
-Fny = AyAdd(A.Fny, CvNy(FF))
+Fny = AyAdd(A.Fny, NyzNN(FF))
 Dry = AddColzDryCC(A.Dry, C1, C2)
 Set DrsAddCC = Drs(Fny, Dry)
 End Function

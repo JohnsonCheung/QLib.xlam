@@ -79,7 +79,7 @@ End Function
 
 Function AyShfItmNy(A$(), ItmNy0) As Variant()
 Dim Ny$(), A1$()
-    Ny = CvNy(ItmNy0)
+    Ny = NyzNN(ItmNy0)
     A1 = A
 Dim O() As Variant, Ay(), J%
 ReDim O(Sz(Ny))

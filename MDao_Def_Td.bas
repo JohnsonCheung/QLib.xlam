@@ -4,30 +4,26 @@ Function CvTd(A) As Dao.TableDef
 Set CvTd = A
 End Function
 
-Sub AppFdAy(A As Dao.TableDef, FdAy() As Dao.Field2)
+Sub AppFdAy(A As Dao.TableDef, FdAy() As Field2)
 Dim I
 For Each I In FdAy
     A.Fields.Append I
 Next
 End Sub
 
-Sub AddFldId(A As Dao.TableDef)
+Sub AddFldzId(A As Dao.TableDef)
 A.Fields.Append FdzId(A.Name)
 End Sub
 
-Sub AddFldLng(A As Dao.TableDef, FF)
-AppFdAy A, ZFdAy(FF, dbLong)
+Sub AddFldzLng(A As Dao.TableDef, FF)
+AppFdAy A, FdAy(FF, dbLong)
 End Sub
 
-Sub AddFldLngFF(A As Dao.TableDef, FF)
-AppFdAy A, ZFdAy(FF, dbText)
-End Sub
-
-Sub AddFldTimStmp(A As Dao.TableDef, F$)
+Sub AddFldzTimStmp(A As Dao.TableDef, F$)
 A.Fields.Append Fd(F, Dao.dbDate, Dft:="Now")
 End Sub
 
-Sub AddFldTxtFF(A As Dao.TableDef, FF, Optional Req As Boolean, Optional Sz As Byte = 255)
+Sub AddFldzTxt(A As Dao.TableDef, FF, Optional Req As Boolean, Optional Sz As Byte = 255)
 Dim F
 For Each F In NyzNN(FF)
     A.Fields.Append Fd(F, dbText, Req, Sz)
@@ -84,10 +80,10 @@ For Each F In A.Fields
 Next
 End Function
 
-Private Function ZFdAy(FF, T As Dao.DataTypeEnum) As Dao.Field2()
+Private Function FdAy(FF, T As Dao.DataTypeEnum) As Dao.Field2()
 Dim F
-For Each F In CvNy(FF)
-    PushObj ZFdAy, Fd(F, T)
+For Each F In NyzNN(FF)
+    PushObj FdAy, Fd(F, T)
 Next
 End Function
 
@@ -101,11 +97,10 @@ Dim F As Byte
 Dim G As Dao.TableDefAttributeEnum
 CvTd A
 AppFdAy B, C
-AddFldId B
-AddFldLng B, A
-AddFldLngFF B, A
-AddFldTimStmp B, D
-AddFldTxtFF B, A, E, F
+AddFldzId B
+AddFldzLng B, A
+AddFldzTimStmp B, D
+AddFldzTxt B, A, E, F
 FnyzTd B
 IsEqTd B, B
 ThwIfNETd B, B

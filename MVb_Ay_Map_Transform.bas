@@ -30,3 +30,19 @@ For Each L In Itr(Ay)
 Next
 End Function
 
+Function T2Ay(Ay) As String()
+Dim L
+For Each L In Itr(Ay)
+    PushI T2Ay, T2(L)
+Next
+End Function
+
+
+Function TermAsetzTLinAy(TLinAy$()) As Aset
+Dim I, O$()
+For Each I In Itr(TLinAy)
+    PushIAy O, SySsl(I)
+Next
+Set TermAsetzTLinAy = AsetzAy(O)
+End Function
+

@@ -1,7 +1,7 @@
 Attribute VB_Name = "MIde_ContLin"
 Option Explicit
 Const CMod$ = "MIde__ContLin."
-Function ContLinMdLno$(A As CodeModule, Lno)
+Function ContLinzMdLno$(A As CodeModule, Lno)
 Dim J&, L&
 L = Lno
 Dim O$: O = A.Lines(L, 1)
@@ -9,7 +9,7 @@ While LasChr(O) = "_"
     L = L + 1
     O = RmvLasChr(O) & A.Lines(L, 1)
 Wend
-ContLinMdLno = O
+ContLinzMdLno = O
 End Function
 Function NxtSrcIx&(Src$(), Ix&)
 Dim O&
@@ -53,23 +53,27 @@ Next
 If IsCont Then Thw CSub, "each lines {Src} ends with sfx _, which is impossible"
 ContLin = O
 End Function
-Function ContLinMd$(A As CodeModule, Lno&)
-Const CSub$ = CMod & "ContLinMd"
-Dim Ix&
-If Ix <= -1 Then Exit Function
-Dim J&, I$
-Dim O$, IsCont As Boolean
+
+Function FTIxzMdLnoCont(A As CodeModule, Lno&) As FTIx
+Set FTIxzMdLnoCont = FTIx(Lno - 1, ToLnozContLinMd(A, Lno) - 1)
+End Function
+
+Private Function ToLnozContLinMd&(A As CodeModule, Lno&)
+Dim J&
 For J = Lno To A.CountOfLines
-   I = A.Lines(J, 1)
-   O = O & LTrim(I)
-   If Not HasSfx(I, " _") Then
-        ContLinMd = O & LTrim(I)
+   If Not HasSfx(A.Lines(J, 1), " _") Then
+        ToLnozContLinMd = J
+        Exit Function
    End If
-   If IsCont Then O = RmvSfx(RmvSfx(O, "_"), " ")
-   If Not IsCont Then Exit For
 Next
-If IsCont Then Thw CSub, "each lines {Src} ends with sfx _, which is impossible"
-ContLinMd = O
+If Lno <> A.CountOfLines Then Thw CSub, "each lines ends with sfx _ started from Lno, which is impossible", "Md Started-Fm-Lno", MdNm(A), Lno
+End Function
+Function ContLinzMd$(A As CodeModule, Lno&)
+Dim J&, O$()
+For J = Lno To ToLnozContLinMd(A, Lno)
+    PushI O, RmvSfx(A.Lines(J, 1), "_")
+Next
+ContLinzMd = JnSpc(O)
 End Function
 
 

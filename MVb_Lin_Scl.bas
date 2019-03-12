@@ -6,7 +6,7 @@ Sub AsgSclNN(Scl$, NN$, ParamArray OAp())
 Const CSub$ = CMod & "AsgSclNN"
 Dim Av(): Av = OAp
 Dim V, Ny$(), I, J%
-Ny = CvNy(NN)
+Ny = NyzNN(NN)
 If Sz(Ny) <> Sz(Av) Then Stop
 For Each I In Itr(AyeEmpEle(AyTrim(SplitSemi(Scl))))
     V = SclItm_V(CStr(I), Ny)
@@ -22,7 +22,7 @@ End Sub
 Function ChkSclNN(A$, Ny0) As String()
 Const CSub$ = CMod & "ChkSclNN"
 Dim V, Ny$(), I, Er1$(), Er2$()
-Ny = CvNy(Ny0)
+Ny = NyzNN(Ny0)
 For Each I In Itr(AyeEmpEle(AyTrim(SplitSemi(A))))
     V = SclItm_V(CStr(I), Ny)
     Select Case True

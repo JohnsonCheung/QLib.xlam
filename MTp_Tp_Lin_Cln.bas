@@ -2,7 +2,7 @@ Attribute VB_Name = "MTp_Tp_Lin_Cln"
 Option Explicit
 Function ClnBrk1(A$(), Ny0) As Variant()
 Dim O(), U%, Ny$(), L, T1$, T2$, NmDic As Dictionary, Ix%, Er$()
-Ny = CvNy(Ny0)
+Ny = NyzNN(Ny0)
 U = UB(Ny)
 ReDim O(U)
 'O = AyMap(O, "EmpSy")

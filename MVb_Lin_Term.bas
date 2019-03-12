@@ -56,6 +56,17 @@ Function TermItr(NN)
 Asg TermAyzNN(NN), TermItr
 End Function
 
+Function CvNy(Ny0) As String()
+Const CSub$ = CMod & "CvNy"
+Select Case True
+Case IsMissing(Ny0) Or IsEmpty(Ny0)
+Case IsStr(Ny0): CvNy = TermAy(Ny0)
+Case IsSy(Ny0): CvNy = Ny0
+Case IsArray(Ny0): CvNy = SyzAy(Ny0)
+Case Else: Thw CSub, "Given Ny0 must be Missing | Empty | Str | Sy | Ay", "TypeName-Ny0", TypeName(Ny0)
+End Select
+End Function
+
 Function TermAyzNN(NN) As String()
 Select Case True
 Case IsStr(NN): TermAyzNN = TermAy(NN)

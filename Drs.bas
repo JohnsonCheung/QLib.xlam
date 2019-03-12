@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 Option Explicit
 Private A_Fny$(), A_Dry()
 Friend Function Init(Fny0, Dry()) As Drs
-A_Fny = CvNy(Fny0)
+A_Fny = NyzNN(Fny0)
 A_Dry = Dry
 Set Init = Me
 End Function

@@ -2,6 +2,10 @@ Attribute VB_Name = "MIde_Ty_Component"
 Option Explicit
 Const CMod$ = "MIde_Ty_Component."
 
+Function ShtCmpTyzMd$(A As CodeModule)
+ShtCmpTyzMd = ShtCmpTy(CmpTyzMd(A))
+End Function
+
 Function ShtCmpTy$(A As vbext_ComponentType)
 Dim O$
 Select Case A

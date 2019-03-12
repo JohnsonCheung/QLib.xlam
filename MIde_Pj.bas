@@ -59,7 +59,6 @@ Function MdzPj(A As VBProject, Nm) As CodeModule
 Set MdzPj = A.VBComponents(Nm).CodeModule
 End Function
 
-
 Sub Compile()
 CompilePj CurPj
 End Sub

@@ -125,11 +125,6 @@ End Function
 Sub SetAppVis(A As Excel.Application, Vis As Boolean)
 If A.Visible <> Vis Then A.Visible = Vis
 End Sub
-Function RgVis(Rg As Range) As Range
-Rg.Application.Visible = True
-Set RgVis = Rg
-End Function
-
 Function AtAddSq(At As Range, Sq()) As Range
 Dim O As Range
 Set O = RgzResz(At, Sq)

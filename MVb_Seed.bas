@@ -5,7 +5,7 @@ Function SeedExpand$(VblQQStr, Ny0)
 'Seed is a VblQQ-String
 Dim A$, J%, O$()
 Dim Ny$()
-Ny = CvNy(Ny0)
+Ny = NyzNN(Ny0)
 For J = 0 To UB(Ny)
     Push O, Replace(VblQQStr, "?", Ny(J))
 Next

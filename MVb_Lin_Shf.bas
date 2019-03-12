@@ -17,6 +17,13 @@ End Function
 Function TakChr$(S, ChrLis$) ' Ret fst chr if it is in ChrLis
 If HasSubStr(ChrLis, FstChr(S)) Then TakChr = FstChr(S)
 End Function
+Function RmvChrzSfx$(S, ChrLis$)
+If HasSubStr(ChrLis, LasChr(S)) Then
+    RmvChrzSfx = RmvLasChr(S)
+Else
+    RmvChrzSfx = S
+End If
+End Function
 Function ShfChr$(OLin, ChrList$)
 Dim C$: C = TakChr(OLin, ChrList)
 If C = "" Then Exit Function

@@ -107,6 +107,14 @@ Next
 RmvPfxAySpc = A
 End Function
 
+Function RmvBkt$(A)
+RmvBkt = RmvSfxzBkt(A)
+End Function
+
+Function RmvSfxzBkt$(A)
+RmvSfxzBkt = RmvSfx(A, "()")
+End Function
+
 Function RmvSfx$(A, Sfx)
 If HasSfx(A, Sfx) Then RmvSfx = Left(A, Len(A) - Len(Sfx)) Else RmvSfx = A
 End Function

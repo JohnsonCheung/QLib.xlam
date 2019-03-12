@@ -41,9 +41,17 @@ If S = "" Then Exit Sub
 ODic.Add K, S
 End Sub
 
-Function DiczLines(Lines, Optional JnSep$ = vbCrLf) As Dictionary
-Set DiczLines = Dic(SplitCrLf(Lines), JnSep)
+Function DiczLines(DicLines, Optional JnSep$ = vbCrLf) As Dictionary
+Set DiczLines = Dic(SplitCrLf(DicLines), JnSep)
 End Function
+
+Sub AddDiczApp(O As Dictionary, K, StrItm$, Sep$)
+If O.Exists(K) Then
+    O(K) = O(K) & Sep & StrItm
+Else
+    O.Add K, StrItm
+End If
+End Sub
 
 Function Dic(Ly$(), Optional JnSep$ = vbCrLf) As Dictionary
 Dim O As New Dictionary

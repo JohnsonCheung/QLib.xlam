@@ -313,7 +313,7 @@ BdrRgAround RgRCRC(At, 7, 7, 9, 9)
 RgCC(At, 1, 9).EntireColumn.ColumnWidth = 2
 End Sub
 
-Sub Z_SolveSudoku()
+Private Sub Z_SolveSudoku()
 Dim Ws As Worksheet
 GoSub T0
 Exit Sub

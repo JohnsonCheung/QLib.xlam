@@ -21,6 +21,27 @@ Next
 'OErLy = O(U + 1)
 'Set ORmkDic = O(U + 2)
 End Function
+Function LnxAyzT1(Ly$(), T1) As Lnx()
+Dim J&, O() As Lnx
+For J = 0 To UB(Ly)
+    If T1zLin(Ly(J)) = T1 Then
+        PushObj O, Lnx(J, Ly(J))
+    End If
+Next
+LnxAyzT1 = O
+End Function
+
+Function LnxAyDic(Ly$()) As Dictionary
+Set LnxAyDic = LnxAyDiczT1nn(Ly, AywDist(T1Ay(Ly)))
+End Function
+
+Function LnxAyDiczT1nn(Ly$(), T1nn) As Dictionary
+Dim T
+Set LnxAyDiczT1nn = New Dictionary
+For Each T In NyzNN(T1nn)
+    LnxAyDiczT1nn.Add T, LnxAyzT1(Ly, T)
+Next
+End Function
 
 Function LnxAy(Ly$()) As Lnx()
 Dim J&, O() As Lnx

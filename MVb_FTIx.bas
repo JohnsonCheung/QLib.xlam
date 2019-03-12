@@ -21,14 +21,11 @@ If O < 0 Then Stop
 FTIxLinCnt = O
 End Function
 
-Function FTIxFTIx(A As FTIx) As FTIx
-Dim Lno&, Cnt&
-   Cnt = A.ToIx - A.FmIx + 1
-   If Cnt < 0 Then Cnt = 0
-   Lno = A.FmIx + 1
-Set FTIxFTIx = FTIx(Lno, Cnt)
+Function EmpFTIx() As FTIx
+Static X As New FTIx, Y As Boolean
+If Not Y Then Y = True: Set X = FTIx(-1, -2)
+Set EmpFTIx = X
 End Function
-
 Function FTIx(FmIx, ToIx) As FTIx
 Dim O As New FTIx
 Set FTIx = O.Init(FmIx, ToIx)

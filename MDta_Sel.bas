@@ -14,7 +14,7 @@ DrySelIxAp = DrySel(A, IxAy)
 End Function
 
 Function DrsSel(A As Drs, FF) As Drs
-Dim Fny$(): Fny = CvNy(FF)
+Dim Fny$(): Fny = NyzNN(FF)
 If IsEqAy(A.Fny, Fny) Then Set DrsSel = A: Exit Function
 ThwNotSuperAy A.Fny, Fny
 Set DrsSel = Drs(Fny, DrySel(A.Dry, IxAy(A.Fny, Fny)))

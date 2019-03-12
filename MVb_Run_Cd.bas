@@ -30,7 +30,7 @@ End Property
 
 Sub TimFun(FunNN)
 Dim B!, E!, F
-For Each F In CvNy(FunNN)
+For Each F In NyzNN(FunNN)
     B = Timer
     Run F
     E = Timer

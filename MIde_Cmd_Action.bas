@@ -6,7 +6,7 @@ WinTileVertBtn.Execute
 End Sub
 
 Sub TileV()
-WinTileVertBtn.Execute
+'WinTileVertBtn.Execute
 End Sub
 
 Property Get TileVBtn() As CommandBarButton

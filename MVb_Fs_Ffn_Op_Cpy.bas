@@ -29,7 +29,7 @@ End Function
 
 Sub CpyFilzIfDif(FfnAy_or_Ffn, Pth$, Optional UseEq As Boolean)
 Dim I
-For Each I In StrItr(FfnAy_or_Ffn)
+For Each I In ItrzStr(FfnAy_or_Ffn)
     CpyFilzIfDifzSng I, Pth, UseEq
 Next
 End Sub
@@ -41,7 +41,7 @@ End Sub
 Function CpyFilzToPth$(FfnAy_or_Ffn, ToPth$, Optional OvrWrt As Boolean)
 Dim Ffn, P$, O$
 P = PthEnsSfx(ToPth)
-For Each Ffn In StrItr(FfnAy_or_Ffn)
+For Each Ffn In ItrzStr(FfnAy_or_Ffn)
     O = P & Fn(Ffn)
     CpyFilzToFfn Ffn, O, OvrWrt
 Next

@@ -24,6 +24,9 @@ For Each L In SrcMd
 Next
 Brw O
 End Sub
+Function HitConstNm(SrcLin, ConstNm$) As Boolean
+HitConstNm = ConstNmzSrcLin(SrcLin) = ConstNm
+End Function
 
 Function HitMthLin(MthLin, B As WhMth) As Boolean
 HitMthLin = HitMthNm3(MthNm3(MthLin), B)

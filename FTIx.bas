@@ -16,9 +16,11 @@ Property Get ToIx&()
 ToIx = A_ToIx
 End Property
 Friend Function Init(FmIx, ToIx) As FTIx
-If FmIx < 0 Then Stop
-If ToIx < 0 Then Stop
-If FmIx > ToIx Then Stop
+If Not (FmIx = -1 And ToIx = -2) Then ' This is known as EmpFTIx
+    If FmIx < 0 Then Stop
+    If ToIx < 0 Then Stop
+    If FmIx > ToIx Then Stop
+End If
 A_FmIx = FmIx
 A_ToIx = ToIx
 Set Init = Me

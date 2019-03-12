@@ -24,8 +24,11 @@ Sub LnxBrwAy(A() As Lnx)
 BrwAy LyzLnxAyzWithLno(A)
 End Sub
 
+Function DupT2AyzLnxAy(A() As Lnx) As String()
+DupT2AyzLnxAy = AywDup(T2Ay(LyzLnxAy(A)))
+End Function
 Function LyzLnxAy(A() As Lnx) As String()
-LyzLnxAy = SyOyP(A, "Lin")
+LyzLnxAy = SyzOyPrp(A, "Lin")
 End Function
 
 Function LnxAyeT1Ay(A() As Lnx, T1Ay$()) As Lnx()
@@ -51,6 +54,17 @@ If Sz(T1Ay) = 0 Then Exit Function
 Dim Er() As Lnx: Er = LnxAyeT1Ay(A, T1Ay)
 If Sz(Er) = 0 Then Exit Function
 ErzLnxAyT1ss = LyzMsgNap("There are lines have invalid T1", "Lines Valid-Ty", LyzLnxAyzWithLno(Er), T1Ay)
+End Function
+
+Function LnxAywT2(A() As Lnx, T2) As Lnx()
+Dim X
+For Each X In Itr(A)
+    With CvLnx(X)
+        If T2zLin(.Lin) = T2 Then
+            PushObj LnxAywT2, X
+        End If
+    End With
+Next
 End Function
 
 Function LnxAywRmvT1(A() As Lnx, T) As Lnx()

@@ -9,7 +9,7 @@ Dim Ny$(): Ny = AywPfx(MdNyPj, Pfx)
 If Sz(Ny) = 0 Then InfoLin CSub, "no module begins with " & Pfx: Exit Sub
 Brw Ny
 Dim N
-If CFm("Rmv those Md as show in the notepad?") Then
+If Cfm("Rmv those Md as show in the notepad?") Then
     For Each N In Ny
         RmvMd Md(N)
     Next

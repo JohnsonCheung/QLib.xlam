@@ -102,11 +102,6 @@ End Function
 Function A1Wb(A As Workbook, Optional Wsn$) As Range
 Set A1Wb = A1zWs(WsAdd(A, Wsn))
 End Function
-Function WsVis(A As Worksheet) As Worksheet
-XlsVis A.Application
-Set WsVis = A
-End Function
-
 Function A1zWs(A As Worksheet) As Range
 Set A1zWs = A.Range("A1")
 End Function

@@ -155,8 +155,6 @@ Private Sub Z()
 Z_SubZZEpt
 End Sub
 
-
-
 Private Property Get Z_SubZZzMd__Ept2$()
 Const A_1$ = "Private Sub ZZ()" & _
 vbCrLf & "Dim A As Variant" & _

@@ -7,7 +7,7 @@ End Property
 
 Function MthLinAyzSrcNm(A$(), MthNm$) As String()
 Dim Ix
-For Each Ix In Itr(MthIxAyMth(A, MthNm))
+For Each Ix In Itr(MthIxAyzNm(A, MthNm))
     PushI MthLinAyzSrcNm, ContLin(A, Ix)
 Next
 End Function

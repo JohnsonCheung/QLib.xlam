@@ -31,7 +31,7 @@ Next
 EnmFmIx = -1
 End Function
 Function EnmNyMd(A As CodeModule) As String()
-EnmNyMd = EnmNy(DclLyMd(A))
+EnmNyMd = EnmNy(DclLyzMd(A))
 End Function
 Function EnmNyPj(Pj As VBProject, Optional WhStr$) As String()
 Dim M
@@ -119,7 +119,7 @@ If ShfX(L, "Type ") Then UsrTyNm = TakNm(LTrim(L))
 End Function
 
 Function EnmLyMd(Md As CodeModule, EnmNm$) As String()
-EnmLyMd = EnmLy(DclLyMd(Md), EnmNm)
+EnmLyMd = EnmLy(DclLyzMd(Md), EnmNm)
 End Function
 
 Function NEnmMbrMd%(A As CodeModule, EnmNm$)
@@ -131,11 +131,11 @@ EnmMbrLyMd = CdLyzSrc(EnmLyMd(A, EnmNm))
 End Function
 
 Function NEnmMd%(A As CodeModule)
-NEnmMd = NEnm(DclLyMd(A))
+NEnmMd = NEnm(DclLyzMd(A))
 End Function
 
 Function UsrTyNyMd(A As CodeModule) As String()
-UsrTyNyMd = AySrt(UsrTyNy(DclLyMd(A)))
+UsrTyNyMd = AySrt(UsrTyNy(DclLyzMd(A)))
 End Function
 
 Function UsrTyNyPj(A As VBProject, Optional WhStr$) As String()

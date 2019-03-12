@@ -66,7 +66,16 @@ Function MthDiczMd(A As CodeModule) As Dictionary
 Set MthDiczMd = AddDicKeyPfx(MthDic(Src(A)), MdQNmzMd(A) & ".")
 End Function
 
-Function MthDic(Src$()) As Dictionary
+Function MthNmDic(Src$()) As Dictionary 'Key is MthNm.  One PrpNm may have 2 PrpMth: (Get & Set) or (Get & Let)
+Dim D As Dictionary: Set D = MthDic(Src)
+Dim O As New Dictionary, MthDNm
+For Each MthDNm In D.Keys
+    AddDiczApp O, MthNmzMthDNm(MthDNm), D(MthDNm), vbCrLf & vbCrLf
+Next
+Set MthNmDic = O
+End Function
+
+Function MthDic(Src$()) As Dictionary ' Key is MthDNm
 Dim Ix, O As New Dictionary
 O.Add "*Dcl", DclLines(Src)
 For Each Ix In MthIxItr(Src)

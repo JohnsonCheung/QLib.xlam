@@ -134,13 +134,6 @@ For Each P In A.VBProjects
 Next
 End Function
 
-Sub SrtVbe(A As Vbe)
-Dim P As VBProject
-For Each P In A.VBProjects
-    SrtzPj P
-Next
-End Sub
-
 Function SrtRptVbe(A As Vbe) As String()
 Dim P As VBProject
 For Each P In A.VBProjects

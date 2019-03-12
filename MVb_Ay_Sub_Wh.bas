@@ -8,11 +8,30 @@ Dim Dup$()
 If Sz(Dup) = 0 Then Exit Sub
 Thw Fun, "There are dup in array", "Dup Ay", Dup, A
 End Sub
-
+Function AywBetEle(Ay, FmEle, ToEle)
+Dim O: O = AyCln(Ay)
+Dim Inside As Boolean, I
+For Each I In Itr(Ay)
+    If Inside Then
+        If I = ToEle Then
+            AywBetEle = O
+            Exit Function
+        End If
+        PushI O, I
+    Else
+        If I = FmEle Then
+            Inside = True
+        End If
+    End If
+Next
+If Inside Then
+    Thw CSub, "FmEle is found, but ToEle", "Ay FmEle ToEle", Ay, FmEle, ToEle
+End If
+End Function
 Function AywDist(A, Optional IgnCas As Boolean)
 AywDist = IntozAy(AyCln(A), CntDic(A, IgnCas).Keys)
 End Function
-Sub Z_FmtCntDic()
+Private Sub Z_FmtCntDic()
 Dim Ay
 GoSub ZZ
 Exit Sub

@@ -32,7 +32,7 @@ Dim Lno&: Lno = CurLno
 Dim J&
 For J = Lno To 1 Step -1
     If IsMthLin(A.Lines(J, 1)) Then
-        CurMthLin = ContLinMd(A, J)
+        CurMthLin = ContLinzMd(A, J)
         Exit Function
     End If
 Next

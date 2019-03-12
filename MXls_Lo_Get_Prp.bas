@@ -176,10 +176,6 @@ Function SqzLo(A As ListObject)
 SqzLo = A.DataBodyRange.Value
 End Function
 
-Function LoVis(A As ListObject) As ListObject
-XlsVis A.Application
-Set LoVis = A
-End Function
 Function WsLo(A As ListObject) As Worksheet
 Set WsLo = A.Parent
 End Function
