@@ -28,7 +28,7 @@ Next
 Set SkIdx = O
 End Function
 
-Function TdzFdy(T, Fdy() As Dao.Field2, Optional SkFF) As Dao.TableDef
+Function TdzFdy(T, Fdy() As Field2, Optional SkFF) As Dao.TableDef
 Dim O As New Dao.TableDef, F
 O.Name = T
 Set TdzFdy = TdAddSk(TdAddPk(TdAppFdy(O, Fdy)), SkFF)

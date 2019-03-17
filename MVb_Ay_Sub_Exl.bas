@@ -93,8 +93,8 @@ Function AyeFmTo(A, FmIx, ToIx)
 Const CSub$ = CMod & "AyeFmTo"
 Dim U&
 U = UB(A)
-If 0 > FmIx Or FmIx > U Then Thw CSub, "[FmIx] is out of range", "Ay U FmIx ToIx", A, UB(A), FmIx, ToIx
-If FmIx > ToIx Or ToIx > U Then Thw CSub, "[ToIx] is out of range", "Ay U FmIx ToIx", A, UB(A), FmIx, ToIx
+If 0 > FmIx Or FmIx > U Then Thw CSub, "[FmIx] is out of range", "U FmIx ToIx Ay", UB(A), FmIx, ToIx, A
+If FmIx > ToIx Or ToIx > U Then Thw CSub, "[ToIx] is out of range", "U FmIx ToIx Ay", UB(A), FmIx, ToIx, A
 Dim O
     O = A
     Dim I&, J&
@@ -125,6 +125,7 @@ End Function
 
 Function AyeFTIx(A, B As FTIx)
 With B
+    If .IsEmp Then AyeFTIx = A: Exit Function
     AyeFTIx = AyeFmTo(A, .FmIx, .ToIx)
 End With
 End Function

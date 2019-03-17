@@ -5,7 +5,7 @@ Function CvTd(A) As Dao.TableDef
 Set CvTd = A
 End Function
 
-Function TdAppFdy(A As Dao.TableDef, Fdy() As Dao.Field2) As Dao.TableDef
+Function TdAppFdy(A As Dao.TableDef, Fdy() As Field2) As Dao.TableDef
 Dim I
 For Each I In Fdy
     A.Fields.Append I

@@ -68,6 +68,8 @@ End Sub
 Private Sub GenErMsgzMd(Md As CodeModule)
 Init Md
 If Si(A.ErNy) = 0 Then Inf CSub, "No GenErMsg-Src-Beg. / GenErMsg-Src-End.", "Md", MdNm(Md): Exit Sub
+Brw SrcRplConstzDic(Src(Md), ErMsgConstDic)
+Stop
 Dim O$(): O = SrcRplMthzDic(SrcRplConstzDic(Src(Md), ErMsgConstDic), MthDiczErMsg)
 Stop
 Brw O
@@ -105,14 +107,26 @@ Set ConstFTIx = EmpFTIx
 End Function
 
 Function SrcRplConstzDic(Src$(), ConstDic As Dictionary) As String()
-Dim ConstNm, O$()
-O = Src
+Dim ConstNm, Dcl$(), Bdy$()
+AsgSrcToDclAndBdy Src, Dcl, Bdy
 For Each ConstNm In ConstDic.Keys
-    O = SrcRplConst(O, ConstNm, ConstDic(ConstNm))
+    Dcl = DclRplConst(Dcl, ConstNm, ConstDic(ConstNm))
 Next
+SrcRplConstzDic = SyAdd(Dcl, Bdy)
 End Function
 
-Function SrcRplConst(Src$(), ConstNm, ConstLines$) As String()
+Sub AsgSrcToDclAndBdy(Src$(), ODcl$(), OBdy$())
+Dim J&, F&
+F = FstMthIx(Src)
+For J = 0 To F - 1
+    PushI ODcl, Src(J)
+Next
+For J = F To U
+    PushI OBdy, Src(J)
+Next
+End Sub
+
+Function DclRplConst(Dcl$(), ConstNm, ConstLines$) As String()
 SrcRplConst = CvSy(AyAdd(AyeFTIx(Src, ConstFTIx(Src, ConstNm)), SplitCrLf(ConstLines)))
 End Function
 
