@@ -37,7 +37,7 @@ End Sub
 Sub RmvMdMth(Md As CodeModule, MthNm)
 Const CSub$ = CMod & "RmvMdMth"
 Dim X() As FTIx: X = MthFTIxAyzMth(Md, MthNm)
-Info CSub, "Remove method", "Md Mth FTIx-WithTopRmk", MdNm(Md), Md, FTIxAyLy(X)
+Inf CSub, "Remove method", "Md Mth FTIx-WithTopRmk", MdNm(Md), Md, LyzFTIxAy(X)
 RmvMdFtLinesIxAy Md, X
 End Sub
 
@@ -67,7 +67,7 @@ If Not HasMthMd(Md, MthNm) Then GoSub BldNav: ThwNav CSub, "Fm Mth not Exist", N
 If HasMthMd(ToMd, MthNm) Then GoSub BldNav: ThwNav CSub, "To Mth exist", Nav
 ToMd.AddFromString MthLineszMd(Md, MthNm)
 RmvMdMth Md, MthNm
-If Not IsSilent Then Info CSub, FmtQQ("Mth[?] in Md[?] is copied ToMd[?]", MthNm, MdNm(Md), MdNm(ToMd))
+If Not IsSilent Then Inf CSub, FmtQQ("Mth[?] in Md[?] is copied ToMd[?]", MthNm, MdNm(Md), MdNm(ToMd))
 Exit Sub
 BldNav:
     Nav(0) = "FmMd Mth ToMd"

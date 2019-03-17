@@ -104,6 +104,6 @@ If HasMthPm(Lin) Then Exit Function
 IsPurePrpLin = True
 End Function
 Function HasMthPm(MthLin) As Boolean
-HasMthPm = TakBetBkt(MthLin) <> ""
+HasMthPm = StrBetBkt(MthLin) <> ""
 End Function
 

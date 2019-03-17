@@ -11,15 +11,15 @@ If B.IsEmp Then Exit Function
 LinesMdFTIx = A.Lines(B.FmNo, B.Cnt)
 End Function
 
-Function LyMdFTIx(A As CodeModule, B As FTIx) As String()
-LyMdFTIx = SplitCrLf(LinesMdFTIx(A, B))
+Function LyzMdFTIx(A As CodeModule, B As FTIx) As String()
+LyzMdFTIx = SplitCrLf(LinesMdFTIx(A, B))
 End Function
 
 Function LyMdRe(A As CodeModule, B As RegExp) As String()
 Dim Ix&(): Ix = AyRe_IxAy(Src(A), B)
 Dim O$(), I, Md As CodeModule
 Dim N$: N = MdNm(A)
-If Sz(Ix) = 0 Then Exit Function
+If Si(Ix) = 0 Then Exit Function
 For Each I In Ix
    Push O, FmtQQ("MdJmpLno ""?"",??' ?", N, I + 1, vbTab, A.Lines(I + 1, 1))
 Next

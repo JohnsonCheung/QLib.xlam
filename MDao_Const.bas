@@ -12,10 +12,10 @@ Public Const StdETFLines$ = _
 "ETF Tim * *Tim         " & vbCrLf & _
 "ETF Dte * *Dte         " & vbCrLf & _
 "ETF Crt * CrtTim       " & vbCrLf & _
-"ETF Lng * Sz           " & vbCrLf & _
+"ETF Lng * Si           " & vbCrLf & _
 "ETF Mem * Lines *Ft *Fx"
 
-Public Const SpecSchmVbl$ = "Tbl Spec * SpecNm | Lines Ft Sz Tim LTimStr CrtTim"
+Public Const SpecSchmVbl$ = "Tbl Spec * SpecNm | Lines Ft Si Tim LTimStr CrtTim"
 Public Const C_Des$ = "Description"
 
 Public Const SampReSeqSpec$ = _

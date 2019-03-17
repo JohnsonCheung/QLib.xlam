@@ -54,7 +54,7 @@ End Function
 Function ChkAyDup(A, QMsg$) As String()
 Dim Dup
 Dup = AywDup(A)
-If Sz(Dup) = 0 Then Exit Function
+If Si(Dup) = 0 Then Exit Function
 Push ChkAyDup, FmtQQ(QMsg, JnSpc(Dup))
 End Function
 
@@ -63,14 +63,14 @@ AyDupT1 = AywDup(AyTakT1(A))
 End Function
 
 Function AyEmpChk(A, Msg$) As String()
-If Sz(A) = 0 Then AyEmpChk = Sy(Msg)
+If Si(A) = 0 Then AyEmpChk = Sy(Msg)
 End Function
 
 Function ChkEqAy(Ay1, Ay2, Optional Ay1Nm$ = "Exp", Optional Ay2Nm$ = "Act") As String()
 Dim U&: U = UB(Ay1)
 Dim O$()
-    If U <> UB(Ay2) Then Push O, FmtQQ("Array [?] and [?] has different Sz: [?] [?]", Ay1Nm, Ay2Nm, Sz(Ay1), Sz(Ay2)): GoTo X
-If Sz(Ay1) = 0 Then Exit Function
+    If U <> UB(Ay2) Then Push O, FmtQQ("Array [?] and [?] has different Si: [?] [?]", Ay1Nm, Ay2Nm, Si(Ay1), Si(Ay2)): GoTo X
+If Si(Ay1) = 0 Then Exit Function
 Dim O1$()
     Dim A2: A2 = Ay2
     Dim J&, ReachLimit As Boolean
@@ -87,9 +87,9 @@ Dim O1$()
     Next
 If IsEmp(O1) Then Exit Function
 Dim O2$()
-    Push O2, FmtQQ("Array [?] and [?] both having size[?] have differnt element(s):", Ay1Nm, Ay2Nm, Sz(Ay1))
+    Push O2, FmtQQ("Array [?] and [?] both having size[?] have differnt element(s):", Ay1Nm, Ay2Nm, Si(Ay1))
     If ReachLimit Then
-        Push O2, FmtQQ("At least [?] differences:", Sz(O1))
+        Push O2, FmtQQ("At least [?] differences:", Si(O1))
     End If
 PushAy O, O2
 PushAy O, O1
@@ -102,7 +102,7 @@ ChkEqAy = O
 End Function
 
 Function AyOfAyAy(AyOfAy)
-If Sz(AyOfAy) = 0 Then Exit Function
+If Si(AyOfAy) = 0 Then Exit Function
 Dim O
 O = AyCln(AyOfAy(0))
 Dim X
@@ -129,7 +129,7 @@ AyFlat = AyOfAyAy(AyOfAy)
 End Function
 
 Function AyItmCnt%(A, M)
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim O%, X
 For Each X In Itr(A)
     If X = M Then O = O + 1
@@ -153,7 +153,7 @@ AywLasN = O
 End Function
 
 Function LasEle(Ay)
-Dim N%: N = Sz(Ay)
+Dim N%: N = Si(Ay)
 If N = 0 Then
     Warn CSub, "No ele in Ay"
 Else
@@ -203,11 +203,11 @@ If IsSy(Str_or_Sy) Then Asg Itr(Str_or_Sy), ItrzStr: Exit Function
 Thw CSub, "Str_or_Sy should be Str or Sy", "TypeName(Str_or_sy)", TypeName(Str_or_Sy)
 End Function
 Function Itr(A)
-If Sz(A) = 0 Then Set Itr = New Collection Else Itr = A
+If Si(A) = 0 Then Set Itr = New Collection Else Itr = A
 End Function
 
 Function AyRTrim(A$()) As String()
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim O$(), I
 For Each I In A
     Push O, RTrim(I)
@@ -262,7 +262,7 @@ End Function
 
 Function AyRpl_MidSeg(A, FmIx&, ToIx&, ByAy)
 Dim M As AyABC
-    M = AyABCzAyFT(A, FmIx, ToIx)
+    M = AyABCzFT(A, FmIx, ToIx)
 AyRpl_MidSeg = M.A
     PushAy AyRpl_MidSeg, ByAy
     PushAy AyRpl_MidSeg, M.C
@@ -293,7 +293,7 @@ AySampLin = "*Ay:[" & U & "]" & S
 End Function
 
 Function Itm_IsSel(Itm, Ay) As Boolean
-If Sz(Ay) = 0 Then Itm_IsSel = True: Exit Function
+If Si(Ay) = 0 Then Itm_IsSel = True: Exit Function
 Itm_IsSel = HasEle(Ay, Itm)
 End Function
 
@@ -314,7 +314,7 @@ Next
 Set SeqCntDicvAy = O
 End Function
 Function SqzAyH(Ay) As Variant()
-Dim N&: N = Sz(Ay)
+Dim N&: N = Si(Ay)
 If N = 0 Then Exit Function
 Dim J&, V
 Dim O()
@@ -327,7 +327,7 @@ SqzAyH = O
 End Function
 
 Function SqzAyV(Ay) As Variant()
-Dim N&: N = Sz(Ay)
+Dim N&: N = Si(Ay)
 If N = 0 Then Exit Function
 Dim J&, V
 Dim O()
@@ -460,9 +460,9 @@ Dim SelIxAy&()
 SubDrFnySel = AywIxAy(Dr, SelIxAy)
 End Function
 
-Private Sub ZZZ_AyABCzAyFT()
+Private Sub ZZZ_AyABCzFT()
 Dim A(): A = Array(1, 2, 3, 4)
-Dim Act As AyABC: Act = AyABCzAyFT(A, 1, 2)
+Dim Act As AyABC: Act = AyABCzFT(A, 1, 2)
 Ass IsEqAy(Act.A, Array(1))
 Ass IsEqAy(Act.B, Array(2, 3))
 Ass IsEqAy(Act.C, Array(4))
@@ -503,13 +503,13 @@ End Sub
 Private Sub ZZ_AyeEmpEleAtEnd()
 Dim A: A = Array(Empty, Empty, Empty, 1, Empty, Empty)
 Dim Act: Act = AyeEmpEleAtEnd(A)
-Ass Sz(Act) = 4
+Ass Si(Act) = 4
 Ass Act(3) = 1
 End Sub
 
 Private Sub ZZ_SyzAy()
 Dim Act$(): Act = SyzAy(Array(1, 2, 3))
-Ass Sz(Act) = 3
+Ass Si(Act) = 3
 Ass Act(0) = 1
 Ass Act(1) = 2
 Ass Act(2) = 3
@@ -536,10 +536,10 @@ Private Sub Z_ChkEqAy()
 DmpAy ChkEqAy(Array(1, 2, 3, 3, 4), Array(1, 2, 3, 4, 4))
 End Sub
 
-Private Sub Z_AyABCzAyFTIxIx()
+Private Sub Z_AyABCzFTIxIx()
 Dim A(): A = Array(1, 2, 3, 4)
 Dim M As FTIx: M = FTIx(1, 2)
-Dim Act As AyABC: Act = AyABCzAyFTIx(A, M)
+Dim Act As AyABC: Act = AyABCzFTIx(A, M)
 Ass IsEqAy(Act.A, Array(1))
 Ass IsEqAy(Act.B, Array(2, 3))
 Ass IsEqAy(Act.C, Array(4))
@@ -592,7 +592,7 @@ End Sub
 
 Private Sub Z_SyzAy()
 Dim Act$(): Act = SyzAy(Array(1, 2, 3))
-Ass Sz(Act) = 3
+Ass Si(Act) = 3
 Ass Act(0) = 1
 Ass Act(1) = 2
 Ass Act(2) = 3
@@ -610,7 +610,7 @@ PushI Dry, Array()
 PushI Dry, Array()
 PushI Dry, Array()
 PushI Dry, Array()
-'Ass Sz(Act) = 4
+'Ass Si(Act) = 4
 'Ass IsEqAy(Act(0), Array("A", 3, 1, 2, 3))
 'Ass IsEqAy(Act(1), Array("B", 3, 2, 3, 4))
 'Ass IsEqAy(Act(2), Array("C", 0))
@@ -646,7 +646,7 @@ End Function
 Private Sub Z()
 Z_ChkAyDup
 Z_AyFlat
-Z_AyABCzAyFTIxIx
+Z_AyABCzFTIxIx
 Z_HasEleDupEle
 Z_ChkEqAy
 Z_AyMinus

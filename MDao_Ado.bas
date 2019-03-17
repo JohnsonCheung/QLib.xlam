@@ -178,7 +178,7 @@ End Function
 Function DftWsNy(WsNy0, Fx$) As String()
 Dim O$()
     O = CvSy(WsNy0)
-If Sz(O) = 0 Then
+If Si(O) = 0 Then
     DftWsNy = WsNyzFx(Fx)
 Else
     DftWsNy = O
@@ -187,7 +187,7 @@ End Function
 Function DftTny(Tny0, Fb$) As String()
 Dim O$()
     O = CvSy(Tny0)
-If Sz(O) = 0 Then
+If Si(O) = 0 Then
     DftTny = TnyzFb(Fb)
 Else
     DftTny = O
@@ -195,7 +195,7 @@ End If
 End Function
 Function FxDftWsNy(A, WsNy0) As String()
 Dim O$(): O = CvSy(WsNy0)
-If Sz(O) = 0 Then
+If Si(O) = 0 Then
     FxDftWsNy = WsNyzFx(A)
 Else
     FxDftWsNy = O
@@ -231,7 +231,7 @@ CnStrzFxAdo = FmtQQ("Provider=Microsoft.ACE.OLEDB.16.0;Data Source=?;Extended Pr
 End Function
 
 Function DtaSrczScl(DtaSrcScl$)
-DtaSrczScl = TakBet(DtaSrcScl, "Data Source=", ";")
+DtaSrczScl = StrBet(DtaSrcScl, "Data Source=", ";")
 End Function
 Function DtaSrc$(A As Database, T)
 DtaSrc = DtaSrczScl(A.TableDefs(T).Connect)

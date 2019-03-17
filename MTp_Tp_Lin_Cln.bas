@@ -24,7 +24,7 @@ T1Ay = SySsl(T1ss)
 For Each L In Ly
     If Not HasEle(T1Ay, T1(L)) Then Push O, L
 Next
-If Sz(O) > 0 Then
+If Si(O) > 0 Then
     O = AyAddPfx(AyQuoteSq(O), Space(4))
     O = AyInsItm(O, FmtQQ("Following lines have invalid T1.  Valid T1 are [?]", JnSpc(T1Ay)))
 End If
@@ -36,7 +36,7 @@ If IsEmp(Lin) Then Exit Function
 If IsDotLin(Lin) Then Exit Function
 If IsSngTermLin(Lin) Then Exit Function
 If IsDDLin(Lin) Then Exit Function
-ClnLin = TakBefDD(Lin)
+ClnLin = StrBefDD(Lin)
 End Function
 
 Function LnxAyzCln(Ly$()) As Lnx()

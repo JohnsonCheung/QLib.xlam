@@ -1,8 +1,8 @@
 Attribute VB_Name = "MDao_Att_Op_Exp"
 Option Explicit
 Const CMod$ = "MDao_Att_Op_Exp."
-Const DoczTblAtt$ = ""
-Const DoczAtt$ = "Attachment:It a Key-string of Table-Att in a database.  It can retrieve a record from Table-Att."
+Const ™TblAtt$ = ""
+Const ™Att$ = "Attachment:It a Key-string of Table-Att in a database.  It can retrieve a record from Table-Att."
 Private Function ExpAttzAttd$(A As Attd, ToFfn) 'Export the only File in {Attds} {ToFfn}
 Dim Fn$, T$, F2 As Dao.Field2
 With A.ARs
@@ -25,7 +25,7 @@ If N <> 1 Then
         Att, N, ToFfn, DbNm(Db)
 End If
 ExpAtt = ExpAttzAttd(Attd(Db, Att), ToFfn)
-Info CSub, "Att is exported", "Att ToFfn FmDb", Att, ToFfn, DbNm(Db)
+Inf CSub, "Att is exported", "Att ToFfn FmDb", Att, ToFfn, DbNm(Db)
 End Function
 
 Function ExpAttzFn$(A As Database, Att$, AttFn$, ToFfn)

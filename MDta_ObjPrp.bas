@@ -21,11 +21,11 @@ End Function
 Private Function WFmlEr(PrpAy$(), PPzFml$()) As String()
 Dim Fml, ErPmAy$(), PmAy$(), O$()
 For Each Fml In Itr(PPzFml)
-    PmAy = SplitComma(TakBetBkt(Fml))
+    PmAy = SplitComma(StrBetBkt(Fml))
     ErPmAy = AyMinus(PmAy, PrpAy)
-    If Sz(ErPmAy) > 0 Then PushI O, FmtQQ("Invalid-Pm[?] in Fml[?]", JnSpc(ErPmAy), Fml)
+    If Si(ErPmAy) > 0 Then PushI O, FmtQQ("Invalid-Pm[?] in Fml[?]", JnSpc(ErPmAy), Fml)
 Next
-If Sz(O) > 0 Then PushI O, FmtQQ("Valid-Pm[?]", JnSpc(PrpAy))
+If Si(O) > 0 Then PushI O, FmtQQ("Valid-Pm[?]", JnSpc(PrpAy))
 WFmlEr = O
 End Function
 
@@ -33,7 +33,7 @@ Private Sub WAsg3PP(PP_with_NewFldEqQuoteFmFld$, OPPzPrp$(), OPPzFml$(), OPPzAll
 Dim I
 For Each I In SySsl(PP_with_NewFldEqQuoteFmFld)
     If HasSubStr(I, "=") Then
-        PushI OPPzAll, TakBef(I, "=")
+        PushI OPPzAll, StrBef(I, "=")
         PushI OPPzFml, I
     Else
         PushI OPPzAll, I
@@ -46,21 +46,21 @@ Private Function DrsAddFml(A As Drs, PPzFml$()) As Drs
 Dim O As Drs: Set O = A
 Dim NewFld$, FunNm$, PmAy$(), Fml
 For Each Fml In Itr(PPzFml)
-    NewFld = TakBef(Fml, "=")
-    FunNm = TakBet(Fml, "=", "(")
-    PmAy = SplitComma(TakBetBkt(Fml))
+    NewFld = StrBef(Fml, "=")
+    FunNm = StrBet(Fml, "=", "(")
+    PmAy = SplitComma(StrBetBkt(Fml))
     Set O = AddColzFmlDrs(O, NewFld, FunNm, PmAy)
 Next
 End Function
 
 Function AddColzFmlDrs(A As Drs, NewFld, FunNm$, PmAy$()) As Drs
 Dim Dry(): Dry = A.Dry
-If Sz(Dry) = 0 Then Set AddColzFmlDrs = A: Exit Function
+If Si(Dry) = 0 Then Set AddColzFmlDrs = A: Exit Function
 Dim Dr, U&, IxAy1&(), Av()
 IxAy1 = IxAy(A.Fny, PmAy)
 U = UB(A.Fny)
 For Each Dr In Dry
-    If UB(Dr) <> U Then Thw CSub, "Dr-Sz is diff", "Dr-Sz U", UB(Dr), U
+    If UB(Dr) <> U Then Thw CSub, "Dr-Si is diff", "Dr-Si U", UB(Dr), U
     Av = AywIxAy(Dr, IxAy1)
     Push Dr, RunAv(FunNm, Av)
 Next

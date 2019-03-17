@@ -6,7 +6,7 @@ OAy = AyeFstNEle(OAy)
 End Function
 
 Function FstEle(Ay)
-If Sz(Ay) = 0 Then Exit Function
+If Si(Ay) = 0 Then Exit Function
 Asg Ay(0), FstEle
 End Function
 
@@ -15,7 +15,7 @@ If HasEle(A, V) Then FstEleEv = V
 End Function
 
 Function FstEleLik$(A, Lik$)
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim X
 For Each X In A
     If X Like Lik Then FstEleLik = X: Exit Function
@@ -30,7 +30,7 @@ Next
 End Function
 
 Function FstElePredPX(A, PX$, P)
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim X
 For Each X In Itr(A)
     If Run(PX, P, X) Then Asg X, FstElePredPX: Exit Function
@@ -45,7 +45,7 @@ Next
 End Function
 
 Function FstElePredXP(A, XP$, P)
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim X
 For Each X In Itr(A)
     If Run(XP, X, P) Then Asg X, FstElePredXP: Exit Function

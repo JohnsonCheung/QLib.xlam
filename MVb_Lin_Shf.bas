@@ -3,9 +3,9 @@ Option Explicit
 
 Function ShfBktStr$(OLin$)
 Dim O$
-O = TakBetBkt(OLin): If O = "" Then Exit Function
+O = StrBetBkt(OLin): If O = "" Then Exit Function
 ShfBktStr = O
-OLin = TakAftBkt(OLin)
+OLin = StrAftBkt(OLin)
 End Function
 Function RmvChr$(S, ChrLis$) ' Rmv fst chr if it is in ChrLis
 If HasSubStr(ChrLis, FstChr(S)) Then

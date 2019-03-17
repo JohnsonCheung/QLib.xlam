@@ -10,7 +10,7 @@ End Select
 End Function
 
 Function CsvzDr$(A)
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim O$(), U&, J&, V
 U = UB(A)
 ReDim O(U)

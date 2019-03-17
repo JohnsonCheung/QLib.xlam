@@ -45,7 +45,7 @@ End Function
 
 Function LnxAy(Ly$()) As Lnx()
 Dim J&, O() As Lnx
-If Sz(Ly) = 0 Then Exit Function
+If Si(Ly) = 0 Then Exit Function
 For J = 0 To UB(Ly)
     PushObj O, Lnx(J, Ly(J))
 Next
@@ -57,6 +57,6 @@ Dim Cnt%, J%
 For J = 0 To UB(Ly)
     If HasPfx(Ly(J), MajPfx) Then Cnt = Cnt + 1
 Next
-HasMajPfx = Cnt > (Sz(Ly) \ 2)
+HasMajPfx = Cnt > (Si(Ly) \ 2)
 End Function
 

@@ -9,8 +9,8 @@ T1: 'This fail
     A.Add "A", EmpAv
     PushI A("A"), 1
     V = A("A")
-    Act = Sz(V)
-    If Sz(Act) <> 1 Then Stop
+    Act = Si(V)
+    If Si(Act) <> 1 Then Stop
     Return
 T2:  'Should Pass
     Set A = New Dictionary
@@ -19,7 +19,7 @@ T2:  'Should Pass
     PushI V, 1
     A("A") = V
     Act = A("A")
-    If Sz(Act) <> 1 Then Stop
+    If Si(Act) <> 1 Then Stop
     Return
 'Ans is: Cannot
 End Sub

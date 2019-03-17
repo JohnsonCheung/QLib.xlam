@@ -2,7 +2,7 @@ Attribute VB_Name = "MDta_Ds"
 Option Explicit
 Function DsAddDt(A As Ds, T As Dt) As Ds
 If DsHasDt(A, T.DtNm) Then Err.Raise 1, , FmtQQ("DsAddDt: Ds[?] already has Dt[?]", A.DsNm, T.DtNm)
-Dim N%: N = Sz(A.DtAy)
+Dim N%: N = Si(A.DtAy)
 Dim Ay() As Dt
     Ay = A.DtAy
 ReDim Preserve Ay(N)
@@ -39,10 +39,10 @@ Next
 End Function
 
 Function DsIsEmp(A As Ds) As Boolean
-DsIsEmp = Sz(A.DtAy) = 0
+DsIsEmp = Si(A.DtAy) = 0
 End Function
 
 
 Function DsNDt%(A As Ds)
-DsNDt = Sz(A.DtAy)
+DsNDt = Si(A.DtAy)
 End Function

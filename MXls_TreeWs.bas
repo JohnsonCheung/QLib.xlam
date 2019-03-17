@@ -55,15 +55,15 @@ ClrCurCol Cur
 Dim SubPthAy$(), FnAy$()
 AsgEnt SubPthAy, FnAy, PthzCur(Cur)
 PutCurEnt Cur, SubPthAy, FnAy
-MgeCurSubPthCol Sz(SubPthAy)
-MgeCurFnCol Sz(SubPthAy), Sz(FnAy)
+MgeCurSubPthCol Si(SubPthAy)
+MgeCurFnCol Si(SubPthAy), Si(FnAy)
 End Sub
 
 Private Function PthzCur$(Cur As Range)
 PthzCur = PthEnsSfx(A1zRg(Cur).Value)
 End Function
 Private Sub PutCurEnt(Cur As Range, SubPthAy$(), FnAy$())
-EntRg(Cur, Sz(SubPthAy) + Sz(FnAy)).Value = SqzAyV(AyAdd(SubPthAy, FnAy))
+EntRg(Cur, Si(SubPthAy) + Si(FnAy)).Value = SqzAyV(AyAdd(SubPthAy, FnAy))
 End Sub
 Private Function EntRg(Cur As Range, EntCnt%) As Range
 Dim Ws As Worksheet: Set Ws = WszRg(Cur)

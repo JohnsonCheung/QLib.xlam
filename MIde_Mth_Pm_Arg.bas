@@ -1,35 +1,37 @@
 Attribute VB_Name = "MIde_Mth_Pm_Arg"
 Option Explicit
+Const DoczArgStr$ = "It is splitting of MthPm"
+Const DoczArgSy$ = "It Array of ArgStr"
+Const DoczSset$ = "String-Aset"
 Function MthPm$(Lin)
-If IsMthLin(Lin) Then
-    MthPm = TakBetBkt(Lin)
-End If
-End Function
-Function MthArgAy(Lin) As String()
-MthArgAy = AyTrim(SplitComma(MthPm(Lin)))
+If IsMthLin(Lin) Then MthPm = StrBetBkt(Lin)
 End Function
 
-Function ArgAyzPj(A As VBProject) As String()
-Dim O$(), L
+Function MthArgSy(Lin) As String()
+MthArgSy = SplitCommaSpc(MthPm(Lin))
+End Function
+
+Property Get ArgStrSetPj() As Aset
+Set ArgStrSetPj = ArgStrSetzPj(CurPj)
+End Property
+Function ArgStrSetzPj(A As VBProject) As Aset
+Set ArgStrSetzPj = New Aset
+Dim L
 For Each L In MthLinAyzPj(A)
-    PushIAy O, MthArgAy(L)
+    ArgStrSetzPj.PushAy MthArgSy(L)
 Next
-ArgAyzPj = AywDist(O)
 End Function
 
-Private Sub Z_ArgAyzPj()
-Brw AyQSrt(ArgAyzPj(CurPj))
+Private Sub Z_ArgStrSetPj()
+ArgStrSetPj.Srt.Brw
 End Sub
 
-Function ArgSfx$(Arg)
-Dim B$
-B = RmvNm(RmvPfxSpc(RmvPfxSpc(Arg, "Optional"), "ParamArray"))
-ArgSfx = RTrim(TakBefOrAll(B, "=", NoTrim:=True))
+Function DimItmzArgStr$(ArgStr)
+DimItmzArgStr = StrBefOrAll(RmvPfxSpc(RmvPfxSpc(ArgStr, "Optional"), "ParamArray"), " =")
 End Function
 
-
-Function ArgTy$(Arg)
-
+Function ArgTy$(ArgStr)
+ArgTy = RmvNm(DimItmzArgStr(ArgStr))
 End Function
 
 

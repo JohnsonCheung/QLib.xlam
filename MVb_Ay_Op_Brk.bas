@@ -29,14 +29,14 @@ Next
 AyABzAyEle = O
 End Function
 
-Function AyABCzAyFT(Ay, FmIx&, ToIx&) As AyABC
-Dim O As AyABC
-O.A = AywFT(Ay, 0, FmIx - 1)
-O.B = AywFT(Ay, FmIx, ToIx)
-O.C = AywFmIx(Ay, ToIx + 1)
-AyABCzAyFT = O
+Function AyABCzFT(Ay, FmIx&, ToIx&) As AyABC
+Dim O As New AyABC
+Set AyABCzFT = O.Init( _
+    AywFT(Ay, 0, FmIx - 1), _
+    AywFT(Ay, FmIx, ToIx), _
+    AywFmIx(Ay, ToIx + 1))
 End Function
 
-Function AyABCzAyFTIx(A, B As FTIx) As AyABC
-AyABCzAyFTIx = AyABCzAyFT(A, B.FmIx, B.ToIx)
+Function AyABCzFTIx(Ay, B As FTIx) As AyABC
+Set AyABCzFTIx = AyABCzFT(Ay, B.FmIx, B.ToIx)
 End Function

@@ -53,6 +53,12 @@ Else
 End If
 End Sub
 
+Function LyzLinesDicByItems(LinesDic As Dictionary) As String()
+Dim Lines
+For Each Lines In LinesDic.Items
+    PushIAy LyzLinesDicByItems, SplitCrLf(Lines)
+Next
+End Function
 Function Dic(Ly$(), Optional JnSep$ = vbCrLf) As Dictionary
 Dim O As New Dictionary
 Dim I, T$, Rst$

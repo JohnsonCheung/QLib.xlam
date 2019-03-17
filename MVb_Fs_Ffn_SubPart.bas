@@ -45,6 +45,14 @@ Function FfnPth$(Ffn)
 FfnPth = Pth(Ffn)
 End Function
 
+Function PthUp$(Pth, NUp%)
+Dim O$: O = Pth
+Dim J%
+For J = 1 To NUp
+    O = ParPth(O)
+Next
+PthUp = O
+End Function
 Function Pth$(Ffn)
 Dim P%: P = InStrRev(Ffn, "\")
 If P = 0 Then Exit Function

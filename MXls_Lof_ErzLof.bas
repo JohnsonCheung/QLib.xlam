@@ -1,5 +1,20 @@
 Attribute VB_Name = "MXls_Lof_ErzLof"
 Option Explicit
+Private Const M_Bet_FldSeq$ = "Lno#{Lno&} is [Bet] line and ignored due to Fld(?), FmFld(?) and ToFld(?) are not in order.  See order the Fld, FmFld and ToFld in [Fny-Value]"""
+Private Const M_Bet_EqFmTo$ = "Lno#{Lno&} is [Bet] line and ignored due to FmFld(?) and ToFld(?) are equal."""
+Private Const M_Tot_DupSel$ = "Lno#{Lno&} is [Tot-{TotKd$}] line having Fldss({Fldss$}) selecting SelFld({SelFld$}) which is already selected by Lno#{AlreadyInLno&} of [Tot-{AlreadyTotKd$}].  The SelFld is ignored."
+Private Const M_LoNm$ = "Lno#{Lno&} is [Lo-Nm] line having value({Val$}) which is not a good name"""
+Private Const M_Fldss_DupSel$ = "Lno#{Lno&} is [{T1$}] line having"
+Private Const M_Fldss_NotSel$ = "Lno#{Lno&} is [{T1$}] line having Fldss({Fldss$}) which should select one for Fny value.  See [Fny-Value]"
+Private Const M_Fld_Dup$ = "Lno#{Lno&} is [{T1$}] line having Fld({F}) which is duplicated and ignored due to it has defined in Lno#{AlreadyInLno&}"
+Private Const M_Val_FmlNotBegEq$ = "Lno#{Lno&} is [Fml] line having [{Fml$}] which is not started with [=]"
+Private Const M_Bet_3Fld$ = "Lno#{Lno&} is [Bet] line.  It should have 3 fields, but now it has (?) fields of [?]"""
+Private Const M_LoNm_Dup$ = "Lno#{Lno&} is [Lo-Nm] which is duplicated and ignored due to there is already a [Lo-Nm] in Lno#{AlreadyInLno&}"
+Private Const M_Fld_NotInFny$ = "Lno#{Lno&} is [{T1$}] line having Fld({F}) which should one of the Fny value.  See [Fny-Value]"
+Private Const M_Val_FmlFld$ = "Lno#{Lno&} is [Fml] line having invalid Fml({Fml$}) due to invalid Fny({ErFny$()}).  Valid-Fny are [{VdtFny$()}]"
+Private Const M_LoNm_Mis$ = "[Lo-Nm] line is missing"
+Private Const M_Val_NotInLis$ = "Lno#{Lno&} is [{T1$}] line having invalid Val({ErVal$}).  See valid-value-{VdtValNm$}"
+Private Const M_Val_NotNum$ = "Lno#{Lno&} is [{T1$}] line having Val({Val$}) which should be a number"
 Const CMod$ = ""
 Public Const LofT1nn$ = _
                             "Lo Ali Bdr Tot Wdt Fmt Lvl Cor Fml Lbl Tit Bet" ' Fmt. i.tm s.pace s.eparated string
@@ -23,54 +38,17 @@ Public Const LofT1nnzMul$ = "Lo Ali Bdr Tot Wdt Fmt Lvl Cor                " ' M
 'Bet_EqFmTo      Lno#{Lno&} is [Bet] line and ignored due to FmFld(?) and ToFld(?) are equal."
 'Bet_FldSeq      Lno#{Lno&} is [Bet] line and ignored due to Fld(?), FmFld(?) and ToFld(?) are not in order.  See order the Fld, FmFld and ToFld in [Fny-Value]"
 'GenErMsg-Src-End.
-Const M01$ = "Lno#? is [?] line having Val(?) which should be a number" 'MVal_IsNotNum
-Const M02$ = "Lno#? is [?] line having Val(?) which between (?) and (?)" 'MVal_IsNotBet
-Const M03$ = "Lno#? is [?] line having invalid Val(?).  See valid-value-?"  'For Ali Bdr Tot Cor
-Const M04$ = "Lno#? is [Fml] line having invalid Fml(?) due to invalid Fny{?}.  Valid-Fny are [?]." 'For Fml
-Const M04a$ = "Lno#? is [Fml] line having invalid Fml(?) due to first char is not [=]"
-Const M05$ = "Lno#? is [?] line having Fld(?) which should one of the Fny value.  See [Fny-Value]" 'For Fml Lbl Tit Bet
-Const M06$ = "Lno#? is [?] line having Fld(?) which is duplicated and ignored due to it has defined in Lno#?" 'For
-Const M07$ = "Lno#? is [?] line having Fldss(?) which should select one for Fny value.  See [Fny-Value]"
-Const M08$ = "Lno#? is LoNm line having value(?) which is not a good name"
-Const M09$ = "LoNm line is missing"
-Const M10$ = "Lno#? is LoNm line which is duplicated and ignored due to there is already a LoNm in Lno#?"
-Const M11$ = "Lno#? is [Bdr ?] line having Fld(?) which is duplicated and ignored due to it is alredy defined in Lno#? as [?]"
-Const M12$ = "Lno#? is [Bdr ?] line which is duplicated and ignore due to there is already a [Bdr ?] line in Lno#?"
-Const M13$ = "Lno#? is [Tot ?] line. It has selected more than one fields: [?].  [?] is used, the rest is ignored"
-Const M14$ = "Lno#? is [] line having Val(?) which in invalid.  Valid value is one of (Tot Avg Sum)"
-Const M15$ = "Lno#? is [?] line with Fld(?), which is already defined as (?)-Fld in same line and is ignored."
-Const M16$ = "Lno#? is [?] line with Fld(?), which is already defined as (?)-Fld in Lno#? and is ignored"
-Const M17$ = "Lno#? is [Bet] line.  It should have 3 fields, but now it has (?) fields of [?]"
-Const M18$ = "Lno#? is [Bet] line and ignored due to FmFld(?) and ToFld(?) are equal."
-Const M19$ = "Lno#? is [Bet] line and ignored due to Fld(?), FmFld(?) and ToFld(?) are not in order.  See order the Fld, FmFld and ToFld in [Fny-Value]"
-Const MVal_IsNotNum$ = M01
-Const MVal_IsNotBet$ = M02
-Const MVal_IsNotInLis$ = M03
-Const MVal_Fml$ = M04
-Const MVal_FmlNotBegWithEq$ = M04a
-Const MFld_Mis$ = M05
-Const MFld_Dup$ = M06
-Const MFldss_NotSelAnyFld$ = M07
-Const MLoNm_NoVal$ = M08
-Const MLoNm_NoLin$ = M09
-Const MLoNm_Excess$ = M10
-Const MBdr_ExcessFld$ = M11
-Const MBdr_ExcessLin$ = M12
-Const MTot_DupFld$ = M13
-Const MTot_MoreThanOneFldIsCnt$ = M14
-Const MTot_Fld_AlreadyDefinedSamLin$ = M15
-Const MTot_Fld_AlreadyDefinedInLno$ = M16
-Const MBet_TermCntEr = M17
-Const MBet_FmToEq = M18
-Const MBet_Bet = M19
 Private A$(), A_Fny$(), A_T1ToLnxAyDic As Dictionary
 Private Function MsgVal_FmlNotBegWithEq$(Lno&, Fml$)
 
 End Function
+Property Get LofT1Ny() As String()
+LofT1Ny = NyzNN(LofT1nn)
+End Property
 Function ErzLof(Lof$(), Fny$()) As String() 'Error-of-ListObj-Formatter:Er.z.Lo.f
 Const CSub$ = CMod & "LofEr"
 Init Lof, Fny
-ErzLof = AyAddAp( _
+ErzLof = SyAddAp( _
     ErVal, ErFld, ErFldss, ErLoNm, _
     ErAli, ErBdr, ErTot, _
     ErWdt, ErFmt, ErLvl, ErCor, _
@@ -103,11 +81,11 @@ Dim Lc As ListColumn
 End Property
 
 Private Function WMsg_Fld_Dup$(Lno&, T1, DupFld, AlreadInLno&)
-WMsg_Fld_Dup = FmtQQ(MFld_Dup, Lno, T1, DupFld, AlreadInLno)
+WMsg_Fld_Dup = FmtQQ(M_Fld_Dup, Lno, T1, DupFld, AlreadInLno)
 End Function
 
 Private Property Get ErAli() As String()
-ErAli = Sy(WAli_LeftRightCenter)
+'ErAli = Sy(WAli_LeftRightCenter)
 End Property
 
 Private Property Get ErBdr() As String()
@@ -146,7 +124,7 @@ ErBdrFld = WMsgzFny(Fny, "Bdr")
 End Property
 
 Private Property Get ErBet() As String()
-ErBet = Sy(ErBetDup, ErBetFny, ErBetTermCnt)
+ErBet = SyAddAp(ErBetDup, ErBetFny, ErBetTermCnt)
 End Property
 
 Private Property Get ErBetDup() As String()
@@ -161,7 +139,7 @@ End Property
 Private Property Get ErBetTermCnt() As String()
 Dim L
 'For Each L In Itr(Bet)
-    If Sz(SySsl(L)) <> 3 Then
+    If Si(SySsl(L)) <> 3 Then
         PushI ErBetTermCnt, WMsgzBetTermCnt(L, 3)
     End If
 'Next
@@ -170,7 +148,7 @@ End Property
 Private Property Get ErCor() As String()
 Dim L$()
 'L = Cor
-ErCor = Sy(ErCorDup(L), ErCorFld(L), ErCorVal(L))
+ErCor = SyAddAp(ErCorDup(L), ErCorFld(L), ErCorVal(L))
 'Cor = L
 End Property
 
@@ -228,7 +206,7 @@ Next
 End Function
 
 Private Property Get ErFml() As String()
-ErFml = Sy(ErFml__InsideFmlHasInvalidFld)
+ErFml = ErFml__InsideFmlHasInvalidFld
 End Property
 
 Private Property Get ErFml__InsideFmlHasInvalidFld() As String()
@@ -327,7 +305,7 @@ PushIAy ErValzNotBet, ErValzNotBetz("Lvl", 2, 9)
 End Function
 
 Private Function ErValzNotBetz(T1, FmNumVal, ToNumval) As String()
-Dim Lnx(): Lnx = A_T1ToLnxAyDic(T1)
+'Dim Lnx(): Lnx = A_T1ToLnxAyDic(T1)
 End Function
 
 Private Function ErValzNotInLis() As String()
@@ -362,7 +340,7 @@ End Function
 Private Function WMsgzFny(Fny$(), Lin_Ty$) As String()
 'Return Msg if given-Fny has some field not in A_Fny
 Dim ErFny$(): ErFny = AyMinus(Fny, A_Fny)
-If Sz(ErFny) = 0 Then Exit Function
+If Si(ErFny) = 0 Then Exit Function
 'PushI WMsgzFny, FmtQQ(M_Fny, ErFny, Lin_Ty)
 End Function
 
@@ -393,6 +371,4 @@ T1:
 Tst:
     Init Lof, Fny
     Act = ErFldSngzDup
-   
 End Sub
-

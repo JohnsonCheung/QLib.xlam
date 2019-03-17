@@ -19,7 +19,7 @@ End Function
 
 Private Sub EntAyR1(Pth)
 Ass HasPth(Pth)
-If Sz(O) Mod 1000 = 0 Then Debug.Print "EntAyR1: (Each 1000): " & Pth
+If Si(O) Mod 1000 = 0 Then Debug.Print "EntAyR1: (Each 1000): " & Pth
 PushI O, Pth
 PushIAy O, FfnAy(Pth, A_Spec)
 Dim I, P$()
@@ -54,9 +54,9 @@ End Function
 
 Private Sub FfnAyR1(Pth)
 PushIAy O, FfnAy(Pth, A_Spec)
-If Sz(O) Mod 1000 = 0 Then InfoLin CSub, "...Reading", "#Ffn-read", Sz(O)
+If Si(O) Mod 1000 = 0 Then InfLin CSub, "...Reading", "#Ffn-read", Si(O)
 Dim P$(): P = SubPthAyz(Pth, A_Spec)
-If Sz(P) = 0 Then Exit Sub
+If Si(P) = 0 Then Exit Sub
 Dim I
 For Each I In P
     FfnAyR1 I
@@ -65,7 +65,7 @@ End Sub
 
 Private Sub ZZ_EntAyR()
 Dim A$(): A = EntAyR("C:\users\user\documents\")
-Debug.Print Sz(A)
+Debug.Print Si(A)
 Stop
 DmpAy A
 End Sub

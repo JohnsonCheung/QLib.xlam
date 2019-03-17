@@ -1,8 +1,8 @@
 Attribute VB_Name = "MVb_Fs_Pth_Mbr"
 Option Explicit
 
-Function PthDir$(Pth)
-PthDir = Dir(PthEnsSfx(Pth) & "*.*", vbDirectory)
+Function DirzPth$(Pth)
+DirzPth = Dir(PthEnsSfx(Pth) & "*.*", vbDirectory)
 End Function
 
 Function FdrAyz(Pth, Optional Spec$ = "*.*", Optional Atr As VbFileAttribute) As String()
@@ -13,7 +13,7 @@ X = Atr Or vbDirectory
 M = Dir(P & Spec, vbDirectory)
 While M <> ""
     If InStr(M, "?") > 0 Then
-        Info CSub, "Unicode entry is skipped", "UniCode-Entry Pth Spec Atr", M, Pth, Spec, Atr
+        Inf CSub, "Unicode entry is skipped", "UniCode-Entry Pth Spec Atr", M, Pth, Spec, Atr
         GoTo Nxt
     End If
     If M = "." Then GoTo Nxt
@@ -29,7 +29,7 @@ End Function
 
 Function EntAy(Pth) As String()
 'Function EntAy(A$, Optional FilSpec$ = "*.*", Optional Atr As FileAttribute) As String()
-Dim A$: A$ = PthDir(Pth)
+Dim A$: A$ = DirzPth(Pth)
 While A <> ""
     If A = "." Then GoTo X
     If A = ".." Then GoTo X
@@ -41,7 +41,7 @@ End Function
 
 Function FdrAy(Pth) As String()
 Dim P$: P = PthEnsSfx(Pth)
-Dim A$: A = PthDir(P)
+Dim A$: A = DirzPth(P)
 While A <> ""
     If A = "." Then GoTo X
     If A = ".." Then GoTo X

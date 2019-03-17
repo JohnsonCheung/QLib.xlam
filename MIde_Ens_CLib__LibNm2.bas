@@ -21,6 +21,23 @@ Dim L$
 L = ClsLibNmLin(PjNmzMd(A))
 A.InsertLines FstLnozAftOptMd(A), L
 End Sub
+Function FstIxzAftOpt&(Src$())
+Dim J&, L$
+For J = 0 To UBound(Src)
+    If Not HasPfx(Src(J), "Option") Then
+        If IsCdLin(L) Then
+            FstIxzAftOpt = J
+            Exit Function
+        End If
+    End If
+    If IsMthLin(L) Then
+        FstIxzAftOpt = J - 1
+        Exit Function
+    End If
+Next
+FstIxzAftOpt = 0
+End Function
+
 Function FstLnozAftOptMd%(A As CodeModule)
 Dim J%, L$
 For J = 1 To A.CountOfDeclarationLines

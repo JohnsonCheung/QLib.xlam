@@ -83,7 +83,7 @@ If ErNo = 3024 Then
     Set L = X_L
     Exit Property
 End If
-'Info CSub, "Cannot open LgDb", "Er ErNo", E, ErNo
+'Inf CSub, "Cannot open LgDb", "Er ErNo", E, ErNo
 Stop
 End Property
 
@@ -92,7 +92,7 @@ Ens_Sess
 EnsMsg Fun, MsgTxt
 WrtLg Fun, MsgTxt
 Dim Av(): Av = Ap
-If Sz(Av) = 0 Then Exit Sub
+If Si(Av) = 0 Then Exit Sub
 Dim J%, V
 With L.TableDefs("LgV").OpenRecordset
     For Each V In Av
@@ -142,21 +142,21 @@ Set Db = Db(LgFb)
 Set T = New Dao.TableDef
 T.Name = "Sess"
 AddFldzId T
-AddFldzTimStmp T, "Dte"
+AddFldzTimstmp T, "Dte"
 Db.TableDefs.Append T
 '
 Set T = New Dao.TableDef
 T.Name = "Msg"
 AddFldzId T
 AddFldzTxt T, "Fun MsgTxt"
-AddFldzTimStmp T, "Dte"
+AddFldzTimstmp T, "Dte"
 Db.TableDefs.Append T
 '
 Set T = New Dao.TableDef
 T.Name = "Lg"
 AddFldzId T
 AddFldzLng T, "Sess Msg"
-AddFldzTimStmp T, "Dte"
+AddFldzTimstmp T, "Dte"
 Db.TableDefs.Append T
 '
 Set T = New Dao.TableDef
@@ -197,7 +197,7 @@ Private Sub X(A$)
 PushI XSchm, A
 End Sub
 Property Get LgSchm() As String()
-If Sz(XSchm) = 0 Then
+If Si(XSchm) = 0 Then
 X "E Mem | Mem Req AlwZLen"
 X "E Txt | Txt Req"
 X "E Crt | Dte Req Dft=Now"

@@ -168,10 +168,10 @@ End Function
 
 Private Function EvlTermAy(SwTermAy$(), AND_OR$, Sw As Dictionary, BoolTermPm As Dictionary) As BoolRslt
 Dim O As Boolean
-If Sz(SwTermAy) = 0 Then Stop
+If Si(SwTermAy) = 0 Then Stop
 Dim BoolAy() As Boolean
     BoolAy = EvlTermAy1(SwTermAy, AND_OR, Sw, BoolTermPm)
-    If Sz(BoolAy) = 0 Then Exit Function
+    If Si(BoolAy) = 0 Then Exit Function
     
 Select Case AND_OR
 Case "AND": O = IsAllTrue(BoolAy)
@@ -193,7 +193,7 @@ End Function
 
 Private Property Get OpStrAy() As String()
 Static X$()
-If Sz(X) = 0 Then X = SySsl("OR AND NE EQ")
+If Si(X) = 0 Then X = SySsl("OR AND NE EQ")
 OpStrAy = X
 End Property
 

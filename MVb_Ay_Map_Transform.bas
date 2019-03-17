@@ -4,7 +4,7 @@ Option Explicit
 Function AyAddIxPfx(A, Optional BegFm&) As String()
 Dim I, J&, N%
 J = BegFm
-N = Len(CStr(Sz(A)))
+N = Len(CStr(Si(A)))
 For Each I In Itr(A)
     PushI AyAddIxPfx, AlignR(J, N) & ": " & I
     J = J + 1

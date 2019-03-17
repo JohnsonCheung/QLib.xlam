@@ -34,7 +34,7 @@ End Function
 
 Function SkFnyzTdLin(A) As String()
 Dim A1$, T$, Rst$
-    A1 = TakBef(A, "|")
+    A1 = StrBef(A, "|")
     If A1 = "" Then Exit Function
 AsgTRst A1, T, Rst
 T = RmvSfx(T, "*")

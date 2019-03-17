@@ -10,9 +10,9 @@ End Function
 
 Private Function FmtAyNTerm1$(A, W%())
 Dim Ay$(), J%, N%, O$(), I
-N = Sz(W)
+N = Si(W)
 Ay = SyzNTermRst(A, N)
-If Sz(Ay) <> N + 1 Then Stop
+If Si(Ay) <> N + 1 Then Stop
 For J = 0 To N - 1
     PushI O, AlignL(Ay(J), W(J))
 Next
@@ -21,7 +21,7 @@ FmtAyNTerm1 = RTrim(JnSpc(O))
 End Function
 
 Private Function WdtAyNTermAy(NTerm%, Ay) As Integer()
-If Sz(Ay) = 0 Then Exit Function
+If Si(Ay) = 0 Then Exit Function
 Dim O%(), W%(), L
 ReDim O(NTerm - 1)
 For Each L In Ay

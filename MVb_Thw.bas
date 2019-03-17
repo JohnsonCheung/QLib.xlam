@@ -1,7 +1,7 @@
 Attribute VB_Name = "MVb_Thw"
 Option Explicit
 Const CMod$ = "MVb_Thw."
-
+Public ShwInf As Boolean
 Sub ThwIfNEgEle(Ay, Fun$)
 Const CSub$ = CMod & "ThwIfNEgEle"
 Dim I, J&, O$()
@@ -11,13 +11,13 @@ For Each I In Itr(Ay)
         J = J + 1
     End If
 Next
-If Sz(O) > 0 Then
+If Si(O) > 0 Then
     Thw CSub, "In [Ay], there are [negative-element (Ix Ele)]", Ay, O
 End If
 End Sub
 
 Sub ThwIfNESz(A, B, Fun$)
-If Sz(A) <> Sz(B) Then Thw Fun, "Sz-A <> Sz-B", "Sz-A Sz-B", Sz(A), Sz(B)
+If Si(A) <> Si(B) Then Thw Fun, "Si-A <> Si-B", "Si-A Si-B", Si(A), Si(B)
 End Sub
 
 Sub ThwIfNE(A, B, Optional ANm$ = "A", Optional BNm$ = "B")
@@ -40,7 +40,7 @@ Private Sub ThwIfNEAy(AyA, AyB, ANm$, BNm$)
 ThwDifSz AyA, AyB, ANm, BNm
 Dim J&, X
 For Each X In Itr(AyA)
-    If Not IsEq(X, AyB(J)) Then Thw CSub, "2 ay ele are diff", "[Ty / Sz / Dif-At] Ay-?-Ele-Ty Ay-?-Ele-Ty Ay-?-Ele Ay-?-Ele", ANm, BNm, ANm, BNm, TypeName(AyA), Sz(AyA), J
+    If Not IsEq(X, AyB(J)) Then Thw CSub, "2 ay ele are diff", "[Ty / Si / Dif-At] Ay-?-Ele-Ty Ay-?-Ele-Ty Ay-?-Ele Ay-?-Ele", ANm, BNm, ANm, BNm, TypeName(AyA), Si(AyA), J
     J = J + 1
 Next
 End Sub
@@ -52,8 +52,8 @@ Thw CSub, "Type Diff", NN, TypeName(A), TypeName(B)
 End Sub
 
 Sub ThwDifSz(A, B, Optional ANm$ = "A", Optional BNm$ = "B")
-If Sz(A) = Sz(B) Then Exit Sub
-Thw CSub, "Two ay has dif sz", "AyNm Sz Ty Ay-? Ay-?", ANm & " / " & BNm, Sz(A) & " / " & Sz(B), TypeName(A) & " / " & TypeName(B), A, B
+If Si(A) = Si(B) Then Exit Sub
+Thw CSub, "Two ay has dif sz", "AyNm Si Ty Ay-? Ay-?", ANm & " / " & BNm, Si(A) & " / " & Si(B), TypeName(A) & " / " & TypeName(B), A, B
 End Sub
 
 Sub ThwNotExistFfn(Ffn$, Fun$, Optional FilKd$ = "file")
@@ -70,8 +70,8 @@ End Sub
 Sub ThwOpt(Thw As eThwOpt, Fun$, Msg$, ParamArray Nap())
 Dim Nav(): Nav = Nap
 Select Case Thw
-Case eNoThwInfo: InfoNav Fun, Msg, Nav
-Case eNoThwNoInfo:
+Case eNoThwInf: InfNav Fun, Msg, Nav
+Case eNoThwNoInf:
 Case Else:   ThwNav Fun, Msg, Nav
 End Select
 End Sub
@@ -109,13 +109,13 @@ Sub Done()
 MsgBox "Done"
 End Sub
 Sub ThwPgmEr(Er$(), Fun$)
-If Sz(Er) = 0 Then Exit Sub
+If Si(Er) = 0 Then Exit Sub
 BrwAy AyAdd(Box("Programm Error"), Er)
 Halt
 End Sub
 Function NavAddNNAv(Nav(), NN$, Av()) As Variant()
 Dim O(): O = Nav
-If Sz(O) = 0 Then
+If Si(O) = 0 Then
     PushI O, NN
 Else
     O(0) = O(0) & " " & NN
@@ -127,12 +127,12 @@ Function NavAddNmV(Nav(), Nm$, V) As Variant()
 NavAddNmV = NavAddNNAv(Nav, Nm, Av(V))
 End Function
 Sub ThwErMsg(Er$(), Fun$, Msg$, ParamArray Nap())
-If Sz(Er) = 0 Then Exit Sub
+If Si(Er) = 0 Then Exit Sub
 Dim Nav(): Nav = Nap
 ThwNav Fun, Msg, NavAddNmV(Nav, "Er", Er)
 End Sub
 Sub ThwEr(Er$(), Fun$)
-If Sz(Er) = 0 Then Exit Sub
+If Si(Er) = 0 Then Exit Sub
 ThwNav Fun, "There is error", Av("Er", Er)
 End Sub
 Sub ThwLoopingTooMuch(Fun$)
@@ -165,7 +165,12 @@ For J = 0 To UB(Ay)
     Debug.Print J; ": "; Ay(J)
 Next
 End Sub
-
+Sub DmpAscSq()
+Dmp FmtAscSq
+End Sub
+Function FmtAscSq() As String()
+FmtAscSq = FmtSq(AscSqNoNonPrt)
+End Function
 Sub DmpAsc(S)
 Dim J&, C$
 Debug.Print "Len=" & Len(S)
@@ -174,6 +179,23 @@ For J = 1 To Len(S)
     Debug.Print J, Asc(C), C
 Next
 End Sub
+Function RRCCzSq(Sq()) As RRCC
+Set RRCCzSq = New RRCC
+With RRCCzSq
+    .R1 = LBound(Sq, 1)
+    .R2 = UBound(Sq, 1)
+    .C1 = LBound(Sq, 2)
+    .C2 = UBound(Sq, 2)
+End With
+End Function
+Function FmtSq(Sq(), Optional SepChr$ = " ") As String()
+With RRCCzSq(Sq)
+Dim I%
+For I = .R1 To .R2
+    PushI FmtSq, Jn(DrzSqr(Sq, I), SepChr)
+Next
+End With
+End Function
 Sub DmpAy(Ay)
 Dim J&
 For J = 0 To UB(Ay)
@@ -181,14 +203,15 @@ For J = 0 To UB(Ay)
 Next
 End Sub
 
-Sub InfoLin(Fun$, Msg$, ParamArray Nap())
+Sub InfLin(Fun$, Msg$, ParamArray Nap())
 Dim Nav(): Nav = Nap
 D LinzFunMsgNav(Fun, Msg, Nav)
 End Sub
-Sub InfoNav(Fun$, Msg$, Nav())
+Sub InfNav(Fun$, Msg$, Nav())
 D LyzFunMsgNav(Fun, Msg, Nav)
 End Sub
-Sub Info(Fun$, Msg$, ParamArray Nap())
+Sub Inf(Fun$, Msg$, ParamArray Nap())
+If Not ShwInf Then Exit Sub
 Dim Nav(): Nav = Nap
 D LyzFunMsgNav(Fun, Msg, Nav)
 End Sub
@@ -203,7 +226,7 @@ Dim Nav(): Nav = Nap
 D LyzFunMsgNav(Fun, Msg, Nav)
 End Sub
 
-Private Sub Z_InfoObjPP()
+Private Sub Z_InfObjPP()
 Dim Fun$, Msg$, Obj, PP$
 Fun = "XXX"
 Msg = "MsgABC"
@@ -212,7 +235,7 @@ PP = "Name Type Size"
 GoSub Tst
 Exit Sub
 Tst:
-    InfoObjPP Fun, Msg, Obj, PP
+    InfObjPP Fun, Msg, Obj, PP
 End Sub
 
 Private Sub ZZ()
@@ -225,7 +248,7 @@ Dim XX
 End Sub
 
 Sub StopEr(Er$())
-If Sz(Er) = 0 Then Exit Sub
+If Si(Er) = 0 Then Exit Sub
 BrwAy Er
 Stop
 End Sub

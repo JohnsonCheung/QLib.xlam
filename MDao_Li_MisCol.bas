@@ -1,8 +1,8 @@
 Attribute VB_Name = "MDao_Li_MisCol"
 Option Explicit
 Function MisCol(A As LiPm, B As LiAct) As LiMisCol()
-PushObjAy MisCol, MisColFx(A.Fx, B.Fx)
-PushObjAy MisCol, MisColFb(A.Fb, B.Fb)
+PushObjzAy MisCol, MisColFx(A.Fx, B.Fx)
+PushObjzAy MisCol, MisColFb(A.Fb, B.Fb)
 End Function
 
 Private Function MisColFx(A() As LiFx, B() As LiActFx) As LiMisCol()

@@ -16,7 +16,7 @@ Dim DifSz As Boolean
 Dim SamSz As Boolean
 Dim DifFt As Boolean
 Dim Rs As Dao.Recordset
-    Q = FmtQQ("Select SpecNm,Ft,Lines,Tim,Sz,LTimStr_Dte from Spec where SpecNm = '?'", Spnm)
+    Q = FmtQQ("Select SpecNm,Ft,Lines,Tim,Si,LTimStr_Dte from Spec where SpecNm = '?'", Spnm)
     Set Rs = A.OpenRecordset(Q)
     NoCur = Not HasFfn(Ft)
     'NoLas = HasRec(Rs)
@@ -28,7 +28,7 @@ Dim Rs As Dao.Recordset
     CurT = TimFfn(Ft)
     If Not NoLas Then
         With Rs
-            LasS = Nz(Rs!Sz, -1)
+            LasS = Nz(Rs!Si, -1)
             LasT = Nz(!Tim, 0)
             LasFt = Nz(!Ft, "")
 '            LdTimStr_Dte = DteTimStr(!LTimStr_Dte)
@@ -51,7 +51,7 @@ Const SamTimSz___$ = "Sam tim & sz."
 Const SamTimDifSz$ = "Sam tim & sz. (Odd!)"
 Const CurIsOld___$ = "Cur is old."
 Const CurIsNew__$ = "Cur is new."
-Const C$ = "|[SpecNm] [Db] [Cur-Ft] [Las-Ft] [Cur-Tim] [Las-Tim] [Cur-Sz] [Las-Sz] [Imported-Time]."
+Const C$ = "|[SpecNm] [Db] [Cur-Ft] [Las-Ft] [Cur-Tim] [Las-Tim] [Cur-Si] [Las-Si] [Imported-Time]."
 
 Dim Dr()
 Dr = Array(Spnm, Ft, FtLines(Ft), CurT, CurS, Now)

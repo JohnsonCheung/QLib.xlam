@@ -6,7 +6,7 @@ If HasStdPk(A, T) Then Exit Function
 If HasPk(A, T) Then
     Dim Pk$(): Pk = PkFny(A, T)
     Select Case True
-    Case Sz(Pk) <> 1: ChkPk = FmtQQ("There is PrimaryKey-Idx, but it has [?] fields[?]", Sz(Pk), TLin(Pk))
+    Case Si(Pk) <> 1: ChkPk = FmtQQ("There is PrimaryKey-Idx, but it has [?] fields[?]", Si(Pk), TLin(Pk))
     Case Pk(0) <> T & "Id": ChkPk = FmtQQ("There is One-field-PrimaryKey-Idx of FldNm(?), but it should named as ?Id", Pk(0), T)
     Case FdzTF(A, T, 0).Name <> T & "Id": ChkPk = FmtQQ("The Pk-field(?Id) should be first fields, but now it is (?)", T, FdzTF(A, T, T & "Id").OrdinalPosition)
     End Select
@@ -17,7 +17,7 @@ End Function
 Function ChkSsk$(A As Database, T)
 Dim O$, Sk$(): Sk = SkFny(A, T)
 O = ChkSk(A, T): If O <> "" Then ChkSsk = O: Exit Function
-If Sz(Sk) <> 1 Then
+If Si(Sk) <> 1 Then
     ChkSsk = FmtQQ("Secondary is not single field. Tbl[?] Db[?] SkFfn[?]", T, DbNm(A), JnTermAy(Sk))
 End If
 End Function

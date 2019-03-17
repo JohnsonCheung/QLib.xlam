@@ -227,7 +227,7 @@ End Function
 
 Private Function PopXXXOpt$(A$(), XXX$)
 'Return No-Q-T1-of-LasEle-of-A$() if No-Q-T1-of it = XXX else return ''
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 PopXXXOpt = PopXXX(A, XXX)
 End Function
 
@@ -260,7 +260,7 @@ End Function
 
 Private Function PopMulXorYOpt(A$(), X$, Y$) As String()
 Dim J%, L$
-While Sz(A) > 0
+While Si(A) > 0
     J = J + 1: If J > 1000 Then Stop
     L = PopXorYOpt(A, X, Y)
     If L = "" Then Exit Function
@@ -270,7 +270,7 @@ End Function
 
 Private Function PopMulXXX(A$(), XXX$) As String()
 Dim J%
-While Sz(A) > 0
+While Si(A) > 0
     J = J + 1: If J > 1000 Then Stop
     If Not IsXXX(A, XXX) Then Exit Function
     PushObj PopMulXXX, Pop(A)

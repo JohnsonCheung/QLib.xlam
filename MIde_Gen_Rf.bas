@@ -6,12 +6,12 @@ Property Get RffAy() As String()
 RffAy = RffAyPj(CurPj)
 End Property
 
-Property Get FmtRf() As String()
-FmtRf = FmtAy3T(RfLy)
+Property Get FmtRfPj() As String()
+FmtRfPj = FmtAy3T(RfLyPj)
 End Property
 
-Property Get RfLy() As String()
-RfLy = RfSrc(CurPj)
+Property Get RfLyPj() As String()
+RfLyPj = RfSrczPj(CurPj)
 End Property
 
 Function RfNyPj(A As VBProject) As String()
@@ -24,10 +24,6 @@ End Property
 Function CvRf(A) As VBIDE.Reference
 Set CvRf = A
 End Function
-
-Sub AddRfzAy(Pj As VBProject, RffAy$())
-
-End Sub
 
 Sub CpyPjRfToPj(Pj As VBProject, ToPj As VBProject)
 AddRfzAy ToPj, RffAyPj(Pj)
@@ -48,7 +44,7 @@ HasRff = HasItrPEv(A.References, "FullPath", Rff)
 End Function
 
 Sub BrwRf()
-BrwAy FmtRf
+BrwAy FmtRfPj
 End Sub
 
 Function RffAyPj(A As VBProject) As String()

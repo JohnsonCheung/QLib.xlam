@@ -16,7 +16,7 @@ Set Drs = O.Init(NyzNN(FF), Dry)
 End Function
 
 Function DrsAddCol(A As Drs, ColNm$, ConstVal) As Drs
-Set DrsAddCol = Drs(AyAddItm(A.Fny, ColNm), AddColzDryC(A.Dry, ConstVal))
+Set DrsAddCol = Drs(AyAddItm(A.Fny, ColNm), DryAddColzC(A.Dry, ConstVal))
 End Function
 
 Function DrsAddIxCol(A As Drs, HidIxCol As Boolean) As Drs
@@ -51,7 +51,7 @@ Ix = IxzAy(A.Fny, C): If Ix = -1 Then Stop
 O = Into
 Erase O
 Dry = A.Dry
-If Sz(Dry) = 0 Then IntoDrsC = O: Exit Function
+If Si(Dry) = 0 Then IntoDrsC = O: Exit Function
 For Each Dr In Dry
     Push O, Dr(Ix)
 Next
@@ -87,7 +87,7 @@ Set DtDrsDtnm = Dt(DtNm, A.Fny, A.Dry)
 End Function
 
 Function DrsInsCV(A As Drs, C$, V) As Drs
-Set DrsInsCV = Drs(AyInsItm(A.Fny, C), InsColzDryV(A.Dry, V, IxzAy(A.Fny, C)))
+Set DrsInsCV = Drs(AyInsItm(A.Fny, C), DryInsColzV(A.Dry, V, IxzAy(A.Fny, C)))
 End Function
 
 Function DrsInsCVAft(A As Drs, C$, V, AftFldNm$) As Drs
@@ -106,7 +106,7 @@ If IsAft Then
     Ix = Ix + 1
 End If
 Fny1 = AyInsItm(Fny, FldNm, CLng(Ix))
-Dry = InsColzDryV(A.Dry, V, Ix)
+Dry = DryInsColzV(A.Dry, V, Ix)
 Set DrsInsCVIsAftFld = Drs(Fny1, Dry)
 End Function
 
@@ -152,11 +152,11 @@ Function CntDiczDrs(A As Drs, C$) As Dictionary
 Set CntDiczDrs = CntDic(ColzDrs(A, C))
 End Function
 Function NColzDrs%(A As Drs)
-NColzDrs = Max(Sz(A.Fny), NColzDry(A.Dry))
+NColzDrs = Max(Si(A.Fny), NColzDry(A.Dry))
 End Function
 
 Function NRowDrs&(A As Drs)
-NRowDrs = Sz(A.Dry)
+NRowDrs = Si(A.Dry)
 End Function
 
 Function DrwIxAy(Dr, IxAy)
@@ -189,17 +189,17 @@ Function SqzDrs(A As Drs) As Variant()
 Dim NC&, NR&, Dry(), Fny$()
     Fny = A.Fny
     Dry = A.Dry
-    NC = Max(NColzDry(Dry), Sz(Fny))
-    NR = Sz(Dry)
+    NC = Max(NColzDry(Dry), Si(Fny))
+    NR = Si(Dry)
 Dim O()
 ReDim O(1 To 1 + NR, 1 To NC)
 Dim C&, R&, Dr
-    For C = 1 To Sz(Fny)
+    For C = 1 To Si(Fny)
         O(1, C) = Fny(C - 1)
     Next
     For R = 1 To NR
         Dr = Dry(R - 1)
-        For C = 1 To Min(Sz(Dr), NC)
+        For C = 1 To Min(Si(Dr), NC)
             O(R + 1, C) = Dr(C - 1)
         Next
     Next
@@ -208,9 +208,6 @@ End Function
 
 Function SyDrsC(A As Drs, ColNm) As String()
 SyDrsC = IntoDrsC(EmpSy, A, ColNm)
-End Function
-Function PrpNy(PP) As String()
-PrpNy = NyzNN(PP) 'Stop '
 End Function
 
 Sub PushDrs(O As Drs, A As Drs)
@@ -276,7 +273,7 @@ End Sub
 Function DrsAddCC(A As Drs, FF, C1, C2) As Drs
 Dim Fny$(), Dry()
 Fny = AyAdd(A.Fny, NyzNN(FF))
-Dry = AddColzDryCC(A.Dry, C1, C2)
+Dry = DryAddColzCC(A.Dry, C1, C2)
 Set DrsAddCC = Drs(Fny, Dry)
 End Function
 

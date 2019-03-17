@@ -11,7 +11,7 @@ End Function
 
 Private Function RowIxAyzDupzDrs(A As Drs, FF) As Long()
 Dim Fny$(): Fny = NyzNN(FF)
-If Sz(Fny) = 1 Then
+If Si(Fny) = 1 Then
     RowIxAyzDupzDrs = IxAyzDup(ColzDrs(A, Fny(0)))
     Exit Function
 End If
@@ -27,11 +27,11 @@ For Each Dr In Dry
     If HasDr(DupD, Dr) Then PushI O, Ix
     Ix = Ix + 1
 Next
-If Sz(O) < Sz(DupD) * 2 Then Stop
+If Si(O) < Si(DupD) * 2 Then Stop
 RowIxAyzDupzDry = O
 End Function
 Private Function DryzDup(Dry()) As Variant()
-If Sz(Dry) = 0 Then Exit Function
+If Si(Dry) = 0 Then Exit Function
 Dim Dr
 For Each Dr In GpCntDry(Dry)
     If Dr(0) > 1 Then
@@ -50,9 +50,9 @@ Private Function GpCntDryzQuick(Dry()) As Variant()
 End Function
 
 Private Function GpCntDryzSlow(Dry()) As Variant()
-If Sz(Dry) = 0 Then Exit Function
+If Si(Dry) = 0 Then Exit Function
 Dim OKeyDry(), OCnt&(), Dr
-    Dim LasIx&: LasIx = Sz(Dry(0))
+    Dim LasIx&: LasIx = Si(Dry(0))
     Dim J&
     For Each Dr In Dry
         If J Mod 50 = 0 Then Debug.Print J;
@@ -65,7 +65,7 @@ Dim OKeyDry(), OCnt&(), Dr
             End Select
         End With
     Next
-    If Sz(OKeyDry) <> Sz(OCnt) Then Thw CSub, "Sz Diff", "OKeyDry-Sz OCnt-Sz", Sz(OKeyDry), Sz(OCnt)
+    If Si(OKeyDry) <> Si(OCnt) Then Thw CSub, "Si Diff", "OKeyDry-Si OCnt-Si", Si(OKeyDry), Si(OCnt)
 For J = 0 To UB(OCnt)
     PushI GpCntDryzSlow, AyAdd(Array(OCnt(J)), OKeyDry(J)) '<===========
 Next

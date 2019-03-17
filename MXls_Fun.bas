@@ -26,8 +26,8 @@ End Sub
 
 Function AyabWs(A, B, Optional N1$ = "Ay1", Optional N2$ = "Ay2", Optional LoNm$ = "AyAB") As Worksheet
 Dim N&, AtA1 As Range, R As Range
-N = Sz(A)
-If N <> Sz(B) Then Stop
+N = Si(A)
+If N <> Si(B) Then Stop
 Set AtA1 = NewA1
 
 PutAyRowAt Array(N1, N2), AtA1

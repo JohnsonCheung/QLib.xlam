@@ -4,25 +4,25 @@ Option Explicit
 Private Sub Z_MthRetTy()
 'Dim MthLin$
 'Dim A$:
-'MthLin = "Function MthPm(MthPmStr$) As MthPm"
+'MthLin = "Function MthPm(MthPm$) As MthPm"
 'A = MthRetTy(MthLin)
 'Ass A.TyAsNm = "MthPm"
 'Ass A.IsAy = False
 'Ass A.TyChr = ""
 '
-'MthLin = "Function MthPm(MthPmStr$) As MthPm()"
+'MthLin = "Function MthPm(MthPm$) As MthPm()"
 'A = MthRetTy(MthLin)
 'Ass A.TyAsNm = "MthPm"
 'Ass A.IsAy = True
 'Ass A.TyChr = ""
 '
-'MthLin = "Function MthPm$(MthPmStr$)"
+'MthLin = "Function MthPm$(MthPm$)"
 'A = MthRetTy(MthLin)
 'Ass A.TyAsNm = ""
 'Ass A.IsAy = False
 'Ass A.TyChr = "$"
 '
-'MthLin = "Function MthPm(MthPmStr$)"
+'MthLin = "Function MthPm(MthPm$)"
 'A = MthRetTy(MthLin)
 'Ass A.TyAsNm = ""
 'Ass A.IsAy = False
@@ -36,5 +36,5 @@ Function MthRetTy$(Lin)
 If IsMthLin(Lin) Then MthRetTy = TakMthRetTy(Lin)
 End Function
 Function TakMthRetTy$(MthLin)
-TakMthRetTy = TakBefOrAll(TakAftBkt(MthLin), "'")
+TakMthRetTy = StrBefOrAll(StrAftBkt(MthLin), "'")
 End Function

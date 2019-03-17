@@ -36,7 +36,7 @@ End Function
 
 Function AyInsAyAt(A, B, At&)
 Dim O, NB&, J&
-NB = Sz(B)
+NB = Si(B)
 O = AyRgzResz(A, At, NB)
 For J = 0 To NB - 1
     Asg B(J), O(At + J)

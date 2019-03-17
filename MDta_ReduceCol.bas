@@ -7,7 +7,7 @@ End Type
 
 Function ReduceCol(A As Drs) As ReduceCol
 Dim Dry(): Dry = A.Dry
-If Sz(Dry) = 0 Then Set ReduceCol.Drs = A:        Exit Function
+If Si(Dry) = 0 Then Set ReduceCol.Drs = A:        Exit Function
 Dim F$(): F = FnyzReducibleCol(A)
 Dim Vy: Vy = DrzDrs(A, F)
 Set ReduceCol.ReduceColDic = DiczKyVy(F, Vy)

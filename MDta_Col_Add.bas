@@ -12,11 +12,11 @@ Private Function DryAddColzColVy(Dry(), ColVy, AtIx&) As Variant()
 Dim Dr, J&, O(), U&
 U = UB(ColVy)
 If U = -1 Then Exit Function
-If U <> UB(Dry) Then Thw CSub, "Row-in-Dry <> Sz-ColVy", "Row-in-Dry Sz-ColVy", Sz(Dry), Sz(ColVy)
+If U <> UB(Dry) Then Thw CSub, "Row-in-Dry <> Si-ColVy", "Row-in-Dry Si-ColVy", Si(Dry), Si(ColVy)
 ReDim O(U)
 
 For Each Dr In Itr(Dry)
-    If Sz(Dr) > AtIx Then Thw CSub, "Some Dr in Dry has bigger size than AtIx", "DrSz AtIx", Sz(Dr), AtIx
+    If Si(Dr) > AtIx Then Thw CSub, "Some Dr in Dry has bigger size than AtIx", "DrSz AtIx", Si(Dr), AtIx
     ReDim Preserve Dr(AtIx)
     Dr(AtIx) = ColVy(J)
     O(J) = Dr
@@ -29,9 +29,9 @@ Function DrsAddColzMap(A As Drs, NewFldEqFunQuoteFmFldSsl$) As Drs
 Dim NewColVy(), FmVy()
 Dim I, NewFld$, Fun$, FmFld$
 For Each I In SySsl(NewFldEqFunQuoteFmFldSsl)
-    NewFld = TakBef(I, "=")
-    Fun = TakBet(I, "=", "(")
-    FmFld = TakBetBkt(I)
+    NewFld = StrBef(I, "=")
+    Fun = StrBet(I, "=", "(")
+    FmFld = StrBetBkt(I)
     FmVy = ColzDrs(A, FmFld)
     NewColVy = AyMap(FmVy, Fun)
     Stop '

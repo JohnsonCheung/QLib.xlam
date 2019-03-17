@@ -17,11 +17,11 @@ End Sub
 Sub AddRfzRff(A As VBProject, Rff)
 Const CSub$ = CMod & "AddRf"
 If HasRff(A, Rff) Then
-    InfoLin CSub, "Rff exists in Pj", "Rff Pj", Rff, A.Name
+    InfLin CSub, "Rff exists in Pj", "Rff Pj", Rff, A.Name
     Exit Sub
 End If
 A.References.AddFromFile Rff
-InfoLin CSub, "Rff is added to Pj", "Rff Pj", Rff, A.Name
+InfLin CSub, "Rff is added to Pj", "Rff Pj", Rff, A.Name
 End Sub
 
 Sub AddRfzAy(A As VBProject, RffAy$())

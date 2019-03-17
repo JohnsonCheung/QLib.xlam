@@ -44,7 +44,7 @@ End Function
 
 Property Get VbKwAy() As String()
 Static X$()
-If Sz(X) = 0 Then
+If Si(X) = 0 Then
     X = SySsl("Function Sub Then If As For To Each End While Wend Loop Do Static Dim Option Explicit Compare Text")
 End If
 VbKwAy = X

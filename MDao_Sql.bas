@@ -1,6 +1,7 @@
 Attribute VB_Name = "MDao_Sql"
 Option Explicit
 Const CMod$ = "MSql."
+Const ™NN$ = "It a Str or Sy will give Ny.  See NyzNN"
 Const KwBet$ = "between"
 Const KwUpd$ = "update"
 Const KwInto$ = "into"
@@ -133,7 +134,7 @@ WdtzLinesAy = O
 End Function
 
 Function LinesFmtAyL(LinesAy$()) As String()
-If Sz(LinesAy) = 0 Then Exit Function
+If Si(LinesAy) = 0 Then Exit Function
 Dim W%: W = WdtzLinesAy(LinesAy)
 Dim O$()
 ReDim O(UB(LinesAy))
@@ -211,7 +212,7 @@ Function SqpSet_FF_Ey$(FF, Ey$())
 Const CSub$ = CMod & "SqpSet_FF_Ey"
 Dim Fny$(): Fny = SySsl(FF)
 Ass IsVblAy(Ey)
-If Sz(Fny) <> Sz(Ey) Then Thw CSub, "[FF-Sz} <> [Sz-Ey], where [FF],[Ey]", Sz(Fny), Sz(Ey), FF, Ey
+If Si(Fny) <> Si(Ey) Then Thw CSub, "[FF-Sz} <> [Si-Ey], where [FF],[Ey]", Si(Fny), Si(Ey), FF, Ey
 Dim AFny$()
     AFny = FmtAyAlign(Fny)
     AFny = AyAddSfx(AFny, " = ")
@@ -416,7 +417,7 @@ End Function
 
 Function NyzNNDft(NN, DftFny$()) As String()
 Dim O$(): O = NyzNN(NN)
-If Sz(O) = 0 Then
+If Si(O) = 0 Then
     NyzNNDft = DftFny
 Else
     NyzNNDft = O
@@ -530,7 +531,7 @@ SqlSel_FF_Fm_Ord = SqpSel_FF(FF) & SqpFm(T) & SqpOrd_FFMinus(OrdFFMinus)
 End Function
 
 Function SqlUpd_T_Sk_Fny_Dr$(T, Sk$(), Fny$(), Dr)
-If Sz(Sk) = 0 Then Stop
+If Si(Sk) = 0 Then Stop
 Dim SqpUpd_T$, Set_$, Wh$: GoSub X_SqpUpd_T_Set_Wh
 'UpdSql = SqpUpd_T & Set_ & Wh
 Exit Function

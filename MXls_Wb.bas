@@ -89,7 +89,7 @@ End Function
 Function OleWcAy(A As Workbook) As OLEDBConnection()
 Dim O() As OLEDBConnection, Wc As WorkbookConnection
 For Each Wc In A.Connections
-    PushObjExlNothing O, Wc.OLEDBConnection
+    PushObjzExlNothing O, Wc.OLEDBConnection
 Next
 OleWcAy = OyeNothing(IntozItrPrp(A.Connections, "OLEDBConnection", OleWcAy))
 End Function
@@ -166,7 +166,7 @@ Sub ThwWbMisOupNy(A As Workbook, OupNy$())
 Dim O$(), N$, B$(), Wny$()
 Wny = WsCdNy(A)
 O = AyMinus(AyAddPfx(OupNy, "WsO"), Wny)
-If Sz(O) > 0 Then
+If Si(O) > 0 Then
     N = "OupNy":  B = OupNy:  GoSub Dmp
     N = "WbCdNy": B = Wny: GoSub Dmp
     N = "Mssing": B = O:      GoSub Dmp
@@ -283,7 +283,6 @@ TxtCnzWc B
 FstWs C
 FxWb C
 LasWs C
-LozWb C, D
 MainWs C
 Wbs C
 TxtWc C

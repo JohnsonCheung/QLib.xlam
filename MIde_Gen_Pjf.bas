@@ -1,21 +1,33 @@
 Attribute VB_Name = "MIde_Gen_Pjf"
 Option Explicit
-Function DistPth$(SrcPth)
-ThwNotSrcPth SrcPth
-DistPth = PthEns(SiblingPth(SrcPth, "Dist"))
+Const TermzSrcRoot$ = "It a Pth with Fdr eq '.src'"
+Const ™Srcp$ = "Src-Pth:Src.p. It a Pth with Fdr is PjFn and ParFdr is SrcRoot"
+Const ™DistRoot$ = "It a Pth with Fdr eq '.dist'"
+Const ™DistPth$ = "It an InstPth with Fdr is InstPth and ParFdr is DistRoot"
+Const ™PthInst$ = "It a InstFdr of under a given Pth"
+Const ™InstPth$ = "It a Pth with Fdr is InstNm"
+Function SrcRoot$(Srcp)
+SrcRoot = ParPth(Srcp)
+End Function
+Function DistPth$(Srcp)
+DistPth = AddFdrEns(PthUp(Srcp, 2), ".dist", Fdr(Srcp))
 End Function
 
-Function DistFba$(SrcPth)
-DistFba = DistPth(SrcPth) & FbaFnzSrcPth(SrcPth)
+Function DistFba$(Srcp)
+DistFba = DistPth(Srcp) & RplExt(Fdr(Srcp), ".accdb")
 End Function
 
-Function DistFxa$(SrcPth)
-DistFxa = DistPth(SrcPth) & FxaFnzSrcPth(SrcPth)
+Function DistFxa$(Srcp)
+DistFxa = DistPth(Srcp) & RplExt(Fdr(Srcp), ".xlam")
+End Function
+
+Function DistFxazNxt$(Srcp)
+DistFxazNxt = NxtFfn(DistFxa(Srcp))
 End Function
 
 Private Sub Z_DistPjf()
 Dim Pth
-For Each Pth In SrcPthAyzExpgzInst
+For Each Pth In SrcpAyzExpgzInst
     Debug.Print Pth
     Debug.Print DistFba(Pth)
     Debug.Print DistFxa(Pth)
@@ -23,37 +35,3 @@ For Each Pth In SrcPthAyzExpgzInst
 Next
 End Sub
 
-Private Function PjFnzSrcPth$(SrcPth)
-Dim R$: R$ = SrcRoot(SrcPth): If R = "" Then Exit Function
-PjFnzSrcPth = RmvExt(Fdr(R))
-End Function
-
-Private Function FxaFnzSrcPth$(SrcPth)
-FxaFnzSrcPth = RplExt(PjFnzSrcPth(SrcPth), FxaExt)
-End Function
-
-Private Function SrcRoot$(SrcPth)
-Dim P$: P$ = ParPth(SrcPth)
-If IsSrcRoot(P) Then SrcRoot = P: Exit Function
-Dim F$: F$ = Fdr(P)
-If Not IsDteTimStr(F) Then Exit Function
-Dim P1$: P1$ = ParPth(P)
-If IsSrcRoot(P1) Then SrcRoot = P1
-End Function
-
-Private Function IsSrcRoot(Pth) As Boolean
-If Not IsPth(Pth) Then Exit Function
-Dim F$: F$ = Fdr(Pth)
-Select Case True
-Case Ext(F) <> ".Src", Not IsPjf(RmvExt(F))
-Case Else: IsSrcRoot = True
-End Select
-End Function
-
-Private Sub ThwNotSrcRoot(Pth)
-If Not IsSrcRoot(Pth) Then Err.Raise 1, , "Not SourceRoot(" & Pth & ")"
-End Sub
-
-Private Function FbaFnzSrcPth$(SrcPth)
-FbaFnzSrcPth = RplExt(PjFnzSrcPth(SrcPth), FbaExt)
-End Function

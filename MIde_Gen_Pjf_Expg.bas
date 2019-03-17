@@ -5,41 +5,41 @@ GenExpg
 End Sub
 
 Sub GenExpg()
-Dim Ay$(): Ay = SrcPthAyzExpgzInstzNoNonEmpDist
-If Sz(Ay) = 0 Then Exit Sub
-Dim SrcPth, Xls As Excel.Application, Acs As Access.Application
+Dim Ay$(): Ay = SrcpAyzExpgzInstzNoNonEmpDist
+If Si(Ay) = 0 Then Exit Sub
+Dim Srcp, Xls As Excel.Application, Acs As Access.Application
 Set Xls = NewXls: Set Acs = NewAcs
-For Each SrcPth In Itr(Ay)
+For Each Srcp In Itr(Ay)
     Stamp "GenExpg: Begin"
-    Stamp "GenExpg: SrcPth " & SrcPth
-    GenFxa SrcPth, Xls
-    GenFba SrcPth, Acs
+    Stamp "GenExpg: Srcp " & Srcp
+    DistFxazGen Srcp, Xls
+    GenFba Srcp, Acs
     Stamp "GenExpg: End"
 Next
 AcsQuit Acs
 XlsQuit Xls
 End Sub
 
-Function SrcPthAyzExpgzInst() As String()
+Function SrcpAyzExpgzInst() As String()
 Dim P
 For Each P In Itr(SubPthAyR(ExpgPth))
-    If IsSrcPthInst(P) Then
-        PushI SrcPthAyzExpgzInst, P
+    If IsSrcpInst(P) Then
+        PushI SrcpAyzExpgzInst, P
     End If
 Next
 End Function
-Private Sub Z_SrcPthAyzExpgzInstzNoNonEmpDist()
-DmpAy SrcPthAyzExpgzInstzNoNonEmpDist
+Private Sub Z_SrcpAyzExpgzInstzNoNonEmpDist()
+DmpAy SrcpAyzExpgzInstzNoNonEmpDist
 End Sub
-Private Sub Z_SrcPthAyzExpgzInst()
-DmpAy SrcPthAyzExpgzInst
+Private Sub Z_SrcpAyzExpgzInst()
+DmpAy SrcpAyzExpgzInst
 End Sub
-Function SrcPthAyzExpgzInstzNoNonEmpDist() As String()
+Function SrcpAyzExpgzInstzNoNonEmpDist() As String()
 Dim Pth, Dist$
-For Each Pth In Itr(SrcPthAyzExpgzInst)
+For Each Pth In Itr(SrcpAyzExpgzInst)
     Dist = SiblingPth(Pth, "Dist")
     Select Case True
-    Case Not IsPth(Dist), IsEmpPth(Dist): PushI SrcPthAyzExpgzInstzNoNonEmpDist, Pth
+    Case Not IsPth(Dist), IsEmpPth(Dist): PushI SrcpAyzExpgzInstzNoNonEmpDist, Pth
     End Select
 Next
 End Function

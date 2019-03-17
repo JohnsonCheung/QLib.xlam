@@ -53,7 +53,7 @@ Private Function SqyCrtSk(TdLy$()) As String()
 Dim TdLin, Sk$()
 For Each TdLin In Itr(TdLy)
     Sk = SkFny(TdLin)
-    If Sz(Sk) > 0 Then
+    If Si(Sk) > 0 Then
         PushI SqyCrtSk, SqlCrtSk_T_SkFF(T1(TdLin), AyRpl(Sk, "*", T1(TdLin)))
     End If
 Next
@@ -63,7 +63,7 @@ Private Function SkFny(TdLin) As String()
 Dim P%, T$, Rst$
 P = InStr(TdLin, "|")
 If P = 0 Then Exit Function
-AsgTRst TakBef(TdLin, "|"), T, Rst
+AsgTRst StrBef(TdLin, "|"), T, Rst
 Rst = Replace(Rst, T, "*")
 SkFny = SySsl(Rst)
 End Function

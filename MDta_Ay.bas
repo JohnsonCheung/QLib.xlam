@@ -10,7 +10,7 @@ Set AyDt = Dt(DtNm, FldNm, O)
 End Function
 
 Function GpCntDryzAy(A) As Variant()
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim Dup, O(), X, T&, Cnt&
 Dup = AywDist(A)
 For Each X In Itr(Dup)

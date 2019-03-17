@@ -146,7 +146,7 @@ Function LozRg(Rg As Range, Optional LoNm$) As ListObject
 Dim O As ListObject: Set O = WszRg(Rg).ListObjects.Add(xlSrcRange, Rg, , xlYes)
 BdrRgAround Rg
 Rg.EntireColumn.AutoFit
-Set LozRg = SetLoNm(O, LoNm)
+Set LozRg = LoSetNm(O, LoNm)
 End Function
 
 Sub MgeRg(A As Range)

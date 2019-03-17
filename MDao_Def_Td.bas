@@ -1,32 +1,34 @@
 Attribute VB_Name = "MDao_Def_Td"
 Option Explicit
+
 Function CvTd(A) As Dao.TableDef
 Set CvTd = A
 End Function
 
-Sub AppFdAy(A As Dao.TableDef, FdAy() As Field2)
+Function TdAppFdy(A As Dao.TableDef, Fdy() As Dao.Field2) As Dao.TableDef
 Dim I
-For Each I In FdAy
+For Each I In Fdy
     A.Fields.Append I
 Next
-End Sub
+Set TdAppFdy = A
+End Function
 
 Sub AddFldzId(A As Dao.TableDef)
 A.Fields.Append FdzId(A.Name)
 End Sub
 
 Sub AddFldzLng(A As Dao.TableDef, FF)
-AppFdAy A, FdAy(FF, dbLong)
+TdAppFdy A, Fdy(FF, dbLong)
 End Sub
 
-Sub AddFldzTimStmp(A As Dao.TableDef, F$)
+Sub AddFldzTimstmp(A As Dao.TableDef, F$)
 A.Fields.Append Fd(F, Dao.dbDate, Dft:="Now")
 End Sub
 
-Sub AddFldzTxt(A As Dao.TableDef, FF, Optional Req As Boolean, Optional Sz As Byte = 255)
+Sub AddFldzTxt(A As Dao.TableDef, FF, Optional Req As Boolean, Optional Si As Byte = 255)
 Dim F
 For Each F In NyzNN(FF)
-    A.Fields.Append Fd(F, dbText, Req, Sz)
+    A.Fields.Append Fd(F, dbText, Req, Si)
 Next
 End Sub
 
@@ -80,10 +82,10 @@ For Each F In A.Fields
 Next
 End Function
 
-Private Function FdAy(FF, T As Dao.DataTypeEnum) As Dao.Field2()
+Private Function Fdy(FF, T As Dao.DataTypeEnum) As Dao.Field2()
 Dim F
 For Each F In NyzNN(FF)
-    PushObj FdAy, Fd(F, T)
+    PushObj Fdy, Fd(F, T)
 Next
 End Function
 
@@ -96,10 +98,9 @@ Dim E As Boolean
 Dim F As Byte
 Dim G As Dao.TableDefAttributeEnum
 CvTd A
-AppFdAy B, C
 AddFldzId B
 AddFldzLng B, A
-AddFldzTimStmp B, D
+AddFldzTimstmp B, D
 AddFldzTxt B, A, E, F
 FnyzTd B
 IsEqTd B, B

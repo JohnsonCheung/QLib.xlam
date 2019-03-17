@@ -1,7 +1,7 @@
 Attribute VB_Name = "MVb_Ay_Map_Quote"
 Option Explicit
 Function AyQuote(A, QuoteStr$) As String()
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim U&: U = UB(A)
 Dim O$()
     ReDim O(U)

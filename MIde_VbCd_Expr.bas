@@ -75,7 +75,7 @@ While Len(S) > 0
     If Cur >= Las Then Stop
     Las = Cur
 Wend
-MsgBox Sz(O)
+MsgBox Si(O)
 Stop
 Brw O
 End Function

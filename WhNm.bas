@@ -17,8 +17,8 @@ IsEmp = X_IsEmp
 End Property
 Friend Function Init(Patn$, LikAy$(), ExlLikAy$()) As WhNm
 If Patn = "" Then
-    If Sz(LikAy) = 0 Then
-        If Sz(ExlLikAy) = 0 Then
+    If Si(LikAy) = 0 Then
+        If Si(ExlLikAy) = 0 Then
             X_IsEmp = True
             Set Init = Me
             Exit Function

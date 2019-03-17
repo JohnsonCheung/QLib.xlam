@@ -8,7 +8,7 @@ Dim L&
 L = LnozInsExit(A, PrpLno)
 If L = 0 Then Exit Sub
 A.InsertLines L, "Exit Property"
-Info CSub, "Exit Property is inserted", "Md PrpLno At", MdNm(A), PrpLno, L
+Inf CSub, "Exit Property is inserted", "Md PrpLno At", MdNm(A), PrpLno, L
 End Sub
 
 Private Sub EnsLinzLblX(A As CodeModule, PrpLno&)
@@ -24,10 +24,10 @@ If E <> ActLblXLin Then
         EndPrpLno = LnozEndPrp(A, PrpLno)
         If EndPrpLno = 0 Then Stop
         A.InsertLines EndPrpLno, E
-        Info CSub, "Inserted [at] with [line]", EndPrpLno, E
+        Inf CSub, "Inserted [at] with [line]", EndPrpLno, E
     Else
         A.ReplaceLine L, E
-        Info CSub, "Replaced [at] with [line]", L, E
+        Inf CSub, "Replaced [at] with [line]", L, E
     End If
 End If
 End Sub

@@ -27,8 +27,8 @@ Set SkIdx = Idx(A, T, C_SkNm)
 End Function
 
 Function SskFld$(Db As Database, T)
-Dim Sk$(): Sk = SkFny(Db, T): If Sz(Sk) = 1 Then SskFld = Sk(0): Exit Function
-Thw CSub, "SkFny-Sz<>1", "Db T, SkFny-Sz SkFny", DbNm(Db), T, Sz(Sk), Sk
+Dim Sk$(): Sk = SkFny(Db, T): If Si(Sk) = 1 Then SskFld = Sk(0): Exit Function
+Thw CSub, "SkFny-Sz<>1", "Db T, SkFny-Si SkFny", DbNm(Db), T, Si(Sk), Sk
 End Function
 
 Sub DltRecNotInSskv(Db As Database, SskTbl, NotInSSskv As Aset) _

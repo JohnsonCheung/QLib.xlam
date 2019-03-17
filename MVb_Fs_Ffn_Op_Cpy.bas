@@ -27,10 +27,10 @@ CpyFilzToFfn Ffn, O
 CpyFilzToNxt = O
 End Function
 
-Sub CpyFilzIfDif(FfnAy_or_Ffn, Pth$, Optional UseEq As Boolean)
+Sub CpyFilzIfDif(FfnAy_or_Ffn, ToPth$, Optional UseEq As Boolean)
 Dim I
 For Each I In ItrzStr(FfnAy_or_Ffn)
-    CpyFilzIfDifzSng I, Pth, UseEq
+    CpyFilzIfDifzSng I, ToPth, UseEq
 Next
 End Sub
 
@@ -64,9 +64,33 @@ Case Else
 End Select
 Exit Sub
 Prt:
-    Info CSub, Msg, "Fil FmPth ToPth IsDif HasToFfn Sz Tim", Fn(Ffn), Pth(Ffn), ToPth, IsDif, HasFfn(B), FfnSz(Ffn), FfnTimStr(Ffn)
+    Inf CSub, Msg, "Fil FmPth ToPth IsDif HasToFfn Si Tim", Fn(Ffn), Pth(Ffn), ToPth, IsDif, HasFfn(B), FfnSz(Ffn), FfnTimStr(Ffn)
     Return
 End Sub
+
+Function IsNxtFfn(Ffn) As Boolean
+Dim Las5$: Las5 = Right(Fn(Ffn), 5)
+Select Case True
+Case FstChr(Las5) <> "(", LasChr(Las5) <> ")", Not IsDigStr(Mid(Las5, 2, 3))
+Case Else: IsNxtFfn = True
+End Select
+End Function
+Function IsDigStr(S) As Boolean
+Dim J&
+For J = 1 To Len(S)
+    If Not IsAscDig(Asc(Mid(S, J, 1))) Then Exit Function
+Next
+IsDigStr = True
+End Function
+
+Function FfnzNxtFfn$(NxtFfn)
+If IsNxtFfn(NxtFfn) Then
+    Dim F$: F = Fn(NxtFfn)
+    FfnzNxtFfn = Pth(NxtFfn) & Left(F, Len(F) - 5) & Ext(NxtFfn)
+Else
+    FfnzNxtFfn = NxtFfn
+End If
+End Function
 
 Function NxtFfn$(Ffn)
 If Not HasFfn(Ffn) Then NxtFfn = Ffn: Exit Function

@@ -7,8 +7,8 @@ If MthDNm = "*Dcl" Then
     Nm = "*Dcl"
 Else
     Dim B$(): B = SplitDot(MthDNm)
-    If Sz(B) <> 3 Then
-        Thw CSub, "Given MthDNm SplitDot should be 3 elements", "NEle-SplitDot MthDNm", Sz(B), MthDNm
+    If Si(B) <> 3 Then
+        Thw CSub, "Given MthDNm SplitDot should be 3 elements", "NEle-SplitDot MthDNm", Si(B), MthDNm
     End If
     Dim ShtMdy$, ShtTy$
     AsgAp B, Nm, ShtTy, ShtMdy
@@ -25,7 +25,7 @@ End Function
 
 Function MthSrtKey$(MthDNm)
 If MthDNm = "*Dcl" Then MthSrtKey = "*Dcl": Exit Function
-Dim A$(): A = SplitDot(MthDNm): If Sz(A) <> 3 Then Thw CSub, "Invalid MthDNm, should have 2 dot", "MthDNm", MthDNm
+Dim A$(): A = SplitDot(MthDNm): If Si(A) <> 3 Then Thw CSub, "Invalid MthDNm, should have 2 dot", "MthDNm", MthDNm
 MthSrtKey = A(2) & "." & A(1) & "." & A(0)
 End Function
 
@@ -110,7 +110,7 @@ SrtzPj CurPj
 End Sub
 
 Private Sub SrtzPj(A As VBProject)
-Backup Pjf(A)
+FfnBackup Pjf(A)
 RplPj A, SrtedMdDic(A)
 End Sub
 
@@ -154,7 +154,7 @@ Ass:
         Debug.Print "Is Same of before and after sorting ......"
         Return
     End If
-    If Sz(AftSrt) <> 0 Then
+    If Si(AftSrt) <> 0 Then
         If LasEle(AftSrt) = "" Then
             Dim Pfx
             Pfx = Array("There is non-blank-line at end after sorting", "Md=[" & MdNm(Md) & "=====")
@@ -166,14 +166,14 @@ Ass:
     A = AyMinus(BefSrt, AftSrt)
     B = AyMinus(AftSrt, BefSrt)
     Debug.Print
-    If Sz(A) = 0 And Sz(B) = 0 Then Return
-    If Sz(AyeEmpEle(A)) <> 0 Then
-        Debug.Print "Sz(A)=" & Sz(A)
+    If Si(A) = 0 And Si(B) = 0 Then Return
+    If Si(AyeEmpEle(A)) <> 0 Then
+        Debug.Print "Si(A)=" & Si(A)
         BrwAy A
         Stop
     End If
-    If Sz(AyeEmpEle(B)) <> 0 Then
-        Debug.Print "Sz(B)=" & Sz(B)
+    If Si(AyeEmpEle(B)) <> 0 Then
+        Debug.Print "Si(B)=" & Si(B)
         BrwAy B
         Stop
     End If

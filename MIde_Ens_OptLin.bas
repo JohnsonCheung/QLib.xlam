@@ -61,7 +61,7 @@ Const CSub$ = CMod & "EnsOptLin"
 If A.CountOfLines = 0 Then Exit Sub
 If OptLno(A, OptLin) > 0 Then Exit Sub
 A.InsertLines 1, OptLin
-InfoLin CSub, "[" & OptLin & "] is Inserted", "Md", MdNm(A)
+InfLin CSub, "[" & OptLin & "] is Inserted", "Md", MdNm(A)
 End Sub
 
 Private Sub RmvOptLin(A As CodeModule, OptLin$)
@@ -69,5 +69,5 @@ Const CSub$ = CMod & "RmvOptLin"
 Dim I%: I = OptLno(A, OptLin)
 If I = 0 Then Exit Sub
 A.DeleteLines I
-Info CSub, "[" & OptLin & "] line is deleted", "Md Lno", MdNm(A), I
+Inf CSub, "[" & OptLin & "] line is deleted", "Md Lno", MdNm(A), I
 End Sub

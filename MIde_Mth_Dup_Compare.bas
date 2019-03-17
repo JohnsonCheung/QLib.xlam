@@ -10,7 +10,7 @@ Function FmtCmpFun(FunNm, Optional InclSam As Boolean) As String()
 Dim O$()
 Dim N$(): ' N = FunFNmAy(FunNm)
 'DupMthFNy_ShwNotDupMsg N, FunNm
-If Sz(N) <= 1 Then Exit Function
+If Si(N) <= 1 Then Exit Function
 FmtCmpFun = FmtCmpDic(N, InclSam:=InclSam)
 End Function
 
@@ -31,7 +31,7 @@ Dim UniqLinesAy$()
 '    LinesAy = SyzAyMap(A, "FunFNm_MthLines")
     UniqLinesAy = AywDist(LinesAy)
 Dim MthNm$: MthNm = Brk(A(0), ":").S1
-Dim Hdr$(): Hdr = FmtCmpDic__1Hdr(OIx, MthNm, Sz(A))
+Dim Hdr$(): Hdr = FmtCmpDic__1Hdr(OIx, MthNm, Si(A))
 Dim Sam$(): Sam = FmtCmpDic__2Sam(InclSam, OSam, A, LinesAy)
 Dim Syn$(): Syn = FmtCmpDic__3Syn(UniqLinesAy, LinesAy, A)
 Dim Cmp$(): Cmp = FmtCmpDic__4Cmp(UniqLinesAy, LinesAy, A)
@@ -79,7 +79,7 @@ FmtCmpDic__2Sam1 = AyAddAp(A1, A2, A3)
 End Function
 
 Private Function FmtCmpDic__3Syn(UniqLinesAy$(), LinesAy$(), FunFNyGp) As String()
-If Sz(UniqLinesAy) <= 1 Then Exit Function
+If Si(UniqLinesAy) <= 1 Then Exit Function
 Dim B$()
     Dim J%, I%
     Dim Lines
@@ -95,7 +95,7 @@ Dim B$()
 End Function
 
 Private Function FmtCmpDic__4Cmp(UniqLinesAy$(), LinesAy$(), FunFNyGp) As String()
-If Sz(UniqLinesAy) <= 1 Then Exit Function
+If Si(UniqLinesAy) <= 1 Then Exit Function
 Dim L2$() ' = From L1 with each element with MdDNm added in front
     ReDim L2(UB(UniqLinesAy))
     Dim Fnd As Boolean, DNm$, J%, Lines$, I%
@@ -118,7 +118,7 @@ End Function
 
 Function MthNmCmpFmt(A, Optional InclSam As Boolean) As String()
 Dim N$(): ' N = MthNm_DupMthFNy(A)
-If Sz(N) > 1 Then
+If Si(N) > 1 Then
     MthNmCmpFmt = FmtCmpDic(N, InclSam:=InclSam)
 End If
 End Function
@@ -129,7 +129,7 @@ Stop
 Dim N$(): 'N = VbeDupMthFNm(A, B)
 Dim Ay(): 'Ay = DupMthFNy_GpAy(N)
 Dim O$(), J%
-'Push O, FmtQQ("Total ? dup function.  ? of them has mth-lines are same", Sz(Ay), DupMthFNyGpAyAllSameCnt(Ay))
+'Push O, FmtQQ("Total ? dup function.  ? of them has mth-lines are same", Si(Ay), DupMthFNyGpAyAllSameCnt(Ay))
 Dim Cnt%, Sam%
 For J = 0 To UB(Ay)
     PushAy O, FmtCmpDic(Ay(J), Cnt, Sam, InclSam:=InclSam)

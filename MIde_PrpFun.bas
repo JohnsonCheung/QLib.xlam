@@ -1,6 +1,6 @@
 Attribute VB_Name = "MIde_PrpFun"
 Option Explicit
-Dim Info$()
+Dim Inf$()
 Function IsPrpFunLin(Lin) As Boolean
 Dim L$, B$
 L = RmvMdy(Lin)
@@ -28,11 +28,11 @@ End Sub
 
 Sub EnsPrpFunPj(Pj As VBProject, Optional WhatIf As Boolean)
 Dim I
-Erase Info
+Erase Inf
 'For Each I In MdItr(Pj)
 '    EnsPjFunMd CvMd(I), WhatIf
 'Next
-Brw Info
+Brw Inf
 End Sub
 
 Sub EnsPrpFun()
@@ -45,6 +45,6 @@ Dim NewLin$
     OldLin = A.Lines(Lno, 1)
     NewLin = Replace(A.Lines(Lno, 1), "Function", "Property Get")
 If Not WhatIf Then A.ReplaceLine Lno, NewLin
-PushI Info, "EnsPrpFun:EnsPrpFunMdLno NewLin: " & OldLin
-PushI Info, "                 OldLin: " & NewLin
+PushI Inf, "EnsPrpFun:EnsPrpFunMdLno NewLin: " & OldLin
+PushI Inf, "                 OldLin: " & NewLin
 End Sub

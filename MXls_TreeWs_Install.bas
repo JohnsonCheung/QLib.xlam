@@ -55,9 +55,9 @@ Set Md = MdzWs(A)
 Stop
 If Md.CountOfLines = 0 Then
     Md.AddFromString TreeWsMdLines
-    InfoLin CSub, "TreeWs in Wb is installed with code", "Wb", WbNmzWs(A)
+    InfLin CSub, "TreeWs in Wb is installed with code", "Wb", WbNmzWs(A)
 Else
-    InfoLin CSub, "TreeWs in Wb already has code", "Wb", WbNmzWs(A)
+    InfLin CSub, "TreeWs in Wb already has code", "Wb", WbNmzWs(A)
 End If
 End Sub
 

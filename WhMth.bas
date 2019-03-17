@@ -16,7 +16,7 @@ X_ShtMdy = ShtMdy
 X_ShtKd = ShtKd
 Set X_Nm = Nm
 If IsNothing(Nm) Then Thw CSub, "Nm cannot be nothing"
-If Nm.IsEmp And (Sz(ShtMdy) = 0) And (Sz(ShtKd) = 0) Then X_IsEmp = True
+If Nm.IsEmp And (Si(ShtMdy) = 0) And (Si(ShtKd) = 0) Then X_IsEmp = True
 Set Init = Me
 End Function
 

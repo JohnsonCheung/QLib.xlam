@@ -2,7 +2,7 @@ Attribute VB_Name = "MIde_Cnt_Mth"
 Option Explicit
 Const MthCntPP$ = "NPubSub NPubFun NPubPrp NPrvSub NPrvFun NPrvPrp NFrdSub NFrdFun NFrdPrp"
 Function NMthzSrc%(Src$())
-NMthzSrc = Sz(MthIxAy(Src))
+NMthzSrc = Si(MthIxAy(Src))
 End Function
 
 Function NMthPj%()

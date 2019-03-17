@@ -1,11 +1,11 @@
 Attribute VB_Name = "MDao_Bql_Read"
 Option Explicit
-Public Const DoczBql$ = "Back-Quote-Line:B.q.l:Back-Quote is (`) and it is a String.  Each field is separated by (`)"
-Public Const DoczFbql$ = "Fullfilename-Bql:F.bql:it is a [Ft]|Each line is a [Bql]|Fst line is [ShtTyBql]"
-Public Const DoczShtTys$ = "ShtTy-Sz:It is a [ShtTy] or (Tnnn) where nnn can 1 to 3 digits of value 1-255"
-Public Const DoczShtTyLis$ = "ShtTyLis Short-Type-List Sht.Ty.Lis (String)|is a Cml-String of each 1 to 3 char of ShtTy"
-Public Const DoczShtTyscf$ = "ShtTys-Colon-FldNm:ShtTys.c.f:FldNm can have space, then ShtTyscf should be sq bracket"
-Public Const DoczShtTyBql$ = "ShtTyscf-Bql:ShtTy.Bql:It is a [Bql] with each field is a [ShtTyscf].  It is used to create an empty table by CrtTblzShtTyBql"
+Public Const ™Bql$ = "Back-Quote-Line:B.q.l:Back-Quote is (`) and it is a String.  Each field is separated by (`)"
+Public Const ™Fbql$ = "Fullfilename-Bql:F.bql:it is a [Ft]|Each line is a [Bql]|Fst line is [ShtTyBql]"
+Public Const ™ShtTys$ = "ShtTy-Si:It is a [ShtTy] or (Tnnn) where nnn can 1 to 3 digits of value 1-255"
+Public Const ™ShtTyLis$ = "ShtTyLis Short-Type-List Sht.Ty.Lis (String)|is a Cml-String of each 1 to 3 char of ShtTy"
+Public Const ™ShtTyscf$ = "ShtTys-Colon-FldNm:ShtTys.c.f:FldNm can have space, then ShtTyscf should be sq bracket"
+Public Const ™ShtTyBql$ = "ShtTyscf-Bql:ShtTy.Bql:It is a [Bql] with each field is a [ShtTyscf].  It is used to create an empty table by CrtTblzShtTyBql"
 
 Private Sub Z_CrtTTzPth()
 Dim A As Database: Set A = TmpDb

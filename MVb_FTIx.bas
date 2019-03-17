@@ -26,6 +26,11 @@ Static X As New FTIx, Y As Boolean
 If Not Y Then Y = True: Set X = FTIx(-1, -2)
 Set EmpFTIx = X
 End Function
+
+Function FTIxzIxCnt(FmIx, Cnt) As FTIx
+Set FTIxzIxCnt = FTIx(FmIx, FmIx + Cnt - 1)
+End Function
+
 Function FTIx(FmIx, ToIx) As FTIx
 Dim O As New FTIx
 Set FTIx = O.Init(FmIx, ToIx)

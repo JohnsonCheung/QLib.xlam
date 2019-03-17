@@ -223,7 +223,7 @@ Dim I, J%
 For Each I In NineEle
     If IsBytAy(I) Then
         M = Intersect(CvBytAy(I), Should)
-        If Sz(I) > Sz(M) Then
+        If Si(I) > Si(M) Then
             SolveNineEle.HasSolve = True
             O(J) = M
         End If
@@ -237,7 +237,7 @@ End Function
 
 Private Function Intersect(A() As Byte, B() As Byte)
 Dim O: O = AyIntersect(A, B)
-Intersect = IIf(Sz(O) = 1, O(0), O)
+Intersect = IIf(Si(O) = 1, O(0), O)
 End Function
 
 Private Function ShouldBe(NineEle()) As Byte()

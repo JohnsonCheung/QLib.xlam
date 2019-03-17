@@ -29,7 +29,7 @@ End Sub
 Private Function CdLyzPushStr(S, ByVal Fst As Boolean) As String()
 Dim CdLin, LasL%, O$()
 Dim CdLy$(): CdLy = ExprLyzStr(S)
-LasL = Sz(CdLy)
+LasL = Si(CdLy)
 Dim J%
 For Each CdLin In Itr(CdLy(S))
     Select Case True

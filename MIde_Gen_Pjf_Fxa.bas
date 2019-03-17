@@ -1,17 +1,29 @@
 Attribute VB_Name = "MIde_Gen_Pjf_Fxa"
 Option Explicit
-Sub GenFxa(SrcPth, Optional Xls As Excel.Application)
-ThwNoPth SrcPth, CSub
-Dim Fxa$: Fxa = DistFxa(SrcPth)
-Dim A As Excel.Application: Set A = DftXls(Xls)
-Dim Wb As Workbook: Set Wb = CrtFxa(Fxa, A)
-Dim Pj As VBProject: Set Pj = PjzFxa(Fxa, A)
-AddRfzPj Pj
-LoadBas Pj
-Wb.Close True
-CpyFilzToPth Fxa, AddFdrEns(ParPth(ParPth(Pth(Fxa))), "Dist"), OvrWrt:=True
-If IsNothing(Xls) Then XlsQuit A
+Sub Z_DistFxazCompress()
+Debug.Print DistFxazCompress(Pjf(CurPj))
 End Sub
+
+Function DistFxazCompress$(Fxa)
+'ExpFxa Fxa
+DistFxazGen SrcpzPjf(Fxa)
+DistFxazCompress = Fxa
+End Function
+
+Function DistFxazGen$(Srcp, Optional Xls As Excel.Application)
+If Not IsSrcp(Srcp) Then Thw CSub, "Not Srcp", "Srcp", Srcp
+Dim Fxa$
+Dim A As Excel.Application
+    Set A = DftXls(Xls)
+    Fxa = DistFxa(Srcp)
+    Dim Wb As Workbook
+    Set Wb = WbCrtNxtFxa(Fxa, A)
+DistFxazGen = Wb.FullName
+AddRfzPj Wb.VBProject
+LoadBas Wb.VBProject
+Wb.Close True
+If IsNothing(Xls) Then XlsQuit A
+End Function
 
 Function PjzFxa(Fxa, A As Excel.Application) As VBProject
 If Not IsFxa(Fxa) Then Stop
@@ -21,15 +33,16 @@ A.Workbooks.Open Fxa
 Set PjzFxa = PjzXls(A, Fxa)
 End Function
 
-Function CrtFxa(Fxa, A As Excel.Application) As Workbook
-If Not IsFxa(Fxa) Then Stop
+Function WbCrtNxtFxa(Fxa, A As Excel.Application) As Workbook
+If Not IsFxa(Fxa) Then Thw CSub, "Not a Fxa", "Fxa", Fxa
 Dim Wb As Workbook: Set Wb = A.Workbooks.Add
-Wb.SaveAs Fxa, XlFileFormat.xlOpenXMLAddIn
+Dim F$: F = NxtFfn(Fxa)
+Wb.SaveAs F, XlFileFormat.xlOpenXMLAddIn
 Wb.Close
-Set Wb = A.Workbooks.Open(Fxa)
+Set Wb = A.Workbooks.Open(F)
 Dim Pj As VBProject
-PjzFxa(Fxa, A).Name = Fnn(Fxa)
+PjzFxa(F, A).Name = Fnn(Fxa)
 Wb.Save
-Set CrtFxa = Wb
+Set WbCrtNxtFxa = Wb
 End Function
 

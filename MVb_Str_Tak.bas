@@ -1,74 +1,74 @@
 Attribute VB_Name = "MVb_Str_Tak"
 Option Explicit
 
-Function TakBefDot$(A)
-TakBefDot = TakBef(A, ".")
+Function StrBefDot$(A)
+StrBefDot = StrBef(A, ".")
 End Function
 
-Function TakAft$(S, Sep, Optional NoTrim As Boolean)
-TakAft = Brk1(S, Sep, NoTrim).S2
+Function StrAft$(S, Sep, Optional NoTrim As Boolean)
+StrAft = Brk1(S, Sep, NoTrim).S2
 End Function
 
-Function TakAftAt$(A, At&, S)
+Function StrAftAt$(A, At&, S)
 If At = 0 Then Exit Function
-TakAftAt = Mid(A, At + Len(S))
+StrAftAt = Mid(A, At + Len(S))
 End Function
 
-Function TakAftDotOrAll$(A)
-TakAftDotOrAll = TakAftOrAll(A, ".")
+Function StrAftDotOrAll$(A)
+StrAftDotOrAll = StrAftOrAll(A, ".")
 End Function
 
-Function TakAftDot$(A)
-TakAftDot = TakAft(A, ".")
+Function StrAftDot$(A)
+StrAftDot = StrAft(A, ".")
 End Function
 
-Function TakAftMust$(A, Sep, Optional NoTrim As Boolean)
-TakAftMust = Brk(A, Sep, NoTrim).S2
+Function StrAftMust$(A, Sep, Optional NoTrim As Boolean)
+StrAftMust = Brk(A, Sep, NoTrim).S2
 End Function
 
-Function TakAftOrAll$(S, Sep, Optional NoTrim As Boolean)
-TakAftOrAll = Brk2(S, Sep, NoTrim).S2
+Function StrAftOrAll$(S, Sep, Optional NoTrim As Boolean)
+StrAftOrAll = Brk2(S, Sep, NoTrim).S2
 End Function
 
-Function TakAftOrAllRev$(A, S)
-TakAftOrAllRev = StrDft(TakAftRev(A, S), A)
+Function StrAftOrAllRev$(A, S)
+StrAftOrAllRev = StrDft(StrAftRev(A, S), A)
 End Function
 
-Function TakAftRev$(S, Sep, Optional NoTrim As Boolean)
-TakAftRev = Brk1Rev(S, Sep, NoTrim).S2
+Function StrAftRev$(S, Sep, Optional NoTrim As Boolean)
+StrAftRev = Brk1Rev(S, Sep, NoTrim).S2
 End Function
 
-Function TakBef$(S, Sep, Optional NoTrim As Boolean)
-TakBef = Brk2(S, Sep, NoTrim).S1
+Function StrBef$(S, Sep, Optional NoTrim As Boolean)
+StrBef = Brk2(S, Sep, NoTrim).S1
 End Function
 
-Function TakBefAt(A, At&)
+Function StrBefAt(A, At&)
 If At = 0 Then Exit Function
-TakBefAt = Left(A, At - 1)
+StrBefAt = Left(A, At - 1)
 End Function
 
-Function TakBefDD$(A)
-TakBefDD = RTrim(TakBefOrAll(A, "--"))
+Function StrBefDD$(A)
+StrBefDD = RTrim(StrBefOrAll(A, "--"))
 End Function
 
-Function TakBefDDD$(A)
-TakBefDDD = RTrim(TakBefOrAll(A, "---"))
+Function StrBefDDD$(A)
+StrBefDDD = RTrim(StrBefOrAll(A, "---"))
 End Function
 
-Function TakBefMust$(S, Sep$, Optional NoTrim As Boolean)
-TakBefMust = Brk(S, Sep, NoTrim).S1
+Function StrBefMust$(S, Sep$, Optional NoTrim As Boolean)
+StrBefMust = Brk(S, Sep, NoTrim).S1
 End Function
 
-Function TakBefOrAll$(S, Sep, Optional NoTrim As Boolean)
-TakBefOrAll = Brk1(S, Sep, NoTrim).S1
+Function StrBefOrAll$(S, Sep, Optional NoTrim As Boolean)
+StrBefOrAll = Brk1(S, Sep, NoTrim).S1
 End Function
 
-Function TakBefOrAllRev$(A, S)
-TakBefOrAllRev = StrDft(TakBefRev(A, S), A)
+Function StrBefOrAllRev$(A, S)
+StrBefOrAllRev = StrDft(StrBefRev(A, S), A)
 End Function
 
-Function TakBefRev$(A, Sep, Optional NoTrim As Boolean)
-TakBefRev = Brk2Rev(A, Sep, NoTrim).S1
+Function StrBefRev$(A, Sep, Optional NoTrim As Boolean)
+StrBefRev = Brk2Rev(A, Sep, NoTrim).S1
 End Function
 Function TakP123(A, S1, S2) As String()
 Dim P1&, P2&
@@ -94,20 +94,20 @@ Ept = "Private Function ZChunk$(ConstLy$(), IChunk%)"
 GoSub Tst
 Exit Sub
 Tst:
-    Act = TakBetFstLas(S, Fst, Las)
+    Act = StrBetFstLas(S, Fst, Las)
     C
     Return
 End Sub
-Function TakBetFstLas$(S, Fst, Las)
-TakBetFstLas = TakBefRev(TakAft(S, Fst), Las)
+Function StrBetFstLas$(S, Fst, Las)
+StrBetFstLas = StrBefRev(StrAft(S, Fst), Las)
 End Function
 
-Function TakBet$(S, S1, S2, Optional NoTrim As Boolean, Optional InclMarker As Boolean)
+Function StrBet$(S, S1, S2, Optional NoTrim As Boolean, Optional InclMarker As Boolean)
 With Brk1(S, S1, NoTrim)
    If .S2 = "" Then Exit Function
    Dim O$: O = Brk1(.S2, S2, NoTrim).S1
    If InclMarker Then O = S1 & O & S2
-   TakBet = O
+   StrBet = O
 End With
 End Function
 
@@ -115,7 +115,7 @@ Private Sub Z_Tak_BetBkt()
 Dim Act$
    Dim S$
    S = "sdklfjdsf(1234()567)aaa("
-   Act = TakBetBkt(S)
+   Act = StrBetBkt(S)
    Ass Act = "1234()567"
 End Sub
 
@@ -165,26 +165,26 @@ If HasPfx(Lin, Pfx) Then If Mid(Lin, Len(Pfx) + 1, 1) = " " Then TakPfxS = Pfx
 End Function
 
 Function TakT1$(A)
-If FstChr(A) <> "[" Then TakT1 = TakBef(A, " "): Exit Function
+If FstChr(A) <> "[" Then TakT1 = StrBef(A, " "): Exit Function
 Dim P%
 P = InStr(A, "]")
 If P = 0 Then Stop
 TakT1 = Mid(A, 2, P - 2)
 End Function
 
-Private Sub Z_TakAftBkt()
+Private Sub Z_StrAftBkt()
 Dim A$
 A = "(lsk(aa)df lsdkfj) A"
 Ept = " A"
 GoSub Tst
 Exit Sub
 Tst:
-    Act = TakAftBkt(A)
+    Act = StrAftBkt(A)
     C
     Return
 End Sub
 
-Private Sub Z_TakBet()
+Private Sub Z_StrBet()
 Dim Lin$
 Lin = "Excel 8.0;HDR=YES;IMEX=2;DATABASE=??       | DATABASE= | ; | ??":            GoSub Tst
 Lin = "Excel 8.0;HDR=YES;IMEX=2;DATABASE=??;AA=XX | DATABASE= | ; | ??":            GoSub Tst
@@ -193,7 +193,7 @@ Exit Sub
 Tst:
     Dim FmStr$, ToStr$
     AsgAp AyTrim(SplitVBar(Lin)), Lin, FmStr, ToStr, Ept
-    Act = TakBet(Lin, FmStr, ToStr)
+    Act = StrBet(Lin, FmStr, ToStr)
     C
     Return
 End Sub
@@ -206,28 +206,28 @@ Ept = "A$()A":     A = "(A$()A)XX":   GoSub Tst
 Ept = "O$()":      A = "(O$()) As X": GoSub Tst
 Exit Sub
 Tst:
-    Act = TakBetBkt(A)
+    Act = StrBetBkt(A)
     C
     Return
 End Sub
 
 Private Sub Z()
-Z_TakAftBkt
+Z_StrAftBkt
 Z_Tak_BefFstLas
-Z_TakBet
+Z_StrBet
 Z_Tak_BetBkt
 MVb_Str_Tak:
 End Sub
 
-Function TakBefRevOrAll$(S, Sep$)
+Function StrBefRevOrAll$(S, Sep$)
 Dim P%: P = InStrRev(S, Sep)
-If P = 0 Then TakBefRevOrAll = S: Exit Function
-TakBefRevOrAll = Left(S, P - Len(Sep))
+If P = 0 Then StrBefRevOrAll = S: Exit Function
+StrBefRevOrAll = Left(S, P - Len(Sep))
 End Function
 '
-'Function TakAftRev$(S, Sep$)
+'Function StrAftRev$(S, Sep$)
 'Dim P%: P = InStrRev(S, Sep): If P = 0 Then Exit Function
-'TakAftRev = Mid(S, P + Len(Sep))
+'StrAftRev = Mid(S, P + Len(Sep))
 'End Function
 '
 

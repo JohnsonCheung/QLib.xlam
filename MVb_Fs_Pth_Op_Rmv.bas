@@ -11,7 +11,7 @@ Sub RmvEmpPthR(Pth)
 Dim Ay$(), I, J%
 Lp:
     J = J + 1: If J > 10000 Then Stop
-    Ay = EmpPthAyR(Pth): If Sz(Ay) = 0 Then Exit Sub
+    Ay = EmpPthAyR(Pth): If Si(Ay) = 0 Then Exit Sub
     For Each I In Ay
         RmDir I
     Next

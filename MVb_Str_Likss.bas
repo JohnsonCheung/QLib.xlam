@@ -35,7 +35,7 @@ End Sub
 
 Function T1ikLikSslFstEleT2T3Eq$(A$(), T2, T3)
 Dim L, T$, Lik$, Likssl$
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 For Each L In A
     Asg2TRst L, T, Lik, Likssl
     If T2 Like Lik Then
@@ -49,7 +49,7 @@ End Function
 
 Function T1ikLikSslAyT1$(A$(), T2, T3)
 Dim L, T$, Lik$, Likssl$
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 For Each L In A
     Asg2TRst L, T, Lik, Likssl
     If T2 Like Lik Then
@@ -63,7 +63,7 @@ End Function
 
 Function T1ikSslAyT1$(T1ikSslAy$(), Nm)
 Dim L, T1$
-If Sz(T1ikSslAy) = 0 Then Exit Function
+If Si(T1ikSslAy) = 0 Then Exit Function
 For Each L In T1ikSslAy
     T1 = ShfT(L)
     If StrLikss(Nm, L) Then

@@ -6,11 +6,11 @@ A.Parent.Export SrcFfnMd(A)
 End Sub
 
 Sub ExpPjRf(A As VBProject)
-WrtAy RfSrc(A), RfSrcFfn(A)
+WrtAy RfSrczPj(A), RfSrcFfn(A)
 End Sub
 
-Sub BrwPSrcPth()
-BrwPth SrcPthzPj(CurPj)
+Sub BrwPSrcp()
+BrwPth SrcpzPj(CurPj)
 End Sub
 
 Function SrcExtMd$(A As CodeModule)
@@ -26,11 +26,11 @@ SrcExtMd = O
 End Function
 
 Function SrcFfnMd$(A As CodeModule)
-SrcFfnMd = SrcPthzPj(PjzMd(A)) & MdNm(A) & SrcExtMd(A)
+SrcFfnMd = SrcpzPj(PjzMd(A)) & MdNm(A) & SrcExtMd(A)
 End Function
 
-Function SrcPthzPj$(A As VBProject)
-SrcPthzPj = PthEns(PjPth(A) & "Src\")
+Function SrcpzPj$(A As VBProject)
+SrcpzPj = PthEns(PjPth(A) & "Src\")
 End Function
 
 

@@ -43,7 +43,7 @@ End Function
 
 Function DicHasKy(A As Dictionary, Ky) As Boolean
 Ass IsArray(Ky)
-If Sz(Ky) = 0 Then Stop
+If Si(Ky) = 0 Then Stop
 Dim K
 For Each K In Ky
    If Not A.Exists(K) Then

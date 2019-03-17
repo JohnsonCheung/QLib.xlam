@@ -25,7 +25,7 @@ Next
 End Function
 
 Private Function MsgzLeftOvrAftEvl(A() As SwBrk, Sw As Dictionary) As String()
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim I
 PushI MsgzLeftOvrAftEvl, "Following lines cannot be further evaluated:"
 For Each I In A
@@ -127,8 +127,8 @@ Dim Msgz$
 With IO
     If .Nm = "" Then ErzLin1 = MsgzNoNm(IO): Exit Function
     Select Case .OpStr
-    Case "OR", "AND": If Sz(.TermAy) = 0 Then ErzLin1 = MsgzTermCntAndOr(IO): Exit Function
-    Case "EQ", "NE":  If Sz(.TermAy) <> 2 Then ErzLin1 = MsgzTermCntEqNe(IO): Exit Function
+    Case "OR", "AND": If Si(.TermAy) = 0 Then ErzLin1 = MsgzTermCntAndOr(IO): Exit Function
+    Case "EQ", "NE":  If Si(.TermAy) <> 2 Then ErzLin1 = MsgzTermCntEqNe(IO): Exit Function
     Case Else:        ErzLin1 = MsgzOpStrEr(IO): Exit Function
     End Select
 End With

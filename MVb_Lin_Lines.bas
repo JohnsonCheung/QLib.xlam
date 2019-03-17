@@ -1,11 +1,11 @@
 Attribute VB_Name = "MVb_Lin_Lines"
 Option Explicit
 Const CMod$ = "MVb_Lin_Lines."
-Function CntSzzLines$(Lines$)
-CntSzzLines = CntSz(LinCnt(Lines), Len(Lines))
+Function CntSzStrzLines$(Lines)
+CntSzStrzLines = CntSzStr(LinCnt(Lines), Len(Lines))
 End Function
-Function CntSz$(Cnt&, Sz&)
-CntSz = FmtQQ("CntSz(? ?)", Cnt, Sz)
+Function CntSzStr$(Cnt&, Si&)
+CntSzStr = FmtQQ("CntSzStr(? ?)", Cnt, Si)
 End Function
 Private Sub Z_LinesWrap()
 Dim A$, W%
@@ -30,9 +30,9 @@ Function LyWrap(Ly$(), Optional Wdt% = 80) As String()
 Const CSub$ = CMod & "LinesWrap"
 Dim L$(), W%, J%, A$
 W = Wdt
-If W < 10 Then W = 10: Info CSub, "Given Wdt is too small, 10 is used", "Wdt Ly", Wdt, Ly
+If W < 10 Then W = 10: Inf CSub, "Given Wdt is too small, 10 is used", "Wdt Ly", Wdt, Ly
 L = Ly
-While Sz(L) > 0
+While Si(L) > 0
     J = J + 1: If J >= 1000 Then Stop
     PushI LyWrap, ShfWrapLin(L, W)
 Wend
@@ -75,7 +75,7 @@ A = Join(Ay, vbCrLf)
 Debug.Print LasNLines(A, 3)
 End Sub
 Function FstLin$(Lines)
-FstLin = RplCr(TakBefOrAll(Lines, vbLf))
+FstLin = RplCr(StrBefOrAll(Lines, vbLf))
 End Function
 Function LinesApp$(A, L)
 If A = "" Then LinesApp = L: Exit Function
@@ -117,7 +117,7 @@ LasNLines = JnCrLf(AywLasN(SplitCrLf(Lines), N))
 End Function
 
 Function LinCnt&(Lines)
-LinCnt = Sz(SplitCrLf(Lines))
+LinCnt = Si(SplitCrLf(Lines))
 End Function
 
 Function HSqLines(Lines) As Variant()

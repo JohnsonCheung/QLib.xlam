@@ -25,14 +25,14 @@ ChkWs = LyzFunMsgNap(CSub, M, "Folder File Expected-Worksheet Worksheets-in-file
 End Function
 Function ChkFxw(Fx, Wsn, Optional FxKind$ = "Excel file") As String()
 Const CSub$ = CMod & "ChkFxw"
-ChkFxw = ChkHasFfn(Fx, FxKind): If Sz(ChkFxw) > 0 Then Exit Function
+ChkFxw = ChkHasFfn(Fx, FxKind): If Si(ChkFxw) > 0 Then Exit Function
 ChkFxw = ChkWs(Fx, Wsn, FxKind)
 End Function
 Function ChkLnkWs(A As Database, T, Fx, Wsn, Optional FxKind$ = "Excel file") As String()
 Const CSub$ = CMod & "ChkLnkWs"
 Dim O$()
     O = ChkFxw(Fx, Wsn, FxKind)
-    If Sz(O) > 0 Then
+    If Si(O) > 0 Then
         ChkLnkWs = O
         Exit Function
     End If

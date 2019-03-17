@@ -1,7 +1,9 @@
 Attribute VB_Name = "MXls_Lo_Fmt"
 Option Explicit
 Const CMod$ = "MXls_Lo_Fmt."
+Const ™Lof$ = "It is Ly with T1 LofT1nn"
 Private A As ListObject, B$(), Fny$()
+
 Function FmtLo(Lo As ListObject, Lof$()) As ListObject
 Set A = Lo
 Fny = FnyzLo(Lo)
@@ -18,7 +20,7 @@ For Each L In WItr("Lvl"): WFmtLvl L: Next
 For Each L In WItr("Tot"): WFmtTot L: Next
 For Each L In WItr("Wdt"): WFmtWdt L: Next
 SetLoTit Lo, WLy("Tit")
-SetLoNm Lo, T2(FstEleT1(B, "Nm"))
+LoSetNm Lo, T2(FstEleT1(B, "Nm"))
 For Each L In WItr("Lbl"): WFmtLbl L: Next ' Must run Last
 Set FmtLo = A
 End Function

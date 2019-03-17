@@ -3,7 +3,7 @@ Option Explicit
 Function WrpDrNRow%(WrpDr())
 Dim Col, R%, M%
 For Each Col In Itr(WrpDr)
-    M = Sz(Col)
+    M = Si(Col)
     If M > R Then R = M
 Next
 WrpDrNRow = R
@@ -24,14 +24,14 @@ End Function
 
 Function WrpDrSq(WrpDr()) As Variant()
 Dim O(), R%, C%, NCol%, NRow%, Cell, Col, NColi%
-NCol = Sz(WrpDr)
+NCol = Si(WrpDr)
 NRow = WrpDrNRow(WrpDr)
 ReDim O(1 To NRow, 1 To NCol)
 C = 0
 For Each Col In WrpDr
     C = C + 1
     If IsArray(Col) Then
-        NColi = Sz(Col)
+        NColi = Si(Col)
         For R = 1 To NRow
             If R <= NColi Then
                 O(R, C) = Col(R - 1)
@@ -55,7 +55,7 @@ Function WrpDryWdt(WrpDry(), WrpWdt%) As Integer() _
 'WrpCol is col with each cell being array
 'if maxWdt of array-ele of wrpCol has wdt > WrpWdt, use that wdt
 'otherwise use WrpWdt
-If Sz(WrpDry) = 0 Then Exit Function
+If Si(WrpDry) = 0 Then Exit Function
 Dim J%, Col()
 For J = 0 To NColzDry(WrpDry) - 1
     Col = ColzDry(WrpDry, J)
@@ -96,7 +96,7 @@ End Function
 
 
 Function SqAlign(Sq(), W%()) As Variant()
-If UBound(Sq, 2) <> Sz(W) Then Stop
+If UBound(Sq, 2) <> Si(W) Then Stop
 Dim C%, R%, Wdt%, O
 O = Sq
 For C = 1 To UBound(Sq, 2) - 1 ' The last column no need to align

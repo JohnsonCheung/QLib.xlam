@@ -12,7 +12,7 @@ Public Enum eAgg
     eAvg
 End Enum
 Function DryGpAy(A, KIx%, GIx%) As Variant()
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim J%, O, K, GpAy(), O_Ix&, Gp, Dr, K_Ay()
 For Each Dr In A
     K = Dr(KIx)

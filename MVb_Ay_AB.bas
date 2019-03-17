@@ -20,8 +20,8 @@ End Function
 Function DicAyab(A, B) As Dictionary
 ThwDifSz A, B, CSub
 Dim N1&, N2&
-N1 = Sz(A)
-N2 = Sz(B)
+N1 = Si(A)
+N2 = Si(B)
 If N1 <> N2 Then Stop
 Set DicAyab = New Dictionary
 Dim J&, X

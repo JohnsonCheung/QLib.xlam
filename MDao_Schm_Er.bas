@@ -161,7 +161,7 @@ Next
 End Function
 
 Private Function ErT_NoTLin(A() As Lnx) As String()
-If Sz(A) > 0 Then Exit Function
+If Si(A) > 0 Then Exit Function
 PushI ErT_NoTLin, MsgT_NoTLin
 End Function
 
@@ -189,13 +189,13 @@ Dim Fny$()
 If HasSubStr(L, "|") Then
 '3
     Dim IdFld$
-    IdFld = Trim(TakBef(L, "|"))
+    IdFld = Trim(StrBef(L, "|"))
     If IdFld <> Tbl & "Id" Then
         PushI ErT_1_OneLinEr, MsgT_IdFld(T)
         Exit Function
     End If
 '4
-    If Trim(TakBet(L, "|", "|")) = "" Then
+    If Trim(StrBet(L, "|", "|")) = "" Then
         PushI ErT_1_OneLinEr, MsgT_NoFLdBetVV(T)
         Exit Function
     End If
@@ -203,12 +203,12 @@ End If
 '5
     Dim Dup$()
     Dup = AywDup(Fny)
-    If Sz(Dup) > 0 Then
+    If Si(Dup) > 0 Then
         PushI ErT_1_OneLinEr, MsgT_DupF(T, Tbl, Dup)
         Exit Function
     End If
 '6
-If Sz(Fny) = 0 Then
+If Si(Fny) = 0 Then
     PushI ErT_1_OneLinEr, MsgT_NoFld(T)
     Exit Function
 End If

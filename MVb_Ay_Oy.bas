@@ -119,7 +119,7 @@ End Function
 
 Function OywPIn(A, P, InAy)
 Dim X, O
-If Sz(A) = 0 Or Sz(InAy) Then OywPIn = A: Exit Function
+If Si(A) = 0 Or Si(InAy) Then OywPIn = A: Exit Function
 O = A
 Erase O
 For Each X In Itr(A)

@@ -72,11 +72,11 @@ End Function
 
 
 Function NMthzSrc%(A$())
-NMthzSrc = Sz(MthIxAy(A))
+NMthzSrc = Si(MthIxAy(A))
 End Function
 
 Function NUsrTySrc%(A$())
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim I, O%
 For Each I In A
 '   If SrcLin_IsTy(I) Then O = O + 1

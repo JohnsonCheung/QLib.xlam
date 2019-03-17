@@ -32,7 +32,7 @@ Private Sub Z_CntSzStrAy()
 Debug.Print CntSzStrAy(SrczPj(CurPj))
 End Sub
 Function CntSzStrAy$(Ay)
-CntSzStrAy = "AyCntSz(" & Sz(Ay) & "." & SzAy(Ay) & ")"
+CntSzStrAy = "AyCntSz(" & Si(Ay) & "." & SzAy(Ay) & ")"
 End Function
 Private Sub Z()
 Z_CntDryzAy

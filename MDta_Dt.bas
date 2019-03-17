@@ -60,10 +60,10 @@ Set DtzDrs = Dt(DtNm, A.Fny, A.Dry)
 End Function
 
 Function NRowzDt&(A As Dt)
-NRowzDt = Sz(A.Dry)
+NRowzDt = Si(A.Dry)
 End Function
 Function NRowzDrs&(A As Drs)
-NRowzDrs = Sz(A.Dry)
+NRowzDrs = Si(A.Dry)
 End Function
 Sub DmpDt(A As Dt)
 DmpAy FmtDt(A)
@@ -72,7 +72,7 @@ Property Get EmpDtAy() As Dt()
 End Property
 
 Function IsEmpDt(A As Dt) As Boolean
-IsEmpDt = Sz(A.Dry) = 0
+IsEmpDt = Si(A.Dry) = 0
 End Function
 
 Function DtReOrd(A As Dt, BySubFF) As Dt

@@ -1,11 +1,8 @@
 Attribute VB_Name = "MVb_Fs_Pth_Exist"
 Option Explicit
-Function EnsPth$(Pth)
-If Not Fso.FolderExists(Pth) Then MkDir Pth
-EnsPth = PthEnsSfx(Pth)
-End Function
 Function PthEns$(Pth)
-PthEns = EnsPth(Pth)
+If Not Fso.FolderExists(Pth) Then MkDir Pth
+PthEns = PthEnsSfx(Pth)
 End Function
 
 Function PthEnsAll$(A$)
@@ -46,7 +43,7 @@ HasSubFdr = Fso.GetFolder(Pth).SubFolders.Count > 0
 End Function
 
 Sub ThwNotHasPth(Pth, Fun$)
-If Not HasPth(Pth) Then Thw Fun, "Path not Has", "Path", Pth
+If Not HasPth(Pth) Then Thw Fun, "Path not exist", "Path", Pth
 End Sub
 
 

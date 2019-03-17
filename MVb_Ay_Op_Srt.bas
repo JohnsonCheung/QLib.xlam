@@ -14,7 +14,7 @@ IsSrtAy = True
 End Function
 
 Function AyQSrt(A)
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim O: O = A
 AyQSrtLH O, 0, UB(A)
 AyQSrt = O
@@ -79,7 +79,7 @@ AySrt_BY_AY = O
 End Function
 
 Function AySrt(Ay, Optional Des As Boolean)
-If Sz(Ay) = 0 Then AySrt = Ay: Exit Function
+If Si(Ay) = 0 Then AySrt = Ay: Exit Function
 Dim Ix&, V, J&
 Dim O: O = Ay: Erase O
 Push O, Ay(0)
@@ -107,7 +107,7 @@ AySrt__Ix = O
 End Function
 
 Function IxAyzAySrt(Ay, Optional Des As Boolean) As Long()
-If Sz(Ay) = 0 Then Exit Function
+If Si(Ay) = 0 Then Exit Function
 Dim Ix&, V, J&
 Dim O&():
 Push O, 0

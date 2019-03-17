@@ -17,7 +17,7 @@ Sub ImpTp(Apn)
 Const CSub$ = CMod & "ImpTp"
 Dim Tp1$: Tp1 = Tp(Apn)
 If Tp1 = "" Then
-    Info CSub, "Tp not exist AppFb, no Import", "AppFb Tp", AppFb(Apn), Tp1
+    Inf CSub, "Tp not exist AppFb, no Import", "AppFb Tp", AppFb(Apn), Tp1
     Exit Sub
 End If
 Dim D As Database: Set D = AppDb(Apn)
@@ -33,7 +33,7 @@ Private Function TpFxm$(Apn)
 TpFxm = TpPth & Apn & "(Template).xlsm"
 End Function
 Sub OpnTp(Apn)
-Dim Tp1$: Tp1 = Tp(Apn): If Tp1 = "" Then Info CSub, "Tp not found", "Tp", Tp1
+Dim Tp1$: Tp1 = Tp(Apn): If Tp1 = "" Then Inf CSub, "Tp not found", "Tp", Tp1
 OpnFx Tp1
 End Sub
 

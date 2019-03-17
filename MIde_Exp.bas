@@ -21,7 +21,7 @@ Sub ExpPjf(Pjf, Optional Xls As Excel.Application, Optional Acs As Access.Applic
 Stamp "ExpPj: Begin"
 Stamp "ExpPj: Pjf " & Pjf
 Select Case True
-Case IsFxa(Pjf): ExpFx Pjf, Xls
+Case IsFxa(Pjf): ExpFxa Pjf, Xls
 Case IsFba(Pjf): ExpFb Pjf, Acs
 End Select
 Stamp "ExpPj: End"
@@ -32,7 +32,7 @@ ExpExpg
 End Sub
 
 Sub ExpFb(Fb, Optional Acs As Access.Application)
-CpyFilzToPth Fb, PthEns(SrcPthzPjf(Fb))
+CpyFilzToPth Fb, PthEns(SrcpzPjf(Fb))
 Dim A As Access.Application: Set A = DftAcs(Acs)
 OpnFb A, Fb
 Dim Pj As VBProject: Set Pj = A.Vbe.ActiveVBProject
@@ -40,10 +40,9 @@ ExpzPj Pj
 If IsNothing(Acs) Then AcsQuit A
 End Sub
 
-Sub ExpFx(Fx, Optional Xls As Excel.Application)
-CpyFilzToPth Fx, PthEns(SrcPthzPjf(Fx))
+Sub ExpFxa(Fxa, Optional Xls As Excel.Application)
 Dim A As Excel.Application: Set A = DftXls(Xls)
-A.Workbooks.Open Fx
+A.Workbooks.Open Fxa
 Dim Pj As VBProject: Set Pj = A.Vbe.ActiveVBProject
 ExpzPj Pj
 If IsNothing(Xls) Then XlsQuit A
@@ -54,12 +53,12 @@ ExpzPj CurPj
 End Sub
 
 Sub ExpzPj(Pj As VBProject)
-Dim P$: P = SrcPthEns(Pj)
+Dim P$: P = PthEnsAll(Srcp(Pj))
 ClrPthFil P
+CpyFilzToPth Pjf(Pj), P
 ExpSrc Pj
 ExpRf Pj
 ExpFrm Pj
-ZipPth P
 End Sub
 
 Private Sub ExpSrc(A As VBProject)
@@ -71,8 +70,9 @@ Next
 End Sub
 
 Private Sub ExpRf(A As VBProject)
-WrtAy RfSrc(A), RfSrcFfn(A)
+WrtAy RfSrczPj(A), RfSrcFfn(A)
 End Sub
+
 Private Sub ExpFrm(A As VBProject)
 If Not IsFbaPj(A) Then Exit Sub
 Stop
@@ -84,5 +84,3 @@ For Each F In A.CurrentProject.AllForms
     A.SaveAsText acForm, F.Name, ToPth & F.Name & ".frm.txt"
 Next
 End Sub
-
-

@@ -3,13 +3,13 @@ Option Explicit
 Function MthInfAyzbe(A As Vbe) As MthInf()
 Dim P As VBProject
 For Each P In A.VBProjects
-    PushObjAy MthInfAyzbe, MthInfAy_Pj(P)
+    PushObjzAy MthInfAyzbe, MthInfAy_Pj(P)
 Next
 End Function
 Function MthInfAy_Pj(A As VBProject) As MthInf()
 Dim C As VBComponent
 For Each C In A.VBComponents
-    PushObjAy MthInfAy_Pj, MthInfAy_Md(C.CodeModule)
+    PushObjzAy MthInfAy_Pj, MthInfAy_Md(C.CodeModule)
 Next
 End Function
 Function MthInfAy_Md(A As CodeModule) As MthInf()
@@ -52,7 +52,7 @@ Ffn$ = Pjf(P)
 Pj = P.Name
 MdTy = ShtCmpTyzMd(A)
 Md = MdNm(A)
-MthLinDryzMd = InsColzDry4V(MthLinDryzSrc(Src(A)), Ffn, Pj, MdTy, Md)
+MthLinDryzMd = DryInsColz4V(MthLinDryzSrc(Src(A)), Ffn, Pj, MdTy, Md)
 End Function
 Function MthLinDryzSrc(Src$(), Optional WhStr$) As Variant()
 Dim MthLin, W As WhMth
@@ -69,7 +69,7 @@ Ffn$ = Pjf(P)
 Pj = P.Name
 MdTy = ShtCmpTyzMd(A)
 Md = MdNm(A)
-MthDryzMd = InsColzDry4V(MthDryzSrc(Src(A)), Ffn, Pj, MdTy, Md)
+MthDryzMd = DryInsColz4V(MthDryzSrc(Src(A)), Ffn, Pj, MdTy, Md)
 End Function
 
 Property Get PjfAy() As String()
@@ -225,7 +225,7 @@ X_Pt2:
     Return
 X_Lo2:
     Set Lo2 = PtCpyToLo(Pt2, Ws1.Range("Q1"))
-    SetLoNm Lo2, "T_UsrEdtMthLoc"
+    LoSetNm Lo2, "T_UsrEdtMthLoc"
     Return
 Set MthWbFmt = A
 End Function
@@ -270,7 +270,7 @@ Dim L$, Lines$, TopRmk$, Lno&, Cnt%
 '    Lines = MthLineszSrcNm(A, MthFmIx)
     Cnt = LinCnt(Lines)
     TopRmk = MthTopRmkIx(Src, MthFmIx)
-Dim Dr(): ' Dr = MthLinDr_Lin(L): If Sz(Dr) = 0 Then Stop
+Dim Dr(): ' Dr = MthLinDr_Lin(L): If Si(Dr) = 0 Then Stop
 MthInfSrcFm = AyAdd(Dr, Array(Lno, Cnt, Lines, TopRmk))
 End Function
 

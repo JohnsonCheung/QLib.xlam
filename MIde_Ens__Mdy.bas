@@ -4,11 +4,11 @@ Sub MdyLin(A As CodeModule, B As ActLin, Optional Silent As Boolean)
 Dim M As Boolean: M = Not Silent
 Select Case B.Act
 Case eActLin.eInsLin
-    If M Then Info CSub, "Line inserted", "Md Lin At", MdNm(A), B.Lin, B.Lno
+    If M Then Inf CSub, "Line inserted", "Md Lin At", MdNm(A), B.Lin, B.Lno
     A.InsertLines B.Lno, B.Lin
 Case eActLin.eDltLin
     If A.Lines(B.Lno, 1) <> B.Lin Then Stop
-    If M Then Info CSub, "Line deleted", "Md Lin At", MdNm(A), B.Lin, B.Lno
+    If M Then Inf CSub, "Line deleted", "Md Lin At", MdNm(A), B.Lin, B.Lno
     A.DeleteLines B.Lno, 1
 Case Else
     Thw CSub, "Invalid ActLin", "Md ActLin", MdNm(A), B
@@ -46,7 +46,7 @@ Dim B() As ActLin
 B = A.ActLinAy
 Dim O$()
     Dim Ix%, Las As ActLin, Msg$, Cur As ActLin
-    If Sz(A) <= 1 Then Exit Function
+    If Si(A) <= 1 Then Exit Function
     Set Las = A(0)
     For Ix = 1 To UB(A)
         Set Cur = A(Ix)

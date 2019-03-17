@@ -56,7 +56,7 @@ Private Function XFld(A As Database, Tny$()) As Dt
 Dim Dry(), T
 For Each T In Tni(A)
 Next
-Set XFld = Dt("DbFld", "Tbl Fld Pk Ty Sz Dft Req Des", Dry)
+Set XFld = Dt("DbFld", "Tbl Fld Pk Ty Si Dft Req Des", Dry)
 End Function
 
 Private Function XTblF(D As Database, Tny$()) As Dt
@@ -65,7 +65,7 @@ Dim T
 For Each T In Tni(D)
     PushIAy Dry, XTblFDry(D, T)
 Next
-Set XTblF = Dt("TblFld", "Tbl Seq Fld Ty Sz ", Dry)
+Set XTblF = Dt("TblFld", "Tbl Seq Fld Ty Si ", Dry)
 End Function
 
 Private Function XTblFDry(D As Database, T) As Variant()

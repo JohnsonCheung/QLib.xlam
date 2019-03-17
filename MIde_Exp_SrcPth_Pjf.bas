@@ -1,10 +1,10 @@
 Attribute VB_Name = "MIde_Exp_SrcPth_Pjf"
 Option Explicit
-Function Fxa$(FxaNm, SrcPth)
-Fxa = DistPth(SrcPth) & FxaNm & ".xlam"
+Function Fxa$(FxaNm, Srcp)
+Fxa = DistPth(Srcp) & FxaNm & ".xlam"
 End Function
 
-Function Fba$(FbaNm, SrcPth)
-Fba = PthEns(SrcPth & "Dist") & FbaNm & ".accdb"
+Function Fba$(FbaNm, Srcp)
+Fba = PthEns(Srcp & "Dist") & FbaNm & ".accdb"
 End Function
 

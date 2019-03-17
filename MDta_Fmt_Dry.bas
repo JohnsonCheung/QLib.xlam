@@ -10,7 +10,7 @@ End Sub
 
 Function FmtDry(Dry(), _
 Optional MaxColWdt% = 100, Optional BrkColIx% = -1, Optional ShwZer As Boolean, Optional Fmt As eDryFmt) As String()
-If Sz(Dry) = 0 Then Exit Function
+If Si(Dry) = 0 Then Exit Function
 Dim Dry1(): Dry1 = DryzStrCell(Dry, ShwZer, Fmt, MaxColWdt) ' Convert each cell in Dry-Dry into string
 Dim W%(): W = WdtAyzDry(Dry1)
 If Fmt = eSpcSep Then
@@ -63,7 +63,7 @@ Case IsNumeric(V)
     End If
 Case IsEmp(V):
 Case IsArray(V)
-    Dim N&: N = Sz(V)
+    Dim N&: N = Si(V)
     If N = 0 Then
         StrCell = "*[0]"
     Else

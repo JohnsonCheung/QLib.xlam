@@ -1,35 +1,48 @@
 Attribute VB_Name = "MIde_Exp_SrcPth"
 Option Explicit
-Function SrcPthPj$()
-SrcPthPj = SrcPth(CurPj)
+Function SrcpPj$()
+SrcpPj = Srcp(CurPj)
 End Function
 
-Function SrcPthzCmp$(A As VBComponent)
-SrcPthzCmp = SrcPth(PjzCmp(A))
+Function SrcpzCmp$(A As VBComponent)
+SrcpzCmp = Srcp(PjzCmp(A))
 End Function
 
-Function SrcPthzPjf$(Pjf)
-SrcPthzPjf = AddFdr(Pth(Pjf), ".source", Fn(Pjf))
+Function SrcpzPjf$(Pjf)
+SrcpzPjf = AddFdr(Pth(Pjf), ".src", Fn(Pjf))
 End Function
 
-Function SrcPthEns$(A As VBProject)
-SrcPthEns = PthEnsAll(SrcPth(A))
+Function SrcpzEns$(A As VBProject)
+SrcpzEns = PthEnsAll(Srcp(A))
 End Function
 
-Function SrcPth$(A As VBProject)
-SrcPth = SrcPthzPjf(Pjf(A))
+Function SrcpzDistPj$(DistPj As VBProject)
+Dim P$: P = PjPth(DistPj)
+SrcpzDistPj = AddFdr(PthUp(P, 2), ".src", Fdr(P))
 End Function
 
-Function IsSrcPth(Pth) As Boolean
-IsSrcPth = Fdr(Pth) = "Src"
+Function PthRmvFdr$(Pth)
+PthRmvFdr = StrBefRev(PthRmvSfx(Pth), PthSep) & PthSep
+End Function
+
+Function FfnUp$(Ffn)
+FfnUp = PthRmvFdr(Pth(Ffn))
+End Function
+
+Function Srcp$(A As VBProject)
+Srcp = SrcpzPjf(Pjf(A))
+End Function
+
+Function IsSrcp(Pth) As Boolean
+IsSrcp = Fdr(ParPth(Pth)) = ".src"
 End Function
 
 Function SrcFn$(A As VBComponent)
 SrcFn = A.Name & ".bas"
 End Function
 
-Sub ThwNotSrcPth(SrcPth)
-If Not IsSrcPth(SrcPth) Then Err.Raise 1, , "Not SrcPth(" & SrcPth & ")"
+Sub ThwNotSrcp(Srcp)
+If Not IsSrcp(Srcp) Then Err.Raise 1, , "Not Srcp:" & vbCrLf & Srcp
 End Sub
 
 Function SrcExt$(A As VBComponent)
@@ -42,17 +55,17 @@ End Select
 End Function
 
 Function SrcFfn$(A As VBComponent)
-SrcFfn = SrcPthzCmp(A) & SrcFn(A)
+SrcFfn = SrcpzCmp(A) & SrcFn(A)
 End Function
 
-Function IsSrcPthInst(Pth) As Boolean
+Function IsSrcpInst(Pth) As Boolean
 If Not IsPth(Pth) Then Exit Function
 If Fdr(Pth) <> "Src" Then Exit Function
 Dim P$: P = ParPth(Pth)
 If Not IsDteTimStr(Fdr(P)) Then Exit Function
-IsSrcPthInst = True
+IsSrcpInst = True
 End Function
 
-Sub ThwNotSrcPthInst(Pth)
-If Not IsSrcPthInst(Pth) Then Err.Raise 1, , "Not SrcPthInst(" & Pth & ")"
+Sub ThwNotSrcpInst(Pth)
+If Not IsSrcpInst(Pth) Then Err.Raise 1, , "Not SrcpInst(" & Pth & ")"
 End Sub

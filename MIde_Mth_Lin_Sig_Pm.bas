@@ -1,23 +1,18 @@
 Attribute VB_Name = "MIde_Mth_Lin_Sig_Pm"
 Option Explicit
 
-Function NPrm(MthLin) As Byte
-NPrm = Sz(SplitComma(TakBetBkt(MthLin)))
-End Function
-Function ArgNm$(Arg)
-ArgNm = RmvPfxAySpc(Arg, TermAy("Optional Paramarray [By Val] [By Ref]"))
-End Function
-Function ArgNy(MthLin) As String()
-Dim Arg
-For Each Arg In Itr(SplitComma(TakBetBkt(MthLin)))
-    PushI ArgNy, ArgNm(Arg)
-Next
+Function NMthArg(MthLin) As Byte
+NMthArg = Si(SplitComma(MthPm(MthLin)))
 End Function
 
-Function ArgAy(MthLin$) As Arg()
+Function ArgNy(MthLin) As String()
+ArgNy = NyzOy(ArgAy(MthLin))
+End Function
+
+Function ArgAy(MthLin) As Arg()
 Dim P$()
-    P = SplitComma(TakBetBkt(MthLin))
-If Sz(P) = 0 Then Exit Function
+    P = SplitComma(StrBetBkt(MthLin))
+If Si(P) = 0 Then Exit Function
 Dim O() As Arg
     Dim U%: U = UB(P)
     ReDim O(U)
@@ -43,30 +38,13 @@ With Arg
 End With
 End Function
 
-Function ArgNyArgAy(A() As Arg) As String()
-Dim J%
-For J = 0 To UB(A)
-    PushI ArgNyArgAy, A(J).Nm
-Next
+Function ArgNyzArgAy(A() As Arg) As String()
+ArgNyzArgAy = NyzOy(A)
 End Function
-
-Function ArgTy$(A As Arg)
-Dim B$
-With A
-    If .IsAy Or .IsPmAy Then B = "()"
-    If .TyChr <> "" Then ArgTy = ArgTyNmTyChr(.TyChr) & B: Exit Function
-    If .AsTy = "" Then
-        ArgTy = "Variant" & B
-    Else
-        ArgTy = .AsTy & B
-    End If
-End With
-End Function
-
 
 Private Sub Z()
 Exit Sub
-'Lin_NPrm
+'Lin_NMthArg
 'Lin_PmNy A
 'MthMthPmzLinStr
 'MthLinPmAy
@@ -78,9 +56,4 @@ Exit Sub
 'MthPmUB
 'PushMthPm
 End Sub
-Function MthPmStr$(MthLin)
-If IsMthLin(MthLin) Then
-    MthPmStr = TakBetBkt(MthLin)
-End If
-End Function
 

@@ -30,10 +30,10 @@ End Property
 
 Private Function MisMsgTyOneFx(ColMsg$()) As String()
 Dim M$
-    Select Case Sz(ColMsg)
+    Select Case Si(ColMsg)
     Case 0: Exit Function
     Case 1: M = "There is one column having unexpected column type"
-    Case Else: M = FmtQQ("There are ? columns having unexpected column type", Sz(ColMsg))
+    Case Else: M = FmtQQ("There are ? columns having unexpected column type", Si(ColMsg))
     End Select
 Dim Fxn$
 Dim NN$: NN = FmtQQ("[? excel file] Worksheet unexpected", Fxn)

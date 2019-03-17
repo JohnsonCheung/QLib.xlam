@@ -1,9 +1,9 @@
 Attribute VB_Name = "MDao_Tmp"
 Option Explicit
 Property Get TmpTd() As Dao.TableDef
-Dim FdAy() As Field2
-PushObj FdAy, FdzTxt("F1")
-Set TmpTd = TdzFdAy("Tmp", FdAy)
+Dim Fdy() As Dao.Field2
+PushObj Fdy, FdzTxt("F1")
+Set TmpTd = TdzFdy("Tmp", Fdy)
 End Property
 
 Property Get TmpDbPth$()

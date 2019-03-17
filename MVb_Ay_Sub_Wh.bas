@@ -5,9 +5,18 @@ Sub AyDupAss(A, Fun$, Optional IgnCas As Boolean)
 ' If there are 2 ele with same string (IgnCas), throw error
 Dim Dup$()
     Dup = AywDup(A, IgnCas)
-If Sz(Dup) = 0 Then Exit Sub
+If Si(Dup) = 0 Then Exit Sub
 Thw Fun, "There are dup in array", "Dup Ay", Dup, A
 End Sub
+Function AywIxCnt(Ay, Ix, Cnt)
+Dim J&
+Dim O: O = Ay: Erase O
+For J = 0 To Cnt - 1
+    Push O, Ay(Ix + J)
+Next
+AywIxCnt = O
+End Function
+
 Function AywBetEle(Ay, FmEle, ToEle)
 Dim O: O = AyCln(Ay)
 Dim Inside As Boolean, I
@@ -41,9 +50,6 @@ ZZ:
     
 End Sub
 
-Function FmtCntDic(Ay, Optional IgnCas As Boolean, Optional Opt As eCntOpt) As String()
-FmtCntDic = FmtS1S2Ay(SwapS1S2Ay(S1S2AyzDic(CntDic(Ay, IgnCas, Opt))), Nm1:="Cnt", Nm2:="Mth")
-End Function
 
 Function SyzDistAy(Ay) As String()
 SyzDistAy = CvSy(AywDist(Ay))
@@ -75,12 +81,11 @@ AywFmIx = O
 End Function
 
 Function AywFT(A, FmIx, ToIx)
-Dim J&, O
-O = AyCln(A)
+Dim J&
+AywFT = AyCln(A)
 For J = FmIx To ToIx
-    Push O, A(J)
+    Push AywFT, A(J)
 Next
-AywFT = O
 End Function
 Function AywFstUEle(Ay, U)
 Dim O: O = Ay
@@ -120,7 +125,7 @@ Dim O: O = AyCln(A)
 Dim Ix
 For Each Ix In Itr(IxAy)
     If 0 > Ix Or Ix > U Then
-        ReDim Preserve O(Sz(O))
+        ReDim Preserve O(Si(O))
     Else
         Push O, A(Ix)
     End If
@@ -151,8 +156,8 @@ IsEmpWhNm = True
 If IsNothing(A) Then Exit Function
 With A
     If IsNothing(.Re) Then
-        If Sz(.ExlLikAy) = 0 Then
-            If Sz(.LikAy) = 0 Then
+        If Si(.ExlLikAy) = 0 Then
+            If Si(.LikAy) = 0 Then
                 Exit Function
             End If
         End If
@@ -194,7 +199,7 @@ Next
 End Function
 
 Function AywPatn(A, Patn$) As String()
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 If Patn = "" Or Patn = "." Then AywPatn = SyzAy(A): Exit Function
 Dim X, R As RegExp
 Set R = RegExp(Patn)
@@ -211,7 +216,7 @@ Function AyPatn_IxAy(A, Patn$) As Long()
 AyPatn_IxAy = AyRe_IxAy(A, RegExp(Patn))
 End Function
 Function AyRe_IxAy(A, B As RegExp) As Long()
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim I, O&(), J&
 For Each I In A
     If B.Test(I) Then Push O, J
@@ -349,7 +354,7 @@ End Function
 Function AywSingleEle(A)
 Dim O: O = A: Erase O
 Dim CntDry(): CntDry = CntDryzAy(A)
-If Sz(CntDry) = 0 Then
+If Si(CntDry) = 0 Then
     AywSingleEle = O
     Exit Function
 End If
@@ -386,7 +391,7 @@ Next
 End Function
 
 Function AywT1InAy(A, Ay$()) As String()
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim O$(), L
 For Each L In A
     If HasEle(Ay, T1(L)) Then Push O, L

@@ -3,7 +3,7 @@ Option Explicit
 
 Function IsDimItmzAs(DimItm) As Boolean
 Dim A$(): A = SySsl(DimItm)
-If Sz(A) <> 3 Then Exit Function
+If Si(A) <> 3 Then Exit Function
 If A(1) <> "As" Then Thw CSub, "2nd term is not a [As]", "DimItm", DimItm
 If IsNm(A(0)) Then Thw CSub, "1st term is not a name", "DimItm", DimItm
 IsDimItmzAs = True
@@ -14,7 +14,14 @@ DimNmzSht = RmvChrzSfx(RmvSfxzBkt(DimShtItm), MthChrLis)
 End Function
 
 Function DimNmzAs$(DimAsItm)
-DimNmzAs = RmvSfxzBkt(TakBef(DimAsItm, " As"))
+DimNmzAs = RmvSfxzBkt(StrBef(DimAsItm, " As"))
+End Function
+Function DimTy$(DimItm)
+Select Case True
+Case IsDimItmzSht(DimItm): DimTy = RmvNm(DimItm)
+Case IsDimItmzAs(DimItm):  DimTy = StrBef(DimItm, " As")
+Case Else: Thw CSub, "Not a DimItm", "DimItm", DimItm
+End Select
 End Function
 
 Function DimNm$(DimItm)

@@ -30,11 +30,11 @@ AddFdr = O
 End Function
 
 Function MsgzFfnAlreadyLoaded(Ffn$, FilKind$, LTimStr$) As String()
-Dim Sz&, Tim$, Ld$, Msg$
-Sz = FfnSz(Ffn)
+Dim Si&, Tim$, Ld$, Msg$
+Si = FfnSz(Ffn)
 Tim = FfnTimStr(Ffn)
 Msg = FmtQQ("[?] file of [time] and [size] is already loaded [at].", FilKind)
-MsgzFfnAlreadyLoaded = LyzMsgNap(Msg, Ffn, Tim, Sz, LTimStr)
+MsgzFfnAlreadyLoaded = LyzMsgNap(Msg, Ffn, Tim, Si, LTimStr)
 End Function
 
 Function IsEmpPth(Pth) As Boolean
@@ -54,8 +54,12 @@ Function HitFilAtr(A As VbFileAttribute, Wh As VbFileAttribute) As Boolean
 HitFilAtr = True
 End Function
 
+Function FdrzFfn$(Ffn)
+FdrzFfn = Fdr(Pth(Ffn))
+End Function
+
 Function Fdr$(Pth)
-Fdr = TakAftRev(RmvLasChr(PthEnsSfx(Pth)), PthSep)
+Fdr = StrAftRev(PthRmvSfx(Pth), PthSep)
 End Function
 
 Sub ThwNotFdr(A)
@@ -63,4 +67,3 @@ Const CSub$ = CMod & "ThwNotFdr"
 Const C$ = "\/:<>"
 If HasChrList(A, C) Then Thw CSub, "Fdr cannot has these char " & C, "Fdr Char", A, C
 End Sub
-

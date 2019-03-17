@@ -1,5 +1,8 @@
 Attribute VB_Name = "MDao_Bql_Write"
 Option Explicit
+Const ™Fbq$ = "Fbq is Full file name of back quote (`) separated lines. " & _
+"It has first line as ShtTyscfQBLin.  " & _
+"It rest of lines are records."
 Private Sub Z_WrtFbqlzDb()
 Dim P$: P = TmpPth
 WrtFbqlzDb P, SampDb_DutyDta
@@ -40,11 +43,3 @@ With R
 End With
 Close #F
 End Sub
-Private Function DoczFbq() As String()
-Erase XX
-X "Fbq is Full file name of back quote (`) separated lines"
-X "Fbq has first line as ShtTyscfQBLin"
-X "Fbq rest of lines are records"
-DoczFbq = XX
-Erase XX
-End Function

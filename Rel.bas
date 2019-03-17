@@ -33,7 +33,7 @@ End Sub
 Sub PushRelLin(A)
 Dim Ay$(), P$, C
 Ay = SySsl(A)
-If Sz(Ay) = 0 Then Exit Sub
+If Si(Ay) = 0 Then Exit Sub
 P = AyShf(Ay)
 For Each C In Itr(Ay)
     PushParChd P, C

@@ -16,7 +16,7 @@ End Sub
 
 Sub RenCmp(A As VBComponent, NewNm$)
 If HasCmp(NewNm) Then
-    InfoLin CSub, "New cmp exists", "OldCmp NewCmp", A.Name, NewNm
+    InfLin CSub, "New cmp exists", "OldCmp NewCmp", A.Name, NewNm
 Else
     A.Name = NewNm
 End If

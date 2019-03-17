@@ -6,7 +6,7 @@ BoxLyLines = BoxLyAy(SplitCrLf(Lines))
 End Function
 
 Function BoxLyAy(Ay) As String()
-If Sz(Ay) = 0 Then Exit Function
+If Si(Ay) = 0 Then Exit Function
 Dim W%: W = WdtzAy(Ay)
 Dim H$: H = "|" & Dup("-", W + 2) & "|"
 Push BoxLyAy, H

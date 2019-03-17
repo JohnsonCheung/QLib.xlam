@@ -1,6 +1,7 @@
 Attribute VB_Name = "MVb_Ay_Sub_Exl"
 Option Explicit
 Const CMod$ = "MVb_Ay_Sub_Exl."
+
 Function AyePatn(A, Patn$) As String()
 Dim I, Re As New RegExp
 Re.Pattern = Patn
@@ -8,11 +9,12 @@ For Each I In Itr(A)
     If Not Re.Test(I) Then PushI AyePatn, I
 Next
 End Function
+
 Function AyeAtCnt(A, Optional At = 0, Optional Cnt = 1)
 If Cnt <= 0 Then Stop
-If Sz(A) = 0 Then AyeAtCnt = A: Exit Function
+If Si(A) = 0 Then AyeAtCnt = A: Exit Function
 If At = 0 Then
-    If Sz(A) = Cnt Then
+    If Si(A) = Cnt Then
         AyeAtCnt = AyCln(A)
         Exit Function
     End If
@@ -53,7 +55,7 @@ AyeEleAt = AyeAtCnt(Ay, At, Cnt)
 End Function
 
 Function AyeEleLik(A, Lik$) As String()
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim J&
 For J = 0 To UB(A)
     If A(J) Like Lik Then AyeEleLik = AyeEleAt(A, J): Exit Function
@@ -62,7 +64,7 @@ End Function
 
 Function AyeEmpEle(A)
 Dim O: O = AyCln(A)
-If Sz(A) > 0 Then
+If Si(A) > 0 Then
     Dim X
     For Each X In Itr(A)
         PushNonEmp O, X
@@ -113,7 +115,7 @@ End Function
 
 Function AyeFstNEle(A, Optional N = 1)
 Dim O: O = A
-ReDim O(Sz(A) - 1)
+ReDim O(Si(A) - 1)
 Dim J&
 For J = 0 To UB(A) - N
     O(J) = A(N + J)
@@ -125,6 +127,15 @@ Function AyeFTIx(A, B As FTIx)
 With B
     AyeFTIx = AyeFmTo(A, .FmIx, .ToIx)
 End With
+End Function
+
+Function AyeIxSet(Ay, IxSet As Aset)
+Dim J&, O
+O = Ay: Erase O
+For J = 0 To UBound(Ay)
+    If Not IxSet.Has(J) Then PushI O, Ay(J)
+Next
+AyeIxSet = O
 End Function
 
 Function AyeIxAy(A, IxAy)
@@ -146,7 +157,7 @@ End Function
 Function AyeLasNEle(A, Optional NEle% = 1)
 If NEle = 0 Then AyeLasNEle = A: Exit Function
 Dim O: O = A
-Select Case Sz(A)
+Select Case Si(A)
 Case Is > NEle:    ReDim Preserve O(UB(A) - NEle)
 Case NEle: Erase O
 Case Else: Stop
@@ -173,7 +184,7 @@ AyeLikss = AyeLikAy(A, SySsl(Likss))
 End Function
 
 Function AyeLikssAy(A, LikssAy$()) As String()
-If Sz(LikssAy) = 0 Then AyeLikssAy = SyzAy(A): Exit Function
+If Si(LikssAy) = 0 Then AyeLikssAy = SyzAy(A): Exit Function
 Dim Likss
 For Each Likss In Itr(A)
     If Not HitLikss(A, Likss) Then PushI AyeLikssAy, A
@@ -222,7 +233,7 @@ End Function
 
 Function AyeT1Ay(A, ExlT1Ay0) As String()
 'Exclude those Lin in Array-A its T1 in ExlT1Ay0
-Dim Exl$(): Exl = NyzNN(ExlT1Ay0): If Sz(Exl) = 0 Then Stop
+Dim Exl$(): Exl = NyzNN(ExlT1Ay0): If Si(Exl) = 0 Then Stop
 Dim L
 For Each L In Itr(A)
     If Not HasEle(Exl, T1(L)) Then
@@ -249,7 +260,7 @@ End Sub
 Private Sub Z_AyeEmpEleAtEnd()
 Dim A: A = Array(Empty, Empty, Empty, 1, Empty, Empty)
 Dim Act: Act = AyeEmpEleAtEnd(A)
-Ass Sz(Act) = 4
+Ass Si(Act) = 4
 Ass Act(3) = 1
 End Sub
 
@@ -260,7 +271,7 @@ Dim Act
 A = SplitSpc("a b c d e")
 Set FTIx1 = FTIx(1, 2)
 Act = AyeFTIx(A, FTIx1)
-Ass Sz(Act) = 3
+Ass Si(Act) = 3
 Ass JnSpc(Act) = "a d e"
 End Sub
 
@@ -269,7 +280,7 @@ Dim A
 Dim Act
 A = SplitSpc("a b c d e")
 Act = AyeFTIx(A, FTIx(1, 2))
-Ass Sz(Act) = 3
+Ass Si(Act) = 3
 Ass JnSpc(Act) = "a d e"
 End Sub
 

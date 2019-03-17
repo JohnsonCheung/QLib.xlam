@@ -18,24 +18,17 @@ For Each C In A.VBComponents
 Next
 End Function
 
-Function DclLinCntzMd%(Md As CodeModule)
+Function DclLinCntzMd%(Md As CodeModule) 'Assume FstMth cannot have TopRmk
 Dim I&
     I = FstMthLnoMd(Md)
     If I <= 0 Then
         DclLinCntzMd = Md.CountOfLines
         Exit Function
     End If
-    I = MthTopRmkLnoMdFm(Md, I)
-Dim O&
-    For I = I - 1 To 1 Step -1
-         If IsCdLin(Md.Lines(I, 1)) Then O = I + 1: GoTo X
-    Next
-    O = 0
-X:
-DclLinCntzMd = O
+DclLinCntzMd = MthTopRmkLnoMdFm(Md, I) - 1
 End Function
 
-Function DclLinCnt%(Src$())
+Function DclLinCnt%(Src$()) 'Assume FstMth cannot have TopRmk
 Dim Top&
     Dim Fm&
     Fm = FstMthIx(Src)
@@ -43,18 +36,7 @@ Dim Top&
         DclLinCnt = UB(Src) + 1
         Exit Function
     End If
-    Top = MthTopRmkIx(Src, Fm)
-    If Top = -1 Then
-        Top = Fm
-    End If
-Dim O&
-    Dim I&
-    For I = Top - 1 To 0 Step -1
-         If IsCdLin(Src(I)) Then O = I + 1: GoTo X
-    Next
-    O = 0
-X:
-DclLinCnt = O
+    DclLinCnt = Fm - 1
 End Function
 
 Function DclLines$(Src$())
@@ -62,7 +44,7 @@ DclLines = JnCrLf(DclLy(Src))
 End Function
 
 Function DclLy(Src$()) As String()
-If Sz(Src) = 0 Then Exit Function
+If Si(Src) = 0 Then Exit Function
 Dim N&
    N = DclLinCnt(Src)
 If N = 0 Then Exit Function

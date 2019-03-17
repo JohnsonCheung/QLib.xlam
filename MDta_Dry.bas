@@ -11,14 +11,14 @@ End Function
 Function DrywColInAy(A(), ColIx%, InAy) As Variant()
 Const CSub$ = CMod & "DrywColInAy"
 If Not IsArray(InAy) Then Thw CSub, "[InAy] is not Array, but [TypeName]", InAy, TypeName(InAy)
-If Sz(InAy) = 0 Then DrywColInAy = A: Exit Function
+If Si(InAy) = 0 Then DrywColInAy = A: Exit Function
 Dim Dr
 For Each Dr In Itr(A)
     If HasEle(InAy, Dr(ColIx)) Then PushI DrywColInAy, Dr
 Next
 End Function
 Sub C3DryDo3(C3Dry(), Do3$)
-If Sz(C3Dry) = 0 Then Exit Sub
+If Si(C3Dry) = 0 Then Exit Sub
 Dim Dr
 For Each Dr In C3Dry
     Run Do3, Dr(0), Dr(1), Dr(2)
@@ -26,7 +26,7 @@ Next
 End Sub
 
 Sub C4DryDo4(C4Dry(), Do4$)
-If Sz(C4Dry) = 0 Then Exit Sub
+If Si(C4Dry) = 0 Then Exit Sub
 Dim Dr
 For Each Dr In C4Dry
     Run Do4, Dr(0), Dr(1), Dr(2), Dr(3)
@@ -39,7 +39,7 @@ For Each Dr In Itr(A)
 Next
 End Function
 Function DryDotNy(DotNy$()) As Variant()
-If Sz(DotNy) = 0 Then Exit Function
+If Si(DotNy) = 0 Then Exit Function
 Dim O(), I
 For Each I In DotNy
    With Brk1(I, ".")
@@ -78,12 +78,12 @@ End Function
 
 Function DryzJnFldKK(Dry(), KKIxAy, JnFldIx, Optional Sep$ = " ") As Variant()
 Dim IxAy: IxAy = KKIxAy: PushI IxAy, JnFldIx
-Dim N%: N = Sz(IxAy)
+Dim N%: N = Si(IxAy)
 DryzJnFldKK = DryJnFldNFld(DrySelIxAy(Dry, IxAy), N)
 End Function
 
 Function RowIxzDryDr&(Dry(), Dr)
-Dim N%: N = Sz(Dr)
+Dim N%: N = Si(Dr)
 Dim Ix&, D
 For Each D In Itr(Dry)
     If IsEqAy(AywFstNEle(D, N), Dr) Then
@@ -155,14 +155,8 @@ Case Else: Stop
 End Select
 End Function
 
-Function DryInsAv(A(), Av())
-
-End Function
-
-
-
 Function IsBrkDryIxC(A(), DrIx&, BrkColIx) As Boolean
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 If DrIx = 0 Then Exit Function
 If DrIx = UB(A) Then Exit Function
 If A(DrIx)(BrkColIx) = A(DrIx - 1)(BrkColIx) Then Exit Function
@@ -172,7 +166,7 @@ End Function
 Function NColzDry%(A)
 Dim O%, Dr
 For Each Dr In Itr(A)
-    O = Max(O, Sz(Dr))
+    O = Max(O, Si(Dr))
 Next
 NColzDry = O
 End Function

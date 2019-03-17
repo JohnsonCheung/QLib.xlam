@@ -24,7 +24,7 @@ TFfn = TimFfn(Ffn)
 AttIs = IIf(TAtt > TFfn, "new", "old")
 Dim M$
 M = "Att is " & AttIs
-Info CSub, M, "Att Ffn AttTim TimFfn AttIs-Old-or-New?", Att, Ffn, TAtt, TFfn, AttIs
+Inf CSub, M, "Att Ffn AttTim TimFfn AttIs-Old-or-New?", Att, Ffn, TAtt, TFfn, AttIs
 End Function
 
 Function AttSz&(A As Database, Att)
@@ -80,7 +80,7 @@ Const CSub$ = CMod & "AttFnzAttd"
 With A.ARs
     If .EOF Then
         If .BOF Then
-            Info CSub, "[AttNm] has no attachment files", "AttNm", AttNm(A)
+            Inf CSub, "[AttNm] has no attachment files", "AttNm", AttNm(A)
             Exit Function
         End If
     End If

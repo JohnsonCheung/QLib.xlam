@@ -62,7 +62,7 @@ End Function
 
 Function DiczDryOfTwoCol(Dry(), Optional Sep$ = " ") As Dictionary
 Dim O As New Dictionary
-If Sz(Dry) <> 0 Then
+If Si(Dry) <> 0 Then
    Dim Dr
    For Each Dr In Dry
        O.Add Dr(0), Dr(1)
@@ -99,7 +99,7 @@ Function DryzDic(A As Dictionary, Optional InclDicValOptTy As Boolean) As Varian
 Dim I, Dr
 If A.Count = 0 Then Exit Function
 Dim K(): K = A.Keys
-If Sz(K) = 0 Then Exit Function
+If Si(K) = 0 Then Exit Function
 For Each I In K
     If InclDicValOptTy Then
         Dr = Array(I, A(I), TypeName(A(I)))
@@ -127,6 +127,10 @@ End Function
 Sub ThwDifDic(A As Dictionary, B As Dictionary, Fun$, Optional N1$ = "A", Optional N2$ = "B")
 If Not IsEqDic(A, B) Then Thw Fun, "2 given dic are diff", FmtQQ("[?] [?]", N1, N2), FmtDic(A), FmtDic(B)
 End Sub
+
+Function KeySet(A As Dictionary) As Aset
+Set KeySet = AsetzItr(A.Keys)
+End Function
 
 Function KeySyzDic(A As Dictionary) As String()
 KeySyzDic = SyzAy(A.Keys)
@@ -196,7 +200,7 @@ Function DicMaxValSz%(A As Dictionary)
 'MaxMthCnt is max-of-#-of-method per MthNm
 Dim O%, K
 For Each K In A.Keys
-    O = Max(O, Sz(A(K)))
+    O = Max(O, Si(A(K)))
 Next
 DicMaxValSz = O
 End Function
@@ -206,7 +210,7 @@ Dim Av(): Av = DicAp
 Dim Ny$()
    Ny = SySsl(PfxSsl)
    Ny = AyAddSfx(Ny, "@")
-If Sz(Av) <> Sz(Ny) Then Stop
+If Si(Av) <> Si(Ny) Then Stop
 Dim Dy() As Dictionary
 Dim D As Dictionary
    Dim J%

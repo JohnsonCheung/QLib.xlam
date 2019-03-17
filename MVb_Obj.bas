@@ -3,8 +3,8 @@ Option Explicit
 Const CMod$ = "MVb__Obj."
 Enum eThwOpt
     eThw
-    eNoThwInfo
-    eNoThwNoInfo
+    eNoThwInf
+    eNoThwNoInf
 End Enum
 Function IsEqObj(A, B) As Boolean
 IsEqObj = ObjPtr(A) = ObjPtr(B)
@@ -34,7 +34,7 @@ Function ObjAddAy(Obj, Oy)
 Dim O: O = Oy
 Erase O
 PushObj O, Obj
-PushObjAy O, Oy
+PushObjzAy O, Oy
 ObjAddAy = O
 End Function
 Function ObjNm$(A)
@@ -48,7 +48,7 @@ End Function
 
 Function DrzObjPrpNy(Obj, PrpNy$()) As Variant()
 Const CSub$ = CMod & "DrzObjPrpNy"
-If IsNothing(Obj) Then Info CSub, "Given object is nothing", "PrpNy", PrpNy: Exit Function
+If IsNothing(Obj) Then Inf CSub, "Given object is nothing", "PrpNy", PrpNy: Exit Function
 Dim I
 For Each I In PrpNy
     Push DrzObjPrpNy, ObjPrp(Obj, I)

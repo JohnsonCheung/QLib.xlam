@@ -26,7 +26,7 @@ Set A = Pj_MthDic(CurPj)
 Ass IsDiczSy(A) '
 For Each K In A
     If InStr(K, ".") > 0 Then Stop
-    If Sz(A(K)) = 0 Then Stop
+    If Si(A(K)) = 0 Then Stop
 Next
 End Sub
 
@@ -36,7 +36,7 @@ Set A = Pj_MthDic(CurPj)
 Ass IsDiczSy(A) '
 For Each K In A
     If InStr(K, ".") > 0 Then Stop
-    If Sz(A(K)) = 0 Then Stop
+    If Si(A(K)) = 0 Then Stop
 Next
 End Sub
 Private Sub Z()
@@ -62,6 +62,7 @@ End Function
 Function MthDicMd() As Dictionary
 Set MthDicMd = MthDiczMd(CurMd)
 End Function
+
 Function MthDiczMd(A As CodeModule) As Dictionary
 Set MthDiczMd = AddDicKeyPfx(MthDic(Src(A)), MdQNmzMd(A) & ".")
 End Function

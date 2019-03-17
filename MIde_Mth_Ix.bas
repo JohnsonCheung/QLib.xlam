@@ -133,13 +133,13 @@ MIde_Mth_Ix:
 End Sub
 
 Function MthRgAy(Src$()) As MthRg()
-If Sz(Src) = 0 Then Exit Function
+If Si(Src) = 0 Then Exit Function
 Dim F&(), T&(), N$()
 F = MthIxAy(Src)
 N = MthNyzSrcFm(Src, F)
 T = MthToIxAy(Src, F)
 Dim S&
-S = Sz(F)
+S = Si(F)
 If S = 0 Then Exit Function
 Dim O() As MthRg
 ReDim O(S - 1)

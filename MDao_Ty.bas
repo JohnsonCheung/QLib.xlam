@@ -56,7 +56,7 @@ End Select
 DaoTyzShtTy = O
 End Function
 
-Function SqlTyzDao$(T As Dao.DataTypeEnum, Optional Sz%, Optional Precious%)
+Function SqlTyzDao$(T As Dao.DataTypeEnum, Optional Si%, Optional Precious%)
 Stop '
 End Function
 

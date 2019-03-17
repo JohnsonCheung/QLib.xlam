@@ -12,8 +12,8 @@ Const CSub$ = CMod & "FmtQQAv"
 Dim O$, I, Cnt
 O = Replace(QQVbl, "|", vbCrLf)
 Cnt = SubStrCnt(QQVbl, "?")
-If Cnt <> Sz(Av) Then
-    Thw CSub, "[QQVbl-?-Cnt] <> Av-Sz", "QQVbl-?-Cnt AvSz QQVbl Av", Cnt, Sz(Av), QQVbl, Av
+If Cnt <> Si(Av) Then
+    Thw CSub, "[QQVbl-?-Cnt] <> Av-Si", "QQVbl-?-Cnt AvSz QQVbl Av", Cnt, Si(Av), QQVbl, Av
     Exit Function
 End If
 Dim P&

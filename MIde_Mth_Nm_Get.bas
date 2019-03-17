@@ -59,7 +59,7 @@ End Function
 
 Function DrzMthQNm(MthQNm) As String()
 Dim O$(): O = SplitDot(MthQNm)
-If Sz(O) <> 5 Then Thw CSub, "MthQNm should have 4 dot", "MthQNm", MthQNm
+If Si(O) <> 5 Then Thw CSub, "MthQNm should have 4 dot", "MthQNm", MthQNm
 DrzMthQNm = O
 End Function
 

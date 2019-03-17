@@ -4,7 +4,11 @@ Option Explicit
 Function CvLnx(A) As Lnx
 Set CvLnx = A
 End Function
-
+Function EmpLnx() As Lnx
+Static X As New Lnx, Y As Boolean
+If Not Y Then Y = True: X.Ix = -1
+Set EmpLnx = X
+End Function
 Function Lnx(Ix, Lin) As Lnx
 Set Lnx = New Lnx
 With Lnx
@@ -20,7 +24,7 @@ With A
 End With
 End Sub
 
-Sub LnxBrwAy(A() As Lnx)
+Sub BrwLnxAy(A() As Lnx)
 BrwAy LyzLnxAyzWithLno(A)
 End Sub
 
@@ -50,9 +54,9 @@ End Function
 
 Function ErzLnxAyT1ss(A() As Lnx, T1ss) As String()
 Dim T1Ay$(): T1Ay = SySsl(T1ss)
-If Sz(T1Ay) = 0 Then Exit Function
+If Si(T1Ay) = 0 Then Exit Function
 Dim Er() As Lnx: Er = LnxAyeT1Ay(A, T1Ay)
-If Sz(Er) = 0 Then Exit Function
+If Si(Er) = 0 Then Exit Function
 ErzLnxAyT1ss = LyzMsgNap("There are lines have invalid T1", "Lines Valid-Ty", LyzLnxAyzWithLno(Er), T1Ay)
 End Function
 

@@ -24,7 +24,7 @@ For Each L In SrcMd
 Next
 Brw O
 End Sub
-Function HitConstNm(SrcLin, ConstNm$) As Boolean
+Function HitConstNm(SrcLin, ConstNm) As Boolean
 HitConstNm = ConstNmzSrcLin(SrcLin) = ConstNm
 End Function
 

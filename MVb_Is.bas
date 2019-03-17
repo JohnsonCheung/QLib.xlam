@@ -10,7 +10,7 @@ End Function
 Function IsEmp(A) As Boolean
 Select Case True
 Case IsStr(A):    IsEmp = Trim(A) = ""
-Case IsArray(A):  IsEmp = Sz(A) = 0
+Case IsArray(A):  IsEmp = Si(A) = 0
 Case IsEmpty(A), IsNothing(A), IsMissing(A), IsNull(A): IsEmp = True
 End Select
 End Function

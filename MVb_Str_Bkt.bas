@@ -91,24 +91,24 @@ A3 = Mid(A, P2 + 1)
 BrkBkt = Sy(A1, A2, A3)
 End Function
 
-Function TakBetBkt$(A, Optional OpnBkt$ = vbOpnBkt)
+Function StrBetBkt$(A, Optional OpnBkt$ = vbOpnBkt)
 Dim P1%, P2%
 AsgBktPos A, OpnBkt, P1, P2
-TakBetBkt = Mid(A, P1 + 1, P2 - P1 - 1)
+StrBetBkt = Mid(A, P1 + 1, P2 - P1 - 1)
 End Function
 
-Function TakAftBkt$(Lin, Optional OpnBkt$ = vbOpnBkt)
+Function StrAftBkt$(Lin, Optional OpnBkt$ = vbOpnBkt)
 Dim P1%, P2%
 AsgBktPos Lin, OpnBkt, P1, P2
 If P2 = 0 Then Exit Function
-TakAftBkt = Mid(Lin, P2 + 1)
+StrAftBkt = Mid(Lin, P2 + 1)
 End Function
 
-Function TakBefBkt$(Lin, Optional OpnBkt$ = vbOpnBkt)
+Function StrBefBkt$(Lin, Optional OpnBkt$ = vbOpnBkt)
 Dim P1%, P2%
    AsgBktPos Lin, OpnBkt, P1, P2
 If P1 = 0 Then Exit Function
-TakBefBkt = Left(Lin, P1 - 1)
+StrBefBkt = Left(Lin, P1 - 1)
 End Function
 
 Private Sub Z()

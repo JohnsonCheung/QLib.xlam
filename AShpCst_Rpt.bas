@@ -4,9 +4,11 @@ Public Const RptApn$ = "ShpCst"
 Function RptFb$()
 RptFb = WFb(RptApn)
 End Function
+
 Function RptDb() As Database
 Set RptDb = Db(RptFb)
 End Function
+
 Function RptAppDb() As Database
 Set RptAppDb = AppDb(RptApn)
 End Function
@@ -18,9 +20,9 @@ GenOMain
 WCls
 End Sub
 
-Sub GenRptShpCst()
-GenRpt RptLidPm
-End Sub
+Function OupFxzShpCst$()
+OupFxzShpCst = OupFxzLidPm(RptLidPm)
+End Function
 
 Sub BrwRptPm()
 ShpCstLiPm.Brw

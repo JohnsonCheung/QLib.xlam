@@ -1,7 +1,7 @@
 Attribute VB_Name = "MVb_Hit"
 Option Explicit
 Function HitPfxAy(A, PfxAy) As Boolean
-If Sz(PfxAy) = 0 Then HitPfxAy = 0: Exit Function
+If Si(PfxAy) = 0 Then HitPfxAy = 0: Exit Function
 Dim I
 For Each I In PfxAy
    If HasPfx(A, I) Then HitPfxAy = True: Exit Function
@@ -79,7 +79,7 @@ If HitLikAy(V, B.LikAy) Then Exit Function
 HitNm = False
 End Function
 Function HitAy(V, Ay) As Boolean
-If Sz(Ay) = 0 Then HitAy = True: Exit Function
+If Si(Ay) = 0 Then HitAy = True: Exit Function
 HitAy = HasEle(Ay, V)
 End Function
 

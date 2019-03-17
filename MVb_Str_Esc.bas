@@ -4,7 +4,7 @@ Const CMod$ = "MVb_Str_Esc."
 Function Esc$(A, Fm$, ToStr$)
 Const CSub$ = CMod & "Esc"
 If InStr(A, ToStr) > 0 Then
-    Info CSub, "Warning: escaping a {Str} of {FmStrSub} to {ToSubStr} is found that {Str} contains some {ToSubStr}.  This will make the string chagned after EscUn", A, Fm, ToStr
+    Inf CSub, "Warning: escaping a {Str} of {FmStrSub} to {ToSubStr} is found that {Str} contains some {ToSubStr}.  This will make the string chagned after EscUn", A, Fm, ToStr
 End If
 Esc = Replace(A, Fm, ToStr)
 End Function

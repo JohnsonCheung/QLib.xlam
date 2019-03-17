@@ -182,7 +182,7 @@ IsStrAy = VarType(A) = vbArray + vbString
 End Function
 Function IsEmpSy(A) As Boolean
 If Not IsSy(A) Then Exit Function
-IsEmpSy = Sz(A) = 0
+IsEmpSy = Si(A) = 0
 End Function
 Function IsSy(A) As Boolean
 IsSy = IsStrAy(A)

@@ -2,8 +2,8 @@ Attribute VB_Name = "MDao_Def_Td_New"
 Option Explicit
 Const CMod$ = "MDao_Td_New."
 
-Private Function CvIdxFds(A) As Dao.IndexFields
-Set CvIdxFds = A
+Private Function CvIdxfds(A) As Dao.IndexFields
+Set CvIdxfds = A
 End Function
 
 Private Function IsIdFd(A As Dao.Field2, T) As Boolean
@@ -23,41 +23,40 @@ If Not HasEleAy(FnyzTd(T), Sk) Then
 End If
 Dim I
 For Each I In Sk
-    CvIdxFds(O.Fields).Append Fd(I)
+    CvIdxfds(O.Fields).Append Fd(I)
 Next
 Set SkIdx = O
 End Function
 
-Function TdzFdAy(T, FdAy() As Field2, Optional SkFF) As Dao.TableDef
+Function TdzFdy(T, Fdy() As Dao.Field2, Optional SkFF) As Dao.TableDef
 Dim O As New Dao.TableDef, F
 O.Name = T
-AppFdAy O, FdAy
-AddPk O
-AddSk O, SkFF
-Set TdzFdAy = O
+Set TdzFdy = TdAddSk(TdAddPk(TdAppFdy(O, Fdy)), SkFF)
 End Function
 
-Private Sub AddPk(A As Dao.TableDef)
+Private Function TdAddPk(A As Dao.TableDef) As Dao.TableDef
 'Any Pk Fields in A.Fields?, if no exit sub
 Dim F As Dao.Field2
 For Each F In A.Fields
     If IsIdFd(F, A.Name) Then
         A.Indexes.Append PkIdxzT(A.Name)
-        Exit Sub
+        Exit Function
     End If
 Next
-End Sub
+Set TdAddPk = A
+End Function
 
 Function PkIdxzT(T) As Dao.Index
 Dim O As New Dao.Index
 O.Name = "PrimaryKey"
 O.Primary = True
-CvIdxFds(O.Fields).Append FdzId(T & "Id")
+CvIdxfds(O.Fields).Append FdzId(T & "Id")
 Set PkIdxzT = O
 End Function
 
-Private Sub AddSk(A As Dao.TableDef, SkFF)
-Dim Sk$(): Sk = NyzNN(SkFF): If Sz(Sk) = 0 Then Exit Sub
+Private Function TdAddSk(A As Dao.TableDef, SkFF) As Dao.TableDef
+Dim Sk$(): Sk = NyzNN(SkFF): If Si(Sk) = 0 Then Exit Function
 A.Indexes.Append SkIdx(A, Sk)
-End Sub
+Set TdAddSk = A
+End Function
 

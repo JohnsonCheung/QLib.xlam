@@ -157,7 +157,7 @@ Sub Brw(A, Optional Fnn$, Optional UseVc As Boolean)
 Select Case True
 Case IsStr(A): BrwStr A, Fnn, UseVc
 Case IsArray(A): BrwAy A, Fnn, UseVc
-Case IsAset(A): CvAset(A).Brw Fnn
+Case IsAset(A): CvAset(A).Brw Fnn, UseVc
 Case IsDrs(A): BrwDrs CvDrs(A), Fnn:=Fnn, UseVc:=UseVc
 Case IsDic(A): BrwDic CvDic(A), UseVc:=UseVc, InclDicValOptTy:=True
 Case IsEmpty(A): Debug.Print "Empty"

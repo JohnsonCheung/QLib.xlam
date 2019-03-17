@@ -4,7 +4,7 @@ Function IntozItp(OInto, Itr, P) As String()
 Dim O: O = OInto
 Dim Obj
 For Each Obj In Itr
-    Push O, ObjPrp(Obj, P, eNoThwNoInfo)
+    Push O, ObjPrp(Obj, P, eNoThwNoInf)
 Next
 IntozItp = O
 End Function

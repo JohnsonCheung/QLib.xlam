@@ -2,12 +2,12 @@ Attribute VB_Name = "MVb_Ay_Run_Pred"
 Option Explicit
 
 Function IsAllTruezItrPred_AyPred(A, Pred$) As Boolean
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 IsAllTruezItrPred_AyPred = IsAllTruezItrPred(A, Pred)
 End Function
 
 Function IsSomeTruezAyPred(A, Pred$) As Boolean
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 IsSomeTruezAyPred = IsSomFalsezItrPred(A, Pred)
 End Function
 
@@ -27,6 +27,6 @@ End Sub
 
 
 Function IsAllFalsezItrPred_AyPred(A, Pred$) As Boolean
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 IsAllFalsezItrPred_AyPred = IsAllFalsezItrPred(A, Pred)
 End Function

@@ -38,31 +38,36 @@ Tst:
     C
     Return
 End Sub
-Function ContLin$(A$(), Ix)
-Const CSub$ = CMod & "ContLin"
-If Ix <= -1 Then Exit Function
-Dim J&, I$
-Dim O$, IsCont As Boolean
-For J = Ix To UB(A)
-   I = A(J)
-   O = O & LTrim(I)
-   IsCont = HasSfx(I, " _")
-   If IsCont Then O = RmvSfx(RmvSfx(O, "_"), " ")
-   If Not IsCont Then Exit For
+Function ContLinCnt%(Src$(), Ix)
+If Si(Src) = 0 Then Exit Function
+Dim J&, O%
+For J = Ix To UB(Src)
+    O = O + 1
+    If LasChr(Src(J)) <> "_" Then
+        ContLinCnt = O
+        Exit Function
+    End If
 Next
-If IsCont Then Thw CSub, "each lines {Src} ends with sfx _, which is impossible"
-ContLin = O
+Thw CSub, "LasLin of Src cannot be end of [_]", "LasLin-Of-Src Src", LasEle(Src), Src
 End Function
 
-Function FTIxzMdLnoCont(A As CodeModule, Lno&) As FTIx
-Set FTIxzMdLnoCont = FTIx(Lno - 1, ToLnozContLinMd(A, Lno) - 1)
+Function ContLin$(A$(), Ix)
+ContLin = JnCrLf(AywIxCnt(A, Ix, ContLinCnt(A, Ix)))
 End Function
 
-Private Function ToLnozContLinMd&(A As CodeModule, Lno&)
+Function ContFTIxzSrc(Src$(), Ix) As FTIx
+Set ContFTIxzSrc = FTIxzIxCnt(Ix, ContLinCnt(Src, Ix))
+End Function
+
+Function ContFTIxzMd(A As CodeModule, Lno&) As FTIx
+Set ContFTIxzMd = FTIx(Lno - 1, ContToLno(A, Lno) - 1)
+End Function
+
+Private Function ContToLno&(A As CodeModule, Lno&)
 Dim J&
 For J = Lno To A.CountOfLines
    If Not HasSfx(A.Lines(J, 1), " _") Then
-        ToLnozContLinMd = J
+        ContToLno = J
         Exit Function
    End If
 Next
@@ -70,7 +75,7 @@ If Lno <> A.CountOfLines Then Thw CSub, "each lines ends with sfx _ started from
 End Function
 Function ContLinzMd$(A As CodeModule, Lno&)
 Dim J&, O$()
-For J = Lno To ToLnozContLinMd(A, Lno)
+For J = Lno To ContToLno(A, Lno)
     PushI O, RmvSfx(A.Lines(J, 1), "_")
 Next
 ContLinzMd = JnSpc(O)

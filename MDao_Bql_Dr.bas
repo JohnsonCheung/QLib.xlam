@@ -1,5 +1,6 @@
 Attribute VB_Name = "MDao_Bql_Dr"
 Option Explicit
+Const ™Bql$ = "is Back quote (`) separated line.  If the field is blank, don't set Rs's value"
 Sub InsRszBql(R As Dao.Recordset, Bql)
 R.AddNew
 Dim Ay$(): Ay = Split(Bql, "`")
@@ -28,8 +29,3 @@ BqlzRs = L
 End Function
 
 
-Private Function DoczBql() As String()
-Erase XX
-X "Bql is Back quote (`) separated line"
-X ". If the field is blank, don't set Rs's value"
-End Function

@@ -22,7 +22,7 @@ End Select
 End Function
 
 Function IsVblAy(VblAy$()) As Boolean
-If Sz(VblAy) = 0 Then IsVblAy = True: Exit Function
+If Si(VblAy) = 0 Then IsVblAy = True: Exit Function
 Dim Vbl
 For Each Vbl In VblAy
     If Not IsVbl(CStr(Vbl)) Then Exit Function

@@ -16,7 +16,7 @@ With Me
     .ExtNm = ExtNm
 End With
 Dim A$(): A = ErzShtTyLis(ShtTyLis)
-If Sz(A) > 0 Then
+If Si(A) > 0 Then
     Thw CSub, "Given ShtTyLis has invalid ShtTy", "Invalid-ShtTy Given-ShtTyLis ColNm ExtNm", JnSpc(A), ShtTyLis, ColNm, ExtNm
 End If
 Set Init = Me

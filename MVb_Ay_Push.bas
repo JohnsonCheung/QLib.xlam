@@ -4,7 +4,7 @@ Const CMod$ = "MVb_Ay_Push."
 
 Sub Push(O, M)
 Dim N&
-N = Sz(O)
+N = Si(O)
 ReDim Preserve O(N)
 If IsObject(M) Then
     Set O(N) = M
@@ -52,7 +52,7 @@ End Sub
 
 Sub PushI(O, M)
 Dim N&
-N = Sz(O)
+N = Si(O)
 ReDim Preserve O(N)
 O(N) = M
 End Sub
@@ -65,7 +65,7 @@ Next
 End Sub
 
 Sub PushISomSz(OAy, IAy)
-If Sz(IAy) = 0 Then Exit Sub
+If Si(IAy) = 0 Then Exit Sub
 PushI OAy, IAy
 End Sub
 
@@ -110,28 +110,28 @@ PushObj O, M
 End Sub
 
 Sub PushNonZSz(O, Ay)
-If Sz(Ay) = 0 Then Exit Sub
+If Si(Ay) = 0 Then Exit Sub
 PushI O, Ay
 End Sub
-Sub PushObjExlNothing(O, M)
+Sub PushObjzExlNothing(O, M)
 If IsNothing(M) Then PushObj O, M
 End Sub
 
 Sub PushObj(O, M)
 Dim N&
-N = Sz(O)
+N = Si(O)
 ReDim Preserve O(N)
 Set O(N) = M
 End Sub
 
-Sub PushObjItr(O, Itr)
+Sub PushObjzItr(O, Itr)
 Dim Obj
 For Each Obj In Itr
     PushObj O, Obj
 Next
 End Sub
 
-Sub PushObjAy(O, Oy)
+Sub PushObjzAy(O, Oy)
 Dim I
 For Each I In Itr(Oy)
     PushObj O, I
@@ -140,22 +140,22 @@ End Sub
 
 Sub PushWithSz(O, Ay)
 If Not IsArray(Ay) Then Stop
-If Sz(Ay) = 0 Then Exit Sub
+If Si(Ay) = 0 Then Exit Sub
 Push O, Ay
 End Sub
 
-Function Sz&(A)
+Function Si&(A)
 On Error Resume Next
-Sz = UBound(A) + 1
+Si = UBound(A) + 1
 End Function
 
 Function UB&(A)
-UB = Sz(A) - 1
+UB = Si(A) - 1
 End Function
 
 Function Pop(O)
 Pop = LasEle(O)
-If Sz(O) = 1 Then
+If Si(O) = 1 Then
     Erase O
 Else
     ReDim Preserve O(UB(O) - 1)

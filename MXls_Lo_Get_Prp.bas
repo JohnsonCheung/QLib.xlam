@@ -254,7 +254,7 @@ NewPtLoAtRDCPNm B
 LoQt B
 R1Lo B, C
 R2Lo B, C
-SetLoNm B, E
+LoSetNm B, E
 SqzLo B
 LoVis B
 WbLo B

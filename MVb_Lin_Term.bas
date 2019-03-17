@@ -1,6 +1,7 @@
 Attribute VB_Name = "MVb_Lin_Term"
 Option Explicit
 Const CMod$ = "MVb_Lin_Term."
+
 Function RmvTermAy$(Lin, Ay$())
 Dim T$, I
 T = T1(Lin)
@@ -74,6 +75,7 @@ Case IsSy(NN): TermAyzNN = NN
 Case Else: Thw CSub, "NN must be String or Sy", "TypeName(NN)", TypeName(NN)
 End Select
 End Function
+
 Function TermAy(Lin) As String()
 Dim L$, J%
 L = Lin

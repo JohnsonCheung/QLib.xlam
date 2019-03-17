@@ -31,7 +31,7 @@ Sub LnkCcm(Db As Database, IsLcl As Boolean)
 Const CSub$ = CMod & "LnkCcm"
 Dim T$()  ' All ^xxx
     T = CcmTny(Db)
-    If Sz(T) = 0 Then Thw CSub, "No ^xxx table in [Db]", Db.Name 'Assume always
+    If Si(T) = 0 Then Thw CSub, "No ^xxx table in [Db]", Db.Name 'Assume always
 Chk Db, T, IsLcl ' Chk if all T after rmv ^ is in TarFb
 LnkCcmzTny Db, T, IsLcl
 End Sub
@@ -50,7 +50,7 @@ If Not IsLcl Then Chk2 Db, CcmTny: Exit Sub ' Asserting for TarFb is stored in C
 
 'Asserting for TarFb = Db
 Dim Mis$(): Mis = Chk1(Db, CcmTny)
-If Sz(Mis) = 0 Then Exit Sub
+If Si(Mis) = 0 Then Exit Sub
 Thw CSub, "[Some-Missing-Tar-Tbl] in [Db] cannot be found according to given [CcmTny] in [Db]", Mis, Db.Name, CcmTny, Db.Name
 End Sub
 Private Function Chk1(A As Database, CcmTny$()) As String()

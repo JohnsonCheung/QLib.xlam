@@ -16,9 +16,9 @@ End Function
 
 Private Function IfShwNoDupMsg(MthDNy$(), MthNm) As Boolean
 IfShwNoDupMsg = False
-Select Case Sz(MthDNy)
-Case 0: Info CSub, "No such method in CurVbe", "MthNm", MthNm
-Case 1: Info CSub, "No dup method", "MthDNm", MthDNy(0)
+Select Case Si(MthDNy)
+Case 0: Inf CSub, "No such method in CurVbe", "MthNm", MthNm
+Case 1: Inf CSub, "No dup method", "MthDNm", MthDNy(0)
 Case Else: IfShwNoDupMsg = True
 End Select
 End Function
@@ -29,7 +29,7 @@ End Function
 
 Function DupMthQNyGp_IsVdt(A) As Boolean
 If Not IsSy(A) Then Exit Function
-If Sz(A) <= 1 Then Exit Function
+If Si(A) <= 1 Then Exit Function
 Dim N$: N = Brk(A(0), ":").S1
 Dim J%
 For J = 1 To UB(A)
@@ -39,7 +39,7 @@ DupMthQNyGp_IsVdt = True
 End Function
 
 Function DupMthQNyGpAyAllSameCnt%(A)
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim O%, Gp
 For Each Gp In A
     If DupMthQNyGp_IsDup(Gp) Then O = O + 1

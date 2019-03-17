@@ -31,9 +31,9 @@ Dim N$: N = FmtQQ("Mis-Columns in-? in-? Actual-columns-in-table Expected-column
 Dim Mis$()
     Mis = EptFset.Minus(ActFset).Sy
 Dim M$
-    Select Case Sz(Mis)
+    Select Case Si(Mis)
     Case 1: M = "There is one column missing"
-    Case Else: M = FmtQQ("There are ? columns missing", Sz(Mis))
+    Case Else: M = FmtQQ("There are ? columns missing", Si(Mis))
     End Select
 MisMsg = LyzMsgNap(M, N, Mis, Ffn, T, ActFset.Sy, EptFset.Sy)
 End Property

@@ -25,7 +25,7 @@ For J = 0 To UB(Ly)
     Dim Lin$
     Lin = Ly(J)
     If HasPfx(Lin, "==") Then
-        If Sz(LnxAy) > 0 Then
+        If Si(LnxAy) > 0 Then
             PushObj GpAy, Gp(LnxAy)
         End If
         Erase LnxAy
@@ -33,7 +33,7 @@ For J = 0 To UB(Ly)
         PushObj LnxAy, Lnx(J, Lin)
     End If
 Next
-If Sz(LnxAy) > 0 Then
+If Si(LnxAy) > 0 Then
     PushObj GpAy, Gp(LnxAy)
 End If
 GpAy = O
@@ -43,7 +43,7 @@ Private Function GpAyzRmvRmk(A() As Gp) As Gp()
 Dim J%, O() As Gp, M As Gp
 For J = 0 To UB(A)
     Set M = RmvRmkzGp(A(J))
-    If Sz(M.LnxAy) > 0 Then
+    If Si(M.LnxAy) > 0 Then
         PushObj O, M
     End If
 Next
@@ -88,11 +88,11 @@ IsPmLy = HasMajPfx(A, "%")
 End Function
 
 Private Function IsRmLy(A$()) As Boolean
-IsRmLy = Sz(A) = 0
+IsRmLy = Si(A) = 0
 End Function
 
 Private Function IsSqLy(A$()) As Boolean
-If Sz(A) <> 0 Then Exit Function
+If Si(A) <> 0 Then Exit Function
 Dim L$: L = A(0)
 Dim Sy$(): Sy = SySsl("?SEL SEL ?SELDIS SELDIS UPD DRP")
 If HitPfxAy(L, Sy) Then IsSqLy = True: Exit Function

@@ -6,6 +6,11 @@ Function AyAdd1(A)
 AyAdd1 = AyAddN(A, 1)
 End Function
 
+Function SyAdd(A$(), B$()) As String()
+SyAdd = A
+PushAy SyAdd, B
+End Function
+
 Function AyAdd(A, B)
 AyAdd = A
 PushAy AyAdd, B

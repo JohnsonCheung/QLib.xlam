@@ -38,8 +38,8 @@ Sub LnkFbzTT(Db As Database, TTCrt$, Fb$, Optional Fbtt$)
 Dim TnyCrt$(), TnyzFb$(), J%, T
 TnyCrt = NyzNN(TTCrt)
 TnyzFb = IIf(Fbtt = "", TnyCrt, TermAy(Fbtt))
-If Sz(TnyzFb) <> Sz(TnyCrt) Then
-    Thw CSub, "[TTCrt] and [FbttSz] are diff", "TTCrtSz FbttSz TnyCrt TnyzFb GivenFbtt", Sz(TnyCrt), Sz(TnyzFb), TnyCrt, TnyzFb, Fbtt
+If Si(TnyzFb) <> Si(TnyCrt) Then
+    Thw CSub, "[TTCrt] and [FbttSz] are diff", "TTCrtSz FbttSz TnyCrt TnyzFb GivenFbtt", Si(TnyCrt), Si(TnyzFb), TnyCrt, TnyzFb, Fbtt
 End If
 Dim Cn$: Cn = CnStrzFbDao(Fb)
 For J = 0 To UB(TnyCrt)

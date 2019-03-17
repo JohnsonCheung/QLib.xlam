@@ -18,29 +18,28 @@ For J = UB(B) To 0 Step -1
 Next
 End Sub
 
-Function CntSzzMd$(A As CodeModule)
-CntSzzMd = CntSzzLines(SrcLines(A))
+Function CntSzStrzMd$(A As CodeModule)
+CntSzStrzMd = CntSzStrzLines(SrcLines(A))
+End Function
+
+Function MdLineszMd(A As CodeModule) As MdLines
+Set MdLineszMd = MdLines(1, SrcLines(A))
 End Function
 
 Sub RplMd(A As CodeModule, NewMdLines$)
-Dim OldLines$: OldLines = SrcLines(A)
-Dim NewCntSz$: NewCntSz = CntSzzLines(NewMdLines)
-If OldLines = NewMdLines Then
-    InfoLin CSub, "No replace: Same", "MdNm LinesCnt", MdNm(A), NewCntSz
-    Exit Sub
-End If
-Dim OldCntSz$: OldCntSz = CntSzzLines(OldLines)
-ClrMd A
-A.AddFromString NewMdLines
-InfoLin CSub, "Replaced", "MdNm Type OldLin NewLin", MdNm(A), OldLines, NewCntSz
+RplMdLines A, MdLineszMd(A), NewMdLines, "Whole-Md"
 End Sub
 
 Sub RmvMdFTIx(A As CodeModule, FTIx As FTIx)
+Dim FstLin$
+FstLin = A.Lines(FTIx.FmNo, 1)
 With FTIx
     If .Cnt = 0 Then Exit Sub
     A.DeleteLines .FmNo, .Cnt
+    InfLin CSub, "Lines deleted", "Md Lno Cnt FstLin", MdNm(A), FTIx.FmNo, FTIx.Cnt, FstLin
 End With
 End Sub
+
 Sub RmvMdFtLinesIxAy(A As CodeModule, B() As FTIx)
 If Not FTIxAyIsInOrd(B) Then Stop
 Dim J%

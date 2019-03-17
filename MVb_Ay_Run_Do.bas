@@ -1,7 +1,7 @@
 Attribute VB_Name = "MVb_Ay_Run_Do"
 Option Explicit
 Sub DoAy(A, FunNm$)
-If Sz(A) = 0 Then Exit Sub
+If Si(A) = 0 Then Exit Sub
 Dim I
 For Each I In A
     Run FunNm, I

@@ -36,5 +36,5 @@ NPubMthPj = O
 End Function
 
 Function NMthzSrc%(A$(), Optional WhStr$)
-NMthzSrc = Sz(MthIxAy(A, WhStr$))
+NMthzSrc = Si(MthIxAy(A, WhStr$))
 End Function

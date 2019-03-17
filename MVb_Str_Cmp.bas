@@ -16,8 +16,8 @@ Dim DifAt&
     DifAt = DifAtIx(AA, BB)
 Dim O$(), J&, MinU&
     PushNonBlankStr O, Hdr
-    PushI O, FmtQQ("LinesCnt=? (?)", Sz(AA), N1)
-    PushI O, FmtQQ("LinesCnt=? (?)", Sz(BB), N2)
+    PushI O, FmtQQ("LinesCnt=? (?)", Si(AA), N1)
+    PushI O, FmtQQ("LinesCnt=? (?)", Si(BB), N2)
     PushI O, FmtQQ("Dif At Ix=?", DifAt)
     
     MinU = Min(UB(AA), UB(BB))
@@ -93,7 +93,7 @@ End Function
 
 Private Function DifAtIx&(A$(), B$())
 Dim O&
-For O = 0 To Min(Sz(A), Sz(B))
+For O = 0 To Min(Si(A), Si(B))
     If A(O) <> B(O) Then DifAtIx = O: Exit Function
 Next
 'Thw_Never CSub

@@ -3,7 +3,7 @@ Option Explicit
 
 Sub SetLoTit(A As ListObject, TitLy$())
 Dim Sq(), R As Range
-    Sq = TitSq(TitLy, FnyzLo(A)): If Sz(Sq) = 0 Then Exit Sub
+    Sq = TitSq(TitLy, FnyzLo(A)): If Si(Sq) = 0 Then Exit Sub
     Set R = TitAt(A, UBound(Sq, 1))
 Set R = RgzSq(Sq, R)
 MgeTitRg R

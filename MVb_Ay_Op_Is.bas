@@ -1,7 +1,7 @@
 Attribute VB_Name = "MVb_Ay_Op_Is"
 Option Explicit
 Function IsAllEleHasVyzDicKK(A) As Boolean
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim I
 For Each I In A
     If IsEmp(I) Then Exit Function
@@ -10,7 +10,7 @@ IsAllEleHasVyzDicKK = True
 End Function
 
 Function IsAllEleEqAy(A) As Boolean
-If Sz(A) <= 1 Then IsAllEleEqAy = True: Exit Function
+If Si(A) <= 1 Then IsAllEleEqAy = True: Exit Function
 Dim A0, J&
 A0 = A(0)
 For J = 1 To UB(A)
@@ -30,7 +30,7 @@ IsAllStrAy = True
 End Function
 
 Function IsEqSz(A, B) As Boolean
-IsEqSz = Sz(A) = Sz(B)
+IsEqSz = Si(A) = Si(B)
 End Function
 
 Function IsEqAy(A, B) As Boolean

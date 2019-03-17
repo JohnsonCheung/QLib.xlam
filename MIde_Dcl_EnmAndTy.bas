@@ -123,7 +123,7 @@ EnmLyMd = EnmLy(DclLyzMd(Md), EnmNm)
 End Function
 
 Function NEnmMbrMd%(A As CodeModule, EnmNm$)
-NEnmMbrMd = Sz(EnmMbrLyMd(A, EnmNm))
+NEnmMbrMd = Si(EnmMbrLyMd(A, EnmNm))
 End Function
 
 Function EnmMbrLyMd(A As CodeModule, EnmNm$) As String()

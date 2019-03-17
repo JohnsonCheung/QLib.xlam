@@ -1,10 +1,10 @@
 Attribute VB_Name = "MIde_Gen_Pjf_Fba"
 Option Explicit
 
-Sub GenFba(SrcPthInst, Optional Acs As Access.Application)
-ThwNotSrcPthInst SrcPthInst
+Sub GenFba(SrcpInst, Optional Acs As Access.Application)
+ThwNotSrcpInst SrcpInst
 Dim A As Access.Application: Set A = DftAcs(A)
-Dim Fba$: Fba = DistFba(SrcPthInst)
+Dim Fba$: Fba = DistFba(SrcpInst)
 CrtFb Fba
 OpnFb A, Fba
 Dim Pj As VBProject: Set Pj = A.Vbe.ActiveVBProject
@@ -18,17 +18,17 @@ End Sub
 Private Sub LoadFrm(A As VBProject)
 Stop
 End Sub
-Private Sub LoadFrmzAcs(A As Access.Application, SrcPth)
+Private Sub LoadFrmzAcs(A As Access.Application, Srcp)
 Dim FrmFfn, N$
-For Each FrmFfn In Itr(FrmFfnAy(SrcPth))
+For Each FrmFfn In Itr(FrmFfnAy(Srcp))
     N$ = RmvExt(RmvExt(FrmFfn))
     A.LoadFromText acForm, RmvExt(RmvExt(FrmFfn)), FrmFfn
 Next
 End Sub
 
-Private Function FrmFfnAy(SrcPth) As String()
+Private Function FrmFfnAy(Srcp) As String()
 Dim Ffn
-For Each Ffn In FfnAy(SrcPth)
+For Each Ffn In FfnAy(Srcp)
     If IsFrmFfn(Ffn) Then
         PushI FrmFfnAy, Ffn
     End If

@@ -27,14 +27,14 @@ Function LyzFunMsgNyAv(Fun$, Msg$, Ny$(), Av()) As String()
 LyzFunMsgNyAv = AyAdd(LyzFunMsg(Fun, Msg), AyIndent(LyzNyAv(Ny, Av)))
 End Function
 
-Sub InfoObjPP(Fun$, Msg$, Obj, PP)
+Sub InfObjPP(Fun$, Msg$, Obj, PP)
 D LyzFunMsgObjPP(Fun, Msg, Obj, PP)
 End Sub
 
 Function LyzNv(Nm$, V, Optional Sep$ = ": ") As String()
 Dim Ly$(): Ly = LyzVal(V)
 Dim J%, S$
-If Sz(Ly) = 0 Then
+If Si(Ly) = 0 Then
     PushI LyzNv, Nm & Sep
 Else
     PushI LyzNv, Nm & Sep & Ly(0)
@@ -108,7 +108,7 @@ LinzNyAv = JnVBarSpc(O)
 End Function
 
 Sub AsgNyAv(Nav(), ONy$(), OAv())
-If Sz(Nav) = 0 Then
+If Si(Nav) = 0 Then
     Erase ONy
     Erase OAv
     Exit Sub

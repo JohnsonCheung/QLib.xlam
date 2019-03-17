@@ -24,7 +24,7 @@ End Function
 Function Md(MdDNm) As CodeModule
 Const CSub$ = CMod & "Md"
 Dim A1$(): A1 = Split(MdDNm, ".")
-Select Case Sz(A1)
+Select Case Si(A1)
 Case 1: Set Md = CurPj.VBComponents(A1(0)).CodeModule
 Case 2: Set Md = Pj(A1(0)).VBComponents(A1(1)).CodeModule
 Case Else: Thw CSub, "[MdDNm] should be XXX.XXX or XXX", MdDNm
@@ -79,6 +79,10 @@ Function PjzMd(A As CodeModule) As VBProject
 Set PjzMd = A.Parent.Collection.Parent
 End Function
 
+Function SrcExlMth(Src$(), MthNmSet As Aset) As String()
+SrcExlMth = LyzLinesDicByItems(DicExlKeySet(MthNmDic(Src), MthNmSet))
+End Function
+
 Function SrcLines$(A As CodeModule)
 SrcLines = JnCrLf(Src(A))
 End Function
@@ -117,7 +121,7 @@ Dim O$()
         J = J + 1
         Push L, MthLnoMdMth(A, CStr(M))
         If J Mod 150 = 0 Then
-            Debug.Print J, Sz(Ny), "Z_MthLnoMdMth"
+            Debug.Print J, Si(Ny), "Z_MthLnoMdMth"
         End If
     Next
 

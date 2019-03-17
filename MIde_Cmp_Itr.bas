@@ -32,7 +32,7 @@ For Each C In CmpAyzPj(CurPj, "-Cls")
 Next
 End Sub
 Function CmpAyzPj(A As VBProject, Optional WhStr$) As VBComponent()
-If IsProtectzInfo(A) Then Exit Function
+If IsProtectzInf(A) Then Exit Function
 Dim C As VBComponent, W As WhMd
 Set W = WhMdzStr(WhStr): If IsNothing(W) Then Stop '
 For Each C In A.VBComponents

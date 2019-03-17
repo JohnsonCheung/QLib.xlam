@@ -4,8 +4,8 @@ Function LtPmzLid(A As LidPm) As LtPm()
 Dim O() As LtPm, D As Dictionary, P$
 Set D = FilNmToFfnDiczLidPm(A.Fil)
 P = WPth(A.Apn)
-PushObjAy O, LtPmAyFb(A, D, P)
-PushObjAy O, LtPmAyFx(A, D, P)
+PushObjzAy O, LtPmAyFb(A, D, P)
+PushObjzAy O, LtPmAyFx(A, D, P)
 LtPmzLid = O
 End Function
 

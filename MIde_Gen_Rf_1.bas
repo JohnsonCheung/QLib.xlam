@@ -1,17 +1,18 @@
 Attribute VB_Name = "MIde_Gen_Rf_1"
 Option Explicit
-Sub AddRfzPj(A As VBProject)
-Dim F$: F$ = RfSrcFfn(A)
-If Not HasFfn(F) Then Err.Raise 1, , "No RfSrcFfn(" & F & ")"
-Dim RfLin
-For Each RfLin In Itr(FtLy(F))
-    AddRfzRfLin A, RfLin
+Sub AddRfzPj(DistPj As VBProject)
+Dim RfLin, RfLy$()
+RfLy = FtLy(RfSrcFfnzDistPj(DistPj))
+For Each RfLin In Itr(RfLy)
+    AddRf DistPj, RfLin
 Next
 End Sub
-Sub AddRfzRfLin(A As VBProject, RfLin)
-Dim Ffn$: Ffn = RfFfn(RfLin)
-If HasRfFfn(A, Ffn) Then Exit Sub
-A.References.AddFromFile Ffn
+
+Sub AddRf(A As VBProject, RfLin)
+If RfLin = "" Then Exit Sub
+Dim F$: F = RfFfn(RfLin)
+If HasRfFfn(A, F) Then Exit Sub
+A.References.AddFromFile F
 End Sub
 
 Function RfFfn$(RfLin)
@@ -27,13 +28,19 @@ Next
 End Function
 
 Function RfSrcFfn$(A As VBProject)
-RfSrcFfn = SrcPth(A) & "Rf.txt"
+RfSrcFfn = Srcp(A) & "Rf.txt"
 End Function
 
-Function RfSrc(A As VBProject) As String()
+Function RfSrcFfnzDistPj$(DistPj As VBProject)
+RfSrcFfnzDistPj = SrcpzDistPj(DistPj) & "Rf.txt"
+End Function
+Function RfSrcPj() As String()
+RfSrcPj = RfSrczPj(CurPj)
+End Function
+Function RfSrczPj(A As VBProject) As String()
 Dim R As VBIDE.Reference
 For Each R In A.References
-    PushI RfSrc, RfLin(R)
+    PushI RfSrczPj, RfLin(R)
 Next
 End Function
 

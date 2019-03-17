@@ -77,9 +77,9 @@ Fmt = FmtAyzSepSS(O, "ValCnt Val(")
 End Function
 
 Private Function FmtzNmSy$(PmNm, Sy$())
-Select Case Sz(Sy)
+Select Case Si(Sy)
 Case 0:    FmtzNmSy = FmtQQ("PmSw(?)", PmNm)
-Case Else: FmtzNmSy = FmtQQ("Pm(?) ValCnt(?) Val(?)", PmNm, Sz(Sy), JnSpc(Sy))
+Case Else: FmtzNmSy = FmtQQ("Pm(?) ValCnt(?) Val(?)", PmNm, Si(Sy), JnSpc(Sy))
 End Select
 End Function
 
@@ -100,10 +100,10 @@ Function StrPmVal$(PmNm, Optional NmPfx$)
 Const CSub$ = CMod & "StrPmVal"
 Dim Vy$()
     Vy = SyPmVal(PmNm, NmPfx)
-Select Case Sz(Vy)
+Select Case Si(Vy)
 Case 0
 Case 1: StrPmVal = Vy(0)
-Case Else: Thw CSub, FmtQQ("Parameter [-?] should have one value", PmNm), "Pm PmValSz PmVal-Sy", Fmt, Sz(Vy), Vy
+Case Else: Thw CSub, FmtQQ("Parameter [-?] should have one value", PmNm), "Pm PmValSz PmVal-Sy", Fmt, Si(Vy), Vy
 End Select
 End Function
 Function Patn$(NmPfx)

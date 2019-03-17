@@ -5,7 +5,7 @@ Sub X(S$)
 Push XX, S
 End Sub
 Sub X0(S$)
-If Sz(XX) = 0 Then PushI XX, S: Exit Sub
+If Si(XX) = 0 Then PushI XX, S: Exit Sub
 X1 S
 End Sub
 Sub X1(S$)

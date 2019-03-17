@@ -1,5 +1,12 @@
 Attribute VB_Name = "MXls_Xls"
 Option Explicit
+Sub Z_XlszGet()
+Debug.Print XlszGet.Name
+End Sub
+Function XlszGet() As Excel.Application
+Set XlszGet = GetObject("C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE")
+End Function
+
 Function Xls() As Excel.Application
 Set Xls = Excel.Application
 End Function
@@ -21,7 +28,6 @@ For Each W In A.Workbooks
     W.Close False
 Next
 End Sub
-
 
 Function DftXls(A As Excel.Application) As Excel.Application
 If IsNothing(A) Then

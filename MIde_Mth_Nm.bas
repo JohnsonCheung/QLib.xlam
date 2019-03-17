@@ -7,7 +7,7 @@ Type MdMth
 End Type
 Sub AsgDNm(DNm$, O1$, O2$, O3$)
 Dim Ay$(): Ay = Split(DNm, ".")
-Select Case Sz(Ay)
+Select Case Si(Ay)
 Case 1: O1 = "":    O2 = "":    O3 = Ay(0)
 Case 2: O1 = "":    O2 = Ay(0): O3 = Ay(1)
 Case 3: O1 = Ay(0): O2 = Ay(1): O3 = Ay(2)
@@ -106,14 +106,21 @@ Function MthNm$(Lin, Optional B As WhMth)
 MthNm = MthNm3(Lin, B).Nm
 End Function
 Function MthNmzMthDNm$(MthDNm)
+If MthDNm = "*Dcl" Then MthNmzMthDNm = MthDNm: Exit Function
 Dim A$()
 A = SplitDot(MthDNm)
-If Sz(A) <> 3 Then Thw CSub, "MthDNm should have 2 dot", "MthDNm", MthDNm
+If Si(A) <> 3 Then Thw CSub, "MthDNm should have 2 dot", "MthDNm", MthDNm
 MthNmzMthDNm = A(0)
 End Function
+
+Function MthDNmzLin$(MthLin)
+MthDNmzLin = MthDNmzMthNm3(MthNm3(MthLin))
+End Function
+
 Function MthDNm$(Lin, Optional B As WhMth)
 MthDNm = MthNm3(Lin, B).DNm
 End Function
+
 Function MthNmzLin$(Lin, Optional B As WhMth)
 MthNmzLin = MthNm3(Lin, B).Nm
 End Function
@@ -128,7 +135,7 @@ End Function
 Function MthNmzDNm$(MthNm)
 Dim Ay$(): Ay = Split(MthNm, ".")
 Dim Nm$
-Select Case Sz(Ay)
+Select Case Si(Ay)
 Case 1: Nm = Ay(0)
 Case 2: Nm = Ay(1)
 Case 3: Nm = Ay(2)

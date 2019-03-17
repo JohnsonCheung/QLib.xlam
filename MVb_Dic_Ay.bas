@@ -27,3 +27,13 @@ For Each I In DicAy
 Next
 'DicAyDr = O
 End Function
+
+Function DicExlKeySet(Dic As Dictionary, ExlKeySet As Aset) As Dictionary
+Dim K
+Set DicExlKeySet = New Dictionary
+For Each K In Dic.Keys
+    If Not ExlKeySet.Has(K) Then
+        DicExlKeySet.Add K, Dic(K)
+    End If
+Next
+End Function

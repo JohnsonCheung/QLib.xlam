@@ -18,46 +18,46 @@ Const C_PrpSet$ = C_Prp + " " + C_Set
 
 Property Get PrpTyAy() As String()
 Static X$()
-If Sz(X) = 0 Then X = Sy(C_Get, C_Set, C_Let)
+If Si(X) = 0 Then X = Sy(C_Get, C_Set, C_Let)
 PrpTyAy = X
 End Property
 Property Get MthTyAy() As String()
 Static X$()
-If Sz(X) = 0 Then X = Sy(C_Fun, C_Sub, C_PrpGet, C_PrpLet, C_PrpSet)
+If Si(X) = 0 Then X = Sy(C_Fun, C_Sub, C_PrpGet, C_PrpLet, C_PrpSet)
 MthTyAy = X
 End Property
 
 Property Get MthMdyAy() As String()
 Static X$()
-If Sz(X) = 0 Then X = Sy(C_Pub, C_Prv, C_Frd, "")
+If Si(X) = 0 Then X = Sy(C_Pub, C_Prv, C_Frd, "")
 MthMdyAy = X
 End Property
 
 Property Get ShtMdyAy() As String()
 Static X$()
-If Sz(X) = 0 Then X = Sy("Pub", "Prv", "Frd", "")
+If Si(X) = 0 Then X = Sy("Pub", "Prv", "Frd", "")
 ShtMdyAy = X
 End Property
 Property Get ShtMthKdAy() As String()
 Static X$()
-If Sz(X) = 0 Then X = Sy("Fun", "Sub", "Prp")
+If Si(X) = 0 Then X = Sy("Fun", "Sub", "Prp")
 ShtMthKdAy = X
 End Property
 Property Get ShtMthTyAy() As String()
 Static X$()
-If Sz(X) = 0 Then X = Sy("Fun", "Sub", "Get", "Set", "Let")
+If Si(X) = 0 Then X = Sy("Fun", "Sub", "Get", "Set", "Let")
 ShtMthTyAy = X
 End Property
 
 
 Property Get MthKdAy() As String()
 Static X$()
-If Sz(X) = 0 Then X = Sy(C_Fun, C_Sub, C_Prp)
+If Si(X) = 0 Then X = Sy(C_Fun, C_Sub, C_Prp)
 MthKdAy = X
 End Property
 
 Property Get DclItmAy() As String()
 Static X$()
-If Sz(X) = 0 Then X = Sy(C_Ty, C_Enm)
+If Si(X) = 0 Then X = Sy(C_Ty, C_Enm)
 DclItmAy = X
 End Property

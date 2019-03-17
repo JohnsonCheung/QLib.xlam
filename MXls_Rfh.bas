@@ -52,12 +52,11 @@ End Sub
 Function RfhWb(Wb As Workbook, Fb) As Workbook
 RplLozFb Wb, Fb
 Dim C As WorkbookConnection
-Dim P As PivotCache:
-Dim W As Worksheet:
-For Each C In Wb.Connections:   RfhWc W, Fb: Next
-For Each P In Wb.PivotCaches:   P.MissingItemsLimit = xlMissingItemsNone: P.Refresh: Next
-For Each W In Wb.Sheets:        RfhWs W: Next
-'FmtLozWb Wb
+Dim P As PivotCache, W As Worksheet
+For Each C In Wb.Connections: RfhWc C, Fb:                                          Next
+For Each P In Wb.PivotCaches: P.MissingItemsLimit = xlMissingItemsNone: P.Refresh:  Next
+For Each W In Wb.Sheets:      RfhWs W:                                              Next
+FmtLozStdWb Wb
 ClsWczWb Wb
 DltWc Wb
 Set RfhWb = Wb

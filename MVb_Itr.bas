@@ -128,22 +128,26 @@ Function IsEqNmItr(A, B)
 IsEqNmItr = IsSamAy(Itn(A), Itn(B))
 End Function
 
-Function ItrMap(Itr, Map$) As Variant()
-ItrMap = IntozItrMap(EmpAv, Itr, Map)
+Function AvzItrMap(Itr, Map$) As Variant()
+AvzItrMap = IntozAvzItrMap(EmpAv, Itr, Map)
 End Function
 
-Function IntozItrMap(OInto, Itr, Map$)
+Function IntozAyMap(OInto, Ay, Map$)
+IntozAyMap = IntozAvzItrMap(OInto, Itr(Ay), Map)
+End Function
+
+Function IntozAvzItrMap(OInto, Itr, Map$)
 Dim O: O = OInto
 Erase O
 Dim X
 For Each X In Itr
     Push O, Run(Map, X)
 Next
-IntozItrMap = O
+IntozAvzItrMap = O
 End Function
 
-Function SyzItrMap(Itr, Map$) As String()
-SyzItrMap = IntozItrMap(EmpSy, Itr, Map)
+Function SyzAvzItrMap(Itr, Map$) As String()
+SyzAvzItrMap = IntozAvzItrMap(EmpSy, Itr, Map)
 End Function
 
 Function MaxItrPrp(A, P)
@@ -176,6 +180,9 @@ Dim Obj
 For Each Obj In Itr
     PushI VyzItr, Obj.Value
 Next
+End Function
+Function NyzOy(Oy) As String()
+NyzOy = Itn(Itr(Oy))
 End Function
 Function Itn(Itr) As String()
 Dim I
@@ -303,7 +310,7 @@ DoItrFunPX A, B, A
 DoItrFunXP A, B, A
 FstItr A
 FstItr A
-SyzItrMap A, B
+SyzAvzItrMap A, B
 MaxItrPrp A, A
 Itn A
 IsAllFalsezItrPred A, B

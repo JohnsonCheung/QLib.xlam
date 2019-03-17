@@ -25,7 +25,7 @@ Next
 End Function
 
 Function AyRmvPfx(A, Pfx) As String()
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim U&: U = UB(A)
 Dim O$()
 ReDim O(U)
@@ -37,7 +37,7 @@ AyRmvPfx = O
 End Function
 
 Function AyRmvSngQRmk(A$()) As String()
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim X, O$()
 For Each X In Itr(A)
     If Not IsSngQRmk(CStr(X)) Then Push O, X
@@ -74,7 +74,7 @@ For Each I In Itr(Ay)
 Next
 End Function
 Function AyRmv2Dash(Ay) As String()
-If Sz(Ay) = 0 Then Exit Function
+If Si(Ay) = 0 Then Exit Function
 Dim O$(), I
 For Each I In Ay
     Push O, Rmv2Dash(CStr(I))

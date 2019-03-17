@@ -48,7 +48,7 @@ Public Const SampFbzDuty_Pgm$ _
 Public Const SampFx_KE24 _
                                     = H & "DutyPrepay5\SAPDownloadExcel\KE24 2010-01c.xls"
 Public Const SampFbzDuty_PgmBackup$ _
-                                    = H & "DutyPrepay5\DutyPrepay5_Backup.accdb"
+                                    = H & "DutyPrepay5\DutyPrepay5_FfnBackup.accdb"
 Public Const SampFbzTaxCmp$ _
                                     = H1 & "QFinalSln\TaxExpCmp v1.3.accdb"
 Public Const SampFbzShpRate$ _

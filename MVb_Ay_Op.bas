@@ -4,11 +4,12 @@ Const CMod$ = "MVb_Ay__Operation."
 Function DashLT1Ay(Ay) As String()
 Dim I
 For Each I In Itr(Ay)
-    PushNoDup DashLT1Ay, TakBefOrAll(I, "_")
+    PushNoDup DashLT1Ay, StrBefOrAll(I, "_")
 Next
 End Function
+
 Function AyEndTrim(A$()) As String()
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 If LasEle(A) <> "" Then AyEndTrim = A: Exit Function
 Dim J%
 For J = UB(A) To 0 Step -1
@@ -24,8 +25,8 @@ End Function
 
 Function AyIntersect(A, B)
 AyIntersect = AyCln(A)
-If Sz(A) = 0 Then Exit Function
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim V
 For Each V In A
     If HasEle(B, V) Then PushI AyIntersect, V
@@ -33,7 +34,7 @@ Next
 End Function
 Function MinAy(A)
 Dim O, J&
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 O = A(0)
 For J = 1 To UB(A)
     If A(J) < O Then O = A(J)
@@ -46,15 +47,15 @@ Dim IAy, O
 O = Ay
 For Each IAy In Ap
     O = AyMinus(Ay, IAy)
-    If Sz(O) = 0 Then AyMinusAp = O: Exit Function
+    If Si(O) = 0 Then AyMinusAp = O: Exit Function
 Next
 AyMinusAp = O
 End Function
 
 Function AyMinus(A, B)
-If Sz(B) = 0 Then AyMinus = A: Exit Function
+If Si(B) = 0 Then AyMinus = A: Exit Function
 AyMinus = AyCln(A)
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim V
 For Each V In A
     If Not HasEle(B, V) Then
@@ -71,16 +72,6 @@ Next
 MaxAy = O
 End Function
 
-Function MaxAySz%(A)
-If Sz(A) = 0 Then Exit Function
-Dim O&, I, S&
-For Each I In A
-    O = Max(O, Sz(I))
-Next
-MaxAySz = O
-End Function
-
-
 Function Ny(A) As String()
 Const CSub$ = CMod & "Ny"
 Select Case True
@@ -89,8 +80,6 @@ Case IsSy(A): Ny = A
 Case Else: ThwPmEr A, CSub, "Should be Str or Sy"
 End Select
 End Function
-
-
 
 Function CvVy(Vy)
 Const CSub$ = CMod & "CvVy"
@@ -120,7 +109,7 @@ End Function
 
 Function SyShow(XX$, Sy$()) As String()
 Dim O$()
-Select Case Sz(Sy)
+Select Case Si(Sy)
 Case 0
     Push O, XX & "()"
 Case 1

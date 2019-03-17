@@ -2,7 +2,7 @@ Attribute VB_Name = "MVb_FmCnt"
 Option Explicit
 
 Function IsEqFTIxAy(A() As FTIx, B() As FTIx) As Boolean
-If Sz(A) <> Sz(B) Then Exit Function
+If Si(A) <> Si(B) Then Exit Function
 Dim X, J&
 For Each X In Itr(A)
     If Not FTIxIsEq(CvFTIx(X), B(J)) Then Exit Function
@@ -32,10 +32,10 @@ Next
 FTIxAyLinCnt = O
 End Function
 
-Function FTIxAyLy(A() As FTIx) As String()
+Function LyzFTIxAy(A() As FTIx) As String()
 Dim I
 For Each I In Itr(A)
-    PushI FTIxAyLy, FTIxStr(CvFTIx(I))
+    PushI LyzFTIxAy, FTIxStr(CvFTIx(I))
 Next
 End Function
 
@@ -60,7 +60,7 @@ FTIx A, A
 IsEqFTIxAy B, B
 FTIxAyIsInOrd B
 FTIxAyLinCnt B
-FTIxAyLy B
+LyzFTIxAy B
 FTIxIsEq C, C
 FTIxStr C
 End Sub

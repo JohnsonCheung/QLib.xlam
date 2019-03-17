@@ -82,13 +82,13 @@ Dim Ny$(), A1$()
     Ny = NyzNN(ItmNy0)
     A1 = A
 Dim O() As Variant, Ay(), J%
-ReDim O(Sz(Ny))
+ReDim O(Si(Ny))
 For J = 0 To UB(Ny)
     Ay = AyShfItmEq(A1, Ny(J))
     O(J) = Ay(0)
     A1 = Ay(1)
 Next
-O(Sz(Ny)) = Ay(1)
+O(Si(Ny)) = Ay(1)
 AyShfItmNy = O
 End Function
 

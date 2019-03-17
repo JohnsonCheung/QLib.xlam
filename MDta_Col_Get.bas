@@ -28,7 +28,7 @@ Function SqzDrySkip(A(), SkipNRow%)
 Dim O(), C%, R&, Dr
 Dim NC%, NR&
 NC = NColzDry(A)
-NR = Sz(A) + SkipNRow
+NR = Si(A) + SkipNRow
 ReDim O(1 To NR, 1 To NC)
 Dim DryIx&
 For R = SkipNRow + 1 To NR

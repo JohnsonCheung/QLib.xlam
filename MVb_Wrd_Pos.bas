@@ -3,7 +3,7 @@ Option Explicit
 
 Function WrdLblLinPos$(WrdPos%(), OFmNo&)
 Dim O$(), A$, B$, W%, J%
-If Sz(WrdPos) = 0 Then Exit Function
+If Si(WrdPos) = 0 Then Exit Function
 PushNonBlankStr O, Space(WrdPos(0) - 1)
 For J = 0 To UB(WrdPos) - 1
     A = OFmNo

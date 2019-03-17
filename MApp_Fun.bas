@@ -6,8 +6,8 @@ Function AppDb(Apn) As Database
 Set AppDb = Db(AppFb(Apn))
 End Function
 
-Function OupFxInst$(Apn)
-OupFxInst = FfnInst(OupFx(Apn))
+Function OupFxzNxt$(Apn)
+OupFxzNxt = NxtFfn(OupFx(Apn))
 End Function
 
 Function OupFx$(Apn)
@@ -17,6 +17,7 @@ End Function
 Function AppFb$(Apn)
 AppFb = AppHom & Apn & ".app.accdb"
 End Function
+
 Property Get AppHom$()
 Static Y$
 If Y = "" Then

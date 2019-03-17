@@ -21,7 +21,7 @@ End Property
 
 Private Property Get Fil() As LiFil()
 Dim O$(): O = AywRmvT1(A, "Fil")
-If Sz(O) = 0 Then Thw CSub, "There is no Fil-Line in LiPmSrc", "LiPmSrc", A
+If Si(O) = 0 Then Thw CSub, "There is no Fil-Line in LiPmSrc", "LiPmSrc", A
 Dim L, FilNm$, Ffn$
 For Each L In O
     AsgTRst L, FilNm, Ffn
@@ -104,8 +104,8 @@ End Function
 Function LtPm(A As LiPm) As LtPm()
 Dim O() As LtPm, D As Dictionary
 Set D = A.FilNmToFfnDic
-PushObjAy O, LtPmAyFb(A.Fb, D)
-PushObjAy O, LtPmAyFx(A.Fx, D)
+PushObjzAy O, LtPmAyFb(A.Fb, D)
+PushObjzAy O, LtPmAyFx(A.Fx, D)
 LtPm = O
 End Function
 

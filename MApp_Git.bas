@@ -2,11 +2,11 @@ Attribute VB_Name = "MApp_Git"
 Option Explicit
 
 Sub GitCmit(Optional Msg$ = "commit", Optional ReInit As Boolean)
-RunFcmdWait FcmdWaitzCdLines(GitCmitCdLines(SrcPth(CurPj), Msg, ReInit))
+RunFcmdWait FcmdWaitzCdLines(GitCmitCdLines(Srcp(CurPj), Msg, ReInit))
 End Sub
 
 Sub GitPush()
-RunFcmdWait FcmdWaitzCdLines(GitPushCdLines(SrcPth(CurPj)))
+RunFcmdWait FcmdWaitzCdLines(GitPushCdLines(Srcp(CurPj)))
 End Sub
 
 Private Function GitCmitCdLines$(CmitgPth, Msg$, ReInit As Boolean)
@@ -43,10 +43,6 @@ Push O, "Pause"
 GitPushCdLines = JnCrLf(O)
 End Function
 
-Sub Exp()
-ExpzPj CurPj
-End Sub
-
 Sub BrwGitCmitCdLines()
 BrwFt GitCmitCdLines("PthA", "Msg", ReInit:=True)
 End Sub
@@ -55,7 +51,7 @@ Sub BrwGitPushCdLines()
 BrwFt GitPushCdLines("A")
 End Sub
 Private Function PjNm$(CmitgPth)
-If Fdr(ParPth(CmitgPth)) <> ".source" Then Thw CSub, "Not source path", "CmitgPth", CmitgPth
+If Fdr(ParPth(CmitgPth)) <> ".src" Then Thw CSub, "Not source path", "CmitgPth", CmitgPth
 PjNm = Fdr(CmitgPth)
 End Function
 

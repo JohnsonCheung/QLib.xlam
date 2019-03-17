@@ -35,11 +35,11 @@ Function IsSamSzFfn(A, B) As Boolean
 IsSamSzFfn = FfnSz(A) = FfnSz(B)
 End Function
 
-Function MsgSamFfn(A, B, Sz&, Tim$, Optional Msg$) As String()
+Function MsgSamFfn(A, B, Si&, Tim$, Optional Msg$) As String()
 Dim O$()
 Push O, "File 1   : " & A
 Push O, "File 2   : " & B
-Push O, "File Size: " & Sz
+Push O, "File Size: " & Si
 Push O, "File Time: " & Tim
 Push O, "File 1 and 2 have same size and time"
 If Msg <> "" Then Push O, Msg

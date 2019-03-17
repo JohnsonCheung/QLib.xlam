@@ -1,7 +1,7 @@
 Attribute VB_Name = "MDta_Dry_ReSzToSamColCnt"
 Option Explicit
 Function DryReSzToSamColCnt(Dry()) As Variant()
-If Sz(Dry) = 0 Then Exit Function
+If Si(Dry) = 0 Then Exit Function
 Dim U&: U = UB(Dry(0))
 Dim NeedReSz As Boolean
     Dim IU&, Dr

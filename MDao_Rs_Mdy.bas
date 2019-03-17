@@ -12,9 +12,9 @@ End Sub
 
 
 Sub SetRs(Rs As Dao.Recordset, Dr)
-If Sz(Dr) <> Rs.Fields.Count Then
-    Thw CSub, "Sz of Rs & Dr are diff", _
-        "Sz-Rs and Sz-Dr Rs-Fny Dr", Rs.Fields.Count, Sz(Dr), Itn(Rs.Fields), Dr
+If Si(Dr) <> Rs.Fields.Count Then
+    Thw CSub, "Si of Rs & Dr are diff", _
+        "Si-Rs and Si-Dr Rs-Fny Dr", Rs.Fields.Count, Si(Dr), Itn(Rs.Fields), Dr
 End If
 Dim V, J%
 For Each V In Dr

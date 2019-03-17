@@ -37,7 +37,7 @@ End Function
 Sub EnsCSubzMd(A As CodeModule, Optional Silent As Boolean)
 Dim Act As ActMd: Set Act = ActMd(A)
 MdyMd Act, Silent
-If Sz(Act.ActLinAy) > 0 Then
+If Si(Act.ActLinAy) > 0 Then
     SavPj PjzMd(A)
 End If
 End Sub

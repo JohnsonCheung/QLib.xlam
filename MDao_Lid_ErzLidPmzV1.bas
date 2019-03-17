@@ -103,7 +103,7 @@ Private Function MsgzMisTy(T() As Tbl) As String()
 Dim I%, M As LidMisTy
 For I = 0 To UBound(T)
     With T(I)
-        If Sz(.Tyc) > 0 Then Exit Function
+        If Si(.Tyc) > 0 Then Exit Function
         PushIAy MsgzMisTy, MsgzMisTy1(T(I))
     End With
 Next

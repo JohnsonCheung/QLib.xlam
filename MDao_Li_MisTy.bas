@@ -12,7 +12,7 @@ End Function
 
 Private Function MisTyFxOpt(A As LiFx, B() As LiActFx) As LiMisTy
 Dim Act As LiActFx:    Set Act = LiActFxOpt(A.Fxn, A.Wsn, B): If IsNothing(Act) Then Exit Function
-Dim TycAy() As LiMisTyc: TycAy = MisColAy(A.FxcAy, Act.ShtTyDic): If Sz(TycAy) = 0 Then Exit Function
+Dim TycAy() As LiMisTyc: TycAy = MisColAy(A.FxcAy, Act.ShtTyDic): If Si(TycAy) = 0 Then Exit Function
 Set MisTyFxOpt = New LiMisTy
 MisTyFxOpt.Init Act.Fx, A.Fxn, A.Wsn, TycAy
 End Function

@@ -63,7 +63,7 @@ Private Function MisTy(T() As Tbl) As LidMisTy()
 Dim I%, M As LidMisTy
 For I = 0 To UBound(T)
     With T(I)
-        If Sz(.Tyc) > 0 Then
+        If Si(.Tyc) > 0 Then
             Set M = New LidMisTy
             PushObj MisTy, M.Init(.Ffn, .FilNm, .Wsn, .Tyc)
         End If

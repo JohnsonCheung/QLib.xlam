@@ -1,10 +1,10 @@
 Attribute VB_Name = "MDao_Tbl"
 Option Explicit
 Const C_SkNm$ = "SecondaryKey"
-Public Const DoczShtTyscf$ = "Short-Type-Sz-Colon-FldNm:Sht.Ty.s.c.f: It is for one field optionally square bracket quoted if FldNm has space" & _
+Public Const ™ShtTyscf$ = "Short-Type-Si-Colon-FldNm:Sht.Ty.s.c.f: It is for one field optionally square bracket quoted if FldNm has space" & _
 "|It is format of [ShtTys][FldNm]"
-Public Const DoczShtTys$ = ""
-Const ShtTyBql$ = "Short-Type-Sz-Colon-FldNm-Bql:Sht.Ty.s.c.f.Bql: It is a [Bql] with each field is a [ShtTyscf]"
+Public Const ™ShtTys$ = ""
+Const ShtTyBql$ = "Short-Type-Si-Colon-FldNm-Bql:Sht.Ty.s.c.f.Bql: It is a [Bql] with each field is a [ShtTyscf]"
 Function Fny(A As Database, T, Optional NoReOpn As Boolean) As String()
 Fny = Itn(ReOpnDb(A, NoReOpn).TableDefs(T).Fields)
 End Function
@@ -17,8 +17,8 @@ Function ColSetzT(A As Database, T, Optional F = 0) As Aset
 Set ColSetzT = ColSetzRs(ColzRs(A, T, F))
 End Function
 
-Function CntDicz(A As Database, T, F) As Dictionary
-Set CntDicz = CntDiczRs(ColzRs(A, T, F))
+Function CntDiczTF(A As Database, T, F) As Dictionary
+Set CntDiczTF = CntDiczRs(ColzRs(A, T, F))
 End Function
 
 Function IdxzTd(A As Dao.TableDef, Nm) As Dao.Index
@@ -60,7 +60,7 @@ End Function
 
 Function HasStdPkzTd(A As Dao.TableDef) As Boolean
 If Not HasPkzTd(A) Then Exit Function
-Dim Pk$(): Pk = PkFnyzTd(A): If Sz(Pk) <> 1 Then Exit Function
+Dim Pk$(): Pk = PkFnyzTd(A): If Si(Pk) <> 1 Then Exit Function
 Dim P$: P = A.Name & "Id"
 If Pk(0) <> P Then Exit Function
 HasStdPkzTd = A.Fields(0).Name <> P
@@ -129,7 +129,7 @@ Next
 End Sub
 
 Function SrcFbzT$(A As Database, T)
-SrcFbzT = TakBet(A.TableDefs(T).Connect, "Database=", ";")
+SrcFbzT = StrBet(A.TableDefs(T).Connect, "Database=", ";")
 End Function
 
 Function NColzT&(A As Database, T)
@@ -203,7 +203,7 @@ Dim Sk, Rst
     Dim J%, X
     'Sk = SkFny
     Rst = AyMinus(F, Sk)
-    If Sz(Sk) > 0 Then
+    If Si(Sk) > 0 Then
         For Each X In Sk
             Sk(J) = Replace(X, T, "*")
             J = J + 1
@@ -234,10 +234,10 @@ Sub AddFd(A As Database, T, Fd As Dao.Fields)
 A.TableDefs(T).Fields.Append Fd
 End Sub
 
-Sub AddFldz(A As Database, T, F, Ty As DataTypeEnum, Optional Sz%, Optional Precious%)
+Sub AddFldz(A As Database, T, F, Ty As DataTypeEnum, Optional Si%, Optional Precious%)
 If HasFld(A, T, F) Then Exit Sub
 Dim S$, SqlTy$
-SqlTy = SqlTyzDao(Ty, Sz, Precious)
+SqlTy = SqlTyzDao(Ty, Si, Precious)
 S = FmtQQ("Alter Table [?] Add Column [?] ?", T, F, Ty)
 A.Execute S
 End Sub
@@ -352,7 +352,7 @@ End Sub
 
 Function ShtTyBqlzDrs$(Drs As Drs)
 Dim Dry(): Dry = Drs.Dry
-If Sz(Dry) = 0 Then ShtTyBqlzDrs = Jn(Drs.Fny, "`"): Exit Function
+If Si(Dry) = 0 Then ShtTyBqlzDrs = Jn(Drs.Fny, "`"): Exit Function
 Dim O$(), F, C%
 For Each F In Drs.Fny
     PushI O, ShtTyscfzCol(ColzDry(Dry, C), F)

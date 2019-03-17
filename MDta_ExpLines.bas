@@ -17,7 +17,7 @@ End Function
 
 Function DrsExpLinesCol(A As Drs, LinesColNm$) As Drs
 Dim Dry(): Dry = A.Dry
-If Sz(Dry) = 0 Then
+If Si(Dry) = 0 Then
     Set DrsExpLinesCol = Drs(A.Fny, Dry)
     Exit Function
 End If

@@ -65,7 +65,7 @@ Dim I, BelowN&, Dt As Dt
 For Each I In Itr(A.DtAy)
     Set Dt = I
     LozDt Dt, At
-    BelowN = 2 + Sz(Dt.Dry)
+    BelowN = 2 + Si(Dt.Dry)
     Set At = CellBelow(At, BelowN)
 Next
 Set WszDs = O

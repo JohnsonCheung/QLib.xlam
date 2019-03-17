@@ -30,7 +30,7 @@ End Function
 Private Function ConstValzConst$(C)
 Dim I, O$(), A$, B$
 For Each I In SplitCrLf(C)
-    A = TakBetFstLas(I, """", """")
+    A = StrBetFstLas(I, """", """")
     B = Replace(A, """""", """")
     PushI O, B
 Next
@@ -42,7 +42,7 @@ Dim Ay$(), O$
 O = JnCrLf(O)
 Lp:
     Ay = TakP123(O, "Const", vbCrLf & vbCrLf)
-    If Sz(Ay) = 3 Then
+    If Si(Ay) = 3 Then
         PushI ConstLinesAy, Ay(1)
         O = Ay(2)
         GoTo Lp
@@ -92,7 +92,7 @@ Dim L$: L = RmvMthMdy(Lin)
 If Not ShfX(L, "Const ") Then Exit Function
 If ShfNm(L) <> ConstNm Then Exit Function
 If ShfMthChr(L) = "$" Then Thw CSub, "Given constant name is found, but is not a Str", "ConstLin ConstNm", Lin, ConstNm
-Dim O$: O = TakBet(L, """", """")
+Dim O$: O = StrBet(L, """", """")
 If O = "" Then Thw CSub, "Between DblQuote is nothing", "ConstLin ConstNm", Lin, ConstNm
 ConstValzLinNm = O
 End Function

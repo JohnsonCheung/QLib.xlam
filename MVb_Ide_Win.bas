@@ -42,11 +42,13 @@ For Each W In Itr(Vis)
     End If
 Next
 End Sub
+
 Sub SetWinVisOpt(A, Vis As Boolean)
 Dim W As VBIDE.Window
 Set W = CvWinOpt(A)
 If Not IsNothing(W) Then W.Visible = Vis
 End Sub
+
 Sub ClsWinOpt(A)
 SetWinVisOpt A, False
 End Sub
@@ -150,7 +152,7 @@ WinCnt = CurVbe.Windows.Count
 End Property
 
 Function MdNmCdWin$(CdWin As VBIDE.Window)
-MdNmCdWin = TakBet(CdWin.Caption, " - ", " (Code)")
+MdNmCdWin = StrBet(CdWin.Caption, " - ", " (Code)")
 End Function
 
 Property Get WinNy() As String()
@@ -210,7 +212,7 @@ For Each W In CurVbe.Windows
 Next
 End Function
 Function IsWinCaptionEqMd(WinCaption$, CmpNm) As Boolean
-IsWinCaptionEqMd = TakBet(WinCaption, " - ", " (Code)") = CmpNm
+IsWinCaptionEqMd = StrBet(WinCaption, " - ", " (Code)") = CmpNm
 End Function
 Sub ShwCmp(CmpNm)
 Dim W As VBIDE.Window: Set W = CmpWin(CmpNm)

@@ -183,8 +183,8 @@ End Property
 Property Get ColrSq() As Variant()
 Dim J%, O(), Ly$(), Nm$, Colr&
 Ly = ColrLy
-ReDim O(1 To Sz(Ly), 1 To 2)
-For J = 1 To Sz(Ly)
+ReDim O(1 To Si(Ly), 1 To 2)
+For J = 1 To Si(Ly)
     AsgTRst Ly(J - 1), Nm, Colr
     O(J, 1) = Nm
     O(J, 2) = Colr

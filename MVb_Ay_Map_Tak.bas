@@ -2,41 +2,41 @@ Attribute VB_Name = "MVb_Ay_Map_Tak"
 Option Explicit
 
 Function AyTakBefDD(A) As String()
-'AyTakBefDD = SyzAyMap(A, "TakBefDD")
+'AyTakBefDD = SyzAyMap(A, "StrBefDD")
 End Function
 
 Function AyTakAftDot(A) As String()
 Dim I
 For Each I In Itr(A)
-    Push AyTakAftDot, TakAftDot(A)
+    Push AyTakAftDot, StrAftDot(A)
 Next
 End Function
 
 Function AyTakAft(A, Sep$) As String()
 Dim I
 For Each I In Itr(A)
-    PushI AyTakAft, TakAft(I, Sep)
+    PushI AyTakAft, StrAft(I, Sep)
 Next
 End Function
 
 Function AyTakBef(A, Sep$) As String()
 Dim I
 For Each I In Itr(A)
-    PushI AyTakBef, TakBef(I, Sep)
+    PushI AyTakBef, StrBef(I, Sep)
 Next
 End Function
 
 Function AyTakBefDot(A) As String()
 Dim X
 For Each X In Itr(A)
-    PushI AyTakBefDot, TakBefDot(X)
+    PushI AyTakBefDot, StrBefDot(X)
 Next
 End Function
 
 Function AyTakBefOrAll(A, Sep$) As String()
 Dim I
 For Each I In Itr(A)
-    Push AyTakBefOrAll, TakBefOrAll(I, Sep)
+    Push AyTakBefOrAll, StrBefOrAll(I, Sep)
 Next
 End Function
 
@@ -58,7 +58,7 @@ End Function
 Function AyTakBetBkt(Ay) As String()
 Dim I
 For Each I In Itr(Ay)
-    PushI AyTakBetBkt, TakBetBkt(I)
+    PushI AyTakBetBkt, StrBetBkt(I)
 Next
 End Function
 

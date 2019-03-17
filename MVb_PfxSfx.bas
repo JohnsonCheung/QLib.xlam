@@ -20,7 +20,7 @@ End Function
 
 
 Function AyAddPfx(A, Pfx) As String()
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim O$(), U&, J&
 U = UB(A)
 ReDim O(U)
@@ -32,7 +32,7 @@ End Function
 
 Function AyAddPfxSfx(A, Pfx, Sfx) As String()
 Dim O$(), J&, U&
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 U = UB(A)
 ReDim Preserve O(U)
 For J = 0 To U
@@ -42,7 +42,7 @@ AyAddPfxSfx = O
 End Function
 
 Function AyAddSfx(A, Sfx) As String()
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim O$(), J&, U&
 U = UB(A)
 ReDim Preserve O(U)
@@ -53,7 +53,7 @@ AyAddSfx = O
 End Function
 
 Function AyIsAllEleHitPfx(A, Pfx$) As Boolean
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim I
 For Each I In A
    If Not HasPfx(I, Pfx) Then Exit Function
@@ -110,7 +110,7 @@ Next
 End Function
 
 Function SyIsAllEleHitPfx(A$(), Pfx$) As Boolean
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim I
 For Each I In A
    If Not HasPfx(CStr(I), Pfx) Then Exit Function

@@ -131,10 +131,10 @@ IsUsrLibPj C
 MdzPj C, B
 NModzPj C
 End Sub
-Function IsProtectzInfo(A As VBProject) As Boolean
+Function IsProtectzInf(A As VBProject) As Boolean
 If Not IsProtect(A) Then Exit Function
-InfoLin CSub, FmtQQ("Skip protected Pj{?)", A.Name)
-IsProtectzInfo = True
+InfLin CSub, FmtQQ("Skip protected Pj{?)", A.Name)
+IsProtectzInf = True
 End Function
 Function IsProtect(A As VBProject) As Boolean
 IsProtect = A.Protection = vbext_pp_locked

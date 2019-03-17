@@ -83,9 +83,14 @@ End Sub
 
 Private Sub Z()
 End Sub
-
-Sub DmpRfDrsPj(A As VBProject)
-D RfSrc(A)
+Sub BrwRf()
+Brw FmtAy4T(RfSrczPj(CurPj))
+End Sub
+Sub DmpRf()
+DmpRfzPj CurPj
+End Sub
+Sub DmpRfzPj(A As VBProject)
+D FmtAy4T(RfSrczPj(A))
 End Sub
 
 Private Function GuidLinRfNm$(RfNm)

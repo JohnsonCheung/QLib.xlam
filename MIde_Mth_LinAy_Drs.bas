@@ -33,8 +33,8 @@ For Each I In ModItrPj(A, WhStr)
 Next
 End Function
 
-Function MthLinAy(Optional WhStr$) As String()
-MthLinAy = MthLinAyzVbe(CurVbe, WhStr)
+Function MthLinAyVbe(Optional WhStr$) As String()
+MthLinAyVbe = MthLinAyzVbe(CurVbe, WhStr)
 End Function
 
 Function MthLinAyzVbe(V As Vbe, Optional WhStr$) As String()

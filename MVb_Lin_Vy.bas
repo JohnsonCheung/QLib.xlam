@@ -20,7 +20,7 @@ For Each L In Itr(SySsl(Lblss))
     Select Case FstChr(L)
     Case "*":
         Select Case SndChr(L)
-        Case "?":  If Sz(Ay) = 0 Then Thw CSub, "Must BoolLbl of Lblss not found in Lin", "Must-Bool-Lbl Lin Lblss", L, Lin, Lblss
+        Case "?":  If Si(Ay) = 0 Then Thw CSub, "Must BoolLbl of Lblss not found in Lin", "Must-Bool-Lbl Lin Lblss", L, Lin, Lblss
                    PushI O, CBool(ShfFstEle(Ay))
         Case Else: PushI O, ShfFstEle(Ay)
         End Select
@@ -32,13 +32,13 @@ VyzLinLbl = O
 End Function
 
 Private Function ShfTxtOpt(OAy$(), Lbl) As StrRslt
-If Sz(OAy) = 0 Then Exit Function
+If Si(OAy) = 0 Then Exit Function
 Dim S$: S = ShfTxt(OAy, Lbl)
 If S = "" Then ShfTxtOpt = StrRslt(S)
 End Function
 
 Private Function ShfBool(OAy$(), Lbl)
-If Sz(OAy) = 0 Then Exit Function
+If Si(OAy) = 0 Then Exit Function
 Dim J%, L$, Ay$()
 Ay = OAy
 L = RmvFstChr(Lbl)
@@ -52,7 +52,7 @@ Next
 End Function
 
 Private Function ShfTxt(OAy$(), Lbl)
-If Sz(OAy) = 0 Then Exit Function
+If Si(OAy) = 0 Then Exit Function
 'Return either string or ""
 Dim I, J%, Ay$()
 Ay = OAy

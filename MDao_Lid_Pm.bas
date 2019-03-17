@@ -3,7 +3,7 @@ Option Explicit
 Private A$()
 
 Function LidPm(Src$()) As LidPm
-If Sz(Src) = 0 Then Thw CSub, "No lines in Src"
+If Si(Src) = 0 Then Thw CSub, "No lines in Src"
 If T1(Src(0)) <> "LidPm" Then Thw CSub, "First line must be LidPm", "Src", Src
 A = Src
 Set LidPm = New LidPm

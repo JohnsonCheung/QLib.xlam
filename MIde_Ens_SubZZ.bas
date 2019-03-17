@@ -9,11 +9,11 @@ Dim mPubPrpGetNm As Aset
 Dim mPubMthPmAy$()         ' From mPubMthLinAy    mPubMthLinAy & mPm same sz     ' mPubMthPmAy is the string in the bracket of the MthmPubMthLinAyLin
 Dim mMthNyPub$()      ' From mPubMthLinAy    mPubMthLinAy & mMthNm same sz
 Dim mArgAy$()         ' Each mArgAy in mArgAy become on mPubMthPmAy   Eg, 1-mArgAy = A$, B$, C%, D As XYZ => 4-mPubMthPmAy
-                     ' ArgSfxDic is Key=ArgSfx and Val=A, B, C
-                     ' ArgSfx is mArgAy-without-Nm
-Dim ArgSfx$()
+                     ' ArgTyDic is Key=ArgTy and Val=A, B, C
+                     ' ArgTy is mArgAy-without-Nm
+Dim ArgTy$()
 Dim ArgAset As Aset
-Dim ArgSfxToAbcDic As Dictionary
+Dim ArgTyToAbcDic As Dictionary
 Dim mCallingPmAy$()
 Dim mHasPrp As Boolean
 
@@ -22,16 +22,16 @@ Dim mHasPrp As Boolean
     mPubMthPmAy = AyTakBetBkt(mPubMthLinAy) ' Each Mth return an-Ele to call
     mMthNyPub = MthNyzMthLinAy(mPubMthLinAy)
     mArgAy = WArgAy(mPubMthPmAy)
-    ArgSfx = WArgSfxAy(mArgAy)
-    Set ArgAset = AsetzAy(ArgSfx)
-    Set ArgSfxToAbcDic = ArgAset.AbcDic
-    mCallingPmAy = WCallingPmAy(mPubMthPmAy, ArgSfxToAbcDic)
+    ArgTy = WArgTyAy(mArgAy)
+    Set ArgAset = AsetzAy(ArgTy)
+    Set ArgTyToAbcDic = ArgAset.AbcDic
+    mCallingPmAy = WCallingPmAy(mPubMthPmAy, ArgTyToAbcDic)
     mHasPrp = mPubPrpGetNm.Cnt > 0
 '-------------
 Dim mDimLy$()
 Dim mCallingLy$()
-    mDimLy = WDimLy(ArgSfxToAbcDic, mHasPrp)   ' 1-mArgAy => 1-DimLin
-    mCallingLy = WCallingLy(mMthNyPub, mPubMthPmAy, ArgSfxToAbcDic, mPubPrpGetNm)
+    mDimLy = WDimLy(ArgTyToAbcDic, mHasPrp)   ' 1-mArgAy => 1-DimLin
+    mCallingLy = WCallingLy(mMthNyPub, mPubMthPmAy, ArgTyToAbcDic, mPubPrpGetNm)
 D mDimLy
 Stop
 Dim O$()
@@ -54,10 +54,10 @@ For Each Pm In Itr(PmAy)
 Next
 End Function
 
-Private Function WArgSfxAy(ArgAy$()) As String()
+Private Function WArgTyAy(ArgAy$()) As String()
 Dim Arg
 For Each Arg In Itr(ArgAy)
-    PushI WArgSfxAy, ArgSfx(Arg)
+    PushI WArgTyAy, ArgTy(Arg)
 Next
 End Function
 
@@ -71,7 +71,7 @@ End Function
 
 Private Function WCallingLy(MthNy$(), PmAy$(), ArgDic As Dictionary, PrpGetAset As Aset) As String()
 'A$() & PmAy$() are same sz
-'ArgDic: Key is ArgSfx(Arg-without-Name), Val is A,B,..
+'ArgDic: Key is ArgTy(Arg-without-Name), Val is A,B,..
 'CallingLin is {MthNm} A,B,C,...
 'PrpGetAset    is PrpNm set
 Dim MthNm, CallingPm$, Pm$, J%, O$()
@@ -87,7 +87,7 @@ End Function
 Private Function WCallingPm$(Pm, ArgDic As Dictionary)
 Dim O$(), Arg
 For Each Arg In Itr(AyTrim(SplitComma(Pm)))
-    PushI O, ArgDic(ArgSfx(Arg))
+    PushI O, ArgDic(ArgTy(Arg))
 Next
 'WCallingPm = CommaSpc(O)
 End Function
@@ -100,14 +100,14 @@ Next
 End Function
 
 Private Function WDimLy(ArgDic As Dictionary, HasPrp As Boolean) As String()  '1-Arg => 1-DimLin
-Dim ArgSfx, S$
-For Each ArgSfx In ArgDic.Keys
-    If HasPfx(ArgSfx, "As ") Then
+Dim ArgTy, S$
+For Each ArgTy In ArgDic.Keys
+    If HasPfx(ArgTy, "As ") Then
         S = " "
     Else
         S = ""
     End If
-    PushI WDimLy, "Dim " & ArgDic(ArgSfx) & S & ArgSfx
+    PushI WDimLy, "Dim " & ArgDic(ArgTy) & S & ArgTy
 Next
 If HasPrp Then PushI WDimLy, "Dim XX"
 End Function
@@ -145,13 +145,13 @@ Dim A
 Dim B As CodeModule
 Dim C$()
 Dim XX
-ArgSfx A
+ArgTy A
 SubZZEpt B
 MthNyzMthLinAy C
 End Sub
 
 Private Sub Z()
-'MIde_Ens_SubZZ.ArgSfx
+'MIde_Ens_SubZZ.ArgTy
 Z_SubZZEpt
 End Sub
 

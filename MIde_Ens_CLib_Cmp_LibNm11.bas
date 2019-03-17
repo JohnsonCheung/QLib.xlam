@@ -16,7 +16,7 @@ Next
 End Function
 
 Function LibNm$(A As VBComponent, B As eLibNmTy)
-LibNm = TakBef(A.Name, "_")
+LibNm = StrBef(A.Name, "_")
 End Function
 
 Function MdNmToLibNmDic() As Dictionary
@@ -54,7 +54,7 @@ End Function
 Function C_MdNmToLibNmLy() As String()
 Erase XX
 X "MCmpAdd QIde"
-X "MUSysRegInfo QIde"
+X "MUSysRegInf QIde"
 X "MLinShould QIde"
 X "MMdyPj QIde"
 X "MTreeWs QXls"

@@ -22,14 +22,14 @@ Case IsLines(V):
     End If
 Case IsStr(V): O = EscTab(V)
 Case IsPrim(V): O = V
-Case IsSy(V): If Sz(V) > 0 Then O = FmtQQ("#Sy(?):", UB(V)) & EscTab(V(0))
+Case IsSy(V): If Si(V) > 0 Then O = FmtQQ("#Sy(?):", UB(V)) & EscTab(V(0))
 Case IsNothing(V): O = "#Nothing"
 Case IsEmpty(V): O = "#Empty"
 Case IsMissing(V): O = "#Missing"
 Case IsObject(V): O = "#Obj(" & TypeName(V) & ")"
 Case IsNull(V): O = "#Null"
 Case IsArray(V)
-    If Sz(V) = 0 Then
+    If Si(V) = 0 Then
         O = "#Emp-" & TypeName(V)
     Else
         O = "#" & TypeName(V) & "(" & UB(V) & ")"
@@ -50,7 +50,7 @@ Case IsMissing(V): LyzVal = Sy("#Missing")
 Case IsObject(V): LyzVal = Sy("#Obj(" & TypeName(V) & ")")
 Case IsArray(V)
     Dim I
-    If Sz(V) = 0 Then Exit Function
+    If Si(V) = 0 Then Exit Function
     For Each I In V
         PushI LyzVal, LinzVal(I)
     Next

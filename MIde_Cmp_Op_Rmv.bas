@@ -6,7 +6,7 @@ A.VBComponents.Remove A.VBComponents(MdNm)
 End Sub
 Sub RmvMdzPfx(Pfx$)
 Dim Ny$(): Ny = AywPfx(MdNyPj, Pfx)
-If Sz(Ny) = 0 Then InfoLin CSub, "no module begins with " & Pfx: Exit Sub
+If Si(Ny) = 0 Then InfLin CSub, "no module begins with " & Pfx: Exit Sub
 Brw Ny
 Dim N
 If Cfm("Rmv those Md as show in the notepad?") Then

@@ -113,9 +113,9 @@ Sy2zS1S2Ay = O
 End Function
 
 Function SqzS1S2Ay(A() As S1S2, Optional Nm1$ = "S1", Optional Nm2$ = "S2") As Variant()
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim O(), I, R&
-ReDim O(1 To Sz(A), 1 To 2)
+ReDim O(1 To Si(A), 1 To 2)
 R = 2
 O(1, 1) = Nm1
 O(1, 2) = Nm2

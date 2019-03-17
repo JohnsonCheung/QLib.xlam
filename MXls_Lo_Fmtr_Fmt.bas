@@ -20,7 +20,7 @@ Dim O$()
         PushIAy O, AywT1(Spec, T)
     Next
     Dim M$(): M = AyeT1Ay(Spec, mT1Ay)
-    If Sz(M) > 0 Then
+    If Si(M) > 0 Then
         PushI O, FmtQQ("# Error: in not T1Ay(?)", TLin(mT1Ay))
         PushIAy O, M
     End If

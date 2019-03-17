@@ -13,8 +13,8 @@ Else
 End If
 End Function
 
-Function RmvPthSfx$(Pth)
-RmvPthSfx = RmvSfx(Pth, PthSep)
+Function PthRmvSfx$(Pth)
+PthRmvSfx = RmvSfx(Pth, PthSep)
 End Function
 
 

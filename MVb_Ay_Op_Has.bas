@@ -27,7 +27,7 @@ Function HasElezInSomAyzOfAp(ParamArray AyAp()) As Boolean
 Dim AvAp(): AvAp = AyAp
 Dim Ay
 For Each Ay In Itr(AvAp)
-    If Sz(Ay) > 0 Then HasElezInSomAyzOfAp = True: Exit Function
+    If Si(Ay) > 0 Then HasElezInSomAyzOfAp = True: Exit Function
 Next
 End Function
 Function IsSubAy(SubAy, SuperAy) As Boolean
@@ -47,7 +47,7 @@ End Function
 
 Function HasEleAyInSeq(A, B) As Boolean
 Dim BItm, Ix&
-If Sz(B) = 0 Then Stop
+If Si(B) = 0 Then Stop
 For Each BItm In B
     Ix = IxzAy(A, BItm, Ix)
     If Ix = -1 Then Exit Function
@@ -57,7 +57,7 @@ HasEleAyInSeq = True
 End Function
 
 Function HasEleDupEle(A) As Boolean
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim Pool: Pool = A: Erase Pool
 Dim I
 For Each I In A
@@ -68,7 +68,7 @@ End Function
 
 Function HasEleNegOne(A) As Boolean
 Dim V
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 For Each V In A
     If V = -1 Then HasEleNegOne = True: Exit Function
 Next
@@ -82,7 +82,7 @@ Next
 End Function
 
 Function HasElePredXPTrue(A, XP$, P) As Boolean
-If Sz(A) = 0 Then Exit Function
+If Si(A) = 0 Then Exit Function
 Dim X
 For Each X In Itr(A)
     If Run(XP, X, P) Then
@@ -93,8 +93,8 @@ Next
 End Function
 
 Function IsAySub(Ay, SubAy) As Boolean
-If Sz(Ay) = 0 Then Exit Function
-If Sz(SubAy) = 0 Then IsAySub = True: Exit Function
+If Si(Ay) = 0 Then Exit Function
+If Si(SubAy) = 0 Then IsAySub = True: Exit Function
 Dim I
 For Each I In SubAy
     If Not HasEle(Ay, I) Then Exit Function

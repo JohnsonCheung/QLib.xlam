@@ -10,7 +10,7 @@ Function AddCmp(Nm, Ty As vbext_ComponentType) As VBComponent
 Set AddCmp = AddCmpzPj(CurPj, Nm, Ty)
 End Function
 Function AddCmpzPj(A As VBProject, Nm, Ty As vbext_ComponentType) As VBComponent
-If HasCmp(Nm) Then InfoLin CSub, FmtQQ("?[?] already exist", ShtCmpTy(Ty), Nm): Exit Function
+If HasCmp(Nm) Then InfLin CSub, FmtQQ("?[?] already exist", ShtCmpTy(Ty), Nm): Exit Function
 Dim O As VBComponent
 Set O = A.VBComponents.Add(Ty)
 O.Name = CStr(Nm) ' no CStr will break
@@ -31,7 +31,7 @@ JmpCmp Sy(0)
 End Sub
 
 Function IsErDmp(Er$()) As Boolean
-If Sz(Er) = 0 Then Exit Function
+If Si(Er) = 0 Then Exit Function
 D Er
 IsErDmp = True
 End Function

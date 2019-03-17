@@ -1,7 +1,7 @@
 Attribute VB_Name = "MAcs_USysRegInfo"
 Option Explicit
-'http://www.utteraccess.com/forum/USysRegInfo-table-t353963.html
-''able Name = USysRegInfo
+'http://www.utteraccess.com/forum/USysRegInf-table-t353963.html
+''able Name = USysRegInf
 'Fields: Subkey (text), Type (number), ValName (text), Value (text)
 'At least 3 records.
 'Subkey in all 3 records = 'HKEY_CURRENT_ACCESS_PROFILE\Menu Add-Ins\&NameOfYourAdd-inHere'
@@ -16,11 +16,11 @@ Option Explicit
 ' 1      SK    0     ""            ""
 ' 2      SK    1     "Expression"  "={FunNm}()"
 ' 3      SK    1     "Library"     "|ACCDIDR\{fba}"
-Sub CrtTblzUSysRegInfo(A As Database)
-RunQ A, "Create Table [USysRegInfo] (Subky Text,Type Long,ValName Text,Value Text)"
+Sub CrtTblzUSysRegInf(A As Database)
+RunQ A, "Create Table [USysRegInf] (Subky Text,Type Long,ValName Text,Value Text)"
 End Sub
-Sub EnsTblzUSysRegInfo(A As Database)
-If HasTbl(A, "USysRegInfo") Then CrtTblzUSysRegInfo A
+Sub EnsTblzUSysRegInf(A As Database)
+If HasTbl(A, "USysRegInf") Then CrtTblzUSysRegInf A
 End Sub
 
 Sub InstallAddIn(A As Database, Fb$, Optional AutoFunNm$ = "AutoExec")
@@ -28,7 +28,7 @@ Dim Sk$: Sk = "HKEY_CURRENT_ACCESS_PROFILE\Menu Add-Ins\&NameOfYourAdd-inHere"
 Dim Fba$: Fba = ""
 Dim FunNm$
 Stop '
-RunQQ A, "Insert into [USysRegInfo] Values('?',0,'','')"
-RunQQ A, "Insert into [USysRegInfo] Values('?',1,'Expression','?')", Sk, FunNm
-RunQQ A, "Insert into [USysRegInfo] Values('?',1,'Library','?')", Sk, Fba
+RunQQ A, "Insert into [USysRegInf] Values('?',0,'','')"
+RunQQ A, "Insert into [USysRegInf] Values('?',1,'Expression','?')", Sk, FunNm
+RunQQ A, "Insert into [USysRegInf] Values('?',1,'Library','?')", Sk, Fba
 End Sub

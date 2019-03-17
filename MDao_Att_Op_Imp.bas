@@ -8,7 +8,7 @@ Dim F2 As Field2
 Dim S&, T As Date
 S = FfnSz(Ffn)
 T = FfnDte(Ffn)
-'Msg CSub, "[Att] is going to import [Ffn] with [Sz] and [Tim]", FdVal(A.TRs!AttNm), Ffn, S, T
+'Msg CSub, "[Att] is going to import [Ffn] with [Si] and [Tim]", FdVal(A.TRs!AttNm), Ffn, S, T
 With A
     .TRs.Edit
     With .ARs

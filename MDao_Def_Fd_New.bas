@@ -158,9 +158,9 @@ Case "Txt", "T":  Set O = FdzTxt(Fld)
 Case "Tim":       Set O = FdzTim(Fld)
 Case Else:
     If FstChr(ShtTys) = "T" Then
-        Dim Sz As Byte
-        Sz = CByte(RmvFstChr(ShtTys))
-        Set O = FdzTxt(Fld, Sz)
+        Dim Si As Byte
+        Si = CByte(RmvFstChr(ShtTys))
+        Set O = FdzTxt(Fld, Si)
         Exit Function
     End If
     ThwShtTyEr CSub, ShtTys

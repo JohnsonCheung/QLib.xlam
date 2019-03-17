@@ -7,7 +7,7 @@ BrwDic JnStrDicTwoFldRs(R), True
 End Sub
 
 Sub BrwDic(A As Dictionary, Optional InclDicValOptTy As Boolean, Optional UseVc As Boolean)
-BrwAy FmtDic(A, InclDicValOptTy), UseVc:=True
+BrwAy FmtDic(A, InclDicValOptTy), UseVc:=UseVc
 End Sub
 
 Sub DmpDic(A As Dictionary, Optional InclDicValOptTy As Boolean, Optional Tit$ = "Key Val")
