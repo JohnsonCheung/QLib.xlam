@@ -256,16 +256,9 @@ Next
 OyReverse = O
 End Function
 
-Function AyRpl_MidSeg_FT_IX(A, B As FTIx, AySeg)
-AyRpl_MidSeg_FT_IX = AyRpl_MidSeg(A, B.FmIx, B.ToIx, AySeg)
-End Function
-
-Function AyRpl_MidSeg(A, FmIx&, ToIx&, ByAy)
-Dim M As AyABC
-    M = AyABCzFT(A, FmIx, ToIx)
-AyRpl_MidSeg = M.A
-    PushAy AyRpl_MidSeg, ByAy
-    PushAy AyRpl_MidSeg, M.C
+Function AyRplMid(Ay, B As FTIx, ByAy)
+Dim M As AyABC: Set M = AyABCzFTIx(Ay, B)
+AyRplMid = AyAddAp(M.A, ByAy, M.C)
 End Function
 
 Function AyRpl_Star_InEach_Ele(A$(), By) As String()

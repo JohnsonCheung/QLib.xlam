@@ -60,7 +60,7 @@ Dim Col()
         If Tit = "" Then
             PushI Col, Sy(F)
         Else
-            PushI Col, AyTrim(SplitVBar(Tit))
+            PushI Col, AyTrim(SplitVbar(Tit))
         End If
     Next
 TitSq = SqTranspose(SqzDry(Col))

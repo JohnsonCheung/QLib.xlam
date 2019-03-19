@@ -32,7 +32,7 @@ Private Function FmtDic2(A As Dictionary) As String()
 Dim K, O$(), J&
 J = 1
 For Each K In A.Keys
-    PushI O, J & " " & K & " " & TypeName(A(K)) & " " & LinzVal(A(K))
+    PushI O, J & " " & K & " " & TypeName(A(K)) & " " & StrCellzVal(A(K))
     J = J + 1
 Next
 FmtDic2 = FmtAy2T(O)

@@ -118,7 +118,7 @@ Dim ExprVblAy$()
     Push ExprVblAy, "1lskdf|sdlkfjsdfkl sldkjf sldkfj|lskdjf|lskdjfdf"
     Push ExprVblAy, "2dfkl sldkjf sldkdjf|lskdjfdf"
     Push ExprVblAy, "3sldkfjsdf"
-DmpAy SplitVBar(SqpGp_ExprVblAy(ExprVblAy))
+DmpAy SplitVbar(SqpGp_ExprVblAy(ExprVblAy))
 End Sub
 
 Function WdtLines%(Lines)
@@ -173,7 +173,7 @@ Dim P1$()
         Next
 
     End If
-Dim P2$(): If FmtSql Then P2 = FmtAyAlign(Fny) Else P2 = Fny
+Dim P2$(): If FmtSql Then P2 = FmtAySamWdt(Fny) Else P2 = Fny
 SqpSelX_FF_ExtNy = KwSel & C_T & JnComma(AyAddPfx(JnAyab(P1, P2), C_NLTT))
 End Function
 
@@ -214,7 +214,7 @@ Dim Fny$(): Fny = SySsl(FF)
 Ass IsVblAy(Ey)
 If Si(Fny) <> Si(Ey) Then Thw CSub, "[FF-Sz} <> [Si-Ey], where [FF],[Ey]", Si(Fny), Si(Ey), FF, Ey
 Dim AFny$()
-    AFny = FmtAyAlign(Fny)
+    AFny = FmtAySamWdt(Fny)
     AFny = AyAddSfx(AFny, " = ")
 Dim W%
     'W = VblWdtAy(Ey)
@@ -238,7 +238,7 @@ Dim Vbl$
         If J = 0 Then P = "|  Set" Else P = ""
 '        Push Ay1, VblAlign(Ay(J), Pfx:=P, IdentOpt:=6)
     Next
-    Vbl = JnVBar(Ay1)
+    Vbl = JnVbar(Ay1)
 SqpSet_FF_Ey = Vbl
 End Function
 
@@ -342,7 +342,7 @@ Private Sub Z_SqpWhFldInVy_StrSqpAy()
 End Sub
 
 Function VblFmtAyAsLines$(ExprVblAy$(), Optional Pfx$, Optional IdentOpt%, Optional SfxAy, Optional Sep$ = ",")
-VblFmtAyAsLines = JnVBar(VblFmtAyAsLy(ExprVblAy, Pfx, IdentOpt, SfxAy, Sep))
+VblFmtAyAsLines = JnVbar(VblFmtAyAsLy(ExprVblAy, Pfx, IdentOpt, SfxAy, Sep))
 End Function
 
 Function VblFmtAyAsLy(ExprVblAy$(), Optional Pfx$, Optional IdentOpt%, Optional SfxAyOpt, Optional Sep$ = ",") As String()
@@ -352,7 +352,7 @@ Dim SfxAy$()
     NoSfxAy = IsEmp(SfxAy)
     If Not NoSfxAy Then
         Ass IsSy(SfxAyOpt)
-        SfxAy = FmtAyAlign(SfxAyOpt)
+        SfxAy = FmtAySamWdt(SfxAyOpt)
         Dim U%, J%: U = UB(SfxAy)
         For J = 0 To U
             If J <> U Then
@@ -581,7 +581,7 @@ X_A:
 End Function
 
 Function FnyAlignQuote(Fny$()) As String()
-FnyAlignQuote = FmtAyAlign(AyQuoteSq(Fny))
+FnyAlignQuote = FmtAySamWdt(AyQuoteSq(Fny))
 End Function
 
 Private Sub Z_SqlDtlTWhfInAset()

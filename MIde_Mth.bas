@@ -25,29 +25,30 @@ For Each Ix In Itr(MthIxAyzNm(S, MthNm))
 Next
 End Function
 
-Sub RplMth(Md As CodeModule, MthNm, ByLines)
+Function MdRplMth(Md As CodeModule, MthNm, ByLines) As CodeModule
 Dim M() As MdLines: M = MdLinesAyzMth(Md, MthNm)
 Select Case Si(M)
-Case 0: AppLines Md, ByLines: InfLin CSub, "MthNm is added", "Md Mth MthLinCntSz", MdNm(Md), MthNm, CntSzStrzLines(ByLines)
-Case 1: RplMdLines Md, M(0), ByLines, "MthLines"
-Case 2: RplMdLines Md, M(0), ByLines, "MthLines": Md.DeleteLines M(1).StartLine, M(1).Count
+Case 0: MdAppLines Md, ByLines: InfLin CSub, "MthNm is added", "Md Mth MthLinCntSz", MdNm(Md), MthNm, CntSzStrzLines(ByLines)
+Case 1: MdRplLines Md, M(0), ByLines, "MthLines"
+Case 2: MdRplLines Md, M(0), ByLines, "MthLines": Md.DeleteLines M(1).StartLine, M(1).Count
 Case Else: Thw CSub, "Er in MdLinesAyzMth.  It should return Si of 0,1 or 2", "But-Now-It-Return-Si", Si(M)
 End Select
-End Sub
+Set MdRplMth = Md
+End Function
 
 Private Sub Z()
 Z_MthFTixAyzMth
 MIde__Mth:
 End Sub
 
-Function EnsMth(Md As CodeModule, MthNm$, MthLines$)
+Function MdEnsMth(Md As CodeModule, MthNm$, MthLines$) As CodeModule
 Dim OldMthLines$: OldMthLines = MthLineszMd(Md, MthNm)
 If OldMthLines = MthLines Then
-    Debug.Print FmtQQ("EnsMth: Mth(?) in Md(?) is same", MthNm, MdNm(Md))
+    Debug.Print FmtQQ("MdEnsMth: Mth(?) in Md(?) is same", MthNm, MdNm(Md))
 End If
 RmvMdMth Md, MthNm
-AppLines Md, MthLines
-Debug.Print FmtQQ("EnsMth: Mth(?) in Md(?) is replaced <=========", MthNm, MdNm(Md))
+Set MdEnsMth = MdAppLines(Md, MthLines)
+Debug.Print FmtQQ("MdEnsMth: Mth(?) in Md(?) is replaced <=========", MthNm, MdNm(Md))
 End Function
 
 Private Sub Z_MthFTixAyzMth()

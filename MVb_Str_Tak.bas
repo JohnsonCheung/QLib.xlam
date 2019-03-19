@@ -192,7 +192,7 @@ Lin = "lkjsdf;dkfjl;Data Source=Johnson;lsdfjldf  | Data Source= | ; | Johnson":
 Exit Sub
 Tst:
     Dim FmStr$, ToStr$
-    AsgAp AyTrim(SplitVBar(Lin)), Lin, FmStr, ToStr, Ept
+    AsgAp AyTrim(SplitVbar(Lin)), Lin, FmStr, ToStr, Ept
     Act = StrBet(Lin, FmStr, ToStr)
     C
     Return

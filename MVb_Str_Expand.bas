@@ -23,7 +23,7 @@ X "On Error Resume Next"
 X "?Si = Ubound(A) + 1"
 X "End Function"
 X ""
-QVbl = JnVBar(XX)
+QVbl = JnVbar(XX)
 Brw Expand(QVbl, "S1S2 XX")
 End Sub
 

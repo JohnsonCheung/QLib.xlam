@@ -17,14 +17,14 @@ Dim Av(): Av = Ap
 JnPthSepAp = JnPthSep(Av)
 End Function
 
-Function JnVBarAp$(ParamArray Ap())
+Function JnVbarAp$(ParamArray Ap())
 Dim Av(): Av = Ap
-JnVBarAp = JnVBar(Av)
+JnVbarAp = JnVbar(Av)
 End Function
 
-Function JnVBarApSpc$(ParamArray Ap())
+Function JnVbarApSpc$(ParamArray Ap())
 Dim Av(): Av = Ap
-JnVBarApSpc = JnVBarSpc(Av)
+JnVbarApSpc = JnVbarSpc(Av)
 End Function
 
 Function JnSpcAp$(ParamArray Ap())

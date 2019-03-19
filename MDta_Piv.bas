@@ -69,18 +69,21 @@ Dim KeyIxAy&(), GIx%
     GIx = IxzAy(Fny, G)
 Set GpDicDKG = DryGpDic(A.Dry, KeyIxAy, GIx)
 End Function
+
 Function DryDotAy(DotAy) As Variant()
 Dim I
 For Each I In Itr(DotAy)
     PushI DryDotAy, SplitDot(I)
 Next
 End Function
-Function DryColonAy(ColonAy) As Variant()
+
+Function DryzLyWithColon(LyWithColon$()) As Variant()
 Dim I
-For Each I In Itr(ColonAy)
-    PushI DryColonAy, SplitColon(I)
+For Each I In Itr(LyWithColon)
+    PushI DryzLyWithColon, SplitColon(I)
 Next
 End Function
+
 Function DryGpDic(A, KeyIxAy, G) As Dictionary
 Const CSub$ = CMod & "DryGpDic"
 'If K < 0 Or G < 0 Then

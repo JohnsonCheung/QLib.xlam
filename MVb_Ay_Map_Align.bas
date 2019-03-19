@@ -70,15 +70,12 @@ End Function
 Function FmtAyAtDot(A) As String()
 FmtAyAtDot = FmtAyAtChr(A, ".")
 End Function
-Function FmtAyColon(ColonAy) As String()
-FmtAyColon = FmtDry(DryColonAy(ColonAy))
-End Function
 
 Function FmtAyDot(DotAy) As String()
-FmtAyDot = FmtDry(DryDotAy(DotAy), Fmt:=eSpcSep)
+FmtAyDot = FmtDryAsSpcSep(DryDotAy(DotAy))
 End Function
 
-Function FmtAyT1(A) As String()
+Function FmtAyT1(A$()) As String()
 FmtAyT1 = FmtAyNTerm(A, 1)
 End Function
 
@@ -94,11 +91,11 @@ Function FmtAy4T(A$()) As String()
 FmtAy4T = FmtAyNTerm(A, 4)
 End Function
 
-Function FmtAyAlign(Ay) As String()
+Function FmtAySamWdt(Ay) As String()
 Dim W%: W = WdtzAy(Ay) + 1
 Dim I
 For Each I In Itr(Ay)
-    Push FmtAyAlign, AlignL(I, W)
+    Push FmtAySamWdt, AlignL(I, W)
 Next
 End Function
 
@@ -134,9 +131,6 @@ Tst:
     C
     Return
 End Sub
-
-
-
 
 Private Sub Z()
 Z_FmtAy2T

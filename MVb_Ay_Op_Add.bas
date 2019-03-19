@@ -16,15 +16,36 @@ AyAdd = A
 PushAy AyAdd, B
 End Function
 
-Function SyAddAp(Sy$(), ParamArray SyAp()) As String()
-Dim Av(): Av = SyAp
+Function SyAddSorSyAp(Sy$(), ParamArray SorSyAp()) As String()
+Dim Av(): Av = SorSyAp
+Dim I, J&
+For Each I In Av
+    If IsSy(I) Then Av(J) = I Else Av(J) = Sy(I)
+    J = J + 1
+Next
+SyAddSorSyAp = SyAddSyAv(Sy, Av)
+End Function
+Function TyNyzAy(Ay) As String()
+Dim I
+For Each I In Itr(Ay)
+    PushI TyNyzAy, TypeName(I)
+Next
+End Function
+Function SyAddSyAv(Sy$(), SyAv()) As String()
 Dim O$(): O = Sy
 Dim I
-For Each I In Av
+For Each I In Itr(SyAv)
+    If Not IsSy(I) Then Thw CSub, "There is Non-Sy in SyAv", "TyNy-of-given-SyAv", TyNyzAy(SyAv)
     PushIAy O, I
 Next
-SyAddAp = O
+SyAddSyAv = O
 End Function
+
+Function SyAddAp(Sy$(), ParamArray SyAp()) As String()
+Dim Av(): Av = SyAp
+SyAddAp = SyAddSyAv(Sy, Av)
+End Function
+
 Function AyAddAp(Ay, ParamArray Itm_or_AyAp())
 Const CSub$ = CMod & "AyAddAp"
 Dim Av(): Av = Itm_or_AyAp

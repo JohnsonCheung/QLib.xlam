@@ -1,7 +1,7 @@
 Attribute VB_Name = "MXls_RgVBar"
 Option Explicit
-Sub VBar_MgeBottomEmpCell(A As Range)
-Ass IsVBarRg(A)
+Sub Vbar_MgeBottomEmpCell(A As Range)
+Ass IsVbarRg(A)
 Dim R2: R2 = A.Rows.Count
 Dim R1
     Dim Fnd As Boolean
@@ -16,15 +16,15 @@ R.Merge
 R.VerticalAlignment = XlVAlign.xlVAlignTop
 End Sub
 
-Function VBarAy(A As Range) As Variant()
-Ass IsVBarRg(A)
-'VBarAy = Sq_Col(RgzSq(A), 1)
+Function VbarAy(A As Range) As Variant()
+Ass IsVbarRg(A)
+'VbarAy = Sq_Col(RgzSq(A), 1)
 End Function
 
-Function VBarIntAy(A As Range) As Integer()
-'VBarIntAy = AyIntAy(VBarAy(A))
+Function VbarIntAy(A As Range) As Integer()
+'VbarIntAy = AyIntAy(VbarAy(A))
 End Function
 
-Function VBarSy(A As Range) As String()
-VBarSy = SyzAy(VBarAy(A))
+Function VbarSy(A As Range) As String()
+VbarSy = SyzAy(VbarAy(A))
 End Function

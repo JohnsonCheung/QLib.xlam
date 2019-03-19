@@ -36,6 +36,6 @@ Function SplitSsl(A) As String()
 SplitSsl = Split(RplDblSpc(Trim(A)), " ")
 End Function
 
-Function SplitVBar(A) As String()
-SplitVBar = AyTrim(Split(A, "|"))
+Function SplitVbar(A) As String()
+SplitVbar = AyTrim(Split(A, "|"))
 End Function

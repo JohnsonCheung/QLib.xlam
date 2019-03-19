@@ -44,8 +44,8 @@ Next
 JmpCmp Sy(0)
 End Sub
 
-Sub AppLines(A As CodeModule, Lines)
-If Lines = "" Then Exit Sub
+Function MdAppLines(A As CodeModule, Lines) As CodeModule
+If Lines = "" Then Exit Function
 Dim Bef&, Aft&, Exp&, Cnt&
 Bef = A.CountOfLines
 A.InsertLines A.CountOfLines + 1, Lines '<=====
@@ -56,11 +56,11 @@ If Exp <> Aft Then
 '    Thw CSub, "After copy line count are inconsistents, where [Md], [LinCnt-Bef-Cpy], [LinCnt-of-lines], [Exp-LinCnt-Aft-Cpy], [Act-LinCnt-Aft-Cpy], [Lines]", _
         MdNm(A), Bef, Cnt, Exp, Aft, Lines
 End If
-End Sub
-
+Set MdAppLines = A
+End Function
 
 Sub AddFun(FunNm$)
-AppLines CurMd, EmpFunLines(FunNm)
+MdAppLines CurMd, EmpFunLines(FunNm)
 JmpMth FunNm
 End Sub
 Function CmpNew(Nm$, Ty As vbext_ComponentType) As VBComponent
@@ -75,7 +75,7 @@ Function EmpSubLines$(SubNm)
 EmpSubLines = FmtQQ("Sub ?()|End Sub", SubNm)
 End Function
 Sub AddSub(SubNm$)
-AppLines CurMd, EmpSubLines(SubNm)
+MdAppLines CurMd, EmpSubLines(SubNm)
 JmpMth SubNm
 End Sub
 
@@ -94,8 +94,7 @@ End Function
 Function AddCmpzLinesPj(A As VBProject, Nm, Lines$) As VBComponent
 Dim O As VBComponent
 Set O = AddCmpzPj(A, Nm, vbext_ct_StdModule): If IsNothing(O) Then Stop
-AppLines O.CodeModule, Lines
-Set AddCmpzLinesPj = O
+Set AddCmpzLinesPj = MdAppLines(O.CodeModule, Lines)
 End Function
 Sub RenAddCmpPfx_CmpPfx(A As VBComponent, AddPfx$)
 A.Name = AddPfx & A.Name

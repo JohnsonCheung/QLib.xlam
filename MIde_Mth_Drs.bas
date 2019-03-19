@@ -314,7 +314,7 @@ WsVis VbeAyMthWs(ZZVbeAy)
 End Sub
 
 Private Sub Z_MthLinDryzVbe()
-BrwDry MthLinDryzVbe(CurVbe), Fmt:=eSpcSep
+BrwDry MthLinDryzVbe(CurVbe)
 End Sub
 
 Private Sub ZZ()

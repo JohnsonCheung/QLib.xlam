@@ -76,7 +76,7 @@ Next
 End Function
 
 Function FmtDrWrp(WrpDr, W%()) As String() _
-'Each Itm of WrpDr may be an array.  So a FmtDr return Ly not string.
+'Each Itm of WrpDr may be an array.  So a AyFmtToWdtAy return Ly not string.
 Dim Dr(): Dr = WrpDrPad(WrpDr, W)
 Dim Sq(): Sq = WrpDrSq(Dr)
 Dim Sq1(): Sq1 = SqAlign(Sq, W)

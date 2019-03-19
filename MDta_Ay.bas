@@ -28,8 +28,9 @@ End Function
 Sub BrwGpCntDryzAy(Ay)
 Brw FmtGpCntDryzAy(Ay)
 End Sub
+
 Function FmtGpCntDryzAy(Ay) As String()
-FmtGpCntDryzAy = FmtDry(GpCntDryzAy(Ay), Fmt:=eSpcSep)
+FmtGpCntDryzAy = FmtDryAsSpcSep(GpCntDryzAy(Ay))
 End Function
 
 Private Sub ZZ_FmtGpCntDryzAy()

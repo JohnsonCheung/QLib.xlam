@@ -174,7 +174,7 @@ Dim Tbl$
 '1
 Select Case SubStrCnt(L, "|")
 Case 0, 1
-Case Else: PushI ErT_1_OneLinEr, MsgT_VBar_Cnt(T): Exit Function
+Case Else: PushI ErT_1_OneLinEr, MsgT_Vbar_Cnt(T): Exit Function
 End Select
 
 '2
@@ -323,9 +323,9 @@ Private Function MsgT_TblIsNotNm$(A As Lnx)
 MsgT_TblIsNotNm = WMsg(A, "Tbl is not a name")
 End Function
 
-Private Function MsgT_VBar_Cnt$(A As Lnx)
-Const M$ = "The T-Lin should have 0 or 1 VBar only"
-MsgT_VBar_Cnt = WMsg(A, M)
+Private Function MsgT_Vbar_Cnt$(A As Lnx)
+Const M$ = "The T-Lin should have 0 or 1 Vbar only"
+MsgT_Vbar_Cnt = WMsg(A, M)
 End Function
 
 Private Function MsgT_FldEr$(A As Lnx, F$)

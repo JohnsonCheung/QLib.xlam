@@ -100,11 +100,11 @@ Next
 JnTerm = Join(O, " ")
 End Function
 
-Function JnVBar$(A)
-JnVBar = Jn(A, "|")
+Function JnVbar$(A)
+JnVbar = Jn(A, "|")
 End Function
 
-Function JnVBarSpc$(A)
-JnVBarSpc = Jn(A, " | ")
+Function JnVbarSpc$(A)
+JnVbarSpc = Jn(A, " | ")
 End Function
 

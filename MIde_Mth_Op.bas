@@ -31,7 +31,7 @@ Next
 End Sub
 
 Sub RmvMthzNm(A As CodeModule, MthNm, Optional WithTopRmk As Boolean)
-RmvMdFTIxAy A, MthFTIxAyzMth(A, MthNm, WithTopRmk)
+MdRmvFTIxAy A, MthFTIxAyzMth(A, MthNm, WithTopRmk)
 End Sub
 
 Sub RmvMdMth(Md As CodeModule, MthNm)
@@ -53,7 +53,7 @@ Tst:
 Crt:
     Set Md = TmpMod
     RmvMd Md
-    AppLines Md, LineszVbl("Property Get ZZRmv1()||End Property||Function ZZRmv2()|End Function||'|Property Let ZZRmv1(V)|End Property")
+    MdAppLines Md, LineszVbl("Property Get ZZRmv1()||End Property||Function ZZRmv2()|End Function||'|Property Let ZZRmv1(V)|End Property")
     Return
 End Sub
 

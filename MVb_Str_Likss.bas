@@ -18,56 +18,34 @@ For Each Likss In LikssAy
 Next
 End Function
 
-
-Private Sub Z_T1ikSslAyT1()
+Private Sub Z_T1zT1LikTLinAy()
 Dim A$(), Nm$
-A = SplitVBar("a bb* *dd | c x y")
-Nm = "x"
-Ept = "c"
-GoSub Tst
+GoSub T1
+GoSub T2
 Exit Sub
+T1:
+    A = SplitVbar("a bb* *dd | c x y")
+    Nm = "x"
+    Ept = "c"
+    GoTo Tst
+T2:
+    A = SplitVbar("a bb* *dd | c x y")
+    Nm = "bb1"
+    Ept = "a"
+    GoTo Tst
 Tst:
-    Act = T1ikSslAyT1(A, Nm)
+    Act = T1zT1LikTLinAy(A, Nm)
     C
     Return
 End Sub
 
-
-Function T1ikLikSslFstEleT2T3Eq$(A$(), T2, T3)
-Dim L, T$, Lik$, Likssl$
-If Si(A) = 0 Then Exit Function
-For Each L In A
-    Asg2TRst L, T, Lik, Likssl
-    If T2 Like Lik Then
-        If StrLikss(T3, Likssl) Then
-            T1ikLikSslFstEleT2T3Eq = L
-            Exit Function
-        End If
-    End If
-Next
-End Function
-
-Function T1ikLikSslAyT1$(A$(), T2, T3)
-Dim L, T$, Lik$, Likssl$
-If Si(A) = 0 Then Exit Function
-For Each L In A
-    Asg2TRst L, T, Lik, Likssl
-    If T2 Like Lik Then
-        If StrLikss(T3, L) Then
-            T1ikLikSslAyT1 = T
-            Exit Function
-        End If
-    End If
-Next
-End Function
-
-Function T1ikSslAyT1$(T1ikSslAy$(), Nm)
+Function T1zT1LikTLinAy$(T1LikTLinAy$(), Nm)
 Dim L, T1$
-If Si(T1ikSslAy) = 0 Then Exit Function
-For Each L In T1ikSslAy
+If Si(T1LikTLinAy) = 0 Then Exit Function
+For Each L In T1LikTLinAy
     T1 = ShfT(L)
     If StrLikss(Nm, L) Then
-        T1ikSslAyT1 = T1
+        T1zT1LikTLinAy = T1
         Exit Function
     End If
 Next
@@ -75,6 +53,6 @@ End Function
 
 
 Private Sub Z()
-Z_T1ikSslAyT1
+Z_T1zT1LikTLinAy
 MVb_Str_Likss:
 End Sub

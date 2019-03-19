@@ -19,7 +19,7 @@ Function FnyzReseqSpec(ReSeqSpec$) As String()
 Dim L1$
 Dim D As Dictionary
     Dim Ay$()
-    Ay = SplitVBar(ReSeqSpec)
+    Ay = SplitVbar(ReSeqSpec)
     L1 = AyShf(Ay)
     Set D = Dic(Ay)
 Dim L1Itm, O$()

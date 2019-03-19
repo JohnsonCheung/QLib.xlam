@@ -1,8 +1,9 @@
 Attribute VB_Name = "MVb_Lin_Vbl"
 Option Explicit
-Function DryzTLinAy(A$()) As Variant()
+
+Function DryzTLinAy(TLinAy$()) As Variant()
 Dim I
-For Each I In Itr(A)
+For Each I In Itr(TLinAy)
     PushI DryzTLinAy, TermAy(I)
 Next
 End Function
@@ -10,7 +11,7 @@ End Function
 Function DryzVblLy(A$()) As Variant()
 Dim I
 For Each I In Itr(A)
-    PushI DryzVblLy, AyTrim(SplitVBar(CStr(I)))
+    PushI DryzVblLy, AyTrim(SplitVbar(CStr(I)))
 Next
 End Function
 

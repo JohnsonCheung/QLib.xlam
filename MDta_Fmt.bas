@@ -1,19 +1,19 @@
 Attribute VB_Name = "MDta_Fmt"
 Option Explicit
-Sub VcDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional Fnn$)
-BrwDrs A, MaxColWdt, BrkColNm, Fnn, UseVc:=True
+Sub VcDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColNN, Optional Fnn$)
+BrwDrs A, MaxColWdt, BrkColNN, Fnn, UseVc:=True
 End Sub
 
-Sub BrwDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional Fnn$, Optional UseVc As Boolean)
-BrwAy FmtDrs(A, MaxColWdt, BrkColNm$), Fnn, UseVc
+Sub BrwDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColNN, Optional Fnn$, Optional UseVc As Boolean)
+BrwAy FmtDrs(A, MaxColWdt, BrkColNN), Fnn, UseVc
 End Sub
 
-Function FmtDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional ShwZer As Boolean, Optional HidIxCol As Boolean) As String()
+Function FmtDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColNN, Optional ShwZer As Boolean, Optional HidIxCol As Boolean) As String()
 'If BrkColNm changed, insert a break line if BrkColNm is given
 Dim Drs As Drs
     Set Drs = DrsAddIxCol(A, HidIxCol)
 Dim BrkColIx%
-    BrkColIx = IxzAy(A.Fny, BrkColNm)
+    BrkColIx = IxzAy(A.Fny, BrkColNN)
 Dim Dry()
     Dry = Drs.Dry
     PushI Dry, Drs.Fny

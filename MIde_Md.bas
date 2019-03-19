@@ -79,8 +79,8 @@ Function PjzMd(A As CodeModule) As VBProject
 Set PjzMd = A.Parent.Collection.Parent
 End Function
 
-Function SrcExlMth(Src$(), MthNmSet As Aset) As String()
-SrcExlMth = LyzLinesDicByItems(DicExlKeySet(MthNmDic(Src), MthNmSet))
+Function SrcRmvMth(Src$(), MthNmSet As Aset) As String()
+SrcRmvMth = LyzLinesDicByItems(DicExlKeySet(MthNmDic(Src), MthNmSet))
 End Function
 
 Function SrcLines$(A As CodeModule)

@@ -60,6 +60,6 @@ Function HasT1(L, T) As Boolean
 HasT1 = T1(L) = T
 End Function
 
-Function HasVBar(A$) As Boolean
-HasVBar = HasSubStr(A, "|")
+Function HasVbar(A$) As Boolean
+HasVbar = HasSubStr(A, "|")
 End Function

@@ -19,5 +19,5 @@ Set Rel = O.Init(RelLy)
 End Function
 
 Function RelVbl(Vbl$) As Rel
-Set RelVbl = Rel(SplitVBar(Vbl))
+Set RelVbl = Rel(SplitVbar(Vbl))
 End Function

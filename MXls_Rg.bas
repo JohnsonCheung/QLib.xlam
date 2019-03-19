@@ -118,8 +118,8 @@ Function IsHBarRg(A As Range) As Boolean
 IsHBarRg = A.Rows.Count = 1
 End Function
 
-Function IsVBarRg(A As Range) As Boolean
-IsVBarRg = A.Columns.Count = 1
+Function IsVbarRg(A As Range) As Boolean
+IsVbarRg = A.Columns.Count = 1
 End Function
 
 Function LasColRg%(A As Range)
@@ -134,8 +134,8 @@ Function LasRowRg&(A As Range)
 LasRowRg = A.Row + A.Rows.Count - 1
 End Function
 
-Function LasVBarRg(A As Range) As Range
-Set LasVBarRg = RgC(A, NColRg(A))
+Function LasVbarRg(A As Range) As Range
+Set LasVbarRg = RgC(A, NColRg(A))
 End Function
 
 

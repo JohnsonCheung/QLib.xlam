@@ -23,10 +23,10 @@ Function RplCr$(A)
 RplCr = Replace(A, vbCr, "")
 End Function
 Function RplVbl$(Vbl)
-RplVbl = RplVBar(Vbl)
+RplVbl = RplVbar(Vbl)
 End Function
-Function RplVBar$(Vbl)
-RplVBar = Replace(Vbl, "|", vbCrLf)
+Function RplVbar$(Vbl)
+RplVbar = Replace(Vbl, "|", vbCrLf)
 End Function
 Function RplBet$(A, By$, S1$, S2$)
 Dim P1%, P2%, B$, C$

@@ -4,7 +4,7 @@ Function LineszVal$(V)
 LineszVal = JnCrLf(LyzVal(V))
 End Function
 
-Function LinzVal$(V, Optional ShwZer As Boolean, Optional MaxWdt%)
+Function StrCellzVal$(V, Optional ShwZer As Boolean, Optional MaxWdt%)
 Dim T$, S$, W%, I, Sep$, O$
 Select Case True
 Case IsDic(V): O = "#Dic"
@@ -36,7 +36,7 @@ Case IsArray(V)
     End If
 Case Else
 End Select
-LinzVal = O
+StrCellzVal = O
 End Function
 
 Function LyzVal(V) As String()
@@ -52,7 +52,7 @@ Case IsArray(V)
     Dim I
     If Si(V) = 0 Then Exit Function
     For Each I In V
-        PushI LyzVal, LinzVal(I)
+        PushI LyzVal, StrCellzVal(I)
     Next
 Case Else
 End Select

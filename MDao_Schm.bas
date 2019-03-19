@@ -15,7 +15,7 @@ Private Type FdRslt
 End Type
 
 Sub CrtSchmzVbl(A As Database, SchmVbl$)
-CrtSchm A, SplitVBar(SchmVbl)
+CrtSchm A, SplitVbar(SchmVbl)
 End Sub
 
 Sub CrtSchm(A As Database, Schm$())

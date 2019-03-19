@@ -14,7 +14,7 @@ Stop
 End Function
 
 Sub CellClrDown(A As Range)
-VBarRgAt(A, AtLeastOneCell:=True).Clear
+VbarRgAt(A, AtLeastOneCell:=True).Clear
 End Sub
 
 Sub CellFillSeqDown(A As Range, FmNum&, ToNum&)
@@ -56,10 +56,10 @@ If RgRC(Cell, 0, 1).MergeCells Then Exit Sub
 MgeRg RgCRR(Cell, 1, 0, 1)
 End Sub
 
-Function VBarRgAt(At As Range, Optional AtLeastOneCell As Boolean) As Range
+Function VbarRgAt(At As Range, Optional AtLeastOneCell As Boolean) As Range
 If IsEmpty(At.Value) Then
     If AtLeastOneCell Then
-        Set VBarRgAt = RgA1(At)
+        Set VbarRgAt = RgA1(At)
     End If
     Exit Function
 End If
@@ -71,5 +71,5 @@ Dim R2&
         R2 = At.End(xlDown).Row
     End If
 Dim C%: C = At.Column
-Set VBarRgAt = WsCRR(WszRg(At), C, R1, R2)
+Set VbarRgAt = WsCRR(WszRg(At), C, R1, R2)
 End Function

@@ -178,10 +178,17 @@ End Function
 Function CmlLin$(Nm)
 CmlLin = Nm & " " & JnSpc(CmlAy(Nm))
 End Function
-Function CmlAy(S) As String()
+Function CmlSetzNy(Ny$()) As Aset
+Dim O As New Aset, S
+For Each S In Itr(Ny)
+    O.PushAy CmlAy(S)
+Next
+Set CmlSetzNy = O
+End Function
+Function CmlAy(Nm) As String()
 Dim J&, Fst As Boolean, Cml$, C$, A%
-For J = 1 To Len(S)
-    C = Mid(S, J, 1)
+For J = 1 To Len(Nm)
+    C = Mid(Nm, J, 1)
     A = Asc(C)
     Select Case True
     Case Fst

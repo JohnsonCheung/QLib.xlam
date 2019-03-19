@@ -1,16 +1,19 @@
 Attribute VB_Name = "MIde_Mth_Nm_Drs"
 Option Explicit
 
-Function MthNmDRsVbe(Optional WhStr$) As Drs
-Set MthNmDRsVbe = MthNmDrszVbe(CurVbe, WhStr)
+Function MthNmCmlSetVbe(Optional WhStr$) As Aset
+Set MthNmCmlSetVbe = CmlSetzNy(MthNyVbe(WhStr))
+End Function
+Function MthNmDrsVbe(Optional WhStr$) As Drs
+Set MthNmDrsVbe = MthNmDrszVbe(CurVbe, WhStr)
 End Function
 
-Function MthNmDRsPj(Optional WhStr$) As Drs
-Set MthNmDRsPj = MthNmDrszPj(CurPj, WhStr)
+Function MthNmDrsPj(Optional WhStr$) As Drs
+Set MthNmDrsPj = MthNmDrszPj(CurPj, WhStr)
 End Function
 
-Function MthNmDRsMd(Optional WhStr$) As Drs
-Set MthNmDRsMd = MthNmDrszMd(CurMd, WhStr)
+Function MthNmDrsMd(Optional WhStr$) As Drs
+Set MthNmDrsMd = MthNmDrszMd(CurMd, WhStr)
 End Function
 
 Private Function MthNmDrszMd(M As CodeModule, Optional WhStr$) As Drs

@@ -54,7 +54,7 @@ Function MthCntMd() As MthCnt
 Set MthCntMd = MthCnt(CurMd)
 End Function
 Sub MthCntPjBrw()
-BrwDry DryzTLinAy(LyzMthCntAy(MthCntPj)), Fmt:=eSpcSep
+BrwDry DryzTLinAy(LyzMthCntAy(MthCntPj))
 End Sub
 Function MthCntPj() As MthCnt()
 MthCntPj = MthCntAy(CurPj)

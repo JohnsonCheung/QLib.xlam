@@ -2,14 +2,14 @@ Attribute VB_Name = "MXls_Fill"
 Option Explicit
 Sub FillSeqH(HBar As Range)
 Dim Sq()
-Sq = SqVBar(HBar.Rows.Count)
+Sq = SqVbar(HBar.Rows.Count)
 RgzResz(HBar, Sq).Value = Sq
 End Sub
 
-Sub FillSeqV(VBar As Range)
+Sub FillSeqV(Vbar As Range)
 Dim Sq()
-Sq = SqHBar(VBar.Rows.Count)
-RgzResz(VBar, Sq).Value = Sq
+Sq = SqHBar(Vbar.Rows.Count)
+RgzResz(Vbar, Sq).Value = Sq
 End Sub
 
 Sub FillWsNy(At As Range)

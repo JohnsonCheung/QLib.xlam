@@ -12,7 +12,7 @@ LiFxcLnkColStr.Init ColNm, ShtTyLis, RmvSqBkt(RTrim(ExtNm))
 End Function
 
 Function LiFxcAy(LnkColVbl$) As LiFxc()
-LiFxcAy = LiFxcAyLnkColAy(SplitVBar(LnkColVbl))
+LiFxcAy = LiFxcAyLnkColAy(SplitVbar(LnkColVbl))
 End Function
 
 Function LiFxcAyLnkColAy(A$()) As LiFxc()

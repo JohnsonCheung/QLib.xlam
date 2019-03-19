@@ -1,11 +1,11 @@
 Attribute VB_Name = "MIde_Md_Op_Add_Lines"
 Option Explicit
-Sub MdIns_DclLin(A As CodeModule, DclLines$)
-A.InsertLines A.CountOfDeclarationLines + 1, DclLines
-Debug.Print FmtQQ("MdIns_DclLin: Module(?) a DclLin is inserted", MdNm(A))
-End Sub
+Function MdInsDclLines(A As CodeModule, DclLines$) As CodeModule
+A.InsertLines FstMthLnoMd(A), DclLines
+Debug.Print FmtQQ("MdInsDclLines: Module(?) a DclLin is inserted", MdNm(A))
+End Function
 
-Sub MdAppy_Ly(A As CodeModule, Ly$())
-AppLines A, JnCrLf(Ly)
-End Sub
+Function MdAppLy(A As CodeModule, Ly$()) As CodeModule
+Set MdAppLy = MdAppLines(A, JnCrLf(Ly))
+End Function
 

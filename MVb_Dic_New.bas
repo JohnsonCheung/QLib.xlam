@@ -28,7 +28,7 @@ End Sub
 Function FmtDic1(A As Dictionary) As String()
 If A.Count = 0 Then Exit Function
 Dim Key: Key = A.Keys
-Dim O$(): O = FmtAyAlign(Key)
+Dim O$(): O = FmtAySamWdt(Key)
 Dim J&
 For J = 0 To UB(Key)
    O(J) = O(J) & " " & A(Key(J))
@@ -84,6 +84,6 @@ Next
 End Function
 
 Function DiczVbl(Vbl, Optional JnSep$ = vbCrLf) As Dictionary
-Set DiczVbl = Dic(SplitVBar(Vbl), JnSep)
+Set DiczVbl = Dic(SplitVbar(Vbl), JnSep)
 End Function
 

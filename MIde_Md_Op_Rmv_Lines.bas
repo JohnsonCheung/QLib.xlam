@@ -8,7 +8,7 @@ With A
 End With
 End Sub
 
-Sub RmvMdFTIxAy(A As CodeModule, B() As FTIx)
+Sub MdRmvFTIxAy(A As CodeModule, B() As FTIx)
 If Not FTIxAyIsInOrd(B) Then Stop
 Dim J%
 For J = UB(B) To 0 Step -1
@@ -26,19 +26,19 @@ Function MdLineszMd(A As CodeModule) As MdLines
 Set MdLineszMd = MdLines(1, SrcLines(A))
 End Function
 
-Sub RplMd(A As CodeModule, NewMdLines$)
-RplMdLines A, MdLineszMd(A), NewMdLines, "Whole-Md"
-End Sub
+Function MdRpl(A As CodeModule, NewMdLines$) As CodeModule
+Set MdRpl = MdRplLines(A, MdLineszMd(A), NewMdLines, "Whole-Md")
+End Function
 
-Sub RmvMdFTIx(A As CodeModule, FTIx As FTIx)
+Function MdRmvFTIx(A As CodeModule, FTIx As FTIx) As CodeModule
 Dim FstLin$
 FstLin = A.Lines(FTIx.FmNo, 1)
 With FTIx
-    If .Cnt = 0 Then Exit Sub
+    If .Cnt = 0 Then Exit Function
     A.DeleteLines .FmNo, .Cnt
     InfLin CSub, "Lines deleted", "Md Lno Cnt FstLin", MdNm(A), FTIx.FmNo, FTIx.Cnt, FstLin
 End With
-End Sub
+End Function
 
 Sub RmvMdFtLinesIxAy(A As CodeModule, B() As FTIx)
 If Not FTIxAyIsInOrd(B) Then Stop

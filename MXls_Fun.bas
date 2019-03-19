@@ -99,10 +99,10 @@ ReDim O(1 To 1, 1 To N)
 SqHBar = O
 End Function
 
-Function SqVBar(N%) As Variant()
+Function SqVbar(N%) As Variant()
 Dim O(), J%
 ReDim O(1 To N, 1 To 1)
-SqVBar = O
+SqVbar = O
 End Function
 
 Function N_ZerFill$(N, NDig%)

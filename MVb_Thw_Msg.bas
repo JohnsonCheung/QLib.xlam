@@ -46,7 +46,7 @@ Next
 End Function
 
 Function LyzNvzStr$(Nm$, V)
-LyzNvzStr = Nm & "=[" & LinzVal(V) & "]"
+LyzNvzStr = Nm & "=[" & StrCellzVal(V) & "]"
 End Function
 Function LyzMsgNap(Msg$, ParamArray Nap()) As String()
 Dim Nav(): Nav = Nap
@@ -79,7 +79,7 @@ End Sub
 Function LyzNyAv(Ny$(), Av(), Optional Sep$ = ": ") As String()
 Dim J%, O$(), N$()
 ReszAyabMax Ny, Av
-N = FmtAyAlign(Ny)
+N = FmtAySamWdt(Ny)
 For J = 0 To UB(Ny)
     PushIAy LyzNyAv, LyzNv(N(J), Av(J), Sep)
 Next
@@ -101,10 +101,10 @@ U1 = UB(Ny)
 U2 = UB(Av)
 For J = 0 To Max(U1, U2)
     If J <= U1 Then N = QuoteSq(Ny(J)) Else N = "[?]"
-    If J <= U2 Then V = LinzVal(Av(J)) Else V = "?"
+    If J <= U2 Then V = StrCellzVal(Av(J)) Else V = "?"
     PushI O, N & " " & V
 Next
-LinzNyAv = JnVBarSpc(O)
+LinzNyAv = JnVbarSpc(O)
 End Function
 
 Sub AsgNyAv(Nav(), ONy$(), OAv())
