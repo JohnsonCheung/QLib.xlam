@@ -59,7 +59,7 @@ End Sub
 Function MthLinDryzVbe(A As Vbe, Optional WhStr$) As Variant()
 Dim P
 For Each P In PjItr(A, WhStr)
-    PushObjzAy MthLinDryzVbe, MthLinDryzPj(CvPj(P), WhStr)
+    PushObjAy MthLinDryzVbe, MthLinDryzPj(CvPj(P), WhStr)
 Next
 End Function
 Function PjAy(A As Vbe, Optional WhStr$, Optional NmPfx$) As VBProject()

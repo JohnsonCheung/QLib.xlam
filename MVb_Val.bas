@@ -42,6 +42,7 @@ End Function
 Function LyzVal(V) As String()
 Select Case True
 Case IsDic(V): LyzVal = FmtDic(CvDic(V))
+Case IsAset(V): LyzVal = CvAset(V).Sy
 Case IsPrim(V): LyzVal = Sy(V)
 Case IsSy(V): LyzVal = SplitCrLf(JnCrLf(V))
 Case IsNothing(V): LyzVal = Sy("#Nothing")
@@ -49,11 +50,12 @@ Case IsEmpty(V): LyzVal = Sy("#Empty")
 Case IsMissing(V): LyzVal = Sy("#Missing")
 Case IsObject(V): LyzVal = Sy("#Obj(" & TypeName(V) & ")")
 Case IsArray(V)
-    Dim I
+    Dim I, O$()
     If Si(V) = 0 Then Exit Function
     For Each I In V
-        PushI LyzVal, StrCellzVal(I)
+        PushI O, StrCellzVal(I)
     Next
+    LyzVal = AyAddIxPfx(O)
 Case Else
 End Select
 End Function

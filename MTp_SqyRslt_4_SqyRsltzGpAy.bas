@@ -5,9 +5,9 @@ Const Msg_Sq_1_NotInEDic = "These items not found in ExprDic [?]"
 Const Msg_Sq_1_MustBe1or0 = "For %?xxx, 2nd term must be 1 or 0"
 
 Private Enum eStmtTy
-    eUpdStmt = 1
-    eDrpStmt = 2
-    eSelStmt = 3
+    eeUpdStmt = 1
+    eeDrpStmt = 2
+    eeSelStmt = 3
 End Enum
 Const U_Into$ = "INTO"
 Const U_Sel$ = "SEL"
@@ -56,9 +56,9 @@ Set E = ExprDic(SqLy)
 NoExprLinSqLy = RmvExprLin(SqLy)
 Dim O As SqlRslt
     Select Case Ty
-    Case eUpdStmt: O = SqlRsltUpd(NoExprLinSqLy, E)
-    Case eDrpStmt: O = SqlRsltDrp(NoExprLinSqLy)
-    Case eSelStmt: O = SqlRsltSel(NoExprLinSqLy, E)
+    Case eeUpdStmt: O = SqlRsltUpd(NoExprLinSqLy, E)
+    Case eeDrpStmt: O = SqlRsltDrp(NoExprLinSqLy)
+    Case eeSelStmt: O = SqlRsltSel(NoExprLinSqLy, E)
     Case Else: Stop
     End Select
 SqlRsltzSqLy = O
@@ -115,9 +115,9 @@ Private Function StmtTy(SqLy$()) As eStmtTy
 Dim L$
 L = UCase(RmvPfx(T1(SqLy(0)), "?"))
 Select Case L
-Case "SEL": StmtTy = eSelStmt
-Case "UPD": StmtTy = eUpdStmt
-Case "DRP": StmtTy = eDrpStmt
+Case "SEL": StmtTy = eeSelStmt
+Case "UPD": StmtTy = eeUpdStmt
+Case "DRP": StmtTy = eeDrpStmt
 Case Else: Stop
 End Select
 End Function
@@ -125,8 +125,8 @@ End Function
 Private Function StmtSwKey$(SqLy$(), Ty As eStmtTy)
 Stop
 Select Case Ty
-Case eStmtTy.eSelStmt: StmtSwKey = StmtSwKey_SEL(SqLy)
-Case eStmtTy.eUpdStmt: StmtSwKey = StmtSwKey_UPD(SqLy)
+Case eeSelStmt: StmtSwKey = StmtSwKey_SEL(SqLy)
+Case eeUpdStmt: StmtSwKey = StmtSwKey_UPD(SqLy)
 Case Else: Stop
 End Select
 End Function
@@ -421,14 +421,14 @@ Dim Ly$(), Ty As eStmtTy
 PushI Ly, "sel sdflk"
 PushI Ly, "fm AA BB"
 Ept = "AA BB"
-Ty = eSelStmt
+Ty = eeSelStmt
 GoSub Tst
 '---
 Erase Ly
 PushI Ly, "?upd XX BB"
 PushI Ly, "fm dsklf dsfl"
 Ept = "XX BB"
-Ty = eUpdStmt
+Ty = eeUpdStmt
 GoSub Tst
 Exit Sub
 Tst:

@@ -28,6 +28,10 @@ Function HitConstNm(SrcLin, ConstNm) As Boolean
 HitConstNm = ConstNmzSrcLin(SrcLin) = ConstNm
 End Function
 
+Function HitConstNmDic(SrcLin, ConstNmSet) As Boolean
+HitConstNmDic = ConstNmSet.Has(ConstNmzSrcLin(SrcLin))
+End Function
+
 Function HitMthLin(MthLin, B As WhMth) As Boolean
 HitMthLin = HitMthNm3(MthNm3(MthLin), B)
 End Function

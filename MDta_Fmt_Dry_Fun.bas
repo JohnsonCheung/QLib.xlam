@@ -83,27 +83,23 @@ End Function
 
 '=======================
 Function DryFmtCommon(Dry(), MaxColWdt%, ShwZer As Boolean) As Variant()
-Dim Dry1(): Dry1 = DryStrfy(Dry, ShwZer, MaxColWdt)  ' Convert each cell in Dry-Dry into string
-Dim W%(): W = WdtAyzDry(Dry1)
-Dim Dry2(): Dry2 = DryFmtCommon__DryFmtCol_ToSamWdt(Dry1, W)
-Dim Dr, J%, I&, ODry()
-ODry = DryFmtCommon
+DryFmtCommon = DryAlignCol(DryStrfy(Dry, ShwZer, MaxColWdt))
 End Function
-
-Function DryFmtCommon__DryFmtCol_ToSamWdt(StrCellDry(), Wdt%()) As Variant()
-Dim Dr, Cell, J%, I&
-Dim ODry(): ODry = StrCellDry
-For Each Dr In Itr(StrCellDry)
-    For Each Cell In Itr(Dr)
-        Dr(J) = AlignL(Cell, W(J))
-        J = J + 1
-    Next
-    I = I + 1
-    ODry(I) = Dr
+Function DrAlign(Dr, W%()) As String()
+Dim Cell, J%
+For Each Cell In Itr(Dr)
+    PushI DrAlign, AlignL(Cell, W(J))
+    J = J + 1
 Next
-DryFmtCommon__DryFmtCol_ToSamWdt = ODry
 End Function
-Private Function DryStrfy(Dry, ShwZer As Boolean, MaxColWdt%) As Variant()
+Function DryAlignCol(Dry()) As Variant()
+Dim W%(): W = WdtAyzDry(Dry)
+Dim Dr
+For Each Dr In Itr(Dry)
+    PushI DryAlignCol, DrAlign(Dr, W)
+Next
+End Function
+Private Function DryStrfy(Dry(), ShwZer As Boolean, MaxColWdt%) As Variant()
 Dim Dr
 For Each Dr In Itr(Dry)
    Push DryStrfy, DrStrfy(Dr, ShwZer, MaxColWdt)
@@ -113,7 +109,7 @@ End Function
 Private Function DrStrfy(Dr, ShwZer As Boolean, MaxWdt%) As String()
 Dim I
 For Each I In Itr(Dr)
-    PushI DrStrfy, StrzVal(I, ShwZer)
+    PushI DrStrfy, Left(StrzVal(I, ShwZer), MaxWdt)
 Next
 End Function
 Private Function StrzVal$(V, Optional ShwZer As Boolean) ' Convert V into a string in a cell
@@ -187,7 +183,7 @@ End Function
 
 Function FmtDryByJnCell(Dry(), Optional Sep$ = " | ", Optional Pfx$ = "| ", Optional Sfx$ = " |") As String()
 Dim Dr
-For Each Dr In Dry
+For Each Dr In Itr(Dry)
     PushI FmtDryByJnCell, LinFmDrByJnCell(Dr, Sep, Pfx, Sfx)
 Next
 End Function

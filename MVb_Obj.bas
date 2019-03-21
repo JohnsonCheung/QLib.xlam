@@ -2,9 +2,9 @@ Attribute VB_Name = "MVb_Obj"
 Option Explicit
 Const CMod$ = "MVb__Obj."
 Enum eThwOpt
-    eThw
-    eNoThwInf
-    eNoThwNoInf
+    eeThw
+    eeNoThwInf
+    eeNoThwNoInf
 End Enum
 Function IsEqObj(A, B) As Boolean
 IsEqObj = ObjPtr(A) = ObjPtr(B)
@@ -30,13 +30,15 @@ For Each I In Itr(Oy)
 Next
 IntozOyPrp = O
 End Function
+
 Function ObjAddAy(Obj, Oy)
 Dim O: O = Oy
 Erase O
 PushObj O, Obj
-PushObjzAy O, Oy
+PushObjAy O, Oy
 ObjAddAy = O
 End Function
+
 Function ObjNm$(A)
 If IsNothing(A) Then ObjNm = "#Obj Is Nothing#": Exit Function
 On Error GoTo X

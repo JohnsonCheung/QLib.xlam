@@ -28,14 +28,14 @@ For Each C In A.VBComponents
 Next
 End Sub
 
-Sub EnsPubZMd()
-EnsPubZzMd CurMd
+Sub EnsPubMd()
+EnsPubzMd CurMd
 End Sub
 
 Sub EnsPrvZzMd(A As CodeModule)
-MdyMd ActMdzEnsPrvZ(A)
+MdMdy A, ActLinAyzEnsPrvZ(A)
 End Sub
-Function ActMdzEnsPrvZ(A As CodeModule) As ActMd
+Function ActLinAyzEnsPrvZ(A As CodeModule) As ActLin()
 
 End Function
 Function LnoAyzPubZ(A As CodeModule) As Long()
@@ -52,36 +52,40 @@ Function LnoItrzPubZ(A As CodeModule)
 Asg Itr(LnoAyzPubZ(A)), LnoItrzPubZ
 End Function
 
-Sub EnsPubZzMd(A As CodeModule)
-MdyMd ActMdzEnsPubZ(A)
+Sub EnsPubzMd(A As CodeModule)
+MdMdy A, ActLinAyzEnsPubZ(A)
 End Sub
-Function ActMdzEnsPubZ(A As CodeModule) As ActMd
+
+Function ActLinAyzEnsPubZ(A As CodeModule) As ActLin()
 
 End Function
+
 Function LnoItrPrvZ(A As CodeModule)
 
 End Function
-Function ActLinzEnsMthMdy(A As CodeModule, MthNm, Mdy) As ActLin
+
+Function ActLinzEnsMdy(A As CodeModule, MthNm, Mdy) As ActLin
 End Function
-Sub EnsMdyzMth(A As CodeModule, MthNm$, Optional Mdy$)
-MdyLin A, ActLinzEnsMthMdy(A, MthNm, Mdy)
+
+Sub EnsMdy(A As CodeModule, MthNm$, Optional Mdy$)
+MdyLin A, ActLinzEnsMdy(A, MthNm, Mdy)
 End Sub
-Sub EnsPrvZzMth(A As CodeModule, MthNm$)
-EnsMdyzMth A, MthNm, "Private"
+
+Sub EnsPrv(A As CodeModule, MthNm$)
+EnsMdy A, MthNm, "Private"
 End Sub
-Function ActLinzEnsPubMth(A, MthNm) As ActLin
+
+Function ActLinzEnsPub(A, MthNm) As ActLin
 
 End Function
 
-Sub EnsPubzMth(A As CodeModule, MthNm$)
-MdyLin A, ActLinzEnsPubMth(A, MthNm)
+Sub EnsPub(A As CodeModule, MthNm$)
+MdyLin A, ActLinzEnsPub(A, MthNm)
 End Sub
-Function ActLinzEnsPrvMth(A As CodeModule, MthNm) As ActLin
+
+Function ActLinzEnsPrv(A As CodeModule, MthNm) As ActLin
 
 End Function
-Sub EnsPrvzMth(A As CodeModule, MthNm$)
-MdyLin A, ActLinzEnsPrvMth(A, MthNm)
-End Sub
 
 Private Function MthLinzEnsMdy$(OldMthLin$, ShtMdy$)
 Const CSub$ = CMod & "MthLinzEnsMdy"
@@ -96,7 +100,7 @@ Dim L$: L = RmvMdy(OldMthLin)
 End Function
 
 
-Private Sub Z_EnsMdyzMth()
+Private Sub Z_EnsMdy()
 Dim M As CodeModule
 Dim MthNm$
 Dim Mdy$
@@ -107,7 +111,7 @@ Mdy = "Prv"
 GoSub Tst
 Exit Sub
 Tst:
-    EnsMdyzMth M, MthNm, Mdy
+    EnsMdy M, MthNm, Mdy
     Return
 End Sub
 

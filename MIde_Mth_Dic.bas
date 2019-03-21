@@ -17,7 +17,7 @@ BrwDic MthDiczMd(CurMd)
 End Sub
 
 
-Private Sub Z_MdMthDic()
+Private Sub Z_MthDiczMd()
 BrwDic MthDiczMd(CurMd)
 End Sub
 Private Sub Z_PjMthDic()
@@ -40,18 +40,22 @@ For Each K In A
 Next
 End Sub
 Private Sub Z()
-Z_MdMthDic
 Z_PjMthDic
 Z_PjMthDic1
 MIde_Mth_Dic:
 End Sub
 
 Private Sub Z_MthDic()
-BrwDic MthDic(Src(Md("AAAMod")))
+Dim Src$()
+ZZ:
+    Src = Sy("Sub AA(): XX : End Sub", "Sub BB()", "XX", "End Sub")
+    Brw MthDic(Src)
+    Return
 End Sub
 Function MthDicPj()
 Set MthDicPj = MthDiczPj(CurPj)
 End Function
+
 Function MthDiczPj(A As VBProject) As Dictionary
 Dim O As New Dictionary, I
 For Each I In MdItr(A)
@@ -59,6 +63,7 @@ For Each I In MdItr(A)
 Next
 Set MthDiczPj = O
 End Function
+
 Function MthDicMd() As Dictionary
 Set MthDicMd = MthDiczMd(CurMd)
 End Function
@@ -68,7 +73,7 @@ Set MthDiczMd = AddDicKeyPfx(MthDic(Src(A)), MdQNmzMd(A) & ".")
 End Function
 
 Function MthNmDic(Src$()) As Dictionary 'Key is MthNm.  One PrpNm may have 2 PrpMth: (Get & Set) or (Get & Let)
-Dim D As Dictionary: Set D = MthDic(Src)
+Dim D As Dictionary: Set D = MthDic(Src): 'Brw LyzNNAp("Src MthDic", Src, FmtDic(D)): Stop
 Dim O As New Dictionary, MthDNm
 For Each MthDNm In D.Keys
     AddDiczApp O, MthNmzMthDNm(MthDNm), D(MthDNm), vbCrLf & vbCrLf
@@ -76,7 +81,7 @@ Next
 Set MthNmDic = O
 End Function
 
-Function MthDic(Src$()) As Dictionary ' Key is MthDNm
+Function MthDic(Src$()) As Dictionary 'Key is MthDNm, Val is MthLines
 Dim Ix, O As New Dictionary
 O.Add "*Dcl", DclLines(Src)
 For Each Ix In MthIxItr(Src)

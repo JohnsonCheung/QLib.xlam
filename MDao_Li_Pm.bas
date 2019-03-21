@@ -104,8 +104,8 @@ End Function
 Function LtPm(A As LiPm) As LtPm()
 Dim O() As LtPm, D As Dictionary
 Set D = A.FilNmToFfnDic
-PushObjzAy O, LtPmAyFb(A.Fb, D)
-PushObjzAy O, LtPmAyFx(A.Fx, D)
+PushObjAy O, LtPmAyFb(A.Fb, D)
+PushObjAy O, LtPmAyFx(A.Fx, D)
 LtPm = O
 End Function
 

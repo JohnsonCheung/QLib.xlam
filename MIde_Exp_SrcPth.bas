@@ -45,15 +45,6 @@ Sub ThwNotSrcp(Srcp)
 If Not IsSrcp(Srcp) Then Err.Raise 1, , "Not Srcp:" & vbCrLf & Srcp
 End Sub
 
-Function SrcExt$(A As VBComponent)
-Select Case A.Type
-Case vbext_ct_StdModule:   SrcExt = ".std.bas"
-Case vbext_ct_ClassModule: SrcExt = ".cls.bas"
-Case vbext_ct_Document:    SrcExt = ".doc.bas"
-Case Else: Stop
-End Select
-End Function
-
 Function SrcFfn$(A As VBComponent)
 SrcFfn = SrcpzCmp(A) & SrcFn(A)
 End Function

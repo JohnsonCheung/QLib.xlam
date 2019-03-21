@@ -8,8 +8,8 @@ Dim A3() As LiMisTy:  A3 = MisTyFxAy(A.Fx, B.Fx)
 LiMis.Init A.MisFfn, A1, A2, A3
 End Function
 Private Function MisTbl(A As LiPm, B As LiAct) As LiMisTbl()
-PushObjzAy MisTbl, MisTblFb(A.Fb, B.Fb)
-PushObjzAy MisTbl, MisTblFx(A.Fx, B.Fx)
+PushObjAy MisTbl, MisTblFb(A.Fb, B.Fb)
+PushObjAy MisTbl, MisTblFx(A.Fx, B.Fx)
 End Function
 Private Function MisTblFx(A() As LiFx, B() As LiActFx) As LiMisTbl()
 Dim J%

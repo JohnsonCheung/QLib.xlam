@@ -2,18 +2,18 @@ Attribute VB_Name = "MVb_Ay_BoolAy"
 Option Explicit
 
 Enum eBoolOp
-    eOpEQ = 1
-    eOpNE = 2
-    eOpAND = 3
-    eOpOR = 4
+    eeOpEQ = 1
+    eeOpNE = 2
+    eeOpAND = 3
+    eeOpOR = 4
 End Enum
 Enum eEqNeOp
-    eOpEQ = eBoolOp.eOpEQ
-    eOpNE = eBoolOp.eOpNE
+    eeOpEQ = eBoolOp.eeOpEQ
+    eeOpNE = eBoolOp.eeOpNE
 End Enum
 Enum eAndOrOp
-    eOpAND = eBoolOp.eOpAND
-    eOpOR = eBoolOp.eOpOR
+    eeOpAND = eBoolOp.eeOpAND
+    eeOpOR = eBoolOp.eeOpOR
 End Enum
 
 Function AndBoolAy(A() As Boolean) As Boolean
@@ -59,10 +59,10 @@ End Function
 Function BoolOp(BoolOpStr) As eBoolOp
 Dim O As eBoolOp
 Select Case UCase(BoolOpStr)
-Case "AND": O = eBoolOp.eOpAND
-Case "OR": O = eBoolOp.eOpOR
-Case "EQ": O = eBoolOp.eOpEQ
-Case "NE": O = eBoolOp.eOpNE
+Case "AND": O = eBoolOp.eeOpAND
+Case "OR": O = eBoolOp.eeOpOR
+Case "EQ": O = eBoolOp.eeOpEQ
+Case "NE": O = eBoolOp.eeOpNE
 Case Else: Stop
 End Select
 BoolOp = O

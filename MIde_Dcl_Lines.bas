@@ -36,7 +36,7 @@ Dim Top&
         DclLinCnt = UB(Src) + 1
         Exit Function
     End If
-    DclLinCnt = Fm - 1
+    DclLinCnt = Fm
 End Function
 
 Function DclLines$(Src$())
@@ -45,10 +45,12 @@ End Function
 
 Function DclLy(Src$()) As String()
 If Si(Src) = 0 Then Exit Function
-Dim N&
+Dim N&, O$()
    N = DclLinCnt(Src)
-If N = 0 Then Exit Function
-DclLy = AywFstNEle(Src, N)
+If N <= 0 Then Exit Function
+O = AywFstNEle(Src, N)
+DclLy = O
+'Brw LyzNNAp("N Src DclLy", N, AyAddIxPfx(Src), O): Stop
 End Function
 
 Function DclLineszMd$(A As CodeModule)

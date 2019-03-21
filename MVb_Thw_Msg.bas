@@ -58,6 +58,7 @@ End Function
 Function LyzMsgNav(Msg$, Nav()) As String()
 LyzMsgNav = AyAdd(LyzMsg(Msg), AyIndent(LyzNav(Nav)))
 End Function
+
 Function LyzNNAp(NN$, ParamArray Ap()) As String()
 Dim Av(): Av = Ap
 LyzNNAp = LyzNNAv(NN, Av)

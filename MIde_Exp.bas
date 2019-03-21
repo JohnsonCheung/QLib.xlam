@@ -36,7 +36,7 @@ CpyFilzToPth Fb, PthEns(SrcpzPjf(Fb))
 Dim A As Access.Application: Set A = DftAcs(Acs)
 OpnFb A, Fb
 Dim Pj As VBProject: Set Pj = A.Vbe.ActiveVBProject
-ExpzPj Pj
+PjExp Pj
 If IsNothing(Acs) Then AcsQuit A
 End Sub
 
@@ -44,22 +44,23 @@ Sub ExpFxa(Fxa, Optional Xls As Excel.Application)
 Dim A As Excel.Application: Set A = DftXls(Xls)
 A.Workbooks.Open Fxa
 Dim Pj As VBProject: Set Pj = A.Vbe.ActiveVBProject
-ExpzPj Pj
+PjExp Pj
 If IsNothing(Xls) Then XlsQuit A
 End Sub
 
 Sub ExpPj()
-ExpzPj CurPj
+PjExp CurPj
 End Sub
 
-Sub ExpzPj(Pj As VBProject)
+Function PjExp(Pj As VBProject) As VBProject
 Dim P$: P = PthEnsAll(Srcp(Pj))
 ClrPthFil P
 CpyFilzToPth Pjf(Pj), P
 ExpSrc Pj
 ExpRf Pj
 ExpFrm Pj
-End Sub
+Set PjExp = Pj
+End Function
 
 Private Sub ExpSrc(A As VBProject)
 Dim C As VBComponent

@@ -2,11 +2,11 @@ Attribute VB_Name = "MTp_SqyRslt"
 Option Explicit
 Type SqyRslt: Er() As String: Sqy() As String: End Type
 Enum eSqBlkTy
-    eErBlk
-    ePmBlk
-    eSwBlk
-    eSqBlk
-    eRmBlk
+    eeErBlk
+    eePmBlk
+    eeSwBlk
+    eeSqBlk
+    eeRmBlk
 End Enum
 Const SqBlkTyNN$ = "ER PM SW SQ RM"
 Public SampSqt As New SampSqt

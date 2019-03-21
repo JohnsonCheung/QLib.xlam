@@ -16,14 +16,14 @@ AyAdd = A
 PushAy AyAdd, B
 End Function
 
-Function SyAddSorSyAp(Sy$(), ParamArray SorSyAp()) As String()
+Function SyAddSorSyAp(GivenSy$(), ParamArray SorSyAp()) As String()
 Dim Av(): Av = SorSyAp
 Dim I, J&
 For Each I In Av
     If IsSy(I) Then Av(J) = I Else Av(J) = Sy(I)
     J = J + 1
 Next
-SyAddSorSyAp = SyAddSyAv(Sy, Av)
+SyAddSorSyAp = SyAddSyAv(GivenSy, Av)
 End Function
 Function TyNyzAy(Ay) As String()
 Dim I

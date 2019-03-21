@@ -1,8 +1,8 @@
 Attribute VB_Name = "MDao_Att_Op_Exp"
 Option Explicit
 Const CMod$ = "MDao_Att_Op_Exp."
-Const ™TblAtt$ = ""
-Const ™Att$ = "Attachment:It a Key-string of Table-Att in a database.  It can retrieve a record from Table-Att."
+Public Const ™TblAtt$ = ""
+Public Const ™Att$ = "Attachment:It a Key-string of Table-Att in a database.  It can retrieve a record from Table-Att."
 Private Function ExpAttzAttd$(A As Attd, ToFfn) 'Export the only File in {Attds} {ToFfn}
 Dim Fn$, T$, F2 As Dao.Field2
 With A.ARs

@@ -33,7 +33,7 @@ End Sub
 
 Function FmtDryAsSpcSep(Dry(), _
 Optional MaxColWdt% = 100, _
-Optional ShwZer As Boolean)
+Optional ShwZer As Boolean) As String()
 If Si(Dry) = 0 Then Exit Function
 Dim Dr
 For Each Dr In DryFmtCommon(Dry, MaxColWdt, ShwZer)

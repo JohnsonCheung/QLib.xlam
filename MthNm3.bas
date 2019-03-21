@@ -18,7 +18,7 @@ End With
 Set Init = Me
 End Function
 Function Lin$(Optional Hdr As eHdr)
-Dim Pfx$: If Hdr = eWithHdr Then Pfx = "Mdy Ty Nm: "
+Dim Pfx$: If Hdr = eeWithHdr Then Pfx = "Mdy Ty Nm: "
 Lin = Pfx & Appd(MthMdy, " ") & MthTy & " " & Nm
 End Function
 Property Get DNm$()

@@ -1,8 +1,10 @@
 Attribute VB_Name = "MIde_Ens_CSub"
 Option Explicit
+Const DoczAy01$ = "Tag: FunNmSfx DtaTy.  It is an array with either 0 or 1 element."
 Enum eActLin
-    eInsLin
-    eDltLin
+    eeInsLin
+    eeDltLin
+    eeRplLin
 End Enum
 Const CMod$ = "MIde_Ens_CSub."
 Private Type CModInf
@@ -22,40 +24,71 @@ Sub EnsCSubMd()
 EnsCSubzMd CurMd
 End Sub
 
-Private Function ActMd(A As CodeModule) As ActMd
+Private Function ActMdAy01(A As CodeModule) As ActMd()
 Dim S$():                 S = Src(A)
 Dim Rg() As MthRg:       Rg = MthRgAy(S)
-Dim CInf() As CSubInf: CInf = CSubInfAy(S, Rg) 'Same# of ele as mMthRgAy
+Dim CInf() As CSubInf: CInf = CSubInfAy(S, Rg) 'Should same# of ele as Rg
 Dim MInf As CModInf:   MInf = CModInf(A, CInf)
-Dim MAct  As ActLin:   MAct = CModAct(MInf)
-Dim CAct() As ActLin:  CAct = CSubActAy(CInf)
-Dim OAy() As ActLin:    OAy = IntozOy(OAy, ObjAddAy(MAct, CAct))
-Set ActMd = New ActMd
-ActMd.Init A, OAy
+Dim MAct() As ActLin:  MAct = CModAct(MInf)
+Dim CAct() As ActLin:  CAct = CSubAct(CInf)
+Dim OAy() As ActLin:    OAy = OyAdd(MAct, CAct)
+If Si(OAy) > 0 Then
+    Dim ActMd As New ActMd
+    PushObj ActMdAy01, ActMd.Init(A, OAy)
+End If
 End Function
 
+Sub Z_ActMdAyzPj()
+Dim Pj As VBProject, Act() As ActMd, Ept() As ActMd
+GoSub ZZ
+Exit Sub
+ZZ:
+    Set Pj = CurPj
+    GoTo Tst
+Tst:
+    Act = ActMdAyzPj(Pj)
+    Brw LyzActMdAy(Act): Stop
+    Return
+End Sub
+Function LyzActMdAy(A() As ActMd) As String()
+If Si(A) = 0 Then Exit Function
+Dim O$()
+PushI O, A(0).Hdr
+Dim J%
+For J = 0 To UB(A)
+    PushIAy O, A(J).ToLy
+Next
+LyzActMdAy = FmtAyT3(O)
+End Function
 Sub EnsCSubzMd(A As CodeModule, Optional Silent As Boolean)
-Dim Act As ActMd: Set Act = ActMd(A)
-MdyMd Act, Silent
-If Si(Act.ActLinAy) > 0 Then
-    SavPj PjzMd(A)
-End If
+Dim Act() As ActMd: Act = ActMdAy01(A)
+If Si(Act) = 0 Then Exit Sub
+MdMdy A, Act(0).ActLinAy, Silent
+SavPj PjzMd(A)
+End Sub
+Private Sub Z_ActMdAy01()
+Dim Md1 As CodeModule, Act() As ActMd
+GoSub T0
+Exit Sub
+T0:
+    Set Md1 = CurMd
+    GoTo Tst
+Tst:
+    Act = ActMdAy01(Md1)
+    Brw Act(0).ToLy
+    Return
 End Sub
 
-Private Function ActPj(Pj As VBProject) As ActPj
+Private Function ActMdAyzPj(Pj As VBProject) As ActMd()
 If Pj.Protection = vbext_pp_locked Then Thw CSub, "Pj is locked", "Pj", Pj.Name
 Dim C As VBComponent
-Dim OAct() As ActMd
 For Each C In Pj.VBComponents
-    PushObj OAct, ActMd(C.CodeModule)
+    PushObjAy ActMdAyzPj, ActMdAy01(C.CodeModule) '<===
 Next
-Set ActPj = New ActPj
-ActPj.Init OAct
 End Function
 
-
 Sub EnsCSubzPj(A As VBProject, Optional Silent As Boolean)
-MdyPj ActPj(A), Silent
+PjMdy A, ActMdAyzPj(A)
 End Sub
 
 Sub EnsCSubPj(Optional Silent As Boolean)
@@ -70,10 +103,10 @@ Private Function CSubLin$(MthNm$)
 CSubLin = FmtQQ("Const CSub$ = CMod & ""?""", MthNm)
 End Function
 
-Private Function CSubLnx(Src$(), B As FTIx) As Lnx
+Private Function CSubLnx(Src$(), FmIx&, ToIx&) As Lnx
 Dim Ix
 Dim O As New Lnx
-For Ix = B.FmIx + 1 To B.ToIx - 1
+For Ix = FmIx + 1 To ToIx - 1
     If HasPfx(Src(Ix), "Const CSub$") Then
         O.Ix = Ix
         O.Lin = Src(Ix)
@@ -86,7 +119,7 @@ End Function
 
 Private Function CSubInf(Src$(), B As MthRg) As CSubInf
 With CSubInf
-    Set .Lnx = CSubLnx(Src, B)
+    Set .Lnx = CSubLnx(Src, B.FmIx, B.ToIx)
     .InsLno = InsLnoCSub(Src, B)
     .IsUsingCSub = IsUsingCSub(Src, B)
     .MthNm = B.MthNm
@@ -101,19 +134,19 @@ End Sub
 Private Function CModInf(A As CodeModule, B() As CSubInf) As CModInf
 With CModInf
 .MdNm = MdNm(A)
-.Lnx = CModLnx(A)
+Set .Lnx = CModLnx(A)
 .InsLno = InsLnoCMod(A)
 .IsUsingCMod = IsUsingCMod(B)
 End With
 End Function
 
 Private Function CSubInfAy(Src$(), A() As MthRg) As CSubInf()
-Dim N&: N = UB(A)
-If N = 0 Then Exit Function
+Dim U&: U = UB(A)
+If U < 0 Then Exit Function
 Dim O() As CSubInf
-ReDim O(N - 1) As CSubInf
+ReDim O(U) As CSubInf
 Dim J%
-For J = 0 To N - 1
+For J = 0 To U
     O(J) = CSubInf(Src, A(J))
 Next
 CSubInfAy = O
@@ -156,14 +189,14 @@ End With
 
 End Function
 
-Private Function CModAct(A As CModInf) As ActLin
+Private Function CModAct(A As CModInf) As ActLin()
 Dim IsUsing As Boolean, OldLin$, NewLin$, Lno&
 IsUsing = A.IsUsingCMod
 Lno = A.Lnx.Lno
 OldLin = A.Lnx.Lin
 NewLin = CModLin(A.MdNm)
-If ShouldIns(IsUsing, OldLin, NewLin) Then PushObj CModAct, ActLin(eInsLin, Lno, NewLin)
-If ShouldDlt(IsUsing, OldLin, NewLin) Then PushObj CModAct, ActLin(eDltLin, Lno, OldLin)
+If ShouldIns(IsUsing, OldLin, NewLin) Then PushObj CModAct, ActLin(eeInsLin, Lno, NewLin)
+If ShouldDlt(IsUsing, OldLin, NewLin) Then PushObj CModAct, ActLin(eeDltLin, Lno, OldLin)
 End Function
 
 Private Function ActLin(Act As eActLin, Lno&, Lin$) As ActLin
@@ -178,15 +211,13 @@ X:
 End Function
 
 Private Function CSubInfUB%(A() As CSubInf)
-CSubInfUB = CSubInfSz(A)
+CSubInfUB = CSubInfSz(A) - 1
 End Function
 
-Private Function CSubActAy(A() As CSubInf) As ActLin()
-Dim J%, O() As ActMd
-If CSubInfSz(A) = 0 Then Exit Function
-ReDim O(CSubInfUB(A))
+Private Function CSubAct(A() As CSubInf) As ActLin()
+Dim J%
 For J = 0 To CSubInfUB(A)
-    O(J) = CSubActSng(A(J))
+    PushObjAy CSubAct, CSubActzSng(A(J))
 Next
 End Function
 
@@ -198,29 +229,29 @@ For J = A.FmIx + 1 To A.ToIx - 1
         Exit Function
     End If
 Next
+'No need to throw error, just exit it returns 0
+'Thw CSub, "Cannot find Lno where to insert CSub of a given method", "MthNm MthLy", A.MthNm, AywFT(Src, A.FmIx, A.ToIx)
 End Function
 
 Private Function InsLnoCMod&(A As CodeModule)
 InsLnoCMod = FstLnozAftOptMd(A)
 End Function
 
-Private Function CSubActSng(A As CSubInf) As ActLin()
+Private Function CSubActzSng(A As CSubInf) As ActLin()
 Dim IsUsing As Boolean, OldLin$, NewLin$, Lno&, InsLno&
 IsUsing = A.IsUsingCSub
 InsLno = A.InsLno
 Lno = A.Lnx.Lno
 OldLin = A.Lnx.Lin
 NewLin = CSubLin(A.MthNm)
-If ShouldIns(IsUsing, OldLin, NewLin) Then PushObj CSubActSng, ActLin(eInsLin, Lno, NewLin)
-If ShouldDlt(IsUsing, OldLin, NewLin) Then PushObj CSubActSng, ActLin(eDltLin, Lno, OldLin)
-'StopEr ActMdEr(CSubActSng)
+If ShouldIns(IsUsing, OldLin, NewLin) Then PushObj CSubActzSng, ActLin(eeInsLin, InsLno, NewLin)
+If ShouldDlt(IsUsing, OldLin, NewLin) Then PushObj CSubActzSng, ActLin(eeDltLin, Lno, OldLin)
+'StopEr ActMdEr(CSubActzSng)
 End Function
 
-Private Function CvActMd(A) As ActMd
+Function CvActMd(A) As ActMd
 Set CvActMd = A
 End Function
-
-
 
 Private Function CModLnx(Md As CodeModule) As Lnx
 Dim J%, L$

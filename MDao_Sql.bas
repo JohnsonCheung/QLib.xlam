@@ -1,7 +1,7 @@
 Attribute VB_Name = "MDao_Sql"
 Option Explicit
 Const CMod$ = "MSql."
-Const ™NN$ = "It a Str or Sy will give Ny.  See NyzNN"
+Public Const ™NN$ = "It a Str or Sy will give Ny.  See NyzNN"
 Const KwBet$ = "between"
 Const KwUpd$ = "update"
 Const KwInto$ = "into"

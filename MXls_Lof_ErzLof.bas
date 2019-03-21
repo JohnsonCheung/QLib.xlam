@@ -12,15 +12,15 @@ Public Const LofT1nnzMul$ = "Lo Ali Bdr Tot Wdt Fmt Lvl Cor                " ' M
 'Val_FmlFld      Lno#{Lno&} is [Fml] line having invalid Fml({Fml$}) due to invalid Fny({ErFny$()}).  Valid-Fny are [{VdtFny$()}]
 'Val_FmlNotBegEq Lno#{Lno&} is [Fml] line having [{Fml$}] which is not started with [=]
 'Fld_NotInFny    Lno#{Lno&} is [{T1$}] line having Fld({F}) which should one of the Fny value.  See [Fny-Value]
-'Fld_Dup         Lno#{Lno&} is [{T1$}] line having Fld({F}) which is duplicated and ignored due to it has defined in Lno#{AlreadyInLno&}
+'Fld_Dup         Lno#{Lno&} is [{T1}] line having Fld({F}) which is duplicated and ignored due to it has defined in Lno#{AlreadyInLno&}
 'Fldss_NotSel    Lno#{Lno&} is [{T1$}] line having Fldss({Fldss$}) which should select one for Fny value.  See [Fny-Value]
 'Fldss_DupSel    Lno#{Lno&} is [{T1$}] line having
-'LoNm            Lno#{Lno&} is [Lo-Nm] line having value({Val$}) which is not a good name"
+'LoNm            Lno#{Lno&} is [Lo-Nm] line having value({Val$}) which is not a good name.
 'LoNm_Mis        [Lo-Nm] line is missing
 'LoNm_Dup        Lno#{Lno&} is [Lo-Nm] which is duplicated and ignored due to there is already a [Lo-Nm] in Lno#{AlreadyInLno&}
 'Tot_DupSel      Lno#{Lno&} is [Tot-{TotKd$}] line having Fldss({Fldss$}) selecting SelFld({SelFld$}) which is already selected by Lno#{AlreadyInLno&} of [Tot-{AlreadyTotKd$}].  The SelFld is ignored.
 'Bet_3Fld        Lno#{Lno&} is [Bet] line.  It should have 3 fields, but now it has (?) fields of [?]"
-'Bet_EqFmTo      Lno#{Lno&} is [Bet] line and ignored due to FmFld(?) and ToFld(?) are equal."
+'Bet_EqFmTo      Lno#{Lno&} is [Bet] line and ignored due to FmFld(?) and ToFld(?) are equal.
 'Bet_FldSeq      Lno#{Lno&} is [Bet] line and ignored due to Fld(?), FmFld(?) and ToFld(?) are not in order.  See order the Fld, FmFld and ToFld in [Fny-Value]"
 'GenErMsg-Src-End.
 Private A$(), A_Fny$(), A_T1ToLnxAyDic As Dictionary
@@ -30,15 +30,16 @@ Private Const M_Val_NotInLis$ = "Lno#{Lno&} is [{T1$}] line having invalid Val({
 Private Const M_Val_FmlFld$ = "Lno#{Lno&} is [Fml] line having invalid Fml({Fml$}) due to invalid Fny({ErFny$()}).  Valid-Fny are [{VdtFny$()}]"
 Private Const M_Val_FmlNotBegEq$ = "Lno#{Lno&} is [Fml] line having [{Fml$}] which is not started with [=]"
 Private Const M_Fld_NotInFny$ = "Lno#{Lno&} is [{T1$}] line having Fld({F}) which should one of the Fny value.  See [Fny-Value]"
-Private Const M_Fld_Dup$ = "Lno#{Lno&} is [{T1$}] line having Fld({F}) which is duplicated and ignored due to it has defined in Lno#{AlreadyInLno&}"
+Private Const M_Fld_Dup$ = "Lno#{Lno&} is [{T1}] line having Fld({F}) which is duplicated and ignored due to it has defined in Lno#{AlreadyInLno&}"
 Private Const M_Fldss_NotSel$ = "Lno#{Lno&} is [{T1$}] line having Fldss({Fldss$}) which should select one for Fny value.  See [Fny-Value]"
 Private Const M_Fldss_DupSel$ = "Lno#{Lno&} is [{T1$}] line having"
-Private Const M_LoNm$ = "Lno#{Lno&} is [Lo-Nm] line having value({Val$}) which is not a good name"""
+Private Const M_LoNm$ = "Lno#{Lno&} is [Lo-Nm] line having value({Val$}) which is not a good name."
 Private Const M_LoNm_Mis$ = "[Lo-Nm] line is missing"
 Private Const M_LoNm_Dup$ = "Lno#{Lno&} is [Lo-Nm] which is duplicated and ignored due to there is already a [Lo-Nm] in Lno#{AlreadyInLno&}"
 Private Const M_Tot_DupSel$ = "Lno#{Lno&} is [Tot-{TotKd$}] line having Fldss({Fldss$}) selecting SelFld({SelFld$}) which is already selected by Lno#{AlreadyInLno&} of [Tot-{AlreadyTotKd$}].  The SelFld is ignored."
 Private Const M_Bet_3Fld$ = "Lno#{Lno&} is [Bet] line.  It should have 3 fields, but now it has (?) fields of [?]"""
-Private Const M_Bet_EqFmTo$ = "Lno#{Lno&} is [Bet] line and ignored due to FmFld(?) and ToFld(?) are equal."""
+Private Const M_Bet_EqFmTo$ = "Lno#{Lno&} is [Bet] line and ignored due to FmFld(?) and ToFld(?) are equal."
+Private Const M_Bet_FldSeq$ = "Lno#{Lno&} is [Bet] line and ignored due to Fld(?), FmFld(?) and ToFld(?) are not in order.  See order the Fld, FmFld and ToFld in [Fny-Value]"""
 Private Function MsgVal_FmlNotBegWithEq$(Lno&, Fml$)
 
 End Function
@@ -75,9 +76,6 @@ Dim Lc As ListColumn
     'If LcFmtSpecLy_WAny_Tot(Lc, FmtSpecLy) Then WAny_Tot = True: Exit Function
 'Next
 End Property
-Private Function WMsg_Fld_Dup$(Lno&, T1, DupFld, AlreadInLno&)
-WMsg_Fld_Dup = FmtQQ(M_Fld_Dup, Lno, T1, DupFld, AlreadInLno)
-End Function
 Private Property Get ErAli() As String()
 'ErAli = Sy(WAli_LeftRightCenter)
 End Property
@@ -168,7 +166,7 @@ Dim LnoAy&(): LnoAy = LngAyzOyPrp(LnxAywT2(LnxAy, DupFld), "Lno")
 Dim J%, Lno0&
 For J = 1 To UB(LnoAy)
     Lno0 = LnoAy(0)
-    PushI ErFldSngzDup__DupFld_is_fnd, WMsg_Fld_Dup(LnoAy(J), T1, DupFld, Lno0)
+    PushI ErFldSngzDup__DupFld_is_fnd, MsgOf_Fld_Dup(LnoAy(J), T1, DupFld, Lno0)
 Next
 End Function
 Private Function ErFldSngzDup__WithinT1(T1) As String() 'Within T1 any fld is dup?
@@ -322,30 +320,20 @@ Tst:
     Init Lof, Fny
     Act = ErFldSngzDup
 End Sub
-Private Function Msgz_Val_NotNum(Lno&, T1$, Val$) As String()
-Msgz_Val_NotNum = FmtMacro("Lno#{Lno&} is [{T1$}] line having Val({Val$}) which should be a number", Lno, T1, Val)
-End Function
-Private Function Msgz_Val_NotBet(Lno&, T1$, Val$, FmNo) As String()
-Msgz_Val_NotBet = FmtMacro("Lno#{Lno&} is [{T1$}] line having Val({Val$}) which between ({FmNo}) and (ToNm})", Lno, T1, Val, FmNo)
-End Function
-Private Function Msgz_Val_NotInLis(Lno&, T1$, ErVal$, VdtValNm$) As String()
-Msgz_Val_NotInLis = FmtMacro("Lno#{Lno&} is [{T1$}] line having invalid Val({ErVal$}).  See valid-value-{VdtValNm$}", Lno, T1, ErVal, VdtValNm)
-End Function
-Private Function Msgz_Val_FmlFld(Lno&, Fml$, ErFny$(), VdtFny$()) As String()
-Msgz_Val_FmlFld = FmtMacro("Lno#{Lno&} is [Fml] line having invalid Fml({Fml$}) due to invalid Fny({ErFny$()}).  Valid-Fny are [{VdtFny$()}]", Lno, Fml, ErFny, VdtFny)
-End Function
-Private Function Msgz_Val_FmlNotBegEq(Lno&, Fml$) As String()
-Msgz_Val_FmlNotBegEq = FmtMacro("Lno#{Lno&} is [Fml] line having [{Fml$}] which is not started with [=]", Lno, Fml)
-End Function
-Private Function Msgz_Fld_NotInFny(Lno&, T1$, F) As String()
-Msgz_Fld_NotInFny = FmtMacro("Lno#{Lno&} is [{T1$}] line having Fld({F}) which should one of the Fny value.  See [Fny-Value]", Lno, T1, F)
-End Function
-Private Function Msgz_Fld_Dup(Lno&, T1$, F, AlreadyInLno&) As String()
-Msgz_Fld_Dup = FmtMacro("Lno#{Lno&} is [{T1$}] line having Fld({F}) which is duplicated and ignored due to it has defined in Lno#{AlreadyInLno&}", Lno, T1, F, AlreadyInLno)
-End Function
-Private Function Msgz_Fldss_NotSel(Lno&, T1$, Fldss$) As String()
-Msgz_Fldss_NotSel = FmtMacro("Lno#{Lno&} is [{T1$}] line having Fldss({Fldss$}) which should select one for Fny value.  See [Fny-Value]", Lno, T1, Fldss)
-End Function
-Private Function Msgz_Fldss_DupSel(Lno&, T1$) As String()
-Msgz_Fldss_DupSel = FmtMacro("Lno#{Lno&} is [{T1$}] line having", Lno, T1)
-End Function
+Private Function MsgOf_Val_NotNum(Lno&, T1$, Val$) As String():                                             MsgOf_Val_NotNum = FmtMacro(M_Val_NotNum, Lno, T1, Val):                                          End Function
+Private Function MsgOf_Val_NotBet(Lno&, T1$, Val$, FmNo) As String():                                       MsgOf_Val_NotBet = FmtMacro(M_Val_NotBet, Lno, T1, Val, FmNo):                                    End Function
+Private Function MsgOf_Val_NotInLis(Lno&, T1$, ErVal$, VdtValNm$) As String():                              MsgOf_Val_NotInLis = FmtMacro(M_Val_NotInLis, Lno, T1, ErVal, VdtValNm):                          End Function
+Private Function MsgOf_Val_FmlFld(Lno&, Fml$, ErFny$(), VdtFny$()) As String():                             MsgOf_Val_FmlFld = FmtMacro(M_Val_FmlFld, Lno, Fml, ErFny, VdtFny):                               End Function
+Private Function MsgOf_Val_FmlNotBegEq(Lno&, Fml$) As String():                                             MsgOf_Val_FmlNotBegEq = FmtMacro(M_Val_FmlNotBegEq, Lno, Fml):                                    End Function
+Private Function MsgOf_Fld_NotInFny(Lno&, T1$, F) As String():                                              MsgOf_Fld_NotInFny = FmtMacro(M_Fld_NotInFny, Lno, T1, F):                                        End Function
+Private Function MsgOf_Fld_Dup(Lno&, T1, F, AlreadyInLno&) As String():                                     MsgOf_Fld_Dup = FmtMacro(M_Fld_Dup, Lno, T1, F, AlreadyInLno):                                    End Function
+Private Function MsgOf_Fldss_NotSel(Lno&, T1$, Fldss$) As String():                                         MsgOf_Fldss_NotSel = FmtMacro(M_Fldss_NotSel, Lno, T1, Fldss):                                    End Function
+Private Function MsgOf_Fldss_DupSel(Lno&, T1$) As String():                                                 MsgOf_Fldss_DupSel = FmtMacro(M_Fldss_DupSel, Lno, T1):                                           End Function
+Private Function MsgOf_LoNm(Lno&, Val$) As String():                                                        MsgOf_LoNm = FmtMacro(M_LoNm, Lno, Val):                                                          End Function
+Private Function MsgOf_LoNm_Mis() As String():                                                              MsgOf_LoNm_Mis = FmtMacro(M_LoNm_Mis):                                                            End Function
+Private Function MsgOf_LoNm_Dup(Lno&, AlreadyInLno&) As String():                                           MsgOf_LoNm_Dup = FmtMacro(M_LoNm_Dup, Lno, AlreadyInLno):                                         End Function
+Private Function MsgOf_Tot_DupSel(Lno&, TotKd$, Fldss$, SelFld$, AlreadyInLno&, AlreadyTotKd$) As String(): MsgOf_Tot_DupSel = FmtMacro(M_Tot_DupSel, Lno, TotKd, Fldss, SelFld, AlreadyInLno, AlreadyTotKd): End Function
+Private Function MsgOf_Bet_3Fld(Lno&) As String():                                                          MsgOf_Bet_3Fld = FmtMacro(M_Bet_3Fld, Lno):                                                       End Function
+Private Function MsgOf_Bet_EqFmTo(Lno&) As String():                                                        MsgOf_Bet_EqFmTo = FmtMacro(M_Bet_EqFmTo, Lno):                                                   End Function
+Private Function MsgOf_Bet_FldSeq(Lno&) As String():                                                        MsgOf_Bet_FldSeq = FmtMacro(M_Bet_FldSeq, Lno):                                                   End Function
+

@@ -28,7 +28,7 @@ Property Get N%()
 N = NPubSub + NPubFun + NPubPrp + NPrvSub + NPrvFun + NPrvPrp + NFrdSub + NFrdFun + NFrdPrp
 End Property
 Function Lin$(Optional Hdr As eHdr)
-Dim Pfx$: If Hdr = eWithHdr Then Pfx = "Pub* | Prv* | Frd* : *{Sub Fun Frd} "
+Dim Pfx$: If Hdr = eeWithHdr Then Pfx = "Pub* | Prv* | Frd* : *{Sub Fun Frd} "
 Lin = Pfx & MdNm & " | " & N & " | " & NPubSub & " " & NPubFun & " " & NPubPrp & " | " & NPrvSub & " " & NPrvFun & " " & NPrvPrp & " | " & NFrdSub & " " & NFrdFun & " " & NFrdPrp
 End Function
 

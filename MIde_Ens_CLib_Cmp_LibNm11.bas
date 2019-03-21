@@ -1,15 +1,15 @@
 Attribute VB_Name = "MIde_Ens_CLib_Cmp_LibNm11"
 Option Explicit
 Enum eLibNmTy
-    eByDic
-    eByFstCml
-    eByPjNm
+    eeByDic
+    eeByFstCml
+    eeByPjNm
 End Enum
 
 Function NoLibMdNy() As String()
 Dim I
 For Each I In CmpAy
-    If LibNm(CvCmp(I), eByDic) = "" Then
+    If LibNm(CvCmp(I), eeByDic) = "" Then
         PushI NoLibMdNy, CvCmp(I).Name
     End If
 Next
@@ -152,7 +152,7 @@ End Function
 
 Function LibDef() As String()
 LibDef = _
-FmtAy2T(AyAdd( _
+FmtAyT2(AyAdd( _
 AyAddPfx(C_MdNmToLibNmLy, "MdNm "), _
 AyAddPfx(C_MdPfxToLibNmLy, "MdPfx ")))
 End Function

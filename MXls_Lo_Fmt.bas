@@ -1,7 +1,7 @@
 Attribute VB_Name = "MXls_Lo_Fmt"
 Option Explicit
 Const CMod$ = "MXls_Lo_Fmt."
-Const ™Lof$ = "It is Ly with T1 LofT1nn"
+Public Const ™Lof$ = "It is Ly with T1 LofT1nn"
 Private A As ListObject, B$(), Fny$()
 
 Function FmtLo(Lo As ListObject, Lof$()) As ListObject

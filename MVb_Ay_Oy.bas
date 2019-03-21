@@ -1,11 +1,8 @@
 Attribute VB_Name = "MVb_Ay_Oy"
 Option Explicit
-Function OyAdd(A, B)
-Dim O, I
-O = A
-For Each I In Itr(B)
-    PushObj O, I
-Next
+Function OyAdd(Oy1, Oy2)
+Dim O: O = Oy1
+PushObjAy O, Oy2
 OyAdd = O
 End Function
 

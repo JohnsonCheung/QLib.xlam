@@ -39,7 +39,6 @@ Wend
 End Function
 
 Private Function ShfWrapLin$(OLy$(), W%)
-Stop
 Exit Function
 Dim O$, L$
     If FstChr(O) = " " Then

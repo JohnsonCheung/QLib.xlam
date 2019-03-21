@@ -131,7 +131,7 @@ For Each Obj In Itr
 Next
 End Sub
 
-Sub PushObjzAy(O, Oy)
+Sub PushObjAy(O, Oy)
 Dim I
 For Each I In Itr(Oy)
     PushObj O, I

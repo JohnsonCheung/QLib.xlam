@@ -80,7 +80,8 @@ Set PjzMd = A.Parent.Collection.Parent
 End Function
 
 Function SrcRmvMth(Src$(), MthNmSet As Aset) As String()
-SrcRmvMth = LyzLinesDicByItems(DicExlKeySet(MthNmDic(Src), MthNmSet))
+Dim D As Dictionary: Set D = DicExlKeySet(MthNmDic(Src), MthNmSet): 'Brw D: Stop
+SrcRmvMth = LyzLinesDicByItems(D)
 End Function
 
 Function SrcLines$(A As CodeModule)

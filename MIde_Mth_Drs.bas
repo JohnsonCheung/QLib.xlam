@@ -3,13 +3,13 @@ Option Explicit
 Function MthInfAyzbe(A As Vbe) As MthInf()
 Dim P As VBProject
 For Each P In A.VBProjects
-    PushObjzAy MthInfAyzbe, MthInfAy_Pj(P)
+    PushObjAy MthInfAyzbe, MthInfAy_Pj(P)
 Next
 End Function
 Function MthInfAy_Pj(A As VBProject) As MthInf()
 Dim C As VBComponent
 For Each C In A.VBComponents
-    PushObjzAy MthInfAy_Pj, MthInfAy_Md(C.CodeModule)
+    PushObjAy MthInfAy_Pj, MthInfAy_Md(C.CodeModule)
 Next
 End Function
 Function MthInfAy_Md(A As CodeModule) As MthInf()

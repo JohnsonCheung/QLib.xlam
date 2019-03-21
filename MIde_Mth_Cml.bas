@@ -25,7 +25,7 @@ Set MthCmlWsBase = WszDrs(Drs(MthCmlFny(NColzDry(Dry)), Dry), Vis:=Vis)
 End Function
 
 Sub MthCmlAyVbeBrw()
-Brw FmtAy3T(MthCmlAyVbe)
+Brw FmtAyT3(MthCmlAyVbe)
 End Sub
 Function MthCmlVbe() As String()
 MthCmlVbe = MthCmlAyzVbe(CurVbe)

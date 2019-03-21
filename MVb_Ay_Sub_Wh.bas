@@ -34,7 +34,7 @@ For Each I In Itr(Ay)
     End If
 Next
 If Inside Then
-    Thw CSub, "FmEle is found, but ToEle", "Ay FmEle ToEle", Ay, FmEle, ToEle
+    Thw CSub, "FmEle is found, but no ToEle", "Ay FmEle ToEle", Ay, FmEle, ToEle
 End If
 End Function
 Function AywDist(A, Optional IgnCas As Boolean)

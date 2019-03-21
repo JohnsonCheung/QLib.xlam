@@ -29,3 +29,11 @@ X:
 MsgBox "File [" & Ffn & "] cannot be deleted, " & vbCrLf & Msg
 DltFfnIfPrompt = True
 End Function
+
+Function DltFfnDone(Ffn) As Boolean
+On Error GoTo X
+Kill Ffn
+DltFfnDone = True
+Exit Function
+X:
+End Function

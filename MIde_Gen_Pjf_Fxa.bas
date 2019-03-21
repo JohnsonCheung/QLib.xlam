@@ -1,16 +1,15 @@
 Attribute VB_Name = "MIde_Gen_Pjf_Fxa"
 Option Explicit
-Sub Z_DistFxazCompress()
-Debug.Print DistFxazCompress(Pjf(CurPj))
+Private Sub Z_FxaCompress()
+Debug.Print FxaCompress(Pjf(CurPj))
 End Sub
 
-Function DistFxazCompress$(Fxa)
-'ExpFxa Fxa
-DistFxazGen SrcpzPjf(Fxa)
-DistFxazCompress = Fxa
+Function FxaCompress$(Fxa, Optional Xls As Excel.Application)
+PjExp PjzPjfVbe(Xls.Vbe, Fxa)
+FxaCompress = FfnRpl(Fxa, DistFxazSrcp(SrcpzPjf(Fxa), Xls))
 End Function
 
-Function DistFxazGen$(Srcp, Optional Xls As Excel.Application)
+Function DistFxazSrcp$(Srcp, Optional Xls As Excel.Application)
 If Not IsSrcp(Srcp) Then Thw CSub, "Not Srcp", "Srcp", Srcp
 Dim Fxa$
 Dim A As Excel.Application
@@ -18,7 +17,7 @@ Dim A As Excel.Application
     Fxa = DistFxa(Srcp)
     Dim Wb As Workbook
     Set Wb = WbCrtNxtFxa(Fxa, A)
-DistFxazGen = Wb.FullName
+DistFxazSrcp = Wb.FullName
 AddRfzPj Wb.VBProject
 LoadBas Wb.VBProject
 Wb.Close True

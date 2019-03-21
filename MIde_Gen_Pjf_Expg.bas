@@ -12,7 +12,7 @@ Set Xls = NewXls: Set Acs = NewAcs
 For Each Srcp In Itr(Ay)
     Stamp "GenExpg: Begin"
     Stamp "GenExpg: Srcp " & Srcp
-    DistFxazGen Srcp, Xls
+    DistFxazSrcp Srcp, Xls
     GenFba Srcp, Acs
     Stamp "GenExpg: End"
 Next

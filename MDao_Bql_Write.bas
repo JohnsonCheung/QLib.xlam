@@ -1,6 +1,6 @@
 Attribute VB_Name = "MDao_Bql_Write"
 Option Explicit
-Const ™Fbq$ = "Fbq is Full file name of back quote (`) separated lines. " & _
+Public Const ™Fbq$ = "Fbq is Full file name of back quote (`) separated lines. " & _
 "It has first line as ShtTyscfQBLin.  " & _
 "It rest of lines are records."
 Private Sub Z_WrtFbqlzDb()

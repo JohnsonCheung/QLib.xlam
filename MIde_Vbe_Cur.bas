@@ -13,10 +13,10 @@ Function HasPjf(Pjf) As Boolean
 HasPjf = HasPjfVbe(CurVbe, Pjf)
 End Function
 
-
 Function PjzPjf(A) As VBProject
 Set PjzPjf = PjzPjfVbe(CurVbe, A)
 End Function
+
 Function MdDRszbe(A As Vbe, Optional WhStr$) As Drs
 Set MdDRszbe = Drs(MdTblFny, MdDryzbe(A, WhStr))
 End Function

@@ -1,8 +1,8 @@
 Attribute VB_Name = "MIde_Mth_Pm_Arg"
 Option Explicit
-Const DoczArgStr$ = "It is splitting of MthPm"
-Const DoczArgSy$ = "It Array of ArgStr"
-Const DoczSset$ = "String-Aset"
+Public Const DoczArgStr$ = "It is splitting of MthPm"
+Public Const DoczArgSy$ = "It Array of ArgStr"
+Public Const DoczSset$ = "String-Aset"
 Function MthPm$(Lin)
 If IsMthLin(Lin) Then MthPm = StrBetBkt(Lin)
 End Function

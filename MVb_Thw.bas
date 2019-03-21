@@ -70,8 +70,8 @@ End Sub
 Sub ThwOpt(Thw As eThwOpt, Fun$, Msg$, ParamArray Nap())
 Dim Nav(): Nav = Nap
 Select Case Thw
-Case eNoThwInf: InfNav Fun, Msg, Nav
-Case eNoThwNoInf:
+Case eeNoThwInf: InfNav Fun, Msg, Nav
+Case eeNoThwNoInf:
 Case Else:   ThwNav Fun, Msg, Nav
 End Select
 End Sub
@@ -189,6 +189,7 @@ With RRCCzSq
 End With
 End Function
 Function FmtSq(Sq(), Optional SepChr$ = " ") As String()
+If IsEmpSq(Sq) Then Exit Function
 With RRCCzSq(Sq)
 Dim I%
 For I = .R1 To .R2

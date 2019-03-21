@@ -10,8 +10,8 @@ Attribute VB_Exposed = True
 Option Explicit
 Public NMod%, NCls%, NDoc%, NOth%, Locked As Boolean
 Enum eHdr
-    eNoHdr
-    eWithHdr
+    eeNoHdr
+    eeWithHdr
 End Enum
 Friend Function Init(NMod%, NCls%, NDoc%, NOth%) As CmpCnt
 With Me
@@ -29,6 +29,6 @@ End Property
 
 Function Lin$(Optional Hdr As eHdr)
 Dim Pfx$
-If Hdr = eWithHdr Then Pfx = "Cmp Mod Cls Doc Oth "
+If Hdr = eeWithHdr Then Pfx = "Cmp Mod Cls Doc Oth "
 Lin = Pfx & NCmp & " " & NMod & " " & NCls & " " & NDoc & " " & NOth
 End Function

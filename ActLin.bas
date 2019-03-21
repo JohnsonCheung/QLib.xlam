@@ -17,6 +17,12 @@ With Me
 End With
 Set Init = Me
 End Function
+Property Get Ix&()
+Ix = Lno - 1
+End Property
+Property Get ActStr$()
+ActStr = IIf(Act = eeDltLin, "Dlt", "Ins")
+End Property
 Function ToStr$()
-
+ToStr = ActStr & ":" & Lno & ":" & Lin
 End Function

@@ -79,16 +79,16 @@ Function FmtAyT1(A$()) As String()
 FmtAyT1 = FmtAyNTerm(A, 1)
 End Function
 
-Function FmtAy2T(A) As String()
-FmtAy2T = FmtAyNTerm(A, 2)
+Function FmtAyT2(A) As String()
+FmtAyT2 = FmtAyNTerm(A, 2)
 End Function
 
-Function FmtAy3T(A$()) As String()
-FmtAy3T = FmtAyNTerm(A, 3)
+Function FmtAyT3(A$()) As String()
+FmtAyT3 = FmtAyNTerm(A, 3)
 End Function
 
-Function FmtAy4T(A$()) As String()
-FmtAy4T = FmtAyNTerm(A, 4)
+Function FmtAyT4(A$()) As String()
+FmtAyT4 = FmtAyNTerm(A, 4)
 End Function
 
 Function FmtAySamWdt(Ay) As String()
@@ -107,7 +107,7 @@ For Each I In Itr(Ay)
 Next
 End Function
 
-Private Sub Z_FmtAy2T()
+Private Sub Z_FmtAyT2()
 Dim Ly$()
 Ly = Sy("AAA B C D", "A BBB CCC")
 Ept = Sy("AAA B   C D", _
@@ -115,11 +115,11 @@ Ept = Sy("AAA B   C D", _
 GoSub Tst
 Exit Sub
 Tst:
-    Act = FmtAy2T(Ly)
+    Act = FmtAyT2(Ly)
     C
     Return
 End Sub
-Private Sub Z_FmtAy3T()
+Private Sub Z_FmtAyT3()
 Dim Ly$()
 Ly = Sy("AAA B C D", "A BBB CCC")
 Ept = Sy("AAA B   C   D", _
@@ -127,13 +127,13 @@ Ept = Sy("AAA B   C   D", _
 GoSub Tst
 Exit Sub
 Tst:
-    Act = FmtAy3T(Ly)
+    Act = FmtAyT3(Ly)
     C
     Return
 End Sub
 
 Private Sub Z()
-Z_FmtAy2T
-Z_FmtAy3T
+Z_FmtAyT2
+Z_FmtAyT3
 MVb_Align_Ay:
 End Sub

@@ -1,12 +1,12 @@
 Attribute VB_Name = "MIde_Gen_ErMsg"
 Option Explicit
-Const DoczVdtVerbss$ = "Tag:Definition.  Gen"
+Public Const DoczVdtVerbss$ = "Tag:Definition.  Gen"
 Private Type A
     ErNy() As String
     ErMsgAy() As String
 End Type
 Private A As A
-Const ™DimItm$ = "DimStmt :: `Dim` DimItm, ..."
+Public Const ™DimItm$ = "DimStmt :: `Dim` DimItm, ..."
 
 Sub GenErMsgzNm(MdNm$)
 MdGenErMsg Md(MdNm)
@@ -16,36 +16,38 @@ Sub GenErMsgMd()
 MdGenErMsg CurMd
 End Sub
 
-Private Sub Init(Md As CodeModule)
-Dim Dcl$(): Dcl = DclLyzMd(Md)
-'Brw Dcl
+Private Sub Init(Src$())
+Dim Dcl$(): Dcl = DclLy(Src)
 Dim SrcLy$(): SrcLy = CvSy(AywBetEle(Dcl, "'GenErMsg-Src-Beg.", "'GenErMsg-Src-End."))
 'Brw SrcLy, CSub
 A.ErNy = T1Ay(AyRmvFstChr(SrcLy))
 A.ErMsgAy = AyRmvT1(SrcLy)
 End Sub
 
-Sub Z_MdGenErMsg()
-Const MdNm$ = "ZZ_GenMsgzMd"
-Dim Md As CodeModule
-GoSub T1
-'GoSub ZZ
+Sub Z_SrcGenErMsg()
+Dim Src$(), MdNm$
+'GoSub T1
+'GoSub ZZ1
+GoSub ZZ2
 Exit Sub
 T1:
-    Set Md = MdzPj(CurPj, "MXls_Lof_ErzLof")
-    GoTo Tst
-ZZ:
-    GoSub CrtMd
-    Set Md = MdzPj(CurPj, MdNm)
+
+ZZ2:
+    Src = SrczMdNm("MXls_Lof_ErzLof")
     GoSub Tst
-    Brw Src(Md)
-    RmvMd Md
+    Brw Act
+    Return
+ZZ1:
+    GoSub Set_Src
+    MdNm = "XX"
+    GoSub Tst
+    Brw Act
     Return
 Tst:
-    MdGenErMsg Md
+    Act = SrcGenErMsg(Src, MdNm)
     Return
-CrtMd:
-    Const MdVbl$ = "'GenErMsg-Src-Beg." & _
+Set_Src:
+    Const X$ = "'GenErMsg-Src-Beg." & _
     "|'Val_NotNum      Lno#{Lno&} is [{T1$}] line having Val({Val$}) which should be a number" & _
     "|'Val_NotBet      Lno#{Lno&} is [{T1$}] line having Val({Val$}) which between ({FmNo}) and (ToNm})" & _
     "|'Val_NotInLis    Lno#{Lno&} is [{T1$}] line having invalid Val({ErVal$}).  See valid-value-{VdtValNm$}" & _
@@ -62,29 +64,25 @@ CrtMd:
     "|'Bet_3Fld        Lno#{Lno&} is [Bet] line.  It should have 3 fields, but now it has (?) fields of [?]" & _
     "|'Bet_EqFmTo      Lno#{Lno&} is [Bet] line and ignored due to FmFld(?) and ToFld(?) are equal." & _
     "|'Bet_FldSeq      Lno#{Lno&} is [Bet] line and ignored due to Fld(?), FmFld(?) and ToFld(?) are not in order.  See order the Fld, FmFld and ToFld in [Fny-Value]" & _
-    "|'GenErMsg-Src-End."
-    MdRpl EnsMd(MdNm), RplVbl(MdVbl)
+    "|'GenErMsg-Src-End." & _
+    "|Const M_Bet_FldSeq$ = 1"
+    Src = SplitVbar(X)
     Return
 End Sub
 
-Private Sub A_Main()
-MdGenErMsg:
+Private Sub A_Prim()
+SrcGenErMsg:
 End Sub
 
-Private Function MdGenErMsg(Md As CodeModule) As CodeModule
-Set MdGenErMsg = Md
-Init Md
-If Si(A.ErNy) = 0 Then Inf CSub, "No GenErMsg-Src-Beg. / GenErMsg-Src-End.", "Md", MdNm(Md): Exit Function
-Dim O$()
-O = SrcRplConstDic(Src(Md), ErConstDic)
-O = SyAdd(SrcRmvMth(O, ErMthNmSet), ErMthLinAy)
-Brw O
-Exit Function
+Private Function MdGenErMsg(Md As CodeModule) As CodeModule 'eMthNmTy.eeNve
+Dim O$(): O = SrcGenErMsg(Src(Md)): 'Brw O: Stop 'Rmk: There is an error when Md is [MXls_Lof_ErzLof].  Er:CannotRmvMth:.
 Set MdGenErMsg = MdRpl(Md, JnCrLf(O))
 End Function
-
-Sub Z_ErConstDic()
-Init Md("MXls_Lof_ErzLof")
+Sub Z_MdGenErMsg()
+MdGenErMsg Md("MXls_Lof_ErzLof")
+End Sub
+Private Sub Z_ErConstDic()
+Init ZZ_Src
 Brw ErConstDic
 End Sub
 
@@ -112,22 +110,41 @@ Next
 Set ConstFTIx = EmpFTIx
 End Function
 
-Private Function SrcGenErMsg(Src$()) As String()
-
+Function SrcGenErMsg(Src$(), Optional MdNm$ = "?") As String()
+Init Src
+If Si(A.ErNy) = 0 Then Inf CSub, "No GenErMsg-Src-Beg. / GenErMsg-Src-End.", "Md", MdNm: Exit Function
+Dim O$(), O1$(), O2$()
+O1 = SrcRplConstDic(Src, ErConstDic): 'Brw O1: Stop
+O2 = SrcRmvMth(O1, ErMthNmSet):       'Brw LyzNNAp("MthToRmv BefRmvMth AftRmvMth", ErMthNmSet, O1, O2): Stop
+O = SyAdd(O2, ErMthLinAy):            'Brw O:Stop
+SrcGenErMsg = O
 End Function
+
 Function SrcRplConstDic(Src$(), ConstDic As Dictionary) As String()
-Dim ConstNm, Dcl$(), Bdy$()
-AsgSrcToDclAndBdy Src, Dcl, Bdy
-For Each ConstNm In ConstDic.Keys
-    Dcl = DclRplConst(Dcl, ConstNm, ConstDic(ConstNm))
-Next
-SrcRplConstDic = SyAdd(Dcl, Bdy)
+Dim ConstNm, Dcl$(), Bdy$(), Dcl1$(), Dcl2$()
+AsgDclAndBdy Src, Dcl, Bdy
+Dcl1 = DclRmvConstzSngLinConst(Dcl, KeySet(ConstDic)): 'Brw Dcl1: Stop
+'Brw LyzLinesDicByItems(ConstDic): Stop
+Dcl2 = SyAddAp(Dcl1, LyzLinesDicByItems(ConstDic), Bdy): 'Brw Dcl2: Stop
+SrcRplConstDic = Dcl2
 End Function
-
-Sub AsgSrcToDclAndBdy(Src$(), ODcl$(), OBdy$())
+Function DclRmvConstzSngLinConst(Dcl$(), ConstNmDic As Aset) As String() 'Assume: the const in Dcl to be remove is SngLin
+Dim L
+For Each L In Itr(Dcl)
+    If Not HitConstNmDic(L, ConstNmDic) Then
+        PushI DclRmvConstzSngLinConst, L
+    End If
+Next
+End Function
+Sub AsgDclAndBdy(Src$(), ODcl$(), OBdy$())
 Dim J&, F&, U&
 U = UB(Src)
 F = FstMthIx(Src)
+If F < 0 Then
+    Erase OBdy
+    ODcl = Src
+    Exit Sub
+End If
 For J = 0 To F - 1
     PushI ODcl, Src(J)
 Next
@@ -135,10 +152,6 @@ For J = F To U
     PushI OBdy, Src(J)
 Next
 End Sub
-
-Function DclRplConst(Dcl$(), ConstNm, ConstLines$) As String()
-DclRplConst = CvSy(AyAdd(AyeFTIx(Dcl, ConstFTIx(Dcl, ConstNm)), SplitCrLf(ConstLines)))
-End Function
 
 Function SrcRplMthDic(Src$(), MthDic As Dictionary) As String()
 SrcRplMthDic = SyAdd(SrcRmvMth(Src, KeySet(MthDic)), LyzLinesDicByItems(MthDic))
@@ -226,7 +239,7 @@ Private Property Get ErMthNy() As String()
 Dim ErNy$(): ErNy = A.ErNy
 Dim I
 For Each I In Itr(ErNy)
-    PushI ErMthNy, I
+    PushI ErMthNy, ErMthNm(I)
 Next
 End Property
 
@@ -245,26 +258,34 @@ ErConstNm = "M_" & ErNm
 End Function
 
 Private Sub Z_ErMthLinAy()
+'GoSub ZZ
 GoSub T1
 Exit Sub
+ZZ:
+    Init ZZ_Src
+    Brw ErMthLinAy
+    Return
 T1:
     A.ErNy = Sy("Val_NotNum")
     A.ErMsgAy = Sy("Lno#{Lno&} is [{T1$}] line having Val({Val$}) which should be a number")
-    Ept = ""
+    Ept = Sy("Private Function Msgz_Val_NotNum(Lno&, T1$, Val$) As String(): Msgz_Val_NotNum = FmtMacro(M_Val_NotNum, Lno, T1, Val): End Function")
     GoTo Tst
 Tst:
     Act = ErMthLinAy
-    Brw Act
-    Stop
     C
     Return
 End Sub
 
-Sub Z_Init()
-Init Md("MXls_Lof_ErzLof")
-D ErMthLinAy
+Private Sub Z_Init()
+Init Src(Md("MXls_Lof_ErzLof"))
+If Not HasEle(A.ErNy, "Bet_FldSeq") Then Stop
+'Bet_FldSeq
 Stop
 End Sub
+
+Private Function ZZ_Src() As String()
+ZZ_Src = Src(Md("MXls_Lof_ErzLof"))
+End Function
 
 Private Function ErMthLinAy() As String() 'One ErMth is one-MulStmtLin
 Dim ErNy$(), MsgAy$(), J%, O$()
@@ -277,15 +298,15 @@ ErMthLinAy = FmtMulStmtSrc(O)
 End Function
 
 Private Function ErMthLinesByNm$(ErNm$, ErMsg$)
-Const C$ = "Private Function Msgz_?(?) As String():Msgz_? = FmtMacro(?, ?):End Function"
+Const C$ = "Private Function ?(?) As String():? = FmtMacro(??):End Function"
 Dim CNm$:         CNm = ErConstNm(ErNm)
 Dim ErNy$():     ErNy = NyzMacro(ErMsg, ExlBkt:=True)
 Dim Pm$:           Pm = JnCommaSpc(AywDist(ErNy))
-Dim Calling$: Calling = JnCommaSpc(DimNyzDimItmAy(ErNy))
-ErMthLinesByNm = FmtQQ(C, ErNm, Pm, ErNm, CNm, Calling)
+Dim Calling$: Calling = Jn(AyAddPfx(DimNyzDimItmAy(ErNy), ", "))
+Dim MthNm$:     MthNm = ErMthNm(ErNm)
+ErMthLinesByNm = FmtQQ(C, MthNm, Pm, MthNm, CNm, Calling)
 End Function
 
 Private Function ErMthNm$(ErNm)
-ErMthNm = "ErMsgz_" & ErNm
+ErMthNm = "MsgOf_" & ErNm
 End Function
-

@@ -1,8 +1,8 @@
 Attribute VB_Name = "MVb_Str_Has"
 Option Explicit
 Enum eIgnCas
-    eIgnCas = 0
-    eCasSen = 1
+    eeIgnCas = 0
+    eeCasSen = 1
 End Enum
 
 Function HasDot(Str) As Boolean

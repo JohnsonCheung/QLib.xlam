@@ -1,6 +1,6 @@
 Attribute VB_Name = "MXls_Xls"
 Option Explicit
-Sub Z_XlszGet()
+Private Sub Z_XlszGet()
 Debug.Print XlszGet.Name
 End Sub
 Function XlszGet() As Excel.Application
