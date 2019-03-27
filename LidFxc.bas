@@ -8,8 +8,10 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
+Const CMod$ = "LidFxc."
 Public ColNm$, ShtTyLis$, ExtNm$
 Friend Function Init(ColNm$, ShtTyLis$, ExtNm$) As LidFxc
+Const CSub$ = CMod & "Init"
 With Me
     .ColNm = ColNm
     .ShtTyLis = ShtTyLis

@@ -10,6 +10,7 @@ Attribute VB_Exposed = True
 Option Explicit
 Dim X_Nm As WhNm, X_ShtMdy$(), X_ShtKd$()
 Dim X_IsEmp As Boolean
+
 Function Init(ShtMdy$(), ShtKd$(), Nm As WhNm) As WhMth
 Set X_Nm = Nm
 X_ShtMdy = ShtMdy

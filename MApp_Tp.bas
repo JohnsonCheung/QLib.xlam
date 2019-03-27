@@ -33,6 +33,7 @@ Private Function TpFxm$(Apn)
 TpFxm = TpPth & Apn & "(Template).xlsm"
 End Function
 Sub OpnTp(Apn)
+Const CSub$ = CMod & "OpnTp"
 Dim Tp1$: Tp1 = Tp(Apn): If Tp1 = "" Then Inf CSub, "Tp not found", "Tp", Tp1
 OpnFx Tp1
 End Sub

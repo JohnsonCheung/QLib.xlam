@@ -88,18 +88,20 @@ End Function
 Function DrAlign(Dr, W%()) As String()
 Dim Cell, J%
 For Each Cell In Itr(Dr)
-    PushI DrAlign, AlignL(Cell, W(J))
+    PushI DrAlign, " " & AlignL(Cell, W(J)) & " "
     J = J + 1
 Next
 End Function
-Function DryAlignCol(Dry()) As Variant()
-Dim W%(): W = WdtAyzDry(Dry)
+Function DryAlignColzWdt(Dry(), W%()) As Variant()
 Dim Dr
 For Each Dr In Itr(Dry)
-    PushI DryAlignCol, DrAlign(Dr, W)
+    PushI DryAlignColzWdt, DrAlign(Dr, W)
 Next
 End Function
-Private Function DryStrfy(Dry(), ShwZer As Boolean, MaxColWdt%) As Variant()
+Function DryAlignCol(Dry()) As Variant()
+DryAlignCol = DryAlignColzWdt(Dry, WdtAyzDry(Dry))
+End Function
+Function DryStrfy(Dry(), ShwZer As Boolean, MaxColWdt%) As Variant()
 Dim Dr
 For Each Dr In Itr(Dry)
    Push DryStrfy, DrStrfy(Dr, ShwZer, MaxColWdt)
@@ -112,6 +114,7 @@ For Each I In Itr(Dr)
     PushI DrStrfy, Left(StrzVal(I, ShwZer), MaxWdt)
 Next
 End Function
+
 Private Function StrzVal$(V, Optional ShwZer As Boolean) ' Convert V into a string in a cell
 'SpcSepStr is a string can be displayed in a cell
 Select Case True
@@ -136,25 +139,30 @@ Case Else:        StrzVal = V
 End Select
 End Function
 
-Function DryInsSep(Dry, BrkColIxAy, SepDr$()) As Variant()
-If Si(BrkColIxAy) = 0 Then DryInsSep = Dry: Exit Function
-Dim Dr, IsBrk As Boolean, LasCell$, Fst As Boolean
-'LasCell = Dry(0)(BrkColIxAy)
-For Each Dr In Dry
-    If Fst Then
-        Fst = False
-    Else
-'        IsBrk = LasCell = Dr(BrkColIx)
+Function IsEqDrCC(Dr1, Dr2, CC%()) As Boolean
+Dim J%
+For J = 0 To UB(CC)
+    If Dr1(CC(J)) <> Dr2(CC(J)) Then Exit Function
+Next
+IsEqDrCC = True
+End Function
+
+Function DryInsBrk(SrtedDry, BrkCC, SepDr$()) As Variant()
+Dim CC%(): CC = IxAyzCC(BrkCC)
+If Si(CC) = 0 Then DryInsBrk = SrtedDry: Exit Function
+Dim Dr, IsBrk As Boolean, LasDr, J&
+LasDr = SrtedDry(0)
+PushI DryInsBrk, LasDr
+For J = 1 To UB(SrtedDry)
+    If Not IsEqDrCC(LasDr, SrtedDry(J), CC) Then
+        PushI DryInsBrk, SepDr
+        LasDr = SrtedDry(J)
     End If
-    If IsBrk Then
-        PushI DryInsSep, SepDr
-'        LasCell = Dr(BrkColIx)
-    End If
-    Push DryInsSep, Dr
+    Push DryInsBrk, SrtedDry(J)
 Next
 End Function
 
-Private Function WdtAyzDry(A()) As Integer()
+Function WdtAyzDry(A()) As Integer()
 Dim J%
 For J = 0 To NColzDry(A) - 1
     Push WdtAyzDry, WdtzAy(ColzDry(A, J))
@@ -169,7 +177,7 @@ End Function
 Function SepDr(W%()) As String()
 Dim I
 For Each I In W
-    Push SepDr, Dup("-", I)
+    Push SepDr, Dup("-", I + 2)
 Next
 End Function
 
@@ -177,11 +185,11 @@ Function SepLinzSepDr$(SepDr$(), Sep$)
 SepLinzSepDr = "|" & Join(SepDr, Sep) & "|"
 End Function
 
-Function LinFmDrByJnCell$(Dr, Optional Sep$ = " | ", Optional Pfx$ = "| ", Optional Sfx$ = " |")
+Function LinFmDrByJnCell$(Dr, Optional Sep$ = "|", Optional Pfx$ = "|", Optional Sfx$ = "|")
 LinFmDrByJnCell = Pfx & Jn(Dr, Sep) & Sfx
 End Function
 
-Function FmtDryByJnCell(Dry(), Optional Sep$ = " | ", Optional Pfx$ = "| ", Optional Sfx$ = " |") As String()
+Function FmtDryByJnCell(Dry(), Optional Sep$ = "|", Optional Pfx$ = "|", Optional Sfx$ = "|") As String()
 Dim Dr
 For Each Dr In Itr(Dry)
     PushI FmtDryByJnCell, LinFmDrByJnCell(Dr, Sep, Pfx, Sfx)

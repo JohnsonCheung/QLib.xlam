@@ -1,5 +1,6 @@
 Attribute VB_Name = "MDao_Db"
 Option Explicit
+Const CMod$ = "MDao_Db."
 Public Q$
 
 Function IsOkDb(A As Database) As Boolean
@@ -98,6 +99,7 @@ A.Execute "Create Table [#Tmp] (AA Int, BB Text 10)"
 End Sub
 
 Sub RunQ(A As Database, Q)
+Const CSub$ = CMod & "RunQ"
 On Error GoTo X
 A.Execute Q
 Exit Sub
@@ -117,6 +119,7 @@ Set RszQQ = Rs(A, FmtQQAv(QQ, Av))
 End Function
 
 Function Rs(A As Database, Q) As Dao.Recordset
+Const CSub$ = CMod & "Rs"
 On Error GoTo X
 Set Rs = A.OpenRecordset(Q)
 Exit Function
@@ -389,4 +392,5 @@ Exit Function
 X:
 DbNm = Err.Description
 End Function
+
 

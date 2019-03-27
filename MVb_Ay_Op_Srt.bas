@@ -13,24 +13,50 @@ Next
 IsSrtAy = True
 End Function
 
-Function AyQSrt(A)
-If Si(A) = 0 Then Exit Function
-Dim O: O = A
-AyQSrtLH O, 0, UB(A)
+Function AyQSrt(Ay)
+If Si(Ay) = 0 Then Exit Function
+Dim O: O = Ay
+AyQSrtLH O, 0, UB(Ay)
 AyQSrt = O
 End Function
 
-Sub AyQSrtLH(A, L&, H&)
+Sub AyQSrtLH(Ay, L&, H&)
 If L >= H Then Exit Sub
 Dim P&
-P = AyQSrtPartition(A, L, H)
-AyQSrtLH A, L, P
-AyQSrtLH A, P + 1, H
+P = AyQSrtPartition1(Ay, L, H)
+AyQSrtLH Ay, L, P
+AyQSrtLH Ay, P + 1, H
 End Sub
-
-Function AyQSrtPartition&(A, L&, H&)
+Function AyQSrtPartition1&(OAy, L&, H&) 'Try mdy
 Dim V, I&, J&, X
-V = A(L)
+V = OAy(L)
+I = L
+J = H
+Dim Z&
+Do
+    Z = Z + 1
+    If Z > 10000 Then Stop
+    While OAy(I) < V
+        I = I + 1
+    Wend
+    
+    While OAy(J) > V
+        J = J - 1
+    Wend
+    If I >= J Then
+        AyQSrtPartition1 = J
+        Exit Function
+    End If
+
+    X = OAy(I)
+    OAy(I) = OAy(J)
+    OAy(J) = X
+Loop
+End Function
+
+Function AyQSrtPartition&(OAy, L&, H&)
+Dim V, I&, J&, X
+V = OAy(L)
 I = L - 1
 J = H + 1
 Dim Z&
@@ -39,23 +65,24 @@ Do
     If Z > 10000 Then Stop
     Do
         I = I + 1
-    Loop Until A(I) >= V
+    Loop Until OAy(I) >= V
     
     Do
         J = J - 1
-    Loop Until A(J) <= V
+    Loop Until OAy(J) <= V
 
     If I >= J Then
         AyQSrtPartition = J
         Exit Function
     End If
 
-     X = A(I)
-     A(I) = A(J)
-     A(J) = X
+    X = OAy(I)
+    OAy(I) = OAy(J)
+    OAy(J) = X
 Loop
 End Function
-Private Sub Z_AySrt_BY_AY()
+
+Private Sub Z_AySrtByAy()
 Dim Ay, ByAy
 Ay = Array(1, 2, 3, 4)
 ByAy = Array(3, 4)
@@ -63,19 +90,19 @@ Ept = Array(3, 4, 1, 2)
 GoSub Tst
 Exit Sub
 Tst:
-    Act = AySrt_BY_AY(Ay, ByAy)
+    Act = AySrtByAy(Ay, ByAy)
     C
     Return
 End Sub
 
-Function AySrt_BY_AY(Ay, ByAy)
+Function AySrtByAy(Ay, ByAy)
 Dim O: O = AyCln(Ay)
 Dim I
 For Each I In ByAy
     If HasEle(Ay, I) Then PushI O, I
 Next
 PushIAy O, AyMinus(Ay, O)
-AySrt_BY_AY = O
+AySrtByAy = O
 End Function
 
 Function AySrt(Ay, Optional Des As Boolean)
@@ -142,7 +169,7 @@ Push Exp, "Private:MdMthDRsFunBdyLy:Function"
 Push Exp, "Private:SrcMthLx_ToLx:Function"
 Push Exp, "~Private:JnContinueLin:Sub"
 Push Exp, "~~:Tst:Sub"
-Act = AySrt(A)
+Act = AyQSrt(A)
 ThwAyabNE Exp, Act
 End Sub
 

@@ -1,5 +1,6 @@
 Attribute VB_Name = "MApp_Git"
 Option Explicit
+Const CMod$ = "MApp_Git."
 
 Sub GitCmit(Optional Msg$ = "commit", Optional ReInit As Boolean)
 RunFcmdWait FcmdWaitzCdLines(GitCmitCdLines(Srcp(CurPj), Msg, ReInit))
@@ -51,6 +52,7 @@ Sub BrwGitPushCdLines()
 BrwFt GitPushCdLines("A")
 End Sub
 Private Function PjNm$(CmitgPth)
+Const CSub$ = CMod & "PjNm"
 If Fdr(ParPth(CmitgPth)) <> ".src" Then Thw CSub, "Not source path", "CmitgPth", CmitgPth
 PjNm = Fdr(CmitgPth)
 End Function

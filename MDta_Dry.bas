@@ -1,6 +1,22 @@
 Attribute VB_Name = "MDta_Dry"
 Option Explicit
 Const CMod$ = "MDta_Dry."
+Function IxAyzCC(CC) As Integer()
+Select Case True
+Case IsLngAy(CC): IxAyzCC = IntozItr(IxAyzCC, Itr(CC))
+Case IsIntAy(CC): IxAyzCC = CC
+Case IsInt(CC): IxAyzCC = IntAy(CC)
+Case IsStr(CC): IxAyzCC = IntAyzIIStr(CStr(CC))
+Case IsEmpty(CC), IsMissing(CC):
+Case Else: Thw CSub, "CC must be Int IntAy or IIStr", "TypeName(CC)", TypeName(CC)
+End Select
+End Function
+Function IntAyzIIStr(IIStr$) As Integer()
+Dim I
+For Each I In Itr(SySsl(IIStr))
+    PushI IntAyzIIStr, I
+Next
+End Function
 Function CntDrywGT1(CntDry()) As Variant()
 Dim Dr
 For Each Dr In CntDry
@@ -218,8 +234,7 @@ End Function
 
 Function DrywDup(A(), CC) As Variant()
 If Not IsArray(CC) Then DrywDup = DrywDupCol(A, CInt(CC)): Exit Function
-Dim Dup, Dr, Chr0$
-Chr0 = Chr(0)
+Dim Dup, Dr
 Dup = AywDup(SyzDry(A, CC))
 For Each Dr In Itr(A)
     If HasEle(Dup, Jn(AywIxAy(Dr, CC), vbFldSep)) Then Push DrywDup, Dr

@@ -10,7 +10,7 @@ Else
 End If
 End Function
 
-Function AlignR$(S, W%)
+Function AlignR$(S, W)
 Dim L%: L = Len(S)
 If W > L Then
     AlignR = Space(W - L) & S

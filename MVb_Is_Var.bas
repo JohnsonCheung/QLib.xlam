@@ -70,7 +70,9 @@ End Function
 Function IsEqTy(A, B) As Boolean
 IsEqTy = VarType(A) = VarType(B)
 End Function
-
+Function IsInt(A) As Boolean
+IsInt = VarType(A) = vbInteger
+End Function
 Function IsIntAy(A) As Boolean
 IsIntAy = VarType(A) = vbArray + vbInteger
 End Function

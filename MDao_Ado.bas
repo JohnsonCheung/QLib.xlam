@@ -1,5 +1,6 @@
 Attribute VB_Name = "MDao_Ado"
 Option Explicit
+Const CMod$ = "MDao_Ado."
 Function CvTc(A) As ADOX.Table
 Set CvTc = A
 End Function
@@ -76,12 +77,12 @@ Set ARsFbq = CnzFb(Fb).Execute(Q)
 End Function
 
 Function DrsArs(A As ADODB.Recordset) As Drs
-Set DrsArs = Drs(FnyArs(A), DryArs(A))
+Set DrsArs = Drs(FnyzArs(A), DryzArs(A))
 End Function
 
-Function DryArs(A As ADODB.Recordset) As Variant()
+Function DryzArs(A As ADODB.Recordset) As Variant()
 While Not A.EOF
-    PushI DryArs, DrzAfds(A.Fields)
+    PushI DryzArs, DrzAfds(A.Fields)
     A.MoveNext
 Wend
 End Function
@@ -91,11 +92,11 @@ Dim S$
 Const Q$ = "Select * from KE24"
 S = "GRANT SELECT ON MSysObjects TO Admin;"
 'CurrentProject.Connection.Execute S
-BrwDry DryArs(ArsCnq(CnzFb(SampFbzDutyDta), Q))
+BrwDry DryzArs(ArsCnq(CnzFb(SampFbzDutyDta), Q))
 End Sub
 
-Function FnyArs(A As ADODB.Recordset) As String()
-FnyArs = FnyAfds(A.Fields)
+Function FnyzArs(A As ADODB.Recordset) As String()
+FnyzArs = FnyzAfds(A.Fields)
 End Function
 
 Function IntAyzARs(A As ADODB.Recordset, Optional Col = 0) As Integer()
@@ -114,6 +115,7 @@ Private Sub Z_WsNyzFx()
 DmpAy WsNyzFx(SampFx_KE24)
 End Sub
 Function HasTblzFfnTblNm(Ffn, TblNm) As Boolean
+Const CSub$ = CMod & "HasTblzFfnTblNm"
 Select Case True
 Case IsFx(Ffn): HasTblzFfnTblNm = HasFxw(Ffn, TblNm)
 Case IsFx(Ffn): HasTblzFfnTblNm = HasFxw(Ffn, TblNm)
@@ -254,6 +256,7 @@ Function FFzFxw$(Fx$, Wsn$)
 FFzFxw = TLin(FnyzFxw(Fx, Wsn))
 End Function
 Function FnyzFfnTblNm(Ffn, TblNm) As String()
+Const CSub$ = CMod & "FnyzFfnTblNm"
 Select Case True
 Case IsFx(Ffn): FnyzFfnTblNm = FnyzFxw(Ffn, TblNm)
 Case IsFb(Ffn): FnyzFfnTblNm = FnyzFbt(Ffn, TblNm)
@@ -322,8 +325,8 @@ For Each F In A
 Next
 End Function
 
-Function FnyAfds(A As ADODB.Fields) As String()
-FnyAfds = Itn(A)
+Function FnyzAfds(A As ADODB.Fields) As String()
+FnyzAfds = Itn(A)
 End Function
 
 

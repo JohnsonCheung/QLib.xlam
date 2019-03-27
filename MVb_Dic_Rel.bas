@@ -13,6 +13,10 @@ Function IsRel(A) As Boolean
 IsRel = TypeName(A) = "Rel"
 End Function
 
+Function RelzVbl(RelVbl$) As Rel
+Set RelzVbl = Rel(SplitVbar(RelVbl))
+End Function
+
 Function Rel(RelLy$()) As Rel
 Dim O As New Rel
 Set Rel = O.Init(RelLy)

@@ -1,6 +1,5 @@
 Attribute VB_Name = "MApp_Fun"
 Option Explicit
-Const CMod$ = "MApp___Fun."
 Private X_Acs As New Access.Application
 Function AppDb(Apn) As Database
 Set AppDb = Db(AppFb(Apn))

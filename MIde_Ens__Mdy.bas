@@ -28,10 +28,10 @@ Function SrcMdyLin(Src$(), B As ActLin) As String()
 Dim O$()
 Select Case B.Act
 Case eActLin.eeInsLin
-    SrcMdyLin = CvSy(AyInsItm(Src, B.Lin, B.Lno))
+    SrcMdyLin = CvSy(AyInsItm(Src, B.Lin, B.Ix))
 Case eActLin.eeDltLin
-    If Src(B.Lno - 1) <> B.Lin Then Stop
-    SrcMdyLin = AyeEleAt(Src, B.Lno - 1)
+    If Src(B.Ix) <> B.Lin Then Stop
+    SrcMdyLin = AyeEleAt(Src, B.Ix)
 Case Else
     Thw CSub, "Invalid ActLin.Act, it should eeInsLin or eeDltLin, ", "ActLin", B.ToStr
 End Select
@@ -41,33 +41,107 @@ Function PjMdy(A As VBProject, B() As ActMd, Optional Silent As Boolean) As VBPr
 Dim I
 For Each I In Itr(B)
     With CvActMd(I)
+        Debug.Print MdNm(.Md)
         MdMdy .Md, .ActLinAy, Silent
     End With
 Next
 Set PjMdy = A
 End Function
-Sub Z()
+
+Sub Z_SrcMdy()
+Dim Mdy() As ActLin
+GoSub ZZ2
+Exit Sub
+ZZ2:
+    Dim M, J%
+    For Each M In MdItr(CurPj)
+        If J > 10 Then Exit For
+        Dim A() As ActMd
+        A = ActMdAy01zEnsCSub(CvMd(M))
+        If Si(A) > 0 Then
+            Brw SrcMdy(Src(CvMd(M)), A(0).ActLinAy), MdNm(CvMd(M))
+        End If
+    Next
+    Return
+Tst:
+    Return
 
 End Sub
-Function LyzSrcApplyMdy(Src$(), B() As ActLin) As String()
+Sub Z_FmtEnsCSubzMd()
+Dim Md As CodeModule
+'GoSub ZZ1
+GoSub ZZ2
+Exit Sub
+ZZ1:
+    Set Md = CurMd
+    GoTo Tst
+ZZ2:
+    Dim M
+    For Each M In MdItr(CurPj)
+        Dim O$()
+        O = FmtEnsCSubzMd(CvMd(M))
+        If Si(O) > 0 Then Brw O, MdNm(CvMd(M))
+    Next
+    Return
+Tst:
+    Act = FmtEnsCSubzMd(Md)
+    Brw Act
+    Return
+End Sub
+Function FmtEnsCSubzMd(A As CodeModule) As String()
+Dim ActMdAy01() As ActMd
+ActMdAy01 = ActMdAy01zEnsCSub(A)
+Select Case Si(ActMdAy01)
+Case 0:
+Case 1: FmtEnsCSubzMd = FmtSrcMdy(Src(A), ActMdAy01(0).ActLinAy)
+Case Else: Thw CSub, "Err in ActMdAy01zEnsCS: Should return Ay of si 1 or 0"
+End Select
+End Function
+Function FmtSrcMdy(Src$(), B() As ActLin) As String()
 Dim N As Byte: N = NDig(Si(Src))
 Dim J&, Middle$, Lno$, Lin$, O$()
-Dim D As New Dictionary
+Dim DltDic As New Dictionary
     For J = 0 To UB(B)
-        D.Add B(J).Ix, B(J)
+        If B(J).Act = eeDltLin Then
+            DltDic.Add B(J).Ix, B(J)
+        End If
     Next
+Dim InsDic As New Dictionary
+    For J = 0 To UB(B)
+        If B(J).Act = eeInsLin Then
+            InsDic.Add B(J).Ix, B(J)
+        End If
+    Next
+
 For J = 0 To UB(Src)
-    Dim Hit As Boolean: D.Exists (J)
-    Dim M As ActLin: If Hit Then Set M = D(J) Else Set M = Nothing
+    Dim IsIns As Boolean, IsDlt As Boolean
+    Dim InsLin$, DltLin$
+        If DltDic.Exists(J) Then
+            IsDlt = True
+            DltLin = CvActLin(DltDic(J)).Lin
+        Else
+            IsDlt = False
+            DltLin = ""
+        End If
+        
+        If InsDic.Exists(J) Then
+            IsIns = True
+            InsLin = CvActLin(InsDic(J)).Lin
+        Else
+            IsIns = False
+            InsLin = ""
+        End If
+    
+    Lno = AlignR(J + 1, N)
     Lin = Src(J)
-    Middle = IIf(Hit, " <<<<< ", "        ")
-    Lno = AlignL(J + 1, N)
-    PushI O, Lno & Middle & Lin
-    If D.Exists(J) Then
-        PushI O, Lno & " >>>>> " & M.Lin
+    If IsDlt Then If DltLin <> Lin Then Stop
+    Middle = IIf(IsDlt, " <<<<< ", "       ")
+    If IsIns Then
+        PushI O, Lno & " >>>>> " & InsLin
     End If
+    PushI O, Lno & Middle & Lin
 Next
-LyzSrcApplyMdy = O
+FmtSrcMdy = O
 End Function
 Function SrcMdy(Src$(), B() As ActLin) As String()
 ThwErMsg ErzActLinAy(B), CSub, "Error in ActLinAy", "ActMd Src", LyzActLinAy(B), Src
@@ -81,7 +155,6 @@ End Function
 
 Function MdMdy(A As CodeModule, B() As ActLin, Optional Silent As Boolean) As CodeModule
 Dim NewLines$: NewLines = JnCrLf(SrcMdy(Src(A), B)): 'Brw NewLines: Stop
-Stop
 MdRpl A, NewLines
 End Function
 

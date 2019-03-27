@@ -1,5 +1,6 @@
 Attribute VB_Name = "Module1"
 Option Explicit
+Const CMod$ = "Module1."
 
 Function AscWs() As Worksheet
 RgzSq AscSqNoNonPrt, NewA1(Vis:=True)
@@ -51,6 +52,7 @@ Dim J%
 For J = 0 To 15: PushI HexDigAy, Hex(J): Next
 End Property
 Function AscAddLbl(AscSq) As Variant()
+Const CSub$ = CMod & "AscAddLbl"
 If Not IsVdtAsc(AscSq) Then Thw CSub, "Given AscSq is invalid.  Vdt-AscSq must 1-16 x 1-16"
 Dim O(1 To 17, 1 To 17)
 Dim R%, C%
@@ -70,3 +72,4 @@ End Function
 Function FmtAsc(Optional RplNonPrtByAsc% = 8) As String()
 FmtAsc = FmtSq(AscAddLbl(AscSqNoNonPrt))
 End Function
+

@@ -103,7 +103,7 @@ For Ix = 0 To UB(Dry)
         D.Add V, Ix
     End If
 Next
-For Each I In O.Par.Itms
+For Each I In O.SetOfPar.Itms
     PushIAy RowIxAyzDupzDryColIx, O.ParChd(I).Av
 Next
 End Function

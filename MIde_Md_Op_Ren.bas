@@ -11,3 +11,6 @@ Sub RenMd(A As CodeModule, NewNm$)
 A.Parent.Name = NewNm
 End Sub
 
+Sub MthKeyDrFny()
+
+End Sub

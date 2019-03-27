@@ -1,6 +1,6 @@
 Attribute VB_Name = "MDao_Att"
 Option Explicit
-Const CMod$ = "MDaoAtt."
+Const CMod$ = "MDao_Att."
 Type Attd
     TRs As Dao.Recordset
     ARs As Dao.Recordset

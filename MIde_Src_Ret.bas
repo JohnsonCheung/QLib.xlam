@@ -30,6 +30,10 @@ Function LyPjPatn(A As VBProject, Patn$)
 LyPjPatn = AywPatn(SrczPj(A), Patn)
 End Function
 
+Function SrczMd(A As CodeModule) As String()
+SrczMd = Src(A)
+End Function
+
 Function Src(A As CodeModule) As String()
 Src = SplitCrLf(LinesMd(A))
 End Function

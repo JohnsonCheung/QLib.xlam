@@ -220,7 +220,10 @@ End Function
 
 Function MdRplLines(A As CodeModule, B As MdLines, NewLines, Optional LinesNm$ = "MdLines") As CodeModule
 Dim OldLines$: If B.Count > 0 Then OldLines = A.Lines(B.StartLine, B.Count)
-If OldLines = NewLines Then Inf CSub, "Same " & LinesNm, "Md StartLine Count FstLin", MdNm(A), B.StartLine, B.Count, FstLin(B.Lines): Exit Function
+If OldLines = NewLines Then
+    Inf CSub, "Same " & LinesNm, "Md StartLine Count FstLin", MdNm(A), B.StartLine, B.Count, FstLin(B.Lines)
+    Exit Function
+End If
 If B.Count > 0 Then A.DeleteLines B.InsLno, B.Count
 A.InsertLines B.InsLno, NewLines
 Inf CSub, LinesNm & " is replaced", "Md StartLines NewLinCnt OldLinCnt NewLines OldLines", MdNm(A), B.StartLine, LinCnt(NewLines), B.Count, NewLines, OldLines
@@ -298,13 +301,13 @@ ErMthLinAy = FmtMulStmtSrc(O)
 End Function
 
 Private Function ErMthLinesByNm$(ErNm$, ErMsg$)
-Const C$ = "Private Function ?(?) As String():? = FmtMacro(??):End Function"
 Dim CNm$:         CNm = ErConstNm(ErNm)
 Dim ErNy$():     ErNy = NyzMacro(ErMsg, ExlBkt:=True)
 Dim Pm$:           Pm = JnCommaSpc(AywDist(ErNy))
 Dim Calling$: Calling = Jn(AyAddPfx(DimNyzDimItmAy(ErNy), ", "))
 Dim MthNm$:     MthNm = ErMthNm(ErNm)
-ErMthLinesByNm = FmtQQ(C, MthNm, Pm, MthNm, CNm, Calling)
+ErMthLinesByNm = FmtQQ("Private Function ?(?) As String():? = FmtMacro(??):End Function", _
+    MthNm, Pm, MthNm, CNm, Calling)
 End Function
 
 Private Function ErMthNm$(ErNm)

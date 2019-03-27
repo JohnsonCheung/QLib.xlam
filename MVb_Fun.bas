@@ -2,6 +2,12 @@ Attribute VB_Name = "MVb_Fun"
 Option Explicit
 Const CMod$ = "MVb_Fun."
 Public CSub$
+Sub Swap(OA, OB)
+Dim X
+X = OA
+OA = OB
+OB = X
+End Sub
 Sub Asg(Fm, OTo)
 If IsNumeric(Fm) Then
     If Not IsEmpty(OTo) Then

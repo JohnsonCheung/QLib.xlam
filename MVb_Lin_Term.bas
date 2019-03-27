@@ -70,9 +70,10 @@ End Function
 
 Function TermAyzNN(NN) As String()
 Select Case True
+Case IsMissing(NN): Exit Function
 Case IsStr(NN): TermAyzNN = TermAy(NN)
 Case IsSy(NN): TermAyzNN = NN
-Case Else: Thw CSub, "NN must be String or Sy", "TypeName(NN)", TypeName(NN)
+Case Else: Thw CSub, "NN must be String or Sy or Missing", "TypeName(NN)", TypeName(NN)
 End Select
 End Function
 

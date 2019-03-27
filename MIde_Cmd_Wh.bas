@@ -16,11 +16,11 @@ LisMthPfx Pfx, InclPrv
 End Sub
 
 Sub LisMthPfx(Pfx$, Optional InclPrv As Boolean)
-D MthDNy(WhMthzStrPfx(Pfx, InclPrv))
+D MthDNyVbe(WhMthzStrPfx(Pfx, InclPrv))
 End Sub
 
 Sub LisMthSfx(Sfx$, Optional InclPrv As Boolean)
-D MthDNy(WhMthzStrSfx(Sfx, InclPrv))
+D MthDNyVbe(WhMthzStrSfx(Sfx, InclPrv))
 End Sub
 
 Sub LisMthPatn(Patn$, Optional InclPrv As Boolean)

@@ -1,5 +1,6 @@
 Attribute VB_Name = "AShpCst_Rpt"
 Option Explicit
+Const CMod$ = "AShpCst_Rpt."
 Public Const RptApn$ = "ShpCst"
 Function RptFb$()
 RptFb = WFb(RptApn)
@@ -111,6 +112,7 @@ WDrp "#Cpy #Cpy1 #Cpy2"
 End Sub
 
 Private Function ErzMB52MissingWhs8601Or8701(FxMB52$, Wsn$) As String()
+Const CSub$ = CMod & "ErzMB52MissingWhs8601Or8701"
 Const M$ = "Column-[Plant] must have value 8601 or 8701"
 If NReczFxw(FxMB52, Wsn, "Plant in ('8601','8701')") = 0 Then
     ErzMB52MissingWhs8601Or8701 = _
@@ -133,3 +135,4 @@ End Sub
 Property Get ShpCstLiAct() As LiAct
 Set ShpCstLiAct = LiAct(ShpCstLiPm)
 End Property
+

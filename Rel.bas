@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 Option Explicit
 Const CMod$ = "Rel."
 Public Nm$
-Private Dic As New Dictionary    ' Key is Par, Val is Dic of chd
+Private Dic As New Dictionary    ' Key is Par, Val is Aset of chd
 
 Friend Function Init(RelLy$()) As Rel
 Dim O As New Rel, L
@@ -39,6 +39,25 @@ For Each C In Itr(Ay)
     PushParChd P, C
 Next
 End Sub
+
+Property Get CycParDotChdAy() As String()
+Dim P, C
+For Each P In Dic.Items
+    For Each C In CvAset(Dic(P)).Itms
+        If IsPar(C) Then PushI CycParDotChdAy, P & "." & C
+    Next
+Next
+End Property
+
+Property Get IsCyc() As Boolean
+Dim I, C
+For Each I In Dic.Items
+    For Each C In CvAset(I).Itms
+        If IsPar(C) Then IsCyc = True: Exit Function
+    Next
+Next
+End Property
+
 Sub Brw()
 BrwAy Fmt
 End Sub
@@ -92,7 +111,7 @@ Next
 End Sub
 
 Property Get NItm&()
-NItm = Itms.Cnt
+NItm = SetOfItm.Cnt
 End Property
 
 Function IsLeaf(Itm) As Boolean
@@ -111,13 +130,13 @@ Function IsPar(Itm) As Boolean
 IsPar = Dic.Exists(Itm)
 End Function
 
-Function Itms() As Aset
+Function SetOfItm() As Aset
 Dim O As New Aset, K
 O.PushItr Dic.Keys
 For Each K In Dic.Keys
     O.PushAset Dic(K)
 Next
-Set Itms = O
+Set SetOfItm = O
 End Function
 
 Function InDpdOrdItms() As Aset
@@ -131,7 +150,7 @@ Dim O As New Aset, J%, M As Rel, Leaves As Aset
 Set M = Clone
 Do
     J = J + 1: If J > 1000 Then Thw CSub, "looping to much"
-    Set Leaves = M.Leaf
+    Set Leaves = M.SetOfLeaf
     If Leaves.IsEmp Then
         If M.NPar > 0 Then
             Thw CSub, "Cyclic relation is found so far.  No leaves but there is remaining Rel", _
@@ -149,27 +168,27 @@ Loop
 Set InDpdOrdItms = O
 End Function
 
-Function Par() As Aset
-Set Par = AsetzAy(Dic.Keys)
+Function SetOfPar() As Aset
+Set SetOfPar = AsetzAy(Dic.Keys)
 End Function
 
-Function Leaf() As Aset
+Function SetOfLeaf() As Aset
 Dim Itm, O As New Aset
-For Each Itm In Itms.Itms
+For Each Itm In SetOfItm.Itms
     If IsLeaf(Itm) Then O.PushItm Itm
 Next
-Set Leaf = O
+Set SetOfLeaf = O
 End Function
 
 Function NoChdPar() As Aset
 Dim O As New Aset, P
-For Each P In Par.Itms
+For Each P In SetOfPar.Itms
     If ParIsNoChd(P) Then O.PushItm P
 Next
 Set NoChdPar = O
 End Function
 
-Sub HasPar_XAss(Par, Fun$)
+Sub ThwIfNotPar(Par, Fun$)
 If IsPar(Par) Then Exit Sub
 Thw Fun, "Given Par is not a parent", "Rel Par", Fmt, Par: Stop
 End Sub
@@ -194,7 +213,7 @@ Function ParLin$(P)
 If Not IsPar(P) Then Exit Function
 ParLin = P & " " & ParChd(P).Lin
 End Function
-Function ParRmvChdAy&(P, ChdAy())
+Function RmvChdAy&(P, ChdAy())
 If Not IsPar(P) Then Exit Function
 Dim C, O&
 For Each C In Itr(ChdAy)
@@ -202,21 +221,29 @@ For Each C In Itr(ChdAy)
         O = O + 1
     End If
 Next
-ParRmvChdAy = O
+RmvChdAy = O
 End Function
 
-Function ParRmvChdItm(P, C) As Boolean
+Function RmvChd(P, C) As Boolean
 Dim X As Aset
 If ParHasChd(P, C) Then
-    ParRmvChdItm = ParChd(P).RmvItm(C)
+    RmvChd = ParChd(P).RmvItm(C)
 End If
 End Function
 
+Property Get SetOfChd() As Aset
+Dim I, Chd As Aset, O As New Aset
+For Each I In Dic.Items
+    O.PushAset CvAset(I)
+Next
+Set SetOfChd = O
+End Property
+
 Function RmvAllLeaf&()
 Dim P, LeafAy(), O&
-LeafAy = Leaf.Av
+LeafAy = SetOfLeaf.Av
 For Each P In Dic.Keys
-    If ParRmvChdAy(P, LeafAy) Then
+    If RmvChdAy(P, LeafAy) Then
         O = O + 1
     End If
 Next
@@ -251,7 +278,7 @@ Set A = RelVbl("A B C | B D E | C D")
 GoSub Tst
 Exit Sub
 Tst:
-    Set Act = A.Itms
+    Set Act = A.SetOfItm
     C
     Return
 End Sub

@@ -181,8 +181,8 @@ Private Sub Z_MthDNyzSrc()
 BrwAy MthDNyzSrc(SrcMd)
 End Sub
 
-Function MthDNy(Optional WhStr$) As String()
-MthDNy = MthDNyzVbe(CurVbe, WhStr)
+Function MthDNyVbe(Optional WhStr$) As String()
+MthDNyVbe = MthDNyzVbe(CurVbe, WhStr)
 End Function
 
 Function MthDNyzVbe(A As Vbe, Optional WhStr$) As String()

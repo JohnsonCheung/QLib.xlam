@@ -94,7 +94,12 @@ End Function
 Function DicFny(InclDicValOptTy As Boolean) As String()
 DicFny = SplitSpc("Key Val"): If InclDicValOptTy Then PushI DicFny, "ValTy"
 End Function
-
+Function DryzDotAy(DotAy$()) As Variant()
+Dim I
+For Each I In Itr(DotAy)
+    PushI DryzDotAy, SplitDot(I)
+Next
+End Function
 Function DryzDic(A As Dictionary, Optional InclDicValOptTy As Boolean) As Variant()
 Dim I, Dr
 If A.Count = 0 Then Exit Function

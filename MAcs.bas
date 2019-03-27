@@ -1,6 +1,5 @@
 Attribute VB_Name = "MAcs"
 Option Explicit
-Const CMod$ = "MAcs."
 
 Sub DoFrm(A As Access.Application, FrmNm$)
 A.DoCmd.OpenForm FrmNm

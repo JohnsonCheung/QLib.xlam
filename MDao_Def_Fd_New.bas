@@ -1,5 +1,6 @@
 Attribute VB_Name = "MDao_Def_Fd_New"
 Option Explicit
+Const CMod$ = "MDao_Def_Fd_New."
 Public Const EleLblss$ = "*Fld *Ty ?Req ?AlwZLen Dft VTxt VRul TxtSz Expr"
 Function FdzStr(FdStr$) As Dao.Field2
 
@@ -140,6 +141,7 @@ Set FdzTim = Fd(F, dbTime, True, Dft:="0")
 End Function
 
 Function FdzShtTys(ShtTys, Fld) As Dao.Field2
+Const CSub$ = CMod & "FdzShtTys"
 'Public Const ShtTyLis$ = "ABBytCChrDDteDecILMSTTimTxt"
 Dim O As Dao.Field2
 Select Case ShtTys
@@ -255,4 +257,5 @@ End Sub
 
 Private Sub Z()
 End Sub
+
 

@@ -1,6 +1,6 @@
 Attribute VB_Name = "MDao_Ccm"
 Option Explicit
-Const CMod$ = "MDao__Ccm."
+Const CMod$ = "MDao_Ccm."
 Private Sub Z_LnkCcm()
 Dim D As Database, IsLcl As Boolean
 Set D = Db(SampFbzShpRate)
@@ -37,6 +37,7 @@ LnkCcmzTny Db, T, IsLcl
 End Sub
 
 Private Sub LnkCcmzTny(Db As Database, CcmTny$(), IsLcl As Boolean)
+Const CSub$ = CMod & "LnkCcmzTny"
 Dim CcmTbl, TarFb$
 TarFb = Db.Name
 For Each CcmTbl In CcmTny

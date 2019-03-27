@@ -8,7 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
-Const CMod$ = ""
+Const CMod$ = "LinPm."
 Public Dic As Dictionary ' it is a SyDic
 
 Function Init(PmStr$) As LinPm

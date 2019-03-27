@@ -1,6 +1,5 @@
 Attribute VB_Name = "MVb_Dic_Set"
 Option Explicit
-
 Property Get EmpAset() As Aset
 Set EmpAset = New Aset
 End Property

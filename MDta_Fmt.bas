@@ -12,14 +12,14 @@ Function FmtDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColNN, Optional
 'If BrkColNm changed, insert a break line if BrkColNm is given
 Dim Drs As Drs
     Set Drs = DrsAddIxCol(A, HidIxCol)
-Dim BrkColIx%
-    BrkColIx = IxzAy(A.Fny, BrkColNN)
+Dim BrkColIxAy&()
+    BrkColIxAy = IxAy(A.Fny, NyzNN(BrkColNN))
 Dim Dry()
     Dry = Drs.Dry
     PushI Dry, Drs.Fny
 
 Dim Ay$()
-    Ay = FmtDry(Dry, MaxColWdt, BrkColIx, ShwZer) '<== Will insert break line if BrkColIx>=0
+    Ay = FmtDry(Dry, MaxColWdt, BrkColIxAy, ShwZer) '<== Will insert break line if BrkColIx>=0
 
 Dim U&: U = UB(Ay)
 Dim Hdr$: Hdr = Ay(U - 1)

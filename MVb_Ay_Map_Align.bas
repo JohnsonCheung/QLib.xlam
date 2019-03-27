@@ -71,6 +71,10 @@ Function FmtAyAtDot(A) As String()
 FmtAyAtDot = FmtAyAtChr(A, ".")
 End Function
 
+Sub BrwAyDot(DotAy)
+Brw FmtAyDot(DotAy)
+End Sub
+
 Function FmtAyDot(DotAy) As String()
 FmtAyDot = FmtDryAsSpcSep(DryDotAy(DotAy))
 End Function

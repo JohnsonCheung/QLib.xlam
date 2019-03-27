@@ -71,7 +71,7 @@ Dim Dry(), Dry1(), Dry2()
 Dry = MthQNmDryzPj(A, "-Mod") ' PjNm MdNm MthNm Ty Mdy
 'Dry1 = DryeCEv(Dry, 4, "Prv")
 Dry2 = DrywDup(Dry, 2)
-DupMthQNmDryzPj = DrySrt(Dry2, 2)
+DupMthQNmDryzPj = DrySrtzCol(Dry2, 2)
 End Function
 
 Function DupIxAyzDry(Dry(), CC) As Long()
@@ -82,11 +82,12 @@ Function DupMthQNmDryVbe() As Variant()
 DupMthQNmDryVbe = DupMthQNmDryzVbe(CurVbe)
 End Function
 
-Function DupMthQNmDryzMthQNy(A$()) As Variant()
-
+Function DupMthQNmDryzMthQNy(MthQNy$()) As Variant()
+DupMthQNmDryzMthQNy = DrywDup(DryzDotAy(MthQNy), 2)
 End Function
+
 Function DupMthQNmDryzVbe(A As Vbe) As Variant()
-DupMthQNmDryzVbe = DupMthQNmDryzMthQNy(MthQNyzVbe(A))
+DupMthQNmDryzVbe = DupMthQNmDryzMthQNy(MthQNyzVbe(A, "-Mod -Pub"))
 End Function
 
 Private Sub Z()

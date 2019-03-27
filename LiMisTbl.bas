@@ -8,8 +8,10 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
+Const CMod$ = "LiMisTbl."
 Public Ffn$, T$, Wsn$, FilNm$
 Friend Function Init(Ffn, FilNm, T, Optional Wsn$) As LiMisTbl
+Const CSub$ = CMod & "Init"
 Dim M$
 With Me
     .FilNm = FilNm
@@ -31,3 +33,4 @@ Property Get MisMsg$()
 MisMsg = FmtQQ("In ?-?, ?[?] is missing, in folder[?], file-name[?]", _
     FilNm, FfnKd(Ffn), TblKd(Ffn), T, Pth(Ffn), Fn(Ffn))
 End Property
+

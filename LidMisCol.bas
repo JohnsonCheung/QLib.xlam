@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
+Const CMod$ = "LidMisCol."
 Public Ffn As String
 Public T As String
 Public Wsn As String
@@ -15,6 +16,7 @@ Public MisFset As New Aset
 Public EptFset As New Aset
 Public ActFset As New Aset
 Friend Function Init(Ffn, T, EptFset As Aset, ActFset As Aset, Optional Wsn) As LidMisCol
+Const CSub$ = CMod & "Init"
 With Me
     .Ffn = Ffn
     .T = T

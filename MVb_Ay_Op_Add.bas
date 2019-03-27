@@ -32,13 +32,12 @@ For Each I In Itr(Ay)
 Next
 End Function
 Function SyAddSyAv(Sy$(), SyAv()) As String()
-Dim O$(): O = Sy
+SyAddSyAv = Sy
 Dim I
 For Each I In Itr(SyAv)
     If Not IsSy(I) Then Thw CSub, "There is Non-Sy in SyAv", "TyNy-of-given-SyAv", TyNyzAy(SyAv)
-    PushIAy O, I
+    PushIAy SyAddSyAv, I
 Next
-SyAddSyAv = O
 End Function
 
 Function SyAddAp(Sy$(), ParamArray SyAp()) As String()
