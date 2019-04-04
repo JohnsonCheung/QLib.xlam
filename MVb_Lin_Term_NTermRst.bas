@@ -4,23 +4,23 @@ Function SyzTRst(Lin) As String()
 SyzTRst = SyzNTermRst(Lin, 1)
 End Function
 
-Function Syz2TRst(Lin) As String()
-Syz2TRst = SyzNTermRst(Lin, 2)
+Function SyzN2tRst(Lin) As String()
+SyzN2tRst = SyzNTermRst(Lin, 2)
 End Function
 
-Function Syz3TRst(Lin) As String()
-Syz3TRst = SyzNTermRst(Lin, 3)
+Function SyzN3TRst(Lin) As String()
+SyzN3TRst = SyzNTermRst(Lin, 3)
 End Function
 
-Function Syz4TRst(Lin) As String()
-Syz4TRst = SyzNTermRst(Lin, 4)
+Function SyzN4tRst(Lin) As String()
+SyzN4tRst = SyzNTermRst(Lin, 4)
 End Function
 
 Function SyzNTermRst(Lin, N%) As String()
 Dim L$, J%
 L = Lin
 For J = 1 To N
-    PushI SyzNTermRst, ShfT(L)
+    PushI SyzNTermRst, ShfT1(L)
 Next
 PushI SyzNTermRst, L
 End Function

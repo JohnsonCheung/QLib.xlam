@@ -1,8 +1,14 @@
 Attribute VB_Name = "MIde_Wh"
 Option Explicit
+Function WhMthzPfx(WhMthNmPfx$, Optional InclPrv As Boolean) As WhMth
+
+End Function
+Function WhMthzSfx(WhMthNmSfx$, Optional InclPrv As Boolean) As WhMth
+
+End Function
 
 Function WhMthzStr(WhStr$) As WhMth
-Dim ShtMdy$(), ShtKd$(), Nm As WhNm
+Dim ShtMdy$(), ShtKd$()
 Dim A As LinPm: Set A = LinPm(WhStr)
 With A
     PushNonBlankStr ShtMdy, .SwNm("Pub")
@@ -11,9 +17,8 @@ With A
     PushNonBlankStr ShtKd, .SwNm("Sub")
     PushNonBlankStr ShtKd, .SwNm("Fun")
     PushNonBlankStr ShtKd, .SwNm("Prp")
-    Set Nm = WhNmzStr(WhStr)
 End With
-Set WhMthzStr = WhMth(ShtMdy, ShtKd, Nm)
+Set WhMthzStr = WhMth(ShtMdy, ShtKd, WhNmzStr(WhStr, "Mth"))
 End Function
 
 Function WhMdMth(Optional Md As WhMd, Optional Mth As WhMth) As WhMdMth
@@ -24,12 +29,12 @@ With WhMdMth
 End With
 End Function
 
-Function WhMdMth_WhMd(A As WhMdMth) As WhMd
-If Not IsNothing(A) Then Set WhMdMth_WhMd = A.Md
+Function WhMdzWhMdMth(A As WhMdMth) As WhMd
+If Not IsNothing(A) Then Set WhMdzWhMdMth = A.Md
 End Function
 
-Function WhMdMth_WhMth(A As WhMdMth) As WhMth
-If Not IsNothing(A) Then Set WhMdMth_WhMth = A.Mth
+Function WhMthzWhMdMth(A As WhMdMth) As WhMth
+If Not IsNothing(A) Then Set WhMthzWhMdMth = A.Mth
 End Function
 
 Function WhMth(ShtMdy$(), ShtKd$(), Nm As WhNm) As WhMth
@@ -44,9 +49,10 @@ With WhPjMth
     Set .MdMth = MdMth
 End With
 End Function
-Function WhNm(Patn$, LikAy$(), ExlLikAy$()) As WhNm
+
+Function WhNm(Patn$, LikeAy$(), ExlLikAy$()) As WhNm
 Dim O As New WhNm
-Set WhNm = O.Init(Patn, LikAy, ExlLikAy)
+Set WhNm = O.Init(Patn, LikeAy, ExlLikAy)
 End Function
 
 Function WhMd(CmpTy() As vbext_ComponentType, Nm As WhNm) As WhMd

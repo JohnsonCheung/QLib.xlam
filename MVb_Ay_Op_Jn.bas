@@ -32,14 +32,10 @@ Dim Av(): Av = Ap
 JnSpcAp = JnSpc(AyeEmpEle(Av))
 End Function
 
-Function JnSpcApes$(ParamArray Ap())
-Dim Av(): Av = Ap
-JnSpcApes = JnCrLf(AyeEmpEle(Av))
-End Function
 
-Function ApScl$(ParamArray Ap())
+Function JnSemiColonAp$(ParamArray Ap())
 Dim Av(): Av = Ap
-ApScl = JnSemi(AyeEmpEle(Av))
+JnSemiColonAp = JnSemi(AyeEmpEle(Av))
 End Function
 
 Private Sub ZZ()

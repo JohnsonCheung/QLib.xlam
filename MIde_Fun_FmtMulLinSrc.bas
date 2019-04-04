@@ -1,4 +1,5 @@
 Attribute VB_Name = "MIde_Fun_FmtMulLinSrc"
+Option Explicit
 Private Function DryzMulStmtSrc(MulStmtSrc$()) As Variant()
 Dim ODry(): ODry = DryzLyWithColon(MulStmtSrc)
 Dim Dr, J%, I&

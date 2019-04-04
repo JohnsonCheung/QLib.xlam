@@ -37,8 +37,9 @@ End Sub
 Sub ThwNotMod(A As CodeModule, Fun$)
 If A.Parent.Type <> vbext_ct_StdModule Then Thw Fun, "Should be Mod", "Type", ShtCmpTy(A.Parent.Type)
 End Sub
+
 Sub CpyMod(A As CodeModule, ToPj As VBProject)
-AddCmpzLinesPj ToPj, A.Name, LinesMd(A)
+AddCmpzSrcLineszPj ToPj, A.Name, SrcLineszMd(A)
 End Sub
 
 Private Sub ZZ()

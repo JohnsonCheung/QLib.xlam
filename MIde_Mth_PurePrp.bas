@@ -1,11 +1,12 @@
 Attribute VB_Name = "MIde_Mth_PurePrp"
 Option Explicit
+
 Sub ImPurePrpPjBrw()
-Brw ImPurePrpLyPj
+Brw ImpPurePrpLyOfPj
 End Sub
 
-Function ImPurePrpLyPj() As String()
-ImPurePrpLyPj = ImPurePrpLyzPj(CurPj)
+Function ImpPurePrpLyOfPj() As String()
+ImpPurePrpLyOfPj = ImPurePrpLyzPj(CurPj)
 End Function
 
 Function ImPurePrpLyzPj(A As VBProject) As String()
@@ -49,19 +50,28 @@ For Each L In Itr(MthLinAyzPj(A))
     If IsPurePrpLin(L) Then PushI PurePrpLyzPj, L
 Next
 End Function
-Function LnoAyzZPurePrp(A As CodeModule) As Long()
+Function PurePrpIxAy(Src$()) As Long()
+Dim Ix&
+For Ix = 0 To UB(Src)
+    If IsPrpLin(Src(Ix)) Then
+        Push PurePrpIxAy, Ix
+    End If
+Next
+End Function
+
+Function PurePrpLnoAy(A As CodeModule) As Long()
 Dim O&(), Lno&
 For Lno = 1 To A.CountOfLines
     If IsPrpLin(A.Lines(Lno, 1)) Then
         Push O, Lno
     End If
 Next
-LnoAyzZPurePrp = O
+PurePrpLnoAy = O
 End Function
 
 Function PurePrpLy(A As CodeModule) As String()
 Dim O$(), Lno
-For Lno = 0 To Itr(LnoAyzZPurePrp(A))
+For Lno = 0 To Itr(PurePrpLnoAy(A))
     Push O, A.Lines(Lno, 1)
 Next
 PurePrpLy = O
@@ -69,7 +79,7 @@ End Function
 
 Function PurePrpNy(A As CodeModule) As String()
 Dim O$(), Lno
-For Each Lno In Itr(LnoAyzZPurePrp(A))
+For Each Lno In Itr(PurePrpLnoAy(A))
     PushNoDup O, PrpNm(A.Lines(Lno, 1))
 Next
 PurePrpNy = O
@@ -104,6 +114,6 @@ If HasMthPm(Lin) Then Exit Function
 IsPurePrpLin = True
 End Function
 Function HasMthPm(MthLin) As Boolean
-HasMthPm = StrBetBkt(MthLin) <> ""
+HasMthPm = BetBkt(MthLin) <> ""
 End Function
 

@@ -21,7 +21,7 @@ End Function
 Private Function WFmlEr(PrpAy$(), PPzFml$()) As String()
 Dim Fml, ErPmAy$(), PmAy$(), O$()
 For Each Fml In Itr(PPzFml)
-    PmAy = SplitComma(StrBetBkt(Fml))
+    PmAy = SplitComma(BetBkt(Fml))
     ErPmAy = AyMinus(PmAy, PrpAy)
     If Si(ErPmAy) > 0 Then PushI O, FmtQQ("Invalid-Pm[?] in Fml[?]", JnSpc(ErPmAy), Fml)
 Next
@@ -48,7 +48,7 @@ Dim NewFld$, FunNm$, PmAy$(), Fml
 For Each Fml In Itr(PPzFml)
     NewFld = StrBef(Fml, "=")
     FunNm = StrBet(Fml, "=", "(")
-    PmAy = SplitComma(StrBetBkt(Fml))
+    PmAy = SplitComma(BetBkt(Fml))
     Set O = AddColzFmlDrs(O, NewFld, FunNm, PmAy)
 Next
 End Function
@@ -81,7 +81,7 @@ Next
 End Function
 
 Private Sub Z_DrszItrPP()
-'BrwDrs DrszItrPP(Excel.Application.AddIns, "Name Installed IsOpen FullName CLSId ")
+'BrwDrs DrszItrPP(Excel.Application.Addins, "Name Installed IsOpen FullName CLSId ")
 'BrwDrs DrszItrPP(Fds(Db(SampFbzDutyDta), "Permit"), "Name Type Required")
 'BrwDrs ItrPrpDrs(Application.VBE.VBProjects, "Name Type")
 BrwDrs DrszItrPP(CurPj.VBComponents, "Name Type CmpTy=ShpCmpTy(Type)")

@@ -1,6 +1,6 @@
 Attribute VB_Name = "MVb_Ay_Op_Brk"
 Option Explicit
-Function AyABzAyPfx(Ay, Pfx) As AyAB
+Function AyabzAyPfx(Ay, Pfx) As AyAB
 Dim O As New AyAB
 O.A = AyCln(Ay)
 O.B = O.A
@@ -12,9 +12,9 @@ For Each S In Itr(Ay)
         PushI O.A, S
     End If
 Next
-AyABzAyPfx = O
+AyabzAyPfx = O
 End Function
-Function AyABzAyEle(Ay, Ele) As AyAB
+Function AyabzAyEle(Ay, Ele) As AyAB
 Dim O As AyAB
 O.A = AyCln(Ay)
 O.B = O.A
@@ -26,17 +26,17 @@ Next
 For J = J + 1 To UB(Ay)
     PushI O.B, Ay(J)
 Next
-AyABzAyEle = O
+AyabzAyEle = O
 End Function
 
-Function AyABCzFT(Ay, FmIx&, ToIx&) As AyABC
+Function AyabCzFT(Ay, FmIx&, ToIx&) As AyABC
 Dim O As New AyABC
-Set AyABCzFT = O.Init( _
+Set AyabCzFT = O.Init( _
     AywFT(Ay, 0, FmIx - 1), _
     AywFT(Ay, FmIx, ToIx), _
     AywFmIx(Ay, ToIx + 1))
 End Function
 
-Function AyABCzFTIx(Ay, B As FTIx) As AyABC
-Set AyABCzFTIx = AyABCzFT(Ay, B.FmIx, B.ToIx)
+Function AyabCzFTIx(Ay, B As FTIx) As AyABC
+Set AyabCzFTIx = AyabCzFT(Ay, B.FmIx, B.ToIx)
 End Function

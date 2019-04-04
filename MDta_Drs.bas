@@ -6,6 +6,11 @@ Enum eCntOpt
     eDupCnt
     eSngCnt
 End Enum
+Enum eCntSrtOpt
+    eNoSrt
+    eSrtByCnt
+    eSrtByItm
+End Enum
 Function CvDrs(A) As Drs
 Set CvDrs = A
 End Function
@@ -76,7 +81,7 @@ Dim ODry()
     ODry = DrySelColIxAy(A.Dry, IAy)
 Set DrsSelCC = Drs(OFny, ODry)
 End Function
-Function DrySelColIxAy(Dry(), IxAy) As Variant()
+Function DrySelColIxAy(Dry(), IxAy&()) As Variant()
 Dim Dr
 For Each Dr In Itr(Dry)
     PushI DrySelColIxAy, AywIxAy(Dr, IxAy)
@@ -119,7 +124,35 @@ End Function
 Sub BrwCnt(Ay, Optional IgnCas As Boolean, Optional Opt As eCntOpt)
 Brw FmtCntDic(CntDic(Ay, IgnCas, Opt))
 End Sub
-
+Function DicItmWdt%(A As Dictionary)
+Dim I, O%
+For Each I In A.Items
+    O = Max(Len(I), O)
+Next
+DicItmWdt = O
+End Function
+Private Function CntLyzCntDic(CntDic As Dictionary, CntWdt%) As String()
+Dim K
+For Each K In CntDic.Keys
+    PushI CntLyzCntDic, AlignR(CntDic(K), CntWdt) & " " & K
+Next
+End Function
+Function CntLy(Ay, Optional Opt As eCntOpt, Optional SrtOpt As eCntSrtOpt, Optional IsDesc As Boolean, Optional IgnCas As Boolean) As String()
+Dim D As Dictionary: Set D = CntDic(Ay, IgnCas, Opt)
+Dim K
+Dim W%: W = DicItmWdt(D)
+Dim O$()
+Select Case SrtOpt
+Case eNoSrt
+    CntLy = CntLyzCntDic(D, W)
+Case eSrtByCnt
+    CntLy = AyQSrt(CntLyzCntDic(D, W), IsDesc)
+Case eSrtByItm
+    CntLy = CntLyzCntDic(DicSrt(D, IsDesc), W)
+Case Else
+    Thw CSub, "Invalid SrtOpt", "SrtOpt", SrtOpt
+End Select
+End Function
 Function CntDic(Ay, Optional IgnCas As Boolean, Optional Opt As eCntOpt) As Dictionary
 Dim O As New Dictionary, I, C&
 If IgnCas Then O.CompareMode = TextCompare

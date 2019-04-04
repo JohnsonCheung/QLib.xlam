@@ -1,18 +1,13 @@
 Attribute VB_Name = "MIde_Src_Ret"
 Option Explicit
 
-Function LinesMd$(A As CodeModule)
-If A.CountOfLines = 0 Then Exit Function
-LinesMd = A.Lines(1, A.CountOfLines)
-End Function
-
-Function LinesMdFTIx$(A As CodeModule, B As FTIx)
+Function LineszMdFTIx$(A As CodeModule, B As FTIx)
 If B.IsEmp Then Exit Function
-LinesMdFTIx = A.Lines(B.FmNo, B.Cnt)
+LineszMdFTIx = A.Lines(B.FmNo, B.Cnt)
 End Function
 
 Function LyzMdFTIx(A As CodeModule, B As FTIx) As String()
-LyzMdFTIx = SplitCrLf(LinesMdFTIx(A, B))
+LyzMdFTIx = SplitCrLf(LineszMdFTIx(A, B))
 End Function
 
 Function LyMdRe(A As CodeModule, B As RegExp) As String()
@@ -26,44 +21,8 @@ Next
 LyMdRe = O
 End Function
 
-Function LyPjPatn(A As VBProject, Patn$)
-LyPjPatn = AywPatn(SrczPj(A), Patn)
+Function LyzPjPatn(A As VBProject, Patn$)
+LyzPjPatn = AywPatn(SrczPj(A), Patn)
 End Function
 
-Function SrczMd(A As CodeModule) As String()
-SrczMd = Src(A)
-End Function
 
-Function Src(A As CodeModule) As String()
-Src = SplitCrLf(LinesMd(A))
-End Function
-
-Function SrcPj() As String()
-SrcPj = SrczPj(CurPj)
-End Function
-
-Function SrcVbe() As String()
-SrcVbe = SrczVbe(CurVbe)
-End Function
-
-Function SrczMdNm(MdNm$) As String()
-SrczMdNm = Src(Md(MdNm))
-End Function
-
-Function SrczPj(A As VBProject) As String()
-Dim C As VBComponent
-For Each C In A.VBComponents
-    PushAy SrczPj, Src(C.CodeModule)
-Next
-End Function
-
-Function SrczVbe(A As Vbe) As String()
-Dim P
-For Each P In A.VBProjects
-    PushIAy SrczVbe, SrczPj(CvPj(P))
-Next
-End Function
-
-Property Get SrcMd() As String()
-SrcMd = Src(CurMd)
-End Property

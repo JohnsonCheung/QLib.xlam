@@ -115,7 +115,7 @@ Private Sub Z_Tak_BetBkt()
 Dim Act$
    Dim S$
    S = "sdklfjdsf(1234()567)aaa("
-   Act = StrBetBkt(S)
+   Act = BetBkt(S)
    Ass Act = "1234()567"
 End Sub
 
@@ -165,21 +165,18 @@ If HasPfx(Lin, Pfx) Then If Mid(Lin, Len(Pfx) + 1, 1) = " " Then TakPfxS = Pfx
 End Function
 
 Function TakT1$(A)
-If FstChr(A) <> "[" Then TakT1 = StrBef(A, " "): Exit Function
-Dim P%
-P = InStr(A, "]")
-If P = 0 Then Stop
-TakT1 = Mid(A, 2, P - 2)
+If FstChr(A) <> "[" Then TakT1 = StrBefOrAll(A, " "): Exit Function
+TakT1 = StrBefOrAll(RmvFstChr(A), "]")
 End Function
 
-Private Sub Z_StrAftBkt()
+Private Sub Z_AftBkt()
 Dim A$
 A = "(lsk(aa)df lsdkfj) A"
 Ept = " A"
 GoSub Tst
 Exit Sub
 Tst:
-    Act = StrAftBkt(A)
+    Act = AftBkt(A)
     C
     Return
 End Sub
@@ -206,13 +203,13 @@ Ept = "A$()A":     A = "(A$()A)XX":   GoSub Tst
 Ept = "O$()":      A = "(O$()) As X": GoSub Tst
 Exit Sub
 Tst:
-    Act = StrBetBkt(A)
+    Act = BetBkt(A)
     C
     Return
 End Sub
 
 Private Sub Z()
-Z_StrAftBkt
+Z_AftBkt
 Z_Tak_BefFstLas
 Z_StrBet
 Z_Tak_BetBkt

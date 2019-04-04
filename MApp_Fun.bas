@@ -46,8 +46,73 @@ LnkCcm CurrentDb, IsDev
 'D "-After LnkCcm: Srcy--------------------------"
 'D Srcy
 End Property
+Function DocLy(DclLy$()) As String()
+Dim Lin, N$
+For Each Lin In Itr(DclLy)
+    N = ConstNm(Lin)
+    If Left(N, 5) = "DocOf" Then PushI DocLy, Mid(N, 6) & " " & StrConstVal(Lin)
+Next
+End Function
+Function StrConstVal$(Lin)
+Dim L$: L = Lin
+ShfMthMdy L
+If Not ShfPfx(L, "Const") Or (ShfNm(L) = "") Then Thw CSub, "Lin is not a StrConstLin", "Lin", Lin
+If Not ShfPfx(L, "$") Then Thw CSub, "No $ after name", "Lin", Lin
+If Not ShfPfx(L, " = """) Then Thw CSub, "No [ = ""] after [$]", "Lin", Lin
+Dim P&: P = InStr(L, """"): If P = 0 Then Thw CSub, "Should  have 2 dbl-quote", "Lin", Lin
+StrConstVal = Left(L, P - 1)
+End Function
 
-Sub Doc()
+Function ConstNm$(Lin)
+Dim L$: L = Lin
+ShfMthMdy L
+If ShfPfx(L, "Const") Then ConstNm = TakNm(L)
+End Function
+Function DocDicOfPj() As Dictionary
+Static X As Dictionary
+If IsNothing(X) Then Set X = DocDiczPj(CurPj)
+Set DocDicOfPj = X
+End Function
+Function IsDocNm(S) As Boolean
+If Not IsNm(S) Then Exit Function
+IsDocNm = Left(S, 5) = "DocOf"
+End Function
+Sub AsgStrConstNmAaaVal(OStrConstNm$, OStrConstVal$, Lin)
+Dim L$, N$: L = Lin
+OStrConstNm = ""
+OStrConstVal = ""
+ShfMthMdy L
+If Not ShfPfx(L, "Const ") Then Exit Sub
+N = ShfNm(L)
+If Not ShfPfx(L, "$") Then Exit Sub
+OStrConstNm = N
+If Not ShfPfx(L, " = """) Then Thw CSub, "Something wrong in Lin, which is suppose to be a string const lin.  There is no [ = ""] after [$]", "Lin", Lin
+Dim P&: P = InStr(L, """"): If P = 0 Then Thw CSub, "Something wrong in Lin, which is supposed to be string const lin.  There is no snd [""]", "Lin", Lin
+OStrConstVal = Left(L, P - 1)
+End Sub
+
+Function DocDiczDcl(Dcl) As Dictionary
+Dim MdDNm, Lin, DocNm$, StrConstVal$, StrConstNm$
+Set DocDiczDcl = New Dictionary
+For Each Lin In LinItr(Dcl)
+    AsgStrConstNmAaaVal StrConstNm, StrConstVal, Lin
+    If Left(StrConstNm, 5) = "DocOf" Then
+        DocNm = Mid(StrConstNm, 6)
+        If DocDiczDcl.Exists(DocNm) Then Thw CSub, "DocNm is dup", "DocNm", DocNm
+        DocDiczDcl.Add DocNm, StrConstVal
+    End If
+Next
+End Function
+
+Function DocDiczPj(A As VBProject) As Dictionary
+Dim O As New Dictionary, Dcl
+For Each Dcl In DclDiczPj(A).Items
+    PushDic O, DocDiczDcl(Dcl)
+Next
+Set DocDiczPj = O
+End Function
+Sub Doc(Nm$)
+If DocDicOfPj.Exists(Nm) Then D DocDicOfPj(Nm) Else D "Not exist"
 '#BNmMIS is Method-B-Nm-of-Missing.
 '           Missing means the method is found in FmPj, but not ToPj
 '#FmDicB is MthDic-of-MthBNm-zz-MthLines.   It comes from FmPj
@@ -95,17 +160,15 @@ End Property
 
 Private Sub ZZ()
 Dim A As Database
-Doc
-Ens
 PgmDb_DtaDb A
 PgmDb_DtaFb A
 End Sub
 
 Property Let ApnzDb(A As Database, V$)
-ValzQ(A, SqlSel_F("Apn")) = V
+ValOfQ(A, SqlSel_F("Apn")) = V
 End Property
 
 Property Get ApnzDb$(A As Database)
-ApnzDb = ValzQ(A, "Select Apn from Apn")
+ApnzDb = ValOfQ(A, "Select Apn from Apn")
 End Property
 

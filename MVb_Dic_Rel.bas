@@ -17,6 +17,9 @@ Function RelzVbl(RelVbl$) As Rel
 Set RelzVbl = Rel(SplitVbar(RelVbl))
 End Function
 
+Function RelzDotLy(DotLy$()) As Rel
+Stop
+End Function
 Function Rel(RelLy$()) As Rel
 Dim O As New Rel
 Set Rel = O.Init(RelLy)

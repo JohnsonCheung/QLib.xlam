@@ -23,11 +23,15 @@ End Function
 Function AsetzFF(FF) As Aset
 Set AsetzFF = AsetzAy(NyzNN(FF))
 End Function
+Function AsetzSsl(Ssl) As Aset
+Set AsetzSsl = EmpAset
+Dim Sy$(): Sy = SySsl(Ssl)
+If HasDup(Sy) Then Thw CSub, "Ssl has dup", "Ssl DupEle", Ssl, AywDup(Sy)
+AsetzSsl.PushAy SySsl(Ssl)
+End Function
+
 Function AsetzAy(A) As Aset
 Set AsetzAy = EmpAset
 AsetzAy.PushAy A
-End Function
-Function AsetzSsl(Ssl) As Aset
-Set AsetzSsl = AsetzAy(SySsl(Ssl))
 End Function
 

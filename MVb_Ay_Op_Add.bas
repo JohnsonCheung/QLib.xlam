@@ -59,10 +59,10 @@ For Each I In Av
     End If
 Next
 End Function
-Function AyMap(Ay, Map$) As Variant()
+Function AyMap(Ay, MapFun$) As Variant()
 Dim X
 For Each X In Itr(Ay)
-    Push AyMap, Run(Map, X)
+    Push AyMap, Run(MapFun, X)
 Next
 End Function
 

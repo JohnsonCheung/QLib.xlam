@@ -1,7 +1,8 @@
 Attribute VB_Name = "MVb_Thw"
 Option Explicit
 Const CMod$ = "MVb_Thw."
-Public ShwInf As Boolean
+Public Cfg_ShwInf As Boolean
+Public Cfg_ShwInfLinTim As Boolean
 Sub ThwIfNEgEle(Ay, Fun$)
 Const CSub$ = CMod & "ThwIfNEgEle"
 Dim I, J&, O$()
@@ -165,38 +166,6 @@ For J = 0 To UB(Ay)
     Debug.Print J; ": "; Ay(J)
 Next
 End Sub
-Sub DmpAscSq()
-Dmp FmtAscSq
-End Sub
-Function FmtAscSq() As String()
-FmtAscSq = FmtSq(AscSqNoNonPrt)
-End Function
-Sub DmpAsc(S)
-Dim J&, C$
-Debug.Print "Len=" & Len(S)
-For J = 1 To Len(S)
-    C = Mid(S, J, 1)
-    Debug.Print J, Asc(C), C
-Next
-End Sub
-Function RRCCzSq(Sq()) As RRCC
-Set RRCCzSq = New RRCC
-With RRCCzSq
-    .R1 = LBound(Sq, 1)
-    .R2 = UBound(Sq, 1)
-    .C1 = LBound(Sq, 2)
-    .C2 = UBound(Sq, 2)
-End With
-End Function
-Function FmtSq(Sq(), Optional SepChr$ = " ") As String()
-If IsEmpSq(Sq) Then Exit Function
-With RRCCzSq(Sq)
-Dim I%
-For I = .R1 To .R2
-    PushI FmtSq, Jn(DrzSqr(Sq, I), SepChr)
-Next
-End With
-End Function
 Sub DmpAy(Ay)
 Dim J&
 For J = 0 To UB(Ay)
@@ -212,7 +181,7 @@ Sub InfNav(Fun$, Msg$, Nav())
 D LyzFunMsgNav(Fun, Msg, Nav)
 End Sub
 Sub Inf(Fun$, Msg$, ParamArray Nap())
-If Not ShwInf Then Exit Sub
+If Not Cfg_ShwInf Then Exit Sub
 Dim Nav(): Nav = Nap
 D LyzFunMsgNav(Fun, Msg, Nav)
 End Sub

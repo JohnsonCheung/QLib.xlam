@@ -24,6 +24,9 @@ End Function
 Function QuoteBkt$(A)
 QuoteBkt = "(" & A & ")"
 End Function
+Function QuoteDot$(S)
+QuoteDot = "." & S & "."
+End Function
 Function Quote$(A, QuoteStr$)
 With BrkQuote(QuoteStr)
     Quote = .S1 & A & .S2

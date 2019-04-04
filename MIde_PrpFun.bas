@@ -6,7 +6,7 @@ Dim L$, B$
 L = RmvMdy(Lin)
 If ShfMthTy(L) <> "Function" Then Exit Function
 If ShfNm(L) = "" Then Exit Function
-ShfMthChr L
+ShfTyChr L
 IsPrpFunLin = Left(L, 2) = "()"
 End Function
 
@@ -19,14 +19,14 @@ Next
 End Function
 
 
-Sub EnsPjFunMd(Md As CodeModule, Optional WhatIf As Boolean)
+Sub EnsPjFunzMd(Md As CodeModule, Optional WhatIf As Boolean)
 Dim L
 For Each L In Itr(PrpFunLnoAy(Md))
     EnsPrpFunMdLno Md, L, WhatIf
 Next
 End Sub
 
-Sub EnsPrpFunPj(Pj As VBProject, Optional WhatIf As Boolean)
+Sub EnsPrpFunzPj(Pj As VBProject, Optional WhatIf As Boolean)
 Dim I
 Erase Inf
 'For Each I In MdItr(Pj)
@@ -36,7 +36,7 @@ Brw Inf
 End Sub
 
 Sub EnsPrpFun()
-EnsPjFunMd CurMd
+EnsPjFunzMd CurMd
 End Sub
 
 Private Sub EnsPrpFunMdLno(A As CodeModule, Lno, Optional WhatIf As Boolean)

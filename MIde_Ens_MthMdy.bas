@@ -1,16 +1,16 @@
 Attribute VB_Name = "MIde_Ens_MthMdy"
 Option Explicit
 Const CMod$ = "MIde_Ens_Mdy."
-Function MthLinzEnsPrv$(MthLin)
-Const CSub$ = CMod & "MthLinzEnsPrv"
+Function MthLinzEnsprv$(MthLin)
+Const CSub$ = CMod & "MthLinzEnsprv"
 If Not IsMthLin(MthLin) Then Thw CSub, "Given MthLin is not MthLin", "Lin", MthLin
-MthLinzEnsPrv = "Private " & RmvMdy(MthLin)
+MthLinzEnsprv = "Private " & RmvMdy(MthLin)
 End Function
 
-Function MthLinzEnsPub$(MthLin)
-Const CSub$ = CMod & "MthLinzEnsPub"
+Function MthLinzEnspub$(MthLin)
+Const CSub$ = CMod & "MthLinzEnspub"
 If Not IsMthLin(MthLin) Then Thw CSub, "Given MthLin is not MthLin", MthLin
-MthLinzEnsPub = RmvMdy(MthLin)
+MthLinzEnspub = RmvMdy(MthLin)
 End Function
 
 Sub EnsMdPrvZ()
@@ -33,30 +33,31 @@ EnsPubzMd CurMd
 End Sub
 
 Sub EnsPrvZzMd(A As CodeModule)
-MdMdy A, ActLinAyzEnsPrvZ(A)
+MdMdy A, ActLinAyOfEnsPrvZ(A)
 End Sub
-Function ActLinAyzEnsPrvZ(A As CodeModule) As ActLin()
+Function ActLinAyOfEnsPrvZ(A As CodeModule) As ActLin()
 
 End Function
-Function LnoAyzPubZ(A As CodeModule) As Long()
+
+Function LnoAyOfPubZ(A As CodeModule) As Long()
 Dim L, J&
 For Each L In Itr(Src(A))
     J = J + 1
     If IsMthLinzPub(L) Then
-        PushI LnoAyzPubZ, J
+        PushI LnoAyOfPubZ, J
     End If
 Next
 End Function
 
-Function LnoItrzPubZ(A As CodeModule)
-Asg Itr(LnoAyzPubZ(A)), LnoItrzPubZ
+Function LnoItrOfPubZ(A As CodeModule)
+Asg Itr(LnoAyOfPubZ(A)), LnoItrOfPubZ
 End Function
 
 Sub EnsPubzMd(A As CodeModule)
-MdMdy A, ActLinAyzEnsPubZ(A)
+MdMdy A, ActLinAyOfEnsPubZ(A)
 End Sub
 
-Function ActLinAyzEnsPubZ(A As CodeModule) As ActLin()
+Function ActLinAyOfEnsPubZ(A As CodeModule) As ActLin()
 
 End Function
 
@@ -75,15 +76,15 @@ Sub EnsPrv(A As CodeModule, MthNm$)
 EnsMdy A, MthNm, "Private"
 End Sub
 
-Function ActLinzEnsPub(A, MthNm) As ActLin
+Function ActLinzEnspub(A, MthNm) As ActLin
 
 End Function
 
 Sub EnsPub(A As CodeModule, MthNm$)
-MdyLin A, ActLinzEnsPub(A, MthNm)
+MdyLin A, ActLinzEnspub(A, MthNm)
 End Sub
 
-Function ActLinzEnsPrv(A As CodeModule, MthNm) As ActLin
+Function ActLinzEnsprv(A As CodeModule, MthNm) As ActLin
 
 End Function
 

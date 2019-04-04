@@ -1,14 +1,18 @@
 Attribute VB_Name = "MVb_Str"
 Option Explicit
-Function AddLib$(A, Lbl$)
+Function AddLib$(V, Lbl$)
 Dim B$
-If IsDate(A) Then
-'    B = FfnTimStr(CDate(A))
+If IsDate(V) Then
+    B = FfnTimStr(CDate(V))
 Else
-    B = Replace(Replace(A, ";", "%3B"), "=", "%3D")
+    B = Replace(Replace(V, ";", "%3B"), "=", "%3D")
 End If
-If A <> "" Then AddLib = Lbl & "=" & B
+If V <> "" Then AddLib = Lbl & "=" & B
 End Function
+Function IsEqStr(A, B, Optional IgnoreCase As Boolean) As Boolean
+IsEqStr = StrComp(A, B, IIf(IgnoreCase, vbTextCompare, vbBinaryCompare)) = 0
+End Function
+
 
 Function Pad0$(N, NDig%)
 Pad0 = Format(N, Dup("0", NDig))

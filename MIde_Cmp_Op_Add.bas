@@ -44,7 +44,7 @@ Next
 JmpCmp Sy(0)
 End Sub
 
-Function MdAppLines(A As CodeModule, Lines) As CodeModule
+Function MdApdLines(A As CodeModule, Lines) As CodeModule
 If Lines = "" Then Exit Function
 Dim Bef&, Aft&, Exp&, Cnt&
 Bef = A.CountOfLines
@@ -56,11 +56,11 @@ If Exp <> Aft Then
 '    Thw CSub, "After copy line count are inconsistents, where [Md], [LinCnt-Bef-Cpy], [LinCnt-of-lines], [Exp-LinCnt-Aft-Cpy], [Act-LinCnt-Aft-Cpy], [Lines]", _
         MdNm(A), Bef, Cnt, Exp, Aft, Lines
 End If
-Set MdAppLines = A
+Set MdApdLines = A
 End Function
 
 Sub AddFun(FunNm$)
-MdAppLines CurMd, EmpFunLines(FunNm)
+MdApdLines CurMd, EmpFunLines(FunNm)
 JmpMth FunNm
 End Sub
 Function CmpNew(Nm$, Ty As vbext_ComponentType) As VBComponent
@@ -75,7 +75,7 @@ Function EmpSubLines$(SubNm)
 EmpSubLines = FmtQQ("Sub ?()|End Sub", SubNm)
 End Function
 Sub AddSub(SubNm$)
-MdAppLines CurMd, EmpSubLines(SubNm)
+MdApdLines CurMd, EmpSubLines(SubNm)
 JmpMth SubNm
 End Sub
 
@@ -85,16 +85,16 @@ Set AddOptExpLinMd = A
 End Function
 
 Function HasCmp(CmpNm) As Boolean
-HasCmp = HasCmpz(CurPj, CmpNm)
+HasCmp = HasCmpzPj(CurPj, CmpNm)
 End Function
 Function AddCmpzLines(Nm, Lines$) As VBComponent
-
+Stop
 End Function
 
-Function AddCmpzLinesPj(A As VBProject, Nm, Lines$) As VBComponent
+Function AddCmpzSrcLineszPj(A As VBProject, Nm, Lines$) As VBComponent
 Dim O As VBComponent
 Set O = AddCmpzPj(A, Nm, vbext_ct_StdModule): If IsNothing(O) Then Stop
-Set AddCmpzLinesPj = MdAppLines(O.CodeModule, Lines)
+Set AddCmpzSrcLineszPj = MdApdLines(O.CodeModule, Lines)
 End Function
 Sub RenAddCmpPfx_CmpPfx(A As VBComponent, AddPfx$)
 A.Name = AddPfx & A.Name
@@ -125,7 +125,7 @@ Set EnsCls = EnsCmp(A, ClsNm, vbext_ct_ClassModule)
 End Function
 
 Function EnsCmp(A As VBProject, Nm, Optional Ty As vbext_ComponentType = vbext_ct_StdModule) As CodeModule
-If Not HasCmpz(A, Nm) Then
+If Not HasCmpzPj(A, Nm) Then
     A.VBComponents.Add(Ty).Name = Nm
 End If
 Set EnsCmp = A.VBComponents(Nm).CodeModule

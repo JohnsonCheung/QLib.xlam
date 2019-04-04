@@ -1,13 +1,18 @@
 Attribute VB_Name = "MVb_Thw_Msg"
 Option Explicit
 
-Function LinzLines$(Lines)
-LinzLines = Replace(RplCr(Lines), vbLf, "|")
+Function VblzLines$(Lines)
+VblzLines = Replace(RmvCr(Lines), vbLf, "|")
 End Function
 
-
 Function LinzFunMsg$(Fun$, Msg$)
-LinzFunMsg = NowStr & " | " & Msg & " | " & Fun
+Dim F$: F = IIf(Fun = "", "", " | @" & Fun)
+Dim A$: A = Msg & F
+If Cfg_ShwInfLinTim Then
+    LinzFunMsg = NowStr & " | " & A
+Else
+    LinzFunMsg = A
+End If
 End Function
 
 Function LyzFunMsgNav(Fun$, Msg$, Nav()) As String()
@@ -79,7 +84,7 @@ End Sub
 
 Function LyzNyAv(Ny$(), Av(), Optional Sep$ = ": ") As String()
 Dim J%, O$(), N$()
-ReszAyabMax Ny, Av
+ReSumSiabMax Ny, Av
 N = FmtAySamWdt(Ny)
 For J = 0 To UB(Ny)
     PushIAy LyzNyAv, LyzNv(N(J), Av(J), Sep)
@@ -137,9 +142,9 @@ End Function
 
 Private Function LyzFunMsg(Fun$, Msg$) As String()
 Dim O$(), MsgL1$, MsgRst$
-AsgBrkDot1 Msg, MsgL1, MsgRst
+AsgBrk1Dot Msg, MsgL1, MsgRst
 PushI LyzFunMsg, SfxDotEns(MsgL1) & IIf(Fun = "", "", "  @" & Fun)
-PushIAy LyzFunMsg, AyIndent(LyWrap(SplitCrLf(MsgRst)))
+PushIAy LyzFunMsg, AyIndent(LyWrp(SplitCrLf(MsgRst)))
 End Function
 
 

@@ -1,117 +1,10 @@
 Attribute VB_Name = "MIde_Srt"
 Option Explicit
 
-Function MthNm3zDNm(MthDNm) As MthNm3
-Dim Nm$, Ty$, Mdy$
-If MthDNm = "*Dcl" Then
-    Nm = "*Dcl"
-Else
-    Dim B$(): B = SplitDot(MthDNm)
-    If Si(B) <> 3 Then
-        Thw CSub, "Given MthDNm SplitDot should be 3 elements", "NEle-SplitDot MthDNm", Si(B), MthDNm
-    End If
-    Dim ShtMdy$, ShtTy$
-    AsgAp B, Nm, ShtTy, ShtMdy
-    Ty = MthTySht(ShtTy)
-    Mdy = MthMdySht(ShtMdy)
-End If
-Set MthNm3zDNm = New MthNm3
-With MthNm3zDNm
-    .Nm = Nm
-    .MthMdy = Mdy
-    .MthTy = Ty
-End With
-End Function
-
-Function MthSrtKey$(MthDNm)
-If MthDNm = "*Dcl" Then MthSrtKey = "*Dcl": Exit Function
-Dim A$(): A = SplitDot(MthDNm): If Si(A) <> 3 Then Thw CSub, "Invalid MthDNm, should have 2 dot", "MthDNm", MthDNm
-MthSrtKey = A(2) & "." & A(1) & "." & A(0)
-End Function
-
-Function SrtedMd(A As CodeModule) As String()
-SrtedMd = SrtedSrc(Src(A))
-End Function
-
-Function SrtedMdDic(A As VBProject) As Dictionary
-Dim C As VBComponent, O As New Dictionary
-For Each C In A.VBComponents
-    O.Add C.Name, SrtedSrcLineszMd(C.CodeModule)
-Next
-Set SrtedMdDic = O
-End Function
-
-Function SrtedSrc(Src$()) As String()
-SrtedSrc = SplitCrLf(SrtedSrcLines(Src))
-End Function
-
-Function SrtedSrcDic(Src$()) As Dictionary
-Dim D As Dictionary: Set D = MthDic(Src)
-Dim K
-Dim O As New Dictionary
-For Each K In D
-    O.Add MthSrtKey(K), D(K)
-Next
-Set SrtedSrcDic = DicSrt(O)
-End Function
-
-Function SrtedSrcLines$(Src$())
-SrtedSrcLines = JnDblCrLf(SrtedSrcDic(Src).Items)
-End Function
-
-Function SrtedSrcLineszMd$(A As CodeModule)
-SrtedSrcLineszMd = SrtedSrcLines(Src(A))
-End Function
-
-Sub BrwSrtRptzMd(A As CodeModule)
-Dim Old$: Old = LinesMd(A)
-Dim NewLines$: NewLines = SrtedSrcLineszMd(A)
-Dim O$: O = IIf(Old = NewLines, "(Same)", "<====Diff")
-Debug.Print MdNm(A), O
-End Sub
-
-Sub BrwSrtedMdDic()
-BrwDic SrtedMdDic(CurPj)
-End Sub
-
-Sub RplPj(A As VBProject, MdDic As Dictionary)
-Dim MdNm
-For Each MdNm In MdDic.Keys
-    If MdNm <> "MIde_Srt" Then
-        MdRpl MdzPj(A, MdNm), MdDic(MdNm)
-    End If
-Next
-End Sub
-
-Sub Srt()
-SrtzMd CurMd
-End Sub
-
-Sub SrtzMd(A As CodeModule)
-Dim Nm$: Nm = MdNm(A)
-Debug.Print "Sorting: "; AlignL(Nm, 20); " ";
-Dim LinesN$: LinesN = SrtedSrcLineszMd(A)
-Dim LinesO$: LinesO = LinesMd(A)
-'Exit if same
-    If LinesO = LinesN Then
-        Debug.Print "<== Same"
-        Exit Sub
-    End If
-'Delete
-    Debug.Print FmtQQ("<--- Deleted (?) lines", A.CountOfLines);
-    ClrMd A
-'Add sorted lines
-    A.AddFromString LinesN
-    Debug.Print "<----Sorted Lines added...."
-End Sub
-
-Sub SrtPj()
-SrtzPj CurPj
-End Sub
 
 Private Sub SrtzPj(A As VBProject)
 FfnBackup Pjf(A)
-RplPj A, SrtedMdDic(A)
+RplPj A, SrtedMdDiczPj(A)
 End Sub
 
 Private Sub ZZ()
@@ -124,7 +17,7 @@ Dim B$() ' Src->Srt
 Dim A1$() 'Src->Dcl
 Dim B1$() 'Src->Src->Dcl
 A = Src(Md(MdNm))
-B = SrtedSrc(A)
+B = SrcSrt(A)
 A1 = DclLy(A)
 B1 = DclLy(B)
 Stop
@@ -184,6 +77,123 @@ Private Sub ZZ_SrtedSrcLineszMd()
 BrwStr SrtedSrcLineszMd(Md("MIde_Md"))
 End Sub
 
-Private Sub Z_SrtedSrcLines()
-Brw SrtedSrcLines(SrcMd)
+Private Sub Z_SrcLinesSrt()
+Brw SrcLinesSrt(CurSrc)
+End Sub
+
+Function MthNm3zDNm(MthDNm) As MthNm3
+Dim Nm$, Ty$, Mdy$
+If MthDNm = "*Dcl" Then
+    Nm = "*Dcl"
+Else
+    Dim B$(): B = SplitDot(MthDNm)
+    If Si(B) <> 3 Then
+        Thw CSub, "Given MthDNm SplitDot should be 3 elements", "NEle-SplitDot MthDNm", Si(B), MthDNm
+    End If
+    Dim ShtMdy$, ShtTy$
+    AsgAp B, Nm, ShtTy, ShtMdy
+    Ty = MthTyBySht(ShtTy)
+    Mdy = ShtMthMdy(ShtMdy)
+End If
+Set MthNm3zDNm = New MthNm3
+With MthNm3zDNm
+    .Nm = Nm
+    .MthMdy = Mdy
+    .MthTy = Ty
+End With
+End Function
+
+Function MthSrtKey$(MthDNm)
+If MthDNm = "*Dcl" Then MthSrtKey = "*Dcl": Exit Function
+Dim A$(): A = SplitDot(MthDNm): If Si(A) <> 3 Then Thw CSub, "Invalid MthDNm, should have 2 dot", "MthDNm", MthDNm
+MthSrtKey = A(2) & "." & A(1) & "." & A(0)
+End Function
+
+Function SrtedSrczMd(A As CodeModule) As String()
+SrtedSrczMd = SrcSrt(Src(A))
+End Function
+Function SrtedMdDicOfPj() As Dictionary
+Set SrtedMdDicOfPj = SrtedMdDiczPj(CurPj)
+End Function
+
+Function SrtedMdDiczPj(A As VBProject) As Dictionary
+Dim C As VBComponent, O As New Dictionary
+For Each C In A.VBComponents
+    O.Add C.Name, SrtedSrcLineszMd(C.CodeModule)
+Next
+Set SrtedMdDiczPj = O
+End Function
+
+Function SrcSrt(Src$()) As String()
+SrcSrt = SplitCrLf(SrcLinesSrt(Src))
+End Function
+
+Function SrcDic(Src$(), Optional WiTopRmk As Boolean) As Dictionary
+Dim D As Dictionary: Set D = MthDic(Src, WiTopRmk)
+Dim K
+Set SrcDic = New Dictionary
+For Each K In D
+    SrcDic.Add MthSrtKey(K), D(K)
+Next
+End Function
+
+Function SrtedSrcDic(Src$()) As Dictionary
+Set SrtedSrcDic = DicSrt(SrcDic(Src))
+End Function
+
+Function SrcLinesSrt$(Src$())
+SrcLinesSrt = JnDblCrLf(SrtedSrcDic(Src).Items)
+End Function
+
+Function SrtedSrcLinesOfMd$()
+SrtedSrcLinesOfMd = SrtedSrcLineszMd(CurMd)
+End Function
+Function SrtedSrcLineszMd$(A As CodeModule)
+SrtedSrcLineszMd = SrcLinesSrt(Src(A))
+End Function
+
+Sub BrwSrtRptzMd(A As CodeModule)
+Dim Old$: Old = SrcLineszMd(A)
+Dim NewLines$: NewLines = SrtedSrcLineszMd(A)
+Dim O$: O = IIf(Old = NewLines, "(Same)", "<====Diff")
+Debug.Print MdNm(A), O
+End Sub
+
+Sub BrwSrtedMdDic()
+BrwDic SrtedMdDicOfPj(CurPj)
+End Sub
+
+Sub RplPj(A As VBProject, MdDic As Dictionary)
+Dim MdNm
+For Each MdNm In MdDic.Keys
+    If MdNm <> "MIde_Srt" Then
+        MdRpl MdzPj(A, MdNm), MdDic(MdNm)
+    End If
+Next
+End Sub
+
+Sub Srt()
+SrtzMd CurMd
+End Sub
+
+Sub SrtPj()
+SrtzPj CurPj
+End Sub
+
+Sub SrtzMd(A As CodeModule)
+Dim Nm$: Nm = MdNm(A)
+Debug.Print "Sorting: "; AlignL(Nm, 20); " ";
+Dim LinesN$: LinesN = SrtedSrcLineszMd(A)
+Dim LinesO$: LinesO = SrcLineszMd(A)
+'Exit if same
+    If LinesO = LinesN Then
+        Debug.Print "<== Same"
+        Exit Sub
+    End If
+'Delete
+    Debug.Print FmtQQ("<--- Deleted (?) lines", A.CountOfLines);
+    ClrMd A
+'Add sorted lines
+    A.AddFromString LinesN
+    Debug.Print "<----Sorted Lines added...."
 End Sub

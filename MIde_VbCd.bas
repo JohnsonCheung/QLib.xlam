@@ -1,7 +1,7 @@
 Attribute VB_Name = "MIde_VbCd"
 Option Explicit
 Function CdLyPj() As String()
-CdLyPj = CdLyzSrc(SrcPj)
+CdLyPj = CdLyzSrc(SrcOfPj)
 End Function
 Function CdLyzMd(A As CodeModule) As String()
 CdLyzMd = CdLyzSrc(Src(A))

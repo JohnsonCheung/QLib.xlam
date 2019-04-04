@@ -1,10 +1,10 @@
 Attribute VB_Name = "MIde_Mth_Ix_FT"
 Option Explicit
 
-Function MthFTIxAyzSrcMth(Src$(), MthNm, Optional WithTopRmk As Boolean) As FTIx()
+Function MthFTIxAyzSrcMth(Src$(), MthNm, Optional WiTopRmk As Boolean) As FTIx()
 Dim FmIx&, ToIx&, Ix
 For Each Ix In Itr(MthIxAyzNm(Src, MthNm))
-    If WithTopRmk Then
+    If WiTopRmk Then
         FmIx = Ix
     Else
         FmIx = MthTopRmkIx(Src, Ix)
@@ -13,14 +13,14 @@ For Each Ix In Itr(MthIxAyzNm(Src, MthNm))
 Next
 End Function
 
-Function MthFTIxAyzMth(A As CodeModule, MthNm, Optional WithTopRmk As Boolean) As FTIx()
-MthFTIxAyzMth = MthFTIxAyzSrcMth(Src(A), MthNm, WithTopRmk)
+Function MthFTIxAyzMth(A As CodeModule, MthNm, Optional WiTopRmk As Boolean) As FTIx()
+MthFTIxAyzMth = MthFTIxAyzSrcMth(Src(A), MthNm, WiTopRmk)
 End Function
 
-Function MthFTIxAy(Src$(), Optional WithTopRmk As Boolean) As FTIx()
+Function MthFTIxAy(Src$(), Optional WiTopRmk As Boolean) As FTIx()
 Dim Ix, FmIx&, ToIx&
 For Each Ix In MthIxItr(Src)
-    If WithTopRmk Then
+    If WiTopRmk Then
         FmIx = Ix
     Else
         FmIx = MthTopRmkIx(Src, Ix)

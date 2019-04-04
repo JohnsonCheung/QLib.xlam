@@ -21,16 +21,43 @@ D A
 End Sub
 Sub LisPj()
 Dim A$()
-    A = PjNyz(CurVbe)
+    A = PjNyzVbe(CurVbe)
     D AyAddPfx(A, "ShwPj """)
 D A
 End Sub
 
-Sub LisMth(Optional MthPatn$, Optional MthExl$, Optional WhMdy$, Optional WhKd$, Optional MdPatn$)
-Dim Ny$(), M As WhMdMth
-'    Set M = NewWhMdMth_MTH_MD(MthPatn, MthExl, WhMdy, WhKd, MdPatn)
-'    Ny = MthNyzPj(CurPj, M)
-D AyAddPfx(Ny, PjNm & ".")
+Sub LisMth(Optional WhStr$)
+Dim Ay$(): Ay = MthQNyzVbe(CurVbe, WhStr)
+Debug.Print "Fst 30 of " & Si(Ay) & " methods"
+D AywFstNEle(Ay, 30)
+End Sub
+
+Private Function WhStrzMthPatn$(MthPatn$, Optional PubOnly As Boolean)
+WhStrzMthPatn = " -MthPatn " & MthPatn & WhStrzPubOnly(PubOnly)
+End Function
+
+Private Function WhStrzPubOnly$(PubOnly As Boolean)
+If PubOnly Then WhStrzPubOnly = " -Pub"
+End Function
+
+Function WhStrzPfx$(MthPfx$, Optional PubOnly As Boolean)
+WhStrzPfx = WhStrzMthPatn("^" & MthPfx, PubOnly)
+End Function
+
+Function WhStrzSfx$(MthSfx$, Optional PubOnly As Boolean)
+WhStrzSfx = WhStrzMthPatn(MthSfx & "$", PubOnly)
+End Function
+
+Sub LisMthPfx(Pfx$, Optional PubOnly As Boolean)
+D MthQNyOfVbe(WhStrzPfx(Pfx, PubOnly))
+End Sub
+
+Sub LisMthSfx(Sfx$, Optional PubOnly As Boolean)
+D MthQNyOfVbe(WhMthzSfx(Sfx, PubOnly))
+End Sub
+
+Sub LisMthPatn(Patn$, Optional InclPrv As Boolean)
+D MthNyOfPj(WhStrzMthPatn(Patn, InclPrv))
 End Sub
 
 

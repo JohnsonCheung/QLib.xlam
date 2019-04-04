@@ -9,11 +9,11 @@ Dim mPubPrpGetNm As Aset
 Dim mPubMthPmAy$()         ' From mPubMthLinAy    mPubMthLinAy & mPm same sz     ' mPubMthPmAy is the string in the bracket of the MthmPubMthLinAyLin
 Dim mMthNyPub$()      ' From mPubMthLinAy    mPubMthLinAy & mMthNm same sz
 Dim mArgAy$()         ' Each mArgAy in mArgAy become on mPubMthPmAy   Eg, 1-mArgAy = A$, B$, C%, D As XYZ => 4-mPubMthPmAy
-                     ' ArgTyDic is Key=ArgTy and Val=A, B, C
-                     ' ArgTy is mArgAy-without-Nm
-Dim ArgTy$()
+                     ' ArgSfxDic is Key=ArgSfx and Val=A, B, C
+                     ' ArgSfx is mArgAy-without-Nm
+Dim ArgSfx$()
 Dim ArgAset As Aset
-Dim ArgTyToAbcDic As Dictionary
+Dim ArgSfxToAbcDic As Dictionary
 Dim mCallingPmAy$()
 Dim mHasPrp As Boolean
 
@@ -21,17 +21,17 @@ Dim mHasPrp As Boolean
     Set mPubPrpGetNm = WPrpGetAset(mPubMthLinAy)
     mPubMthPmAy = AyTakBetBkt(mPubMthLinAy) ' Each Mth return an-Ele to call
     mMthNyPub = MthNyzMthLinAy(mPubMthLinAy)
-    mArgAy = WArgAy(mPubMthPmAy)
-    ArgTy = WArgTyAy(mArgAy)
-    Set ArgAset = AsetzAy(ArgTy)
-    Set ArgTyToAbcDic = ArgAset.AbcDic
-    mCallingPmAy = WCallingPmAy(mPubMthPmAy, ArgTyToAbcDic)
+    mArgAy = ArgAyzPmAy(mPubMthPmAy)
+    ArgSfx = ArgSfxAy(mArgAy)
+    Set ArgAset = AsetzAy(ArgSfx)
+    Set ArgSfxToAbcDic = ArgAset.AbcDic
+    mCallingPmAy = WCallingPmAy(mPubMthPmAy, ArgSfxToAbcDic)
     mHasPrp = mPubPrpGetNm.Cnt > 0
 '-------------
 Dim mDimLy$()
 Dim mCallingLy$()
-    mDimLy = WDimLy(ArgTyToAbcDic, mHasPrp)   ' 1-mArgAy => 1-DimLin
-    mCallingLy = WCallingLy(mMthNyPub, mPubMthPmAy, ArgTyToAbcDic, mPubPrpGetNm)
+    mDimLy = WDimLy(ArgSfxToAbcDic, mHasPrp)   ' 1-mArgAy => 1-DimLin
+    mCallingLy = WCallingLy(mMthNyPub, mPubMthPmAy, ArgSfxToAbcDic, mPubPrpGetNm)
 D mDimLy
 Stop
 Dim O$()
@@ -42,22 +42,19 @@ Dim O$()
 SubZZEpt = JnCrLf(O)
 End Function
 
-Private Function WArgAy(PmAy$()) As String()
+Function ArgAyzPmAy(PmAy$()) As String()
 Dim Pm, Arg
-Dim O As New Aset 'Pm the the string in the bracket of the MthDclLin
-                  'Arg is the one Arg in Pm.  Eg 1-Pm: A$, B$ => 2-Arg
-                  'ArgDic the Arg mapping to A B C.  Fst Arg will be A Snd Arg will be B, ..
 For Each Pm In Itr(PmAy)
-    For Each Arg In Itr(AyTrim(SplitComma(Pm)))
-        PushI WArgAy, Arg
+    For Each Arg In Itr(SplitCommaSpc(Pm))
+        PushI ArgAyzPmAy, Arg
     Next
 Next
 End Function
 
-Private Function WArgTyAy(ArgAy$()) As String()
+Private Function ArgSfxAy(ArgAy$()) As String()
 Dim Arg
 For Each Arg In Itr(ArgAy)
-    PushI WArgTyAy, ArgTy(Arg)
+    PushI ArgSfxAy, ArgSfx(Arg)
 Next
 End Function
 
@@ -71,7 +68,7 @@ End Function
 
 Private Function WCallingLy(MthNy$(), PmAy$(), ArgDic As Dictionary, PrpGetAset As Aset) As String()
 'A$() & PmAy$() are same sz
-'ArgDic: Key is ArgTy(Arg-without-Name), Val is A,B,..
+'ArgDic: Key is ArgSfx(Arg-without-Name), Val is A,B,..
 'CallingLin is {MthNm} A,B,C,...
 'PrpGetAset    is PrpNm set
 Dim MthNm, CallingPm$, Pm$, J%, O$()
@@ -87,7 +84,7 @@ End Function
 Private Function WCallingPm$(Pm, ArgDic As Dictionary)
 Dim O$(), Arg
 For Each Arg In Itr(AyTrim(SplitComma(Pm)))
-    PushI O, ArgDic(ArgTy(Arg))
+    PushI O, ArgDic(ArgSfx(Arg))
 Next
 'WCallingPm = CommaSpc(O)
 End Function
@@ -100,14 +97,14 @@ Next
 End Function
 
 Private Function WDimLy(ArgDic As Dictionary, HasPrp As Boolean) As String()  '1-Arg => 1-DimLin
-Dim ArgTy, S$
-For Each ArgTy In ArgDic.Keys
-    If HasPfx(ArgTy, "As ") Then
+Dim ArgSfx, S$
+For Each ArgSfx In ArgDic.Keys
+    If HasPfx(ArgSfx, "As ") Then
         S = " "
     Else
         S = ""
     End If
-    PushI WDimLy, "Dim " & ArgDic(ArgTy) & S & ArgTy
+    PushI WDimLy, "Dim " & ArgDic(ArgSfx) & S & ArgSfx
 Next
 If HasPrp Then PushI WDimLy, "Dim XX"
 End Function
@@ -145,13 +142,13 @@ Dim A
 Dim B As CodeModule
 Dim C$()
 Dim XX
-ArgTy A
+ArgSfx A
 SubZZEpt B
 MthNyzMthLinAy C
 End Sub
 
 Private Sub Z()
-'MIde_Ens_SubZZ.ArgTy
+'MIde_Ens_SubZZ.ArgSfx
 Z_SubZZEpt
 End Sub
 
@@ -186,10 +183,10 @@ vbCrLf & "IsDiczLines B" & _
 vbCrLf & "IsDiczStr B" & _
 vbCrLf & "KeySyzDic B" & _
 vbCrLf & "FmtDic1 B" & _
-vbCrLf & "ValzDicKyJn B, A, D" & _
+vbCrLf & "ValOfDicKyJn B, A, D" & _
 vbCrLf & "SyzDicKy B, E" & _
-vbCrLf & "DicLblLy B, D" & _
-vbCrLf & "LinesDic B" & _
+vbCrLf & "FmtDicTit B, D" & _
+vbCrLf & "LineszDic B" & _
 vbCrLf & "FmtDic11 B" & _
 vbCrLf & "FmtDic2 B" & _
 vbCrLf & "FmtDic2__1 D, D" & _
@@ -205,7 +202,7 @@ vbCrLf & "DiczSwapKV B" & _
 vbCrLf & "DicTy B" & _
 vbCrLf & "DicTyBrw B" & _
 vbCrLf & "DicValOpt B, A" & _
-vbCrLf & "Keyz_LikssDic_Itm B, A" & _
+vbCrLf & "KeyzLikssDic_Itm B, A" & _
 vbCrLf & "MapStrDic A" & _
 vbCrLf & "MayDicValOpt B, A" & _
 vbCrLf & "End Sub"
@@ -226,7 +223,7 @@ Cas2:
     Return
 Cas1:
     Set A = CurMd
-    'UpdMdConstValzFt "Z_SubZZEptMd_1", SubZZEpt(A): Return
+    'UpdMdConstValOfFt "Z_SubZZEptMd_1", SubZZEpt(A): Return
     'Ept = Z_SubZZEptMd_1
     GoSub Tst
     Return

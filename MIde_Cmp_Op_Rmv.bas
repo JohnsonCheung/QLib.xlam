@@ -1,11 +1,11 @@
 Attribute VB_Name = "MIde_Cmp_Op_Rmv"
 Option Explicit
 Sub DltCmpz(A As VBProject, MdNm$)
-If Not HasCmpz(A, MdNm) Then Exit Sub
+If Not HasCmpzPj(A, MdNm) Then Exit Sub
 A.VBComponents.Remove A.VBComponents(MdNm)
 End Sub
 Sub RmvMdzPfx(Pfx$)
-Dim Ny$(): Ny = AywPfx(MdNyPj, Pfx)
+Dim Ny$(): Ny = AywPfx(MdNyOfPj, Pfx)
 If Si(Ny) = 0 Then InfLin CSub, "no module begins with " & Pfx: Exit Sub
 Brw Ny
 Dim N

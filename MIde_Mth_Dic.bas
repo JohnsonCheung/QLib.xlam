@@ -56,10 +56,10 @@ Function MthDicPj()
 Set MthDicPj = MthDiczPj(CurPj)
 End Function
 
-Function MthDiczPj(A As VBProject) As Dictionary
+Function MthDiczPj(A As VBProject, Optional WiTopRmk As Boolean) As Dictionary
 Dim O As New Dictionary, I
 For Each I In MdItr(A)
-    PushDic O, MthDiczMd(CvMd(I))
+    PushDic O, MthDiczMd(CvMd(I), WiTopRmk)
 Next
 Set MthDiczPj = O
 End Function
@@ -68,8 +68,8 @@ Function MthDicMd() As Dictionary
 Set MthDicMd = MthDiczMd(CurMd)
 End Function
 
-Function MthDiczMd(A As CodeModule) As Dictionary
-Set MthDiczMd = AddDicKeyPfx(MthDic(Src(A)), MdQNmzMd(A) & ".")
+Function MthDiczMd(A As CodeModule, Optional WiTopRmk As Boolean) As Dictionary
+Set MthDiczMd = AddDicKeyPfx(MthDic(Src(A), WiTopRmk), MdQNmzMd(A) & ".")
 End Function
 
 Function MthNmDic(Src$()) As Dictionary 'Key is MthNm.  One PrpNm may have 2 PrpMth: (Get & Set) or (Get & Let)
@@ -81,11 +81,11 @@ Next
 Set MthNmDic = O
 End Function
 
-Function MthDic(Src$()) As Dictionary 'Key is MthDNm, Val is MthLines
+Function MthDic(Src$(), Optional WiTopRmk As Boolean) As Dictionary 'Key is MthDNm, Val is MthLinesWiTopRmk
 Dim Ix, O As New Dictionary
-O.Add "*Dcl", DclLines(Src)
+O.Add "*Dcl", Dcl(Src)
 For Each Ix In MthIxItr(Src)
-    O.Add MthDNmzLin(Src(Ix)), MthLineszSrcFm(Src, Ix, WithTopRmk:=True)
+    O.Add MthDNmzLin(Src(Ix)), MthLineszSrcFm(Src, Ix, WiTopRmk:=WiTopRmk)
 Next
 Set MthDic = O
 End Function

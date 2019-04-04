@@ -1,43 +1,105 @@
 Attribute VB_Name = "MIde_Identifier"
 Option Explicit
-Function MthExtNy(Src$()) As String()
-Dim ArgA$(): ArgA = ArgNy(ContLin(Src, 0))
-Dim DimA$(): DimA = DimNy(Src)
-MthExtNy = AyMinusAp(IdentifierAy(JnSpc(Src)), DimA, ArgA)
-End Function
-
-Private Sub Z_IdentifierAset()
-Dim A As Aset
-Set A = IdentifierAset(LinesPj(CurPj))
-Debug.Print A.Cnt
-A.Srt.Brw
+Private Sub Z_NyzStr()
+Dim S$
+GoSub ZZ
+'GoSub T0
+Exit Sub
+ZZ:
+    Dim Lines$: Lines = SrcLinesOfPj
+    Dim Ny1$(): Ny1 = NyzStr(Lines)
+    Dim Ny2$(): Ny2 = WrdAy(Lines)
+    If Not IsEqAy(Ny1, Ny2) Then Stop
+    Return
+T0:
+    S = "S_S"
+    Ept = Sy("S_S")
+    GoTo Tst
+Tst:
+    Act = NyzStr(S)
+    C
+    Return
 End Sub
-
-Function IdentifierAset(S) As Aset
-Set IdentifierAset = AsetzAy(IdentifierAy(S))
+Private Sub Z_NsetzStr()
+NsetzStr(SrcLinesOfPj).Srt.Vc
+End Sub
+Function NsetzStr(S) As Aset
+Set NsetzStr = AsetzAy(NyzStr(S))
 End Function
-
-Function RmvPun$(S)
-If S = "" Then Exit Function
-Dim J&, O$(), C$, A%
-ReDim O(Len(S) - 1)
-For J = 1 To Len(S)
-    C = Mid(S, J, 1)
+Function RplPun$(Str)
+Dim O$(), C$, A%, J&, L&
+L = Len(Str)
+ReDim O(L - 1)
+For J = 0 To L - 1
+    C = Mid(Str, J + 1, 1)
     A = Asc(C)
-    If IsAscNmChr(A) Then
-        O(J - 1) = C
-    Else
-        O(J - 1) = " "
-    End If
+    If IsAscPun(A) Then O(J) = " " Else O(J) = C
 Next
-RmvPun = Jn(O, "")
+RplPun = Jn(O)
 End Function
 
-Function IdentifierAy(S) As String()
-Dim I
-For Each I In Itr(SySsl(RmvPun(S)))
-    If IsAscFstNmChr(Asc(FstChr(I))) Then
-        PushI IdentifierAy, I
+Function SyeNonNm(Sy$()) As String()
+Dim Nm
+For Each Nm In Sy
+    If IsNm(Nm) Then PushI SyeNonNm, Nm
+Next
+End Function
+
+Function NyzStr(S) As String()
+NyzStr = SyeNonNm(SySsl(RplLf(RplCr(RplPun(S)))))
+End Function
+Function RelOf_PubMthNm_To_ModNy_OfPj() As Rel
+Set RelOf_PubMthNm_To_ModNy_OfPj = RelOf_PubMthNm_To_ModNy_zPj(CurPj)
+End Function
+Function RelOfMthNmToCmlOfVbe(Optional WhStr$) As Rel
+Set RelOfMthNmToCmlOfVbe = RelOfMthNmToCmlzVbe(CurVbe, WhStr)
+End Function
+Function RelOfMthNmToCmlzVbe(A As Vbe, Optional WhStr$) As Rel
+Dim O As New Rel, MthNm
+For Each MthNm In MthNyzVbe(A, WhStr)
+    O.PushRelLin CmlLin(MthNm)
+Next
+Set RelOfMthNmToCmlzVbe = O
+End Function
+Function RelOf_PubMthNm_To_ModNy_zPj(A As VBProject) As Rel
+Dim C, S$(), O As New Rel, MthNm, ModNm$, Cmp As VBComponent, B As WhMth
+Set B = WhMthzStr("-Pub")
+For Each C In CmpItr(A, "-Mod")
+    Set Cmp = C
+    ModNm = Cmp.Name
+    S = Src(Cmp.CodeModule)
+    For Each MthNm In Itr(MthNyzSrc(S, B))
+        O.PushParChd MthNm, ModNm
+    Next
+Next
+Set RelOf_PubMthNm_To_ModNy_zPj = O
+End Function
+Function RelOf_MthNm_To_MdNy_zPj(A As VBProject) As Rel
+Dim C As VBComponent, O As New Rel, MthNm, MdNm$
+For Each C In A.VBComponents
+    MdNm = C.Name
+    For Each MthNm In Itr(MthNyzSrc(Src(C.CodeModule)))
+        O.PushParChd MthNm, MdNm
+    Next
+Next
+Set RelOf_MthNm_To_MdNy_zPj = O
+End Function
+Function RelOf_MthNm_To_MdNy_OfPj() As Rel
+Static O As Rel
+If IsNothing(O) Then Set O = RelOf_MthNm_To_MdNy_zPj(CurPj)
+Set RelOf_MthNm_To_MdNy_OfPj = O
+End Function
+Function MthExtNy(MthPjDotMdNm$, PubMthLy$(), PubMthNm_To_PjDotModNy As Dictionary) As String()
+Dim Cxt$: Cxt = JnSpc(MthCxtLy(PubMthLy))
+Dim Ny$(): Ny = NyzStr(Cxt)
+Dim Nm
+For Each Nm In Itr(Ny)
+    If PubMthNm_To_PjDotModNy.Exists(Nm) Then
+        Dim PjDotModNy$():
+            PjDotModNy = AyeEle(PubMthNm_To_PjDotModNy(Nm), MthPjDotMdNm)
+        If HasEle(PjDotModNy, Nm) Then
+            PushI MthExtNy, Nm
+        End If
     End If
 Next
 End Function

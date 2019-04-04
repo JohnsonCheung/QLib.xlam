@@ -81,7 +81,7 @@ Set DtzFxw = DtDrsDtnm(DrsFxq(Fx, Sql), N)
 End Function
 
 Function IntAyFxwf(Fx, W, F) As Integer()
-IntAyFxwf = IntAyzARs(ArsFxwf(Fx, W, F))
+IntAyFxwf = IntAyzArs(ArsFxwf(Fx, W, F))
 End Function
 
 Function WszFxwSy(A, W, Optional F = 0) As String()

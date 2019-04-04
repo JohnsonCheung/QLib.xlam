@@ -178,7 +178,7 @@ End Function
 
 Private Sub Z_BrkAyzPrintable1()
 Dim T, O$(), J&
-For Each T In BrkAyzPrintable(JnCrLf(SrcPj))
+For Each T In BrkAyzPrintable(JnCrLf(SrcOfPj))
     J = J + 1
     Push O, FmtPrintableStr(T)
 Next
@@ -476,7 +476,7 @@ If Asc("•") <> 149 Then Debug.Print 149
 If Asc("–") <> 150 Then Debug.Print 150
 If Asc("—") <> 151 Then Debug.Print 151
 If Asc("˜") <> 152 Then Debug.Print 152
-If Asc("™") <> 153 Then Debug.Print 153
+If Asc("DocOf") <> 153 Then Debug.Print 153
 If Asc("š") <> 154 Then Debug.Print 154
 If Asc("›") <> 155 Then Debug.Print 155
 If Asc("œ") <> 156 Then Debug.Print 156

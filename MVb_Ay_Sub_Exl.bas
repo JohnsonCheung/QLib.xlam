@@ -9,7 +9,12 @@ For Each I In Itr(A)
     If Not Re.Test(I) Then PushI AyePatn, I
 Next
 End Function
-
+Function AyeRe(Ay, Re As RegExp) As String()
+Dim I
+For Each I In Itr(Ay)
+    If Not Re.Test(I) Then PushI AyeRe, I
+Next
+End Function
 Function AyeAtCnt(A, Optional At = 0, Optional Cnt = 1)
 If Cnt <= 0 Then Stop
 If Si(A) = 0 Then AyeAtCnt = A: Exit Function
@@ -114,11 +119,10 @@ AyeFstEle = AyeEleAt(A)
 End Function
 
 Function AyeFstNEle(A, Optional N = 1)
-Dim O: O = A
-ReDim O(Si(A) - 1)
+Dim O: O = A: Erase O
 Dim J&
-For J = 0 To UB(A) - N
-    O(J) = A(N + J)
+For J = N To UB(A)
+    Push O, A(J)
 Next
 AyeFstNEle = O
 End Function
@@ -173,10 +177,10 @@ For Each I In Itr(A)
 Next
 End Function
 
-Function AyeLikAy(A, LikAy$()) As String()
+Function AyeLikAy(A, LikeAy$()) As String()
 Dim I
 For Each I In Itr(A)
-    If Not HitLikAy(I, LikAy) Then Push AyeLikAy, I
+    If Not HitLikAy(I, LikeAy) Then Push AyeLikAy, I
 Next
 End Function
 

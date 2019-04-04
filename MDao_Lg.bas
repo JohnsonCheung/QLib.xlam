@@ -36,7 +36,7 @@ Set CurSessRs = L.OpenRecordset(FmtQQ("Select Top ? * from sess order by Sess de
 End Function
 Private Function CvSess&(A&)
 If A > 0 Then CvSess = A: Exit Function
-'CvSess = ValzQ(L, "select Max(Sess) from Sess")
+'CvSess = ValOfQ(L, "select Max(Sess) from Sess")
 End Function
 Private Sub EnsMsg(Fun$, MsgTxt$)
 With L.TableDefs("Msg").OpenRecordset
@@ -279,7 +279,7 @@ LgAy = SessLgAy(A)
 End Function
 
 Function SessNLg%(A&)
-'SessNLg = ValzQ(L, "Select Count(*) from Lg where Sess=" & A)
+'SessNLg = ValOfQ(L, "Select Count(*) from Lg where Sess=" & A)
 End Function
 
 Private Sub WrtLg(Fun$, MsgTxt$)

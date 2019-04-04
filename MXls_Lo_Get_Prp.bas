@@ -92,12 +92,12 @@ Function DryRgzLoCC(Lo As ListObject, CC) As Variant() _
 DryRgzLoCC = DryRgColAy(Lo.DataBodyRange, IxAy(FnyzLo(Lo), CC))
 End Function
 
-Function DtaAdrLo$(A As ListObject)
-DtaAdrLo = RgAdr(A.DataBodyRange)
+Function DtaAdrzLo$(A As ListObject)
+DtaAdrzLo = WsRgAdr(A.DataBodyRange)
 End Function
 
-Function EntColLoC(A As ListObject, C) As Range
-Set EntColLoC = RgzLc(A, C).EntireColumn
+Function EntColzLo(A As ListObject, C) As Range
+Set EntColzLo = RgzLc(A, C).EntireColumn
 End Function
 
 Function FbtStrLo$(A As ListObject)

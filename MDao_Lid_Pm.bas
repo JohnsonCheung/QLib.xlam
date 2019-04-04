@@ -26,7 +26,7 @@ End Property
 
 Private Function Fxi(WsLin) As LidFx
 Dim T$, Fxn$, Wsn$, Bexpr$
-Asg3TRst WsLin, T, Fxn, Wsn, Bexpr
+AsgN3tRst WsLin, T, Fxn, Wsn, Bexpr
 Set Fxi = New LidFx
 Fxi.Init Fxn, Wsn, T, FxcAy(T), Bexpr
 End Function
@@ -39,7 +39,7 @@ End Function
 
 Private Function Fxc(WsColLin) As LidFxc
 Dim ColNm$, ShtTyLis$, ExtNm$
-Asg2TRst WsColLin, ColNm, ShtTyLis, ExtNm
+AsgN2tRst WsColLin, ColNm, ShtTyLis, ExtNm
 Set Fxc = New LidFxc
 Fxc.Init ColNm, ShtTyLis, ExtNm
 End Function
@@ -62,7 +62,7 @@ End Property
 
 Private Function Fbi(TblLin, FfnDic As Dictionary) As LidFb
 Dim T$, Fbn$, FF$, Bexpr$, Fb$
-Asg3TRst TblLin, T, Fbn, FF, Bexpr
+AsgN3tRst TblLin, T, Fbn, FF, Bexpr
 Fb = FfnDic(Fbn)
 Set Fbi = New LidFb
 Fbi.Init Fbn, T, AsetzFF(FF), Bexpr, Fb

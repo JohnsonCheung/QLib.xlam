@@ -2,7 +2,7 @@ Attribute VB_Name = "MDao_Def_Fds"
 Option Explicit
 
 Function CsvzFds$(A As Dao.Fields)
-CsvzFds = CsvzDr(VyzItr(A))
+CsvzFds = CsvzDr(AvzItr(A))
 End Function
 Function NzEmpty(A)
 If IsNull(A) Then Exit Function

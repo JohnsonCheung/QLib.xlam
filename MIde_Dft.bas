@@ -17,15 +17,15 @@ End If
 End Function
 
 
-Function SzPj&(A As VBProject)
+Function SizPj&(A As VBProject)
 Dim O&, C As VBComponent
 For Each C In A.VBComponents
-    O = O + SzMd(C.CodeModule)
+    O = O + SizMd(C.CodeModule)
 Next
-SzPj = O
+SizPj = O
 End Function
-Function PjSz&()
-PjSz = SzPj(CurPj)
+Function SiOfPj&()
+SiOfPj = SizPj(CurPj)
 End Function
 
 Private Sub Z()

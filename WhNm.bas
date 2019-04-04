@@ -10,14 +10,14 @@ Attribute VB_Exposed = True
 Option Explicit
 Private X_Re As RegExp
 Dim X_ExlLikAy$()
-Dim X_LikAy$()
+Dim X_LikeAy$()
 Dim X_IsEmp As Boolean
 Property Get IsEmp() As Boolean
 IsEmp = X_IsEmp
 End Property
-Friend Function Init(Patn$, LikAy$(), ExlLikAy$()) As WhNm
+Friend Function Init(Patn$, LikeAy$(), ExlLikAy$()) As WhNm
 If Patn = "" Then
-    If Si(LikAy) = 0 Then
+    If Si(LikeAy) = 0 Then
         If Si(ExlLikAy) = 0 Then
             X_IsEmp = True
             Set Init = Me
@@ -29,14 +29,15 @@ End If
 Set X_Re = Re
 Set X_Re = RegExp(Patn)
 X_ExlLikAy = ExlLikAy
-X_LikAy = LikAy
+X_LikeAy = LikeAy
 Set Init = Me
 End Function
 Property Get Re() As RegExp
 Set Re = X_Re
 End Property
-Property Get LikAy() As String()
-LikAy = X_LikAy
+
+Property Get LikeAy() As String()
+LikeAy = X_LikeAy
 End Property
 
 Property Get ExlLikAy() As String()
@@ -47,7 +48,7 @@ Property Get ToStr$()
 If IsEmp Then ToStr = "#Emp": Exit Function
 Dim O$()
 Push O, Quote(X_Re.Pattern, "Patn(*)")
-Push O, Quote(TLin(X_LikAy), "LikAy(*)")
+Push O, Quote(TLin(X_LikeAy), "LikeAy(*)")
 Push O, Quote(TLin(X_ExlLikAy), "ExlLikAy(*)")
 ToStr = JnCrLf(O)
 End Property

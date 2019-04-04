@@ -9,7 +9,7 @@ Next
 Set AyDt = Dt(DtNm, FldNm, O)
 End Function
 
-Function GpCntDryzAy(A) As Variant()
+Function DryGpCntzAy(A) As Variant()
 If Si(A) = 0 Then Exit Function
 Dim Dup, O(), X, T&, Cnt&
 Dup = AywDist(A)
@@ -19,23 +19,23 @@ For Each X In Itr(Dup)
     T = T + Cnt
 Next
 Push O, Array("~Tot", T)
-GpCntDryzAy = O
+DryGpCntzAy = O
 End Function
 
-Function GpCntDryzAyWhDup(A) As Variant()
-GpCntDryzAyWhDup = DrywCGt(GpCntDryzAy(A), 1, 1)
+Function DryGpCntzAyWhDup(A) As Variant()
+DryGpCntzAyWhDup = DrywCGt(DryGpCntzAy(A), 1, 1)
 End Function
-Sub BrwGpCntDryzAy(Ay)
-Brw FmtGpCntDryzAy(Ay)
+Sub BrwDryGpCntzAy(Ay)
+Brw FmtDryGpCntzAy(Ay)
 End Sub
 
-Function FmtGpCntDryzAy(Ay) As String()
-FmtGpCntDryzAy = FmtDryAsSpcSep(GpCntDryzAy(Ay))
+Function FmtDryGpCntzAy(Ay) As String()
+FmtDryGpCntzAy = FmtDryAsSpcSep(DryGpCntzAy(Ay))
 End Function
 
-Private Sub ZZ_FmtGpCntDryzAy()
+Private Sub ZZ_FmtDryGpCntzAy()
 Dim Ay()
-Brw FmtGpCntDryzAy(Ay)
+Brw FmtDryGpCntzAy(Ay)
 End Sub
 
 Private Sub ZZ_CntDryzAy()

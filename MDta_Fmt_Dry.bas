@@ -17,9 +17,9 @@ Optional BrkCC, _
 Optional ShwZer As Boolean) _
 As String()
 If Si(Dry) = 0 Then Exit Function
-Dim Dry1(): Dry1 = DryStrfy(Dry, ShwZer, MaxColWdt)
+Dim Dry1(): Dry1 = DryMkCell(Dry, ShwZer, MaxColWdt)
 Dim W%(): W = WdtAyzDry(Dry1)
-Dim Dry2(): Dry2 = DryAlignColzWdt(Dry, W)
+Dim Dry2(): Dry2 = DryAlignColzWdt(Dry1, W)
 Dim Sep$(): Sep = SepDr(W)
 Dim Dry3(): Dry3 = DryInsBrk(Dry2, BrkCC, Sep)
 Dim SepLin$: SepLin = "|" & Jn(Sep, "|") & "|"

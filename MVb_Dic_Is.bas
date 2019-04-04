@@ -45,7 +45,7 @@ Dim O$
 Select Case True
 Case IsDiczEmp(A):   O = "EmpDic"
 Case IsDiczStr(A):   O = "StrDic"
-Case IsDiczLines(A): O = "LinesDic"
+Case IsDiczLines(A): O = "LineszDic"
 Case IsDiczSy(A):    O = "SyDic"
 Case Else:           O = "Dic"
 End Select

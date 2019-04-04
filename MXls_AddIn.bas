@@ -1,25 +1,25 @@
 Attribute VB_Name = "MXls_AddIn"
 Option Explicit
 
-Function AddInsDrs(A As Excel.Application) As Drs
-Set AddInsDrs = DrszItrPP(A.AddIns, "Name FullName Installed IsOpen ProgId CLSID")
+Function AddinsDrs(A As Excel.Application) As Drs
+Set AddinsDrs = DrszItrPP(A.AddIns, "Name FullName Installed IsOpen ProgId CLSID")
 End Function
-Sub DmpAddInsXls()
-DmpAddIns Xls
+Sub DmpAddinsXls()
+DmpAddins Xls
 End Sub
 
-Sub DmpAddIns(A As Excel.Application)
-DmpDrs AddInsDrs(A)
+Sub DmpAddins(A As Excel.Application)
+DmpDrs AddinsDrs(A)
 End Sub
 
-Function AddInsWs(A As Excel.Application) As Worksheet
-Set AddInsWs = WsVis(WszDrs(AddInsDrs(A)))
+Function AddinsWs(A As Excel.Application) As Worksheet
+Set AddinsWs = WsVis(WszDrs(AddinsDrs(A)))
 End Function
 
-Function AddIn(A As Excel.Application, FxaNm) As Excel.AddIn
-Dim I As Excel.AddIn
+Function Addin(A As Excel.Application, FxaNm) As Excel.Addin
+Dim I As Excel.Addin
 For Each I In A.AddIns
-    If I.Name = FxaNm & ".xlam" Then Set AddIn = I
+    If I.Name = FxaNm & ".xlam" Then Set Addin = I
 Next
 End Function
 

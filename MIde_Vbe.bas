@@ -5,16 +5,16 @@ Function CvVbe(A) As Vbe
 Set CvVbe = A
 End Function
 Sub DmpPjIsSav()
-DmpDrs PjIsSavDRszbe(CurVbe)
+DmpDrs PjIsSavDrszVbe(CurVbe)
 End Sub
-Function PjIsSavDryzbe(A As Vbe) As Variant()
+Function PjIsSavDryzVbe(A As Vbe) As Variant()
 Dim I As VBProject
 For Each I In A.VBProjects
-    PushI PjIsSavDryzbe, Array(I.Saved, I.Name, I.BuildFileName)
+    PushI PjIsSavDryzVbe, Array(I.Saved, I.Name, I.BldFileName)
 Next
 End Function
-Function PjIsSavDRszbe(A As Vbe) As Drs
-Set PjIsSavDRszbe = Drs("IsSav PjNm BldFfn", PjIsSavDryzbe(A))
+Function PjIsSavDrszVbe(A As Vbe) As Drs
+Set PjIsSavDrszVbe = Drs("IsSav PjNm BldFfn", PjIsSavDryzVbe(A))
 End Function
 
 Function Vbe_Pj(A As Vbe, PjNm$) As VBProject
@@ -28,13 +28,13 @@ For Each I In Vbe.VBProjects
 Next
 End Function
 
-Function MdDryzbe(A As Vbe, Optional WhStr$) As Variant()
+Function MdDryzVbe(A As Vbe, Optional WhStr$) As Variant()
 Dim P, C, Pnm$, Pj As VBProject
 For Each P In PjItr(A, WhStr)
     Set Pj = P
     Pnm = Pj.Name
     For Each C In CmpAyzPj(Pj, WhStr)
-        Push MdDryzbe, MdDr(CvMd(C))
+        Push MdDryzVbe, MdDr(CvMd(C))
     Next
 Next
 End Function
@@ -87,18 +87,26 @@ Else
 End If
 End Function
 
-Function PjfAyz(A As Vbe) As String()
+Property Get PjfAyOfVbe() As String()
+PjfAyOfVbe = PjfAyzVbe(CurVbe)
+End Property
+
+Function PjfAyzVbe(A As Vbe) As String()
 Dim P As VBProject
 For Each P In A.VBProjects
-    PushNonBlankStr PjfAyz, Pjf(P)
+    PushNonBlankStr PjfAyzVbe, Pjf(P)
 Next
 End Function
 
-Function PjNy(Optional WhStr$, Optional NmPfx$) As String()
-PjNy = PjNyz(CurVbe, WhStr, NmPfx)
+Function PjNyOfVbe(Optional WhStr$, Optional NmPfx$) As String()
+PjNyOfVbe = PjNyzVbe(CurVbe, WhStr, NmPfx)
 End Function
-Function PjNyz(A As Vbe, Optional WhStr$, Optional NmPfx$) As String()
-PjNyz = AywWhStrPfx(PjNyz(A), WhStr, NmPfx)
+
+Function PjNyzVbe(A As Vbe, Optional WhStr$, Optional NmPfx$) As String()
+Dim P
+For Each P In PjItr(A, WhStr, NmPfx)
+    PushI PjNyzVbe, CvPj(P).Name
+Next
 End Function
 
 Function FstQPj(A As Vbe) As VBProject

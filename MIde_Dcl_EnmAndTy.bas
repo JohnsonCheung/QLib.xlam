@@ -2,19 +2,23 @@ Attribute VB_Name = "MIde_Dcl_EnmAndTy"
 Option Explicit
 Const CMod$ = "MIde_Dcl_EnmAndTy."
 
-Function EnmBdyLySrc(Src$(), EnmNm$) As String()
-EnmBdyLySrc = EnmBdyLy(EnmLy(Src, EnmNm$))
+Function EnmBdyLyzSrc(Src$(), EnmNm$) As String()
+EnmBdyLyzSrc = EnmBdyLy(EnmLy(Src, EnmNm$))
 End Function
+
 Function EnmBdyLy(EnmLy$()) As String()
 
 End Function
+
 Function EnmFTIx(Src$(), EnmNm) As FTIx
 Dim Fm&: Fm = EnmFmIx(Src, EnmNm)
 Set EnmFTIx = FTIx(Fm, EndEnmIx(Src, Fm))
 End Function
+
 Function EnmLy(Src$(), EnmNm$) As String()
 EnmLy = AywFTIx(Src, EnmFTIx(Src, EnmNm))
 End Function
+
 Function EnmFmIx&(Src$(), EnmNm)
 Dim J&, L
 For Each L In Itr(Src)
@@ -30,6 +34,7 @@ For Each L In Itr(Src)
 Next
 EnmFmIx = -1
 End Function
+
 Function EnmNyMd(A As CodeModule) As String()
 EnmNyMd = EnmNy(DclLyzMd(A))
 End Function
@@ -110,12 +115,12 @@ End Function
 
 Function EnmNm$(Lin)
 Dim L$: L = RmvMdy(Lin)
-If ShfX(L, "Enum ") Then EnmNm = TakNm(LTrim(L))
+If ShfPfx(L, "Enum ") Then EnmNm = TakNm(LTrim(L))
 End Function
 
 Function UsrTyNm$(Lin)
 Dim L$: L = RmvMdy(Lin)
-If ShfX(L, "Type ") Then UsrTyNm = TakNm(LTrim(L))
+If ShfPfx(L, "Type ") Then UsrTyNm = TakNm(LTrim(L))
 End Function
 
 Function EnmLyMd(Md As CodeModule, EnmNm$) As String()
@@ -151,11 +156,11 @@ UsrTyNyPj = AyQSrt(O)
 End Function
 
 Function ShfXEnm(O) As Boolean
-ShfXEnm = ShfX(O, "Enum")
+ShfXEnm = ShfPfx(O, "Enum")
 End Function
 
 Function ShfXTy(O) As Boolean
-ShfXTy = ShfX(O, "Type")
+ShfXTy = ShfPfx(O, "Type")
 End Function
 
 Private Sub Z()

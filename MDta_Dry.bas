@@ -17,10 +17,10 @@ For Each I In Itr(SySsl(IIStr))
     PushI IntAyzIIStr, I
 Next
 End Function
-Function CntDrywGT1(CntDry()) As Variant()
+Function CntDryWhGt1(CntDry()) As Variant()
 Dim Dr
 For Each Dr In CntDry
-    If Dr(1) > 1 Then PushI CntDrywGT1, Dr
+    If Dr(1) > 1 Then PushI CntDryWhGt1, Dr
 Next
 End Function
 
@@ -98,17 +98,17 @@ Dim N%: N = Si(IxAy)
 DryzJnFldKK = DryJnFldNFld(DrySelIxAy(Dry, IxAy), N)
 End Function
 
-Function RowIxzDryDr&(Dry(), Dr)
+Function RowIxOptzDryDr&(Dry(), Dr)
 Dim N%: N = Si(Dr)
 Dim Ix&, D
 For Each D In Itr(Dry)
     If IsEqAy(AywFstNEle(D, N), Dr) Then
-        RowIxzDryDr = Ix
+        RowIxOptzDryDr = Ix
         Exit Function
     End If
     Ix = Ix + 1
 Next
-RowIxzDryDr = -1
+RowIxOptzDryDr = -1
 End Function
 Function DryJnFldNFld(Dry(), FstNFld%, Optional Sep$ = " ") As Variant()
 Dim U%: U = FstNFld - 1
@@ -118,11 +118,11 @@ For Each Dr In Itr(Dry)
     If U <> UB(Dr) Then
         ReDim Preserve Dr(U)
     End If
-    Dim Ix: Ix = RowIxzDryDr(O, AywFstNEle(Dr, UK))
+    Dim Ix: Ix = RowIxOptzDryDr(O, AywFstNEle(Dr, UK))
     If Ix = -1 Then
         PushI O, Dr
     Else
-        O(Ix)(U) = Appd(O(Ix)(U), Sep) & Dr(U)
+        O(Ix)(U) = Apd(O(Ix)(U), Sep) & Dr(U)
     End If
 Next
 DryJnFldNFld = O
@@ -232,12 +232,12 @@ For Each Dr In Itr(A)
 Next
 End Function
 
-Function DrywDup(A(), CC) As Variant()
-If Not IsArray(CC) Then DrywDup = DrywDupCol(A, CInt(CC)): Exit Function
-Dim Dup, Dr
-Dup = AywDup(SyzDry(A, CC))
-For Each Dr In Itr(A)
-    If HasEle(Dup, Jn(AywIxAy(Dr, CC), vbFldSep)) Then Push DrywDup, Dr
+Function DrywDupCC(Dry(), CC) As Variant()
+If Not IsArray(CC) Then DrywDupCC = DrywDupCol(Dry, CInt(CC)): Exit Function
+Dim Dup$(), Dr
+Dup = AywDup(DrLinAy(Dry, CC))
+For Each Dr In Itr(Dry)
+    If HasEle(Dup, Jn(AywIxAy(Dr, CC), vbFldSep)) Then Push DrywDupCC, Dr
 Next
 End Function
 
@@ -257,7 +257,7 @@ Next
 End Function
 
 Function DistSyzDry(A(), C) As String()
-DistSyzDry = AywDist(SyzDry(A, C))
+DistSyzDry = AywDist(DrLin(A, C))
 End Function
 
 Function DryzSqCol(Sq, ColIxAy) As Variant()

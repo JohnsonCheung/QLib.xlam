@@ -43,7 +43,7 @@ End If
 Dim K
 For Each K In A.Keys
     If O.Exists(K) Then
-        WarnLin CSub, "Key Hass, itm not merge", "Key", K
+        Thw CSub, "Key is found in both Dic", "Key Dic1 Dic2", K, O, A
     Else
         O.Add K, A(K)
     End If

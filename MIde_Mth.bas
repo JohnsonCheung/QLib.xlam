@@ -28,7 +28,7 @@ End Function
 Function MdRplMth(Md As CodeModule, MthNm, ByLines) As CodeModule
 Dim M() As MdLines: M = MdLinesAyzMth(Md, MthNm)
 Select Case Si(M)
-Case 0: MdAppLines Md, ByLines: InfLin CSub, "MthNm is added", "Md Mth MthLinCntSz", MdNm(Md), MthNm, CntSzStrzLines(ByLines)
+Case 0: MdApdLines Md, ByLines: InfLin CSub, "MthNm is added", "Md Mth MthLinCntSz", MdNm(Md), MthNm, CntSzStrzLines(ByLines)
 Case 1: MdRplLines Md, M(0), ByLines, "MthLines"
 Case 2: MdRplLines Md, M(0), ByLines, "MthLines": Md.DeleteLines M(1).StartLine, M(1).Count
 Case Else: Thw CSub, "Er in MdLinesAyzMth.  It should return Si of 0,1 or 2", "But-Now-It-Return-Si", Si(M)
@@ -47,7 +47,7 @@ If OldMthLines = MthLines Then
     Debug.Print FmtQQ("MdEns: Mth(?) in Md(?) is same", MthNm, MdNm(Md))
 End If
 RmvMdMth Md, MthNm
-Set MdEns = MdAppLines(Md, MthLines)
+Set MdEns = MdApdLines(Md, MthLines)
 Debug.Print FmtQQ("MdEns: Mth(?) in Md(?) is replaced <=========", MthNm, MdNm(Md))
 End Function
 
@@ -58,10 +58,6 @@ For J = 0 To UB(A)
     FTIxDmp A(J)
 Next
 End Sub
-
-Function MthDNyzMd(A As CodeModule) As String()
-MthDNyzMd = AyAddPfx(MthDNyzSrc(Src(A)), MdQNmzMd(A) & ".")
-End Function
 
 
 

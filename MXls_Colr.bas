@@ -250,7 +250,7 @@ Private Sub SetColr_ToDo()
 '    ColrLines
 End Sub
 
-Sub FSharpBuildKnownColor()
+Sub FSharpBldKnownColor()
 '// Learn more about F# at http://fsharp.org
 '// See the 'F# Tutorial' project for more help.
 'open System.Drawing

@@ -60,7 +60,7 @@ Function ToAscString(rabyt)
   End With
 End Function
 
-Sub to_SHA256()
+Sub SHA256()
 'Requires a reference to mscorlib 4.0 64-bit, which is part of the .Net Framework 4.0
 GoTo Tst1
 Exit Sub
@@ -89,7 +89,7 @@ End Sub
 
 '64-bit MS Access VBA code to calculate an SHA-512 or SHA-256 hash in VBA.  This requires a VBA reference to the .Net Framework 4.0 mscorlib.dll.  The hashed strings are calculated using calls to encryption methods built into mscorlib.dll.  The calculated hash strings are the same values as those calculated with jsSHA, a Javascript SHA implementation (see https://caligatio.github.io/jsSHA/ for an online calculator and the jsSHA code).
 'The mscorlib.dll is intended for .Net Framework managed applications, but the stackoverflow.com post showed how it could be used with MS Access VBA.  This technique is not documented anywhere in MS Access documentation that I could find, so the stackoverflow.com post was very helpful in this regard.
-Sub to_SHA512()
+Sub SHA512()
 'Requires a reference to mscorlib 4.0 64-bit
 Dim text As Object
 Dim SHA512 As Object
@@ -122,8 +122,8 @@ Private Sub ZZ()
 Dim A As Variant
 ToBase64String A
 ToAscString A
-to_SHA256
-to_SHA512
+SHA256
+SHA512
 End Sub
 
 Private Sub Z()

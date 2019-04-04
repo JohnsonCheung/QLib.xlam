@@ -58,6 +58,39 @@ For Each I In Dic.Items
 Next
 End Property
 
+Property Get MulChdRel() As Rel
+Dim P, C, Chd As Aset, O As New Rel
+For Each P In Dic.Keys
+    Set Chd = CvAset(Dic(P))
+    If Chd.Cnt > 1 Then
+        For Each C In Chd.Itms
+            O.PushParChd P, C
+        Next
+    End If
+Next
+Set MulChdRel = O
+End Property
+Property Get Srt() As Rel
+Dim C, P, O As New Rel
+For Each P In SetOfPar.Srt.Itms
+    For Each C In ParChd(P).Itms
+        O.PushParChd P, C
+    Next
+Next
+Set Srt = O
+End Property
+Property Get SwapParChd() As Rel
+Set SwapParChd = New Rel
+Dim P, C
+For Each P In SetOfPar.Itms
+    For Each C In ParChd(P).Itms
+        SwapParChd.PushParChd C, P
+    Next
+Next
+End Property
+Sub Vc()
+VcAy Fmt
+End Sub
 Sub Brw()
 BrwAy Fmt
 End Sub
@@ -169,7 +202,7 @@ Set InDpdOrdItms = O
 End Function
 
 Function SetOfPar() As Aset
-Set SetOfPar = AsetzAy(Dic.Keys)
+Set SetOfPar = AsetzItr(Dic.Keys)
 End Function
 
 Function SetOfLeaf() As Aset
@@ -202,7 +235,11 @@ If IsPar(P) Then Exit Function
 ParHasChd = ParChd(P).Has(C)
 End Function
 Function ParChd(P) As Aset
-If Dic.Exists(P) Then Set ParChd = Dic(P)
+If Dic.Exists(P) Then
+    Set ParChd = Dic(P)
+Else
+    Set ParChd = New Dictionary
+End If
 End Function
 Function ParIsNoChd(P) As Boolean
 If Not IsPar(P) Then Exit Function
@@ -334,5 +371,10 @@ Me.Z_InDpdOrdItms
 Me.Z_Itms
 End Sub
 
-
-
+Property Get SetOfSngChdPar() As Aset
+Set SetOfSngChdPar = New Aset
+Dim P
+For Each P In Dic.Keys
+    If CvAset(Dic(P)).Cnt = 1 Then SetOfSngChdPar.PushItm P
+Next
+End Property

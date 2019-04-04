@@ -70,10 +70,18 @@ Dim KeyIxAy&(), GIx%
 Set GpDicDKG = DryGpDic(A.Dry, KeyIxAy, GIx)
 End Function
 
-Function DryDotAy(DotAy) As Variant()
+Function TwoColDryzDotLy(DotLy$()) As Variant()
+Dim DotLin
+For Each DotLin In Itr(DotLy)
+    With Brk2Dot(DotLin, NoTrim:=True)
+        PushI TwoColDryzDotLy, Sy(.S1, .S2)
+    End With
+Next
+End Function
+Function DryzDotLy(DotAy) As Variant()
 Dim I
 For Each I In Itr(DotAy)
-    PushI DryDotAy, SplitDot(I)
+    PushI DryzDotLy, SplitDot(I)
 Next
 End Function
 

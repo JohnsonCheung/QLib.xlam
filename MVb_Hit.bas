@@ -29,16 +29,16 @@ End Function
 
 Function Has2T(Lin, T1, T2) As Boolean
 Dim L$: L = Lin
-If ShfT(L) <> T1 Then Exit Function
-If ShfT(L) <> T2 Then Exit Function
+If ShfT1(L) <> T1 Then Exit Function
+If ShfT1(L) <> T2 Then Exit Function
 Has2T = True
 End Function
 
 Function Has3T(Lin, T1, T2, T3) As Boolean
 Dim L$: L = Lin
-If ShfT(L) <> T1 Then Exit Function
-If ShfT(L) <> T2 Then Exit Function
-If ShfT(L) <> T3 Then Exit Function
+If ShfT1(L) <> T1 Then Exit Function
+If ShfT1(L) <> T2 Then Exit Function
+If ShfT1(L) <> T3 Then Exit Function
 Has3T = True
 End Function
 
@@ -53,9 +53,9 @@ Function HitLikss(S, Likss) As Boolean
 HitLikss = HitLikAy(S, SySsl(Likss))
 End Function
 
-Function HitLikAy(S, LikAy$()) As Boolean
+Function HitLikAy(S, LikeAy$()) As Boolean
 Dim Lik
-For Each Lik In Itr(LikAy)
+For Each Lik In Itr(LikeAy)
     If S Like Lik Then HitLikAy = True: Exit Function
 Next
 End Function
@@ -75,7 +75,7 @@ If IsNothing(B) Then Exit Function
 If B.IsEmp Then Exit Function
 If HitLikAy(V, B.ExlLikAy) Then HitNm = False: Exit Function
 If HitRe(V, B.Re) Then Exit Function
-If HitLikAy(V, B.LikAy) Then Exit Function
+If HitLikAy(V, B.LikeAy) Then Exit Function
 HitNm = False
 End Function
 Function HitAy(V, Ay) As Boolean

@@ -16,14 +16,14 @@ Dim K As vbext_ProcKind
 CurMthNmMd = A.ProcOfLine(CurLno, K)
 End Function
 
-Property Get CurWinzMd() As VBIDE.Window
+Property Get CurWinzMd() As Vbide.Window
 Dim A As CodePane
 Set A = CurCdPne
 If IsNothing(A) Then Exit Property
 Set CurWinzMd = A.Window
 End Property
 
-Property Get CurCdPne() As VBIDE.CodePane
+Property Get CurCdPne() As Vbide.CodePane
 Set CurCdPne = CurVbe.ActiveCodePane
 End Property
 Property Get CurMthLin$()

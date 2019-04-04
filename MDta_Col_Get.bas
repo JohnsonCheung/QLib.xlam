@@ -1,19 +1,25 @@
 Attribute VB_Name = "MDta_Col_Get"
 Option Explicit
-Public Const vbFldSep$ = vbNullChar & "`" & vbNullChar
+Public Const vbFldSep$ = ""
 Function ColzDrs(A As Drs, ColNm$) As Variant()
 ColzDrs = ColzDry(A.Dry, IxzAy(A.Fny, ColNm))
 End Function
 Function StrColzDrs(A As Drs, ColNm$) As String()
 StrColzDrs = StrColzDry(A.Dry, IxzAy(A.Fny, ColNm))
 End Function
-
-Function SyzDry(Dry(), CC, Optional FldSep$ = vbFldSep) As String()
-If Not IsArray(CC) Then SyzDry = StrColzDry(Dry, CC): Exit Function
+Function DrLinAy(Dry(), Optional CC, Optional FldSep$ = vbFldSep) As String()
 Dim Dr
 For Each Dr In Itr(Dry)
-    PushI SyzDry, Jn(AywIxAy(Dr, CC), FldSep)
+    PushI DrLinAy, DrLin(Dr, CC, FldSep)
 Next
+End Function
+
+Function DrLin$(Dr, Optional CC, Optional FldSep$ = vbFldSep)
+If IsMissing(CC) Then
+    DrLin = Jn(Dr, FldSep)
+Else
+    DrLin = Jn(AywIxAy(Dr, IxAyzCC(CC)), FldSep)
+End If
 End Function
 
 Function SqzDry(A()) As Variant()
@@ -51,7 +57,7 @@ Function IntoColzDry(Into, Dry(), C)
 Dim O, J&, Dr, U&
 O = Into
 U = UB(Dry)
-ReszAyU O, U
+ReSumSiU O, U
 For Each Dr In Itr(Dry)
     If UB(Dr) >= C Then
         O(J) = Dr(C)

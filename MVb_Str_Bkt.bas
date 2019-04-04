@@ -39,10 +39,6 @@ Tst:
     Return
 End Sub
 
-Function IsEqStr(A, B, Optional IgnoreCase As Boolean) As Boolean
-IsEqStr = StrComp(A, B, IIf(IgnoreCase, vbTextCompare, vbBinaryCompare)) = 0
-End Function
-
 Sub AsgBktPos(A, OpnBkt$, OFmPos%, OToPos%)
 Const CSub$ = CMod & "AsgBktPos"
 OFmPos = 0
@@ -84,31 +80,39 @@ Function BrkBkt(A, Optional OpnBkt$ = vbOpnBkt) As String()
 Dim P1%, P2%
     AsgBktPos A, OpnBkt, _
     P1, P2
+If P1 = 0 Or P2 = 0 Then Exit Function
 Dim A1$, A2$, A3$
 A1 = Left(A, P1 - 1)
 A2 = Mid(A, P1 + 1, P2 - P1 - 1)
 A3 = Mid(A, P2 + 1)
 BrkBkt = Sy(A1, A2, A3)
 End Function
-
-Function StrBetBkt$(A, Optional OpnBkt$ = vbOpnBkt)
+Function BetBktMust$(S, Fun$, Optional OpnBkt$ = vbOpnBkt)
 Dim P1%, P2%
-AsgBktPos A, OpnBkt, P1, P2
-StrBetBkt = Mid(A, P1 + 1, P2 - P1 - 1)
+AsgBktPos S, OpnBkt, P1, P2
+If P1 = 0 Or P2 = 0 Then Thw Fun, "No Bkt is found in Str", "Str", S
+BetBktMust = Mid(S, P1 + 1, P2 - P1 - 1)
 End Function
 
-Function StrAftBkt$(Lin, Optional OpnBkt$ = vbOpnBkt)
+Function BetBkt$(A, Optional OpnBkt$ = vbOpnBkt)
+Dim P1%, P2%
+AsgBktPos A, OpnBkt, P1, P2
+If P1 = 0 Or P2 = 0 Then Exit Function
+BetBkt = Mid(A, P1 + 1, P2 - P1 - 1)
+End Function
+
+Function AftBkt$(Lin, Optional OpnBkt$ = vbOpnBkt)
 Dim P1%, P2%
 AsgBktPos Lin, OpnBkt, P1, P2
 If P2 = 0 Then Exit Function
-StrAftBkt = Mid(Lin, P2 + 1)
+AftBkt = Mid(Lin, P2 + 1)
 End Function
 
-Function StrBefBkt$(Lin, Optional OpnBkt$ = vbOpnBkt)
+Function BefBkt$(Lin, Optional OpnBkt$ = vbOpnBkt)
 Dim P1%, P2%
    AsgBktPos Lin, OpnBkt, P1, P2
 If P1 = 0 Then Exit Function
-StrBefBkt = Left(Lin, P1 - 1)
+BefBkt = Left(Lin, P1 - 1)
 End Function
 
 Private Sub Z()

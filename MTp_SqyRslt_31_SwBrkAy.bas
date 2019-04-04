@@ -8,8 +8,8 @@ Ix = A.Ix
 If IsDDRmkLin(L) Then Thw CSub, "[SwLin], [Ix] is a remark line.  It should be removed before calling Evl", A.Lin, A.Ix
 Set SwBrk = New SwBrk
 With SwBrk
-    .Nm = ShfTerm(L)
-    .OpStr = UCase(ShfTerm(L))
+    .Nm = ShfT1(L)
+    .OpStr = UCase(ShfT1(L))
     .TermAy = SySsl(L)
     .Ix = Ix
 End With

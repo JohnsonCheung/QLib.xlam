@@ -4,9 +4,9 @@ Function StrLikss(A, Likss) As Boolean
 StrLikss = StrLikAy(A, SySsl(Likss))
 End Function
 
-Function StrLikAy(A, LikAy$()) As Boolean
+Function StrLikAy(A, LikeAy$()) As Boolean
 Dim I
-For Each I In Itr(LikAy)
+For Each I In Itr(LikeAy)
     If A Like I Then StrLikAy = True: Exit Function
 Next
 End Function
@@ -43,7 +43,7 @@ Function T1zT1LikTLinAy$(T1LikTLinAy$(), Nm)
 Dim L, T1$
 If Si(T1LikTLinAy) = 0 Then Exit Function
 For Each L In T1LikTLinAy
-    T1 = ShfT(L)
+    T1 = ShfT1(L)
     If StrLikss(Nm, L) Then
         T1zT1LikTLinAy = T1
         Exit Function

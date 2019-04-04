@@ -14,7 +14,7 @@ End Function
 
 Private Sub Z_Src_PthMthLinAy()
 Dim MthNy$(), Src$()
-Src = SrcMd
+Src = CurSrc
 MthNy = Sy("Src_MthDclDry", "Mth_MthDclLin")
 Ept = Sy("Function Mth_MthDclLin$(A As Mth)", "Function Src_MthDclDry(A$()) As Variant()")
 GoSub Tst

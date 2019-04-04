@@ -1,7 +1,7 @@
 Attribute VB_Name = "MDao_Sql"
 Option Explicit
 Const CMod$ = "MSql."
-Public Const ™NN$ = "It a Str or Sy will give Ny.  See NyzNN"
+Public Const DocOfNN$ = "It a Str or Sy will give Ny.  See NyzNN"
 Const KwBet$ = "between"
 Const KwUpd$ = "update"
 Const KwInto$ = "into"
@@ -169,7 +169,7 @@ Dim P1$()
         Next
     Else
         For J = 0 To UB(P1)
-            P1(J) = Appd(P1(J), " As ")
+            P1(J) = Apd(P1(J), " As ")
         Next
 
     End If

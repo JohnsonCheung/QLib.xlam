@@ -13,14 +13,18 @@ Function FmtCmpDic(A As Dictionary, B As Dictionary, Optional Nm1$ = "Fst", Opti
 FmtCmpDic = FmtDicCmp(DicCmp(A, B, Nm1, Nm2))
 End Function
 
-Function FmtDicCmp(A As DicCmp) As String()
+Function FmtDicCmp(A As DicCmp, Optional ExlSam As Boolean) As String()
+Dim O$()
 With A
-    FmtDicCmp = AyAddAp( _
+    O = AyAddAp( _
         FmtExcess(.AExcess, .Nm1), _
         FmtExcess(.BExcess, .Nm2), _
-        FmtDif(.ADif, .BDif), _
-        FmtSam(.Sam))
+        FmtDif(.ADif, .BDif))
 End With
+If Not ExlSam Then
+    O = AyAdd(O, FmtSam(A.Sam))
+End If
+FmtDicCmp = O
 End Function
 
 Function DicCmp(A As Dictionary, B As Dictionary, Nm1$, Nm2$) As DicCmp

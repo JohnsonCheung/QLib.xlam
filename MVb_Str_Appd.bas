@@ -1,21 +1,21 @@
 Attribute VB_Name = "MVb_Str_Appd"
 Option Explicit
 
-Function AppdCrLf$(A)
+Function ApdCrLf$(A)
 If A = "" Then Exit Function
-AppdCrLf = A & vbCrLf
+ApdCrLf = A & vbCrLf
 End Function
-Function PrepSpc$(A)
+Function PpdSpc$(A)
 If A = "" Then Exit Function
-PrepSpc = " " & A
+PpdSpc = " " & A
 End Function
-Function Appd$(A, Sfx, Optional Sep$ = "")
-If A = "" Then Appd = A: Exit Function
-Appd = A & Sep & Sfx
+Function Apd$(A, Sfx, Optional Sep$ = "")
+If A = "" Then Apd = A: Exit Function
+Apd = A & Sep & Sfx
 End Function
 
-Function Prep$(A, Pfx, Optional Sep$ = "")
-If A = "" Then Prep = A: Exit Function
-Prep = Pfx & Sep & A
+Function Ppd$(A, Pfx, Optional Sep$ = "")
+If A = "" Then Ppd = A: Exit Function
+Ppd = Pfx & Sep & A
 End Function
 

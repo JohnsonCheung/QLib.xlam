@@ -10,7 +10,7 @@ WrpDrNRow = R
 End Function
 
 Function WrpDrPad(WrpDr, W%()) As Variant() _
-'Some Cell in WrpDr may be an array, wraping each element to cell if their width can fit its W%(?)
+'Some Cell in WrpDr may be an array, Wrping each element to cell if their width can fit its W%(?)
 Dim J%, Cell, O()
 O = WrpDr
 For Each Cell In Itr(O)
@@ -50,7 +50,7 @@ WrpDrSq = O
 End Function
 
 Function WrpDryWdt(WrpDry(), WrpWdt%) As Integer() _
-'WrpDry is dry having 1 or more wrpCol, which mean need wrapping.
+'WrpDry is dry having 1 or more wrpCol, which mean need Wrpping.
 'WrpWdt is for wrpCol _
 'WrpCol is col with each cell being array
 'if maxWdt of array-ele of wrpCol has wdt > WrpWdt, use that wdt

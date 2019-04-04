@@ -1,9 +1,6 @@
 Attribute VB_Name = "MIde_Md"
 Option Explicit
 Const CMod$ = "MIde_Md."
-Property Get CurSrc() As String()
-CurSrc = Src(CurMd)
-End Property
 Property Get CurMd() As CodeModule
 Set CurMd = CurCdPne.CodeModule
 End Property
@@ -63,8 +60,8 @@ Sub RmvMdLno(A As CodeModule, Lno&)
 A.DeleteLines Lno, 1
 End Sub
 
-Function SzMd&(A As CodeModule)
-SzMd = Len(SrcLines(A))
+Function SizMd&(A As CodeModule)
+SizMd = Len(SrcLines(A))
 End Function
 
 Function MdNm$(A As CodeModule)
@@ -81,7 +78,7 @@ End Function
 
 Function SrcRmvMth(Src$(), MthNmSet As Aset) As String()
 Dim D As Dictionary: Set D = DicExlKeySet(MthNmDic(Src), MthNmSet): 'Brw D: Stop
-SrcRmvMth = LyzLinesDicByItems(D)
+SrcRmvMth = LyzLinesDicItems(D)
 End Function
 
 Function SrcLines$(A As CodeModule)

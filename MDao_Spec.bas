@@ -47,7 +47,7 @@ Const NoImport$ = "----- no import -----"
 Const NoCur______$ = "No Ft."
 Const NoLas______$ = "No Last."
 Const FtDif______$ = "Ft is dif."
-Const SamTimSz___$ = "Sam tim & sz."
+Const SamTimSi___$ = "Sam tim & sz."
 Const SamTimDifSz$ = "Sam tim & sz. (Odd!)"
 Const CurIsOld___$ = "Cur is old."
 Const CurIsNew__$ = "Cur is new."
@@ -68,7 +68,7 @@ Select Case True
 'Case NoCur:            XDmp_Lin_AV CSub, NoImport & NoCur______ & C, Av
 'Case NoLas:            XDmp_Lin_AV CSub, Imported & NoLas______ & C, Av
 'Case DifFt:            XDmp_Lin_AV CSub, Imported & FtDif______ & C, Av
-'Case SamTim And SamSz: XDmp_Lin_AV CSub, NoImport & SamTimSz___ & C, Av
+'Case SamTim And SamSz: XDmp_Lin_AV CSub, NoImport & SamTimSi___ & C, Av
 'Case SamTim And DifSz: XDmp_Lin_AV CSub, NoImport & SamTimDifSz & C, Av
 'Case CurOld:           XDmp_Lin_AV CSub, NoImport & CurIsOld___ & C, Av
 'Case CurNew:           XDmp_Lin_AV CSub, Imported & CurIsNew__ & C, Av

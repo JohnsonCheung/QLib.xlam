@@ -91,17 +91,17 @@ Next
 Set TdzLin = O
 End Function
 
-Function T1z_Itm_T1LikssAy$(Itm, T1LikssAy$())
+Function T1zItm_T1LikssAy$(Itm, T1LikssAy$())
 Dim L, Likss$, T1$
 For Each L In T1LikssAy
     AsgTRst L, T1, Likss
-    If HitLikss(Itm, Likss) Then T1z_Itm_T1LikssAy = T1: Exit Function
+    If HitLikss(Itm, Likss) Then T1zItm_T1LikssAy = T1: Exit Function
 Next
 End Function
 
 Private Function FdzEF(F, A As EF) As Dao.Field2
 If Left(F, 2) = "Id" Then Stop
-Dim Ele$: Ele = T1z_Itm_T1LikssAy(F, A.FldLy)
+Dim Ele$: Ele = T1zItm_T1LikssAy(F, A.FldLy)
 If Ele <> "" Then Set FdzEF = FdzEle(Ele, A.EleLy, F): Exit Function
 Set FdzEF = FdzFld(F):                    If Not IsNothing(FdzEF) Then Exit Function
 Set FdzEF = FdzEle(CStr(F), A.EleLy, F):  If Not IsNothing(FdzEF) Then Exit Function

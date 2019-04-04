@@ -7,6 +7,12 @@ End Function
 Function SndChr$(A)
 SndChr = Mid(A, 2, 1)
 End Function
+Function FstAsc%(A)
+FstAsc = Asc(FstChr(A))
+End Function
+Function SndAsc%(A)
+SndAsc = Asc(SndChr(A))
+End Function
 Function FstChr$(A)
 FstChr = Left(A, 1)
 End Function

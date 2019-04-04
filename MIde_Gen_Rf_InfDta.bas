@@ -13,13 +13,13 @@ Property Get PjRfFny() As String()
 PjRfFny = AyItmAddAy("Pj", RfFny)
 End Property
 Function PjRfDry(A As VBProject) As Variant()
-Dim R As VBIDE.Reference, N$
+Dim R As Vbide.Reference, N$
 N = A.Name
 For Each R In A.References
     PushI PjRfDry, AyItmAddAy(N, DrRf(R))
 Next
 End Function
-Function DrRf(A As VBIDE.Reference) As Variant()
+Function DrRf(A As Vbide.Reference) As Variant()
 With A
 DrRf = Array(.Name, .Guid, .Major, .Minor, .FullPath, .Description, .BuiltIn, .Type, .IsBroken)
 End With

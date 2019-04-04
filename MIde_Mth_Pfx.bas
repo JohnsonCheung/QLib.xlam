@@ -33,7 +33,7 @@ Dim Fnd As Boolean
     Fnd = False
     For P2 = 2 To Len(A0)
         C = Asc(Mid(A0, P2, 1))
-        If IsAscLCase(C) Then Fnd = True: Exit For
+        If IsAscLCas(C) Then Fnd = True: Exit For
     Next
 '---
     If Not Fnd Then Exit Function
@@ -41,7 +41,7 @@ Dim P3%
 Fnd = False
     For P3 = P2 + 1 To Len(A0)
         C = Asc(Mid(A0, P3, 1))
-        If IsAscUCase(C) Or IsAscDigit(C) Then Fnd = True: Exit For
+        If IsAscUCas(C) Or IsAscDigit(C) Then Fnd = True: Exit For
     Next
 '--
 If Fnd Then

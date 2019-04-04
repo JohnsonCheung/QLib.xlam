@@ -140,10 +140,10 @@ For Each I In Itr(A)
 Next
 End Function
 
-Function AywLikAy(A, LikAy$()) As String()
+Function AywLikAy(A, LikeAy$()) As String()
 Dim I, Lik
 For Each I In Itr(A)
-    For Each Lik In LikAy
+    For Each Lik In LikeAy
         If I Like Lik Then
             PushI AywLikAy, I
             Exit For
@@ -157,7 +157,7 @@ If IsNothing(A) Then Exit Function
 With A
     If IsNothing(.Re) Then
         If Si(.ExlLikAy) = 0 Then
-            If Si(.LikAy) = 0 Then
+            If Si(.LikeAy) = 0 Then
                 Exit Function
             End If
         End If
@@ -402,7 +402,7 @@ End Function
 Function AywT1SelRst(A, T1) As String()
 Dim L
 For Each L In Itr(A)
-    If ShfTerm(L) = T1 Then PushI AywT1SelRst, L
+    If ShfT1(L) = T1 Then PushI AywT1SelRst, L
 Next
 End Function
 
@@ -417,7 +417,7 @@ End Function
 Function AywTTSelRst(A, T1, T2) As String()
 Dim L, X1$, X2$, Rst$
 For Each L In Itr(A)
-    Asg2TRst L, X1, X2, Rst
+    AsgN2tRst L, X1, X2, Rst
     If X1 = T1 Then
         If X2 = T2 Then
             PushI AywTTSelRst, Rst

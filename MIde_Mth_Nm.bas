@@ -18,10 +18,17 @@ End Sub
 Property Get MdQNm$()
 MdQNm = MdQNmzMd(CurMd)
 End Property
-
-Property Get MthQNm$()
-MthQNm = MdQNm & "." & MthDNmzLin(CurMthLin)
+Property Get CurMthQNm$()
+On Error GoTo X
+CurMthQNm = MthQNm(CurMd, CurMthLin)
+Exit Property
+X: Debug.Print CSub
 End Property
+
+Function MthQNm$(A As CodeModule, Lin)
+Dim D$: D = MthDNmzLin(Lin): If D = "" Then Exit Function
+MthQNm = MdQNmzMd(A) & "." & D
+End Function
 
 Function MthNyzPub(Src$()) As String()
 Dim Ix, N$, B As MthNm3
@@ -86,6 +93,21 @@ If ShfMthTy(L) = "" Then Exit Function
 If ShfNm(L) = "" Then Thw CSub, "Not as SrcLin", "Lin", Lin
 RmvMthNm3 = L
 End Function
+
+Function RelOf_MthSDNm_To_MdNm_OfVbe(Optional WhStr$) As Rel
+'Set MthSDNmToMdNmRelOfVbe = MthSDNmToMdNmRelzVbe(CurVbe, WhStr)
+End Function
+
+Function RelOf_MthSDNm_To_MdNm_zVbe(A As Vbe, Optional WhStr$) As Rel
+Dim MthQNm
+For Each MthQNm In MthQNyzVbe(A, WhStr)
+'    PushI MthSQNmToMdNmRelzVbe, MthSDNm
+Next
+'Set MthSDNmToMdNmRelOfVbe = MthSDNmToMdNmRelzVbe(CurVbe, WhStr)
+End Function
+
+
+
 Function MthNm3(Lin, Optional B As WhMth) As MthNm3
 Dim L$: L = Lin
 Dim O As New MthNm3
@@ -116,7 +138,41 @@ End Function
 Function MthDNmzLin$(MthLin)
 MthDNmzLin = MthDNmzMthNm3(MthNm3(MthLin))
 End Function
+Function MthSQNyOfVbe(Optional WhStr$) As String()
+MthSQNyOfVbe = MthSQNyzVbe(CurVbe, WhStr)
+End Function
+Function MthSQNyzVbe(A As Vbe, Optional WhStr$) As String()
+Dim MthQNm
+For Each MthQNm In Itr(MthQNyzVbe(A, WhStr))
+    PushI MthSQNyzVbe, MthSQNm(MthQNm)
+Next
+End Function
 
+Function MthSQNm$(MthQNm)
+Dim A$(): A = SplitDot(MthQNm): If Si(A) <> 5 Then Thw CSub, "MthQNm should have 4 dots", "MthQNm", MthQNm
+Dim P$, Md$, M$, T$, N$
+AsgAp A, P, Md, M, T, N
+MthSQNm = JnDotAp(N, MthMdyc(M) & MthTyc(T), P, Md)
+End Function
+
+Function MthTyc$(ShtMthTy$)
+Select Case ShtMthTy
+Case "Fun": MthTyc = "F"
+Case "Sub": MthTyc = "S"
+Case "Get": MthTyc = "G"
+Case "Let": MthTyc = "L"
+Case "Set": MthTyc = "T"
+Case Else: Thw CSub, "Invalid ShtMthTy.", "ShtMthTy VdtShtMthTy", ShtMthTy, ShtMthTyAy
+End Select
+End Function
+Function MthMdyc$(ShtMthMdy$)
+Select Case ShtMthMdy
+Case "Pub": MthMdyc = "P"
+Case "Prv": MthMdyc = "V"
+Case "Frd": MthMdyc = "F"
+Case Else: Thw CSub, "Invalid ShtMthMdy.", "ShtMthMdy VdtShtMthMdy", ShtMthMdy, ShtMthMdyAy
+End Select
+End Function
 Function MthDNm$(Lin, Optional B As WhMth)
 MthDNm = MthNm3(Lin, B).DNm
 End Function
@@ -168,6 +224,18 @@ Function MthKd$(Lin)
 MthKd = TakMthKd(RmvMdy(Lin))
 End Function
 
+Function Rpl$(S, SubStr$, By$, Optional Ith% = 1)
+Dim P&: P = InStrWiIthSubStr(S, SubStr, Ith)
+If P = 0 Then Rpl = S: Exit Function
+Rpl = Replace(S, SubStr, By, P, 1)
+End Function
+Function PoszSubStr(S, SubStr) As Pos
+InStr
+End Function
+Property Get Rel0MthNm2MdNm() As Rel
+Dim O As New Rel
+
+End Property
 Function ModNyzPubMthNm(PubMthNm) As String()
 Dim I, A$
 A = PubMthNm
@@ -182,7 +250,7 @@ End Function
 
 Private Sub Z_MthTy()
 Dim O$(), L
-For Each L In SrcMdNm("Fct")
+For Each L In SrczMdNm("Fct")
     Push O, MthTy(L) & "." & L
 Next
 BrwAy O

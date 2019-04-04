@@ -1,9 +1,11 @@
 Attribute VB_Name = "MIde_Mth_Cml"
 Option Explicit
-Function MthCmlAsetPj(Optional WhStr$) As Aset
-Set MthCmlAsetPj = CmlAset(JnSpc(MthAsetPj(WhStr).Itms))
-End Function
+#Const Sav = True
+Public Const DocOfMthCml$ = "NewType:Sy."
 
+Function MthCmlAsetOfPj(Optional WhStr$) As Aset
+Set MthCmlAsetOfPj = CmlAset(MthNsetOfPj(WhStr).Sy)
+End Function
 
 Function MthCmlFny(NDryCol%) As String()
 MthCmlFny = AyAddAp(SySsl("Mdy Kd Mth"), FnyzPfxN("Seg", NDryCol - 3))
@@ -11,40 +13,28 @@ End Function
 Function MthCmlWs(Optional Vis As Boolean) As Worksheet
 Dim Ws As Worksheet
 Dim Lo As ListObject
-Set Ws = MthCmlWsBase
+Set Ws = MthCmlLinWsBase
 Set Lo = FstLo(Ws)
-AddFml Lo, "Sel", "=IF(ISNA(VLOOKUP([@Seg1],Seg1Er,1,True))),"""",""Err"")"
+AddFml Lo, "Sel", "" ' "=IF(ISNA(VLOOKUP([@Seg1],Seg1Er,1,True))),"""",""Err"")"
 LozAyH Seg1ErNy, WbLo(Lo), "Seg1Er"
 Lo.Application.Visible = Vis
 Set MthCmlWs = Lo.Parent
 End Function
-Function MthCmlWsBase(Optional Vis As Boolean) As Worksheet
+Function MthCmlLinWsBase() As Worksheet
 Dim Dry()
-Dry = DryzSslAy(MthCmlVbe)
-Set MthCmlWsBase = WszDrs(Drs(MthCmlFny(NColzDry(Dry)), Dry), Vis:=Vis)
+Dry = DryzSslAy(MthCmlLyOfVbe)
+Set MthCmlLinWsBase = WszDrs(Drs(MthCmlFny(NColzDry(Dry)), Dry))
 End Function
 
-Sub MthCmlAyVbeBrw()
-Brw FmtAyT3(MthCmlAyVbe)
+Sub BrwMthCmlLyOfVbe()
+Brw FmtAyT3(MthCmlLyOfVbe)
 End Sub
-Function MthCmlVbe() As String()
-MthCmlVbe = MthCmlAyzVbe(CurVbe)
-End Function
-Function MthCmlAyVbe() As String()
-MthCmlAyVbe = MthCmlAyzVbe(CurVbe)
-End Function
-Function MthCmlAyzVbe(A As Vbe) As String()
-Dim L
-For Each L In Itr(MthDNyzVbe(A))
-    PushI MthCmlAyzVbe, MthCml(L)
-Next
+
+Function MthCmlLyOfVbe() As String()
+MthCmlLyOfVbe = MthCmlLyzVbe(CurVbe)
 End Function
 
-Function MthCml$(MthDNm)
-Dim Ay$(): Ay = SplitDot(MthDNm)
-Dim Pub$: If Ay(2) = "" Then Pub = ". " Else Pub = Ay(2) & " "
-Dim Kd$: Kd = Ay(1) & " "
-MthCml = Pub & Kd & Cmlxx(Ay(0))
+Function MthCmlLyzVbe(A As Vbe) As String()
+MthCmlLyzVbe = CmlLy(MthNyzVbe(A))
 End Function
-
 

@@ -1,77 +1,80 @@
 Attribute VB_Name = "MIde_Ty_Mth_ShtTy_Cv"
 Option Explicit
 
-Function MthKdzMthTy$(MthTy$)
+Function MthKdByMthTy$(MthTy)
 Select Case MthTy
-Case "Function", "Sub": MthKdzMthTy = MthTy
-Case "Property Get", "Property Let", "Property Set": MthKdzMthTy = "Property"
+Case "Function", "Sub": MthKdByMthTy = MthTy
+Case "Property Get", "Property Let", "Property Set": MthKdByMthTy = "Property"
 End Select
 End Function
 
-Function IsMthTy(A$) As Boolean
-IsMthTy = HasEle(MthTyAy, A)
+Function IsMthTy(Str$) As Boolean
+IsMthTy = HasEle(MthTyAy, Str)
 End Function
 
 Function IsMthMdy(A$) As Boolean
 IsMthMdy = HasEle(MthMdyAy, A)
 End Function
 
-Function ShtMthMdy$(A)
+Function MthMdyBySht$(ShtMthMdy)
 Dim O$
-Select Case A
-Case "Public": O = "Pub"
-Case "Private": O = "Prv"
-Case "Friend": O = "Frd"
-Case ""
-Case Else: Stop
-End Select
-ShtMthMdy = O
-End Function
-Function MthTySht$(A)
-Dim O$
-Select Case A
-Case "Get": O = "Property Get"
-Case "Set": O = "Property Set"
-Case "Let": O = "Property Let"
-Case "Fun": O = "Function"
-Case "Sub": O = "Sub"
-End Select
-MthTySht = O
-End Function
-
-Function MthMdySht$(A)
-Dim O$
-Select Case A
+Select Case ShtMthMdy
 Case "Pub": O = "Public"
 Case "Prv": O = "Private"
 Case "Frd": O = "Friend"
 Case ""
 Case Else: Stop
 End Select
-MthMdySht = O
+MthMdyBySht = O
 End Function
 
-Function ShtMthTy$(A)
+Function ShtMthMdy$(MthMdy)
 Dim O$
-Select Case A
+Select Case MthMdy
+Case "Public", "": O = "Pub"
+Case "Private": O = "Prv"
+Case "Friend": O = "Frd"
+Case Else: O = "???"
+End Select
+ShtMthMdy = O
+End Function
+
+Function MthTyBySht$(ShtMthTy)
+Dim O$
+Select Case ShtMthTy
+Case "Get": O = "Property Get"
+Case "Set": O = "Property Set"
+Case "Let": O = "Property Let"
+Case "Fun": O = "Function"
+Case "Sub": O = "Sub"
+Case Else: O = "???"
+End Select
+MthTyBySht = O
+End Function
+
+Function ShtMthTy$(MthTy)
+Dim O$
+Select Case MthTy
 Case "Property Get": O = "Get"
 Case "Property Set": O = "Set"
 Case "Property Let": O = "Let"
 Case "Function":     O = "Fun"
 Case "Sub":          O = "Sub"
+Case Else: O = "???"
 End Select
 ShtMthTy = O
 End Function
-Function ShtMthKdShtMthTy$(A)
+Function ShtMthKdByShtMthTy$(ShtMthTy)
 Dim O$
-Select Case A
+Select Case ShtMthTy
 Case "Get": O = "Prp"
 Case "Set": O = "Prp"
 Case "Let": O = "Prp"
 Case "Fun": O = "Fun"
 Case "Sub": O = "Sub"
+Case Else: O = "???"
 End Select
-ShtMthKdShtMthTy = O
+ShtMthKdByShtMthTy = O
 End Function
 
 Function ShtMthKd$(MthKd)
@@ -80,6 +83,7 @@ Select Case MthKd
 Case "Property": O = "Prp"
 Case "Function": O = "Fun"
 Case "Sub":      O = "Sub"
+Case Else: O = "???"
 End Select
 ShtMthKd = O
 End Function

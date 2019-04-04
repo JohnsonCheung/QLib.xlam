@@ -51,8 +51,24 @@ Next
 Thw CSub, "LasLin of Src cannot be end of [_]", "LasLin-Of-Src Src", LasEle(Src), Src
 End Function
 
-Function ContLin$(A$(), Ix)
-ContLin = JnCrLf(AywIxCnt(A, Ix, ContLinCnt(A, Ix)))
+Private Function JnContLin$(ContLy$())
+Dim J%
+For J = 0 To UB(ContLy) - 1
+    If LasChr(ContLy(J)) = "_" Then
+        ContLy(J) = RmvLasChr(ContLy(J))
+    Else
+        Thw CSub, "Given ContLy is not Continue-Ly", "ContLy", ContLy
+    End If
+Next
+JnContLin = Jn(ContLy)
+End Function
+
+Function ContLin$(A$(), Ix, Optional OneLin As Boolean)
+If OneLin Then
+    ContLin = JnContLin(CvSy(AywIxCnt(A, Ix, ContLinCnt(A, Ix))))
+Else
+    ContLin = JnCrLf(AywIxCnt(A, Ix, ContLinCnt(A, Ix)))
+End If
 End Function
 
 Function ContFTIxzSrc(Src$(), Ix) As FTIx

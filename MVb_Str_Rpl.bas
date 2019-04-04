@@ -19,8 +19,15 @@ End Sub
 Private Sub ZZ_RplPfx()
 Ass RplPfx("aaBB", "aa", "xx") = "xxBB"
 End Sub
+Function RmvCr$(A)
+RmvCr = Replace(A, vbCr, "")
+End Function
+
 Function RplCr$(A)
-RplCr = Replace(A, vbCr, "")
+RplCr = Replace(A, vbCr, " ")
+End Function
+Function RplLf$(A)
+RplLf = Replace(A, vbLf, " ")
 End Function
 Function RplVbl$(Vbl)
 RplVbl = RplVbar(Vbl)

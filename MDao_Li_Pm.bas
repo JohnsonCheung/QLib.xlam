@@ -32,7 +32,7 @@ End Property
 Private Property Get Fb() As LiFb()
 Dim L, Fbn$, T$, FF$, Fset As Aset, Bexpr$
 For Each L In Itr(AywRmvT1(A, "FbTbl"))
-    Asg2TRst L, T, FF, Bexpr
+    AsgN2tRst L, T, FF, Bexpr
     PushObj Fb, LiFb(Fbn, T, NsetzNN(FF), Bexpr)
 Next
 End Property
@@ -40,7 +40,7 @@ End Property
 Private Property Get Fx() As LiFx()
 Dim L, Fxn$, Wsn$, T$, Bexpr
 For Each L In Itr(AywRmvT1(A, "WszT"))
-    Asg3TRst L, Fxn, Wsn, T, Bexpr
+    AsgN3tRst L, Fxn, Wsn, T, Bexpr
     PushObj Fx, LiFx(Fxn, Wsn, T, FxcAy(T), Bexpr)
 Next
 End Property

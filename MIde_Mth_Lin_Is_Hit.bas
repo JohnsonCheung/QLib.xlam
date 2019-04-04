@@ -17,7 +17,7 @@ Tst:
     Return
 ZZ:
 Dim L, O$()
-For Each L In SrcMd
+For Each L In CurSrc
     If IsMthLin(CStr(L)) Then
         PushI O, L
     End If
@@ -45,14 +45,14 @@ Case A.Nm = "":
 Case IsNothing(B): HitMthNm3 = True
 Case B.IsEmp:
 Case Not HitNm(A.Nm, B.WhNm)
-Case Not HitShtMdy(A.ShtMdy, B.ShtMdyAy)
+Case Not HitShtMdy(A.ShtMdy, B.ShtMthMdyAy)
 Case Not HitAy(A.ShtKd, B.ShtKdAy)
 Case Else: HitMthNm3 = True
 End Select
 End Function
 
-Function HitShtMdy(ShtMdy$, ShtMdyAy$()) As Boolean
-HitShtMdy = HitAy(IIf(ShtMdy = "", "Pub", ShtMdy), ShtMdyAy)
+Function HitShtMdy(ShtMdy$, ShtMthMdyAy$()) As Boolean
+HitShtMdy = HitAy(IIf(ShtMdy = "", "Pub", ShtMdy), ShtMthMdyAy)
 End Function
 
 Function IsMthLinzPubZ(Lin) As Boolean

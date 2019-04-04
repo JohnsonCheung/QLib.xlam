@@ -54,7 +54,7 @@ Set TermAset = AsetzAy(TermAy(Lin))
 End Function
 
 Function TermItr(NN)
-Asg TermAyzNN(NN), TermItr
+Asg Itr(TermAyzNN(NN)), TermItr
 End Function
 
 Function CvNy(Ny0) As String()
@@ -82,42 +82,29 @@ Dim L$, J%
 L = Lin
 While L <> ""
     J = J + 1: If J > 5000 Then Stop
-    PushNonBlankStr TermAy, ShfTerm(L)
+    PushNonBlankStr TermAy, ShfT1(L)
 Wend
 End Function
-
-Function ShfT$(O)
-ShfT = ShfTerm(O)
-End Function
-
-Function ShfX(O, X$) As Boolean
-If T1(O) = X Then
-    ShfX = True
-    O = RmvT1(O)
+Function ShfTermX(OLin, X$) As Boolean
+If T1(OLin) = X Then
+    ShfTermX = True
+    OLin = RmvT1(OLin)
 End If
 End Function
 
-Private Function ShfTerm1$(O)
-Dim A$
-AsgAp BrkBkt(O, "["), A, ShfTerm1, O
+Function ShfT1$(OLin)
+ShfT1 = T1(OLin)
+OLin = RmvT1(OLin)
 End Function
 
-Function ShfTerm$(O)
-Dim A$
-    A = LTrim(O)
-If FstChr(A) = "[" Then ShfTerm = ShfTerm1(O): Exit Function
-Dim P%
-    P = InStr(A, " ")
-If P = 0 Then
-    ShfTerm = A
-    O = ""
-    Exit Function
-End If
-ShfTerm = Left(A, P - 1)
-O = LTrim(Mid(A, P + 1))
+Function ShfTermDot$(OLin)
+With Brk2Dot(OLin, NoTrim:=True)
+    ShfTermDot = .S1
+    OLin = .S2
+End With
 End Function
 
-Private Sub Z_ShfT()
+Private Sub Z_ShfT1()
 Dim O$, OEpt$
 O = " S   DFKDF SLDF  "
 OEpt = "DFKDF SLDF  "
@@ -131,7 +118,7 @@ GoSub Tst
 '
 Exit Sub
 Tst:
-    Act = ShfT(O)
+    Act = ShfT1(O)
     C
     Ass O = OEpt
     Return
@@ -139,7 +126,7 @@ End Sub
 
 
 Private Sub Z()
-Z_ShfT
+Z_ShfT1
 MVb_Lin_Term:
 End Sub
 

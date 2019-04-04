@@ -1,15 +1,27 @@
 Attribute VB_Name = "MIde_Mth_Chr"
 Option Explicit
-Public Const MthChrLis$ = "!@#$%^&"
+Public Const TyChrLis$ = "!@#$%^&"
 
-Function IsMthChr(A$) As Boolean
+Function IsTyChr(A$) As Boolean
 If Len(A) <> 1 Then Exit Function
-IsMthChr = HasSubStr(MthChrLis, A)
+IsTyChr = HasSubStr(TyChrLis, A)
+End Function
+Function TyChrzTyNm$(TyNm$)
+Select Case TyNm
+Case "String":   TyChrzTyNm = "$"
+Case "Integer":  TyChrzTyNm = "%"
+Case "Long":     TyChrzTyNm = "&"
+Case "Double":   TyChrzTyNm = "#"
+Case "Single":   TyChrzTyNm = "!"
+Case "Currency": TyChrzTyNm = "@"
+Case Else:       TyChrzTyNm = TyNm
+End Select
 End Function
 
-Function ArgTyNmTyChr$(MthChr$)
+Function TyNmzTyChr$(TyChr$)
 Dim O$
-Select Case MthChr
+Select Case TyChr
+Case "": Thw CSub, "TyChr cannot be blank"
 Case "#": O = "Double"
 Case "%": O = "Integer"
 Case "!": O = "Signle"
@@ -17,23 +29,23 @@ Case "@": O = "Currency"
 Case "^": O = "LongLong"
 Case "$": O = "String"
 Case "&": O = "Long"
-Case Else: Stop
+Case Else: Thw CSub, "Invalid TyChr", "TyChr VdtTyChrLis", TyChr, TyChrLis
 End Select
-ArgTyNmTyChr = O
+TyNmzTyChr = O
 End Function
 
-Function RmvMthChr$(A)
-RmvMthChr = RmvChrzSfx(A, MthChrLis)
+Function RmvTyChr$(A)
+RmvTyChr = RmvChrzSfx(A, TyChrLis)
 End Function
 
-Function ShfMthChr$(OLin)
-ShfMthChr = ShfChr(OLin, MthChrLis)
+Function ShfTyChr$(OLin)
+ShfTyChr = ShfChr(OLin, TyChrLis)
 End Function
 
-Function MthChr$(Lin)
-If IsMthLin(Lin) Then MthChr = TakMthChr(RmvMthNm3(Lin))
+Function TyChr$(Lin)
+If IsMthLin(Lin) Then TyChr = TakTyChr(RmvMthNm3(Lin))
 End Function
 
-Function TakMthChr$(S)
-TakMthChr = TakChr(S, MthChrLis)
+Function TakTyChr$(S)
+TakTyChr = TakChr(S, TyChrLis)
 End Function

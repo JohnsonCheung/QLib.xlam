@@ -32,12 +32,14 @@ JnDblCrLf = Jn(A, vbCrLf & vbCrLf)
 End Function
 
 Function JnDotAp$(ParamArray Ap())
-Dim Av(): Av = Ap
-JnDotAp = JnDot(Av)
+Dim Av(): Av = Ap: JnDotAp = JnDot(Av)
+End Function
+Function JnQDot$(Ay) 'JnQDot = QuoteDot . JnDot
+JnQDot = QuoteDot(JnDot(Ay))
 End Function
 
-Function JnDot$(A)
-JnDot = Jn(A, ".")
+Function JnDot$(Ay)
+JnDot = Jn(Ay, ".")
 End Function
 
 Function JnDollar$(A)

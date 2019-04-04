@@ -31,7 +31,7 @@ PushI MsgzLeftOvrAftEvl, "Following lines cannot be further evaluated:"
 For Each I In A
     PushI MsgzLeftOvrAftEvl, vbTab & CvSwBrk(I).Lin
 Next
-PushIAy MsgzLeftOvrAftEvl, DicLblLy(Sw, "Following is the [Sw] after evaluated:")
+PushIAy MsgzLeftOvrAftEvl, FmtDicTit(Sw, "Following is the [Sw] after evaluated:")
 End Function
 
 Private Function MsgzNoNm$(A As SwBrk)

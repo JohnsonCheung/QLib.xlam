@@ -6,7 +6,7 @@ Function Md_MthNmDic(A As CodeModule) As Dictionary
 End Function
 
 Private Sub Z_Src_MthNmDic()
-'BrwDic Src_MthNmDic(SrcMd)
+'BrwDic Src_MthNmDic(CurSrc)
 End Sub
 
 

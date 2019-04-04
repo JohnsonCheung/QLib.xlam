@@ -2,7 +2,7 @@ Attribute VB_Name = "MVb_Ay_AB"
 Option Explicit
 Function JnAyab(A, B, Optional Sep$) As String()
 Dim AA, BB: AA = A: BB = B
-ReszAyabMax AA, BB
+ReSumSiabMax AA, BB
 Dim J&, U&
 U = UB(AA)
 If U = -1 Then Exit Function
@@ -48,9 +48,9 @@ End Function
 Sub AsgAyaReSzMax(A, B, OA, OB)
 OA = A
 OB = B
-ReszAyabMax OA, OB
+ReSumSiabMax OA, OB
 End Sub
-Sub ReszAyabMax(OA, OB)
+Sub ReSumSiabMax(OA, OB)
 Dim U1&, U2&
 U1 = UB(OA)
 U2 = UB(OB)

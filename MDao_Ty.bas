@@ -29,7 +29,7 @@ End Property
 
 Function IsShtTy(A) As Boolean
 Select Case Len(A)
-Case 1, 3: If Not IsAscUCase(Asc(A)) Then Exit Function
+Case 1, 3: If Not IsAscUCas(Asc(A)) Then Exit Function
     IsShtTy = HasSubStr(ShtTyLis, A, IgnCas:=True)
 End Select
 End Function
@@ -184,7 +184,7 @@ End Function
 
 Function IsVdtShtTy(A) As Boolean
 Select Case Len(A)
-Case 1, 3: If Not IsAscUCase(Asc(FstChr(A))) Then Exit Function
+Case 1, 3: If Not IsAscUCas(Asc(FstChr(A))) Then Exit Function
     IsVdtShtTy = HasSubStr(ShtTyLis, A)
 End Select
 End Function

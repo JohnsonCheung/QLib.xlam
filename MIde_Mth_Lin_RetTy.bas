@@ -29,12 +29,6 @@ Private Sub Z_MthRetTy()
 'Ass A.TyChr = ""
 End Sub
 
-Function RetTy$(Lin)
-RetTy = MthRetTy(Lin)
-End Function
 Function MthRetTy$(Lin)
-If IsMthLin(Lin) Then MthRetTy = TakMthRetTy(Lin)
-End Function
-Function TakMthRetTy$(MthLin)
-TakMthRetTy = StrBefOrAll(StrAftBkt(MthLin), "'")
+If IsMthLin(Lin) Then MthRetTy = StrBefOrAll(AftBkt(Lin), "'")
 End Function

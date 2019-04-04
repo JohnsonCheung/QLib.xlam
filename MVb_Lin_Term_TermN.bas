@@ -20,11 +20,11 @@ End Function
 
 Function TermN$(Lin, N%)
 Dim L$, J%
-L = Lin
+L = LTrim(Lin)
 For J = 1 To N - 1
-    ShfTerm L
+    L = RmvT1(L)
 Next
-TermN = ShfTerm(L)
+TermN = TakT1(L)
 End Function
 
 Private Sub Z_TermN()

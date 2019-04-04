@@ -31,7 +31,7 @@ Dim I, NewFld$, Fun$, FmFld$
 For Each I In SySsl(NewFldEqFunQuoteFmFldSsl)
     NewFld = StrBef(I, "=")
     Fun = StrBet(I, "=", "(")
-    FmFld = StrBetBkt(I)
+    FmFld = BetBkt(I)
     FmVy = ColzDrs(A, FmFld)
     NewColVy = AyMap(FmVy, Fun)
     Stop '

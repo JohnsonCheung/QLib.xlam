@@ -28,6 +28,7 @@ End Sub
 Sub ClsWsNoSav(A As Worksheet)
 ClsWbNoSav WbzWs(A)
 End Sub
+
 Property Get CurWs() As Worksheet
 Set CurWs = Xls.ActiveSheet
 End Property
@@ -96,8 +97,9 @@ End Function
 Function SqzWs(A As Worksheet) As Variant()
 SqzWs = RgzWs(A).Value
 End Function
-Function SetWsVis(A As Worksheet, Vis As Boolean) As Worksheet
+Function WsSetVis(A As Worksheet, Vis As Boolean) As Worksheet
 A.Application.Visible = Vis
+Set WsSetVis = A
 End Function
 Function A1Wb(A As Workbook, Optional Wsn$) As Range
 Set A1Wb = A1zWs(WsAdd(A, Wsn))

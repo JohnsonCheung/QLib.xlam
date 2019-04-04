@@ -28,6 +28,13 @@ For Each P In PfxAy
     If HasPfx(Lin, CStr(P)) Then FstElePfx = P: Exit Function
 Next
 End Function
+Function FstEleInAset(Ay, InAset As Aset)
+Dim I
+For Each I In Ay
+    Stop
+    If InAset.Has(I) Then FstEleInAset = I: Exit Function
+Next
+End Function
 
 Function FstElePredPX(A, PX$, P)
 If Si(A) = 0 Then Exit Function
@@ -75,7 +82,7 @@ End Function
 Function FstEleRmvTT$(A, T1$, T2$)
 Dim X, X1$, X2$, Rst$
 For Each X In Itr(A)
-    Asg2TRst X, X1, X2, Rst
+    AsgN2tRst X, X1, X2, Rst
     If X1 = T1 Then
         If X2 = T2 Then
             FstEleRmvTT = X

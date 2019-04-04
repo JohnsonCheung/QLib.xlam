@@ -19,6 +19,12 @@ For Each K In A.Keys
     PushObj S1S2AyzSyDic, S1S2(K, JnCrLf(A(K)))
 Next
 End Function
+Function FmtDicTit(A As Dictionary, Tit$) As String()
+PushI FmtDicTit, Tit
+PushI FmtDicTit, vbTab & "Count=" & A.Count
+PushIAy FmtDicTit, AyAddPfx(FmtDic(A, InclValTy:=True), vbTab)
+End Function
+
 Function FmtDic(A As Dictionary, Optional InclValTy As Boolean, Optional Nm1$ = "Key", Optional Nm2$ = "Val") As String()
 If IsNothing(A) Then Exit Function
 Select Case True

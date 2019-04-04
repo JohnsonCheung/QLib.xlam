@@ -13,17 +13,20 @@ Next
 IsSrtAy = True
 End Function
 
-Function AyQSrt(Ay)
+Function AyQSrt(Ay, Optional IsDes As Boolean)
 If Si(Ay) = 0 Then Exit Function
 Dim O: O = Ay
 AyQSrtLH O, 0, UB(Ay)
-AyQSrt = O
+If IsDes Then
+    AyQSrt = AyReverseI(O)
+Else
+    AyQSrt = O
+End If
 End Function
-
 Sub AyQSrtLH(Ay, L&, H&)
 If L >= H Then Exit Sub
 Dim P&
-P = AyQSrtPartition1(Ay, L, H)
+P = AyQSrtPartition(Ay, L, H)
 AyQSrtLH Ay, L, P
 AyQSrtLH Ay, P + 1, H
 End Sub
@@ -33,6 +36,7 @@ V = OAy(L)
 I = L
 J = H
 Dim Z&
+Z = 0
 Do
     Z = Z + 1
     If Z > 10000 Then Stop
@@ -214,11 +218,11 @@ AySrtInToIxIxAy& = O
 End Function
 
 
-Function DicSrt(A As Dictionary) As Dictionary
+Function DicSrt(A As Dictionary, Optional IsDesc As Boolean) As Dictionary
 If A.Count = 0 Then Set DicSrt = New Dictionary: Exit Function
 Dim K
 Set DicSrt = New Dictionary
-For Each K In AyQSrt(A.Keys)
+For Each K In AyQSrt(A.Keys, IsDesc)
    DicSrt.Add K, A(K)
 Next
 End Function

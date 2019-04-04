@@ -1,7 +1,7 @@
 Attribute VB_Name = "MXls_Lo_Fmt"
 Option Explicit
 Const CMod$ = "MXls_Lo_Fmt."
-Public Const ™Lof$ = "It is Ly with T1 LofT1nn"
+Public Const DocOfLof$ = "It is Ly with T1 LofT1nn"
 Private A As ListObject, B$(), Fny$()
 
 Function FmtLo(Lo As ListObject, Lof$()) As ListObject
@@ -65,7 +65,7 @@ End Sub
 'Bet----------------------------------------------------------
 Private Sub WFmtBet(L)
 Dim Fld$, FmFld$, ToFld$
-    Asg2TRst L, Fld, FmFld, ToFld
+    AsgN2tRst L, Fld, FmFld, ToFld
     Dim IsEr As Boolean
     If Not HasEle(Fny, Fld) Then IsEr = True
     If Not HasEle(Fny, FmFld) Then IsEr = True
@@ -121,7 +121,7 @@ Dim R1 As Range
 Dim R2 As Range
 Set R1 = WHdrCell(Fld)
 Set R2 = CellAbove(R1)
-SwapValzRg R1, R2
+SwapValOfRg R1, R2
 End Sub
 
 'Lvl----------------------------------------------------------

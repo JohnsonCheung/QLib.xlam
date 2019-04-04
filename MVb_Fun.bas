@@ -8,35 +8,26 @@ X = OA
 OA = OB
 OB = X
 End Sub
+
 Sub Asg(Fm, OTo)
-If IsNumeric(Fm) Then
-    If Not IsEmpty(OTo) Then
-        If IsNull(Fm) Then
-            OTo = 0
-        Else
-            OTo = Val(Fm)
-        End If
-        Exit Sub
-    End If
-End If
-If IsObject(Fm) Then
-    Set OTo = Fm
-Else
-    If IsNull(Fm) Then
-        OTo = ""
-    Else
-        OTo = Fm
-    End If
-End If
+Select Case True
+Case IsObject(Fm): Set OTo = Fm
+Case Else: OTo = Fm
+End Select
 End Sub
 
-Function InstrN&(S, SubStr, N%)
+Function InStrWiIthSubStr&(S, SubStr, Optional Ith% = 1)
 Dim P&, J%
-For J = 1 To N
-    P = InStr(P + 1, S, SubStr)
+If Ith < 1 Then Thw CSub, "Ith cannot be <1", "Ith", Ith
+For J = 1 To Ith
+    P = InStr(P + 1, SubStr, SubStr)
     If P = 0 Then Exit Function
 Next
-InstrN = P
+InStrWiIthSubStr = P
+End Function
+
+Function InStrN&(S, SubStr, Optional N% = 1)
+InStrN = InStrWiIthSubStr(S, SubStr, N)
 End Function
 
 Function CvNothing(A)
@@ -44,7 +35,7 @@ If IsEmpty(A) Then Set CvNothing = Nothing: Exit Function
 Set CvNothing = A
 End Function
 
-Private Sub Z_InstrN()
+Private Sub Z_InStrN()
 Dim Act&, Exp&, S, SubStr, N%
 
 '    12345678901234
@@ -52,7 +43,7 @@ S = ".aaaa.aaaa.bbb"
 SubStr = "."
 N = 1
 Exp = 1
-Act = InstrN(S, SubStr, N)
+Act = InStrN(S, SubStr, N)
 Ass Exp = Act
 
 '    12345678901234
@@ -60,7 +51,7 @@ S = ".aaaa.aaaa.bbb"
 SubStr = "."
 N = 2
 Exp = 6
-Act = InstrN(S, SubStr, N)
+Act = InStrN(S, SubStr, N)
 Ass Exp = Act
 
 '    12345678901234
@@ -68,7 +59,7 @@ S = ".aaaa.aaaa.bbb"
 SubStr = "."
 N = 3
 Exp = 11
-Act = InstrN(S, SubStr, N)
+Act = InStrN(S, SubStr, N)
 Ass Exp = Act
 
 '    12345678901234
@@ -76,7 +67,7 @@ S = ".aaaa.aaaa.bbb"
 SubStr = "."
 N = 4
 Exp = 0
-Act = InstrN(S, SubStr, N)
+Act = InStrN(S, SubStr, N)
 Ass Exp = Act
 End Sub
 
@@ -139,21 +130,9 @@ DoEvents
 SendKeys A, True
 End Sub
 
-Function NDig%(Length&)
-Const CSub$ = CMod & "NDig"
-Select Case True
-Case 0 > Length: Thw CSub, "Length cannot <0", "Length", Length
-Case 10 > Length: NDig = 1
-Case 100 > Length: NDig = 2
-Case 1000 > Length: NDig = 3
-Case 10000 > Length: NDig = 4
-Case 100000 > Length: NDig = 5
-Case 1000000 > Length: NDig = 6
-Case 10000000 > Length: NDig = 7
-Case 100000000 > Length: NDig = 8
-Case 1000000000 > Length: NDig = 9
-Case Else: NDig = 10
-End Select
+Function NDig%(N&)
+Dim A$: A = N
+NDig = Len(A)
 End Function
 
 Sub Vc(A, Optional Fnn$)
@@ -171,7 +150,9 @@ Case IsNothing(A): Debug.Print "Nothing"
 Case Else: Stop
 End Select
 End Sub
-
+Function Mch(Re As RegExp, S) As MatchCollection
+Set Mch = Re.Execute(S)
+End Function
 Function RegExp(Patn$, Optional MultiLine As Boolean, Optional IgnoreCase As Boolean, Optional IsGlobal As Boolean) As RegExp
 If Patn = "" Or Patn = "." Then Exit Function
 Dim O As New RegExp
@@ -185,7 +166,7 @@ Set RegExp = O
 End Function
 
 Private Sub Z()
-Z_InstrN
+Z_InStrN
 MVb___Fun:
 End Sub
 

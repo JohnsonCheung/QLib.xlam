@@ -10,7 +10,6 @@ Attribute VB_Exposed = True
 Option Explicit
 Dim X_Nm As WhNm, X_ShtMdy$(), X_ShtKd$()
 Dim X_IsEmp As Boolean
-
 Function Init(ShtMdy$(), ShtKd$(), Nm As WhNm) As WhMth
 Set X_Nm = Nm
 X_ShtMdy = ShtMdy
@@ -31,8 +30,8 @@ Property Get ShtKdAy() As String()
 ShtKdAy = X_ShtKd
 End Property
 
-Property Get ShtMdyAy() As String()
-ShtMdyAy = X_ShtMdy
+Property Get ShtMthMdyAy() As String()
+ShtMthMdyAy = X_ShtMdy
 End Property
 
 Property Get ToStr$()

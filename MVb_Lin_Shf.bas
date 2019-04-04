@@ -1,11 +1,17 @@
 Attribute VB_Name = "MVb_Lin_Shf"
 Option Explicit
-
+Function ShfDotSeg$(OLin$)
+ShfDotSeg = ShfBef(OLin, ".")
+End Function
+Function ShfBef(OLin$, Sep$)
+With Brk2(OLin, Sep, NoTrim:=True)
+    ShfBef = .S1
+    OLin = .S2
+End With
+End Function
 Function ShfBktStr$(OLin$)
-Dim O$
-O = StrBetBkt(OLin): If O = "" Then Exit Function
-ShfBktStr = O
-OLin = StrAftBkt(OLin)
+ShfBktStr = BetBkt(OLin)
+OLin = AftBkt(OLin)
 End Function
 Function RmvChr$(S, ChrLis$) ' Rmv fst chr if it is in ChrLis
 If HasSubStr(ChrLis, FstChr(S)) Then

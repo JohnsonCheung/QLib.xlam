@@ -11,8 +11,8 @@ T = FfnDte(Ffn)
 'Msg CSub, "[Att] is going to import [Ffn] with [Si] and [Tim]", FdVal(A.TRs!AttNm), Ffn, S, T
 With A
     .TRs.Edit
-    With .ARs
-        If HasReczFEv(A.ARs, "FileName", Fn(Ffn)) Then
+    With .Ars
+        If HasReczFEv(A.Ars, "FileName", Fn(Ffn)) Then
             D "Ffn is found in Att and it is replaced"
             .Edit
         Else

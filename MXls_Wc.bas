@@ -47,7 +47,7 @@ End Sub
 Private Function WbzFbOupTbl(Fb) As Workbook
 Dim O As Workbook
 Set O = NewWb
-DoAyABX OupTnyzFb(Fb), "WczWbFb", O, Fb
+DoAyabX OupTnyzFb(Fb), "WczWbFb", O, Fb
 DoItrFun O.Connections, "NewWsC"
 RfhWb O, Fb
 Set WbzFbOupTbl = O

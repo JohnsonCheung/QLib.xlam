@@ -4,12 +4,12 @@ Private Function SrtRpt(Src$()) As String()
 Dim X As Dictionary
 Dim Y As Dictionary
 Set X = MthDic(Src)
-Set Y = MthDic(SrtedSrc(Src))
+Set Y = MthDic(SrcSrt(Src))
 SrtRpt = FmtCmpDic(X, Y, "BefSrt", "AftSrt")
 End Function
 
 Private Sub Z_SrtRpt()
-Brw SrtRpt(SrcMd)
+Brw SrtRpt(CurSrc)
 End Sub
 
 Property Get SrtRptMd() As String()

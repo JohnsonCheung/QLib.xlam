@@ -26,7 +26,6 @@ Next
 End Sub
 
 
-Function IsAllFalsezItrPred_AyPred(A, Pred$) As Boolean
-If Si(A) = 0 Then Exit Function
-IsAllFalsezItrPred_AyPred = IsAllFalsezItrPred(A, Pred)
+Function IsAllFalsezAyPred(Ay, Pred$) As Boolean
+IsAllFalsezAyPred = IsAllFalsezItrPred(Itr(Ay), Pred)
 End Function

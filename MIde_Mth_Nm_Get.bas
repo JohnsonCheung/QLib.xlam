@@ -1,8 +1,52 @@
 Attribute VB_Name = "MIde_Mth_Nm_Get"
 Option Explicit
+Public Const DocOfDta_MthQVNm$ = "It is a String dervied from Nm.  Q for quoted.  V for verb.  It has 3 Patn: NoVerb-[#xxx], MidVerb-[xxx(vvv)xxx], FstVerb-[(vvv)xxx]."
+Public Const DocOfNmRul_FstVerbBeingDo1$ = "The Fun will not return any value"
+Public Const DocOfNmRul_FstVerbBeingDo2$ = "The Cmls aft Do is a verb"
+Sub Z_MthNsetOfVbeWiVerb()
+MthNsetOfVbeWiVerb.Srt.Vc
+End Sub
+Sub Z_DryOf_MthNm_Verb_OfVbe()
+BrwDry DryOf_MthNm_Verb_OfVbe
+End Sub
+Function DryOf_MthNm_Verb_OfVbe() As Variant()
+Dim MthNm, ODry()
+For Each MthNm In Itr(MthNyOfVbe)
+    PushI ODry, Sy(MthNm, Verb(MthNm))
+Next
+DryOf_MthNm_Verb_OfVbe = DrywDist(ODry)
+End Function
+Sub Z_MthNsetOfVbeWoVerb()
+MthNsetOfVbeWoVerb.Srt.Vc
+End Sub
 
-Function MthNset(Optional WhStr$) As Aset
-Set MthNset = AsetzAy(MthNyPj(WhStr))
+Property Get MthNyOfVbeWiVerb() As String()
+Dim MthNm, J&
+For Each MthNm In Itr(MthNyOfVbe)
+'    If HasSubStr(MthNm, "Z_ExprDic") Then Stop
+    If J Mod 100 = 0 Then Debug.Print J
+    If HasVerb(MthNm) Then PushI MthNyOfVbeWiVerb, MthNm
+    J = J + 1
+Next
+End Property
+Property Get MthNyOfVbeWoVerb() As String()
+Dim MthNm
+For Each MthNm In Itr(MthNyOfVbe)
+    If Not HasVerb(MthNm) Then PushI MthNyOfVbeWiVerb, MthNm
+Next
+End Property
+
+Function HasVerb(Nm) As Boolean
+HasVerb = Verb(Nm) <> ""
+End Function
+Property Get MthNsetOfVbeWiVerb() As Aset
+Set MthNsetOfVbeWiVerb = AsetzAy(MthNyOfVbeWiVerb)
+End Property
+Property Get MthNsetOfVbeWoVerb() As Aset
+Set MthNsetOfVbeWoVerb = AsetzAy(MthNyOfVbeWoVerb)
+End Property
+Function MthNsetOfVbe(Optional WhStr$) As Aset
+Set MthNsetOfVbe = AsetzAy(MthNyOfVbe(WhStr))
 End Function
 
 Function MthNyzSrcFm(Src$(), FmMthIxAy&()) As String()
@@ -12,19 +56,20 @@ For Each Ix In Itr(FmMthIxAy)
 Next
 End Function
 
-Function MthNyVbe(Optional WhStr$) As String()
-MthNyVbe = MthNyzVbe(CurVbe, WhStr$)
+Function MthNyOfVbe(Optional WhStr$) As String()
+MthNyOfVbe = MthNyzVbe(CurVbe, WhStr$)
 End Function
 
-Function MthAsetPj(Optional WhStr$) As Aset
-Set MthAsetPj = AsetzAy(MthNyPj(WhStr))
-End Function
-Function MthNyPj(Optional WhStr$) As String()
-MthNyPj = MthNyzPj(CurPj, WhStr$)
+Function MthNsetOfPj(Optional WhStr$) As Aset
+Set MthNsetOfPj = AsetzAy(MthNyOfPj(WhStr))
 End Function
 
-Function MthNyPubVbe(Optional WhStr$) As String()
-MthNyPubVbe = MthNyzVbe(CurVbe, WhStr & " -Pub")
+Function MthNyOfPj(Optional WhStr$) As String()
+MthNyOfPj = MthNyzPj(CurPj, WhStr$)
+End Function
+
+Function MthNyOfPubVbe(Optional WhStr$) As String()
+MthNyOfPubVbe = MthNyzVbe(CurVbe, WhStr & " -Pub")
 End Function
 
 Function MthNyzPj(A As VBProject, Optional WhStr$) As String()
@@ -35,8 +80,8 @@ For Each M In MdItr(A, WhStr)
 Next
 End Function
 
-Function MthQNyVbe(Optional WhStr$) As String()
-MthQNyVbe = MthQNyzVbe(CurVbe, WhStr)
+Function MthQNyOfVbe(Optional WhStr$) As String()
+MthQNyOfVbe = MthQNyzVbe(CurVbe, WhStr)
 End Function
 
 Function MthQNyzVbe(A As Vbe, Optional WhStr$) As String()
@@ -53,14 +98,14 @@ End Function
 Function MthQNmDryzPj(A As VBProject, Optional WhStr$) As Variant()
 Dim QNm
 For Each QNm In Itr(MthQNyzPj(A, WhStr))
-    PushI MthQNmDryzPj, DrzMthQNm(QNm)
+    PushI MthQNmDryzPj, MthQNmDr(QNm)
 Next
 End Function
 
-Function DrzMthQNm(MthQNm) As String()
+Function MthQNmDr(MthQNm) As String()
 Dim O$(): O = SplitDot(MthQNm)
 If Si(O) <> 5 Then Thw CSub, "MthQNm should have 4 dot", "MthQNm", MthQNm
-DrzMthQNm = O
+MthQNmDr = O
 End Function
 
 Function MthQNyzPj(A As VBProject, Optional WhStr$) As String()
@@ -85,8 +130,11 @@ End Function
 Function MthDNyzMdMthNm(Md As CodeModule, MthNm$) As String()
 
 End Function
-Function MthNyFb(Fb) As String()
-MthNyFb = MthNyzVbe(VbePjf(Fb))
+Property Get MMthNyOfVbe() As String()
+MthNyOfVbe
+End Property
+Function MthNyzFb(Fb) As String()
+MthNyzFb = MthNyzVbe(VbePjf(Fb))
 ClsPjf Fb
 End Function
 
@@ -97,7 +145,7 @@ Exit Sub
 X_BrwAll:
     Dim O$(), Fb
 '    For Each Fb In AppFbAy
-        PushAy O, MthNyFb(Fb)
+        PushAy O, MthNyzFb(Fb)
 '    Next
     'Brw O
     Return
@@ -108,7 +156,7 @@ End Sub
 
 
 Private Sub Z_MthNyzSrc()
-Brw MthNyzSrc(SrcMd)
+Brw MthNyzSrc(CurSrc)
 End Sub
 
 Function MthNyzSrc(Src$(), Optional B As WhMth) As String()
@@ -137,7 +185,7 @@ End Function
 
 Private Sub ZZ_MthNyzSrc()
 Dim Act$()
-   Act = MthNyzSrc(SrcMd)
+   Act = MthNyzSrc(CurSrc)
    BrwAy Act
 End Sub
 
@@ -149,10 +197,6 @@ Function MthDNmWszPj(A As VBProject) As Worksheet
 Set MthDNmWszPj = WsVis(WszSq(MthDNmSqzPj(A)))
 End Function
 
-Function MthDNyzMd(A As CodeModule) As String()
-MthDNyzMd = MthDNyzSrc(Src(A))
-End Function
-
 Function MthNyzVbe(A As Vbe, Optional WhStr$) As String()
 Dim I
 For Each I In PjItr(A, WhStr)
@@ -161,7 +205,7 @@ Next
 End Function
 
 Function MthAsetVbe(Optional WhStr$) As Aset
-Set MthAsetVbe = AsetzAy(MthNyVbe(WhStr))
+Set MthAsetVbe = AsetzAy(MthNyOfVbe(WhStr))
 End Function
 
 
@@ -178,29 +222,28 @@ End Sub
 
 
 Private Sub Z_MthDNyzSrc()
-BrwAy MthDNyzSrc(SrcMd)
+BrwAy MthDNyzSrc(CurSrc)
 End Sub
 
-Function MthDNyVbe(Optional WhStr$) As String()
-MthDNyVbe = MthDNyzVbe(CurVbe, WhStr)
+Function MthDNyOfVbe(Optional WhStr$) As String()
+MthDNyOfVbe = MthDNyzVbe(CurVbe, WhStr)
 End Function
 
 Function MthDNyzVbe(A As Vbe, Optional WhStr$) As String()
 Dim P As VBProject
 For Each P In PjItr(A, WhStr)
-    PushIAy MthDNyzVbe, MthDNyPj(P, WhStr)
+    PushIAy MthDNyzVbe, MthDNyzPj(P, WhStr)
 Next
 End Function
 
-Function MthDNyMd(A As CodeModule, Optional WhStr$) As String()
-MthDNyMd = MthDNyzSrc(Src(A), WhStr)
+Function MthDNyzMd(A As CodeModule, Optional WhStr$) As String()
+MthDNyzMd = MthDNyzSrc(Src(A), WhMthzStr(WhStr))
 End Function
-
 Function MthDNyzSrc(Src$(), Optional WhStr$) As String()
-Dim L
+Dim L, B As WhMth
+Set B = WhMthzStr(WhStr)
 For Each L In Itr(Src)
-    PushNonBlankStr MthDNyzSrc, MthDNmzLin(L)
+    PushNonBlankStr MthDNyzSrc, MthDNm(L, B)
 Next
 End Function
-
 

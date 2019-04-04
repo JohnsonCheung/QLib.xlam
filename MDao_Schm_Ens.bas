@@ -2,6 +2,7 @@ Attribute VB_Name = "MDao_Schm_Ens"
 Option Explicit
 
 Sub EnsSchm(A As Database, Schm$())
+Stop
 ThwErMsg ErzSchm(Schm), CSub, "there is error in the Schm"
 'AppDbTdAy A, TdAy(Smt, AywRmvT1(Schm, CCF), AywRmvT1(Schm, CCE))
 'RunSqy A, SqyCrtPk_Tny(PkTnySmt(Smt))

@@ -221,7 +221,7 @@ End Sub
 Function FdzFdStr(FdStr) As Dao.Field2
 Dim Fld$, TyStr$, Req As Boolean, AlwZLen As Boolean, Dft$, VTxt$, VRul$, TxtSz As Byte, Expr$
 Dim L$: L = FdStr
-Dim Vy(): Vy = VyzLinLbl(L, EleLblss)
+Dim Vy(): Vy = ShfVy(L, EleLblss)
 AsgAp Vy, _
     Fld, TyStr, Req, AlwZLen, Dft, VTxt, VRul, TxtSz, Expr
 Set FdzFdStr = Fd( _

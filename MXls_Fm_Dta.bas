@@ -9,19 +9,19 @@ Function LozDrs(Drs As Drs, At As Range, Optional LoNm$) As ListObject
 Set LozDrs = LozRg(RgzDrs(Drs, At), LoNm)
 End Function
 
-Function WszAy(Ay, Optional Wsn$ = "Sheet1") As Worksheet
+Function WSumSi(Ay, Optional Wsn$ = "Sheet1") As Worksheet
 Dim O As Worksheet, R As Range
 Set O = NewWs(Wsn)
 O.Range("A1").Value = "Array"
 Set R = RgzSq(SqzAyV(Ay), O.Range("A2"))
 LozRg RgzMoreTop(R)
-Set WszAy = O
+Set WSumSi = O
 End Function
 
 Function WszDrs(Drs As Drs, Optional Wsn$ = "Sheet1", Optional Vis As Boolean) As Worksheet
 Dim O As Worksheet: Set O = NewWs(Wsn)
 LozDrs Drs, O.Range("A1")
-Set WszDrs = SetWsVis(O, Vis)
+Set WszDrs = WsSetVis(O, Vis)
 End Function
 
 Function RgzAyV(Ay, At As Range) As Range

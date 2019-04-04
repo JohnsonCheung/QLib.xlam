@@ -2,7 +2,7 @@ Attribute VB_Name = "MIde_Mth_Ix"
 Option Explicit
 Private Sub Z_MthIxAy()
 Dim Ix, Src$()
-Src = SrcMd
+Src = CurSrc
 For Each Ix In MthIxItr(Src)
     If MthKd(Src(Ix)) <> "" Then
         Debug.Print Ix; Src(Ix)

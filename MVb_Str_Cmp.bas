@@ -22,7 +22,7 @@ Dim O$(), J&, MinU&
     
     MinU = Min(UB(AA), UB(BB))
     For J = 0 To MinU
-        PushIAy O, LyCmpAB(AA(J), BB(J), J)
+        PushIAy O, LyzCmpStr(AA(J), BB(J), J)
     Next
     PushIAy O, LyRest(AA, BB, MinU, N1, N2)
     PushIAy O, LyAll(AA, N1)
@@ -32,12 +32,12 @@ End Function
 Private Function LyAll(A$(), Nm$) As String()
 
 End Function
-Private Function LyCmpAB(A$, B$, Ix&) As String()
-If A = B Then PushI LyCmpAB, Ix & ":" & A: Exit Function
-PushI LyCmpAB, Ix & ":" & A & "<" & Len(A)
+Private Function LyzCmpStr(A$, B$, Ix&) As String()
+If A = B Then PushI LyzCmpStr, Ix & ":" & A: Exit Function
+PushI LyzCmpStr, Ix & ":" & A & "<" & Len(A)
 Dim W%
 W = Len(CStr(Ix)) + 1
-PushI LyCmpAB, Space(W) & B & "<" & Len(B)
+PushI LyzCmpStr, Space(W) & B & "<" & Len(B)
 End Function
 Private Function LyRest(A$(), B$(), MinU&, Nm1$, Nm2$) As String()
 Dim Ay$(), Nm$

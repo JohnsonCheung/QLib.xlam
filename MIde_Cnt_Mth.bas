@@ -12,6 +12,7 @@ End Function
 Function NMthMd%()
 NMthMd = NMthzMd(CurMd)
 End Function
+
 Function NMthzPj%(Pj As VBProject)
 Dim O%, C As VBComponent
 For Each C In Pj.VBComponents
@@ -20,18 +21,35 @@ Next
 NMthzPj = O
 End Function
 
-Function MthCmlPj() As Aset
-Set MthCmlPj = MthCmlzPj(CurPj)
+Function MthDotCmlNyOfVbe(Optional WhStr$) As String()
+MthDotCmlNyOfVbe = MthDotCmlNyzVbe(CurVbe, WhStr)
+End Function
+Private Function MthDotCmlNyzVbe(A As Vbe, Optional WhStr$) As String()
+Dim MthNm
+For Each MthNm In MthNyzVbe(A, WhStr)
+    PushI MthDotCmlNyzVbe, DotCml(MthNm)
+Next
+End Function
+Function MthCmlGpAsetOfVbe(Optional WhStr$) As Aset
+Set MthCmlGpAsetOfVbe = MthCmlGpAsetzVbe(CurVbe, WhStr)
 End Function
 
-Function MthCmlzPj(A As VBProject) As Aset
-Set MthCmlzPj = CmlAset(JnSpc(MthNyzPj(A)))
+Function MthCmlGpAsetzVbe(A As Vbe, Optional WhStr$) As Aset
+Dim MthNm
+Set MthCmlGpAsetzVbe = New Aset
+For Each MthNm In Itr(MthNyzVbe(A, WhStr))
+    MthCmlGpAsetzVbe.PushAy CmlGpAy(MthNm)
+Next
+End Function
+
+Function MthCmlAsetzPj(A As VBProject, Optional WhStr$) As Aset
+Set MthCmlAsetzPj = CmlAset(MthNyzPj(A))
 End Function
 
 Function MthCnt(A As CodeModule) As MthCnt
 Dim NPubSub%, NPubFun%, NPubPrp%, NPrvSub%, NPrvFun%, NPrvPrp%, NFrdSub%, NFrdFun%, NFrdPrp%
 Dim MthLin
-For Each MthLin In Itr(MthLinAyzMd(A))
+For Each MthLin In Itr(MthLinAyzSrc(Src(A)))
     With MthNm3(MthLin)
         Select Case True
         Case .IsPub And .IsSub: NPubSub = NPubSub + 1

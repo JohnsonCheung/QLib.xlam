@@ -18,11 +18,8 @@ If A.Row <> 1 Then Exit Function
 If A.Column <> 1 Then Exit Function
 IsA1 = True
 End Function
-Function RgAdr$(A As Range)
-RgAdr = "'" & WszRg(A).Name & "'!" & A.Address
-End Function
-Function AdrRg$(A As Range)
-AdrRg = RgAdr(A)
+Function WsRgAdr$(A As Range)
+WsRgAdr = "'" & WszRg(A).Name & "'!" & A.Address
 End Function
 
 Sub AsgRRRCCRg(A As Range, OR1, OR2, OC1, OC2)
@@ -181,7 +178,7 @@ Function CellBelow(Cell As Range, Optional N = 1) As Range
 Set CellBelow = RgRC(Cell, 1 + N, 1)
 End Function
 
-Sub SwapValzRg(Cell1 As Range, Cell2 As Range)
+Sub SwapValOfRg(Cell1 As Range, Cell2 As Range)
 Dim A: A = RgRC(Cell1, 1, 1).Value
 RgRC(Cell1, 1, 1).Value = RgRC(Cell2, 1, 1).Value
 RgRC(Cell2, 1, 1).Value = A

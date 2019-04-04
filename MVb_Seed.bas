@@ -1,26 +1,29 @@
 Attribute VB_Name = "MVb_Seed"
 Option Explicit
 
-Function SeedExpand$(VblQQStr, Ny0)
+Function Expand$(Seed$, Ny0)
 'Seed is a VblQQ-String
 Dim A$, J%, O$()
 Dim Ny$()
 Ny = NyzNN(Ny0)
+A = RplVbl(Seed)
 For J = 0 To UB(Ny)
-    Push O, Replace(VblQQStr, "?", Ny(J))
+    Push O, Replace(A, "?", Ny(J))
 Next
-'SeedExpand = LineszVbl(Lines(O))
+Expand = JnCrLf(O)
 End Function
 
-Private Sub Z_SeedExpand()
-Dim VblQQStr, Ny0
+Private Sub Z_Expand()
+Dim VblQQStr$, Ny0
 '
 VblQQStr = "Sub Tst?()|Dim A As New ?: A.Tst|End Sub"
 Ny0 = "Xws Xwb Xfx Xrg"
 GoSub Tst
 Exit Sub
 Tst:
-    Act = SeedExpand(VblQQStr, Ny0)
+    Act = Expand(VblQQStr, Ny0)
+    Debug.Print Act
+    Stop
     C
     Debug.Print Act
     Stop
@@ -28,6 +31,6 @@ Tst:
 End Sub
 
 Private Sub Z()
-Z_SeedExpand
+Z_Expand
 MVb__Seed:
 End Sub

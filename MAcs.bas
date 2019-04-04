@@ -27,9 +27,9 @@ Sub SavRec()
 DoCmd.RunCommand acCmdSaveRecord
 End Sub
 
-Function AcsFb$(A As Access.Application)
+Function FbzAcs$(A As Access.Application)
 On Error Resume Next
-AcsFb = A.CurrentDb.Name
+FbzAcs = A.CurrentDb.Name
 End Function
 
 Sub ClsDbzAcs(A As Access.Application)
@@ -59,10 +59,6 @@ For Each T In A.CodeData.AllTables
     A.DoCmd.Close acTable, T.Name
 Next
 End Sub
-
-Function FbzAcs$(A As Access.Application)
-FbzAcs = AcsFb(A)
-End Function
 
 Sub QuitzA(A As Access.Application)
 ClsDbzAcs A

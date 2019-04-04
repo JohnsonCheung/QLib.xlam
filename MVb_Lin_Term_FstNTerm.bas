@@ -16,6 +16,6 @@ Function FstNTerm(Lin, N%) As String()
 Dim J%, L$
 L = Lin
 For J = 1 To N
-    PushI FstNTerm, ShfT(L)
+    PushI FstNTerm, ShfT1(L)
 Next
 End Function

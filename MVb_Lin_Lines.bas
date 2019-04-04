@@ -7,7 +7,7 @@ End Function
 Function CntSzStr$(Cnt&, Si&)
 CntSzStr = FmtQQ("CntSzStr(? ?)", Cnt, Si)
 End Function
-Private Sub Z_LinesWrap()
+Private Sub Z_LinesWrp()
 Dim A$, W%
 A = "lksjf lksdj flksdjf lskdjf lskdjf lksdjf lksdjf klsdjf klj skldfj lskdjf klsdjf klsdfj klsdfj lskdfj  sdlkfj lsdkfj lsdkjf klsdfj lskdjf lskdjf kldsfj lskdjf sdklf sdklfj dsfj "
 W = 80
@@ -17,50 +17,68 @@ Ept = Sy("lksjf lksdj flksdjf lskdjf lskdjf lksdjf lksdjf klsdjf klj skldfj lskd
 GoSub Tst
 Exit Sub
 Tst:
-    Act = LinesWrap(A, W)
+    Act = LinesWrp(A, W)
     C
     Return
 End Sub
-Function LinesWrap$(Lines, Optional Wdt% = 80)
-LinesWrap = Lines: Exit Function
-LinesWrap = JnCrLf(LyWrap(SplitCrLf(Lines), Wdt))
+Function LinesWrp$(Lines, Optional Wdt% = 80)
+LinesWrp = Lines: Exit Function
+LinesWrp = JnCrLf(LyWrp(SplitCrLf(Lines), Wdt))
 End Function
+Sub Z_LyWrp()
+Dim Ly$(), Wdt%
+GoSub T1
+Exit Sub
+T1:
+    Ly = Sy("a b c d")
+    Wdt = 80
+    Ept = Sy("a b c d")
+    GoTo Tst
+Tst:
+    Act = LyWrp(Ly, Wdt)
+    C
+    Return
+End Sub
 
-Function LyWrap(Ly$(), Optional Wdt% = 80) As String()
-Const CSub$ = CMod & "LinesWrap"
-Dim L$(), W%, J%, A$
+Function LyWrp(Ly$(), Optional Wdt% = 80) As String()
+Const CSub$ = CMod & "LinesWrp"
+Dim L$(), W%, J%, A$, Lin
 W = Wdt
 If W < 10 Then W = 10: Inf CSub, "Given Wdt is too small, 10 is used", "Wdt Ly", Wdt, Ly
 L = Ly
-While Si(L) > 0
-    J = J + 1: If J >= 1000 Then Stop
-    PushI LyWrap, ShfWrapLin(L, W)
-Wend
+For Each Lin In Itr(Ly)
+    PushIAy LyWrp, LyzLinWrp(Lin, W)
+Next
 End Function
 
-Private Function ShfWrapLin$(OLy$(), W%)
-Exit Function
-Dim O$, L$
-    If FstChr(O) = " " Then
-        O = LTrim(O)
-    Else
-        If LasChr(L) <> " " Then
-            Dim P%
-            P = InStrRev(L, " ")
-            If P = 0 Then
-                O = ""
-            Else
-                O = Mid(L, P + 1) & O
-                L = Left(L, P - 1)
-            End If
-        End If
-    End If
-
+Private Function LyzLinWrp(Lin, W%) As String()
+If Len(Lin) > W Then LyzLinWrp = Sy(Lin): Exit Function
+Dim L$: L = RTrim(Lin)
+Dim O$(), A$, LasA$, FstL$, NoMore As Boolean, J%
+Do
+    J = J + 1: If J > 1000 Then ThwLoopingTooMuch CSub
+    A = RTrim(Left(L, W))
+    L = Mid(L, W + 1)
+    LasA = LasChr(A)
+    FstL = FstChr(L)
+    NoMore = L = ""
+    Select Case True
+    Case NoMore: PushI LyzLinWrp, RTrim(A): Exit Function
+    Case LasA = " " And FstL = " ": PushI LyzLinWrp, RTrim(A): L = LTrim(L)
+    Case LasA = " ":                PushI LyzLinWrp, RTrim(A)
+    Case FstL = " ":                PushI LyzLinWrp, A: L = LTrim(L)
+    Case Else:
+        Dim P%: P = InStrRev(A, " ")
+        If P = 0 Then PushI LyzLinWrp, A: Exit Function
+        PushI LyzLinWrp, Left(A, P - 1)
+        L = LTrim(Mid(A, P + 1)) & L
+    End Select
+Loop
 End Function
 
-Private Sub ZZ_TrimRCrLf()
+Private Sub ZZ_TrimCrLfAtEnd()
 Dim Lines$: Lines = LineszVbl("lksdf|lsdfj|||")
-Dim Act$: Act = TrimRCrLf(Lines)
+Dim Act$: Act = TrimCrLfAtEnd(Lines)
 Debug.Print Act & "<"
 Stop
 End Sub
@@ -73,8 +91,23 @@ Next
 A = Join(Ay, vbCrLf)
 Debug.Print LasNLines(A, 3)
 End Sub
+
 Function FstLin$(Lines)
-FstLin = RplCr(StrBefOrAll(Lines, vbLf))
+FstLin = StrBefOrAll(Lines, vbCrLf)
+End Function
+
+Function LinesRmvBlankLinAtEnd$(Lines)
+Dim J%, O$
+O = Lines
+Do
+    J = J + 1: If J = 1000 Then ThwLoopingTooMuch CSub
+    If HasSfx(O, vbCrLf) Then
+        O = RmvSfx(O, vbCrLf)
+    Else
+        LinesRmvBlankLinAtEnd = O
+        Exit Function
+    End If
+Loop
 End Function
 Function LinesApp$(A, L)
 If A = "" Then LinesApp = L: Exit Function
@@ -104,9 +137,9 @@ For Each L In SplitCrLf(A)
 Next
 End Sub
 
-Private Sub Z_TrimRCrLf()
+Private Sub Z_TrimCrLfAtEnd()
 Dim Lines$: Lines = LineszVbl("lksdf|lsdfj|||")
-Dim Act$: Act = TrimRCrLf(Lines)
+Dim Act$: Act = TrimCrLfAtEnd(Lines)
 Debug.Print Act & "<"
 Stop
 End Sub
@@ -128,7 +161,7 @@ VSqLines = SqzAyV(SplitCrLf(Lines))
 End Function
 
 Function TrimR$(S)
-TrimR = TrimRCrLf(RTrim(S))
+TrimR = TrimCrLfAtEnd(RTrim(S))
 End Function
 
 Function RLenOfCrLf%(S)
@@ -145,8 +178,8 @@ End Function
 Function IsCrLf(Asc%)
 IsCrLf = Asc = 13 Or Asc = 10
 End Function
-Function TrimRCrLf$(S)
-TrimRCrLf = RmvLasNChr(S, RLenOfCrLf(S))
+Function TrimCrLfAtEnd$(S)
+TrimCrLfAtEnd = RmvLasNChr(S, RLenOfCrLf(S))
 End Function
 
 Function LasLinLines$(Lines)

@@ -102,6 +102,11 @@ Function WcStrAyWbOLE(A As Workbook) As String()
 WcStrAyWbOLE = SyzOyPrp(OleWcAy(A), "Connection")
 End Function
 
+'
+'
+'
+
+'
 Function WszWb(A As Workbook, Wsn) As Worksheet
 Set WszWb = A.Sheets(Wsn)
 End Function

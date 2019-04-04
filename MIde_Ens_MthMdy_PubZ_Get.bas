@@ -1,16 +1,16 @@
 Attribute VB_Name = "MIde_Ens_MthMdy_PubZ_Get"
 Option Explicit
 Private Const Ns$ = ""
-Sub BrwMdNyzWthPubZ()
-Brw MdNyzWthPubZ, "MdNyzWthPubZ"
+Sub BrwMdNyzWiPubZ()
+Brw MdNyzWiPubZ, "MdNyzWiPubZ"
 End Sub
-Function MdNyzWthPubZ() As String()
-MdNyzWthPubZ = MdNyzWthPubZPj(CurPj)
+Function MdNyzWiPubZ() As String()
+MdNyzWiPubZ = MdNyzWiPubZPj(CurPj)
 End Function
-Function MdNyzWthPubZPj(A As VBProject) As String()
+Function MdNyzWiPubZPj(A As VBProject) As String()
 Dim C As VBComponent
 For Each C In A.VBComponents
-    If IsWthPubZMd(C.CodeModule) Then PushI MdNyzWthPubZPj, C.Name
+    If IsWiPubZMd(C.CodeModule) Then PushI MdNyzWiPubZPj, C.Name
 Next
 End Function
 
@@ -31,10 +31,10 @@ For Each C In A.VBComponents
     PushIAy MthLinAyzPubZInPj, MthLinAyzPubZInMd(C.CodeModule)
 Next
 End Function
-Function IsWthPubZMd(A As CodeModule) As Boolean
+Function IsWiPubZMd(A As CodeModule) As Boolean
 Dim MthLin
 For Each MthLin In Itr(MthLinAyzSrc(Src(A)))
-    If IsMthLinzPubZ(MthLin) Then IsWthPubZMd = True: Exit Function
+    If IsMthLinzPubZ(MthLin) Then IsWiPubZMd = True: Exit Function
 Next
 End Function
 

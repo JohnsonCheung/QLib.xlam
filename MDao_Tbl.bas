@@ -1,9 +1,9 @@
 Attribute VB_Name = "MDao_Tbl"
 Option Explicit
 Const C_SkNm$ = "SecondaryKey"
-Public Const ™ShtTyscf$ = "Short-Type-Si-Colon-FldNm:Sht.Ty.s.c.f: It is for one field optionally square bracket quoted if FldNm has space" & _
+Public Const DocOfShtTyscf$ = "Short-Type-Si-Colon-FldNm:Sht.Ty.s.c.f: It is for one field optionally square bracket quoted if FldNm has space" & _
 "|It is format of [ShtTys][FldNm]"
-Public Const ™ShtTys$ = ""
+Public Const DocOfShtTys$ = ""
 Const ShtTyBql$ = "Short-Type-Si-Colon-FldNm-Bql:Sht.Ty.s.c.f.Bql: It is a [Bql] with each field is a [ShtTyscf]"
 Function Fny(A As Database, T, Optional NoReOpn As Boolean) As String()
 Fny = Itn(ReOpnDb(A, NoReOpn).TableDefs(T).Fields)
@@ -137,11 +137,11 @@ NColzT = A.TableDefs(T).Fields.Count
 End Function
 
 Function NReczDbtBexpr&(A As Database, T, Bexpr$)
-NReczDbtBexpr = ValzQ(A, FmtQQ("Select Count(*) from [?]?", T, SqpWh(Bexpr)))
+NReczDbtBexpr = ValOfQ(A, FmtQQ("Select Count(*) from [?]?", T, SqpWh(Bexpr)))
 End Function
 
 Function PkFnyzTd(A As Dao.TableDef) As String()
-PkFnyzTd = FnyzIdx(PkIdxzTd(A))
+PkFnyzTd = FnyzIdx(NewPkIdxd(A))
 End Function
 
 Function PkFny(A As Database, T) As String()
@@ -152,12 +152,12 @@ Function PkIdxNm$(A As Database, T)
 PkIdxNm = ObjNm(PkIdx(A, T))
 End Function
 
-Function PkIdxzTd(A As Dao.TableDef) As Dao.Index
-Set PkIdxzTd = FstItn(A.Indexes, C_PkNm)
+Function NewPkIdxd(A As Dao.TableDef) As Dao.Index
+Set NewPkIdxd = FstItn(A.Indexes, C_PkNm)
 End Function
 
 Function PkIdx(A As Database, T) As Dao.Index
-Set PkIdx = PkIdxzTd(A.TableDefs(T))
+Set PkIdx = NewPkIdxd(A.TableDefs(T))
 End Function
 
 Function RszTFF(A As Database, T, FF) As Dao.Recordset
@@ -234,7 +234,7 @@ Sub AddFd(A As Database, T, Fd As Dao.Fields)
 A.TableDefs(T).Fields.Append Fd
 End Sub
 
-Sub AddFldz(A As Database, T, F, Ty As DataTypeEnum, Optional Si%, Optional Precious%)
+Sub AddFld(A As Database, T, F, Ty As DataTypeEnum, Optional Si%, Optional Precious%)
 If HasFld(A, T, F) Then Exit Sub
 Dim S$, SqlTy$
 SqlTy = SqlTyzDao(Ty, Si, Precious)
@@ -246,7 +246,7 @@ Sub RenTbl(A As Database, T, ToNm)
 A.TableDefs(T).Name = ToNm
 End Sub
 
-Sub RenTblzAddPfxDbt(A As Database, T, Pfx)
+Sub RenTblzAddPfx(A As Database, T, Pfx)
 RenTbl A, T, Pfx & T
 End Sub
 
@@ -262,18 +262,18 @@ Function IsHidTbl(A As Database, T) As Boolean
 IsHidTbl = (A.TableDefs(T).Attributes And Dao.TableDefAttributeEnum.dbHiddenObject) <> 0
 End Function
 
-Function LnkInf(A As Database) As String()
+Function Lnkinf(A As Database) As String()
 Dim T
 For Each T In Tni(A)
-    PushI LnkInf, LnkInfzT(A, T)
+    PushI Lnkinf, LnkinfzT(A, T)
 Next
 End Function
 
-Function LnkInfzT$(A As Database, T)
+Function LnkinfzT$(A As Database, T)
 Dim O$, LnkFx$, LnkW$, LnkFb$, LnkT$
 Select Case True
-Case IsLnkzFx(A, T): LnkInfzT = FmtQQ("LnkFx(?).LnkWs(?).Tbl(?).Db(?)", DtaSrc(A, T), SrcTn(A, T), T, DbNm(A))
-Case IsLnkzFb(A, T): LnkInfzT = FmtQQ("LnkFb(?).LnkTbl(?).Tbl(?).Db(?)", DtaSrc(A, T), SrcTn(A, T), T, DbNm(A))
+Case IsLnkzFx(A, T): LnkinfzT = FmtQQ("LnkFx(?).LnkWs(?).Tbl(?).Db(?)", DtaSrc(A, T), SrcTn(A, T), T, DbNm(A))
+Case IsLnkzFb(A, T): LnkinfzT = FmtQQ("LnkFb(?).LnkTbl(?).Tbl(?).Db(?)", DtaSrc(A, T), SrcTn(A, T), T, DbNm(A))
 End Select
 End Function
 
@@ -470,7 +470,7 @@ Dim Tar$, LisFld$
     Tar = T & "_Jn_" & JnFld
     LisFld = JnFld & "_Jn"
 RunQ A, SqlSel_FF_Into_Fm_WhFalse(KK, Tar, T)
-AddFldz A, T, LisFld, dbMemo
+AddFld A, T, LisFld, dbMemo
 InsTblzDry A, T, DryzJnFldKK(DryzT(A, T), KK, FldIx(A, T, JnFld))
 End Sub
 
@@ -546,7 +546,7 @@ End Function
 
 Function NxtId&(Db As Database, T)
 Dim S$: S = FmtQQ("select Max(?Id) from [?]", T, T)
-NxtId = ValzQ(Db, S) + 1
+NxtId = ValOfQ(Db, S) + 1
 End Function
 
 Function DaoTyzTF(A As Database, T, F) As Dao.DataTypeEnum
@@ -565,8 +565,8 @@ Sub AddFldzExpr(Db As Database, T, F, Expr$, Ty As Dao.DataTypeEnum)
 Db.TableDefs(T).Fields.Append Fd(F, Ty, Expr:=Expr)
 End Sub
 
-Function ValzTFRecId(Db As Database, T, F, RecId&) ' K is Pk value
-ValzTFRecId = ValzQ(Db, SqlSel_FF_Fm(T, F, BexprRecId(T, RecId)))
+Function ValOfTFRecId(Db As Database, T, F, RecId&) ' K is Pk value
+ValOfTFRecId = ValOfQ(Db, SqlSel_FF_Fm(T, F, BexprRecId(T, RecId)))
 End Function
 
 Sub CrtTblzEmpClone(Db As Database, T, FmTbl)
@@ -621,22 +621,22 @@ Dim O As Dao.Database
 Dim XX
 End Sub
 
-Function ValzArs(A As ADODB.Recordset)
+Function ValOfArs(A As ADODB.Recordset)
 If NoReczAdo(A) Then Exit Function
 Dim V: V = A.Fields(0).Value
 If IsNull(V) Then Exit Function
-ValzArs = V
+ValOfArs = V
 End Function
 
-Function ValzCnq(A As ADODB.Connection, Q)
-ValzCnq = ValzArs(A.Execute(Q))
+Function ValOfCnq(A As ADODB.Connection, Q)
+ValOfCnq = ValOfArs(A.Execute(Q))
 End Function
 
 Function NReczFxw&(Fx, Wsn, Optional Bexpr$)
-NReczFxw = ValzCnq(CnzFx(Fx), SqlSelCnt_T(CatT(Wsn), Bexpr))
+NReczFxw = ValOfCnq(CnzFx(Fx), SqlSelCnt_T(CatT(Wsn), Bexpr))
 End Function
 Function NReczT&(A As Database, T, Optional Bexpr$)
-NReczT = ValzQ(A, SqlSelCnt_T(T, Bexpr))
+NReczT = ValOfQ(A, SqlSelCnt_T(T, Bexpr))
 End Function
 
 Property Get LofVblPrp$(A As Database, T)

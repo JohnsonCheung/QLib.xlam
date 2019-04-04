@@ -47,7 +47,7 @@ End Sub
 Function SetCmpNm(A As VBComponent, Nm, Optional Fun$ = "SetCmpNm") As VBComponent
 Dim Pj As VBProject
 Set Pj = PjzCmp(A)
-If HasCmpz(Pj, Nm) Then
+If HasCmpzPj(Pj, Nm) Then
     Thw Fun, "Cmp already Has", "Cmp Has-in-Pj", Nm, Pj.Name
 End If
 If Pj.Name = Nm Then

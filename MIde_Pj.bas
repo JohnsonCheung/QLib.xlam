@@ -13,7 +13,7 @@ Set CvPj = I
 End Function
 
 Function IsPjNm(A) As Boolean
-IsPjNm = HasEle(PjNy, A)
+IsPjNm = HasEle(PjNyOfVbe, A)
 End Function
 
 Function Pj(PjNm) As VBProject

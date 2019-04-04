@@ -1,12 +1,12 @@
 Attribute VB_Name = "MDao_Att_Op_Exp"
 Option Explicit
 Const CMod$ = "MDao_Att_Op_Exp."
-Public Const ™TblAtt$ = ""
-Public Const ™Att$ = "Attachment:It a Key-string of Table-Att in a database.  It can retrieve a record from Table-Att."
+Public Const DocOfTblAtt$ = ""
+Public Const DocOfAtt$ = "Attachment:It a Key-string of Table-Att in a database.  It can retrieve a record from Table-Att."
 Private Function ExpAttzAttd$(A As Attd, ToFfn) 'Export the only File in {Attds} {ToFfn}
 Const CSub$ = CMod & "ExpAttzAttd"
 Dim Fn$, T$, F2 As Dao.Field2
-With A.ARs
+With A.Ars
     If Ext(!Filename) <> Ext(ToFfn) Then Thw CSub, "The Ext in the Att should be same", "Att-Ext ToFfn-Ext", Ext(!Filename), Ext(ToFfn)
     Set F2 = !FileData
 End With
@@ -55,7 +55,7 @@ ExpAttzFn = ToFfn
 End Function
 Private Function AttFd2(A As Database, Att, AttFn) As Dao.Field2
 With Attd(A, Att)
-    With .ARs
+    With .Ars
         .MoveFirst
         While Not .EOF
             If !Filename = AttFn Then

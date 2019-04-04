@@ -7,6 +7,14 @@ For Each I In Ay
     If ObjPtr(I) = OPtr Then HasObj = True: Exit Function
 Next
 End Function
+Function HasDup(Ay) As Boolean
+Dim S As New Dictionary
+Dim I
+For Each I In Ay
+    If S.Exists(I) Then HasDup = True: Exit Function
+    S.Add I, Empty
+Next
+End Function
 
 Function HasEle(Ay, Ele) As Boolean
 Dim I

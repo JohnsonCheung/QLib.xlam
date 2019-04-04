@@ -19,7 +19,7 @@ Public Const LofT1nnzMul$ = "Lo Ali Bdr Tot Wdt Fmt Lvl Cor                " ' M
 'LoNm_Mis        [Lo-Nm] line is missing
 'LoNm_Dup        Lno#{Lno&} is [Lo-Nm] which is duplicated and ignored due to there is already a [Lo-Nm] in Lno#{AlreadyInLno&}
 'Tot_DupSel      Lno#{Lno&} is [Tot-{TotKd$}] line having Fldss({Fldss$}) selecting SelFld({SelFld$}) which is already selected by Lno#{AlreadyInLno&} of [Tot-{AlreadyTotKd$}].  The SelFld is ignored.
-'Bet_3Fld        Lno#{Lno&} is [Bet] line.  It should have 3 fields, but now it has (?) fields of [?]"
+'Bet_N3Fld        Lno#{Lno&} is [Bet] line.  It should have 3 fields, but now it has (?) fields of [?]"
 'Bet_EqFmTo      Lno#{Lno&} is [Bet] line and ignored due to FmFld(?) and ToFld(?) are equal.
 'Bet_FldSeq      Lno#{Lno&} is [Bet] line and ignored due to Fld(?), FmFld(?) and ToFld(?) are not in order.  See order the Fld, FmFld and ToFld in [Fny-Value]"
 'GenErMsg-Src-End.
@@ -37,7 +37,7 @@ Private Const M_LoNm$ = "Lno#{Lno&} is [Lo-Nm] line having value({Val$}) which i
 Private Const M_LoNm_Mis$ = "[Lo-Nm] line is missing"
 Private Const M_LoNm_Dup$ = "Lno#{Lno&} is [Lo-Nm] which is duplicated and ignored due to there is already a [Lo-Nm] in Lno#{AlreadyInLno&}"
 Private Const M_Tot_DupSel$ = "Lno#{Lno&} is [Tot-{TotKd$}] line having Fldss({Fldss$}) selecting SelFld({SelFld$}) which is already selected by Lno#{AlreadyInLno&} of [Tot-{AlreadyTotKd$}].  The SelFld is ignored."
-Private Const M_Bet_3Fld$ = "Lno#{Lno&} is [Bet] line.  It should have 3 fields, but now it has (?) fields of [?]"""
+Private Const M_Bet_N3Fld$ = "Lno#{Lno&} is [Bet] line.  It should have 3 fields, but now it has (?) fields of [?]"""
 Private Const M_Bet_EqFmTo$ = "Lno#{Lno&} is [Bet] line and ignored due to FmFld(?) and ToFld(?) are equal."
 Private Const M_Bet_FldSeq$ = "Lno#{Lno&} is [Bet] line and ignored due to Fld(?), FmFld(?) and ToFld(?) are not in order.  See order the Fld, FmFld and ToFld in [Fny-Value]"""
 Private Function MsgVal_FmlNotBegWithEq$(Lno&, Fml$)
@@ -56,10 +56,10 @@ ErzLof = SyAddAp( _
     ErFml, ErLbl, ErTit, ErBet)
 End Function
 Function FnywLikssAy(Fny$(), LikssAy$()) As String()
-Dim F, LikAy$()
-LikAy = TermAsetzTLinAy(LikssAy).Sy
+Dim F, LikeAy$()
+LikeAy = TermAsetzTLinAy(LikssAy).Sy
 For Each F In Itr(Fny)
-    If HitLikAy(F, LikAy) Then PushI FnywLikssAy, F
+    If HitLikAy(F, LikeAy) Then PushI FnywLikssAy, F
 Next
 End Function
 Private Sub Init(Lof$(), Fny$())
@@ -183,7 +183,7 @@ Private Property Get ErFml__InsideFmlHasInvalidFld() As String()
 Dim I, A$, Fld$, Fml$, O$(), T1
 For Each I In Itr(WLnxAyzT1("Fml"))
     With CvLnx(I)
-        Asg2TRst .Lin, A, Fld, Fml
+        AsgN2tRst .Lin, A, Fld, Fml
         If FstChr(Fml) <> "=" Then
             'PushI O, WMsg_Fml_FstChr(.Lno)
         Else
@@ -252,22 +252,22 @@ End Property
 Private Property Get ErVal() As String() 'W-Error-of-LofLinVal:W means working-value. _
 which is using the some Module-Lvl-variables and it is private. _
 Val here means the LofValFld of LofLin
-ErVal = SyAddAp(ErValzNotNum, ErValzNotInLis, ErValzFml, ErValzNotBet)
+ErVal = SyAddAp(ErValOfNotNum, ErValOfNotInLis, ErValOfFml, ErValOfNotBet)
 End Property
-Private Function ErValzFml() As String()
+Private Function ErValOfFml() As String()
 
 End Function
-Private Function ErValzNotBet() As String()
-PushIAy ErValzNotBet, ErValzNotBetz("Wdt", 10, 200)
-PushIAy ErValzNotBet, ErValzNotBetz("Lvl", 2, 9)
+Private Function ErValOfNotBet() As String()
+PushIAy ErValOfNotBet, ErValOfNotBetz("Wdt", 10, 200)
+PushIAy ErValOfNotBet, ErValOfNotBetz("Lvl", 2, 9)
 End Function
-Private Function ErValzNotBetz(T1, FmNumVal, ToNumval) As String()
+Private Function ErValOfNotBetz(T1, FmNumVal, ToNumval) As String()
 'Dim Lnx(): Lnx = A_T1ToLnxAyDic(T1)
 End Function
-Private Function ErValzNotInLis() As String()
+Private Function ErValOfNotInLis() As String()
 
 End Function
-Private Function ErValzNotNum() As String()
+Private Function ErValOfNotNum() As String()
 Dim T
 For Each T In SySsl("Wdt Lvl")
 Next
@@ -333,7 +333,7 @@ Private Function MsgOf_LoNm(Lno&, Val$) As String():                            
 Private Function MsgOf_LoNm_Mis() As String():                                                              MsgOf_LoNm_Mis = FmtMacro(M_LoNm_Mis):                                                            End Function
 Private Function MsgOf_LoNm_Dup(Lno&, AlreadyInLno&) As String():                                           MsgOf_LoNm_Dup = FmtMacro(M_LoNm_Dup, Lno, AlreadyInLno):                                         End Function
 Private Function MsgOf_Tot_DupSel(Lno&, TotKd$, Fldss$, SelFld$, AlreadyInLno&, AlreadyTotKd$) As String(): MsgOf_Tot_DupSel = FmtMacro(M_Tot_DupSel, Lno, TotKd, Fldss, SelFld, AlreadyInLno, AlreadyTotKd): End Function
-Private Function MsgOf_Bet_3Fld(Lno&) As String():                                                          MsgOf_Bet_3Fld = FmtMacro(M_Bet_3Fld, Lno):                                                       End Function
+Private Function MsgOf_Bet_N3Fld(Lno&) As String():                                                          MsgOf_Bet_N3Fld = FmtMacro(M_Bet_N3Fld, Lno):                                                       End Function
 Private Function MsgOf_Bet_EqFmTo(Lno&) As String():                                                        MsgOf_Bet_EqFmTo = FmtMacro(M_Bet_EqFmTo, Lno):                                                   End Function
 Private Function MsgOf_Bet_FldSeq(Lno&) As String():                                                        MsgOf_Bet_FldSeq = FmtMacro(M_Bet_FldSeq, Lno):                                                   End Function
 

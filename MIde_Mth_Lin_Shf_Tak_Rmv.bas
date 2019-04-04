@@ -15,11 +15,9 @@ Sub ShfMthTyAsg(A, OMthTy, ORst$)
 AsgAp ShfMthTy(A), OMthTy, ORst
 End Sub
 
-Function ShfAs(A) As Variant()
-Dim L$
-L = LTrim(A)
-If Left(L, 3) = "As " Then ShfAs = Array(True, LTrim(Mid(L, 4))): Exit Function
-ShfAs = Array(False, A)
+Function ShfTermAftAs$(OLin)
+If Not ShfTermX(OLin, "As") Then Exit Function
+ShfTermAftAs = ShfT1(OLin)
 End Function
 Function ShfShtMthMdy$(OLin)
 ShfShtMthMdy = ShtMthMdy(ShfMthMdy(OLin))
@@ -28,7 +26,7 @@ Function ShfShtMthTy$(OLin)
 ShfShtMthTy = ShtMthTy(ShfMthTy(OLin))
 End Function
 Function ShfShtMthKd$(OLin)
-ShfShtMthKd = ShtMthKdShtMthTy(ShtMthTy(ShfMthTy(OLin)))
+ShfShtMthKd = ShtMthKdByShtMthTy(ShtMthTy(ShfMthTy(OLin)))
 End Function
 
 Function ShfMthMdy$(OLin)

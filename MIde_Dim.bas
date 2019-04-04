@@ -10,7 +10,7 @@ IsDimItmzAs = True
 End Function
 
 Function DimNmzSht$(DimShtItm)
-DimNmzSht = RmvChrzSfx(RmvSfxzBkt(DimShtItm), MthChrLis)
+DimNmzSht = RmvChrzSfx(RmvSfxzBkt(DimShtItm), TyChrLis)
 End Function
 
 Function DimNmzAs$(DimAsItm)
@@ -34,12 +34,12 @@ End Function
 
 Function IsDimItmzSht(DimItm) As Boolean
 If HasSpc(DimItm) Then Exit Function
-IsDimItmzSht = IsNm(RmvMthChr(RmvSfxzBkt(DimItm)))
+IsDimItmzSht = IsNm(RmvTyChr(RmvSfxzBkt(DimItm)))
 End Function
 
 Function DimItmAy(Lin) As String()
 Dim L$: L = Lin
-If Not ShfX(L, "Dim ") Then Exit Function
+If Not ShfPfx(L, "Dim ") Then Exit Function
 DimItmAy = SplitCommaSpc(L)
 End Function
 

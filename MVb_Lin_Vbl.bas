@@ -15,7 +15,7 @@ For Each I In Itr(A)
 Next
 End Function
 
-Private Sub Z_DryzblLy()
+Private Sub Z_DryzVblLy()
 Dim VblLy$()
 Push VblLy, "1 | 2 | 3"
 Push VblLy, "4 | 5 6 |"
@@ -40,6 +40,6 @@ DmpDry DryzVblLy(VblLy)
 End Sub
 
 Private Sub Z()
-Z_DryzblLy
+Z_DryzVblLy
 MVb_Lin_Vbl:
 End Sub

@@ -2,7 +2,7 @@ Attribute VB_Name = "MIde_Mth_Nm_Drs_Dup"
 Option Explicit
 
 Function DupMthDrsPj() As Drs
-Set DupMthDrsPj = DrsSrt(DupMthDrszPj(CurPj))
+Set DupMthDrsPj = DupMthDrszPj(CurPj)
 End Function
 
 Private Function DupMthDrszPj(A As VBProject) As Drs
@@ -11,9 +11,8 @@ Dim C As Drs: Set C = DrswDup(B, "MthNm")
 Dim D As Drs: Set D = DrseDup(C, "MthNm Md") '<==
 Dim E As Drs: Set E = AddColzMthLines(D)
 Dim F As Drs: Set F = AddColzValIdzCntzDrs(E, "MthLines")
-Set DupMthDrszPj = F
+Set DupMthDrszPj = DrsSrt(F)
 End Function
-
 
 Private Function AddColzMthLines(MthNmDrs As Drs) As Drs
 Dim A():  A = DrsSel(MthNmDrs, "Md MthNm Ty").Dry
@@ -28,6 +27,6 @@ For Each Dr In Itr(Dry)
     Set M = Md(Dr(0))
     MthNm = Dr(1)
     ShtMthTy = Dr(2)
-    PushI MthLinesAyzDry_Md_MthNm_ShtMthTy, MthLineszMdNmTy(M, MthNm, ShtMthTy, WithTopRmk:=True)
+    PushI MthLinesAyzDry_Md_MthNm_ShtMthTy, MthLineszMdNmTy(M, MthNm, ShtMthTy, WiTopRmk:=True)
 Next
 End Function

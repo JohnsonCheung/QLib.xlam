@@ -1,5 +1,12 @@
 Attribute VB_Name = "MVb_Itr"
 Option Explicit
+Function ObjVyzItr(Itr) As Variant()
+Dim Obj
+For Each Obj In Itr
+    PushI ObjVyzItr, Obj.Value
+Next
+End Function
+
 Function AvzItr(Itr) As Variant()
 AvzItr = IntozItr(Array(), Itr)
 End Function
@@ -175,12 +182,6 @@ For Each Obj In Itr
     PushI SyPrp, ObjPrp(Obj, P)
 Next
 End Function
-Function VyzItr(Itr) As Variant()
-Dim Obj
-For Each Obj In Itr
-    PushI VyzItr, Obj.Value
-Next
-End Function
 Function NyzOy(Oy) As String()
 NyzOy = Itn(Itr(Oy))
 End Function
@@ -199,9 +200,9 @@ Next
 IsAllFalsezItrPred = True
 End Function
 
-Function IsAllTruezItrPred(A, Pred$) As Boolean
+Function IsAllTruezItrPred(Itr, Pred$) As Boolean
 Dim I
-For Each I In A
+For Each I In Itr
     If Not Run(Pred, I) Then Exit Function
 Next
 IsAllTruezItrPred = True
@@ -214,15 +215,14 @@ For Each I In Itr
 Next
 End Function
 
-Function IsSomeTruezItrPred(Itr, Pred$) As Boolean
+Function IsSomTruezItrPred(Itr, Pred$) As Boolean
 Dim I
 For Each I In Itr
-    If Run(Pred, I) Then IsSomeTruezItrPred = True: Exit Function
+    If Run(Pred, I) Then IsSomTruezItrPred = True: Exit Function
 Next
 End Function
 Function SyzItrPrp(Itr, P) As String()
-Stop
-SyzItrPrp = IntozItrPrp(Itr, P, EmpSy)
+SyzItrPrp = IntozItrPrp(EmpSy, Itr, P)
 End Function
 
 Function AvzItrPrp(Itr, P) As Variant()
@@ -237,6 +237,7 @@ For Each I In Itr
     End If
 Next
 End Function
+
 Function IntozItrPEv(Into, Itr, P, Ev)
 IntozItrPEv = AyCln(Into)
 Dim Obj
@@ -316,7 +317,6 @@ Itn A
 IsAllFalsezItrPred A, B
 IsAllTruezItrPred A, B
 IsSomFalsezItrPred A, B
-IsSomeTruezItrPred A, B
 ItrwPrpTrue A, A
 End Sub
 

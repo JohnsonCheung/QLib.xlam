@@ -23,7 +23,7 @@ Sub EnsTblzUSysRegInf(A As Database)
 If HasTbl(A, "USysRegInf") Then CrtTblzUSysRegInf A
 End Sub
 
-Sub InstallAddIn(A As Database, Fb$, Optional AutoFunNm$ = "AutoExec")
+Sub InstallAddin(A As Database, Fb$, Optional AutoFunNm$ = "AutoExec")
 Dim Sk$: Sk = "HKEY_CURRENT_ACCESS_PROFILE\Menu Add-Ins\&NameOfYourAdd-inHere"
 Dim Fba$: Fba = ""
 Dim FunNm$

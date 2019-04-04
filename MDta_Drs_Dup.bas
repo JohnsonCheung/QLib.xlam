@@ -21,7 +21,8 @@ RowIxAyzDupzDrs = RowIxAyzDupzDry(Dry)
 End Function
 
 Private Function RowIxAyzDupzDry(Dry()) As Long()
-Dim DupD(): DupD = DryzDup(Dry)
+Stop
+Dim DupD(): DupD = DrywDup(Dry)
 Dim Dr, Ix&, O&()
 For Each Dr In Dry
     If HasDr(DupD, Dr) Then PushI O, Ix
@@ -30,35 +31,45 @@ Next
 If Si(O) < Si(DupD) * 2 Then Stop
 RowIxAyzDupzDry = O
 End Function
-Private Function DryzDup(Dry()) As Variant()
+
+Function DrywDup(Dry()) As Variant()
 If Si(Dry) = 0 Then Exit Function
 Dim Dr
-For Each Dr In GpCntDry(Dry)
+For Each Dr In DryGpCnt(Dry)
     If Dr(0) > 1 Then
-        PushI DryzDup, AyeFstEle(Dr)
+        PushI DrywDup, AyeFstEle(Dr)
     End If
 Next
 End Function
-Function GpCntDry(Dry()) As Variant()
-#If True Then
-    GpCntDry = GpCntDryzSlow(Dry)
-#Else
-    GpCntDry = GpCntDryzQuick(Dry)
-#End If
-End Function
-Private Function GpCntDryzQuick(Dry()) As Variant()
+Function DrywDist(Dry()) As Variant()
+If Si(Dry) = 0 Then Exit Function
+Dim Dr
+For Each Dr In DryGpCnt(Dry)
+    PushI DrywDist, Dr
+Next
 End Function
 
-Private Function GpCntDryzSlow(Dry()) As Variant()
+Function DryGpCnt(Dry()) As Variant()
+#If True Then
+    DryGpCnt = DryGpCntzSlow(Dry)
+#Else
+    DryGpCnt = DryGpCntzQuick(Dry)
+#End If
+End Function
+
+Private Function DryGpCntzQuick(Dry()) As Variant()
+End Function
+
+Private Function DryGpCntzSlow(Dry()) As Variant()
 If Si(Dry) = 0 Then Exit Function
 Dim OKeyDry(), OCnt&(), Dr
     Dim LasIx&: LasIx = Si(Dry(0))
     Dim J&
     For Each Dr In Dry
+        If J Mod 500 = 0 Then Debug.Print "DryGpCntzSlow"
         If J Mod 50 = 0 Then Debug.Print J;
-        If J Mod 500 = 0 Then Debug.Print
         J = J + 1
-        With IxzDryDr(OKeyDry, Dr)
+        With IxOptzDryDr(OKeyDry, Dr)
             Select Case .Som
             Case True: OCnt(.Lng) = OCnt(.Lng) + 1
             Case Else: PushI OKeyDry, Dr: PushI OCnt, 1
@@ -67,14 +78,14 @@ Dim OKeyDry(), OCnt&(), Dr
     Next
     If Si(OKeyDry) <> Si(OCnt) Then Thw CSub, "Si Diff", "OKeyDry-Si OCnt-Si", Si(OKeyDry), Si(OCnt)
 For J = 0 To UB(OCnt)
-    PushI GpCntDryzSlow, AyAdd(Array(OCnt(J)), OKeyDry(J)) '<===========
+    PushI DryGpCntzSlow, AyAdd(Array(OCnt(J)), OKeyDry(J)) '<===========
 Next
 End Function
 
-Private Function IxzDryDr(Dry(), Dr) As LngRslt
+Private Function IxOptzDryDr(Dry(), Dr) As LngRslt
 Dim IDr, Ix&
 For Each IDr In Itr(Dry)
-    If IsEqAy(IDr, Dr) Then IxzDryDr = LngRslt(Ix): Exit Function
+    If IsEqAy(IDr, Dr) Then IxOptzDryDr = LngRslt(Ix): Exit Function
     Ix = Ix + 1
 Next
 End Function

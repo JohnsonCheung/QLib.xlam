@@ -21,7 +21,7 @@ Function S1S2AyAyab(A, B, Optional NoTrim As Boolean) As S1S2()
 ThwDifSz A, B, CSub
 Dim U&, O() As S1S2
 U = UB(A)
-ReszAyU O, U
+ReSumSiU O, U
 Dim J&
 For J = 0 To UB(A)
     Set O(J) = S1S2(A(J), B(J), NoTrim)
@@ -63,12 +63,12 @@ Function S1S2Lin$(A As S1S2, Optional Sep$ = " ", Optional W1%)
 S1S2Lin = AlignL(A.S1, W1) & Sep & A.S2
 End Function
 
-Function S1S2AyAddAsLy(A() As S1S2, Optional Sep$ = "") As String()
+Function JnS1S2Ay(A() As S1S2, Optional Sep$ = "") As String()
 Dim O$(), J&
 For J = 0 To UB(A)
    Push O, A(J).S1 & Sep & A(J).S2
 Next
-S1S2AyAddAsLy = O
+JnS1S2Ay = O
 End Function
 
 Sub BrwS1S2Ay(A() As S1S2)
@@ -138,7 +138,7 @@ End Function
 Function S1S2AyzAySep(Ay, Sep$, Optional NoTrim As Boolean) As S1S2()
 Dim O() As S1S2, J%
 Dim U&: U = UB(Ay)
-ReszAyU O, U
+ReSumSiU O, U
 For J = 0 To U
     Set O(J) = Brk1(Ay(J), Sep, NoTrim)
 Next

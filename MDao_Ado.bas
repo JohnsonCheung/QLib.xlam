@@ -63,7 +63,7 @@ Function DrsCnq(A As ADODB.Connection, Q) As Drs
 Set DrsCnq = DrsArs(ArsCnq(A, Q))
 End Function
 Function DrsFbqAdo(A$, Q$) As Drs
-Set DrsFbqAdo = DrsArs(ARsFbq(A, Q))
+Set DrsFbqAdo = DrsArs(ArszFbq(A, Q))
 End Function
 
 Private Sub Z_DrsFbqAdo()
@@ -72,8 +72,8 @@ Const Q$ = "Select * from Permit"
 BrwDrs DrsFbqAdo(Fb, Q)
 End Sub
 
-Function ARsFbq(Fb$, Q$) As ADODB.Recordset
-Set ARsFbq = CnzFb(Fb).Execute(Q)
+Function ArszFbq(Fb$, Q$) As ADODB.Recordset
+Set ArszFbq = CnzFb(Fb).Execute(Q)
 End Function
 
 Function DrsArs(A As ADODB.Recordset) As Drs
@@ -99,8 +99,8 @@ Function FnyzArs(A As ADODB.Recordset) As String()
 FnyzArs = FnyzAfds(A.Fields)
 End Function
 
-Function IntAyzARs(A As ADODB.Recordset, Optional Col = 0) As Integer()
-IntAyzARs = IntoColzArs(A, EmpIntAy, Col)
+Function IntAyzArs(A As ADODB.Recordset, Optional Col = 0) As Integer()
+IntAyzArs = IntoColzArs(A, EmpIntAy, Col)
 End Function
 
 Private Function HasCatT(A As Catalog, T) As Boolean

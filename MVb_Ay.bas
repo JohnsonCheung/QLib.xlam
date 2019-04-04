@@ -202,6 +202,9 @@ If IsStr(Str_or_Sy) Then ItrzStr = Sy(Str_or_Sy): Exit Function
 If IsSy(Str_or_Sy) Then Asg Itr(Str_or_Sy), ItrzStr: Exit Function
 Thw CSub, "Str_or_Sy should be Str or Sy", "TypeName(Str_or_sy)", TypeName(Str_or_Sy)
 End Function
+Function LinItr(Lines)
+Asg Itr(SplitCrLf(Lines)), LinItr
+End Function
 Function Itr(A)
 If Si(A) = 0 Then Set Itr = New Collection Else Itr = A
 End Function
@@ -214,18 +217,19 @@ For Each I In A
 Next
 AyRTrim = O
 End Function
-Sub ReszAyN(OAy, N)
-ReszAyU OAy, N - 1
+Sub ReSumSiN(OAy, N)
+ReSumSiU OAy, N - 1
 End Sub
 
 Sub Resz(OAy, U)
-ReszAyU OAy, U
+ReSumSiU OAy, U
 End Sub
 
-Sub ReszAyU(OAy, U)
+Sub ReSumSiU(OAy, U)
 If U < 0 Then Erase OAy: Exit Sub
 ReDim OAy(U)
 End Sub
+
 Function AyReverse(A)
 Dim O: O = A
 Dim J&, U&
@@ -257,7 +261,7 @@ OyReverse = O
 End Function
 
 Function AyRplMid(Ay, B As FTIx, ByAy)
-Dim M As AyABC: Set M = AyABCzFTIx(Ay, B)
+Dim M As AyABC: Set M = AyabCzFTIx(Ay, B)
 AyRplMid = AyAddAp(M.A, ByAy, M.C)
 End Function
 
@@ -268,8 +272,8 @@ For Each X In Itr(A)
 Next
 End Function
 
-Function AyRpl_T1(A$(), T1$) As String()
-AyRpl_T1 = AyAddPfx(AyRmvT1(A), T1 & " ")
+Function AyRplT1(A$(), T1$) As String()
+AyRplT1 = AyAddPfx(AyRmvT1(A), T1 & " ")
 End Function
 
 Function AySampLin$(A)
@@ -382,7 +386,7 @@ Dim U2&: U2 = UB(A2)
 Dim U&: U = Max(U1, U2)
 Dim O()
     Dim J&
-    ReszAyU O, U
+    ReSumSiU O, U
     For J = 0 To U
         If U1 >= J Then
             If U2 >= J Then
@@ -421,7 +425,7 @@ Dim URowAy&()
 
 Dim ODry()
     Dim Dr()
-    ReszAyU ODry, URow
+    ReSumSiU ODry, URow
     Dim I%
     For J = 0 To URow
         Erase Dr
@@ -453,9 +457,9 @@ Dim SelIxAy&()
 SubDrFnySel = AywIxAy(Dr, SelIxAy)
 End Function
 
-Private Sub ZZZ_AyABCzFT()
+Private Sub ZZZ_AyabCzFT()
 Dim A(): A = Array(1, 2, 3, 4)
-Dim Act As AyABC: Act = AyABCzFT(A, 1, 2)
+Dim Act As AyABC: Act = AyabCzFT(A, 1, 2)
 Ass IsEqAy(Act.A, Array(1))
 Ass IsEqAy(Act.B, Array(2, 3))
 Ass IsEqAy(Act.C, Array(4))
@@ -529,10 +533,10 @@ Private Sub Z_ChkEqAy()
 DmpAy ChkEqAy(Array(1, 2, 3, 3, 4), Array(1, 2, 3, 4, 4))
 End Sub
 
-Private Sub Z_AyABCzFTIxIx()
+Private Sub Z_AyabCzFTIxIx()
 Dim A(): A = Array(1, 2, 3, 4)
 Dim M As FTIx: M = FTIx(1, 2)
-Dim Act As AyABC: Act = AyABCzFTIx(A, M)
+Dim Act As AyABC: Act = AyabCzFTIx(A, M)
 Ass IsEqAy(Act.A, Array(1))
 Ass IsEqAy(Act.B, Array(2, 3))
 Ass IsEqAy(Act.C, Array(4))
@@ -639,7 +643,7 @@ End Function
 Private Sub Z()
 Z_ChkAyDup
 Z_AyFlat
-Z_AyABCzFTIxIx
+Z_AyabCzFTIxIx
 Z_HasEleDupEle
 Z_ChkEqAy
 Z_AyMinus
@@ -669,10 +673,12 @@ Pfx = AyShf(Ay)
 SyPfxSsl = AyAddPfx(Ay, Pfx)
 End Function
 
+Function StrItrzSsl(Ssl)
+Asg Itr(SySsl(Ssl)), StrItrzSsl
+End Function
 Function SySsl(S) As String()
 SySsl = SplitSpc(Trim(RplDblSpc(S)))
 End Function
-
 
 Function IntSeq(N&, Optional IsFmOne As Boolean) As Integer()
 Dim O%(): ReDim O(N - 1)

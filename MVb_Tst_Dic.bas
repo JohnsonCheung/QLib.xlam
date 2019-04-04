@@ -1,6 +1,6 @@
 Attribute VB_Name = "MVb_Tst_Dic"
 Option Explicit
-Private Sub Can_a_Dic_with_Ayzal_be_PUSHED()
+Private Sub Can_A_AyDic_To_Be_Pushed()
 Dim A As Dictionary, Act, V
 GoSub T1
 Exit Sub

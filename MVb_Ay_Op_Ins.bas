@@ -3,7 +3,7 @@ Option Explicit
 
 Function AyInsVVAt(A, V1, V2, Optional At&)
 Dim O: O = A
-'AyRgzReszCnt O, At, 2
+'AyReszCnt O, At, 2
 Asg V1, O(At)
 Asg V2, O(At + 1)
 AyInsVVAt = O
@@ -37,14 +37,14 @@ End Function
 Function AyInsAyAt(A, B, At&)
 Dim O, NB&, J&
 NB = Si(B)
-O = AyRgzResz(A, At, NB)
+O = AyResz(A, At, NB)
 For J = 0 To NB - 1
     Asg B(J), O(At + J)
 Next
 AyInsAyAt = O
 End Function
 
-Private Function AyRgzResz(Ay, At&, Optional Cnt = 1)
+Private Function AyResz(Ay, At&, Optional Cnt = 1)
 Dim J&, F&, T&, U&, O, NewU&
 U = UB(Ay)
 NewU = U + Cnt
@@ -57,10 +57,10 @@ For J& = At To U
     F = T - Cnt
     Asg Ay(F), O(T)
 Next
-AyRgzResz = O
+AyResz = O
 End Function
 
-Private Sub Z_AyRgzResz()
+Private Sub Z_AyResz()
 Dim Ay(), At&, Cnt&
 Ay = Array(1, 2, 3)
 At = 1
@@ -68,12 +68,12 @@ Cnt = 3
 Ept = Array(1, Empty, Empty, Empty, 2, 3)
 Exit Sub
 Tst:
-'    Act = AyRgzReszCnt(Ay, At, Cnt)
+'    Act = AyReszCnt(Ay, At, Cnt)
     C
     Return
 End Sub
 
 Private Sub Z()
-Z_AyRgzResz
+Z_AyResz
 MVb_AyIns:
 End Sub

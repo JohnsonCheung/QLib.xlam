@@ -48,7 +48,7 @@ Next
 Set PjMdy = A
 End Function
 
-Sub Z_SrcMdy()
+Private Sub Z_SrcMdy()
 Dim Mdy() As ActLin
 GoSub ZZ2
 Exit Sub
@@ -67,7 +67,7 @@ Tst:
     Return
 
 End Sub
-Sub Z_FmtEnsCSubzMd()
+Private Sub Z_FmtEnsCSubzMd()
 Dim Md As CodeModule
 'GoSub ZZ1
 GoSub ZZ2

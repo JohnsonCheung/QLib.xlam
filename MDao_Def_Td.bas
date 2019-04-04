@@ -5,20 +5,19 @@ Function CvTd(A) As Dao.TableDef
 Set CvTd = A
 End Function
 
-Function TdAppFdy(A As TableDef, Fdy() As Dao.Field2) As Dao.TableDef
+Sub AddFdy(A As TableDef, Fdy() As Dao.Field2)
 Dim I
 For Each I In Fdy
     A.Fields.Append I
 Next
-Set TdAppFdy = A
-End Function
+End Sub
 
 Sub AddFldzId(A As Dao.TableDef)
 A.Fields.Append FdzId(A.Name)
 End Sub
 
 Sub AddFldzLng(A As Dao.TableDef, FF)
-TdAppFdy A, Fdy(FF, dbLong)
+AddFdy A, Fdy(FF, dbLong)
 End Sub
 
 Sub AddFldzTimstmp(A As Dao.TableDef, F$)
@@ -105,9 +104,6 @@ AddFldzTxt B, A, E, F
 FnyzTd B
 IsEqTd B, B
 ThwIfNETd B, B
-End Sub
-
-Private Sub Z()
 End Sub
 
 Function IsSysTd(A As Dao.TableDef) As Boolean

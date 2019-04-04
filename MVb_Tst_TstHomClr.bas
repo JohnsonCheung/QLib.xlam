@@ -1,7 +1,7 @@
 Attribute VB_Name = "MVb_Tst_TstHomClr"
 Option Explicit
 
-Sub TstHomClr() ' Rmv-Empty-Pth Rmk-Pth-As-At
+Sub ClsTstHom() ' Rmv-Empty-Pth Rmk-Pth-As-At
 RmvEmpPthR TstHom
 Ren_PthPj_AsAt
 Ren_MdPth_AsAt

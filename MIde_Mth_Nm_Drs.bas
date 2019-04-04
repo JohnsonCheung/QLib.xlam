@@ -2,7 +2,7 @@ Attribute VB_Name = "MIde_Mth_Nm_Drs"
 Option Explicit
 
 Function MthNmCmlSetVbe(Optional WhStr$) As Aset
-Set MthNmCmlSetVbe = CmlSetzNy(MthNyVbe(WhStr))
+Set MthNmCmlSetVbe = CmlSetzNy(MthNyOfVbe(WhStr))
 End Function
 Function MthNmDrsVbe(Optional WhStr$) As Drs
 Set MthNmDrsVbe = MthNmDrszVbe(CurVbe, WhStr)
@@ -29,7 +29,7 @@ Set MthNmDrszPj = Drs(MthNmFny, MthNmDryzPj(A, WhStr))
 End Function
 
 Private Function MthNmDryzMd(M As CodeModule, Optional B As WhMth) As Variant()
-MthNmDryzMd = DryAddColz3C(MthNmDryzSrc(Src(M), B), MdNm(M), ShtCmpTy(M.Parent.Type), PjNmzMd(M))
+MthNmDryzMd = DryAddColzC3(MthNmDryzSrc(Src(M), B), MdNm(M), ShtCmpTy(M.Parent.Type), PjNmzMd(M))
 End Function
 
 Private Function MthNmDryzVbe(A As Vbe, Optional WhStr$) As Variant()

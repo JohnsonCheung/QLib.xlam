@@ -83,7 +83,7 @@ End Function
 
 '=======================
 Function DryFmtCommon(Dry(), MaxColWdt%, ShwZer As Boolean) As Variant()
-DryFmtCommon = DryAlignCol(DryStrfy(Dry, ShwZer, MaxColWdt))
+DryFmtCommon = DryAlignCol(DryMkCell(Dry, ShwZer, MaxColWdt))
 End Function
 Function DrAlign(Dr, W%()) As String()
 Dim Cell, J%
@@ -101,42 +101,47 @@ End Function
 Function DryAlignCol(Dry()) As Variant()
 DryAlignCol = DryAlignColzWdt(Dry, WdtAyzDry(Dry))
 End Function
-Function DryStrfy(Dry(), ShwZer As Boolean, MaxColWdt%) As Variant()
+
+Function DryMkCell(Dry(), ShwZer As Boolean, MaxColWdt%) As Variant()
 Dim Dr
 For Each Dr In Itr(Dry)
-   Push DryStrfy, DrStrfy(Dr, ShwZer, MaxColWdt)
+   Push DryMkCell, DrMkCell(Dr, ShwZer, MaxColWdt)
 Next
 End Function
 
-Private Function DrStrfy(Dr, ShwZer As Boolean, MaxWdt%) As String()
+Private Function DrMkCell(Dr, ShwZer As Boolean, MaxWdt%) As String()
 Dim I
 For Each I In Itr(Dr)
-    PushI DrStrfy, Left(StrzVal(I, ShwZer), MaxWdt)
+    PushI DrMkCell, MkCell(I, ShwZer, MaxWdt)
 Next
 End Function
 
-Private Function StrzVal$(V, Optional ShwZer As Boolean) ' Convert V into a string in a cell
-'SpcSepStr is a string can be displayed in a cell
+Function MkCell$(V, Optional ShwZer As Boolean, Optional MaxWdt% = 30) ' Convert V into a string fit in a cell
+Dim O$
 Select Case True
+Case IsStr(V)
+'    If HasSubStr(V, vbCr) Then Stop
+    O = EscCrLf(Left(V, MaxWdt))
 Case IsNumeric(V)
     If V = 0 Then
         If ShwZer Then
-            StrzVal = "0"
+            O = "0"
         End If
     Else
-        StrzVal = V
+        O = V
     End If
 Case IsEmp(V):
 Case IsArray(V)
     Dim N&: N = Si(V)
     If N = 0 Then
-        StrzVal = "*[0]"
+        O = "*[0]"
     Else
-        StrzVal = "*[" & N & "]" & V(0)
+        O = "*[" & N & "]" & V(0)
     End If
-Case IsObject(V): StrzVal = TypeName(V)
-Case Else:        StrzVal = V
+Case IsObject(V): O = TypeName(V)
+Case Else:        O = V
 End Select
+MkCell = O
 End Function
 
 Function IsEqDrCC(Dr1, Dr2, CC%()) As Boolean

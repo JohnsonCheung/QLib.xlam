@@ -1,6 +1,5 @@
 Attribute VB_Name = "MIde_Mth_Nm_Dup_X"
 Option Explicit
-
 Function SamMthLinesMthDNmDry(MthQNmLDrs As Drs, Vbe As Vbe) As Variant()
 Dim Gp(): 'Gp = DupMthQNy_GpAy(A)
 Dim O$(), N, Ny
@@ -70,7 +69,7 @@ Function DupMthQNmDryzPj(A As VBProject) As Variant()
 Dim Dry(), Dry1(), Dry2()
 Dry = MthQNmDryzPj(A, "-Mod") ' PjNm MdNm MthNm Ty Mdy
 'Dry1 = DryeCEv(Dry, 4, "Prv")
-Dry2 = DrywDup(Dry, 2)
+Dry2 = DrywDupCC(Dry, 2)
 DupMthQNmDryzPj = DrySrtzCol(Dry2, 2)
 End Function
 
@@ -83,7 +82,7 @@ DupMthQNmDryVbe = DupMthQNmDryzVbe(CurVbe)
 End Function
 
 Function DupMthQNmDryzMthQNy(MthQNy$()) As Variant()
-DupMthQNmDryzMthQNy = DrywDup(DryzDotAy(MthQNy), 2)
+DupMthQNmDryzMthQNy = DrywDupCC(DryzDotAy(MthQNy), 2)
 End Function
 
 Function DupMthQNmDryzVbe(A As Vbe) As Variant()

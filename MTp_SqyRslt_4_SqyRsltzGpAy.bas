@@ -138,7 +138,7 @@ End Function
 Private Function StmtSwKey_UPD$(SqLy)
 Dim Lin1$
     Lin1 = SqLy(0)
-If RmvPfx(ShfTerm(Lin1), "?") <> "upd" Then Stop
+If RmvPfx(ShfT1(Lin1), "?") <> "upd" Then Stop
 StmtSwKey_UPD = Lin1
 End Function
 
@@ -199,9 +199,9 @@ Dim F$, I, L$, Ix%, M As Lnx
 For Each I In Itr(A)
     Set M = I
     LnxAsg M, L, Ix
-    If ShfTerm(L) <> "and" Then Stop
-    F = ShfTerm(L)
-    Select Case ShfTerm(L)
+    If ShfT1(L) <> "and" Then Stop
+    F = ShfT1(L)
+    Select Case ShfT1(L)
     Case "bet":
     Case "in"
     Case Else: Stop
@@ -281,7 +281,7 @@ Private Function XSel$(A$, E As Dictionary)
 Dim Fny$()
     Dim T1$, L$
     L = A
-    T1 = RmvPfx(ShfTerm(L), "?")
+    T1 = RmvPfx(ShfT1(L), "?")
     Fny = XSelFny(SySsl(L), FldSw)
 Select Case T1
 'Case U_Sel:    XSel = X.Sel_Fny_EDic(Fny, E)

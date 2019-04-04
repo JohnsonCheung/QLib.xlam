@@ -1,8 +1,8 @@
 Attribute VB_Name = "MVb_Ay_Op_Cnt"
 Option Explicit
 
-Function GT1CntDryzAy(A) As Variant()
-GT1CntDryzAy = CntDrywGT1(DryzDic(CntDic(A)))
+Function CntDryWhGt1zAy(A) As Variant()
+CntDryWhGt1zAy = CntDryWhGt1(DryzDic(CntDic(A)))
 End Function
 
 Function CntDryzAy(A) As Variant()
@@ -21,18 +21,18 @@ Tst:
     Return
 End Sub
 
-Function SzAy&(Ay)
+Function SumSi&(Ay)
 Dim I, O&
 For Each I In Itr(Ay)
     O = O + Len(I)
 Next
-SzAy = O
+SumSi = O
 End Function
-Private Sub Z_CntSzStrAy()
-Debug.Print CntSzStrAy(SrczPj(CurPj))
+Private Sub Z_CntSiLin()
+Debug.Print CntSiLin(SrczPj(CurPj))
 End Sub
-Function CntSzStrAy$(Ay)
-CntSzStrAy = "AyCntSz(" & Si(Ay) & "." & SzAy(Ay) & ")"
+Function CntSiLin$(Ay)
+CntSiLin = "AyCntSz(" & Si(Ay) & "." & SumSi(Ay) & ")"
 End Function
 Private Sub Z()
 Z_CntDryzAy

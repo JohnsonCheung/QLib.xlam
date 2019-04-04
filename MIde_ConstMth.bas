@@ -1,12 +1,15 @@
 Attribute VB_Name = "MIde_ConstMth"
 Option Explicit
+Public Const DocOfQNm$ = "newtype AOptDotNm.  "
+Public Const DocOfAOptDotNm$ = "type Nm | ADotNm."
+
 Sub EdtConst(ConstQNm$)
 EdtStr ConstVal(ConstQNm), FtzConstQNm(ConstQNm)
 End Sub
 
 Sub UpdConst(ConstQNm$, Optional IsPub As Boolean)
 With MdMth(ConstQNm)
-    MdRplMth .Md, .MthNm, ConstMthLines(ConstQNm, IsPub)
+    MdRplMth .Md, .MthNm, ConstPrpLines(ConstQNm, IsPub)
 End With
 End Sub
 

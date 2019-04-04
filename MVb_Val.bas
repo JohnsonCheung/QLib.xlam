@@ -15,10 +15,10 @@ Case IsNumeric(V):
     End Select
 Case IsLines(V):
     If MaxWdt <= 0 Then
-        O = EscTab(LinzLines(V))
+        O = EscTab(VblzLines(V))
     Else
         O = Left(V, MaxWdt)
-        O = Left(EscTab(LinzLines(O)), MaxWdt)
+        O = Left(EscTab(VblzLines(O)), MaxWdt)
     End If
 Case IsStr(V): O = EscTab(V)
 Case IsPrim(V): O = V

@@ -17,7 +17,7 @@ PnmFfn = PnmPth(Db, Pnm) & PnmFn(Db, Pnm)
 End Function
 
 Property Get PnmVal$(Db As Database, Pnm$)
-PnmVal = ValzTF(Db, "Pm", Pnm)
+PnmVal = ValOfTF(Db, "Pm", Pnm)
 End Property
 
 Property Let PnmVal(Db As Database, Pnm$, V$)

@@ -6,7 +6,7 @@ LiFxc.Init ColNm, ShtTyLis, ExtNm
 End Function
 
 Function LiFxcLnkColStr(LnkColStr) As LiFxc
-Dim ColNm$, ShtTyLis$, ExtNm$: Asg2TRst LnkColStr, ColNm, ShtTyLis, ExtNm
+Dim ColNm$, ShtTyLis$, ExtNm$: AsgN2tRst LnkColStr, ColNm, ShtTyLis, ExtNm
 Set LiFxcLnkColStr = New LiFxc
 LiFxcLnkColStr.Init ColNm, ShtTyLis, RmvSqBkt(RTrim(ExtNm))
 End Function

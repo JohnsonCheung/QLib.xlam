@@ -3,17 +3,17 @@ Option Explicit
 Const CMod$ = "MDao_Att."
 Type Attd
     TRs As Dao.Recordset
-    ARs As Dao.Recordset
+    Ars As Dao.Recordset
 End Type
 
 Function FstAttFfn$(A As Database, Att)
-FstAttFfn = RsMovFst(Attd(A, Att).ARs)!Filename
+FstAttFfn = RsMovFst(Attd(A, Att).Ars)!Filename
 End Function
 
 Function FnyzAttFld(A As Database) As String()
 Dim TRs As Dao.Recordset2: Set TRs = A.TableDefs("Att").OpenRecordset
-Dim ARs As Dao.Recordset2: Set ARs = TRs!Att.Value
-FnyzAttFld = Itn(ARs.Fields)
+Dim Ars As Dao.Recordset2: Set Ars = TRs!Att.Value
+FnyzAttFld = Itn(Ars.Fields)
 End Function
 
 Function IsOldAtt(A As Database, Att$, Ffn$) As Boolean
@@ -28,15 +28,15 @@ Inf CSub, M, "Att Ffn AttTim TimFfn AttIs-Old-or-New?", Att, Ffn, TAtt, TFfn, At
 End Function
 
 Function AttSz&(A As Database, Att)
-AttSz = ValzSsk(A, "Att", "FilSz", Att)
+AttSz = ValOfSsk(A, "Att", "FilSz", Att)
 End Function
 
 Function AttTim(A As Database, Att) As Date
-AttTim = ValzSsk(A, "Att", "FilTim", Att)
+AttTim = ValOfSsk(A, "Att", "FilTim", Att)
 End Function
 
 Function AttFilCntzAttd%(A As Attd)
-AttFilCntzAttd = NReczRs(A.ARs)
+AttFilCntzAttd = NReczRs(A.Ars)
 End Function
 Function AttFilCnt%(Db As Database, Att)
 AttFilCnt = AttFilCntzAttd(Attd(Db, Att))
@@ -44,7 +44,7 @@ End Function
 
 Function AttFnAy(A As Database, Att) As String()
 Dim R As Attd: R = Attd(A, Att)
-AttFnAy = SyzRs(R.ARs, "FileName")
+AttFnAy = SyzRs(R.Ars, "FileName")
 End Function
 Function FnyzTblAtt(A As Database) As String()
 FnyzTblAtt = Fny(A, "Att")
@@ -54,8 +54,8 @@ AttFn = AttFnzAttd(Attd(A, Att))
 End Function
 
 Function HasOneFilAtt(A As Database, Att) As Boolean
-Debug.Print "DbAttHasOnlyFile: " & Attd(A, Att).ARs.RecordCount
-HasOneFilAtt = Attd(A, Att).ARs.RecordCount = 1
+Debug.Print "DbAttHasOnlyFile: " & Attd(A, Att).Ars.RecordCount
+HasOneFilAtt = Attd(A, Att).Ars.RecordCount = 1
 End Function
 
 Function AttNy(A As Database) As String()
@@ -77,7 +77,7 @@ End Function
 
 Function AttFnzAttd$(A As Attd)
 Const CSub$ = CMod & "AttFnzAttd"
-With A.ARs
+With A.Ars
     If .EOF Then
         If .BOF Then
             Inf CSub, "[AttNm] has no attachment files", "AttNm", AttNm(A)
@@ -96,7 +96,7 @@ With Attd
         A.Execute FmtQQ("Insert into Att (AttNm) values('?')", Att)
         Set .TRs = A.OpenRecordset(FmtQQ("Select Att from Att where AttNm='?'", Att))
     End If
-    Set .ARs = .TRs.Fields(0).Value
+    Set .Ars = .TRs.Fields(0).Value
 End With
 End Function
 

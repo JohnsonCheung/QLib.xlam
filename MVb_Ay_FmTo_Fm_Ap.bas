@@ -30,6 +30,12 @@ Dim Av(): Av = Ap
 DteAy = IntozAy(DteAy, Av)
 End Function
 
+Function IntAyzLngAy(LngAy&()) As Integer()
+Dim I
+For Each I In Itr(LngAy)
+    PushI IntAyzLngAy, I
+Next
+End Function
 Function IntAy(ParamArray Ap()) As Integer()
 Dim Av(): Av = Ap
 IntAy = IntozAy(EmpIntAy, Av)

@@ -2,7 +2,7 @@ Attribute VB_Name = "MIde_Dcl_Const"
 Option Explicit
 
 Function ShfConst(O) As Boolean
-ShfConst = ShfX(O, "Const")
+ShfConst = ShfPfx(O, "Const")
 End Function
 
 Function HasConstNm(A As CodeModule, ConstNm$) As Boolean

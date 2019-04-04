@@ -1,26 +1,14 @@
-Attribute VB_Name = "MIde_Mth_Lin_Sig_Pm"
+Attribute VB_Name = "MIde_Mth_Lin_Fmt"
 Option Explicit
-
-Function NMthArg(MthLin) As Byte
-NMthArg = Si(SplitComma(MthPm(MthLin)))
+Function NArg(MthLin) As Byte
+NArg = Si(SplitComma(MthPm(MthLin)))
 End Function
 
 Function ArgNy(MthLin) As String()
 ArgNy = NyzOy(ArgAy(MthLin))
 End Function
-
-Function ArgAy(MthLin) As Arg()
-Dim P$()
-    P = SplitComma(StrBetBkt(MthLin))
-If Si(P) = 0 Then Exit Function
-Dim O() As Arg
-    Dim U%: U = UB(P)
-    ReDim O(U)
-    Dim J%
-    For J = 0 To U
-        Set O(J) = Arg(P(J))
-    Next
-ArgAy = O
+Function ArgAy(Lin) As String()
+ArgAy = SplitCommaSpc(MthPm(Lin))
 End Function
 
 Function Arg(ArgStr$) As Arg
@@ -44,7 +32,7 @@ End Function
 
 Private Sub Z()
 Exit Sub
-'Lin_NMthArg
+'Lin_NArg
 'Lin_PmNy A
 'MthMthPmzLinStr
 'MthLinPmAy

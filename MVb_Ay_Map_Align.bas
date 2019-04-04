@@ -26,7 +26,7 @@ Dim O%(), W%(), L
 ReDim O(NTerm - 1)
 For Each L In Ay
     W = WdtAyNTermLin(NTerm, L)
-    O = WdtAyAB(O, W)
+    O = WdtAyab(O, W)
 Next
 WdtAyNTermAy = O
 End Function
@@ -37,14 +37,14 @@ For Each T In FstNTerm(Lin, N)
     PushI WdtAyNTermLin, Len(T)
 Next
 End Function
-Private Function WdtAyAB(A%(), B%()) As Integer()
+Private Function WdtAyab(A%(), B%()) As Integer()
 Dim O%(), J%, I
 O = A
 For Each I In B
     If I > O(J) Then O(J) = I
     J = J + 1
 Next
-WdtAyAB = O
+WdtAyab = O
 End Function
 
 Function FmtAyAtChr(Ay, AtChr$) As String()
@@ -71,12 +71,15 @@ Function FmtAyAtDot(A) As String()
 FmtAyAtDot = FmtAyAtChr(A, ".")
 End Function
 
-Sub BrwAyDot(DotAy)
-Brw FmtAyDot(DotAy)
+Sub BrwDotLy(DotLy$())
+Brw FmtAyDot(DotLy)
 End Sub
 
-Function FmtAyDot(DotAy) As String()
-FmtAyDot = FmtDryAsSpcSep(DryDotAy(DotAy))
+Function FmtAyDot(DotLy$()) As String()
+FmtAyDot = FmtDryAsSpcSep(DryzDotLy(DotLy))
+End Function
+Function FmtAyDot1(DotLy$()) As String()
+FmtAyDot1 = FmtDryAsSpcSep(TwoColDryzDotLy(DotLy))
 End Function
 
 Function FmtAyT1(A$()) As String()

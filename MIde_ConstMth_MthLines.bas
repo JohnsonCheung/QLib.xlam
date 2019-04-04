@@ -2,12 +2,12 @@ Attribute VB_Name = "MIde_ConstMth_MthLines"
 Option Explicit
 Const CMod$ = "MIde_Gen_Const_MthLines."
 
-Function ConstMthLines$(ConstQNm$, IsPub As Boolean)
-ConstMthLines = JnCrLf(ConstMthLy(ConstQNm, IsPub))
+Function ConstPrpLines$(ConstQNm$, IsPub As Boolean)
+ConstPrpLines = JnCrLf(ConstPrpLy(ConstQNm, IsPub))
 End Function
 
-Private Function ConstMthLy(ConstQNm$, IsPub As Boolean) As String() 'Ret Ly from ConstMthFt
-Const CSub$ = CMod & "ConstMthLines"
+Private Function ConstPrpLy(ConstQNm$, IsPub As Boolean) As String() 'Ret Ly from ConstPrpFt
+Const CSub$ = CMod & "ConstPrpLines"
 Dim Ft$: Ft = FtzConstQNm(ConstQNm): If Not HasFfn(Ft) Then Exit Function
 Dim O$()
 '    PushI O, IIf(IsPub, "", "Private ") & "Property Get " & ConstNm & "() As String()"
@@ -19,7 +19,7 @@ Dim O$()
         End If
     Next
     PushI O, "End Property"
-'ConstMthLines = O
+'ConstPrpLines = O
 End Function
 
 Private Sub Z_ExprLyzStr()
@@ -42,10 +42,10 @@ Next
 CdLyzPushStr = O
 End Function
 
-Private Sub Z_ConstMthLines()
+Private Sub Z_ConstPrpLines()
 GoSub ZZ
 Exit Sub
-Const CSub$ = CMod & "Z_ConstMthLines"
+Const CSub$ = CMod & "Z_ConstPrpLines"
 GoSub T0
 GoSub T1
 GoSub T2
@@ -86,7 +86,7 @@ T2:
 Tst:
     If IsEdt Then Return
     If ConstVal = "" Then Stop
-'    Act = ConstMthLines(ConstVal, Nm, IsPub)
+'    Act = ConstPrpLines(ConstVal, Nm, IsPub)
     Brw Act: Stop
     C
     ShwTstOk CSub, Cas
@@ -94,7 +94,7 @@ Tst:
 ZZ:
     Dim V$: V = JnCrLf(AywFstNEle(SrczPj(CurPj), 5000))
     Stop
-'    Brw ConstMthLines("AA", V, IsPub:=True)
+'    Brw ConstPrpLines("AA", V, IsPub:=True)
     Return
 End Sub
 
@@ -104,7 +104,7 @@ Dim B As Boolean
 End Sub
 
 Private Sub Z()
-Z_ConstMthLines
+Z_ConstPrpLines
 End Sub
 Private Property Get C_A$()
 Const A_1$ = "sldkfj skldjf slkdfj sd" & _

@@ -7,8 +7,7 @@ Dim mS1$():                     mS1 = Sy1zS1S2Ay(A)
 Dim mS2$():                     mS2 = Sy2zS1S2Ay(A)
 Dim mW1%:                       mW1 = WdtzLinesAy(AyAddItm(mS1, Nm1))
 Dim mW2%:                       mW2 = WdtzLinesAy(AyAddItm(mS2, Nm2))
-Dim mIncW%:                   mIncW = IIf(mHasLines, 2, 1)
-Dim mSep$:                     mSep = SepLin(IntAy(mW1 + mIncW, mW2 + mIncW), mSepChr)
+Dim mSep$:                     mSep = SepLin(IntAy(mW1, mW2), mSepChr)
 Dim mTit$:                     mTit = LinzS1S2(S1S2(Nm1, Nm2), mW1, mW2)
 Dim mHdrLy$():               mHdrLy = Sy(mSep, mTit, mSep)
 Dim mMidLy$():               mMidLy = LyzS1S2Ay(A, mW1, mW2, mHasLines, mSep)
@@ -30,7 +29,7 @@ Dim NLin%
 Dim Ly1$(), Ly2$()
     Ly1 = SplitCrLf(Lines1)
     Ly2 = SplitCrLf(Lines2)
-    ReszAyabMax Ly1, Ly2
+    ReSumSiabMax Ly1, Ly2
     Ly1 = LyAlignLWdt(Ly1, W1)
     Ly2 = LyAlignLWdt(Ly2, W2)
 Dim J%, O$()

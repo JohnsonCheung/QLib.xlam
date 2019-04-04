@@ -31,7 +31,7 @@ If Dic.Exists(PmNm) Then Exit Sub
 Dic.Add PmNm, Sy()
 End Sub
 Function WhNm(Optional NmPfx$) As WhNm
-Set WhNm = MIde_Wh.WhNm(Patn(NmPfx), LikAy(NmPfx), ExlLikAy(NmPfx))
+Set WhNm = MIde_Wh.WhNm(Patn(NmPfx), LikeAy(NmPfx), ExlLikAy(NmPfx))
 End Function
 Function HasSw(SwNm) As Boolean
 HasSw = HasEle(SwNy, SwNm)
@@ -83,8 +83,8 @@ Case Else: FmtzNmSy = FmtQQ("Pm(?) ValCnt(?) Val(?)", PmNm, Si(Sy), JnSpc(Sy))
 End Select
 End Function
 
-Function LikAy(NmPfx) As String()
-LikAy = SyPmVal(NmPfx & "LikAy")
+Function LikeAy(NmPfx) As String()
+LikeAy = SyPmVal(NmPfx & "LikeAy")
 End Function
 
 Function ExlLikAy(NmPfx) As String()

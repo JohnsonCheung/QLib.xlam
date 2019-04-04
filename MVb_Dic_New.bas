@@ -45,18 +45,18 @@ Function DiczLines(DicLines, Optional JnSep$ = vbCrLf) As Dictionary
 Set DiczLines = Dic(SplitCrLf(DicLines), JnSep)
 End Function
 
-Sub AddDiczApp(O As Dictionary, K, StrItm$, Sep$)
-If O.Exists(K) Then
-    O(K) = O(K) & Sep & StrItm
+Sub AddDiczApp(OLinesDic As Dictionary, K, StrItm$, Sep$)
+If OLinesDic.Exists(K) Then
+    OLinesDic(K) = OLinesDic(K) & Sep & StrItm
 Else
-    O.Add K, StrItm
+    OLinesDic.Add K, StrItm
 End If
 End Sub
 
-Function LyzLinesDicByItems(LinesDic As Dictionary) As String()
+Function LyzLinesDicItems(LineszDic As Dictionary) As String()
 Dim Lines
-For Each Lines In LinesDic.Items
-    PushIAy LyzLinesDicByItems, SplitCrLf(Lines)
+For Each Lines In LineszDic.Items
+    PushIAy LyzLinesDicItems, SplitCrLf(Lines)
 Next
 End Function
 Function Dic(Ly$(), Optional JnSep$ = vbCrLf) As Dictionary

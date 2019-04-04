@@ -8,7 +8,7 @@ For Each I In A
 Next
 End Sub
 
-Sub DoAyABX(Ay, ABX$, A, B)
+Sub DoAyabX(Ay, ABX$, A, B)
 Dim X
 For Each X In Itr(Ay)
     Run ABX, A, B, X

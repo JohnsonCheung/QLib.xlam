@@ -36,11 +36,14 @@ End Function
 Function IsAscFstNmChr(A%) As Boolean
 IsAscFstNmChr = IsAscLetter(A)
 End Function
+Function IsAscLDash(A%) As Boolean
+IsAscLDash = A = 95
+End Function
 
-Function IsAscLCase(A%) As Boolean
+Function IsAscLCas(A%) As Boolean
 If A < 97 Then Exit Function
 If A > 122 Then Exit Function
-IsAscLCase = True
+IsAscLCas = True
 End Function
 Function IsAscLetterDig(A%) As Boolean
 IsAscLetterDig = True
@@ -50,8 +53,8 @@ IsAscLetterDig = False
 End Function
 Function IsAscLetter(A%) As Boolean
 IsAscLetter = True
-If IsAscUCase(A) Then Exit Function
-If IsAscLCase(A) Then Exit Function
+If IsAscUCas(A) Then Exit Function
+If IsAscLCas(A) Then Exit Function
 IsAscLetter = False
 End Function
 
@@ -62,8 +65,34 @@ If IsAscDig(A) Then Exit Function
 IsAscNmChr = A = 95 '_
 End Function
 
-Function IsAscUCase(A%) As Boolean
+Function IsAscPun(A%) As Boolean
+'  0 1 2 3 4 5 6 7 8 9 A B C D E F
+'0                
+'1                
+'2   ! " # $ % & ' ( ) * + , - . /
+'3 0 1 2 3 4 5 6 7 8 9 : ; < = > ?
+'4 @ A B C D E F G H I J K L M N O
+'5 P Q R S T U V W X Y Z [ \ ] ^ _
+'6 ` a b c d e f g h i j k l m n o
+'7 p q r s t u v w x y z { | } ~ 
+Select Case True
+Case IsAscPun1(A), IsAscPun2(A), IsAscPun3(A), IsAscPun4(A): IsAscPun = True
+End Select
+End Function
+Function IsAscPun1(A%) As Boolean
+IsAscPun1 = (&H21 <= A And A <= &H2F)
+End Function
+Function IsAscPun2(A%) As Boolean
+IsAscPun2 = (&H3A <= A And A <= &H40)
+End Function
+Function IsAscPun3(A%) As Boolean
+IsAscPun3 = (&H5B <= A And A <= &H60)
+End Function
+Function IsAscPun4(A%) As Boolean
+IsAscPun4 = (&H7B <= A And A <= &H7F)
+End Function
+Function IsAscUCas(A%) As Boolean
 If A < 65 Then Exit Function
 If A > 90 Then Exit Function
-IsAscUCase = True
+IsAscUCas = True
 End Function

@@ -30,14 +30,14 @@ For Each MthNm In NyzNN(MthNmNN)
 Next
 End Sub
 
-Sub RmvMthzNm(A As CodeModule, MthNm, Optional WithTopRmk As Boolean)
-MdRmvFTIxAy A, MthFTIxAyzMth(A, MthNm, WithTopRmk)
+Sub RmvMthzNm(A As CodeModule, MthNm, Optional WiTopRmk As Boolean)
+MdRmvFTIxAy A, MthFTIxAyzMth(A, MthNm, WiTopRmk)
 End Sub
 
 Sub RmvMdMth(Md As CodeModule, MthNm)
 Const CSub$ = CMod & "RmvMdMth"
 Dim X() As FTIx: X = MthFTIxAyzMth(Md, MthNm)
-Inf CSub, "Remove method", "Md Mth FTIx-WithTopRmk", MdNm(Md), Md, LyzFTIxAy(X)
+Inf CSub, "Remove method", "Md Mth FTIx-WiTopRmk", MdNm(Md), Md, LyzFTIxAy(X)
 RmvMdFtLinesIxAy Md, X
 End Sub
 
@@ -53,7 +53,7 @@ Tst:
 Crt:
     Set Md = TmpMod
     RmvMd Md
-    MdAppLines Md, LineszVbl("Property Get ZZRmv1()||End Property||Function ZZRmv2()|End Function||'|Property Let ZZRmv1(V)|End Property")
+    MdApdLines Md, LineszVbl("Property Get ZZRmv1()||End Property||Function ZZRmv2()|End Function||'|Property Let ZZRmv1(V)|End Property")
     Return
 End Sub
 

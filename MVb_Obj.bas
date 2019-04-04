@@ -87,10 +87,10 @@ Dim E$: E = Err.Description
 ThwOpt Thw, CSub, "Err", "Er ObjTy PrpPth", E, TypeName(A), PrpPth
 End Function
 
-Function Obj_ToStr$(A)
-'On Error GoTo X
-Obj_ToStr = A.ToStr: Exit Function
-'X: Obj_ToStr = QuoteSq(TypeName(A))
+Function ObjStr$(Obj)
+On Error GoTo X
+ObjStr = Obj.ToStr: Exit Function
+X: ObjStr = QuoteSq(TypeName(Obj))
 End Function
 
 Private Sub ZZZ_ObjPrp()

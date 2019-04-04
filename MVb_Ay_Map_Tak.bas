@@ -58,7 +58,7 @@ End Function
 Function AyTakBetBkt(Ay) As String()
 Dim I
 For Each I In Itr(Ay)
-    PushI AyTakBetBkt, StrBetBkt(I)
+    PushI AyTakBetBkt, BetBkt(I)
 Next
 End Function
 

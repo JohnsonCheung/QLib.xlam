@@ -1,26 +1,26 @@
 Attribute VB_Name = "MVb_Lin_Vy"
 Option Explicit
 
-Function VyzLinLbl(Lin$, Lblss$) As Variant()
-'Return Ay, which is
-'   Same sz as Lblss-cnt
-'   Ay-ele will be either string of boolean
-'   Each element is corresponding to terms-lblss
-'Return OLin
-'   if the term match, it will removed from OLin
-'Lblss: is in *LLL ?LLL or LLL
-'   *LLL is always first at beginning, mean the value OLin has not lbl
-'   ?LLL means the value is in OLin is using LLL => it is true,
-'   LLL  means the value in OLin is LLL=VVV
-'OLin is
+Function ShfVy(OLin$, Lblss$) As Variant() ' _
+'Return Ay, which is _
+'   Same sz as Lblss-cnt _
+'   Ay-ele will be either string of boolean _
+'   Each element is corresponding to terms-lblss _
+'Update OLin _
+'   if the term match, it will removed from OLin _
+'Lblss: is in *LLL ?LLL or LLL _
+'   *LLL is always first at beginning, mean the value OLin has not lbl _
+'   ?LLL means the value is in OLin is using LLL => it is true, _
+'   LLL  means the value in OLin is LLL=VVV _
+'OLin is _
 '   VVV VVV=LLL [VVV=L L]
 Dim L, Ay$(), O()
-Ay = TermAy(Lin)
+Ay = TermAy(OLin)
 For Each L In Itr(SySsl(Lblss))
     Select Case FstChr(L)
     Case "*":
         Select Case SndChr(L)
-        Case "?":  If Si(Ay) = 0 Then Thw CSub, "Must BoolLbl of Lblss not found in Lin", "Must-Bool-Lbl Lin Lblss", L, Lin, Lblss
+        Case "?":  If Si(Ay) = 0 Then Thw CSub, "Must BoolLbl of Lblss not found in OLin", "Must-Bool-Lbl OLin Lblss", L, OLin, Lblss
                    PushI O, CBool(ShfFstEle(Ay))
         Case Else: PushI O, ShfFstEle(Ay)
         End Select
@@ -28,7 +28,7 @@ For Each L In Itr(SySsl(Lblss))
     Case Else: PushI O, ShfTxt(Ay, L)
     End Select
 Next
-VyzLinLbl = O
+ShfVy = O
 End Function
 
 Private Function ShfTxtOpt(OAy$(), Lbl) As StrRslt
@@ -68,7 +68,7 @@ For Each I In Itr(Ay)
 Next
 End Function
 
-Private Sub Z_VyzLinLbl()
+Private Sub Z_ShfVy()
 GoSub T0
 'GoSub T1
 'GoSub T2
@@ -96,7 +96,7 @@ T3:
     Ept = Array("Txt", True, False, "A 1", "XYZ", "123")
     GoTo Tst
 Tst:
-    Act = VyzLinLbl(Lin, Lblss)
+    Act = ShfVy(Lin, Lblss)
     C Act, Ept
     Return
 End Sub

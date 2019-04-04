@@ -3,13 +3,14 @@ Option Explicit
 Public Const C_Dbl$ = """"
 Public Const C_Sng$ = "'"
 
-Function IsNm(A) As Boolean
-If Not IsLetter(FstChr(A)) Then Exit Function
-Dim L%: L = Len(A)
+Function IsNm(S) As Boolean
+If S = "" Then Exit Function
+If Not IsLetter(FstChr(S)) Then Exit Function
+Dim L&: L = Len(S)
 If L > 64 Then Exit Function
 Dim J%
 For J = 2 To L
-   If Not IsNmChr(Mid(A, J, 1)) Then Exit Function
+   If Not IsNmChr(Mid(S, J, 1)) Then Exit Function
 Next
 IsNm = True
 End Function
@@ -51,7 +52,7 @@ Function NmSfx$(A)
 Dim J%, O$, C$
 For J = Len(A) To 1 Step -1
     C = Mid(A, J, 1)
-    If Not IsAscUCase(Asc(C)) Then
+    If Not IsAscUCas(Asc(C)) Then
         If C <> "_" Then
             NmSfx = O: Exit Function
         End If

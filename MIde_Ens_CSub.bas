@@ -1,6 +1,6 @@
 Attribute VB_Name = "MIde_Ens_CSub"
 Option Explicit
-Const DoczAy01$ = "Tag: FunNmSfx DtaTy.  It is an array with either 0 or 1 element."
+Const DocOfAy01$ = "Tag: FunNmSfx DtaTy.  It is an array with either 0 or 1 element."
 Const CMod$ = ""
 Enum eActLin
     eeInsLin
@@ -78,7 +78,7 @@ Sub EnsCSubzPj(A As VBProject, Optional Silent As Boolean)
 PjMdy A, ActMdAyzPj(A)
 End Sub
 
-Sub Z_ActMdAyzPj()
+Private Sub Z_ActMdAyzPj()
 Dim Pj As VBProject, Act() As ActMd, Ept() As ActMd
 GoSub ZZ
 Exit Sub

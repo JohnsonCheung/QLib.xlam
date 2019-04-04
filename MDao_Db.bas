@@ -252,7 +252,7 @@ End Sub
 Sub RenTblzAddPfx(A As Database, TT, Pfx$)
 Dim T
 For Each T In ItrTT(TT)
-    RenTblzAddPfxDbt A, T, Pfx
+    RenTblzAddPfx A, T, Pfx
 Next
 End Sub
 

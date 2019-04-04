@@ -17,13 +17,13 @@ Function PjzPjf(A) As VBProject
 Set PjzPjf = PjzPjfVbe(CurVbe, A)
 End Function
 
-Function MdDRszbe(A As Vbe, Optional WhStr$) As Drs
-Set MdDRszbe = Drs(MdTblFny, MdDryzbe(A, WhStr))
+Function MdDrszVbe(A As Vbe, Optional WhStr$) As Drs
+Set MdDrszVbe = Drs(MdTblFny, MdDryzVbe(A, WhStr))
 End Function
 Function MdTblFny() As String()
 
 End Function
 
-Sub CurVbeSav()
+Sub SavCurVbe()
 SavVbe CurVbe
 End Sub

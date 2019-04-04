@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
+Const A$ = "A"
 Public Act As eActLin, Lin$, Lno&
 Friend Function Init(Act As eActLin, Lin$, Lno&) As ActLin
 With Me

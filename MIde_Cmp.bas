@@ -8,9 +8,9 @@ Function PjzCmp(A As VBComponent) As VBProject
 Set PjzCmp = A.Collection.Parent
 End Function
 
-Function HasCmpz(A As VBProject, CmpNm) As Boolean
+Function HasCmpzPj(A As VBProject, CmpNm) As Boolean
 If IsProtect(A) Then Exit Function
-HasCmpz = HasItn(A.VBComponents, CmpNm)
+HasCmpzPj = HasItn(A.VBComponents, CmpNm)
 End Function
 Function PjNmzCmp$(A As VBComponent)
 PjNmzCmp = PjzCmp(A).Name
@@ -24,11 +24,11 @@ Function CvCmp(A) As VBComponent
 Set CvCmp = A
 End Function
 
-Private Function HasCmpzTy(A As VBProject, Nm, Ty As vbext_ComponentType) As Boolean
+Private Function HasCmpzPjTy(A As VBProject, Nm, Ty As vbext_ComponentType) As Boolean
 Dim T As vbext_ComponentType
 If Not HasItn(A.VBComponents, Nm) Then Exit Function
 T = A.VBComponents(Nm).Type
-If T = Ty Then HasCmpzTy = True: Exit Function
+If T = Ty Then HasCmpzPjTy = True: Exit Function
 Thw CSub, "Pj has Cmp not as expected type", "PjNmzCmp EptTy ActTy", A.Name, Nm, ShtCmpTy(Ty), ShtCmpTy(T)
 End Function
 

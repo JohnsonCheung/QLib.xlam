@@ -1,18 +1,19 @@
 Attribute VB_Name = "MXls_Xls"
 Option Explicit
-Private Sub Z_XlszGet()
-Debug.Print XlszGet.Name
+Private Sub Z_XlszGetObj()
+Debug.Print XlszGetObj.Name
 End Sub
-Function XlszGet() As Excel.Application
-Set XlszGet = GetObject("C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE")
+
+Function XlszGetObj() As Excel.Application
+Set XlszGetObj = GetObject("C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE")
 End Function
 
 Function Xls() As Excel.Application
 Set Xls = Excel.Application
 End Function
 
-Function HasAddInFn(A As Excel.Application, AddInFn) As Boolean
-HasAddInFn = HasItn(A.AddIns, AddInFn)
+Function HasAddinFn(A As Excel.Application, AddinFn) As Boolean
+HasAddinFn = HasItn(A.AddIns, AddinFn)
 End Function
 
 Sub XlsQuit(A As Excel.Application)

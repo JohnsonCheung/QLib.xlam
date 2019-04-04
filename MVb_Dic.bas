@@ -141,14 +141,14 @@ Function KeySyzDic(A As Dictionary) As String()
 KeySyzDic = SyzAy(A.Keys)
 End Function
 
-Function ValzDicKyJn$(A As Dictionary, Ky, Optional Sep$ = vbCrLf & vbCrLf)
+Function ValOfDicKyJn$(A As Dictionary, Ky, Optional Sep$ = vbCrLf & vbCrLf)
 Dim O$(), K
 For Each K In Itr(Ky)
     If A.Exists(K) Then
         PushI O, A(K)
     End If
 Next
-ValzDicKyJn = Join(O, Sep)
+ValOfDicKyJn = Join(O, Sep)
 End Function
 
 Function SyzDicKy(Dic As Dictionary, Ky$()) As String()
@@ -160,14 +160,8 @@ For Each K In Itr(Ky)
 Next
 End Function
 
-Function DicLblLy(A As Dictionary, Lbl$) As String()
-PushI DicLblLy, Lbl
-PushI DicLblLy, vbTab & "Count=" & A.Count
-PushIAy DicLblLy, AyAddPfx(FmtDic(A, InclValTy:=True), vbTab)
-End Function
-
-Function LinesDic(A As Dictionary) As String
-LinesDic = JnCrLf(FmtDic2(A))
+Function LineszDic$(A As Dictionary)
+LineszDic = JnCrLf(FmtDic2(A))
 End Function
 
 Function FmtDic2(A As Dictionary) As String()
@@ -269,23 +263,23 @@ If IsNothing(A) Then Exit Function
 If A.Exists(K) Then Asg A(K), DicValOpt
 End Function
 
-Function Keyz_LikAyDic_Itm$(Dic As Dictionary, Itm)
-Dim K, LikAy$()
+Function KeyzLikAyDic_Itm$(Dic As Dictionary, Itm)
+Dim K, LikeAy$()
 For Each K In Dic.Keys
-    LikAy = Dic(K)
-    If HitLikAy(Itm, LikAy) Then
-        Keyz_LikAyDic_Itm = K
+    LikeAy = Dic(K)
+    If HitLikAy(Itm, LikeAy) Then
+        KeyzLikAyDic_Itm = K
         Exit Function
     End If
 Next
 End Function
 
 
-Function Keyz_LikssDic_Itm$(A As Dictionary, Itm)
+Function KeyzLikssDic_Itm$(A As Dictionary, Itm)
 Dim Likss$, K
 For Each K In A
     Likss = A(K)
-    If HitLikss(Itm, Likss) Then Keyz_LikssDic_Itm = K: Exit Function
+    If HitLikss(Itm, Likss) Then KeyzLikssDic_Itm = K: Exit Function
 Next
 End Function
 
@@ -315,10 +309,10 @@ IsDiczEmp B
 ThwDifDic B, B, D, D, D
 IsDiczLines B
 IsDiczStr B
-ValzDicKyJn B, A, D
+ValOfDicKyJn B, A, D
 SyzDicKy B, E
-DicLblLy B, D
-LinesDic B
+FmtDicTit B, D
+LineszDic B
 FmtDic2 B
 FmtDic2__1 D, D
 DicMap B, D
@@ -330,7 +324,7 @@ DicSelIntoSy B, E
 SyzDicKey B
 DiczSwapKV B
 DicTy B
-Keyz_LikssDic_Itm B, A
+KeyzLikssDic_Itm B, A
 End Sub
 
 Private Sub Z()

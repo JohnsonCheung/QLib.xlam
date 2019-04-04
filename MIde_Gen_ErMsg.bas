@@ -1,12 +1,12 @@
 Attribute VB_Name = "MIde_Gen_ErMsg"
 Option Explicit
-Public Const DoczVdtVerbss$ = "Tag:Definition.  Gen"
+Public Const DocOfVdtVerbss$ = "Tag:Definition.  Gen"
 Private Type A
     ErNy() As String
     ErMsgAy() As String
 End Type
 Private A As A
-Public Const ™DimItm$ = "DimStmt :: `Dim` DimItm, ..."
+Public Const DocOfDimItm$ = "DimStmt :: `Dim` DimItm, ..."
 
 Sub GenErMsgzNm(MdNm$)
 MdGenErMsg Md(MdNm)
@@ -24,7 +24,7 @@ A.ErNy = T1Ay(AyRmvFstChr(SrcLy))
 A.ErMsgAy = AyRmvT1(SrcLy)
 End Sub
 
-Sub Z_SrcGenErMsg()
+Private Sub Z_SrcGenErMsg()
 Dim Src$(), MdNm$
 'GoSub T1
 'GoSub ZZ1
@@ -61,7 +61,7 @@ Set_Src:
     "|'LoNm_Mis        [Lo-Nm] line is missing" & _
     "|'LoNm_Dup        Lno#{Lno&} is [Lo-Nm] which is duplicated and ignored due to there is already a [Lo-Nm] in Lno#{AlreadyInLno&}" & _
     "|'Tot_DupSel      Lno#{Lno&} is [Tot-{TotKd$}] line having Fldss({Fldss$}) selecting SelFld({SelFld$}) which is already selected by Lno#{AlreadyInLno&} of [Tot-{AlreadyTotKd$}].  The SelFld is ignored." & _
-    "|'Bet_3Fld        Lno#{Lno&} is [Bet] line.  It should have 3 fields, but now it has (?) fields of [?]" & _
+    "|'Bet_N3Fld        Lno#{Lno&} is [Bet] line.  It should have 3 fields, but now it has (?) fields of [?]" & _
     "|'Bet_EqFmTo      Lno#{Lno&} is [Bet] line and ignored due to FmFld(?) and ToFld(?) are equal." & _
     "|'Bet_FldSeq      Lno#{Lno&} is [Bet] line and ignored due to Fld(?), FmFld(?) and ToFld(?) are not in order.  See order the Fld, FmFld and ToFld in [Fny-Value]" & _
     "|'GenErMsg-Src-End." & _
@@ -74,11 +74,11 @@ Private Sub A_Prim()
 SrcGenErMsg:
 End Sub
 
-Private Function MdGenErMsg(Md As CodeModule) As CodeModule 'eMthNmTy.eeNve
+Private Sub MdGenErMsg(Md As CodeModule)  'eMthNmTy.eeNve
 Dim O$(): O = SrcGenErMsg(Src(Md)): 'Brw O: Stop 'Rmk: There is an error when Md is [MXls_Lof_ErzLof].  Er:CannotRmvMth:.
-Set MdGenErMsg = MdRpl(Md, JnCrLf(O))
-End Function
-Sub Z_MdGenErMsg()
+MdRpl Md, JnCrLf(O)
+End Sub
+Private Sub Z_MdGenErMsg()
 MdGenErMsg Md("MXls_Lof_ErzLof")
 End Sub
 Private Sub Z_ErConstDic()
@@ -124,8 +124,8 @@ Function SrcRplConstDic(Src$(), ConstDic As Dictionary) As String()
 Dim ConstNm, Dcl$(), Bdy$(), Dcl1$(), Dcl2$()
 AsgDclAndBdy Src, Dcl, Bdy
 Dcl1 = DclRmvConstzSngLinConst(Dcl, KeySet(ConstDic)): 'Brw Dcl1: Stop
-'Brw LyzLinesDicByItems(ConstDic): Stop
-Dcl2 = SyAddAp(Dcl1, LyzLinesDicByItems(ConstDic), Bdy): 'Brw Dcl2: Stop
+'Brw LyzLinesDicItems(ConstDic): Stop
+Dcl2 = SyAddAp(Dcl1, LyzLinesDicItems(ConstDic), Bdy): 'Brw Dcl2: Stop
 SrcRplConstDic = Dcl2
 End Function
 Function DclRmvConstzSngLinConst(Dcl$(), ConstNmDic As Aset) As String() 'Assume: the const in Dcl to be remove is SngLin
@@ -154,11 +154,11 @@ Next
 End Sub
 
 Function SrcRplMthDic(Src$(), MthDic As Dictionary) As String()
-SrcRplMthDic = SyAdd(SrcRmvMth(Src, KeySet(MthDic)), LyzLinesDicByItems(MthDic))
+SrcRplMthDic = SyAdd(SrcRmvMth(Src, KeySet(MthDic)), LyzLinesDicItems(MthDic))
 End Function
 
 Function SrcRplMth(Src$(), MthNm, MthLines) As String()
-Dim A() As FTIx: A = MthFTIxAyzSrcMth(Src, MthNm, WithTopRmk:=True)
+Dim A() As FTIx: A = MthFTIxAyzSrcMth(Src, MthNm, WiTopRmk:=True)
 Dim Ly$(): Ly = SplitCrLf(MthLines)
 Select Case Si(A)
 Case 0: SrcRplMth = SyAdd(Src, Ly)
@@ -218,21 +218,20 @@ Next
 Set MdLineszConst = EmpMdLines(A)
 End Function
 
-Function MdRplLines(A As CodeModule, B As MdLines, NewLines, Optional LinesNm$ = "MdLines") As CodeModule
+Sub MdRplLines(A As CodeModule, B As MdLines, NewLines, Optional LinesNm$ = "MdLines")
 Dim OldLines$: If B.Count > 0 Then OldLines = A.Lines(B.StartLine, B.Count)
 If OldLines = NewLines Then
     Inf CSub, "Same " & LinesNm, "Md StartLine Count FstLin", MdNm(A), B.StartLine, B.Count, FstLin(B.Lines)
-    Exit Function
+    Exit Sub
 End If
 If B.Count > 0 Then A.DeleteLines B.InsLno, B.Count
 A.InsertLines B.InsLno, NewLines
 Inf CSub, LinesNm & " is replaced", "Md StartLines NewLinCnt OldLinCnt NewLines OldLines", MdNm(A), B.StartLine, LinCnt(NewLines), B.Count, NewLines, OldLines
-Set MdRplLines = A
-End Function
+End Sub
 
-Function MdRplConst(A As CodeModule, ConstNm, NewLines) As CodeModule
-Set MdRplConst = MdRplLines(A, MdLineszConst(A, ConstNm), NewLines, "MdConst")
-End Function
+Sub MdRplConst(A As CodeModule, ConstNm, NewLines)
+MdRplLines A, MdLineszConst(A, ConstNm), NewLines, "MdConst"
+End Sub
 
 Private Property Get ErMthNmSet() As Aset
 Set ErMthNmSet = AsetzAy(ErMthNy)
@@ -271,7 +270,7 @@ ZZ:
 T1:
     A.ErNy = Sy("Val_NotNum")
     A.ErMsgAy = Sy("Lno#{Lno&} is [{T1$}] line having Val({Val$}) which should be a number")
-    Ept = Sy("Private Function Msgz_Val_NotNum(Lno&, T1$, Val$) As String(): Msgz_Val_NotNum = FmtMacro(M_Val_NotNum, Lno, T1, Val): End Function")
+    Ept = Sy("Private Function MsgzVal_NotNum(Lno&, T1$, Val$) As String(): MsgzVal_NotNum = FmtMacro(M_Val_NotNum, Lno, T1, Val): End Function")
     GoTo Tst
 Tst:
     Act = ErMthLinAy

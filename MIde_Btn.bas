@@ -22,13 +22,13 @@ Property Get BarNy() As String()
 BarNy = BarNyvVbe(CurVbe)
 End Property
 
-Property Get BrwObjWin() As VBIDE.Window
+Property Get BrwObjWin() As Vbide.Window
 Set BrwObjWin = FstWinTy(vbext_wt_Browser)
 End Property
 
 Property Get CompileBtn() As CommandBarButton
 Dim O As CommandBarButton
-Set O = DbgPop.CommandBar.Controls(1)
+Set O = DbgPopup.CommandBar.Controls(1)
 If Not HasPfx(O.Caption, "Compi&le") Then Stop
 Set CompileBtn = O
 End Property
@@ -37,36 +37,33 @@ Private Function CvCtl(A) As CommandBarControl
 Set CvCtl = A
 End Function
 
-Property Get DbgPop() As CommandBarPopup
-Set DbgPop = MnuBar.Controls("Debug")
+Property Get DbgPopup() As CommandBarPopup
+Set DbgPopup = MnuBar.Controls("Debug")
 End Property
 
-Property Get EdtClrBtn() As Office.CommandBarButton
-Set EdtClrBtn = FstItrPEv(PopEdt.Controls, "Caption", "C&lear")
+Property Get EdtclrBtn() As Office.CommandBarButton
+Set EdtclrBtn = FstItrPEv(EditPopup.Controls, "Caption", "C&lear")
 End Property
 
-Property Get IdeMnuBar() As Office.CommandBar
-Set IdeMnuBar = CurVbe.CommandBars("Menu Bar")
+Property Get MnuBar() As CommandBar
+Set MnuBar = MnuBarzVbe(CurVbe)
 End Property
 
 Property Get SelAllBtn() As Office.CommandBarButton
-Set SelAllBtn = FstItrPEv(PopEdt.Controls, "Caption", "Select &All")
+Set SelAllBtn = FstItrPEv(EditPopup.Controls, "Caption", "Select &All")
 End Property
 
 Function IsBtn(A) As Boolean
 IsBtn = TypeName(A) = "CommandButton"
 End Function
 
-Private Property Get MnuBar() As CommandBar
-Set MnuBar = MnuBarz(CurVbe)
-End Property
 
 Property Get NxtStmtBtn() As CommandBarButton
-Set NxtStmtBtn = DbgPop.Controls("Show Next Statement")
+Set NxtStmtBtn = DbgPopup.Controls("Show Next Statement")
 End Property
 
-Private Property Get PopEdt() As Office.CommandBarPopup
-Set PopEdt = FstItrPEv(IdeMnuBar.Controls, "Caption", "&Edit")
+Private Property Get EditPopup() As Office.CommandBarPopup
+Set EditPopup = FstItrPEv(MnuBar.Controls, "Caption", "&Edit")
 End Property
 
 Property Get SavBtn() As CommandBarButton
@@ -74,15 +71,14 @@ Set SavBtn = SavBtnz(CurVbe)
 End Property
 
 Property Get JmpNxtStmtBtn() As CommandBarButton
-Set JmpNxtStmtBtn = DbgPop.Controls("Show Next Statement")
+Set JmpNxtStmtBtn = DbgPopup.Controls("Show Next Statement")
 End Property
 
 Property Get StdBar() As Office.CommandBar
 Set StdBar = CurVbe_Bars("Standard")
 End Property
-
-Function MnuBarz(A As Vbe) As CommandBar
-Set MnuBar = A.CommandBars("Menu Bar")
+Function MnuBarzVbe(A As Vbe) As CommandBar
+Set MnuBarzVbe = A.CommandBars("Menu Bar")
 End Function
 
 Function SavBtnz(A As Vbe) As CommandBarButton
@@ -129,7 +125,7 @@ End Property
 
 Private Sub ZZ_DbgPop()
 Dim A
-Set A = DbgPop
+Set A = DbgPopup
 Stop
 End Sub
 

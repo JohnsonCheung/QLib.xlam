@@ -124,8 +124,13 @@ If Not IsSngQuoted(A) Then RmvSngQuote = A: Exit Function
 RmvSngQuote = RmvFstLasChr(A)
 End Function
 
-Function RmvT1$(A)
-RmvT1 = SyzTRst(A)(1)
+Function RmvT1$(S)
+Dim L$: L = LTrim(S): If L = "" Then Exit Function
+If FstChr(L) = "[" Then
+    RmvT1 = StrAft(L, "]")
+Else
+    RmvT1 = StrAft(L, " ")
+End If
 End Function
 
 Function RmvTT$(A)

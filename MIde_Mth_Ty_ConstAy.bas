@@ -33,10 +33,10 @@ If Si(X) = 0 Then X = Sy(C_Pub, C_Prv, C_Frd, "")
 MthMdyAy = X
 End Property
 
-Property Get ShtMdyAy() As String()
+Property Get ShtMthMdyAy() As String()
 Static X$()
 If Si(X) = 0 Then X = Sy("Pub", "Prv", "Frd", "")
-ShtMdyAy = X
+ShtMthMdyAy = X
 End Property
 Property Get ShtMthKdAy() As String()
 Static X$()

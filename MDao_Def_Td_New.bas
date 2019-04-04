@@ -13,50 +13,54 @@ If A.Type <> dbLong Then Exit Function
 IsIdFd = True
 End Function
 
-Private Function SkIdx(T As Dao.TableDef, Sk$()) As Dao.Index
-Const CSub$ = CMod & "SkIdx"
+Function NewSkIdx(T As Dao.TableDef, SkFny$()) As Dao.Index
+Const CSub$ = CMod & "NewSkIdx"
 Dim O As New Dao.Index
 O.Name = "SecondaryKey"
 O.Unique = True
-If Not HasEleAy(FnyzTd(T), Sk) Then
-    Thw CSub, "Given Td does not contain all given-Sk", "Missing-Sk Td-Name Td-Fny Given-Sk", T.Name & "Id", AyMinus(Sk, FnyzTd(T)), T.Name, FnyzTd(T), Sk
+If Not HasEleAy(FnyzTd(T), SkFny) Then
+    Thw CSub, "Given Td does not contain all given-SkFny", "Missing-SkFny Td-Name Td-Fny Given-SkFny", T.Name & "Id", AyMinus(SkFny, FnyzTd(T)), T.Name, FnyzTd(T), SkFny
 End If
-Dim I
-For Each I In Sk
-    CvIdxfds(O.Fields).Append Fd(I)
+Dim IdxFds As Dao.IndexFields, I
+Set IdxFds = CvIdxfds(O.Fields)
+For Each I In SkFny
+    IdxFds.Append Fd(I)
 Next
-Set SkIdx = O
+Set NewSkIdx = O
 End Function
 
 Function TdzFdy(T, Fdy() As Field2, Optional SkFF) As Dao.TableDef
 Dim O As New Dao.TableDef, F
 O.Name = T
-Set TdzFdy = TdAddSk(TdAddPk(TdAppFdy(O, Fdy)), SkFF)
+AddSk O, SkFF
+AddPk O
+AddFdy O, Fdy
+Set TdzFdy = O
 End Function
 
-Private Function TdAddPk(A As Dao.TableDef) As Dao.TableDef
+Private Sub AddPk(A As Dao.TableDef)
 'Any Pk Fields in A.Fields?, if no exit sub
-Dim F As Dao.Field2
-For Each F In A.Fields
-    If IsIdFd(F, A.Name) Then
-        A.Indexes.Append PkIdxzT(A.Name)
-        Exit Function
-    End If
+Dim F As Dao.Field2, IdFldNm$, J%
+IdFldNm = A.Name & "Id"
+If IsIdFd(A.Fields(0), A.Name) Then
+    A.Indexes.Append NewPkIdx(A.Name)
+    Exit Sub
+End If
+For J = 2 To A.Fields.Count
+    If A.Fields(J).Name = IdFldNm Then Thw CSub, "The Table Id fields must be the fst fld", "I-th", J
 Next
-Set TdAddPk = A
-End Function
+End Sub
 
-Function PkIdxzT(T) As Dao.Index
+Private Function NewPkIdx(T) As Dao.Index
 Dim O As New Dao.Index
 O.Name = "PrimaryKey"
 O.Primary = True
 CvIdxfds(O.Fields).Append FdzId(T & "Id")
-Set PkIdxzT = O
+Set NewPkIdx = O
 End Function
 
-Private Function TdAddSk(A As Dao.TableDef, SkFF) As Dao.TableDef
-Dim Sk$(): Sk = NyzNN(SkFF): If Si(Sk) = 0 Then Exit Function
-A.Indexes.Append SkIdx(A, Sk)
-Set TdAddSk = A
-End Function
+Private Sub AddSk(A As Dao.TableDef, SkFF)
+Dim SkFny$(): SkFny = NyzNN(SkFF): If Si(SkFny) = 0 Then Exit Sub
+A.Indexes.Append NewSkIdx(A, SkFny)
+End Sub
 

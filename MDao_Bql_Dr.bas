@@ -1,6 +1,6 @@
 Attribute VB_Name = "MDao_Bql_Dr"
 Option Explicit
-Public Const ™Bql$ = "is Back quote (`) separated line.  If the field is blank, don't set Rs's value"
+Public Const DocOfBql$ = "is Back quote (`) separated line.  If the field is blank, don't set Rs's value"
 Sub InsRszBql(R As Dao.Recordset, Bql)
 R.AddNew
 Dim Ay$(): Ay = Split(Bql, "`")
@@ -23,7 +23,7 @@ For Each F In A.Fields
     End If
 Next
 Dim L$: L = Jn(O, "`")
-If L = "401`HD04VFOF00C9ZT" Then Stop
+If L = "401`HD0V4FOF00C9ZT" Then Stop
 BqlzRs = L
 
 End Function

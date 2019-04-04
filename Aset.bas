@@ -116,10 +116,9 @@ For Each I In Itms
     Asg I, FstItm
 Next
 End Function
-Function AbcDic() As Dictionary
-'AbcDic means the keys is comming from Aset the value is starting from A, B, C
+Function AbcDic() As Dictionary 'AbcDic means the keys is comming from Aset the value is starting from A, B, C
 Dim O As New Dictionary, J%, K
-For Each K In Itms
+For Each K In Me.Itms
     O.Add K, Chr(65 + J%)
     J = J + 1
 Next

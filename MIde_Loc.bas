@@ -1,21 +1,30 @@
 Attribute VB_Name = "MIde_Loc"
 Option Explicit
-Function SubStrPos(A, SubStr) As Pos
-Dim P&: P = InStr(A, SubStr)
-SubStrPos = Pos(P, P + Len(SubStr) - 1)
-End Function
-Function MthPos(MthLin) As Pos
-If IsMthLin(MthLin) Then
-    MthPos = SubStrPos(MthLin, MthNm(MthLin))
-End If
+Function MthPos(MthNm) As MdPos()
+Dim R As Rel: Set R = RelOf_MthNm_To_MdNy_OfPj
+Dim MdNm, M As CodeModule, MthLnx
+For Each MdNm In R.ParChd(MthNm).Itms
+    Set M = Md(MdNm)
+    For Each MthLnx In MthLnxAyzMd(M)
+        Dim Lno&, MthLin$
+            With CvLnx(MthLnx)
+            Lno = .Ix + 1
+            MthLin = .Lin
+            End With
+        Dim P As Pos
+            Pos
+            Set P = SubStrPos(MthLin, MthNm)
+        PushObj MthPos, MdPos(M, LinPos(Lno, SubStrPos(MthLin, MthNm)))
+    Next
+Next
 End Function
 
 Function LocLyPatn(Patn$) As String()
-LocLyPatn = LocLyPjPatn(CurPj, Patn)
+LocLyPatn = LocLyzPjPatn(CurPj, Patn)
 End Function
 
-Function LocLyPjPatn(A As VBProject, Patn$) As String()
-LocLyPjPatn = AywPatn(SrczPj(A), Patn)
+Function LocLyzPjPatn(A As VBProject, Patn$) As String()
+LocLyzPjPatn = AywPatn(SrczPj(A), Patn)
 End Function
 
 Function CurLocLyPjRe(Re_Or_Patn) As String()

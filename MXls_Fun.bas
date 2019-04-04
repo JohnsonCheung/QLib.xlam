@@ -24,7 +24,7 @@ Sq = SqzAyH(Ay)
 RgzResz(At, Sq).Value = Sq
 End Sub
 
-Function AyabWs(A, B, Optional N1$ = "Ay1", Optional N2$ = "Ay2", Optional LoNm$ = "AyAB") As Worksheet
+Function AyabWs(A, B, Optional N1$ = "Ay1", Optional N2$ = "Ay2", Optional LoNm$ = "Ayab") As Worksheet
 Dim N&, AtA1 As Range, R As Range
 N = Si(A)
 If N <> Si(B) Then Stop
