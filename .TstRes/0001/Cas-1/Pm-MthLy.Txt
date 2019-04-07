@@ -1,0 +1,2 @@
+Property Get AA()
+End Property

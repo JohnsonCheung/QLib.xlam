@@ -1,0 +1,3 @@
+Property Get AA()
+On Error Goto E
+End Property

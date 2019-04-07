@@ -1,0 +1,5 @@
+Property Get AA()
+On Error Goto X
+Exit Property
+X: Debug.Print CSub & ".PrpEr[" &  Err.Description & "]"
+End Property
