@@ -24,6 +24,7 @@ For Each L In CurSrc
 Next
 Brw O
 End Sub
+
 Function HitConstNm(SrcLin, ConstNm) As Boolean
 HitConstNm = ConstNmzSrcLin(SrcLin) = ConstNm
 End Function
@@ -32,22 +33,24 @@ Function HitConstNmDic(SrcLin, ConstNmSet) As Boolean
 HitConstNmDic = ConstNmSet.Has(ConstNmzSrcLin(SrcLin))
 End Function
 
-Function HitMthLin(MthLin, B As WhMth) As Boolean
-HitMthLin = HitMthNm3(MthNm3(MthLin), B)
+Function HitMthLin(Lin, B As WhMth) As Boolean
+If Not IsMthLin(Lin) Then Exit Function
+If IsNothing(B) Then Exit Function
+If B.IsEmp Then HitMthLin = True: Exit Function
+HitMthLin = True
 End Function
 
 Function HitMthNm3(A As MthNm3, B As WhMth) As Boolean
-If A.IsEmp Then Exit Function
-If IsNothing(B) Then HitMthNm3 = True: Exit Function
-If B.IsEmp Then HitMthNm3 = True: Exit Function
 Select Case True
 Case A.Nm = "":
-Case IsNothing(B): HitMthNm3 = True
-Case B.IsEmp:
-Case Not HitNm(A.Nm, B.WhNm)
-Case Not HitShtMdy(A.ShtMdy, B.ShtMthMdyAy)
-Case Not HitAy(A.ShtKd, B.ShtKdAy)
-Case Else: HitMthNm3 = True
+Case IsNothing(B), B.IsEmp
+    HitMthNm3 = True
+Case _
+    Not HitNm(A.Nm, B.WhNm), _
+    Not HitShtMdy(A.ShtMdy, B.ShtMthMdyAy), _
+    Not HitAy(A.ShtTy, B.ShtTyAy)
+Case Else
+    HitMthNm3 = True
 End Select
 End Function
 

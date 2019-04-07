@@ -360,7 +360,7 @@ Sub VcMthDotCmlGpAsetOfVbe(Optional WhStr$)
 MthDotCmlGpAsetOfVbe.Srt.Vc
 End Sub
 
-Sub Z_Cml1Ay()
+Private Sub Z_Cml1Ay()
 Dim Ny$(): Ny = MthNyOfVbe
 Dim N
 For Each N In Ny

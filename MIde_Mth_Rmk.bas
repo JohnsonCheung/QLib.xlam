@@ -15,17 +15,6 @@ Dim Md As CodeModule, MthNm$
 'RmkMth M:   Ass LineszVbl(MthLines(M)) = "Property Get ZZA()|Stop '|End Property||Property Let YYA(V)|Stop '|'|End Property"
 'UnRmkMth M: Ass LineszVbl(MthLines(M)) = "Property Get ZZA()|End Property||Property Let YYA(V)||End Property"
 End Sub
-Function NxtSrcIx&(Src$(), Ix&)
-Const CSub$ = CMod & "NxtSrcIx"
-Dim J&
-For J = Ix To UB(Src)
-    If LasChr(Src(J)) <> "_" Then
-        NxtSrcIx = J
-        Exit Function
-    End If
-Next
-Thw CSub, "All line From Ix is Src has _ as LasChr", "Ix Src", Ix, AyAddIxPfx(Src, 1)
-End Function
 Function NxtMdLno&(A As CodeModule, Lno&)
 Const CSub$ = CMod & "NxtMdLno"
 Dim J&

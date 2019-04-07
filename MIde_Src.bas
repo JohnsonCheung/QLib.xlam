@@ -92,7 +92,6 @@ Function Src(A As CodeModule) As String()
 Src = SplitCrLf(SrcLineszMd(A))
 End Function
 
-
 Function SrcOfPj() As String()
 SrcOfPj = SrczPj(CurPj)
 End Function

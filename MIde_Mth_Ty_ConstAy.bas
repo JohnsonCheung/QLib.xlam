@@ -21,6 +21,7 @@ Static X$()
 If Si(X) = 0 Then X = Sy(C_Get, C_Set, C_Let)
 PrpTyAy = X
 End Property
+
 Property Get MthTyAy() As String()
 Static X$()
 If Si(X) = 0 Then X = Sy(C_Fun, C_Sub, C_PrpGet, C_PrpLet, C_PrpSet)

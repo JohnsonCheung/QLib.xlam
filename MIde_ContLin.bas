@@ -11,16 +11,18 @@ While LasChr(O) = "_"
 Wend
 ContLinzMdLno = O
 End Function
-Function NxtSrcIx&(Src$(), Ix&)
-Dim O&
-For O = Ix + 1 To UB(Src)
-    If LasChr(Src(Ix)) <> "_" Then
-        NxtSrcIx = O
+Function NxtSrcIx&(Src$(), Optional Ix& = 0)
+Const CSub$ = CMod & "NxtSrcIx"
+Dim J&
+For J = Ix To UB(Src)
+    If LasChr(Src(J)) <> "_" Then
+        NxtSrcIx = J + 1
         Exit Function
     End If
 Next
-NxtSrcIx = -1
+Thw CSub, "All line From Ix is Src has _ as LasChr", "Ix Src", Ix, AyAddIxPfx(Src, 1)
 End Function
+
 Private Sub Z_ContLin()
 Dim Src$(), MthFmIx%
 MthFmIx = 0
@@ -63,7 +65,7 @@ Next
 JnContLin = Jn(ContLy)
 End Function
 
-Function ContLin$(A$(), Ix, Optional OneLin As Boolean)
+Function ContLin$(A$(), Optional Ix = 0, Optional OneLin As Boolean)
 If OneLin Then
     ContLin = JnContLin(CvSy(AywIxCnt(A, Ix, ContLinCnt(A, Ix))))
 Else

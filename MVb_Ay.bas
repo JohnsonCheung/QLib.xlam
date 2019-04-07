@@ -44,7 +44,7 @@ BrwAy = A
 End Function
 
 Function AyCln(A)
-ThwNotAy A, CSub
+ThwIfNotAy A, CSub
 Dim O
 O = A
 Erase O
@@ -448,7 +448,7 @@ End Function
 
 
 Function AyItmAddAy(Itm, Ay)
-AyItmAddAy = AyInsItm(Ay, Itm)
+AyItmAddAy = AyInsEle(Ay, Itm)
 End Function
 
 Function SubDrFnySel(Dr(), DrFny$(), SelFF) As Variant()
@@ -547,7 +547,7 @@ Ass HasEleDupEle(Array(1, 2, 3, 4)) = False
 Ass HasEleDupEle(Array(1, 2, 3, 4, 4)) = True
 End Sub
 
-Private Sub Z_AyInsItm()
+Private Sub Z_AyInsEle()
 Dim A, M, At&
 '
 A = Array(1, 2, 3)
@@ -557,7 +557,7 @@ GoSub Tst
 '
 Exit Sub
 Tst:
-    Act = AyInsItm(A, M, At)
+    Act = AyInsEle(A, M, At)
     C
 Return
 End Sub

@@ -66,6 +66,7 @@ End Function
 Function MthLineszSrcFm$(Src$(), MthFmIx, Optional WiTopRmk As Boolean)
 MthLineszSrcFm = JnCrLf(MthLyzSrcFm(Src, MthFmIx, WiTopRmk))
 End Function
+
 Function MthLyzSrcFm(Src$(), MthFmIx, Optional WiTopRmk As Boolean) As String()
 Dim TopLy$()
 If WiTopRmk Then

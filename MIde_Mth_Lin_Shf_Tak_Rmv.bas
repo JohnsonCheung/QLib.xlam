@@ -26,12 +26,12 @@ Function ShfShtMthTy$(OLin)
 ShfShtMthTy = ShtMthTy(ShfMthTy(OLin))
 End Function
 Function ShfShtMthKd$(OLin)
-ShfShtMthKd = ShtMthKdByShtMthTy(ShtMthTy(ShfMthTy(OLin)))
+ShfShtMthKd = ShtMthKdzShtMthTy(ShtMthTy(ShfMthTy(OLin)))
 End Function
 
 Function ShfMthMdy$(OLin)
 Dim O$
-O = TakMthMdy(OLin):
+O = MthMdy(OLin):
 ShfMthMdy = O
 OLin = LTrim(RmvPfx(OLin, O))
 End Function
@@ -60,26 +60,21 @@ ShfNm = O
 OLin = RmvPfx(OLin, O)
 End Function
 
-Function ShfRmk(A) As String()
+Function ShfRmk$(OStr)
 Dim L$
-L = LTrim(A)
+L = LTrim(OStr)
 If FstChr(L) = "'" Then
-    ShfRmk = Sy(Mid(L, 2), "")
-Else
-    ShfRmk = Sy("", A)
+    ShfRmk = Mid(L, 2)
+    OStr = ""
 End If
 End Function
 
-Function TakMthMdy$(A)
-TakMthMdy = TermLinAy(A, MthMdyAy)
+Function TakMthKd$(S)
+TakMthKd = TakPfxzAySpc(S, MthKdAy)
 End Function
 
-Function TakMthKd$(A)
-TakMthKd = TermLinAy(A, MthKdAy)
-End Function
-
-Function TakMthTy$(A)
-TakMthTy = TermLinAy(A, MthTyAy)
+Function TakMthTy$(S)
+TakMthTy = TakPfxzAySpc(S, MthTyAy)
 End Function
 
 Function RmvMdy$(A)

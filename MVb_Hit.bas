@@ -1,29 +1,29 @@
 Attribute VB_Name = "MVb_Hit"
 Option Explicit
-Function HitPfxAy(A, PfxAy) As Boolean
+Function HitPfxAy(S, PfxAy) As Boolean
 If Si(PfxAy) = 0 Then HitPfxAy = 0: Exit Function
 Dim I
 For Each I In PfxAy
-   If HasPfx(A, I) Then HitPfxAy = True: Exit Function
+   If HasPfx(S, I) Then HitPfxAy = True: Exit Function
 Next
 End Function
 
-Function HitPfxAp(A, ParamArray PfxAp()) As Boolean
+Function HitPfxAp(S, ParamArray PfxAp()) As Boolean
 Dim Av(): Av = PfxAp
-HitPfxAp = HitPfxAy(A, Av)
+HitPfxAp = HitPfxAy(S, Av)
 End Function
 
-Function HitPfxSpc(A, Pfx) As Boolean
-HitPfxSpc = HasPfx(A, Pfx & " ")
+Function HitPfxSpc(S, Pfx) As Boolean
+HitPfxSpc = HasPfx(S, Pfx & " ")
 End Function
 
-Function HitAyElePfx(Ay, ElePfx) As Boolean
+Function HitElePfx(Ay, ElePfx) As Boolean
 Dim S
 For Each S In Itr(Ay)
-'    If HasPfx(S, Pfx) Then
-        HitAyElePfx = True
+    If HasPfx(S, ElePfx) Then
+        HitElePfx = True
         Exit Function
-'    End If
+    End If
 Next
 End Function
 

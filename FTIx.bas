@@ -12,6 +12,9 @@ Private A_FmIx&, A_ToIx&
 Property Get FmIx&()
 FmIx = A_FmIx
 End Property
+Property Get ToStr$()
+ToStr = FmtQQ("FTIx(? ?)", A_FmIx, A_ToIx)
+End Property
 Property Get ToIx&()
 ToIx = A_ToIx
 End Property

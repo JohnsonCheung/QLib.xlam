@@ -32,23 +32,12 @@ Next
 FTIxAyLinCnt = O
 End Function
 
-Function LyzFTIxAy(A() As FTIx) As String()
-Dim I
-For Each I In Itr(A)
-    PushI LyzFTIxAy, FTIxStr(CvFTIx(I))
-Next
-End Function
-
 Function FTIxIsEq(A As FTIx, B As FTIx) As Boolean
 With A
     If .FmNo <> B.FmNo Then Exit Function
     If .Cnt <> B.Cnt Then Exit Function
 End With
 FTIxIsEq = True
-End Function
-
-Function FTIxStr$(A As FTIx)
-FTIxStr = "FmNo[" & A.FmNo & "] Cnt[" & A.Cnt & "]"
 End Function
 
 Private Sub ZZ()
@@ -62,7 +51,6 @@ FTIxAyIsInOrd B
 FTIxAyLinCnt B
 LyzFTIxAy B
 FTIxIsEq C, C
-FTIxStr C
 End Sub
 
 Private Sub Z()

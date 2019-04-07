@@ -31,7 +31,7 @@ Next
 End Sub
 
 Sub RmvMthzNm(A As CodeModule, MthNm, Optional WiTopRmk As Boolean)
-MdRmvFTIxAy A, MthFTIxAyzMth(A, MthNm, WiTopRmk)
+RmvFTIxAy A, MthFTIxAyzMth(A, MthNm, WiTopRmk)
 End Sub
 
 Sub RmvMdMth(Md As CodeModule, MthNm)

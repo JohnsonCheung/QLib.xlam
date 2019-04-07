@@ -9,7 +9,7 @@ End Sub
 
 Sub UpdConst(ConstQNm$, Optional IsPub As Boolean)
 With MdMth(ConstQNm)
-    MdRplMth .Md, .MthNm, ConstPrpLines(ConstQNm, IsPub)
+    RplMth .Md, .MthNm, ConstPrpLines(ConstQNm, IsPub)
 End With
 End Sub
 

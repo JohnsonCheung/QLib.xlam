@@ -56,16 +56,17 @@ Lp:
 End Function
 
 Private Sub Z_ConstValOfMth()
+Const TstId% = 3
 Const CSub$ = CMod & "Z_ConstValMthLines"
-Dim IsEdt As Boolean, MthLines$, Cas$
+Dim MthLines$, Cas$, IsEdt As Boolean
 GoSub T0
 GoSub T1
 Exit Sub
 T0:
     IsEdt = False
     Cas = "Complex"
-    MthLines = TstTxt(CSub, Cas, "MthLines", IsEdt)
-    Ept = TstTxt(CSub, Cas, "Ept", IsEdt)
+    MthLines = TstTxt(TstId, CSub, Cas, "MthLines", IsEdt:=True)
+    Ept = TstTxt(TstId, CSub, Cas, "Ept", IsEdt)
     If IsEdt Then Return
     GoTo Tst
 T1:

@@ -82,10 +82,13 @@ Set MthNmDic = O
 End Function
 
 Function MthDic(Src$(), Optional WiTopRmk As Boolean) As Dictionary 'Key is MthDNm, Val is MthLinesWiTopRmk
-Dim Ix, O As New Dictionary
+Dim Ix, O As New Dictionary, Lines$, DNm$
 O.Add "*Dcl", Dcl(Src)
 For Each Ix In MthIxItr(Src)
-    O.Add MthDNmzLin(Src(Ix)), MthLineszSrcFm(Src, Ix, WiTopRmk:=WiTopRmk)
+    DNm = MthDNmzLin(Src(Ix))
+    Lines = MthLineszSrcFm(Src, Ix, WiTopRmk:=WiTopRmk)
+    If Lines = "" Then Stop
+    O.Add DNm, Lines
 Next
 Set MthDic = O
 End Function

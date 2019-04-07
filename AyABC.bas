@@ -15,9 +15,9 @@ Private Type A
 End Type
 Private X As A
 Friend Function Init(A, B, C) As AyABC
-ThwNotAy A, CSub
-ThwNotAy B, CSub
-ThwNotAy C, CSub
+ThwIfNotAy A, CSub
+ThwIfNotAy B, CSub
+ThwIfNotAy C, CSub
 With X
     .A = A
     .B = B

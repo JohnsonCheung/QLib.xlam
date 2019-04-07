@@ -11,7 +11,7 @@ PushNonBlankStr WhMthMdyPm, A.SwNm("Frd")
 End Function
 
 Function WhMthMdy(WhStr$) As String()
-WhMthMdy = WhMthMdyPm(LinPm(WhStr))
+WhMthMdy = WhMthMdyPm(LinPm(WhStr, C_WhMthSpec))
 End Function
 
 Function HitCmp(A As VBComponent, B As WhMd) As Boolean

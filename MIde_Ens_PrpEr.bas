@@ -1,145 +1,255 @@
 Attribute VB_Name = "MIde_Ens_PrpEr"
 Option Explicit
 Const CMod$ = "MIde_Ens_PrpEr."
+Private Const LinOfLblX$ = "X: Debug.Print CSub & "".PrpEr["" &  Err.Description & ""]"""
+Public Type TopRmkLyAaaMthLy
+    TopRmkLy() As String
+    MthLy() As String
+End Type
+Private Function HasLinExitAaaLblX(MthLy$(), LinOfExit) As Boolean
+Dim U&: U = UB(MthLy): If U < 2 Then Exit Function
+If MthLy(U - 1) <> LinOfLblX Then Exit Function
+If MthLy(U - 2) <> MthExitLin(MthLy(0)) Then Exit Function
+End Function
 
-Private Sub EnsLinzExit(A As CodeModule, PrpLno&)
-Const CSub$ = CMod & "EnsLinzExit"
-Dim L&
-L = LnozInsExit(A, PrpLno)
-If L = 0 Then Exit Sub
-A.InsertLines L, "Exit Property"
-Inf CSub, "Exit Property is inserted", "Md PrpLno At", MdNm(A), PrpLno, L
-End Sub
+Private Function InsLinExitAaaLblX(MthLy$(), LinOfExit$) As String()
+InsLinExitAaaLblX = AyInsAyAt(MthLy, Sy(LinOfExit, LinOfLblX), UB(MthLy))
+End Function
 
-Private Sub EnsLinzLblX(A As CodeModule, PrpLno&)
-Const CSub$ = CMod & "EnsLinzLblX"
-Dim E$, L%, ActLblXLin$, EndPrpLno&
-E = LinzLblX(A, PrpLno)
-L = LnozLblX(A, PrpLno)
-If L <> 0 Then
-    ActLblXLin = A.Lines(L, 1)
-End If
-If E <> ActLblXLin Then
-    If L = 0 Then
-        EndPrpLno = LnozEndPrp(A, PrpLno)
-        If EndPrpLno = 0 Then Stop
-        A.InsertLines EndPrpLno, E
-        Inf CSub, "Inserted [at] with [line]", EndPrpLno, E
-    Else
-        A.ReplaceLine L, E
-        Inf CSub, "Replaced [at] with [line]", L, E
+Private Function EnsLinExitAaaLblX(MthLy$(), LinOfExit$) As String()
+If HasLinExitAaaLblX(MthLy, LinOfExit) Then EnsLinExitAaaLblX = MthLy: Exit Function
+Dim O$():
+O = AyeEle(MthLy, LinOfExit)
+O = AyeEle(MthLy, LinOfLblX)
+EnsLinExitAaaLblX = InsLinExitAaaLblX(O, LinOfExit)
+End Function
+
+Function AyEnsEle(Ay, NeedDlt As Boolean, NeedIns As Boolean, NewEle, DltIx&, InsIx&)
+Dim O
+Select Case True
+Case NeedDlt And NeedIns: Asg NewEle, O(InsIx)
+Case NeedDlt:             O = AyeEleAt(Ay, DltIx)
+Case NeedIns:             O = AyInsEle(Ay, InsIx)
+End Select
+End Function
+Private Function RmvOnErGoNonX(MthLy$()) As String()
+Dim J&, I&
+For J = 0 To UB(MthLy)
+    If HasPfx(MthLy(J), "On Error Goto") Then
+        For I = J + 1 To UB(MthLy)
+            PushI RmvOnErGoNonX, MthLy(I)
+        Next
+        Exit Function
     End If
-End If
-End Sub
-
-Private Sub EnsPrpOnErzLno(A As CodeModule, PrpLno&)
-If HasSubStr(A.Lines(PrpLno, 1), "End Property") Then
-    Exit Sub
-End If
-EnsLinzLblX A, PrpLno
-EnsLinzExit A, PrpLno
-EnsLinzOnEr A, PrpLno
-End Sub
-
-Private Sub EnsLinzOnEr(A As CodeModule, PrpLno&)
-Const CSub$ = CMod & "EnsLinzOnEr"
-Dim L&
-L = IxOfOnEr(A, PrpLno)
-If L <> 0 Then Exit Sub
-A.InsertLines PrpLno + 1, "On Error Goto X"
-'If Trc Then Msg CSub, "Exit Property is inserted [at]", L
-End Sub
-
-Private Function LnozExit&(A As CodeModule, PrpLno)
-If HasSfx(A.Lines(PrpLno, 1), "End Property") Then Exit Function
-Dim J%, L$
-For J = PrpLno + 1 To A.CountOfLines
-    L = A.Lines(J, 1)
-    If HasPfx(L, "Exit Property") Then LnozExit = J: Exit Function
-    If HasPfx(L, "End Property") Then Exit Function
+    PushI RmvOnErGoNonX, MthLy(J)
 Next
-Stop
 End Function
 
-Private Function LnozInsExit&(A As CodeModule, PrpLno)
-If LnozExit(A, PrpLno) <> 0 Then Exit Function
-Dim L%
-L = LnozLblX(A, PrpLno)
-If L = 0 Then Stop
-LnozInsExit = L
+Private Function InsOnErGoX(MthLy$()) As String()
+InsOnErGoX = AyInsEle(MthLy, "On Error Goto X", NxtSrcIx(MthLy))
 End Function
 
-Private Function LinzLblX$(A As CodeModule, PrpLno)
-Dim Nm$, Lin$
-Lin = A.Lines(PrpLno, 1)
-Nm = PrpNm(Lin)
-If Nm = "" Then Stop
-LinzLblX = FmtQQ("X: Debug.Print ""?.?.PrpEr...[""; Err.Description; ""]""", MdNm(A), Nm)
+Private Function EnsLinzOnEr(MthLy$()) As String()
+Dim O$()
+O = RmvOnErGoNonX(MthLy)
+EnsLinzOnEr = InsOnErGoX(O)
+End Function
+Function MthEndLin$(MthLin)
+MthEndLin = MthXXXLin(MthLin, "End")
+End Function
+Function MthExitLin$(MthLin)
+MthExitLin = MthXXXLin(MthLin, "Exit")
+End Function
+Private Function MthXXXLin$(MthLin, XXX$)
+Dim X$: X = MthKd(MthLin): If X = "" Then Thw CSub, "Given Lin is not MthLin", "Lin", MthLin
+MthXXXLin = XXX & " " & X
 End Function
 
-Private Function LnozLblX&(A As CodeModule, PrpLno)
+Private Function IxOfExit&(MthLy$())
+Dim J&, LinOfExit$
+LinOfExit = "Exit " & MthKd(MthLy(0))
+For J = 0 To UB(MthLy)
+    If MthLy(J) = LinOfExit Then IxOfExit = J: Exit Function
+Next
+IxOfExit = -1
+End Function
+
+Private Function IxOfLblX&(MthLy$())
 Dim J&, L$
-For J = PrpLno + 1 To A.CountOfLines
-    L = A.Lines(J, 1)
-    If HasPfx(L, "X: Debug.Print") Then LnozLblX = J: Exit Function
-    If HasPfx(L, "End Property") Then Exit Function
+For J = 0 To UB(MthLy)
+    If HasPfx(MthLy(J), "X: Debug.Print") Then IxOfLblX = J: Exit Function
 Next
-Stop
+IxOfLblX = -1
 End Function
 
-Private Function IxOfOnEr&(A As CodeModule, PrpLno)
-Dim J%, L$
-For J = PrpLno + 1 To A.CountOfLines
-    L = A.Lines(J, 1)
-    If HasPfx(L, "On Error Goto X") Then IxOfOnEr = J: Exit Function
-    If HasPfx(L, "End Property") Then Exit Function
+Private Function IxOfOnEr&(PurePrpLy$())
+Dim J&
+For J = 0 To UB(PurePrpLy)
+    If HasPfx(PurePrpLy(J), "On Error Goto X") Then IxOfOnEr = J: Exit Function
 Next
-Stop '
+IxOfOnEr = -1
 End Function
 
-Private Function LnozEndPrp&(A As CodeModule, PrpLno)
-If HasSfx(A.Lines(PrpLno, 1), "End Property") Then LnozEndPrp = PrpLno: Exit Function
-Dim J%
-For J = PrpLno + 1 To A.CountOfLines
-    If HasPfx(A.Lines(J, 1), "End Property") Then LnozEndPrp = J: Exit Function
+Private Sub Z_EnsPrpOnerzSrc()
+Dim Src$()
+Const TstId% = 2
+GoSub ZZ
+'GoSub T1
+Exit Sub
+T1:
+    Src = TstLy(TstId, CSub, 1, "Pm-Src", IsEdt:=False)
+    Ept = TstLy(TstId, CSub, 1, "Ept", IsEdt:=False)
+    GoTo Tst
+    Return
+Tst:
+    Act = EnsPrpOnErzSrc(Src)
+    C
+    Return
+ZZ:
+    Src = CurSrc
+    Vc EnsPrpOnErzSrc(Src)
+    Return
+End Sub
+Private Function EnsPrpOnErzSrc(Src$()) As String()
+If Si(Src) = 0 Then Exit Function
+Dim D As Dictionary: Set D = MthDic(Src, WiTopRmk:=True)
+Dim MthNm, MthLin$, MthLyWiTopRmk$()
+Dim O$(): Erase O
+If D.Exists("*Dcl") Then
+    PushIAy O, SplitCrLf(D("*Dcl"))
+    D.Remove "*Dcl"
+End If
+
+For Each MthNm In D.Keys
+    MthLyWiTopRmk = SplitCrLf(D(MthNm))
+    PushI O, ""
+    With TopRmkLyAaaMthLy(MthLyWiTopRmk)
+        PushIAy O, .TopRmkLy
+        Dim MthLy$(): MthLy = .MthLy
+    End With
+    MthLin = ContLin(MthLy)
+    If IsPurePrpLin(MthLin) Then
+        PushIAy O, EnsOnEr(MthLy)
+    Else
+        PushIAy O, MthLy
+    End If
 Next
-Stop
+If Si(O) = 0 Then Thw CSub, "O$() should have something"
+EnsPrpOnErzSrc = O
 End Function
 
-Private Sub EnsPrpOnErzMd(A As CodeModule)
-Dim J%, L&()
-L = PurePrpLnoAy(A)
-ThwAyNotSrt L, CSub
-For J = UB(L) To 0 Step -1
-    EnsPrpOnErzLno A, L(J)
+Function TopRmkLyAaaMthLy(MthLyWiTopRmk$()) As TopRmkLyAaaMthLy
+Dim Lin, J&, TopRmkLy$(), MthLy$()
+For Each Lin In MthLyWiTopRmk
+    If FstChr(Lin) = "'" Then
+        PushI TopRmkLy, Lin
+    Else
+        MthLy = AywFmIx(MthLyWiTopRmk, J)
+        TopRmkLyAaaMthLy.TopRmkLy = TopRmkLy
+        TopRmkLyAaaMthLy.MthLy = MthLy
+        Exit Function
+    End If
 Next
+Thw CSub, "MthLyWiTopRmk is invalid, it does not have non remark line", "MthLyWiTopRmk", MthLyWiTopRmk
+End Function
+
+Sub Z_EnsprpOnErDiczPj()
+BrwDic EnsprpOnErDiczPj(CurPj)
 End Sub
 
-Private Sub RmvPrpOnErzLno(A As CodeModule, PrpLno&)
-RmvMdLno A, LnozExit(A, PrpLno)
-RmvMdLno A, IxOfOnEr(A, PrpLno)
-RmvMdLno A, LnozLblX(A, PrpLno)
+Function EnsprpOnErDiczPj(A As VBProject) As Dictionary
+Dim N$, Old$, S$(), C As VBComponent
+Dim O As New Dictionary
+For Each C In A.VBComponents
+    S = Src(C.CodeModule)
+    If Si(S) > 0 Then
+        Old = JnCrLf(S)
+        N = JnCrLf(EnsPrpOnErzSrc(S))
+        If Old <> N Then
+            O.Add C.Name, N
+        End If
+    End If
+Next
+Set EnsprpOnErDiczPj = O
+End Function
+
+Private Sub Z_EnsOnEr()
+Const TstId% = 1
+Const CSub$ = CMod & "Z_EnsOnEr"
+Dim MthLy$(), Cas$, IsEdt As Boolean
+GoSub T1
+GoSub T2
+Exit Sub
+T1:
+    Cas = "1"
+    WrtTstPth TstId, CSub
+    MthLy = TstLy(TstId, CSub, Cas, "Pm-MthLy", IsEdt:=False)
+    Ept = TstLy(TstId, CSub, Cas, "Ept", IsEdt:=False)
+    GoTo Tst
+T2:
+    Cas = "2"
+    WrtTstPth TstId, CSub
+    MthLy = TstLy(TstId, CSub, Cas, "Pm-MthLy", IsEdt:=False)
+    Ept = TstLy(TstId, CSub, Cas, "Ept", IsEdt:=False)
+    GoTo Tst
+Tst:
+    Act = EnsOnEr(MthLy)
+    C
+    Return
 End Sub
 
+Private Sub Z_IsSngLinMth()
+Dim MthLy$()
+GoSub T1
+Exit Sub
+T1:
+    MthLy = Sy("Function AA():End Function")
+    Ept = True
+    GoTo Tst
+Tst:
+    Act = IsSngLinMth(MthLy)
+    C
+    Return
+End Sub
+
+Function IsSngLinMth(MthLy$()) As Boolean
+If Si(MthLy) <> 1 Then Exit Function
+IsSngLinMth = HasSubStr(MthLy(0), "End " & MthKd(MthLy(0)))
+End Function
+
+Private Function EnsOnEr(MthLy$()) As String()
+If IsSngLinMth(MthLy) Then EnsOnEr = MthLy: Exit Function
+Dim O$(), LinOfExit$: LinOfExit = MthExitLin(MthLy(0))
+O = EnsLinExitAaaLblX(MthLy, LinOfExit)
+EnsOnEr = EnsLinzOnEr(O)
+End Function
+
+Private Function RmvPrpOnErzPurePrpLy(PurePrpLy$()) As String()
+Dim L&(): L = LngAy( _
+IxOfExit(PurePrpLy), _
+IxOfOnEr(PurePrpLy), _
+IxOfLblX(PurePrpLy))
+RmvPrpOnErzPurePrpLy = CvSy(AyeIxAy(PurePrpLy, L))
+End Function
+Private Function RmvPrpOnzSrc(Src$()) As String()
+
+End Function
 Private Sub RmvPrpOnErzMd(A As CodeModule)
-If A.Parent.Type <> vbext_ct_ClassModule Then Exit Sub
-Dim J%, L&()
-L = PurePrpLnoAy(A)
-If Not IsSrtAy(L) Then Stop
-For J = UB(L) To 0 Step -1
-    RmvPrpOnErzLno A, L(J)
-Next
+RplMd A, JnCrLf(RmvPrpOnzSrc(Src(A)))
 End Sub
 
 Sub RmvPrpOnErOfMd()
 RmvPrpOnErzMd CurMd
 End Sub
 
+Sub EnsPrpOnErzMd(A As CodeModule)
+RplMd A, JnCrLf(EnsPrpOnErzSrc(Src(A)))
+End Sub
+
 Sub EnsPrpOnErOfMd()
 EnsPrpOnErzMd CurMd
 End Sub
-Private Sub Z_EnsPrpOnErzMd()
-'EnsPrpOnErzMd ZZMd
-End Sub
+
+
 
 

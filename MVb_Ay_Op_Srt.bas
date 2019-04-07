@@ -115,7 +115,7 @@ Dim Ix&, V, J&
 Dim O: O = Ay: Erase O
 Push O, Ay(0)
 For J = 1 To UB(Ay)
-    O = AyInsItm(O, Ay(J), AySrt__Ix(O, Ay(J), Des))
+    O = AyInsEle(O, Ay(J), AySrt__Ix(O, Ay(J), Des))
 Next
 AySrt = O
 End Function
@@ -143,7 +143,7 @@ Dim Ix&, V, J&
 Dim O&():
 Push O, 0
 For J = 1 To UB(Ay)
-    O = AyInsItm(O, J, IxAyzAySrt_Ix(O, Ay, Ay(J), Des))
+    O = AyInsEle(O, J, IxAyzAySrt_Ix(O, Ay, Ay(J), Des))
 Next
 IxAyzAySrt = O
 End Function

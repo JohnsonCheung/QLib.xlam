@@ -133,7 +133,7 @@ OMthNmRst = OMthNm & L
 End Sub
 Private Function MthQidLin$(MthQMLin, Id$)
 Dim Ay$(): Ay = SplitDot(MthQMLin): If Si(Ay) < 6 Then Thw CSub, "MtQMLin should have at least 5 dots", "MthQMLin", MthQMLin
-Dim Ay1$(): Ay1 = AyInsItm(Ay, Id, 3)
+Dim Ay1$(): Ay1 = AyInsEle(Ay, Id, 3)
 MthQidLin = JnDot(Ay1)
 End Function
 

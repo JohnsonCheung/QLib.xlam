@@ -76,7 +76,7 @@ End Sub
 
 Private Sub MdGenErMsg(Md As CodeModule)  'eMthNmTy.eeNve
 Dim O$(): O = SrcGenErMsg(Src(Md)): 'Brw O: Stop 'Rmk: There is an error when Md is [MXls_Lof_ErzLof].  Er:CannotRmvMth:.
-MdRpl Md, JnCrLf(O)
+RplMd Md, JnCrLf(O)
 End Sub
 Private Sub Z_MdGenErMsg()
 MdGenErMsg Md("MXls_Lof_ErzLof")
@@ -168,12 +168,12 @@ Case Else: Thw CSub, "Error in MthFTIxAyzMth, it should return Sz of 0,1,2, but 
 End Select
 End Function
 
-Function MdRplMthDic(A As CodeModule, MthDic As Dictionary) As CodeModule
+Function RplMthDic(A As CodeModule, MthDic As Dictionary) As CodeModule
 Dim MthNm
 For Each MthNm In MthDic.Keys
-    MdRplMth A, MthNm, MthDic(MthNm)
+    RplMth A, MthNm, MthDic(MthNm)
 Next
-Set MdRplMthDic = A
+Set RplMthDic = A
 End Function
 
 Function MdRplConstDic(A As CodeModule, ConstDic As Dictionary) As CodeModule
@@ -218,7 +218,7 @@ Next
 Set MdLineszConst = EmpMdLines(A)
 End Function
 
-Sub MdRplLines(A As CodeModule, B As MdLines, NewLines, Optional LinesNm$ = "MdLines")
+Sub RplLines(A As CodeModule, B As MdLines, NewLines, Optional LinesNm$ = "MdLines")
 Dim OldLines$: If B.Count > 0 Then OldLines = A.Lines(B.StartLine, B.Count)
 If OldLines = NewLines Then
     Inf CSub, "Same " & LinesNm, "Md StartLine Count FstLin", MdNm(A), B.StartLine, B.Count, FstLin(B.Lines)
@@ -230,7 +230,7 @@ Inf CSub, LinesNm & " is replaced", "Md StartLines NewLinCnt OldLinCnt NewLines 
 End Sub
 
 Sub MdRplConst(A As CodeModule, ConstNm, NewLines)
-MdRplLines A, MdLineszConst(A, ConstNm), NewLines, "MdConst"
+RplLines A, MdLineszConst(A, ConstNm), NewLines, "MdConst"
 End Sub
 
 Private Property Get ErMthNmSet() As Aset

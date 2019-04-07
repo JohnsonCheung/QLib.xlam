@@ -23,7 +23,7 @@ If IsDigit(A) Then Exit Function
 IsNmChr = False
 End Function
 Function WhNmzStr(WhStr$, Optional NmPfx$) As WhNm
-Set WhNmzStr = LinPm(WhStr).WhNm(NmPfx)
+Set WhNmzStr = LinPm(WhStr, "-Sw Prv Pub Frd Sub Fun Prp Get Set Let WiRet WoRet").WhNm(NmPfx)
 End Function
 
 Function ChrQuote$(S, Chr$)

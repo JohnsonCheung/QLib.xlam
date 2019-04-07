@@ -10,8 +10,8 @@ If Si(Ay) = 0 Then Exit Function
 Asg Ay(0), FstEle
 End Function
 
-Function FstEleEv(A, V)
-If HasEle(A, V) Then FstEleEv = V
+Function FstEleEv(Ay, V)
+If HasEle(Ay, V) Then FstEleEv = V
 End Function
 
 Function FstEleLik$(A, Lik$)

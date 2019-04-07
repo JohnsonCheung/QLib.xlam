@@ -64,7 +64,22 @@ Case Else: O = "???"
 End Select
 ShtMthTy = O
 End Function
-Function ShtMthKdByShtMthTy$(ShtMthTy)
+Private Sub Z_ShtMthTyzLin()
+GoSub ZZ
+Exit Sub
+ZZ:
+    Dim O$(), Lin
+    For Each Lin In MthLinAyOfVbe
+        PushI O, ShtMthTyzLin(Lin)
+    Next
+    Brw O
+    Return
+End Sub
+Function ShtMthTyzLin$(Lin)
+ShtMthTyzLin = ShtMthTy(TakMthTy(RmvMthMdy(Lin)))
+End Function
+
+Function ShtMthKdzShtMthTy$(ShtMthTy)
 Dim O$
 Select Case ShtMthTy
 Case "Get": O = "Prp"
@@ -74,7 +89,7 @@ Case "Fun": O = "Fun"
 Case "Sub": O = "Sub"
 Case Else: O = "???"
 End Select
-ShtMthKdByShtMthTy = O
+ShtMthKdzShtMthTy = O
 End Function
 
 Function ShtMthKd$(MthKd)

@@ -11,7 +11,11 @@ Option Explicit
 Const CMod$ = "LinPm."
 Public Dic As Dictionary ' it is a SyDic
 
-Function Init(PmStr$) As LinPm
+Private Sub ThwIfPmStrEr(PmNmToPmValSyDic As Dictionary, LinPmSpec$)
+
+End Sub
+
+Function Init(PmStr$, LinPmSpec$) As LinPm
 Dic.RemoveAll
 Dim Ay$(): Ay = SySsl(PmStr)
     Dim I
@@ -25,6 +29,7 @@ Dim Ay$(): Ay = SySsl(PmStr)
         End If
     Next
 Set Init = Me
+ThwIfPmStrEr Dic, LinPmSpec
 End Function
 Private Sub PushPmNm(PmNm$)
 If Dic.Exists(PmNm) Then Exit Sub

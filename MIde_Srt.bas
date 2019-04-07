@@ -167,7 +167,7 @@ Sub RplPj(A As VBProject, MdDic As Dictionary)
 Dim MdNm
 For Each MdNm In MdDic.Keys
     If MdNm <> "MIde_Srt" Then
-        MdRpl MdzPj(A, MdNm), MdDic(MdNm)
+        RplMd MdzPj(A, MdNm), MdDic(MdNm)
     End If
 Next
 End Sub

@@ -8,6 +8,9 @@ Function SkFnyzTd(T As Dao.TableDef) As String()
 SkFnyzTd = FnyzIdx(SkIdxzTd(T))
 End Function
 
+Function SkSqlQPfxAy(A As Database, T) As String()
+Stop '
+End Function
 Function SkFny(A As Database, T) As String()
 SkFny = SkFnyzTd(A.TableDefs(T))
 End Function

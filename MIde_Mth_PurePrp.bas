@@ -36,13 +36,9 @@ For Each L In Itr(M)
 Next
 End Function
 
-Sub PurePrpPjBrw()
-Brw PurePrpLyPj
-End Sub
-
-Function PurePrpLyPj() As String()
-PurePrpLyPj = PurePrpLyzPj(CurPj)
-End Function
+Property Get PurePrpLyOfPj() As String()
+PurePrpLyOfPj = PurePrpLyzPj(CurPj)
+End Property
 
 Function PurePrpLyzPj(A As VBProject) As String()
 Dim L
@@ -50,36 +46,38 @@ For Each L In Itr(MthLinAyzPj(A))
     If IsPurePrpLin(L) Then PushI PurePrpLyzPj, L
 Next
 End Function
+
+Function PurePrpLyAyzPj(A As VBProject) As Variant()
+Dim Ly, C As VBComponent
+For Each C In A.VBComponents
+    For Each Ly In Itr(PurePrpLyAyzMd(C.Codmodule))
+        PushI PurePrpLyAyzPj, Ly
+    Next
+Next
+End Function
+
 Function PurePrpIxAy(Src$()) As Long()
 Dim Ix&
 For Ix = 0 To UB(Src)
-    If IsPrpLin(Src(Ix)) Then
+    If IsPurePrpLin(Src(Ix)) Then
         Push PurePrpIxAy, Ix
     End If
 Next
 End Function
 
-Function PurePrpLnoAy(A As CodeModule) As Long()
-Dim O&(), Lno&
-For Lno = 1 To A.CountOfLines
-    If IsPrpLin(A.Lines(Lno, 1)) Then
-        Push O, Lno
-    End If
-Next
-PurePrpLnoAy = O
+Function PurePrpLyAyzMd(A As CodeModule) As Variant()
+PurePrpLyAyzMd = PurePrpLyAyzSrc(Src(A))
 End Function
 
-Function PurePrpLy(A As CodeModule) As String()
-Dim O$(), Lno
-For Lno = 0 To Itr(PurePrpLnoAy(A))
-    Push O, A.Lines(Lno, 1)
+Function PurePrpLyAyzSrc(Src$()) As Variant()
+Dim Ix
+For Each Ix In Itr(PurePrpIxAy(Src))
+    PushI PurePrpLyAyzSrc, MthLyzSrcFm(Src, Ix)
 Next
-PurePrpLy = O
 End Function
-
 Function PurePrpNy(A As CodeModule) As String()
 Dim O$(), Lno
-For Each Lno In Itr(PurePrpLnoAy(A))
+For Each Lno In Itr(PurePrpIxAy(Src(A)))
     PushNoDup O, PrpNm(A.Lines(Lno, 1))
 Next
 PurePrpNy = O
@@ -104,16 +102,20 @@ End With
 End Function
 Function IsImPurePrpLin(Lin, LetSetPrpNset As Aset) As Boolean
 If Not MthTy(Lin) = "Property Get" Then Exit Function
+Stop
 If Not HasMthPm(Lin) Then Exit Function
 IsImPurePrpLin = Not LetSetPrpNset.Has(MthNm(Lin))
 End Function
 
 Function IsPurePrpLin(Lin) As Boolean
-If Not MthTy(Lin) = "Property Get" Then Exit Function
-If HasMthPm(Lin) Then Exit Function
-IsPurePrpLin = True
+Dim O As Boolean
+Select Case MthTy(Lin)
+Case "Property Get":  O = Not HasMthPm(Lin)
+End Select
+IsPurePrpLin = O
 End Function
+
 Function HasMthPm(MthLin) As Boolean
-HasMthPm = BetBkt(MthLin) <> ""
+HasMthPm = MthPm(MthLin) <> ""
 End Function
 

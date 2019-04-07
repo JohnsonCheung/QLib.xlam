@@ -25,7 +25,7 @@ Function LinesWrp$(Lines, Optional Wdt% = 80)
 LinesWrp = Lines: Exit Function
 LinesWrp = JnCrLf(LyWrp(SplitCrLf(Lines), Wdt))
 End Function
-Sub Z_LyWrp()
+Private Sub Z_LyWrp()
 Dim Ly$(), Wdt%
 GoSub T1
 Exit Sub
@@ -165,21 +165,21 @@ TrimR = TrimCrLfAtEnd(RTrim(S))
 End Function
 
 Function RLenOfCrLf%(S)
-Dim O%, J%
-For J = Len(S) To 1 Step -1
-    If IsCrLf(AscAt(S, J)) Then O = O + 1
-Next
 End Function
 
 Function AscAt%(S, Pos)
 AscAt = Asc(Mid(S, Pos, 1))
 End Function
 
-Function IsCrLf(Asc%)
-IsCrLf = Asc = 13 Or Asc = 10
+Function IsAscCrLf(Asc%)
+IsAscCrLf = (Asc = 13) Or (Asc = 10)
 End Function
+
 Function TrimCrLfAtEnd$(S)
-TrimCrLfAtEnd = RmvLasNChr(S, RLenOfCrLf(S))
+Dim J&
+For J = Len(S) To 1 Step -1
+    If Not IsAscCrLf(AscAt(S, J)) Then TrimCrLfAtEnd = Left(S, J): Exit Function
+Next
 End Function
 
 Function LasLinLines$(Lines)

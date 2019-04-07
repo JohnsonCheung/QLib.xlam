@@ -155,12 +155,14 @@ If ShouldIns(IsUsing, OldLin, NewLin) Then PushObj CSubActzSng, ActLin(eeInsLin,
 If ShouldDlt(IsUsing, OldLin, NewLin) Then PushObj CSubActzSng, ActLin(eeDltLin, Lno, OldLin)
 'StopEr ActMdEr(CSubActzSng)
 End Function
-
+Private Function MthLy(Src$(), A As MthRg) As String()
+MthLy = AywFT(Src, A.FmIx, A.ToIx)
+End Function
 Private Function CSubInf(Src$(), B As MthRg) As CSubInf
 With CSubInf
     Set .Lnx = CSubLnx(Src, B.FmIx, B.ToIx)
     .InsLno = InsLnoOfCSub(Src, B)
-    .IsUsingCSub = IsUsingCSub(Src, B)
+    .IsUsingCSub = IsUsingCSub(MthLy(Src, B))
     .MthNm = B.MthNm
 End With
 End Function
@@ -230,18 +232,15 @@ For J = 0 To CSubInfUB(A)
     End If
 Next
 End Function
-
-Private Function IsUsingCSub(Src$(), A As MthRg) As Boolean
-Const CSub$ = CMod & "IsUsingCSub"
-Dim J%
-With A
-    For J = .FmIx + 1 To .ToIx - 1
-        If HasSubStr(Src(J), "CSub, ") Then
-            IsUsingCSub = True
-            Exit Function
-        End If
-    Next
-End With
+Private Function IsUsingCSub(MthLy$()) As Boolean
+Dim L
+For Each L In Itr(MthLy)
+    If HasSubStr(L, "CSub, ") Then GoTo Yes
+    If HasSubStr(L, "(CSub") Then GoTo Yes
+Next
+Exit Function
+Yes:
+    IsUsingCSub = True
 End Function
 
 Private Sub Z_ActMdyAy01zEnsCSub()

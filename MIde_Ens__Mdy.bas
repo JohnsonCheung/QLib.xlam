@@ -28,7 +28,7 @@ Function SrcMdyLin(Src$(), B As ActLin) As String()
 Dim O$()
 Select Case B.Act
 Case eActLin.eeInsLin
-    SrcMdyLin = CvSy(AyInsItm(Src, B.Lin, B.Ix))
+    SrcMdyLin = CvSy(AyInsEle(Src, B.Lin, B.Ix))
 Case eActLin.eeDltLin
     If Src(B.Ix) <> B.Lin Then Stop
     SrcMdyLin = AyeEleAt(Src, B.Ix)
@@ -155,7 +155,7 @@ End Function
 
 Function MdMdy(A As CodeModule, B() As ActLin, Optional Silent As Boolean) As CodeModule
 Dim NewLines$: NewLines = JnCrLf(SrcMdy(Src(A), B)): 'Brw NewLines: Stop
-MdRpl A, NewLines
+RplMd A, NewLines
 End Function
 
 Private Sub PushActEr(O$(), Msg$, Ix, Cur As ActLin, Las As ActLin)

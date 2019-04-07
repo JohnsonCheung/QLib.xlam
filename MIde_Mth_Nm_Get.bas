@@ -3,10 +3,10 @@ Option Explicit
 Public Const DocOfDta_MthQVNm$ = "It is a String dervied from Nm.  Q for quoted.  V for verb.  It has 3 Patn: NoVerb-[#xxx], MidVerb-[xxx(vvv)xxx], FstVerb-[(vvv)xxx]."
 Public Const DocOfNmRul_FstVerbBeingDo1$ = "The Fun will not return any value"
 Public Const DocOfNmRul_FstVerbBeingDo2$ = "The Cmls aft Do is a verb"
-Sub Z_MthNsetOfVbeWiVerb()
+Private Sub Z_MthNsetOfVbeWiVerb()
 MthNsetOfVbeWiVerb.Srt.Vc
 End Sub
-Sub Z_DryOf_MthNm_Verb_OfVbe()
+Private Sub Z_DryOf_MthNm_Verb_OfVbe()
 BrwDry DryOf_MthNm_Verb_OfVbe
 End Sub
 Function DryOf_MthNm_Verb_OfVbe() As Variant()
@@ -16,7 +16,7 @@ For Each MthNm In Itr(MthNyOfVbe)
 Next
 DryOf_MthNm_Verb_OfVbe = DrywDist(ODry)
 End Function
-Sub Z_MthNsetOfVbeWoVerb()
+Private Sub Z_MthNsetOfVbeWoVerb()
 MthNsetOfVbeWoVerb.Srt.Vc
 End Sub
 

@@ -1,5 +1,6 @@
 Attribute VB_Name = "MIde_Wh"
 Option Explicit
+Public Const C_WhMthSpec$ = ""
 Function WhMthzPfx(WhMthNmPfx$, Optional InclPrv As Boolean) As WhMth
 
 End Function
@@ -9,7 +10,8 @@ End Function
 
 Function WhMthzStr(WhStr$) As WhMth
 Dim ShtMdy$(), ShtKd$()
-Dim A As LinPm: Set A = LinPm(WhStr)
+Const C$ = ""
+Dim A As LinPm: Set A = LinPm(WhStr, C)
 With A
     PushNonBlankStr ShtMdy, .SwNm("Pub")
     PushNonBlankStr ShtMdy, .SwNm("Prv")
@@ -60,7 +62,7 @@ Set WhMd = New WhMd
 WhMd.Init CmpTy, Nm
 End Function
 Function WhMdzStr(WhStr$) As WhMd
-With LinPm(WhStr)
+With LinPm(WhStr, C_WhMthSpec)
     Dim CmpTy() As vbext_ComponentType
     If .HasSw("Cls") Then PushI CmpTy, vbext_ct_ClassModule
     If .HasSw("Mod") Then PushI CmpTy, vbext_ct_StdModule

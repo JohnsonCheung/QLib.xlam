@@ -39,9 +39,13 @@ End Select
 End Sub
 Private Sub ThwIfNEAy(AyA, AyB, ANm$, BNm$)
 ThwDifSz AyA, AyB, ANm, BNm
-Dim J&, X
-For Each X In Itr(AyA)
-    If Not IsEq(X, AyB(J)) Then Thw CSub, "2 ay ele are diff", "[Ty / Si / Dif-At] Ay-?-Ele-Ty Ay-?-Ele-Ty Ay-?-Ele Ay-?-Ele", ANm, BNm, ANm, BNm, TypeName(AyA), Si(AyA), J
+ThwDifTy AyA, AyB, ANm, BNm
+Dim J&, A
+For Each A In Itr(AyA)
+    If Not IsEq(A, AyB(J)) Then
+        Dim NN$: NN = FmtQQ("AyTy AySi Dif-At Ay-?-Ele-?-Ty Ay-?-Ele-?-Ty Ay-?-Ele-Val Ay-?-Ele-Val Ay-? Ay-?", ANm, J, BNm, J, ANm, BNm, ANm, BNm)
+        Thw CSub, "There is ele in 2 Ay are diff", NN, TypeName(AyA), Si(AyA), J, TypeName(A), TypeName(AyB(J)), A, AyB(J), AyA, AyB
+    End If
     J = J + 1
 Next
 End Sub
@@ -54,7 +58,8 @@ End Sub
 
 Sub ThwDifSz(A, B, Optional ANm$ = "A", Optional BNm$ = "B")
 If Si(A) = Si(B) Then Exit Sub
-Thw CSub, "Two ay has dif sz", "AyNm Si Ty Ay-? Ay-?", ANm & " / " & BNm, Si(A) & " / " & Si(B), TypeName(A) & " / " & TypeName(B), A, B
+Dim NN$: NN = FmtQQ("AyNm Si Ty Ay-? Ay-?", ANm, BNm)
+Thw CSub, "Two ay has dif sz", NN, ANm & " / " & BNm, Si(A) & " / " & Si(B), TypeName(A) & " / " & TypeName(B), A, B
 End Sub
 
 Sub ThwNotExistFfn(Ffn$, Fun$, Optional FilKd$ = "file")
@@ -94,7 +99,7 @@ Sub ThwNothing(A, Fun$)
 If IsNothing(A) Then Exit Sub
 Thw Fun, "Given parameter should be array, but now TypeName=" & TypeName(A)
 End Sub
-Sub ThwNotAy(A, Fun$)
+Sub ThwIfNotAy(A, Fun$)
 If IsArray(A) Then Exit Sub
 Thw Fun, "Given parameter should be array, but now TypeName=" & TypeName(A)
 End Sub

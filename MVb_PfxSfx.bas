@@ -62,10 +62,10 @@ AyIsAllEleHitPfx = True
 End Function
 
 
-Function AyAddCommaSpcSfxExlLas(A) As String()
+Function AyAddCommaSpcSfxExlLas(Ay) As String()
 Dim X, J, U%
-U = UB(A)
-For Each X In Itr(A)
+U = UB(Ay)
+For Each X In Itr(Ay)
     If J = U Then
         Push AyAddCommaSpcSfxExlLas, X
     Else
@@ -74,8 +74,8 @@ For Each X In Itr(A)
     J = J + 1
 Next
 End Function
-Function TakSfxChr$(A, SfxChrLis$, Optional IsCasSen As Boolean)
-If HasSfxChrLis(A, SfxChrLis, IsCasSen) Then TakSfxChr = LasChr(A)
+Function TakSfxChr$(S, SfxChrLis$, Optional IsCasSen As Boolean)
+If HasSfxChrLis(S, SfxChrLis, IsCasSen) Then TakSfxChr = LasChr(S)
 End Function
 
 Function HasSfxChrLis(A, SfxChrLis$, Optional IsCasSen As Boolean) As Boolean
@@ -84,11 +84,11 @@ For J = 1 To Len(SfxChrLis)
     If HasSfx(A, Mid(SfxChrLis, J, 1), IsCasSen) Then HasSfxChrLis = True: Exit Function
 Next
 End Function
-Function HasPfx(A, Pfx, Optional IsCasSen As Boolean) As Boolean
-HasPfx = StrComp(Left(A, Len(Pfx)), Pfx, IsCasSen) = 0
+Function HasPfx(S, Pfx, Optional IsCasSen As Boolean) As Boolean
+HasPfx = StrComp(Left(S, Len(Pfx)), Pfx, IsCasSen) = 0
 End Function
-Function HasSfx(A, Sfx, Optional IsCasSen As Boolean) As Boolean
-HasSfx = StrEq(Right(A, Len(Sfx)), Sfx, IsCasSen) = 0
+Function HasSfx(S, Sfx, Optional IsCasSen As Boolean) As Boolean
+HasSfx = StrEq(Right(S, Len(Sfx)), Sfx, IsCasSen) = 0
 End Function
 Function StrEq(A, B, Optional IsCasSen) As Boolean
 StrEq = StrComp(A, B, IIf(IsCasSen, VbCompareMethod.vbBinaryCompare, vbTextCompare))

@@ -1,6 +1,16 @@
 Attribute VB_Name = "MVb_Tst"
 Option Explicit
 Public Act, Ept, Dbg As Boolean, Trc As Boolean
+Function TstHom$()
+TstHom = TstHomOfPj
+End Function
+Function TstHomOfPj$()
+Static X$: If X = "" Then X = TstHomzPj(CurPj)
+TstHomOfPj = X
+End Function
+Function TstHomzPj$(A As VBProject)
+TstHomzPj = AddFdrEns(Srcp(A), ".TstRes")
+End Function
 Sub StopNE()
 If Not IsEq(Act, Ept) Then Stop
 End Sub
@@ -11,43 +21,93 @@ Else
     ThwIfNE A, E, "Act", "Ept"
 End If
 End Sub
-
-Sub BrwTstPth(Fun$, Cas$)
-BrwPth TstPth(Fun, Cas)
-End Sub
-
-Private Function TstPth$(Fun$, Cas$)
-TstPth = TstHom & JnPthSepAp(Replace(Fun, ".", PthSep), Cas) & PthSep
+Function TstCasPth$(TstId%, Cas$)
+TstCasPth = AddFdrEns(TstPth(TstId), "Cas-" & Cas)
 End Function
 
-Property Get TstHom$()
-Static X$
-Dim P$
-P = Pth(Application.Vbe.ActiveVBProject.Filename)
-If X = "" Then X = PthEns(P & "TstRes\")
-TstHom = X
-End Property
+Sub BrwTstPth(TstId%, Optional Cas$)
+If Cas = "" Then
+    BrwPth TstCasPth(TstId, Cas)
+Else
+    BrwPth TstPth(TstId)
+End If
+End Sub
+
+Function TstPth$(TstId%)
+TstPth = AddFdrEns(TstHom, Pad0(TstId, 4))
+End Function
+Private Function TstIdFt$(TstId%)
+TstIdFt = TstPth(TstId) & "TstId.Txt"
+End Function
+Sub BrwTstIdPth(TstId%)
+BrwPth TstPth(TstId)
+End Sub
 
 Sub BrwTstHom()
 BrwPth TstHom
 End Sub
-
+Function NxtIdFdr$(Pth$, Optional NDig% = 4) '
+Dim J%, F$
+ThwNoPth Pth, CSub
+If NDig < 0 Then Thw CSub, "NDig should between 1 to 5", "NDig", NDig
+For J = 1 To Val(Left("99999", NDig))
+    F = Pad0(J, NDig)
+    If Not HasFdr(Pth, F) Then NxtIdFdr = F: Exit Function
+Next
+Thw CSub, "IdFdr is full in Pth", "Pth NDig", "Pth NDig", Pth, NDig
+End Function
+Function NxtTstId%()
+NxtTstId = NxtIdFdr(TstHom, 4)
+End Function
 Sub ShwTstOk(Fun$, Cas$)
 Debug.Print "Tst OK | "; Fun; " | Case "; Cas
 End Sub
 
-Function TstTxt$(Fun$, Cas$, Itm$, Optional IsEdt As Boolean)
-If IsEdt Then
-    EdtTstTxt Fun, Cas, Itm
-    Exit Function
-End If
-TstTxt = FtLines(TstFt(Fun, Cas, Itm))
+Function TstLy(TstId%, Fun$, Cas$, Itm$, Optional IsEdt As Boolean) As String()
+TstLy = SplitCrLf(TstTxt(TstId, Fun, Cas, Itm, IsEdt))
 End Function
-
-Sub EdtTstTxt(Fun$, Cas$, Itm$)
-BrwFt TstFt(Fun, Cas, Itm)
+Private Function TstIdStr$(TstId%, Fun$)
+TstIdStr = "TstId=" & TstId & ";CSub=" & Fun
+End Function
+Sub WrtTstPth(TstId%, Fun$)
+Dim F$: F = TstIdFt(TstId)
+Dim IdStr$: IdStr = TstIdStr(TstId, Fun)
+Dim Exist As Boolean
+Exist = HasFfn(F)
+Select Case True
+Case (Exist And TrimCrLfAtEnd(FtLines(F)) <> IdStr) Or Not Exist
+    WrtStr TstIdStr(TstId, Fun), F
+End Select
 End Sub
-
-Private Function TstFt$(Fun$, Cas$, Itm$)
-TstFt = PthEnsAll(TstPth(Fun, Cas) & Itm & ".txt")
+Sub EnsTstPth(TstId%, Fun$)
+Dim F$: F = TstIdFt(TstId)
+Dim IdStr$: IdStr = TstIdStr(TstId, Fun)
+Dim Exist As Boolean
+Exist = HasFfn(F)
+Select Case True
+Case Exist And TrimCrLfAtEnd(FtLines(F)) <> IdStr
+    Thw CSub, "TstIdStr in TstIdFt is not expected", "TstIdFt Expected-TstIdStr Actual-TstIdStr-in-TstIdFt", F, IdStr, FtLines(F)
+Case Exist:
+Case Else
+    WrtStr TstIdStr(TstId, Fun), F
+End Select
+End Sub
+Function TstTxt$(TstId%, Fun$, Cas$, Itm$, Optional IsEdt As Boolean)
+EnsTstPth TstId, Fun
+Dim F$: F = TstFt(TstId, Cas, Itm)
+Dim Exist As Boolean: Exist = HasFfn(F)
+Select Case True
+Case Not Exist: BrwFt EnsFfn(F): Stop
+Case IsEdt:     BrwFt F:         Stop
+End Select
+TstTxt = FtLines(F)
 End Function
+
+Private Function TstFt$(TstId%, Cas$, Itm$)
+TstFt = TstFfn(TstId, Cas, Itm & ".Txt")
+End Function
+
+Private Function TstFfn$(TstId%, Cas$, Fn$)
+TstFfn = TstCasPth(TstId, Cas) & Fn
+End Function
+

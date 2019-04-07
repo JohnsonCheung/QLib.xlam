@@ -36,6 +36,4 @@ For J = Lno To 1 Step -1
         Exit Function
     End If
 Next
-End Function
-
-
+End Property

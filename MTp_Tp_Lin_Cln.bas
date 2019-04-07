@@ -26,7 +26,7 @@ For Each L In Ly
 Next
 If Si(O) > 0 Then
     O = AyAddPfx(AyQuoteSq(O), Space(4))
-    O = AyInsItm(O, FmtQQ("Following lines have invalid T1.  Valid T1 are [?]", JnSpc(T1Ay)))
+    O = AyInsEle(O, FmtQQ("Following lines have invalid T1.  Valid T1 are [?]", JnSpc(T1Ay)))
 End If
 ErzT1 = O
 End Function

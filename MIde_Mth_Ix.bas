@@ -21,9 +21,9 @@ Dim O&
 For O = FmIx + 1 To UB(Src)
    If HasPfx(Src(O), C) Then EndLinIx = O: Exit Function
 Next
-EndLinIx = -1
+Thw CSub, "Cannot find EndLin", "EndLin FmIx Src", C, FmIx, Src
 End Function
-Function MthIx&(Src$(), MthNm$)
+Function MthIx&(Src$(), MthNm)
 Dim Ix
 For Ix = 0 To UB(Src)
     If IsMthLinzNm(Src(Ix), MthNm) Then

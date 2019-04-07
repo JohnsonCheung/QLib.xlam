@@ -7,9 +7,14 @@ With A
     .DeleteLines 1, .CountOfLines
 End With
 End Sub
-
-Sub MdRmvFTIxAy(A As CodeModule, B() As FTIx)
-If Not FTIxAyIsInOrd(B) Then Stop
+Function LyzFTIxAy(A() As FTIx) As String()
+Dim J%
+For J = 0 To UB(A)
+    PushI LyzFTIxAy, J & " " & A(J).ToStr
+Next
+End Function
+Sub RmvFTIxAy(A As CodeModule, B() As FTIx)
+If Not FTIxAyIsInOrd(B) Then Thw CSub, "Given FTIxAy is not in order", "FTIxAy", LyzFTIxAy(B)
 Dim J%
 For J = UB(B) To 0 Step -1
     With B(J)
@@ -26,8 +31,8 @@ Function MdLineszMd(A As CodeModule) As MdLines
 Set MdLineszMd = MdLines(1, SrcLines(A))
 End Function
 
-Sub MdRpl(A As CodeModule, NewMdLines$)
-MdRplLines A, MdLineszMd(A), NewMdLines, "Whole-Md"
+Sub RplMd(A As CodeModule, NewMdLines$)
+RplLines A, MdLineszMd(A), NewMdLines, "Whole-Md"
 End Sub
 
 Sub RmvMdFTIx(A As CodeModule, FTIx As FTIx)

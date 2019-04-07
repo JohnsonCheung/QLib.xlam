@@ -43,9 +43,10 @@ CdLyzPushStr = O
 End Function
 
 Private Sub Z_ConstPrpLines()
+Const TstId% = 2
+Const CSub$ = CMod & "Z_ConstPrpLines"
 GoSub ZZ
 Exit Sub
-Const CSub$ = CMod & "Z_ConstPrpLines"
 GoSub T0
 GoSub T1
 GoSub T2
@@ -57,8 +58,8 @@ T0:
     Cas = "Complex1"
     IsEdt = False
     Nm = "ZZ_B"
-    ConstVal = TstTxt(CSub, Cas, "ConstVal", IsEdt)
-    Ept = TstTxt(CSub, "Complex1", "Ept", IsEdt)
+    ConstVal = TstTxt(TstId, CSub, Cas, "ConstVal", IsEdt:=False)
+    Ept = TstTxt(TstId, CSub, "Complex1", "Ept", IsEdt)
     IsPub = True
     GoTo Tst
 
@@ -69,7 +70,7 @@ T1:
     Stop
     Nm = "ZZ_A"
     IsPub = True
-    Ept = TstTxt(CSub, "Complex", "Ept", IsEdt)
+    Ept = TstTxt(TstId, CSub, "Complex", "Ept", IsEdt)
     GoTo Tst
 
 T2:

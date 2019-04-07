@@ -87,7 +87,7 @@ End Function
 Function DryInsColzV(A(), V, Optional At& = 0) As Variant()
 Dim Dr
 For Each Dr In Itr(A)
-    PushI DryInsColzV, AyInsItm(Dr, V, At)
+    PushI DryInsColzV, AyInsEle(Dr, V, At)
 Next
 End Function
 

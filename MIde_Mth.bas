@@ -25,16 +25,15 @@ For Each Ix In Itr(MthIxAyzNm(S, MthNm))
 Next
 End Function
 
-Function MdRplMth(Md As CodeModule, MthNm, ByLines) As CodeModule
-Dim M() As MdLines: M = MdLinesAyzMth(Md, MthNm)
-Select Case Si(M)
-Case 0: MdApdLines Md, ByLines: InfLin CSub, "MthNm is added", "Md Mth MthLinCntSz", MdNm(Md), MthNm, CntSzStrzLines(ByLines)
-Case 1: MdRplLines Md, M(0), ByLines, "MthLines"
-Case 2: MdRplLines Md, M(0), ByLines, "MthLines": Md.DeleteLines M(1).StartLine, M(1).Count
-Case Else: Thw CSub, "Er in MdLinesAyzMth.  It should return Si of 0,1 or 2", "But-Now-It-Return-Si", Si(M)
-End Select
-Set MdRplMth = Md
-End Function
+Sub RplMth(Md As CodeModule, MthNm, ByLines)
+Dim Ix&: Ix = MthIx(Src(Md), MthNm)
+RmvMth Md, MthNm
+If Ix = -1 Then
+    Md.AddFromString ByLines
+Else
+    Md.InsertLines Ix + 1, ByLines
+End If
+End Sub
 
 Private Sub Z()
 Z_MthFTixAyzMth

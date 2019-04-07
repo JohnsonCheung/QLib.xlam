@@ -9,13 +9,13 @@ Asg V2, O(At + 1)
 AyInsVVAt = O
 End Function
 Function AyIns(Ay)
-AyIns = AyInsItm(Ay, Empty)
+AyIns = AyInsEle(Ay, Empty)
 End Function
 
-Function AyInsItm(Ay, Itm, Optional At& = 0)
-AyInsItm = AyInsAyAt(Ay, Array(Itm), At)
+Function AyInsEle(Ay, Ele, Optional At& = 0)
+AyInsEle = AyInsAyAt(Ay, Array(Ele), At)
 End Function
-Private Sub Z_AyInsItmAt()
+Private Sub Z_AyInsEleAt()
 Dim A(), M, At&
 '--
 A = Array(1, 2, 3, 4, 5)
@@ -26,7 +26,7 @@ GoSub Tst
 '
 Exit Sub
 Tst:
-'    Act = AyInsItmAt(A, M, At)
+'    Act = AyInsEleAt(A, M, At)
     C
     Return
 End Sub

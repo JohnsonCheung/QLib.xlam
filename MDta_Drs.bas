@@ -31,11 +31,11 @@ If HidIxCol Then
 End If
 
 Dim Fny$()
-    Fny = AyInsItm(A.Fny, "Ix")
+    Fny = AyInsEle(A.Fny, "Ix")
 Dim Dry()
     Dim J&, I, Dr
     For Each I In Itr(A.Dry)
-        Dr = AyInsItm(I, J): J = J + 1
+        Dr = AyInsEle(I, J): J = J + 1
         Push Dry, Dr
     Next
 Set DrsAddIxCol = Drs(Fny, Dry)
@@ -92,7 +92,7 @@ Set DtDrsDtnm = Dt(DtNm, A.Fny, A.Dry)
 End Function
 
 Function DrsInsCV(A As Drs, C$, V) As Drs
-Set DrsInsCV = Drs(AyInsItm(A.Fny, C), DryInsColzV(A.Dry, V, IxzAy(A.Fny, C)))
+Set DrsInsCV = Drs(AyInsEle(A.Fny, C), DryInsColzV(A.Dry, V, IxzAy(A.Fny, C)))
 End Function
 
 Function DrsInsCVAft(A As Drs, C$, V, AftFldNm$) As Drs
@@ -110,7 +110,7 @@ Ix = IxzAy(Fny, C): If Ix = -1 Then Stop
 If IsAft Then
     Ix = Ix + 1
 End If
-Fny1 = AyInsItm(Fny, FldNm, CLng(Ix))
+Fny1 = AyInsEle(Fny, FldNm, CLng(Ix))
 Dry = DryInsColzV(A.Dry, V, Ix)
 Set DrsInsCVIsAftFld = Drs(Fny1, Dry)
 End Function

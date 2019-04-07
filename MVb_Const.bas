@@ -1,5 +1,9 @@
 Attribute VB_Name = "MVb_Const"
 Option Explicit
+Public Const DoczOfLimPmSpec$ = "It is lin with 3 Pm: [-Sw xx -Sng xx -Mul xx].  Where -Sw xx are allowed switch.  " & _
+"Where -Sng xx are allowed single-value Pm.  " & _
+"Where -Mul xx are allowed multiple-value Pm.  " & _
+"Where xx are PmNm."
 Public Const vbOpnBkt$ = "("
 Public Const vbDblQuote$ = """"
 Public Const vbTwoDblQuote$ = vbDblQuote & vbDblQuote
@@ -84,7 +88,7 @@ Set A = Interaction.CreateObject("{00024500-0000-0000-C000-000000000046}", "Exce
 Stop
 End Sub
 
-Function LinPm(PmStr$) As LinPm
+Function LinPm(PmStr$, LinPmSpec$) As LinPm
 Dim O As New LinPm
-Set LinPm = O.Init(PmStr)
+Set LinPm = O.Init(PmStr, LinPmSpec)
 End Function

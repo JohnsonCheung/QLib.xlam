@@ -9,7 +9,7 @@ SrcpzCmp = Srcp(PjzCmp(A))
 End Function
 
 Function SrcpzPjf$(Pjf)
-SrcpzPjf = AddFdr(Pth(Pjf), ".src", Fn(Pjf))
+SrcpzPjf = AddFdrEns(Pth(Pjf), ".Src", Fn(Pjf))
 End Function
 
 Function SrcpzEns$(A As VBProject)
@@ -18,7 +18,7 @@ End Function
 
 Function SrcpzDistPj$(DistPj As VBProject)
 Dim P$: P = PjPth(DistPj)
-SrcpzDistPj = AddFdr(PthUp(P, 2), ".src", Fdr(P))
+SrcpzDistPj = AddFdr(PthUp(P, 2), ".Src", Fdr(P))
 End Function
 
 Function PthRmvFdr$(Pth)
@@ -28,7 +28,9 @@ End Function
 Function FfnUp$(Ffn)
 FfnUp = PthRmvFdr(Pth(Ffn))
 End Function
-
+Function SrcpOfPj$()
+SrcpOfPj = Srcp(CurPj)
+End Function
 Function Srcp$(A As VBProject)
 Srcp = SrcpzPjf(Pjf(A))
 End Function

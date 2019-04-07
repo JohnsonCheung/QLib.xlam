@@ -61,7 +61,7 @@ End Sub
 Function WrtStr$(Str, Ft, Optional OvrWrt As Boolean)
 If OvrWrt Then DltFfnIf Ft
 Dim Fno%: Fno = FnoOup(Ft)
-Print #Fno, Str
+Print #Fno, Str;
 Close #Fno
 WrtStr = Ft
 End Function

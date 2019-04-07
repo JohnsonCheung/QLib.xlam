@@ -22,13 +22,14 @@ Case D1 = D2: Exit Sub
 Case D2 > D1: Stop
 End Select
 Stop '
-IupDbt MthDb, "MthCache", MthDrszPjf(Pjf, FmtQQ("Pjf='?'", Pjf))
+IupDbt MthDbOfPj, "MthCache", MthDrszPjf(Pjf, FmtQQ("Pjf='?'", Pjf))
 End Sub
-Sub ThwIfDrsGoodToIupDbt(Drs As Drs, Db As Database, T)
+Sub ThwIfDrsGoodToIupDbt(Fun$, Drs As Drs, Db As Database, T)
 
 End Sub
 
-Function BexprzFnyWiSqlQuMk(FNyWiSqlQuMk$())
+Function BexprzFnyzSqlQPfxAy$(Fny$(), SqlQPfxAy$())
+
 End Function
 Function SqlQuMk$(A As Dao.DataTypeEnum)
 Select Case A
@@ -53,20 +54,20 @@ Case Else
     Thw CSub, "Invalid DaoTy", "DaoTy", A
 End Select
 End Function
-Function SkFnyWiSqlQuMkPfx(A As Database, T) As String()
+Function SkFnyWiSqlQPfx(A As Database, T) As String()
 Dim F
 For Each F In Itr(SkFny(A, T))
-    PushI SkFnyWiSqlQuMkPfx, SqlQuMk(DaoTyzTF(A, T, F)) & F
+    PushI SkFnyWiSqlQPfx, SqlQuMk(DaoTyzTF(A, T, F)) & F
 Next
 End Function
 Sub IupDbt(A As Database, T, Drs As Drs)
 Dim Dry(): Dry = Drs.Dry
 If Si(Dry) = 0 Then Exit Sub
 ThwIfDrsGoodToIupDbt CSub, Drs, A, T
-Dim R As Dao.Recordset, Q$, Sql$
-Sql = SqlSel_T_Wh(T, BexprzFnyWiSqlQuMkPfx(SkFnyWiSqlQuMkPfx(A, T)))
+Dim R As Dao.Recordset, Q$, Sql$, Dr
+Sql = SqlSel_T_Wh(T, BexprzFnyzSqlQPfxAy(SkFny(A, T), SkSqlQPfxAy(A, T)))
 For Each Dr In Dry
-    Q = FmtQQAv(Sql, Dr)
+    Q = FmtQQAv(Sql, CvAv(Dr))
     Set R = Rs(A, Q)
     If HasRec(R) Then
         UpdRs R, Dr

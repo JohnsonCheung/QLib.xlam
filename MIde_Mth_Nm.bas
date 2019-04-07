@@ -52,12 +52,6 @@ For Each I In Itr(MthLinAy)
     J = J + 1
 Next
 End Function
-Function Ens1Dot(S) As StrRslt
-Select Case DotCnt(S)
-Case 0: Ens1Dot = StrRslt("." & S)
-Case 1: Ens1Dot = StrRslt(S)
-End Select
-End Function
 Function Ens2Dot(S) As StrRslt
 Select Case DotCnt(S)
 Case 0: Ens2Dot = StrRslt(".." & S)
@@ -107,14 +101,13 @@ Next
 End Function
 
 
-
-Function MthNm3(Lin, Optional B As WhMth) As MthNm3
-Dim L$: L = Lin
+Function MthNm3(MthLin, Optional B As WhMth) As MthNm3
+Dim L$: L = MthLin
 Dim O As New MthNm3
 With O
     .MthMdy = ShfMthMdy(L)
     .MthTy = ShfMthTy(L)
-    If .MthTy = "" Then Set MthNm3 = O: Exit Function
+    If .MthTy = "" Then Thw CSub, "Given MthLin is not MthLin", "MthLin", MthLin
     .Nm = TakNm(L)
 End With
 If HitMthNm3(O, B) Then
@@ -125,8 +118,10 @@ End If
 End Function
 
 Function MthNm$(Lin, Optional B As WhMth)
+If Not IsMthLin(Lin) Then Exit Function
 MthNm = MthNm3(Lin, B).Nm
 End Function
+
 Function MthNmzMthDNm$(MthDNm)
 If MthDNm = "*Dcl" Then MthNmzMthDNm = MthDNm: Exit Function
 Dim A$()
@@ -245,7 +240,7 @@ Next
 End Function
 
 Function MthTy$(Lin)
-MthTy = TermLinAy(RmvMdy(Lin), MthTyAy)
+MthTy = PfxzPfxAyPlusSpc(RmvMthMdy(Lin), MthTyAy)
 End Function
 
 Private Sub Z_MthTy()

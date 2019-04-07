@@ -255,7 +255,7 @@ LgPth = Y
 End Property
 
 Sub FTIxDmp(A As FTIx)
-Debug.Print FTIxStr(A)
+Debug.Print A.ToStr
 End Sub
 
 Sub SessBrw(Optional A&)

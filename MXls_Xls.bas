@@ -1,11 +1,12 @@
 Attribute VB_Name = "MXls_Xls"
 Option Explicit
-Private Sub Z_XlszGetObj()
-Debug.Print XlszGetObj.Name
+Public Const XlsPgmFfn$ = "C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE"
+Private Sub Z_XlsOfGetObj()
+Debug.Print XlsOfGetObj.Name
 End Sub
 
-Function XlszGetObj() As Excel.Application
-Set XlszGetObj = GetObject("C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE")
+Function XlsOfGetObj() As Excel.Application
+Set XlsOfGetObj = GetObject(XlsPgmFfn)
 End Function
 
 Function Xls() As Excel.Application

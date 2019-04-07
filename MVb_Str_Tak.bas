@@ -135,29 +135,25 @@ Function TakPfx$(Lin, Pfx$) ' Return [Pfx] if [Lin] has such pfx else return ""
 If HasPfx(Lin, Pfx) Then TakPfx = Pfx
 End Function
 
-Function PfxAyFstSpc$(PfxAy$(), Lin) ' Return Fst ele-P of [PfxAy] if [Lin] has pfx ele-P and a space
+Function TakPfxzAySpc$(Lin, PfxAy$()) ' Return Fst ele-P of [PfxAy] if [Lin] has pfx ele-P and a space
 Dim P
 For Each P In PfxAy
-    If HasPfx(Lin, P & " ") Then PfxAyFstSpc = P: Exit Function
+    If HasPfx(Lin, P & " ") Then TakPfxzAySpc = P: Exit Function
 Next
 End Function
 
-Function PfxLinAy$(A, PfxAy$()) ' Return Fst ele-P of [PfxAy] if [Lin] has pfx ele-P
+Function TakPfxzAy$(Lin, PfxAy$()) ' Return Fst ele-P of [PfxAy] if [Lin] has pfx ele-P
 Dim P
 For Each P In PfxAy
-    If HasPfx(A, P) Then PfxLinAy = P: Exit Function
+    If HasPfx(Lin, P) Then TakPfxzAy = P: Exit Function
 Next
 End Function
 
-Function SfxLinAy$(A, SfxAy$()) ' Return Fst ele-P of [PfxAy] if [Lin] has pfx ele-P
+Function TakSfxzAy$(Lin, SfxAy$()) ' Return Fst ele-P of [PfxAy] if [Lin] has pfx ele-P
 Dim S
 For Each S In SfxAy
-    If HasSfx(A, S) Then SfxLinAy = S: Exit Function
+    If HasSfx(Lin, S) Then TakSfxzAy = S: Exit Function
 Next
-End Function
-
-Function TermLinAy$(Lin, PfxAy$()) ' Return Fst ele-P of [PfxAy] if [Lin] has pfx ele-P and a space
-TermLinAy = PfxAyFstSpc$(PfxAy, Lin)
 End Function
 
 Function TakPfxS$(Lin, Pfx$) ' Return [Pfx] if [Lin] has such pfx+" " else return ""

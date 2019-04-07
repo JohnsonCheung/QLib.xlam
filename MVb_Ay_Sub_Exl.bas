@@ -50,7 +50,7 @@ Function AyeDotLin(A) As String()
 AyeDotLin = AywPredFalse(A, "IsDotLin")
 End Function
 
-Function AyeEle(A, Ele)
+Function AyeEle(A, Ele) 'Rmv Fst-Ele eq to Ele from Ay
 Dim Ix&: Ix = IxzAy(A, Ele): If Ix = -1 Then AyeEle = A: Exit Function
 AyeEle = AyeEleAt(A, IxzAy(A, Ele))
 End Function

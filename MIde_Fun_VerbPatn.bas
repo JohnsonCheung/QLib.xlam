@@ -14,7 +14,7 @@ For Each MthNm In Itr(MthNyOfVbe)
     PushI MthVNyOfVbe, MthVNm(MthNm)
 Next
 End Property
-Sub Z_MthVNsetOfVbe()
+Private Sub Z_MthVNsetOfVbe()
 MthVNsetOfVbe.Srt.Vc
 End Sub
 Property Get MthDNmToMdDNmRelOfVbe() As Rel

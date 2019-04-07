@@ -20,12 +20,29 @@ End Function
 Function HasLinT1Ay(Lin, T1Ay$()) As Boolean
 HasLinT1Ay = HasEle(T1Ay, T1(Lin))
 End Function
-
-Function PfxLinAp(A, ParamArray PfxAp())
-Dim Av(): Av = PfxAp
+Function PfxzPfxAy(S, PfxAy)
 Dim X
-For Each X In Av
-    If HasPfx(A, X) Then PfxLinAp = X: Exit Function
+ThwIfNotAy PfxAy, CSub
+For Each X In PfxAy
+    If HasPfx(S, X) Then PfxzPfxAy = X: Exit Function
 Next
+End Function
+
+Function PfxzPfxAyPlusSpc(S, PfxAy)
+Dim X
+ThwIfNotAy PfxAy, CSub
+For Each X In PfxAy
+    If HasPfx(S, X & " ") Then PfxzPfxAyPlusSpc = X: Exit Function
+Next
+End Function
+
+Function PfxzPfxApPlusSpc(S, ParamArray PfxAp())
+Dim Av(): Av = PfxAp
+PfxzPfxApPlusSpc = PfxzPfxAyPlusSpc(S, Av)
+End Function
+
+Function PfxzPfxAp(S, ParamArray PfxAp())
+Dim Av(): Av = PfxAp
+PfxzPfxAp = PfxzPfxAy(S, Av)
 End Function
 

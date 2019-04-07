@@ -1,6 +1,7 @@
 Attribute VB_Name = "MIde_Md"
 Option Explicit
 Const CMod$ = "MIde_Md."
+Public Const DoczMdDic$ = "It is from Pj. Key is MdNm and Val is MdLines"
 Property Get CurMd() As CodeModule
 Set CurMd = CurCdPne.CodeModule
 End Property
@@ -81,6 +82,16 @@ Dim D As Dictionary: Set D = DicExlKeySet(MthNmDic(Src), MthNmSet): 'Brw D: Stop
 SrcRmvMth = LyzLinesDicItems(D)
 End Function
 
+Function MdDicOfPj() As Dictionary
+Set MdDicOfPj = MdDic(CurPj)
+End Function
+Function MdDic(A As VBProject) As Dictionary
+Dim C As VBComponent
+Set MdDic = New Dictionary
+For Each C In A.VBComponents
+    MdDic.Add C.Name, SrcLines(C.CodeModule)
+Next
+End Function
 Function SrcLines$(A As CodeModule)
 SrcLines = JnCrLf(Src(A))
 End Function
