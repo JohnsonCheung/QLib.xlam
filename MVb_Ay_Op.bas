@@ -72,12 +72,12 @@ Next
 MaxAy = O
 End Function
 
-Function Ny(A) As String()
+Function Ny(Ssl_or_Ny) As String()
 Const CSub$ = CMod & "Ny"
 Select Case True
-Case IsStr(A): Ny = SySsl(A)
-Case IsSy(A): Ny = A
-Case Else: ThwPmEr A, CSub, "Should be Str or Sy"
+Case IsStr(Ssl_or_Ny): Ny = SySsl(Ssl_or_Ny)
+Case IsSy(Ssl_or_Ny): Ny = Ssl_or_Ny
+Case Else: ThwPmEr Ssl_or_Ny, CSub, "Should be Str or Sy"
 End Select
 End Function
 
@@ -107,17 +107,17 @@ Case Else: CvSy = Sy(CStr(A))
 End Select
 End Function
 
-Function SyShow(XX$, Sy$()) As String()
+Function SyShow(xx$, Sy$()) As String()
 Dim O$()
 Select Case Si(Sy)
 Case 0
-    Push O, XX & "()"
+    Push O, xx & "()"
 Case 1
-    Push O, XX & "(" & Sy(0) & ")"
+    Push O, xx & "(" & Sy(0) & ")"
 Case Else
-    Push O, XX & "("
+    Push O, xx & "("
     PushAy O, Sy
-    Push O, XX & ")"
+    Push O, xx & ")"
 End Select
 SyShow = O
 End Function
@@ -127,7 +127,7 @@ Dim A
 Dim B()
 Dim C$
 Dim D$()
-Dim XX
+Dim xx
 NyzNN A
 CvSy A
 Sy B

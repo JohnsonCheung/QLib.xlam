@@ -21,7 +21,7 @@ RfFfn = Mid(RfLin, P + 1)
 End Function
 
 Function HasRfFfn(A As VBProject, RfFfn) As Boolean
-Dim R As Vbide.Reference
+Dim R As VBIDE.Reference
 For Each R In A.References
     If R.FullPath = RfFfn Then HasRfFfn = True: Exit Function
 Next
@@ -38,13 +38,13 @@ Function RfSrcPj() As String()
 RfSrcPj = RfSrczPj(CurPj)
 End Function
 Function RfSrczPj(A As VBProject) As String()
-Dim R As Vbide.Reference
+Dim R As VBIDE.Reference
 For Each R In A.References
     PushI RfSrczPj, RfLin(R)
 Next
 End Function
 
-Function RfLin$(A As Vbide.Reference)
+Function RfLin$(A As VBIDE.Reference)
 With A
 RfLin = JnSpc(Av(.Name, .Guid, .Major, .Minor, .FullPath))
 End With

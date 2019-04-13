@@ -29,10 +29,10 @@ End Function
 Function DupMthQNyGp_IsVdt(A) As Boolean
 If Not IsSy(A) Then Exit Function
 If Si(A) <= 1 Then Exit Function
-Dim N$: N = Brk(A(0), ":").S1
+Dim N$: N = Brk(A(0), ":").s1
 Dim J%
 For J = 1 To UB(A)
-    If N <> Brk(A(J), ":").S1 Then Exit Function
+    If N <> Brk(A(J), ":").s1 Then Exit Function
 Next
 DupMthQNyGp_IsVdt = True
 End Function
@@ -46,15 +46,8 @@ Next
 DupMthQNyGpAyAllSameCnt = O
 End Function
 
-Function DupPjLinesIdMthNy(A As VBProject) As String()
-Dim Dic As New Dictionary, N
-Dim M
-'For Each N In Itr(PjDupMthNy(A))
-'    PushI DupPjLinesIdMthNy, N & "." & X1(A, N, Dic)
-'Next
-End Function
-Function DupMthQNmDrsPj() As Drs
-Set DupMthQNmDrsPj = DupMthQNmDrszPj(CurPj)
+Function DupMthQNmDrsInPj() As Drs
+Set DupMthQNmDrsInPj = DupMthQNmDrszPj(CurPj)
 End Function
 
 Function DupMthQNmDrszPj(A As VBProject) As Drs

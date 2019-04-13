@@ -29,25 +29,28 @@ End Function
 
 Function MthTopRmkIx&(Src$(), MthFmIx)
 Dim J&, L
+MthTopRmkIx = MthFmIx
 If MthFmIx = 0 Then Exit Function
-
 For J = MthFmIx - 1 To 0 Step -1
-    L = Src(J)
-    If IsCdLin(L) Then
-        MthTopRmkIx = J + 1
-        Exit Function
-    End If
-Next
-MthTopRmkIx = -1
-End Function
-Function MthTopRmkLnoMdFm&(Md As CodeModule, MthLno)
-Dim J&, L
-For J = MthLno To 1 Step -1
-    L = Md.Lines(J, 1)
-    If IsCdLin(L) Then
-        MthTopRmkLnoMdFm = J - 1
-        Exit Function
-    End If
+    L = LTrim(Src(J))
+    Select Case True
+    Case L = ""
+    Case FstChr(L) = "'": MthTopRmkIx = J
+    Case Else: Exit Function
+    End Select
 Next
 End Function
 
+Function MthTopRmkLno&(Md As CodeModule, MthLno)
+Dim J&, L
+MthTopRmkLno = MthLno
+If MthLno = 0 Then Exit Function
+For J = MthLno - 1 To 1 Step -1
+    L = LTrim(Md.Lines(J, 1))
+    Select Case True
+    Case L = ""
+    Case FstChr(L) = "'": MthTopRmkLno = J
+    Case Else: Exit Function
+    End Select
+Next
+End Function

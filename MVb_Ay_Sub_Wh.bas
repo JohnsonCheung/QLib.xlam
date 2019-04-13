@@ -1,7 +1,7 @@
 Attribute VB_Name = "MVb_Ay_Sub_Wh"
 Option Explicit
 
-Sub AyDupAss(A, Fun$, Optional IgnCas As Boolean)
+Sub AssAyDup(A, Fun$, Optional IgnCas As Boolean)
 ' If there are 2 ele with same string (IgnCas), throw error
 Dim Dup$()
     Dup = AywDup(A, IgnCas)
@@ -118,6 +118,13 @@ For Each Ix In Itr(IxAy)
     Push O, Ay(Ix)
 Next
 AywIxAyzMust = O
+End Function
+Function AywInAset(Ay, A As Aset)
+AywInAset = AyCln(Ay)
+Dim I
+For Each I In Itr(Ay)
+    If A.Has(I) Then Push AywInAset, I
+Next
 End Function
 Function AywIxAy(A, IxAy)
 Dim U&: U = UB(A)
@@ -443,7 +450,7 @@ Dim F$()
 Dim G As WhNm
 Dim H()
 Dim I As RegExp
-AyDupAss A, B
+AssAyDup A, B
 AywDist A, C
 FmtCntDic A
 SyzDistAy A

@@ -1,27 +1,26 @@
 Attribute VB_Name = "MDta_Drs_Dup"
 Option Explicit
 Function DrswDup(A As Drs, FF) As Drs
-Set DrswDup = DrswRowIxAy(A, RowIxAyzDupzDrs(A, FF))
+Set DrswDup = DrswRowIxAy(A, RowIxAyOfDupRow(A, FF))
 End Function
 
 Function DrseDup(A As Drs, FF) As Drs
-Dim RowIxAy&(): RowIxAy = RowIxAyzDupzDrs(A, FF)
+Dim RowIxAy&(): RowIxAy = RowIxAyOfDupRow(A, FF)
 Set DrseDup = DrseRowIxAy(A, RowIxAy)
 End Function
 
-Private Function RowIxAyzDupzDrs(A As Drs, FF) As Long()
+Private Function RowIxAyOfDupRow(A As Drs, FF) As Long()
 Dim Fny$(): Fny = NyzNN(FF)
 If Si(Fny) = 1 Then
-    RowIxAyzDupzDrs = IxAyzDup(ColzDrs(A, Fny(0)))
+    RowIxAyOfDupRow = IxAyzDup(ColzDrs(A, Fny(0)))
     Exit Function
 End If
 Dim ColIxAy&(): ColIxAy = IxAy(A.Fny, Fny, ThwNotFnd:=True)
 Dim Dry(): Dry = DrySel(A.Dry, ColIxAy)
-RowIxAyzDupzDrs = RowIxAyzDupzDry(Dry)
+RowIxAyOfDupRow = RowIxAyzOfDupzDry(Dry)
 End Function
 
-Private Function RowIxAyzDupzDry(Dry()) As Long()
-Stop
+Private Function RowIxAyzOfDupzDry(Dry()) As Long()
 Dim DupD(): DupD = DrywDup(Dry)
 Dim Dr, Ix&, O&()
 For Each Dr In Dry
@@ -29,7 +28,7 @@ For Each Dr In Dry
     Ix = Ix + 1
 Next
 If Si(O) < Si(DupD) * 2 Then Stop
-RowIxAyzDupzDry = O
+RowIxAyzOfDupzDry = O
 End Function
 
 Function DrywDup(Dry()) As Variant()
@@ -82,10 +81,10 @@ For J = 0 To UB(OCnt)
 Next
 End Function
 
-Private Function IxOptzDryDr(Dry(), Dr) As LngRslt
+Private Function IxOptzDryDr(Dry(), Dr) As LngOpt
 Dim IDr, Ix&
 For Each IDr In Itr(Dry)
-    If IsEqAy(IDr, Dr) Then IxOptzDryDr = LngRslt(Ix): Exit Function
+    If IsEqAy(IDr, Dr) Then IxOptzDryDr = SomLng(Ix): Exit Function
     Ix = Ix + 1
 Next
 End Function
@@ -103,7 +102,7 @@ Tst:
     Return
 End Sub
 '======================================================================
-Private Function RowIxAyzDupzDryColIx(Dry(), ColIx&) As Long()
+Private Function RowIxAyzOfDupzDryColIx(Dry(), ColIx&) As Long()
 Dim D As New Dictionary, FstIx&, V, O As New Rel, Ix&, I
 For Ix = 0 To UB(Dry)
     V = Dry(Ix)(ColIx)
@@ -115,11 +114,11 @@ For Ix = 0 To UB(Dry)
     End If
 Next
 For Each I In O.SetOfPar.Itms
-    PushIAy RowIxAyzDupzDryColIx, O.ParChd(I).Av
+    PushIAy RowIxAyzOfDupzDryColIx, O.ParChd(I).Av
 Next
 End Function
 
-Private Sub Z_RowIxAyzDupzDryColIx()
+Private Sub Z_RowIxAyzOfDupzDryColIx()
 Dim Dry(), ColIx&, Act&(), Ept&()
 GoSub T0
 Exit Sub
@@ -129,7 +128,7 @@ T0:
     Ept = LngAy(0, 1)
     GoTo Tst
 Tst:
-    Act = RowIxAyzDupzDryColIx(Dry, ColIx)
+    Act = RowIxAyzOfDupzDryColIx(Dry, ColIx)
     If Not IsEqAy(Act, Ept) Then Stop
     C
     Return

@@ -8,41 +8,41 @@ Static X As Aset
 If IsNothing(X) Then Set X = AsetzSsl(C_BRKCmlss)
 Set BRKCmlASet = X
 End Property
-Property Get MthVNyOfVbe() As String()
+Property Get MthVNyInVbe() As String()
 Dim MthNm
-For Each MthNm In Itr(MthNyOfVbe)
-    PushI MthVNyOfVbe, MthVNm(MthNm)
+For Each MthNm In Itr(MthNyInVbe)
+    PushI MthVNyInVbe, MthVNm(MthNm)
 Next
 End Property
-Private Sub Z_MthVNsetOfVbe()
-MthVNsetOfVbe.Srt.Vc
+Private Sub Z_MthVNsetInVbe()
+MthVNsetInVbe.Srt.Vc
 End Sub
-Property Get MthDNmToMdDNmRelOfVbe() As Rel
-Set MthDNmToMdDNmRelOfVbe = MthDNmToMdDNmRelzVbe(CurVbe)
+Property Get MthDNmToMdDNmRelInVbe() As Rel
+Set MthDNmToMdDNmRelInVbe = MthDNmToMdDNmRelzVbe(CurVbe)
 End Property
 
 Private Function MthDNmToMdDNmRelzVbe(A As Vbe) As Rel
 Set MthDNmToMdDNmRelzVbe = RelzDotLy(MthQNyzVbe(A))
 End Function
-Property Get MthVNsetOfVbe() As Aset
-Set MthVNsetOfVbe = AsetzAy(MthVNyOfVbe)
+Property Get MthVNsetInVbe() As Aset
+Set MthVNsetInVbe = AsetzAy(MthVNyInVbe)
 End Property
 
-Function MthQVNsetOfVbe(Optional WhStr$) As Aset
-Dim Ay$(): Ay = MthQVNyOfVbe(WhStr)
-Set MthQVNsetOfVbe = AsetzAy(Ay)
+Function MthQVNsetInVbe(Optional WhStr$) As Aset
+Dim Ay$(): Ay = MthQVNyInVbe(WhStr)
+Set MthQVNsetInVbe = AsetzAy(Ay)
 End Function
 
-Sub VcMthQVNsetOfVbe(Optional WhStr$)
-MthQVNsetOfVbe(WhStr).Srt.Vc
+Sub VcMthQVNsetInVbe(Optional WhStr$)
+MthQVNsetInVbe(WhStr).Srt.Vc
 End Sub
 
-Sub VcMthQVNyOfVbe(Optional WhStr$)
-Vc AyQSrt(MthQVNyOfVbe(WhStr))
+Sub VcMthQVNyInVbe(Optional WhStr$)
+AsetzAy(MthQVNyInVbe(WhStr)).Srt.Vc
 End Sub
 
-Function MthQVNyOfVbe(Optional WhStr$) As String()
-MthQVNyOfVbe = MthQVNyzVbe(CurVbe, WhStr)
+Function MthQVNyInVbe(Optional WhStr$) As String() '6204
+MthQVNyInVbe = MthQVNyzVbe(CurVbe, WhStr)
 End Function
 
 Function MthQVNyzVbe(A As Vbe, Optional WhStr$) As String()
@@ -74,7 +74,7 @@ If V = "" Then
     QVBNm = "#" & QBNm(Nm)
 Else
     With Brk(Nm, V)
-    QVBNm = QBNm(.S1) & QuoteSq(V) & QBNm(.S2)
+    QVBNm = QBNm(.s1) & QuoteSq(V) & QBNm(.s2)
     End With
 End If
 End Function
@@ -97,14 +97,14 @@ End Property
 Sub BrwVerb()
 Vc SySsl(C_VerbSs)
 End Sub
-Sub VcNVTDNmAsetOfVbe()
-NVTDNmAsetOfVbe.Srt.Vc
+Sub VcNVTDNmAsetInVbe()
+NVTDNmAsetInVbe.Srt.Vc
 End Sub
-Property Get NVTDNmAsetOfVbe() As Aset
-Set NVTDNmAsetOfVbe = AsetzAy(NVTDNyOfVbe)
+Property Get NVTDNmAsetInVbe() As Aset
+Set NVTDNmAsetInVbe = AsetzAy(NVTDNyInVbe)
 End Property
-Property Get NVTDNyOfVbe() As String()
-NVTDNyOfVbe = NVTDNyzVbe(CurVbe)
+Property Get NVTDNyInVbe() As String()
+NVTDNyInVbe = NVTDNyzVbe(CurVbe)
 End Property
 Private Function NVTDNyzVbe(A As Vbe) As String()
 NVTDNyzVbe = NVTDNy(MthNyzVbe(A))
@@ -118,7 +118,7 @@ End Function
 Private Function NVTDNm$(Nm) 'Nm.Verb.Ty.Dot-Nm
 NVTDNm = NVTy(Nm) & "." & Nm
 End Function
-Function FstVerbSubNyOfVbe() As String()
+Function FstVerbSubNyInVbe() As String()
 
 End Function
 Function NVTy$(Nm) 'Nm.Verb-Ty
@@ -178,7 +178,7 @@ Dim O$(), Verb
 For Each Verb In AsetzAy(SySsl(Verbss)).Itms
     PushI O, PatnzVerb(Verb)
 Next
-PatnzVerbss = QuoteBkt(JnVbar(O))
+PatnzVerbss = QuoteBkt(JnVBar(O))
 End Function
 
 Private Function PatnzVerb$(Verb)

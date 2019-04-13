@@ -51,13 +51,13 @@ Else
     Next
 End If
 End Function
-Function MthIxzSrcNmTy(Src$(), MthNm, ShtMthTy$) As LngRslt
+Function MthIxzSrcNmTy(Src$(), MthNm, ShtMthTy$) As LngOpt
 Dim Ix&
 For Ix = 0 To UB(Src)
     With MthNm3(Src(Ix))
         If .Nm = MthNm Then
             If .ShtTy = ShtMthTy Then
-                MthIxzSrcNmTy = LngRslt(CLng(Ix))
+                MthIxzSrcNmTy = SomLng(CLng(Ix))
                 Exit Function
             End If
         End If
@@ -99,11 +99,11 @@ Function MthToIx&(Src$(), MthIx)
 MthToIx = EndLinIx(Src, MthKd(Src(MthIx)), MthIx)
 End Function
 
-Function FstMthLnoMd&(Md As CodeModule)
+Function FstMthLnozMd&(Md As CodeModule)
 Dim J&
 For J = 1 To Md.CountOfLines
    If IsMthLin(Md.Lines(J, 1)) Then
-       FstMthLnoMd = J
+       FstMthLnozMd = J
        Exit Function
    End If
 Next

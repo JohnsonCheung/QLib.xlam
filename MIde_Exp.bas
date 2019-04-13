@@ -12,7 +12,7 @@ Dim Ffn
 For Each Ffn In Itr(FfnAy(ExpgPth))
     ExpPjf Ffn, Xls, Acs
 Next
-XlsQuit Xls
+QuitXls Xls
 AcsQuit Acs
 Stamp "ExpExpg: End"
 End Sub
@@ -45,7 +45,7 @@ Dim A As Excel.Application: Set A = DftXls(Xls)
 A.Workbooks.Open Fxa
 Dim Pj As VBProject: Set Pj = A.Vbe.ActiveVBProject
 PjExp Pj
-If IsNothing(Xls) Then XlsQuit A
+If IsNothing(Xls) Then QuitXls A
 End Sub
 
 Sub ExpPj()

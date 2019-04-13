@@ -2,7 +2,7 @@ Attribute VB_Name = "MVb_Ay_Vbl"
 Option Explicit
 
 Function SyzVbl(Vbl) As String()
-SyzVbl = SplitVbar(Vbl)
+SyzVbl = SplitVBar(Vbl)
 End Function
 Function ItrVbl(Vbl)
 ItrVbl = Itr(SyzVbl(Vbl))

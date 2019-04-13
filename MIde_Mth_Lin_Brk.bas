@@ -52,8 +52,8 @@ M = ShfTermDot(L)
 MthFLin = JnDotAp(P, T, M, MthFLinzMthLin(L))
 End Function
 
-Function MthFLyOfVbe(Optional WhStr$) As String()
-MthFLyOfVbe = MthFLyzVbe(CurVbe, WhStr)
+Function MthFLyInVbe(Optional WhStr$) As String()
+MthFLyInVbe = MthFLyzVbe(CurVbe, WhStr)
 End Function
 
 Function MthFLyzVbe(A As Vbe, Optional WhStr$) As String()
@@ -86,8 +86,8 @@ Else
 End If
 End Function
 
-Function ShtRetTyAsetOfVbe(Optional WhStr$) As Aset
-Set ShtRetTyAsetOfVbe = ShtRetTyAsetzVbe(CurVbe, WhStr)
+Function ShtRetTyAsetInVbe(Optional WhStr$) As Aset
+Set ShtRetTyAsetInVbe = ShtRetTyAsetzVbe(CurVbe, WhStr)
 End Function
 
 Function ShtRetTyAsetzVbe(A As Vbe, Optional WhStr$) As Aset

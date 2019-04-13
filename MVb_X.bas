@@ -1,14 +1,14 @@
 Attribute VB_Name = "MVb_X"
 Option Explicit
-Public XX$()
+Public xx$()
 Sub X(S$)
-Push XX, S
+Push xx, S
 End Sub
 Sub X0(S$)
-If Si(XX) = 0 Then PushI XX, S: Exit Sub
+If Si(xx) = 0 Then PushI xx, S: Exit Sub
 X1 S
 End Sub
 Sub X1(S$)
-Dim U&: U = UB(XX)
-XX(U) = XX(U) & S
+Dim U&: U = UB(xx)
+xx(U) = xx(U) & S
 End Sub

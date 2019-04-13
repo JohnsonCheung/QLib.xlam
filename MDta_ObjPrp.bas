@@ -1,21 +1,22 @@
 Attribute VB_Name = "MDta_ObjPrp"
 Option Explicit
-Function DrszItrPP(Itr, PP_MayWith_NewFldEqQuoteFmFld$) As Drs
-Dim A$(): A = SySsl(PP_MayWith_NewFldEqQuoteFmFld)
-Dim PPzPrp$()
-Dim PPzFml$()
-Dim PPzAll$()
-WAsg3PP PP_MayWith_NewFldEqQuoteFmFld, PPzPrp, PPzFml, PPzAll
-ThwEr WFmlEr(PPzPrp, PPzFml), CSub
-Dim Drs1 As Drs: Set Drs1 = DrszItrPPzPure(Itr, PPzPrp)
+Sub AX()
+Dim B
+Set B = CurPj
 Stop
-Dim Drs2 As Drs: Set Drs2 = DrsAddFml(Drs1, PPzFml)
-Set DrszItrPP = DrsSel(Drs2, PPzAll)
-Stop
+End Sub
+Function DrszItr(Itr, PP$) As Drs
+Dim PrpPthAy$(): PrpPthAy = Ny(PP)
+Set DrszItr = Drs(PrpPthAy, DryzItr(Itr, PrpPthAy))
 End Function
 
-Function DrszOyPP(Oy, PP_MayWith_NewFldEqQuoteFmFld$) As Drs
-Set DrszOyPP = DrszItrPP(Itr(Oy), PP_MayWith_NewFldEqQuoteFmFld)
+Function DrszItrpp(Itr, PP) As Drs
+Dim A$(): A = NyzNN(PP)
+Set DrszItrpp = Drs(A, DryzItr(Itr, A))
+End Function
+
+Function DrszOypp(Oy, PP) As Drs
+Set DrszOypp = DrszItrpp(Itr(Oy), PP)
 End Function
 
 Private Function WFmlEr(PrpAy$(), PPzFml$()) As String()
@@ -67,28 +68,22 @@ Next
 Set AddColzFmlDrs = Drs(AyAddItm(A.Fny, NewFld), Dry)
 End Function
 
-Private Function DrszItrPPzPure(Oy, PP) As Drs
-Set DrszItrPPzPure = Drs(PP, DryzItrPPzPure(Oy, PP))
-End Function
-
-Private Function DryzItrPPzPure(Itr, PP) As Variant()
-Dim U%, I
-Dim PrpNy$()
-PrpNy = NyzNN(PP)
-For Each I In Itr
-    Push DryzItrPPzPure, DrzObjPrpNy(I, PrpNy)
+Private Function DryzItr(Itr, PrpPthAy$()) As Variant()
+Dim Obj
+For Each Obj In Itr
+    Push DryzItr, DrzObj(Obj, PrpPthAy)
 Next
 End Function
 
-Private Sub Z_DrszItrPP()
+Private Sub Z_DrszItrpp()
 'BrwDrs DrszItrPP(Excel.Application.Addins, "Name Installed IsOpen FullName CLSId ")
 'BrwDrs DrszItrPP(Fds(Db(SampFbzDutyDta), "Permit"), "Name Type Required")
 'BrwDrs ItrPrpDrs(Application.VBE.VBProjects, "Name Type")
-BrwDrs DrszItrPP(CurPj.VBComponents, "Name Type CmpTy=ShpCmpTy(Type)")
+BrwDrs DrszItrpp(CurPj.VBComponents, "Name Type CmpTy=ShpCmpTy(Type)")
 End Sub
 
 Private Sub Z()
-Z_DrszItrPP
-MDta_ObjPrp:
+Z_DrszItrpp
+MDta_Prp:
 End Sub
 

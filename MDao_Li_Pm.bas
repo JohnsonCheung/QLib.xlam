@@ -49,7 +49,7 @@ Private Function FxcAy(T$) As LiFxc()
 FxcAy = LiFxcAyLnkColAy(AywRmvTT(A, "WsCol", T))
 End Function
 Function SampLiPmSrc() As String()
-Erase XX
+Erase xx
 X "LiPm ShpCst"
 X "Fil MB52 C:\Users\user\Desktop\MHD\SAPAccessReports\StockShipCost\Sample\MB52 2018-07-30.xls"
 X "Fil UOM  C:\Users\user\Desktop\MHD\SAPAccessReports\StockShipCost\Sample\sales text.xlsx"
@@ -77,8 +77,8 @@ X "WsCol MB52 Whs    M Plant"
 X "WsCol MB52 QInsp  D In Quality Insp#"
 X "WsCol MB52 QUnRes D Unrestricted"
 X "WsCol MB52 QBlk   D Blocked"
-SampLiPmSrc = XX
-Erase XX
+SampLiPmSrc = xx
+Erase xx
 End Function
 Private Function LtPmAyFx(A() As LiFx, FfnDic As Dictionary) As LtPm()
 Dim J%, Fx$, M As LtPm

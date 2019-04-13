@@ -118,7 +118,7 @@ Dim ExprVblAy$()
     Push ExprVblAy, "1lskdf|sdlkfjsdfkl sldkjf sldkfj|lskdjf|lskdjfdf"
     Push ExprVblAy, "2dfkl sldkjf sldkdjf|lskdjfdf"
     Push ExprVblAy, "3sldkfjsdf"
-DmpAy SplitVbar(SqpGp_ExprVblAy(ExprVblAy))
+DmpAy SplitVBar(SqpGp_ExprVblAy(ExprVblAy))
 End Sub
 
 Function WdtLines%(Lines)
@@ -238,7 +238,7 @@ Dim Vbl$
         If J = 0 Then P = "|  Set" Else P = ""
 '        Push Ay1, VblAlign(Ay(J), Pfx:=P, IdentOpt:=6)
     Next
-    Vbl = JnVbar(Ay1)
+    Vbl = JnVBar(Ay1)
 SqpSet_FF_Ey = Vbl
 End Function
 
@@ -342,7 +342,7 @@ Private Sub Z_SqpWhFldInVy_StrSqpAy()
 End Sub
 
 Function VblFmtAyAsLines$(ExprVblAy$(), Optional Pfx$, Optional IdentOpt%, Optional SfxAy, Optional Sep$ = ",")
-VblFmtAyAsLines = JnVbar(VblFmtAyAsLy(ExprVblAy, Pfx, IdentOpt, SfxAy, Sep))
+VblFmtAyAsLines = JnVBar(VblFmtAyAsLy(ExprVblAy, Pfx, IdentOpt, SfxAy, Sep))
 End Function
 
 Function VblFmtAyAsLy(ExprVblAy$(), Optional Pfx$, Optional IdentOpt%, Optional SfxAyOpt, Optional Sep$ = ",") As String()

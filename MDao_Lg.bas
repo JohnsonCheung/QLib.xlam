@@ -54,7 +54,7 @@ With L.TableDefs("Msg").OpenRecordset
 End With
 End Sub
 
-Private Sub Ens_Sess()
+Private Sub EnsSess()
 If X_Sess > 0 Then Exit Sub
 With L.TableDefs("Sess").OpenRecordset
     .AddNew
@@ -88,7 +88,7 @@ Stop
 End Property
 
 Sub Lg(Fun$, MsgTxt$, ParamArray Ap())
-Ens_Sess
+EnsSess
 EnsMsg Fun, MsgTxt
 WrtLg Fun, MsgTxt
 Dim Av(): Av = Ap

@@ -95,7 +95,7 @@ End Sub
 Sub PutFbtAt(Fb$, T, At As Range, Optional LoNm0$)
 Dim O As ListObject
 Set O = WszRg(At).ListObjects.Add(SourceType:=XlSourceType.xlSourceWorkbook, Destination:=At)
-LoSetNm O, Dft(LoNm0, LoNm(T))
+SetLoNm O, Dft(LoNm0, LoNm(T))
 SetQtFbt O.QueryTable, Fb, T
 End Sub
 Sub FxzTT(Fx$, Db As Database, TT)
@@ -105,7 +105,7 @@ End Sub
 Function WszWbT(Wb As Workbook, Db As Database, T, Optional Wsn0$) As Worksheet
 Dim Wsn$: Wsn = DftStr(Wsn0, T)
 Dim Sq(): Sq = SqzT(Db, T)
-Dim A1 As Range: Set A1 = A1zWs(WsAdd(Wb, Wsn))
+Dim A1 As Range: Set A1 = A1zWs(AddWs(Wb, Wsn))
 Set WszWbT = WsLo(LozSq(Sq, A1))
 End Function
 

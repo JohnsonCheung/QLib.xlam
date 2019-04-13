@@ -84,6 +84,6 @@ Next
 End Function
 
 Function DiczVbl(Vbl, Optional JnSep$ = vbCrLf) As Dictionary
-Set DiczVbl = Dic(SplitVbar(Vbl), JnSep)
+Set DiczVbl = Dic(SplitVBar(Vbl), JnSep)
 End Function
 

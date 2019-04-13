@@ -28,8 +28,8 @@ End Function
 Function FfnUp$(Ffn)
 FfnUp = PthRmvFdr(Pth(Ffn))
 End Function
-Function SrcpOfPj$()
-SrcpOfPj = Srcp(CurPj)
+Function SrcpInPj$()
+SrcpInPj = Srcp(CurPj)
 End Function
 Function Srcp$(A As VBProject)
 Srcp = SrcpzPjf(Pjf(A))

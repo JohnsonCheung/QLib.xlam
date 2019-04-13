@@ -66,7 +66,7 @@ Set_Src:
     "|'Bet_FldSeq      Lno#{Lno&} is [Bet] line and ignored due to Fld(?), FmFld(?) and ToFld(?) are not in order.  See order the Fld, FmFld and ToFld in [Fny-Value]" & _
     "|'GenErMsg-Src-End." & _
     "|Const M_Bet_FldSeq$ = 1"
-    Src = SplitVbar(X)
+    Src = SplitVBar(X)
     Return
 End Sub
 
@@ -217,16 +217,17 @@ For Each L In DclLy(Src(A))
 Next
 Set MdLineszConst = EmpMdLines(A)
 End Function
-
-Sub RplLines(A As CodeModule, B As MdLines, NewLines, Optional LinesNm$ = "MdLines")
-Dim OldLines$: If B.Count > 0 Then OldLines = A.Lines(B.StartLine, B.Count)
-If OldLines = NewLines Then
-    Inf CSub, "Same " & LinesNm, "Md StartLine Count FstLin", MdNm(A), B.StartLine, B.Count, FstLin(B.Lines)
-    Exit Sub
+Sub ThwIfMdLinesMisMatch(A As MdLines, Md As CodeModule)
+Dim OldLines$: OldLines = SrcLines(Md)
+If OldLines = A.Lines Then
+    Thw CSub, "MdLines mis-match with Md", "Md Md-Lines MdLines-Lno MdLines-Lines", MdNm(Md), OldLines, A.StartLine, A.Lines
 End If
+End Sub
+Sub RplLines(A As CodeModule, B As MdLines, NewLines, Optional LinesNm$ = "MdLines")
+Dim OldLinCnt&: OldLinCnt = A.CountOfLines
 If B.Count > 0 Then A.DeleteLines B.InsLno, B.Count
 A.InsertLines B.InsLno, NewLines
-Inf CSub, LinesNm & " is replaced", "Md StartLines NewLinCnt OldLinCnt NewLines OldLines", MdNm(A), B.StartLine, LinCnt(NewLines), B.Count, NewLines, OldLines
+Inf CSub, LinesNm & " is replaced", "Md StartLines NewLinCnt OldLinCnt", MdNm(A), B.StartLine, LinCnt(NewLines), OldLinCnt
 End Sub
 
 Sub MdRplConst(A As CodeModule, ConstNm, NewLines)

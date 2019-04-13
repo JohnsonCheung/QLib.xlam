@@ -11,7 +11,7 @@ End Function
 Function DryzVblLy(A$()) As Variant()
 Dim I
 For Each I In Itr(A)
-    PushI DryzVblLy, AyTrim(SplitVbar(CStr(I)))
+    PushI DryzVblLy, AyTrim(SplitVBar(CStr(I)))
 Next
 End Function
 

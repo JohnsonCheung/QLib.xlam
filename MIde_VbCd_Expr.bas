@@ -13,7 +13,7 @@ End Type
 Function ExprLyzStr(Str, Optional MaxCdLinWdt% = 200) As String()
 Dim L, Ay$(): Ay = SplitCrLf(Str)
 Dim J&, Fst As Boolean
-Erase XX
+Erase xx
 Fst = True
 For Each L In Itr(Ay)
     If Fst Then
@@ -26,9 +26,9 @@ For Each L In Itr(Ay)
 '    PushIAy ExprLyzStr, ExprLyzLin(L, MaxCdLinWdt)
 '    Stop
 Next
-Brw AyAddIxPfx(XX)
+Brw AyAddIxPfx(xx)
 Stop
-Erase XX
+Erase xx
 End Function
 Private Function ExprLyzLin(Lin, W%) As String()
 Dim J&
@@ -157,12 +157,12 @@ Tst:
 End Sub
 Private Sub AAA()
 Dim J%, A
-Erase XX
+Erase xx
 For J = 0 To 255
     X FmtQQ("If Asc(""?"")<>? Then Debug.Print ?", Chr(J), J, J)
 Next
-Brw XX
-Erase XX
+Brw xx
+Erase xx
 End Sub
 Private Sub Z_BrwRepeatedBytes()
 BrwRepeatedBytes StrzCurPjf
@@ -178,7 +178,7 @@ End Function
 
 Private Sub Z_BrkAyzPrintable1()
 Dim T, O$(), J&
-For Each T In BrkAyzPrintable(JnCrLf(SrcOfPj))
+For Each T In BrkAyzPrintable(JnCrLf(SrcInPj))
     J = J + 1
     Push O, FmtPrintableStr(T)
 Next
@@ -306,7 +306,7 @@ Dim J&, B%, B1%, RepeatCnt&, L&
 L = Len(S)
 If L = 0 Then Exit Sub
 B = Asc(FstChr(S)): RepeatCnt = 1
-Erase XX
+Erase xx
 X FmtQQ("Len(?)", L)
 For J = 2 To L
     B1 = Asc(Mid(S, J, 1))
@@ -320,8 +320,8 @@ For J = 2 To L
         B = B1
     End Select
 Next
-Brw AyAddIxPfx(XX)
-Erase XX
+Brw AyAddIxPfx(xx)
+Erase xx
 End Sub
 
 Sub BBB()

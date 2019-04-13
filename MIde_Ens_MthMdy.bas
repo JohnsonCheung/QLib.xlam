@@ -1,6 +1,6 @@
 Attribute VB_Name = "MIde_Ens_MthMdy"
 Option Explicit
-Const CMod$ = "MIde_Ens_Mdy."
+Const CMod$ = "MIde_EnsMdy."
 Function MthLinzEnsprv$(MthLin)
 Const CSub$ = CMod & "MthLinzEnsprv"
 If Not IsMthLin(MthLin) Then Thw CSub, "Given MthLin is not MthLin", "Lin", MthLin

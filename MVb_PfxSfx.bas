@@ -74,6 +74,13 @@ For Each X In Itr(Ay)
     J = J + 1
 Next
 End Function
+Function EnsSfx$(S, Sfx$)
+If HasSfx(S, Sfx) Then
+    EnsSfx = S
+Else
+    EnsSfx = S & Sfx
+End If
+End Function
 Function TakSfxChr$(S, SfxChrLis$, Optional IsCasSen As Boolean)
 If HasSfxChrLis(S, SfxChrLis, IsCasSen) Then TakSfxChr = LasChr(S)
 End Function

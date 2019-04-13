@@ -15,7 +15,7 @@ Private Type FdRslt
 End Type
 
 Sub CrtSchmzVbl(A As Database, SchmVbl$)
-CrtSchm A, SplitVbar(SchmVbl)
+CrtSchm A, SplitVBar(SchmVbl)
 End Sub
 
 Sub CrtSchm(A As Database, Schm$())
@@ -127,7 +127,7 @@ Private Function EleStrzStd$(Ele)
 End Function
 
 Private Property Get Schm1() As String()
-Erase XX
+Erase xx
 X "Tbl A *Id *Nm     | *Dte AATy Loc Expr Rmk"
 X "Tbl B *Id  AId *Nm | *Dte"
 X "Fld Txt AATy"
@@ -138,8 +138,8 @@ X "Des Tbl  A     AA BB "
 X "Des Tbl  A     CC DD "
 X "Des Fld  ANm   AA BB "
 X "Des Fld  A.ANm TF_Des-AA-BB"
-Schm1 = XX
-Erase XX
+Schm1 = xx
+Erase xx
 End Property
 
 Private Sub Z_CrtSchm()

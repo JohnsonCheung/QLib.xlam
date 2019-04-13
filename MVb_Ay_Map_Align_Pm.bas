@@ -31,8 +31,8 @@ Dim J%, W%, F
 Set T1ToAlignNColDiczNoSrt = New Dictionary
 For J = 2 To UB(PmLy)
     With Brk(PmLy(J), ":")
-        W = .S1
-        For Each F In NyzNN(.S2)
+        W = .s1
+        For Each F In NyzNN(.s2)
             T1ToAlignNColDiczNoSrt.Add F, W
         Next
     End With

@@ -12,15 +12,35 @@ For J = FmIx To UB(Ay)
 Next
 IxzAy = -1
 End Function
-Function IxAyU(U&) As Long()
+Function IxAyzU(U&) As Long()
 Dim O&(), J&
 ReDim O(U)
 For J = 0 To U
     O(J) = J
 Next
-IxAyU = O
+IxAyzU = O
 End Function
 
+Function GrpEndIxAyOfEmp(Ay) As Long()
+Dim J&, Fst As Boolean, U&
+U = UB(Ay)
+For J = 1 To U
+    If Not IsEmpty(Ay(J)) Then
+        PushI GrpEndIxAyOfEmp, J - 1
+    End If
+Next
+PushI GrpEndIxAyOfEmp, U
+End Function
+Function GrpEndIxAyOfSam(Ay) As Long()
+Dim J&, U&
+U = UB(Ay)
+For J = 1 To U
+    If Ay(J) <> Ay(J - 1) Then
+        PushI GrpEndIxAyOfSam, J - 1
+    End If
+Next
+PushI GrpEndIxAyOfSam, U
+End Function
 Function IxAy(Ay, SubAy, Optional ThwNotFnd As Boolean) As Long()
 Dim I, HasNegIx As Boolean, Ix&
 For Each I In Itr(SubAy)

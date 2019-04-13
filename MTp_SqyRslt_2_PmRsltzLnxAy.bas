@@ -19,9 +19,10 @@ End Function
 Private Function PmLyRslt(A() As Lnx) As LyRslt
 Dim R1 As LnxAyRslt
 Dim R2 As LnxAyRslt
+
     R1 = LnxAyRsltzDupKey(A)
     R2 = LnxAyRsltzPercentagePfx(R1)
-PmLyRslt = LyRslt(LyzLnxAy(R2.LnxAy), SyAddAp(R1.Er, R2.Er))
+PmLyRslt = LyRslt(SyAddAp(R1.Er, R2.Er), LyzLnxAy(R2.LnxAy))
 End Function
 
 Private Function LnxAyRsltzDupKey(A() As Lnx) As LnxAyRslt

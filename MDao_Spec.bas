@@ -93,7 +93,7 @@ Sub EnsTblSpec(A As Database)
 End Sub
 
 Sub CrtTblSpec(A As Database)
-CrtSchm A, SplitVbar(SpecSchmVbl)
+CrtSchm A, SplitVBar(SpecSchmVbl)
 End Sub
 
 Sub ExpSpec(Apn$)

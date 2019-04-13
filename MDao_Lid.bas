@@ -46,7 +46,7 @@ End Function
 Private Function ExTnyzLidFxcAy(A() As LidFxc) As String()
 Dim J%
 For J = 0 To UB(A)
-    PushI ExTnyzLidFxcAy, A(J).ExtNm
+    PushI ExTnyzLidFxcAy, A(J).Extnm
 Next
 End Function
 

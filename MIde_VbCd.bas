@@ -1,7 +1,7 @@
 Attribute VB_Name = "MIde_VbCd"
 Option Explicit
 Function CdLyPj() As String()
-CdLyPj = CdLyzSrc(SrcOfPj)
+CdLyPj = CdLyzSrc(SrcInPj)
 End Function
 Function CdLyzMd(A As CodeModule) As String()
 CdLyzMd = CdLyzSrc(Src(A))
@@ -21,7 +21,7 @@ End Function
 Function IsCdLin(A) As Boolean
 Dim L$: L = Trim(A)
 If A = "" Then Exit Function
-If FstChr(A) = "'" Then Exit Function
+If FstChr(LTrim(A)) = "'" Then Exit Function
 IsCdLin = True
 End Function
 Function IsNonOptCdLin(A) As Boolean

@@ -1,27 +1,27 @@
 Attribute VB_Name = "MIde_Ens_PrpEr"
 Option Explicit
-Const CMod$ = "MIde_Ens_PrpEr."
+Const CMod$ = "MIde_EnsPrpEr."
 Private Const LinOfLblX$ = "X: Debug.Print CSub & "".PrpEr["" &  Err.Description & ""]"""
-Public Type TopRmkLyAaaMthLy
+Public Type TopRmkLyAndMthLy
     TopRmkLy() As String
     MthLy() As String
 End Type
-Private Function HasLinExitAaaLblX(MthLy$(), LinOfExit) As Boolean
+Private Function HasLinExitAndLblX(MthLy$(), LinOfExit) As Boolean
 Dim U&: U = UB(MthLy): If U < 2 Then Exit Function
 If MthLy(U - 1) <> LinOfLblX Then Exit Function
 If MthLy(U - 2) <> MthExitLin(MthLy(0)) Then Exit Function
 End Function
 
-Private Function InsLinExitAaaLblX(MthLy$(), LinOfExit$) As String()
-InsLinExitAaaLblX = AyInsAyAt(MthLy, Sy(LinOfExit, LinOfLblX), UB(MthLy))
+Private Function InsLinExitAndLblX(MthLy$(), LinOfExit$) As String()
+InsLinExitAndLblX = AyInsAyAt(MthLy, Sy(LinOfExit, LinOfLblX), UB(MthLy))
 End Function
 
-Private Function EnsLinExitAaaLblX(MthLy$(), LinOfExit$) As String()
-If HasLinExitAaaLblX(MthLy, LinOfExit) Then EnsLinExitAaaLblX = MthLy: Exit Function
+Private Function EnsLinExitAndLblX(MthLy$(), LinOfExit$) As String()
+If HasLinExitAndLblX(MthLy, LinOfExit) Then EnsLinExitAndLblX = MthLy: Exit Function
 Dim O$():
 O = AyeEle(MthLy, LinOfExit)
 O = AyeEle(MthLy, LinOfLblX)
-EnsLinExitAaaLblX = InsLinExitAaaLblX(O, LinOfExit)
+EnsLinExitAndLblX = InsLinExitAndLblX(O, LinOfExit)
 End Function
 
 Function AyEnsEle(Ay, NeedDlt As Boolean, NeedIns As Boolean, NewEle, DltIx&, InsIx&)
@@ -110,6 +110,35 @@ ZZ:
     Vc EnsPrpOnErzSrc(Src)
     Return
 End Sub
+
+Private Function SrcOptOfEnsprpOnEr(Src$()) As LyOpt ' Ret None is no change in Src
+If Si(Src) = 0 Then Exit Function
+Dim D As Dictionary: Set D = MthDic(Src, WiTopRmk:=True)
+Dim MthNm, MthLin$, MthLyWiTopRmk$()
+Dim O$(): Erase O
+If D.Exists("*Dcl") Then
+    PushIAy O, SplitCrLf(D("*Dcl"))
+    D.Remove "*Dcl"
+End If
+
+For Each MthNm In D.Keys
+    MthLyWiTopRmk = SplitCrLf(D(MthNm))
+    PushI O, ""
+    With TopRmkLyAndMthLy(MthLyWiTopRmk)
+        PushIAy O, .TopRmkLy
+        Dim MthLy$(): MthLy = .MthLy
+    End With
+    MthLin = ContLin(MthLy)
+    If IsPurePrpLin(MthLin) Then
+'        PushIAy O, MthLyOfEnsonEr(MthLy)
+    Else
+        PushIAy O, MthLy
+    End If
+Next
+If Si(O) = 0 Then Thw CSub, "O$() should have something"
+SrcOptOfEnsprpOnEr = SomLy(O)
+End Function
+
 Private Function EnsPrpOnErzSrc(Src$()) As String()
 If Si(Src) = 0 Then Exit Function
 Dim D As Dictionary: Set D = MthDic(Src, WiTopRmk:=True)
@@ -123,13 +152,13 @@ End If
 For Each MthNm In D.Keys
     MthLyWiTopRmk = SplitCrLf(D(MthNm))
     PushI O, ""
-    With TopRmkLyAaaMthLy(MthLyWiTopRmk)
+    With TopRmkLyAndMthLy(MthLyWiTopRmk)
         PushIAy O, .TopRmkLy
         Dim MthLy$(): MthLy = .MthLy
     End With
     MthLin = ContLin(MthLy)
     If IsPurePrpLin(MthLin) Then
-        PushIAy O, EnsOnEr(MthLy)
+'        PushIAy O, MthLyOfEnsonEr(MthLy)
     Else
         PushIAy O, MthLy
     End If
@@ -138,15 +167,15 @@ If Si(O) = 0 Then Thw CSub, "O$() should have something"
 EnsPrpOnErzSrc = O
 End Function
 
-Function TopRmkLyAaaMthLy(MthLyWiTopRmk$()) As TopRmkLyAaaMthLy
+Function TopRmkLyAndMthLy(MthLyWiTopRmk$()) As TopRmkLyAndMthLy
 Dim Lin, J&, TopRmkLy$(), MthLy$()
 For Each Lin In MthLyWiTopRmk
     If FstChr(Lin) = "'" Then
         PushI TopRmkLy, Lin
     Else
         MthLy = AywFmIx(MthLyWiTopRmk, J)
-        TopRmkLyAaaMthLy.TopRmkLy = TopRmkLy
-        TopRmkLyAaaMthLy.MthLy = MthLy
+        TopRmkLyAndMthLy.TopRmkLy = TopRmkLy
+        TopRmkLyAndMthLy.MthLy = MthLy
         Exit Function
     End If
 Next
@@ -156,6 +185,10 @@ End Function
 Sub Z_EnsprpOnErDiczPj()
 BrwDic EnsprpOnErDiczPj(CurPj)
 End Sub
+
+Function EnsprpOnErDicInPj() As Dictionary
+Set EnsprpOnErDicInPj = EnsprpOnErDiczPj(CurPj)
+End Function
 
 Function EnsprpOnErDiczPj(A As VBProject) As Dictionary
 Dim N$, Old$, S$(), C As VBComponent
@@ -173,9 +206,9 @@ Next
 Set EnsprpOnErDiczPj = O
 End Function
 
-Private Sub Z_EnsOnEr()
+Private Sub Z_MthLyOfEnsOnEr()
 Const TstId% = 1
-Const CSub$ = CMod & "Z_EnsOnEr"
+Const CSub$ = CMod & "Z_MthLyOfEnsOnEr"
 Dim MthLy$(), Cas$, IsEdt As Boolean
 GoSub T1
 GoSub T2
@@ -193,7 +226,7 @@ T2:
     Ept = TstLy(TstId, CSub, Cas, "Ept", IsEdt:=False)
     GoTo Tst
 Tst:
-    Act = EnsOnEr(MthLy)
+'    Act = MthLyOfEnsonEr(MthLy)
     C
     Return
 End Sub
@@ -217,11 +250,11 @@ If Si(MthLy) <> 1 Then Exit Function
 IsSngLinMth = HasSubStr(MthLy(0), "End " & MthKd(MthLy(0)))
 End Function
 
-Private Function EnsOnEr(MthLy$()) As String()
-If IsSngLinMth(MthLy) Then EnsOnEr = MthLy: Exit Function
-Dim O$(), LinOfExit$: LinOfExit = MthExitLin(MthLy(0))
-O = EnsLinExitAaaLblX(MthLy, LinOfExit)
-EnsOnEr = EnsLinzOnEr(O)
+Private Function MthLyRsltOfEnsonEr(MthLy$()) As LyRslt
+'If IsSngLinMth(MthLy) Then MthLyOfEnsonEr = MthLy: Exit Function
+Dim LinOfExit$: LinOfExit = MthExitLin(MthLy(0))
+Dim O$(): O = EnsLinExitAndLblX(MthLy, LinOfExit)
+'MthLyRsltOfEnsonEr = EnsLinzOnEr(O)
 End Function
 
 Private Function RmvPrpOnErzPurePrpLy(PurePrpLy$()) As String()
@@ -238,7 +271,7 @@ Private Sub RmvPrpOnErzMd(A As CodeModule)
 RplMd A, JnCrLf(RmvPrpOnzSrc(Src(A)))
 End Sub
 
-Sub RmvPrpOnErOfMd()
+Sub RmvPrpOnErInMd()
 RmvPrpOnErzMd CurMd
 End Sub
 
@@ -246,7 +279,7 @@ Sub EnsPrpOnErzMd(A As CodeModule)
 RplMd A, JnCrLf(EnsPrpOnErzSrc(Src(A)))
 End Sub
 
-Sub EnsPrpOnErOfMd()
+Sub EnsPrpOnErInMd()
 EnsPrpOnErzMd CurMd
 End Sub
 

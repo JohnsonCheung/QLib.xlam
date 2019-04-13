@@ -87,9 +87,6 @@ For Each Dr In Itr(Dry)
     PushI DrySelColIxAy, AywIxAy(Dr, IxAy)
 Next
 End Function
-Function DtDrsDtnm(A As Drs, DtNm$) As Dt
-Set DtDrsDtnm = Dt(DtNm, A.Fny, A.Dry)
-End Function
 
 Function DrsInsCV(A As Drs, C$, V) As Drs
 Set DrsInsCV = Drs(AyInsEle(A.Fny, C), DryInsColzV(A.Dry, V, IxzAy(A.Fny, C)))
@@ -296,7 +293,7 @@ DrsAddCol C, D, A
 AddColzValIdzCntzDrs C, D, D
 BrwDrs C, E, D, D
 DrsSelCC C, A
-DtDrsDtnm C, D
+DtzDrs C, D
 DrsInsCV C, D, A
 PushDrs C, C
 End Sub

@@ -16,7 +16,9 @@ IsDt = TypeName(A) = "Dt"
 End Function
 
 Sub BrwDs(A As Ds, Optional Fnn$)
-BrwAy FmtDs(A), Dft(Fnn, A.DsNm)
+'Dim Fnn1$: Fnn1 = NmzStr(Dft(Fnn, A.DsNm))
+'Stop
+BrwAy FmtDs(A) ', Fnn1
 End Sub
 
 Sub BrwDt(A As Dt, Optional Fnn$)
@@ -45,16 +47,17 @@ Next
 End Function
 
 Function DtSelCol(A As Dt, CC, Optional DtNm$) As Dt
-Set DtSelCol = DtDrsDtnm(DrsSelCC(DrszDt(A), CC), Dft(DtNm, A.DtNm))
+Set DtSelCol = DtzDrs(DrsSelCC(DrszDt(A), CC), Dft(DtNm, A.DtNm))
 End Function
 
 Function DtDrpCol(A As Dt, CC, Optional DtNm$) As Dt
-Set DtDrpCol = DtDrsDtnm(DrsDrpCC(DrszDt(A), CC), Dft(DtNm, A.DtNm))
+Set DtDrpCol = DtzDrs(DrsDrpCC(DrszDt(A), CC), Dft(DtNm, A.DtNm))
 End Function
 
 Function DrszDt(A As Dt) As Drs
 Set DrszDt = Drs(A.Fny, A.Dry)
 End Function
+
 Function DtzDrs(A As Drs, Optional DtNm$ = "Dt") As Dt
 Set DtzDrs = Dt(DtNm, A.Fny, A.Dry)
 End Function
@@ -76,7 +79,7 @@ IsEmpDt = Si(A.Dry) = 0
 End Function
 
 Function DtReOrd(A As Dt, BySubFF) As Dt
-Set DtReOrd = DtDrsDtnm(DrsReOrdBy(DrszDt(A), BySubFF), A.DtNm)
+Set DtReOrd = DtzDrs(DrsReOrdBy(DrszDt(A), BySubFF), A.DtNm)
 End Function
 Function Dt(DtNm, Fny0, Dry()) As Dt
 Dim O As New Dt

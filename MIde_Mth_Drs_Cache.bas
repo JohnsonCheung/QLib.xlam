@@ -3,12 +3,12 @@ Option Explicit
 Public Const DoczTof$ = "DashNm: tbl-of.  IsCml. After Tof, it is a table-name."
 
 Function CacheDtevPjf(Pjf) As Date
-CacheDtevPjf = ValOfQ(MthDbOfPj, FmtQQ("Select PjDte from Mth where Pjf='?'", Pjf))
+CacheDtevPjf = ValOfQ(MthDbInPj, FmtQQ("Select PjDte from Mth where Pjf='?'", Pjf))
 End Function
 
 Function MthDrszPjfzFmCache(Pjf, Optional WhStr$) As Drs
 Dim Sql$: Sql = FmtQQ("Select * from MthCache where Pjf='?'", Pjf)
-Set MthDrszPjfzFmCache = DrszFbq(MthDbOfPj, Sql)
+Set MthDrszPjfzFmCache = DrszFbq(MthDbInPj, Sql)
 End Function
 Sub EnsTofMthCachezPjf(Pjf)
 Dim D1 As Date
@@ -22,7 +22,7 @@ Case D1 = D2: Exit Sub
 Case D2 > D1: Stop
 End Select
 Stop '
-IupDbt MthDbOfPj, "MthCache", MthDrszPjf(Pjf, FmtQQ("Pjf='?'", Pjf))
+IupDbt MthDbInPj, "MthCache", MthDrszPjf(Pjf, FmtQQ("Pjf='?'", Pjf))
 End Sub
 Sub ThwIfDrsGoodToIupDbt(Fun$, Drs As Drs, Db As Database, T)
 

@@ -1,12 +1,13 @@
 Attribute VB_Name = "MIde_Dcl_Lines"
 Option Explicit
 Public Const DocOfDclDic$ = "Key is PjNm.MdNm.  Value is Dcl (which is Lines)"
-Public Const DocOfDcl$ = "It is Lines"
+Public Const DocOfDcl$ = "It is Lines."
+
 Private Sub Z_DclLinCnt()
 Dim B1$(): B1 = CurSrc
 Dim B2$(): B2 = SrcSrt(B1)
 Dim A1%: A1 = DclLinCnt(B1)
-Dim A2%: A2 = DclLinCnt(SrcSrt(B1))
+Dim A2%: A2 = DclLinCnt(B2)
 End Sub
 
 Sub BrwDclLinCntDryPj()
@@ -22,12 +23,12 @@ End Function
 
 Function DclLinCntzMd%(Md As CodeModule) 'Assume FstMth cannot have TopRmk
 Dim I&
-    I = FstMthLnoMd(Md)
+    I = FstMthLnozMd(Md)
     If I <= 0 Then
         DclLinCntzMd = Md.CountOfLines
         Exit Function
     End If
-DclLinCntzMd = MthTopRmkLnoMdFm(Md, I) - 1
+DclLinCntzMd = MthTopRmkLno(Md, I) - 1
 End Function
 
 Function DclLinCnt%(Src$()) 'Assume FstMth cannot have TopRmk
@@ -38,15 +39,21 @@ Dim Top&
         DclLinCnt = UB(Src) + 1
         Exit Function
     End If
-    DclLinCnt = Fm
+DclLinCnt = IxOfPrvCdLin(Src, Fm) + 1
 End Function
-
+Function IxOfPrvCdLin&(Src$(), Fm)
+Dim O&
+For O = Fm - 1 To 0 Step -1
+    If IsCdLin(Src(O)) Then IxOfPrvCdLin = O: Exit Function
+Next
+IxOfPrvCdLin = -1
+End Function
 Function Dcl$(Src$())
 Dcl = JnCrLf(DclLy(Src))
 End Function
 
-Function DclDicOfPj() As Dictionary
-Set DclDicOfPj = DclDiczPj(CurPj)
+Function DclDicInPj() As Dictionary
+Set DclDicInPj = DclDiczPj(CurPj)
 End Function
 
 Function DclDiczPj(A As VBProject) As Dictionary

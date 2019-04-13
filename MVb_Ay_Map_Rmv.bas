@@ -1,7 +1,7 @@
 Attribute VB_Name = "MVb_Ay_Map_Rmv"
 Option Explicit
 Private Sub Y(S$, X$)
-PushI XX, RplQ(S, X)
+PushI xx, RplQ(S, X)
 End Sub
 Function AyRmvFstChr(A) As String()
 Dim I

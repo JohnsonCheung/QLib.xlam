@@ -1,10 +1,13 @@
 Attribute VB_Name = "MDao_Tbl"
 Option Explicit
 Const C_SkNm$ = "SecondaryKey"
-Public Const DocOfShtTyscf$ = "Short-Type-Si-Colon-FldNm:Sht.Ty.s.c.f: It is for one field optionally square bracket quoted if FldNm has space" & _
-"|It is format of [ShtTys][FldNm]"
 Public Const DocOfShtTys$ = ""
 Const ShtTyBql$ = "Short-Type-Si-Colon-FldNm-Bql:Sht.Ty.s.c.f.Bql: It is a [Bql] with each field is a [ShtTyscf]"
+
+Function FnyzT(A As Database, T, Optional NoReOpn As Boolean) As String()
+FnyzT = Fny(A, T, NoReOpn)
+End Function
+
 Function Fny(A As Database, T, Optional NoReOpn As Boolean) As String()
 Fny = Itn(ReOpnDb(A, NoReOpn).TableDefs(T).Fields)
 End Function
@@ -242,10 +245,6 @@ S = FmtQQ("Alter Table [?] Add Column [?] ?", T, F, Ty)
 A.Execute S
 End Sub
 
-Sub RenTbl(A As Database, T, ToNm)
-A.TableDefs(T).Name = ToNm
-End Sub
-
 Sub RenTblzAddPfx(A As Database, T, Pfx)
 RenTbl A, T, Pfx & T
 End Sub
@@ -272,8 +271,8 @@ End Function
 Function LnkinfzT$(A As Database, T)
 Dim O$, LnkFx$, LnkW$, LnkFb$, LnkT$
 Select Case True
-Case IsLnkzFx(A, T): LnkinfzT = FmtQQ("LnkFx(?).LnkWs(?).Tbl(?).Db(?)", DtaSrc(A, T), SrcTn(A, T), T, DbNm(A))
-Case IsLnkzFb(A, T): LnkinfzT = FmtQQ("LnkFb(?).LnkTbl(?).Tbl(?).Db(?)", DtaSrc(A, T), SrcTn(A, T), T, DbNm(A))
+Case IsLnkzFx(A, T): LnkinfzT = FmtQQ("LnkFx(?).LnkWs(?).Tbl(?).Db(?)", CnStrzDbt(A, T), SrcTn(A, T), T, DbNm(A))
+Case IsLnkzFb(A, T): LnkinfzT = FmtQQ("LnkFb(?).LnkTbl(?).Tbl(?).Db(?)", CnStrzDbt(A, T), SrcTn(A, T), T, DbNm(A))
 End Select
 End Function
 
@@ -309,7 +308,7 @@ ZZ:
     Return
 End Sub
 Sub CrtTblzDrs(A As Database, T, Drs As Drs)
-CrtTblzDrszEmp A, T, Drs
+CrtTblOfEmpzDrs A, T, Drs
 InsTblzDry A, T, Drs.Dry
 End Sub
 
@@ -322,21 +321,21 @@ Sub CrtTblzDrszEmpzAllStr(A As Database, T, Drs As Drs)
 Dim C%, F, O$(), Dry()
 Dry = Drs.Dry
 For Each F In Drs.Fny
-    If IsColzMem(ColzDry(Dry, C)) Then
+    If IsColOfMem(ColzDry(Dry, C)) Then
         PushI O, "M:" & F
     Else
         PushI O, F
     End If
     C = C + 1
 Next
-CrtTblzShtTyBql A, T, Jn(O, "`")
+CrtTblzShtTyscfBql A, T, Jn(O, "`")
 End Sub
 
-Sub CrtTblzDrszEmp(A As Database, T, Drs As Drs)
-CrtTblzShtTyBql A, T, ShtTyBqlzDrs(Drs)
+Sub CrtTblOfEmpzDrs(A As Database, T, Drs As Drs)
+CrtTblzShtTyscfBql A, T, ShtTyscfBqlzDrs(Drs)
 End Sub
 
-Private Sub Z_ShtTyBqlzDrs()
+Private Sub Z_ShtTyscfBqlzDrs()
 Dim Drs As Drs
 GoSub T0
 Exit Sub
@@ -345,53 +344,53 @@ T0:
     Ept = "A`B:B`Byt:C`I:D`L:E`D:G`S:H`C:I`Dte:J`M:K"
     GoTo Tst
 Tst:
-    Act = ShtTyBqlzDrs(Drs)
+    Act = ShtTyscfBqlzDrs(Drs)
     C
     Return
 End Sub
 
-Function ShtTyBqlzDrs$(Drs As Drs)
+Function ShtTyscfBqlzDrs$(Drs As Drs)
 Dim Dry(): Dry = Drs.Dry
-If Si(Dry) = 0 Then ShtTyBqlzDrs = Jn(Drs.Fny, "`"): Exit Function
+If Si(Dry) = 0 Then ShtTyscfBqlzDrs = Jn(Drs.Fny, "`"): Exit Function
 Dim O$(), F, C%
-For Each F In Drs.Fny
+For C = 0 To NColzDrs(Drs) - 1
     PushI O, ShtTyscfzCol(ColzDry(Dry, C), F)
-    C = C + 1
 Next
-ShtTyBqlzDrs = Jn(O, "`")
+ShtTyscfBqlzDrs = Jn(O, "`")
 End Function
 
 Private Function ShtTyscfzCol$(Col, F)
 Dim ShtTysc$
 Select Case True
-Case IsColzBool(Col): ShtTyscfzCol = "B:" & F
-Case IsColzDte(Col): ShtTyscfzCol = "Dte:" & F
-Case IsColzNum(Col): ShtTyscfzCol = ShtTyzNumCol(Col) & ":" & F
-Case IsColzStr(Col): ShtTyscfzCol = IIf(IsColzMem(Col), "M:", "") & F
+Case IsColOfBool(Col): ShtTyscfzCol = "B:" & F
+Case IsColOfDte(Col): ShtTyscfzCol = "Dte:" & F
+Case IsColOfNum(Col): ShtTyscfzCol = ShtTyzNumCol(Col) & ":" & F
+Case IsColOfStr(Col): ShtTyscfzCol = IIf(IsColOfMem(Col), "M:", "") & F
 Case Else: Thw CSub, "Col cannot determine its type: Not [Str* Num* Bool* Dte*:Col]", "Col", Col
 End Select
 End Function
 Function ShtTyzNumCol$(Col)
 ShtTyzNumCol = ShtTyzDao(DaoTyzNumCol(Col))
 End Function
-Function IsColzMem(Col) As Boolean
+Function IsColOfMem(Col) As Boolean
 Dim I
 For Each I In Col
     If IsStr(I) Then
-        If Len(I) > 255 Then IsColzMem = True: Exit Function
+        If Len(I) > 255 Then IsColOfMem = True: Exit Function
     End If
 Next
 End Function
 
-Function IsColzStr(Col) As Boolean
+Function IsColOfStr(Col) As Boolean
 Dim V
 For Each V In Col
     If Not IsStr(V) Then Exit Function
 Next
-IsColzStr = True
+IsColOfStr = True
 End Function
 
 Function DaoTyzNumCol$(NumCol)
+ThwIfNotAy NumCol, CSub
 Dim O As VbVarType: O = VarType(NumCol(0))
 If Not IsNumzVbTy(O) Then Stop
 Dim V
@@ -400,12 +399,12 @@ For Each V In NumCol
 Next
 DaoTyzNumCol = DaoTyzVbTy(O)
 End Function
-Function IsColzNum(Col) As Boolean
+Function IsColOfNum(Col) As Boolean
 Dim V
 For Each V In Col
     If Not IsNumeric(V) Then Exit Function
 Next
-IsColzNum = True
+IsColOfNum = True
 End Function
 
 Function IsNumzVbTy(A As VbVarType) As Boolean
@@ -445,20 +444,20 @@ Case Else: Thw CSub, "NumVbTy is not numeric VbTy", "NumVbTyp", ShtTyzNumVbTy(Nu
 End Select
 End Function
 
-Function IsColzBool(Col) As Boolean
+Function IsColOfBool(Col) As Boolean
 Dim V
 For Each V In Col
     If Not IsBool(V) Then Exit Function
 Next
-IsColzBool = True
+IsColOfBool = True
 End Function
 
-Function IsColzDte(Col) As Boolean
+Function IsColOfDte(Col) As Boolean
 Dim V
 For Each V In Col
     If Not IsDte(V) Then Exit Function
 Next
-IsColzDte = True
+IsColOfDte = True
 End Function
 
 Sub InsTblzDry(A As Database, T, Dry())
@@ -618,7 +617,7 @@ Dim J&
 Dim L As Dictionary
 Dim M As Dao.Index
 Dim O As Dao.Database
-Dim XX
+Dim xx
 End Sub
 
 Function ValOfArs(A As ADODB.Recordset)

@@ -6,6 +6,9 @@ End Sub
 Private Sub XXX1B()
 MsgBox "XXX1B"
 End Sub
-Private Function VerbPatn$(XX)
-MsgBox XX
+Private Function VerbPatn$(xx)
+MsgBox xx
 End Function
+Sub F()
+
+End Sub

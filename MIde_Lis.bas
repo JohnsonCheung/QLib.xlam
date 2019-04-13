@@ -49,15 +49,13 @@ WhStrzSfx = WhStrzMthPatn(MthSfx & "$", PubOnly)
 End Function
 
 Sub LisMthPfx(Pfx$, Optional PubOnly As Boolean)
-D MthQNyOfVbe(WhStrzPfx(Pfx, PubOnly))
+D MthQNyInVbe(WhStrzPfx(Pfx, PubOnly))
 End Sub
 
 Sub LisMthSfx(Sfx$, Optional PubOnly As Boolean)
-D MthQNyOfVbe(WhMthzSfx(Sfx, PubOnly))
+D MthQNyInVbe(WhMthzSfx(Sfx, PubOnly))
 End Sub
 
 Sub LisMthPatn(Patn$, Optional InclPrv As Boolean)
-D MthNyOfPj(WhStrzMthPatn(Patn, InclPrv))
+D MthQLyInVbe(WhStrzMthPatn(Patn, InclPrv))
 End Sub
-
-

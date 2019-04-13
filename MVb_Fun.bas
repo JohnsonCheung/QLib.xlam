@@ -138,18 +138,24 @@ End Function
 Sub Vc(A, Optional Fnn$)
 Brw A, Fnn, UseVc:=True
 End Sub
-Sub Brw(A, Optional Fnn$, Optional UseVc As Boolean)
-Select Case True
-Case IsStr(A): BrwStr A, Fnn, UseVc
-Case IsArray(A): BrwAy A, Fnn, UseVc
-Case IsAset(A): CvAset(A).Brw Fnn, UseVc
-Case IsDrs(A): BrwDrs CvDrs(A), Fnn:=Fnn, UseVc:=UseVc
-Case IsDic(A): BrwDic CvDic(A), UseVc:=UseVc, InclDicValOptTy:=True
-Case IsEmpty(A): Debug.Print "Empty"
-Case IsNothing(A): Debug.Print "Nothing"
-Case Else: Stop
-End Select
+Sub B(A, Optional Fnn$, Optional UseVc As Boolean)
+Brw A, Fnn, UseVc
 End Sub
+Sub Brw(A, Optional Fnn$, Optional UseVc As Boolean)
+BrwAy Fmt(A), Fnn, UseVc
+End Sub
+Function Fmt(A) As String()
+Select Case True
+Case IsStr(A): Fmt = Sy(A)
+Case IsArray(A): Fmt = SyzAy(A)
+Case IsAset(A):  Fmt = CvAset(A).Sy
+Case IsDrs(A): Fmt = FmtDrs(CvDrs(A))
+Case IsDic(A): Fmt = FmtDic(CvDic(A), InclValTy:=True, AddIx:=True)
+Case IsEmpty(A): Fmt = Sy("#Empty")
+Case IsNothing(A): Fmt = Sy("#Nothing")
+Case Else: Fmt = Sy("#TypeName:" & TypeName(A))
+End Select
+End Function
 Function Mch(Re As RegExp, S) As MatchCollection
 Set Mch = Re.Execute(S)
 End Function

@@ -2,7 +2,7 @@ Attribute VB_Name = "MXls_AddIn"
 Option Explicit
 
 Function AddinsDrs(A As Excel.Application) As Drs
-Set AddinsDrs = DrszItrPP(A.AddIns, "Name FullName Installed IsOpen ProgId CLSID")
+Set AddinsDrs = DrszItrpp(A.AddIns, "Name FullName Installed IsOpen ProgId CLSID")
 End Function
 Sub DmpAddinsXls()
 DmpAddins Xls

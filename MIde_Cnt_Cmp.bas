@@ -20,7 +20,7 @@ End Function
 Function CmpCnt(A As VBProject) As CmpCnt
 If A.Protection = vbext_pp_locked Then Set CmpCnt = LockedCmpCnt: Exit Function
 Set CmpCnt = New CmpCnt
-CmpCnt.Init NModzPj(A), NClszPj(A), NDocOfPj(A), NOthCmpzPj(A)
+CmpCnt.Init NModzPj(A), NClszPj(A), NDocInPj(A), NOthCmpzPj(A)
 End Function
 '----------------------------------------------
 Property Get CmpCntPj() As CmpCnt
@@ -36,9 +36,6 @@ Function NModzPj%(Pj As VBProject)
 NModzPj = NCmpzTy(Pj, vbext_ct_StdModule)
 End Function
 
-Function NDocOfPj%(A As VBProject)
-NDocOfPj = NCmpzTy(A, vbext_ct_Document)
-End Function
 
 Function NClszPj%(A As VBProject)
 NClszPj = NCmpzTy(A, vbext_ct_ClassModule)
@@ -56,6 +53,6 @@ NCmpzTy = O
 End Function
 
 Function NOthCmpzPj%(A As VBProject)
-NOthCmpzPj = NCmpzPj(A) - NClszPj(A) - NModzPj(A) - NDocOfPj(A)
+NOthCmpzPj = NCmpzPj(A) - NClszPj(A) - NModzPj(A) - NDocInPj(A)
 End Function
 

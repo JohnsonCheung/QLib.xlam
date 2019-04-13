@@ -17,7 +17,7 @@ For Each Srcp In Itr(Ay)
     Stamp "GenExpg: End"
 Next
 AcsQuit Acs
-XlsQuit Xls
+QuitXls Xls
 End Sub
 
 Function SrcpAyzExpgzInst() As String()

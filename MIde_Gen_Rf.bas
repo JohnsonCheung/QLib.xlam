@@ -21,7 +21,7 @@ Property Get RfNy() As String()
 RfNy = RfNyPj(CurPj)
 End Property
 
-Function CvRf(A) As Vbide.Reference
+Function CvRf(A) As VBIDE.Reference
 Set CvRf = A
 End Function
 
@@ -30,7 +30,7 @@ AddRfzAy ToPj, RffAyPj(Pj)
 End Sub
 
 Function HasRf(Pj As VBProject, RfNm)
-Dim Rf As Vbide.Reference
+Dim Rf As VBIDE.Reference
 For Each Rf In Pj.References
     If Rf.Name = RfNm Then HasRf = True: Exit Function
 Next
@@ -51,7 +51,7 @@ Function RffAyPj(A As VBProject) As String()
 RffAyPj = SyzItrPrp(A.References, "FullPath")
 End Function
 
-Function RfLin$(A As Vbide.Reference)
+Function RfLin$(A As VBIDE.Reference)
 With A
 RfLin = .Name & " " & .Guid & " " & .Major & " " & .Minor & " " & .FullPath
 End With
@@ -88,17 +88,17 @@ ThwNotExistFfn Rff, CSub, "StdRfFil"
 A.References.AddFromFile Rff
 End Sub
 
-Function Rff$(A As Vbide.Reference)
+Function Rff$(A As VBIDE.Reference)
 On Error Resume Next
 Rff = A.FullPath
 End Function
 
-Function RfPth$(A As Vbide.Reference)
+Function RfPth$(A As VBIDE.Reference)
 On Error Resume Next
 RfPth = A.FullPath
 End Function
 
-Function RfToStr$(A As Vbide.Reference)
+Function RfToStr$(A As VBIDE.Reference)
 With A
    RfToStr = .Name & " " & RfPth(A)
 End With
@@ -109,7 +109,7 @@ Dim B As VBProject
 Dim C$()
 Dim D$
 Dim E As Reference
-Dim F As Vbide.Reference
+Dim F As VBIDE.Reference
 CvRf A
 AddRfzAy B, C
 HasRf B, D

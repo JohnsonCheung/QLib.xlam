@@ -87,8 +87,8 @@ Else
 End If
 End Function
 
-Property Get PjfAyOfVbe() As String()
-PjfAyOfVbe = PjfAyzVbe(CurVbe)
+Property Get PjfAyInVbe() As String()
+PjfAyInVbe = PjfAyzVbe(CurVbe)
 End Property
 
 Function PjfAyzVbe(A As Vbe) As String()
@@ -98,8 +98,8 @@ For Each P In A.VBProjects
 Next
 End Function
 
-Function PjNyOfVbe(Optional WhStr$, Optional NmPfx$) As String()
-PjNyOfVbe = PjNyzVbe(CurVbe, WhStr, NmPfx)
+Function PjNyInVbe(Optional WhStr$, Optional NmPfx$) As String()
+PjNyInVbe = PjNyzVbe(CurVbe, WhStr, NmPfx)
 End Function
 
 Function PjNyzVbe(A As Vbe, Optional WhStr$, Optional NmPfx$) As String()
@@ -168,7 +168,7 @@ Dim C$
 Dim D As Boolean
 Dim E As WhPjMth
 Dim F As WhNm
-Dim XX
+Dim xx
 CvVbe A
 PjzPjfVbe B, A
 'VbePjf B, A

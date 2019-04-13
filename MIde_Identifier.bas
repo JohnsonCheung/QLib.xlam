@@ -6,7 +6,7 @@ GoSub ZZ
 'GoSub T0
 Exit Sub
 ZZ:
-    Dim Lines$: Lines = SrcLinesOfPj
+    Dim Lines$: Lines = SrcLinesInPj
     Dim Ny1$(): Ny1 = NyzStr(Lines)
     Dim Ny2$(): Ny2 = WrdAy(Lines)
     If Not IsEqAy(Ny1, Ny2) Then Stop
@@ -21,7 +21,7 @@ Tst:
     Return
 End Sub
 Private Sub Z_NsetzStr()
-NsetzStr(SrcLinesOfPj).Srt.Vc
+NsetzStr(SrcLinesInPj).Srt.Vc
 End Sub
 Function NsetzStr(S) As Aset
 Set NsetzStr = AsetzAy(NyzStr(S))
@@ -48,11 +48,11 @@ End Function
 Function NyzStr(S) As String()
 NyzStr = SyeNonNm(SySsl(RplLf(RplCr(RplPun(S)))))
 End Function
-Function RelOf_PubMthNm_To_ModNy_OfPj() As Rel
-Set RelOf_PubMthNm_To_ModNy_OfPj = RelOf_PubMthNm_To_ModNy_zPj(CurPj)
+Function RelOf_PubMthNm_To_ModNy_InPj() As Rel
+Set RelOf_PubMthNm_To_ModNy_InPj = RelOf_PubMthNm_To_ModNy_zPj(CurPj)
 End Function
-Function RelOfMthNmToCmlOfVbe(Optional WhStr$) As Rel
-Set RelOfMthNmToCmlOfVbe = RelOfMthNmToCmlzVbe(CurVbe, WhStr)
+Function RelOfMthNmToCmlInVbe(Optional WhStr$) As Rel
+Set RelOfMthNmToCmlInVbe = RelOfMthNmToCmlzVbe(CurVbe, WhStr)
 End Function
 Function RelOfMthNmToCmlzVbe(A As Vbe, Optional WhStr$) As Rel
 Dim O As New Rel, MthNm
@@ -84,10 +84,10 @@ For Each C In A.VBComponents
 Next
 Set RelOf_MthNm_To_MdNy_zPj = O
 End Function
-Function RelOf_MthNm_To_MdNy_OfPj() As Rel
+Function RelOf_MthNm_To_MdNy_InPj() As Rel
 Static O As Rel
 If IsNothing(O) Then Set O = RelOf_MthNm_To_MdNy_zPj(CurPj)
-Set RelOf_MthNm_To_MdNy_OfPj = O
+Set RelOf_MthNm_To_MdNy_InPj = O
 End Function
 Function MthExtNy(MthPjDotMdNm$, PubMthLy$(), PubMthNm_To_PjDotModNy As Dictionary) As String()
 Dim Cxt$: Cxt = JnSpc(MthCxtLy(PubMthLy))

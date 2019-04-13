@@ -99,8 +99,8 @@ End Function
 
 Function ShfTermDot$(OLin)
 With Brk2Dot(OLin, NoTrim:=True)
-    ShfTermDot = .S1
-    OLin = .S2
+    ShfTermDot = .s1
+    OLin = .s2
 End With
 End Function
 

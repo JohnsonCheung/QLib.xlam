@@ -3,7 +3,7 @@ Option Explicit
 Private Const WrdReStr$ = "[a-zA-Z][a-zA-Z0-9_]*"
 Private Sub Z_WrdCntDic()
 Dim A As Dictionary
-Set A = DicSrt(WrdCntDic(JnCrLf(SrcOfPj)))
+Set A = DicSrt(WrdCntDic(JnCrLf(SrcInPj)))
 BrwDic A
 End Sub
 Function WrdCntDic(S) As Dictionary
@@ -16,11 +16,11 @@ End Function
 Function CvMch(A) As IMatch
 Set CvMch = A
 End Function
-Function FstWrdAsetOfPjSrc() As Aset
+Function FstWrdAsetInPjSrc() As Aset
 Dim I
-Set FstWrdAsetOfPjSrc = New Aset
-For Each I In SrcOfPj
-    FstWrdAsetOfPjSrc.PushItm FstWrd(I)
+Set FstWrdAsetInPjSrc = New Aset
+For Each I In SrcInPj
+    FstWrdAsetInPjSrc.PushItm FstWrd(I)
 Next
 End Function
 Function FstWrd$(S)

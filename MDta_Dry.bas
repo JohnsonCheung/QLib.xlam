@@ -59,7 +59,7 @@ If Si(DotNy) = 0 Then Exit Function
 Dim O(), I
 For Each I In DotNy
    With Brk1(I, ".")
-       Push O, Sy(.S1, .S2)
+       Push O, Sy(.s1, .s2)
    End With
 Next
 DryDotNy = O

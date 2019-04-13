@@ -74,7 +74,7 @@ Function TwoColDryzDotLy(DotLy$()) As Variant()
 Dim DotLin
 For Each DotLin In Itr(DotLy)
     With Brk2Dot(DotLin, NoTrim:=True)
-        PushI TwoColDryzDotLy, Sy(.S1, .S2)
+        PushI TwoColDryzDotLy, Sy(.s1, .s2)
     End With
 Next
 End Function

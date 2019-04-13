@@ -62,8 +62,8 @@ Function AyDupT1(A) As String()
 AyDupT1 = AywDup(AyTakT1(A))
 End Function
 
-Function AyEmpChk(A, Msg$) As String()
-If Si(A) = 0 Then AyEmpChk = Sy(Msg)
+Function ChkAyEmp(A, Msg$) As String()
+If Si(A) = 0 Then ChkAyEmp = Sy(Msg)
 End Function
 
 Function ChkEqAy(Ay1, Ay2, Optional Ay1Nm$ = "Exp", Optional Ay2Nm$ = "Act") As String()
@@ -202,9 +202,11 @@ If IsStr(Str_or_Sy) Then ItrzStr = Sy(Str_or_Sy): Exit Function
 If IsSy(Str_or_Sy) Then Asg Itr(Str_or_Sy), ItrzStr: Exit Function
 Thw CSub, "Str_or_Sy should be Str or Sy", "TypeName(Str_or_sy)", TypeName(Str_or_Sy)
 End Function
+
 Function LinItr(Lines)
 Asg Itr(SplitCrLf(Lines)), LinItr
 End Function
+
 Function Itr(A)
 If Si(A) = 0 Then Set Itr = New Collection Else Itr = A
 End Function
@@ -379,7 +381,24 @@ End Function
 Sub WrtAy(A, Ft, Optional OvrWrt As Boolean)
 WrtStr JnCrLf(A), Ft, OvrWrt
 End Sub
-
+Function AyLTrim(Ay) As String()
+Dim L
+For Each L In Itr(Ay)
+    PushI AyLTrim, LTrim(L)
+Next
+End Function
+Function AyEnsSfxDot(Ay) As String()
+AyEnsSfxDot = AyEnsSfx(Ay, ".")
+End Function
+Function AyEnsSfx(Ay, Sfx$) As String()
+Dim L
+For Each L In Itr(Ay)
+    PushI AyEnsSfx, EnsSfx(L, Sfx)
+Next
+End Function
+Function StmtLy(StmtLin) As String()
+StmtLy = AyEnsSfxDot(AyLTrim(Split(StmtLin, ". ")))
+End Function
 Function AyZip(A1, A2) As Variant()
 Dim U1&: U1 = UB(A1)
 Dim U2&: U2 = UB(A2)
@@ -449,12 +468,6 @@ End Function
 
 Function AyItmAddAy(Itm, Ay)
 AyItmAddAy = AyInsEle(Ay, Itm)
-End Function
-
-Function SubDrFnySel(Dr(), DrFny$(), SelFF) As Variant()
-Dim SelIxAy&()
-
-SubDrFnySel = AywIxAy(Dr, SelIxAy)
 End Function
 
 Private Sub ZZZ_AyabCzFT()
@@ -613,19 +626,6 @@ PushI Dry, Array()
 'Ass IsEqAy(Act(2), Array("C", 0))
 'Ass IsEqAy(Act(3), Array("D", 1, "X"))
 End Sub
-Private Sub Z_SubDrFnySel()
-Dim DrFny$(), SelFF$, Dr()
-DrFny = SySsl("A B C D E F")
-Dr = Array(Empty, Empty, 1, Empty, 2)
-SelFF = "C E"
-Ept = Array(1, 2)
-GoSub Tst
-Exit Sub
-Tst:
-    Act = SubDrFnySel(Dr, DrFny, SelFF)
-    C
-    Return
-End Sub
 
 Function CvAy(A) As Variant()
 CvAy = A
@@ -649,7 +649,6 @@ Z_ChkEqAy
 Z_AyMinus
 Z_SyzAy
 Z_AyTrim
-Z_SubDrFnySel
 MVb_Ay:
 End Sub
 

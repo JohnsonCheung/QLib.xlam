@@ -10,6 +10,10 @@ Function IsEqObj(A, B) As Boolean
 IsEqObj = ObjPtr(A) = ObjPtr(B)
 End Function
 
+Function IsEqVar(A, B) As Boolean
+IsEqVar = VarPtr(A) = VarPtr(B)
+End Function
+
 Function IntozOy(OInto, Oy)
 Erase OInto
 Dim O, I
@@ -26,7 +30,7 @@ Function IntozOyPrp(OInto, Oy, Prp)
 Dim O, I
 O = AyCln(OInto)
 For Each I In Itr(Oy)
-    Push O, ObjPrp(I, Prp)
+    Push O, Prp(I, Prp)
 Next
 IntozOyPrp = O
 End Function
@@ -48,43 +52,17 @@ X:
 ObjNm = "#" & Err.Description & "#"
 End Function
 
-Function DrzObjPrpNy(Obj, PrpNy$()) As Variant()
+Function DrzObj(Obj, PrpPthAy$()) As Variant()
 Const CSub$ = CMod & "DrzObjPrpNy"
-If IsNothing(Obj) Then Inf CSub, "Given object is nothing", "PrpNy", PrpNy: Exit Function
-Dim I
-For Each I In PrpNy
-    Push DrzObjPrpNy, ObjPrp(Obj, I)
+If IsNothing(Obj) Then Inf CSub, "Given object is nothing", "PrpPthAy", PrpPthAy: Exit Function
+Dim PrpPth
+For Each PrpPth In PrpPthAy
+    Push DrzObj, Prp(Obj, PrpPth)
 Next
 End Function
-Function LyzObjPrpNy(Obj, B$()) As String()
-LyzObjPrpNy = LyzNyAv(B, DrzObjPrpNy(Obj, B))
-End Function
-Function LyzObjPP(Obj, PP) As String()
-LyzObjPP = LyzObjPrpNy(Obj, Ny(PP))
-End Function
-Function DrzObjPP(Obj, PP$) As Variant()
-DrzObjPP = DrzObjPrpNy(Obj, Ny(PP))
-End Function
 
-Function ObjPrp(A, PrpPth, Optional Thw As eThwOpt)
-Const CSub$ = CMod & "ObjPrp"
-'ThwNothing A, CSub
-On Error GoTo X
-'Ret the Obj's Get-Property-Value using Pth, which is dot-separated-string
-Dim P$()
-    P = Split(PrpPth, ".")
-Dim O
-    Dim J%, U%
-    Set O = A
-    U = UB(P)
-    For J = 0 To U - 1      ' U-1 is to skip the last Pth-Seg
-        Set O = CallByName(O, P(J), VbGet) ' in the middle of each path-seg, they must be object, so use [Set O = ...] is OK
-    Next
-Asg CallByName(O, P(U), VbGet), ObjPrp ' Last Prp may be non-object, so must use 'Asg'
-Exit Function
-X:
-Dim E$: E = Err.Description
-ThwOpt Thw, CSub, "Err", "Er ObjTy PrpPth", E, TypeName(A), PrpPth
+Function LyzObjPP(Obj, PP) As String()
+LyzObjPP = LyzObjPP(Obj, Ny(PP))
 End Function
 
 Function ObjStr$(Obj)
@@ -93,14 +71,35 @@ ObjStr = Obj.ToStr: Exit Function
 X: ObjStr = QuoteSq(TypeName(Obj))
 End Function
 
-Private Sub ZZZ_ObjPrp()
-Dim Act$: Act = ObjPrp(Excel.Application.Vbe.ActiveVBProject, "FileName Name")
+Private Sub ZZZ_Prp()
+Dim Act$: Act = Prp(Excel.Application.Vbe.ActiveVBProject, "FileName Name")
 Ass Act = "C:\Users\user\Desktop\Vba-Lib-1\QVb.xlam|QVb"
 End Sub
 
-
-Function Prp(Obj, P)
+Function PrpzNm(Obj, P) ' P is PrpNm (Nm cannot have Dot
 On Error Resume Next
-Prp = CallByName(Obj, P, VbGet)
+PrpzNm = CallByName(Obj, P, VbGet)
 End Function
+
+Function Prp(Obj, PrpPth, Optional Thw As eThwOpt)
+Const CSub$ = CMod & "Prp"
+'ThwNothing Obj, CSub
+On Error GoTo X
+'Ret the Obj's Get-Property-Value using Pth, which is dot-separated-string
+Dim P$()
+    P = Split(PrpPth, ".")
+Dim O
+    Dim J%, U%
+    Set O = Obj
+    U = UB(P)
+    For J = 0 To U - 1      ' U-1 is to skip the last Pth-Seg
+        Set O = CallByName(O, P(J), VbGet) ' in the middle of each path-seg, they must be object, so use [Set O = ...] is OK
+    Next
+Asg CallByName(O, P(U), VbGet), Prp ' Last Prp may be non-object, so must use 'Asg'
+Exit Function
+X:
+Dim E$: E = Err.Description
+ThwOpt Thw, CSub, "Err", "Er ObjTy PrpPth", E, TypeName(Obj), PrpPth
+End Function
+
 

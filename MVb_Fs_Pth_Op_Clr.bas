@@ -4,6 +4,7 @@ Option Explicit
 Sub ClrPth(Pth)
 DltFfnyAyIf FfnAy(Pth)
 End Sub
+
 Private Sub Z_ClrPthFil()
 ClrPthFil TmpRoot
 End Sub

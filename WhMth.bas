@@ -9,9 +9,9 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
 Dim X_Nm As WhNm, X_ShtMdy$(), X_ShtTy$(), _
-X_ShtRetTy$(), X_FstArgNm$, X_FstArgShtTy$, X_ArgNy$(), X_ArgSfx$(), X_WiPmOpt As BoolRslt
+X_ShtRetTy$(), X_FstArgNm$, X_FstArgShtTy$, X_ArgNy$(), X_ArgSfx$(), X_WiPmOpt As BoolOpt
 Dim X_IsEmp As Boolean
-Property Get WiPmOpt() As BoolRslt
+Property Get WiPmOpt() As BoolOpt
 WiPmOpt = X_WiPmOpt
 End Property
 

@@ -1,7 +1,7 @@
 Attribute VB_Name = "MIde_Gen_Rf_Dfn"
 Option Explicit
 Private Property Get UsrPjRfLy() As String()
-Erase XX
+Erase xx
 X "MVb"
 X "MIde  MVb MXls MAcs"
 X "MXls  MVb"
@@ -14,8 +14,8 @@ X "MTp   MVb"
 X "MSql  MVb"
 X "AStkShpCst MVb MXls MAcs"
 X "MAcs  MVb MXls"
-UsrPjRfLy = XX
-Erase XX
+UsrPjRfLy = xx
+Erase xx
 End Property
 
 Property Get PjNmToStdRfNNDic() As Dictionary
@@ -24,7 +24,7 @@ If IsNothing(O) Then Set O = Dic(PjNmToStdRfNNLy)
 Set PjNmToStdRfNNDic = O
 End Property
 Private Property Get PjNmToStdRfNNLy() As String()
-Erase XX
+Erase xx
 X "MVb   Scripting VBScript_RegExp_55 DAO VBIDE Office"
 X "MIde  Scripting VBIDE Excel"
 X "MXls  Scripting Office Excel"
@@ -37,12 +37,12 @@ X "MTp   Scripting"
 X "MSql  Scripting"
 X "AStkShpCst Scripting"
 X "MAcs  Scripting Office Access"
-PjNmToStdRfNNLy = XX
-Erase XX
+PjNmToStdRfNNLy = xx
+Erase xx
 End Property
 
 Private Property Get StdGuidLy() As String()
-Erase XX
+Erase xx
 X "VBA                {000204EF-0000-0000-C000-000000000046} 4  2 C:\Program Files (x86)\Common Files\Microsoft Shared\VBA\VBA7.1\VBE7.DLL"
 X "Access             {4AFFC9A0-5F99-101B-AF4E-00AA003F0F07} 9  0 C:\Program Files (x86)\Microsoft Office\Root\Office16\MSACC.OLB"
 X "stdole             {00020430-0000-0000-C000-000000000046} 2  0 C:\Windows\SysWOW64\stdole2.tlb"
@@ -54,8 +54,8 @@ X "ADODB              {B691E011-1797-432E-907A-4D8C69339129} 6  1 C:\Program Fil
 X "ADOX               {00000600-0000-0010-8000-00AA006D2EA4} 6  0 C:\Program Files (x86)\Common Files\System\ado\msadox.dll"
 X "VBScript_RegExp_55 {3F4DACA7-160D-11D2-A8E9-00104B365C9F} 5  5 C:\Windows\SysWOW64\vbscript.dll"
 X "VBIDE              {0002E157-0000-0000-C000-000000000046} 5  3 C:\Program Files (x86)\Common Files\Microsoft Shared\VBA\VBA6\VBE6EXT.OLB"
-StdGuidLy = XX
-Erase XX
+StdGuidLy = xx
+Erase xx
 End Property
 
 Private Sub Z_FAny_DPD_ORD()

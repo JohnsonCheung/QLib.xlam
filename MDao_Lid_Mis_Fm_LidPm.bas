@@ -117,7 +117,7 @@ Set FsetzFxc = New Aset
 Dim I, M As LidFxc
 For Each I In A
     Set M = I
-    FsetzFxc.PushItm M.ExtNm
+    FsetzFxc.PushItm M.Extnm
 Next
 End Function
 Private Function FldNmToEptShtTyLisDiczFxc(A() As LidFxc) As Dictionary
@@ -125,7 +125,7 @@ Dim I, M As LidFxc
 Set FldNmToEptShtTyLisDiczFxc = New Dictionary
 For Each I In A
     Set M = I
-    FldNmToEptShtTyLisDiczFxc.Add M.ExtNm, M.ShtTyLis
+    FldNmToEptShtTyLisDiczFxc.Add M.Extnm, M.ShtTyLis
 Next
 End Function
 
@@ -199,10 +199,10 @@ For Each F In ExistFset.Itms
     End With
 Next
 End Function
-Private Function Tyci(ActShtTy$, EptShtTyLis$, ExtNm) As TycOpt
+Private Function Tyci(ActShtTy$, EptShtTyLis$, Extnm) As TycOpt
 If HasEle(CmlAy(EptShtTyLis), ActShtTy) Then Exit Function
 Set Tyci.Tyc = New LidMisTyc
-Tyci.Tyc.Init ExtNm, ActShtTy, EptShtTyLis
+Tyci.Tyc.Init Extnm, ActShtTy, EptShtTyLis
 Tyci.Som = True
 End Function
 '===================================================================================

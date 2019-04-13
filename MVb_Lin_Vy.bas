@@ -31,10 +31,10 @@ Next
 ShfVy = O
 End Function
 
-Private Function ShfTxtOpt(OAy$(), Lbl) As StrRslt
+Private Function ShfTxtOpt(OAy$(), Lbl) As StrOpt
 If Si(OAy) = 0 Then Exit Function
 Dim S$: S = ShfTxt(OAy, Lbl)
-If S = "" Then ShfTxtOpt = StrRslt(S)
+If S = "" Then ShfTxtOpt = SomStr(S)
 End Function
 
 Private Function ShfBool(OAy$(), Lbl)
@@ -58,8 +58,8 @@ Dim I, J%, Ay$()
 Ay = OAy
 For Each I In Itr(Ay)
     With Brk2(I, "=")
-        If .S1 = Lbl Then
-            ShfTxt = .S2
+        If .s1 = Lbl Then
+            ShfTxt = .s2
             OAy = AyeEleAt(Ay, J)
             Exit Function
         End If

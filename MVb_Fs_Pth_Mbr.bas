@@ -38,7 +38,22 @@ X:
     A = Dir
 Wend
 End Function
-
+Function IsInstNm(S) As Boolean
+If FstChr(S) <> "N" Then Exit Function
+If Len(S) <> 16 Then Exit Function
+If Not IsYYYYMMDD(Mid(S, 2, 8)) Then Exit Function
+If Mid(S, 10, 1) <> "_" Then Exit Function
+If Not IsHHMMDD(Right(S, 6)) Then Exit Function
+IsInstNm = True
+End Function
+Function InstFdrAy(Pth) As String()
+Dim Fdr
+For Each Fdr In Itr(FdrAy(Pth))
+    If IsInstNm(Fdr) Then
+        PushI InstFdrAy, Fdr
+    End If
+Next
+End Function
 Function FdrAy(Pth) As String()
 Dim P$: P = PthEnsSfx(Pth)
 Dim A$: A = DirzPth(P)

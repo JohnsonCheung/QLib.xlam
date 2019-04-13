@@ -3,8 +3,8 @@ Option Explicit
 #Const Sav = True
 Public Const DocOfMthCml$ = "NewType:Sy."
 
-Function MthCmlAsetOfPj(Optional WhStr$) As Aset
-Set MthCmlAsetOfPj = CmlAset(MthNsetOfPj(WhStr).Sy)
+Function MthCmlAsetInPj(Optional WhStr$) As Aset
+Set MthCmlAsetInPj = CmlAset(MthNsetInPj(WhStr).Sy)
 End Function
 
 Function MthCmlFny(NDryCol%) As String()
@@ -22,16 +22,16 @@ Set MthCmlWs = Lo.Parent
 End Function
 Function MthCmlLinWsBase() As Worksheet
 Dim Dry()
-Dry = DryzSslAy(MthCmlLyOfVbe)
+Dry = DryzSslAy(MthCmlLyInVbe)
 Set MthCmlLinWsBase = WszDrs(Drs(MthCmlFny(NColzDry(Dry)), Dry))
 End Function
 
-Sub BrwMthCmlLyOfVbe()
-Brw FmtAyT3(MthCmlLyOfVbe)
+Sub BrwMthCmlLyInVbe()
+Brw FmtAyT3(MthCmlLyInVbe)
 End Sub
 
-Function MthCmlLyOfVbe() As String()
-MthCmlLyOfVbe = MthCmlLyzVbe(CurVbe)
+Function MthCmlLyInVbe() As String()
+MthCmlLyInVbe = MthCmlLyzVbe(CurVbe)
 End Function
 
 Function MthCmlLyzVbe(A As Vbe) As String()

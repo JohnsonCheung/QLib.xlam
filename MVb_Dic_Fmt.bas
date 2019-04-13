@@ -6,13 +6,20 @@ Set R = Rs(SampDb_DutyDta, "Select Sku,BchNo from PermitD where BchNo<>''")
 BrwDic JnStrDicTwoFldRs(R), True
 End Sub
 
-Sub BrwDic(A As Dictionary, Optional InclDicValOptTy As Boolean, Optional UseVc As Boolean)
-BrwAy FmtDic(A, InclDicValOptTy), UseVc:=UseVc
+Sub BrwDic(A As Dictionary, Optional InclDicValOptTy As Boolean, Optional UseVc As Boolean, Optional AddIx As Boolean)
+Dim B As Dictionary
+If AddIx Then
+    Set B = DicAddIxToKey(A)
+Else
+    Set B = A
+End If
+BrwAy FmtDic(B, InclDicValOptTy), UseVc:=UseVc
 End Sub
 
 Sub DmpDic(A As Dictionary, Optional InclDicValOptTy As Boolean, Optional Tit$ = "Key Val")
 D FmtDic(A, InclDicValOptTy, Tit)
 End Sub
+
 Function S1S2AyzSyDic(A As Dictionary) As S1S2()
 Dim K
 For Each K In A.Keys
@@ -25,7 +32,7 @@ PushI FmtDicTit, vbTab & "Count=" & A.Count
 PushIAy FmtDicTit, AyAddPfx(FmtDic(A, InclValTy:=True), vbTab)
 End Function
 
-Function FmtDic(A As Dictionary, Optional InclValTy As Boolean, Optional Nm1$ = "Key", Optional Nm2$ = "Val") As String()
+Function FmtDic(A As Dictionary, Optional InclValTy As Boolean, Optional Nm1$ = "Key", Optional Nm2$ = "Val", Optional AddIx As Boolean) As String()
 If IsNothing(A) Then Exit Function
 Select Case True
 Case IsDiczSy(A):    FmtDic = FmtS1S2Ay(S1S2AyzSyDic(A), Nm1, Nm2)

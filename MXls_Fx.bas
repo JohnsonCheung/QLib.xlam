@@ -32,7 +32,7 @@ Sub FxRmvWsIfHas(A, Wsn)
 If HasFxw(A, Wsn) Then
    Dim B As Workbook: Set B = WbzFx(A)
    WszWb(B, Wsn).Delete
-   WbSav B
+   SavWb B
    ClsWbNoSav B
 End If
 End Sub
@@ -77,7 +77,7 @@ End Function
 Function DtzFxw(Fx, Optional Wsn0$) As Dt
 Dim N$: N = FxDftWsn(Fx, Wsn0)
 Dim Sql$: Sql = FmtQQ("Select * from [?$]", N)
-Set DtzFxw = DtDrsDtnm(DrsFxq(Fx, Sql), N)
+Set DtzFxw = DtzDrs(DrsFxq(Fx, Sql), N)
 End Function
 
 Function IntAyFxwf(Fx, W, F) As Integer()

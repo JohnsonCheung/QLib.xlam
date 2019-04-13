@@ -24,7 +24,6 @@ Dim D As Database: Set D = AppDb(Apn)
 If IsOldAtt(D, "Tp", Tp1) Then ImpAtt D, "Tp", Tp1 '<== Import
 End Sub
 
-'===============================================
 Private Function TpFx$(Apn)
 TpFx = TpPth & Apn & "(Template).xlsx"
 End Function

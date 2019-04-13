@@ -23,7 +23,7 @@ End Sub
 Function FstOyPEv(Oy, P, V)
 Dim Obj
 For Each Obj In Itr(Oy)
-    If ObjPrp(Obj, P) = V Then Asg Obj, FstOyPEv: Exit Function
+    If Prp(Obj, P) = V Then Asg Obj, FstOyPEv: Exit Function
 Next
 End Function
 
@@ -35,7 +35,7 @@ Function IntoOyP(Into, Oy, P)
 Dim O: O = Into: Erase O
 Dim Obj
 For Each Obj In Itr(Oy)
-    Push O, ObjPrp(Obj, P)
+    Push O, Prp(Obj, P)
 Next
 IntoOyP = O
 End Function
@@ -101,7 +101,7 @@ Dim O
    Erase O
    Dim Obj
    For Each Obj In Itr(Oy)
-       If ObjPrp(Obj, P) = Ev Then PushObj O, Obj
+       If Prp(Obj, P) = Ev Then PushObj O, Obj
    Next
 OywPEv = O
 End Function
@@ -110,8 +110,8 @@ Function IntAyOywPEvSelP(Oy, P, Ev, SelP) As Integer()
 IntAyOywPEvSelP = IntAyOyP(OywPEv(Oy, P, Ev), SelP)
 End Function
 
-Function DryOywPEvSelPP(Oy, P, Ev, SelPP$) As Variant()
-DryOywPEvSelPP = DryOySelPP(OywPEv(Oy, P, Ev), SelPP)
+Function DrszOyppWhPev(Oy, PP, P, Ev) As Drs
+'Set DrszOyppWhPev = Drs(Fny, DryzOyppWhPev(Oy, Fny, P, Ev))
 End Function
 
 Function OywPIn(A, P, InAy)
@@ -120,16 +120,16 @@ If Si(A) = 0 Or Si(InAy) Then OywPIn = A: Exit Function
 O = A
 Erase O
 For Each X In Itr(A)
-    If HasEle(InAy, ObjPrp(X, P)) Then PushObj O, X
+    If HasEle(InAy, Prp(X, P)) Then PushObj O, X
 Next
 OywPIn = O
 End Function
 
-Function DryOySelPP(Oy, SelPP$) As Variant()
-Dim Obj, PrpNy$()
-PrpNy = SySsl(SelPP)
+Function DryzOyPP(Oy, PP) As Variant()
+Dim Obj, PrpPthAy$()
+PrpPthAy = SySsl(PP)
 For Each Obj In Itr(Oy)
-    PushI DryOySelPP, DrzObjPrpNy(Obj, PrpNy)
+    PushI DryzOyPP, DrzObj(Obj, PrpPthAy)
 Next
 End Function
 

@@ -4,7 +4,7 @@ Function SwapS1S2Ay(A() As S1S2) As S1S2()
 Dim I
 For Each I In Itr(A)
     With CvS1S2(I)
-    PushObj SwapS1S2Ay, S1S2(.S2, .S1)
+    PushObj SwapS1S2Ay, S1S2(.s2, .s1)
     End With
 Next
 End Function
@@ -39,34 +39,34 @@ For Each I In Av
     PushObj S1S2Ay, I
 Next
 End Function
-Function S1S2(S1, S2, Optional NoTrim As Boolean) As S1S2
+Function S1S2(s1, s2, Optional NoTrim As Boolean) As S1S2
 Set S1S2 = New S1S2
 If NoTrim Then
-    S1S2.S1 = S1
-    S1S2.S2 = S2
+    S1S2.s1 = s1
+    S1S2.s2 = s2
 Else
-    S1S2.S1 = Trim(S1)
-    S1S2.S2 = Trim(S2)
+    S1S2.s1 = Trim(s1)
+    S1S2.s2 = Trim(s2)
 End If
 End Function
 
 Sub AsgS1S2(A As S1S2, O1, O2)
-O1 = A.S1
-O2 = A.S2
+O1 = A.s1
+O2 = A.s2
 End Sub
 
 Function S1S2Clone(A As S1S2) As S1S2
-Set S1S2Clone = S1S2(A.S1, A.S2)
+Set S1S2Clone = S1S2(A.s1, A.s2)
 End Function
 
 Function S1S2Lin$(A As S1S2, Optional Sep$ = " ", Optional W1%)
-S1S2Lin = AlignL(A.S1, W1) & Sep & A.S2
+S1S2Lin = AlignL(A.s1, W1) & Sep & A.s2
 End Function
 
 Function JnS1S2Ay(A() As S1S2, Optional Sep$ = "") As String()
 Dim O$(), J&
 For J = 0 To UB(A)
-   Push O, A(J).S1 & Sep & A(J).S2
+   Push O, A(J).s1 & Sep & A(J).s2
 Next
 JnS1S2Ay = O
 End Function
@@ -86,10 +86,10 @@ Function DiczS1S2Ay(A() As S1S2, Optional Sep$ = " ") As Dictionary
 Dim J&, O As New Dictionary
 For J = 0 To UB(A)
     With A(J)
-        If O.Exists(.S1) Then
-            O(.S1) = O(.S1) & " " & O(.S2)
+        If O.Exists(.s1) Then
+            O(.s1) = O(.s1) & " " & O(.s2)
         Else
-            O.Add .S1, .S2
+            O.Add .s1, .s2
         End If
     End With
 Next
@@ -99,7 +99,7 @@ End Function
 Function Sy1zS1S2Ay(A() As S1S2) As String()
 Dim O$(), J&
 For J = 0 To UB(A)
-   Push O, A(J).S1
+   Push O, A(J).s1
 Next
 Sy1zS1S2Ay = O
 End Function
@@ -107,7 +107,7 @@ End Function
 Function Sy2zS1S2Ay(A() As S1S2) As String()
 Dim O$(), J&
 For J = 0 To UB(A)
-   Push O, A(J).S2
+   Push O, A(J).s2
 Next
 Sy2zS1S2Ay = O
 End Function
@@ -121,8 +121,8 @@ O(1, 1) = Nm1
 O(1, 2) = Nm2
 For Each I In Itr(A)
     With CvS1S2(I)
-        O(R, 1) = .S1
-        O(R, 2) = .S2
+        O(R, 1) = .s1
+        O(R, 2) = .s2
         R = R + 1
     End With
 Next

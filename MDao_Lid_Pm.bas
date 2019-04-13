@@ -38,10 +38,10 @@ Next
 End Function
 
 Private Function Fxc(WsColLin) As LidFxc
-Dim ColNm$, ShtTyLis$, ExtNm$
-AsgN2tRst WsColLin, ColNm, ShtTyLis, ExtNm
+Dim ColNm$, ShtTyLis$, Extnm$
+AsgN2tRst WsColLin, ColNm, ShtTyLis, Extnm
 Set Fxc = New LidFxc
-Fxc.Init ColNm, ShtTyLis, ExtNm
+Fxc.Init ColNm, ShtTyLis, Extnm
 End Function
 
 Private Function LyzWsCol(TblNm$)

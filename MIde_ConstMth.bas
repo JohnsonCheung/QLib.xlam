@@ -2,7 +2,6 @@ Attribute VB_Name = "MIde_ConstMth"
 Option Explicit
 Public Const DocOfQNm$ = "newtype AOptDotNm.  "
 Public Const DocOfAOptDotNm$ = "type Nm | ADotNm."
-
 Sub EdtConst(ConstQNm$)
 EdtStr ConstVal(ConstQNm), FtzConstQNm(ConstQNm)
 End Sub
@@ -14,7 +13,7 @@ End With
 End Sub
 
 Private Property Get Z_CrtSchm1() As String()
-Erase XX
+Erase xx
 X "Tbl A *Id | *Nm     | *Dte AATy Loc Expr Rmk"
 X "Tbl B *Id | AId *Nm | *Dte"
 X "Fld Txt AATy"
@@ -27,17 +26,17 @@ X "Des Tbl     A     AA BB "
 X "Des Tbl     A     CC DD "
 X "Des Fld     ANm   AA BB "
 X "Des Tbl.Fld A.ANm TF_Des-AA-BB"
-Z_CrtSchm1 = XX
-Erase XX
+Z_CrtSchm1 = xx
+Erase xx
 End Property
 
 Private Property Get C_A() As String()
-Erase XX
+Erase xx
 X "lsjdf lskdjf lsdkf"
 X "sdfkljsdf"
 X "sdf"
 X "sdf"
-C_A = XX
-C_A = XX
-Erase XX
+C_A = xx
+C_A = xx
+Erase xx
 End Property

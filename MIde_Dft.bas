@@ -24,8 +24,8 @@ For Each C In A.VBComponents
 Next
 SizPj = O
 End Function
-Function SiOfPj&()
-SiOfPj = SizPj(CurPj)
+Function SiInPj&()
+SiInPj = SizPj(CurPj)
 End Function
 
 Private Sub Z()

@@ -17,12 +17,12 @@ Function HasAddinFn(A As Excel.Application, AddinFn) As Boolean
 HasAddinFn = HasItn(A.AddIns, AddinFn)
 End Function
 
-Sub XlsQuit(A As Excel.Application)
-Stamp "XlsQuit: Start"
-Stamp "XlsQuit: ClsAllWb":    ClsAllWb A
-Stamp "XlsQuit: Quit":        A.Quit
-Stamp "XlsQuit: Set nothing": Set A = Nothing
-Stamp "XlsQuit: Done"
+Sub QuitXls(A As Excel.Application)
+Stamp "QuitXls: Start"
+Stamp "QuitXls: ClsAllWb":    ClsAllWb A
+Stamp "QuitXls: Quit":        A.Quit
+Stamp "QuitXls: Set nothing": Set A = Nothing
+Stamp "QuitXls: Done"
 End Sub
 Sub ClsAllWb(A As Excel.Application)
 Dim W As Workbook

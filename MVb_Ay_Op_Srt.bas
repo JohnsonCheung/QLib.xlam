@@ -217,6 +217,14 @@ Next
 AySrtInToIxIxAy& = O
 End Function
 
+Function DicAddIxToKey(A As Dictionary) As Dictionary
+Dim O As New Dictionary, K, J&
+For Each K In A.Keys
+    O.Add J & " " & K, A(K)
+    J = J + 1
+Next
+Set DicAddIxToKey = O
+End Function
 
 Function DicSrt(A As Dictionary, Optional IsDesc As Boolean) As Dictionary
 If A.Count = 0 Then Set DicSrt = New Dictionary: Exit Function

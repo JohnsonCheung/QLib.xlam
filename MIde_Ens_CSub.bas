@@ -65,7 +65,7 @@ EnsCSubzPj CurPj, Silent
 End Sub
 
 Sub EnsCSubzMd(A As CodeModule, Optional Silent As Boolean)
-If HasEle(Array("MIde_Ens__Mdy", "MIde_Ens_CSub"), MdNm(A)) Then
+If HasEle(Array("MIde_Ens_Mdy", "MIde_EnsCSub"), MdNm(A)) Then
     InfLin CSub, "Skip", "Md", MdNm(A)
     Exit Sub
 End If

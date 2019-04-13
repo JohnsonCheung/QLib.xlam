@@ -70,10 +70,10 @@ AsgBrkAt A, InStr(A, Sep), Sep, O1, O2, NoTrim
 End Sub
 
 Private Function BrkAtSep(A, P&, Sep, NoTrim As Boolean) As S1S2
-Dim S1$, S2$
-S1 = Left(A, P - 1)
-S2 = Mid(A, P + Len(Sep))
-Set BrkAtSep = S1S2(S1, S2, NoTrim)
+Dim s1$, s2$
+s1 = Left(A, P - 1)
+s2 = Mid(A, P + Len(Sep))
+Set BrkAtSep = S1S2(s1, s2, NoTrim)
 End Function
 
 Function Brk1At(A, P&, Sep, NoTrim As Boolean) As S1S2
@@ -132,29 +132,29 @@ End If
 End Sub
 
 Private Sub ZZ_Brk1Rev()
-Dim S1$, S2$, ExpS1$, ExpS2$, A$
+Dim s1$, s2$, ExpS1$, ExpS2$, A$
 A = "aa --- bb --- cc"
 ExpS1 = "aa --- bb"
 ExpS2 = "cc"
 With Brk1Rev(A, "---")
-    S1 = .S1
-    S2 = .S2
+    s1 = .s1
+    s2 = .s2
 End With
-Ass S1 = ExpS1
-Ass S2 = ExpS2
+Ass s1 = ExpS1
+Ass s2 = ExpS2
 End Sub
 
 Private Sub Z_Brk1Rev()
-Dim S1$, S2$, ExpS1$, ExpS2$, A$
+Dim s1$, s2$, ExpS1$, ExpS2$, A$
 A = "aa --- bb --- cc"
 ExpS1 = "aa --- bb"
 ExpS2 = "cc"
 With Brk1Rev(A, "---")
-    S1 = .S1
-    S2 = .S2
+    s1 = .s1
+    s2 = .s2
 End With
-Ass S1 = ExpS1
-Ass S2 = ExpS2
+Ass s1 = ExpS1
+Ass s2 = ExpS2
 End Sub
 
 Private Sub Z()

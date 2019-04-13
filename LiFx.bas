@@ -42,7 +42,7 @@ End Function
 Function ExtNy() As String()
 Dim J%
 For J = 0 To UB(A_Fxc)
-    PushI ExtNy, A_Fxc(J).ExtNm
+    PushI ExtNy, A_Fxc(J).Extnm
 Next
 End Function
 

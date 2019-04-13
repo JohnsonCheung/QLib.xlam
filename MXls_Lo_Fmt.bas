@@ -4,7 +4,28 @@ Const CMod$ = "MXls_Lo_Fmt."
 Public Const DocOfLof$ = "It is Ly with T1 LofT1nn"
 Private A As ListObject, B$(), Fny$()
 
-Function FmtLo(Lo As ListObject, Lof$()) As ListObject
+Function AyzSqC(Sq, Optional C = 1) As Variant()
+Stop
+End Function
+
+Sub GrpBrdLo(Lo As ListObject, Optional ByEmp As Boolean) ' Bdr each Gp in Lo by fst Col grouping by Empty or by SamVal
+Dim Ay(): Ay = AyzSqC(A.ListColumns(1).DataBodyRange.Value)
+Dim Ix&()
+    If ByEmp Then
+        Ix = GrpEndIxAyOfEmp(Ay)
+    Else
+        Ix = GrpEndIxAyOfEmp(Ay)
+    End If
+Dim R As Range: Set R = Lo.DataBodyRange
+Dim RR() As Range, R1&, R2&, J&
+    For J = 0 To UB(Ix)
+        PushObj RR, RgRR(R, R1, R2)
+    Next
+For J = 0 To UB(RR)
+    BdrRgAround RR(J)
+Next
+End Sub
+Sub FmtLo(Lo As ListObject, Lof$())
 Set A = Lo
 Fny = FnyzLo(Lo)
 B = Lof
@@ -20,10 +41,9 @@ For Each L In WItr("Lvl"): WFmtLvl L: Next
 For Each L In WItr("Tot"): WFmtTot L: Next
 For Each L In WItr("Wdt"): WFmtWdt L: Next
 SetLoTit Lo, WLy("Tit")
-LoSetNm Lo, T2(FstEleT1(B, "Nm"))
+SetLoNm Lo, T2(FstEleT1(B, "Nm"))
 For Each L In WItr("Lbl"): WFmtLbl L: Next ' Must run Last
-Set FmtLo = A
-End Function
+End Sub
 
 'Ali -----------------------------------------------------------
 Private Sub WFmtAli(L)
@@ -209,7 +229,7 @@ Private Sub ZZ()
 Dim A As ListObject
 Dim B$()
 Dim C As Workbook
-Dim XX
+Dim xx
 End Sub
 
 'Fun===========================================================================
@@ -229,3 +249,17 @@ End Function
 Private Function WHdrCell(C) As Range
 Set WHdrCell = A1zRg(CellAbove(A.ListColumns(C).Range))
 End Function
+
+Sub FmtLozStdWb(A As Workbook)
+Dim Lo
+For Each Lo In LoAy(A)
+    FmtLozStd CvLo(Lo)
+Next
+End Sub
+Sub FmtLozStd(A As ListObject)
+FmtLo A, StdLof
+End Sub
+Property Get StdLof() As String()
+
+End Property
+

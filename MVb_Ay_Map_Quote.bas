@@ -8,8 +8,8 @@ Dim O$()
     Dim J&
     Dim Q1$, Q2$
     With BrkQuote(QuoteStr)
-        Q1 = .S1
-        Q2 = .S2
+        Q1 = .s1
+        Q2 = .s2
     End With
     For J = 0 To U
         O(J) = Q1 & A(J) & Q2

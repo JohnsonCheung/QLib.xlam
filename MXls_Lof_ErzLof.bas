@@ -314,7 +314,7 @@ Dim Lof$(), Fny$(), Act$(), Ept$()
 GoSub T1
 Exit Sub
 T1:
-    Lof = SplitVbar("Fml AA sdlkfsdflk|Fml AA skldf|Fml BB sdklfjdlf|Fml BB sdlfkjsdf|Fml BB sdklfjsdf|Fml CC sdfsdf")
+    Lof = SplitVBar("Fml AA sdlkfsdflk|Fml AA skldf|Fml BB sdklfjdlf|Fml BB sdlfkjsdf|Fml BB sdklfjsdf|Fml CC sdfsdf")
     GoTo Tst
 Tst:
     Init Lof, Fny

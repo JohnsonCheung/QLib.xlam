@@ -37,7 +37,7 @@ D LyzFunMsgObjPP(Fun, Msg, Obj, PP)
 End Sub
 
 Function LyzNv(Nm$, V, Optional Sep$ = ": ") As String()
-Dim Ly$(): Ly = LyzVal(V)
+Dim Ly$(): Ly = FmtV(V)
 Dim J%, S$
 If Si(Ly) = 0 Then
     PushI LyzNv, Nm & Sep
@@ -50,8 +50,8 @@ For J = 1 To UB(Ly)
 Next
 End Function
 
-Function LyzNvzStr$(Nm$, V)
-LyzNvzStr = Nm & "=[" & StrCellzVal(V) & "]"
+Function LinzNv$(Nm$, V)
+LinzNv = Nm & "=[" & StrCellzVal(V) & "]"
 End Function
 Function LyzMsgNap(Msg$, ParamArray Nap()) As String()
 Dim Nav(): Nav = Nap

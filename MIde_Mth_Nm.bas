@@ -33,7 +33,7 @@ End Function
 Function MthNyzPub(Src$()) As String()
 Dim Ix, N$, B As MthNm3
 For Each Ix In MthIxItr(Src)
-    B = MthNm3(Src(Ix))
+    Set B = MthNm3(Src(Ix))
     If B.Nm <> "" Then
         If B.ShtMdy = "" Or B.ShtMdy = "Pub" Then
             PushI MthNyzPub, B.Nm
@@ -52,11 +52,11 @@ For Each I In Itr(MthLinAy)
     J = J + 1
 Next
 End Function
-Function Ens2Dot(S) As StrRslt
+Function Ens2Dot(S) As StrOpt
 Select Case DotCnt(S)
-Case 0: Ens2Dot = StrRslt(".." & S)
-Case 1: Ens2Dot = StrRslt("." & S)
-Case 2: Ens2Dot = StrRslt(S)
+Case 0: Ens2Dot = SomStr(".." & S)
+Case 1: Ens2Dot = SomStr("." & S)
+Case 2: Ens2Dot = SomStr(S)
 End Select
 End Function
 
@@ -88,8 +88,8 @@ If ShfNm(L) = "" Then Thw CSub, "Not as SrcLin", "Lin", Lin
 RmvMthNm3 = L
 End Function
 
-Function RelOf_MthSDNm_To_MdNm_OfVbe(Optional WhStr$) As Rel
-'Set MthSDNmToMdNmRelOfVbe = MthSDNmToMdNmRelzVbe(CurVbe, WhStr)
+Function RelOf_MthSDNm_To_MdNm_InVbe(Optional WhStr$) As Rel
+'Set MthSDNmToMdNmRelInVbe = MthSDNmToMdNmRelzVbe(CurVbe, WhStr)
 End Function
 
 Function RelOf_MthSDNm_To_MdNm_zVbe(A As Vbe, Optional WhStr$) As Rel
@@ -97,17 +97,16 @@ Dim MthQNm
 For Each MthQNm In MthQNyzVbe(A, WhStr)
 '    PushI MthSQNmToMdNmRelzVbe, MthSDNm
 Next
-'Set MthSDNmToMdNmRelOfVbe = MthSDNmToMdNmRelzVbe(CurVbe, WhStr)
+'Set MthSDNmToMdNmRelInVbe = MthSDNmToMdNmRelzVbe(CurVbe, WhStr)
 End Function
 
-
-Function MthNm3(MthLin, Optional B As WhMth) As MthNm3
-Dim L$: L = MthLin
+Function MthNm3(Lin, Optional B As WhMth) As MthNm3
+Dim L$: L = Lin
 Dim O As New MthNm3
 With O
     .MthMdy = ShfMthMdy(L)
     .MthTy = ShfMthTy(L)
-    If .MthTy = "" Then Thw CSub, "Given MthLin is not MthLin", "MthLin", MthLin
+    If .MthTy = "" Then Set MthNm3 = New MthNm3: Exit Function
     .Nm = TakNm(L)
 End With
 If HitMthNm3(O, B) Then
@@ -133,8 +132,8 @@ End Function
 Function MthDNmzLin$(MthLin)
 MthDNmzLin = MthDNmzMthNm3(MthNm3(MthLin))
 End Function
-Function MthSQNyOfVbe(Optional WhStr$) As String()
-MthSQNyOfVbe = MthSQNyzVbe(CurVbe, WhStr)
+Function MthSQNyInVbe(Optional WhStr$) As String()
+MthSQNyInVbe = MthSQNyzVbe(CurVbe, WhStr)
 End Function
 Function MthSQNyzVbe(A As Vbe, Optional WhStr$) As String()
 Dim MthQNm

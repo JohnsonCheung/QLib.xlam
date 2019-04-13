@@ -30,7 +30,7 @@ Dim LinesAy$()
 Dim UniqLinesAy$()
 '    LinesAy = SyzAyMap(A, "FunFNm_MthLines")
     UniqLinesAy = AywDist(LinesAy)
-Dim MthNm$: MthNm = Brk(A(0), ":").S1
+Dim MthNm$: MthNm = Brk(A(0), ":").s1
 Dim Hdr$(): Hdr = FmtCmpDic__1Hdr(OIx, MthNm, Si(A))
 Dim Sam$(): Sam = FmtCmpDic__2Sam(InclSam, OSam, A, LinesAy)
 Dim Syn$(): Syn = FmtCmpDic__3Syn(UniqLinesAy, LinesAy, A)

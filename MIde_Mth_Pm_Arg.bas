@@ -8,8 +8,8 @@ MthPm = BetBktMust(MthLin, CSub)
 End Function
 
 
-Property Get ArgAsetOfPj() As Aset
-Set ArgAsetOfPj = ArgAsetzPj(CurPj)
+Property Get ArgAsetInPj() As Aset
+Set ArgAsetInPj = ArgAsetzPj(CurPj)
 End Property
 
 Function ArgAsetzPj(A As VBProject) As Aset
@@ -20,8 +20,8 @@ For Each L In MthLinAyzPj(A)
 Next
 End Function
 
-Private Sub Z_ArgAsetOfPj()
-ArgAsetOfPj.Srt.Vc
+Private Sub Z_ArgAsetInPj()
+ArgAsetInPj.Srt.Vc
 End Sub
 
 Function DimItmzArg$(Arg)

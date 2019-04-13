@@ -78,11 +78,11 @@ Else
 End If
 End Function
 
-Function MdNyOfPj(Optional WhStr$) As String()
-MdNyOfPj = MdNyzPj(CurPj, WhStr)
+Function MdNyInPj(Optional WhStr$) As String()
+MdNyInPj = MdNyzPj(CurPj, WhStr)
 End Function
-Function MdNyWiPrpOfVbe(Optional WhStr$) As String()
-MdNyWiPrpOfVbe = MdNyWiPrpzVbe(CurVbe, WhStr)
+Function MdNyWiPrpInVbe(Optional WhStr$) As String()
+MdNyWiPrpInVbe = MdNyWiPrpzVbe(CurVbe, WhStr)
 End Function
 Function MdNyWiPrpzVbe(A As Vbe, Optional WhStr$) As String()
 Dim MdNm
@@ -99,14 +99,14 @@ For J = 1 To M.CountOfLines
     If IsPrpLin(M.Lines(J, 1)) Then IsMdWiPrp = True: Exit Function
 Next
 End Function
-Function MdNyOfVbe(Optional WhStr$) As String()
-MdNyOfVbe = MdNyzVbe(CurVbe, WhStr)
+Function MdNyInVbe(Optional WhStr$) As String()
+MdNyInVbe = MdNyzVbe(CurVbe, WhStr)
 End Function
 Function MdNyzMth(MthNm$) As String()
 MdNyzMth = MdNsetzMth(MthNm).Sy
 End Function
 Function MdNsetzMth(MthNm$) As Aset
-Set MdNsetzMth = RelOf_MthNm_To_MdNy_OfPj.ParChd(MthNm)
+Set MdNsetzMth = RelOf_MthNm_To_MdNy_InPj.ParChd(MthNm)
 End Function
 Function MdNyzPj(A As VBProject, Optional WhStr$) As String()
 Dim C

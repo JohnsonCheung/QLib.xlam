@@ -53,7 +53,7 @@ Tst:
 Crt:
     Set Md = TmpMod
     RmvMd Md
-    MdApdLines Md, LineszVbl("Property Get ZZRmv1()||End Property||Function ZZRmv2()|End Function||'|Property Let ZZRmv1(V)|End Property")
+    ApdLines Md, LineszVbl("Property Get ZZRmv1()||End Property||Function ZZRmv2()|End Function||'|Property Let ZZRmv1(V)|End Property")
     Return
 End Sub
 
@@ -65,7 +65,7 @@ Dim Nav(): ReDim Nav(2)
 GoSub BldNav: ThwEqObjNav Md, ToMd, CSub, "Fm & To md cannot be same", Nav
 If Not HasMthMd(Md, MthNm) Then GoSub BldNav: ThwNav CSub, "Fm Mth not Exist", Nav
 If HasMthMd(ToMd, MthNm) Then GoSub BldNav: ThwNav CSub, "To Mth exist", Nav
-ToMd.AddFromString MthLineszMd(Md, MthNm)
+ToMd.AddFromString MthLinesByMdMth(Md, MthNm)
 RmvMdMth Md, MthNm
 If Not IsSilent Then Inf CSub, FmtQQ("Mth[?] in Md[?] is copied ToMd[?]", MthNm, MdNm(Md), MdNm(ToMd))
 Exit Sub

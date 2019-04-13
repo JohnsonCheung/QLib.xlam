@@ -1,18 +1,18 @@
 Attribute VB_Name = "MDao_Lid__Is_LnkImpDef"
 Option Explicit
-Function LiFxc(ColNm$, ShtTyLis$, ExtNm$) As LiFxc
+Function LiFxc(ColNm$, ShtTyLis$, Extnm$) As LiFxc
 Set LiFxc = New LiFxc
-LiFxc.Init ColNm, ShtTyLis, ExtNm
+LiFxc.Init ColNm, ShtTyLis, Extnm
 End Function
 
 Function LiFxcLnkColStr(LnkColStr) As LiFxc
-Dim ColNm$, ShtTyLis$, ExtNm$: AsgN2tRst LnkColStr, ColNm, ShtTyLis, ExtNm
+Dim ColNm$, ShtTyLis$, Extnm$: AsgN2tRst LnkColStr, ColNm, ShtTyLis, Extnm
 Set LiFxcLnkColStr = New LiFxc
-LiFxcLnkColStr.Init ColNm, ShtTyLis, RmvSqBkt(RTrim(ExtNm))
+LiFxcLnkColStr.Init ColNm, ShtTyLis, RmvSqBkt(RTrim(Extnm))
 End Function
 
 Function LiFxcAy(LnkColVbl$) As LiFxc()
-LiFxcAy = LiFxcAyLnkColAy(SplitVbar(LnkColVbl))
+LiFxcAy = LiFxcAyLnkColAy(SplitVBar(LnkColVbl))
 End Function
 
 Function LiFxcAyLnkColAy(A$()) As LiFxc()

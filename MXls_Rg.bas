@@ -82,6 +82,9 @@ If A.Row > 1 Then
     BdrRg RgR(A, 0), xlEdgeBottom
 End If
 End Sub
+Function RgCEnt(A As Range, C) As Range
+Set RgCEnt = RgC(A, C).EntireColumn
+End Function
 
 Function RgC(A As Range, C) As Range
 Set RgC = RgCC(A, C, C)
@@ -143,7 +146,8 @@ Function LozRg(Rg As Range, Optional LoNm$) As ListObject
 Dim O As ListObject: Set O = WszRg(Rg).ListObjects.Add(xlSrcRange, Rg, , xlYes)
 BdrRgAround Rg
 Rg.EntireColumn.AutoFit
-Set LozRg = LoSetNm(O, LoNm)
+SetLoNm O, LoNm
+Set LozRg = O
 End Function
 
 Sub MgeRg(A As Range)

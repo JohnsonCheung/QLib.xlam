@@ -1,7 +1,7 @@
 Attribute VB_Name = "MIde_Loc"
 Option Explicit
 Function MthPos(MthNm) As MdPos()
-Dim R As Rel: Set R = RelOf_MthNm_To_MdNy_OfPj
+Dim R As Rel: Set R = RelOf_MthNm_To_MdNy_InPj
 Dim MdNm, M As CodeModule, MthLnx
 For Each MdNm In R.ParChd(MthNm).Itms
     Set M = Md(MdNm)

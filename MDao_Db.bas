@@ -89,9 +89,9 @@ Dim DtAy() As Dt
     ReDim DtAy(U)
     Dim J%
     For J = 0 To U
-        'Set DtAy(J) = Dt(A, Tny(J))
+        Set DtAy(J) = DtzT(A, Tny(J))
     Next
-'Set DsDb = Ds(DtAy, DftDbNm(DsNm, A))
+Set DszTT = Ds(DtAy, DftStr(DsNm, DbNm(A)))
 End Function
 Sub EnsTmpTblz(A As Database)
 If HasTbl(A, "#Tmp") Then Exit Sub

@@ -21,7 +21,7 @@ Dim R0 As SwBrkAyRslt:        R0 = SwBrkAyRslt(Inp, Pm)
 Dim Inp1() As SwBrk:        Inp1 = R0.SwBrkAy
 Dim OSw As New Dictionary
     Dim NotEvl() As SwBrk
-    Dim R As DicRslt
+    Dim R As DicOpt
     Dim IsEvl As Boolean
     Dim I%, J%
     Dim Evling() As SwBrk:
@@ -68,8 +68,8 @@ For Each K In SwDic.Keys
 Next
 End Function
 
-Private Function EvlBoolTerm(BoolTerm, Sw As Dictionary, BoolTermPm As Dictionary) As BoolRslt
-Dim O As BoolRslt
+Private Function EvlBoolTerm(BoolTerm, Sw As Dictionary, BoolTermPm As Dictionary) As BoolOpt
+Dim O As BoolOpt
 If BoolTermPm.Exists(BoolTerm) Then
     O.Bool = BoolTermPm(BoolTerm)
     O.Som = True
@@ -81,12 +81,12 @@ Else
 End If
 EvlBoolTerm = O
 End Function
-Private Function EvlSwBrkLin(A As SwBrk, Sw As Dictionary) As DicRslt
+Private Function EvlSwBrkLin(A As SwBrk, Sw As Dictionary) As DicOpt
 'Return True and set Result if evalulated
 Const CSub$ = CMod & "EvlSwBrkLin"
 If Sw.Exists(A.Nm) Then Thw CSub, "[SwBrk] should not be found in [Sw]", A.Lin, FmtDic(Sw)
 Dim Ay$(): Ay = A.TermAy
-Dim R As BoolRslt, BoolTermPm As Dictionary
+Dim R As BoolOpt, BoolTermPm As Dictionary
 Stop
 Select Case A.OpStr
 Case "OR":  R = EvlTermAy(Ay, "OR", Sw, BoolTermPm)
@@ -99,37 +99,31 @@ End Select
 If R.Som Then
     Dim O As Dictionary: Set O = DicClone(Sw)
     O.Add A.Nm, R.Bool
-    EvlSwBrkLin = DicRslt(O)
+    EvlSwBrkLin = SomDic(O)
 End If
 End Function
 
 
-Private Function EvlT1(T1$, Sw As Dictionary, SwTermPm As Dictionary) As StrRslt
+Private Function EvlT1(T1$, Sw As Dictionary, SwTermPm As Dictionary) As StrOpt
 EvlT1 = EvlTerm(T1, Sw, SwTermPm)
 End Function
 
-Private Function EvlT1T2(T1$, T2$, EQ_NE$, Sw As Dictionary) As BoolRslt
+Private Function EvlT1T2(T1$, T2$, EQ_NE$, Sw As Dictionary) As BoolOpt
 'Return True and set ORslt if evaluated
 Const CSub$ = CMod & "EvlT1T2"
 Dim SwTermPm As Dictionary
-Dim R1 As StrRslt, R2 As StrRslt
+Dim R1 As StrOpt, R2 As StrOpt
 R1 = EvlT1(T1, Sw, SwTermPm)
 R2 = EvlT2(T2, Sw, SwTermPm)
 Select Case EQ_NE
 
-Case "EQ": If IsEqStrRslt(R1, R2) Then EvlT1T2 = TrueRslt
-Case "NE": If IsEqStrRslt(R1, R2) Then EvlT1T2 = FalseRslt
+Case "EQ": If IsEqStrOpt(R1, R2) Then EvlT1T2 = SomTrue
+Case "NE": If IsEqStrOpt(R1, R2) Then EvlT1T2 = SomFalse
 Case Else: Thw CSub, "[EQ_NE] does not eq EQ or NE", EQ_NE
 End Select
 End Function
 
-Private Function IsEqStrRslt(A As StrRslt, B As StrRslt) As Boolean
-If Not A.Som Then Exit Function
-If Not B.Som Then Exit Function
-IsEqStrRslt = A.Str = B.Str
-End Function
-
-Private Function EvlT2(T2$, Sw As Dictionary, SwTermPm As Dictionary) As StrRslt
+Private Function EvlT2(T2$, Sw As Dictionary, SwTermPm As Dictionary) As StrOpt
 'Return True is evalulated
 'switch-term begins with @ or ? or it is *Blank.  @ is for parameter & ? is for switch
 '  If @, it will evaluated to str by lookup from Pm
@@ -137,27 +131,27 @@ Private Function EvlT2(T2$, Sw As Dictionary, SwTermPm As Dictionary) As StrRslt
 '  If ?, it will evaluated to bool by lookup from Sw
 '        if not Has in {Sw}, return None
 '  Otherwise, just return SomVar(A)
-Dim R As StrRslt: R = EvlTerm(T2, Sw, SwTermPm): If Not R.Som Then Exit Function
+Dim R As StrOpt: R = EvlTerm(T2, Sw, SwTermPm): If Not R.Som Then Exit Function
 If FstChr(R.Str) = "*" Then
     If UCase(R.Str) <> "*BLANK" Then Stop ' it means the validation fail to remove this term
-    EvlT2 = StrRslt("")
+    EvlT2 = SomStr("")
 Else
     EvlT2 = R
 End If
 End Function
 
-Private Function EvlTerm(SwTerm$, Sw As Dictionary, SwTermPm As Dictionary) As StrRslt
+Private Function EvlTerm(SwTerm$, Sw As Dictionary, SwTermPm As Dictionary) As StrOpt
 Dim O$
 Select Case True
 Case SwTermPm.Exists(SwTerm): O = SwTermPm(SwTerm)
 Case Not Sw.Exists(SwTerm):       Exit Function
 Case Else:                    O = Sw(SwTerm)
 End Select
-EvlTerm = StrRslt(O)
+EvlTerm = SomStr(O)
 End Function
 
 Private Function EvlTermAy1(SwTermAy$(), AND_OR$, Sw As Dictionary, BoolTermPm As Dictionary) As Boolean()
-Dim R As BoolRslt, O() As Boolean, I
+Dim R As BoolOpt, O() As Boolean, I
 For Each I In SwTermAy
     R = EvlBoolTerm(I, Sw, BoolTermPm)
     If Not R.Som Then Exit Function
@@ -166,7 +160,7 @@ Next
 EvlTermAy1 = O
 End Function
 
-Private Function EvlTermAy(SwTermAy$(), AND_OR$, Sw As Dictionary, BoolTermPm As Dictionary) As BoolRslt
+Private Function EvlTermAy(SwTermAy$(), AND_OR$, Sw As Dictionary, BoolTermPm As Dictionary) As BoolOpt
 Dim O As Boolean
 If Si(SwTermAy) = 0 Then Stop
 Dim BoolAy() As Boolean
@@ -178,7 +172,7 @@ Case "AND": O = IsAllTrue(BoolAy)
 Case "OR":  O = IsSomTrue(BoolAy)
 Case Else: Stop
 End Select
-EvlTermAy = BoolRslt(O)
+EvlTermAy = SomBool(O)
 End Function
 Sub A()
 Z
@@ -216,7 +210,7 @@ Private Sub ZZ()
 Dim A() As Lnx
 Dim B As Dictionary
 Dim C() As SwBrk
-Dim XX
+Dim xx
 End Sub
 
 Private Sub Z()

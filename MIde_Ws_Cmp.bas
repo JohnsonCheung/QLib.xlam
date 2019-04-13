@@ -5,7 +5,9 @@ Set MdzWs = CmpzWs(A).CodeModule
 End Function
 
 Function CmpzWs(A As Worksheet) As VBComponent
-Dim P As VBProject
-Set P = WbzWs(A).VBProject
-Set CmpzWs = FstItrNm(P.VBComponents, A.CodeName)
+Set CmpzWs = FstItrNm(PjzWs(A).VBComponents, A.CodeName)
+End Function
+
+Function PjzWs(A As Worksheet) As VBProject
+Set PjzWs = WbzWs(A).VBProject
 End Function

@@ -1,6 +1,6 @@
 Attribute VB_Name = "MIde_Ens_SubZZ"
 Option Explicit
-Const CMod$ = "MIde_Ens_SubZZ."
+Const CMod$ = "MIde_EnsSubZZ."
 
 Function SubZZEpt$(A As CodeModule) ' SubZZ is Sub ZZ() bodyLines
 'Sub ZZ() has all calling of public method with dummy parameter so that it can Shf-F2
@@ -141,14 +141,14 @@ Private Sub ZZ()
 Dim A
 Dim B As CodeModule
 Dim C$()
-Dim XX
+Dim xx
 ArgSfx A
 SubZZEpt B
 MthNyzMthLinAy C
 End Sub
 
 Private Sub Z()
-'MIde_Ens_SubZZ.ArgSfx
+'MIde_EnsSubZZ.ArgSfx
 Z_SubZZEpt
 End Sub
 

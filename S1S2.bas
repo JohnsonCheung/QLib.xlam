@@ -8,14 +8,14 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
-Public S1$, S2$
+Public s1$, s2$
 
-Friend Function Init(S1, S2) As S1S2
-Me.S1 = S1
-Me.S2 = S2
+Friend Function Init(s1, s2) As S1S2
+Me.s1 = s1
+Me.s2 = s2
 Set Init = Me
 End Function
 
 Property Get ToStr$()
-ToStr = "S1S2(S1(" & S1 & ") S2(" & S2 & "))"
+ToStr = "S1S2(S1(" & s1 & ") S2(" & s2 & "))"
 End Property

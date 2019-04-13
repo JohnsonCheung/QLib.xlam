@@ -21,10 +21,10 @@ Next
 Set DsAddDtAy = O
 End Function
 
-Function DsDt(A As Ds, Ix%) As Dt
+Function DtzDs(A As Ds, Ix%) As Dt
 Dim DtAy() As Dt
 DtAy = A.DtAy
-Set DsDt = DtAy(Ix)
+Set DtzDs = DtAy(Ix)
 End Function
 Function Ds(A() As Dt, Optional DsNm$ = "Ds") As Ds
 Dim O As New Ds
@@ -42,7 +42,6 @@ Function DsIsEmp(A As Ds) As Boolean
 DsIsEmp = Si(A.DtAy) = 0
 End Function
 
-
-Function DsNDt%(A As Ds)
-DsNDt = Si(A.DtAy)
+Function NDt%(A As Ds)
+NDt = Si(A.DtAy)
 End Function

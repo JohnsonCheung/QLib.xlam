@@ -8,7 +8,7 @@ Set SampLo = LozRg(RgzSq(SampSqWithHdr, NewA1), "Sample")
 End Property
 
 Property Get SampLof() As String()
-Erase XX
+Erase xx
 X "Bet A B C"
 X "Lo Nm ABC"
 X "Lo Fld A B C D E F G"
@@ -35,8 +35,8 @@ X "Fml F A + B"
 X "Fml C A * 2"
 X "Lbl A lksd flks dfj"
 X "Lbl B lsdkf lksdf klsdj f"
-SampLof = XX
-Erase XX
+SampLof = xx
+Erase xx
 End Property
 
 Property Get SampLofTp() As String()
@@ -64,11 +64,11 @@ SampLofTp = O
 End Property
 
 
-Property Get SampDrzAToJ() As Variant()
+Property Get SampDrOfAToJ() As Variant()
 Const NC% = 10
 Dim J%
 For J = 0 To NC - 1
-    PushI SampDrzAToJ, Chr(Asc("A") + J)
+    PushI SampDrOfAToJ, Chr(Asc("A") + J)
 Next
 End Property
 
@@ -87,7 +87,7 @@ End Property
 
 
 Property Get SampSqWithHdr() As Variant()
-SampSqWithHdr = SqInsDr(SampSq, SampDrzAToJ)
+SampSqWithHdr = SqInsDr(SampSq, SampDrOfAToJ)
 End Property
 
 Property Get SampWs() As Worksheet

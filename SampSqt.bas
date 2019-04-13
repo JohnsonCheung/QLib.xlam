@@ -35,7 +35,7 @@ End Property
 
 
 Property Get SwLnxAy() As Lnx()
-Erase XX
+Erase xx
 X "?#LvlY    EQ @SumLvl Y"
 X "?#LvlY    EQ @SumLvl Y"
 X "?#LvlM    EQ @SumLvl M"
@@ -54,8 +54,8 @@ X "?Crd     OR @?BrkCrd"
 X "?SEL#Div NE @LisDiv *blank"
 X "?SEL#Sto NE @LisSto *blank"
 X "?SEL#Crd NE @LisCrd *blank"
-SwLnxAy = LnxAy(XX)
-Erase XX
+SwLnxAy = LnxAy(xx)
+Erase xx
 End Property
 Property Get Sw() As Dictionary
 
@@ -68,7 +68,7 @@ Property Get StmtSw() As Dictionary
 End Property
 
 Property Get SqTp$()
-Erase XX
+Erase xx
 X "-- Rmk: -- is remark"
 X "-- %XX: is prmDicLin"
 X "-- %?XX: is switchPrm, it value must be 0 or 1"
@@ -220,7 +220,7 @@ X "?LvlM    EQ %SumLvl M"
 X "?LvlW    EQ %SumLvl W"
 X "?LvlD    EQ %SumLvl D"
 X "?Y       OR ?LvlD ?LvlW ?LvlM ?LvlY`"
-SqTp = JnCrLf(XX)
-Erase XX
+SqTp = JnCrLf(xx)
+Erase xx
 End Property
 

@@ -25,11 +25,11 @@ Next
 End Function
 
 Private Function MisColOpt(Ept As LiFxc, ActShtTyDic As Dictionary) As LiMisTyc
-If Not ActShtTyDic.Exists(Ept.ExtNm) Then Exit Function
-Dim ActShtTy$: ActShtTy = ActShtTyDic(Ept.ExtNm)
+If Not ActShtTyDic.Exists(Ept.Extnm) Then Exit Function
+Dim ActShtTy$: ActShtTy = ActShtTyDic(Ept.Extnm)
 If Not IsMisTy(Ept.ShtTyLis, ActShtTy) Then Exit Function
 Set MisColOpt = New LiMisTyc
-MisColOpt.Init Ept.ExtNm, ActShtTy, Ept.ShtTyLis
+MisColOpt.Init Ept.Extnm, ActShtTy, Ept.ShtTyLis
 End Function
 
 Private Function IsMisTy(EptShtTyLis$, ActShtTy$) As Boolean

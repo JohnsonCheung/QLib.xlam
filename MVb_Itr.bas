@@ -93,7 +93,7 @@ End Function
 Function FstItrPEv(Itr, P, Ev) 'Return first element in Itr-A with its Prp-P eq to V
 Dim O
 For Each O In Itr
-    If ObjPrp(O, P) = Ev Then Set FstItrPEv = O: Exit Function
+    If Prp(O, P) = Ev Then Set FstItrPEv = O: Exit Function
 Next
 Set FstItrPEv = Nothing
 End Function
@@ -107,7 +107,7 @@ End Function
 Function HasItrTrueP(Itr, TruePrp) As Boolean
 Dim Obj
 For Each Obj In Itr
-    If ObjPrp(Obj, TruePrp) Then HasItrTrueP = True: Exit Function
+    If Prp(Obj, TruePrp) Then HasItrTrueP = True: Exit Function
 Next
 End Function
 Function HasItn(Itr, Nm) As Boolean
@@ -120,14 +120,14 @@ End Function
 Function HasItrPEv(A, P, Ev) As Boolean
 Dim X
 For Each X In A
-    If ObjPrp(X, P) = Ev Then HasItrPEv = True: Exit Function
+    If Prp(X, P) = Ev Then HasItrPEv = True: Exit Function
 Next
 End Function
 
 Function HasItrTruePrp(A, P) As Boolean
 Dim X
 For Each X In A
-    If ObjPrp(X, P) Then HasItrTruePrp = True: Exit Function
+    If Prp(X, P) Then HasItrTruePrp = True: Exit Function
 Next
 End Function
 
@@ -160,7 +160,7 @@ End Function
 Function MaxItrPrp(A, P)
 Dim X, O
 For Each X In A
-    O = Max(O, ObjPrp(X, P))
+    O = Max(O, Prp(X, P))
 Next
 MaxItrPrp = O
 End Function
@@ -173,17 +173,20 @@ End Function
 Function ItnPEv(Itr, WhPrp, Ev) As String()
 Dim Obj
 For Each Obj In Itr
-    If ObjPrp(Obj, WhPrp) = Ev Then PushI ItnPEv, ObjNm(Obj)
+    If Prp(Obj, WhPrp) = Ev Then PushI ItnPEv, ObjNm(Obj)
 Next
 End Function
 Function SyPrp(Itr, P) As String()
 Dim Obj
 For Each Obj In Itr
-    PushI SyPrp, ObjPrp(Obj, P)
+    PushI SyPrp, Prp(Obj, P)
 Next
 End Function
 Function NyzOy(Oy) As String()
 NyzOy = Itn(Itr(Oy))
+End Function
+Function PrpVyzItr(Itr, PrpNm) As Variant()
+
 End Function
 Function Itn(Itr) As String()
 Dim I
@@ -232,7 +235,7 @@ Function IntozItrPrpTrue(Into, Itr, P)
 IntozItrPrpTrue = AyCln(Into)
 Dim I
 For Each I In Itr
-    If ObjPrp(I, P) Then
+    If Prp(I, P) Then
         Push IntozItrPrpTrue, I
     End If
 Next
@@ -242,14 +245,14 @@ Function IntozItrPEv(Into, Itr, P, Ev)
 IntozItrPEv = AyCln(Into)
 Dim Obj
 For Each Obj In Itr
-    If ObjPrp(Obj, P) = Ev Then PushObj IntozItrPEv, Obj
+    If Prp(Obj, P) = Ev Then PushObj IntozItrPEv, Obj
 Next
 End Function
 Function IntozItrPrp(Into, Itr, P)
 IntozItrPrp = AyCln(Into)
 Dim I
 For Each I In Itr
-    Push IntozItrPrp, ObjPrp(I, P)
+    Push IntozItrPrp, Prp(I, P)
 Next
 End Function
 
@@ -272,7 +275,7 @@ Function ItrwPrpEqval(A, Prp, EqVal)
 ItrwPrpEqval = ItrClnAy(A)
 Dim O
 For Each O In A
-    If ObjPrp(O, Prp) = EqVal Then PushObj ItrwPrpEqval, O
+    If Prp(O, Prp) = EqVal Then PushObj ItrwPrpEqval, O
 Next
 ItrwPrpEqval = O
 End Function
@@ -281,7 +284,7 @@ Function ItrwPrpTrue(A, P)
 ItrwPrpTrue = ItrClnAy(A)
 Dim O
 For Each O In A
-    If ObjPrp(O, P) Then
+    If Prp(O, P) Then
         Push ItrwPrpTrue, O
     End If
 Next
@@ -325,7 +328,19 @@ End Sub
 Function NItrPEv&(Itr, P, Ev)
 Dim O&, Obj
 For Each Obj In Itr
-    If ObjPrp(Obj, P) = Ev Then O = O + 1
+    If Prp(Obj, P) = Ev Then O = O + 1
 Next
 NItrPEv = O
 End Function
+Function VyzItrPrp(Itr, PrpPth) As String()
+Dim Obj
+For Each Obj In Itr
+    Push VyzItrPrp, Prp(Obj, PrpPth)
+Next
+End Function
+
+
+Function PrpNy(A) As String()
+PrpNy = Itn(A.Properties)
+End Function
+

@@ -52,7 +52,7 @@ Set MdNmToLibNmDiczDef = A
 End Function
 
 Function C_MdNmToLibNmLy() As String()
-Erase XX
+Erase xx
 X "MCmpAdd QIde"
 X "MUSysRegInf QIde"
 X "MLinShould QIde"
@@ -65,12 +65,12 @@ X "MClrCell QXls"
 X "MTreeWsInstall QXls"
 X "MDefDic QVb"
 X "MSepLin QDta"
-C_MdNmToLibNmLy = XX
-Erase XX
+C_MdNmToLibNmLy = xx
+Erase xx
 End Function
 
 Function C_MdPfxToLibNmLy() As String()
-Erase XX
+Erase xx
 X "MCml QVb"
 X "Act QIde"
 X "MCmp QIde"
@@ -146,8 +146,8 @@ X "MArg QIde"
 X "MNMth QIde"
 X "MNCmp QIde"
 X "Cmp QIde"
-C_MdPfxToLibNmLy = XX
-Erase XX
+C_MdPfxToLibNmLy = xx
+Erase xx
 End Function
 
 Function LibDef() As String()

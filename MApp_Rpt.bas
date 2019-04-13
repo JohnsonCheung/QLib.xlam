@@ -1,6 +1,5 @@
 Attribute VB_Name = "MApp_Rpt"
 Option Explicit
-
 Function OupFxzLidPm$(A As LidPm) 'Gen&Vis OupFx using LidPm as NxtFfn.
 CpyFilzIfDif SyzOyPrp(A.Fil, "Ffn"), WPth(A.Apn)
 LnkImpzLidPm A

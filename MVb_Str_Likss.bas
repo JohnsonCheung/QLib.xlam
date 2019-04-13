@@ -24,12 +24,12 @@ GoSub T1
 GoSub T2
 Exit Sub
 T1:
-    A = SplitVbar("a bb* *dd | c x y")
+    A = SplitVBar("a bb* *dd | c x y")
     Nm = "x"
     Ept = "c"
     GoTo Tst
 T2:
-    A = SplitVbar("a bb* *dd | c x y")
+    A = SplitVBar("a bb* *dd | c x y")
     Nm = "bb1"
     Ept = "a"
     GoTo Tst

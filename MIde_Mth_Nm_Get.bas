@@ -3,50 +3,50 @@ Option Explicit
 Public Const DocOfDta_MthQVNm$ = "It is a String dervied from Nm.  Q for quoted.  V for verb.  It has 3 Patn: NoVerb-[#xxx], MidVerb-[xxx(vvv)xxx], FstVerb-[(vvv)xxx]."
 Public Const DocOfNmRul_FstVerbBeingDo1$ = "The Fun will not return any value"
 Public Const DocOfNmRul_FstVerbBeingDo2$ = "The Cmls aft Do is a verb"
-Private Sub Z_MthNsetOfVbeWiVerb()
-MthNsetOfVbeWiVerb.Srt.Vc
+Private Sub Z_MthNsetInVbeWiVerb()
+MthNsetInVbeWiVerb.Srt.Vc
 End Sub
-Private Sub Z_DryOf_MthNm_Verb_OfVbe()
-BrwDry DryOf_MthNm_Verb_OfVbe
+Private Sub Z_DryOf_MthNm_Verb_InVbe()
+BrwDry DryOf_MthNm_Verb_InVbe
 End Sub
-Function DryOf_MthNm_Verb_OfVbe() As Variant()
+Function DryOf_MthNm_Verb_InVbe() As Variant()
 Dim MthNm, ODry()
-For Each MthNm In Itr(MthNyOfVbe)
+For Each MthNm In Itr(MthNyInVbe)
     PushI ODry, Sy(MthNm, Verb(MthNm))
 Next
-DryOf_MthNm_Verb_OfVbe = DrywDist(ODry)
+DryOf_MthNm_Verb_InVbe = DrywDist(ODry)
 End Function
-Private Sub Z_MthNsetOfVbeWoVerb()
-MthNsetOfVbeWoVerb.Srt.Vc
+Private Sub Z_MthNsetInVbeWoVerb()
+MthNsetInVbeWoVerb.Srt.Vc
 End Sub
 
-Property Get MthNyOfVbeWiVerb() As String()
+Property Get MthNyInVbeWiVerb() As String()
 Dim MthNm, J&
-For Each MthNm In Itr(MthNyOfVbe)
+For Each MthNm In Itr(MthNyInVbe)
 '    If HasSubStr(MthNm, "Z_ExprDic") Then Stop
     If J Mod 100 = 0 Then Debug.Print J
-    If HasVerb(MthNm) Then PushI MthNyOfVbeWiVerb, MthNm
+    If HasVerb(MthNm) Then PushI MthNyInVbeWiVerb, MthNm
     J = J + 1
 Next
 End Property
-Property Get MthNyOfVbeWoVerb() As String()
+Property Get MthNyInVbeWoVerb() As String()
 Dim MthNm
-For Each MthNm In Itr(MthNyOfVbe)
-    If Not HasVerb(MthNm) Then PushI MthNyOfVbeWiVerb, MthNm
+For Each MthNm In Itr(MthNyInVbe)
+    If Not HasVerb(MthNm) Then PushI MthNyInVbeWiVerb, MthNm
 Next
 End Property
 
 Function HasVerb(Nm) As Boolean
 HasVerb = Verb(Nm) <> ""
 End Function
-Property Get MthNsetOfVbeWiVerb() As Aset
-Set MthNsetOfVbeWiVerb = AsetzAy(MthNyOfVbeWiVerb)
+Property Get MthNsetInVbeWiVerb() As Aset
+Set MthNsetInVbeWiVerb = AsetzAy(MthNyInVbeWiVerb)
 End Property
-Property Get MthNsetOfVbeWoVerb() As Aset
-Set MthNsetOfVbeWoVerb = AsetzAy(MthNyOfVbeWoVerb)
+Property Get MthNsetInVbeWoVerb() As Aset
+Set MthNsetInVbeWoVerb = AsetzAy(MthNyInVbeWoVerb)
 End Property
-Function MthNsetOfVbe(Optional WhStr$) As Aset
-Set MthNsetOfVbe = AsetzAy(MthNyOfVbe(WhStr))
+Function MthNsetInVbe(Optional WhStr$) As Aset
+Set MthNsetInVbe = AsetzAy(MthNyInVbe(WhStr))
 End Function
 
 Function MthNyzSrcFm(Src$(), FmMthIxAy&()) As String()
@@ -56,16 +56,16 @@ For Each Ix In Itr(FmMthIxAy)
 Next
 End Function
 
-Function MthNyOfVbe(Optional WhStr$) As String()
-MthNyOfVbe = MthNyzVbe(CurVbe, WhStr$)
+Function MthNyInVbe(Optional WhStr$) As String()
+MthNyInVbe = MthNyzVbe(CurVbe, WhStr$)
 End Function
 
-Function MthNsetOfPj(Optional WhStr$) As Aset
-Set MthNsetOfPj = AsetzAy(MthNyOfPj(WhStr))
+Function MthNsetInPj(Optional WhStr$) As Aset
+Set MthNsetInPj = AsetzAy(MthNyInPj(WhStr))
 End Function
 
-Function MthNyOfPj(Optional WhStr$) As String()
-MthNyOfPj = MthNyzPj(CurPj, WhStr$)
+Function MthNyInPj(Optional WhStr$) As String()
+MthNyInPj = MthNyzPj(CurPj, WhStr$)
 End Function
 
 Function MthNyOfPubVbe(Optional WhStr$) As String()
@@ -80,8 +80,8 @@ For Each M In MdItr(A, WhStr)
 Next
 End Function
 
-Function MthQNyOfVbe(Optional WhStr$) As String()
-MthQNyOfVbe = MthQNyzVbe(CurVbe, WhStr)
+Function MthQNyInVbe(Optional WhStr$) As String()
+MthQNyInVbe = MthQNyzVbe(CurVbe, WhStr)
 End Function
 
 Function MthQNyzVbe(A As Vbe, Optional WhStr$) As String()
@@ -130,8 +130,8 @@ End Function
 Function MthDNyzMdMthNm(Md As CodeModule, MthNm$) As String()
 
 End Function
-Property Get MMthNyOfVbe() As String()
-MthNyOfVbe
+Property Get MMthNyInVbe() As String()
+MthNyInVbe
 End Property
 Function MthNyzFb(Fb) As String()
 MthNyzFb = MthNyzVbe(VbePjf(Fb))
@@ -205,7 +205,7 @@ Next
 End Function
 
 Function MthAsetVbe(Optional WhStr$) As Aset
-Set MthAsetVbe = AsetzAy(MthNyOfVbe(WhStr))
+Set MthAsetVbe = AsetzAy(MthNyInVbe(WhStr))
 End Function
 
 
@@ -225,8 +225,8 @@ Private Sub Z_MthDNyzSrc()
 BrwAy MthDNyzSrc(CurSrc)
 End Sub
 
-Function MthDNyOfVbe(Optional WhStr$) As String()
-MthDNyOfVbe = MthDNyzVbe(CurVbe, WhStr)
+Function MthDNyInVbe(Optional WhStr$) As String()
+MthDNyInVbe = MthDNyzVbe(CurVbe, WhStr)
 End Function
 
 Function MthDNyzVbe(A As Vbe, Optional WhStr$) As String()

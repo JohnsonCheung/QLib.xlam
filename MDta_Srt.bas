@@ -37,7 +37,7 @@ Dim ColIxAy%(): ColIxAy = IntAyzLngAy(IxAy(A.Fny, Fny))
 Dim IsDesAy() As Boolean
     Asg Fny, SrtByFF, _
         ColIxAy, IsDesAy
-Set DrsSrt = Drs(Fny, DrySrt(A.Dry, ColIxAy, IsDesAy))
+Set DrsSrt = Drs(A.Fny, DrySrt(A.Dry, ColIxAy, IsDesAy))
 End Function
 
 Function DrySrt(Dry(), ColIxAy%(), IsDesAy() As Boolean) As Variant()

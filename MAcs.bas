@@ -133,12 +133,12 @@ SetMainMsg ""
 End Sub
 
 Sub SetMainMsgzQnm(QryNm)
-SetMainMsg "Running query: " & QryNm
+SetMainMsg "Running query: (" & QryNm & ")...."
 End Sub
 
-Sub SetMainMsg(A$)
+Sub SetMainMsg(Msg$)
 On Error Resume Next
-SetTBox MMBox, A
+SetTBox MMBox, Msg
 End Sub
 
 Private Property Get MMBox() As Access.TextBox
@@ -150,7 +150,6 @@ Private Property Get MFrm() As Access.Form
 On Error Resume Next
 Set MFrm = Access.Forms("Main")
 End Property
-
 
 Private Sub ZZ()
 Dim A As Variant

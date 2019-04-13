@@ -9,15 +9,15 @@ Public Const AppJJFb$ = H & "TaxExpCmp\TaxExpCmp\PgmObj\Lib\jj.accdb"
 
 Property Get MHDAppFbDic() As Dictionary
 Const A$ = "N:\SAPAccessReports\"
-Erase XX
+Erase xx
 X "Duty     " & A & "DutyPrepay\.accdb"
 X "SkHld    " & A & "StkHld\.accdb"
 X "ShpRate  " & A & "DutyPrepay\StockShipRate_Data.accdb"
 X "ShpCst   " & A & "StockShipCost\.accdb"
 X "TaxCmp   " & A & "TaxExpCmp\.accdb"
 X "TaxAlert " & A & "TaxRateAlert\.accdb"
-Set MHDAppFbDic = Dic(XX)
-Erase XX
+Set MHDAppFbDic = Dic(xx)
+Erase xx
 End Property
 
 Property Get AppFbAy() As String()

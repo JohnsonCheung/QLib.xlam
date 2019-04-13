@@ -65,6 +65,20 @@ Next
 JnContLin = Jn(ContLy)
 End Function
 
+Function ContLyzLy(Ly$()) As String()
+Dim J&
+For J = 0 To UB(Ly)
+    If Not HasPrvLin(Ly, J) Then
+        PushI ContLyzLy, ContLin(Ly, J, OneLin:=True)
+    End If
+Next
+End Function
+
+Function HasPrvLin(Src$(), Ix) As Boolean
+If Ix = 0 Then Exit Function
+HasPrvLin = HasSfx(Src(Ix - 1), "_")
+End Function
+
 Function ContLin$(A$(), Optional Ix = 0, Optional OneLin As Boolean)
 If OneLin Then
     ContLin = JnContLin(CvSy(AywIxCnt(A, Ix, ContLinCnt(A, Ix))))

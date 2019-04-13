@@ -1,10 +1,10 @@
 Attribute VB_Name = "MIde_Mth_Fb"
 Option Explicit
-Function MthFbOfPj$()
-MthFbOfPj = MthFbzPj(CurPj)
+Function MthFbInPj$()
+MthFbInPj = MthFbzPj(CurPj)
 End Function
 Function MthFb$()
-MthFb = MthFbOfPj
+MthFb = MthFbInPj
 End Function
 Function MthFbzPj$(A As VBProject)
 MthFbzPj = MthPthzPj(A) & Fn(Pjf(A)) & ".MthDb.accdb"
@@ -28,8 +28,8 @@ EnsMthFb Fb
 Set MthDbzPj = Db(Fb)
 End Function
 
-Property Get MthDbOfPj() As Database
-Set MthDbOfPj = MthDbzPj(CurPj)
+Property Get MthDbInPj() As Database
+Set MthDbInPj = MthDbzPj(CurPj)
 End Property
 
 Sub BrwMthFb()
@@ -37,7 +37,7 @@ BrwFb MthFb
 End Sub
 
 Private Property Get MthSchm() As String()
-Erase XX
+Erase xx
 X "Fld Nm  Md Pj"
 X "Fld T50 MchStr"
 X "Fld T10 MthPfx"
@@ -49,7 +49,7 @@ X "Fld Mem Lines TopRmk"
 X "Tbl Pj  *Id Pjf | PjNm PjDte"
 X "Tbl Md  *Id PjId MdNm | MdTy"
 X "Tbl Mth *Id MdId MthNm ShtTy | ShtMdy Prm Ret LinRmk TopRmk Lines Lno"
-MthSchm = XX
-Erase XX
+MthSchm = xx
+Erase xx
 End Property
 

@@ -21,8 +21,8 @@ Next
 NMthzPj = O
 End Function
 
-Function MthDotCmlNyOfVbe(Optional WhStr$) As String()
-MthDotCmlNyOfVbe = MthDotCmlNyzVbe(CurVbe, WhStr)
+Function MthDotCmlNyInVbe(Optional WhStr$) As String()
+MthDotCmlNyInVbe = MthDotCmlNyzVbe(CurVbe, WhStr)
 End Function
 Private Function MthDotCmlNyzVbe(A As Vbe, Optional WhStr$) As String()
 Dim MthNm
@@ -30,8 +30,8 @@ For Each MthNm In MthNyzVbe(A, WhStr)
     PushI MthDotCmlNyzVbe, DotCml(MthNm)
 Next
 End Function
-Function MthCmlGpAsetOfVbe(Optional WhStr$) As Aset
-Set MthCmlGpAsetOfVbe = MthCmlGpAsetzVbe(CurVbe, WhStr)
+Function MthCmlGpAsetInVbe(Optional WhStr$) As Aset
+Set MthCmlGpAsetInVbe = MthCmlGpAsetzVbe(CurVbe, WhStr)
 End Function
 
 Function MthCmlGpAsetzVbe(A As Vbe, Optional WhStr$) As Aset

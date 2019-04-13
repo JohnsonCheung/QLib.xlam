@@ -71,8 +71,8 @@ Function CurSrcLines$()
 CurSrcLines = SrcLineszMd(CurMd)
 End Function
 
-Function SrcLinesOfPj$()
-SrcLinesOfPj = SrcLineszPj(CurPj)
+Function SrcLinesInPj$()
+SrcLinesInPj = SrcLineszPj(CurPj)
 End Function
 
 Function SrcLineszPj$(A As VBProject)
@@ -92,12 +92,12 @@ Function Src(A As CodeModule) As String()
 Src = SplitCrLf(SrcLineszMd(A))
 End Function
 
-Function SrcOfPj() As String()
-SrcOfPj = SrczPj(CurPj)
+Function SrcInPj() As String()
+SrcInPj = SrczPj(CurPj)
 End Function
 
-Function SrcOfVbe() As String()
-SrcOfVbe = SrczVbe(CurVbe)
+Function SrcInVbe() As String()
+SrcInVbe = SrczVbe(CurVbe)
 End Function
 
 

@@ -8,15 +8,15 @@ Function ConstVal$(ConstQNm$)
 Dim Md As CodeModule, ConstNm$
 AsgMdAndConstNm Md, ConstNm, _
     ConstQNm
-ConstVal = ConstValOfMd(Md, ConstNm)
+ConstVal = ConstValByMd(Md, ConstNm)
 End Function
 Private Sub AsgMdAndConstNm(OMd As CodeModule, OConstNm$, ConstQNm$)
 
 End Sub
-Function ConstValOfMd$(Md As CodeModule, ConstNm$)
-Dim M$: M = MthLineszMd(Md, "C_" & ConstNm): If M = "" Then Exit Function
+Function ConstValByMd$(Md As CodeModule, ConstNm$)
+Dim M$: M = MthLinesByMdMth(Md, "C_" & ConstNm): If M = "" Then Exit Function
 If Not IsConstPrp(M) Then Thw CSub, "Not a const method.  It should be [Property Get]", "ConstNm MthLines", ConstNm, M
-ConstValOfMd = ConstValOfMth(M)
+ConstValByMd = ConstValOfMth(M)
 End Function
 
 Private Function IsConstPrp(MthLines$) As Boolean
@@ -85,12 +85,12 @@ Z_ConstValOfMth
 MIde_Gen_Const_ConstVal:
 End Sub
 
-Function ConstValOfMd1$(A As CodeModule, ConstNm$)
+Function ConstValByMd1$(A As CodeModule, ConstNm$)
 Dim J%, L$, O$
 For J = 1 To A.CountOfDeclarationLines
     L = A.Lines(J, 1)
     O = ConstValOfLinNm(L, ConstNm)
-    If O <> "" Then ConstValOfMd1 = O: Exit Function
+    If O <> "" Then ConstValByMd1 = O: Exit Function
 Next
 End Function
 

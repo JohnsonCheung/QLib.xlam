@@ -5,8 +5,8 @@ ShfDotSeg = ShfBef(OLin, ".")
 End Function
 Function ShfBef(OLin$, Sep$)
 With Brk2(OLin, Sep, NoTrim:=True)
-    ShfBef = .S1
-    OLin = .S2
+    ShfBef = .s1
+    OLin = .s2
 End With
 End Function
 Function ShfBktStr$(OLin$)

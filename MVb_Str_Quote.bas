@@ -2,15 +2,15 @@ Attribute VB_Name = "MVb_Str_Quote"
 Option Explicit
 Function BrkQuote(QuoteStr) As S1S2
 Dim L%: L = Len(QuoteStr)
-Dim S1$, S2$
+Dim s1$, s2$
 Select Case L
 Case 0:
 Case 1
-    S1 = QuoteStr
-    S2 = QuoteStr
+    s1 = QuoteStr
+    s2 = QuoteStr
 Case 2
-    S1 = Left(QuoteStr, 1)
-    S2 = Right(QuoteStr, 1)
+    s1 = Left(QuoteStr, 1)
+    s2 = Right(QuoteStr, 1)
 Case Else
     If InStr(QuoteStr, "*") > 0 Then
         Set BrkQuote = Brk(QuoteStr, "*", NoTrim:=True)
@@ -18,7 +18,7 @@ Case Else
     End If
     Stop
 End Select
-Set BrkQuote = S1S2(S1, S2)
+Set BrkQuote = S1S2(s1, s2)
 End Function
 
 Function QuoteBkt$(A)
@@ -29,7 +29,7 @@ QuoteDot = "." & S & "."
 End Function
 Function Quote$(A, QuoteStr$)
 With BrkQuote(QuoteStr)
-    Quote = .S1 & A & .S2
+    Quote = .s1 & A & .s2
 End With
 End Function
 

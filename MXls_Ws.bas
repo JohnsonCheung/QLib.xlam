@@ -3,8 +3,16 @@ Option Explicit
 Sub ShwWs(A As Worksheet)
 A.Application.Visible = True
 End Sub
-Function WsAdd(Wb As Workbook, Optional Wsn$) As Worksheet
-Set WsAdd = SetWsNm(Wb.Sheets.Add, Wsn)
+Function AddWs(A As Workbook, Optional Wsn$, Optional AtBeg As Boolean, Optional AtEnd As Boolean, Optional BefWsn$, Optional AftWsn$) As Worksheet
+Dim O As Worksheet
+DltWs A, Wsn
+Select Case True
+Case AtBeg:         Set O = A.Sheets.Add(FstWs(A))
+Case AtEnd:         Set O = A.Sheets.Add(LasWs(A))
+Case BefWsn <> "": Set O = A.Sheets.Add(A.Sheets(BefWsn))
+Case AftWsn <> "": Set O = A.Sheets.Add(, A.Sheets(AftWsn))
+Case Else:          Set O = A.Sheets.Add
+End Select
 End Function
 
 Function WsC(A As Worksheet, C) As Range
@@ -97,13 +105,18 @@ End Function
 Function SqzWs(A As Worksheet) As Variant()
 SqzWs = RgzWs(A).Value
 End Function
-Function WsSetVis(A As Worksheet, Vis As Boolean) As Worksheet
+Function SetVisOfWs(A As Worksheet, Vis As Boolean) As Worksheet
 A.Application.Visible = Vis
-Set WsSetVis = A
+Set SetVisOfWs = A
 End Function
-Function A1Wb(A As Workbook, Optional Wsn$) As Range
-Set A1Wb = A1zWs(WsAdd(A, Wsn))
+Function A1zWb(A As Workbook, Optional NewWsn$) As Range ' Return A1 of a new Ws (with NewWsn) in Wb
+Set A1zWb = A1zWs(AddWs(A, NewWsn))
 End Function
+
+Function A2zWs(A As Worksheet) As Range
+Set A2zWs = A.Range("A2")
+End Function
+
 Function A1zWs(A As Worksheet) As Range
 Set A1zWs = A.Range("A1")
 End Function

@@ -29,7 +29,7 @@ LoItr = Itr(LoAy(A))
 End Function
 
 Function LozAyH(Ay, Wb As Workbook, Optional Wsn$, Optional LoNm$) As ListObject
-Set LozAyH = LozRg(RgzSq(SqzAyV(Ay), A1Wb(Wb, Wsn)), LoNm)
+Set LozAyH = LozRg(RgzSq(SqzAyV(Ay), A1zWb(Wb, Wsn)), LoNm)
 End Function
 
 Function MainLo(A As Workbook) As ListObject
@@ -119,6 +119,22 @@ Function WsNy(A As Workbook) As String()
 WsNy = Itn(A.Sheets)
 End Function
 
+Private Sub Z_SetWsCdNm()
+Dim A As Worksheet: Set A = NewWs
+SetWsCdNm A, "XX"
+WsVis A
+Stop
+End Sub
+
+Sub SetWsCdNm(A As Worksheet, CdNm$)
+CmpzWs(A).Name = CdNm
+End Sub
+
+Sub SetWsCdNmAndLoNm(A As Worksheet, Nm$)
+CmpzWs(A).Name = Nm
+SetLoNm FstLo(A), Nm
+End Sub
+
 Function WszCdNm(A As Workbook, WsCdNm$) As Worksheet
 Dim Ws As Worksheet
 For Each Ws In A.Sheets
@@ -152,19 +168,6 @@ End Function
 
 Function WczWbFb(A As Workbook, LnkToFb$, WcNm) As WorkbookConnection
 Set WczWbFb = A.Connections.Add2(WcNm, WcNm, CnStrzFbForWbCn(LnkToFb), WcNm, XlCmdType.xlCmdTable)
-End Function
-
-Function AddWs(A As Workbook, Optional Wsn$, Optional AtBeg As Boolean, Optional AtEnd As Boolean, Optional BefWsn$, Optional AftWsn$) As Worksheet
-Dim O As Worksheet
-DltWs A, Wsn
-Select Case True
-Case AtBeg:         Set O = A.Sheets.Add(FstWs(A))
-Case AtEnd:         Set O = A.Sheets.Add(LasWs(A))
-Case BefWsn <> "": Set O = A.Sheets.Add(A.Sheets(BefWsn))
-Case AftWsn <> "": Set O = A.Sheets.Add(, A.Sheets(AftWsn))
-Case Else:          Set O = A.Sheets.Add
-End Select
-Set AddWs = SetWsNm(O, Wsn)
 End Function
 
 Sub ThwWbMisOupNy(A As Workbook, OupNy$())
@@ -216,16 +219,16 @@ Function NewA1Wb(A As Workbook, Optional Wsn$) As Range
 End Function
 
 Sub WbQuit(A As Workbook)
-XlsQuit A.Application
+QuitXls A.Application
 End Sub
 
-Function WbSav(A As Workbook) As Workbook
+Function SavWb(A As Workbook) As Workbook
 Dim Y As Boolean
 Y = A.Application.DisplayAlerts
 A.Application.DisplayAlerts = False
 A.Save
 A.Application.DisplayAlerts = Y
-Set WbSav = A
+Set SavWb = A
 End Function
 
 Function WbSavAs(A As Workbook, Fx, Optional Fmt As XlFileFormat = xlOpenXMLWorkbook) As Workbook
@@ -282,7 +285,7 @@ Dim F As Boolean
 Dim G As Dt
 Dim H$()
 Dim I()
-Dim XX
+Dim xx
 CvWb A
 TxtCnzWc B
 FstWs C
@@ -310,7 +313,7 @@ WbSavAs C, A
 SetWbFcsvCn C, D
 WbVis C
 HasWbzWs C, A
-XX = CurWb()
+xx = CurWb()
 End Sub
 
 Private Sub Z()

@@ -2,11 +2,11 @@ Attribute VB_Name = "MIde_Mth_PurePrp"
 Option Explicit
 
 Sub ImPurePrpPjBrw()
-Brw ImpPurePrpLyOfPj
+Brw ImpPurePrpLyInPj
 End Sub
 
-Function ImpPurePrpLyOfPj() As String()
-ImpPurePrpLyOfPj = ImPurePrpLyzPj(CurPj)
+Function ImpPurePrpLyInPj() As String()
+ImpPurePrpLyInPj = ImPurePrpLyzPj(CurPj)
 End Function
 
 Function ImPurePrpLyzPj(A As VBProject) As String()
@@ -36,8 +36,8 @@ For Each L In Itr(M)
 Next
 End Function
 
-Property Get PurePrpLyOfPj() As String()
-PurePrpLyOfPj = PurePrpLyzPj(CurPj)
+Property Get PurePrpLyInPj() As String()
+PurePrpLyInPj = PurePrpLyzPj(CurPj)
 End Property
 
 Function PurePrpLyzPj(A As VBProject) As String()
@@ -72,7 +72,7 @@ End Function
 Function PurePrpLyAyzSrc(Src$()) As Variant()
 Dim Ix
 For Each Ix In Itr(PurePrpIxAy(Src))
-    PushI PurePrpLyAyzSrc, MthLyzSrcFm(Src, Ix)
+    PushI PurePrpLyAyzSrc, MthLyBySrcFm(Src, Ix)
 Next
 End Function
 Function PurePrpNy(A As CodeModule) As String()

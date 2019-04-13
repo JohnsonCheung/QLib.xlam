@@ -91,7 +91,6 @@ Function SyzAv(Av() As Variant) As String()
 SyzAv = IntozAy(EmpSy, Av)
 End Function
 
-
 Function SyzAy(Ay) As String()
 SyzAy = IntozAy(EmpSy, Ay)
 End Function

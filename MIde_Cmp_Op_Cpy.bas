@@ -39,7 +39,7 @@ If A.Parent.Type <> vbext_ct_StdModule Then Thw Fun, "Should be Mod", "Type", Sh
 End Sub
 
 Sub CpyMod(A As CodeModule, ToPj As VBProject)
-AddCmpzSrcLineszPj ToPj, A.Name, SrcLineszMd(A)
+AddCmpzLines ToPj, A.Name, SrcLineszMd(A)
 End Sub
 
 Private Sub ZZ()

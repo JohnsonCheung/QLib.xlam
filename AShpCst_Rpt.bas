@@ -1,17 +1,8 @@
 Attribute VB_Name = "AShpCst_Rpt"
 Option Explicit
 Const CMod$ = "AShpCst_Rpt."
-Public Const RptApn$ = "ShpCst"
-Function RptFb$()
-RptFb = WFb(RptApn)
-End Function
-
-Function RptDb() As Database
-Set RptDb = Db(RptFb)
-End Function
-
 Function RptAppDb() As Database
-Set RptAppDb = AppDb(RptApn)
+'Set RptAppDb = AppDb(RptApn)
 End Function
 
 Sub GenOupTbl(Apn$)

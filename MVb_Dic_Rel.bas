@@ -14,7 +14,7 @@ IsRel = TypeName(A) = "Rel"
 End Function
 
 Function RelzVbl(RelVbl$) As Rel
-Set RelzVbl = Rel(SplitVbar(RelVbl))
+Set RelzVbl = Rel(SplitVBar(RelVbl))
 End Function
 
 Function RelzDotLy(DotLy$()) As Rel
@@ -26,5 +26,6 @@ Set Rel = O.Init(RelLy)
 End Function
 
 Function RelVbl(Vbl$) As Rel
-Set RelVbl = Rel(SplitVbar(Vbl))
+Set RelVbl = Rel(SplitVBar(Vbl))
 End Function
+

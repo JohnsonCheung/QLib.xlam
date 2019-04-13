@@ -196,7 +196,7 @@ Function ColrStr$(A&)
 Dim L
 For Each L In ColrLy
     With Brk(L, " ")
-        If .S2 = A Then ColrStr = .S1: Exit Function
+        If .s2 = A Then ColrStr = .s1: Exit Function
     End With
 Next
 End Function

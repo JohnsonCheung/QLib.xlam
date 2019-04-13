@@ -10,11 +10,11 @@ End Sub
 Private Sub GenPushzMd(A As CodeModule)
 Dim Gen$(): Gen = TyNyzGen(A) 'TyNy need to generate Push
 Dim Dlt$(): Dlt = TyNyzDlt(A) ' TyNy need to delete
-MdEnsMth A, MthDic(Gen)
+EnsMdMth A, MthDic(Gen)
 RmvMth A, MthNyzDltTyNy(Dlt)
 End Sub
 
-Sub MdEnsMth(A As CodeModule, MthDic As Dictionary)
+Sub EnsMdMth(A As CodeModule, MthDic As Dictionary)
 
 End Sub
 Private Function TyNyzGen(A As CodeModule) As String()

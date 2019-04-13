@@ -21,7 +21,7 @@ DistFxazSrcp = Wb.FullName
 AddRfzPj Wb.VBProject
 LoadBas Wb.VBProject
 Wb.Close True
-If IsNothing(Xls) Then XlsQuit A
+If IsNothing(Xls) Then QuitXls A
 End Function
 
 Function PjzFxa(Fxa, A As Excel.Application) As VBProject

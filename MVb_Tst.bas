@@ -2,11 +2,11 @@ Attribute VB_Name = "MVb_Tst"
 Option Explicit
 Public Act, Ept, Dbg As Boolean, Trc As Boolean
 Function TstHom$()
-TstHom = TstHomOfPj
+TstHom = TstHomInPj
 End Function
-Function TstHomOfPj$()
+Function TstHomInPj$()
 Static X$: If X = "" Then X = TstHomzPj(CurPj)
-TstHomOfPj = X
+TstHomInPj = X
 End Function
 Function TstHomzPj$(A As VBProject)
 TstHomzPj = AddFdrEns(Srcp(A), ".TstRes")

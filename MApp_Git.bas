@@ -11,7 +11,7 @@ RunFcmdWait FcmdWaitzCdLines(GitPushCdLines(Srcp(CurPj)))
 End Sub
 
 Private Function GitCmitCdLines$(CmitgPth, Msg$, ReInit As Boolean)
-Erase XX
+Erase xx
 Dim Pj$: Pj = PjNm(CmitgPth)
 X "Cd """ & CmitgPth & """"
 If ReInit Then X "Rd .git /s/q"
@@ -19,8 +19,8 @@ X "git init"
 X "git add -A"
 X FmtQQ("git commit -m ""?""", Msg)
 X "Pause"
-GitCmitCdLines = JnCrLf(XX)
-Erase XX
+GitCmitCdLines = JnCrLf(xx)
+Erase xx
 End Function
 Private Sub Z_FcmdWaitzCdLines()
 Debug.Print FtLines(FcmdWaitzCdLines("Dir"))

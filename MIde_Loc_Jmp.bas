@@ -99,9 +99,7 @@ End Function
 Sub JmpCurMd()
 JmpMd CurMd
 End Sub
-Sub JmpMd(A As CodeModule)
-JmpCmp A.Parent.Name
-End Sub
+
 Sub JmpPj(A As VBProject)
 ClsWin
 Dim Md As CodeModule
@@ -118,11 +116,11 @@ Sub JmpPjMd(A As VBProject, MdNm$)
 ClsWinzExl WinzMd(Md(MdNm))
 End Sub
 
-Sub MdJmp(A As CodeModule)
+Sub JmpMd(A As CodeModule)
 A.CodePane.Show
 End Sub
 
-Sub JmpClsNm(ClsNm$)
+Sub JmpCls(ClsNm$)
 End Sub
 
 

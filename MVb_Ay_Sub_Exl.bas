@@ -15,8 +15,18 @@ For Each I In Itr(Ay)
     If Not Re.Test(I) Then PushI AyeRe, I
 Next
 End Function
+Sub Z_AA()
+Dim A
+A = Array(1)
+Debug.Print VarPtr(A)
+Debug.Print VarPtr(AA(A))
+If Not IsEqVar(A, AA(A)) Then Stop
+End Sub
+Function AA(A)
+AA = A
+End Function
 Function AyeAtCnt(A, Optional At = 0, Optional Cnt = 1)
-If Cnt <= 0 Then Stop
+If Cnt <= 0 Then Thw CSub, "Cnt cannot <=0", "At Cnt Ay", At, Cnt, A
 If Si(A) = 0 Then AyeAtCnt = A: Exit Function
 If At = 0 Then
     If Si(A) = Cnt Then
@@ -29,15 +39,9 @@ If At > U Then Stop
 If At < 0 Then Stop
 Dim O: O = A
 Dim J&
-If IsObject(A(0)) Then
-    For J = At To U - Cnt
-        Set O(J) = O(J + Cnt)
-    Next
-Else
-    For J = At To U - Cnt
-        O(J) = O(J + Cnt)
-    Next
-End If
+For J = At To U - Cnt
+    Asg O(J + Cnt), O(J)
+Next
 ReDim Preserve O(U - Cnt)
 AyeAtCnt = O
 End Function

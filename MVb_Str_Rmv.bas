@@ -17,7 +17,7 @@ Rmv3T = RmvTT(RmvT1(A))
 End Function
 
 Function RmvAft$(A, Sep$)
-RmvAft = Brk1(A, Sep, NoTrim:=True).S1
+RmvAft = Brk1(A, Sep, NoTrim:=True).s1
 End Function
 
 Function RmvDDRmk$(A$)

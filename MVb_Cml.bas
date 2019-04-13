@@ -221,12 +221,12 @@ Case Else: IsULCml = LCase(FstChr(Cml)) = SndChr(Cml)
 End Select
 End Function
 
-Function MthDotCmlGpAsetOfVbe(Optional WhStr$) As Aset
-Set MthDotCmlGpAsetOfVbe = MthDotCmlGpAsetzVbe(CurVbe, WhStr)
+Function MthDotCmlGpAsetInVbe(Optional WhStr$) As Aset
+Set MthDotCmlGpAsetInVbe = MthDotCmlGpAsetzVbe(CurVbe, WhStr)
 End Function
 
-Function MthDotCmlGpAyOfVbe(Optional WhStr$) As String()
-MthDotCmlGpAyOfVbe = MthDotCmlGpAyzVbe(CurVbe, WhStr)
+Function MthDotCmlGpAyInVbe(Optional WhStr$) As String()
+MthDotCmlGpAyInVbe = MthDotCmlGpAyzVbe(CurVbe, WhStr)
 End Function
 
 Function MthDotCmlGpAyzVbe(A As Vbe, Optional WhStr$) As String()
@@ -251,7 +251,7 @@ Next
 End Function
 
 Function Seg1ErNy() As String()
-Erase XX
+Erase xx
 X "Act"
 X "App"
 X "Ass"
@@ -314,7 +314,7 @@ X "V"
 X "W"
 X "Xls"
 X "Y"
-Seg1ErNy = XX
+Seg1ErNy = xx
 End Function
 
 Function ShfCml$(OStr$)
@@ -356,12 +356,12 @@ While True
 Wend
 End Function
 
-Sub VcMthDotCmlGpAsetOfVbe(Optional WhStr$)
-MthDotCmlGpAsetOfVbe.Srt.Vc
+Sub VcMthDotCmlGpAsetInVbe(Optional WhStr$)
+MthDotCmlGpAsetInVbe.Srt.Vc
 End Sub
 
 Private Sub Z_Cml1Ay()
-Dim Ny$(): Ny = MthNyOfVbe
+Dim Ny$(): Ny = MthNyInVbe
 Dim N
 For Each N In Ny
     If N <> Jn(Cml1Ay(N)) Then Stop

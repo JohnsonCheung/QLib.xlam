@@ -19,7 +19,7 @@ End Function
 
 Function JnVbarAp$(ParamArray Ap())
 Dim Av(): Av = Ap
-JnVbarAp = JnVbar(Av)
+JnVbarAp = JnVBar(Av)
 End Function
 
 Function JnVbarApSpc$(ParamArray Ap())

@@ -16,14 +16,14 @@ End Function
 Function Sy1zS1S2Ay(A() As S1S2) As String()
 Dim I
 For Each I In Itr(A)
-    PushI Sy1zS1S2Ay, CvS1S2(I).S1
+    PushI Sy1zS1S2Ay, CvS1S2(I).s1
 Next
 End Function
 
 Private Function LyzS1S2(A As S1S2, W1%, W2%) As String()
 Dim Lines1$, Lines2$
-    Lines1 = A.S1
-    Lines2 = A.S2
+    Lines1 = A.s1
+    Lines2 = A.s2
 Dim NLin%
     NLin = Max(LinCnt(Lines1), LinCnt(Lines2))
 Dim Ly1$(), Ly2$()
@@ -62,7 +62,7 @@ Else
 End If
 End Function
 Private Function LinzS1S2$(A As S1S2, W1%, W2%)
-LinzS1S2 = "| " & AlignL(A.S1, W1) & " | " & AlignL(A.S2, W2) & " |"
+LinzS1S2 = "| " & AlignL(A.s1, W1) & " | " & AlignL(A.s2, W2) & " |"
 End Function
 Function LinDrWdtAy$(Dr, WdtzAy%())
 Dim O$(), J%
@@ -77,7 +77,7 @@ End Function
 Function Sy2zS1S2Ay(A() As S1S2) As String()
 Dim I
 For Each I In Itr(A)
-    PushI Sy2zS1S2Ay, CvS1S2(I).S2
+    PushI Sy2zS1S2Ay, CvS1S2(I).s2
 Next
 End Function
 
@@ -86,8 +86,8 @@ Dim J&
 HasLines = True
 For J = 0 To UB(A)
     With A(J)
-        If IsLines(.S1) Then Exit Function
-        If IsLines(.S2) Then Exit Function
+        If IsLines(.s1) Then Exit Function
+        If IsLines(.s2) Then Exit Function
     End With
 Next
 HasLines = False

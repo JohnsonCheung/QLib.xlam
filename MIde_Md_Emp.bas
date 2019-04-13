@@ -53,7 +53,7 @@ T1:
 '    Set M = PjAdd_Md(P, T)
     Ept = True
     GoSub Tst
-    DltCmpz P, T
+    DltCmpzPjNm P, T
     Return
 Tst:
     Act = IsEmpMd(M)

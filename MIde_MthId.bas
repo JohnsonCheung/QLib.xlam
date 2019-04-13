@@ -7,11 +7,11 @@ Public Const DocOfMthMLin$ = "M for Modified.  Fmt is [ShtMthMdy.ShtMthKd.MthNmR
 Public Const DocOfMthSQMLin$ = "It is A5DotStr.  Q for qualified.  M for Modified.  Fmt is [MthSrtKey.PjNm.ShtMdTyNm.MdNm.ShtMthMdy.ShtMthKd.MthNmRst]."
 Public Const DocOfMthSrtKey$ = "It is Str.  Fmt is [MthMdy:MthNm]"
 Private A_MthQLy$()
-Function FmtMthQidLyOfVbe() As String()
-FmtMthQidLyOfVbe = DotLyInsSep(MthQidLy(MthQLyOfVbe), 3)
+Function FmtMthQidLyInVbe() As String()
+FmtMthQidLyInVbe = DotLyInsSep(MthQidLy(MthQLyInVbe), 3)
 End Function
-Private Sub Z_FmtMthQidLyOfVbe()
-Vc FmtMthQidLyOfVbe
+Private Sub Z_FmtMthQidLyInVbe()
+Vc FmtMthQidLyInVbe
 End Sub
 Function MthRetNmRstLinzMthNmRstLin$(MthNmRstLin$, IsRetVal As Boolean)
 Dim Pm$, TyChr$, RetTy$, Rmk$, MthNm$
@@ -20,12 +20,12 @@ Dim Ret$
     Ret = ShtRetTy(TyChr, RetTy, IsRetVal)
 MthRetNmRstLinzMthNmRstLin = JnDotAp(Ret, MthNm, FmtPm(Pm), Rmk)
 End Function
-Function MthQidLyOfVbe(Optional WhStr$) As String()
-MthQidLyOfVbe = MthQidLy(MthQLyOfVbe(WhStr))
+Function MthQidLyInVbe(Optional WhStr$) As String()
+MthQidLyInVbe = MthQidLy(MthQLyInVbe(WhStr))
 End Function
 
-Private Sub Z_MthQidLyOfVbe()
-Vc MthQidLyOfVbe
+Private Sub Z_MthQidLyInVbe()
+Vc MthQidLyInVbe
 End Sub
 
 Function MthSrtKey$(ShtMthMdy$, MthNm$)

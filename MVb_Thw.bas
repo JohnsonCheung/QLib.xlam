@@ -114,11 +114,10 @@ End Sub
 Sub Done()
 MsgBox "Done"
 End Sub
-Sub ThwPgmEr(Er$(), Fun$)
-If Si(Er) = 0 Then Exit Sub
-BrwAy AyAdd(Box("Programm Error"), Er)
-Halt
+Sub ThwPgmEr(Msg$, Fun$)
+ThwEr SyAdd(Box("Programm Error"), Sy(Msg)), Fun
 End Sub
+
 Function NavAddNNAv(Nav(), NN$, Av()) As Variant()
 Dim O(): O = Nav
 If Si(O) = 0 Then
@@ -145,10 +144,12 @@ Sub ThwLoopingTooMuch(Fun$)
 Thw Fun, "Looping too much"
 End Sub
 Sub ThwPmEr(PmVal, Fun$, Optional MsgWhyPmEr$ = "Invalid value")
-Thw Fun, "Parameter error: " & MsgWhyPmEr, "Pm-Type Pm-Val", TypeName(PmVal), LyzVal(PmVal)
+Thw Fun, "Parameter error: " & MsgWhyPmEr, "Pm-Type Pm-Val", TypeName(PmVal), FmtV(PmVal)
 End Sub
 
+
 Sub D(Optional A)
+
 Select Case True
 Case IsMissing(A): Debug.Print
 Case IsArray(A): DmpAy A
@@ -219,7 +220,7 @@ Dim B()
 Dim C
 Dim D%
 Dim F$()
-Dim XX
+Dim xx
 End Sub
 
 Sub StopEr(Er$())

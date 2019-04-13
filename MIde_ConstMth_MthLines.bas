@@ -65,7 +65,7 @@ T0:
 
 T1:
     IsEdt = True
-    ConstVal = MthLineszMd(CurMd, "Chunk")
+    ConstVal = MthLinesByMdMth(CurMd, "Chunk")
     BrwStr ConstVal
     Stop
     Nm = "ZZ_A"

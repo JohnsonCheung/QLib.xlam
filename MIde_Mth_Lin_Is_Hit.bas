@@ -35,8 +35,9 @@ End Function
 
 Function HitMthLin(Lin, B As WhMth) As Boolean
 If Not IsMthLin(Lin) Then Exit Function
-If IsNothing(B) Then Exit Function
+If IsNothing(B) Then HitMthLin = True: Exit Function
 If B.IsEmp Then HitMthLin = True: Exit Function
+If Not HitMthNm3(MthNm3(Lin), B) Then Exit Function
 HitMthLin = True
 End Function
 

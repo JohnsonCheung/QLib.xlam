@@ -19,10 +19,10 @@ Function Bar(Nm$) As CommandBar
 Set Bar = CurVbe.CommandBars(Nm)
 End Function
 Property Get BarNy() As String()
-BarNy = BarNyvVbe(CurVbe)
+BarNy = BarNyByVbe(CurVbe)
 End Property
 
-Property Get BrwObjWin() As Vbide.Window
+Property Get BrwObjWin() As VBIDE.Window
 Set BrwObjWin = FstWinTy(vbext_wt_Browser)
 End Property
 
@@ -96,14 +96,14 @@ Set X = Vbe_Bars(A)
 Set StdBarz = X("Standard")
 End Function
 
-Function BarNyvVbe(A As Vbe) As String()
-BarNyvVbe = CmdBarNyvVbe(A)
+Function BarNyByVbe(A As Vbe) As String()
+BarNyByVbe = CmdBarNyvVbe(A)
 End Function
 
-Function CmdBarAyzVbe(A As Vbe) As Office.CommandBar()
+Function BarAyByVbe(A As Vbe) As Office.CommandBar()
 Dim I
 For Each I In A.CommandBars
-   PushObj CmdBarAyzVbe, I
+   PushObj BarAyByVbe, I
 Next
 End Function
 
@@ -111,16 +111,16 @@ Function CmdBarNyvVbe(A As Vbe) As String()
 CmdBarNyvVbe = Itn(A.CommandBars)
 End Function
 
-Property Get WinPop() As CommandBarPopup
-Set WinPop = MnuBar.Controls("Window")
+Property Get PopupOfWin() As CommandBarPopup
+Set PopupOfWin = MnuBar.Controls("Window")
 End Property
 
-Property Get WinTileVertBtn() As Office.CommandBarButton
-Set WinTileVertBtn = WinPop.Controls("Tile &Vertically")
+Property Get BtnOfTileV() As Office.CommandBarButton
+Set BtnOfTileV = PopupOfWin.Controls("Tile &Vertically")
 End Property
 
-Property Get XlsBtn() As Office.CommandBarControl
-Set XlsBtn = StdBar.Controls(1)
+Property Get BtnOfXls() As Office.CommandBarControl
+Set BtnOfXls = StdBar.Controls(1)
 End Property
 
 Private Sub ZZ_DbgPop()
@@ -142,8 +142,8 @@ Dim C As Vbe
 DltClr A
 CtlAy A
 IsBtn B
-BarNyvVbe C
-CmdBarAyzVbe C
+BarNyByVbe C
+BarAyByVbe C
 CmdBarNyvVbe C
 End Sub
 

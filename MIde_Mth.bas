@@ -40,15 +40,15 @@ Z_MthFTixAyzMth
 MIde__Mth:
 End Sub
 
-Function MdEns(Md As CodeModule, MthNm$, MthLines$) As CodeModule
-Dim OldMthLines$: OldMthLines = MthLineszMd(Md, MthNm)
+Sub EnsMdLines(Md As CodeModule, MthNm$, MthLines$)
+Dim OldMthLines$: OldMthLines = MthLinesByMdMth(Md, MthNm)
 If OldMthLines = MthLines Then
-    Debug.Print FmtQQ("MdEns: Mth(?) in Md(?) is same", MthNm, MdNm(Md))
+    Debug.Print FmtQQ("EnsMd: Mth(?) in Md(?) is same", MthNm, MdNm(Md))
 End If
 RmvMdMth Md, MthNm
-Set MdEns = MdApdLines(Md, MthLines)
-Debug.Print FmtQQ("MdEns: Mth(?) in Md(?) is replaced <=========", MthNm, MdNm(Md))
-End Function
+ApdLines Md, MthLines
+Debug.Print FmtQQ("EnsMd: Mth(?) in Md(?) is replaced <=========", MthNm, MdNm(Md))
+End Sub
 
 Private Sub Z_MthFTixAyzMth()
 Dim A() As FTIx: A = MthFTIxAyzMth(Md("Md_"), "XX")

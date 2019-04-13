@@ -1,6 +1,6 @@
 Attribute VB_Name = "MIde_Ens_OptLin"
 Option Explicit
-Const CMod$ = "MIde_Ens_Option."
+Const CMod$ = "MIde_EnsOption."
 Const OptLinoExplicit$ = "Option Explicit"
 Const OptLinoCmpBin$ = "Option Compare Binary"
 Const OptLinoCmpDb$ = "Option Compare Database"

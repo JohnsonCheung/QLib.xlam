@@ -1,7 +1,7 @@
 Attribute VB_Name = "MVb_Val"
 Option Explicit
 Function LineszVal$(V)
-LineszVal = JnCrLf(LyzVal(V))
+LineszVal = JnCrLf(FmtV(V))
 End Function
 
 Function StrCellzVal$(V, Optional ShwZer As Boolean, Optional MaxWdt%)
@@ -38,24 +38,34 @@ Case Else
 End Select
 StrCellzVal = O
 End Function
+Function FmtLines(Lines$) As String()
+FmtLines = FmtSy(SplitCrLf(Lines))
+End Function
+Function FmtSy(Sy$()) As String()
+FmtSy = AyAddIxPfx(Sy, 0)
+End Function
+Function FmtPrim$(Prim)
+FmtPrim = Prim & " (" & TypeName(Prim) & ")"
+End Function
 
-Function LyzVal(V) As String()
+Function FmtV(V) As String()
 Select Case True
-Case IsDic(V): LyzVal = FmtDic(CvDic(V))
-Case IsAset(V): LyzVal = CvAset(V).Sy
-Case IsPrim(V): LyzVal = Sy(V)
-Case IsSy(V): LyzVal = SplitCrLf(JnCrLf(V))
-Case IsNothing(V): LyzVal = Sy("#Nothing")
-Case IsEmpty(V): LyzVal = Sy("#Empty")
-Case IsMissing(V): LyzVal = Sy("#Missing")
-Case IsObject(V): LyzVal = Sy("#Obj(" & TypeName(V) & ")")
+Case IsDic(V): FmtV = FmtDic(CvDic(V))
+Case IsAset(V): FmtV = CvAset(V).Sy
+Case IsLines(V): FmtV = FmtLines(CStr(V))
+Case IsPrim(V): FmtV = Sy(FmtPrim(V))
+Case IsSy(V): FmtV = FmtSy(CvSy(V))
+Case IsNothing(V): FmtV = Sy("#Nothing")
+Case IsEmpty(V): FmtV = Sy("#Empty")
+Case IsMissing(V): FmtV = Sy("#Missing")
+Case IsObject(V): FmtV = Sy("#Obj(" & TypeName(V) & ")")
 Case IsArray(V)
     Dim I, O$()
     If Si(V) = 0 Then Exit Function
     For Each I In V
         PushI O, StrCellzVal(I)
     Next
-    LyzVal = AyAddIxPfx(O)
+    FmtV = AyAddIxPfx(O)
 Case Else
 End Select
 End Function

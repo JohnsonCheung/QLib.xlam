@@ -6,7 +6,7 @@ StrBefDot = StrBef(A, ".")
 End Function
 
 Function StrAft$(S, Sep, Optional NoTrim As Boolean)
-StrAft = Brk1(S, Sep, NoTrim).S2
+StrAft = Brk1(S, Sep, NoTrim).s2
 End Function
 
 Function StrAftAt$(A, At&, S)
@@ -23,11 +23,11 @@ StrAftDot = StrAft(A, ".")
 End Function
 
 Function StrAftMust$(A, Sep, Optional NoTrim As Boolean)
-StrAftMust = Brk(A, Sep, NoTrim).S2
+StrAftMust = Brk(A, Sep, NoTrim).s2
 End Function
 
 Function StrAftOrAll$(S, Sep, Optional NoTrim As Boolean)
-StrAftOrAll = Brk2(S, Sep, NoTrim).S2
+StrAftOrAll = Brk2(S, Sep, NoTrim).s2
 End Function
 
 Function StrAftOrAllRev$(A, S)
@@ -35,11 +35,11 @@ StrAftOrAllRev = StrDft(StrAftRev(A, S), A)
 End Function
 
 Function StrAftRev$(S, Sep, Optional NoTrim As Boolean)
-StrAftRev = Brk1Rev(S, Sep, NoTrim).S2
+StrAftRev = Brk1Rev(S, Sep, NoTrim).s2
 End Function
 
 Function StrBef$(S, Sep, Optional NoTrim As Boolean)
-StrBef = Brk2(S, Sep, NoTrim).S1
+StrBef = Brk2(S, Sep, NoTrim).s1
 End Function
 
 Function StrBefAt(A, At&)
@@ -56,11 +56,11 @@ StrBefDDD = RTrim(StrBefOrAll(A, "---"))
 End Function
 
 Function StrBefMust$(S, Sep$, Optional NoTrim As Boolean)
-StrBefMust = Brk(S, Sep, NoTrim).S1
+StrBefMust = Brk(S, Sep, NoTrim).s1
 End Function
 
 Function StrBefOrAll$(S, Sep, Optional NoTrim As Boolean)
-StrBefOrAll = Brk1(S, Sep, NoTrim).S1
+StrBefOrAll = Brk1(S, Sep, NoTrim).s1
 End Function
 
 Function StrBefOrAllRev$(A, S)
@@ -68,22 +68,22 @@ StrBefOrAllRev = StrDft(StrBefRev(A, S), A)
 End Function
 
 Function StrBefRev$(A, Sep, Optional NoTrim As Boolean)
-StrBefRev = Brk2Rev(A, Sep, NoTrim).S1
+StrBefRev = Brk2Rev(A, Sep, NoTrim).s1
 End Function
-Function TakP123(A, S1, S2) As String()
+Function TakP123(A, s1, s2) As String()
 Dim P1&, P2&
-P1 = InStr(A, S1)
-P2 = InStr(P1 + Len(S1), A, S2)
+P1 = InStr(A, s1)
+P2 = InStr(P1 + Len(s1), A, s2)
 If P2 > P1 And P1 > 0 And P2 > 0 Then
     PushI TakP123, Left(A, P1)
     Dim L&
-        L = P2 - P1 - Len(S1)
-    PushI TakP123, Mid(A, P1 + Len(S1), L)
-    PushI TakP123, Mid(A, P2 + Len(S2))
+        L = P2 - P1 - Len(s1)
+    PushI TakP123, Mid(A, P1 + Len(s1), L)
+    PushI TakP123, Mid(A, P2 + Len(s2))
 End If
 End Function
-Sub TakP123Asg(A, S1, S2, O1, O2, O3)
-AsgAp TakP123(A, S1, S2), O1, O2, O3
+Sub TakP123Asg(A, s1, s2, O1, O2, O3)
+AsgAp TakP123(A, s1, s2), O1, O2, O3
 End Sub
 Private Sub Z_Tak_BefFstLas()
 Dim S, Fst, Las
@@ -102,11 +102,11 @@ Function StrBetFstLas$(S, Fst, Las)
 StrBetFstLas = StrBefRev(StrAft(S, Fst), Las)
 End Function
 
-Function StrBet$(S, S1, S2, Optional NoTrim As Boolean, Optional InclMarker As Boolean)
-With Brk1(S, S1, NoTrim)
-   If .S2 = "" Then Exit Function
-   Dim O$: O = Brk1(.S2, S2, NoTrim).S1
-   If InclMarker Then O = S1 & O & S2
+Function StrBet$(S, s1, s2, Optional NoTrim As Boolean, Optional InclMarker As Boolean)
+With Brk1(S, s1, NoTrim)
+   If .s2 = "" Then Exit Function
+   Dim O$: O = Brk1(.s2, s2, NoTrim).s1
+   If InclMarker Then O = s1 & O & s2
    StrBet = O
 End With
 End Function
@@ -185,7 +185,7 @@ Lin = "lkjsdf;dkfjl;Data Source=Johnson;lsdfjldf  | Data Source= | ; | Johnson":
 Exit Sub
 Tst:
     Dim FmStr$, ToStr$
-    AsgAp AyTrim(SplitVbar(Lin)), Lin, FmStr, ToStr, Ept
+    AsgAp AyTrim(SplitVBar(Lin)), Lin, FmStr, ToStr, Ept
     Act = StrBet(Lin, FmStr, ToStr)
     C
     Return

@@ -86,7 +86,7 @@ Dim Ix, O As New Dictionary, Lines$, DNm$
 O.Add "*Dcl", Dcl(Src)
 For Each Ix In MthIxItr(Src)
     DNm = MthDNmzLin(Src(Ix))
-    Lines = MthLineszSrcFm(Src, Ix, WiTopRmk:=WiTopRmk)
+    Lines = MthLinesBySrcFm(Src, Ix, WiTopRmk:=WiTopRmk)
     If Lines = "" Then Stop
     O.Add DNm, Lines
 Next

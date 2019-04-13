@@ -231,12 +231,15 @@ Function CnStrzFxAdo$(A)
 'CnStrzFxAdo = FmtQQ("Provider=Microsoft.ACE.OLEDB.16.0;Data Source=?", A) 'Try
 CnStrzFxAdo = FmtQQ("Provider=Microsoft.ACE.OLEDB.16.0;Data Source=?;Extended Properties=""Excel 12.0 Xml;HDR=YES;IMEX=1""", A) 'Ok
 End Function
-
-Function DtaSrczScl(DtaSrcScl$)
-DtaSrczScl = StrBet(DtaSrcScl, "Data Source=", ";")
+Function ValzScvl(Scvl$, Nm$)
+ValzScvl = StrBet(EnsSfx(Scvl, ";"), Nm & "=", ";")
 End Function
-Function DtaSrc$(A As Database, T)
-DtaSrc = DtaSrczScl(A.TableDefs(T).Connect)
+
+Function DtaSrczScvl(Scvl$)
+DtaSrczScvl = ValzScvl(Scvl, "Data Source")
+End Function
+Function CnStrzDbt$(A As Database, T)
+CnStrzDbt = DtaSrczScvl(A.TableDefs(T).Connect)
 End Function
 
 Function CnzFx(Fx) As ADODB.Connection

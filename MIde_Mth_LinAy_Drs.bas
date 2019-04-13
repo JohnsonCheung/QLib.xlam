@@ -35,8 +35,8 @@ For Each I In MdItr(A, WhStr)
 Next
 End Function
 
-Function MthLinAyOfVbe(Optional WhStr$) As String()
-MthLinAyOfVbe = MthLinAyzVbe(CurVbe, WhStr)
+Function MthLinAyInVbe(Optional WhStr$) As String()
+MthLinAyInVbe = MthLinAyzVbe(CurVbe, WhStr)
 End Function
 
 Function MthLinAyzVbe(V As Vbe, Optional WhStr$) As String()
@@ -82,12 +82,12 @@ Dim MthQLin
 For Each MthQLin In Itr(MthQLy)
 Next
 End Function
-Function MthQ1LyOfVbe(Optional WhStr$) As String()
-MthQ1LyOfVbe = MthQ1LyzMthQLy(MthQLyzVbe(CurVbe, WhStr))
+Function MthQ1LyInVbe(Optional WhStr$) As String()
+MthQ1LyInVbe = MthQ1LyzMthQLy(MthQLyzVbe(CurVbe, WhStr))
 End Function
 
-Function MthQLyOfVbe(Optional WhStr$) As String()
-MthQLyOfVbe = MthQLyzVbe(CurVbe, WhStr)
+Function MthQLyInVbe(Optional WhStr$) As String()
+MthQLyInVbe = MthQLyzVbe(CurVbe, WhStr)
 End Function
 
 Function MthQLyzVbe(A As Vbe, Optional WhStr$) As String()
@@ -99,7 +99,7 @@ End Function
 
 Function MthQLyzMd(A As CodeModule, Optional WhStr$) As String()
 Dim P$
-P = A.Parent.Collection.Parent.Name & "." & ShtCmpTy(A.Parent.Type) & "." & A.Parent.Name & "."
+P = PjNmzMd(A) & "." & ShtCmpTy(A.Parent.Type) & "." & A.Parent.Name & "."
 MthQLyzMd = AyAddPfx(MthLinAyzSrc(Src(A), WhStr), P)
 End Function
 

@@ -51,7 +51,7 @@ Dim J%, Fxc() As LidFxc
 Fxc = A.Fxc
 For J = 0 To UB(Fxc)
     With Fxc(J)
-        PushI FxColDr, Array(A.Fxn, A.Wsn, A.T, .ColNm, .ShtTyLis, .ExtNm)
+        PushI FxColDr, Array(A.Fxn, A.Wsn, A.T, .ColNm, .ShtTyLis, .Extnm)
     End With
 Next
 End Function

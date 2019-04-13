@@ -11,6 +11,10 @@ Function JnComma$(A)
 JnComma = Jn(A, ",")
 End Function
 
+Function JnBq$(A)
+JnBq = Jn(A, "`")
+End Function
+
 Function JnCommaCrLf$(A)
 JnCommaCrLf = Jn(A, "," & vbCrLf)
 End Function
@@ -27,8 +31,8 @@ Function JnCrLf$(Ay)
 JnCrLf = Jn(Ay, vbCrLf)
 End Function
 
-Function JnDblCrLf$(A)
-JnDblCrLf = Jn(A, vbCrLf & vbCrLf)
+Function JnDblCrLf$(Ay)
+JnDblCrLf = Jn(Ay, vbCrLf & vbCrLf)
 End Function
 
 Function JnDotAp$(ParamArray Ap())
@@ -102,8 +106,8 @@ Next
 JnTerm = Join(O, " ")
 End Function
 
-Function JnVbar$(A)
-JnVbar = Jn(A, "|")
+Function JnVBar$(A)
+JnVBar = Jn(A, "|")
 End Function
 
 Function JnVbarSpc$(A)

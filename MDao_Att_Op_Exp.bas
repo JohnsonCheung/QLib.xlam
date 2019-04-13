@@ -83,7 +83,7 @@ Dim A$
 Dim B
 Dim C As Attd
 Dim D As Database
-Dim XX
+Dim xx
 ExpAttzFn D, A, A, B
 ExpAttzAttd C, B
 End Sub

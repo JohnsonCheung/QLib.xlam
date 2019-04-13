@@ -6,6 +6,7 @@ Public Const DoczOfLimPmSpec$ = "It is lin with 3 Pm: [-Sw xx -Sng xx -Mul xx]. 
 "Where xx are PmNm."
 Public Const vbOpnBkt$ = "("
 Public Const vbDblQuote$ = """"
+Public Const vbDblCrLf$ = vbCrLf & vbCrLf
 Public Const vbTwoDblQuote$ = vbDblQuote & vbDblQuote
 Public Const vbDblQuoteAsc As Byte = 34
 Public Const vbSngQuote$ = "'"
@@ -52,7 +53,7 @@ Public Const SampFbzDuty_Pgm$ _
 Public Const SampFx_KE24 _
                                     = H & "DutyPrepay5\SAPDownloadExcel\KE24 2010-01c.xls"
 Public Const SampFbzDuty_PgmBackup$ _
-                                    = H & "DutyPrepay5\DutyPrepay5_FfnBackup.accdb"
+                                    = H & "DutyPrepay5\DutyPrepay5_BackupFfn.accdb"
 Public Const SampFbzTaxCmp$ _
                                     = H1 & "QFinalSln\TaxExpCmp v1.3.accdb"
 Public Const SampFbzShpRate$ _

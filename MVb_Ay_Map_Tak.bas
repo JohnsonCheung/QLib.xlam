@@ -19,6 +19,13 @@ For Each I In Itr(A)
 Next
 End Function
 
+Function AyTakAftOrAll(A, Sep$) As String()
+Dim I
+For Each I In Itr(A)
+    PushI AyTakAftOrAll, StrAftOrAll(I, Sep)
+Next
+End Function
+
 Function AyTakBef(A, Sep$) As String()
 Dim I
 For Each I In Itr(A)

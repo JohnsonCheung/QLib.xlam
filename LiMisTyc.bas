@@ -8,10 +8,10 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
-Public ExtNm$, ActShtTy$, EptShtTyLis$
-Friend Function Init(ExtNm$, ActShtTy$, EptShtTyLis$) As LiMisTyc
+Public Extnm$, ActShtTy$, EptShtTyLis$
+Friend Function Init(Extnm$, ActShtTy$, EptShtTyLis$) As LiMisTyc
 With Me
-    .ExtNm = ExtNm
+    .Extnm = Extnm
     .ActShtTy = ActShtTy
     .EptShtTyLis = EptShtTyLis
 End With
@@ -19,6 +19,6 @@ Set Init = Me
 End Function
 
 Property Get MisMsg$()
-MisMsg = FmtQQ("Column[?] has unexpected-data-type[?], it should be [?]", ExtNm, DtaTyzShtTy(ActShtTy), JnSpc(DtaTyAyzShtTyAy(CmlAy(EptShtTyLis))))
+MisMsg = FmtQQ("Column[?] has unexpected-data-type[?], it should be [?]", Extnm, DtaTyzShtTy(ActShtTy), JnSpc(DtaTyAyzShtTyAy(CmlAy(EptShtTyLis))))
 End Property
 

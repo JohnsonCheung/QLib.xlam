@@ -8,11 +8,11 @@ Private Sub Z_RptLidPrmSrc()
 Brw FmtAyPm(RptLidPmSrc, "[LidPm Apn AppFb Fil Ws WsCol] [2:LidPm AppFb Fil] [3:Ws] 4:WsCol")
 End Sub
 Property Get RptLidPmSrc() As String()
-RptLidPmSrc = RptLidPmSrczAppFb(RptAppFb)
+RptLidPmSrc = RptLidPmSrcByAppFb(RptAppFb)
 End Property
 
-Private Function RptLidPmSrczAppFb(AppFb$) As String()
-Erase XX
+Private Function RptLidPmSrcByAppFb(AppFb$) As String()
+Erase xx
 X "LidPm"
 X "Apn ShpCst"
 X "AppFb " & AppFb
@@ -46,8 +46,8 @@ X "WsCol MB52 Whs    M Plant"
 X "WsCol MB52 QInsp  D In Quality Insp#"
 X "WsCol MB52 QUnRes D Unrestricted"
 X "WsCol MB52 QBlk   D Blocked"
-RptLidPmSrczAppFb = XX
-Erase XX
+RptLidPmSrcByAppFb = xx
+Erase xx
 End Function
 
 Property Get RptLidPm() As LidPm
@@ -55,7 +55,7 @@ Set RptLidPm = RptLidPmzAppFb(RptAppFb)
 End Property
 
 Private Function RptLidPmzAppFb(AppFb$) As LidPm
-Set RptLidPmzAppFb = LidPm(RptLidPmSrczAppFb(AppFb))
+Set RptLidPmzAppFb = LidPm(RptLidPmSrcByAppFb(AppFb))
 End Function
 
 Private Function RptLidFilLinAy() As String()

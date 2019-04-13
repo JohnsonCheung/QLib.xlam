@@ -13,11 +13,11 @@ Private Sub Z_PrpNy()
 Dim Db As Database: Set Db = SampDb_DutyDta
 Dim Fd As Dao.Field
 Set Fd = FdzTF(Db, "Permit", "Permit")
-D PrpNyFd(Fd)
+D PrpNyzFd(Fd)
 End Sub
 
-Function PrpNyFd(A As Dao.Field) As String()
-PrpNyFd = Itn(A.Properties)
+Function PrpNyzFd(A As Dao.Field) As String()
+PrpNyzFd = Itn(A.Properties)
 End Function
 
 Private Sub Z_PrpDryzFd()

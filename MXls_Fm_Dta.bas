@@ -21,7 +21,7 @@ End Function
 Function WszDrs(Drs As Drs, Optional Wsn$ = "Sheet1", Optional Vis As Boolean) As Worksheet
 Dim O As Worksheet: Set O = NewWs(Wsn)
 LozDrs Drs, O.Range("A1")
-Set WszDrs = WsSetVis(O, Vis)
+Set WszDrs = SetVisOfWs(O, Vis)
 End Function
 
 Function RgzAyV(Ay, At As Range) As Range

@@ -32,7 +32,7 @@ Set MdLineszMd = MdLines(1, SrcLines(A))
 End Function
 
 Sub RplMd(A As CodeModule, NewMdLines$)
-RplLines A, MdLineszMd(A), NewMdLines, "Whole-Md"
+RplLines A, MdLineszMd(A), NewMdLines
 End Sub
 
 Sub RmvMdFTIx(A As CodeModule, FTIx As FTIx)

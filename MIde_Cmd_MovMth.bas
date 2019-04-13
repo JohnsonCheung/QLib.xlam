@@ -36,12 +36,12 @@ For Each C In A.Controls
     End If
 Next
 End Function
-Sub Ens_CmdBarBtn(CmdBarNm, BtnCaption)
-Ens_CmdBar XMov_MthBarNm
+Sub EnsCmdBarBtn(CmdBarNm, BtnCaption)
+EnsCmdBar XMov_MthBarNm
 If CmdBar_HasBtn(CmdBar(CmdBarNm), BtnCaption) Then Exit Sub
 CmdBar(CmdBarNm).Controls.Add(msoControlButton).Caption = BtnCaption
 End Sub
-Sub Ens_CmdBar(A$)
+Sub EnsCmdBar(A$)
 If CurVbe_BarsHas(A) Then Exit Sub
 AddCmdBar A
 End Sub

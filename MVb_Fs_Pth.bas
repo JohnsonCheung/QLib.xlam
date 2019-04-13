@@ -46,7 +46,7 @@ End Function
 
 Function PthAddPfx$(Pth, Pfx)
 With Brk2Rev(RmvSfx(Pth, PthSep), PthSep, NoTrim:=True)
-    PthAddPfx = .S1 & PthSep & Pfx & .S2 & PthSep
+    PthAddPfx = .s1 & PthSep & Pfx & .s2 & PthSep
 End With
 End Function
 

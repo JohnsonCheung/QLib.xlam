@@ -14,16 +14,16 @@ Set SetViszWs = A
 End Function
 
 Function WsVis(A As Worksheet) As Worksheet
-XlsVis A.Application
+VisXls A.Application
 Set WsVis = A
 End Function
 
 Function WbVis(A As Workbook) As Workbook
-XlsVis A.Application
+VisXls A.Application
 Set WbVis = A
 End Function
 
-Sub XlsVis(A As Excel.Application)
+Sub VisXls(A As Excel.Application)
 If Not A.Visible Then A.Visible = True
 End Sub
 
@@ -33,7 +33,7 @@ Set RgVis = Rg
 End Function
 
 Function LoVis(A As ListObject) As ListObject
-XlsVis A.Application
+VisXls A.Application
 Set LoVis = A
 End Function
 

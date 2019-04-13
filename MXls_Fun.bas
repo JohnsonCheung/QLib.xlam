@@ -54,25 +54,15 @@ Set NewWsDt = O
 If Vis Then WsVis O
 End Function
 
-Function NyFml(A$) As String()
-NyFml = NyzMacro(A)
+Function NyzFml(Fml$) As String()
+NyzFml = NyzMacro(Fml)
 End Function
 
-Sub SetLcTotLnk(A As ListColumn)
-Dim R1 As Range, R2 As Range, R As Range, Ws As Worksheet
-Set R = A.DataBodyRange
-Set Ws = WszRg(R)
-Set R1 = RgRC(R, 0, 1)
-Set R2 = RgRC(R, R.Rows.Count + 1, 1)
-Ws.Hyperlinks.Add Anchor:=R1, Address:="", SubAddress:=R2.Address
-Ws.Hyperlinks.Add Anchor:=R2, Address:="", SubAddress:=R1.Address
-R1.Font.ThemeColor = xlThemeColorDark1
-End Sub
 
-Function LyWs(Ly$(), Vis As Boolean) As Worksheet
-Dim O As Worksheet: Set O = NewWs()
-'AyRgV Ly, A1zWs(O)
-Set LyWs = O
+Function WszLy(Ly$(), Optional Wsn$ = "Sheet1", Optional Vis As Boolean) As Worksheet
+Dim O As Worksheet: Set O = NewWs(Wsn)
+RgzAyV Ly, A1zWs(O)
+Set WszLy = SetVisOfWs(O, Vis)
 End Function
 
 Property Get MaxWsCol&()

@@ -44,8 +44,8 @@ Next
 JmpCmp Sy(0)
 End Sub
 
-Function MdApdLines(A As CodeModule, Lines) As CodeModule
-If Lines = "" Then Exit Function
+Sub ApdLines(A As CodeModule, Lines)
+If Lines = "" Then Exit Sub
 Dim Bef&, Aft&, Exp&, Cnt&
 Bef = A.CountOfLines
 A.InsertLines A.CountOfLines + 1, Lines '<=====
@@ -56,11 +56,10 @@ If Exp <> Aft Then
 '    Thw CSub, "After copy line count are inconsistents, where [Md], [LinCnt-Bef-Cpy], [LinCnt-of-lines], [Exp-LinCnt-Aft-Cpy], [Act-LinCnt-Aft-Cpy], [Lines]", _
         MdNm(A), Bef, Cnt, Exp, Aft, Lines
 End If
-Set MdApdLines = A
-End Function
+End Sub
 
 Sub AddFun(FunNm$)
-MdApdLines CurMd, EmpFunLines(FunNm)
+ApdLines CurMd, EmpFunLines(FunNm)
 JmpMth FunNm
 End Sub
 Function CmpNew(Nm$, Ty As vbext_ComponentType) As VBComponent
@@ -75,7 +74,7 @@ Function EmpSubLines$(SubNm)
 EmpSubLines = FmtQQ("Sub ?()|End Sub", SubNm)
 End Function
 Sub AddSub(SubNm$)
-MdApdLines CurMd, EmpSubLines(SubNm)
+ApdLines CurMd, EmpSubLines(SubNm)
 JmpMth SubNm
 End Sub
 
@@ -87,14 +86,11 @@ End Function
 Function HasCmp(CmpNm) As Boolean
 HasCmp = HasCmpzPj(CurPj, CmpNm)
 End Function
-Function AddCmpzLines(Nm, Lines$) As VBComponent
-Stop
-End Function
-
-Function AddCmpzSrcLineszPj(A As VBProject, Nm, Lines$) As VBComponent
+Function AddCmpzLines(A As VBProject, Nm, SrcLines$) As VBComponent
 Dim O As VBComponent
 Set O = AddCmpzPj(A, Nm, vbext_ct_StdModule): If IsNothing(O) Then Stop
-Set AddCmpzSrcLineszPj = MdApdLines(O.CodeModule, Lines)
+ApdLines O.CodeModule, SrcLines
+Set AddCmpzLines = O
 End Function
 Sub RenAddCmpPfx_CmpPfx(A As VBComponent, AddPfx$)
 A.Name = AddPfx & A.Name
@@ -124,15 +120,15 @@ Function EnsCls(A As VBProject, ClsNm$) As CodeModule
 Set EnsCls = EnsCmp(A, ClsNm, vbext_ct_ClassModule)
 End Function
 
-Function EnsCmp(A As VBProject, Nm, Optional Ty As vbext_ComponentType = vbext_ct_StdModule) As CodeModule
+Function EnsCmp(A As VBProject, Nm, Optional Ty As vbext_ComponentType = vbext_ct_StdModule) As VBComponent
 If Not HasCmpzPj(A, Nm) Then
     A.VBComponents.Add(Ty).Name = Nm
 End If
-Set EnsCmp = A.VBComponents(Nm).CodeModule
+Set EnsCmp = A.VBComponents(Nm)
 End Function
 
 Function EnsMdzPj(A As VBProject, MdNm) As CodeModule
-Set EnsMdzPj = EnsCmp(A, MdNm, vbext_ct_StdModule)
+Set EnsMdzPj = EnsCmp(A, MdNm, vbext_ct_StdModule).CodeModule
 End Function
 
 Function EnsMod(A As VBProject, ModNm$) As CodeModule
