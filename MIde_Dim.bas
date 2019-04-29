@@ -1,7 +1,7 @@
 Attribute VB_Name = "MIde_Dim"
 Option Explicit
 
-Function IsDimItmzAs(DimItm) As Boolean
+Function IsDimItmzAs(DimItm$) As Boolean
 Dim A$(): A = SySsl(DimItm)
 If Si(A) <> 3 Then Exit Function
 If A(1) <> "As" Then Thw CSub, "2nd term is not a [As]", "DimItm", DimItm
@@ -9,22 +9,22 @@ If IsNm(A(0)) Then Thw CSub, "1st term is not a name", "DimItm", DimItm
 IsDimItmzAs = True
 End Function
 
-Function DimNmzSht$(DimShtItm)
+Function DimNmzSht$(DimShtItm$)
 DimNmzSht = RmvChrzSfx(RmvSfxzBkt(DimShtItm), TyChrLis)
 End Function
 
-Function DimNmzAs$(DimAsItm)
-DimNmzAs = RmvSfxzBkt(StrBef(DimAsItm, " As"))
+Function DimNmzAs$(DimAsItm$)
+DimNmzAs = RmvSfxzBkt(Bef(DimAsItm, " As"))
 End Function
-Function DimTy$(DimItm)
+Function DimTy$(DimItm$)
 Select Case True
 Case IsDimItmzSht(DimItm): DimTy = RmvNm(DimItm)
-Case IsDimItmzAs(DimItm):  DimTy = StrBef(DimItm, " As")
+Case IsDimItmzAs(DimItm):  DimTy = Bef(DimItm, " As")
 Case Else: Thw CSub, "Not a DimItm", "DimItm", DimItm
 End Select
 End Function
 
-Function DimNm$(DimItm)
+Function DimNm$(DimItm$)
 Select Case True
 Case IsDimItmzSht(DimItm): DimNm = DimNmzSht(DimItm)
 Case IsDimItmzAs(DimItm):  DimNm = DimNmzAs(DimItm)
@@ -32,7 +32,7 @@ Case Else: Thw CSub, "Not a DimItm", "DimItm", DimItm
 End Select
 End Function
 
-Function IsDimItmzSht(DimItm) As Boolean
+Function IsDimItmzSht(DimItm$) As Boolean
 If HasSpc(DimItm) Then Exit Function
 IsDimItmzSht = IsNm(RmvTyChr(RmvSfxzBkt(DimItm)))
 End Function
@@ -48,8 +48,9 @@ DimNy = DimNyzDimItmAy(DimItmAy(Lin))
 End Function
 
 Function DimNyzDimItmAy(DimItmAy$()) As String()
-Dim DimItm
-For Each DimItm In Itr(DimItmAy)
+Dim DimItm$, I
+For Each I In Itr(DimItmAy)
+    DimItm = I
     PushI DimNyzDimItmAy, DimNm(DimItm)
 Next
 End Function

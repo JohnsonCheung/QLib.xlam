@@ -25,7 +25,7 @@ Exit Property
 X: Debug.Print CSub
 End Property
 
-Function MthQNm$(A As CodeModule, Lin)
+Function MthQNm$(A As CodeModule, Lin$)
 Dim D$: D = MthDNmzLin(Lin): If D = "" Then Exit Function
 MthQNm = MdQNmzMd(A) & "." & D
 End Function
@@ -44,15 +44,16 @@ End Function
 
 Function MthNyzMthLinAy(MthLinAy$()) As String()
 Const CSub$ = CMod & "MthNyzMthLinAy"
-Dim I, Nm$, J%
+Dim I, Nm$, J%, MthLin$
 For Each I In Itr(MthLinAy)
-    Nm = MthNm(I)
-    If Nm = "" Then Thw CSub, "Given MthLinAy does not have MthNm", "[MthLin with error] Ix MthLinAy", I, J, AyAddIxPfx(MthLinAy)
+    MthLin = I
+    Nm = MthNm(MthLin)
+    If Nm = "" Then Thw CSub, "Given MthLinAy does not have MthNm", "[MthLin with error] Ix MthLinAy", I, J, SyAddIxPfx(MthLinAy)
     PushI MthNyzMthLinAy, Nm
     J = J + 1
 Next
 End Function
-Function Ens2Dot(S) As StrOpt
+Function Ens2Dot(S$) As StrOpt
 Select Case DotCnt(S)
 Case 0: Ens2Dot = SomStr(".." & S)
 Case 1: Ens2Dot = SomStr("." & S)
@@ -60,7 +61,7 @@ Case 2: Ens2Dot = SomStr(S)
 End Select
 End Function
 
-Function MdMth(MthQNm) As MdMth
+Function MdMth(MthQNm$) As MdMth
 Const CSub$ = CMod & "MdMthOpt"
 Dim Ny$()
 With Ens2Dot(MthQNm)
@@ -71,8 +72,8 @@ Set MdMth.Md = Md(Ny(0) & "." & Ny(1))
 MdMth.MthNm = Ny(2)
 End Function
 
-Function RmvMthMdy$(L)
-RmvMthMdy = RmvTermAy(L, MthMdyAy)
+Function RmvMthMdy$(Lin$)
+RmvMthMdy = RmvTermAy(Lin, MthMdyAy)
 End Function
 
 Function MthDNmzMthNm3$(A As MthNm3)
@@ -80,7 +81,7 @@ If A.Nm = "" Then Exit Function
 MthDNmzMthNm3 = A.Nm & "." & A.ShtTy & "." & A.ShtMdy
 End Function
 
-Function RmvMthNm3$(Lin)
+Function RmvMthNm3$(Lin$)
 Dim L$: L = Lin
 RmvMthMdy L
 If ShfMthTy(L) = "" Then Exit Function
@@ -100,14 +101,14 @@ Next
 'Set MthSDNmToMdNmRelInVbe = MthSDNmToMdNmRelzVbe(CurVbe, WhStr)
 End Function
 
-Function MthNm3(Lin, Optional B As WhMth) As MthNm3
+Function MthNm3(Lin$, Optional B As WhMth) As MthNm3
 Dim L$: L = Lin
 Dim O As New MthNm3
 With O
     .MthMdy = ShfMthMdy(L)
     .MthTy = ShfMthTy(L)
     If .MthTy = "" Then Set MthNm3 = New MthNm3: Exit Function
-    .Nm = TakNm(L)
+    .Nm = Nm(L)
 End With
 If HitMthNm3(O, B) Then
     Set MthNm3 = O
@@ -116,12 +117,12 @@ Else
 End If
 End Function
 
-Function MthNm$(Lin, Optional B As WhMth)
+Function MthNm$(Lin$, Optional B As WhMth)
 If Not IsMthLin(Lin) Then Exit Function
 MthNm = MthNm3(Lin, B).Nm
 End Function
 
-Function MthNmzMthDNm$(MthDNm)
+Function MthNmzMthDNm$(MthDNm$)
 If MthDNm = "*Dcl" Then MthNmzMthDNm = MthDNm: Exit Function
 Dim A$()
 A = SplitDot(MthDNm)
@@ -129,7 +130,7 @@ If Si(A) <> 3 Then Thw CSub, "MthDNm should have 2 dot", "MthDNm", MthDNm
 MthNmzMthDNm = A(0)
 End Function
 
-Function MthDNmzLin$(MthLin)
+Function MthDNmzLin$(MthLin$)
 MthDNmzLin = MthDNmzMthNm3(MthNm3(MthLin))
 End Function
 Function MthSQNyInVbe(Optional WhStr$) As String()
@@ -138,11 +139,11 @@ End Function
 Function MthSQNyzVbe(A As Vbe, Optional WhStr$) As String()
 Dim MthQNm
 For Each MthQNm In Itr(MthQNyzVbe(A, WhStr))
-    PushI MthSQNyzVbe, MthSQNm(MthQNm)
+    PushI MthSQNyzVbe, MthSQNm(CStr(MthQNm))
 Next
 End Function
 
-Function MthSQNm$(MthQNm)
+Function MthSQNm$(MthQNm$)
 Dim A$(): A = SplitDot(MthQNm): If Si(A) <> 5 Then Thw CSub, "MthQNm should have 4 dots", "MthQNm", MthQNm
 Dim P$, Md$, M$, T$, N$
 AsgAp A, P, Md, M, T, N
@@ -167,22 +168,22 @@ Case "Frd": MthMdyc = "F"
 Case Else: Thw CSub, "Invalid ShtMthMdy.", "ShtMthMdy VdtShtMthMdy", ShtMthMdy, ShtMthMdyAy
 End Select
 End Function
-Function MthDNm$(Lin, Optional B As WhMth)
+Function MthDNm$(Lin$, Optional B As WhMth)
 MthDNm = MthNm3(Lin, B).DNm
 End Function
 
-Function MthNmzLin$(Lin, Optional B As WhMth)
+Function MthNmzLin$(Lin$, Optional B As WhMth)
 MthNmzLin = MthNm3(Lin, B).Nm
 End Function
 
-Function PrpNm$(Lin)
+Function PrpNm$(Lin$)
 Dim L$
 L = RmvMdy(Lin)
 If ShfKd(L) <> "Property" Then Exit Function
-PrpNm = TakNm(L)
+PrpNm = Nm(L)
 End Function
 
-Function MthNmzDNm$(MthNm)
+Function MthNmzDNm$(MthNm$)
 Dim Ay$(): Ay = Split(MthNm, ".")
 Dim Nm$
 Select Case Si(Ay)
@@ -205,16 +206,16 @@ Tst:
 ZZ:
     Dim O$(), L
     For Each L In SrczVbe(CurVbe)
-        PushNonBlankStr O, MthNm(L)
+        PushNonBlankStr O, MthNm(CStr(L))
     Next
     Brw O
 End Sub
 
-Function MthMdy$(Lin)
+Function MthMdy$(Lin$)
 MthMdy = FstEleEv(MthMdyAy, T1(Lin))
 End Function
 
-Function MthKd$(Lin)
+Function MthKd$(Lin$)
 MthKd = TakMthKd(RmvMdy(Lin))
 End Function
 
@@ -238,14 +239,14 @@ For Each I In ModItr
 Next
 End Function
 
-Function MthTy$(Lin)
+Function MthTy$(Lin$)
 MthTy = PfxzPfxAyPlusSpc(RmvMthMdy(Lin), MthTyAy)
 End Function
 
 Private Sub Z_MthTy()
 Dim O$(), L
 For Each L In SrczMdNm("Fct")
-    Push O, MthTy(L) & "." & L
+    Push O, MthTy(CStr(L)) & "." & L
 Next
 BrwAy O
 End Sub

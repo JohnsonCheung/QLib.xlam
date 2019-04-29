@@ -1,34 +1,35 @@
 Attribute VB_Name = "MVb_Lin"
 Option Explicit
 
-Function HasDDRmk(A) As Boolean
-HasDDRmk = HasSubStr(A, "--")
+Function HasDDRmk(Lin$) As Boolean
+HasDDRmk = HasSubStr(Lin, "--")
 End Function
 
-Function IsSngTermLin(A) As Boolean
-IsSngTermLin = InStr(Trim(A), " ") = 0
+Function IsSngTermLin(Lin$) As Boolean
+IsSngTermLin = InStr(Trim(Lin), " ") = 0
 End Function
 
-Function IsDDLin(A) As Boolean
-IsDDLin = FstTwoChr(LTrim(A)) = "--"
+Function IsDDLin(Lin$) As Boolean
+IsDDLin = FstTwoChr(LTrim(Lin)) = "--"
 End Function
 
-Function IsDotLin(A) As Boolean
-IsDotLin = FstChr(A) = "."
+Function IsDotLin(Lin$) As Boolean
+IsDotLin = FstChr(Lin) = "."
 End Function
 
-Function HasLinT1Ay(Lin, T1Ay$()) As Boolean
-HasLinT1Ay = HasEle(T1Ay, T1(Lin))
+Function HitT1Ay(Lin$, T1Sy$()) As Boolean
+HitT1Ay = HasEle(T1Sy, T1(Lin))
 End Function
-Function PfxzPfxAy(S, PfxAy)
-Dim X
+Function PfxzPfxAy$(S$, PfxAy$())
+Dim Pfx$, I
 ThwIfNotAy PfxAy, CSub
-For Each X In PfxAy
-    If HasPfx(S, X) Then PfxzPfxAy = X: Exit Function
+For Each I In PfxAy
+    Pfx = I
+    If HasPfx(S, Pfx) Then PfxzPfxAy = Pfx: Exit Function
 Next
 End Function
 
-Function PfxzPfxAyPlusSpc(S, PfxAy)
+Function PfxzPfxAyPlusSpc(S$, PfxAy$())
 Dim X
 ThwIfNotAy PfxAy, CSub
 For Each X In PfxAy
@@ -36,13 +37,13 @@ For Each X In PfxAy
 Next
 End Function
 
-Function PfxzPfxApPlusSpc(S, ParamArray PfxAp())
-Dim Av(): Av = PfxAp
-PfxzPfxApPlusSpc = PfxzPfxAyPlusSpc(S, Av)
+Function PfxzPfxApPlusSpc(S$, ParamArray PfxAp())
+Dim PfxAy$(): PfxAy = SyzAy(PfxAy)
+PfxzPfxApPlusSpc = PfxzPfxAyPlusSpc(S, PfxAy)
 End Function
 
-Function PfxzPfxAp(S, ParamArray PfxAp())
-Dim Av(): Av = PfxAp
-PfxzPfxAp = PfxzPfxAy(S, Av)
+Function PfxzPfxAp(S$, ParamArray PfxAp())
+Dim PfxAy$(): PfxAy = SyzAy(PfxAy)
+PfxzPfxAp = PfxzPfxAy(S, PfxAy)
 End Function
 

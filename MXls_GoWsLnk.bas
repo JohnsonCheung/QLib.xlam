@@ -1,6 +1,6 @@
 Attribute VB_Name = "MXls_GoWsLnk"
 Option Explicit
-Private Sub CrtGoLnkzCell(Cell As Range, Wsn$)
+Private Sub CrtGoLnkForOne(Cell As Range, Wsn$)
 Dim A1 As Range: Set A1 = A1zRg(Cell)
 With A1.Hyperlinks
     If .Count > 0 Then .Delete
@@ -33,7 +33,7 @@ Sub CrtGoLnk(FstGoCell As Range)
 Dim I
 For Each I In Itr(CellWsnItmAy(FstGoCell))
     With CvCellWsnItm(I)
-        CrtGoLnkzCell .Cell, .Wsn
+        CrtGoLnkForOne .Cell, .Wsn
     End With
 Next
 End Sub

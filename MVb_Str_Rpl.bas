@@ -1,17 +1,17 @@
 Attribute VB_Name = "MVb_Str_Rpl"
 Option Explicit
 Private Sub ZZ_RplBet()
-Dim A$, Exp$, By$, s1$, s2$
-s1 = "Data Source="
-s2 = ";"
-A = "aa;Data Source=???;klsdf"
+Dim S$, Exp$, By$, S1$, S2$
+S1 = "Data Source="
+S2 = ";"
+S = "aa;Data Source=???;klsdf"
 By = "xx"
 Exp = "aa;Data Source=xx;klsdf"
 GoSub Tst
 Exit Sub
 Tst:
 Dim Act$
-Act = RplBet(A, By, s1, s2)
+Act = RplBet(S, By, S1, S2)
 Debug.Assert Exp = Act
 Return
 End Sub
@@ -19,35 +19,35 @@ End Sub
 Private Sub ZZ_RplPfx()
 Ass RplPfx("aaBB", "aa", "xx") = "xxBB"
 End Sub
-Function RmvCr$(A)
-RmvCr = Replace(A, vbCr, "")
+Function RmvCr$(S$)
+RmvCr = Replace(S, vbCr, "")
 End Function
 
-Function RplCr$(A)
-RplCr = Replace(A, vbCr, " ")
+Function RplCr$(S$)
+RplCr = Replace(S, vbCr, " ")
 End Function
-Function RplLf$(A)
-RplLf = Replace(A, vbLf, " ")
+Function RplLf$(S$)
+RplLf = Replace(S, vbLf, " ")
 End Function
-Function RplVbl$(Vbl)
-RplVbl = RplVBar(Vbl)
+Function RplVbl$(S$)
+RplVbl = RplVBar(S)
 End Function
-Function RplVBar$(Vbl)
-RplVBar = Replace(Vbl, "|", vbCrLf)
+Function RplVBar$(S$)
+RplVBar = Replace(S, "|", vbCrLf)
 End Function
-Function RplBet$(A, By$, s1$, s2$)
+Function RplBet$(S$, By$, S1$, S2$)
 Dim P1%, P2%, B$, C$
-P1 = InStr(A, s1)
+P1 = InStr(S, S1)
 If P1 = 0 Then Stop
-P2 = InStr(P1 + Len(s1), CStr(A), s2)
+P2 = InStr(P1 + Len(S1), CStr(S), S2)
 If P2 = 0 Then Stop
-B = Left(A, P1 + Len(s1) - 1)
-C = Mid(A, P2 + Len(s2) - 1)
+B = Left(S, P1 + Len(S1) - 1)
+C = Mid(S, P2 + Len(S2) - 1)
 RplBet = B & By & C
 End Function
 
-Function RplDblSpc$(A)
-Dim O$: O = Trim(A)
+Function RplDblSpc$(S$)
+Dim O$: O = Trim(S)
 Dim J&
 While HasSubStr(O, "  ")
     J = J + 1: If J > 10000 Then Stop
@@ -56,25 +56,29 @@ Wend
 RplDblSpc = O
 End Function
 
-Function RplFstChr$(A, By$)
-RplFstChr = By & RmvFstChr(A)
+Function RplFstChr$(S$, By$)
+RplFstChr = By & RmvFstChr(S)
 End Function
 
-Function RplPfx(A, FmPfx, ToPfx)
-RplPfx = ToPfx & RmvPfx(A, FmPfx)
+Function RplPfx(S$, Fm$, ToPfx$)
+If HasPfx(S, Fm) Then
+    RplPfx = ToPfx & RmvPfx(S, Fm)
+Else
+    RplPfx = S
+End If
 End Function
 
 Private Sub Z_RplPfx()
 Ass RplPfx("aaBB", "aa", "xx") = "xxBB"
 End Sub
 
-Function RplPun$(A)
+Function RplPun$(S$)
 Dim O$(), J&, L&, C$
-L = Len(A)
+L = Len(S)
 If L = 0 Then Exit Function
 ReDim O(L - 1)
 For J = 1 To L
-    C = Mid(A, J, 1)
+    C = Mid(S, J, 1)
     If IsPun(C) Then
         O(J - 1) = " "
     Else
@@ -84,22 +88,22 @@ Next
 RplPun = Join(O, "")
 End Function
 
-Function RplQ$(A, By)
-RplQ = Replace(A, "?", By)
+Function RplQ$(S, By)
+RplQ = Replace(S, "?", By)
 End Function
 
 Private Sub Z_RplBet()
-Dim A$, Exp$, By$, s1$, s2$
-s1 = "Data Source="
-s2 = ";"
-A = "aa;Data Source=???;klsdf"
+Dim S$, Exp$, By$, S1$, S2$
+S1 = "Data Source="
+S2 = ";"
+S = "aa;Data Source=???;klsdf"
 By = "xx"
 Exp = "aa;Data Source=xx;klsdf"
 GoSub Tst
 Exit Sub
 Tst:
 Dim Act$
-Act = RplBet(A, By, s1, s2)
+Act = RplBet(S, By, S1, S2)
 Debug.Assert Exp = Act
 Return
 End Sub

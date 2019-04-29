@@ -59,6 +59,7 @@ For Each I In Av
     End If
 Next
 End Function
+
 Function AyMap(Ay, MapFun$) As Variant()
 Dim X
 For Each X In Itr(Ay)
@@ -72,10 +73,15 @@ For Each X In Itr(Ay)
     PushI DryzAyMap, Array(X, Run(Map, X))
 Next
 End Function
-
-Function AyAddItm(A, Itm)
+Function AddEle(Ay, Ele)
+AddEle = AddEle(Ay, Ele)
+End Function
+Function AddStrEle(Sy$(), Ele$) As String()
+Dim O$(): O = Sy: PushS O, Ele: AddStrEle = O
+End Function
+Function AyAddItm(Ay, Itm)
 Dim O
-O = A
+O = Ay
 Push O, Itm
 AyAddItm = O
 End Function
@@ -99,60 +105,48 @@ ThwAyabNE Ay1, Array(1, 2, 2, 2, 4, 5)
 ThwAyabNE Ay2, Array(2, 2)
 End Sub
 
-
-Private Sub ZZ_AyAdd()
-Dim Act(), Exp(), Ay1(), Ay2()
-Ay1 = Array(1, 2, 2, 2, 4, 5)
-Ay2 = Array(2, 2)
-Act = AyAdd(Ay1, Ay2)
-Exp = Array(1, 2, 2, 2, 4, 5, 2, 2)
-ThwIfNE Exp, Act
-ThwIfNE Ay1, Array(1, 2, 2, 2, 4, 5)
-ThwIfNE Ay2, Array(2, 2)
-End Sub
-
-Private Sub ZZ_AyAddPfx()
-Dim A, Act$(), Pfx$, Exp$()
-A = Array(1, 2, 3, 4)
+Private Sub Z_SyAddPfx()
+Dim Sy$(), Act$(), Pfx$, Exp$()
+Sy = SyzAp(1, 2, 3, 4)
 Pfx = "* "
-Exp = Sy("* 1", "* 2", "* 3", "* 4")
+Exp = SyzAp("* 1", "* 2", "* 3", "* 4")
 GoSub Tst
 Exit Sub
 Tst:
-Act = AyAddPfx(A, Pfx)
-Debug.Assert IsEqAy(Act, Exp)
-Return
+    Act = SyAddPfx(Sy, Pfx)
+    Debug.Assert IsEqAy(Act, Exp)
+    Return
 End Sub
 
-Private Sub ZZ_AyAddPfxSfx()
-Dim A, Act$(), Sfx$, Pfx$, Exp$()
-A = Array(1, 2, 3, 4)
+Private Sub Z_SyAddPfxSfx()
+Dim Sy$(), Act$(), Sfx$, Pfx$, Exp$()
+Sy = SyzAp(1, 2, 3, 4)
 Pfx = "* "
 Sfx = "#"
-Exp = Sy("* 1#", "* 2#", "* 3#", "* 4#")
+Exp = SyzAp("* 1#", "* 2#", "* 3#", "* 4#")
 GoSub Tst
 Exit Sub
 Tst:
-Act = AyAddPfxSfx(A, Pfx, Sfx)
+Act = SyAddPfxSfx(Sy, Pfx, Sfx)
 Debug.Assert IsEqAy(Act, Exp)
 Return
 End Sub
 
-Function AyTab(A) As String()
-AyTab = AyAddPfx(A, vbTab)
+Function AyTab(Sy$()) As String()
+AyTab = SyAddPfx(Sy, vbTab)
 End Function
 
-Private Sub ZZ_AyAddSfx()
-Dim A, Act$(), Sfx$, Exp$()
-A = Array(1, 2, 3, 4)
+Private Sub Z_SyAddSfx()
+Dim Sy$(), Act$(), Sfx$, Exp$()
+Sy = SyzAp(1, 2, 3, 4)
 Sfx = "#"
-Exp = Sy("1#", "2#", "3#", "4#")
+Exp = SyzAp("1#", "2#", "3#", "4#")
 GoSub Tst
 Exit Sub
 Tst:
-Act = AyAddSfx(A, Sfx)
-Debug.Assert IsEqAy(Act, Exp)
-Return
+    Act = SyAddSfx(Sy, Sfx)
+    Debug.Assert IsEqAy(Act, Exp)
+    Return
 End Sub
 
 

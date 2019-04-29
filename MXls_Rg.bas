@@ -140,7 +140,7 @@ End Function
 
 
 Function LozSq(Sq(), At As Range, Optional LoNm$) As ListObject
-Set LozSq = LozRg(RgzSq(Sq, At), LoNm)
+Set LozSq = LozRg(RgzSq(Sq(), At), LoNm)
 End Function
 Function LozRg(Rg As Range, Optional LoNm$) As ListObject
 Dim O As ListObject: Set O = WszRg(Rg).ListObjects.Add(xlSrcRange, Rg, , xlYes)
@@ -210,8 +210,8 @@ Function RgRR(A As Range, R1, R2) As Range
 Set RgRR = RgRCRC(A, R1, 1, R2, NColRg(A))
 End Function
 
-Function RgzResz(At As Range, Sq) As Range
-Set RgzResz = RgRCRC(At, 1, 1, NRowSq(Sq), NColSq(Sq))
+Function RgzResz(At As Range, Sq()) As Range
+Set RgzResz = RgRCRC(At, 1, 1, NRowzSq(Sq), NColzSq(Sq))
 End Function
 
 Function SqzRg(A As Range) As Variant()

@@ -24,7 +24,7 @@ For J = Lno To A.CountOfLines
         Exit Function
     End If
 Next
-Thw CSub, "All line From Lno has _ as LasChr", "Lno Md Src", Lno, MdNm(A), AyAddIxPfx(Src(A), 1)
+Thw CSub, "All line From Lno has _ as LasChr", "Lno Md Src", Lno, MdNm(A), SyAddIxPfx(Src(A), 1)
 End Function
 
 Sub UnRmkMdzFTIxAy(A As CodeModule, B() As FTIx)

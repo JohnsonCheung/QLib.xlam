@@ -5,8 +5,8 @@ Dim mHasLines As Boolean: mHasLines = HasLines(A)
 Dim mSepChr$:               mSepChr = IIf(mHasLines, "|", " ")
 Dim mS1$():                     mS1 = Sy1zS1S2Ay(A)
 Dim mS2$():                     mS2 = Sy2zS1S2Ay(A)
-Dim mW1%:                       mW1 = WdtzLinesAy(AyAddItm(mS1, Nm1))
-Dim mW2%:                       mW2 = WdtzLinesAy(AyAddItm(mS2, Nm2))
+Dim mW1%:                       mW1 = WdtzLinesAy(AddStrEle(mS1, Nm1))
+Dim mW2%:                       mW2 = WdtzLinesAy(AddStrEle(mS2, Nm2))
 Dim mSep$:                     mSep = SepLin(IntAy(mW1, mW2), mSepChr)
 Dim mTit$:                     mTit = LinzS1S2(S1S2(Nm1, Nm2), mW1, mW2)
 Dim mHdrLy$():               mHdrLy = Sy(mSep, mTit, mSep)
@@ -16,14 +16,14 @@ End Function
 Function Sy1zS1S2Ay(A() As S1S2) As String()
 Dim I
 For Each I In Itr(A)
-    PushI Sy1zS1S2Ay, CvS1S2(I).s1
+    PushI Sy1zS1S2Ay, CvS1S2(I).S1
 Next
 End Function
 
 Private Function LyzS1S2(A As S1S2, W1%, W2%) As String()
 Dim Lines1$, Lines2$
-    Lines1 = A.s1
-    Lines2 = A.s2
+    Lines1 = A.S1
+    Lines2 = A.S2
 Dim NLin%
     NLin = Max(LinCnt(Lines1), LinCnt(Lines2))
 Dim Ly1$(), Ly2$()
@@ -62,22 +62,22 @@ Else
 End If
 End Function
 Private Function LinzS1S2$(A As S1S2, W1%, W2%)
-LinzS1S2 = "| " & AlignL(A.s1, W1) & " | " & AlignL(A.s2, W2) & " |"
+LinzS1S2 = "| " & AlignL(A.S1, W1) & " | " & AlignL(A.S2, W2) & " |"
 End Function
-Function LinDrWdtAy$(Dr, WdtzAy%())
+Function LinDrWdtAy$(Dr, AyWdt%())
 Dim O$(), J%
 For J = 0 To UB(Dr)
-    PushI O, AlignL(Dr(J), WdtzAy(J))
+    PushI O, AlignL(Dr(J), AyWdt(J))
 Next
-For J = UB(Dr) + 1 To UB(WdtzAy)
-    PushI O, Space(WdtzAy(J))
+For J = UB(Dr) + 1 To UB(AyWdt)
+    PushI O, Space(AyWdt(J))
 Next
 LinDrWdtAy = "| " & Jn(O, " | ") & " |"
 End Function
 Function Sy2zS1S2Ay(A() As S1S2) As String()
 Dim I
 For Each I In Itr(A)
-    PushI Sy2zS1S2Ay, CvS1S2(I).s2
+    PushI Sy2zS1S2Ay, CvS1S2(I).S2
 Next
 End Function
 
@@ -86,8 +86,8 @@ Dim J&
 HasLines = True
 For J = 0 To UB(A)
     With A(J)
-        If IsLines(.s1) Then Exit Function
-        If IsLines(.s2) Then Exit Function
+        If IsLines(.S1) Then Exit Function
+        If IsLines(.S2) Then Exit Function
     End With
 Next
 HasLines = False

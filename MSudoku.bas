@@ -27,7 +27,7 @@ End Function
 Private Function SolveFstRound(Sq()) As Variant()
 Dim J%
 For J = 1 To 9
-    NineEleOfRow(Sq, J) = SolveNineEleOfFstRnd(NineEleOfRow(Sq, J))
+    NineEleOfRow(Sq(), J) = SolveNineEleOfFstRnd(NineEleOfRow(Sq(), J))
 Next
 SolveFstRound = Sq
 End Function

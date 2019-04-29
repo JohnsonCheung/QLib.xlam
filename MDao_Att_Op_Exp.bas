@@ -5,7 +5,7 @@ Public Const DocOfTblAtt$ = ""
 Public Const DocOfAtt$ = "Attachment:It a Key-string of Table-Att in a database.  It can retrieve a record from Table-Att."
 Private Function ExpAttzAttd$(A As Attd, ToFfn) 'Export the only File in {Attds} {ToFfn}
 Const CSub$ = CMod & "ExpAttzAttd"
-Dim Fn$, T$, F2 As Dao.Field2
+Dim Fn$, T$, F2 As DAO.Field2
 With A.Ars
     If Ext(!Filename) <> Ext(ToFfn) Then Thw CSub, "The Ext in the Att should be same", "Att-Ext ToFfn-Ext", Ext(!Filename), Ext(ToFfn)
     Set F2 = !FileData
@@ -14,19 +14,19 @@ F2.SaveToFile ToFfn
 ExpAttzAttd = ToFfn
 End Function
 
-Function ExpAtt$(Db As Database, Att, ToFfn) 'Exporting the first File in [Att] to [ToFfn]. _
-|If no or more than one file in att, error _
-|If any, export and return ToFfn
+Function ExpAtt$(A As Database, Att, ToFfn) 'Exporting the first File in [Att] to [ToFfn] if Att is newer or ToFfn not exist. _
+Er if no or more than one file in att, error. _
+Er if any, export and return ToFfn.
 Const CSub$ = CMod & "ExpAtt"
 Dim N%
 N = AttFilCnt(Db, Att)
 If N <> 1 Then
     Thw CSub, "AttNm should have only one file, no export.", _
         "AttNm FilCnt ExpToFile Db", _
-        Att, N, ToFfn, DbNm(Db)
+        Att, N, ToFfn, DbNm(A)
 End If
 ExpAtt = ExpAttzAttd(Attd(Db, Att), ToFfn)
-Inf CSub, "Att is exported", "Att ToFfn FmDb", Att, ToFfn, DbNm(Db)
+Inf CSub, "Att is exported", "Att ToFfn FmDb", Att, ToFfn, DbNm(A)
 End Function
 
 Function ExpAttzFn$(A As Database, Att$, AttFn$, ToFfn)
@@ -42,7 +42,7 @@ If HasFfn(ToFfn) Then
         "Db AttNm AttFn ToFfn", _
         DbNm(A), Att, AttFn, ToFfn
 End If
-Dim Fd2 As Dao.Field2
+Dim Fd2 As DAO.Field2
     Set Fd2 = AttFd2(A, Att, AttFn$)
 
 If IsNothing(Fd2) Then
@@ -53,7 +53,7 @@ End If
 Fd2.SaveToFile ToFfn
 ExpAttzFn = ToFfn
 End Function
-Private Function AttFd2(A As Database, Att, AttFn) As Dao.Field2
+Private Function AttFd2(A As Database, Att, AttFn) As DAO.Field2
 With Attd(A, Att)
     With .Ars
         .MoveFirst
@@ -83,7 +83,7 @@ Dim A$
 Dim B
 Dim C As Attd
 Dim D As Database
-Dim xx
+Dim XX
 ExpAttzFn D, A, A, B
 ExpAttzAttd C, B
 End Sub

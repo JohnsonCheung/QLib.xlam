@@ -71,16 +71,17 @@ Act = InStrN(S, SubStr, N)
 Ass Exp = Act
 End Sub
 
-Function Max(ParamArray Ap())
+Function Max(A, B, ParamArray Ap())
 Dim Av(), O
 Av = Ap
-O = Av(0)
+O = IIf(A > B, A, B)
 Dim J%
 For J = 1 To UB(Av)
    If Av(J) > O Then O = Av(J)
 Next
 Max = O
 End Function
+
 Function MaxVbTy(A As VbVarType, B As VbVarType) As VbVarType
 If A = vbString Or B = vbString Then MaxVbTy = A: Exit Function
 If A = vbEmpty Then MaxVbTy = B: Exit Function
@@ -112,9 +113,9 @@ Case Else: Stop
 End Select
 End Function
 
-Function CanCvLng(A) As Boolean
+Function CanCvLng(V) As Boolean
 On Error GoTo X
-Dim L&: L = CLng(A)
+Dim L&: L = CLng(V)
 CanCvLng = True
 X:
 End Function
@@ -130,7 +131,7 @@ DoEvents
 SendKeys A, True
 End Sub
 
-Function NDig%(N&)
+Function NDig&(N&)
 Dim A$: A = N
 NDig = Len(A)
 End Function
@@ -149,7 +150,6 @@ Select Case True
 Case IsStr(A): Fmt = Sy(A)
 Case IsArray(A): Fmt = SyzAy(A)
 Case IsAset(A):  Fmt = CvAset(A).Sy
-Case IsDrs(A): Fmt = FmtDrs(CvDrs(A))
 Case IsDic(A): Fmt = FmtDic(CvDic(A), InclValTy:=True, AddIx:=True)
 Case IsEmpty(A): Fmt = Sy("#Empty")
 Case IsNothing(A): Fmt = Sy("#Nothing")
@@ -185,7 +185,7 @@ SumLngAy = O
 End Function
 
 Private Sub Z_SumLngAy()
-Dim S$: S = FtLines(PjfPj)
+Dim S$: S = LineszFt(PjfPj)
 Debug.Assert SumLngAy(AscCntAy(S)) = Len(S)
 End Sub
 

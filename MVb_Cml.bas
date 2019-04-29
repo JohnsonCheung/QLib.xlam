@@ -1,9 +1,11 @@
 Attribute VB_Name = "MVb_Cml"
 Option Explicit
 #Const PlaySav = 1
-Public Const DocOfCml0$ = "It a String with Fst"
+Public Const DocOfCml0$ = "It a String with FstChr is UCase"
+Public Const DocOfCml1$ = "It a String with FstChr is UCase"
+Public Const DocOfCmlLin$ = "It a Lin of Cml separated by spc"
 Private Function MthDotCmlGpAsetzVbe(A As Vbe, Optional WhStr$) As Aset
-Set MthDotCmlGpAsetzVbe = AsetzAy(MthDotCmlGpAyzVbe(A, WhStr))
+Set MthDotCmlGpAsetzVbe = AsetzAy(MthDotCmlGpzVbe(A, WhStr))
 End Function
 
 Private Sub Z_CmlAset()
@@ -24,7 +26,7 @@ Tst:
     Return
 End Sub
 
-Function Cml0Ay(Nm) As String()
+Function Cml0Sy(Nm$) As String()
 If Nm = "" Then Exit Function
 #If PlaySav Then
 If Not IsNm(Nm) Then Thw CSub, "Given Nm is not a name", "Nm", Nm
@@ -37,60 +39,62 @@ For J = 2 To Len(Nm)
     IsLowZ = C = "z"
     IsUCas = IsAscUCas(A)
     Select Case True
-    Case IsUCas:  PushNonBlankStr Cml0Ay, Cml
+    Case IsUCas:  PushNonBlankStr Cml0Sy, Cml
                   Cml = C
-    Case IsLowZ:  PushNonBlankStr Cml0Ay, Cml
-                  PushI Cml0Ay, "z"
+    Case IsLowZ:  PushNonBlankStr Cml0Sy, Cml
+                  PushI Cml0Sy, "z"
                   Cml = ""
     Case Else:    Cml = Cml & C
     End Select
 Next
-PushNonBlankStr Cml0Ay, Cml
+PushNonBlankStr Cml0Sy, Cml
 End Function
 
-Function Cml1Ay(Nm) As String()
+Function Cml1Sy(Nm$) As String()
 Dim M$(), A$()
 Dim InCombine As Boolean, I, IsOneChr As Boolean, IsLowZ As Boolean
-A = Cml0Ay(Nm)
+A = Cml0Sy(Nm)
 For Each I In Itr(A)
     IsOneChr = Len(I) = 1
     IsLowZ = I = "z"
     Select Case True
-    Case IsLowZ:                    PushNonBlankStr Cml1Ay, Jn(M): Erase M: PushI Cml1Ay, "z"
+    Case IsLowZ:                    PushNonBlankStr Cml1Sy, Jn(M): Erase M: PushI Cml1Sy, "z"
     Case IsOneChr And InCombine:    PushI M, I
     Case IsOneChr:                  PushI M, I: InCombine = True
-    Case InCombine:                 PushI M, I: PushI Cml1Ay, Jn(M): Erase M
-    Case Else:                      PushI Cml1Ay, I
+    Case InCombine:                 PushI M, I: PushI Cml1Sy, Jn(M): Erase M
+    Case Else:                      PushI Cml1Sy, I
     End Select
 Next
-If Si(M) > 0 Then PushI Cml1Ay, Jn(M)
+If Si(M) > 0 Then PushI Cml1Sy, Jn(M)
 End Function
 
 Function CmlAset(Ny$()) As Aset
 Set CmlAset = New Aset
-Dim Nm
-For Each Nm In Itr(Ny)
-    CmlAset.PushAy CmlAy(Nm)
+Dim INm
+For Each INm In Itr(Ny)
+    CmlAset.PushAy CmlSy(CStr(INm))
 Next
 End Function
 
-Function CmlAy(Nm) As String()
+Function CmlSy(Nm$) As String()
 Dim I
-For Each I In Cml1Ay(Nm)
-    PushI CmlAy, RmvLDashSfx(RmvDigSfx(I))
+For Each I In Cml1Sy(Nm)
+    PushI CmlSy, RmvLDashSfx(RmvDigSfx(CStr(I)))
 Next
 End Function
 
-Function CmlAyzNy(Ny) As String()
-Dim L
-For Each L In Itr(Ny)
-    PushI CmlAyzNy, CmlAy(L)
+Function CmlSyzNy(Ny$()) As String()
+Dim I, Nm$
+For Each I In Itr(Ny)
+    Nm = I
+    PushI CmlSyzNy, CmlSy(Nm)
 Next
 End Function
 
-Function CmlGpAy(Nm) As String()
-Dim M$(), Cml, O$()
-For Each Cml In CmlAy(Nm)
+Function CmlGp(Nm$) As String()
+Dim M$(), I, Cml$, O$()
+For Each I In CmlSy(Nm)
+    Cml = I
     Debug.Print Cml; "<--CmlQGpAy"
     If IsBRKCml(Cml) Then
         PushNonBlankStr O, Jn(M)
@@ -101,28 +105,29 @@ For Each Cml In CmlAy(Nm)
     End If
 Next
 PushNonBlankStr O, Jn(M)
-CmlGpAy = O
-Dim I
+CmlGp = O
 For Each I In Itr(O)
-    If FstChr(I) = "_" Then Stop
+    Cml = I
+    If FstChr(Cml) = "_" Then Stop
 Next
 End Function
 
-Function CmlLin$(Nm)
-CmlLin = Nm & " " & JnSpc(Cml1Ay(Nm))
+Function CmlLin$(Nm$)
+CmlLin = Nm & " " & JnSpc(Cml1Sy(Nm))
 End Function
 
-Function CmlLy(Ny) As String()
+Function CmlLy(Ny$()) As String()
 Dim L
 For Each L In Itr(Ny)
-    PushI CmlLy, CmlLin(L)
+    PushI CmlLy, CmlLin(CStr(L))
 Next
 End Function
 
-Function CmlQGpAy(Nm) As String()
-Dim IsVerbQuoted As Boolean, CmlQGp, O$()
-For Each CmlQGp In CmlGpAy(Nm)
-    Debug.Print CmlQGp; "<-- CmlGpAy"
+Function CmlQGpAy(Nm$) As String()
+Dim IsVerbQuoted As Boolean, CmlQGp$, I, O$()
+For Each I In CmlGp(Nm)
+    CmlQGp = I
+    Debug.Print CmlQGp; "<-- CmlGp"
     Select Case True
     Case Not IsVerbQuoted And IsVerb(CmlQGp): PushI O, QuoteSq(CmlQGp): IsVerbQuoted = True
     Case IsBRKCml(CmlQGp):                    PushI O, QuoteBkt(CmlQGp)
@@ -133,22 +138,22 @@ CmlQGpAy = O
 End Function
 
 Function CmlSetzNy(Ny$()) As Aset
-Dim O As New Aset, S
-For Each S In Itr(Ny)
-    O.PushAy CmlAy(S)
+Dim O As New Aset, I
+For Each I In Itr(Ny)
+    O.PushAy CmlSy(CStr(I))
 Next
 Set CmlSetzNy = O
 End Function
 
-Function DotCml$(Nm)
-DotCml = JnQDot(CmlAy(Nm))
+Function DotCml$(Nm$)
+DotCml = JnQDot(CmlSy(Nm))
 End Function
 
-Function DotCmlGp$(Nm) ' = JnQDot . CmpGpAy
-DotCmlGp = JnQDot(CmlGpAy(Nm))
+Function DotCmlGp$(Nm$) ' = JnQDot . CmpGpAy
+DotCmlGp = JnQDot(CmlGp(Nm))
 End Function
 
-Function DotCmlQGp$(Nm) ' = JnQDot . CmpGp1Ay
+Function DotCmlQGp$(Nm$) ' = JnQDot . CmpGp1Ay
 Dim O$: O = JnQDot(CmlQGpAy(Nm))
 DotCmlQGp = O
 'If HasEle(Array(".z.EFSchm.", _
@@ -161,29 +166,29 @@ DotCmlQGp = O
 ".z.SDotDTimFfn."), O) Then Debug.Print Nm, O
 End Function
 
-Function FstCml$(S)
-FstCml = ShfCml(CStr(S))
+Function FstCml$(ByVal S$)
+FstCml = ShfCml(S)
 End Function
 
-Function FstCmlAy(Ay) As String()
+Function FstCmlSy(Sy$()) As String()
 Dim I
-For Each I In Itr(Ay)
-    PushI FstCmlAy, FstCml(I)
+For Each I In Itr(Sy)
+    PushI FstCmlSy, FstCml(CStr(I))
 Next
 End Function
 
-Function FstCmlx$(S)
+Function FstCmlx$(S$)
 FstCmlx = S & " " & FstCml(S)
 End Function
 
-Function FstCmlxAy(Ay) As String()
+Function FstCmlxSy(Sy$()) As String()
 Dim I
-For Each I In Itr(Ay)
-    PushI FstCmlxAy, FstCmlx(I)
+For Each I In Itr(Sy)
+    PushI FstCmlxSy, FstCmlx(CStr(I))
 Next
 End Function
 
-Function FstCmlzWithSng$(S)
+Function FstCmlzWithSng$(S$)
 Dim Lin$, A$, O$, J%
 Lin = S
 While Lin <> ""
@@ -208,13 +213,13 @@ If IsAscLDash(A) Then Exit Function
 IsAscFstCmlChr = IsAscCmlChr(A)
 End Function
 
-Function IsBRKCml(Cml) As Boolean
+Function IsBRKCml(Cml$) As Boolean
 Select Case True
 Case BRKCmlASet.Has(Cml), Cml = "z", IsULCml(Cml): IsBRKCml = True
 End Select
 End Function
 
-Function IsULCml(Cml) As Boolean
+Function IsULCml(Cml$) As Boolean
 Select Case True
 Case Len(Cml) <> 2, Not IsAscUCas(FstAsc(Cml)), Not IsAscLCas(SndAsc(Cml))
 Case Else: IsULCml = LCase(FstChr(Cml)) = SndChr(Cml)
@@ -225,25 +230,25 @@ Function MthDotCmlGpAsetInVbe(Optional WhStr$) As Aset
 Set MthDotCmlGpAsetInVbe = MthDotCmlGpAsetzVbe(CurVbe, WhStr)
 End Function
 
-Function MthDotCmlGpAyInVbe(Optional WhStr$) As String()
-MthDotCmlGpAyInVbe = MthDotCmlGpAyzVbe(CurVbe, WhStr)
+Function MthDotCmlGpInVbe(Optional WhStr$) As String()
+MthDotCmlGpInVbe = MthDotCmlGpzVbe(CurVbe, WhStr)
 End Function
 
-Function MthDotCmlGpAyzVbe(A As Vbe, Optional WhStr$) As String()
+Function MthDotCmlGpzVbe(A As Vbe, Optional WhStr$) As String()
 Dim MthNm
 For Each MthNm In MthNyzVbe(A, WhStr)
-    PushI MthDotCmlGpAyzVbe, DotCmlGp(MthNm)
+    PushI MthDotCmlGpzVbe, DotCmlGp(CStr(MthNm))
 Next
 End Function
 
-Function RmvDigSfx$(S)
+Function RmvDigSfx$(S$)
 Dim J%
 For J = Len(S) To 1 Step -1
     If Not IsAscDig(Asc(Mid(S, J, 1))) Then RmvDigSfx = Left(S, J): Exit Function
 Next
 End Function
 
-Function RmvLDashSfx$(S)
+Function RmvLDashSfx$(S$)
 Dim J%
 For J = Len(S) To 1 Step -1
     If Mid(S, J, 1) <> "_" Then RmvLDashSfx = Left(S, J): Exit Function
@@ -251,7 +256,7 @@ Next
 End Function
 
 Function Seg1ErNy() As String()
-Erase xx
+Erase XX
 X "Act"
 X "App"
 X "Ass"
@@ -314,7 +319,7 @@ X "V"
 X "W"
 X "Xls"
 X "Y"
-Seg1ErNy = xx
+Seg1ErNy = XX
 End Function
 
 Function ShfCml$(OStr$)
@@ -346,12 +351,12 @@ R:
     OStr = Mid(OStr, J)
 End Function
 
-Function ShfCmlAy(S) As String()
+Function ShfCmlSy(S$) As String()
 Dim L$: L = S
 Dim J&
 While True
     J = J + 1: If J > 1000 Then ThwLoopingTooMuch CSub
-    PushNonBlankStr ShfCmlAy, ShfCml(L)
+    PushNonBlankStr ShfCmlSy, ShfCml(L)
     If L = "" Then Exit Function
 Wend
 End Function
@@ -360,11 +365,11 @@ Sub VcMthDotCmlGpAsetInVbe(Optional WhStr$)
 MthDotCmlGpAsetInVbe.Srt.Vc
 End Sub
 
-Private Sub Z_Cml1Ay()
+Private Sub Z_Cml1Sy()
 Dim Ny$(): Ny = MthNyInVbe
 Dim N
 For Each N In Ny
-    If N <> Jn(Cml1Ay(N)) Then Stop
+    If N <> Jn(Cml1Sy(CStr(N))) Then Stop
 Next
 End Sub
 

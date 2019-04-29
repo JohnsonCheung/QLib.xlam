@@ -1,21 +1,12 @@
 Attribute VB_Name = "MVb_Ay_Map_Transform"
 Option Explicit
-
-Function AyAddIxPfx(A, Optional BegFm&) As String()
-Dim I, J&, N%
-J = BegFm
-N = Len(CStr(Si(A)))
-For Each I In Itr(A)
-    PushI AyAddIxPfx, AlignR(J, N) & ": " & I
-    J = J + 1
-Next
-End Function
-Function AyIncEle1(A)
-AyIncEle1 = AyIncEleN(A, 1)
+Public Const DocOfTLin$ = "Is a line with Terms separated by spc."
+Function AyIncEle1(Ay)
+AyIncEle1 = AyIncEleN(Ay, 1)
 End Function
 
-Function AyIncEleN(A, N)
-Dim O: O = A
+Function AyIncEleN(Ay, N)
+Dim O: O = Ay
 Dim J&
 For J = 0 To UB(O)
     O(J) = O(J) + N
@@ -23,25 +14,11 @@ Next
 AyIncEleN = O
 End Function
 
-Function T1Ay(Ay) As String()
-Dim L
-For Each L In Itr(Ay)
-    PushI T1Ay, T1(L)
-Next
-End Function
-
-Function T2Ay(Ay) As String()
-Dim L
-For Each L In Itr(Ay)
-    PushI T2Ay, T2(L)
-Next
-End Function
-
-
 Function TermAsetzTLinAy(TLinAy$()) As Aset
-Dim I, O$()
+Dim I, O$(), TLin$
 For Each I In Itr(TLinAy)
-    PushIAy O, SySsl(I)
+    TLin = I
+    PushIAy O, TermAy(TLin)
 Next
 Set TermAsetzTLinAy = AsetzAy(O)
 End Function

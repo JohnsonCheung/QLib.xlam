@@ -1,7 +1,7 @@
 Attribute VB_Name = "MDao_Db_Get"
 Option Explicit
 
-Function LngAyzQ(A As Database, Q) As Long()
+Function LngAyzQ(A As Database, Q$) As Long()
 LngAyzQ = LngAyzRs(Rs(A, Q))
 End Function
 

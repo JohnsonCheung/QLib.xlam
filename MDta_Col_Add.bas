@@ -5,7 +5,7 @@ Function DrsAddColzNmVy(A As Drs, ColNm$, ColVy) As Drs
 Dim Fny$(): Fny = AyAddItm(A.Fny, ColNm)
 Dim AtIx&: AtIx = UB(Fny)
 Dim Dry(): Dry = DryAddColzColVy(A.Dry, ColVy, AtIx)
-Set DrsAddColzNmVy = Drs(Fny, Dry)
+DrsAddColzNmVy = Drs(Fny, Dry)
 End Function
 
 Private Function DryAddColzColVy(Dry(), ColVy, AtIx&) As Variant()
@@ -29,8 +29,8 @@ Function DrsAddColzMap(A As Drs, NewFldEqFunQuoteFmFldSsl$) As Drs
 Dim NewColVy(), FmVy()
 Dim I, NewFld$, Fun$, FmFld$
 For Each I In SySsl(NewFldEqFunQuoteFmFldSsl)
-    NewFld = StrBef(I, "=")
-    Fun = StrBet(I, "=", "(")
+    NewFld = Bef(I, "=")
+    Fun = Bet(I, "=", "(")
     FmFld = BetBkt(I)
     FmVy = ColzDrs(A, FmFld)
     NewColVy = AyMap(FmVy, Fun)

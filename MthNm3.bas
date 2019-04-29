@@ -19,7 +19,7 @@ Set Init = Me
 End Function
 Function Lin$(Optional Hdr As eHdr)
 Dim Pfx$: If Hdr = eeWithHdr Then Pfx = "Mdy Ty Nm: "
-Lin = Pfx & Apd(MthMdy, " ") & MthTy & " " & Nm
+Lin = Pfx & ApdIf(MthMdy, " ") & MthTy & " " & Nm
 End Function
 Property Get DNm$()
 If IsEmp Then Exit Property

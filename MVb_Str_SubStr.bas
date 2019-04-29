@@ -1,27 +1,27 @@
 Attribute VB_Name = "MVb_Str_SubStr"
 Option Explicit
 
-Function LasChr$(A)
-LasChr = Right(A, 1)
+Function LasChr$(S$)
+LasChr = Right(S, 1)
 End Function
-Function SndChr$(A)
-SndChr = Mid(A, 2, 1)
+Function SndChr$(S$)
+SndChr = Mid(S, 2, 1)
 End Function
-Function FstAsc%(A)
-FstAsc = Asc(FstChr(A))
+Function FstAsc%(S$)
+FstAsc = Asc(FstChr(S))
 End Function
-Function SndAsc%(A)
-SndAsc = Asc(SndChr(A))
+Function SndAsc%(S$)
+SndAsc = Asc(SndChr(S))
 End Function
-Function FstChr$(A)
-FstChr = Left(A, 1)
-End Function
-
-Function FstTwoChr$(A)
-FstTwoChr = Left(A, 2)
+Function FstChr$(S$)
+FstChr = Left(S, 1)
 End Function
 
-Function SubStrCnt&(S, SubStr)
+Function FstTwoChr$(S$)
+FstTwoChr = Left(S, 2)
+End Function
+
+Function SubStrCnt&(S$, SubStr$)
 Dim P&: P = 1
 Dim O&, L%
 L = Len(SubStr)
@@ -33,8 +33,8 @@ While P > 0
 Wend
 End Function
 
-Function PoszSubStr(A, SubStr$) As Pos
-Dim P&: P = InStr(A, SubStr)
+Function PoszSubStr(S$, SubStr$) As Pos
+Dim P&: P = InStr(S, SubStr)
 If P = 0 Then Exit Function
 PoszSubStr = Pos(P, P + Len(SubStr) - 1)
 End Function
@@ -51,7 +51,7 @@ Tst:
     Return
 End Sub
 
-Function DotCnt&(S)
+Function DotCnt&(S$)
 DotCnt = SubStrCnt(S, ".")
 End Function
 

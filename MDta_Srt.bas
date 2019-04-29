@@ -14,7 +14,7 @@ Erase OIsDesAy
 
 '-- ReSz O*
     Dim U%
-    Dim SrtFny$(): SrtFny = NyzNN(SrtByFF)
+    Dim SrtFny$(): SrtFny = TermAy(SrtByFF)
     U = UB(SrtFny)
     If U = -1 Then Exit Sub
     ReDim OColIxAy(U)
@@ -32,12 +32,12 @@ Erase OIsDesAy
     Next
 End Sub
 Function DrsSrt(A As Drs, Optional SrtByFF$ = "") As Drs 'If SrtByFF is blank use fst col.
-Dim Fny$(): Fny = NyzNN(SrtByFF)
+Dim Fny$(): Fny = TermAy(SrtByFF)
 Dim ColIxAy%(): ColIxAy = IntAyzLngAy(IxAy(A.Fny, Fny))
 Dim IsDesAy() As Boolean
     Asg Fny, SrtByFF, _
         ColIxAy, IsDesAy
-Set DrsSrt = Drs(A.Fny, DrySrt(A.Dry, ColIxAy, IsDesAy))
+DrsSrt = Drs(A.Fny, DrySrt(A.Dry, ColIxAy, IsDesAy))
 End Function
 
 Function DrySrt(Dry(), ColIxAy%(), IsDesAy() As Boolean) As Variant()
@@ -50,7 +50,7 @@ End If
 End Function
 
 Function DtSrt(A As Dt, Optional SrtByFF$ = "") As Dt
-Set DtSrt = DtzDrs(DrsSrt(DrszDt(A), SrtByFF), A.DtNm)
+DtSrt = DtzDrs(DrsSrt(DrszDt(A), SrtByFF), A.DtNm)
 End Function
 
 Function DrySrtzCol(Dry(), ColIx%, Optional IsDes As Boolean) As Variant()

@@ -41,6 +41,15 @@ For Each F In AyReSeq(Fny(A, T), ByFny)
 Next
 End Sub
 
+Function RmvFstNEle(Ay, Optional FstNEle& = 1)
+Dim O: O = Ay: Erase O
+Dim J&
+For J = FstNEle To UB(Ay)
+    Push O, Ay(J)
+Next
+RmvFstNEle = O
+End Function
+
 Function AyReSeq(Ay, ByAy)
 Dim O
 O = AyIntersect(ByAy, Ay)

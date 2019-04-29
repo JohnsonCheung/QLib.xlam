@@ -111,7 +111,7 @@ Dim D() As Gp
 Dim E() As Lnx
 Dim F%()
 Dim G$()
-Dim xx
+Dim XX
 ErzBlkAy A
 End Sub
 

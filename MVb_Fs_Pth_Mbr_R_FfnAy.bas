@@ -21,7 +21,7 @@ Private Sub EntAyR1(Pth)
 Ass HasPth(Pth)
 If Si(O) Mod 1000 = 0 Then Debug.Print "EntAyR1: (Each 1000): " & Pth
 PushI O, Pth
-PushIAy O, FfnAy(Pth, A_Spec)
+PushIAy O, FfnSy(Pth, A_Spec)
 Dim I, P$()
 P = SubPthAyz(Pth, A_Spec)
 For Each I In Itr(P)
@@ -53,7 +53,7 @@ FfnAyR = O
 End Function
 
 Private Sub FfnAyR1(Pth)
-PushIAy O, FfnAy(Pth, A_Spec)
+PushIAy O, FfnSy(Pth, A_Spec)
 If Si(O) Mod 1000 = 0 Then InfLin CSub, "...Reading", "#Ffn-read", Si(O)
 Dim P$(): P = SubPthAyz(Pth, A_Spec)
 If Si(P) = 0 Then Exit Sub

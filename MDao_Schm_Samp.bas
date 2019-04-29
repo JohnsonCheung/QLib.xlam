@@ -1,7 +1,7 @@
 Attribute VB_Name = "MDao_Schm_Samp"
 Option Explicit
 Property Get SampSchm() As String()
-Erase xx
+Erase XX
 X "Tbl LoFmt   *Id LoNm"
 X "Tbl LoFmtWdt LoFmtId Wdt | Fldss"
 X "Tbl LoFmtLvl LoFmtId Lvl | Fldss"
@@ -12,8 +12,8 @@ X "Fld Nm  Fld FmFld ToFld"
 X "Fld Lng TotCalc"
 X "Ele Lvl B Req [VdtRul = >=2 and <=8] Dft=2"
 X ""
-SampSchm = xx
-Erase xx
+SampSchm = XX
+Erase XX
 End Property
 
 

@@ -2,10 +2,10 @@ Attribute VB_Name = "MVb_Ay_Sub_Exl"
 Option Explicit
 Const CMod$ = "MVb_Ay_Sub_Exl."
 
-Function AyePatn(A, Patn$) As String()
+Function AyePatn(Ay, Patn$) As String()
 Dim I, Re As New RegExp
 Re.Pattern = Patn
-For Each I In Itr(A)
+For Each I In Itr(Ay)
     If Not Re.Test(I) Then PushI AyePatn, I
 Next
 End Function
@@ -15,29 +15,30 @@ For Each I In Itr(Ay)
     If Not Re.Test(I) Then PushI AyeRe, I
 Next
 End Function
-Sub Z_AA()
-Dim A
-A = Array(1)
-Debug.Print VarPtr(A)
-Debug.Print VarPtr(AA(A))
-If Not IsEqVar(A, AA(A)) Then Stop
+Private Sub Z_AA()
+Dim Ay
+Ay = Array(1)
+Debug.Print VarPtr(Ay)
+Debug.Print VarPtr(AA(Ay))
+If Not IsEqVar(Ay, AA(Ay)) Then Stop
 End Sub
-Function AA(A)
-AA = A
+Private Function AA(Ay)
+AA = Ay
 End Function
-Function AyeAtCnt(A, Optional At = 0, Optional Cnt = 1)
-If Cnt <= 0 Then Thw CSub, "Cnt cannot <=0", "At Cnt Ay", At, Cnt, A
-If Si(A) = 0 Then AyeAtCnt = A: Exit Function
+
+Function AyeAtCnt(Ay, Optional At = 0, Optional Cnt = 1)
+If Cnt <= 0 Then Thw CSub, "Cnt cannot <=0", "At Cnt Ay", At, Cnt, Ay
+If Si(Ay) = 0 Then AyeAtCnt = Ay: Exit Function
 If At = 0 Then
-    If Si(A) = Cnt Then
-        AyeAtCnt = AyCln(A)
+    If Si(Ay) = Cnt Then
+        AyeAtCnt = AyCln(Ay)
         Exit Function
     End If
 End If
-Dim U&: U = UB(A)
+Dim U&: U = UB(Ay)
 If At > U Then Stop
 If At < 0 Then Stop
-Dim O: O = A
+Dim O: O = Ay
 Dim J&
 For J = At To U - Cnt
     Asg O(J + Cnt), O(J)
@@ -45,47 +46,52 @@ Next
 ReDim Preserve O(U - Cnt)
 AyeAtCnt = O
 End Function
+Function PredOfIsDotLin() As IPred
 
-Function AyeDDLin(A) As String()
-AyeDDLin = AywPredFalse(A, "IsDDLin")
+End Function
+Function PredOfIsDDLin() As IPred
+
+End Function
+Function AyeDDLin(Ay) As String()
+AyeDDLin = AywPredFalse(Ay, PredOfIsDDLin)
 End Function
 
-Function AyeDotLin(A) As String()
-AyeDotLin = AywPredFalse(A, "IsDotLin")
+Function AyeDotLin(Ay) As String()
+AyeDotLin = AywPredFalse(Ay, PredOfIsDotLin)
 End Function
 
-Function AyeEle(A, Ele) 'Rmv Fst-Ele eq to Ele from Ay
-Dim Ix&: Ix = IxzAy(A, Ele): If Ix = -1 Then AyeEle = A: Exit Function
-AyeEle = AyeEleAt(A, IxzAy(A, Ele))
+Function AyeEle(Ay, Ele) 'Rmv Fst-Ele eq to Ele from Ay
+Dim Ix&: Ix = IxzAy(Ay, Ele): If Ix = -1 Then AyeEle = Ay: Exit Function
+AyeEle = AyeEleAt(Ay, IxzAy(Ay, Ele))
 End Function
 
 Function AyeEleAt(Ay, Optional At = 0, Optional Cnt = 1)
 AyeEleAt = AyeAtCnt(Ay, At, Cnt)
 End Function
 
-Function AyeEleLik(A, Lik$) As String()
-If Si(A) = 0 Then Exit Function
+Function AyeEleLik(Ay, Lik$) As String()
+If Si(Ay) = 0 Then Exit Function
 Dim J&
-For J = 0 To UB(A)
-    If A(J) Like Lik Then AyeEleLik = AyeEleAt(A, J): Exit Function
+For J = 0 To UB(Ay)
+    If Ay(J) Like Lik Then AyeEleLik = AyeEleAt(Ay, J): Exit Function
 Next
 End Function
 
-Function AyeEmpEle(A)
-Dim O: O = AyCln(A)
-If Si(A) > 0 Then
+Function AyeEmpEle(Ay)
+Dim O: O = AyCln(Ay)
+If Si(Ay) > 0 Then
     Dim X
-    For Each X In Itr(A)
+    For Each X In Itr(Ay)
         PushNonEmp O, X
     Next
 End If
 AyeEmpEle = O
 End Function
 
-Function AyeEmpEleAtEnd(A)
+Function AyeEmpEleAtEnd(Ay)
 Dim LasU&, U&
-Dim O: O = A
-For LasU = UB(A) To 0 Step -1
+Dim O: O = Ay
+For LasU = UB(Ay) To 0 Step -1
     If Not IsEmp(O(LasU)) Then
         Exit For
     End If
@@ -98,14 +104,14 @@ End If
 AyeEmpEleAtEnd = O
 End Function
 
-Function AyeFmTo(A, FmIx, ToIx)
+Function AyeFmTo(Ay, FmIx, ToIx)
 Const CSub$ = CMod & "AyeFmTo"
 Dim U&
-U = UB(A)
-If 0 > FmIx Or FmIx > U Then Thw CSub, "[FmIx] is out of range", "U FmIx ToIx Ay", UB(A), FmIx, ToIx, A
-If FmIx > ToIx Or ToIx > U Then Thw CSub, "[ToIx] is out of range", "U FmIx ToIx Ay", UB(A), FmIx, ToIx, A
+U = UB(Ay)
+If 0 > FmIx Or FmIx > U Then Thw CSub, "[FmIx] is out of range", "U FmIx ToIx Ay", UB(Ay), FmIx, ToIx, Ay
+If FmIx > ToIx Or ToIx > U Then Thw CSub, "[ToIx] is out of range", "U FmIx ToIx Ay", UB(Ay), FmIx, ToIx, Ay
 Dim O
-    O = A
+    O = Ay
     Dim I&, J&
     I = 0
     For J = ToIx + 1 To U
@@ -118,23 +124,23 @@ Dim O
 AyeFmTo = O
 End Function
 
-Function AyeFstEle(A)
-AyeFstEle = AyeEleAt(A)
+Function AyeFstEle(Ay)
+AyeFstEle = AyeEleAt(Ay)
 End Function
 
-Function AyeFstNEle(A, Optional N = 1)
-Dim O: O = A: Erase O
+Function AyeFstNEle(Ay, Optional N = 1)
+Dim O: O = Ay: Erase O
 Dim J&
-For J = N To UB(A)
-    Push O, A(J)
+For J = N To UB(Ay)
+    Push O, Ay(J)
 Next
 AyeFstNEle = O
 End Function
 
-Function AyeFTIx(A, B As FTIx)
+Function AyeFTIx(Ay, B As FTIx)
 With B
-    If .IsEmp Then AyeFTIx = A: Exit Function
-    AyeFTIx = AyeFmTo(A, .FmIx, .ToIx)
+    If .IsEmp Then AyeFTIx = Ay: Exit Function
+    AyeFTIx = AyeFmTo(Ay, .FmIx, .ToIx)
 End With
 End Function
 
@@ -147,75 +153,76 @@ Next
 AyeIxSet = O
 End Function
 
-Function AyeIxAy(A, IxAy)
-'IxAy holds index if A to be remove.  It has been sorted else will be stop
-Ass IsSrtAy(A)
+Function AyeIxAy(Ay, IxAy)
+'IxAy holds index if Ay to be remove.  It has been sorted else will be stop
+Ass IsSrtAy(Ay)
 Ass IsSrtAy(IxAy)
 Dim J&
-Dim O: O = A
+Dim O: O = Ay
 For J = UB(IxAy) To 0 Step -1
     O = AyeEleAt(O, CLng(IxAy(J)))
 Next
 AyeIxAy = O
 End Function
 
-Function AyeLasEle(A)
-AyeLasEle = AyeEleAt(A, UB(A))
+Function AyeLasEle(Ay)
+AyeLasEle = AyeEleAt(Ay, UB(Ay))
 End Function
 
-Function AyeLasNEle(A, Optional NEle% = 1)
-If NEle = 0 Then AyeLasNEle = A: Exit Function
-Dim O: O = A
-Select Case Si(A)
-Case Is > NEle:    ReDim Preserve O(UB(A) - NEle)
+Function AyeLasNEle(Ay, Optional NEle% = 1)
+If NEle = 0 Then AyeLasNEle = Ay: Exit Function
+Dim O: O = Ay
+Select Case Si(Ay)
+Case Is > NEle:    ReDim Preserve O(UB(Ay) - NEle)
 Case NEle: Erase O
 Case Else: Stop
 End Select
 AyeLasNEle = O
 End Function
+Function PredzLik(Lik$) As IPred
 
-Function AyeLik(A, Lik) As String()
+End Function
+Function SyeLik(Sy$(), Lik$) As String()
+SyeLik = SyePred(Sy, PredzLik(Lik))
+End Function
+Function PredzLikAy(LikAy$()) As IPred
+
+End Function
+Function SyePred(Sy$(), P As IPred) As String()
 Dim I
-For Each I In Itr(A)
-    If Not I Like Lik Then PushI AyeLik, I
+For Each I In Itr(Sy)
+    If Not P.Pred(I) Then
+        PushS SyePred, CStr(I)
+    End If
 Next
 End Function
+Function SyeLikAy(Sy$(), LikAy$()) As String()
+SyeLikAy = SyePred(Sy, PredzLikAy(LikAy))
+End Function
 
-Function AyeLikAy(A, LikeAy$()) As String()
+Function SyeLikssAy(Sy$(), LikssAy$()) As String()
+If Si(LikssAy) = 0 Then SyeLikssAy = Sy: Exit Function
+SyeLikssAy = SyePred(Sy, PredzLikssAy(LikssAy))
+End Function
+Function PredzLikssAy(LikssAy$()) As IPred
+
+End Function
+Function AyeNegative(Ay)
 Dim I
-For Each I In Itr(A)
-    If Not HitLikAy(I, LikeAy) Then Push AyeLikAy, I
-Next
-End Function
-
-Function AyeLikss(A, Likss$) As String()
-AyeLikss = AyeLikAy(A, SySsl(Likss))
-End Function
-
-Function AyeLikssAy(A, LikssAy$()) As String()
-If Si(LikssAy) = 0 Then AyeLikssAy = SyzAy(A): Exit Function
-Dim Likss
-For Each Likss In Itr(A)
-    If Not HitLikss(A, Likss) Then PushI AyeLikssAy, A
-Next
-End Function
-
-Function AyeNeg(A)
-Dim I
-AyeNeg = AyCln(A)
-For Each I In Itr(A)
+AyeNegative = AyCln(Ay)
+For Each I In Itr(Ay)
     If I >= 0 Then
-        PushI AyeNeg, I
+        PushI AyeNegative, I
     End If
 Next
 End Function
 
-Function AyeNEle(A, Ele, Cnt%)
+Function AyeNEle(Ay, Ele, Cnt%)
 If Cnt <= 0 Then Stop
-AyeNEle = AyCln(A)
+AyeNEle = AyCln(Ay)
 Dim X, C%
 C = Cnt
-For Each X In Itr(A)
+For Each X In Itr(Ay)
     If C = 0 Then
         PushI AyeNEle, X
     Else
@@ -228,80 +235,81 @@ For Each X In Itr(A)
 Next
 X:
 End Function
+Function PredzIsOneTermLin() As IPred
 
-Function AyeOneTermLin(A) As String()
-AyeOneTermLin = AywPredFalse(A, "LinIsOneTermLin")
+End Function
+Function SyeOneTermLin(Sy$()) As String()
+SyeOneTermLin = SyePred(Sy, PredzIsOneTermLin)
+End Function
+Function PredzPfx(Pfx$) As IPred
+
+End Function
+Function SyePfx(Sy$(), ExlPfx$) As String()
+SyePfx = SyePred(Sy, PredzPfx(ExlPfx))
 End Function
 
-Function AyePfx(A, ExlPfx$) As String()
-Dim I
-For Each I In Itr(A)
-    If Not HasPfx(I, ExlPfx) Then PushI AyePfx, I
-Next
+Function SyeT1Ay(Sy$(), ExlT1Sy$()) As String()
+'Exclude those Lin in Array-Ay its T1 in ExlT1Ay0
+If Si(ExlT1Sy) = 0 Then SyeT1Ay = Sy: Exit Function
+SyeT1Ay = SyePred(Sy, PredzInT1Sy(ExlT1Sy))
 End Function
 
-Function AyeT1Ay(A, ExlT1Ay0) As String()
-'Exclude those Lin in Array-A its T1 in ExlT1Ay0
-Dim Exl$(): Exl = NyzNN(ExlT1Ay0): If Si(Exl) = 0 Then Stop
-Dim L
-For Each L In Itr(A)
-    If Not HasEle(Exl, T1(L)) Then
-        PushI AyeT1Ay, L
-    End If
-Next
+Function PredzInT1Sy(T1Sy$()) As IPred
+Dim O As PredzInT1Sy
+O.Init T1Sy
+Set PredzInT1Sy = O
 End Function
-
 
 Private Sub Z_AyeAtCnt()
-Dim A()
-A = Array(1, 2, 3, 4, 5)
+Dim Ay()
+Ay = Array(1, 2, 3, 4, 5)
 Ept = Array(1, 4, 5)
 GoSub Tst
 '
 Exit Sub
 
 Tst:
-    Act = AyeAtCnt(A, 1, 2)
+    Act = AyeAtCnt(Ay, 1, 2)
     C
     Return
 End Sub
 
 Private Sub Z_AyeEmpEleAtEnd()
-Dim A: A = Array(Empty, Empty, Empty, 1, Empty, Empty)
-Dim Act: Act = AyeEmpEleAtEnd(A)
+Dim Ay: Ay = Array(Empty, Empty, Empty, 1, Empty, Empty)
+Dim Act: Act = AyeEmpEleAtEnd(Ay)
 Ass Si(Act) = 4
 Ass Act(3) = 1
 End Sub
 
 Private Sub Z_AyeFTIx()
-Dim A
+Dim Ay
 Dim FTIx1 As FTIx
 Dim Act
-A = SplitSpc("a b c d e")
+Ay = SplitSpc("a b c d e")
 Set FTIx1 = FTIx(1, 2)
-Act = AyeFTIx(A, FTIx1)
+Act = AyeFTIx(Ay, FTIx1)
 Ass Si(Act) = 3
 Ass JnSpc(Act) = "a d e"
 End Sub
 
 Private Sub Z_AyeFTIx1()
-Dim A
+Dim Ay
 Dim Act
-A = SplitSpc("a b c d e")
-Act = AyeFTIx(A, FTIx(1, 2))
+Ay = SplitSpc("a b c d e")
+Act = AyeFTIx(Ay, FTIx(1, 2))
 Ass Si(Act) = 3
 Ass JnSpc(Act) = "a d e"
 End Sub
 
 Private Sub Z_AyeIxAy()
-Dim A(), IxAy
-A = Array("a", "b", "c", "d", "e", "f")
+Dim Ay(), IxAy
+Ay = Array("a", "b", "c", "d", "e", "f")
 IxAy = Array(1, 3)
 Ept = Array("a", "c", "e", "f")
 GoSub Tst
 Exit Sub
 Tst:
-    Act = AyeIxAy(A, IxAy)
+    Act = AyeIxAy(Ay, IxAy)
     C
     Return
 End Sub

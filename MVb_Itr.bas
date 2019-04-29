@@ -18,25 +18,25 @@ For Each X In Itr
 Next
 End Function
 
-Function ItrAddPfx(A, Pfx$) As String()
+Function ItrAddPfx(Itr, Pfx$) As String()
 Dim X
-For Each X In A
+For Each X In Itr
     Push ItrAddPfx, Pfx & X
 Next
 End Function
 
-Function ItrClnAy(A)
-If A.Count = 0 Then Exit Function
+Function ItrClnAy(Itr)
+If Itr.Count = 0 Then Exit Function
 Dim X
-For Each X In A
+For Each X In Itr
     ItrClnAy = Array(X)
     Exit Function
 Next
 End Function
 
-Function NItrPrpTrue(A, BoolPrpNm)
+Function NItrPrpTrue(Itr, BoolPrpNm)
 Dim O&, X
-For Each X In A
+For Each X In Itr
     If CallByName(X, BoolPrpNm, VbGet) Then
         O = O + 1
     End If
@@ -44,9 +44,9 @@ Next
 NItrPrpTrue = O
 End Function
 
-Sub DoItrFun(A, DoFun$)
+Sub DoItrFun(Itr, DoFun$)
 Dim I
-For Each I In A
+For Each I In Itr
     Run DoFun, I
 Next
 End Sub
@@ -58,128 +58,131 @@ For Each X In Itr
 Next
 End Sub
 
-Sub DoItrFunXP(A, XP$, P)
+Sub DoItrFunXP(Itr, XP$, P)
 Dim X
-For Each X In A
+For Each X In Itr
     Run XP, X, P
 Next
 End Sub
 
-Function FstItr(A)
+Function FstItm(Itr)
 Dim X
-For Each X In A
-    Asg X, FstItr
+For Each X In Itr
+    Asg X, FstItm
     Exit Function
 Next
 End Function
 
-Function FstItrPredXP(A, XP$, P)
+Function FstItmPredXP(Ay, XP$, P$)
 Dim X
-For Each X In A
-    If Run(XP, X, P) Then Asg X, FstItrPredXP: Exit Function
+For Each X In Ay
+    If Run(XP, X, P) Then Asg X, FstItmPredXP: Exit Function
 Next
 End Function
 
-Function FstItrNm(Itr, Nm) ' Return first element in Itr-A with name eq Nm
+Function FstItmzNm(Itr, Nm$) ' Return first element in Itr-Itr with name eq Nm
 Dim O
 For Each O In Itr
     If ObjNm(O) = Nm Then
-        Set FstItrNm = O
+        Set FstItmzNm = O
         Exit Function
     End If
 Next
-Set FstItrNm = Nothing
+Set FstItmzNm = Nothing
 End Function
-Function FstItrPEv(Itr, P, Ev) 'Return first element in Itr-A with its Prp-P eq to V
-Dim O
-For Each O In Itr
-    If Prp(O, P) = Ev Then Set FstItrPEv = O: Exit Function
+Function FstItmPEv(Itr, P$, Ev) 'Return first element in Itr-Itr with its Prp-P eq to V
+Dim I, Obj As Object
+For Each I In Itr
+    If Prp(CvObj(I), P) = Ev Then Set FstItmPEv = I: Exit Function
 Next
-Set FstItrPEv = Nothing
+Set FstItmPEv = Nothing
 End Function
-Function FstItn(Itr, Nm) 'Return first element in Itr with its PrpNm=Nm being true
-Set FstItn = FstItrPEv(Itr, "Name", Nm)
+Function FstItn(Itr, Nm$) 'Return first element in Itr with its PrpNm=Nm being true
+Set FstItn = FstItmPEv(Itr, "Name", Nm)
 End Function
 
-Function FstItrTrueP(Itr, TruePrp) 'Return first element in Itr with its Prp-P being true
-Set FstItrTrueP = FstItrPEv(Itr, TruePrp, True)
+Function FstItmTrueP(Itr, TruePrpPth$) 'Return first element in Itr with its Prp-P being true
+Set FstItmTrueP = FstItmPEv(Itr, TruePrpPth, True)
 End Function
-Function HasItrTrueP(Itr, TruePrp) As Boolean
+Function HasItrTrueP(Itr, TruePrpPth$) As Boolean
 Dim Obj
 For Each Obj In Itr
-    If Prp(Obj, TruePrp) Then HasItrTrueP = True: Exit Function
+    If Prp(CvObj(Obj), TruePrpPth) Then HasItrTrueP = True: Exit Function
 Next
 End Function
-Function HasItn(Itr, Nm) As Boolean
+Function HasItn(Itr, Nm$) As Boolean
 Dim O
 For Each O In Itr
     If O.Name = Nm Then HasItn = True: Exit Function
 Next
 End Function
 
-Function HasItrPEv(A, P, Ev) As Boolean
-Dim X
-For Each X In A
-    If Prp(X, P) = Ev Then HasItrPEv = True: Exit Function
+Function HasItrPEv(Itr, P$, Ev) As Boolean
+Dim I
+For Each I In Itr
+    If Prp(CvObj(I), P) = Ev Then HasItrPEv = True: Exit Function
 Next
 End Function
 
-Function HasItrTruePrp(A, P) As Boolean
-Dim X
-For Each X In A
-    If Prp(X, P) Then HasItrTruePrp = True: Exit Function
+Function HasItrTruePrp(Itr, P$) As Boolean
+Dim I
+For Each I In Itr
+    If Prp(CvObj(I), P) Then HasItrTruePrp = True: Exit Function
 Next
 End Function
 
-Function IsEqNmItr(A, B)
-IsEqNmItr = IsSamAy(Itn(A), Itn(B))
+Function IsEqNmItr(Itr, B)
+IsEqNmItr = IsSamAy(Itn(Itr), Itn(B))
 End Function
 
 Function AvzItrMap(Itr, Map$) As Variant()
-AvzItrMap = IntozAvzItrMap(EmpAv, Itr, Map)
+AvzItrMap = IntozItrMap(EmpAv, Itr, Map)
 End Function
 
 Function IntozAyMap(OInto, Ay, Map$)
-IntozAyMap = IntozAvzItrMap(OInto, Itr(Ay), Map)
+IntozAyMap = IntozItrMap(OInto, Itr(Ay), Map)
 End Function
 
-Function IntozAvzItrMap(OInto, Itr, Map$)
+Function IntozItrMap(OInto, Itr, Map$)
 Dim O: O = OInto
 Erase O
 Dim X
 For Each X In Itr
     Push O, Run(Map, X)
 Next
-IntozAvzItrMap = O
+IntozItrMap = O
 End Function
 
 Function SyzAvzItrMap(Itr, Map$) As String()
-SyzAvzItrMap = IntozAvzItrMap(EmpSy, Itr, Map)
+SyzAvzItrMap = IntozItrMap(EmpSy, Itr, Map)
 End Function
-
-Function MaxItrPrp(A, P)
-Dim X, O
-For Each X In A
-    O = Max(O, Prp(X, P))
+Sub Z_PrpAy()
+Dim Itr(): Itr = PrpAy(CurPj.VBComponents, "CodeModule.CountOfLines")
+D Itr
+End Sub
+Function PrpAy(Itr, P$) As Variant()
+Dim O As Object
+For Each O In Itr
+    Push PrpAy, Prp(O, P)
 Next
-MaxItrPrp = O
 End Function
-Function NyOy(A) As String()
+Function MaxzItrPrp(Itr, P$)
+Dim I, O
+For Each I In Itr
+    O = Max(O, Prp(CvObj(I), P))
+Next
+MaxzItrPrp = O
+End Function
+Function NyOy(Itr) As String()
 Dim I
-For Each I In Itr(A)
+For Each I In Itr(Itr)
     PushI NyOy, ObjNm(I)
 Next
 End Function
-Function ItnPEv(Itr, WhPrp, Ev) As String()
-Dim Obj
+Function ItnPEv(Itr, WhPrp$, Ev) As String()
+Dim Obj As Object
 For Each Obj In Itr
     If Prp(Obj, WhPrp) = Ev Then PushI ItnPEv, ObjNm(Obj)
-Next
-End Function
-Function SyPrp(Itr, P) As String()
-Dim Obj
-For Each Obj In Itr
-    PushI SyPrp, Prp(Obj, P)
 Next
 End Function
 Function NyzOy(Oy) As String()
@@ -224,76 +227,78 @@ For Each I In Itr
     If Run(Pred, I) Then IsSomTruezItrPred = True: Exit Function
 Next
 End Function
-Function SyzItrPrp(Itr, P) As String()
+
+Function PrpSy(Itr, P$) As String()
+PrpSy = SyzItrPrp(Itr, P)
+End Function
+
+Function SyzItrPrp(Itr, P$) As String()
 SyzItrPrp = IntozItrPrp(EmpSy, Itr, P)
 End Function
 
-Function AvzItrPrp(Itr, P) As Variant()
-AvzItrPrp = IntozItrPrp(Itr, P, EmpAv)
-End Function
-Function IntozItrPrpTrue(Into, Itr, P)
-IntozItrPrpTrue = AyCln(Into)
-Dim I
-For Each I In Itr
-    If Prp(I, P) Then
-        Push IntozItrPrpTrue, I
-    End If
-Next
+Function AvzItrPrp(Itr, P$) As Variant()
+AvzItrPrp = IntozItrPrp(EmpAv, Itr, P)
 End Function
 
-Function IntozItrPEv(Into, Itr, P, Ev)
-IntozItrPEv = AyCln(Into)
-Dim Obj
+Function IntozItrwPredTrue(Into, Itr, P As IPred)
+IntozItrwPredTrue = AyCln(Into)
+Dim Obj As Object
 For Each Obj In Itr
-    If Prp(Obj, P) = Ev Then PushObj IntozItrPEv, Obj
-Next
-End Function
-Function IntozItrPrp(Into, Itr, P)
-IntozItrPrp = AyCln(Into)
-Dim I
-For Each I In Itr
-    Push IntozItrPrp, Prp(I, P)
-Next
-End Function
-
-Function AvItrValue(A) As Variant()
-AvItrValue = AvzItrPrp(A, "Value")
-End Function
-
-Function ItrPrp_WhTrue_Into(A, P, Into)
-Dim O: O = Into: Erase O
-Dim Obj
-For Each Obj In A
-    If CallByName(Obj, P, VbGet) Then
-        PushObj Into, Obj
+    If P.Pred(Obj) Then
+        Push IntozItrwPredTrue, Obj
     End If
 Next
-ItrPrp_WhTrue_Into = O
 End Function
 
-Function ItrwPrpEqval(A, Prp, EqVal)
-ItrwPrpEqval = ItrClnAy(A)
-Dim O
-For Each O In A
-    If Prp(O, Prp) = EqVal Then PushObj ItrwPrpEqval, O
+Function IntozItrwPEv(Into, Itr, P$, Ev)
+IntozItrwPEv = AyCln(Into)
+Dim Obj As Object
+For Each Obj In Itr
+    If Prp(Obj, P) = Ev Then PushObj IntozItrwPEv, Obj
+Next
+End Function
+Function Into(OInto, Itr)
+Into = AyCln(OInto)
+Dim I
+For Each I In Itr
+    Push Into, I
+Next
+End Function
+Function IntozItrPrp(Into, Itr, P$)
+IntozItrPrp = AyCln(Into)
+Dim Obj As Object
+For Each Obj In Itr
+    Push IntozItrPrp, Prp(Obj, P)
+Next
+End Function
+
+Function AvItrValue(Itr) As Variant()
+AvItrValue = AvzItrPrp(Itr, "Value")
+End Function
+
+Function ItrwPrpEqval(Itr, P$, EqVal)
+ItrwPrpEqval = ItrClnAy(Itr)
+Dim O As Object
+For Each O In Itr
+    If Prp(O, P) = EqVal Then PushObj ItrwPrpEqval, O
 Next
 ItrwPrpEqval = O
 End Function
 
-Function ItrwPrpTrue(A, P)
-ItrwPrpTrue = ItrClnAy(A)
-Dim O
-For Each O In A
+Function ItrwPrpTrue(Itr, P$)
+ItrwPrpTrue = ItrClnAy(Itr)
+Dim O As Object
+For Each O In Itr
     If Prp(O, P) Then
         Push ItrwPrpTrue, O
     End If
 Next
 End Function
 
-Function ItrwNm(A, B As WhNm)
-ItrwNm = ItrClnAy(A)
+Function ItrwNm(Itr, B As WhNm)
+ItrwNm = ItrClnAy(Itr)
 Dim O
-For Each O In A
+For Each O In Itr
     If HitNm(ObjNm(O), B) Then
         Push ItrwNm, O
     End If
@@ -301,46 +306,44 @@ Next
 End Function
 
 Private Sub ZZ()
-Dim A As Variant
+Dim Itr As Variant
 Dim B$
 Dim C As RegExp
 Dim D$()
 Dim E As WhNm
-AvzItr A
-ItrClnAy A
-DoItrFun A, B
-DoItrFun A, B
-DoItrFunPX A, B, A
-DoItrFunXP A, B, A
-FstItr A
-FstItr A
-SyzAvzItrMap A, B
-MaxItrPrp A, A
-Itn A
-IsAllFalsezItrPred A, B
-IsAllTruezItrPred A, B
-IsSomFalsezItrPred A, B
-ItrwPrpTrue A, A
+AvzItr Itr
+ItrClnAy Itr
+DoItrFun Itr, B
+DoItrFun Itr, B
+DoItrFunPX Itr, B, Itr
+DoItrFunXP Itr, B, Itr
+FstItm Itr
+FstItm Itr
+SyzAvzItrMap Itr, B
+Itn Itr
+IsAllFalsezItrPred Itr, B
+IsAllTruezItrPred Itr, B
+IsSomFalsezItrPred Itr, B
 End Sub
 
 Private Sub Z()
 End Sub
-Function NItrPEv&(Itr, P, Ev)
-Dim O&, Obj
+Function NItrPEv&(Itr, P$, Ev)
+Dim O&, Obj As Object
 For Each Obj In Itr
     If Prp(Obj, P) = Ev Then O = O + 1
 Next
 NItrPEv = O
 End Function
-Function VyzItrPrp(Itr, PrpPth) As String()
-Dim Obj
+Function VyzItrPrp(Itr, P$) As String()
+Dim Obj As Object
 For Each Obj In Itr
-    Push VyzItrPrp, Prp(Obj, PrpPth)
+    Push VyzItrPrp, Prp(Obj, P)
 Next
 End Function
 
 
-Function PrpNy(A) As String()
-PrpNy = Itn(A.Properties)
+Function PrpNy(Itr) As String()
+PrpNy = Itn(Itr.Properties)
 End Function
 

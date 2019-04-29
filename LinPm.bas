@@ -18,22 +18,23 @@ End Sub
 Function Init(PmStr$, LinPmSpec$) As LinPm
 Dic.RemoveAll
 Dim Ay$(): Ay = SySsl(PmStr)
-    Dim I
+    Dim I, S$
     Dim CurPmNm$
     For Each I In Itr(Ay)
-        If FstChr(I) = "-" Then
-            CurPmNm = RmvFstChr(I)
+        S = I
+        If FstChr(S) = "-" Then
+            CurPmNm = RmvFstChr(S)
             PushPmNm CurPmNm
         Else
-            PushPm CurPmNm, CStr(I)
+            PushPm CurPmNm, S
         End If
     Next
 Set Init = Me
 ThwIfPmStrEr Dic, LinPmSpec
 End Function
-Private Sub PushPmNm(Pmnm$)
-If Dic.Exists(Pmnm) Then Exit Sub
-Dic.Add Pmnm, Sy()
+Private Sub PushPmNm(PmNm$)
+If Dic.Exists(PmNm) Then Exit Sub
+Dic.Add PmNm, Sy()
 End Sub
 Function WhNm(Optional NmPfx$) As WhNm
 Set WhNm = MIde_Wh.WhNm(Patn(NmPfx), LikeAy(NmPfx), ExlLikAy(NmPfx))
@@ -56,8 +57,8 @@ End Function
 Property Get Cnt%()
 Cnt = Dic.Count
 End Property
-Function HasPm(Pmnm$) As Boolean
-HasPm = Dic.Exists(Pmnm)
+Function HasPm(PmNm$) As Boolean
+HasPm = Dic.Exists(PmNm)
 End Function
 Private Sub PushPm(Nm$, Optional V$)
 Dim J%, S$()
@@ -74,17 +75,17 @@ Sub Dmp()
 D Fmt
 End Sub
 Function Fmt() As String()
-Dim Pmnm, O$()
-For Each Pmnm In Dic.Keys
-    PushI O, FmtzNmSy(Pmnm, CvSy(Dic(Pmnm)))
+Dim PmNm, O$()
+For Each PmNm In Dic.Keys
+    PushI O, FmtzNmSy(PmNm, CvSy(Dic(PmNm)))
 Next
-Fmt = FmtAyzSepSS(O, "ValCnt Val(")
+Fmt = FmtSyBySepss(O, "ValCnt Val(")
 End Function
 
-Private Function FmtzNmSy$(Pmnm, Sy$())
+Private Function FmtzNmSy$(PmNm, Sy$())
 Select Case Si(Sy)
-Case 0:    FmtzNmSy = FmtQQ("PmSw(?)", Pmnm)
-Case Else: FmtzNmSy = FmtQQ("Pm(?) ValCnt(?) Val(?)", Pmnm, Si(Sy), JnSpc(Sy))
+Case 0:    FmtzNmSy = FmtQQ("PmSw(?)", PmNm)
+Case Else: FmtzNmSy = FmtQQ("Pm(?) ValCnt(?) Val(?)", PmNm, Si(Sy), JnSpc(Sy))
 End Select
 End Function
 
@@ -96,19 +97,19 @@ Function ExlLikAy(NmPfx) As String()
 ExlLikAy = SyPmVal(NmPfx & "ExlLikAy")
 End Function
 
-Function SyPmVal(Pmnm, Optional NmPfx$) As String()
-If Dic.Exists(NmPfx & Pmnm) Then
-    SyPmVal = Dic(Pmnm)
+Function SyPmVal(PmNm, Optional NmPfx$) As String()
+If Dic.Exists(NmPfx & PmNm) Then
+    SyPmVal = Dic(PmNm)
 End If
 End Function
-Function StrPmVal$(Pmnm, Optional NmPfx$)
+Function StrPmVal$(PmNm, Optional NmPfx$)
 Const CSub$ = CMod & "StrPmVal"
 Dim Vy$()
-    Vy = SyPmVal(Pmnm, NmPfx)
+    Vy = SyPmVal(PmNm, NmPfx)
 Select Case Si(Vy)
 Case 0
 Case 1: StrPmVal = Vy(0)
-Case Else: Thw CSub, FmtQQ("Parameter [-?] should have one value", Pmnm), "Pm PmValSz PmVal-Sy", Fmt, Si(Vy), Vy
+Case Else: Thw CSub, FmtQQ("Parameter [-?] should have one value", PmNm), "Pm PmValSz PmVal-Sy", Fmt, Si(Vy), Vy
 End Select
 End Function
 Function Patn$(NmPfx)

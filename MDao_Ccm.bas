@@ -11,7 +11,7 @@ Tst:
     LnkCcm D, IsLcl
     Return
 End Sub
-Sub LnkCcm(Db As Database, IsLcl As Boolean)
+Sub LnkCcm(A As Database, IsLcl As Boolean)
 'Ccm stands for Space-[C]ir[c]umflex-accent
 'CcmTbl is ^xxx table in Db (pgm-database),
 '          which should be same stru as N:\..._Data.accdb @ xxx
@@ -30,37 +30,37 @@ Sub LnkCcm(Db As Database, IsLcl As Boolean)
 '  2. [TarFb] if [TarFb] is given.
 Const CSub$ = CMod & "LnkCcm"
 Dim T$()  ' All ^xxx
-    T = CcmTny(Db)
-    If Si(T) = 0 Then Thw CSub, "No ^xxx table in [Db]", Db.Name 'Assume always
+    T = CcmTny(A)
+    If Si(T) = 0 Then Thw CSub, "No ^xxx table in [Db]", A.Name 'Assume always
 Chk Db, T, IsLcl ' Chk if all T after rmv ^ is in TarFb
 LnkCcmzTny Db, T, IsLcl
 End Sub
 
-Private Sub LnkCcmzTny(Db As Database, CcmTny$(), IsLcl As Boolean)
+Private Sub LnkCcmzTny(A As Database, CcmTny$(), IsLcl As Boolean)
 Const CSub$ = CMod & "LnkCcmzTny"
 Dim CcmTbl, TarFb$
-TarFb = Db.Name
+TarFb = A.Name
 For Each CcmTbl In CcmTny
     If FstChr(CcmTbl) <> "^" Then Thw CSub, "All table in CcmTny must begin ^", "Tbl-without-^ CcmTny", CcmTbl, CcmTny
     LnkFb Db, RmvFstChr(CcmTbl), TarFb, CcmTbl
 Next
 End Sub
-Private Sub Chk(Db As Database, CcmTny$(), IsLcl As Boolean)
+Private Sub Chk(A As Database, CcmTny$(), IsLcl As Boolean)
 Const CSub$ = CMod & "Chk"
 If Not IsLcl Then Chk2 Db, CcmTny: Exit Sub ' Asserting for TarFb is stored in CcmTny's description
 
 'Asserting for TarFb = Db
 Dim Mis$(): Mis = Chk1(Db, CcmTny)
 If Si(Mis) = 0 Then Exit Sub
-Thw CSub, "[Some-Missing-Tar-Tbl] in [Db] cannot be found according to given [CcmTny] in [Db]", Mis, Db.Name, CcmTny, Db.Name
+Thw CSub, "[Some-Missing-Tar-Tbl] in [Db] cannot be found according to given [CcmTny] in [Db]", Mis, A.Name, CcmTny, A.Name
 End Sub
 Private Function Chk1(A As Database, CcmTny$()) As String()
 Dim N1$(): N1 = Tny(A)
-Dim N2$(): N2 = AyRmvFstChr(CcmTny)
+Dim N2$(): N2 = SyRmvFstChr(CcmTny)
 Chk1 = AyMinus(N2, N1)
 End Function
 
-Private Sub Chk2(Db As Database, CcmTny$())
+Private Sub Chk2(A As Database, CcmTny$())
 'Throw if any Corresponding-Table in TarFb is not found
 Dim O$(), T
 For Each T In CcmTny
@@ -68,19 +68,19 @@ For Each T In CcmTny
 Next
 'ErThw O
 End Sub
-Private Function Chk3(Db As Database, CcmTbl) As String()
+Private Function Chk3(A As Database, CcmTbl) As String()
 Dim TarFb$
 '    TarFb = Dbt_Des(Db, CcmTbl)
 Select Case True
-Case TarFb = "":            Chk3 = LyzMsgNap("[CcmTbl] in [Db] should have 'Des' which is TarFb, but this TarFb is blank", CcmTbl, Db.Name)
-'Case NotHasFfn(TarFb):    Chk3 = LyzMsgNap("[CcmTbl] in [Db] should have [Des] which is TarFb, but this TarFb does not Has", CcmTbl, Db.name, TarFb)
+Case TarFb = "":            Chk3 = LyzMsgNap("[CcmTbl] in [Db] should have 'Des' which is TarFb, but this TarFb is blank", CcmTbl, A.Name)
+'Case NotHasFfn(TarFb):    Chk3 = LyzMsgNap("[CcmTbl] in [Db] should have [Des] which is TarFb, but this TarFb does not Has", CcmTbl, A.Name, TarFb)
 Case Not HasFbt(TarFb, RmvFstChr(CcmTbl)):
-    Chk3 = LyzMsgNap("[CcmTbl] in [Db] should have [Des] which is TarFb, but this TarFb does not Has [Tbl-RmvFstChr(CcmTbl)]", CcmTbl, Db.Name, TarFb, RmvFstChr(CcmTbl))
+    Chk3 = LyzMsgNap("[CcmTbl] in [Db] should have [Des] which is TarFb, but this TarFb does not Has [Tbl-RmvFstChr(CcmTbl)]", CcmTbl, A.Name, TarFb, RmvFstChr(CcmTbl))
 End Select
 End Function
 
-Private Function CcmTny(Db As Database) As String()
-CcmTny = AywPfx(Tny(Db), "^")
+Private Function CcmTny(A As Database) As String()
+CcmTny = SywPfx(Tny(A), "^")
 End Function
 
 Private Sub Z_CcmTny()

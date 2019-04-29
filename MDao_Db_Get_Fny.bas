@@ -6,7 +6,7 @@ FnyzQ = FnyzRs(Rs(A, Q))
 End Function
 
 Private Sub Z_FnyzQ()
-Dim A As Database
+Dim Db As Database
 Const S$ = "SELECT qSku.*" & _
 " FROM [N:\SAPAccessReports\DutyPrepay5\DutyPrepay5 (With Import).accdb].[qSku] AS qSku;"
 DmpAy FnyzQ(A, S)

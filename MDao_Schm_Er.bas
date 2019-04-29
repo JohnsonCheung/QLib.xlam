@@ -9,6 +9,28 @@ Const MDT_$ = ""
 Const CDT_Tbl_NotIn_Tny$ = "T[?] is invalid.  Valid T[?]"
 Const MDupE$ = "This E[?] is dup"
 Const CM_LinTyEr$ = "Invalid DaoTy[?].  Valid Ty[?]"
+Function ClnLin$(Lin$)
+If IsEmp(Lin) Then Exit Function
+If IsDotLin(Lin) Then Exit Function
+If IsSngTermLin(Lin) Then Exit Function
+If IsDDLin(Lin) Then Exit Function
+ClnLin = BefDD(Lin)
+End Function
+
+Function LnxAyzCln(Ly$()) As Lnx()
+Dim O()  As Lnx, L$, J%
+For J = 0 To UB(Ly)
+    L = ClnLin(Ly(J))
+    If L <> "" Then
+        Dim M  As Lnx
+        Set M = New Lnx
+        M.Ix = J
+        M.Lin = Ly(J)
+        Push O, M
+    End If
+Next
+LnxAyzCln = O
+End Function
 
 Function ErzSchm(Schm$()) As String()
 '========================================
@@ -24,13 +46,13 @@ Dim T() As Lnx
     F = LnxAywRmvT1(X, "Fld")
 
 Dim Tny$(), Eny$()
-    Eny = AyTakT1(LyzLnxAy(E))
-    Tny = AyTakT1(LyzLnxAy(T))
+    Eny = T1Sy(LyzLnxAy(E))
+    Tny = T1Sy(LyzLnxAy(T))
 '========================================
 Dim AllFny$()
 Dim AllEny$()
     AllFny = FnyzTdLy(LyzLnxAy(T))
-    AllEny = AyTakT1(LyzLnxAy(E))
+    AllEny = T1Sy(LyzLnxAy(E))
 ErzSchm = AyAddAp( _
     ErzLnxAyT1ss(X, "Des Ele Fld Tbl"), _
     ErT(Tny, T, E), _
@@ -153,8 +175,9 @@ Next
 End Function
 
 Private Function ErT_DupTbl(T() As Lnx, Tny$()) As String()
-Dim Tbl
-For Each Tbl In Itr(AywDup(Tny))
+Dim Tbl$, I
+For Each I In Itr(AywDup(Tny))
+    Tbl = I
     Push ErT_DupTbl, MsgT_DupT(LnoAyzTbl(T, Tbl), Tbl)
 Next
 End Function
@@ -188,7 +211,7 @@ Dim Fny$()
 If HasSubStr(L, "|") Then
 '3
     Dim IdFld$
-    IdFld = Trim(StrBef(L, "|"))
+    IdFld = Trim(Bef(L, "|"))
     If IdFld <> Tbl & "Id" Then
         PushI ErT_LinEr_zLnx, MsgT_IdFld(T)
         Exit Function
@@ -231,7 +254,7 @@ For J = 0 To UBound(E)
 Next
 End Function
 
-Private Function LnoAyzTbl(A() As Lnx, T) As Long()
+Private Function LnoAyzTbl(A() As Lnx, T$) As Long()
 Dim J%
 For J = 0 To UB(A)
     If T1(A(J).Lin) = T Then

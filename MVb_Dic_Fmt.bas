@@ -1,8 +1,8 @@
 Attribute VB_Name = "MVb_Dic_Fmt"
 Option Explicit
 Private Sub Z_BrwDic()
-Dim R As Dao.Recordset
-Set R = Rs(SampDb_DutyDta, "Select Sku,BchNo from PermitD where BchNo<>''")
+Dim R As DAO.Recordset
+Set R = Rs(SampDbzDutyDta, "Select Sku,BchNo from PermitD where BchNo<>''")
 BrwDic JnStrDicTwoFldRs(R), True
 End Sub
 
@@ -29,7 +29,7 @@ End Function
 Function FmtDicTit(A As Dictionary, Tit$) As String()
 PushI FmtDicTit, Tit
 PushI FmtDicTit, vbTab & "Count=" & A.Count
-PushIAy FmtDicTit, AyAddPfx(FmtDic(A, InclValTy:=True), vbTab)
+PushIAy FmtDicTit, SyAddPfx(FmtDic(A, InclValTy:=True), vbTab)
 End Function
 
 Function FmtDic(A As Dictionary, Optional InclValTy As Boolean, Optional Nm1$ = "Key", Optional Nm2$ = "Val", Optional AddIx As Boolean) As String()
@@ -45,23 +45,22 @@ Private Function FmtDic2(A As Dictionary) As String()
 Dim K, O$(), J&
 J = 1
 For Each K In A.Keys
-    PushI O, J & " " & K & " " & TypeName(A(K)) & " " & StrCellzVal(A(K))
+    PushI O, J & " " & K & " " & TypeName(A(K)) & " " & StrCellzV(A(K))
     J = J + 1
 Next
-FmtDic2 = FmtAyT2(O)
+FmtDic2 = FmtSyT2(O)
 End Function
-
 Function FmtDic1(A As Dictionary, Optional Sep$ = " ") As String()
 If A.Count = 0 Then Exit Function
-Dim O$(), K, W%, Ky
-Ky = A.Keys
-W = WdtzAy(Ky)
-For Each K In Ky
-   Push O, AlignL(K, W) & Sep & A(K)
+Dim Key: Key = A.Keys
+Dim O$(): O = FmtAySamWdt(SyzItr(A.Keys))
+Dim J&, I
+For Each I In A.Items
+   O(J) = O(J) & Sep & I
+   J = J + 1
 Next
 FmtDic1 = O
 End Function
-
 
 Function FmtDic3(A As Dictionary) As String()
 Dim K
@@ -70,7 +69,7 @@ For Each K In A.Keys
 Next
 End Function
 
-Private Function FmtDic4(K, Lines) As String()
+Private Function FmtDic4(K, Lines$) As String()
 Dim L
 For Each L In Itr(SplitCrLf(Lines))
     Push FmtDic4, K & " " & L

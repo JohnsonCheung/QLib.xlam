@@ -24,7 +24,7 @@ Dim J&, L
 For Each L In Itr(Src)
     L = RmvMdy(L)
     If ShfXEnm(L) Then
-        If TakNm(L) = EnmNm Then
+        If Nm(L) = EnmNm Then
             EnmFmIx = J
             Exit Function
         End If
@@ -115,12 +115,12 @@ End Function
 
 Function EnmNm$(Lin)
 Dim L$: L = RmvMdy(Lin)
-If ShfPfx(L, "Enum ") Then EnmNm = TakNm(LTrim(L))
+If ShfPfx(L, "Enum ") Then EnmNm = Nm(LTrim(L))
 End Function
 
 Function UsrTyNm$(Lin)
 Dim L$: L = RmvMdy(Lin)
-If ShfPfx(L, "Type ") Then UsrTyNm = TakNm(LTrim(L))
+If ShfPfx(L, "Type ") Then UsrTyNm = Nm(LTrim(L))
 End Function
 
 Function EnmLyMd(Md As CodeModule, EnmNm$) As String()
@@ -150,7 +150,7 @@ For Each I In MdItr(A, WhStr)
     Set M = CvMd(I)
     O = UsrTyNy(Src(M))
     O = AywNm(O, W)
-    PushIAy UsrTyNyPj, AyAddPfx(O, MdNm(M) & ".")
+    PushIAy UsrTyNyPj, SyAddPfx(O, MdNm(M) & ".")
 Next
 UsrTyNyPj = AyQSrt(O)
 End Function

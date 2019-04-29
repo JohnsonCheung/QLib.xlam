@@ -79,27 +79,27 @@ Function FmtAyDot(DotLy$()) As String()
 FmtAyDot = FmtDryAsSpcSep(DryzDotLy(DotLy))
 End Function
 Function FmtAyDot1(DotLy$()) As String()
-FmtAyDot1 = FmtDryAsSpcSep(TwoColDryzDotLy(DotLy))
+FmtAyDot1 = FmtDryAsSpcSep(DryzDotLyzTwoCol(DotLy))
 End Function
 
-Function FmtAyT1(A$()) As String()
-FmtAyT1 = FmtAyNTerm(A, 1)
+Function FmtSyT1(A$()) As String()
+FmtSyT1 = FmtAyNTerm(A, 1)
 End Function
 
-Function FmtAyT2(A) As String()
-FmtAyT2 = FmtAyNTerm(A, 2)
+Function FmtSyT2(A$()) As String()
+FmtSyT2 = FmtAyNTerm(A, 2)
 End Function
 
-Function FmtAyT3(A$()) As String()
-FmtAyT3 = FmtAyNTerm(A, 3)
+Function FmtSyT3(A$()) As String()
+FmtSyT3 = FmtAyNTerm(A, 3)
 End Function
 
-Function FmtAyT4(A$()) As String()
-FmtAyT4 = FmtAyNTerm(A, 4)
+Function FmtSyT4(A$()) As String()
+FmtSyT4 = FmtAyNTerm(A, 4)
 End Function
 
 Function FmtAySamWdt(Ay) As String()
-Dim W%: W = WdtzAy(Ay) + 1
+Dim W%: W = AyWdt(Ay) + 1
 Dim I
 For Each I In Itr(Ay)
     Push FmtAySamWdt, AlignL(I, W)
@@ -107,14 +107,14 @@ Next
 End Function
 
 Function FmtAyR(Ay) As String()
-Dim W%: W = WdtzAy(Ay)
+Dim W%: W = AyWdt(Ay)
 Dim I
 For Each I In Itr(Ay)
     Push FmtAyR, AlignR(I, W)
 Next
 End Function
 
-Private Sub Z_FmtAyT2()
+Private Sub Z_FmtSyT2()
 Dim Ly$()
 Ly = Sy("AAA B C D", "A BBB CCC")
 Ept = Sy("AAA B   C D", _
@@ -122,11 +122,11 @@ Ept = Sy("AAA B   C D", _
 GoSub Tst
 Exit Sub
 Tst:
-    Act = FmtAyT2(Ly)
+    Act = FmtSyT2(Ly)
     C
     Return
 End Sub
-Private Sub Z_FmtAyT3()
+Private Sub Z_FmtSyT3()
 Dim Ly$()
 Ly = Sy("AAA B C D", "A BBB CCC")
 Ept = Sy("AAA B   C   D", _
@@ -134,13 +134,13 @@ Ept = Sy("AAA B   C   D", _
 GoSub Tst
 Exit Sub
 Tst:
-    Act = FmtAyT3(Ly)
+    Act = FmtSyT3(Ly)
     C
     Return
 End Sub
 
 Private Sub Z()
-Z_FmtAyT2
-Z_FmtAyT3
+Z_FmtSyT2
+Z_FmtSyT3
 MVb_Align_Ay:
 End Sub

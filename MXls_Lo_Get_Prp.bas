@@ -8,7 +8,7 @@ Set O = Lo.ListColumns.Add
 O.Name = ColNm
 O.DataBodyRange.Formula = Fml
 End Sub
-Function LoNm$(T)
+Function LoNm$(T$)
 LoNm = "T_" & RmvFstNonLetter(T)
 End Function
 
@@ -49,9 +49,9 @@ Function RgzLoCC(A As ListObject, C1, C2, Optional InclTot As Boolean, Optional 
 Dim R1&, R2&, mC1%, mC2%
 R1 = R1Lo(A, InclHdr)
 R2 = R2Lo(A, InclTot)
-mC1 = LoWsCno(A, C1)
-mC2 = LoWsCno(A, C2)
-Set RgzLoCC = WsRCRC(LoWs(A), R1, mC1, R2, mC2)
+mC1 = WsCnozLc(A, C1)
+mC2 = WsCnozLc(A, C2)
+Set RgzLoCC = WsRCRC(WszLo(A), R1, mC1, R2, mC2)
 End Function
 
 Function RgzLc(A As ListObject, C, Optional InclTot As Boolean, Optional InclHdr As Boolean) As Range
@@ -71,7 +71,7 @@ End Function
 
 Sub DltLo(A As ListObject)
 Dim R As Range, R1, C1, R2, C2, Ws As Worksheet
-Set Ws = LoWs(A)
+Set Ws = WszLo(A)
 Set R = RgzMoreBelow(RgzMoreTop(A.DataBodyRange))
 AsgRRRCCRg R, R1, C1, R2, C2
 A.QueryTable.Delete
@@ -79,13 +79,13 @@ WsRCRC(Ws, R1, C1, R2, C2).ClearContents
 End Sub
 
 Function DrszLo(A As ListObject) As Drs
-Set DrszLo = Drs(FnyzLo(A), DryLo(A))
+DrszLo = Drs(FnyzLo(A), DryLo(A))
 End Function
 Function DryLo(A As ListObject) As Variant()
 DryLo = DryzSq(SqzLo(A))
 End Function
 Function DryRgColAy(Rg As Range, ColIxAy) As Variant()
-DryRgColAy = DryzSqCol(Rg.Value, ColIxAy)
+DryRgColAy = DryzSqCol(SqzRg(Rg), ColIxAy)
 End Function
 Function DryRgzLoCC(Lo As ListObject, CC) As Variant() _
 ' Return as many column as columns in [CC] from Lo
@@ -108,8 +108,8 @@ Function FnyzLo(A As ListObject) As String()
 FnyzLo = Itn(A.ListColumns)
 End Function
 
-Function HasLoC(Lo As ListObject, C) As Boolean
-HasLoC = HasItn(Lo.ListColumns, C)
+Function HasLoC(Lo As ListObject, ColNm$) As Boolean
+HasLoC = HasItn(Lo.ListColumns, ColNm)
 End Function
 
 Function HasLoFny(A As ListObject, Fny$()) As Boolean
@@ -146,7 +146,7 @@ End Function
 
 Function LoPc(A As ListObject) As PivotCache
 Dim O As PivotCache
-Set O = WbLo(A).PivotCaches.Create(xlDatabase, A.Name, 6)
+Set O = WbzLo(A).PivotCaches.Create(xlDatabase, A.Name, 6)
 O.MissingItemsLimit = xlMissingItemsNone
 Set LoPc = O
 End Function
@@ -172,26 +172,22 @@ End If
 R2Lo = A.DataBodyRange.Row + IIf(InclTot, 1, 0)
 End Function
 
-Function SqzLo(A As ListObject)
+Function SqzLo(A As ListObject) As Variant()
 SqzLo = A.DataBodyRange.Value
 End Function
 
-Function WsLo(A As ListObject) As Worksheet
-Set WsLo = A.Parent
+Function WszLo(A As ListObject) As Worksheet
+Set WszLo = A.Parent
 End Function
-Function WbLo(A As ListObject) As Workbook
-Set WbLo = WbzWs(LoWs(A))
-End Function
-
-Function LoWs(A As ListObject) As Worksheet
-Set LoWs = A.Parent
+Function WbzLo(A As ListObject) As Workbook
+Set WbzLo = WbzWs(WszLo(A))
 End Function
 
-Function LoWsCno%(A As ListObject, Col)
-LoWsCno = A.ListColumns(Col).Range.Column
+Function WsCnozLc&(A As ListObject, Col)
+WsCnozLc = A.ListColumns(Col).Range.Column
 End Function
 
-Function LoNmzTblNm$(TblNm)
+Function LoNmzTblNm$(TblNm$)
 LoNmzTblNm = "T_" & RmvFstNonLetter(TblNm)
 End Function
 
@@ -216,11 +212,11 @@ BrwLo SampLo
 Stop
 End Sub
 
-Private Sub Z_NewPtLoAtRDCP()
+Private Sub Z_PtzLo()
 Dim At As Range, Lo As ListObject
 Set Lo = SampLo
-'Set At = RgVis(A1zWs(AddWs(WbLo(Lo))))
-ShwPt NewPtLoAtRDCP(Lo, At, "A B", "C D", "F", "E")
+'Set At = RgVis(A1zWs(AddWs(WbzLo(Lo))))
+ShwPt PtzLo(Lo, At, "A B", "C D", "F", "E")
 Stop
 End Sub
 
@@ -243,23 +239,10 @@ RgzLc B, A, C, C
 RgzLc B, A
 FbtStrLo B
 FnyzLo B
-HasLoC B, A
-HasLoFny B, G
-LoHasNoDta B
-LoHdrCell B, A
-LoKeepFstCol B
-LoKeepFstRow B
-LoNCol B
-NewPtLoAtRDCPNm B
-LoQt B
-R1Lo B, C
-R2Lo B, C
 SqzLo B
 LoVis B
-WbLo B
-LoWs B
-LoWsCno B, A
-LoNmzTblNm A
+WbzLo B
+WszLo B
 End Sub
 
 Private Sub Z()

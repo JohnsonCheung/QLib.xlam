@@ -1,27 +1,27 @@
 Attribute VB_Name = "MIde_Pj_Dte"
 Option Explicit
-Function PjDteFb(A) As Date
+Function PjDtezFb(Fb$) As Date
 Static Y As New Access.Application
-Y.OpenCurrentDatabase A
+Y.OpenCurrentDatabase Fb
 Y.Visible = False
-PjDteFb = AcsPjDte(Y)
+PjDtezFb = PjDtezAcs(Y)
 Y.CloseCurrentDatabase
 End Function
 
-Function PjDtePjf(Pjf) As Date
+Function PjDtezPjf(Pjf$) As Date
 Select Case True
-Case IsFxa(Pjf): PjDtePjf = FfnDte(Pjf)
-Case IsFb(Pjf): PjDtePjf = PjDteFb(Pjf)
+Case IsFxa(Pjf): PjDtezPjf = DtezFfn(Pjf)
+Case IsFb(Pjf): PjDtezPjf = PjDtezFb(Pjf)
 Case Else: Stop
 End Select
 End Function
 
-Function AcsPjDte(A As Access.Application)
+Function PjDtezAcs(A As Access.Application)
 Dim O As Date
 Dim M As Date
-M = MaxItrPrp(A.CurrentProject.AllForms, "DateModified")
+M = MaxzItrPrp(A.CurrentProject.AllForms, "DateModified")
 O = Max(O, M)
-O = Max(O, MaxItrPrp(A.CurrentProject.AllModules, "DateModified"))
-O = Max(O, MaxItrPrp(A.CurrentProject.AllReports, "DateModified"))
-AcsPjDte = O
+O = Max(O, MaxzItrPrp(A.CurrentProject.AllModules, "DateModified"))
+O = Max(O, MaxzItrPrp(A.CurrentProject.AllReports, "DateModified"))
+PjDtezAcs = O
 End Function

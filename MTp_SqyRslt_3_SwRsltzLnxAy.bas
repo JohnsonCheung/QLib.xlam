@@ -174,9 +174,6 @@ Case Else: Stop
 End Select
 EvlTermAy = SomBool(O)
 End Function
-Sub A()
-Z
-End Sub
 
 Private Function SwBrkAyFmt(A() As SwBrk) As String()
 Dim I
@@ -210,7 +207,7 @@ Private Sub ZZ()
 Dim A() As Lnx
 Dim B As Dictionary
 Dim C() As SwBrk
-Dim xx
+Dim XX
 End Sub
 
 Private Sub Z()

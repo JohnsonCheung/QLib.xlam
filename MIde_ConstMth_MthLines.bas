@@ -8,11 +8,11 @@ End Function
 
 Private Function ConstPrpLy(ConstQNm$, IsPub As Boolean) As String() 'Ret Ly from ConstPrpFt
 Const CSub$ = CMod & "ConstPrpLines"
-Dim Ft$: Ft = FtzConstQNm(ConstQNm): If Not HasFfn(Ft) Then Exit Function
+Dim Ft$: Ft = FtzConstQNm(ConstQNm): If Not HasFfn(Ft$) Then Exit Function
 Dim O$()
 '    PushI O, IIf(IsPub, "", "Private ") & "Property Get " & ConstNm & "() As String()"
     Dim L, Fst As Boolean: Fst = True
-    For Each L In Itr(FtLy(Ft))
+    For Each L In Itr(LyzFt(Ft$))
         PushIAy O, CdLyzPushStr(L, Fst)
         If Fst Then
             Fst = False

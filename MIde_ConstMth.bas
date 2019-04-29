@@ -8,12 +8,12 @@ End Sub
 
 Sub UpdConst(ConstQNm$, Optional IsPub As Boolean)
 With MdMth(ConstQNm)
-    RplMth .Md, .MthNm, ConstPrpLines(ConstQNm, IsPub)
+    RplMthByDicInMd .Md, .MthNm, ConstPrpLines(ConstQNm, IsPub)
 End With
 End Sub
 
 Private Property Get Z_CrtSchm1() As String()
-Erase xx
+Erase XX
 X "Tbl A *Id | *Nm     | *Dte AATy Loc Expr Rmk"
 X "Tbl B *Id | AId *Nm | *Dte"
 X "Fld Txt AATy"
@@ -26,17 +26,17 @@ X "Des Tbl     A     AA BB "
 X "Des Tbl     A     CC DD "
 X "Des Fld     ANm   AA BB "
 X "Des Tbl.Fld A.ANm TF_Des-AA-BB"
-Z_CrtSchm1 = xx
-Erase xx
+Z_CrtSchm1 = XX
+Erase XX
 End Property
 
 Private Property Get C_A() As String()
-Erase xx
+Erase XX
 X "lsjdf lskdjf lsdkf"
 X "sdfkljsdf"
 X "sdf"
 X "sdf"
-C_A = xx
-C_A = xx
-Erase xx
+C_A = XX
+C_A = XX
+Erase XX
 End Property

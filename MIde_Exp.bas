@@ -9,7 +9,7 @@ Stamp "ExpExpg: Begin"
 Dim Xls As Excel.Application: Set Xls = NewXls
 Dim Acs As Access.Application: Set Acs = NewAcs
 Dim Ffn
-For Each Ffn In Itr(FfnAy(ExpgPth))
+For Each Ffn In Itr(FfnSy(ExpgPth))
     ExpPjf Ffn, Xls, Acs
 Next
 QuitXls Xls
@@ -17,7 +17,7 @@ AcsQuit Acs
 Stamp "ExpExpg: End"
 End Sub
 
-Sub ExpPjf(Pjf, Optional Xls As Excel.Application, Optional Acs As Access.Application)
+Sub ExpPjf(Pjf$, Optional Xls As Excel.Application, Optional Acs As Access.Application)
 Stamp "ExpPj: Begin"
 Stamp "ExpPj: Pjf " & Pjf
 Select Case True
@@ -27,12 +27,8 @@ End Select
 Stamp "ExpPj: End"
 End Sub
 
-Sub Z1()
-ExpExpg
-End Sub
-
-Sub ExpFb(Fb, Optional Acs As Access.Application)
-CpyFilzToPth Fb, PthEns(SrcpzPjf(Fb))
+Sub ExpFb(Fb$, Optional Acs As Access.Application)
+CpyFilzToPth Fb, EnsPth(SrcpzPjf(Fb$))
 Dim A As Access.Application: Set A = DftAcs(Acs)
 OpnFb A, Fb
 Dim Pj As VBProject: Set Pj = A.Vbe.ActiveVBProject
@@ -53,9 +49,11 @@ PjExp CurPj
 End Sub
 
 Function PjExp(Pj As VBProject) As VBProject
-Dim P$: P = PthEnsAll(Srcp(Pj))
+Dim P$
+P = Srcp(Pj)
+EnsPthzAllSeg P
 ClrPthFil P
-CpyFilzToPth Pjf(Pj), P
+CpyFfnzToPth Pj.Filename, P
 ExpSrc Pj
 ExpRf Pj
 ExpFrm Pj

@@ -192,18 +192,19 @@ Next
 ColrSq = O
 End Property
 
-Function ColrStr$(A&)
-Dim L
-For Each L In ColrLy
+Function ColrStr$(Colr&)
+Dim L$, I
+For Each I In ColrLy
+    L = I
     With Brk(L, " ")
-        If .s2 = A Then ColrStr = .s1: Exit Function
+        If .S2 = Colr Then ColrStr = .S1: Exit Function
     End With
 Next
 End Function
 
-Function Colr&(ColrNm)
+Function Colr&(ColrNm$)
 Dim X$
-X = FstEleRmvT1(ColrLy, ColrNm)
+X = FstElezRmvT1(ColrLy, ColrNm)
 If X = "" Then Exit Function
 Colr = CLng(X)
 End Function
@@ -212,7 +213,7 @@ Property Get ColrWb() As Workbook
 Dim Ws As Worksheet, Sq(), J%
 Sq = ColrSq
 'Set Ws = WszRg(RgzSq(ColrSq, NewA1))
-For J = 1 To UBound(Sq, 1)
+For J = 1 To UBound(Sq(), 1)
     WsRC(Ws, J, 3).Interior.Color = Sq(J, 2)
 Next
 WsCC(Ws, 1, 2).EntireColumn.AutoFit

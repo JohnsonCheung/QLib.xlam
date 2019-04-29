@@ -35,36 +35,38 @@ Sub BrwDb(A As Database)
 BrwFb A.Name
 End Sub
 
-Function TnyzTT(TT) As String()
-TnyzTT = NyzNN(TT)
-End Function
-
-Function StruzTT(A As Database, TT)
-Dim T
-For Each T In Itr(AySrt(TnyzTT(TT)))
-    PushI StruzTT, StruzT(A, T)
+Function StruzTny(A As Database, Tny$())
+Dim I
+For Each I In Itr(QSrt(Tny))
+    PushI StruzTny, StruzT(A, CStr(I))
 Next
 End Function
 
-Function Stru(Db As Database) As String()
-Stru = StruzTT(Db, TnyzDaoDb(Db))
+Function StruzTT(A As Database, TT$)
+StruzTT = StruzTny(A, Ny(TT))
+End Function
+
+Function Stru(A As Database) As String()
+Stru = StruzTny(A, Tny(A))
 End Function
 
 Function OupTny(A As Database) As String()
-OupTny = AywPfx(Tny(A), "@")
+OupTny = SywPfx(Tny(A), "@")
 End Function
-
-Sub DrpTT(A As Database, TT, Optional NoReOpn As Boolean)
+Sub DrpTny(A As Database, Tny$())
 Dim T
-For Each T In ItrTT(TT)
-    DrpT A, T
+For Each T In Tny
+    DrpT A, CStr(T)
 Next
 End Sub
-Sub DrpTmp(A As Database)
-DrpTT A, TmpTny(A)
+Sub DrpTT(A As Database, TT$)
+Dim T
 End Sub
-Sub DrpT(A As Database, T, Optional NoReOpn As Boolean)
-If HasTbl(A, T, NoReOpn) Then A.TableDefs.Delete T
+Sub DrpTmp(A As Database)
+DrpTny A, TmpTny(A)
+End Sub
+Sub DrpT(A As Database, T$)
+If HasTbl(A, T) Then A.TableDefs.Delete T
 End Sub
 
 Sub CrtTbl(A As Database, T$, FldDclAy)
@@ -78,47 +80,43 @@ If DsNm = "" Then
 Else
     Nm = DsNm
 End If
-Set DszDb = DszTT(A, Tny(A), Nm)
+DszDb = DszTny(A, Tny(A), Nm)
 End Function
 
-Function DszTT(A As Database, TT, Optional DsNm$) As Ds
-Dim DtAy() As Dt
-    Dim U%, Tny$()
-    Tny = DftTny(TT, A.Name)
-    U = UB(Tny)
-    ReDim DtAy(U)
-    Dim J%
-    For J = 0 To U
-        Set DtAy(J) = DtzT(A, Tny(J))
-    Next
-Set DszTT = Ds(DtAy, DftStr(DsNm, DbNm(A)))
+Function DszTny(A As Database, Tny$(), Optional DsNm$) As Ds
+Dim T
+For Each T In Tny
+    AddDt DszTny, DtzT(A, CStr(T))
+Next
 End Function
-Sub EnsTmpTblz(A As Database)
+Sub EnsTmpTbl(A As Database)
 If HasTbl(A, "#Tmp") Then Exit Sub
 A.Execute "Create Table [#Tmp] (AA Int, BB Text 10)"
 End Sub
 
-Sub RunQ(A As Database, Q)
+Sub RunQ(A As Database, Q$)
 Const CSub$ = CMod & "RunQ"
 On Error GoTo X
 A.Execute Q
 Exit Sub
 X: Dim E$: E = Err.Description: Thw CSub, "Running Sql error", "Er Sql Db", E, Q, DbNm(A)
 End Sub
-Sub RunQQAv(A As Database, QQ, Av())
+Sub RunQQAv(A As Database, QQ$, Av())
 RunQ A, FmtQQAv(QQ, Av)
 End Sub
-Sub RunQQ(A As Database, QQ, ParamArray Ap())
+Sub RunQQ(A As Database, QQ$, ParamArray Ap())
 Dim Av(): Av = Ap
 RunQQAv A, QQ, Av
 End Sub
 
-Function RszQQ(A As Database, QQ, ParamArray Ap()) As Dao.Recordset
+Function RszQQ(A As Database, QQ$, ParamArray Ap()) As DAO.Recordset
 Dim Av(): Av = Ap
 Set RszQQ = Rs(A, FmtQQAv(QQ, Av))
 End Function
-
-Function Rs(A As Database, Q) As Dao.Recordset
+Function RszQ(A As Database, Q$) As DAO.Recordset
+Set RszQ = Rs(A, Q)
+End Function
+Function Rs(A As Database, Q$) As DAO.Recordset
 Const CSub$ = CMod & "Rs"
 On Error GoTo X
 Set Rs = A.OpenRecordset(Q)
@@ -126,20 +124,20 @@ Exit Function
 X: Thw CSub, "Error in opening Rs", "Er Sql Db", Err.Description, Q, DbNm(A)
 End Function
 
-Function HasReczQ(A As Database, Q) As Boolean
+Function HasReczQ(A As Database, Q$) As Boolean
 HasReczQ = HasRec(Rs(A, Q))
 End Function
 
-Function HasQryz(A As Database, Q) As Boolean
+Function HasQryz(A As Database, Q$) As Boolean
 HasQryz = HasReczQ(A, FmtQQ("Select * from MSysObjects where Name='?' and Type=5", Q))
 End Function
 
-Function HasTbl(A As Database, T, Optional ReOpn As Boolean)
-HasTbl = HasItn(ReOpnDb(A, ReOpn).TableDefs, T)
+Function HasTbl(A As Database, T$) As Boolean
+HasTbl = HasItn(A.TableDefs, T)
 End Function
 
-Function HasTblzMSysObjDb(A As Database, T) As Boolean
-HasTblzMSysObjDb = HasRec(Rs(A, FmtQQ("Select Name from MSysObjects where Type in (1,6) and Name='?'", T)))
+Function HasTblByMSys(A As Database, T$) As Boolean
+HasTblByMSys = HasRec(Rs(A, FmtQQ("Select Name from MSysObjects where Type in (1,6) and Name='?'", T)))
 End Function
 
 Function IsDbOk(A As Database) As Boolean
@@ -155,19 +153,20 @@ End Function
 Function Qny(A As Database) As String()
 Qny = SyzQ(A, "Select Name from MSysObjects where Type=5 and Left(Name,4)<>'MSYS' and Left(Name,4)<>'~sq_'")
 End Function
-Function RszQry(A As Database, Qry) As Dao.Recordset
-Set RszQry = A.QueryDefs(Qry).OpenRecordset
+
+Function RszQry(A As Database, QryNm$) As DAO.Recordset
+Set RszQry = A.QueryDefs(QryNm).OpenRecordset
 End Function
 
-Function SrcTnAy(A As Database) As String()
+Function SrcTny(A As Database) As String()
 Dim T
 For Each T In Tni(A)
-    PushNonBlankStr SrcTnAy, A.TableDefs(T).SourceTableName
+    PushNonBlankStr SrcTny, A.TableDefs(T).SourceTableName
 Next
 End Function
 
 Function TmpTny(A As Database) As String()
-TmpTny = AywPfx(Tny(A), "#")
+TmpTny = SywPfx(Tny(A), "#")
 End Function
 
 Function Tni(A As Database)
@@ -175,7 +174,7 @@ Asg Itr(Tny(A)), Tni
 End Function
 
 Function Tny(A As Database) As String()
-Set A = Dao.DBEngine.OpenDatabase(A.Name)
+Set A = DAO.DBEngine.OpenDatabase(A.Name)
 Dim T As TableDef
 For Each T In A.TableDefs
     If Not IsSysTd(T) Then
@@ -190,19 +189,16 @@ Function TnyzADO(A As Database) As String()
 TnyzADO = TnyzFb(A.Name)
 End Function
 
-Function TnyzDaoFb(Fb) As String()
-TnyzDaoFb = TnyzDaoDb(Db(Fb))
-End Function
 
-Function TnyzDaoDb(A As Database, Optional NoReOpn As Boolean) As String()
+Function Tny1(A As Database) As String()
 Dim T As TableDef, O$()
-Dim X As Dao.TableDefAttributeEnum
-X = Dao.TableDefAttributeEnum.dbHiddenObject Or Dao.TableDefAttributeEnum.dbSystemObject
-For Each T In ReOpnDb(A, NoReOpn).TableDefs
+Dim X As DAO.TableDefAttributeEnum
+X = DAO.TableDefAttributeEnum.dbHiddenObject Or DAO.TableDefAttributeEnum.dbSystemObject
+For Each T In A.TableDefs
     Select Case True
     Case T.Attributes And X
     Case Else
-        PushI TnyzDaoDb, T.Name
+        PushI Tny1, T.Name
     End Select
 Next
 End Function
@@ -215,13 +211,13 @@ Private Sub ZZ_Qny()
 'DmpAy Qny(Db(SampFbzDutyDta))
 End Sub
 
-Private Sub Z_Ds()
-Dim Db As Database, Tny0
+Private Sub Z_DszDb()
+Dim A As Database, Tny0, Act As Ds, Ept As Ds
 Stop
 ZZ1:
-    Set Db = Db(SampFbzDutyDta)
-'    Set Act = Ds(Db)
-    CvDs(Act).Brw
+    Set A = Db(SampFbzDutyDta)
+    Act = DszDb(A)
+    BrwDs Act
     Exit Sub
 ZZ2:
     Tny0 = "Permit PermitD"
@@ -230,8 +226,8 @@ ZZ2:
 End Sub
 
 Private Sub ZZ()
-Dim A As Database
-Dim B As Dao.TableDef
+Dim Db As Database
+Dim B As DAO.TableDef
 Dim C$()
 Dim D As Variant
 Dim E$
@@ -249,16 +245,17 @@ Dim G As Dictionary
 'HasDbt A, D
 End Sub
 
-Sub RenTblzAddPfx(A As Database, TT, Pfx$)
+Sub RenTTzAddPfx(A As Database, TT$, Pfx$)
 Dim T
-For Each T In ItrTT(TT)
-    RenTblzAddPfx A, T, Pfx
+For Each T In Ny(TT)
+    RenTblzAddPfx A, CStr(T), Pfx
 Next
 End Sub
 
-Function TdStrAy(A As Database, TT) As String()
-Dim T
-For Each T In ItrTT(TT)
+Function TdStrAy(A As Database, TT$) As String()
+Dim T$, I
+For Each I In ItrzTT(TT)
+    T = I
     PushI TdStrAy, TdStrzT(A, T)
 Next
 End Function
@@ -267,7 +264,7 @@ Sub CrtTblzTmp(A As Database)
 DrpT A, "#Tmp"
 A.TableDefs.Append TmpTd
 End Sub
-Sub RenTbl(A As Database, T, ToNm$)
+Sub RenTbl(A As Database, T$, ToNm$)
 A.TableDefs(T).Name = ToNm
 End Sub
 
@@ -296,11 +293,11 @@ Property Let TblDes(A As Database, T, Des$)
 PrpVal(A.TableDefs(T).Properties, C_Des) = Des
 End Property
 
-Property Get TblAttDes$(A As Dao.Database)
+Property Get TblAttDes$(A As DAO.Database)
 TblAttDes = TblDes(A, "Att")
 End Property
 
-Property Let TblAttDes(A As Dao.Database, Des$)
+Property Let TblAttDes(A As DAO.Database, Des$)
 TblDes(A, "Att") = Des
 End Property
 
@@ -312,10 +309,12 @@ Next
 End Property
 
 Property Get FldDesDic(A As Database) As Dictionary
-Dim T, F, D$
+Dim T$, I, J, F$, D$
 Set FldDesDic = New Dictionary
-For Each T In Tni(A)
-    For Each F In Fny(A, T)
+For Each I In Tni(A)
+    T = I
+    For Each J In Fny(A, T)
+        F = J
         D = FldDes(A, T, F)
         If D <> "" Then FldDesDic.Add T & "." & F, D
     Next
@@ -323,14 +322,16 @@ Next
 End Property
 
 Property Set FldDesDic(A As Database, D As Dictionary)
-Dim T, F$, Des$, TDotF
-For Each TDotF In D.Keys
+Dim T$, F$, Des$, TDotF$, I, J
+For Each I In D.Keys
+    TDotF = I
     Des = D(TDotF)
     If HasDot(TDotF) Then
         AsgBrkDot TDotF, T, F
         FldDes(A, T, F) = Des
     Else
-        For Each T In Tny(A)
+        For Each J In Tny(A)
+            T = J
             If HasFld(A, T, F) Then
                 FldDes(A, T, F) = Des
             End If
@@ -339,9 +340,9 @@ For Each TDotF In D.Keys
 Next
 End Property
 
-Sub ClsDb(Db As Database)
+Sub ClsDb(A As Database)
 On Error Resume Next
-Db.Close
+A.Close
 End Sub
 
 Property Get TblDesDic(A As Database) As Dictionary
@@ -381,8 +382,8 @@ For Each T In TnizInp(A)
 Next
 End Sub
 
-Function ReOpnDb(A As Database, Optional NoReOpn As Boolean) As Database
-If NoReOpn Then Set ReOpnDb = A Else Set ReOpnDb = Db(A.Name)
+Function ReOpnDb(A As Database) As Database
+Set ReOpnDb = Db(A.Name)
 End Function
 
 Function DbNm$(A As Database)
@@ -392,5 +393,4 @@ Exit Function
 X:
 DbNm = Err.Description
 End Function
-
 

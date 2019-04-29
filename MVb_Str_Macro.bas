@@ -11,10 +11,10 @@ If Not HasSubStr(A, Q1) Then Exit Function
 Dim O$(), J%
     Dim Ay$(): Ay = Split(A, Q1)
     For J = 1 To UB(Ay)
-        Push O, StrBef(Ay(J), Q2)
+        Push O, Bef(Ay(J), Q2)
     Next
 If Not ExlBkt Then
-    O = AyAddPfxSfx(O, Q1, Q2)
+    O = SyAddPfxSfx(O, Q1, Q2)
 End If
 NyzMacro = O
 End Function
@@ -30,13 +30,13 @@ End Function
 
 Function FmtMacroDic$(MacroStr$, Dic As Dictionary)
 Dim O$: O = MacroStr
-Dim I, K$
+Dim I, N$, K$
 For Each I In Itr(NyzMacro(MacroStr))
-    K = RmvFstLasChr(I)
+    N = I
+    K = RmvFstLasChr(N)
     If Dic.Exists(K) Then
-        O = Replace(O, I, Dic(K))
+        O = Replace(O, N, Dic(K))
     End If
 Next
 FmtMacroDic = O
 End Function
-

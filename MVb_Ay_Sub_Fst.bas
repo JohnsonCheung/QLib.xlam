@@ -22,16 +22,16 @@ For Each X In A
 Next
 End Function
 
-Function FstElePfx$(PfxAy, Lin$)
-Dim P
-For Each P In PfxAy
-    If HasPfx(Lin, CStr(P)) Then FstElePfx = P: Exit Function
+Function FstElezPfxAy$(PfxAy$(), Lin$)
+Dim I, P$
+For Each I In PfxAy
+    P = I
+    If HasPfx(Lin, P) Then FstElezPfxAy = P: Exit Function
 Next
 End Function
 Function FstEleInAset(Ay, InAset As Aset)
 Dim I
 For Each I In Ay
-    Stop
     If InAset.Has(I) Then FstEleInAset = I: Exit Function
 Next
 End Function
@@ -59,33 +59,43 @@ For Each X In Itr(A)
 Next
 End Function
 
-Function FstEleRmvT1$(Ay, T1Val, Optional IgnCas As Boolean)
-FstEleRmvT1 = RmvT1(FstEleT1(Ay, T1Val, IgnCas))
+Function FstElezRmvT1$(Sy$(), T1$)
+FstElezRmvT1 = RmvT1(FstElezT1(Sy, T1))
 End Function
 
-Function FstEleT1$(Ay, T1Val, Optional IgnCas As Boolean)
-Dim L
-For Each L In Itr(Ay)
-    If IsEqStr(T1(L), T1Val, IgnCas) Then FstEleT1 = L: Exit Function
+Function FstElezT1$(Sy$(), T1$)
+Dim I, S$
+For Each I In Itr(Sy)
+    S = I
+    If HasT1(S, T1) Then FstElezT1 = S: Exit Function
 Next
 End Function
 
-Function FstEleT2$(A, T2)
-FstEleT2 = FstElePredXP(A, "HasL_T2", T2)
+Function FstElezT2$(Sy$(), T2$)
+Dim I, S$
+For Each I In Itr(Sy)
+    S = I
+    If HasT2(S, T2) Then FstElezT2 = S: Exit Function
+Next
 End Function
 
-Function FstEleTT$(A, T1, T2)
-FstEleTT = FstElePredXABTrue(A, "HasTT", T1, T2)
+Function FstElezTT$(Sy$(), T1$, T2$)
+Dim I, S$
+For Each I In Itr(Sy)
+    S = I
+    If HasTT(S, T1, T2) Then FstElezTT = S: Exit Function
+Next
 End Function
 
 
-Function FstEleRmvTT$(A, T1$, T2$)
-Dim X, X1$, X2$, Rst$
-For Each X In Itr(A)
-    AsgN2tRst X, X1, X2, Rst
+Function FstEleRmvTT$(Sy$(), T1$, T2$)
+Dim I, L$, X1$, X2$, Rst$
+For Each I In Itr(Sy)
+    L = I
+    AsgN2tRst L, X1, X2, Rst
     If X1 = T1 Then
         If X2 = T2 Then
-            FstEleRmvTT = X
+            FstEleRmvTT = L
             Exit Function
         End If
     End If

@@ -13,7 +13,7 @@ For Each I In Itr(Ay)
 Next
 End Function
 
-Function IntozItrNy(Into, Itr, Ny$())
+Function IntozItrNy(Into$, Itr, Ny$())
 Dim O: O = Into: Erase O
 Dim Obj
 For Each Obj In Itr
@@ -22,6 +22,9 @@ For Each Obj In Itr
     End If
 Next
 IntozItrNy = O
+End Function
+Function SyzItr(Itr) As String()
+SyzItr = IntozItr(EmpSy, Itr)
 End Function
 Function IntozItr(Into, Itr)
 Dim O: O = Into: Erase O

@@ -12,7 +12,7 @@ Private Property Let XX1(V)
 
 End Property
 
-Function MthLinesByPubMthNm$(PubMthNm)
+Function MthLinesByPubMthNm$(PubMthNm$)
 Const CSub$ = CMod & "MthLinesByPubMthNm"
 Dim A$: A = PubMthNm
 Dim B$(): B = ModNyzPubMthNm(A)
@@ -24,8 +24,8 @@ End Function
 '
 
 '
-Property Get MthLines$()
-MthLines = MthLinesByMdMth(CurMd, CurMthNm$, WiTopRmk:=True)
+Property Get CurMthLines$()
+CurMthLines = MthLinesByMdMth(CurMd, CurMthNm$, WiTopRmk:=True)
 End Property
 
 Sub VcMthLinesAyInPj()
@@ -47,29 +47,37 @@ MthLinesAyByMd = MthLinesAyBySrc(Src(A), WiTopRmk)
 End Function
 
 Function MthLinesAyBySrc(Src$(), Optional WiTopRmk As Boolean) As String()
-Dim I
+Dim I, Ix&
 For Each I In Itr(MthIxAy(Src))
-    PushI MthLinesAyBySrc, MthLinesBySrcFm(Src, I, WiTopRmk)
+    Ix = I
+    PushI MthLinesAyBySrc, MthLinesBySrcFm(Src, Ix, WiTopRmk)
 Next
 End Function
 
-Function MthLinesByMdMth$(Md As CodeModule, MthNm, Optional WiTopRmk As Boolean)
+Function MthLines$(MthNm$, Optional WoTopRmk As Boolean)
+MthLines = MthLineszNm(MthNm$, WoTopRmk)
+End Function
+Function MthLineszNm$(MthNm$, Optional WoTopRmk As Boolean)
+
+End Function
+
+Function MthLinesByMdMth$(Md As CodeModule, MthNm$, Optional WiTopRmk As Boolean)
 MthLinesByMdMth = MthLinesBySrcNm(Src(Md), MthNm, WiTopRmk)
 End Function
 
-Function MthLinesByMdNmTy$(Md As CodeModule, MthNm, ShtMthTy$, Optional WiTopRmk As Boolean)
+Function MthLinesByMdNmTy$(Md As CodeModule, MthNm$, ShtMthTy$, Optional WiTopRmk As Boolean)
 MthLinesByMdNmTy = MthLinesBySrcNmTy(Src(Md), MthNm, ShtMthTy, WiTopRmk)
 End Function
 
-Function MthLyByMdMth(Md As CodeModule, MthNm, Optional WiTopRmk As Boolean) As String()
+Function MthLyByMdMth(Md As CodeModule, MthNm$, Optional WiTopRmk As Boolean) As String()
 MthLyByMdMth = MthLyBySrcNm(Src(Md), MthNm, WiTopRmk)
 End Function
 
-Function MthLinesBySrcFm$(Src$(), MthFmIx, Optional WiTopRmk As Boolean)
+Function MthLinesBySrcFm$(Src$(), MthFmIx&, Optional WiTopRmk As Boolean)
 MthLinesBySrcFm = JnCrLf(MthLyBySrcFm(Src, MthFmIx, WiTopRmk))
 End Function
 
-Function MthLyBySrcFm(Src$(), MthFmIx, Optional WiTopRmk As Boolean) As String()
+Function MthLyBySrcFm(Src$(), MthFmIx&, Optional WiTopRmk As Boolean) As String()
 Dim TopLy$()
 If WiTopRmk Then
     TopLy = MthTopRmkLy(Src, MthFmIx)
@@ -79,19 +87,19 @@ Dim MthLy$(): MthLy = AywFT(Src, MthFmIx, ToIx)
 MthLyBySrcFm = SyAddAp(TopLy, MthLy)
 End Function
 
-Function MthLinesBySrcNm$(Src$(), N, Optional WiTopRmk As Boolean)
-MthLinesBySrcNm = JnCrLf(MthLyBySrcNm(Src, N, WiTopRmk))
+Function MthLinesBySrcNm$(Src$(), MthNm$, Optional WiTopRmk As Boolean)
+MthLinesBySrcNm = JnCrLf(MthLyBySrcNm(Src, MthNm, WiTopRmk))
 End Function
 
 Function MthLinesBySrcNmTy$(Src$(), N, ShtMthTy$, Optional WiTopRmk As Boolean)
 MthLinesBySrcNmTy = JnCrLf(MthLyBySrcNmTy(Src, N, ShtMthTy, WiTopRmk))
 End Function
 
-
-Function MthLyBySrcNm(Src$(), N, Optional WiTopRmk As Boolean) As String()
-Dim I
-For Each I In Itr(MthIxAyzNm(Src, N))
-    PushI MthLyBySrcNm, MthLinesBySrcFm(Src, I, WiTopRmk)
+Function MthLyBySrcNm(Src$(), MthNm$, Optional WiTopRmk As Boolean) As String()
+Dim I, Ix&
+For Each I In Itr(MthIxAyzNm(Src, MthNm))
+    Ix = I
+    PushI MthLyBySrcNm, MthLinesBySrcFm(Src, Ix, WiTopRmk)
 Next
 End Function
 

@@ -76,12 +76,19 @@ End Sub
 Sub ThwOpt(Thw As eThwOpt, Fun$, Msg$, ParamArray Nap())
 Dim Nav(): Nav = Nap
 Select Case Thw
-Case eeNoThwInf: InfNav Fun, Msg, Nav
-Case eeNoThwNoInf:
+Case jNoThwInf: InfNav Fun, Msg, Nav
+Case jNoThwNoInf:
 Case Else:   ThwNav Fun, Msg, Nav
 End Select
 End Sub
-
+Sub PgmEr(Fun$, Msg$, ParamArray Nap())
+Dim Nav(): Nav = Nap
+Const PgmErBox$ = _
+"*******************" & vbCrLf & _
+"** Program error **" & vbCrLf & _
+"*******************" & vbCrLf
+ThwNav Fun, PgmErBox & Msg, Nav
+End Sub
 Sub Thw(Fun$, Msg$, ParamArray Nap())
 Dim Nav(): Nav = Nap
 ThwNav Fun, Msg, Nav
@@ -115,7 +122,7 @@ Sub Done()
 MsgBox "Done"
 End Sub
 Sub ThwPgmEr(Msg$, Fun$)
-ThwEr SyAdd(Box("Programm Error"), Sy(Msg)), Fun
+ThwIfEr SyAdd(Box("Programm Error"), Sy(Msg)), Fun
 End Sub
 
 Function NavAddNNAv(Nav(), NN$, Av()) As Variant()
@@ -131,12 +138,12 @@ End Function
 Function NavAddNmV(Nav(), Nm$, V) As Variant()
 NavAddNmV = NavAddNNAv(Nav, Nm, Av(V))
 End Function
-Sub ThwErMsg(Er$(), Fun$, Msg$, ParamArray Nap())
+Sub ThwIfErMsg(Er$(), Fun$, Msg$, ParamArray Nap())
 If Si(Er) = 0 Then Exit Sub
 Dim Nav(): Nav = Nap
 ThwNav Fun, Msg, NavAddNmV(Nav, "Er", Er)
 End Sub
-Sub ThwEr(Er$(), Fun$)
+Sub ThwIfEr(Er$(), Fun$)
 If Si(Er) = 0 Then Exit Sub
 ThwNav Fun, "There is error", Av("Er", Er)
 End Sub
@@ -202,16 +209,18 @@ Dim Nav(): Nav = Nap
 D LyzFunMsgNav(Fun, Msg, Nav)
 End Sub
 
-Private Sub Z_InfObjPP()
-Dim Fun$, Msg$, Obj, PP$
-Fun = "XXX"
-Msg = "MsgABC"
-Set Obj = New Dao.Field
-PP = "Name Type Size"
-GoSub Tst
+Private Sub Z_LyzObjPP()
+Dim Obj As Object, PP$
+GoSub T0
 Exit Sub
+T0:
+    Set Obj = New DAO.Field
+    PP = "Name Type Size"
+    GoTo Tst
 Tst:
-    InfObjPP Fun, Msg, Obj, PP
+    Act = LyzObjPP(Obj, PP)
+    C
+    Return
 End Sub
 
 Private Sub ZZ()
@@ -220,7 +229,7 @@ Dim B()
 Dim C
 Dim D%
 Dim F$()
-Dim xx
+Dim XX
 End Sub
 
 Sub StopEr(Er$())

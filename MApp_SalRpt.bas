@@ -1,6 +1,6 @@
 Attribute VB_Name = "MApp_SalRpt"
 Option Explicit
-
+Public Const DoczSrp = "Sales-Report-Parameter."
 Property Get DftSrpDic() As Dictionary
 Dim X As Boolean, Y As New Dictionary
 If Not X Then

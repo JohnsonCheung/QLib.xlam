@@ -4,7 +4,7 @@ Const CMod$ = "MVb_Ay__Operation."
 Function DashLT1Ay(Ay) As String()
 Dim I
 For Each I In Itr(Ay)
-    PushNoDup DashLT1Ay, StrBefOrAll(I, "_")
+    PushNoDup DashLT1Ay, BefOrAll(CStr(I), "_")
 Next
 End Function
 
@@ -72,19 +72,14 @@ Next
 MaxAy = O
 End Function
 
-Function Ny(Ssl_or_Ny) As String()
-Const CSub$ = CMod & "Ny"
-Select Case True
-Case IsStr(Ssl_or_Ny): Ny = SySsl(Ssl_or_Ny)
-Case IsSy(Ssl_or_Ny): Ny = Ssl_or_Ny
-Case Else: ThwPmEr Ssl_or_Ny, CSub, "Should be Str or Sy"
-End Select
+Function Ny(S$) As String()
+Ny = TermAy(S)
 End Function
 
 Function CvVy(Vy)
 Const CSub$ = CMod & "CvVy"
 Select Case True
-Case IsStr(Vy): CvVy = SySsl(Vy)
+Case IsStr(Vy): CvVy = SySsl(CStr(Vy))
 Case IsArray(Vy): CvVy = Vy
 Case Else: Thw CSub, "VyzDicKK should either be string or array", "Vy-TypeName Vy", TypeName(Vy), Vy
 End Select
@@ -97,27 +92,29 @@ End Function
 Function CvAv(A) As Variant()
 CvAv = A
 End Function
-
+Function CvObj(A) As Object
+Set CvObj = A
+End Function
 Function CvSy(A) As String()
 Select Case True
-Case IsEmpty(A) Or IsMissing(A)
 Case IsSy(A): CvSy = A
 Case IsArray(A): CvSy = SyzAy(A)
+Case IsEmpty(A) Or IsMissing(A)
 Case Else: CvSy = Sy(CStr(A))
 End Select
 End Function
 
-Function SyShow(xx$, Sy$()) As String()
+Function SyShow(XX$, Sy$()) As String()
 Dim O$()
 Select Case Si(Sy)
 Case 0
-    Push O, xx & "()"
+    Push O, XX & "()"
 Case 1
-    Push O, xx & "(" & Sy(0) & ")"
+    Push O, XX & "(" & Sy(0) & ")"
 Case Else
-    Push O, xx & "("
+    Push O, XX & "("
     PushAy O, Sy
-    Push O, xx & ")"
+    Push O, XX & ")"
 End Select
 SyShow = O
 End Function
@@ -127,8 +124,7 @@ Dim A
 Dim B()
 Dim C$
 Dim D$()
-Dim xx
-NyzNN A
+Dim XX
 CvSy A
 Sy B
 SyShow C, D

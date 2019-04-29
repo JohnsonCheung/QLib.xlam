@@ -7,7 +7,7 @@ Dim Av(): Av = Ap
 FmtQQ = FmtQQAv(QQVbl, Av)
 End Function
 
-Function FmtQQAv$(QQVbl, Av())
+Function FmtQQAv$(QQVbl$, Av())
 Const CSub$ = CMod & "FmtQQAv"
 Dim O$, I, Cnt
 O = Replace(QQVbl, "|", vbCrLf)
@@ -27,21 +27,21 @@ Next
 FmtQQAv = O
 End Function
 
-Function SpcSepStr$(A)
-If A = "" Then SpcSepStr = ".": Exit Function
-SpcSepStr = QuoteSq(EscSqBkt(EscCrLf(EscBackSlash(A))))
+Function SpcSepStr$(S$)
+If S = "" Then SpcSepStr = ".": Exit Function
+SpcSepStr = QuoteSqIf(EscSqBkt(SlashCrLf(EscBackSlash(S))))
 End Function
 
-Function SpcSepStrRev$(A)
-If A = "." Then Exit Function
-SpcSepStrRev = RmvSqBkt(UnEscBackSlash(UnEscSqBkt(UnEscCrLf(A))))
+Function SpcSepStrRev$(S$)
+If S = "." Then Exit Function
+SpcSepStrRev = RmvSqBkt(UnEscBackSlash(EscSqBkt(UnSlashCrLf(S))))
 End Function
 
 Private Sub ZZ_FmtQQAv()
 Debug.Print FmtQQ("klsdf?sdf?dsklf", 2, 1)
 End Sub
 
-Function LblTabFmtAySepSS(Lbl$, Ay) As String()
+Function LblTabFmtAySepSS(Lbl$, Sy$()) As String()
 PushI LblTabFmtAySepSS, Lbl
-PushIAy LblTabFmtAySepSS, AyTab(Ay)
+PushIAy LblTabFmtAySepSS, AyTab(Sy)
 End Function

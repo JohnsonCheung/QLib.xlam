@@ -1,6 +1,6 @@
 Attribute VB_Name = "MIde_Mth_Lin_Is_Hit"
 Option Explicit
-Function IsPrpLin(Lin) As Boolean
+Function IsPrpLin(Lin$) As Boolean
 IsPrpLin = MthKd(Lin) = "Property"
 End Function
 
@@ -25,15 +25,15 @@ Next
 Brw O
 End Sub
 
-Function HitConstNm(SrcLin, ConstNm) As Boolean
+Function HitConstNm(SrcLin$, ConstNm$) As Boolean
 HitConstNm = ConstNmzSrcLin(SrcLin) = ConstNm
 End Function
 
-Function HitConstNmDic(SrcLin, ConstNmSet) As Boolean
-HitConstNmDic = ConstNmSet.Has(ConstNmzSrcLin(SrcLin))
+Function HitConstNmDic(SrcLin$, ConstNm As Aset) As Boolean
+HitConstNmDic = ConstNm.Has(ConstNmzSrcLin(SrcLin))
 End Function
 
-Function HitMthLin(Lin, B As WhMth) As Boolean
+Function HitMthLin(Lin$, B As WhMth) As Boolean
 If Not IsMthLin(Lin) Then Exit Function
 If IsNothing(B) Then HitMthLin = True: Exit Function
 If B.IsEmp Then HitMthLin = True: Exit Function
@@ -59,7 +59,7 @@ Function HitShtMdy(ShtMdy$, ShtMthMdyAy$()) As Boolean
 HitShtMdy = HitAy(IIf(ShtMdy = "", "Pub", ShtMdy), ShtMthMdyAy)
 End Function
 
-Function IsMthLinzPubZ(Lin) As Boolean
+Function IsMthLinzPubZ(Lin$) As Boolean
 With MthNm3(Lin)
     If FstChr(.Nm) <> "Z" Then Exit Function
     If .MthMdy <> "" Then
@@ -70,7 +70,7 @@ With MthNm3(Lin)
 End With
 IsMthLinzPubZ = True
 End Function
-Function IsOptLin(Lin) As Boolean
+Function IsOptLin(Lin$) As Boolean
 If Not HasPfx(Lin, "Option ") Then Exit Function
 Select Case True
 Case _
@@ -83,7 +83,7 @@ End Select
 
 End Function
 
-Function IsMthLinzPub(Lin) As Boolean
+Function IsMthLinzPub(Lin$) As Boolean
 With MthNm3(Lin)
     Select Case True
     Case .Nm <> "":

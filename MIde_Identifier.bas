@@ -23,15 +23,15 @@ End Sub
 Private Sub Z_NsetzStr()
 NsetzStr(SrcLinesInPj).Srt.Vc
 End Sub
-Function NsetzStr(S) As Aset
+Function NsetzStr(S$) As Aset
 Set NsetzStr = AsetzAy(NyzStr(S))
 End Function
-Function RplPun$(Str)
+Function RplPun$(S$)
 Dim O$(), C$, A%, J&, L&
-L = Len(Str)
+L = Len(S)
 ReDim O(L - 1)
 For J = 0 To L - 1
-    C = Mid(Str, J + 1, 1)
+    C = Mid(S, J + 1, 1)
     A = Asc(C)
     If IsAscPun(A) Then O(J) = " " Else O(J) = C
 Next
@@ -39,13 +39,14 @@ RplPun = Jn(O)
 End Function
 
 Function SyeNonNm(Sy$()) As String()
-Dim Nm
-For Each Nm In Sy
+Dim Nm$, I
+For Each I In Sy
+    Nm = I
     If IsNm(Nm) Then PushI SyeNonNm, Nm
 Next
 End Function
 
-Function NyzStr(S) As String()
+Function NyzStr(S$) As String()
 NyzStr = SyeNonNm(SySsl(RplLf(RplCr(RplPun(S)))))
 End Function
 Function RelOf_PubMthNm_To_ModNy_InPj() As Rel
@@ -55,8 +56,9 @@ Function RelOfMthNmToCmlInVbe(Optional WhStr$) As Rel
 Set RelOfMthNmToCmlInVbe = RelOfMthNmToCmlzVbe(CurVbe, WhStr)
 End Function
 Function RelOfMthNmToCmlzVbe(A As Vbe, Optional WhStr$) As Rel
-Dim O As New Rel, MthNm
-For Each MthNm In MthNyzVbe(A, WhStr)
+Dim O As New Rel, MthNm$, I
+For Each I In MthNyzVbe(A, WhStr)
+    MthNm = I
     O.PushRelLin CmlLin(MthNm)
 Next
 Set RelOfMthNmToCmlzVbe = O

@@ -27,7 +27,7 @@ Function ToFmt(Optional NoHdr As Boolean) As String()
 Dim O$()
 If Not NoHdr Then PushI O, Hdr
 PushIAy O, ToLy
-ToFmt = FmtAyT3(O)
+ToFmt = FmtSyT3(O)
 End Function
 
 Function ToLy() As String()

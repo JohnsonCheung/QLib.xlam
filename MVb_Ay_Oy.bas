@@ -6,63 +6,63 @@ PushObjAy O, Oy2
 OyAdd = O
 End Function
 
-Sub DoItrMth(Itr, ObjMth$)
-Dim Obj
-For Each Obj In Itr
+Sub DoItoMth(Ito, ObjMth$)
+Dim Obj As Object
+For Each Obj In Ito
     CallByName Obj, ObjMth, VbMethod
 Next
 End Sub
 
-Sub DoOyMth(Oy, ObjMth$)
-Dim Obj
+Sub DoOyMth(Oy() As Object, ObjMth$)
+Dim Obj As Object
 For Each Obj In Itr(Oy)
     CallByName Obj, ObjMth, VbMethod
 Next
 End Sub
 
-Function FstOyPEv(Oy, P, V)
-Dim Obj
+Function FstItmzOyPEv(Oy, P$, Ev)
+Dim Obj As Object
 For Each Obj In Itr(Oy)
-    If Prp(Obj, P) = V Then Asg Obj, FstOyPEv: Exit Function
+    If Prp(Obj, P) = Ev Then Asg Obj, FstItmzOyPEv: Exit Function
 Next
 End Function
 
-Function AvOyP(Oy, P) As Variant()
-AvOyP = IntoOyP(EmpAv, Oy, P)
+Function AvzOyP(Oy, P$) As Variant()
+AvzOyP = IntozOyP(EmpAv, Oy, P)
 End Function
 
-Function IntoOyP(Into, Oy, P)
+Function IntozOyP(Into, Oy, P$)
 Dim O: O = Into: Erase O
-Dim Obj
+Dim Obj As Object
 For Each Obj In Itr(Oy)
     Push O, Prp(Obj, P)
 Next
-IntoOyP = O
+IntozOyP = O
 End Function
 
-Function IntAyOyP(A, P) As Integer()
-IntAyOyP = IntoOyP(A, P, EmpIntAy)
+Function IntAyzOyP(Oy, P$) As Integer()
+IntAyzOyP = IntozOyP(EmpIntAy, Oy, P)
 End Function
 
-Function SyzOyPrp(A, P) As String()
-SyzOyPrp = IntoOyP(EmpSy, A, P)
+Function SyzOyPrp(Oy, P$) As String()
+SyzOyPrp = IntozOyP(EmpSy, Oy, P)
 End Function
 
-Function OyRmvFstNEle(A, N&)
-Dim O: O = A
+Function OyRmvFstNEle(Oy, N&)
+Dim O: O = Oy
 ReDim O(N - 1)
 Dim J&
-For J = 0 To UB(A) - N
-    Set O(J) = A(N + J)
+For J = 0 To UB(Oy) - N
+    Set O(J) = Oy(N + J)
 Next
 OyRmvFstNEle = O
 End Function
 
-Function OyeNothing(A)
-OyeNothing = AyCln(A)
-Dim I
-For Each I In A
-    If Not IsNothing(I) Then PushObj OyeNothing, I
+Function OyeNothing(Oy)
+OyeNothing = AyCln(Oy)
+Dim Obj As Object
+For Each Obj In Oy
+    If Not IsNothing(Obj) Then PushObj OyeNothing, Obj
 Next
 End Function
 
@@ -83,50 +83,47 @@ For Each Obj In Itr(Oy)
 Next
 End Function
 
-Function OywPredXPTrue(A, XP$, P)
-Dim O, X
-O = A
+Function OywPredXPTrue(Oy, XP$, P$)
+Dim O, Obj As Object
+O = Oy
 Erase O
-For Each X In Itr(A)
-    If Run(XP, X, P) Then
-        PushObj A, X
+For Each Obj In Itr(Oy)
+    If Run(XP, Obj, P) Then
+        PushObj O, Obj
     End If
 Next
 OywPredXPTrue = O
 End Function
 
-Function OywPEv(Oy, P, Ev)
+Function OywPEv(Oy, P$, Ev)
 Dim O
    O = Oy
    Erase O
-   Dim Obj
+   Dim Obj As Object
    For Each Obj In Itr(Oy)
        If Prp(Obj, P) = Ev Then PushObj O, Obj
    Next
 OywPEv = O
 End Function
 
-Function IntAyOywPEvSelP(Oy, P, Ev, SelP) As Integer()
-IntAyOywPEvSelP = IntAyOyP(OywPEv(Oy, P, Ev), SelP)
-End Function
-
-Function DrszOyppWhPev(Oy, PP, P, Ev) As Drs
-'Set DrszOyppWhPev = Drs(Fny, DryzOyppWhPev(Oy, Fny, P, Ev))
-End Function
-
-Function OywPIn(A, P, InAy)
-Dim X, O
-If Si(A) = 0 Or Si(InAy) Then OywPIn = A: Exit Function
-O = A
+Function OywPInAy(Oy, P$, InAy)
+Dim Obj As Object, O
+If Si(Oy) = 0 Or Si(InAy) Then OywPInAy = Oy: Exit Function
+O = Oy
 Erase O
-For Each X In Itr(A)
-    If HasEle(InAy, Prp(X, P)) Then PushObj O, X
+For Each Obj In Itr(Oy)
+    If HasEle(InAy, Prp(Obj, P)) Then PushObj O, Obj
 Next
-OywPIn = O
+OywPInAy = O
 End Function
-
-Function DryzOyPP(Oy, PP) As Variant()
-Dim Obj, PrpPthAy$()
+Function LyzObjPP(Obj As Object, PP$) As String()
+Dim I
+For Each I In SySsl(PP)
+    PushS LyzObjPP, I & " " & Prp(Obj, CStr(I))
+Next
+End Function
+Function DryzOyPP(Oy, PP$) As Variant()
+Dim Obj As Object, PrpPthAy$()
 PrpPthAy = SySsl(PP)
 For Each Obj In Itr(Oy)
     PushI DryzOyPP, DrzObj(Obj, PrpPthAy)

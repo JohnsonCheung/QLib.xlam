@@ -30,7 +30,7 @@ SrcFfnMd = SrcpzPj(PjzMd(A)) & MdNm(A) & SrcExtMd(A)
 End Function
 
 Function SrcpzPj$(A As VBProject)
-SrcpzPj = PthEns(PjPth(A) & "Src\")
+SrcpzPj = EnsPth(PjPth(A) & ".Src\" & Pjfn(A))
 End Function
 
 

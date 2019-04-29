@@ -1,11 +1,35 @@
 Attribute VB_Name = "MVb_Lin_Lines"
 Option Explicit
 Const CMod$ = "MVb_Lin_Lines."
-Function CntSzStrzLines$(Lines)
-CntSzStrzLines = CntSzStr(LinCnt(Lines), Len(Lines))
+Function WdtzLines%(Lines$)
+WdtzLines = AyWdt(SplitCrLf(Lines))
 End Function
-Function CntSzStr$(Cnt&, Si&)
-CntSzStr = FmtQQ("CntSzStr(? ?)", Cnt, Si)
+
+Function WdtzLinesAy%(LinesAy$())
+Dim O%, Lines
+For Each Lines In Itr(LinesAy)
+    O = Max(O, WdtzLines(CStr(Lines)))
+Next
+WdtzLinesAy = O
+End Function
+
+Function FmtLinesAy(LinesAy$()) As String()
+If Si(LinesAy) = 0 Then Exit Function
+Dim W%: W = WdtzLinesAy(LinesAy)
+Dim O$()
+ReDim O(UB(LinesAy))
+Dim Lines, J&
+For Each Lines In Itr(LinesAy)
+    O(J) = LinesAlignL(CStr(Lines), W)
+    J = J + 1
+Next
+FmtLinesAy = O
+End Function
+Function CntSiStrzLines$(Lines$)
+CntSiStrzLines = CntSiStr(LinCnt(Lines), Len(Lines))
+End Function
+Function CntSiStr$(Cnt&, Si&)
+CntSiStr = FmtQQ("CntSiStr(? ?)", Cnt, Si)
 End Function
 Private Sub Z_LinesWrp()
 Dim A$, W%
@@ -21,7 +45,7 @@ Tst:
     C
     Return
 End Sub
-Function LinesWrp$(Lines, Optional Wdt% = 80)
+Function LinesWrp$(Lines$, Optional Wdt% = 80)
 LinesWrp = Lines: Exit Function
 LinesWrp = JnCrLf(LyWrp(SplitCrLf(Lines), Wdt))
 End Function
@@ -92,8 +116,8 @@ A = Join(Ay, vbCrLf)
 Debug.Print LasNLines(A, 3)
 End Sub
 
-Function FstLin$(Lines)
-FstLin = StrBefOrAll(Lines, vbCrLf)
+Function FstLin$(Lines$)
+FstLin = BefOrAll(Lines, vbCrLf)
 End Function
 
 Function LinesRmvBlankLinAtEnd$(Lines)
@@ -114,28 +138,12 @@ If A = "" Then LinesApp = L: Exit Function
 LinesApp = A & vbCrLf & L
 End Function
 
-Function SplitCrLfAy(LinesAy) As String()
+Function LyzLinesAy(LinesAy$()) As String()
 Dim Lines
 For Each Lines In Itr(LinesAy)
-    PushIAy SplitCrLfAy, SplitCrLf(Lines)
+    PushIAy LyzLinesAy, SplitCrLf(CStr(Lines))
 Next
 End Function
-
-Sub LinesAsgBrk(A$, Ny0, ParamArray OLyAp())
-Dim Ny$(), L, T1$, T2$, NmDic As Dictionary
-Ny = NyzNN(Ny0)
-Set NmDic = IxDiczAy(Ny)
-For Each L In SplitCrLf(A)
-    Select Case FstChr(L)
-    Case "'", " "
-    Case Else
-        AsgBrk L, " ", T1, T2
-        If NmDic.Exists(T1) Then
-            Push OLyAp(NmDic(T1)), T2 '<----
-        End If
-    End Select
-Next
-End Sub
 
 Private Sub Z_TrimCrLfAtEnd()
 Dim Lines$: Lines = LineszVbl("lksdf|lsdfj|||")
@@ -144,48 +152,37 @@ Debug.Print Act & "<"
 Stop
 End Sub
 
-Function LasNLines$(Lines, N%)
+Function LasNLines$(Lines$, N%)
 LasNLines = JnCrLf(AywLasN(SplitCrLf(Lines), N))
 End Function
 
-Function LinCnt&(Lines)
+Function LinCnt&(Lines$)
 LinCnt = Si(SplitCrLf(Lines))
 End Function
 
-Function HSqLines(Lines) As Variant()
-HSqLines = SqzAyH(SplitCrLf(Lines))
+Function HSqByLines(Lines$) As Variant()
+HSqByLines = SqzAyH(SplitCrLf(Lines))
 End Function
 
-Function VSqLines(Lines) As Variant()
-VSqLines = SqzAyV(SplitCrLf(Lines))
+Function VSqByLines(Lines$) As Variant()
+VSqByLines = SqzAyV(SplitCrLf(Lines))
 End Function
 
-Function TrimR$(S)
+Function TrimR$(S$)
 TrimR = TrimCrLfAtEnd(RTrim(S))
 End Function
 
-Function RLenOfCrLf%(S)
-End Function
-
-Function AscAt%(S, Pos)
-AscAt = Asc(Mid(S, Pos, 1))
-End Function
-
-Function IsAscCrLf(Asc%)
-IsAscCrLf = (Asc = 13) Or (Asc = 10)
-End Function
-
-Function TrimCrLfAtEnd$(S)
+Function TrimCrLfAtEnd$(S$)
 Dim J&
 For J = Len(S) To 1 Step -1
     If Not IsAscCrLf(AscAt(S, J)) Then TrimCrLfAtEnd = Left(S, J): Exit Function
 Next
 End Function
 
-Function LasLinLines$(Lines)
+Function LasLinLines$(Lines$)
 LasLinLines = LasEle(SplitCrLf(Lines))
 End Function
-Function LinesAlignL$(Lines, W%)
+Function LinesAlignL$(Lines$, W%)
 Dim Las$: Las = LasLinLines(Lines)
 Dim N%: N = W - Len(Las)
 If N > 0 Then

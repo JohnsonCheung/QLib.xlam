@@ -1,40 +1,55 @@
 Attribute VB_Name = "MIde_Gen_Pjf_Fba"
 Option Explicit
-
-Sub GenFba(SrcpInst, Optional Acs As Access.Application)
-ThwNotSrcpInst SrcpInst
-Dim A As Access.Application: Set A = DftAcs(A)
-Dim Fba$: Fba = DistFba(SrcpInst)
+Private Type A
+    Acs As Access.Application
+    Scrp As String
+End Type
+Private Type B
+    DistPj As VBProject
+End Type
+Private A As A, B As B
+Sub GenFba(Scrp, Acs As Access.Application)
+ThwNotSrcp Scrp
+Set A.Acs = Acs
+A.Scrp = Scrp
+B = Gen_CrtFba
+Gen_AddRf
+Gen_LoadBas
+Gen_LoadFrm
+Gen_Cls
+End Sub
+Private Function Gen_CrtFba() As B
+Dim Fba$: Fba = DistFba(A.Scrp)
+DltFfnIf Fba
 CrtFb Fba
-OpnFb A, Fba
-Dim Pj As VBProject: Set Pj = A.Vbe.ActiveVBProject
-AddRfzPj Pj
-LoadBas Pj
-LoadFrm Pj
-ClsDbzAcs A
-CpyFilzToPth Fba, AddFdrEns(ParPth(ParPth(Pth(Fba))), "Dist"), OvrWrt:=True
-If IsNothing(A) Then AcsQuit A
+OpnFb A.Acs, Fba
+Set Gen_CrtFba.DistPj = PjzAcs(A.Acs)
+End Function
+Private Sub Gen_Cls()
+A.Acs.CloseCurrentDatabase
 End Sub
-Private Sub LoadFrm(A As VBProject)
-Stop
+Private Sub Gen_AddRf()
+AddRfzDistPj B.DistPj
 End Sub
-Private Sub LoadFrmzAcs(A As Access.Application, Srcp)
-Dim FrmFfn, N$
-For Each FrmFfn In Itr(FrmFfnAy(Srcp))
-    N$ = RmvExt(RmvExt(FrmFfn))
-    A.LoadFromText acForm, RmvExt(RmvExt(FrmFfn)), FrmFfn
-Next
+Private Sub Gen_LoadBas()
+LoadBas B.DistPj
 End Sub
-
-Private Function FrmFfnAy(Srcp) As String()
+Private Function LoadFrm_FrmFfnAy() As String()
 Dim Ffn
-For Each Ffn In FfnAy(Srcp)
-    If IsFrmFfn(Ffn) Then
-        PushI FrmFfnAy, Ffn
+For Each Ffn In FfnSy(A.Scrp)
+    If LoadFrm_IsFrmFfn(Ffn$) Then
+        PushI LoadFrm_FrmFfnAy, Ffn
     End If
 Next
 End Function
-Private Function IsFrmFfn(Ffn) As Boolean
-IsFrmFfn = HasSfx(Ffn, ".frm.txt")
-End Function
 
+Private Function LoadFrm_IsFrmFfn(Ffn$) As Boolean
+LoadFrm_IsFrmFfn = HasSfx(Ffn$, ".frm.txt")
+End Function
+Sub Gen_LoadFrm()
+Dim FrmFfn, N$
+For Each FrmFfn In Itr(LoadFrm_FrmFfnAy)
+    N$ = RmvExt(RmvExt(FrmFfn))
+    A.Acs.LoadFromText acForm, RmvExt(RmvExt(FrmFfn)), FrmFfn
+Next
+End Sub

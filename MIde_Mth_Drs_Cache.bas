@@ -31,30 +31,30 @@ End Sub
 Function BexprzFnyzSqlQPfxAy$(Fny$(), SqlQPfxAy$())
 
 End Function
-Function SqlQuMk$(A As Dao.DataTypeEnum)
+Function SqlQuMk$(A As DAO.DataTypeEnum)
 Select Case A
 Case _
-    Dao.DataTypeEnum.dbBigInt, _
-    Dao.DataTypeEnum.dbByte, _
-    Dao.DataTypeEnum.dbCurrency, _
-    Dao.DataTypeEnum.dbDecimal, _
-    Dao.DataTypeEnum.dbDouble, _
-    Dao.DataTypeEnum.dbFloat, _
-    Dao.DataTypeEnum.dbInteger, _
-    Dao.DataTypeEnum.dbLong, _
-    Dao.DataTypeEnum.dbNumeric, _
-    Dao.DataTypeEnum.dbSingle: Exit Function
+    DAO.DataTypeEnum.dbBigInt, _
+    DAO.DataTypeEnum.dbByte, _
+    DAO.DataTypeEnum.dbCurrency, _
+    DAO.DataTypeEnum.dbDecimal, _
+    DAO.DataTypeEnum.dbDouble, _
+    DAO.DataTypeEnum.dbFloat, _
+    DAO.DataTypeEnum.dbInteger, _
+    DAO.DataTypeEnum.dbLong, _
+    DAO.DataTypeEnum.dbNumeric, _
+    DAO.DataTypeEnum.dbSingle: Exit Function
 Case _
-    Dao.DataTypeEnum.dbChar, _
-    Dao.DataTypeEnum.dbMemo, _
-    Dao.DataTypeEnum.dbText: SqlQuMk = "'"
+    DAO.DataTypeEnum.dbChar, _
+    DAO.DataTypeEnum.dbMemo, _
+    DAO.DataTypeEnum.dbText: SqlQuMk = "'"
 Case _
-    Dao.DataTypeEnum.dbDate: SqlQuMk = "#"
+    DAO.DataTypeEnum.dbDate: SqlQuMk = "#"
 Case Else
     Thw CSub, "Invalid DaoTy", "DaoTy", A
 End Select
 End Function
-Function SkFnyWiSqlQPfx(A As Database, T) As String()
+Function SkFnyWiSqlQPfx(A As Database, T$) As String()
 Dim F
 For Each F In Itr(SkFny(A, T))
     PushI SkFnyWiSqlQPfx, SqlQuMk(DaoTyzTF(A, T, F)) & F
@@ -64,7 +64,7 @@ Sub IupDbt(A As Database, T, Drs As Drs)
 Dim Dry(): Dry = Drs.Dry
 If Si(Dry) = 0 Then Exit Sub
 ThwIfDrsGoodToIupDbt CSub, Drs, A, T
-Dim R As Dao.Recordset, Q$, Sql$, Dr
+Dim R As DAO.Recordset, Q$, Sql$, Dr
 Sql = SqlSel_T_Wh(T, BexprzFnyzSqlQPfxAy(SkFny(A, T), SkSqlQPfxAy(A, T)))
 For Each Dr In Dry
     Q = FmtQQAv(Sql, CvAv(Dr))

@@ -66,7 +66,7 @@ Next
 Stop
 End Function
 
-Function MthIxAyzNm(Src$(), MthNm) As Long()
+Function MthIxAyzNm(Src$(), MthNm$) As Long()
 Dim Ix&
 Ix = MthIxzFst(Src, MthNm)
 If Ix = -1 Then Exit Function
@@ -120,11 +120,11 @@ Next
 FstMthIx = -1
 End Function
 
-Function MthLnoMdMth&(A As CodeModule, MthNm)
+Function MthLnoMdMth&(A As CodeModule, MthNm$)
 MthLnoMdMth = 1 + MthIxzFst(Src(A), MthNm, 0)
 End Function
 
-Function MthLnoAyMdMth(A As CodeModule, MthNm) As Long()
+Function MthLnoAyMdMth(A As CodeModule, MthNm$) As Long()
 MthLnoAyMdMth = AyIncEle1(MthIxAyzNm(Src(A), MthNm))
 End Function
 

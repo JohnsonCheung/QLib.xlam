@@ -60,35 +60,35 @@ End Function
 Private Function KKCntMulItmColDryD(KKDrToItmAyDualColDry()) As Variant()
 
 End Function
-Function GpDicDKG(A As Drs, KK, G$) As Dictionary
+Function GpDic(A As Drs, KK$, G$) As Dictionary
 Dim Fny$()
 Dim KeyIxAy&(), GIx%
-    Fny = NyzNN(KK)
+    Fny = TermAy(KK)
     KeyIxAy = IxAy(A.Fny, Fny)
     PushI Fny, G & "_Gp"
     GIx = IxzAy(Fny, G)
-Set GpDicDKG = DryGpDic(A.Dry, KeyIxAy, GIx)
+Set GpDic = DryGpDic(A.Dry, KeyIxAy, GIx)
 End Function
 
-Function TwoColDryzDotLy(DotLy$()) As Variant()
-Dim DotLin
-For Each DotLin In Itr(DotLy)
-    With Brk2Dot(DotLin, NoTrim:=True)
-        PushI TwoColDryzDotLy, Sy(.s1, .s2)
-    End With
+Function DryzDotLy(DotLy$()) As Variant()
+Dim IDotLin
+For Each IDotLin In Itr(DotLy)
+    PushI DryzDotLy, SplitDot(CStr(IDotLin))
 Next
 End Function
-Function DryzDotLy(DotAy) As Variant()
+Function DryzDotLyzTwoCol(DotLy$()) As Variant()
 Dim I
-For Each I In Itr(DotAy)
-    PushI DryzDotLy, SplitDot(I)
+For Each I In Itr(DotLy)
+    With Brk1Dot(CStr(I))
+    PushI DryzDotLyzTwoCol, Array(.S1, .S2)
+    End With
 Next
 End Function
 
 Function DryzLyWithColon(LyWithColon$()) As Variant()
 Dim I
 For Each I In Itr(LyWithColon)
-    PushI DryzLyWithColon, SplitColon(I)
+    PushI DryzLyWithColon, SplitColon(CStr(I))
 Next
 End Function
 
@@ -112,10 +112,12 @@ Const CSub$ = CMod & "DryGpDic"
 'Next
 'Set DryGpDic = O
 End Function
-Function DrszFbt(Fb, T) As Drs
-Set DrszFbt = DrszT(Db(Fb), T)
+
+Function DrszFbt(Fb$, T$) As Drs
+DrszFbt = DrszT(Db(Fb$), T)
 End Function
+
 Function KE24Drs() As Drs
-Set KE24Drs = DrszFbt(SampFbzDutyDta, "KE24")
+KE24Drs = DrszFbt(SampFbzDutyDta, "KE24")
 End Function
 

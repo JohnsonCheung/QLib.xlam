@@ -4,8 +4,8 @@ Option Explicit
 Sub SetLoTit(A As ListObject, TitLy$())
 Dim Sq(), R As Range
     Sq = TitSq(TitLy, FnyzLo(A)): If Si(Sq) = 0 Then Exit Sub
-    Set R = TitAt(A, UBound(Sq, 1))
-Set R = RgzSq(Sq, R)
+    Set R = TitAt(A, UBound(Sq(), 1))
+Set R = RgzSq(Sq(), R)
 MgeTitRg R
 BdrRgInner R
 BdrRgAround R
@@ -54,22 +54,23 @@ End Function
 Private Function TitSq(TitLy$(), LoFny$()) As Variant()
 Dim Fny$()
 Dim Col()
-    Dim F, Tit$
-    For Each F In Fny
-        Tit = FstEleRmvT1(TitLy, F)
+    Dim F$, I, Tit$
+    For Each I In Fny
+        F = I
+        Tit = FstElezRmvT1(TitLy, F)
         If Tit = "" Then
             PushI Col, Sy(F)
         Else
             PushI Col, AyTrim(SplitVBar(Tit))
         End If
     Next
-TitSq = SqTranspose(SqzDry(Col))
+TitSq = Transpose(SqzDry(Col))
 End Function
 
 Private Sub Z_TitSq()
 Dim TitLy$(), Fny$()
 '----
-Dim A$()
+Dim A$(), Act(), Ept()
 'TitLy
     Erase A
     Push A, "A A1 | A2 11 "
@@ -79,9 +80,9 @@ Dim A$()
     TitLy = A
 Fny = SySsl("A B C D E")
 Ept = TitSq(TitLy, Fny)
-    SetSqrzDr Ept, 1, SySsl("A1 B1 C1 D E1")
-    SetSqrzDr Ept, 2, Array("A2 11", "B2")
-    SetSqrzDr Ept, 3, Array(Empty, "B3")
+    SetSqzDrv Ept, 1, SySsl("A1 B1 C1 D E1")
+    SetSqzDrv Ept, 2, Array("A2 11", "B2")
+    SetSqzDrv Ept, 3, Array(Empty, "B3")
 GoSub Tst
 Exit Sub
 '---

@@ -14,7 +14,7 @@ At.PasteSpecial xlPasteValues
 Set PtCpyToLo = LozRg(RgRCRC(At, 1, 1, NR, NC))
 End Function
 
-Sub SetPtffOri(A As PivotTable, FF, Ori As XlPivotFieldOrientation)
+Sub SetPtffOri(A As PivotTable, FF$, Ori As XlPivotFieldOrientation)
 Dim F, J%, T
 T = Array(False, False, False, False, False, False, False, False, False, False, False, False)
 J = 1
@@ -50,7 +50,7 @@ Sub ShwWb(Wb As Workbook)
 Wb.Application.Visible = True
 End Sub
 Sub ThwHasWbzWs(Wb As Workbook, Wsn$, Fun$)
-If HasWbzWs(Wb, Wsn) Then
+If HasWs(Wb, Wsn) Then
     Thw Fun, "Wb should have not have Ws", "Wb Ws", Wb.FullName, Wsn
 End If
 End Sub
@@ -132,10 +132,10 @@ O.Value = Sq
 Set AtAddSq = O
 End Function
 
-Function NewPtLoAtRDCP(A As ListObject, At As Range, Rowss$, Dtass$, Optional Colss$, Optional Pagss$) As PivotTable
-If WbLo(A).FullName <> WbzRg(At).FullName Then Stop: Exit Function
+Function PtzLo(A As ListObject, At As Range, Rowss$, Dtass$, Optional Colss$, Optional Pagss$) As PivotTable
+If WbzLo(A).FullName <> WbzRg(At).FullName Then Stop: Exit Function
 Dim O As PivotTable
-Set O = LoPc(A).CreatePivotTable(TableDestination:=At, TableName:=NewPtLoAtRDCPNm(A))
+Set O = LoPc(A).CreatePivotTable(TableDestination:=At, TableName:=PtNmzLo(A))
 With O
     .ShowDrillIndicators = False
     .InGridDropZones = False
@@ -146,12 +146,9 @@ SetPtffOri O, Rowss, xlRowField
 SetPtffOri O, Colss, xlColumnField
 SetPtffOri O, Pagss, xlPageField
 SetPtffOri O, Dtass, xlDataField
-Set NewPtLoAtRDCP = O
+Set PtzLo = O
 End Function
 
-Function NewPtLoAtRDCPNm$(A As ListObject)
-If Left(A.Name, 2) <> "T_" Then Stop
-Dim O$: O = "P_" & Mid(A.Name, 3)
-NewPtLoAtRDCPNm = AyNxtNm(PtNy(WbLo(A)), O)
-End Function
+Function PtNmzLo$(A As ListObject)
 
+End Function

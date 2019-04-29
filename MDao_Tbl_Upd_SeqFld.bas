@@ -1,8 +1,8 @@
 Attribute VB_Name = "MDao_Tbl_Upd_SeqFld"
 Option Explicit
 
-Sub UpdSeqFld(A As Database, T, SeqFld$, GpFF, OrdFFMinus$)
-Dim Q$: Q = SqlSel_FF_Fm_Ord(SeqFld & " " & GpFF, T, OrdFFMinus)
+Sub UpdSeqFld(A As Database, T, SeqFld$, GpFF, OrdffMinus$)
+Dim Q$: Q = SqlSel_FF_Fm_Ordff(SeqFld & " " & GpFF, T, OrdffMinus)
 Dim R As Recordset: Set R = Rs(A, Q)
 If NoRec(R) Then Exit Sub
 Dim Seq&, Las(), Cur(), N%
@@ -11,7 +11,7 @@ With R
     .MoveNext
     Las = DrzRs(R)
     While Not .EOF
-        Cur = DrzSqr(R, N)
+        Cur = DrzSqR(R, N)
         If Not IsEqAy(Cur, Las) Then
             Cur = Las
             Seq = 0

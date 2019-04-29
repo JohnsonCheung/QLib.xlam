@@ -23,8 +23,8 @@ For J = UB(B) To 0 Step -1
 Next
 End Sub
 
-Function CntSzStrzMd$(A As CodeModule)
-CntSzStrzMd = CntSzStrzLines(SrcLines(A))
+Function CntSiStrzMd$(A As CodeModule)
+CntSiStrzMd = CntSiStrzLines(SrcLines(A))
 End Function
 
 Function MdLineszMd(A As CodeModule) As MdLines
@@ -45,7 +45,7 @@ With FTIx
 End With
 End Sub
 
-Sub RmvMdFtLinesIxAy(A As CodeModule, B() As FTIx)
+Sub RmvMdLineszFtIxAy(A As CodeModule, B() As FTIx)
 If Not FTIxAyIsInOrd(B) Then Stop
 Dim J%
 For J = UB(B) To 0 Step -1
@@ -56,9 +56,9 @@ Next
 End Sub
 
 
-Private Sub Z_RmvMdFtLinesIxAy()
+Private Sub Z_RmvMdLineszFtIxAy()
 Dim A() As FTIx
 A = MthFTIxAyzMth(Md("Md_"), "XXX")
-RmvMdFtLinesIxAy Md("Md_"), A
+RmvMdLineszFtIxAy Md("Md_"), A
 End Sub
 

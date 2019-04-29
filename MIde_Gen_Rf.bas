@@ -7,7 +7,7 @@ RffAy = RffAyPj(CurPj)
 End Property
 
 Property Get FmtRfPj() As String()
-FmtRfPj = FmtAyT3(RfLyPj)
+FmtRfPj = FmtSyT3(RfLyPj)
 End Property
 
 Property Get RfLyPj() As String()

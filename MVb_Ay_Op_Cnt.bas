@@ -32,7 +32,7 @@ Private Sub Z_CntSiLin()
 Debug.Print CntSiLin(SrczPj(CurPj))
 End Sub
 Function CntSiLin$(Ay)
-CntSiLin = "AyCntSz(" & Si(Ay) & "." & SumSi(Ay) & ")"
+CntSiLin = "AyCntSi(" & Si(Ay) & "." & SumSi(Ay) & ")"
 End Function
 Private Sub Z()
 Z_CntDryzAy

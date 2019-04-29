@@ -9,34 +9,34 @@ Next
 IsAllEleHasVyzDicKK = True
 End Function
 
-Function IsAllEleEqAy(A) As Boolean
-If Si(A) <= 1 Then IsAllEleEqAy = True: Exit Function
+Function IsAllEleEq(Ay) As Boolean
+If Si(Ay) <= 1 Then IsAllEleEq = True: Exit Function
 Dim A0, J&
-A0 = A(0)
-For J = 1 To UB(A)
-    If A0 <> A(J) Then Exit Function
+A0 = Ay(0)
+For J = 1 To UB(Ay)
+    If A0 <> Ay(J) Then Exit Function
 Next
-IsAllEleEqAy = True
+IsAllEleEq = True
 End Function
 
-Function IsAllStrAy(A) As Boolean
-If Not IsArray(A) Then Exit Function
-If IsSy(A) Then IsAllStrAy = True: Exit Function
+Function IsAllStrAy(Ay) As Boolean
+If Not IsArray(Ay) Then Exit Function
+If IsSy(Ay) Then IsAllStrAy = True: Exit Function
 Dim I
-For Each I In Itr(A)
+For Each I In Itr(Ay)
     If Not IsStr(I) Then Exit Function
 Next
 IsAllStrAy = True
 End Function
 
-Function IsEqSz(A, B) As Boolean
-IsEqSz = Si(A) = Si(B)
+Function IsEqSi(A, B) As Boolean
+IsEqSi = Si(A) = Si(B)
 End Function
 
 Function IsEqAy(A, B) As Boolean
 If Not IsArray(A) Then Exit Function
 If Not IsArray(B) Then Exit Function
-If Not IsEqSz(A, B) Then Exit Function
+If Not IsEqSi(A, B) Then Exit Function
 Dim J&, X
 For Each X In Itr(A)
     If Not IsEq(X, B(J)) Then Exit Function

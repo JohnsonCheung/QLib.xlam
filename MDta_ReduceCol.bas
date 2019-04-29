@@ -19,7 +19,7 @@ Dim J%, Dry(), Fny$()
 Fny = A.Fny
 Dry = A.Dry
 For J = 0 To NCol - 1
-    If IsAllEleEqAy(ColzDry(Dry, J)) Then
+    If IsAllEleEq(ColzDry(Dry, J)) Then
         PushI FnyzReducibleCol, Fny(J)
     End If
 Next

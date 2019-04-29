@@ -11,7 +11,7 @@ LyzMdFTIx = SplitCrLf(LineszMdFTIx(A, B))
 End Function
 
 Function LyMdRe(A As CodeModule, B As RegExp) As String()
-Dim Ix&(): Ix = AyRe_IxAy(Src(A), B)
+Dim Ix&(): Ix = IxAyzAyRe(Src(A), B)
 Dim O$(), I, Md As CodeModule
 Dim N$: N = MdNm(A)
 If Si(Ix) = 0 Then Exit Function
@@ -22,7 +22,7 @@ LyMdRe = O
 End Function
 
 Function LyzPjPatn(A As VBProject, Patn$)
-LyzPjPatn = AywPatn(SrczPj(A), Patn)
+LyzPjPatn = SywPatn(SrczPj(A), Patn)
 End Function
 
 

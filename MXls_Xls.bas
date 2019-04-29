@@ -1,6 +1,9 @@
 Attribute VB_Name = "MXls_Xls"
 Option Explicit
 Public Const XlsPgmFfn$ = "C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE"
+Sub A()
+Debug.Print IsLinesPred.Pred("AA" & vbLf)
+End Sub
 Private Sub Z_XlsOfGetObj()
 Debug.Print XlsOfGetObj.Name
 End Sub
@@ -13,7 +16,7 @@ Function Xls() As Excel.Application
 Set Xls = Excel.Application
 End Function
 
-Function HasAddinFn(A As Excel.Application, AddinFn) As Boolean
+Function HasAddinFn(A As Excel.Application, AddinFn$) As Boolean
 HasAddinFn = HasItn(A.AddIns, AddinFn)
 End Function
 

@@ -10,22 +10,23 @@ Function CdLyzPj(A As VBProject) As String()
 CdLyzPj = CdLyzSrc(SrczPj(A))
 End Function
 Function CdLyzSrc(Src$()) As String()
-Dim L
-For Each L In Itr(Src)
+Dim L$, I
+For Each I In Itr(Src)
+    I = L
     If IsCdLin(L) Then
         PushI CdLyzSrc, L
     End If
 Next
 End Function
 
-Function IsCdLin(A) As Boolean
-Dim L$: L = Trim(A)
-If A = "" Then Exit Function
-If FstChr(LTrim(A)) = "'" Then Exit Function
+Function IsCdLin(Lin$) As Boolean
+Dim L$: L = Trim(Lin)
+If Lin = "" Then Exit Function
+If FstChr(LTrim(Lin)) = "'" Then Exit Function
 IsCdLin = True
 End Function
-Function IsNonOptCdLin(A) As Boolean
-If Not IsCdLin(A) Then Exit Function
-If HasPfx(A, "Option") Then Exit Function
+Function IsNonOptCdLin(Lin$) As Boolean
+If Not IsCdLin(Lin) Then Exit Function
+If HasPfx(Lin, "Option") Then Exit Function
 IsNonOptCdLin = True
 End Function

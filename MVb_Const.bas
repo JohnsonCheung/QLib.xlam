@@ -48,38 +48,38 @@ Public Const SampSqlCnStr_NotWrk$ = _
 
 Public Const SampFbzDutyDta$ _
                                     = H & "DutyPrepay5\DutyPrepay5_Data.mdb"
-Public Const SampFbzDuty_Pgm$ _
+Public Const SampFbzDutyPgm$ _
                                     = H & "DutyPrepay5\DutyPrepay5.accdb"
-Public Const SampFx_KE24 _
+Public Const SampFxzKE24 _
                                     = H & "DutyPrepay5\SAPDownloadExcel\KE24 2010-01c.xls"
-Public Const SampFbzDuty_PgmBackup$ _
+Public Const SampFbzDutyzPgmBackup$ _
                                     = H & "DutyPrepay5\DutyPrepay5_BackupFfn.accdb"
 Public Const SampFbzTaxCmp$ _
                                     = H1 & "QFinalSln\TaxExpCmp v1.3.accdb"
 Public Const SampFbzShpRate$ _
                                     = H1 & "QFinalSln\StockShipRate (ver 1.0).accdb"
 Public Const SampFbzShpCst$ = "C:\Users\user\Documents\Projects\Vba\ShpCst\ShpCstApp.accdb"
-Public Const SampFx$ = SampFx_KE24
-Property Get SampDb_ShpCst() As Database
-Set SampDb_ShpCst = Db(SampFbzShpCst)
+Public Const SampFx$ = SampFxzKE24
+Property Get SampDbzShpCst() As Database
+Set SampDbzShpCst = Db(SampFbzShpCst)
 End Property
 Property Get DbEng() As DBEngine
-Set DbEng = Dao.DBEngine
+Set DbEng = DAO.DBEngine
 End Property
-Private Function Db(A) As Dao.Database
+Private Function Db(A) As DAO.Database
 Set Db = DbEng.OpenDatabase(A)
 End Function
-Property Get SampCn_DutyDta() As ADODB.Connection
-Set SampCn_DutyDta = CnzFb(SampFbzDutyDta)
+Property Get SampCnzDutyDta() As AdoDb.Connection
+Set SampCnzDutyDta = CnzFb(SampFbzDutyDta)
 End Property
 Property Get SampFb$()
 SampFb = SampFbzDutyDta
 End Property
-Property Get SampDb() As Dao.Database
+Property Get SampDb() As DAO.Database
 Set SampDb = Db(SampFb)
 End Property
-Property Get SampDb_DutyDta() As Database
-Set SampDb_DutyDta = Db(SampFbzDutyDta)
+Property Get SampDbzDutyDta() As Database
+Set SampDbzDutyDta = Db(SampFbzDutyDta)
 End Property
 
 Private Sub AAAAA()

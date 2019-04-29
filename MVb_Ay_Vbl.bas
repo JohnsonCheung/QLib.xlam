@@ -1,11 +1,11 @@
 Attribute VB_Name = "MVb_Ay_Vbl"
 Option Explicit
 
-Function SyzVbl(Vbl) As String()
+Function SyzVbl(Vbl$) As String()
 SyzVbl = SplitVBar(Vbl)
 End Function
-Function ItrVbl(Vbl)
-ItrVbl = Itr(SyzVbl(Vbl))
+Function ItrzVbl(Vbl$)
+ItrzVbl = Itr(SyzVbl(Vbl))
 End Function
 
 Function LineszVbl$(Vbl$)

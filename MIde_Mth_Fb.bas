@@ -25,7 +25,7 @@ End Function
 Function MthDbzPj(A As VBProject) As Database
 Dim Fb$: Fb = MthFbzPj(A)
 EnsMthFb Fb
-Set MthDbzPj = Db(Fb)
+Set MthDbzPj = Db(Fb$)
 End Function
 
 Property Get MthDbInPj() As Database
@@ -37,7 +37,7 @@ BrwFb MthFb
 End Sub
 
 Private Property Get MthSchm() As String()
-Erase xx
+Erase XX
 X "Fld Nm  Md Pj"
 X "Fld T50 MchStr"
 X "Fld T10 MthPfx"
@@ -49,7 +49,7 @@ X "Fld Mem Lines TopRmk"
 X "Tbl Pj  *Id Pjf | PjNm PjDte"
 X "Tbl Md  *Id PjId MdNm | MdTy"
 X "Tbl Mth *Id MdId MthNm ShtTy | ShtMdy Prm Ret LinRmk TopRmk Lines Lno"
-MthSchm = xx
-Erase xx
+MthSchm = XX
+Erase XX
 End Property
 

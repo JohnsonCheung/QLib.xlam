@@ -19,35 +19,7 @@ Public Type ConstValOpt
 End Type
 Public Type StrConsts:    N As Long: Ay() As StrConst:    End Type
 Public Type ConstVals:    N As Long: Ay() As ConstVal:    End Type
-Function AppDb(Apn) As Database
-Set AppDb = Db(AppFb(Apn))
-End Function
 
-Function OupFxzNxt$(Apn)
-OupFxzNxt = NxtFfn(OupFx(Apn))
-End Function
-
-Function OupFx1$()
-'Dim A$, B$
-'A = OupPth & FmtQQ("TaxExpCmp ?.xlsx", Format(Now, "YYYY-MM-DD HHMM"))
-'OupFx1 = A
-End Function
-
-Function OupFx$(Apn)
-OupFx = PnmOupPth(AppDb(Apn)) & Apn & ".xlsx"
-End Function
-
-Function AppFb$(Apn)
-AppFb = AppHom & Apn & ".app.accdb"
-End Function
-
-Property Get AppHom$()
-Static Y$
-If Y = "" Then
-    Y = AddFdrEns(AddFdrEns(ParPth(TmpRoot), "Apps"), "Apps")
-End If
-AppHom = Y
-End Property
 Sub Ens()
 'EnsMdCSub
 'EnsMdOptExp
@@ -83,7 +55,7 @@ End Function
 Function ConstNm$(Lin)
 Dim L$: L = Lin
 ShfMthMdy L
-If ShfPfx(L, "Const") Then ConstNm = TakNm(L)
+If ShfPfx(L, "Const") Then ConstNm = Nm(L)
 End Function
 Function DocWsInPj() As Worksheet
 Set DocWsInPj = DocWszPj(CurPj)
@@ -252,13 +224,17 @@ End Function
 Property Get ProdPth$()
 ProdPth = "N:\SAPAccessReports\"
 End Property
-
+Property Get OHApnFb$()
+OHApnFb = ApnFb("OverHeadExpense6")
+End Property
 Private Sub ZZ()
-Dim A As Database
+Dim Db As Database
 PgmDb_DtaDb A
 PgmDb_DtaFb A
 End Sub
-
+Function ApnFb$(Apn$)
+ApnFb = "C:\Users\Public\" & Apn & "\" & Apn & ".accdb"
+End Function
 Property Let ApnzDb(A As Database, V$)
 ValOfQ(A, SqlSel_F("Apn")) = V
 End Property

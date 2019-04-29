@@ -1,71 +1,53 @@
 Attribute VB_Name = "MVb_Ay_Map_Tak"
 Option Explicit
 
-Function AyTakBefDD(A) As String()
-'AyTakBefDD = SyzAyMap(A, "StrBefDD")
-End Function
-
-Function AyTakAftDot(A) As String()
+Function SyTakBefDD(Sy$()) As String()
 Dim I
-For Each I In Itr(A)
-    Push AyTakAftDot, StrAftDot(A)
+For Each I In Itr(Sy)
+    PushI SyTakBefDD, BefDD(CStr(I))
 Next
 End Function
 
-Function AyTakAft(A, Sep$) As String()
+Function SyTakAftDot(Sy$()) As String()
+SyTakAftDot = SyTakAft(Sy, ".")
+End Function
+
+Function SyTakAft(Sy$(), Sep$) As String()
 Dim I
-For Each I In Itr(A)
-    PushI AyTakAft, StrAft(I, Sep)
+For Each I In Itr(Sy)
+    PushI SyTakAft, Aft(CStr(I), Sep)
 Next
 End Function
 
-Function AyTakAftOrAll(A, Sep$) As String()
+Function SyTakAftOrAll(Sy$(), Sep$) As String()
 Dim I
-For Each I In Itr(A)
-    PushI AyTakAftOrAll, StrAftOrAll(I, Sep)
+For Each I In Itr(Sy)
+    PushI SyTakAftOrAll, AftOrAll(CStr(I), Sep)
 Next
 End Function
 
-Function AyTakBef(A, Sep$) As String()
+Function SyTakBef(Sy$(), Sep$) As String() 'Return a Sy which is taking Bef-Sep from Given Sy
 Dim I
-For Each I In Itr(A)
-    PushI AyTakBef, StrBef(I, Sep)
+For Each I In Itr(Sy)
+    PushI SyTakBef, Bef(CStr(I), Sep)
 Next
 End Function
 
-Function AyTakBefDot(A) As String()
-Dim X
-For Each X In Itr(A)
-    PushI AyTakBefDot, StrBefDot(X)
-Next
+Function SyTakBefDot(Sy$()) As String()
+SyTakBefDot = SyTakBef(Sy, ".")
 End Function
 
-Function AyTakBefOrAll(A, Sep$) As String()
+Function SyTakBefOrAll(Sy$(), Sep$) As String()
 Dim I
-For Each I In Itr(A)
-    Push AyTakBefOrAll, StrBefOrAll(I, Sep)
+For Each I In Itr(Sy)
+    Push SyTakBefOrAll, BefOrAll(CStr(I), Sep)
 Next
 End Function
 
-Function AyTakT1(A) As String()
-Dim L
-For Each L In Itr(A)
-    PushI AyTakT1, T1(L)
-Next
-End Function
-
-Function AyTakT2(A) As String()
-'AyTakT2 = SyzAyMap(A, "T2")
-End Function
-
-Function AyTakT3(A) As String()
-'AyTakT3 = SyzAyMap(A, "T3")
-End Function
-
-Function AyTakBetBkt(Ay) As String()
+Function SyTakBetBkt(Sy$()) As String()
 Dim I
-For Each I In Itr(Ay)
-    PushI AyTakBetBkt, BetBkt(I)
+For Each I In Itr(Sy)
+    PushI SyTakBetBkt, BetBkt(CStr(I))
 Next
 End Function
 

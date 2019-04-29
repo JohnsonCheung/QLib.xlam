@@ -6,7 +6,7 @@ Sub AsgSclNN(Scl$, NN$, ParamArray OAp())
 Const CSub$ = CMod & "AsgSclNN"
 Dim Av(): Av = OAp
 Dim V, Ny$(), I, J%
-Ny = NyzNN(NN)
+Ny = TermAy(NN)
 If Si(Ny) <> Si(Av) Then Stop
 For Each I In Itr(AyeEmpEle(AyTrim(SplitSemi(Scl))))
     V = SclItm_V(CStr(I), Ny)
@@ -22,7 +22,7 @@ End Sub
 Function ChkSclNN(A$, Ny0) As String()
 Const CSub$ = CMod & "ChkSclNN"
 Dim V, Ny$(), I, Er1$(), Er2$()
-Ny = NyzNN(Ny0)
+Ny = TermAy(Ny0)
 For Each I In Itr(AyeEmpEle(AyTrim(SplitSemi(A))))
     V = SclItm_V(CStr(I), Ny)
     Select Case True
@@ -49,7 +49,7 @@ Function SclItm_V(A$, Ny$())
 If HasEle(Ny, A) Then SclItm_V = True: Exit Function
 If Not HasStrPfxAy(A, Ny) Then SclItm_V = CByte(1): Exit Function
 If Not HasSubStr(A, "=") Then SclItm_V = CByte(2): Exit Function
-SclItm_V = Trim(StrAft(A, "="))
+SclItm_V = Trim(Aft(A, "="))
 End Function
 
 Function ShfScl$(OStr$)

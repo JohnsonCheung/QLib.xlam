@@ -1,15 +1,15 @@
 Attribute VB_Name = "MVb_Fs_Ffn_MisEr"
 Option Explicit
 Const CMod$ = ""
-Sub ThwMisFfnAy(FfnAy$(), Fun$, Optional FilKind$ = "File")
+Sub ThwMisFfnAy(FfnSy$(), Fun$, Optional FilKind$ = "File")
 Const CSub$ = CMod & "ThwMisFfnAy"
-ThwErMsg ChkMisFfnAy(FfnAy, FilKind), CSub, "Some given files not found", "Given files", FfnAy
+'ThwIfEr ChkMisFfnAy(FfnSy, FilKind), CSub, "Some given files not found", "Given files", FfnSy
 End Sub
 
-Function MsgzMisFfn(Ffn, Optional FilKind$ = "File") As String()
+Function MsgzMisFfn(Ffn$, Optional FilKind$ = "File") As String()
 Dim F$
 F = FmtQQ("[?] not found", FilKind)
-MsgzMisFfn = LyzMsgNap(F, "File Path", Fn(Ffn), Pth(Ffn))
+MsgzMisFfn = LyzMsgNap(F, "File Path", Fn(Ffn$), Pth(Ffn$))
 End Function
 
 Function MsgzMisFfnAset(MisFfn As Aset, Optional FilKind$ = "file") As String()
@@ -24,19 +24,20 @@ PushI MsgzMisFfnAset, FmtQQ("Following ? not found", S)
 PushIAy MsgzMisFfnAset, AyTab(LyzGpPth(MisFfn))
 End Function
 
-Function MsgzMisFfnAy(FfnAy$(), Optional FilKind$ = "File") As String()
-MsgzMisFfnAy = MsgzMisFfnAset(AsetzAy(FfnAy), FilKind)
+Function MsgzMisFfnAy(FfnSy$(), Optional FilKind$ = "File") As String()
+MsgzMisFfnAy = MsgzMisFfnAset(AsetzAy(FfnSy), FilKind)
 End Function
 
 Function ChkMisFfn(Ffn$, Optional FilKind$ = "File") As String()
-If HasFfn(Ffn) Then Exit Function
-ChkMisFfn = MsgzMisFfn(Ffn, FilKind)
+If HasFfn(Ffn$) Then Exit Function
+ChkMisFfn = MsgzMisFfn(Ffn$, FilKind)
 End Function
 
-Function ChkMisFfnAy(FfnAy$(), Optional FilKind$ = "File") As String()
-Dim I, O$()
-For Each I In FfnAy
-    If Not HasFfn(I) Then
+Function ChkMisFfnAy(FfnSy$(), Optional FilKind$ = "File") As String()
+Dim I, O$(), Ffn$
+For Each I In FfnSy
+    Ffn = I
+    If Not HasFfn(Ffn) Then
         PushI O, I
     End If
 Next

@@ -1,31 +1,7 @@
 Attribute VB_Name = "AShpCst_Pm_LiPm"
 Option Explicit
 Private Db As Database
-
-Property Get ShpCstLiPm() As LiPm
-Set Db = AppDb("ShpCst")
-Set ShpCstLiPm = New LiPm
-ShpCstLiPm.Init "ShpCst", LiFilAy, LiFxAy, LiFbAy
-Db.Close
-End Property
-Property Get ShpCstLtPm() As LtPm()
-ShpCstLtPm = LtPm(ShpCstLiPm)
-End Property
-Private Function LiFil(Itm$) As LiFil
-Set LiFil = New LiFil
-LiFil.FilNm = Itm
-LiFil.Ffn = PnmFfn(Db, Itm)
-End Function
-
-Private Property Get LiFilAy() As LiFil()
-Dim A$
-A = "UOM":  PushObj LiFilAy, LiFil(A)
-A = "MB52": PushObj LiFilAy, LiFil(A)
-A = "ZHT1": PushObj LiFilAy, LiFil(A)
-End Property
-Private Property Get LiFbAy() As LiFb()
-End Property
-Private Property Get LiFxAy() As LiFx()
+Private Property Get ShpCstLnkPmLy() As String()
 Const LnkColVblzZHT1$ = _
     " ZHT1   D Brand  |" & _
     " RateSc M Amount |" & _
@@ -46,10 +22,8 @@ Const LnkColVblzMB52$ = _
     " QInsp  D [In Quality Insp#]|" & _
     " QUnRes D Unrestricted|" & _
     " QBlk   D Blocked"
-Dim A$, O() As LiFx
-A = "MB52": PushObj O, LiFxLnkColVbl(A, A, "Sheet1", LnkColVblzMB52)
-A = "UOM":  PushObj O, LiFxLnkColVbl(A, A, "Sheet1", LnkColVblzUom)
-            PushObj O, LiFxLnkColVbl("ZHT1", "ZHT18701", "8701", LnkColVblzZHT1)
-            PushObj O, LiFxLnkColVbl("ZHT1", "ZHT18601", "8601", LnkColVblzZHT1)
-LiFxAy = O
+'A = "MB52": PushObj O, LiFxLnkColVbl(A, A, "Sheet1", LnkColVblzMB52)
+'A = "UOM":  PushObj O, LiFxLnkColVbl(A, A, "Sheet1", LnkColVblzUom)
+'            PushObj O, LiFxLnkColVbl("ZHT1", "ZHT18701", "8701", LnkColVblzZHT1)
+'            PushObj O, LiFxLnkColVbl("ZHT1", "ZHT18601", "8601", LnkColVblzZHT1)
 End Property

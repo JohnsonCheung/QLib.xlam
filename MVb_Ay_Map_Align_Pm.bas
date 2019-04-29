@@ -17,7 +17,7 @@ Set T1ToAlignNColDic = New Dictionary
     Dim Ay$(), F, D As Dictionary
     Ay = TermAy(PmStr)
     Set D = T1ToAlignNColDiczNoSrt(Ay)
-    For Each F In NyzNN(Ay(0))
+    For Each F In TermAy(Ay(0))
         If D.Exists(F) Then
             T1ToAlignNColDic.Add F, D(F)
         Else
@@ -31,8 +31,8 @@ Dim J%, W%, F
 Set T1ToAlignNColDiczNoSrt = New Dictionary
 For J = 2 To UB(PmLy)
     With Brk(PmLy(J), ":")
-        W = .s1
-        For Each F In NyzNN(.s2)
+        W = .S1
+        For Each F In TermAy(.S2)
             T1ToAlignNColDiczNoSrt.Add F, W
         Next
     End With

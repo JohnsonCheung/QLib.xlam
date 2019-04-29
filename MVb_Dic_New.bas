@@ -1,12 +1,13 @@
 Attribute VB_Name = "MVb_Dic_New"
 Option Explicit
-Function DiczFt(Ft) As Dictionary
-Set DiczFt = Dic(FtLy(Ft))
+Function DiczFt(Ft$) As Dictionary
+Set DiczFt = Dic(LyzFt(Ft$))
 End Function
 Function NewSyDic(TermLinAy$()) As Dictionary
-Dim L, T$, Ssl$
+Dim L$, I, T$, Ssl$
 Dim O As New Dictionary
-For Each L In Itr(TermLinAy)
+For Each I In Itr(TermLinAy)
+    L = I
     AsgTRst L, T, Ssl
     If O.Exists(T) Then
         O(T) = AyAdd(O(T), SySsl(Ssl))
@@ -25,24 +26,13 @@ Else
 End If
 End Sub
 
-Function FmtDic1(A As Dictionary) As String()
-If A.Count = 0 Then Exit Function
-Dim Key: Key = A.Keys
-Dim O$(): O = FmtAySamWdt(Key)
-Dim J&
-For J = 0 To UB(Key)
-   O(J) = O(J) & " " & A(Key(J))
-Next
-FmtDic1 = O
-End Function
-
 Sub AddDiczNonBlankStr(ODic As Dictionary, K, S$)
 If S = "" Then Exit Sub
 ODic.Add K, S
 End Sub
 
-Function DiczLines(DicLines, Optional JnSep$ = vbCrLf) As Dictionary
-Set DiczLines = Dic(SplitCrLf(DicLines), JnSep)
+Function DiczLines(Lines$, Optional JnSep$ = vbCrLf) As Dictionary
+Set DiczLines = Dic(SplitCrLf(Lines), JnSep)
 End Function
 
 Sub AddDiczApp(OLinesDic As Dictionary, K, StrItm$, Sep$)
@@ -54,16 +44,18 @@ End If
 End Sub
 
 Function LyzLinesDicItems(LineszDic As Dictionary) As String()
-Dim Lines
-For Each Lines In LineszDic.Items
+Dim Lines$, I
+For Each I In LineszDic.Items
+    Lines = I
     PushIAy LyzLinesDicItems, SplitCrLf(Lines)
 Next
 End Function
 Function Dic(Ly$(), Optional JnSep$ = vbCrLf) As Dictionary
 Dim O As New Dictionary
-Dim I, T$, Rst$
+Dim I, L$, T$, Rst$
 For Each I In Itr(Ly)
-    AsgTRst I, T, Rst
+    L = I
+    AsgTRst L, T, Rst
     If T <> "" Then
         If O.Exists(T) Then
             O(T) = O(T) & JnSep & Rst
@@ -83,7 +75,7 @@ For J = 0 To UB(Ky)
 Next
 End Function
 
-Function DiczVbl(Vbl, Optional JnSep$ = vbCrLf) As Dictionary
+Function DiczVbl(Vbl$, Optional JnSep$ = vbCrLf) As Dictionary
 Set DiczVbl = Dic(SplitVBar(Vbl), JnSep)
 End Function
 

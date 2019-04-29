@@ -21,18 +21,15 @@ Case Else: Thw CSub, "[MdDNm] should be XXX.XXX or XXX", MdDNm
 End Select
 End Function
 
-Function MdAyCmpAy(A() As CodeModule) As VBComponent()
-MdAyCmpAy = IntoOyP(A, "Parent", MdAyCmpAy)
+Function MdAyzCmp(A() As CodeModule) As VBComponent()
+MdAyzCmp = IntozOyP(MdAyzCmp, A, "Parent")
 End Function
 
-Function MdAywInTy(A() As CodeModule, WhInTyAy0$) As CodeModule()
-Dim TyAy() As vbext_ComponentType, Md
-'TyAy = CvWhCmpTy(WhInTyAy0)
-Dim O() As CodeModule
-For Each Md In A
-    If HasEle(TyAy, CvMd(Md).Parent.Type) Then PushObj O, Md
+Function MdAywInTy(A() As CodeModule, InTyAy() As vbext_ComponentType) As CodeModule()
+Dim I
+For Each I In A
+    If HasEle(InTyAy, CvMd(I).Parent.Type) Then PushObj MdAywInTy, I
 Next
-MdAywInTy = O
 End Function
 
 Function MdDNm$(A As CodeModule)
@@ -95,9 +92,9 @@ Function SrcLines$(A As CodeModule)
 SrcLines = JnCrLf(Src(A))
 End Function
 
-Function SrcRmvMth(Src$(), MthNmSet As Aset) As String()
+Function RmvMthInSrc(Src$(), MthNmSet As Aset) As String()
 Dim D As Dictionary: Set D = DicExlKeySet(MthNmDic(Src), MthNmSet): 'Brw D: Stop
-SrcRmvMth = LyzLinesDicItems(D)
+RmvMthInSrc = LyzLinesDicItems(D)
 End Function
 
 Property Get CurMd() As CodeModule

@@ -7,7 +7,7 @@ End Function
 
 Function BoxLyAy(Ay) As String()
 If Si(Ay) = 0 Then Exit Function
-Dim W%: W = WdtzAy(Ay)
+Dim W%: W = AyWdt(Ay)
 Dim H$: H = "|" & Dup("-", W + 2) & "|"
 Push BoxLyAy, H
 Dim I

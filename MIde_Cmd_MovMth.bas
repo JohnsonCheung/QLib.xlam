@@ -1,58 +1,58 @@
 Attribute VB_Name = "MIde_Cmd_MovMth"
 Option Explicit
-Const XMov_MthBarNm$ = "XMov_Mth"
-Const XMov_MthBtnNm$ = "XMov_Mth"
+Const BarNmzMovMth$ = "XMov_Mth"
+Const BtnNmzMovMth$ = "XMov_Mth"
 
-Property Get CmdBarNy() As String()
-CmdBarNy = Itn(CurVbe_Bars)
+Property Get BarNy() As String()
+BarNy = Itn(Bars)
 End Property
 
 Private Sub Z_Mov_MthBar()
-MsgBox XMov_MthBar.Name
+MsgBox BarzMovMth.Name
 End Sub
 
-Function Vbe_Bars(A As Vbe) As Office.CommandBars
-Set Vbe_Bars = A.CommandBars
+Function BarszVbe(A As Vbe) As Office.CommandBars
+Set BarszVbe = A.CommandBars
 End Function
 
-Property Get CurVbe_Bars() As Office.CommandBars
-Set CurVbe_Bars = Vbe_Bars(CurVbe)
+Property Get Bars() As Office.CommandBars
+Set Bars = BarszVbe(CurVbe)
 End Property
 
-Function CurVbe_BarsHas(A) As Boolean
-CurVbe_BarsHas = HasItn(CurVbe_Bars, A)
+Function HasBar(BarNm$) As Boolean
+HasBar = HasItn(Bars, BarNm)
 End Function
-Function CmdBar(A) As Office.CommandBar
-Set CmdBar = CurVbe_Bars(A)
+Function Bar(BarNm$) As Office.CommandBar
+Set Bar = Bars(BarNm)
 End Function
-Sub RmvCmdBar(A)
-If CurVbe_BarsHas(A) Then CmdBar(A).Delete
+Sub RmvBar(BarNm$)
+If HasBar(BarNm) Then Bars(BarNm).Delete
 End Sub
-Function CmdBar_HasBtn(A As Office.CommandBar, BtnCaption)
+Function HasBtn(A As Office.CommandBar, BtnCaption$) As Boolean
 Dim C As Office.CommandBarControl
 For Each C In A.Controls
     If C.Type = msoControlButton Then
-        If CvCmdBtn(C).Caption = BtnCaption Then CmdBar_HasBtn = True: Exit Function
+        If CvBtn(C).Caption = BtnCaption Then HasBtn = True: Exit Function
     End If
 Next
 End Function
-Sub EnsCmdBarBtn(CmdBarNm, BtnCaption)
-EnsCmdBar XMov_MthBarNm
-If CmdBar_HasBtn(CmdBar(CmdBarNm), BtnCaption) Then Exit Sub
-CmdBar(CmdBarNm).Controls.Add(msoControlButton).Caption = BtnCaption
+Sub EnsBarBtn(BarNm$, BtnCaption$)
+EnsBar BarNmzMovMth
+If HasBtn(Bars(BarNm), BtnCaption) Then Exit Sub
+Bars(BarNm).Controls.Add(msoControlButton).Caption = BtnCaption
 End Sub
-Sub EnsCmdBar(A$)
-If CurVbe_BarsHas(A) Then Exit Sub
-AddCmdBar A
+Sub EnsBar(BarNm$)
+If HasBar(BarNm) Then Exit Sub
+AddBar BarNm
 End Sub
-Sub AddCmdBar(A)
-CurVbe_Bars.Add A
+Sub AddBar(BarNm$)
+Bars.Add BarNm
 End Sub
-Private Property Get XMov_MthBar() As Office.CommandBar
-Set XMov_MthBar = CurVbe_Bars(XMov_MthBarNm)
+Private Property Get BarzMovMth() As Office.CommandBar
+Set BarzMovMth = Bars(BarNmzMovMth)
 End Property
-Private Property Get XMov_MthBtn() As Office.CommandBarControl
-Set XMov_MthBtn = XMov_MthBar.Controls(XMov_MthBtnNm)
+Private Property Get BtnzMovMth() As Office.CommandBarControl
+Set BtnzMovMth = BarzMovMth.Controls(BtnNmzMovMth)
 End Property
 
 Private Sub Z()

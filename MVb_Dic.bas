@@ -21,6 +21,26 @@ For J = 0 To UB(Dy)
    PushDic DicAyAdd, Dy(J)
 Next
 End Function
+Function LineszLinesDic(LinesDic As Dictionary, Optional LinesSep$ = vbCrLf) ' Return the joined Lines from LinesDic
+Dim O$(), I, Lines$
+For Each I In LinesDic.Items
+    PushI O, I
+Next
+LineszLinesDic = Jn(O, LinesSep)
+End Function
+
+Function IupDic(A As Dictionary, By As Dictionary) As Dictionary 'Return New dictionary from A-Dic by Ins-or-upd By-Dic.  Ins: if By-Dic has key and A-Dic. _
+Upd: K fnd in both, A-Dic-Val will be replaced by By-Dic-Val
+Dim O As New Dictionary, K
+For Each K In A.Keys
+    If By.Exists(K) Then
+        O.Add K, By(K)
+    Else
+        O(K) = By(K)
+    End If
+Next
+Set IupDic = O
+End Function
 
 Function AddDicKeyPfx(A As Dictionary, Pfx) As Dictionary
 Dim O As New Dictionary, K
@@ -41,7 +61,7 @@ End Sub
 Function DicAllKeyIsNm(A As Dictionary) As Boolean
 Dim K
 For Each K In A.Keys
-    If Not IsNm(K) Then Exit Function
+    If Not IsNm(CStr(K)) Then Exit Function
 Next
 DicAllKeyIsNm = True
 End Function
@@ -95,9 +115,10 @@ Function DicFny(InclDicValOptTy As Boolean) As String()
 DicFny = SplitSpc("Key Val"): If InclDicValOptTy Then PushI DicFny, "ValTy"
 End Function
 Function DryzDotAy(DotAy$()) As Variant()
-Dim I
+Dim I, Lin$
 For Each I In Itr(DotAy)
-    PushI DryzDotAy, SplitDot(I)
+    Lin = I
+    PushI DryzDotAy, SplitDot(Lin)
 Next
 End Function
 Function DryzDic(A As Dictionary, Optional InclDicValOptTy As Boolean) As Variant()
@@ -208,7 +229,7 @@ Function DicMge(A As Dictionary, PfxSsl$, ParamArray DicAp()) As Dictionary
 Dim Av(): Av = DicAp
 Dim Ny$()
    Ny = SySsl(PfxSsl)
-   Ny = AyAddSfx(Ny, "@")
+   Ny = SyAddSfx(Ny, "@")
 If Si(Av) <> Si(Ny) Then Stop
 Dim Dy() As Dictionary
 Dim D As Dictionary
@@ -263,7 +284,7 @@ If IsNothing(A) Then Exit Function
 If A.Exists(K) Then Asg A(K), DicValOpt
 End Function
 
-Function KeyzLikAyDic_Itm$(Dic As Dictionary, Itm)
+Function KeyzLikAyDic_Itm$(Dic As Dictionary, Itm$)
 Dim K, LikeAy$()
 For Each K In Dic.Keys
     LikeAy = Dic(K)
@@ -274,8 +295,7 @@ For Each K In Dic.Keys
 Next
 End Function
 
-
-Function KeyzLikssDic_Itm$(A As Dictionary, Itm)
+Function KeyzLikssDic_Itm$(A As Dictionary, Itm$)
 Dim Likss$, K
 For Each K In A
     Likss = A(K)
@@ -324,7 +344,6 @@ DicSelIntoSy B, E
 SyzDicKey B
 DiczSwapKV B
 DicTy B
-KeyzLikssDic_Itm B, A
 End Sub
 
 Private Sub Z()
@@ -333,8 +352,8 @@ End Sub
 Function WbzNmToLinesDic(A As Dictionary) As Workbook
 'Assume each dic keys is name and each value is lines
 'Prp-Wb is to create a new Wb with worksheet as the dic key and the lines are break to each cell of the sheet
-Ass IsItrzNm(A.Keys)
-Ass IsItrzStr(A.Items)
+Ass IsNmItr(A.Keys)
+Ass IsStrItr(A.Items)
 Dim K, ThereIsSheet1 As Boolean
 Dim O As Workbook
 Set O = NewWb
@@ -346,7 +365,7 @@ For Each K In A.Keys
         Set Ws = O.Sheets.Add
         Ws.Name = K
     End If
-    Ws.Range("A1").Value = VSqLines(A(K))
+    Ws.Range("A1").Value = VSqByLines(A(K))
 Next
 X: Set WbzNmToLinesDic = O
 End Function

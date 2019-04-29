@@ -45,9 +45,10 @@ IsDte = VarType(A) = vbDate
 End Function
 
 Function IsEq(A, B) As Boolean
-If VarType(A) <> VarType(B) Then Exit Function
+If Not IsEqTy(A, B) Then Exit Function
 Select Case True
 Case IsArray(A): IsEq = IsEqAy(A, B)
+Case IsDic(A): IsEq = IsEqDic(CvDic(A), CvDic(B))
 Case IsObject(A): IsEq = ObjPtr(A) = ObjPtr(B)
 Case Else: IsEq = A = B
 End Select
@@ -152,46 +153,46 @@ If A = "_" Then Exit Function
 IsPun = True
 End Function
 
-Function IsQuoted(A, Q1$, Optional ByVal Q2$) As Boolean
+Function IsQuoted(S$, Q1$, Optional ByVal Q2$) As Boolean
 If Q2 = "" Then Q2 = Q1
-If FstChr(A) <> Q1 Then Exit Function
-IsQuoted = LasChr(A) = Q2
+If FstChr(S) <> Q1 Then Exit Function
+IsQuoted = LasChr(S) = Q2
 End Function
 
-Function IsSngQRmk(A) As Boolean
-IsSngQRmk = FstChr(LTrim(A)) = "'"
+Function IsSngQRmk(S$) As Boolean
+IsSngQRmk = FstChr(LTrim(S$)) = "'"
 End Function
 
-Function IsSngQuoted(A) As Boolean
-IsSngQuoted = IsQuoted(A, "'")
+Function IsSngQuoted(S$) As Boolean
+IsSngQuoted = IsQuoted(S, "'")
 End Function
 
-Function IsSomething(A) As Boolean
-IsSomething = Not IsNothing(A)
+Function IsSomething(V) As Boolean
+IsSomething = Not IsNothing(V)
 End Function
-Function IsNeedQuote(A) As Boolean
-If IsSqBktQuoted(A) Then Exit Function
+Function IsNeedQuote(S$) As Boolean
+If IsSqBktQuoted(S) Then Exit Function
 Select Case True
-Case IsAscDig(Asc(FstChr(A))), HasSpc(A), HasDot(A), HasHyphen(A), HasPound(A): IsNeedQuote = True
+Case IsAscDig(Asc(FstChr(S))), HasSpc(S), HasDot(S), HasHyphen(S), HasPound(S): IsNeedQuote = True
 End Select
 End Function
-Function IsStr(A) As Boolean
-IsStr = VarType(A) = vbString
+Function IsStr(V) As Boolean
+IsStr = VarType(V) = vbString
 End Function
 
-Function IsStrAy(A) As Boolean
-IsStrAy = VarType(A) = vbArray + vbString
+Function IsStrAy(V) As Boolean
+IsStrAy = VarType(V) = vbArray + vbString
 End Function
-Function IsEmpSy(A) As Boolean
-If Not IsSy(A) Then Exit Function
-IsEmpSy = Si(A) = 0
+Function IsEmpSy(V) As Boolean
+If Not IsSy(V) Then Exit Function
+IsEmpSy = Si(V) = 0
 End Function
-Function IsSy(A) As Boolean
-IsSy = IsStrAy(A)
+Function IsSy(V) As Boolean
+IsSy = IsStrAy(V)
 End Function
 
-Function IsTgl(A) As Boolean
-IsTgl = TypeName(A) = "ToggleButton"
+Function IsTglBtn(V) As Boolean
+IsTglBtn = TypeName(V) = "ToggleButton"
 End Function
 
 

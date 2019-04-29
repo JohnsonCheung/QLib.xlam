@@ -16,16 +16,19 @@ Sub LisMd(Optional Patn$, Optional Exl$)
 Dim A$()
 '    A = CmpNyPj(CurPj, WhMd("Std", WhNm(Patn, Exl)))
     A = AySrt(A)
-    A = AyAddPfx(A, "ShwMbr """)
+    A = SyAddPfx(A, "ShwMbr """)
 D A
 End Sub
 Sub LisPj()
 Dim A$()
     A = PjNyzVbe(CurVbe)
-    D AyAddPfx(A, "ShwPj """)
+    D SyAddPfx(A, "ShwPj """)
 D A
 End Sub
 
+Sub LisStopLin()
+
+End Sub
 Sub LisMth(Optional WhStr$)
 Dim Ay$(): Ay = MthQNyzVbe(CurVbe, WhStr)
 Debug.Print "Fst 30 of " & Si(Ay) & " methods"

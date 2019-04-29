@@ -6,7 +6,6 @@ Public Const DocOfMthQidLin$ = "newtype A6DotLin.  Q is for qualify.  It is a va
 Public Const DocOfMthMLin$ = "M for Modified.  Fmt is [ShtMthMdy.ShtMthKd.MthNmRst].  MthNmRst is MthMLin with MthMdy and MthTy removed."
 Public Const DocOfMthSQMLin$ = "It is A5DotStr.  Q for qualified.  M for Modified.  Fmt is [MthSrtKey.PjNm.ShtMdTyNm.MdNm.ShtMthMdy.ShtMthKd.MthNmRst]."
 Public Const DocOfMthSrtKey$ = "It is Str.  Fmt is [MthMdy:MthNm]"
-Private A_MthQLy$()
 Function FmtMthQidLyInVbe() As String()
 FmtMthQidLyInVbe = DotLyInsSep(MthQidLy(MthQLyInVbe), 3)
 End Function

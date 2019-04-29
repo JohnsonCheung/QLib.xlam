@@ -16,11 +16,12 @@ Set MdPfxCntDic = MdPfxCntDiczPj(CurPj)
 End Function
 
 Function MdPfxAy(MdNy$()) As String()
-Dim I
+Dim I, N$
 For Each I In MdNy
-    PushI MdPfxAy, MdPfx(I)
+    N = I
+    PushI MdPfxAy, MdPfx(N)
 Next
 End Function
-Function MdPfx$(MdNm)
+Function MdPfx$(MdNm$)
 MdPfx = FstCmlzWithSng(MdNm)
 End Function

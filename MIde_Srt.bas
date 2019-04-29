@@ -96,14 +96,16 @@ Next
 End Sub
 
 Sub Srt()
-SrtzMd CurMd
+SrtMd CurMd
 End Sub
 
 Sub SrtPj()
 SrtzPj CurPj
 End Sub
 
-Sub SrtzMd(A As CodeModule)
+Sub SrtMd(A As CodeModule)
+RplMd A, SrtedSrcLineszMd(A)
+Exit Sub
 Dim Nm$: Nm = MdNm(A)
 Debug.Print "Sorting: "; AlignL(Nm, 20); " ";
 Dim LinesN$: LinesN = SrtedSrcLineszMd(A)

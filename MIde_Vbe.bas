@@ -14,7 +14,7 @@ For Each I In A.VBProjects
 Next
 End Function
 Function PjIsSavDrszVbe(A As Vbe) As Drs
-Set PjIsSavDrszVbe = Drs("IsSav PjNm BldFfn", PjIsSavDryzVbe(A))
+PjIsSavDrszVbe = DrszFF("IsSav PjNm BldFfn", PjIsSavDryzVbe(A))
 End Function
 
 Function Vbe_Pj(A As Vbe, PjNm$) As VBProject
@@ -87,14 +87,14 @@ Else
 End If
 End Function
 
-Property Get PjfAyInVbe() As String()
-PjfAyInVbe = PjfAyzVbe(CurVbe)
+Property Get PjfSyInVbe() As String()
+PjfSyInVbe = PjfSyzVbe(CurVbe)
 End Property
 
-Function PjfAyzVbe(A As Vbe) As String()
+Function PjfSyzVbe(A As Vbe) As String()
 Dim P As VBProject
 For Each P In A.VBProjects
-    PushNonBlankStr PjfAyzVbe, Pjf(P)
+    PushNonBlankStr PjfSyzVbe, Pjf(P)
 Next
 End Function
 
@@ -119,33 +119,33 @@ For Each I In A.VBProjects
 Next
 End Function
 
-Function MthWbVbe(A As Vbe) As Workbook
-Set MthWbVbe = WbVis(WbzWs(MthWszVbe(A)))
+Function MthWbzVbe(A As Vbe) As Workbook
+Set MthWbzVbe = WbVis(WbzWs(MthWszVbe(A)))
 End Function
 
-Function VbeSrtRpt() As String()
-VbeSrtRpt = SrtRptVbe(CurVbe)
+Function SrtRpt() As String()
+SrtRpt = SrtRptzVbe(CurVbe)
 End Function
 
-Function HasVbeBar(A As Vbe, Nm$) As Boolean
-HasVbeBar = HasItn(A.CommandBars, Nm)
+Function HasBarzVbe(A As Vbe, BarNm$) As Boolean
+HasBarzVbe = HasItn(A.CommandBars, BarNm)
 End Function
 
-Function Vbe_HasPj(A As Vbe, PjNm) As Boolean
-Vbe_HasPj = HasItn(A.VBProjects, PjNm)
+Function HasPj(A As Vbe, PjNm$) As Boolean
+HasPj = HasItn(A.VBProjects, PjNm)
 End Function
 
-Function HasPjfVbe(A As Vbe, Ffn) As Boolean
+Function HasPjfzVbe(A As Vbe, Pjf$) As Boolean
 Dim P As VBProject
 For Each P In A.VBProjects
-    If Pjf(P) = Ffn Then HasPjfVbe = True: Exit Function
+    If PjfzPj(P) = Pjf Then HasPjfzVbe = True: Exit Function
 Next
 End Function
 
-Function SrtRptVbe(A As Vbe) As String()
+Function SrtRptzVbe(A As Vbe) As String()
 Dim P As VBProject
 For Each P In A.VBProjects
-    PushIAy SrtRptVbe, SrtRptzPj(P)
+    PushIAy SrtRptzVbe, SrtRptzPj(P)
 Next
 End Function
 
@@ -168,15 +168,11 @@ Dim C$
 Dim D As Boolean
 Dim E As WhPjMth
 Dim F As WhNm
-Dim xx
+Dim XX
 CvVbe A
 PjzPjfVbe B, A
-'VbePjf B, A
+'VbezPjf B, A
 PjzPjfVbe B, A
-MthWbVbe B
-HasVbeBar B, C
-Vbe_HasPj B, A
-HasPjfVbe B, A
 End Sub
 
 Private Sub Z()

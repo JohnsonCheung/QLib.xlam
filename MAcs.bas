@@ -9,9 +9,9 @@ Sub BrwTbl(D As Database, T)
 CAcs(D).DoCmd.OpenTable T
 End Sub
 
-Sub BrwTT(D As Database, TT)
+Sub BrwTT(D As Database, TT$)
 Dim T
-For Each T In ItrTT(TT)
+For Each T In ItrzTT(TT)
     BrwTbl D, T
 Next
 End Sub
@@ -37,23 +37,24 @@ On Error Resume Next
 A.CloseCurrentDatabase
 End Sub
 
-Sub BrwFb(Fb)
+Sub BrwFb(Fb$)
 Static Acs As New Access.Application
 OpnFb Acs, Fb
 Acs.Visible = True
 End Sub
 
-Sub ClsTTz(A As Access.Application, TT)
-Dim T
-For Each T In NyzNN(TT)
-    ClsTblz A, T
+Sub ClsTTz(A As Access.Application, TT$)
+Dim T$, I
+For Each I In TermAy(TT)
+    T = I
+    ClsTbl A, T
 Next
 End Sub
-Sub ClsTblz(A As Access.Application, T)
+Sub ClsTbl(A As Access.Application, T$)
 DoCmd.Close acTable, T
 End Sub
 
-Sub ClsAllTblz(A As Access.Application)
+Sub ClsAllTbl(A As Access.Application)
 Dim T As AccessObject
 For Each T In A.CodeData.AllTables
     A.DoCmd.Close acTable, T.Name
@@ -75,9 +76,10 @@ Function CvAcs(A) As Access.Application
 Set CvAcs = A
 End Function
 
-Property Get Acs() As Access.Application
-Set Acs = Access.Application
-End Property
+Function Acs() As Access.Application
+Static X As Access.Application: If IsNothing(X) Then Set X = New Access.Application
+Set Acs = X
+End Function
 
 Sub CpyAllAcsFrm(A As Access.Application, Fb$)
 Dim I As AccessObject
@@ -100,8 +102,8 @@ If HasFfn(ToFb) Then
 Else
     'Fb = Fb0
 End If
-Ass HasPth(Pth(Fb))
-Ass Not HasFfn(Fb)
+Ass HasPth(Pth(Fb$))
+Ass Not HasFfn(Fb$)
 CrtFb Fb
 'AcsCpyTbl A, Fb
 'AcsCpyFrm A, Fb
@@ -121,7 +123,7 @@ Set A = AcsCtl
 If Not HasPfx(A.Name, "Cmd") Then Exit Sub
 Select Case True
 Case IsBtn(A): CvBtn(A).TabStop = False
-Case IsTgl(A): CvTgl(A).TabStop = False
+Case IsTglBtn(A): CvAcsTgl(A).TabStop = False
 End Select
 End Sub
 
@@ -163,16 +165,16 @@ Sub FrmSetCmdNotTabStop(A As Access.Form)
 DoItrFun A.Controls, "CmdTurnOffTabStop"
 End Sub
 
-Function CvCtl(A) As Access.Control
-Set CvCtl = A
+Function CvAcsCtl(A) As Access.Control
+Set CvAcsCtl = A
 End Function
 
-Function CvBtn(A) As Access.CommandButton
-Set CvBtn = A
+Function CvAcsBtn(A) As Access.CommandButton
+Set CvAcsBtn = A
 End Function
 
-Function CvTgl(A) As Access.ToggleButton
-Set CvTgl = A
+Function CvAcsTgl(A) As Access.ToggleButton
+Set CvAcsTgl = A
 End Function
 
 Sub SetTBox(A As Access.TextBox, Msg$)
@@ -182,6 +184,15 @@ B = LasNLines(A.Value & CrLf & Now & " " & Msg, 5)
 A.Value = B
 DoEvents
 End Sub
+
+Function PjzFba(Fba, A As Access.Application) As VBProject
+OpnFb A, Fba
+Set PjzFba = PjzAcs(A)
+End Function
+
+Function PjzAcs(A As Access.Application) As VBProject
+Set PjzAcs = A.Vbe.ActiveVBProject
+End Function
 
 Sub AcsQuit(A As Access.Application)
 On Error Resume Next

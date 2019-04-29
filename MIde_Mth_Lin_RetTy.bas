@@ -30,5 +30,5 @@ Private Sub Z_MthRetTy()
 End Sub
 
 Function MthRetTy$(Lin)
-If IsMthLin(Lin) Then MthRetTy = StrBefOrAll(AftBkt(Lin), "'")
+If IsMthLin(Lin) Then MthRetTy = BefOrAll(AftBkt(Lin), "'")
 End Function

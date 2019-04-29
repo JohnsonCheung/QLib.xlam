@@ -1,35 +1,46 @@
 Attribute VB_Name = "MApp_Git"
 Option Explicit
 Const CMod$ = "MApp_Git."
+Public Const DocOfFwcmd$ = "It is a TmpFfn and the content is given-CmdLines plus EchoLin which is creating a WaitgFfn."
+Public Const DocOfWaitgFfn$ = "WaitgFfn is a temp file without any content.  It is created at end of the Fwcmd."
+
+Function CmitgFcmd$(Optional Msg$ = "commit", Optional ReInit As Boolean)
+CmitgFcmd = Fwcmd(CdLineszGitCmit(Srcp(CurPj), Msg, ReInit))
+End Function
 
 Sub GitCmit(Optional Msg$ = "commit", Optional ReInit As Boolean)
-RunFcmdWait FcmdWaitzCdLines(GitCmitCdLines(Srcp(CurPj), Msg, ReInit))
+Stop
+WaitFfn CmitgFcmd(Msg, ReInit)
 End Sub
 
 Sub GitPush()
-RunFcmdWait FcmdWaitzCdLines(GitPushCdLines(Srcp(CurPj)))
+RunFcmdWait Fwcmd(GitPushCdLines(Srcp(CurPj)))
 End Sub
 
-Private Function GitCmitCdLines$(CmitgPth, Msg$, ReInit As Boolean)
-Erase xx
-Dim Pj$: Pj = PjNm(CmitgPth)
+Private Function CdLineszGitCmit$(CmitgPth$, Msg$, ReInit As Boolean)
+Erase XX
+Dim Pj$: Pj = PjNmzCmitgPth(CmitgPth)
 X "Cd """ & CmitgPth & """"
 If ReInit Then X "Rd .git /s/q"
-X "git init"
+X "git init"        'If already init, it will do nothing
 X "git add -A"
 X FmtQQ("git commit -m ""?""", Msg)
 X "Pause"
-GitCmitCdLines = JnCrLf(xx)
-Erase xx
+CdLineszGitCmit = JnCrLf(XX)
+Erase XX
 End Function
-Private Sub Z_FcmdWaitzCdLines()
-Debug.Print FtLines(FcmdWaitzCdLines("Dir"))
+
+Private Sub Z_Fwcmd()
+Debug.Print LineszFt(Fwcmd("Dir"))
 End Sub
-Private Function FcmdWaitzCdLines$(CdLines)
+Function WaitgFfn$(Fcmd$)
+WaitgFfn = Fcmd & ".wait.txt"
+End Function
+Private Function Fwcmd$(CmdLines$)
 Dim T$: T = TmpCmd
-Dim EchoLin$: EchoLin = FmtQQ("Echo > ""?""", WaitFfnzFcmd(T))
-Dim S$: S = CdLines & vbCrLf & EchoLin
-FcmdWaitzCdLines = WrtStr(S, T)
+Dim EchoLin$: EchoLin = FmtQQ("Echo > ""?""", WaitgFfn(T))
+Dim S$: S = CmdLines & vbCrLf & EchoLin
+Fwcmd = WrtStr(S, T)
 End Function
 
 Function HasInternet() As Boolean
@@ -45,16 +56,16 @@ GitPushCdLines = JnCrLf(O)
 End Function
 
 Sub BrwGitCmitCdLines()
-BrwFt GitCmitCdLines("PthA", "Msg", ReInit:=True)
+BrwFt CdLineszGitCmit("PthA", "Msg", ReInit:=True)
 End Sub
 
 Sub BrwGitPushCdLines()
 BrwFt GitPushCdLines("A")
 End Sub
-Private Function PjNm$(CmitgPth)
+Private Function PjNmzCmitgPth$(CmitgPth$)
 Const CSub$ = CMod & "PjNm"
-If Fdr(ParPth(CmitgPth)) <> ".src" Then Thw CSub, "Not source path", "CmitgPth", CmitgPth
-PjNm = Fdr(CmitgPth)
+If Fdr(ParPth(CmitgPth)) <> ".Src" Then Thw CSub, "Not source path", "CmitgPth", CmitgPth
+PjNmzCmitgPth = Fdr(CmitgPth)
 End Function
 
 Private Sub XX1()

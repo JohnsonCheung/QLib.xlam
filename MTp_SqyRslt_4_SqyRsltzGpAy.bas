@@ -74,7 +74,7 @@ Dim Sel$(), Into$(), Fm$(), Jn$(), Wh$(), Gp$()
     Dim E As Dictionary
     Set E = ExprDic
     Dim I, J%, B$(), L$
-    B = AyReverseI(A)
+    B = AyReverse(A)
     PushI O, XSel(Pop(B), E)
 '    PushI O, QSqpInto_T(RmvT1(Pop(B)))
 '    PushI O, SqpFm(RmvT1(Pop(B)))
@@ -86,7 +86,7 @@ Dim Sel$(), Into$(), Fm$(), Jn$(), Wh$(), Gp$()
     End If
     PushI O, XGp(PopGp(B), E)
 #End If
-Dim O$(): O = AyAddAp(Sel, Into, Fm, Jn, Wh, Gp)
+Dim O$(): O = AyAddAp(Sel, Into$, Fm, Jn, Wh, Gp)
 SqlRsltSel = SqlRsltzEr(JnCrLf(O), Er)
 End Function
 Private Function RmvExprLin(SqLy$()) As String()
@@ -105,7 +105,7 @@ Next
 End Function
 
 Private Function ExprDic(A) As Dictionary
-Dim Expr$(), M As AyAB
+Dim Expr$(), M As Ayab
 'M = AyBrk_BY_ELE(A, "$")
 'Set ExprDic = LyDic(CvSy(M.B))
 End Function

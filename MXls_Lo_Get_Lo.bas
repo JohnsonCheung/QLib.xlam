@@ -9,10 +9,10 @@ Next
 End Function
 
 Function LozWs(A As Worksheet, LoNm$) As ListObject 'Return LoOpt
-Set LozWs = FstItrNm(A.ListObjects, LoNm)
+Set LozWs = FstItmzNm(A.ListObjects, LoNm)
 End Function
 
 Function FstLo(A As Worksheet) As ListObject 'Return LoOpt
-Set FstLo = FstItr(A.ListObjects)
+Set FstLo = FstItm(A.ListObjects)
 End Function
 

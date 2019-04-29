@@ -1,7 +1,7 @@
 Attribute VB_Name = "MXls_TreeWs_Install"
 Option Explicit
 Function TreeWsMdLines$()
-Erase xx
+Erase XX
 X "Option Explicit"
 X "Private Sub Worksheet_Change(ByVal Target As Range)"
 X "MTreeWs.Change Target"
@@ -10,8 +10,8 @@ X "End Sub"
 X "Private Sub Worksheet_SelectionChange(ByVal Target As Range)"
 X "MTreeWs.SelectionChange Target"
 X "End Sub"
-TreeWsMdLines = JnCrLf(xx)
-Erase xx
+TreeWsMdLines = JnCrLf(XX)
+Erase XX
 End Function
 
 Sub InstallTreeWs()

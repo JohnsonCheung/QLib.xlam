@@ -5,12 +5,12 @@ Property Get CurVbe() As Vbe
 Set CurVbe = Application.Vbe
 End Property
 
-Function HasBar(Nm$) As Boolean
-HasBar = HasVbeBar(CurVbe, Nm)
+Function HasBar(BarNm$) As Boolean
+HasBar = HasBarzVbe(CurVbe, BarNm)
 End Function
 
-Function HasPjf(Pjf) As Boolean
-HasPjf = HasPjfVbe(CurVbe, Pjf)
+Function HasPjf(Pjf$) As Boolean
+HasPjf = HasPjfzVbe(CurVbe, Pjf)
 End Function
 
 Function PjzPjf(A) As VBProject
@@ -18,7 +18,7 @@ Set PjzPjf = PjzPjfVbe(CurVbe, A)
 End Function
 
 Function MdDrszVbe(A As Vbe, Optional WhStr$) As Drs
-Set MdDrszVbe = Drs(MdTblFny, MdDryzVbe(A, WhStr))
+MdDrszVbe = Drs(MdTblFny, MdDryzVbe(A, WhStr))
 End Function
 Function MdTblFny() As String()
 

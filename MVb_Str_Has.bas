@@ -29,37 +29,31 @@ Function HasPound(A) As Boolean
 HasPound = InStr(A, "#") > 0
 End Function
 
-Function HasSpc(A) As Boolean
-HasSpc = InStr(A, " ") > 0
+Function HasSpc(S$) As Boolean
+HasSpc = InStr(S, " ") > 0
 End Function
 
-Function HasSqBkt(A) As Boolean
-HasSqBkt = FstChr(A) = "[" And LasChr(A) = "]"
+Function HasSqBkt(S$) As Boolean
+HasSqBkt = FstChr(S) = "[" And LasChr(S) = "]"
 End Function
 
-Function HasChrList(A, ChrList$) As Boolean
+Function HasChrList(S$, ChrList$) As Boolean
 Dim J%
 For J = 1 To Len(ChrList)
-    If HasSubStr(A, Mid(ChrList, J, 1)) Then HasChrList = True: Exit Function
+    If HasSubStr(S, Mid(ChrList, J, 1)) Then HasChrList = True: Exit Function
 Next
 End Function
 
-Function HasSubStrAy(A, SubStrAy$()) As Boolean
-Dim S
-For Each S In SubStrAy
-    If HasSubStr(A, CStr(S)) Then HasSubStrAy = True: Exit Function
+Function HasSubStrAy(S$, SubStrAy$()) As Boolean
+Dim SubStr
+For Each SubStr In SubStrAy
+    If HasSubStr(S$, CStr(SubStr)) Then HasSubStrAy = True: Exit Function
 Next
 End Function
-Function HasTT(L, T1, T2) As Boolean
-If T1zLin(L) <> T1 Then Exit Function
-If T2zLin(L) <> T2 Then Exit Function
-HasTT = True
+Function HasTT(S$, T1$, T2$) As Boolean
+HasTT = Has2T(S, T1, T2)
 End Function
 
-Function HasT1(L, T) As Boolean
-HasT1 = T1(L) = T
-End Function
-
-Function HasVbar(A$) As Boolean
-HasVbar = HasSubStr(A, "|")
+Function HasVbar(S$) As Boolean
+HasVbar = HasSubStr(S, "|")
 End Function

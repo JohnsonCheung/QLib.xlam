@@ -46,9 +46,9 @@ End Sub
 Sub BrwTstHom()
 BrwPth TstHom
 End Sub
-Function NxtIdFdr$(Pth$, Optional NDig% = 4) '
+Function NxtIdFdr$(Pth$, Optional NDig& = 4) '
 Dim J%, F$
-ThwNoPth Pth, CSub
+ThwIfPthNotExist1 Pth, CSub
 If NDig < 0 Then Thw CSub, "NDig should between 1 to 5", "NDig", NDig
 For J = 1 To Val(Left("99999", NDig))
     F = Pad0(J, NDig)
@@ -75,7 +75,7 @@ Dim IdStr$: IdStr = TstIdStr(TstId, Fun)
 Dim Exist As Boolean
 Exist = HasFfn(F)
 Select Case True
-Case (Exist And TrimCrLfAtEnd(FtLines(F)) <> IdStr) Or Not Exist
+Case (Exist And TrimCrLfAtEnd(LineszFt(F)) <> IdStr) Or Not Exist
     WrtStr TstIdStr(TstId, Fun), F
 End Select
 End Sub
@@ -85,8 +85,8 @@ Dim IdStr$: IdStr = TstIdStr(TstId, Fun)
 Dim Exist As Boolean
 Exist = HasFfn(F)
 Select Case True
-Case Exist And TrimCrLfAtEnd(FtLines(F)) <> IdStr
-    Thw CSub, "TstIdStr in TstIdFt is not expected", "TstIdFt Expected-TstIdStr Actual-TstIdStr-in-TstIdFt", F, IdStr, FtLines(F)
+Case Exist And TrimCrLfAtEnd(LineszFt(F)) <> IdStr
+    Thw CSub, "TstIdStr in TstIdFt is not expected", "TstIdFt Expected-TstIdStr Actual-TstIdStr-in-TstIdFt", F, IdStr, LineszFt(F)
 Case Exist:
 Case Else
     WrtStr TstIdStr(TstId, Fun), F
@@ -97,10 +97,10 @@ EnsTstPth TstId, Fun
 Dim F$: F = TstFt(TstId, Cas, Itm)
 Dim Exist As Boolean: Exist = HasFfn(F)
 Select Case True
-Case Not Exist: BrwFt EnsFfn(F): Stop
+Case Not Exist: EnsFfn F: BrwFt F: Stop
 Case IsEdt:     BrwFt F:         Stop
 End Select
-TstTxt = FtLines(F)
+TstTxt = LineszFt(F)
 End Function
 
 Private Function TstFt$(TstId%, Cas$, Itm$)

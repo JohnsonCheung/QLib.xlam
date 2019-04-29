@@ -68,14 +68,14 @@ Next
 Set XTblF = Dt("TblFld", "Tbl Seq Fld Ty Si ", Dry)
 End Function
 
-Private Function XTblFDry(D As Database, T) As Variant()
+Private Function XTblFDry(D As Database, T$) As Variant()
 Dim F, Seq%
 For Each F In Fny(D, T)
     Seq = Seq + 1
     Push XTblFDry, XTblFDr(T, Seq, FdzTF(D, T, F))
 Next
 End Function
-Private Function XTblFDr(T, Seq%, F As Dao.Field2) As Variant()
+Private Function XTblFDr(T, Seq%, F As DAO.Field2) As Variant()
 XTblFDr = Array(T, Seq, F.Name, DtaTy(F.Type))
 End Function
 Private Sub Z()

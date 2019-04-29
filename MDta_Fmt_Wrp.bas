@@ -60,9 +60,9 @@ Dim J%, Col()
 For J = 0 To NColzDry(WrpDry) - 1
     Col = ColzDry(WrpDry, J)
     If IsArray(Col(0)) Then
-        Push WrpDryWdt, WdtzAy(AyFlat(Col))
+        Push WrpDryWdt, AyWdt(AyFlat(Col))
     Else
-        Push WrpDryWdt, WdtzAy(Col)
+        Push WrpDryWdt, AyWdt(Col)
     End If
 Next
 End Function
@@ -79,7 +79,7 @@ Function FmtDrWrp(WrpDr, W%()) As String() _
 'Each Itm of WrpDr may be an array.  So a AyFmtToWdtAy return Ly not string.
 Dim Dr(): Dr = WrpDrPad(WrpDr, W)
 Dim Sq(): Sq = WrpDrSq(Dr)
-Dim Sq1(): Sq1 = SqAlign(Sq, W)
+Dim Sq1(): Sq1 = SqAlign(Sq(), W)
 Dim Ly$(): Ly = LySq(Sq1)
 PushIAy FmtDrWrp, Ly
 End Function
@@ -96,12 +96,12 @@ End Function
 
 
 Function SqAlign(Sq(), W%()) As Variant()
-If UBound(Sq, 2) <> Si(W) Then Stop
+If UBound(Sq(), 2) <> Si(W) Then Stop
 Dim C%, R%, Wdt%, O
 O = Sq
-For C = 1 To UBound(Sq, 2) - 1 ' The last column no need to align
+For C = 1 To UBound(Sq(), 2) - 1 ' The last column no need to align
     Wdt = W(C - 1)
-    For R = 1 To UBound(Sq, 1)
+    For R = 1 To UBound(Sq(), 1)
         O(R, C) = AlignL(Sq(R, C), Wdt)
     Next
 Next

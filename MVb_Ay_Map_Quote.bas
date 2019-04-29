@@ -1,38 +1,42 @@
 Attribute VB_Name = "MVb_Ay_Map_Quote"
 Option Explicit
-Function AyQuote(A, QuoteStr$) As String()
-If Si(A) = 0 Then Exit Function
-Dim U&: U = UB(A)
+Function QuoteSqBkt$(S$)
+QuoteSqBkt = "[" & S & "]"
+End Function
+Function SyQuote(Sy$(), QuoteStr$) As String()
+If Si(Sy) = 0 Then Exit Function
+Dim U&: U = UB(Sy)
+Dim Q1$, Q2$
+    With BrkQuote(QuoteStr)
+        Q1 = .S1
+        Q2 = .S2
+    End With
+
 Dim O$()
     ReDim O(U)
     Dim J&
-    Dim Q1$, Q2$
-    With BrkQuote(QuoteStr)
-        Q1 = .s1
-        Q2 = .s2
-    End With
     For J = 0 To U
-        O(J) = Q1 & A(J) & Q2
+        O(J) = Q1 & Sy(J) & Q2
     Next
-AyQuote = O
+SyQuote = O
 End Function
 
-Function AyQuoteDbl(A) As String()
-AyQuoteDbl = AyQuote(A, """")
+Function SyQuoteDbl(Sy$()) As String()
+SyQuoteDbl = SyQuote(Sy, """")
 End Function
 
-Function AyQuoteSng(A) As String()
-AyQuoteSng = AyQuote(A, "'")
+Function SyQuoteSng(Sy$()) As String()
+SyQuoteSng = SyQuote(Sy, "'")
 End Function
 
-Function AyQuoteSq(A) As String()
-AyQuoteSq = AyQuote(A, "[]")
+Function SyQuoteSq(Sy$()) As String()
+SyQuoteSq = SyQuote(Sy, "[]")
 End Function
 
-Function AyQuoteSqIf(Ay) As String()
+Function SyQuoteSqIf(Sy$()) As String()
 Dim I
-For Each I In Itr(Ay)
-    PushI AyQuoteSqIf, QuoteSqIf(I)
+For Each I In Itr(Sy)
+    PushI SyQuoteSqIf, QuoteSqIf(CStr(I))
 Next
 End Function
 

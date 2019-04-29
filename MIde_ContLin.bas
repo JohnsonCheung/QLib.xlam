@@ -20,7 +20,7 @@ For J = Ix To UB(Src)
         Exit Function
     End If
 Next
-Thw CSub, "All line From Ix is Src has _ as LasChr", "Ix Src", Ix, AyAddIxPfx(Src, 1)
+Thw CSub, "All line From Ix is Src has _ as LasChr", "Ix Src", Ix, SyAddIxPfx(Src, 1)
 End Function
 
 Private Sub Z_ContLin()

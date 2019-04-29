@@ -8,7 +8,7 @@ Dim Z$
     End If
     Z = AyeFstEle(Z)
     Z = AyeLasEle(Z)
-ResLyMd = AyRmvFstChr(Z)
+ResLyMd = SyRmvFstChr(Z)
 End Function
 
 Function ReStrMd$(A As CodeModule, ResNm$)

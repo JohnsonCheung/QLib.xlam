@@ -1,52 +1,56 @@
 Attribute VB_Name = "MVb_Fs_Pth"
 Option Explicit
 Const CMod$ = "MVb_Fs_Pth."
-Private Function AddFdrzOne$(Pth, Fdr)
-AddFdrzOne = PthEnsSfx(Pth) & Fdr & "\"
+Function AddFdr$(Pth$, Fdr$)
+AddFdr = EnsPthSfx(Pth) & Fdr & "\"
 End Function
 
-Function AddFdrEns$(Pth, ParamArray FdrAp())
+Function AddFdrEns$(Pth$, Fdr$)
+Dim O$: O = AddFdr(Pth, Fdr)
+EnsPth O
+AddFdrEns = O
+End Function
+
+Function AddFdrApEns$(Pth$, ParamArray FdrAp())
 Dim Av(): Av = FdrAp
-AddFdrEns = PthEnsAll(AddFdrAv(Pth, Av))
+Dim O$: O = AddFdrAv(Pth, Av)
+EnsPthzAllSeg O
+AddFdrApEns = O
 End Function
 
-Private Function AddFdrAv$(Pth, FdrAv())
+Private Function AddFdrAv$(Pth$, FdrAv())
 Dim O$: O = Pth
-Dim I
+Dim I, Fdr$
 For Each I In FdrAv
-    O = AddFdrzOne(O, I)
+    Fdr = I
+    O = AddFdr(O, Fdr)
 Next
 AddFdrAv = O
 End Function
 
-Function AddFdr$(Pth, ParamArray FdrAp())
+Function AddFdrAp$(Pth$, ParamArray FdrAp())
 Dim Av(): Av = FdrAp
-Dim O$: O = Pth
-Dim I
-For Each I In Itr(Av)
-    O = AddFdrzOne(O, I)
-Next
-AddFdr = O
+AddFdrAp = AddFdrAv(Pth, Av)
 End Function
 
-Function MsgzFfnAlreadyLoaded(Ffn$, FilKind$, LTimStr$) As String()
+Function MsyzFfnAlreadyLoaded(Ffn$, FilKind$, LTimStr$) As String()
 Dim Si&, Tim$, Ld$, Msg$
-Si = FfnSz(Ffn)
-Tim = FfnTimStr(Ffn)
+Si = SizFfn(Ffn$)
+Tim = DteTimStrzFfn(Ffn$)
 Msg = FmtQQ("[?] file of [time] and [size] is already loaded [at].", FilKind)
-MsgzFfnAlreadyLoaded = LyzMsgNap(Msg, Ffn, Tim, Si, LTimStr)
+MsyzFfnAlreadyLoaded = LyzMsgNap(Msg, Ffn, Tim, Si, LTimStr)
 End Function
 
-Function IsEmpPth(Pth) As Boolean
-ThwNotPth Pth
-If HasFilPth(Pth) Then Exit Function
+Function IsEmpPth(Pth$) As Boolean
+ThwIfPthNotExist Pth
+If AnyFil(Pth) Then Exit Function
 If HasSubFdr(Pth) Then Exit Function
 IsEmpPth = True
 End Function
 
-Function PthAddPfx$(Pth, Pfx)
+Function PthAddPfx$(Pth$, Pfx$)
 With Brk2Rev(RmvSfx(Pth, PthSep), PthSep, NoTrim:=True)
-    PthAddPfx = .s1 & PthSep & Pfx & .s2 & PthSep
+    PthAddPfx = .S1 & PthSep & Pfx & .S2 & PthSep
 End With
 End Function
 
@@ -54,16 +58,16 @@ Function HitFilAtr(A As VbFileAttribute, Wh As VbFileAttribute) As Boolean
 HitFilAtr = True
 End Function
 
-Function FdrzFfn$(Ffn)
-FdrzFfn = Fdr(Pth(Ffn))
+Function FdrzFfn$(Ffn$)
+FdrzFfn = Fdr(Pth(Ffn$))
 End Function
 
-Function Fdr$(Pth)
-Fdr = StrAftRev(PthRmvSfx(Pth), PthSep)
+Function Fdr$(Pth$)
+Fdr = AftRev(RmvPthSfx(Pth), PthSep)
 End Function
 
-Sub ThwNotFdr(A)
+Sub ThwIfNotProperFdrNm(Fdr$)
 Const CSub$ = CMod & "ThwNotFdr"
 Const C$ = "\/:<>"
-If HasChrList(A, C) Then Thw CSub, "Fdr cannot has these char " & C, "Fdr Char", A, C
+If HasChrList(Fdr, C) Then Thw CSub, "Fdr cannot has these char " & C, "Fdr Char", Fdr, C
 End Sub

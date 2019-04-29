@@ -21,8 +21,8 @@ Function PushUnderLinDbl(O$())
 Push O, UnderLinDbl(LasEle(O))
 End Function
 
-Function LinesUnderLin$(A)
-LinesUnderLin = Dup("-", WdtLines(A))
+Function UnderLinzLines$(Lines$, Optional UnderLinChr$ = "-")
+UnderLinzLines = Lines & vbCrLf & Dup("-", WdtzLines(Lines))
 End Function
 
 Function PushMsgUnderLin(O$(), M$)

@@ -20,10 +20,10 @@ End Function
 
 Function MthPfx$(MthNm)
 Dim A0$
-    A0 = Brk1(RmvPfxAy(MthNm, SplitVBar("ZZ_|Z_")), "__").s1
+    A0 = Brk1(RmvPfxAy(MthNm, SplitVBar("ZZ_|Z_")), "__").S1
 With Brk2(A0, "_")
-    If .s1 <> "" Then
-        MthPfx = .s1
+    If .S1 <> "" Then
+        MthPfx = .S1
         Exit Function
     End If
 End With

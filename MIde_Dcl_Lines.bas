@@ -76,7 +76,7 @@ Dim N&, O$()
 If N <= 0 Then Exit Function
 O = AywFstNEle(Src, N)
 DclLy = O
-'Brw LyzNNAp("N Src DclLy", N, AyAddIxPfx(Src), O): Stop
+'Brw LyzNNAp("N Src DclLy", N, SyAddIxPfx(Src), O): Stop
 End Function
 
 Function DclzMd$(A As CodeModule)

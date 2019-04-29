@@ -2,7 +2,7 @@ Attribute VB_Name = "MIde_Gen_Rf_1"
 Option Explicit
 Sub AddRfzPj(DistPj As VBProject)
 Dim RfLin, RfLy$()
-RfLy = FtLy(RfSrcFfnzDistPj(DistPj))
+RfLy = LyzFt(RfSrcFfnzDistPj(DistPj))
 For Each RfLin In Itr(RfLy)
     AddRf DistPj, RfLin
 Next

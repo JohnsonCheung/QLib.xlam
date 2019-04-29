@@ -84,6 +84,15 @@ Function MthQNyInVbe(Optional WhStr$) As String()
 MthQNyInVbe = MthQNyzVbe(CurVbe, WhStr)
 End Function
 
+Function MthQNmWsInVbe(Optional WhStr$) As Worksheet
+Set MthQNmWsInVbe = MthQNmWszVbe(CurVbe, WhStr)
+End Function
+
+Function MthQNmWszVbe(A As Vbe, Optional WhStr$) As Worksheet
+Dim Dry(): Dry = DryzDotLy(MthQNyzVbe(A, WhStr))
+Set MthQNmWszVbe = WszDrs(DrszFF("Pj Md Mth Ty Mdy", Dry))
+End Function
+
 Function MthQNyzVbe(A As Vbe, Optional WhStr$) As String()
 Dim I
 For Each I In PjItr(A, WhStr)
@@ -92,17 +101,17 @@ Next
 End Function
 
 Function MthQNyzMd(A As CodeModule, Optional WhStr$) As String()
-MthQNyzMd = AyAddPfx(MthDNyzSrc(Src(A), WhStr), MdQNmzMd(A) & ".")
+MthQNyzMd = SyAddPfx(MthDNyzSrc(Src(A), WhStr), MdQNmzMd(A) & ".")
 End Function
 
 Function MthQNmDryzPj(A As VBProject, Optional WhStr$) As Variant()
 Dim QNm
 For Each QNm In Itr(MthQNyzPj(A, WhStr))
-    PushI MthQNmDryzPj, MthQNmDr(QNm)
+    PushI MthQNmDryzPj, MthQNmDr(CStr(QNm))
 Next
 End Function
 
-Function MthQNmDr(MthQNm) As String()
+Function MthQNmDr(MthQNm$) As String()
 Dim O$(): O = SplitDot(MthQNm)
 If Si(O) <> 5 Then Thw CSub, "MthQNm should have 4 dot", "MthQNm", MthQNm
 MthQNmDr = O
@@ -133,24 +142,25 @@ End Function
 Property Get MMthNyInVbe() As String()
 MthNyInVbe
 End Property
-Function MthNyzFb(Fb) As String()
-MthNyzFb = MthNyzVbe(VbePjf(Fb))
+Function MthNyzFb(Fb$) As String()
+MthNyzFb = MthNyzVbe(VbezPjf(Fb$))
 ClsPjf Fb
 End Function
 
 
-Private Sub Z_MthNyFb()
+Private Sub Z_MthNyzFb()
 GoSub X_BrwAll
 Exit Sub
 X_BrwAll:
     Dim O$(), Fb
-'    For Each Fb In AppFbAy
-        PushAy O, MthNyzFb(Fb)
-'    Next
-    'Brw O
+    For Each Fb In AppFbAy
+        PushAy O, MthNyzFb(CStr(Fb))
+    Next
+    Brw O
     Return
 X_BrwOne:
-'    Brw MthNyFb(AppFbAy()(0))
+    Dim A$(): A = AppFbAy
+    Brw MthNyzFb(A(0))
     Return
 End Sub
 
@@ -162,7 +172,7 @@ End Sub
 Function MthNyzSrc(Src$(), Optional B As WhMth) As String()
 Dim L
 For Each L In Itr(Src)
-    PushNonBlankStr MthNyzSrc, MthNm(L, B)
+    PushNonBlankStr MthNyzSrc, MthNm(CStr(L), B)
 Next
 End Function
 
@@ -171,7 +181,7 @@ MthNyPubzMd = MthNyzSrc(Src(A), WhMthzStr(WhStr))
 End Function
 
 Private Sub Z()
-Z_MthNyFb
+Z_MthNyzFb
 Z_MthNyzSrc
 MIde_Mth_Nm:
 End Sub
@@ -190,7 +200,7 @@ Dim Act$()
 End Sub
 
 Function MthDNmSqzPj(A As VBProject) As Variant()
-MthDNmSqzPj = MthDNySq(MthNyzPj(A, True))
+MthDNmSqzPj = MthDNmSq(MthNyzPj(A, True))
 End Function
 
 Function MthDNmWszPj(A As VBProject) As Worksheet
@@ -208,15 +218,14 @@ Function MthAsetVbe(Optional WhStr$) As Aset
 Set MthAsetVbe = AsetzAy(MthNyInVbe(WhStr))
 End Function
 
-
-Property Get CurMthNyzMd() As String()
-CurMthNyzMd = MthNyzMd(CurMd)
+Property Get MthNyzCurMd() As String()
+MthNyzCurMd = MthNyzMd(CurMd)
 End Property
 
 Private Sub Z_MthDNy()
 Dim Md1 As CodeModule
 Set Md1 = Md("AAAMod")
-BrwPth MthNyzMd(Md1)
+BrwAy MthNyzMd(Md1)
 BrwAy MthDNyzMd(Md1)
 End Sub
 
@@ -243,7 +252,7 @@ Function MthDNyzSrc(Src$(), Optional WhStr$) As String()
 Dim L, B As WhMth
 Set B = WhMthzStr(WhStr)
 For Each L In Itr(Src)
-    PushNonBlankStr MthDNyzSrc, MthDNm(L, B)
+    PushNonBlankStr MthDNyzSrc, MthDNm(CStr(L), B)
 Next
 End Function
 

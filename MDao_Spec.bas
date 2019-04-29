@@ -15,17 +15,17 @@ Dim SamTim As Boolean
 Dim DifSz As Boolean
 Dim SamSz As Boolean
 Dim DifFt As Boolean
-Dim Rs As Dao.Recordset
+Dim Rs As DAO.Recordset
     Q = FmtQQ("Select SpecNm,Ft,Lines,Tim,Si,LTimStr_Dte from Spec where SpecNm = '?'", Spnm)
     Set Rs = A.OpenRecordset(Q)
-    NoCur = Not HasFfn(Ft)
+    NoCur = Not HasFfn(Ft$)
     'NoLas = HasRec(Rs)
     
     Dim CurT As Date, LasT As Date 'CurTim and LasTim
     Dim CurS&, LasS&
     Dim LasFt$, LdTimStr_Dte$
-    CurS = FfnSz(Ft)
-    CurT = TimFfn(Ft)
+    CurS = SizFfn(Ft$)
+    CurT = TimFfn(Ft$)
     If Not NoLas Then
         With Rs
             LasS = Nz(Rs!Si, -1)
@@ -54,7 +54,7 @@ Const CurIsNew__$ = "Cur is new."
 Const C$ = "|[SpecNm] [Db] [Cur-Ft] [Las-Ft] [Cur-Tim] [Las-Tim] [Cur-Si] [Las-Si] [Imported-Time]."
 
 Dim Dr()
-Dr = Array(Spnm, Ft, FtLines(Ft), CurT, CurS, Now)
+Dr = Array(Spnm, Ft, LineszFt(Ft$), CurT, CurS, Now)
 Select Case True
 Case NoCur, SamTim:
 'Case NoLas: InsDrzRs Dr, Rs
@@ -76,16 +76,16 @@ Case Else: Stop
 End Select
 End Sub
 
-Function SpecPth$(Apn$)
-SpecPth = PthEns(WPth(Apn) & "Spec\")
+Function SpecPth$(WPth$)
+SpecPth = EnsPth(WPth & "Spec\")
 End Function
 
 Sub BrwSpecPth(Apn$)
 BrwPth SpecPth(Apn)
 End Sub
 
-Sub ClrSpecPth(Apn$)
-ClrPth SpecPth(Apn)
+Sub ClrSpecPth(WPth$)
+ClrPth SpecPth(WPth)
 End Sub
 
 Sub EnsTblSpec(A As Database)
@@ -96,16 +96,16 @@ Sub CrtTblSpec(A As Database)
 CrtSchm A, SplitVBar(SpecSchmVbl)
 End Sub
 
-Sub ExpSpec(Apn$)
-ClrSpecPth Apn
+Sub ExpSpec(A As Database, WPth$)
+ClrSpecPth WPth
 Dim N
-For Each N In Itr(SpecNy(Apn))
+For Each N In Itr(SpecNy(Db))
     'ExpSpnm N
 Next
 End Sub
 
-Function SpecNy(Apn$) As String()
-SpecNy = SyzTF(AppDb(Apn), "Spec", "SpecNm")
+Function SpecNy(A As Database) As String()
+SpecNy = SyzTF(A, "Spec", "SpecNm")
 End Function
 
 

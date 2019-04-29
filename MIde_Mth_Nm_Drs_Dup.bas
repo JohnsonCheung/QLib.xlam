@@ -14,7 +14,7 @@ SetLcWdt Lo, "MthLines", 10
 SetLcWrp Lo, "MthLines", False
 End Function
 
-Sub Z_DupMthDrsInPj()
+Private Sub Z_DupMthDrsInPj()
 B DupMthDrsInPj
 End Sub
 Function DupMthDrsInPj() As Drs

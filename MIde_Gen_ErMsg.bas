@@ -7,7 +7,9 @@ Private Type A
 End Type
 Private A As A
 Public Const DocOfDimItm$ = "DimStmt :: `Dim` DimItm, ..."
-
+Function X1X$(A As Range)
+X1X = TypeName(A.Value)
+End Function
 Sub GenErMsgzNm(MdNm$)
 MdGenErMsg Md(MdNm)
 End Sub
@@ -20,8 +22,8 @@ Private Sub Init(Src$())
 Dim Dcl$(): Dcl = DclLy(Src)
 Dim SrcLy$(): SrcLy = CvSy(AywBetEle(Dcl, "'GenErMsg-Src-Beg.", "'GenErMsg-Src-End."))
 'Brw SrcLy, CSub
-A.ErNy = T1Ay(AyRmvFstChr(SrcLy))
-A.ErMsgAy = AyRmvT1(SrcLy)
+A.ErNy = T1Sy(SyRmvFstChr(SrcLy))
+A.ErMsgAy = SyRmvT1(SrcLy)
 End Sub
 
 Private Sub Z_SrcGenErMsg()
@@ -87,8 +89,9 @@ Brw ErConstDic
 End Sub
 
 Function ConstFTIxzMd(A As CodeModule, ConstNm$) As FTIx
-Dim L, Lno&
-For Each L In Itr(DclLyzMd(A))
+Dim L$, I, Lno&
+For Each I In Itr(DclLyzMd(A))
+    L = I
     Lno = Lno + 1
     If HitConstNm(L, ConstNm) Then
         If MthMdy(L) <> "Private" Then Thw CSub, "The given ConstNm should Prv", "Lin ConstNm Lno Md", L, ConstNm, Lno, MdNm(A)
@@ -99,7 +102,7 @@ Next
 Set ConstFTIxzMd = EmpFTIx
 End Function
 
-Function ConstFTIx(DclLy$(), ConstNm) As FTIx
+Function ConstFTIx(DclLy$(), ConstNm$) As FTIx
 Dim J%
 For J = 0 To UB(DclLy)
     If HitConstNm(DclLy(J), ConstNm) Then
@@ -115,7 +118,7 @@ Init Src
 If Si(A.ErNy) = 0 Then Inf CSub, "No GenErMsg-Src-Beg. / GenErMsg-Src-End.", "Md", MdNm: Exit Function
 Dim O$(), O1$(), O2$()
 O1 = SrcRplConstDic(Src, ErConstDic): 'Brw O1: Stop
-O2 = SrcRmvMth(O1, ErMthNmSet):       'Brw LyzNNAp("MthToRmv BefRmvMth AftRmvMth", ErMthNmSet, O1, O2): Stop
+O2 = RmvMthInSrc(O1, ErMthNmSet):       'Brw LyzNNAp("MthToRmv BefRmvMth AftRmvMth", ErMthNmSet, O1, O2): Stop
 O = SyAdd(O2, ErMthLinAy):            'Brw O:Stop
 SrcGenErMsg = O
 End Function
@@ -123,16 +126,17 @@ End Function
 Function SrcRplConstDic(Src$(), ConstDic As Dictionary) As String()
 Dim ConstNm, Dcl$(), Bdy$(), Dcl1$(), Dcl2$()
 AsgDclAndBdy Src, Dcl, Bdy
-Dcl1 = DclRmvConstzSngLinConst(Dcl, KeySet(ConstDic)): 'Brw Dcl1: Stop
+Dcl1 = RmvConstLin(Dcl, KeySet(ConstDic)): 'Brw Dcl1: Stop
 'Brw LyzLinesDicItems(ConstDic): Stop
 Dcl2 = SyAddAp(Dcl1, LyzLinesDicItems(ConstDic), Bdy): 'Brw Dcl2: Stop
 SrcRplConstDic = Dcl2
 End Function
-Function DclRmvConstzSngLinConst(Dcl$(), ConstNmDic As Aset) As String() 'Assume: the const in Dcl to be remove is SngLin
-Dim L
-For Each L In Itr(Dcl)
+Function RmvConstLin(Dcl$(), ConstNmDic As Aset) As String() 'Assume: the const in Dcl to be remove is SngLin
+Dim L$, I
+For Each I In Itr(Dcl)
+    L = I
     If Not HitConstNmDic(L, ConstNmDic) Then
-        PushI DclRmvConstzSngLinConst, L
+        PushI RmvConstLin, L
     End If
 Next
 End Function
@@ -153,38 +157,36 @@ For J = F To U
 Next
 End Sub
 
-Function SrcRplMthDic(Src$(), MthDic As Dictionary) As String()
-SrcRplMthDic = SyAdd(SrcRmvMth(Src, KeySet(MthDic)), LyzLinesDicItems(MthDic))
+Function IupMthByDic(Src$(), ByMthDic As Dictionary) As String() 'Return new Src after replacing Mth in Src by MthDic
+IupMthByDic = SplitCrLf(LineszLinesDic(IupDic(MthDic(Src), ByMthDic)))
 End Function
 
-Function SrcRplMth(Src$(), MthNm, MthLines) As String()
+Function RplMthzSrc(Src$(), MthNm$, MthLines$) As String()
 Dim A() As FTIx: A = MthFTIxAyzSrcMth(Src, MthNm, WiTopRmk:=True)
 Dim Ly$(): Ly = SplitCrLf(MthLines)
 Select Case Si(A)
-Case 0: SrcRplMth = SyAdd(Src, Ly)
-Case 1: SrcRplMth = CvSy(AyRplFTIx(Src, A(0), Ly))
-Case 2: SrcRplMth = CvSy(AyRplFTIx(Src, A(0), AyeFTIx(Ly, A(1))))
+Case 0: RplMthzSrc = SyAdd(Src, Ly)
+Case 1: RplMthzSrc = CvSy(SyRplFTIx(Src, A(0), Ly))
+Case 2: RplMthzSrc = CvSy(SyRplFTIx(Src, A(0), AyeFTIx(Ly, A(1))))
 Case Else: Thw CSub, "Error in MthFTIxAyzMth, it should return Sz of 0,1,2, but now it is " & Si(A)
 End Select
 End Function
+Sub IupMthByDicInMd(A As CodeModule, MthDic As Dictionary)
+Dim NewSrc$(): NewSrc = IupMthByDic(Src(A), MthDic)
+Dim NewLines$: NewLines = JnCrLf(NewSrc)
+RplMd A, NewLines
+End Sub
 
-Function RplMthDic(A As CodeModule, MthDic As Dictionary) As CodeModule
-Dim MthNm
-For Each MthNm In MthDic.Keys
-    RplMth A, MthNm, MthDic(MthNm)
-Next
-Set RplMthDic = A
-End Function
-
-Function MdRplConstDic(A As CodeModule, ConstDic As Dictionary) As CodeModule
-Dim K
+Function RplConstInMdByDic(A As CodeModule, ConstDic As Dictionary) As CodeModule
+Dim K, ConstNm$
 For Each K In ConstDic.Keys
-    MdRplConst A, K, ConstDic(K)
+    ConstNm = K
+    RplConstInMd A, ConstNm, ConstDic(K)
 Next
-Set MdRplConstDic = A
+Set RplConstInMdByDic = A
 End Function
 
-Function MdLines(StartLine, Lines, Optional InsLno0 = 0) As MdLines
+Function MdLines(StartLine&, Lines$, Optional InsLno0 = 0) As MdLines
 Dim O As New MdLines
 Set MdLines = O.Init(StartLine, Lines, InsLno0)
 End Function
@@ -195,7 +197,7 @@ O.InsLno = LnozAftOpt(A)
 Set EmpMdLines = O
 End Function
 
-Function MdLineszMdLno(A As CodeModule, Lno) As MdLines
+Function MdLineszMdLno(A As CodeModule, Lno&) As MdLines
 Dim Count&, J%
 For J = Lno To A.CountOfLines
     Count = Count + 1
@@ -206,9 +208,10 @@ Next
 Set MdLineszMdLno = MdLines(Lno, A.Lines(Lno, Count))
 End Function
 
-Function MdLineszConst(A As CodeModule, ConstNm) As MdLines
-Dim L, J%
-For Each L In DclLy(Src(A))
+Function MdLineszConst(A As CodeModule, ConstNm$) As MdLines
+Dim L$, J&, I
+For Each I In DclLy(Src(A))
+    L = I
     If HitConstNm(L, ConstNm) Then
         Set MdLineszConst = MdLineszMdLno(A, J)
         Exit Function
@@ -223,14 +226,14 @@ If OldLines = A.Lines Then
     Thw CSub, "MdLines mis-match with Md", "Md Md-Lines MdLines-Lno MdLines-Lines", MdNm(Md), OldLines, A.StartLine, A.Lines
 End If
 End Sub
-Sub RplLines(A As CodeModule, B As MdLines, NewLines, Optional LinesNm$ = "MdLines")
+Sub RplLines(A As CodeModule, B As MdLines, NewLines$, Optional LinesNm$ = "MdLines")
 Dim OldLinCnt&: OldLinCnt = A.CountOfLines
 If B.Count > 0 Then A.DeleteLines B.InsLno, B.Count
 A.InsertLines B.InsLno, NewLines
 Inf CSub, LinesNm & " is replaced", "Md StartLines NewLinCnt OldLinCnt", MdNm(A), B.StartLine, LinCnt(NewLines), OldLinCnt
 End Sub
 
-Sub MdRplConst(A As CodeModule, ConstNm, NewLines)
+Sub RplConstInMd(A As CodeModule, ConstNm$, NewLines$)
 RplLines A, MdLineszConst(A, ConstNm), NewLines, "MdConst"
 End Sub
 
@@ -304,7 +307,7 @@ Private Function ErMthLinesByNm$(ErNm$, ErMsg$)
 Dim CNm$:         CNm = ErConstNm(ErNm)
 Dim ErNy$():     ErNy = NyzMacro(ErMsg, ExlBkt:=True)
 Dim Pm$:           Pm = JnCommaSpc(AywDist(ErNy))
-Dim Calling$: Calling = Jn(AyAddPfx(DimNyzDimItmAy(ErNy), ", "))
+Dim Calling$: Calling = Jn(SyAddPfx(DimNyzDimItmAy(ErNy), ", "))
 Dim MthNm$:     MthNm = ErMthNm(ErNm)
 ErMthLinesByNm = FmtQQ("Private Function ?(?) As String():? = FmtMacro(??):End Function", _
     MthNm, Pm, MthNm, CNm, Calling)

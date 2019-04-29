@@ -46,7 +46,7 @@ Set WsCRR = WsRCRC(A, R1, C, R2, C)
 End Function
 
 Function DltWs(A As Workbook, WsIx) As Boolean
-If HasWbzWs(A, WsIx) Then WszWb(A, WsIx).Delete: Exit Function
+If HasWs(A, WsIx) Then WszWb(A, WsIx).Delete: Exit Function
 DltWs = True
 End Function
 
@@ -97,7 +97,7 @@ End Function
 
 Function SetWsNm(A As Worksheet, Nm$) As Worksheet
 If Nm <> "" Then
-    If Not HasWbzWs(WbzWs(A), Nm) Then A.Name = Nm
+    If HasWs(WbzWs(A), Nm) Then A.Name = Nm
 End If
 Set SetWsNm = A
 End Function

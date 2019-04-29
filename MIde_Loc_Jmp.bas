@@ -8,8 +8,9 @@ Function HasMdNm(MdNm$, Optional Inf As Boolean) As Boolean
 If HasItn(CurPj.VBComponents, MdNm) Then HasMdNm = True: Exit Function
 If Inf Then InfLin CSub, FmtQQ("Md[?] not exist", MdNm)
 End Function
-Sub Jmp(MdNm$)
-JmpMdNm MdNm
+Sub Jmp(MdNmDotLno$)
+JmpMdNm BefOrAll(MdNmDotLno, ".")
+JmpLno Aft(MdNmDotLno, ".")
 End Sub
 Function JmpMdNm%(MdNm$)
 If Not HasMdNm(MdNm, Inf:=True) Then JmpMdNm = 1: Exit Function

@@ -1,7 +1,7 @@
 Attribute VB_Name = "MDta_ValId"
 Option Explicit
 Function AddColzValIdzCntzDrs(A As Drs, ColNm$, Optional ColNmPfx$) As Drs
-Dim Ix%, Fny$()
+Dim Ix&, Fny$()
 Fny = A.Fny
 Ix = IxzAy(Fny, ColNm): If Ix = -1 Then Stop
     Dim X$, Y$, C$
@@ -11,15 +11,15 @@ Ix = IxzAy(Fny, ColNm): If Ix = -1 Then Stop
     If HasEle(Fny, X) Then Stop
     If HasEle(Fny, Y) Then Stop
     PushIAy Fny, Array(X, Y)
-Set AddColzValIdzCntzDrs = Drs(Fny, AddColzValIdzCntzDry(A.Dry, Ix))
+AddColzValIdzCntzDrs = Drs(Fny, AddColzValIdzCntzDry(A.Dry, Ix))
 End Function
 
-Function AddColzValIdzCntzDry(A(), ValColIx) As Variant()
+Function AddColzValIdzCntzDry(Dry(), ValColIx&) As Variant()
 Dim NCol%, Dic As Dictionary, O(), Dr, IdCnt, R&
-NCol = NColzDry(A)
-Set Dic = IdCntDiczAy(ColzDry(A, ValColIx))
-O = A
-For Each Dr In Itr(A)
+NCol = NColzDry(Dry)
+Set Dic = IdCntDiczAy(ColzDry(Dry, ValColIx))
+O = Dry
+For Each Dr In Itr(Dry)
     ReDim Preserve Dr(NCol + 1)
     IdCnt = Dic(Dr(ValColIx))
     Dr(NCol) = IdCnt(0)

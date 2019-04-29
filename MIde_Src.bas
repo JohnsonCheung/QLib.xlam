@@ -3,7 +3,7 @@ Option Explicit
 Private P As VBProject
 Private C As VBComponent
 Private Sub ZZ_SrcDcl()
-BrwStr DclLy(ZZSrc)
+BrwAy DclLy(ZZSrc)
 End Sub
 
 Private Sub ZZ_FstMthIx()
@@ -16,22 +16,23 @@ SrczMdNm = Src(Md(MdNm))
 End Function
 Private Sub ZZ_MthTopRmIx_SrcFm()
 Dim ODry()
-    Dim S$(): S = SrczMdNm("IdeSrcLin")
+    Dim Src$(): Src = SrczMdNm("IdeSrcLin")
     Dim Dr(), Lx&
-    Dim J%, IsMth$, RmkLx$, L
-    For Each L In S
+    Dim J%, IsMth$, RmkLx$, Lin$, I
+    For Each I In Src
+        Lin = I
         IsMth = ""
         RmkLx = ""
-        If IsMthLin(L) Then
+        If IsMthLin(Lin) Then
             IsMth = "*Mth"
-            RmkLx = MthTopRmkIx(S, Lx)
+            RmkLx = MthTopRmkIx(Src, Lx)
 
         End If
-        Dr = Array(IsMth, RmkLx, L)
+        Dr = Array(IsMth, RmkLx, Lin)
         Push ODry, Dr
         Lx = Lx + 1
     Next
-BrwDrs Drs("Mth RmkLx Lin", ODry)
+BrwDrs DrszFF("Mth RmkLx Lin", ODry)
 End Sub
 
 Private Property Get ZZSrc() As String()
@@ -56,7 +57,7 @@ End Sub
 Function MthLinDryzSrc(Src$()) As Variant()
 Dim L
 For Each L In Itr(Src)
-    PushISomSz MthLinDryzSrc, MthLinDr(L)
+    PushISomSi MthLinDryzSrc, MthLinDr(CStr(L))
 Next
 End Function
 

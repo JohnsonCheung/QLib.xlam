@@ -1,14 +1,14 @@
 Attribute VB_Name = "MVb_Itp"
 Option Explicit
-Function IntozItp(OInto, Itr, P) As String()
+Function IntozItrP(OInto, Itr, P$) As String()
 Dim O: O = OInto
-Dim Obj
+Dim Obj As Object
 For Each Obj In Itr
-    Push O, Prp(Obj, P, eeNoThwNoInf)
+    Push O, Prp(Obj, P, jNoThwNoInf)
 Next
-IntozItp = O
+IntozItrP = O
 End Function
-Function SyzItp(Itr, P) As String()
-SyzItp = IntozItp(EmpSy, Itr, P)
+Function SyzItrP(Itr, P$) As String()
+SyzItrP = IntozItrP(EmpSy, Itr, P)
 End Function
 

@@ -1,6 +1,6 @@
 Attribute VB_Name = "MApp_Wrk"
 Option Explicit
-Private A As Database
+Private Db As Database
 Property Get W() As Database
 Set W = A
 End Property
@@ -52,7 +52,7 @@ Set WAcs = A
 End Function
 
 Function WPth$(Apn$)
-WPth = PthEns(TmpHom & Apn)
+WPth = EnsPth(TmpHom & Apn)
 End Function
 
 Function WFb$(Apn$)

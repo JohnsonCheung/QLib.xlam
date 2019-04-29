@@ -25,7 +25,7 @@ ArgAsetInPj.Srt.Vc
 End Sub
 
 Function DimItmzArg$(Arg)
-DimItmzArg = StrBefOrAll(RmvPfxSpc(RmvPfxSpc(Arg, "Optional"), "ParamArray"), " =")
+DimItmzArg = BefOrAll(RmvPfxSpc(RmvPfxSpc(Arg, "Optional"), "ParamArray"), " =")
 End Function
 
 Function ArgSfx$(Arg)

@@ -6,13 +6,13 @@ Private Sub ImpAttzAttd(A As Attd, Ffn$)
 Const CSub$ = CMod & "ImpAttzAttd"
 Dim F2 As Field2
 Dim S&, T As Date
-S = FfnSz(Ffn)
-T = FfnDte(Ffn)
+S = SizFfn(Ffn$)
+T = DtezFfn(Ffn$)
 'Msg CSub, "[Att] is going to import [Ffn] with [Si] and [Tim]", FdVal(A.TRs!AttNm), Ffn, S, T
 With A
     .TRs.Edit
     With .Ars
-        If HasReczFEv(A.Ars, "FileName", Fn(Ffn)) Then
+        If HasReczFEv(A.Ars, "FileName", Fn(Ffn$)) Then
             D "Ffn is found in Att and it is replaced"
             .Edit
         Else
@@ -23,13 +23,13 @@ With A
         F2.LoadFromFile Ffn
         .Update
     End With
-    .TRs.Fields!FilTim = TimFfn(Ffn)
-    .TRs.Fields!FilSz = FfnSz(Ffn)
+    .TRs.Fields!FilTim = TimFfn(Ffn$)
+    .TRs.Fields!FilSz = SizFfn(Ffn$)
     .TRs.Update
 End With
 End Sub
 
-Sub ImpAtt(Db As Database, Att, FmFfn$)
+Sub ImpAtt(A As Database, Att, FmFfn$)
 ImpAttzAttd Attd(Db, Att), FmFfn
 End Sub
 

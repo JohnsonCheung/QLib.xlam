@@ -182,7 +182,7 @@ Next
 Thw CSub, "MthLyWiTopRmk is invalid, it does not have non remark line", "MthLyWiTopRmk", MthLyWiTopRmk
 End Function
 
-Sub Z_EnsprpOnErDiczPj()
+Private Sub Z_EnsprpOnErDiczPj()
 BrwDic EnsprpOnErDiczPj(CurPj)
 End Sub
 

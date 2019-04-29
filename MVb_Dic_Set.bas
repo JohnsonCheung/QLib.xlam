@@ -4,12 +4,12 @@ Property Get EmpAset() As Aset
 Set EmpAset = New Aset
 End Property
 
-Function CvAset(A) As Aset
-Set CvAset = A
+Function CvAset(V) As Aset
+Set CvAset = V
 End Function
 
-Function IsAset(A) As Boolean
-IsAset = TypeName(A) = "Aset"
+Function IsAset(V) As Boolean
+IsAset = TypeName(V) = "Aset"
 End Function
 
 Function AsetzAp(ParamArray Ap()) As Aset
@@ -20,18 +20,18 @@ Function AsetzItr(Itr) As Aset
 Set AsetzItr = EmpAset
 AsetzItr.PushItr Itr
 End Function
-Function AsetzFF(FF) As Aset
-Set AsetzFF = AsetzAy(NyzNN(FF))
+Function AsetzFF(FF$) As Aset
+Set AsetzFF = AsetzAy(TermAy(FF))
 End Function
-Function AsetzSsl(Ssl) As Aset
+Function AsetzSsl(Ssl$) As Aset
 Set AsetzSsl = EmpAset
 Dim Sy$(): Sy = SySsl(Ssl)
 If HasDup(Sy) Then Thw CSub, "Ssl has dup", "Ssl DupEle", Ssl, AywDup(Sy)
 AsetzSsl.PushAy SySsl(Ssl)
 End Function
 
-Function AsetzAy(A) As Aset
+Function AsetzAy(Ay) As Aset
 Set AsetzAy = EmpAset
-AsetzAy.PushAy A
+AsetzAy.PushAy Ay
 End Function
 

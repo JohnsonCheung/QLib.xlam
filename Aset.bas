@@ -13,7 +13,7 @@ Private Aset As New Dictionary
 Property Get TermLin$()
 Dim I, O$()
 For Each I In Itms
-    PushI O, QuoteSqIf(I)
+    PushI O, QuoteSqIf(CStr(I))
 Next
 TermLin = JnSpc(O)
 End Property

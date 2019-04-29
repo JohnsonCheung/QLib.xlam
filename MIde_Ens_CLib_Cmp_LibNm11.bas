@@ -16,7 +16,7 @@ Next
 End Function
 
 Function LibNm$(A As VBComponent, B As eLibNmTy)
-LibNm = StrBef(A.Name, "_")
+LibNm = Bef(A.Name, "_")
 End Function
 
 Function MdNmToLibNmDic() As Dictionary
@@ -25,14 +25,15 @@ Set MdNmToLibNmDic = D
 End Function
 
 Private Function MdNmToLibNmDiczPj(A As VBProject) As Dictionary
-Dim I, D1 As Dictionary, D2 As Dictionary
+Dim I, N$, D1 As Dictionary, D2 As Dictionary
 Set D1 = MdNmToLibNmDiczDef
 Set D2 = MdPfxToLibNmDic
 Dim O As New Dictionary
 For Each I In MdNyzPj(A)
+    N = I
     Select Case True
     Case D1.Exists(I):          O.Add I, D1(I)
-    Case D2.Exists(MdPfx(I)):   O.Add I, D2(MdPfx(I))
+    Case D2.Exists(MdPfx(N)):   O.Add I, D2(MdPfx(N))
     Case Else: O.Add I, ""
     End Select
 Next
@@ -52,7 +53,7 @@ Set MdNmToLibNmDiczDef = A
 End Function
 
 Function C_MdNmToLibNmLy() As String()
-Erase xx
+Erase XX
 X "MCmpAdd QIde"
 X "MUSysRegInf QIde"
 X "MLinShould QIde"
@@ -65,12 +66,12 @@ X "MClrCell QXls"
 X "MTreeWsInstall QXls"
 X "MDefDic QVb"
 X "MSepLin QDta"
-C_MdNmToLibNmLy = xx
-Erase xx
+C_MdNmToLibNmLy = XX
+Erase XX
 End Function
 
 Function C_MdPfxToLibNmLy() As String()
-Erase xx
+Erase XX
 X "MCml QVb"
 X "Act QIde"
 X "MCmp QIde"
@@ -146,13 +147,13 @@ X "MArg QIde"
 X "MNMth QIde"
 X "MNCmp QIde"
 X "Cmp QIde"
-C_MdPfxToLibNmLy = xx
-Erase xx
+C_MdPfxToLibNmLy = XX
+Erase XX
 End Function
 
 Function LibDef() As String()
 LibDef = _
-FmtAyT2(AyAdd( _
-AyAddPfx(C_MdNmToLibNmLy, "MdNm "), _
-AyAddPfx(C_MdPfxToLibNmLy, "MdPfx ")))
+FmtSyT2(SyAdd( _
+SyAddPfx(C_MdNmToLibNmLy, "MdNm "), _
+SyAddPfx(C_MdPfxToLibNmLy, "MdPfx ")))
 End Function

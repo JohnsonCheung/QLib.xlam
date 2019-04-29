@@ -1,82 +1,112 @@
 Attribute VB_Name = "MVb_Str_Esc"
 Option Explicit
 Const CMod$ = "MVb_Str_Esc."
-Function Esc$(A, Fm$, ToStr$)
-Const CSub$ = CMod & "Esc"
-If InStr(A, ToStr) > 0 Then
-    Inf CSub, "Warning: escaping a {Str} of {FmStrSub} to {ToSubStr} is found that {Str} contains some {ToSubStr}.  This will make the string chagned after EscUn", A, Fm, ToStr
+Function SlashCr$(S$)
+SlashCr = SlashAsc$(S$, vbCr, "r")
+End Function
+Function EscOpnSqBkt$(S$)
+EscOpnSqBkt = EscChr(S, "[")
+End Function
+Function EscClsSqBkt$(S$)
+EscClsSqBkt = EscChr(S, "]")
+End Function
+Function UnSlashCrLf$(S$)
+UnSlashCrLf = UnSlashCr(UnSlashLf(S))
+End Function
+Function SlashAsc$(S$, Asc%, C$)
+SlashAsc = SlashChr(S, Chr(Asc), C)
+End Function
+Function SlashCrLf$(S$)
+SlashCrLf = SlashLf(SlashCr(S))
+End Function
+Function SlashLf$(S$)
+SlashLf = SlashAsc(S, vbLf, "n")
+End Function
+Function UnSlashChr$(S$, C$, SlashC$)
+SlashChr = Replace(S, "\" & SlashC, C)
+End Function
+
+Function Slash$(S$, C$, SlashC$)
+If InStr(S, "\" & SlashC) > 0 Then
+    Debug.Print FmtQQ("SlashChr: Given S has \?, when UnSlash, it will not match", SlashC)
+    Debug.Print vbTab; QuoteSq(S)
 End If
-Esc = Replace(A, Fm, ToStr)
+SlashChr = Replace(S, C, "\" & SlashC)
+End Function
+Function UnEsc$(S$, C$)
+
+End Function
+Function UnEscBackSlash$(S$)
+UnEscBackSlash = UnEsc(S, "\")
+End Function
+Function EscBackSlash$(S$)
+EscBackSlash = EscChr(S, "\")
 End Function
 
-Function EscBackSlash$(A)
-EscBackSlash = Replace(A, "\", "\\")
+Function EscCr$(S$)
+EscCr = EscAsc(S, vbCr)
 End Function
 
-Function EscCr$(A)
-EscCr = Esc(A, vbCr, "\r")
+Function EscCrLf$(S$)
+EscCrLf = EscCr(EscLf(S))
 End Function
 
-Function EscCrLf$(A)
-EscCrLf = EscCr(EscLf(A))
+Function EscLf$(S$)
+EscLf = EscChr(S, Chr(vbLf))
 End Function
 
-Function EscKey$(A)
-EscKey = EscCrLf(EscSpc(EscTab(A)))
+Function SlashTab$(S$)
+SlashTab = SlashChr(S, vbTab, "t")
+End Function
+Function EscAsc$(S$, A%)
 End Function
 
-Function EscLf$(A)
-EscLf = Esc(A, vbLf, "\n")
+Function UnSlashCr$(S$)
+UnSlashCr = Replace(S, "\r", vbCr)
+End Function
+Function UnSlashLf$(S$)
+UnSlashLf = Replace(S, "\n", vbLf)
 End Function
 
-Function EscSpc$(A)
-EscSpc = Esc(A, " ", "~")
+Function TileSpc$(S$)
+If InStr(S, "~") Then
+    Debug.Print "TileSpc: Given-S has space"
+    Debug.Print vbTab; "[" & S & "]"
+End If
+TileSpc = Replace(S, " ", "~")
+End Function
+Function UnTileSpc$(S$)
+UnTileSpc = Replace(S, "~", " ")
 End Function
 
-Function EscSqBkt$(A)
-EscSqBkt = Replace(Replace(A, "[", "\o"), "]", "\c")
+Function UnSplashTab(S$)
+EscUnTab = Replace(A, "\t", vbTab)
 End Function
 
-Function EscTab$(A)
-EscTab = Esc(A, vbTab, "\t")
+Function UnSlashBackSlash$(S$)
+UnSlashBackSlash = Replace(A, "\\", "\")
 End Function
 
-Function EscUnCr$(A)
-EscUnCr = Replace(A, "\r", vbCr)
-End Function
-
-Function EscUnSpc$(A)
-EscUnSpc = Replace(A, "~", " ")
-End Function
-
-Function EscUnTab(A)
-EscUnTab = Replace(A, "\t", "~")
-End Function
-
-Function UnEscBackSlash$(A)
-UnEscBackSlash = Replace(A, "\\", "\")
-End Function
-
-Function UnEscCr$(A)
+Function UnEscCr$(S$)
 UnEscCr = Replace(A, "\r", vbCr)
 End Function
 
-Function UnEscCrLf$(A)
-UnEscCrLf = UnEscLf(UnEscCr(A))
+Function UnEscCrLf$(S$)
+UnEscCrLf = UnEscLf(UnEscCr(S$))
 End Function
 
-Function UnEscLf$(A)
+Function UnEscLf$(S$)
 UnEscLf = Replace(A, "\n", vbCr)
 End Function
 
-Function UnEscSpc$(A)
+Function UnEscSpc$(S$)
 UnEscSpc = Replace(A, "~", " ")
 End Function
 
-Function UnEscSqBkt$(A)
+Function UnEscSqBkt$(S$)
 UnEscSqBkt = Replace(A, Replace(A, "\o", "["), "\c", "]")
 End Function
 
-Function UnEscTab(A)
+Function UnEscTab(S$)
 UnEscTab = Replace(A, "\t", "~")
 End Function

@@ -1,6 +1,13 @@
 Attribute VB_Name = "MVb_Ay_Push"
 Option Explicit
 Const CMod$ = "MVb_Ay_Push."
+Sub PushS(O$(), S$)
+PushI O, S
+End Sub
+Function Shf(OAy)
+Shf = OAy(0)
+OAy = RmvFstNEle(OAy)
+End Function
 
 Sub Push(O, M)
 Dim N&
@@ -64,7 +71,7 @@ For Each M In Itr(MAy)
 Next
 End Sub
 
-Sub PushISomSz(OAy, IAy)
+Sub PushISomSi(OAy, IAy)
 If Si(IAy) = 0 Then Exit Sub
 PushI OAy, IAy
 End Sub

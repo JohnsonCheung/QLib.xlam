@@ -14,9 +14,10 @@ Function ShfVy(OLin$, Lblss$) As Variant() ' _
 '   LLL  means the value in OLin is LLL=VVV _
 'OLin is _
 '   VVV VVV=LLL [VVV=L L]
-Dim L, Ay$(), O()
+Dim L$, I, Ay$(), O()
 Ay = TermAy(OLin)
-For Each L In Itr(SySsl(Lblss))
+For Each I In Itr(SySsl(Lblss))
+    L = I
     Select Case FstChr(L)
     Case "*":
         Select Case SndChr(L)
@@ -37,7 +38,7 @@ Dim S$: S = ShfTxt(OAy, Lbl)
 If S = "" Then ShfTxtOpt = SomStr(S)
 End Function
 
-Private Function ShfBool(OAy$(), Lbl)
+Private Function ShfBool(OAy$(), Lbl$)
 If Si(OAy) = 0 Then Exit Function
 Dim J%, L$, Ay$()
 Ay = OAy
@@ -54,12 +55,13 @@ End Function
 Private Function ShfTxt(OAy$(), Lbl)
 If Si(OAy) = 0 Then Exit Function
 'Return either string or ""
-Dim I, J%, Ay$()
+Dim I, S$, J&, Ay$()
 Ay = OAy
 For Each I In Itr(Ay)
-    With Brk2(I, "=")
-        If .s1 = Lbl Then
-            ShfTxt = .s2
+    S = I
+    With Brk2(S, "=")
+        If .S1 = Lbl Then
+            ShfTxt = .S2
             OAy = AyeEleAt(Ay, J)
             Exit Function
         End If

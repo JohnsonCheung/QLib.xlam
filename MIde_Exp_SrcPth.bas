@@ -8,12 +8,12 @@ Function SrcpzCmp$(A As VBComponent)
 SrcpzCmp = Srcp(PjzCmp(A))
 End Function
 
-Function SrcpzPjf$(Pjf)
-SrcpzPjf = AddFdrEns(Pth(Pjf), ".Src", Fn(Pjf))
+Function SrcpzPjf$(Pjf$)
+SrcpzPjf = AddFdrApEns(Pth(Pjf), ".Src", Fn(Pjf))
 End Function
 
 Function SrcpzEns$(A As VBProject)
-SrcpzEns = PthEnsAll(Srcp(A))
+SrcpzEns = EnsPthzAllSeg(Srcp(A))
 End Function
 
 Function SrcpzDistPj$(DistPj As VBProject)
@@ -22,17 +22,21 @@ SrcpzDistPj = AddFdr(PthUp(P, 2), ".Src", Fdr(P))
 End Function
 
 Function PthRmvFdr$(Pth)
-PthRmvFdr = StrBefRev(PthRmvSfx(Pth), PthSep) & PthSep
+PthRmvFdr = BefRev(RmvPthSfx(Pth), PthSep) & PthSep
 End Function
 
-Function FfnUp$(Ffn)
-FfnUp = PthRmvFdr(Pth(Ffn))
+Function FfnUp$(Ffn$)
+FfnUp = PthRmvFdr(Pth(Ffn$))
 End Function
 Function SrcpInPj$()
 SrcpInPj = Srcp(CurPj)
 End Function
+
 Function Srcp$(A As VBProject)
 Srcp = SrcpzPjf(Pjf(A))
+End Function
+Function SrcpOfPj$()
+SrcpOfPj = SrcpzPj(CurPj)
 End Function
 
 Function IsSrcp(Pth) As Boolean
@@ -51,14 +55,14 @@ Function SrcFfn$(A As VBComponent)
 SrcFfn = SrcpzCmp(A) & SrcFn(A)
 End Function
 
-Function IsSrcpInst(Pth) As Boolean
+Function IsInstScrp(Pth) As Boolean
 If Not IsPth(Pth) Then Exit Function
 If Fdr(Pth) <> "Src" Then Exit Function
 Dim P$: P = ParPth(Pth)
 If Not IsDteTimStr(Fdr(P)) Then Exit Function
-IsSrcpInst = True
+IsInstScrp = True
 End Function
 
-Sub ThwNotSrcpInst(Pth)
-If Not IsSrcpInst(Pth) Then Err.Raise 1, , "Not SrcpInst(" & Pth & ")"
+Sub ThwNotInstScrp(Pth)
+If Not IsInstScrp(Pth) Then Err.Raise 1, , "Not InstScrp(" & Pth & ")"
 End Sub

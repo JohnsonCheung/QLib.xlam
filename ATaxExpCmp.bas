@@ -1,626 +1,617 @@
 Attribute VB_Name = "ATaxExpCmp"
-'Option Explicit
-'Type XlsLnkInf
-'    IsXlsLnk As Boolean
-'    Fx As String
-'    WsNm As String
-'End Type
-'Type Fxw
-'    Fx As String
-'    Wsn As String
-'End Type
-'Private Const ONm1$ = "@Main"
-'Const OSpec1$ = _
-'    "Flg RecTy Amt Key Uom MovTy Qty BchRateUX RateTy Bch Las GL |" & _
-'    " Flg IsAlert Is3p IsRepack Lvl1 Lvl2 Lvl3 Rank |" & _
-'    " Key PstMth PstDte Sku |" & _
-'    " Bch BchRateU BchNo    BchPermitDate BchPermit BchPermitD|" & _
-'    " Las LasRateU LasBchNo LasPermitDate LasPermit LasPermitD|" & _
-'    " GL GLDocNo GLDocDte GLAsg GLDocTy GLLin GLPstKy GLPc GLAc GLBusA GLRef |" & _
-'    " Uom Des StkUom Ac_U"
-'Const DSpec1$ = "Duty.PermitD "
-'Const DSpec2$ = "Duty.Permit  "
-'Const DSpec3$ = "StockHld.SkuRepackMuti SkuNew SkuFm FmQty "
-'Const DSpec4$ = "SkuTaxBy3rdParty      Sku RateU"
-'Const DSpec5$ = "SkuNoLongerTax        Sku"
-'Const ISpec1$ = "#IGLDuty Sku PstDte Amt GLDocNo GLDocDte GLDocTy GLLin GLPstKy GLPc GLAc GLBusA GLRef"
-'Const ISpec2$ = "#IGLAnp  Sku PstDte Amt GLDocNo GLDocDte GLDocTy GLLin GLPstKy GLPc GLAc GLBusA GLRef"
-'Const ISpec3$ = "#IMB51   Sku PstDte MovTy Qty BchNo"
-'Const ISpec4$ = "#IUom    Sku Des Ac_U StkUom"
-'Public Const LSpec1$ = ">GLDuty |" & _
-'    "Sku       Txt Material |" & _
-'    "PstDte    Dte [Posting Date] |" & _
-'    "Amt       Dbl [Amount in local currency] |" & _
-'    "GLDocNo   Txt [Document Number] |" & _
-'    "GLDocDte  Dte [Document Date] |" & _
-'    "GLAsg     Txt Assignment |" & _
-'    "GLDocTy   Txt [Document Type] |" & _
-'    "GLLin     Txt [Line item] |" & _
-'    "GLPstKy   Txt [Posting Key] |" & _
-'    "GLPc      Txt [Profit Center] |" & _
-'    "GLAc      Txt [G/L Account] |" & _
-'    "GLAcTy    Txt [Account Type] |" & _
-'    "GLBusA    Txt [Business Area]|" & _
-'    "GLRef     Txt [Reference] |" & _
-'    "Where not [Posting Date] is null"
-'
-'Public Const LSpec2$ = ">GLAnp |" & _
-'    "Sku       Txt Material |" & _
-'    "PstDte    Dte [Posting Date] |" & _
-'    "Amt       Dbl [Amount in local currency] |" & _
-'    "GLDocNo   Txt [Document Number] |" & _
-'    "GLDocDte  Dte [Document Date] |" & _
-'    "GLAsg     Txt Assignment |" & _
-'    "GLDocTy   Txt [Document Type] |" & _
-'    "GLLin     Txt [Line item] |" & _
-'    "GLPstKy   Txt [Posting Key] |" & _
-'    "GLPc      Txt [Profit Center] |" & _
-'    "GLAc      Txt [G/L Account] |" & _
-'    "GLAcTy    Txt [Account Type] |" & _
-'    "GLBusA    Txt [Business Area]|" & _
-'    "GLRef     Txt [Reference] |" & _
-'    "Where not [Posting Date] is null"
-'
-'Const LSpec3$ = ">MB51 |" & _
-'    "Whs    Txt Plant |" & _
-'    "Loc    Txt [Storage Location]|" & _
-'    "Sku    Txt Material |" & _
-'    "PstDte Txt [Posting Date] |" & _
-'    "MovTy  Txt [Movement Type]|" & _
-'    "Qty    Txt Quantity|" & _
-'    "BchNo  Txt Batch |" & _
-'    "Where (Plant='8601' and [Storage Location]='0002' and [Movement Type] like '6*' and not [Movement Type] in ('632','633'))" & _
-'    " or   (Plant='8601' and [Movement Type] in ('633','634'))"
-'Const LSpec4$ = ">Uom |" & _
-'    "Sku    Txt Material |" & _
-'    "Des    Txt [Material Description] |" & _
-'    "Ac_U   Txt [Unit per case] |" & _
-'    "StkUom Txt [Base Unit of Measure] |" & _
-'    "ProdH  Txt [Product hierarchy] |" & _
-'    "Where Plant='8601'"
-'
-''Material    Amount  Document Number Posting Date  Document Date   Assignment  Document Type   Line item   Posting Key Profit Center   G/L Account Business Area   Reference   Account Type
-''1074574 -3684.17    800000004       2/1/2018      2/1/2018        20180102    CA              4           50          86BL0A4GRM      E353101C    UD00            0802023295  S
-''1051982 -2107.20    800000007       2/1/2018      2/1/2018        20180102    CA              4           50          86JB020GRM      E353101C    UD00            0802023298  S
-''1055642 -1774.92    800000007       2/1/2018      2/1/2018        20180102    CA              11          50          86HY040GRM      E353101C    HY00            0802023298  S
-'Const Apn$ = "TaxExpCmp"
-'Private W As Database
-'Private Sub TpRfhWc()
-'FxRfhWbCnStr TpFx, WFb
-'End Sub
-'Private Function DNm1$()
-'DNm1 = DSpecNm(DSpec1)
-'End Function
-'Private Function DNm2$()
-'DNm2 = DSpecNm(DSpec2)
-'End Function
-'Private Function DNm3$()
-'DNm3 = DSpecNm(DSpec3)
-'End Function
-'
-'Private Sub WMB51Opn()
-'FxOpn IFxWMB51
-'End Sub
-'Private Function LSpecAy() As String()
-'LSpecAy = ApSy(LSpec1, LSpec2, LSpec3, LSpec4)
-'End Function
-'Private Function IMB51Fny() As String()
-'IMB51Fny = DbtFny(W, ">MB51")
-'End Function
-'Private Function IGLAnpFny() As String()
-'IGLAnpFny = DbtFny(W, ">GLAnp")
-'End Function
-'Private Function IGLDutyFny() As String()
-'IGLDutyFny = DbtFny(W, ">MB51")
-'End Function
-'Private Sub MsgSet(A$)
-''Form_Main.MsgSet A
-'End Sub
-'Private Sub MsgClr()
-''Form_Main.MsgClr
-'End Sub
-'Private Function DSpecAy() As String()
-'DSpecAy = ApSy(DSpec1, DSpec2, DSpec3, DSpec4, DSpec5)
-'End Function
-'Private Function Import() As String()
-'MsgSet "Import the Excel files ....."
-'Dim O$()
-'O = DbImp(W, LSpecAy)
-'If Si(O) > 0 Then Import = O: Exit Function
-'WImpTbl "Permit PermitD SkuRepackMulti SkuTaxBy3rdParty SkuNoLongerTax"
-'W.Execute FmtQQ("Alter Table [?] drop column Whs,Loc", INm3)
-'End Function
-'Private Sub WImpTbl(Tny0)
-'DbtImpTbl W, Tny0
-'End Sub
-'
-'Private Sub Tmp()
-'MsgSet "Running query ($Sku) .....": TmpSku
-'MsgSet "Running query ($MB51) .....": TmpMB51
-'MsgSet "Running query ($Rate) .....": TmpRate
-'MsgSet "Running query ($T1T2) .....": TmpT1T2
-'MsgSet "Running query ($T3) .....": TmpT3_and_5RepackOup
-'MsgSet "Running query ($T4) .....": TmpT4
-'End Sub
-'
-'Private Sub TmpRate()
-'WDrp "$Rate #A"
-'W.Execute "select Distinct Sku into [#A] from [$MB51]"
-'
-'W.Execute "select Sku,PermitDate,PermitDate as PermitDateEnd,BchNo,Rate as BchRateU,PermitD,x.Permit" & _
-'" into [$Rate] from [#IPermitD] x" & _
-'" inner join [#IPermit] a on x.Permit=a.Permit" & _
-'" where Sku in (Select Distinct Sku from [#A])" & _
-'" Order By Sku,PermitDate"
-'UpdEndDte W, "$Rate", "PermitDateEnd", "Sku", "PermitDate"
-'W.Execute "Create Index Sku on [$Rate] (Sku,BchNo)"
-'
-'WDrp "#A"
-'
-'End Sub
-'Private Sub TmpT4()
-'WDrp "$T4 #A #B"
-'W.Execute "Select * into [#A] from [#ISkuTaxBy3rdParty]"
-'W.Execute "Select Id,Sku,Is3p into [#B] from [$MB51] where Is3p"
-'W.Execute "Select Id,x.Sku,RateU into [$T4] from [#B] x left join [#A] a on x.Sku=a.Sku"
-'End Sub
-'Private Sub TmpT3_and_5RepackOup()
-'WDrp "$T3 #A #B #C #D #E #F @Repack1 @Repack2 @Repack3 @Repack4 @Repack5 @Repack6"
-'W.Execute "Select * into [#A] from [#ISkuRepackMulti]"
-'W.Execute "Create Index Pk on [#A] (SkuNew,SkuFm) with Primary"
-'
-'W.Execute "Select Id,Sku as MB51SkuNew, PstDte into [#B] from [$MB51] where IsRepack"
-'W.Execute "Create Index Pk on [#B] (Id) with Primary"
-'
-'W.Execute "Select Id,MB51SkuNew,PstDte,SkuFm,FmSkuQty into [#C] from [#A] x inner join [#B] a on x.SkuNew=a.MB51SkuNew"
-'W.Execute "Create Index Pk on [#C] (Id,SkuFm)"
-'
-'W.Execute "Select Distinct MB51SkuNew,PstDte,SkuFm,FmSkuQty into [#D] from [#C]"
-'W.Execute "Create Index Pk on [#D] (MB51SkuNew,PstDte,SkuFm)"
-'
-'W.Execute "Select MB51SkuNew,PstDte,SkuFm,FmSkuQty,BchRateU,PermitDate,BchNo,Permit,CLng(a.PermitD) as PermitD" & _
-'    " into [#E] from [#D] x,[$Rate] a where false"
-'W.Execute "Insert into [#E] select * from [#D]"
-'W.Execute "Update [#E] x inner join [$Rate] a on x.SkuFm=a.Sku set " & _
-'" x.BchRateU  =a.BchRateU  ," & _
-'" x.PermitDate=a.PermitDate," & _
-'" x.BchNo     =a.BchNo     ," & _
-'" x.Permit    =a.Permit    ," & _
-'" x.PermitD   =a.PermitD    " & _
-'" where PstDte between a.PermitDate and a.PermitDateEnd"
-'W.Execute "Alter Table [#E] add column Amt Currency"
-'W.Execute "Update [#E] set Amt=FmSkuQty*BchRateU"
-'W.Execute "Create Index Pk on [#E] (MB51SkuNew,PstDte,SkuFm)"
-'
-'W.Execute "Select Distinct MB51SkuNew,PstDte,Sum(x.Amt) as PackRateU, Count(*) as FmSkuCnt,Sum(x.FmSkuQty) as FmQty into [#F] from [#E] x group by MB51SkuNew,PstDte"
-'W.Execute "Create Index Pk on [#F] (MB51SkuNew,PstDte)"
-'
-'W.Execute "Select Id,x.MB51SkuNew,x.PstDte,PackRateU,FmSkuCnt,FmQty into [$T3] from [#B] x inner join [#F] a on x.MB51SkuNew=a.MB51SkuNew and x.PstDte=a.PstDte"
-'W.Execute "Create Index Pk on [$T3] (Id)"
-'
-'W.Execute "Drop Index Pk on [#B]"
-'W.Execute "Drop Index Pk on [#C]"
-'
-'W.Execute "ALter Table [#B] drop column Id"
-'W.Execute "ALter Table [#C] drop column Id"
-'
-'WReOpn
-'WTblRen "#A", "@Repack1"
-'WTblRen "#B", "@Repack2"
-'WTblRen "#C", "@Repack3"
-'WTblRen "#D", "@Repack4"
-'WTblRen "#E", "@Repack5"
-'WTblRen "#F", "@Repack6"
-'
-'End Sub
-'
-'Private Sub TmpT1T2()
-'WDrp "#M ##M ##R #A #B $T1 $T2"
-'
-''M
-'W.Execute "select Id,Sku,BchNo,PstDte into [#M] from [$MB51]"
-'W.Execute "Update [#M] set BchNo='' where BchNo is null"
-'
-''T1
-'W.Execute "Select Id,x.Sku,x.BchNo,PermitD,Permit,PermitDate,BchRateU into [#A] from [#M] x inner join [$Rate] a on x.Sku=a.Sku and x.BchNo=a.BchNo"
-'W.Execute "Select Distinct Id,Sku,BchNo,Max(x.PermitD) as PermitD into [#B] from [#A] x group by Id,Sku,BchNo"
-'W.Execute "Select x.Id,x.Sku,x.BchNo,x.PermitD,Permit,PermitDate,BchRateU into [$T1] from [#B] x  inner join [#A] a on x.Id=a.Id and x.Sku=a.Sku and x.BchNo=a.BchNo and x.PermitD=a.PermitD"
-'WDrp "#A #B"
-'
-''T2
-'W.Execute "Select x.* into [##M] from [#M] x left join [$T1] a on x.Id=a.Id where a.Id is null"
-'W.Execute "Select x.* into [##R] from [$Rate] x where Sku in (Select Sku from [##M])"
-'W.Execute "select Id,x.Sku,PstDte,PermitD,Permit,PermitDate,x.BchNo,BchRateU,a.BchNo As LasBchNo into [$T2] from [##M] x inner join [##R] a on x.Sku=a.Sku where PstDte between PermitDate and PermitDateEnd"
-'
-'WDrp "#M ##M ##R #A #B"
-'End Sub
-'Private Sub ORate()
-'WDrp "@Rate"
-''Add RecTy to $Rate
-'W.Execute "Select * into [@Rate] from [$Rate]"
-'W.Execute "Alter Table [@Rate] add column RecTy Text(4)"
-'W.Execute "Update [@Rate] x inner join [$T1] a on x.PermitD=a.PermitD set RecTy='*Bch'"
-'W.Execute "Update [@Rate] x inner join [$T2] a on x.PermitD=a.PermitD set RecTy='*Las'"
-'
-'End Sub
-'Private Sub TmpMB51()
-'WDrp "$MB51"
-'W.Execute "Select CLng(0) as Id,IsTax,IsRepack,Is3p,IsNoLongerTax,x.* into [$MB51] from [#IMB51] x left join [$Sku] a on x.Sku=a.Sku where IsImportFmMB51 or a.Sku is null"
-'DbtUpdSeq W, "$MB51", "Id"
-'End Sub
-'
-'Private Function Lnk() As String()
-'MsgSet "Linking the Excel files ....."
-'Dim A$(), B$(), C$(), D$(), O$(), E$(), F$()
-'A = WLnkFx(">MB51", IFxWMB51)
-'B = WLnkFx(">GLDuty", IFxWGlDuty)
-'B = WLnkFx(">GLAnp", IFxWGLAnp)
-'C = WLnkFx(">Uom", IFxWUom)
-'D = WLnkFb("Permit PermitD", IFbDuty)
-'E = WLnkFb("SkuRepackMulti SkuNoLongerTax SkuTaxBy3rdParty", IFbStkHld)
-'O = AyAddAp(A, B, C, D, E)
-'If Si(O) > 0 Then Lnk = O: Exit Function
-'Lnk = O
-'End Function
-'Private Function IFbDuty$()
+Option Explicit
+Private Type Pm
+ OupPth As String: OupFxFn As String: InpPth As String: InpFxFnGLDutyFx As String: InpFxFnGLAnp As String: InpFxFnMB51 As String
+ Tolerence As Long
+End Type
+Type XlsLnkInf
+    IsXlsLnk As Boolean
+    Fx As String
+    WsNm As String
+End Type
+Type Fxw
+    Fx As String
+    Wsn As String
+End Type
+Private Const OupTn_Main$ = "@Main"
+Const OupFld_Main$ = _
+    "Flg RecTy Amt Key Uom MovTy Qty BchRateUX RateTy Bch Las GL |" & _
+    " Flg IsAlert Is3p IsRepack Lvl1 Lvl2 Lvl3 Rank |" & _
+    " Key PstMth PstDte Sku |" & _
+    " Bch BchRateU BchNo    BchPermitDate BchPermit BchPermitD|" & _
+    " Las LasRateU LasBchNo LasPermitDate LasPermit LasPermitD|" & _
+    " GL GLDocNo GLDocDte GLAsg GLDocTy GLLin GLPstKy GLPc GLAc GLBusA GLRef |" & _
+    " Uom Des StkUom Ac_U"
+Const TblFld_PermitD$ = "Duty.PermitD "
+Const TblFld_Permit$ = "Duty.Permit  "
+Const TblFld_Repack$ = "StockHld.SkuRepackMuti SkuNew SkuFm FmQty "
+Const TblFld_SkuTaxBy3rdParty$ = "TaxCmp.SkuTaxBy3rdParty      Sku RateU"
+Const TblFld_SkuNoLongerTax$ = "TaxCmp.SkuNoLongerTax        Sku"
+Const WsFld_GLDuty$ = "#IGLDuty Sku PstDte Amt GLDocNo GLDocDte GLDocTy GLLin GLPstKy GLPc GLAc GLBusA GLRef"
+Const WsFld_GLAnp$ = "#IGLAnp  Sku PstDte Amt GLDocNo GLDocDte GLDocTy GLLin GLPstKy GLPc GLAc GLBusA GLRef"
+Const WsFld_MB51$ = "#IMB51   Sku PstDte MovTy Qty BchNo"
+Const WsFld_UOM$ = "#IUom    Sku Des Ac_U StkUom"
+Public Const LnkSpec_GLDuty$ = ">GLDuty |" & _
+    "Sku       Txt Material |" & _
+    "PstDte    Dte [Posting Date] |" & _
+    "Amt       Dbl [Amount in local currency] |" & _
+    "GLDocNo   Txt [Document Number] |" & _
+    "GLDocDte  Dte [Document Date] |" & _
+    "GLAsg     Txt Assignment |" & _
+    "GLDocTy   Txt [Document Type] |" & _
+    "GLLin     Txt [Line item] |" & _
+    "GLPstKy   Txt [Posting Key] |" & _
+    "GLPc      Txt [Profit Center] |" & _
+    "GLAc      Txt [G/L Account] |" & _
+    "GLAcTy    Txt [Account Type] |" & _
+    "GLBusA    Txt [Business Area]|" & _
+    "GLRef     Txt [Reference] |" & _
+    "Where not [Posting Date] is null"
+
+Public Const LnkSpec_GLAnp$ = ">GLAnp |" & _
+    "Sku       Txt Material |" & _
+    "PstDte    Dte [Posting Date] |" & _
+    "Amt       Dbl [Amount in local currency] |" & _
+    "GLDocNo   Txt [Document Number] |" & _
+    "GLDocDte  Dte [Document Date] |" & _
+    "GLAsg     Txt Assignment |" & _
+    "GLDocTy   Txt [Document Type] |" & _
+    "GLLin     Txt [Line item] |" & _
+    "GLPstKy   Txt [Posting Key] |" & _
+    "GLPc      Txt [Profit Center] |" & _
+    "GLAc      Txt [G/L Account] |" & _
+    "GLAcTy    Txt [Account Type] |" & _
+    "GLBusA    Txt [Business Area]|" & _
+    "GLRef     Txt [Reference] |" & _
+    "Where not [Posting Date] is null"
+
+Const LnkSpec_MB51$ = ">MB51 |" & _
+    "Whs    Txt Plant |" & _
+    "Loc    Txt [Storage Location]|" & _
+    "Sku    Txt Material |" & _
+    "PstDte Txt [Posting Date] |" & _
+    "MovTy  Txt [Movement Type]|" & _
+    "Qty    Txt Quantity|" & _
+    "BchNo  Txt Batch |" & _
+    "Where (Plant='8601' and [Storage Location]='0002' and [Movement Type] like '6*' and not [Movement Type] in ('632','633'))" & _
+    " or   (Plant='8601' and [Movement Type] in ('633','634'))"
+Const LnkSpec_Uom$ = ">Uom |" & _
+    "Sku    Txt Material |" & _
+    "Des    Txt [Material Description] |" & _
+    "Ac_U   Txt [Unit per case] |" & _
+    "StkUom Txt [Base Unit of Measure] |" & _
+    "ProdH  Txt [Product hierarchy] |" & _
+    "Where Plant='8601'"
+
+'Material    Amount  Document Number Posting Date  Document Date   Assignment  Document Type   Line item   Posting Key Profit Center   G/L Account Business Area   Reference   Account Type
+'1074574 -3684.17    800000004       2/1/2018      2/1/2018        20180102    CA              4           50          86BL0A4GRM      E353101C    UD00            0802023295  S
+'1051982 -2107.20    800000007       2/1/2018      2/1/2018        20180102    CA              4           50          86JB020GRM      E353101C    UD00            0802023298  S
+'1055642 -1774.92    800000007       2/1/2018      2/1/2018        20180102    CA              11          50          86HY040GRM      E353101C    HY00            0802023298  S
+Const Apn$ = "TaxExpCmp"
+Private W As Database
+Property Get ATaxExpCmp() As RptPm
+Static X As Boolean, XGenr As IGenr, XWbFmtr As IWbFmtr
+With ATaxExpCmp
+Set .Genr = XGenr
+.ImpWsSqy = EmpSy
+.InpFbAy = EmpSy
+.InpFbTny = SySsl("")
+End With
+End Property
+Property Get App() As App
+Static X As App
+If IsNothing(X) Then
+    Set X = New App
+    X.Init "TaxExpCmp", "1_3"
+End If
+Set App = X
+End Property
+
+Private Function DSpecNm$(DSpec)
+DSpecNm = AftDotOrAll(T1(DSpec))
+End Function
+
+
+Private Sub WMB51Opn()
+OpnFx IFx_WMB51
+End Sub
+Private Function LnkSpec_Ay() As String()
+LnkSpec_Ay = Sy(LnkSpec_GLDuty, LnkSpec_GLAnp, LnkSpec_MB51, LnkSpec_Uom)
+End Function
+Private Function IMB51Fny() As String()
+IMB51Fny = Fny(W, ">MB51")
+End Function
+Private Function IGLAnpFny() As String()
+IGLAnpFny = Fny(W, ">GLAnp")
+End Function
+Private Function IGLDutyFny() As String()
+IGLDutyFny = Fny(W, ">MB51")
+End Function
+Private Sub MsgSet(A$)
+'Form_Main.MsgSet A
+End Sub
+Private Sub MsgClr()
+'Form_Main.MsgClr
+End Sub
+Private Function DSpecAy() As String()
+DSpecAy = Sy(TblFld_PermitD, TblFld_Permit, TblFld_Repack, TblFld_SkuTaxBy3rdParty, TblFld_SkuNoLongerTax)
+End Function
+Sub ImpzLnkSpec_Ay(A As Database, LnkSpec_Ay$())
+
+End Sub
+Private Sub Rpt_Imp()
+MsgSet "Import the Excel files ....."
+ImpzLnkSpec_Ay W, LnkSpec_Ay
+ImpTT W, "Permit PermitD SkuRepackMulti SkuTaxBy3rdParty SkuNoLongerTax"
+W.Execute FmtQQ("Alter Table [?] drop column Whs,Loc", TmpInpTn_MB51)
+End Sub
+Private Sub ImpTT(A As Database, TT)
+'ImpTT W, TT
+End Sub
+
+Private Sub Rpt_Tmp()
+MsgSet "Running query ($Sku) .....": Tmp_Sku
+MsgSet "Running query ($MB51) .....": Tmp_MB51
+MsgSet "Running query ($Rate) .....": Tmp_Rate
+MsgSet "Running query ($T1T2) .....": Tmp_T1T2
+MsgSet "Running query ($T3 & $T5) .....": Tmp_T3_and_5RepackOup
+MsgSet "Running query ($T4) .....": Tmp_T4
+End Sub
+
+Private Sub Tmp_Rate()
+WDrp "$Rate #A"
+W.Execute "select Distinct Sku into [#A] from [$MB51]"
+
+W.Execute "select Sku,PermitDate,PermitDate as PermitDateEnd,BchNo,Rate as BchRateU,PermitD,x.Permit" & _
+" into [$Rate] from [#IPermitD] x" & _
+" inner join [#IPermit] a on x.Permit=a.Permit" & _
+" where Sku in (Select Distinct Sku from [#A])" & _
+" Order By Sku,PermitDate"
+UpdEndDte W, "$Rate", "PermitDateEnd", "Sku", "PermitDate"
+W.Execute "Create Index Sku on [$Rate] (Sku,BchNo)"
+
+WDrp "#A"
+
+End Sub
+Private Sub Tmp_T4()
+WDrp "$T4 #A #B"
+W.Execute "Select * into [#A] from [#ISkuTaxBy3rdParty]"
+W.Execute "Select Id,Sku,Is3p into [#B] from [$MB51] where Is3p"
+W.Execute "Select Id,x.Sku,RateU into [$T4] from [#B] x left join [#A] a on x.Sku=a.Sku"
+End Sub
+Private Sub Tmp_T3_and_5RepackOup()
+WDrp "$T3 #A #B #C #D #E #F @Repack1 @Repack2 @Repack3 @Repack4 @Repack5 @Repack6"
+W.Execute "Select * into [#A] from [#ISkuRepackMulti]"
+W.Execute "Create Index Pk on [#A] (SkuNew,SkuFm) with Primary"
+
+W.Execute "Select Id,Sku as MB51SkuNew, PstDte into [#B] from [$MB51] where IsRepack"
+W.Execute "Create Index Pk on [#B] (Id) with Primary"
+
+W.Execute "Select Id,MB51SkuNew,PstDte,SkuFm,FmSkuQty into [#C] from [#A] x inner join [#B] a on x.SkuNew=a.MB51SkuNew"
+W.Execute "Create Index Pk on [#C] (Id,SkuFm)"
+
+W.Execute "Select Distinct MB51SkuNew,PstDte,SkuFm,FmSkuQty into [#D] from [#C]"
+W.Execute "Create Index Pk on [#D] (MB51SkuNew,PstDte,SkuFm)"
+
+W.Execute "Select MB51SkuNew,PstDte,SkuFm,FmSkuQty,BchRateU,PermitDate,BchNo,Permit,CLng(a.PermitD) as PermitD" & _
+    " into [#E] from [#D] x,[$Rate] a where false"
+W.Execute "Insert into [#E] select * from [#D]"
+W.Execute "Update [#E] x inner join [$Rate] a on x.SkuFm=a.Sku set " & _
+" x.BchRateU  =a.BchRateU  ," & _
+" x.PermitDate=a.PermitDate," & _
+" x.BchNo     =a.BchNo     ," & _
+" x.Permit    =a.Permit    ," & _
+" x.PermitD   =a.PermitD    " & _
+" where PstDte between a.PermitDate and a.PermitDateEnd"
+W.Execute "Alter Table [#E] add column Amt Currency"
+W.Execute "Update [#E] set Amt=FmSkuQty*BchRateU"
+W.Execute "Create Index Pk on [#E] (MB51SkuNew,PstDte,SkuFm)"
+
+W.Execute "Select Distinct MB51SkuNew,PstDte,Sum(x.Amt) as PackRateU, Count(*) as FmSkuCnt,Sum(x.FmSkuQty) as FmQty into [#F] from [#E] x group by MB51SkuNew,PstDte"
+W.Execute "Create Index Pk on [#F] (MB51SkuNew,PstDte)"
+
+W.Execute "Select Id,x.MB51SkuNew,x.PstDte,PackRateU,FmSkuCnt,FmQty into [$T3] from [#B] x inner join [#F] a on x.MB51SkuNew=a.MB51SkuNew and x.PstDte=a.PstDte"
+W.Execute "Create Index Pk on [$T3] (Id)"
+
+W.Execute "Drop Index Pk on [#B]"
+W.Execute "Drop Index Pk on [#C]"
+
+W.Execute "ALter Table [#B] drop column Id"
+W.Execute "ALter Table [#C] drop column Id"
+
+WReOpn
+WRenTbl "#A", "@Repack1"
+WRenTbl "#B", "@Repack2"
+WRenTbl "#C", "@Repack3"
+WRenTbl "#D", "@Repack4"
+WRenTbl "#E", "@Repack5"
+WRenTbl "#F", "@Repack6"
+
+End Sub
+Private Sub WRenTbl(Fm, ToTbl)
+
+End Sub
+Private Sub WReOpn()
+
+End Sub
+
+Private Sub Tmp_T1T2()
+WDrp "#M ##M ##R #A #B $T1 $T2"
+
+'M
+W.Execute "select Id,Sku,BchNo,PstDte into [#M] from [$MB51]"
+W.Execute "Update [#M] set BchNo='' where BchNo is null"
+
+'T1
+W.Execute "Select Id,x.Sku,x.BchNo,PermitD,Permit,PermitDate,BchRateU into [#A] from [#M] x inner join [$Rate] a on x.Sku=a.Sku and x.BchNo=a.BchNo"
+W.Execute "Select Distinct Id,Sku,BchNo,Max(x.PermitD) as PermitD into [#B] from [#A] x group by Id,Sku,BchNo"
+W.Execute "Select x.Id,x.Sku,x.BchNo,x.PermitD,Permit,PermitDate,BchRateU into [$T1] from [#B] x  inner join [#A] a on x.Id=a.Id and x.Sku=a.Sku and x.BchNo=a.BchNo and x.PermitD=a.PermitD"
+WDrp "#A #B"
+
+'T2
+W.Execute "Select x.* into [##M] from [#M] x left join [$T1] a on x.Id=a.Id where a.Id is null"
+W.Execute "Select x.* into [##R] from [$Rate] x where Sku in (Select Sku from [##M])"
+W.Execute "select Id,x.Sku,PstDte,PermitD,Permit,PermitDate,x.BchNo,BchRateU,a.BchNo As LasBchNo into [$T2] from [##M] x inner join [##R] a on x.Sku=a.Sku where PstDte between PermitDate and PermitDateEnd"
+
+WDrp "#M ##M ##R #A #B"
+End Sub
+Private Sub Oup_ORate()
+WDrp "@Rate"
+'Add RecTy to $Rate
+W.Execute "Select * into [@Rate] from [$Rate]"
+W.Execute "Alter Table [@Rate] add column RecTy Text(4)"
+W.Execute "Update [@Rate] x inner join [$T1] a on x.PermitD=a.PermitD set RecTy='*Bch'"
+W.Execute "Update [@Rate] x inner join [$T2] a on x.PermitD=a.PermitD set RecTy='*Las'"
+
+End Sub
+Private Sub Tmp_MB51()
+WDrp "$MB51"
+W.Execute "Select CLng(0) as Id,IsTax,IsRepack,Is3p,IsNoLongerTax,x.* into [$MB51] from [#IMB51] x left join [$Sku] a on x.Sku=a.Sku where IsImportFmMB51 or a.Sku is null"
+'UpdSeqFld W, "$MB51", "Id",
+End Sub
+
+Private Sub Rpt_Lnk()
+MsgSet "Linking the Excel files ....."
+Dim A$(), B$(), C$(), D$(), O$(), E$(), F$()
+A = LnkFxw(W, ">MB51", IFx_WMB51)
+B = LnkFxw(W, ">GLDuty", IFx_WGLDuty)
+B = LnkFxw(W, ">GLAnp", IFx_WGLAnp)
+C = LnkFxw(W, ">Uom", IFx_WUom)
+D = LnkFbtt(W, "Permit PermitD", IFb_Duty)
+E = LnkFbtt(W, "SkuRepackMulti SkuNoLongerTax SkuTaxBy3rdParty", IFb_StkHld)
+O = AyAddAp(A, B, C, D, E)
+If Si(O) > 0 Then Thw CSub, "There are error in linking tables", "Er", O
+End Sub
+Private Function XFfn$(PmNm$)
+XFfn = PmFfn(App.Db, PmNm)
+End Function
+Private Function IFb_Duty$()
+IFb_Duty = XFfn("Duty")
+Exit Function
 'Const N$ = "N:\SAPAccessReports\DutyPrepay5\DutyPrepay5_data.mdb"
 'If IsDev Then
 '    Dim L$
 '    L = CurDbPth & "PgmObj\Sample\TaxExpCmp_InpTbl.mdb"
-'    IFbDuty = L
+'    IFb_Duty = L
 'Else
-'    IFbDuty = N
+'    IFb_Duty = N
 'End If
-'End Function
-'
-'Private Function IFbStkHld$()
-'Const N$ = "N:\SAPAccessReports\StockHolding6\StockHolding6_Data.mdb"
-'If IsDev Then
-'    Dim L$
+End Function
+
+Private Function IFb_StkHld$()
+IFb_StkHld = XFfn("StkHld")
+Exit Function
+Const N$ = "N:\SAPAccessReports\StockHolding6\StockHolding6_Data.mdb"
+If IsDev Then
+    Dim L$
 '    L = CurDbPth & "PgmObj\Sample\TaxExpCmp_InpTbl.mdb"
-'    IFbStkHld = L
+    IFb_StkHld = L
+Else
+    IFb_StkHld = N
+End If
+End Function
+Private Function WPth$()
+WPth = App.WPth
+End Function
+Private Sub WOpn()
+
+End Sub
+Private Sub Rpt()
+Dim Tp$, AppNm$, AppDb As Database, OupFx$, OupWb As Workbook, WFb$, Pm As Pm
+ClrMainMsg
+Rpt_Cpy
+Rpt_Lnk
+Rpt_Imp
+Rpt_Tmp
+Rpt_Oup Pm.Tolerence
+Rpt_Gen OupFx, AppDb, AppNm, Tp, OupWb, WFb, Pm
+End Sub
+
+Private Sub Rpt_Cpy()
+SetMainMsg "Copying 4 Excel files to C: temp folder ...."
+CpyFilzIfDif Sy(IFx_MB51, IFx_Duty, IFx_Anp, IFx_Uom), WPth
+End Sub
+
+Private Function Gen_OupPth$()
+
+End Function
+
+Private Function Gen_OupFx$()
+Dim A$, B$
+A = Gen_OupPth & FmtQQ("TaxExpCmp ?.xlsx", Format(Now, "YYYY-MM-DD HHMM"))
+Gen_OupFx = A
+End Function
+
+Private Sub Gen_Crt(OupFx$, AppDb As Database, AppNm$, Tp$)
+ExpAtt AppDb, AppNm, Tp
+CpyFilzIfDif Tp, OupFx, True
+End Sub
+Private Sub Rpt_Gen(OupFx$, AppDb As Database, AppNm$, Tp$, OupWb As Workbook, WFb$, Pm As Pm)
+SetMainMsg "Export to Excel ....."
+Gen_Crt OupFx, AppDb, AppNm, Tp
+Gen_Rfh OupWb, WFb
+Gen_Fmt OupWb, Pm
+End Sub
+Private Sub Gen_Rfh(OupWb As Workbook, WFb$)
+RfhWb OupWb, WFb
+End Sub
+Private Sub Gen_AddWs_FmInp_ToOupWb_ForMB51(OupWb As Workbook, MB51Ws As Worksheet)
+MB51Ws.Copy , LasWs(OupWb)
+LasWs(OupWb).Name = "Inp MB51"
+End Sub
+Private Sub Fmt_OupPm(OupWb As Workbook, Pm As Pm)
+With Pm
+RgzAyV Array(.OupPth, .OupFxFn, .InpPth, .InpFxFnGLDutyFx, .InpFxFnGLAnp, .InpFxFnMB51), WszCdNm(OupWb, "WsCtl").Range("C3")
+End With
+End Sub
+Private Sub Gen_Fmt(OupWb As Workbook, Pm As Pm)
+Fmt_OupPm OupWb, Pm
+End Sub
+
+Private Sub IOpnFxMB51()
+OpnFx IFx_MB51
+End Sub
+
+Private Sub IOpnFbStkHld()
+BrwFb IFb_StkHld
+End Sub
+Private Sub IOpnFbDuty()
+BrwFb IFb_Duty
+End Sub
+Private Sub IOpnFxAnp()
+OpnFx IFx_Anp
+End Sub
+Private Sub IOpnFxUom()
+OpnFx IFx_Uom
+End Sub
+
+Private Sub IOpnFxDuty()
+OpnFx IFx_Duty
+End Sub
+
+Private Function IFx_MB51$()
+IFx_MB51 = App.PmFfn("MB51")
+End Function
+
+Private Function IFx_Duty$()
+IFx_Duty = App.PmFfn("GLDuty")
+End Function
+Private Function IFx_Anp$()
+IFx_Anp = App.PmFfn("GLAnp")
+End Function
+Private Function IFx_Uom$()
+IFx_Uom = App.PmFfn("Uom")
+End Function
+
+Private Function IFx_WGLDuty$()
+IFx_WGLDuty = WPth & Fn(IFx_Duty)
+End Function
+Private Function IFx_WGLAnp$()
+IFx_WGLAnp = WPth & Fn(IFx_Anp)
+End Function
+Private Function IFx_WUom$()
+IFx_WUom = WPth & Fn(IFx_Uom)
+End Function
+
+Private Function IFx_WMB51$()
+IFx_WMB51 = WPth & Fn(IFx_MB51)
+End Function
+
+Private Sub Rpt_Oup(Tolerence&)
+SetMainMsgzQnm "@Main": Oup_OMain Tolerence
+SetMainMsgzQnm "@Rate": Oup_ORate
+SetMainMsgzQnm "@Sku":  Oup_OSku
+End Sub
+Private Sub Oup_OSku()
+WDrp "@Sku"
+W.Execute "Select * into [@Sku] from [$Sku]"
+End Sub
+Private Sub Tmp_Sku()
+WDrp "$Sku"
+WDrp "#A #B #C #D ##"
+W.Execute "Select Distinct Sku           into [#A] from [#IPermitD]"
+W.Execute "Select Distinct SkuNew As Sku into [#B] from [#ISkuRepackMulti]"
+W.Execute "Select Distinct Sku           into [#C] from [#ISkuTaxBy3rdParty]"
+W.Execute "Select Distinct Sku           into [#D] from [#ISkuNoLongerTax]"
+W.Execute "Select Sku,Des,StkUom,Ac_U into [##] from [#IUom]"
+W.Execute "Alter Table [##] add column IsTax YesNo, IsRepack YesNo, Is3p YesNo, IsNoLongerTax YesNo, IsImportFmMB51 YesNo"
+W.Execute "Update [##] x inner join [#A] a on x.Sku = a.Sku set IsTax=True"
+W.Execute "Update [##] x inner join [#B] a on x.Sku = a.Sku set IsRepack=True"
+W.Execute "Update [##] x inner join [#C] a on x.Sku = a.Sku set Is3p=True"
+W.Execute "Update [##] x inner join [#D] a on x.Sku = a.Sku set IsNoLongerTax=True"
+W.Execute "Update [##] set IsImportFmMB51=(IsTax or Is3p or IsRepack) and Not IsNoLongerTax"
+W.Execute "Select * into [$Sku] from [##]"
+W.Execute "Create Index Pk on [$Sku] (Sku) with Primary"
+WDrp "#A #B #C #D ##"
+End Sub
+Private Sub Oup_OMain(Tolerence&)
+OMain_1_Crt_WithTmpT1234
+OMain_2_AddGL
+OMain_3_AddCol_IsAlert Tolerence
+OMain_4_MdyCol_PstDte
+OMain_5_AddCol_PstMth
+OMain_6_AddCol_Uom
+OMain_7_AddCol_Rank
+OMain_8_ReSeqFld
+End Sub
+Private Sub OMain_1_Crt_WithTmpT1234()
+WDrp "@Main"
+
+W.Execute "Select * into [@Main] from [$MB51]"
+'----------------------------------
+'Use $T1 $T2 $T3 $T4
+'to update the addition columns @Main
+W.Execute "Alter table [@Main] add column " & _
+    "BchRateUX Currency, RateTy Text(4)," & _
+    "LasRateU Currency, LasPermitD Long, LasPermit Long, LasPermitDate Date, LasBchNo text(50)," & _
+    "BchRateU Currency, BchPermitD Long, BchPermit Long, BchPermitDate Date," & _
+    "PackRateU Currency, PackFmSkuCnt Int, PackFmQty Int," & _
+    "TaxBy3pRateU Currency"
+
+Const S1$ = "set RateTy='*Bch' ,x.BchRateUX=a.BchRateU ,x.BchRateU=a.BchRateU,x.BchPermitD=a.PermitD,x.BchPermit=a.Permit, x.BchPermitDate=a.PermitDate"
+Const S2$ = "set RateTy='*Las' ,x.BchRateUX=a.BchRateU ,x.LasRateU=a.BchRateU,x.LasPermitD=a.PermitD,x.LasPermit=a.Permit, x.LasPermitDate=a.PermitDate,x.LasBchNo=a.LasBchNo"
+Const s3$ = "set RateTy='*Pac' ,x.BchRateUX=a.PackRateU,x.PackRateU=a.PackRateU,x.PackFmSkuCnt=a.FmSkuCnt,x.PackFmQty=a.FmQty"
+Const s4$ = "set RateTy='*3p'  ,x.BchRateUX=a.RateU    ,x.TaxBy3pRateU=a.RateU"
+W.Execute "Update [@Main] x inner join [$T1] a on x.Id=a.Id " & S1
+W.Execute "Update [@Main] x inner join [$T2] a on x.Id=a.Id " & S2
+W.Execute "Update [@Main] x inner join [$T3] a on x.Id=a.Id " & s3
+W.Execute "Update [@Main] x inner join [$T4] a on x.Id=a.Id " & s4
+W.Execute "Alter Table [@Main] drop column Id"
+W.Execute "Alter Table [@Main] add column RecTy Text(8), Amt Currency"
+W.Execute "Update [@Main] set RecTy='*MB51', Amt = BchRateUX*Qty"
+End Sub
+Private Sub OMain_2_AddGL()
+W.Execute "Alter Table [@Main] add column" & _
+" GLDocNo  Text(255)," & _
+" GLDocDte Text(255)," & _
+" GLAsg    Text(255)," & _
+" GLDocTy  Text(255)," & _
+" GLLin    Text(255)," & _
+" GLPstKy  Text(255)," & _
+" GLPc     Text(255)," & _
+" GLAc     Text(255)," & _
+" GLBusA   Text(255)," & _
+" GLRef    Text(255)," & _
+" GLAcTy   Text(255)"
+W.Execute _
+"Insert into [@Main] (Amt,Sku,PstDte,GLDocNo,GLDocDte,GLAsg,GLDocTy,GLLin,GLPstKy,GLPc,GLAc,GLBusA,GLRef,GLAcTy,RecTy)" & _
+         " select     Amt,Sku,PstDte,GLDocNo,GLDocDte,GLAsg,GLDocTy,GLLin,GLPstKy,GLPc,GLAc,GLBusA,GLRef,GLAcTy,'*GLDuty' as RecTy from [#IGLDuty]"
+W.Execute _
+"Insert into [@Main] (Amt,Sku,PstDte,GLDocNo,GLDocDte,GLAsg,GLDocTy,GLLin,GLPstKy,GLPc,GLAc,GLBusA,GLRef,GLAcTy,RecTy)" & _
+         " select     Amt,Sku,PstDte,GLDocNo,GLDocDte,GLAsg,GLDocTy,GLLin,GLPstKy,GLPc,GLAc,GLBusA,GLRef,GLAcTy,'*GLAnp' as RecTy from [#IGLAnp]"
+W.Execute "Update [@Main] x inner join [$Sku] a on x.Sku=a.Sku" & _
+" Set x.IsTax=a.IsTax, x.IsRepack=a.IsRepack, x.Is3p=a.Is3p, x.IsNoLongerTax=a.IsNoLongerTax" & _
+" where RecTy in ('*GLDuty','*GLAnp')"
+End Sub
+Private Sub OMain_4_MdyCol_PstDte()
+'DbtfChgDteToTxt W, OupTn_Main, "PstDte"
+End Sub
+Private Sub OMain_5_AddCol_PstMth()
+W.Execute FmtQQ("Alter Table [?] add column PstMth Text(7)", OupTn_Main)
+W.Execute FmtQQ("Update [?] set PstMth = Left(PstDte,7)", OupTn_Main)
+End Sub
+Private Sub OMain_3_AddCol_IsAlert(Tolerance&)
+'---- Add Column IsAlert
+WDrp "#A #B #C #D #E #F #G #H #Z"
+W.Execute "Select Distinct PstDte,Sku,RecTy,Sum(x.Amt) as Amt into [#A] from [@Main] x group by PstDte,Sku,RecTy"
+W.Execute "Update [#A] set RecTy='*GL' where RecTy in ('*GLDuty','*GLAnp')"
+W.Execute "Select Distinct Sku,PstDte,RecTy,Sum(x.Amt) As Amt into [#B] from [#A] x group by Sku,PstDte,RecTy"
+W.Execute "Select Distinct Sku,PstDte,Count(*) As RecTyCnt, Sum(x.Amt) as Amt into [#C] from [#B] x group by Sku,PstDte"
+If HasReczQ(W, "Select * from [#C] where RecTyCnt>2") Then PgmEr CSub, "Table [#C] should have at most 2 different RecTy (*GLDuty | *GLAnp)"
+W.Execute "Select x.Sku,x.PstDte,RecTy into [#D] from [#C] x inner join [#B] a on x.Sku=a.Sku and x.PstDte=a.PstDte where RecTyCnt=1"
+
+W.Execute "Select x.Sku,x.PstDte,'*Only ' & Mid(x.RecTy,2) As IsAlert into [#Z] from [#D] x inner join [#B] a on x.Sku=a.Sku and a.PstDte=x.PstDte"
+
+W.Execute "Select x.Sku,x.PstDte,Amt into [#E] from [#C] x where RecTyCnt=2"
+W.Execute "Select x.Sku,x.PstDte,Amt,'#Match' as IsAlert into [#G] from [#C] x where Abs(Amt)<=" & Tolerance
+W.Execute "Select x.Sku,x.PstDte,Amt,'*GL+'   as IsAlert into [#F] from [#C] x where Amt > +" & Tolerance
+W.Execute "Select x.Sku,x.PstDte,Amt,'*GL-'   as IsAlert into [#H] from [#C] x where Amt < -" & Tolerance
+W.Execute "Insert into [#Z] (Sku,PstDte,IsAlert) select Sku,PstDte,IsAlert from [#G]"
+W.Execute "Insert into [#Z] (Sku,PstDte,IsAlert) select Sku,PstDte,IsAlert from [#F]"
+W.Execute "Insert into [#Z] (Sku,PstDte,IsAlert) select Sku,PstDte,IsAlert from [#H]"
+
+W.Execute "Alter table [@Main] add column IsAlert Text(10)"
+'If Not DbtHasFld(W, "@Main", "IsAlert") Then
+'    W.Execute "Alter table [@Main] add column IsAlert Text(10)"
 'Else
-'    IFbStkHld = N
+'    W.Execute "Update [@Main] set IsAlert = Null"
 'End If
-'End Function
-'Private Function WPth$()
-'
-'End Function
-'Private Sub WOpn()
-'
-'End Sub
-'Private Sub Rpt()
-'MsgClr
-'WOpn
-'WClr
-'If AyBrwEr(Cpy) Then Exit Sub
-'If AyBrwEr(Lnk) Then Exit Sub
-'If AyBrwEr(Import) Then Exit Sub
-'Tmp
-'Oup
-'Gen
-'WQuit
-'End Sub
-'
-'Private Function Cpy() As String()
-'Dim A$()
-'MsgSet "Copying 4 Excel files to C: temp folder ...."
-'Cpy = FfnCpyToPthIfDif(ApSy(IFxMB51, IFxDuty, IFxAnp, IFxUom), WPth)
-'End Function
-'Private Sub OpnTp()
-'FxOpn TpFx
-'End Sub
-'
-'Private Function TpFx$()
-'TpFx = TpPth & Apn & "(Template).xlsx"
-'End Function
-'Private Function OupFx$()
-'Dim A$, B$
-'A = OupPth & FmtQQ("TaxExpCmp ?.xlsx", Format(Now, "YYYY-MM-DD HHMM"))
-'OupFx = A
-'End Function
-'Private Sub TpOpn()
-'FxOpn TpFx
-'End Sub
-'
-'Private Function TpWb() As Workbook
-'Set TpWb = FxWb(TpFx)
-'End Function
-'
-'Private Function TpWsCdNy() As String()
-'TpWsCdNy = FxWsCdNy(TpFx)
-'End Function
-'
-'Private Sub Gen()
-'MsgSet "Export to Excel ....."
-'Dim O$, Wb As Workbook
-'O = OupFx
-'FfnCpy TpFx, O, True
-'Set Wb = FxWb(O)
-'WbRfh Wb, WFb
-'Gen_FmtCtlWsWb Wb
-'WbVis Wb
-'Wb.Application.WindowState = xlMaximized
-'Wb.Save
-'End Sub
-'Private Sub ZZ_Gen_AddOrignalMB51Ws()
-'Dim Fx$, Wb As Workbook
-'Fx = TmpFx
-'FileCopy TpFx, Fx
-'Set Wb = FxWb(Fx)
-'Gen_AddOrignalMB51Ws Wb
-'Wb.Save
-'Stop
-'End Sub
-'Private Sub Gen_AddOrignalMB51Ws(A As Workbook)
-'Dim Ws As Worksheet
-'Set Ws = WbWs(FxWb(IFxWMB51), "Sheet1")
-'Ws.Copy , WbLasWs(A)
-'WbzWs(Ws).Close False
-'WbLasWs(A).Name = "Original MB51"
-'Set Ws = WbWsCd(A, "WsCtl")
-'Ws.Activate
-'WsA1(Ws).Select
-'End Sub
-'Private Sub Gen_FmtCtlWsWb(A As Workbook)
-'Dim Ws As Worksheet
-'Set Ws = WbWsCd(A, "WsCtl")
-'Ws.Range("C2").Value = "'" & Format(Now, "YYYY-MM-DD HH:MM:SS")
-'Ws.Range("C3").Value = PmnmVal("OupPth")
-'Ws.Range("C4").Value = PmnmFn("GLDuty")
-'Ws.Range("C5").Value = PmnmFn("GLAnp")
-'Ws.Range("C6").Value = PmnmFn("MB51")
-'End Sub
-'Private Sub TpMinLo()
-'Dim O As Workbook
-'Set O = TpWb
-'WbMinLo O
-'O.Save
-'WbVis O
-'End Sub
-'
-'Private Sub IOpnFxMB51()
-'FxOpn IFxMB51
-'End Sub
-'
-'Private Sub IOpnFbStkHld()
-'FbOpn IFbStkHld
-'End Sub
-'Private Sub IOpnFbDuty()
-'FbOpn IFbDuty
-'End Sub
-'Private Sub IOpnFxAnp()
-'FxOpn IFxAnp
-'End Sub
-'Private Sub IOpnFxUom()
-'FxOpn IFxUom
-'End Sub
-'
-'Private Sub IOpnFxDuty()
-'FxOpn IFxDuty
-'End Sub
-'
-'Private Function IFxMB51$()
-'IFxMB51 = PmnmFfn("MB51")
-'End Function
-'
-'Private Function IFxDuty$()
-'IFxDuty = PmnmFfn("GLDuty")
-'End Function
-'Private Function IFxAnp$()
-'IFxAnp = PmnmFfn("GLAnp")
-'End Function
-'Private Function IFxUom$()
-'IFxUom = PmnmVal("UomFfn")
-'End Function
-'
-'Private Function IFxWGlDuty$()
-'IFxWGlDuty = WPth & FfnFn(IFxDuty)
-'End Function
-'Private Function IFxWGLAnp$()
-'IFxWGLAnp = WPth & FfnFn(IFxAnp)
-'End Function
-'Private Function IFxWUom$()
-'IFxWUom = WPth & FfnFn(IFxUom)
-'End Function
-'
-'Private Function IFxWMB51$()
-'IFxWMB51 = WPth & FfnFn(IFxMB51)
-'End Function
-'
-'Private Sub Oup()
-'MsgSet "Running query (@Main) .....": OMain
-'MsgSet "Running query (@Rate) .....": ORate
-'MsgSet "Running query (@Sku) .....": OSku
-'End Sub
-'Private Sub OSku()
-'WDrp "@Sku"
-'W.Execute "Select * into [@Sku] from [$Sku]"
-'End Sub
-'Private Sub TmpSku()
-'WDrp "$Sku"
-'WDrp "#A #B #C #D ##"
-'W.Execute "Select Distinct Sku           into [#A] from [#IPermitD]"
-'W.Execute "Select Distinct SkuNew As Sku into [#B] from [#ISkuRepackMulti]"
-'W.Execute "Select Distinct Sku           into [#C] from [#ISkuTaxBy3rdParty]"
-'W.Execute "Select Distinct Sku           into [#D] from [#ISkuNoLongerTax]"
-'W.Execute "Select Sku,Des,StkUom,Ac_U into [##] from [#IUom]"
-'W.Execute "Alter Table [##] add column IsTax YesNo, IsRepack YesNo, Is3p YesNo, IsNoLongerTax YesNo, IsImportFmMB51 YesNo"
-'W.Execute "Update [##] x inner join [#A] a on x.Sku = a.Sku set IsTax=True"
-'W.Execute "Update [##] x inner join [#B] a on x.Sku = a.Sku set IsRepack=True"
-'W.Execute "Update [##] x inner join [#C] a on x.Sku = a.Sku set Is3p=True"
-'W.Execute "Update [##] x inner join [#D] a on x.Sku = a.Sku set IsNoLongerTax=True"
-'W.Execute "Update [##] set IsImportFmMB51=(IsTax or Is3p or IsRepack) and Not IsNoLongerTax"
-'W.Execute "Select * into [$Sku] from [##]"
-'W.Execute "Create Index Pk on [$Sku] (Sku) with Primary"
-'WDrp "#A #B #C #D ##"
-'End Sub
-'Private Sub OMain()
-'O1_1_Crt_WithTmpT1234
-'O1_2_AddGL
-'O1_3_AddCol_IsAlert
-'O1_4_MdyCol_PstDte
-'O1_5_AddCol_PstMth
-'O1_6_AddCol_Uom
-'O1_7_AddCol_Rank
-'O1_8_ReSeqFld
-'End Sub
-'Private Sub O1_1_Crt_WithTmpT1234()
-'WDrp "@Main"
-'
-'W.Execute "Select * into [@Main] from [$MB51]"
-''----------------------------------
-''Use $T1 $T2 $T3 $T4
-''to update the addition columns @Main
-'W.Execute "Alter table [@Main] add column " & _
-'    "BchRateUX Currency, RateTy Text(4)," & _
-'    "LasRateU Currency, LasPermitD Long, LasPermit Long, LasPermitDate Date, LasBchNo text(50)," & _
-'    "BchRateU Currency, BchPermitD Long, BchPermit Long, BchPermitDate Date," & _
-'    "PackRateU Currency, PackFmSkuCnt Int, PackFmQty Int," & _
-'    "TaxBy3pRateU Currency"
-'
-'Const s1$ = "set RateTy='*Bch' ,x.BchRateUX=a.BchRateU ,x.BchRateU=a.BchRateU,x.BchPermitD=a.PermitD,x.BchPermit=a.Permit, x.BchPermitDate=a.PermitDate"
-'Const s2$ = "set RateTy='*Las' ,x.BchRateUX=a.BchRateU ,x.LasRateU=a.BchRateU,x.LasPermitD=a.PermitD,x.LasPermit=a.Permit, x.LasPermitDate=a.PermitDate,x.LasBchNo=a.LasBchNo"
-'Const s3$ = "set RateTy='*Pac' ,x.BchRateUX=a.PackRateU,x.PackRateU=a.PackRateU,x.PackFmSkuCnt=a.FmSkuCnt,x.PackFmQty=a.FmQty"
-'Const s4$ = "set RateTy='*3p'  ,x.BchRateUX=a.RateU    ,x.TaxBy3pRateU=a.RateU"
-'W.Execute "Update [@Main] x inner join [$T1] a on x.Id=a.Id " & s1
-'W.Execute "Update [@Main] x inner join [$T2] a on x.Id=a.Id " & s2
-'W.Execute "Update [@Main] x inner join [$T3] a on x.Id=a.Id " & s3
-'W.Execute "Update [@Main] x inner join [$T4] a on x.Id=a.Id " & s4
-'W.Execute "Alter Table [@Main] drop column Id"
-'W.Execute "Alter Table [@Main] add column RecTy Text(8), Amt Currency"
-'W.Execute "Update [@Main] set RecTy='*MB51', Amt = BchRateUX*Qty"
-'End Sub
-'Private Sub O1_2_AddGL()
-'W.Execute "Alter Table [@Main] add column" & _
-'" GLDocNo  Text(255)," & _
-'" GLDocDte Text(255)," & _
-'" GLAsg    Text(255)," & _
-'" GLDocTy  Text(255)," & _
-'" GLLin    Text(255)," & _
-'" GLPstKy  Text(255)," & _
-'" GLPc     Text(255)," & _
-'" GLAc     Text(255)," & _
-'" GLBusA   Text(255)," & _
-'" GLRef    Text(255)," & _
-'" GLAcTy   Text(255)"
-'W.Execute _
-'"Insert into [@Main] (Amt,Sku,PstDte,GLDocNo,GLDocDte,GLAsg,GLDocTy,GLLin,GLPstKy,GLPc,GLAc,GLBusA,GLRef,GLAcTy,RecTy)" & _
-'         " select     Amt,Sku,PstDte,GLDocNo,GLDocDte,GLAsg,GLDocTy,GLLin,GLPstKy,GLPc,GLAc,GLBusA,GLRef,GLAcTy,'*GLDuty' as RecTy from [#IGLDuty]"
-'W.Execute _
-'"Insert into [@Main] (Amt,Sku,PstDte,GLDocNo,GLDocDte,GLAsg,GLDocTy,GLLin,GLPstKy,GLPc,GLAc,GLBusA,GLRef,GLAcTy,RecTy)" & _
-'         " select     Amt,Sku,PstDte,GLDocNo,GLDocDte,GLAsg,GLDocTy,GLLin,GLPstKy,GLPc,GLAc,GLBusA,GLRef,GLAcTy,'*GLAnp' as RecTy from [#IGLAnp]"
-'W.Execute "Update [@Main] x inner join [$Sku] a on x.Sku=a.Sku" & _
-'" Set x.IsTax=a.IsTax, x.IsRepack=a.IsRepack, x.Is3p=a.Is3p, x.IsNoLongerTax=a.IsNoLongerTax" & _
-'" where RecTy in ('*GLDuty','*GLAnp')"
-'End Sub
-'Private Sub O1_4_MdyCol_PstDte()
-'DbtfChgDteToTxt W, ONm1, "PstDte"
-'End Sub
-'Private Sub O1_5_AddCol_PstMth()
-'W.Execute FmtQQ("Alter Table [?] add column PstMth Text(7)", ONm1)
-'W.Execute FmtQQ("Update [?] set PstMth = Left(PstDte,7)", ONm1)
-'End Sub
-'Private Sub O1_3_AddCol_IsAlert()
-''---- Add Column IsAlert
-'WDrp "#A #B #C #D #E #F #G #H #Z"
-'W.Execute "Select Distinct PstDte,Sku,RecTy,Sum(x.Amt) as Amt into [#A] from [@Main] x group by PstDte,Sku,RecTy"
-'W.Execute "Update [#A] set RecTy='*GL' where RecTy in ('*GLDuty','*GLAnp')"
-'W.Execute "Select Distinct Sku,PstDte,RecTy,Sum(x.Amt) As Amt into [#B] from [#A] x group by Sku,PstDte,RecTy"
-'W.Execute "Select Distinct Sku,PstDte,Count(*) As RecTyCnt, Sum(x.Amt) as Amt into [#C] from [#B] x group by Sku,PstDte"
-'If DbqAny(W, "Select * from [#C] where RecTyCnt>2") Then Stop
-'W.Execute "Select x.Sku,x.PstDte,RecTy into [#D] from [#C] x inner join [#B] a on x.Sku=a.Sku and x.PstDte=a.PstDte where RecTyCnt=1"
-'
-'W.Execute "Select x.Sku,x.PstDte,'*Only ' & Mid(x.RecTy,2) As IsAlert into [#Z] from [#D] x inner join [#B] a on x.Sku=a.Sku and a.PstDte=x.PstDte"
-'
-'W.Execute "Select x.Sku,x.PstDte,Amt into [#E] from [#C] x where RecTyCnt=2"
-'W.Execute "Select x.Sku,x.PstDte,Amt,'#Match' as IsAlert into [#G] from [#C] x where Abs(Amt)<=" & PmnmVal("Tolerance")
-'W.Execute "Select x.Sku,x.PstDte,Amt,'*GL+'   as IsAlert into [#F] from [#C] x where Amt > +" & PmnmVal("Tolerance")
-'W.Execute "Select x.Sku,x.PstDte,Amt,'*GL-'   as IsAlert into [#H] from [#C] x where Amt < -" & PmnmVal("Tolerance")
-'W.Execute "Insert into [#Z] (Sku,PstDte,IsAlert) select Sku,PstDte,IsAlert from [#G]"
-'W.Execute "Insert into [#Z] (Sku,PstDte,IsAlert) select Sku,PstDte,IsAlert from [#F]"
-'W.Execute "Insert into [#Z] (Sku,PstDte,IsAlert) select Sku,PstDte,IsAlert from [#H]"
-'
-'W.Execute "Alter table [@Main] add column IsAlert Text(10)"
-''If Not DbtHasFld(W, "@Main", "IsAlert") Then
-''    W.Execute "Alter table [@Main] add column IsAlert Text(10)"
-''Else
-''    W.Execute "Update [@Main] set IsAlert = Null"
-''End If
-'W.Execute "Update [@Main] x inner join [#Z] a on x.Sku=a.Sku and x.PstDte=a.PstDte set x.IsAlert=a.IsAlert"
-'WDrp "#A #B #C #D #E #F #G #H #Z"
-'End Sub
-'Private Sub O1_6_AddCol_Uom()
-'W.Execute "Alter Table [@Main] add column Des Text(255),StkUom Text(3),Ac_U Int, Lvl1 Text(2), Lvl2 Text(4), Lvl3 Text(7)"
-'W.Execute "update [@Main] x inner join [#IUom] a on x.Sku=a.Sku" & _
-'" set" & _
-'" x.Des = a.Des, x.StkUom=a.StkUom, x.AC_U=a.AC_U," & _
-'" x.Lvl1 = Left(ProdH,2)," & _
-'" x.Lvl2 = Left(ProdH,4)," & _
-'" x.Lvl3 = Left(ProdH,7)"
-'End Sub
-'Private Sub O1_7_AddCol_Rank()
-''#Rank
-'WDrp "#Rank #Rank1"
-'W.Execute "Select CInt(0) as Rank, Sku,PstDte,Sum(x.Amt) as Amt into [#Rank] from [@Main] x group by Sku,PstDte"
-'W.Execute "Update [#Rank] set Amt = Abs(Round(Nz(Amt,0),2))"
-'W.Execute "Select Distinct CInt(0) as Rank, Amt into [#Rank1] from [#Rank] order by Amt Desc"
-'DbtUpdSeq W, "#Rank1", "Rank"
-'W.Execute "Update [#Rank] x inner join [#Rank1] a on x.Amt=a.Amt set x.Rank=a.Rank"
-'
-'W.Execute "Alter Table [@Main] Add column Rank Int"
-'W.Execute "Update [@Main] x inner join [#Rank] a on x.Sku=a.Sku and x.PstDte=a.PstDte set x.Rank=a.Rank"
-'WDrp "#Rank #Rank1"
-'End Sub
-'
-'Private Sub O1_8_ReSeqFld()
-'WReOpn
-'DbtReSeqFld W, ONm1, OSpec1
-'End Sub
-'Private Sub LSpec2Dmp()
-'LSpecDmp LSpec2
-'End Sub
-'Private Sub LSpec1Dmp()
-'LSpecDmp LSpec1
-'End Sub
-'Private Sub DSpec1Dmp()
-'Debug.Print DSpec1
-'D Fny(W, "Permit")
-'End Sub
-'Private Sub DSpec2Dmp()
-'D Fny(W, "PermitD")
-'End Sub
-'
-'Private Function INm2$()
-'INm2 = ISpecINm(ISpec2)
-'End Function
-'Private Function INm3$()
-'INm3 = ISpecINm(ISpec3)
-'End Function
-'
-'Private Sub LSpec4Dmp()
-'LSpecDmp LSpec4
-'End Sub
-'Private Sub LSpec3Dmp()
-'LSpecDmp LSpec3
-'End Sub
-'Private Sub TpAddWc()
-'Dim Wb As Workbook
-'Set Wb = TpWb
-'WbAddWc Wb, WFb, "@Main"
-'WbAddWc Wb, WFb, "@Rate"
-'WbAddWc Wb, WFb, "@Sku"
-'WbAddWc Wb, WFb, "@Repack1"
-'WbAddWc Wb, WFb, "@Repack2"
-'WbAddWc Wb, WFb, "@Repack3"
-'WbAddWc Wb, WFb, "@Repack4"
-'WbAddWc Wb, WFb, "@Repack5"
-'WbAddWc Wb, WFb, "@Repack6"
-'Wb.Close True
-'End Sub
-'Private Property Get IsDev() As Boolean
+W.Execute "Update [@Main] x inner join [#Z] a on x.Sku=a.Sku and x.PstDte=a.PstDte set x.IsAlert=a.IsAlert"
+WDrp "#A #B #C #D #E #F #G #H #Z"
+End Sub
+Private Sub OMain_6_AddCol_Uom()
+W.Execute "Alter Table [@Main] add column Des Text(255),StkUom Text(3),Ac_U Int, Lvl1 Text(2), Lvl2 Text(4), Lvl3 Text(7)"
+W.Execute "update [@Main] x inner join [#IUom] a on x.Sku=a.Sku" & _
+" set" & _
+" x.Des = a.Des, x.StkUom=a.StkUom, x.AC_U=a.AC_U," & _
+" x.Lvl1 = Left(ProdH,2)," & _
+" x.Lvl2 = Left(ProdH,4)," & _
+" x.Lvl3 = Left(ProdH,7)"
+End Sub
+Private Sub OMain_7_AddCol_Rank()
+'#Rank
+WDrp "#Rank #Rank1"
+W.Execute "Select CInt(0) as Rank, Sku,PstDte,Sum(x.Amt) as Amt into [#Rank] from [@Main] x group by Sku,PstDte"
+W.Execute "Update [#Rank] set Amt = Abs(Round(Nz(Amt,0),2))"
+W.Execute "Select Distinct CInt(0) as Rank, Amt into [#Rank1] from [#Rank] order by Amt Desc"
+UpdSeqFld W, "#Rank1", "Rank", "", ""
+W.Execute "Update [#Rank] x inner join [#Rank1] a on x.Amt=a.Amt set x.Rank=a.Rank"
+
+W.Execute "Alter Table [@Main] Add column Rank Int"
+W.Execute "Update [@Main] x inner join [#Rank] a on x.Sku=a.Sku and x.PstDte=a.PstDte set x.Rank=a.Rank"
+WDrp "#Rank #Rank1"
+End Sub
+Sub ReSeqFld(A As Database, T, Oup)
+
+End Sub
+Private Sub OMain_8_ReSeqFld()
+ReSeqFld W, OupTn_Main, OupFld_Main
+End Sub
+Private Sub Brw_LnkSpec_GLAnp()
+'LnkSpec_Dmp LnkSpec_GLAnp
+End Sub
+Private Sub Brw_LnkSpec_GLDuty()
+'LnkSpec_Dmp LnkSpec_GLDuty
+End Sub
+Private Sub TblFld_PermitDDmp()
+Debug.Print TblFld_PermitD
+D Fny(W, "Permit")
+End Sub
+Private Sub TblFld_PermitDmp()
+D Fny(W, "PermitD")
+End Sub
+Private Sub Z_TmpInpTn_Anp()
+D TmpInpTn_GLAnp
+End Sub
+Private Function TmpInpTn_GLAnp$()
+TmpInpTn_GLAnp = T1(WsFld_GLAnp)
+End Function
+Private Function TmpInpTn_GLDuty$()
+TmpInpTn_GLDuty = T1(WsFld_GLDuty)
+End Function
+Private Function TmpInpTn_UOM$()
+TmpInpTn_UOM = T1(WsFld_UOM)
+End Function
+Private Function TmpInpTn_MB51$()
+TmpInpTn_MB51 = T1(WsFld_MB51)
+End Function
+
+Private Sub Brw_LnkSpec_Uom()
+Brw_LnkSpec LnkSpec_Uom
+End Sub
+Private Sub Brw_LnkSpec(LnkSpec$)
+Brw SplitVBar(LnkSpec)
+End Sub
+Private Sub Brw_LnkSpec_MB51()
+Brw_LnkSpec LnkSpec_MB51
+End Sub
+Private Sub AddWcToTp()
+AddWcToWbFmFbtt App.TpWb, App.WFb, "@Main @Rate @Sku @Repack1 @Repack2 @Repack2 @Repack3 @Repack4 @Repack5 @Repack6"
+End Sub
+Private Property Get IsDev() As Boolean
+Stop '
 'IsDev = FstChr(CurDbPth) = "C"
-'End Property
+End Property
 '''================================
 '''================================
 '''================================
@@ -638,7 +629,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'FxDaoCnStr = O
 'End Function
 'Private Sub WbAddWc(A As Workbook, Fb$, Nm$)
-'A.Connections.Add2 Nm, Nm, FbWbCnStr(Fb), Nm
+'A.Connections.Add2 Nm, Nm, FbWbCnStr(Fb$), Nm
 'End Sub
 'Private Function SplitCrLf(A) As String()
 'SplitCrLf = Split(A, vbCrLf)
@@ -682,8 +673,8 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Function IsBtn(A) As Boolean
 'IsBtn = TypeName(A) = "CommandButton"
 'End Function
-'Private Function IsTgl(A) As Boolean
-'IsTgl = TypeName(A) = "ToggleButton"
+'Private Function IsTglBtn(A) As Boolean
+'IsTglBtn = TypeName(A) = "ToggleButton"
 'End Function
 'Private Function CvTgl(A) As Access.ToggleButton
 'Set CvTgl = A
@@ -694,7 +685,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'If Not HasPfx(A.Name, "Cmd") Then Exit Sub
 'Select Case True
 'Case IsBtn(A): CvBtn(A).TabStop = False
-'Case IsTgl(A): CvTgl(A).TabStop = False
+'Case IsTglBtn(A): CvTgl(A).TabStop = False
 'End Select
 'End Sub
 'Private Sub FrmSetCmdNotTabStop(A As Access.Form)
@@ -723,7 +714,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Set FxCat = CnCat(FxCn(A))
 'End Function
 '
-'Private Function CnCat(A As ADODB.Connection) As Catalog
+'Private Function CnCat(Cn As AdoDb.Connection) As Catalog
 'Dim O As New Catalog
 'Set O.ActiveConnection = A
 'Set CnCat = O
@@ -774,7 +765,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'FxHasWs = AyHas(FxWsNy(A), WsNm)
 'End Function
 '
-'Private Sub DbtImpTbl(A As Database, Tny0)
+'Private Sub DbtImpTbl(A as Database, Tny0)
 'Dim Tny$(), J%, S$
 'Tny = DftNy(Tny0)
 'For J = 0 To UB(Tny)
@@ -787,7 +778,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Dim A1$(), A2$(), Ay() As LnkCol
 'Ay = LnkColStr_LnkColAy(A)
 'A1 = LnkColAy_Ny(Ay)
-'A2 = AyAlignL(AyQuoteSqBkt(LnkColAy_ExtNy(Ay)))
+'A2 = AyAlignL(SyQuoteSqBkt(LnkColAy_ExtNy(Ay)))
 'Dim J%, O$()
 'For J = 0 To UB(A1)
 '    Push O, A2(J) & "  " & A1(J)
@@ -853,10 +844,10 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Function RmvFstLasChr$(A)
 'RmvFstLasChr = RmvFstChr(RmvLasChr(A))
 'End Function
-'Private Function CnStrzT$(A As Database, T)
+'Private Function CnStrzT$(A as Database, T)
 'CnStrzT = A.TableDefs(T).Connect
 'End Function
-'Private Sub DbtImpMap(A As Database, T, LnkColStr$, Optional WhBExpr$)
+'Private Sub DbtImpMap(A as Database, T, LnkColStr$, Optional WhBExpr$)
 'If FstChr(T) <> ">" Then
 '    Debug.Print "FstChr of T must be >"
 '    Stop
@@ -890,7 +881,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'End Function
 'Private Property Get Drs(Fny0, Dry()) As Drs
 'Dim O As New Drs
-'Set Drs = O.Init(DftNy(Fny0), Dry)
+'Drs = O.Init(DftNy(Fny0), Dry)
 'End Property
 'Private Function ApSy(ParamArray Ap()) As String()
 'Dim Av(): Av = Ap
@@ -902,11 +893,11 @@ Attribute VB_Name = "ATaxExpCmp"
 'Next
 'ApSy = O
 'End Function
-'Private Function DbtHasFld(A As Database, T, F$) As Boolean
+'Private Function DbtHasFld(A as Database, T, F$) As Boolean
 'DbtHasFld = ItrHasNm(A.TableDefs(T).Fields, F)
 'End Function
 '
-'Private Function DbDrpTbl(A As Database, Tny0)
+'Private Function DbDrpTbl(A as Database, Tny0)
 'AyDoPX DftNy(Tny0), "DbtDrp", A
 'End Function
 'Private Sub SavRec()
@@ -920,7 +911,7 @@ Attribute VB_Name = "ATaxExpCmp"
 '    Run PXFunNm, P, I
 'Next
 'End Sub
-'Private Function DbqRs(A As Database, Sql) As Dao.Recordset
+'Private Function DbqRs(A as Database, Sql) As Dao.Recordset
 'Set DbqRs = A.OpenRecordset(Sql)
 'End Function
 'Private Function Acs() As Access.Application
@@ -947,7 +938,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Function IsNothing(A) As Boolean
 'IsNothing = TypeName(A) = "Nothing"
 'End Function
-'Private Function AyAddPfx(A, Pfx) As String()
+'Private Function SyAddPfx(A, Pfx) As String()
 'If Si(A) = 0 Then Exit Function
 'Dim O$(), U&, J&
 'U = UB(A)
@@ -955,19 +946,19 @@ Attribute VB_Name = "ATaxExpCmp"
 'For J = 0 To U
 '    O(J) = Pfx & A(J)
 'Next
-'AyAddPfx = O
+'SyAddPfx = O
 'End Function
 'Private Function IsObjAy(A) As Boolean
 'IsObjAy = VarType(A) = vbArray + vbObject
 'End Function
-'Private Function AyRmvEleAt(A, Optional At&)
+'Private Function SyRmvEleAt(A, Optional At&)
 'Dim O, J&, U&
 'U = UB(A)
 'O = A
 'Select Case True
 'Case U = 0
 '    Erase O
-'    AyRmvEleAt = O
+'    SyRmvEleAt = O
 '    Exit Function
 'Case IsObjAy(A)
 '    For J = At To U - 1
@@ -979,7 +970,7 @@ Attribute VB_Name = "ATaxExpCmp"
 '    Next
 'End Select
 'ReDim Preserve O(U - 1)
-'AyRmvEleAt = O
+'SyRmvEleAt = O
 'End Function
 'Private Sub ZZZ_AyShift()
 'Dim Ay(), Exp, Act, ExpAyAft()
@@ -996,7 +987,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'End Sub
 'Private Function AyShift(Ay)
 'AyShift = Ay(0)
-'Ay = AyRmvEleAt(Ay)
+'Ay = SyRmvEleAt(Ay)
 'End Function
 'Private Sub ZZZ_PfxSsl_Sy()
 'Dim A$, Exp$()
@@ -1056,7 +1047,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Dim Ay$(), Pfx$
 'Ay = SslSy(A)
 'Pfx = AyShift(Ay)
-'PfxSsl_Sy = AyAddPfx(Ay, Pfx)
+'PfxSsl_Sy = SyAddPfx(Ay, Pfx)
 'End Function
 'Private Function ApnWAcs(A$)
 'Dim O As Access.Application
@@ -1090,14 +1081,14 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Sub FbCrt(A$)
 'DBEngine.CreateDatabase A, dbLangGeneral
 'End Sub
-'Private Sub FxRfhWbCnStr(A, Fb$)
+'Private Sub RfhWcStr(A, Fb$)
 'WbRfhCnStr(FxWb(A), Fb).Close True
 'End Sub
 'Private Function WbRfhCnStr(A As Workbook, Fb$) As Workbook
-'ItrDoXP A.Connections, "RfhWcCnStr", FbWbCnStr(Fb)
+'ItrDoXP A.Connections, "RfhWcCnStr", FbWbCnStr(Fb$)
 'Set WbRfhCnStr = A
 'End Function
-'Private Sub FbOpn(A)
+'Private Sub OpnFb(A)
 'Acs.OpenCurrentDatabase A
 'AcsVis Acs
 'End Sub
@@ -1112,7 +1103,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Function ApnWPth$(A$)
 'Dim P$
 'P = TmpPthHom & A & "\"
-'PthEns P
+'EnsPth P
 'ApnWPth = P
 'End Function
 'Private Function DbIsOk(A As Database) As Boolean
@@ -1132,10 +1123,10 @@ Attribute VB_Name = "ATaxExpCmp"
 'If Not DbIsOk(Y) Then Set Y = FbDb(ApnWFb(A))
 'Set ApnWDb = Y
 'End Function
-'Private Function DbqAny(A As Database, Sql) As Boolean
+'Private Function DbqAny(A as Database, Sql) As Boolean
 'DbqAny = RsAny(DbqRs(A, Sql))
 'End Function
-'Private Function DbHasTbl(A As Database, T) As Boolean
+'Private Function DbHasTbl(A as Database, T$) As Boolean
 'DbHasTbl = DbqAny(A, FmtQQ("Select * from MSysObjects where Name='?' and Type in (1,6)", T))
 'End Function
 'Private Function AyWdt%(A)
@@ -1152,7 +1143,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Function TblSql$(T, Optional WhBExpr$)
 'TblSql = FmtQQ("Select * from [?]?", T, SqpWhere(WhBExpr))
 'End Function
-'Private Function FbtFny(A, T) As String()
+'Private Function FbtFny(A, T$) As String()
 'FbtFny = RsFny(DbqRs(FbDb(A), TblSql(T)))
 'End Function
 'Private Function Max(A, B)
@@ -1229,7 +1220,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Function TblF_Ty(T, F) As Dao.DataTypeEnum
 '
 'End Function
-'Private Function TblErAyzCol(A As Database, T, ColNy$(), DtaTyAy() As Dao.DataTypeEnum, Optional AddTblLinMsg As Boolean) As String()
+'Private Function TblErAyzCol(A as Database, T, ColNy$(), DtaTyAy() As Dao.DataTypeEnum, Optional AddTblLinMsg As Boolean) As String()
 'Dim Fny$(), F, Fny1$(), Fny2$()
 'Fny = FnyzT(A, T)
 'For Each F In ColNy
@@ -1346,11 +1337,11 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Sub PthBrw(A)
 'Shell FmtQQ("Explorer ""?""", A), vbMaximizedFocus
 'End Sub
-'Private Function PthEnsSfx$(A)
+'Private Function EnsPthSfx$(A)
 'If Right(A, 1) <> "\" Then
-'    PthEnsSfx = A & "\"
+'    EnsPthSfx = A & "\"
 'Else
-'    PthEnsSfx = A
+'    EnsPthSfx = A
 'End If
 'End Function
 'Private Function ItrNy(A) As String()
@@ -1381,7 +1372,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'DteIsVdt = Format(CDate(A), "YYYY-MM-DD") = A
 'End Function
 'Private Sub ZZ_Fny()
-'Dim A As Database
+'Dim Db As database
 'D Fny(A, ">KE24")
 'End Sub
 'Private Function RsSy(A As Dao.Recordset) As String()
@@ -1409,7 +1400,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'End Sub
 '
 'Private Function SqlRs(A) As Dao.Recordset
-'Set SqlRs = CurrentDb.OpenRecordset(A)
+'Set SqlRs = CurrentA.OpenRecordset(A)
 'End Function
 'Private Sub ZZ_SqlSy()
 'D SqlSy("Select Distinct UOR from [>Imp]")
@@ -1418,7 +1409,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Const C$ = "[?] in (?)"
 'Dim B$
 '    If WithQuote Then
-'        B = JnComma(AyQuoteSng(Ay))
+'        B = JnComma(SyQuoteSng(Ay))
 '    Else
 '        B = JnComma(Ay)
 '    End If
@@ -1437,7 +1428,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'DoCmd.OpenTable T
 'End Sub
 '
-'Private Function DbtFny(A As Database, T) As String()
+'Private Function DbtFny(A as Database, T$) As String()
 'DbtFny = RsFny(RszT(A, T))
 'End Function
 'Private Function SplitSpc(A) As String()
@@ -1497,15 +1488,15 @@ Attribute VB_Name = "ATaxExpCmp"
 'End Sub
 '
 '
-'Private Function DbHasQry(A As Database, Q) As Boolean
+'Private Function DbHasQry(A as Database, Q) As Boolean
 'DbHasQry = DbqAny(A, FmtQQ("Select * from MSysObjects where Name='?' and Type=5", Q))
 'End Function
 '
-'Private Sub DbDrpQry(A As Database, Q)
+'Private Sub DbDrpQry(A as Database, Q)
 'If DbHasQry(A, Q) Then A.QueryDefs.Delete Q
 'End Sub
 '
-'Private Sub DbCrtQry(A As Database, Q, Sql$)
+'Private Sub DbCrtQry(A as Database, Q, Sql$)
 'Dim QQ As New QueryDef
 'DbDrpQry A, Q
 'QQ.Sql = Sql
@@ -1554,11 +1545,11 @@ Attribute VB_Name = "ATaxExpCmp"
 'AyMinus = O
 'End Function
 '
-'Private Sub DbtRen(A As Database, Fm$, ToTbl$)
+'Private Sub DbtRen(A as Database, Fm$, ToTbl$)
 'A.TableDefs(Fm).Name = ToTbl
 'End Sub
 '
-'Private Function DbtChkCol(A As Database, T, LnkColStr$) As String()
+'Private Function DbtChkCol(A as Database, T, LnkColStr$) As String()
 'Dim Ay() As LnkCol, O$(), Fny$(), J%, Ty As Dao.DataTypeEnum, F$
 'Ay = LnkColStr_LnkColAy(LnkColStr)
 'Fny = LnkColAy_ExtNy(Ay)
@@ -1607,7 +1598,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'TakBef = Left(A, P - 1)
 'End Function
 '
-'Private Function FxwzDbt(A As Database, T) As Fxw
+'Private Function FxwzDbt(A as Database, T$) As Fxw
 'Dim Cn$
 'Cn = CnStrzT(A, T)
 'If Not IsPfx(Cn, "Excel") Then Exit Function
@@ -1622,10 +1613,10 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Function ISpecINm$(A$)
 'ISpecINm = LinT1(A)
 'End Function
-'Private Sub LSpecDmp(A)
+'Private Sub LnkSpec_Dmp(A)
 'Debug.Print RplVBar(A)
 'End Sub
-'Private Function LSpecLy(A) As String()
+'Private Function LnkSpec_Ly(A) As String()
 'Const L2Spec$ = ">GLAnp |" & _
 '    "Whs    Txt Plant |" & _
 '    "Loc    Txt [Storage Location]|" & _
@@ -1639,7 +1630,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Function HasPfx(A, Pfx$) As Boolean
 'HasPfx = Left(A, Len(Pfx)) = Pfx
 'End Function
-'Private Sub LSpecAsg(A, Optional OTblNm$, Optional OLnkColStr$, Optional OWhBExpr$)
+'Private Sub LnkSpec_Asg(A, Optional OTblNm$, Optional OLnkColStr$, Optional OWhBExpr$)
 'Dim Ay$()
 'Ay = AyTrim(SplitVBar(A))
 'OTblNm = AyShift(Ay)
@@ -1652,9 +1643,9 @@ Attribute VB_Name = "ATaxExpCmp"
 'End Sub
 'Private Function Pop(A)
 'Pop = AyLasEle(A)
-'AyRmvLasEle A
+'SyRmvLasEle A
 'End Function
-'Private Sub AyRmvLasEle(A)
+'Private Sub SyRmvLasEle(A)
 'If Si(A) = 1 Then
 '    Erase A
 '    Exit Sub
@@ -1664,21 +1655,21 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Function JnVBar$(A)
 'JnVBar = Join(A, "|")
 'End Function
-'Private Sub LSpecAy_Asg(A$(), OTny$(), OLnkColStrAy$(), OWhBExprAy$())
+'Private Sub LnkSpec_Ay_Asg(A$(), OTny$(), OLnkColStrAy$(), OWhBExprAy$())
 'Dim U%, J%
 'U = UB(A)
 'ReDim OTny(U)
 'ReDim OLnkColStrAy(U)
 'ReDim OWhBExprAy(U)
 'For J = 0 To U
-'    LSpecAsg A(J), OTny(J), OLnkColStrAy(J), OWhBExprAy(J)
+'    LnkSpec_Asg A(J), OTny(J), OLnkColStrAy(J), OWhBExprAy(J)
 'Next
 'End Sub
 '
-'Private Function DbImp(A As Database, LSpec$()) As String()
+'Private Function DbImp(A as Database, LnkSpec_$()) As String()
 'Dim O$(), J%, T$(), L$(), W$(), U%
-'LSpecAy_Asg LSpec, T, L, W
-'U = UB(LSpec)
+'LnkSpec_Ay_Asg LnkSpec_, T, L, W
+'U = UB(LnkSpec_)
 'For J = 0 To U
 '    PushAy O, DbtChkCol(A, T(J), L(J))
 'Next
@@ -1689,7 +1680,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'DbImp = O
 'End Function
 '
-'Private Function DbtMissFny_Er(A As Database, T, MissFny$(), ExistingFny$()) As String()
+'Private Function DbtMissFny_Er(A as Database, T, MissFny$(), ExistingFny$()) As String()
 'Dim X As Fxw, O$(), I
 'If Si(MissFny) = 0 Then Exit Function
 'X = FxwzDbt(A, T)
@@ -1716,7 +1707,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'DbtMissFny_Er = O
 'End Function
 '
-'Private Function DbtChkFny(A As Database, T, ExpFny$()) As String()
+'Private Function DbtChkFny(A as Database, T, ExpFny$()) As String()
 'Dim Miss$(), TFny$(), O$(), I
 'TFny = DbtFny(A, T)
 'Miss = AyMinus(ExpFny, TFny)
@@ -1783,7 +1774,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'For Each I In Ay
 '    Select Case True
 '    Case FfnIsExist(I)
-'        B = Pth & FfnFn(I)
+'        B = Pth & Fn(I)
 '        Select Case True
 '        Case FfnIsSam(B, CStr(I))
 '            Msg = M_Sam: GoSub Prt
@@ -1817,14 +1808,14 @@ Attribute VB_Name = "ATaxExpCmp"
 'End Function
 'Private Function FfnIsSam(A$, B$) As Boolean
 'If FfnTim(A) <> FfnTim(B) Then Exit Function
-'If FfnSz(A) <> FfnSz(B) Then Exit Function
+'If SizFfn(A) <> SizFfn(B) Then Exit Function
 'FfnIsSam = True
 'End Function
-'Private Function FfnSz&(A$)
+'Private Function SizFfn&(A$)
 'If FfnIsExist(A) Then
-'    FfnSz = FileLen(A)
+'    SizFfn = FileLen(A)
 'Else
-'    FfnSz = -1
+'    SizFfn = -1
 'End If
 'End Function
 'Private Function FfnTim(A$) As Date
@@ -1840,7 +1831,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Next
 'AyTrim = O
 'End Function
-'Private Function DbtChkFldType$(A As Database, T, F, Ty As Dao.DataTypeEnum)
+'Private Function DbtChkFldType$(A as Database, T, F, Ty As Dao.DataTypeEnum)
 'Dim ActTy As Dao.DataTypeEnum
 'ActTy = A.TableDefs(T).Fields(F).Type
 'If ActTy <> Ty Then
@@ -1868,7 +1859,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Sub WbVdtOupNy(A As Workbook, OupNy$())
 'Dim O$(), N$, B$(), WsCdNy$()
 'WsCdNy = WbWsCdNy(A)
-'O = AyMinus(AyAddPfx(OupNy, "WsO"), WsCdNy)
+'O = AyMinus(SyAddPfx(OupNy, "WsO"), WsCdNy)
 'If Si(O) > 0 Then
 '    N = "OupNy":  B = OupNy:  GoSub Dmp
 '    N = "WbCdNy": B = WsCdNy: GoSub Dmp
@@ -1949,7 +1940,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Next
 'RsSq = O
 'End Function
-'Private Sub DbtPutLo(A As Database, T, Lo As ListObject)
+'Private Sub DbtPutLo(A as Database, T, Lo As ListObject)
 'Dim Sq(), Drs As Drs, Rs As Dao.Recordset
 'Set Rs = RszT(A, T)
 'If Not AyIsEq(RsFny(Rs), LoFny(Lo)) Then
@@ -1988,7 +1979,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Function LoSy(A As ListObject, ColNm$) As String()
 'Dim Sq()
 'Sq = A.ListColumns(ColNm).DataBodyRange.Value
-'LoSy = SqColSy(Sq, 1)
+'LoSy = SqColSy(Sq(), 1)
 'End Function
 'Private Function LoFny(A As ListObject) As String()
 'LoFny = ItrNy(A.ListColumns)
@@ -2047,7 +2038,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Function DrsColSy(A As Drs, F) As String()
 'DrsColSy = DrsColInto(A, F, EmpSy)
 'End Function
-'Private Sub DbOupWb(A As Database, Wb As Workbook, OupNmSsl$)
+'Private Sub DbOupWb(A as Database, Wb As Workbook, OupNmSsl$)
 ''OupNm is used for Table-Name-@*, WsCdNm-Ws*, LoNm-Tbl*
 'Dim Ay$(), OupNm
 'Ay = SslSy(OupNmSsl)
@@ -2059,14 +2050,14 @@ Attribute VB_Name = "ATaxExpCmp"
 'Next
 'End Sub
 '
-'Private Sub DbtOupWb(A As Database, T, Wb As Workbook, OupNm)
+'Private Sub DbtOupWb(A as Database, T, Wb As Workbook, OupNm)
 ''OupNm is used for WsCdNm-Ws*, LoNm-Tbl*
 'Dim Ws As Worksheet
 'Set Ws = WbWsCd(Wb, "WsO" & OupNm)
 'DbtPutWs A, T, Ws
 'End Sub
 '
-'Private Sub DbtDrp(A As Database, Tny0)
+'Private Sub DbtDrp(A as Database, Tny0)
 'Dim Tny$(), T
 'Tny = DftNy(Tny0)
 'If Si(Tny) = 0 Then Exit Sub
@@ -2075,7 +2066,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Next
 'End Sub
 '
-'Private Function DbtLnk(A As Database, T$, S$, Cn$) As String()
+'Private Function DbtLnk(A as Database, T$, S$, Cn$) As String()
 'On Error GoTo X
 'Dim TT As New Dao.TableDef
 'DbDrpTbl A, T
@@ -2114,13 +2105,13 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Function FxWb(A) As Workbook
 'Set FxWb = Xls.Workbooks.Open(A)
 'End Function
-'Private Function WsLo(A As Worksheet, LoNm$) As ListObject
-'Set WsLo = A.ListObjects(LoNm)
+'Private Function WszLo(A As Worksheet, LoNm$) As ListObject
+'Set WszLo = A.ListObjects(LoNm)
 'End Function
 'Private Function TblPutAt(A, At As Range) As Range
 'Set TblPutAt = DbtPutAt(CurrentDb, A, At)
 'End Function
-'Private Function DbtPutAt(A As Database, T, At As Range) As Range
+'Private Function DbtPutAt(A as Database, T, At As Range) As Range
 'Set DbtPutAt = SqPutAt(DbtSq(A, T), At)
 'End Function
 'Private Function AyAddAp(ParamArray Ap())
@@ -2155,10 +2146,10 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Function AyAlignL(A) As String()
 'AyAlignL = AyMapXPSy(A, "AlignL", AyWdt(A))
 'End Function
-'Private Function LSpecLnkColStr$(A)
+'Private Function LnkSpec_LnkColStr$(A)
 'Dim L$
-'LSpecAsg A, , L
-'LSpecLnkColStr = L
+'LnkSpec_Asg A, , L
+'LnkSpec_LnkColStr = L
 'End Function
 'Private Function LnkColAy_ImpSql$(A() As LnkCol, T, Optional WhBExpr$)
 'If FstChr(T) <> ">" Then
@@ -2169,7 +2160,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Ny = LnkColAy_Ny(A)
 'ExtNy = LnkColAy_ExtNy(A)
 'N = AyAlignL(Ny)
-'E = AyAlignL(AyQuoteSqBkt(ExtNy))
+'E = AyAlignL(SyQuoteSqBkt(ExtNy))
 'Erase O
 'For J = 0 To UB(Ny)
 '    If ExtNy(J) = Ny(J) Then
@@ -2277,9 +2268,9 @@ Attribute VB_Name = "ATaxExpCmp"
 'Case "0.0.1"
 '    Dim S$
 '    S = A.OLEDBConnection.Connection
-'    Cn = RplBet(S, CStr(Fb), "Data Source=", ";")
+'    Cn = RplBet(S, CStr(Fb$), "Data Source=", ";")
 'Case "0.0.2"
-'    Cn = FbWbCnStr(Fb)
+'    Cn = FbWbCnStr(Fb$)
 'End Select
 'A.OLEDBConnection.Connection = Cn
 'End Sub
@@ -2332,7 +2323,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Set RgRCRC = RgWs(A).Range(RgRC(A, R1, C1), RgRC(A, R2, C2))
 'End Function
 'Private Function RgReSz(A As Range, Sq) As Range
-'Set RgReSz = RgRCRC(A, 1, 1, UBound(Sq, 1), UBound(Sq, 2))
+'Set RgReSz = RgRCRC(A, 1, 1, UBound(Sq(), 1), UBound(Sq(), 2))
 'End Function
 'Private Sub ZZ_TblSq()
 'Dim A()
@@ -2387,9 +2378,9 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Sub RgVis(A As Range)
 'VisXls A.Application
 'End Sub
-'Private Function DbtPutFx(A As Database, T, Fx$, Optional WsNm$ = "Data", Optional LoNm$ = "Data") As Workbook
+'Private Function DbtPutFx(A as Database, T, Fx$, Optional WsNm$ = "Data", Optional LoNm$ = "Data") As Workbook
 'Dim O As Workbook, Ws As Worksheet
-'Set O = FxWb(Fx)
+'Set O = FxWb(Fx$)
 'Set Ws = WbWs(O, WsNm)
 'WsClrLo Ws
 'Stop ' LoNm need handle?
@@ -2456,10 +2447,10 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Sub TblPutWs(T, Ws As Worksheet, Optional LoNm$)
 'RgLo TblPutAt(T, WsA1(Ws)), LoNm
 'End Sub
-'Private Function DbqSy(A As Database, Sql) As String()
+'Private Function DbqSy(A as Database, Sql) As String()
 'DbqSy = RsSy(A.OpenRecordset(Sql))
 'End Function
-'Private Function DbStru(A As Database, Optional Tny0) As String()
+'Private Function DbStru(A as Database, Optional Tny0) As String()
 'DbStru = DbtStru(A, Tny0)
 'End Function
 'Private Function DbTny(A As Database) As String()
@@ -2480,13 +2471,13 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Function IsPfx(A$, Pfx$) As Boolean
 'IsPfx = Left(A, Len(Pfx)) = Pfx
 'End Function
-'Private Function DbtNRec&(A As Database, T)
+'Private Function DbtNRec&(A as Database, T)
 'DbtNRec = DbqV(A, FmtQQ("Select Count(*) from [?]", T))
 'End Function
-'Private Function DbtCsv(A As Database, T) As String()
+'Private Function DbtCsv(A as Database, T$) As String()
 'DbtCsv = RsCsvLy(RszT(A, T))
 'End Function
-'Private Sub DbtPutWs(A As Database, T, Ws As Worksheet)
+'Private Sub DbtPutWs(A as Database, T, Ws As Worksheet)
 ''Assume the WsCdNm is WsXXX and there will only 1 Lo with Name TblXXX
 ''Else stop
 'Dim Lo As ListObject
@@ -2504,10 +2495,10 @@ Attribute VB_Name = "ATaxExpCmp"
 'TakAftDotOrAll = TakAftOrAll(A, ".")
 'End Function
 'Private Function TblWs(T, Optional WsNm$ = "Data", Optional LoNm$ = "Data") As Worksheet
-'Set TblWs = LoWs(SqLo(TblSq(T), WsNm, LoNm))
+'Set TblWs = WszLo(SqLo(TblSq(T), WsNm, LoNm))
 'End Function
-'Private Function LoWs(A As ListObject) As Worksheet
-'Set LoWs = A.Parent
+'Private Function WszLo(A As ListObject) As Worksheet
+'Set WszLo = A.Parent
 'End Function
 'Private Function TblRs(T) As Dao.Recordset
 'Set TblRs = RszT(CurrentDb, T)
@@ -2545,7 +2536,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'If WhBExpr = "" Then Exit Function
 'SqpWhere = " Where " & WhBExpr
 'End Function
-'Private Function DbtNRow&(A As Database, T, Optional WhBExpr$)
+'Private Function DbtNRow&(A as Database, T, Optional WhBExpr$)
 'Dim S$
 'S = FmtQQ("Select Count(*) from [?]?", T, SqpWhere(WhBExpr))
 'DbtNRow = DbqLng(A, S)
@@ -2553,13 +2544,13 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Function TblNCol&(T)
 'TblNCol = DbtNCol(CurrentDb, T)
 'End Function
-'Private Function DbtNCol&(A As Database, T)
+'Private Function DbtNCol&(A as Database, T)
 'DbtNCol = A.OpenRecordset(T).Fields.Count
 'End Function
 'Private Function TblSq(A) As Variant()
 'TblSq = DbtSq(CurrentDb, A)
 'End Function
-'Private Function DbtSq(A As Database, T) As Variant()
+'Private Function DbtSq(A as Database, T$) As Variant()
 'Dim NR&, NC&, Rs As Dao.Recordset
 'Dim O(), J&
 'NR = DbtNRow(A, T)
@@ -2622,12 +2613,12 @@ Attribute VB_Name = "ATaxExpCmp"
 'Set WsA1 = A.Cells(1, 1)
 'End Function
 'Private Function FxLo(A$, Optional WsNm$ = "Data", Optional LoNm$ = "Data") As ListObject
-'Set FxLo = WsLo(WbWs(FxWb(A), WsNm), LoNm)
+'Set FxLo = WszLo(WbWs(FxWb(A), WsNm), LoNm)
 'End Function
 'Private Function TblCnStr$(T)
 'TblCnStr = CurrentDb.TableDefs(T).Connect
 'End Function
-'Private Function DbqLng&(A As Database, Sql)
+'Private Function DbqLng&(A as Database, Sql)
 'DbqLng = DbqV(A, Sql)
 'End Function
 'Private Function SqlLng&(A)
@@ -2636,7 +2627,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Function SqlV(A)
 'SqlV = DbqV(CurrentDb, A)
 'End Function
-'Private Function DbqV(A As Database, Sql)
+'Private Function DbqV(A as Database, Sql)
 'DbqV = A.OpenRecordset(Sql).Fields(0).Value
 'End Function
 'Private Function TblNRec&(A)
@@ -2654,21 +2645,21 @@ Attribute VB_Name = "ATaxExpCmp"
 'Next
 'ErzFileNotFound = O
 'End Function
-'Private Function DbtLnkFx(A As Database, T$, Fx$, Optional WsNm$ = "Sheet1") As String()
+'Private Function DbtLnkFx(A as Database, T$, Fx$, Optional WsNm$ = "Sheet1") As String()
 'Dim O$()
-'O = ErzFileNotFound(Fx)
+'O = ErzFileNotFound(Fx$)
 'If Si(O) > 0 Then
 '    DbtLnkFx = O
 '    Exit Function
 'End If
-'Dim Cn$: Cn = FxDaoCnStr(Fx)
+'Dim Cn$: Cn = FxDaoCnStr(Fx$)
 'Dim Src$: Src = WsNm & "$"
 'DbtLnkFx = DbtLnk(A, T, Src, Cn)
 'End Function
 'Private Function TblLnkFb(Tny0, Fb$, Optional FbTny0) As String()
 'TblLnkFb = DbtLnkFb(CurrentDb, Tny0, Fb, FbTny0)
 'End Function
-'Private Function DbtLnkFb(A As Database, Tny0, Fb$, Optional FbTny0) As String()
+'Private Function DbtLnkFb(A as Database, Tny0, Fb$, Optional FbTny0) As String()
 'Dim Tny$(), FbTny$()
 'Tny = DftNy(Tny0)
 'FbTny = DftNy(FbTny0)
@@ -2679,7 +2670,7 @@ Attribute VB_Name = "ATaxExpCmp"
 '    Case Else
 '        Stop
 '    End Select
-'Dim Cn$: Cn = FbCnStr(Fb)
+'Dim Cn$: Cn = FbCnStr(Fb$)
 'Dim J%, O$()
 'For J = 0 To UB(Tny)
 '    O = AyAdd(O, DbtLnk(A, Tny(J), FbTny(J), Cn))
@@ -2704,16 +2695,16 @@ Attribute VB_Name = "ATaxExpCmp"
 'Next
 'End Function
 '
-'Private Function AyQuoteSqBkt(A) As String()
-'AyQuoteSqBkt = AyQuote(A, "[]")
+'Private Function SyQuoteSqBkt(A) As String()
+'SyQuoteSqBkt = SyQuote(A, "[]")
 'End Function
-'Private Function DbtPk(A As Database, T) As String()
+'Private Function DbtPk(A as Database, T$) As String()
 '
 'End Function
-'Private Function AyQuoteSng(A) As String()
-'AyQuoteSng = AyQuote(A, "'")
+'Private Function SyQuoteSng(A) As String()
+'SyQuoteSng = SyQuote(A, "'")
 'End Function
-'Private Function DbtStru(A As Database, Tny0) As String()
+'Private Function DbtStru(A as Database, Tny0) As String()
 'Dim Tny$()
 'Tny = DftNy(Tny0)
 'Select Case Si(Tny)
@@ -2730,7 +2721,7 @@ Attribute VB_Name = "ATaxExpCmp"
 '    Exit Function
 'End Select
 'End Function
-'Private Sub DbtfChgDteToTxt(A As Database, T, F)
+'Private Sub DbtfChgDteToTxt(A as Database, T, F)
 'A.Execute FmtQQ("Alter Table [?] add column [###] text(12)", T)
 'A.Execute FmtQQ("Update [?] set [###] = Format([?],'YYYY-MM-DD')", T, F)
 'A.Execute FmtQQ("Alter Table [?] Drop Column [?]", T, F)
@@ -2771,7 +2762,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'End Select
 'DaoTy_Str = O
 'End Function
-'Private Function DbqryRs(A As Database, Q) As Dao.Recordset
+'Private Function DbqryRs(A as Database, Q) As Dao.Recordset
 'Set DbqryRs = A.QueryDefs(Q).OpenRecordset
 'End Function
 'Private Function RplVBar$(A)
@@ -2791,7 +2782,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'End Function
 '
 'Private Sub StrWrt(A, Ft$, Optional IsNotOvrWrt As Boolean)
-'Fso.CreateTextFile(Ft, Overwrite:=Not IsNotOvrWrt).Write A
+'Fso.CreateTextFile(Ft$, Overwrite:=Not IsNotOvrWrt).Write A
 'End Sub
 'Private Sub FtBrw(A)
 ''Shell "code.cmd """ & A & """", vbHide
@@ -2840,13 +2831,13 @@ Attribute VB_Name = "ATaxExpCmp"
 '       X = Fdr & "\"
 '   End If
 'Dim O$
-'   O = TmpPthHom & X:   PthEns O
-'   O = O & TmpNm & "\": PthEns O
-'   PthEns O
+'   O = TmpPthHom & X:   EnsPth O
+'   O = O & TmpNm & "\": EnsPth O
+'   EnsPth O
 'TmpPth = O
 'End Function
 '
-'Private Function UpdEndDte__1(A As Database, T, KeyFld$, FmDteFld$) As Date()
+'Private Function UpdEndDte__1(A as Database, T, KeyFld$, FmDteFld$) As Date()
 'Dim K$(), FmDte() As Date, ToDte() As Date, J&, CurKey$, NxtKey$, NxtFmDte As Date
 'With RszT(A, T)
 '    While Not .EOF
@@ -2878,7 +2869,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'DrpT CurrentDb, "#A"
 'End Sub
 '
-'Private Sub UpdEndDte(A As Database, T, ToDteFld$, KeyFld$, FmDteFld$)
+'Private Sub UpdEndDte(A as Database, T, ToDteFld$, KeyFld$, FmDteFld$)
 'Dim ToDte() As Date, J&
 'ToDte = UpdEndDte__1(A, T, KeyFld, FmDteFld)
 'With RszT(A, T)
@@ -2914,7 +2905,7 @@ Attribute VB_Name = "ATaxExpCmp"
 '
 'Private Function SqlDry(A) As Variant()
 'Dim O(), Rs As Dao.Recordset
-'Set Rs = CurrentDb.OpenRecordset(A)
+'Set Rs = CurrentA.OpenRecordset(A)
 'With Rs
 '    While Not .EOF
 '        Push O, FldsDr(Rs.Fields)
@@ -2944,7 +2935,7 @@ Attribute VB_Name = "ATaxExpCmp"
 '    X = True
 '    GoTo Beg
 'End Function
-'Private Function DbtPutAtByCn(A As Database, T, At As Range, Optional LoNm0$) As ListObject
+'Private Function DbtPutAtByCn(A as Database, T, At As Range, Optional LoNm0$) As ListObject
 'If FstChr(T) <> "@" Then Stop
 'Dim LoNm$, Lo As ListObject
 'If LoNm0 = "" Then
@@ -2992,7 +2983,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Set NewXls = O
 'End Function
 'Private Function SqlStrCol(A) As String()
-'SqlStrCol = RsStrCol(CurrentDb.OpenRecordset(A))
+'SqlStrCol = RsStrCol(CurrentA.OpenRecordset(A))
 'End Function
 'Private Sub DicDmp(A As Dictionary)
 'Dim K
@@ -3075,7 +3066,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Next
 'SqzHBar = O
 'End Function
-'Private Sub FxOpn(A)
+'Private Sub OpnFx(A)
 'If Not FfnIsExist(A) Then
 '    MsgBox "File not found: " & vbCrLf & vbCrLf & A
 '    Exit Sub
@@ -3086,7 +3077,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Shell C, vbMaximizedFocus
 ''Xls(Vis:=True).Workbooks.Open A
 'End Sub
-'Private Function AyQuote(A, Q$) As String()
+'Private Function SyQuote(A, Q$) As String()
 'If Si(A) = 0 Then Exit Function
 'Dim Q1$, Q2$
 'Select Case True
@@ -3099,7 +3090,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'For Each I In A
 '    Push O, Q1 & I & Q2
 'Next
-'AyQuote = O
+'SyQuote = O
 'End Function
 'Private Function CvFld(A) As Dao.Field
 'Set CvFld = A
@@ -3161,7 +3152,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'End Function
 '
 'Private Function FfnAddFnSfx$(A, Sfx$)
-'FfnAddFnSfx = FfnPth(A) & FfnFnn(A) & Sfx & FfnExt(A)
+'FfnAddFnSfx = FfnPth(A) & Fnn(A) & Sfx & FfnExt(A)
 'End Function
 '
 'Private Function FfnNxtN$(A, N%)
@@ -3177,7 +3168,7 @@ Attribute VB_Name = "ATaxExpCmp"
 '    .InitialFileName = Nz(A, "")
 '    .Show
 '    If .SelectedItems.Count = 1 Then
-'        PthSel = PthEnsSfx(.SelectedItems(1))
+'        PthSel = EnsPthSfx(.SelectedItems(1))
 '    End If
 'End With
 'End Function
@@ -3204,18 +3195,18 @@ Attribute VB_Name = "ATaxExpCmp"
 'If R = "" Then Exit Sub
 'A.Value = R
 'End Sub
-'Private Function FfnFn$(A)
+'Private Function Fn$(A)
 'Dim P%: P = InStrRev(A, "\")
-'If P = 0 Then FfnFn = A: Exit Function
-'FfnFn = Mid(A, P + 1)
+'If P = 0 Then Fn = A: Exit Function
+'Fn = Mid(A, P + 1)
 'End Function
 '
-'Private Function FfnFnn$(A)
-'FfnFnn = FfnCutExt(FfnFn(A))
+'Private Function Fnn$(A)
+'Fnn = FfnCutExt(Fn(A))
 'End Function
 'Private Function FfnCutExt$(A)
 'Dim B$, C$, P%
-'B = FfnFn(A)
+'B = Fn(A)
 'P = InStrRev(B, ".")
 'If P = 0 Then
 '    C = B
@@ -3224,13 +3215,13 @@ Attribute VB_Name = "ATaxExpCmp"
 'End If
 'FfnCutExt = FfnPth(A) & C
 'End Function
-'Private Sub PthEns(A)
+'Private Sub EnsPth(A)
 'If Dir(A, VbFileAttribute.vbDirectory) = "" Then MkDir A
 'End Sub
 '
 'Private Function PthFfnAy(A, Spec$) As String()
 'Dim O$(), B$, P$
-'P = PthEnsSfx(A)
+'P = EnsPthSfx(A)
 'B = Dir(A & Spec)
 'Dim J%
 'While B <> ""
@@ -3242,10 +3233,10 @@ Attribute VB_Name = "ATaxExpCmp"
 'PthFfnAy = O
 'End Function
 '
-'Private Function FfnExt$(Ffn)
-'Dim P%: P = InStrRev(Ffn, ".")
+'Private Function FfnExt$(Ffn$)
+'Dim P%: P = InStrRev(Ffn$, ".")
 'If P = 0 Then Exit Function
-'FfnExt = Mid(Ffn, P)
+'FfnExt = Mid(Ffn$, P)
 'End Function
 '
 'Private Function PthFxAy(A) As String()
@@ -3301,7 +3292,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'End Function
 'Private Sub ZZ_FldsVy()
 'Dim Rs As Dao.Recordset, Vy()
-'Set Rs = CurrentDb.OpenRecordset("Select * from SkuB")
+'Set Rs = CurrentA.OpenRecordset("Select * from SkuB")
 'With Rs
 '    While Not .EOF
 '        Vy = RsVy(Rs)
@@ -3351,13 +3342,13 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Function SslSqBktCsv$(A)
 'Dim B$(), C$()
 'B = SslSy(A)
-'C = AyQuoteSqBkt(B)
+'C = SyQuoteSqBkt(B)
 'SslSqBktCsv = JnComma(C)
 'End Function
 'Private Function Ny0SqBktCsv$(A)
 'Dim B$(), C$()
 'B = DftNy(A)
-'C = AyQuoteSqBkt(B)
+'C = SyQuoteSqBkt(B)
 'Ny0SqBktCsv = JnComma(C)
 'End Function
 'Private Function RsFny(A As Dao.Recordset) As String()
@@ -3438,7 +3429,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Stop
 'DoCmd.RunSQL "Drop Table [#A]"
 'End Sub
-'Private Sub DbtUpdSeq(A As Database, T$, SeqFldNm$, Optional RestFny0, Optional IncFny0)
+'Private Sub DbtUpdSeq(A as Database, T$, SeqFldNm$, Optional RestFny0, Optional IncFny0)
 ''Assume T is sorted
 ''
 ''Update A->T->SeqFldNm using RestFny0,IncFny0, assume the table has been sorted
@@ -3505,8 +3496,8 @@ Attribute VB_Name = "ATaxExpCmp"
 'Set WsC = R.EntireColumn
 'End Function
 '
-'Private Function AyQuoteSqBktCsv$(A)
-'AyQuoteSqBktCsv = JnComma(AyQuoteSqBkt(A))
+'Private Function SyQuoteSqBktCsv$(A)
+'SyQuoteSqBktCsv = JnComma(SyQuoteSqBkt(A))
 'End Function
 '
 'Private Function LinRmvTerm$(ByVal A$)
@@ -3518,7 +3509,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'DbtReSeqFld CurrentDb, "ZZ_DbtUpdSeq", "Permit PermitD"
 'End Sub
 '
-'Private Sub DbtReSeqFld(A As Database, T, ReSeqSpec$)
+'Private Sub DbtReSeqFld(A as Database, T, ReSeqSpec$)
 'DbtReSeqFldByFny A, T, ReSeqSpec_Fny(ReSeqSpec)
 'End Sub
 '
@@ -3564,7 +3555,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'A.Close
 'Set A = Dao.DBEngine.OpenDatabase(Nm)
 'End Sub
-'Private Sub DbtReSeqFldByFny(A As Database, T, Fny$())
+'Private Sub DbtReSeqFldByFny(A as Database, T, Fny$())
 'Dim TFny$(), F$(), J%, FF
 'TFny = DbtFny(A, T)
 'If Si(TFny) = Si(Fny) Then
@@ -3577,7 +3568,7 @@ Attribute VB_Name = "ATaxExpCmp"
 '    A.TableDefs(T).Fields(FF).OrdinalPosition = J
 'Next
 'End Sub
-'Private Function OyDrs(A, PrpNy0) As Drs
+'Private Function OyDRs(A, PrpNy0) As Drs
 'Dim Fny$(), Dry()
 'Fny = DftNy(PrpNy0)
 'Dry = OyDry(A, Fny)
@@ -3606,7 +3597,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'WsVis DrsWs(OyDrs(CurrentDb.TableDefs("ZZ_DbtUpdSeq").Fields, "Name Type OrdinalPosition"))
 'End Sub
 'Private Function DrsWs(A As Drs) As Worksheet
-'Set DrsWs = SqWs(DrsSq(A))
+'DrsWs = SqWs(DrsSq(A))
 'End Function
 'Private Function DryWs(A) As Worksheet
 'Set DryWs = SqWs(DrySq(A))
@@ -3663,7 +3654,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'DrsSq = O
 'End Function
 'Private Function SqWs(A) As Worksheet
-'Set SqWs = LoWs(SqLo(A))
+'Set SqWs = WszLo(SqLo(A))
 'End Function
 '
 'Private Sub WQuit()
@@ -3683,7 +3674,7 @@ Attribute VB_Name = "ATaxExpCmp"
 'Private Sub WBrw()
 'AcsVis WAcs
 'End Sub
-'Private Sub WTblRen(Fm$, ToTbl$)
+'Private Sub WRenTbl(Fm$, ToTbl$)
 'DbtRen W, Fm, ToTbl
 'End Sub
 '
@@ -3738,7 +3729,7 @@ Attribute VB_Name = "ATaxExpCmp"
 '
 'Private Sub ZZ_WLnkFx()
 'WOpn
-'D WLnkFx(">MB51", IFxMB51)
+'D WLnkFx(">MB51", IFx_MB51)
 'End Sub
 '
 'Private Function WFny(T) As String()

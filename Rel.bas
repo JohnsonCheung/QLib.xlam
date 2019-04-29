@@ -15,7 +15,7 @@ Private Dic As New Dictionary    ' Key is Par, Val is Aset of chd
 Friend Function Init(RelLy$()) As Rel
 Dim O As New Rel, L
 For Each L In Itr(RelLy)
-    O.PushRelLin L
+    O.PushRelLin CStr(L)
 Next
 Set Init = O
 End Function
@@ -30,11 +30,11 @@ Else
     Dic.Add P, S
 End If
 End Sub
-Sub PushRelLin(A)
+Sub PushRelLin(RelLin$)
 Dim Ay$(), P$, C
-Ay = SySsl(A)
+Ay = SySsl(RelLin)
 If Si(Ay) = 0 Then Exit Sub
-P = AyShf(Ay)
+P = Shf(Ay)
 For Each C In Itr(Ay)
     PushParChd P, C
 Next
@@ -130,7 +130,7 @@ PushI O, Nm & " --------------------"
 PushIAy O, Fmt
 PushI O, ANm & " --------------------"
 PushIAy O, A.Fmt
-ThwErMsg O, CSub, "Two rel not eq"
+ThwIfErMsg O, CSub, "Two rel not eq"
 End Sub
 
 Sub ThwNotVdt()

@@ -10,13 +10,13 @@ Function PjRfDrs(A As VBProject) As Drs
 Set PjRfDrs = Drs(PjRfFny, PjRfDry(A))
 End Function
 Property Get PjRfFny() As String()
-PjRfFny = AyItmAddAy("Pj", RfFny)
+PjRfFny = ItmAddAy("Pj", RfFny)
 End Property
 Function PjRfDry(A As VBProject) As Variant()
 Dim R As VBIDE.Reference, N$
 N = A.Name
 For Each R In A.References
-    PushI PjRfDry, AyItmAddAy(N, DrRf(R))
+    PushI PjRfDry, ItmAddAy(N, DrRf(R))
 Next
 End Function
 Function DrRf(A As VBIDE.Reference) As Variant()

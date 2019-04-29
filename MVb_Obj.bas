@@ -2,9 +2,9 @@ Attribute VB_Name = "MVb_Obj"
 Option Explicit
 Const CMod$ = "MVb__Obj."
 Enum eThwOpt
-    eeThw
-    eeNoThwInf
-    eeNoThwNoInf
+    jThw
+    jNoThwInf
+    jNoThwNoInf
 End Enum
 Function IsEqObj(A, B) As Boolean
 IsEqObj = ObjPtr(A) = ObjPtr(B)
@@ -35,7 +35,7 @@ Next
 IntozOyPrp = O
 End Function
 
-Function ObjAddAy(Obj, Oy)
+Function ObjAddAy(Obj As Object, Oy)
 Dim O: O = Oy
 Erase O
 PushObj O, Obj
@@ -52,23 +52,29 @@ X:
 ObjNm = "#" & Err.Description & "#"
 End Function
 
-Function DrzObj(Obj, PrpPthAy$()) As Variant()
+Function DrzObj(Obj As Object, PrpPthAy$()) As Variant()
 Const CSub$ = CMod & "DrzObjPrpNy"
 If IsNothing(Obj) Then Inf CSub, "Given object is nothing", "PrpPthAy", PrpPthAy: Exit Function
 Dim PrpPth
 For Each PrpPth In PrpPthAy
-    Push DrzObj, Prp(Obj, PrpPth)
+    Push DrzObj, Prp(Obj, CStr(PrpPth))
 Next
 End Function
 
-Function LyzObjPP(Obj, PP) As String()
-LyzObjPP = LyzObjPP(Obj, Ny(PP))
+Function DiczObjPP(Obj As Object, PP$) As Dictionary
+Set DiczObjPP = DiczObjPrpPthAy(Obj, Ny(PP))
 End Function
-
-Function ObjStr$(Obj)
+Function DiczObjPrpPthAy(Obj As Object, PrpPthNy$()) As Dictionary
+Dim PrpPth, O As New Dictionary
+For Each PrpPth In PrpPthNy
+    O.Add PrpPth, Prp(Obj, CStr(PrpPth))
+Next
+Set DiczObjPrpPthAy = O
+End Function
+Function ObjToStr$(Obj As Excel.Application)
 On Error GoTo X
-ObjStr = Obj.ToStr: Exit Function
-X: ObjStr = QuoteSq(TypeName(Obj))
+ObjToStr = Obj.ToStr: Exit Function
+X: ObjToStr = QuoteSq(TypeName(Obj))
 End Function
 
 Private Sub ZZZ_Prp()
@@ -76,12 +82,12 @@ Dim Act$: Act = Prp(Excel.Application.Vbe.ActiveVBProject, "FileName Name")
 Ass Act = "C:\Users\user\Desktop\Vba-Lib-1\QVb.xlam|QVb"
 End Sub
 
-Function PrpzNm(Obj, P) ' P is PrpNm (Nm cannot have Dot
+Function PrpzP(Obj As Object, P$) ' P is PrpNm (Nm cannot have Dot
 On Error Resume Next
-PrpzNm = CallByName(Obj, P, VbGet)
+PrpzP = CallByName(Obj, P, VbGet)
 End Function
 
-Function Prp(Obj, PrpPth, Optional Thw As eThwOpt)
+Function Prp(Obj As Object, PrpPth$, Optional Thw As eThwOpt)
 Const CSub$ = CMod & "Prp"
 'ThwNothing Obj, CSub
 On Error GoTo X
@@ -101,5 +107,4 @@ X:
 Dim E$: E = Err.Description
 ThwOpt Thw, CSub, "Err", "Er ObjTy PrpPth", E, TypeName(Obj), PrpPth
 End Function
-
 

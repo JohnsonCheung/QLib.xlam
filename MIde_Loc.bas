@@ -24,7 +24,7 @@ LocLyPatn = LocLyzPjPatn(CurPj, Patn)
 End Function
 
 Function LocLyzPjPatn(A As VBProject, Patn$) As String()
-LocLyzPjPatn = AywPatn(SrczPj(A), Patn)
+LocLyzPjPatn = SywPatn(SrczPj(A), Patn)
 End Function
 
 Function CurLocLyPjRe(Re_Or_Patn) As String()

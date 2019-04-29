@@ -38,7 +38,7 @@ Function MthCmlGpAsetzVbe(A As Vbe, Optional WhStr$) As Aset
 Dim MthNm
 Set MthCmlGpAsetzVbe = New Aset
 For Each MthNm In Itr(MthNyzVbe(A, WhStr))
-    MthCmlGpAsetzVbe.PushAy CmlGpAy(MthNm)
+    MthCmlGpAsetzVbe.PushAy CmlGp(MthNm)
 Next
 End Function
 

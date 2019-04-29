@@ -12,12 +12,8 @@ GenOMain
 WCls
 End Sub
 
-Function OupFxzShpCst$()
-OupFxzShpCst = OupFxzLidPm(RptLidPm)
-End Function
 
-Sub BrwRptPm()
-ShpCstLiPm.Brw
+Sub VcRptPm()
 End Sub
 
 Sub DocUOM _
@@ -110,20 +106,4 @@ If NReczFxw(FxMB52, Wsn, "Plant in ('8601','8701')") = 0 Then
         LyzFunMsgNap(CSub, M, "MB52-File Worksheet", FxMB52, Wsn)
 End If
 End Function
-
-Function PnmStkDte(AppDb As Database) As Date
-PnmStkDte = CDate(Mid(PnmVal(AppDb, "MB52Fn"), 6, 10))
-End Function
-
-Function PnmStkYYMD$(AppDb As Database)
-PnmStkYYMD = Format(PnmStkDte(AppDb), "YYYY-MM-DD")
-End Function
-
-Sub ShpCstBrwLiAct()
-BrwLiAct ShpCstLiAct
-End Sub
-
-Property Get ShpCstLiAct() As LiAct
-Set ShpCstLiAct = LiAct(ShpCstLiPm)
-End Property
 

@@ -5,6 +5,6 @@ Fxa = DistPth(Srcp) & FxaNm & ".xlam"
 End Function
 
 Function Fba$(FbaNm, Srcp)
-Fba = PthEns(Srcp & "Dist") & FbaNm & ".accdb"
+Fba = EnsPth(Srcp & "Dist") & FbaNm & ".accdb"
 End Function
 

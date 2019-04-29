@@ -100,7 +100,7 @@ Property Get WinzLcl() As VBIDE.Window
 Set WinzLcl = FstWinTy(vbext_wt_Locals)
 End Property
 
-Function WinzMdNm(MdNm) As VBIDE.Window
+Function WinzMdNm(MdNm$) As VBIDE.Window
 If HasCmp(MdNm) Then Set WinzMdNm = Md(MdNm).CodePane.Window
 End Function
 
@@ -153,7 +153,7 @@ WinCnt = CurVbe.Windows.Count
 End Property
 
 Function MdNmCdWin$(CdWin As VBIDE.Window)
-MdNmCdWin = StrBet(CdWin.Caption, " - ", " (Code)")
+MdNmCdWin = Bet(CdWin.Caption, " - ", " (Code)")
 End Function
 
 Property Get WinNy() As String()
@@ -165,7 +165,7 @@ Next
 End Property
 
 Function FstWinTy(A As vbext_WindowType) As VBIDE.Window
-Set FstWinTy = FstItrPEv(CurVbe.Windows, "Type", A)
+Set FstWinTy = FstItmPEv(CurVbe.Windows, "Type", A)
 End Function
 
 Function WinAyWinTy(T As vbext_WindowType) As VBIDE.Window()

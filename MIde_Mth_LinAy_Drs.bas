@@ -21,9 +21,10 @@ Set MthLinDiczPj = O
 End Function
 
 Function MthLinDiczSrc(Src$(), Optional WhStr$) As Dictionary
-Dim L
+Dim L$, I
 Set MthLinDiczSrc = New Dictionary
-For Each L In Itr(MthLinAyzSrc(Src, WhStr))
+For Each I In Itr(MthLinAyzSrc(Src, WhStr))
+    L = I
     MthLinDiczSrc.Add MthDNm(L), L
 Next
 End Function
@@ -100,7 +101,7 @@ End Function
 Function MthQLyzMd(A As CodeModule, Optional WhStr$) As String()
 Dim P$
 P = PjNmzMd(A) & "." & ShtCmpTy(A.Parent.Type) & "." & A.Parent.Name & "."
-MthQLyzMd = AyAddPfx(MthLinAyzSrc(Src(A), WhStr), P)
+MthQLyzMd = SyAddPfx(MthLinAyzSrc(Src(A), WhStr), P)
 End Function
 
 Function MthQLyzPj(A As VBProject, Optional WhStr$) As String()

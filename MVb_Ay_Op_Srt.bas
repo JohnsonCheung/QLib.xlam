@@ -12,13 +12,54 @@ For J = 0 To UB(A) - 1
 Next
 IsSrtAy = True
 End Function
+Sub Z_QSrt()
+Dim Act, Ay
+GoSub T0
+Exit Sub
+T0:
+    Ay = Array(1, 2, 4, 87, 4, 2)
+    GoTo Tst
+Tst:
+    Act = QSrt(Ay)
+    Return
+End Sub
 
+Function QSrt(Ay, Optional IsDes As Boolean)
+Dim N&: N = Si(Ay)
+If N <= 1 Then QSrt = Ay: Exit Function
+
+Dim V: V = Ay(0)
+Dim O, H, L, H1, L1
+L = AywLE(Ay, V): L1 = QSrt(L)
+H = AywGT(Ay, V): H1 = QSrt(H)
+O = AyAdd(L1, H1)
+If IsDes Then O = ReserveAy(O)
+QSrt = O
+End Function
+Function AywLE(Ay, V)
+If Si(Ay) = 0 Then AywLE = Ay: Exit Function
+Dim O: O = Ay: Erase O
+Dim I
+For Each I In Ay
+    If I <= V Then PushI O, I
+Next
+AywLE = O
+End Function
+Function AywGT(Ay, V)
+If Si(Ay) = 0 Then AywGT = Ay: Exit Function
+Dim O: O = Ay: Erase O
+Dim I
+For Each I In Ay
+    If I > V Then PushI O, I
+Next
+AywGT = O
+End Function
 Function AyQSrt(Ay, Optional IsDes As Boolean)
 If Si(Ay) = 0 Then Exit Function
 Dim O: O = Ay
 AyQSrtLH O, 0, UB(Ay)
 If IsDes Then
-    AyQSrt = AyReverseI(O)
+    AyQSrt = ReverseAyI(O)
 Else
     AyQSrt = O
 End If

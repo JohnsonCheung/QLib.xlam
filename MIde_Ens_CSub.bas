@@ -49,7 +49,7 @@ Dim J%
 For J = 0 To UB(A)
     PushIAy O, A(J).ToLy
 Next
-LyzActMdAy = FmtAyT3(O)
+LyzActMdAy = FmtSyT3(O)
 End Function
 
 Sub EnsCSub()

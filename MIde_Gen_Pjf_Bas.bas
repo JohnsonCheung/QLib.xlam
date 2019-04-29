@@ -9,15 +9,15 @@ End Sub
 
 Private Function BasFfnAy(Srcp) As String()
 Dim Ffn
-For Each Ffn In FfnAy(Srcp)
-    If IsBasFfn(Ffn) Then
+For Each Ffn In FfnSy(Srcp)
+    If IsBasFfn(Ffn$) Then
         PushI BasFfnAy, Ffn
     End If
 Next
 End Function
-Private Function IsBasFfn(Ffn) As Boolean
+Private Function IsBasFfn(Ffn$) As Boolean
 Select Case True
-Case HasSfx(Ffn, ".bas"): IsBasFfn = True
+Case HasSfx(Ffn$, ".bas"): IsBasFfn = True
 End Select
 End Function
 

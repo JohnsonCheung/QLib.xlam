@@ -25,7 +25,7 @@ End Function
 
 Sub RmvMth(A As CodeModule, MthNmNN)
 Dim MthNm
-For Each MthNm In NyzNN(MthNmNN)
+For Each MthNm In TermAy(MthNmNN)
     RmvMthzNm A, MthNm
 Next
 End Sub
@@ -38,7 +38,7 @@ Sub RmvMdMth(Md As CodeModule, MthNm)
 Const CSub$ = CMod & "RmvMdMth"
 Dim X() As FTIx: X = MthFTIxAyzMth(Md, MthNm)
 Inf CSub, "Remove method", "Md Mth FTIx-WiTopRmk", MdNm(Md), Md, LyzFTIxAy(X)
-RmvMdFtLinesIxAy Md, X
+RmvMdLineszFtIxAy Md, X
 End Sub
 
 Private Sub Z_RmvMdMth()

@@ -7,10 +7,11 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
-Public Tbl$, LnkColStr$, WhBExpr$
-Friend Property Get Init(Tbl$, LnkColStr$, Optional WhBExpr$)
+Option Explicit
+Public Tbl$, LnkColStr$, WhBexpr$
+Friend Property Get Init(Tbl$, LnkColStr$, Optional WhBexpr$)
 Me.Tbl = Tbl
 Me.LnkColStr = LnkColStr
-Me.WhBExpr = WhBExpr
+Me.WhBexpr = WhBexpr
 Set Init = Me
 End Property

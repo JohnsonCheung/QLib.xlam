@@ -1,21 +1,31 @@
 Attribute VB_Name = "MVb_Ay_Op_Brk"
 Option Explicit
-Function AyabzAyPfx(Ay, Pfx) As AyAB
-Dim O As New AyAB
+Function AyabByPfx(Ay, Pfx$) As Ayab
+Dim O As New Ayab
 O.A = AyCln(Ay)
 O.B = O.A
-Dim S
-For Each S In Itr(Ay)
+Dim S$, I
+For Each I In Itr(Ay)
+    S = I
     If HasPfx(S, Pfx) Then
         PushI O.B, S
     Else
         PushI O.A, S
     End If
 Next
-AyabzAyPfx = O
+AyabByPfx = O
 End Function
-Function AyabzAyEle(Ay, Ele) As AyAB
-Dim O As AyAB
+Function Ayab(A, B) As Ayab
+Dim O As New Ayab
+Set Ayab = O.Init(A, B)
+End Function
+
+Function AyabByN(Ay, N) As Ayab
+Set AyabByN = Ayab(AywFstNEle(Ay, N), AyeFstNEle(Ay, N))
+End Function
+
+Function AyabByEle(Ay, Ele) As Ayab
+Dim O As Ayab
 O.A = AyCln(Ay)
 O.B = O.A
 Dim J%
@@ -26,17 +36,17 @@ Next
 For J = J + 1 To UB(Ay)
     PushI O.B, Ay(J)
 Next
-AyabzAyEle = O
+AyabByEle = O
 End Function
 
-Function AyabCzFT(Ay, FmIx&, ToIx&) As AyABC
+Function AyabcByFmTo(Ay, FmIx&, ToIx&) As AyABC
 Dim O As New AyABC
-Set AyabCzFT = O.Init( _
+Set AyabcByFmTo = O.Init( _
     AywFT(Ay, 0, FmIx - 1), _
     AywFT(Ay, FmIx, ToIx), _
     AywFmIx(Ay, ToIx + 1))
 End Function
 
-Function AyabCzFTIx(Ay, B As FTIx) As AyABC
-Set AyabCzFTIx = AyabCzFT(Ay, B.FmIx, B.ToIx)
+Function AyabcByFTIx(Ay, B As FTIx) As AyABC
+Set AyabcByFTIx = AyabcByFmTo(Ay, B.FmIx, B.ToIx)
 End Function

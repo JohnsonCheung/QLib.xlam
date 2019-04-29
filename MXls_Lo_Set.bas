@@ -17,7 +17,7 @@ End Sub
 
 Sub SetLccWrp(A As ListObject, CC$, Optional Wrp As Boolean)
 Dim C
-For Each C In NyzNN(CC)
+For Each C In TermAy(CC)
     SetLcWrp A, C, Wrp
 Next
 End Sub
@@ -27,7 +27,7 @@ End Sub
 
 Sub SetLccWdt(A As ListObject, CC$, W)
 Dim C
-For Each C In NyzNN(CC)
+For Each C In TermAy(CC)
     SetLcWdt A, C, W
 Next
 End Sub

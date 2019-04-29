@@ -31,7 +31,7 @@ Dim E$: E = Err.Description
 WarnLin CSub, FmtQQ("Cannot remove Pj[?] Er[?]", PjNm, E)
 End Sub
 Function StrzCurPjf$()
-StrzCurPjf = FtLines(PjfPj)
+StrzCurPjf = LineszFt(PjfPj)
 End Function
 Function PjfPj$()
 PjfPj = Pjf(CurPj)
@@ -39,7 +39,12 @@ End Function
 Function PjPth$(A As VBProject)
 PjPth = Pth(Pjf(A))
 End Function
-
+Function Pjfn$(A As VBProject)
+Pjfn = Fn(Pjf(A))
+End Function
+Function PjfzPj(A As VBProject)
+PjfzPj = Pjf(A)
+End Function
 Function Pjf$(A As VBProject)
 On Error GoTo X
 Pjf = A.Filename
@@ -52,7 +57,7 @@ PjFnn = Fnn(Pjf(A))
 End Function
 
 Function IsUsrLibPj(A As VBProject) As Boolean
-IsUsrLibPj = IsFxa(A)
+IsUsrLibPj = IsFxa(Pjf(A))
 End Function
 
 Function MdzPj(A As VBProject, Nm) As CodeModule

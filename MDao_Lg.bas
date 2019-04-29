@@ -16,10 +16,10 @@ End Sub
 Function CurLgLy(Optional Sep$ = " ", Optional Top% = 50) As String()
 CurLgLy = RsLy(CurLgRs(Top), Sep)
 End Function
-Private Function RsLy(A As Dao.Database, Sep$) As String()
+Private Function RsLy(A As DAO.Database, Sep$) As String()
 
 End Function
-Function CurLgRs(Optional Top% = 50) As Dao.Recordset
+Function CurLgRs(Optional Top% = 50) As DAO.Recordset
 Set CurLgRs = L.OpenRecordset(FmtQQ("Select Top ? x.*,Fun,MsgTxt from Lg x left join Msg a on x.Msg=a.Msg order by Sess desc,Lg", Top))
 End Function
 
@@ -31,7 +31,7 @@ Function CurSessLy(Optional Sep$, Optional Top% = 50) As String()
 CurSessLy = RsLy(CurSessRs(Top), Sep)
 End Function
 
-Function CurSessRs(Optional Top% = 50) As Dao.Recordset
+Function CurSessRs(Optional Top% = 50) As DAO.Recordset
 Set CurSessRs = L.OpenRecordset(FmtQQ("Select Top ? * from sess order by Sess desc", Top))
 End Function
 Private Function CvSess&(A&)
@@ -97,14 +97,14 @@ Dim J%, V
 With L.TableDefs("LgV").OpenRecordset
     For Each V In Av
         .AddNew
-        !Lines = LineszVal(V)
+        !Lines = LineszV(V)
         .Update
     Next
     .Close
 End With
 End Sub
 
-Private Sub AsgRs(A As Dao.Recordset, ParamArray OAp())
+Private Sub AsgRs(A As DAO.Recordset, ParamArray OAp())
 
 End Sub
 
@@ -136,34 +136,34 @@ End Sub
 
 Sub LgCrt()
 CrtFb LgFb
-Dim Db As Database, T As Dao.TableDef
-Set Db = Db(LgFb)
+Dim A As Database, T As DAO.TableDef
+Set A = Db(LgFb)
 '
-Set T = New Dao.TableDef
+Set T = New DAO.TableDef
 T.Name = "Sess"
 AddFldzId T
 AddFldzTimstmp T, "Dte"
-Db.TableDefs.Append T
+A.TableDefs.Append T
 '
-Set T = New Dao.TableDef
+Set T = New DAO.TableDef
 T.Name = "Msg"
 AddFldzId T
 AddFldzTxt T, "Fun MsgTxt"
 AddFldzTimstmp T, "Dte"
-Db.TableDefs.Append T
+A.TableDefs.Append T
 '
-Set T = New Dao.TableDef
+Set T = New DAO.TableDef
 T.Name = "Lg"
 AddFldzId T
 AddFldzLng T, "Sess Msg"
 AddFldzTimstmp T, "Dte"
-Db.TableDefs.Append T
+A.TableDefs.Append T
 '
-Set T = New Dao.TableDef
+Set T = New DAO.TableDef
 T.Name = "LgV"
 AddFldzId T
 AddFldzLng T, "Lg Val"
-Db.TableDefs.Append T
+A.TableDefs.Append T
 
 'CrtPkDTT Db, "Sess Msg Lg LgV"
 'CrtSkD Db, "Msg", "Fun MsgTxt"
@@ -172,8 +172,8 @@ End Sub
 Sub LgCrt_v1()
 Dim Fb$
 Fb = LgFb
-If HasFfn(Fb) Then Exit Sub
-'DbCrtSchm CrtFb(Fb), LgSchmLines
+If HasFfn(Fb$) Then Exit Sub
+'DbCrtSchm CrtFb(Fb$), LgSchmLines
 End Sub
 
 Property Get LgDb() As Database
@@ -250,7 +250,7 @@ End Sub
 
 Property Get LgPth$()
 Static Y$
-'If Y = "" Then Y = PgmPth & "Log\": PthEns Y
+'If Y = "" Then Y = PgmPth & "Log\": EnsPth Y
 LgPth = Y
 End Property
 

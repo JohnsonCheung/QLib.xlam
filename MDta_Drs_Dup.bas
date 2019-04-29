@@ -1,16 +1,16 @@
 Attribute VB_Name = "MDta_Drs_Dup"
 Option Explicit
 Function DrswDup(A As Drs, FF) As Drs
-Set DrswDup = DrswRowIxAy(A, RowIxAyOfDupRow(A, FF))
+DrswDup = DrswRowIxAy(A, RowIxAyOfDupRow(A, FF))
 End Function
 
 Function DrseDup(A As Drs, FF) As Drs
 Dim RowIxAy&(): RowIxAy = RowIxAyOfDupRow(A, FF)
-Set DrseDup = DrseRowIxAy(A, RowIxAy)
+DrseDup = DrseRowIxAy(A, RowIxAy)
 End Function
 
 Private Function RowIxAyOfDupRow(A As Drs, FF) As Long()
-Dim Fny$(): Fny = NyzNN(FF)
+Dim Fny$(): Fny = TermAy(FF)
 If Si(Fny) = 1 Then
     RowIxAyOfDupRow = IxAyzDup(ColzDrs(A, Fny(0)))
     Exit Function

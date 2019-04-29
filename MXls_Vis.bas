@@ -22,6 +22,12 @@ Function WbVis(A As Workbook) As Workbook
 VisXls A.Application
 Set WbVis = A
 End Function
+Sub VisWb(A As Workbook)
+VisXls A.Application
+End Sub
+Sub VisWs(A As Worksheet)
+VisXls A.Application
+End Sub
 
 Sub VisXls(A As Excel.Application)
 If Not A.Visible Then A.Visible = True

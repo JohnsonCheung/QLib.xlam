@@ -23,16 +23,16 @@ End Select
 End Function
 
 Function DupMthQNyGp_IsDup(Ny) As Boolean
-'DupMthQNyGp_IsDup = IsAllEleEqAy(AyMap(Ny, "FunFNm_MthLines"))
+'DupMthQNyGp_IsDup = IsAllEleEq(AyMap(Ny, "FunFNm_MthLines"))
 End Function
 
 Function DupMthQNyGp_IsVdt(A) As Boolean
 If Not IsSy(A) Then Exit Function
 If Si(A) <= 1 Then Exit Function
-Dim N$: N = Brk(A(0), ":").s1
+Dim N$: N = Brk(A(0), ":").S1
 Dim J%
 For J = 1 To UB(A)
-    If N <> Brk(A(J), ":").s1 Then Exit Function
+    If N <> Brk(A(J), ":").S1 Then Exit Function
 Next
 DupMthQNyGp_IsVdt = True
 End Function

@@ -1,8 +1,8 @@
 Attribute VB_Name = "MIde_Dcl_Const"
 Option Explicit
 
-Function ShfConst(O) As Boolean
-ShfConst = ShfPfx(O, "Const")
+Function ShfConst(OLin$) As Boolean
+ShfConst = ShfPfx(OLin, "Const")
 End Function
 
 Function HasConstNm(A As CodeModule, ConstNm$) As Boolean
@@ -12,8 +12,8 @@ For J = 1 To A.CountOfDeclarationLines
 Next
 End Function
 
-Function ConstNmzSrcLin$(SrcLin)
+Function ConstNmzSrcLin$(SrcLin$)
 Dim L$: L = RmvMdy(SrcLin)
-If ShfConst(L) Then ConstNmzSrcLin = TakNm(L)
+If ShfConst(L) Then ConstNmzSrcLin = Nm(L)
 End Function
 

@@ -2,56 +2,48 @@ Attribute VB_Name = "MXls_Fun"
 Attribute VB_Description = "aaa"
 Option Explicit
 
-Sub PutAyColAt(A, At As Range)
-Dim Sq()
-Sq = SqzAyV(A)
-RgzResz(At, Sq).Value = Sq
+Sub FillAtV(At As Range, Ay)
+FillSq SqzAyV(Ay), At
 End Sub
 
-Sub PutAyRgzLc(A, Lo As ListObject, ColNm$)
+Sub FillLc(Lo As ListObject, ColNm$, Ay)
+If Lo.DataBodyRange.Rows.Count <> Si(Ay) Then Thw CSub, "Lo-NRow <> Si(Ay)", "Lo-NRow ,Si(Ay)", NRowzLo(Lo), Si(Ay)
 Dim At As Range, C As ListColumn, R As Range
 'DmpAy FnyzLo(Lo)
 'Stop
 Set C = Lo.ListColumns(ColNm)
 Set R = C.DataBodyRange
 Set At = R.Cells(1, 1)
-PutAyColAt A, At
+FillAtV At, Ay
 End Sub
-
-Sub PutAyRowAt(Ay, At As Range)
-Dim Sq()
-Sq = SqzAyH(Ay)
+Sub FillSq(Sq(), At As Range)
 RgzResz(At, Sq).Value = Sq
 End Sub
-
-Function AyabWs(A, B, Optional N1$ = "Ay1", Optional N2$ = "Ay2", Optional LoNm$ = "Ayab") As Worksheet
-Dim N&, AtA1 As Range, R As Range
-N = Si(A)
-If N <> Si(B) Then Stop
-Set AtA1 = NewA1
-
-PutAyRowAt Array(N1, N2), AtA1
-PutAyColAt A, AtA1.Range("A2")
-PutAyColAt B, AtA1.Range("B2")
-'LozRg RgRCRC(AtA1, 1, 1, N + 1, 2)
-Set AyabWs = AtA1.Parent
+Sub FillAtH(Ay, At As Range)
+FillSq SqzAyH(Ay), At
+End Sub
+Function DryzAyab(A, B) As Variant()
+Dim J&
+For J = 0 To Min(UB(A), UB(B))
+    PushI DryzAyab, Array(A(J), B(J))
+Next
+End Function
+Function DrszAyab(A, B, Optional N1$ = "Ay1", Optional N2$ = "Ay2") As Drs
+DrszAyab = Drs(Sy(N1, N2), DryzAyab(A, B))
+End Function
+Function WszAyab(A, B, Optional N1$ = "Ay1", Optional N2$ = "Ay2") As Worksheet
+Set WszAyab = WszDrs(DrszAyab(A, B, N1, N2))
 End Function
 
-
-
-Function NewWsDic(Dic As Dictionary, Optional InclDicValOptTy As Boolean) As Worksheet
-Set NewWsDic = WszDrs(DrszDic(Dic, InclDicValOptTy))
-End Function
-Function NewWsVisDic(A As Dictionary, Optional InclDicValOptTy As Boolean) As Worksheet
-Set NewWsVisDic = WsVis(NewWsDic(A, InclDicValOptTy))
+Function WszDic(Dic As Dictionary, Optional InclDicValOptTy As Boolean) As Worksheet
+Set WszDic = WszDrs(DrszDic(Dic, InclDicValOptTy))
 End Function
 
-Function NewWsDt(A As Dt, Optional Vis As Boolean) As Worksheet
+Function WszDt(A As Dt) As Worksheet
 Dim O As Worksheet
 Set O = NewWs(A.DtNm)
 LozDrs DrszDt(A), A1zWs(O)
-Set NewWsDt = O
-If Vis Then WsVis O
+WszDt = O
 End Function
 
 Function NyzFml(Fml$) As String()
@@ -95,7 +87,7 @@ ReDim O(1 To N, 1 To 1)
 SqVbar = O
 End Function
 
-Function N_ZerFill$(N, NDig%)
+Function N_ZerFill$(N, NDig&)
 N_ZerFill = Format(N, String(NDig, "0"))
 End Function
 
@@ -109,7 +101,7 @@ Dim A, B
 ZZ:
     A = SySsl("A B C D E")
     B = SySsl("1 2 3 4 5")
-    WsVis AyabWs(A, B)
+    WsVis WszAyab(A, B)
 End Sub
 
 Private Sub Z_WbFbOupTbl()

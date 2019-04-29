@@ -2,7 +2,7 @@ Attribute VB_Name = "MIde_ConstMth_Val"
 Option Explicit
 Const CMod$ = "MIde_Gen_Const_ConstVal."
 Function ConstValOfFt(ConstNm$)
-ConstValOfFt = FtLines(FtzConstQNm(ConstNm))
+ConstValOfFt = LineszFt(FtzConstQNm(ConstNm))
 End Function
 Function ConstVal$(ConstQNm$)
 Dim Md As CodeModule, ConstNm$
@@ -36,7 +36,7 @@ End Function
 Private Function ConstValOfConst$(C)
 Dim I, O$(), A$, B$
 For Each I In SplitCrLf(C)
-    A = StrBetFstLas(I, """", """")
+    A = BetFstLas(I, """", """")
     B = Replace(A, """""", """")
     PushI O, B
 Next
@@ -47,7 +47,7 @@ Private Function ConstLinesAy(ConstPrpLines$) As String()
 Dim Ay$(), O$
 O = JnCrLf(O)
 Lp:
-    Ay = TakP123(O, "Const", vbCrLf & vbCrLf)
+    Ay = P123(O, "Const", vbCrLf & vbCrLf)
     If Si(Ay) = 3 Then
         PushI ConstLinesAy, Ay(1)
         O = Ay(2)
@@ -99,7 +99,7 @@ Dim L$: L = RmvMthMdy(Lin)
 If Not ShfPfx(L, "Const ") Then Exit Function
 If ShfNm(L) <> ConstNm Then Exit Function
 If ShfTyChr(L) = "$" Then Thw CSub, "Given constant name is found, but is not a Str", "ConstLin ConstNm", Lin, ConstNm
-Dim O$: O = StrBet(L, """", """")
+Dim O$: O = Bet(L, """", """")
 If O = "" Then Thw CSub, "Between DblQuote is nothing", "ConstLin ConstNm", Lin, ConstNm
 ConstValOfLinNm = O
 End Function

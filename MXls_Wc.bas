@@ -31,29 +31,32 @@ With Lo.QueryTable
 End With
 End Sub
 
-Sub AddWcTpWFb()
-'AddWcFxFbtt TpFx, WFb(Apn), TnyzFb(WFb)
+Sub AddWcToWbFmFbtt(ToWb As Workbook, FmFb$, Fmtt$)
+Dim T
+For Each T In TermAy(Fmtt)
+    AddWcToWbFmFbt ToWb, FmFb, T
+Next
 End Sub
 
-Sub AddWcFxFbtt(Fx, LnkFb$, TT)
+Sub AddWcToFxFmFbtt(ToFx$, FmFb$, Fmtt$)
 Dim Wb As Workbook, T
-Set Wb = WbzFx(Fx)
-For Each T In NyzNN(TT)
-    WczWbFb Wb, LnkFb, T
-Next
+Set Wb = WbzFx(ToFx)
+AddWcToWbFmFbtt Wb, FmFb, Fmtt
 Wb.Close True
 End Sub
 
-Private Function WbzFbOupTbl(Fb) As Workbook
+Private Function WbzFbOupTbl(Fb$) As Workbook
 Dim O As Workbook
 Set O = NewWb
-DoAyabX OupTnyzFb(Fb), "WczWbFb", O, Fb
+DoAyABX OupTnyzFb(Fb$), "WczWbFb", O, Fb
 DoItrFun O.Connections, "NewWsC"
 RfhWb O, Fb
 Set WbzFbOupTbl = O
 End Function
-
+Sub Z_CrtFxzFbOupTbl()
+VisWb WbzFbOupTbl(OHApnFb)
+End Sub
 Sub CrtFxzFbOupTbl(Fx$, Fb$)
-WbzFbOupTbl(Fb).SaveAs Fx
+WbzFbOupTbl(Fb$).SaveAs Fx
 End Sub
 

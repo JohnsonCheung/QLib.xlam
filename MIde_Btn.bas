@@ -13,7 +13,7 @@ CtlAy = IntozItr(CtlAy, A.Controls)
 End Function
 
 Function CtlCapAy(A As CommandBar) As String()
-CtlCapAy = SyzItp(CtlAy(A), "Caption")
+CtlCapAy = SyzItrP(CtlAy(A), "Caption")
 End Function
 Function Bar(Nm$) As CommandBar
 Set Bar = CurVbe.CommandBars(Nm)
@@ -42,7 +42,7 @@ Set DbgPopup = MnuBar.Controls("Debug")
 End Property
 
 Property Get EdtclrBtn() As Office.CommandBarButton
-Set EdtclrBtn = FstItrPEv(EditPopup.Controls, "Caption", "C&lear")
+Set EdtclrBtn = FstItmPEv(EditPopup.Controls, "Caption", "C&lear")
 End Property
 
 Property Get MnuBar() As CommandBar
@@ -50,7 +50,7 @@ Set MnuBar = MnuBarzVbe(CurVbe)
 End Property
 
 Property Get SelAllBtn() As Office.CommandBarButton
-Set SelAllBtn = FstItrPEv(EditPopup.Controls, "Caption", "Select &All")
+Set SelAllBtn = FstItmPEv(EditPopup.Controls, "Caption", "Select &All")
 End Property
 
 Function IsBtn(A) As Boolean
@@ -63,11 +63,11 @@ Set NxtStmtBtn = DbgPopup.Controls("Show Next Statement")
 End Property
 
 Private Property Get EditPopup() As Office.CommandBarPopup
-Set EditPopup = FstItrPEv(MnuBar.Controls, "Caption", "&Edit")
+Set EditPopup = FstItmPEv(MnuBar.Controls, "Caption", "&Edit")
 End Property
 
 Property Get SavBtn() As CommandBarButton
-Set SavBtn = SavBtnz(CurVbe)
+Set SavBtn = SavBtnzVbe(CurVbe)
 End Property
 
 Property Get JmpNxtStmtBtn() As CommandBarButton
@@ -75,25 +75,25 @@ Set JmpNxtStmtBtn = DbgPopup.Controls("Show Next Statement")
 End Property
 
 Property Get StdBar() As Office.CommandBar
-Set StdBar = CurVbe_Bars("Standard")
+Set StdBar = Bars("Standard")
 End Property
 Function MnuBarzVbe(A As Vbe) As CommandBar
 Set MnuBarzVbe = A.CommandBars("Menu Bar")
 End Function
 
-Function SavBtnz(A As Vbe) As CommandBarButton
+Function SavBtnzVbe(A As Vbe) As CommandBarButton
 Dim I As CommandBarControl, S As Office.CommandBarControls
-Set S = StdBarz(A).Controls
+Set S = StdBarzVbe(A).Controls
 For Each I In S
     If HasPfx(I.Caption, "&Sav") Then Set SavBtn = I: Exit Function
 Next
 Stop
 End Function
 
-Function StdBarz(A As Vbe) As Office.CommandBar
+Function StdBarzVbe(A As Vbe) As Office.CommandBar
 Dim X As Office.CommandBars
-Set X = Vbe_Bars(A)
-Set StdBarz = X("Standard")
+Set X = BarszVbe(A)
+Set StdBarzVbe = X("Standard")
 End Function
 
 Function BarNyByVbe(A As Vbe) As String()

@@ -19,7 +19,7 @@ Dim mHasPrp As Boolean
 
     mPubMthLinAy = MthLinAyzPub(Src(A))
     Set mPubPrpGetNm = WPrpGetAset(mPubMthLinAy)
-    mPubMthPmAy = AyTakBetBkt(mPubMthLinAy) ' Each Mth return an-Ele to call
+    mPubMthPmAy = SyTakBetBkt(mPubMthLinAy) ' Each Mth return an-Ele to call
     mMthNyPub = MthNyzMthLinAy(mPubMthLinAy)
     mArgAy = ArgAyzPmAy(mPubMthPmAy)
     ArgSfx = ArgSfxAy(mArgAy)
@@ -62,7 +62,7 @@ Private Function WCallingLin$(MthNm, CallingPm$, PrpGetAset As Aset)
 If PrpGetAset.Has(MthNm) Then
     WCallingLin = "XX = " & MthNm & "(" & CallingPm & ")"  ' The MthNm is object, no need to add [Set] XX =, the compiler will not check for this
 Else
-    WCallingLin = MthNm & AddPfxSpc_IfNonBlank(CallingPm)
+    WCallingLin = MthNm & AddPfxSpczIfNonBlank(CallingPm)
 End If
 End Function
 
@@ -141,7 +141,7 @@ Private Sub ZZ()
 Dim A
 Dim B As CodeModule
 Dim C$()
-Dim xx
+Dim XX
 ArgSfx A
 SubZZEpt B
 MthNyzMthLinAy C

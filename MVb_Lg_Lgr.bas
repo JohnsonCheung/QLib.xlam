@@ -21,7 +21,7 @@ End Sub
 
 Property Get LgrPth$()
 Dim O$:
-'O = WrkPth: PthEns O
-O = O & "Log\": PthEns O
+'O = WrkPth: EnsPth O
+O = O & "Log\": EnsPth O
 LgrPth = O
 End Property

@@ -1,16 +1,16 @@
 Attribute VB_Name = "MVb_Str_Quote"
 Option Explicit
-Function BrkQuote(QuoteStr) As S1S2
+Function BrkQuote(QuoteStr$) As S1S2
 Dim L%: L = Len(QuoteStr)
-Dim s1$, s2$
+Dim S1$, S2$
 Select Case L
 Case 0:
 Case 1
-    s1 = QuoteStr
-    s2 = QuoteStr
+    S1 = QuoteStr
+    S2 = QuoteStr
 Case 2
-    s1 = Left(QuoteStr, 1)
-    s2 = Right(QuoteStr, 1)
+    S1 = Left(QuoteStr, 1)
+    S2 = Right(QuoteStr, 1)
 Case Else
     If InStr(QuoteStr, "*") > 0 Then
         Set BrkQuote = Brk(QuoteStr, "*", NoTrim:=True)
@@ -18,42 +18,48 @@ Case Else
     End If
     Stop
 End Select
-Set BrkQuote = S1S2(s1, s2)
+Set BrkQuote = S1S2(S1, S2)
 End Function
+Sub AsgQuote(OQ1$, OQ2$, QuoteStr$)
+With BrkQuote(QuoteStr)
+    OQ1 = .S1
+    OQ2 = .S2
+End With
+End Sub
 
-Function QuoteBkt$(A)
-QuoteBkt = "(" & A & ")"
+Function QuoteBkt$(S$)
+QuoteBkt = "(" & S & ")"
 End Function
-Function QuoteDot$(S)
+Function QuoteDot$(S$)
 QuoteDot = "." & S & "."
 End Function
-Function Quote$(A, QuoteStr$)
+Function Quote$(S$, QuoteStr$)
 With BrkQuote(QuoteStr)
-    Quote = .s1 & A & .s2
+    Quote = .S1 & S & .S2
 End With
 End Function
 
-Function QuoteDblVb$(A)
-QuoteDblVb = QuoteDbl(Replace(A, vbDblQuote, vbTwoDblQuote))
+Function QuoteDblVb$(S$)
+QuoteDblVb = QuoteDbl(Replace(S, vbDblQuote, vbTwoDblQuote))
 End Function
 
-Function QuoteDbl$(A)
-QuoteDbl = vbDblQuote & A & vbDblQuote
+Function QuoteDbl$(S$)
+QuoteDbl = vbDblQuote & S & vbDblQuote
 End Function
 
-Function QuoteSng$(A)
-QuoteSng = "'" & A & "'"
+Function QuoteSng$(S$)
+QuoteSng = "'" & S & "'"
 End Function
-Function QuoteSq$(A)
-QuoteSq = "[" & A & "]"
+Function QuoteSq$(S$)
+QuoteSq = "[" & S & "]"
 End Function
-Function QuoteSqIf$(S)
+Function QuoteSqIf$(S$)
 If IsNeedQuote(S) Then QuoteSqIf = QuoteSq(S) Else QuoteSqIf = S
 End Function
 Function QuoteSqAv(Av()) As String()
 Dim I
 For Each I In Av
-    PushI QuoteSqAv, QuoteSq(I)
+    PushI QuoteSqAv, QuoteSq(CStr(I))
 Next
 End Function
 

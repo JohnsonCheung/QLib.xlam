@@ -1,7 +1,7 @@
 Attribute VB_Name = "MVb_Thw_Msg"
 Option Explicit
 
-Function VblzLines$(Lines)
+Function VblzLines$(Lines$)
 VblzLines = Replace(RmvCr(Lines), vbLf, "|")
 End Function
 
@@ -24,17 +24,13 @@ Dim Nav(): Nav = Nap
 LyzFunMsgNap = LyzFunMsgNav(Fun, Msg, Nav)
 End Function
 
-Function LyzFunMsgObjPP(Fun$, Msg$, Obj, PP) As String()
+Function LyzFunMsgObjPP(Fun$, Msg$, Obj As Object, PP$) As String()
 LyzFunMsgObjPP = AyAdd(LyzFunMsg(Fun, Msg), LyzObjPP(Obj, PP))
 End Function
 
 Function LyzFunMsgNyAv(Fun$, Msg$, Ny$(), Av()) As String()
 LyzFunMsgNyAv = AyAdd(LyzFunMsg(Fun, Msg), AyIndent(LyzNyAv(Ny, Av)))
 End Function
-
-Sub InfObjPP(Fun$, Msg$, Obj, PP)
-D LyzFunMsgObjPP(Fun, Msg, Obj, PP)
-End Sub
 
 Function LyzNv(Nm$, V, Optional Sep$ = ": ") As String()
 Dim Ly$(): Ly = FmtV(V)
@@ -51,7 +47,7 @@ Next
 End Function
 
 Function LinzNv$(Nm$, V)
-LinzNv = Nm & "=[" & StrCellzVal(V) & "]"
+LinzNv = Nm & "=[" & StrCellzV(V) & "]"
 End Function
 Function LyzMsgNap(Msg$, ParamArray Nap()) As String()
 Dim Nav(): Nav = Nap
@@ -77,7 +73,7 @@ Function LinzFunMsgNav$(Fun$, Msg$, Nav())
 LinzFunMsgNav = LinzFunMsg(Fun, Msg) & " " & LinzNav(Nav)
 End Function
 
-Sub DmpNNAp(NN, ParamArray Ap())
+Sub DmpNNAp(NN$, ParamArray Ap())
 Dim Av(): Av = Ap
 D LyzNyAv(Ny(NN), Av)
 End Sub
@@ -107,7 +103,7 @@ U1 = UB(Ny)
 U2 = UB(Av)
 For J = 0 To Max(U1, U2)
     If J <= U1 Then N = QuoteSq(Ny(J)) Else N = "[?]"
-    If J <= U2 Then V = StrCellzVal(Av(J)) Else V = "?"
+    If J <= U2 Then V = StrCellzV(Av(J)) Else V = "?"
     PushI O, N & " " & V
 Next
 LinzNyAv = JnVbarSpc(O)
@@ -119,7 +115,8 @@ If Si(Nav) = 0 Then
     Erase OAv
     Exit Sub
 End If
-ONy = TermAyzTT(Nav(0))
+Dim TT$: TT = Nav(0)
+ONy = TermAyzTT(TT)
 OAv = AyeFstEle(Nav)
 End Sub
 

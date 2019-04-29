@@ -39,8 +39,8 @@ A.MissingItemsLimit = xlMissingItemsNone
 A.Refresh
 End Sub
 
-Sub RfhFx(Fx, Fb$)
-RfhWb(WbzFx(Fx), Fb).Close SaveChanges:=True
+Sub RfhFx(Fx$, Fb$)
+RfhWb(WbzFx(Fx$), Fb).Close SaveChanges:=True
 End Sub
 
 Private Sub RfhWs(A As Worksheet)
@@ -64,7 +64,7 @@ End Function
 
 Private Sub RplLozFb(Wb As Workbook, Fb)
 Dim I, Lo As ListObject, D As Database
-Set D = Db(Fb)
+Set D = Db(Fb$)
 For Each I In OupLoAy(Wb)
     Set Lo = I
     RplLozT Lo, D, "@" & Mid(Lo.Name, 3)
@@ -73,15 +73,15 @@ D.Close
 Set D = Nothing
 End Sub
 
-Private Function RplLozT(A As ListObject, Db As Database, T) As ListObject
+Private Function RplLozT(A As ListObject, Db As Database, T$) As ListObject
 Dim Fny1$(): Fny1 = Fny(Db, T)
 Dim Fny2$(): Fny2 = FnyzLo(A)
 If Not IsSamAy(Fny1, Fny2) Then
-    Thw CSub, "LoFny and TblFny are not same", "LoFny TblNm TblFny Db", Fny2, T, Fny1, DbNm(Db)
+    Thw CSub, "LoFny and TblFny are not same", "LoFny TblNm TblFny Db", Fny2, T, Fny1, DbNm(A)
 End If
 Dim Sq()
-    Dim R As Dao.Recordset
-    Set R = Rs(Db, SqlSel_FF_Fm(Fny2, T))
+    Dim R As DAO.Recordset
+    Set R = Rs(A, SqlSel_FF_Fm(Fny2, T))
     Sq = SqAddSngQuote(SqzRs(R))
 MinxLo A
 RgzSq Sq, A.DataBodyRange

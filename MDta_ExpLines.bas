@@ -18,7 +18,7 @@ End Function
 Function DrsExpLinesCol(A As Drs, LinesColNm$) As Drs
 Dim Dry(): Dry = A.Dry
 If Si(Dry) = 0 Then
-    Set DrsExpLinesCol = Drs(A.Fny, Dry)
+    DrsExpLinesCol = Drs(A.Fny, Dry)
     Exit Function
 End If
 Dim Ix%
@@ -28,5 +28,5 @@ Dim O()
     For Each Dr In Dry
         PushAy Dry, DrExpLinesCol(Dr, Ix)
     Next
-Set DrsExpLinesCol = Drs(A.Fny, O)
+DrsExpLinesCol = Drs(A.Fny, O)
 End Function

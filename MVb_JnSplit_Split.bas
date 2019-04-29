@@ -1,41 +1,41 @@
 Attribute VB_Name = "MVb_JnSplit_Split"
 Option Explicit
-Function SplitComma(A) As String()
-SplitComma = Split(A, ",")
+Function SplitComma(S$) As String()
+SplitComma = Split(S, ",")
 End Function
 
-Function SplitCommaSpc(A) As String()
-SplitCommaSpc = Split(A, ", ")
+Function SplitCommaSpc(S$) As String()
+SplitCommaSpc = Split(S, ", ")
 End Function
 
-Function SplitCrLf(A) As String()
-SplitCrLf = Split(Replace(A, vbCr, ""), vbLf)
+Function SplitCrLf(S$) As String()
+SplitCrLf = Split(Replace(S, vbCr, ""), vbLf)
 End Function
 
-Function SplitTab(A) As String()
-SplitTab = Split(A, vbTab)
+Function SplitTab(S$) As String()
+SplitTab = Split(S, vbTab)
 End Function
 
-Function SplitDot(A) As String()
-SplitDot = Split(A, ".")
+Function SplitDot(S$) As String()
+SplitDot = Split(S, ".")
 End Function
 
-Function SplitColon(A) As String()
-SplitColon = Split(A, ":")
+Function SplitColon(S$) As String()
+SplitColon = Split(S, ":")
 End Function
 
-Function SplitSemi(A) As String()
-SplitSemi = Split(A, ";")
+Function SplitSemi(S$) As String()
+SplitSemi = Split(S, ";")
 End Function
 
-Function SplitSpc(A) As String()
-SplitSpc = Split(A, " ")
+Function SplitSpc(S$) As String()
+SplitSpc = Split(S, " ")
 End Function
 
-Function SplitSsl(A) As String()
-SplitSsl = Split(RplDblSpc(Trim(A)), " ")
+Function SplitSsl(S$) As String()
+SplitSsl = Split(RplDblSpc(Trim(S$)), " ")
 End Function
 
-Function SplitVBar(A) As String()
-SplitVBar = AyTrim(Split(A, "|"))
+Function SplitVBar(S$) As String()
+SplitVBar = AyTrim(CvSy(Split(S, "|")))
 End Function

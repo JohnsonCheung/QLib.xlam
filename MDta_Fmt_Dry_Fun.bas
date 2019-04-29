@@ -1,5 +1,9 @@
 Attribute VB_Name = "MDta_Fmt_Dry_Fun"
 Option Explicit
+Type Syay
+    Syay() As Variant ' Each element is Sy
+End Type
+
 Function AyExtend(Ay, ToSamSzAsThisAy)
 Dim Sz&, SzNew&
 Sz = Si(Ay)
@@ -24,61 +28,73 @@ For Each Cell In AyExtend(Dr, ToWdt)
 Next
 End Function
 
-Function DryzAySepSS(Ay, SepSS$) As Variant()
-Dim Lin, SepAy$()
-SepAy = TermAy(SepSS)
-For Each Lin In Itr(Ay)
-    PushI DryzAySepSS, DrzLinSepAy(Lin, SepAy)
+Function DryzSySepss(Sy$(), Sepss$) As Variant()
+Dim I, Lin$, SepAy$()
+SepAy = TermAy(Sepss)
+For Each I In Itr(Sy)
+    Lin = I
+    PushI DryzSySepss, SyzLinSepAy(Lin, SepAy)
 Next
 End Function
 
-Function DryFmtCellAsStr(A()) As Variant()
-Dim Dr
-For Each Dr In Itr(A)
-    Push DryFmtCellAsStr, DrFmtCellSpcSep(Dr) ' Fmtss(X)
+Function SyAyzDry(Dry()) As Variant()
+Dim I, Dr()
+For Each I In Itr(Dry)
+    Dr = I
+    Push SyAyzDry, SyzDrAsStrSep(Dr) ' Fmtss(X)
 Next
 End Function
 
-Function DrFmtCellSpcSep(Dr) As String()
+Function SyzDrAsStrSep(Dr()) As String()
 Dim J&, U&, O$()
 U = UB(Dr)
 If U < 0 Then Exit Function
 ReDim O(U)
 For J = 0 To U
-    O(J) = SpcSepStr(Dr(J))
+    O(J) = SpcSepStr(CStr(Dr(J)))
 Next
-DrFmtCellSpcSep = O
+SyzDrAsStrSep = O
 End Function
-Private Sub Z_DrzLinSepAy()
+Private Sub Z_SyzLinSepAy()
 Dim Lin$, SepAy$()
 SepAy = SySsl(". . . . . .")
 Lin = "AStkShpCst_Rpt.OupFx.Fun."
 Ept = Sy("AStkShpCst_Rpt", ".OupFx", ".Fun", ".")
 GoSub Tst
 Tst:
-    Act = DrzLinSepAy(Lin, SepAy)
+    Act = SyzLinSepAy(Lin, SepAy)
     C
 End Sub
-Function ShfTermFmSep$(OLin, FmPos%, Sep$)
+
+Function ShfTermFmSep$(OLin$, FmPos%, Sep$)
 Dim P%: P = InStr(FmPos, OLin, Sep)
 If P = 0 Then ShfTermFmSep = OLin: OLin = "": Exit Function
 ShfTermFmSep = Left(OLin, P - 1)
 OLin = Mid(OLin, P)
 End Function
-Function DrzLinSepAy(Lin, SepAy$()) As String()
+
+Function SyzLinSepAy(Lin$, SepAy$()) As String()
 Dim FmPos%: FmPos = 1
 Dim L$: L = Lin
 Dim J%
 For J = 0 To UB(SepAy)
-    PushI DrzLinSepAy, ShfTermFmSep(L, FmPos, SepAy(J))
+    PushI SyzLinSepAy, ShfTermFmSep(L, FmPos, SepAy(J))
     If L = "" Then Exit Function
     If J > 0 Then FmPos = Len(SepAy(J - 1)) + 1
 Next
-If L <> "" Then PushI DrzLinSepAy, L
+If L <> "" Then PushI SyzLinSepAy, L
 End Function
+Function BrkSyBySepss(Sy$(), Sepss$) As Syay
 
-Function FmtAyzSepSS(Ay, SepSS$) As String()
-FmtAyzSepSS = FmtDryAsSpcSep(DryzAySepSS(Ay, SepSS))
+End Function
+Function AlignSyAy(A As Syay) As Syay
+
+End Function
+Function LyzSyAy(A As Syay) As String()
+
+End Function
+Function FmtSyBySepss(Sy$(), Sepss$) As String()
+FmtSyBySepss = LyzSyAy(AlignSyAy(BrkSyBySepss(Sy, Sepss)))
 End Function
 
 '=======================
@@ -167,10 +183,10 @@ For J = 1 To UB(SrtedDry)
 Next
 End Function
 
-Function WdtAyzDry(A()) As Integer()
-Dim J%
-For J = 0 To NColzDry(A) - 1
-    Push WdtAyzDry, WdtzAy(ColzDry(A, J))
+Function WdtAyzDry(Dry()) As Integer()
+Dim J&
+For J = 0 To NColzDry(Dry) - 1
+    Push WdtAyzDry, AyWdt(ColzDry(Dry, J))
 Next
 End Function
 

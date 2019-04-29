@@ -1,13 +1,5 @@
 Attribute VB_Name = "MVb_DotNet_Crypto"
 Option Explicit
-Private Sub XXXX()
-'Dim X As mscorlib.Object
-Dim T
-'Set X = New mscorlib.Object
-Stop
-'Set T = X.getType()
-Stop
-End Sub
 Private Sub Z_AsmAy()
 Dim O
 O = AsmAy
@@ -20,11 +12,6 @@ AppDomain = CreateObject("System.AppDomain")
 Set CurDomain = AppDomain.CurrentDomain
 Stop
 End Property
-Sub YY()
-Static A As Excel.Application
-Set A = New Excel.Application
-Stop
-End Sub
 Private Sub XXX()
 Dim A As Excel.Application
 Set A = GetObject(, "Excel.Application")

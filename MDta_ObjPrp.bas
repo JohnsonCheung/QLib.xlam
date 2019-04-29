@@ -7,16 +7,16 @@ Stop
 End Sub
 Function DrszItr(Itr, PP$) As Drs
 Dim PrpPthAy$(): PrpPthAy = Ny(PP)
-Set DrszItr = Drs(PrpPthAy, DryzItr(Itr, PrpPthAy))
+DrszItr = Drs(PrpPthAy, DryzItr(Itr, PrpPthAy))
 End Function
 
 Function DrszItrpp(Itr, PP) As Drs
-Dim A$(): A = NyzNN(PP)
-Set DrszItrpp = Drs(A, DryzItr(Itr, A))
+Dim A$(): A = TermAy(PP)
+DrszItrpp = Drs(A, DryzItr(Itr, A))
 End Function
 
 Function DrszOypp(Oy, PP) As Drs
-Set DrszOypp = DrszItrpp(Itr(Oy), PP)
+DrszOypp = DrszItrpp(Itr(Oy), PP)
 End Function
 
 Private Function WFmlEr(PrpAy$(), PPzFml$()) As String()
@@ -34,7 +34,7 @@ Private Sub WAsg3PP(PP_with_NewFldEqQuoteFmFld$, OPPzPrp$(), OPPzFml$(), OPPzAll
 Dim I
 For Each I In SySsl(PP_with_NewFldEqQuoteFmFld)
     If HasSubStr(I, "=") Then
-        PushI OPPzAll, StrBef(I, "=")
+        PushI OPPzAll, Bef(I, "=")
         PushI OPPzFml, I
     Else
         PushI OPPzAll, I
@@ -47,8 +47,8 @@ Private Function DrsAddFml(A As Drs, PPzFml$()) As Drs
 Dim O As Drs: Set O = A
 Dim NewFld$, FunNm$, PmAy$(), Fml
 For Each Fml In Itr(PPzFml)
-    NewFld = StrBef(Fml, "=")
-    FunNm = StrBet(Fml, "=", "(")
+    NewFld = Bef(Fml, "=")
+    FunNm = Bet(Fml, "=", "(")
     PmAy = SplitComma(BetBkt(Fml))
     Set O = AddColzFmlDrs(O, NewFld, FunNm, PmAy)
 Next

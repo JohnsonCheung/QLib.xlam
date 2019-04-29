@@ -1,13 +1,13 @@
 Attribute VB_Name = "MVb_Fs_Pth_Mbr"
 Option Explicit
 
-Function DirzPth$(Pth)
-DirzPth = Dir(PthEnsSfx(Pth) & "*.*", vbDirectory)
+Function DirzPth$(Pth$)
+DirzPth = Dir(EnsPthSfx(Pth) & "*.*", vbDirectory)
 End Function
 
-Function FdrAyz(Pth, Optional Spec$ = "*.*", Optional Atr As VbFileAttribute) As String()
+Function FdrAy(Pth$, Optional Spec$ = "*.*", Optional Atr As VbFileAttribute) As String()
 If Not HasPth(Pth) Then Exit Function
-Dim P$: P = PthEnsSfx(Pth)
+Dim P$: P = EnsPthSfx(Pth)
 Dim M$, X&, Atr1&
 X = Atr Or vbDirectory
 M = Dir(P & Spec, vbDirectory)
@@ -21,13 +21,13 @@ While M <> ""
     Atr1 = GetAttr(P & M)
     If (Atr1 And VbFileAttribute.vbDirectory) = 0 Then GoTo Nxt
     If Not HitFilAtr(GetAttr(P & M), Atr) Then GoTo Nxt
-    PushI FdrAyz, M    '<====
+    PushI FdrAy, M    '<====
 Nxt:
     M = Dir
 Wend
 End Function
 
-Function EntAy(Pth) As String()
+Function EntAy(Pth$) As String()
 'Function EntAy(A$, Optional FilSpec$ = "*.*", Optional Atr As FileAttribute) As String()
 Dim A$: A$ = DirzPth(Pth)
 While A <> ""
@@ -38,68 +38,64 @@ X:
     A = Dir
 Wend
 End Function
-Function IsInstNm(S) As Boolean
-If FstChr(S) <> "N" Then Exit Function
-If Len(S) <> 16 Then Exit Function
-If Not IsYYYYMMDD(Mid(S, 2, 8)) Then Exit Function
+Function IsInstNm(S$) As Boolean
+If FstChr(S) <> "N" Then Exit Function      'FstChr = N
+If Len(S) <> 16 Then Exit Function          'Len    =16
+If Not IsYYYYMMDD(Mid(S, 2, 8)) Then Exit Function 'NYYYYMMDD_HHMMDD
 If Mid(S, 10, 1) <> "_" Then Exit Function
 If Not IsHHMMDD(Right(S, 6)) Then Exit Function
 IsInstNm = True
 End Function
-Function InstFdrAy(Pth) As String()
+Function InstFdrAy(Pth$) As String()
 Dim Fdr
 For Each Fdr In Itr(FdrAy(Pth))
-    If IsInstNm(Fdr) Then
+    If IsInstNm(CStr(Fdr)) Then
         PushI InstFdrAy, Fdr
     End If
 Next
 End Function
-Function FdrAy(Pth) As String()
-Dim P$: P = PthEnsSfx(Pth)
+Function FdrAy1(Pth$) As String()
+Dim P$: P = EnsPthSfx(Pth)
 Dim A$: A = DirzPth(P)
 While A <> ""
     If A = "." Then GoTo X
     If A = ".." Then GoTo X
-    If IsPth(P & A) Then PushI FdrAy, A
+    If IsPth(P & A) Then PushI FdrAy1, A
 X:
     A = Dir
 Wend
 End Function
 
-Function FfnItr(Pth)
-Asg Itr(FfnAy(Pth)), FfnItr
+Function FfnItr(Pth$)
+Asg Itr(FfnSy(Pth)), FfnItr
 End Function
 
-'Function FnAy(Pth) As String()
+'Function FnSy(Pth) As String()
 'Dim A$: A = Dir(Pth)
 'While A <> ""
 '    If HasSubStr(A, "?") Then
 '        Debug.Print FmtQQ("File name has ?, skipped.  Pth[?] Fn[?]", Pth, A)
 '    Else
-'        PushI FnAy, A
+'        PushI FnSy, A
 '    End If
 '    A = Dir
 'Wend
 'End Function
 '
-'Function FfnAy(Pth) As String()
-'FfnAy = AyAddPfx(FnAy(Pth), PthEnsSfx(Pth))
+'Function FfnSy(Pth) As String()
+'FfnSy = SyAddPfx(FnSy(Pth), EnsPthSfx(Pth))
 'End Function
 '
 
-Function SubPthAy(Pth) As String()
-SubPthAy = AyAddPfxSfx(FdrAy(Pth), Pth, PthSep)
-End Function
-
-Function SubPthAyz(Pth, Optional Spec$ = "*.*", Optional Atr As FileAttribute) As String()
-SubPthAyz = AyAddPfxSfx(FdrAyz(Pth, Spec, Atr), Pth, PthSep)
+Function SubPthAy(Pth$) As String()
+SubPthAy = SyAddPfxSfx(FdrAy(Pth), Pth, PthSep)
 End Function
 
 Sub AsgEnt(OFdrAy$(), OFnAy$(), Pth$)
 Erase OFdrAy
 Erase OFnAy
 Dim A$, P$
-P = PthEnsSfx(Pth)
+P = EnsPthSfx(Pth)
 A = Dir(Pth, vbDirectory)
 While A <> ""
     If A = "." Then GoTo X
@@ -114,27 +110,27 @@ X:
 Wend
 End Sub
 
-Function FnnAy(A, Optional Spec$ = "*.*", Optional Atr As FileAttribute) As String()
-Dim Fn
-For Each Fn In FnAy(A, Spec)
-    PushI FnnAy, RmvExt(Fn)
+Function FnnSy(Pth$, Optional Spec$ = "*.*") As String()
+Dim I
+For Each I In FnSy(Pth, Spec)
+    PushI FnnSy, RmvExt(CStr(I))
 Next
 End Function
 
-Function FnAy(Pth, Optional Spec$ = "*.*") As String()
-ThwNotHasPth Pth, CSub
+Function FnSy(Pth$, Optional Spec$ = "*.*") As String()
+ThwIfPthNotExist1 Pth, CSub
 Dim O$()
 Dim M$
-M = Dir(PthEnsSfx(Pth) & Spec)
+M = Dir(EnsPthSfx(Pth) & Spec)
 While M <> ""
-   PushI FnAy, M
+   PushI FnSy, M
    M = Dir
 Wend
 End Function
 
-Function FxAy(Pth) As String()
+Function FxAy(Pth$) As String()
 Dim O$(), B$, P$
-P = PthEnsSfx(P)
+P = EnsPthSfx(P)
 B = Dir(Pth & "*.xls")
 Dim J%
 While B <> ""
@@ -148,8 +144,8 @@ Wend
 FxAy = O
 End Function
 
-Function FfnAy(Pth, Optional Spec$ = "*.*") As String()
-FfnAy = AyAddPfx(FnAy(Pth, Spec), Pth)
+Function FfnSy(Pth$, Optional Spec$ = "*.*") As String()
+FfnSy = SyAddPfx(FnSy(Pth, Spec), Pth)
 End Function
 
 Private Sub Z_SubPthAy()

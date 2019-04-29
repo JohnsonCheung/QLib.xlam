@@ -1,30 +1,31 @@
 Attribute VB_Name = "MVb_Lin_Term_TermN"
 Option Explicit
-Function T1zLin$(A)
-T1zLin = T1(A)
-End Function
-Function T1$(Lin)
-T1 = TermN(Lin, 1)
-End Function
-Function T2zLin$(A)
-T2zLin = TermN(A, 2)
+Function T1zS$(S$)
+T1zS = T1(S)
 End Function
 
-Function T2$(A)
-T2 = TermN(A, 2)
+Function T1$(S$)
+T1 = TermN(S, 1)
+End Function
+Function T2zS$(S$)
+T2zS = T2(S)
 End Function
 
-Function T3$(A)
-T3 = TermN(A, 3)
+Function T2$(S$)
+T2 = TermN(S, 2)
 End Function
 
-Function TermN$(Lin, N%)
+Function T3$(S$)
+T3 = TermN(S, 3)
+End Function
+
+Function TermN$(S$, N%)
 Dim L$, J%
-L = LTrim(Lin)
+L = LTrim(S)
 For J = 1 To N - 1
     L = RmvT1(L)
 Next
-TermN = TakT1(L)
+TermN = T1(L)
 End Function
 
 Private Sub Z_TermN()

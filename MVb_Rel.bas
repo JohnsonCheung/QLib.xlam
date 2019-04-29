@@ -4,11 +4,11 @@ Property Get SampRel() As Rel
 Set SampRel = Rel(SampRelLy)
 End Property
 Property Get SampRelLy() As String()
-Erase xx
+Erase XX
 X "A B"
 X "B A"
-SampRelLy = xx
-Erase xx
+SampRelLy = XX
+Erase XX
 End Property
 
 Property Get SampMthRel() As Rel

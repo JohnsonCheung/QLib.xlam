@@ -3,7 +3,7 @@ Option Explicit
 Public Const C_Dbl$ = """"
 Public Const C_Sng$ = "'"
 
-Function IsNm(S) As Boolean
+Function IsNm(S$) As Boolean
 If S = "" Then Exit Function
 If Not IsLetter(FstChr(S)) Then Exit Function
 Dim L&: L = Len(S)
@@ -26,32 +26,32 @@ Function WhNmzStr(WhStr$, Optional NmPfx$) As WhNm
 Set WhNmzStr = LinPm(WhStr, "-Sw Prv Pub Frd Sub Fun Prp Get Set Let WiRet WoRet").WhNm(NmPfx)
 End Function
 
-Function ChrQuote$(S, Chr$)
+Function ChrQuote$(S$, Chr$)
 ChrQuote = Chr & S & Chr
 End Function
 
-Function SpcQuote$(S)
+Function SpcQuote$(S$)
 SpcQuote = ChrQuote(S, " ")
 End Function
 
-Function DblQuote$(S)
+Function DblQuote$(S$)
 DblQuote = ChrQuote(S, vbDblQuote)
 End Function
 
-Function SngQuote$(S)
+Function SngQuote$(S$)
 SngQuote = ChrQuote(S, vbSngQuote)
 End Function
 
-Function HitRe(Str, Re As RegExp) As Boolean
-If Str = "" Then Exit Function
+Function HitRe(S$, Re As RegExp) As Boolean
+If S = "" Then Exit Function
 If IsNothing(Re) Then Exit Function
-HitRe = Re.Test(Str)
+HitRe = Re.Test(S)
 End Function
 
-Function NmSfx$(A)
+Function NmSfx$(S$)
 Dim J%, O$, C$
-For J = Len(A) To 1 Step -1
-    C = Mid(A, J, 1)
+For J = Len(S) To 1 Step -1
+    C = Mid(S, J, 1)
     If Not IsAscUCas(Asc(C)) Then
         If C <> "_" Then
             NmSfx = O: Exit Function
@@ -61,7 +61,7 @@ For J = Len(A) To 1 Step -1
 Next
 End Function
 
-Function NxtSeqNm$(Nm, Optional NDig% = 3) _
+Function NxtSeqNm$(Nm$, Optional NDig& = 3) _
 'Nm-Nm can be XXX or XXX_nn
 '   If XXX, return XXX_001   '<-- # of zero depends on NDig
 '   If XXX_nn, return XXX_mm '<-- mm is nn+1, # of digit of nn and mm depends on NDig

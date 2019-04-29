@@ -91,7 +91,7 @@ Dim O() As OLEDBConnection, Wc As WorkbookConnection
 For Each Wc In A.Connections
     PushObjzExlNothing O, Wc.OLEDBConnection
 Next
-OleWcAy = OyeNothing(IntozItrPrp(A.Connections, "OLEDBConnection", OleWcAy))
+OleWcAy = OyeNothing(IntozItrPrp(OleWcAy, A.Connections, "OLEDBConnection"))
 End Function
 
 Function WcNyWb(A As Workbook) As String()
@@ -150,14 +150,24 @@ Function WbFullNm$(A As Workbook)
 On Error Resume Next
 WbFullNm = A.FullName
 End Function
+Sub AddWszT_UseWc(Wb As Workbook, Db As Database, T$, Optional Wsn0$)
+Dim Wsn$: Wsn = DftStr(Wsn0, T)
 
-Function WbAddTT(A As Workbook, Db As Database, TT, Optional UseWc As Boolean) As Workbook
+End Sub
+
+Sub AddWszT(Wb As Workbook, Db As Database, T$, Optional Wsn0$, Optional UseWc As Boolean)
+If UseWc Then AddWszT_UseWc Wb, Db, T, Wsn0: Exit Sub
+Dim Wsn$: Wsn = DftStr(Wsn0, T)
+Dim Sq(): Sq = SqzT(Db, T)
+Dim A1 As Range: Set A1 = A1zWs(AddWs(Wb, Wsn))
+End Sub
+
+Sub AddWszTny(A As Workbook, Db As Database, Tny$(), Optional UseWc As Boolean)
 Dim T
-For Each T In TnyzTT(TT)
-    WszWbT A, Db, T
+For Each T In Tny
+    AddWszT A, Db, CStr(T), UseWc:=UseWc
 Next
-Set WbAddTT = A
-End Function
+End Sub
 
 Function WszWbDt(A As Workbook, Dt As Dt) As Worksheet
 Dim O As Worksheet
@@ -166,14 +176,14 @@ LozDrs DrszDt(Dt), A1(O)
 Set WszWbDt = O
 End Function
 
-Function WczWbFb(A As Workbook, LnkToFb$, WcNm) As WorkbookConnection
-Set WczWbFb = A.Connections.Add2(WcNm, WcNm, CnStrzFbForWbCn(LnkToFb), WcNm, XlCmdType.xlCmdTable)
-End Function
+Sub AddWcToWbFmFbt(ToWb As Workbook, FmFb$, T)
+ToWb.Connections.Add2 T, T, CnStrzFbForWbCn(FmFb), T, XlCmdType.xlCmdTable
+End Sub
 
 Sub ThwWbMisOupNy(A As Workbook, OupNy$())
 Dim O$(), N$, B$(), Wny$()
 Wny = WsCdNy(A)
-O = AyMinus(AyAddPfx(OupNy, "WsO"), Wny)
+O = AyMinus(SyAddPfx(OupNy, "WsO"), Wny)
 If Si(O) > 0 Then
     N = "OupNy":  B = OupNy:  GoSub Dmp
     N = "WbCdNy": B = Wny: GoSub Dmp
@@ -201,8 +211,8 @@ For Each Wc In A.Connections
 Next
 End Sub
 
-Sub DltWs(A As Workbook, Wsn)
-If HasWbzWs(A, Wsn) Then
+Sub DltWs(A As Workbook, Wsn$)
+If HasWs(A, Wsn) Then
     A.Application.DisplayAlerts = False
     WszWb(A, Wsn).Delete
     A.Application.DisplayAlerts = True
@@ -240,15 +250,19 @@ A.Application.DisplayAlerts = Y
 Set WbSavAs = A
 End Function
 
-Sub SetWbFcsvCn(A As Workbook, Fcsv$)
+Sub SetWcFcsv(A As Workbook, Fcsv$)
 'Set first Wb TextConnection to Fcsv if any
 Dim T As TextConnection: Set T = TxtWc(A)
 Dim C$: C = T.Connection: If Not HasPfx(C, "TEXT;") Then Stop
 T.Connection = "TEXT;" & Fcsv
 End Sub
 
-Function HasWbzWs(A As Workbook, Wsn) As Boolean
-HasWbzWs = HasItn(A.Sheets, Wsn)
+Function HasWs(A As Workbook, W) As Boolean
+If IsNumeric(W) Then
+    HasWs = IsBet(W, 1, A.Sheets.Count)
+    Exit Function
+End If
+HasWs = HasItn(A.Sheets, CStr(W))
 End Function
 
 Private Sub ZZ_WbWcSy()
@@ -265,11 +279,11 @@ Ass TxtWcCnt(O) = 1
 O.Close
 End Sub
 
-Private Sub Z_SetWbFcsvCn()
+Private Sub Z_SetWcFcsv()
 Dim Wb As Workbook
 'Set Wb = WbzFx(Vbe_MthFx)
 Debug.Print TxtWcStr(Wb)
-SetWbFcsvCn Wb, "C:\ABC.CSV"
+SetWcFcsv Wb, "C:\ABC.CSV"
 Ass TxtWcStr(Wb) = "TEXT;C:\ABC.CSV"
 Wb.Close False
 Stop
@@ -285,7 +299,7 @@ Dim F As Boolean
 Dim G As Dt
 Dim H$()
 Dim I()
-Dim xx
+Dim XX
 CvWb A
 TxtCnzWc B
 FstWs C
@@ -303,20 +317,15 @@ WszWb C, A
 WsNy C
 WszCdNm C, D
 WszCdNm C, D
-WczWbFb C, D, D
 AddWs C, D, F, F, D, D
 ThwWbMisOupNy C, H
 ClsWbNoSav C
 DltWc C
-DltWs C, A
 WbSavAs C, A
-SetWbFcsvCn C, D
 WbVis C
-HasWbzWs C, A
-xx = CurWb()
+XX = CurWb()
 End Sub
 
 Private Sub Z()
 Z_TxtWcCnt
-Z_SetWbFcsvCn
 End Sub

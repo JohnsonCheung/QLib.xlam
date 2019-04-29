@@ -58,7 +58,7 @@ End Function
 
 Function QBNm$(Nm)
 Dim Cml, O$()
-For Each Cml In Itr(Cml1Ay(Nm))
+For Each Cml In Itr(Cml1Sy(Nm))
     If IsBRKCml(Cml) Then
         PushI O, QuoteBkt(Cml)
     Else
@@ -74,7 +74,7 @@ If V = "" Then
     QVBNm = "#" & QBNm(Nm)
 Else
     With Brk(Nm, V)
-    QVBNm = QBNm(.s1) & QuoteSq(V) & QBNm(.s2)
+    QVBNm = QBNm(.S1) & QuoteSq(V) & QBNm(.S2)
     End With
 End If
 End Function
@@ -161,7 +161,7 @@ RmvEndDig = Left(S, J)
 End Function
 Function Verb$(Nm)
 Dim Cml, LetterCml$
-For Each Cml In Cml1Ay(Nm)
+For Each Cml In Cml1Sy(Nm)
     LetterCml = RmvDigSfx(Cml)
     If VerbAset.Has(LetterCml) Then Verb = Cml: Exit Function
 Next

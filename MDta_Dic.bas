@@ -3,7 +3,7 @@ Option Explicit
 Function DrszDic(A As Dictionary, Optional InclDicValOptTy As Boolean, Optional Tit$ = "Key Val") As Drs
 Dim Fny$()
 Fny = SySsl(Tit): If InclDicValOptTy Then Push Fny, "Val-TypeName"
-Set DrszDic = Drs(Fny, DryzDic(A, InclDicValOptTy))
+DrszDic = Drs(Fny, DryzDic(A, InclDicValOptTy))
 End Function
 
 Function DtzDic(A As Dictionary, Optional DtNm$ = "Dic", Optional InclDicValOptTy As Boolean) As Dt
@@ -15,7 +15,7 @@ Dim F$
     Else
         F = "Key Val"
     End If
-Set DtzDic = Dt(DtNm, F, Dry)
+DtzDic = DtzFF(DtNm, F, Dry)
 End Function
 
 Function FnyzDic(Optional InclValTy As Boolean) As String()

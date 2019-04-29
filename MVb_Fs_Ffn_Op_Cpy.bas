@@ -1,75 +1,81 @@
 Attribute VB_Name = "MVb_Fs_Ffn_Op_Cpy"
 Option Explicit
-Sub CpyPthzClr(FmPth, ToPth$)
-ThwNotPth ToPth
+Sub CpyPthzClr(FmPth$, ToPth$)
+ThwIfPthNotExist ToPth
 ClrPthFil ToPth
-Dim Ffn
-For Each Ffn In FfnAy(FmPth)
-    CpyFilzToPth Ffn, ToPth
+Dim Ffn$, I
+For Each I In FfnSy(FmPth)
+    Ffn = I
+    CpyFfnzToPth Ffn, ToPth
 Next
 End Sub
 
-Sub CpyFilzUp(Ffn)
-CpyFilzToPth Ffn, ParPth(Ffn)
+Sub CpyFfnzUp(Ffn$)
+CpyFfnzToPth Ffn, ParPth(Ffn$)
 End Sub
 
-Sub CpyFilzToNxtzAy(FfnAy$())
-Dim I
-For Each I In Itr(FfnAy)
-    CpyFilzToNxt I
+Sub CpyFfnSyzToNxt(FfnSy$())
+Dim I, Ffn$
+For Each I In Itr(FfnSy)
+    Ffn = I
+    CpyFfnzToNxt Ffn
 Next
 End Sub
 
-Function CpyFilzToNxt$(Ffn)
+Function CpyFfnzToNxt$(Ffn$)
 Dim O$
-O = NxtFfn(Ffn)
-CpyFilzToFfn Ffn, O
-CpyFilzToNxt = O
+O = NxtFfn(Ffn$)
+CpyFfn Ffn, O
+CpyFfnzToNxt = O
 End Function
+Sub CpyFfnzToPthIfDif(Ffn$, ToPth$, Optional UseEq As Boolean)
+If IsEqFfn(Ffn, FfnzPthFn(ToPth, Fn(Ffn)), UseEq) Then Exit Sub
+CpyFfnzToPth Ffn, ToPth, OvrWrt:=True
+End Sub
 
-Sub CpyFilzIfDif(FfnAy_or_Ffn, ToPth$, Optional UseEq As Boolean)
+Sub CpyFfnSyzIfDif(FfnSy$(), ToPth$, Optional UseEq As Boolean)
 Dim I
-For Each I In ItrzStr(FfnAy_or_Ffn)
-    CpyFilzIfDifzSng I, ToPth, UseEq
+For Each I In FfnSy
+    CpyFfnzIfDif CStr(I), ToPth, UseEq
 Next
 End Sub
 
-Sub CpyFilzToFfn(FmFfn, ToFfn$, Optional OvrWrt As Boolean)
-Fso.GetFile(FmFfn).Copy ToFfn, OvrWrt
+Sub CpyFfn(Ffn$, ToFfn$, Optional OvrWrt As Boolean)
+Fso.GetFile(Ffn).Copy ToFfn, OvrWrt
 End Sub
-
-Function CpyFilzToPth$(FfnAy_or_Ffn, ToPth$, Optional OvrWrt As Boolean)
-Dim Ffn, P$, O$
-P = PthEnsSfx(ToPth)
-For Each Ffn In ItrzStr(FfnAy_or_Ffn)
-    O = P & Fn(Ffn)
-    CpyFilzToFfn Ffn, O, OvrWrt
+Function CpyFfnSy$(FfnSy$(), ToPth$, Optional OvrWrt As Boolean)
+Dim Ffn$, I, P$, O$
+P = EnsPthSfx(ToPth)
+For Each I In FfnSy
+    O = P & Fn(Ffn$)
+    CpyFfn Ffn, O, OvrWrt
 Next
-CpyFilzToPth = O
+
 End Function
 
-Sub CpyFilzIfDifzSng(Ffn, ToPth$, Optional UseEq As Boolean)
-Dim B$, Msg$, IsDif As Boolean
-Select Case True
-Case HasFfn(Ffn)
-    B = ToPth & Fn(Ffn)
-    IsDif = IsDifFfn(B, Ffn, UseEq)
-    Select Case True
-    Case IsDif: Fso.CopyFile Ffn, B, True
-                Msg = "Fil copied": GoSub Prt
-    Case Else:  Msg = FmtQQ("No Copy, file is ?.", IIf(UseEq, "eq", "same")): GoSub Prt
-    End Select
-Case Else
-    Thw CSub, "File not found", "FmFfn ToPth IsDif HasToFfn UseEq", Ffn, ToPth, IsDif, HasFfn(B), UseEq
-End Select
-Exit Sub
-Prt:
-    Inf CSub, Msg, "Fil FmPth ToPth IsDif HasToFfn Si Tim", Fn(Ffn), Pth(Ffn), ToPth, IsDif, HasFfn(B), FfnSz(Ffn), FfnTimStr(Ffn)
-    Return
+Function FfnzPthFn$(Pth$, Fn$)
+FfnzPthFn = Ffn(Pth, Fn)
+End Function
+
+Function Ffn$(Pth$, Fn$)
+Ffn = EnsPthSfx(Pth) & Fn
+End Function
+Function CpyFfnzToPth$(Ffn$, ToPth$, Optional OvrWrt As Boolean)
+CpyFfn Ffn, FfnzPthFn(ToPth, Fn(Ffn)), OvrWrt
+End Function
+
+Sub CpyFfnzIfDif(Ffn$, ToFfn$, Optional UseEq As Boolean)
+If IsEqFfn(Ffn, ToFfn, UseEq) Then
+    Dim M$: M = FmtQQ("? file", IIf(UseEq, "Eq", "Same"))
+    D LyzFunMsgNap(CSub, M, "FmFfn ToFfn", Ffn, ToFfn)
+    Exit Sub
+End If
+CpyFfn Ffn, ToFfn, OvrWrt:=True
+D LyzFunMsgNap(CSub, "File copied", "FmFfn ToFfn", Ffn, ToFfn)
 End Sub
 
-Function IsNxtFfn(Ffn) As Boolean
-Dim Las5$: Las5 = Right(Fn(Ffn), 5)
+Function IsNxtFfn(Ffn$) As Boolean
+Dim Las5$: Las5 = Right(Fn(Ffn$), 5)
 Select Case True
 Case FstChr(Las5) <> "(", LasChr(Las5) <> ")", Not IsDigStr(Mid(Las5, 2, 3))
 Case Else: IsNxtFfn = True
@@ -83,7 +89,7 @@ Next
 IsDigStr = True
 End Function
 
-Function FfnzNxtFfn$(NxtFfn)
+Function FfnzNxtFfn$(NxtFfn$)
 If IsNxtFfn(NxtFfn) Then
     Dim F$: F = Fn(NxtFfn)
     FfnzNxtFfn = Pth(NxtFfn) & Left(F, Len(F) - 5) & Ext(NxtFfn)
@@ -92,11 +98,11 @@ Else
 End If
 End Function
 
-Function NxtFfn$(Ffn)
-If Not HasFfn(Ffn) Then NxtFfn = Ffn: Exit Function
+Function NxtFfn$(Ffn$)
+If Not HasFfn(Ffn$) Then NxtFfn = Ffn: Exit Function
 Dim J%, O$
 For J = 1 To 999
-    O = FfnAddFnSfx(Ffn, "(" & Format(J, "000") & ")")
+    O = FfnAddFnSfx(Ffn$, "(" & Format(J, "000") & ")")
     If Not HasFfn(O) Then NxtFfn = O: Exit Function
 Next
 Stop

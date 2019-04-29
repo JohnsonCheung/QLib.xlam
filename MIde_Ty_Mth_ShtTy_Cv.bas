@@ -68,18 +68,19 @@ Private Sub Z_ShtMthTyzLin()
 GoSub ZZ
 Exit Sub
 ZZ:
-    Dim O$(), Lin
-    For Each Lin In MthLinAyInVbe
+    Dim O$(), I, Lin$
+    For Each I In MthLinAyInVbe
+        Lin = I
         PushI O, ShtMthTyzLin(Lin)
     Next
     Brw O
     Return
 End Sub
-Function ShtMthTyzLin$(Lin)
+Function ShtMthTyzLin$(Lin$)
 ShtMthTyzLin = ShtMthTy(TakMthTy(RmvMthMdy(Lin)))
 End Function
 
-Function ShtMthKdzShtMthTy$(ShtMthTy)
+Function ShtMthKdzShtMthTy$(ShtMthTy$)
 Dim O$
 Select Case ShtMthTy
 Case "Get": O = "Prp"

@@ -16,7 +16,7 @@ Dim Lo As ListObject
 Set Ws = MthCmlLinWsBase
 Set Lo = FstLo(Ws)
 AddFml Lo, "Sel", "" ' "=IF(ISNA(VLOOKUP([@Seg1],Seg1Er,1,True))),"""",""Err"")"
-LozAyH Seg1ErNy, WbLo(Lo), "Seg1Er"
+LozAyH Seg1ErNy, WbzLo(Lo), "Seg1Er"
 Lo.Application.Visible = Vis
 Set MthCmlWs = Lo.Parent
 End Function
@@ -27,7 +27,7 @@ Set MthCmlLinWsBase = WszDrs(Drs(MthCmlFny(NColzDry(Dry)), Dry))
 End Function
 
 Sub BrwMthCmlLyInVbe()
-Brw FmtAyT3(MthCmlLyInVbe)
+Brw FmtSyT3(MthCmlLyInVbe)
 End Sub
 
 Function MthCmlLyInVbe() As String()

@@ -25,15 +25,15 @@ SampDr6 = Array(63, 64, 65)
 End Property
 
 Property Get SampDrs1() As Drs
-Set SampDrs1 = Drs("A B C", SampDry1)
+SampDrs1 = DrszFF("A B C", SampDry1)
 End Property
 
 Property Get SampDrs2() As Drs
-Set SampDrs2 = Drs("A B C", SampDry2)
+SampDrs2 = DrszFF("A B C", SampDry2)
 End Property
 
 Property Get SampDrs() As Drs
-Set SampDrs = Drs("A B C D E G H I J K", SampDry)
+SampDrs = DrszFF("A B C D E G H I J K", SampDry)
 End Property
 
 Property Get SampDFnyRs() As String()
@@ -59,13 +59,15 @@ PushI SampDry, Array("G", True, CByte(8), 1, 2&, 3#, 4!, 5@, Now, String(300, "G
 End Property
 
 Property Get SampDs() As Ds
-'Set SampDs = Ds(DtAy(SampDt1, SampDt2), "SampDs")
+AddDt SampDs, SampDt1
+AddDt SampDs, SampDt2
+SampDs.DsNm = "Ds"
 End Property
 
 Property Get SampDt1() As Dt
-Set SampDt1 = Dt("SampDt1", "A B C", SampDry1)
+SampDt1 = DtzFF("SampDt1", "A B C", SampDry1)
 End Property
 
 Property Get SampDt2() As Dt
-Set SampDt2 = Dt("SampDt2", "A B C", SampDry2)
+SampDt2 = DtzFF("SampDt2", "A B C", SampDry2)
 End Property

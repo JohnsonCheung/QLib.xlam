@@ -1,75 +1,60 @@
 Attribute VB_Name = "MVb_Ay"
 Option Explicit
+Public Const DoczStmt$ = "Stmt is a string between StmtBrkPatn"
+Public Const StmtBrkPatn$ = "(\.  |\r\n|\r)"
 
-Sub Asg_ValTo_VarVarible_and_EleOfVariantAy_and_Ap()
-Dim A: A = CByte(0): A = ""
-Dim B(): ReDim B(0): B(0) = CByte(0): B(0) = ""
-Dim C As Byte
-WAsg C
-End Sub
-Private Sub WAsg(ParamArray C())
-C(0) = ""
-End Sub
 Sub AsgAp(Ay, ParamArray OAp())
-Dim Av(): Av = OAp
-Dim J%
-For J = 0 To Min(UB(Av), UB(Ay))
+Dim J%, OAv()
+OAv = OAp
+For J = 0 To Min(UB(Ay), UB(OAv))
     OAp(J) = Ay(J)
 Next
 End Sub
 
-Sub AyAsgT1AyRestAy(A, OT1Ay$(), ORestAy$())
-Dim U&, J&
-U = UB(A)
-If U = -1 Then
-    Erase OT1Ay, ORestAy
-    Exit Sub
-End If
-ReDim OT1Ay(U)
-ReDim ORestAy(U)
-For J = 0 To U
-    AsgBrk A(J), " ", OT1Ay(J), ORestAy(J)
-Next
+Sub AsgT1SyRestSy(Sy$(), OT1Sy$(), ORestSy$())
+OT1Sy = T1Sy(Sy)
+ORestSy = SyRmvT1(Sy)
 End Sub
-Function VcAy(A, Optional Fnn$)
-BrwAy A, Fnn, UseVc:=True
+
+Function VcAy(Ay, Optional Fnn$)
+BrwAy Ay, Fnn, UseVc:=True
 End Function
 
-Function BrwAy(A, Optional Fnn$, Optional UseVc As Boolean)
+Function BrwAy(Ay, Optional Fnn$, Optional UseVc As Boolean)
 Dim T$
 T = TmpFt("BrwAy", Fnn)
-WrtAy A, T
+WrtAy Ay, T
 BrwFt T, UseVc
-BrwAy = A
+BrwAy = Ay
 End Function
 
-Function AyCln(A)
-ThwIfNotAy A, CSub
+Function AyCln(Ay)
+ThwIfNotAy Ay, CSub
 Dim O
-O = A
+O = Ay
 Erase O
 AyCln = O
 End Function
 
-Function ChkAyDup(A, QMsg$) As String()
+Function ChkDup(Ay, QMsg$) As String()
 Dim Dup
-Dup = AywDup(A)
+Dup = AywDup(Ay)
 If Si(Dup) = 0 Then Exit Function
-Push ChkAyDup, FmtQQ(QMsg, JnSpc(Dup))
+PushI ChkDup, FmtQQ(QMsg, JnSpc(Dup))
 End Function
 
-Function AyDupT1(A) As String()
-AyDupT1 = AywDup(AyTakT1(A))
+Function DupT1(Sy$()) As String()
+DupT1 = CvSy(AywDup(T1Sy(Sy)))
 End Function
 
-Function ChkAyEmp(A, Msg$) As String()
-If Si(A) = 0 Then ChkAyEmp = Sy(Msg)
+Function ChkAyEmp(Ay, Msg$) As String()
+If Si(Ay) = 0 Then ChkAyEmp = Sy(Msg)
 End Function
 
-Function ChkEqAy(Ay1, Ay2, Optional Ay1Nm$ = "Exp", Optional Ay2Nm$ = "Act") As String()
+Function ChkEqAy(Ay1, Ay2, Optional N1$ = "Exp", Optional N2$ = "Act") As String()
 Dim U&: U = UB(Ay1)
 Dim O$()
-    If U <> UB(Ay2) Then Push O, FmtQQ("Array [?] and [?] has different Si: [?] [?]", Ay1Nm, Ay2Nm, Si(Ay1), Si(Ay2)): GoTo X
+    If U <> UB(Ay2) Then Push O, FmtQQ("Array [?] and [?] has different Si: [?] [?]", N1, N2, Si(Ay1), Si(Ay2)): GoTo X
 If Si(Ay1) = 0 Then Exit Function
 Dim O1$()
     Dim A2: A2 = Ay2
@@ -77,7 +62,7 @@ Dim O1$()
     Dim Cnt%
     For J = 0 To U
         If Ay1(J) <> Ay2(J) Then
-            Push O1, FmtQQ("[?]-th Ele is diff: ?[?]<>?[?]", Ay1Nm, Ay2Nm, Ay1(J), Ay2(J))
+            Push O1, FmtQQ("[?]-th Ele is diff: ?[?]<>?[?]", N1, N2, Ay1(J), Ay2(J))
             Cnt = Cnt + 1
         End If
         If Cnt > 10 Then
@@ -87,17 +72,17 @@ Dim O1$()
     Next
 If IsEmp(O1) Then Exit Function
 Dim O2$()
-    Push O2, FmtQQ("Array [?] and [?] both having size[?] have differnt element(s):", Ay1Nm, Ay2Nm, Si(Ay1))
+    Push O2, FmtQQ("Array [?] and [?] both having size[?] have differnt element(s):", N1, N2, Si(Ay1))
     If ReachLimit Then
         Push O2, FmtQQ("At least [?] differences:", Si(O1))
     End If
 PushAy O, O2
 PushAy O, O1
 X:
-Push O, FmtQQ("Ay-[?]:", Ay1Nm)
-PushAy O, AyQuote(Ay1, "[]")
-Push O, FmtQQ("Ay-[?]:", Ay2Nm)
-PushAy O, AyQuote(Ay2, "[]")
+Push O, FmtQQ("Ay-[?]:", N1)
+PushIAy O, SyQuote(SyzAy(Ay1), "[]")
+Push O, FmtQQ("Ay-[?]:", N2)
+PushIAy O, SyQuote(SyzAy(Ay2), "[]")
 ChkEqAy = O
 End Function
 
@@ -128,20 +113,20 @@ Function AyFlat(AyOfAy)
 AyFlat = AyOfAyAy(AyOfAy)
 End Function
 
-Function AyItmCnt%(A, M)
-If Si(A) = 0 Then Exit Function
+Function AyItmCnt%(Ay, M)
+If Si(Ay) = 0 Then Exit Function
 Dim O%, X
-For Each X In Itr(A)
+For Each X In Itr(Ay)
     If X = M Then O = O + 1
 Next
 AyItmCnt = O
 End Function
 
-Function AywLasN(A, N)
+Function AywLasN(Ay, N)
 Dim O, J&, I&, U&, Fm&, NewU&
-U = UB(A)
-If U < N Then AywLasN = A: Exit Function
-O = A
+U = UB(Ay)
+If U < N Then AywLasN = Ay: Exit Function
+O = Ay
 Fm = U - N + 1
 NewU = N - 1
 For J = Fm To U
@@ -161,130 +146,95 @@ Else
 End If
 End Function
 
-Function AyMid(A, Fm, Optional L = 0)
-AyMid = AyCln(A)
+Function AyMid(Ay, Fm, Optional L = 0)
+AyMid = AyCln(Ay)
 Dim J&
 Dim E&
     Select Case True
-    Case L = 0: E = UB(A)
-    Case Else:  E = Min(UB(A), L + Fm - 1)
+    Case L = 0: E = UB(Ay)
+    Case Else:  E = Min(UB(Ay), L + Fm - 1)
     End Select
 For J = Fm To E
-    Push AyMid, A(J)
+    Push AyMid, Ay(J)
 Next
 End Function
 
-
-Function AyNPfxStar%(A)
-Dim O%, X
-For Each X In Itr(A)
-    If FstChr(X) = "*" Then AyNPfxStar = O: Exit Function
-    O = O + 1
-Next
-End Function
-Function AyNxtNm$(A, Nm$, Optional MaxN% = 99)
-If Not HasEle(A, Nm) Then AyNxtNm = Nm: Exit Function
-Dim J%, O$
-For J = 1 To MaxN
-    O = Nm & Format(J, "00")
-    If Not HasEle(A, O) Then AyNxtNm = O: Exit Function
-Next
+Function NxtNm$(Ny$(), Optional MaxN% = 0)
 Stop
 End Function
-Function ItrzSS(Ssl_or_Sy)
-If IsStr(Ssl_or_Sy) Then ItrzSS = SySsl(Ssl_or_Sy): Exit Function
-If IsSy(Ssl_or_Sy) Then Asg Itr(Ssl_or_Sy), ItrzSS: Exit Function
-Thw CSub, "Ssl_or_Sy should be Str or Sy", "TypeName(Ssl_or_sy)", TypeName(Ssl_or_Sy)
+
+Function NxtFn$(Fn$, FnSy$(), Optional MaxN% = 999)
+If Not HasEle(FnSy, Fn) Then NxtFn = Fn: Exit Function
+NxtFn = AyMax(AywLik(FnSy, Fn & "(???)"))
 End Function
 
-Function ItrzStr(Str_or_Sy)
-If IsStr(Str_or_Sy) Then ItrzStr = Sy(Str_or_Sy): Exit Function
-If IsSy(Str_or_Sy) Then Asg Itr(Str_or_Sy), ItrzStr: Exit Function
-Thw CSub, "Str_or_Sy should be Str or Sy", "TypeName(Str_or_sy)", TypeName(Str_or_Sy)
+Function ItrzLines(Lines$)
+Asg Itr(SplitCrLf(Lines$)), ItrzLines
 End Function
 
-Function LinItr(Lines)
-Asg Itr(SplitCrLf(Lines)), LinItr
+Function Itr(Ay)
+If Si(Ay) = 0 Then Set Itr = New Collection Else Itr = Ay
 End Function
 
-Function Itr(A)
-If Si(A) = 0 Then Set Itr = New Collection Else Itr = A
-End Function
-
-Function AyRTrim(A$()) As String()
-If Si(A) = 0 Then Exit Function
+Function AyRTrim(Sy$()) As String()
+If Si(Sy) = 0 Then Exit Function
 Dim O$(), I
-For Each I In A
+For Each I In Sy
     Push O, RTrim(I)
 Next
 AyRTrim = O
 End Function
-Sub ReSumSiN(OAy, N)
-ReSumSiU OAy, N - 1
+Sub ResiN(OAy, N&)
+Resi OAy, N - 1
 End Sub
 
-Sub Resz(OAy, U)
-ReSumSiU OAy, U
-End Sub
-
-Sub ReSumSiU(OAy, U)
+Sub Resi(OAy, U&)
 If U < 0 Then Erase OAy: Exit Sub
 ReDim OAy(U)
 End Sub
 
-Function AyReverse(A)
-Dim O: O = A
+Function ReserveAy(Ay)
+Dim O: O = Ay
 Dim J&, U&
 U = UB(O)
 For J = 0 To U
-    Asg A(U - J), O(J)
+    Asg Ay(U - J), O(J)
 Next
-AyReverse = O
+ReserveAy = O
 End Function
 
-Function AyReverseI(A)
-Dim O: O = A
+Function ReverseAyI(Ay)
+Dim O: O = Ay
 Dim J&, U&
 U = UB(O)
 For J = 0 To U
-    O(J) = A(U - J)
+    O(J) = Ay(U - J)
 Next
-AyReverseI = O
+ReverseAyI = O
 End Function
 
-Function OyReverse(A)
-Dim O: O = A
+Function ReverseOy(Oy() As Object)
+Dim O: O = Oy
 Dim J&, U&
 U = UB(O)
 For J = 0 To U
-    Set O(J) = A(U - J)
+    Set O(J) = Oy(U - J)
 Next
-OyReverse = O
+ReverseOy = O
 End Function
 
-Function AyRplMid(Ay, B As FTIx, ByAy)
-Dim M As AyABC: Set M = AyabCzFTIx(Ay, B)
-AyRplMid = AyAddAp(M.A, ByAy, M.C)
+Function SyRplMid(Ay, B As FTIx, ByAy)
+Dim M As AyABC: Set M = AyabcByFTIx(Ay, B)
+SyRplMid = AyAddAp(M.A, ByAy, M.C)
 End Function
 
-Function AyRpl_Star_InEach_Ele(A$(), By) As String()
-Dim X
-For Each X In Itr(A)
-    PushI AyRpl_Star_InEach_Ele, Replace(X, By, "*")
-Next
-End Function
-
-Function AyRplT1(A$(), T1$) As String()
-AyRplT1 = AyAddPfx(AyRmvT1(A), T1 & " ")
-End Function
-
-Function AySampLin$(A)
+Function AySampLin$(Ay)
 Dim S$, U&
-U = UB(A)
+U = UB(Ay)
 If U >= 0 Then
     Select Case True
-    Case IsPrim(A(0)): S = "[" & A(0) & "]"
-    Case IsObject(A(0)), IsArray(A(0)): S = "[*Ty:" & TypeName(A(0)) & "]"
+    Case IsPrim(Ay(0)): S = "[" & Ay(0) & "]"
+    Case IsObject(Ay(0)), IsArray(Ay(0)): S = "[*Ty:" & TypeName(Ay(0)) & "]"
     Case Else: Stop
     End Select
 End If
@@ -296,9 +246,9 @@ If Si(Ay) = 0 Then Itm_IsSel = True: Exit Function
 Itm_IsSel = HasEle(Ay, Itm)
 End Function
 
-Function SeqCntDicvAy(A) As Dictionary 'The return dic of key=AyEle pointing to 2-Ele-LngAy with Ele-0 as Seq#(0..) and Ele- as Cnt
+Function SeqCntDicvAy(Ay) As Dictionary 'The return dic of key=AyEle pointing to 2-Ele-LngAy with Ele-0 as Seq#(0..) and Ele- as Cnt
 Dim S&, O As New Dictionary, L&(), X
-For Each X In Itr(A)
+For Each X In Itr(Ay)
     If O.Exists(X) Then
         L = O(X)
         L(1) = L(1) + 1
@@ -338,36 +288,49 @@ Next
 SqzAyV = O
 End Function
 
-Function AyT1Chd(A, T1) As String()
-AyT1Chd = AyRmvT1(AywT1(A, T1))
+Function AywT1SelRst(Sy$(), T1$) As String()
+AywT1SelRst = SyRmvT1(AywT1(Sy, T1))
 End Function
 
-Function AyIndent(A, Optional Ident% = 4) As String()
+Function AyIndent(Sy$(), Optional Ident% = 4) As String()
 Dim I, S$
 S = Space(Ident)
-For Each I In Itr(A)
+For Each I In Itr(Sy)
     PushI AyIndent, S & I
 Next
 End Function
-Function AyTrim(A) As String()
+Function AyTrim(Sy$()) As String()
 Dim X
-For Each X In Itr(A)
+For Each X In Itr(Sy)
     Push AyTrim, Trim(X)
 Next
 End Function
-
-Function WdtzAy%(A)
-Dim O%, J&
-For J = 0 To UB(A)
-    O = Max(O, Len(A(J)))
+Function AyMin(Ay)
+Dim O, I
+For Each I In Ay
+    If I < O Then O = I
 Next
-WdtzAy = O
+AyMin = O
+End Function
+Function AyMax(Ay)
+Dim O, I
+For Each I In Ay
+    If I > O Then O = I
+Next
+AyMax = O
+End Function
+Function AyWdt%(Ay)
+Dim O%, J&
+For J = 0 To UB(Ay)
+    O = Max(O, Len(Ay(J)))
+Next
+AyWdt = O
 End Function
 
-Function AyWrpPad(A, W%) As String() ' Each Itm of Ay[A] is padded to line with WdtzAy(A).  return all padded lines as String()
+Function AyWrpPad(Ay, W%) As String() ' Each Itm of Ay[Ay] is padded to line with AyWdt(Ay).  return all padded lines as String()
 Dim O$(), X, I%
 ReDim O(0)
-For Each X In Itr(A)
+For Each X In Itr(Ay)
     If Len(O(I)) + Len(X) < W Then
         O(I) = O(I) & X
     Else
@@ -378,8 +341,8 @@ Next
 AyWrpPad = O
 End Function
 
-Sub WrtAy(A, Ft, Optional OvrWrt As Boolean)
-WrtStr JnCrLf(A), Ft, OvrWrt
+Sub WrtAy(Ay, Ft$, Optional OvrWrt As Boolean)
+WrtStr JnCrLf(Ay), Ft, OvrWrt
 End Sub
 Function AyLTrim(Ay) As String()
 Dim L
@@ -387,17 +350,17 @@ For Each L In Itr(Ay)
     PushI AyLTrim, LTrim(L)
 Next
 End Function
-Function AyEnsSfxDot(Ay) As String()
-AyEnsSfxDot = AyEnsSfx(Ay, ".")
+Function SyEnsSfxDot(Ay) As String()
+SyEnsSfxDot = SyEnsSfx(Sy, ".")
 End Function
-Function AyEnsSfx(Ay, Sfx$) As String()
-Dim L
-For Each L In Itr(Ay)
-    PushI AyEnsSfx, EnsSfx(L, Sfx)
+Function SyEnsSfx(Sy$(), Sfx$) As String()
+Dim I
+For Each I In Itr(Sy)
+    PushI SyEnsSfx, EnsSfx(CStr(I), Sfx)
 Next
 End Function
-Function StmtLy(StmtLin) As String()
-StmtLy = AyEnsSfxDot(AyLTrim(Split(StmtLin, ". ")))
+Function StmtLy(StmtLin$) As String()
+StmtLy = SyEnsSfxDot(AyLTrim(Split(StmtLin, ". ")))
 End Function
 Function AyZip(A1, A2) As Variant()
 Dim U1&: U1 = UB(A1)
@@ -405,7 +368,7 @@ Dim U2&: U2 = UB(A2)
 Dim U&: U = Max(U1, U2)
 Dim O()
     Dim J&
-    ReSumSiU O, U
+    Resi O, U
     For J = 0 To U
         If U1 >= J Then
             If U2 >= J Then
@@ -424,13 +387,13 @@ Dim O()
 AyZip = O
 End Function
 
-Function AyZip_Ap(A, ParamArray Ap()) As Variant()
+Function AyZip_Ap(Ay, ParamArray Ap()) As Variant()
 Dim Av(): Av = Ap
 Dim UCol%
     UCol = UB(Av)
 
 Dim URow1&
-    URow1 = UB(A)
+    URow1 = UB(Ay)
 
 Dim URow&
 Dim URowAy&()
@@ -444,12 +407,12 @@ Dim URowAy&()
 
 Dim ODry()
     Dim Dr()
-    ReSumSiU ODry, URow
+    Resi ODry, URow
     Dim I%
     For J = 0 To URow
         Erase Dr
         If URow1 >= J Then
-            Push Dr, A(J)
+            Push Dr, Ay(J)
         Else
             Push Dr, Empty
         End If
@@ -465,24 +428,28 @@ Dim ODry()
 AyZip_Ap = ODry
 End Function
 
-
-Function AyItmAddAy(Itm, Ay)
-AyItmAddAy = AyInsEle(Ay, Itm)
+Function StrAddSy(S$, Sy$()) As String()
+StrAddSy = CvSy(ItmAddAy(S, Sy))
 End Function
 
-Private Sub ZZZ_AyabCzFT()
-Dim A(): A = Array(1, 2, 3, 4)
-Dim Act As AyABC: Act = AyabCzFT(A, 1, 2)
+
+Function ItmAddAy(Itm, Ay)
+ItmAddAy = AyInsEle(Ay, Itm)
+End Function
+
+Private Sub ZZZ_AyabcByFmTo()
+Dim Ay(): Ay = Array(1, 2, 3, 4)
+Dim Act As AyABC: Act = AyabcByFmTo(Ay, 1, 2)
 Ass IsEqAy(Act.A, Array(1))
 Ass IsEqAy(Act.B, Array(2, 3))
 Ass IsEqAy(Act.C, Array(4))
 End Sub
 
 Private Sub ZZ_AyAsgAp()
-Dim O%, A$
-'AyAsgAp Array(234, "abc"), O, A
+Dim O%, Ay$
+'AyAsgAp Array(234, "abc"), O, Ay
 Ass O = 234
-Ass A = "abc"
+Ass Ay = "abc"
 End Sub
 
 Private Sub ZZ_ChkEqAy()
@@ -490,9 +457,9 @@ DmpAy ChkEqAy(Array(1, 2, 3, 3, 4), Array(1, 2, 3, 4, 4))
 End Sub
 
 Private Sub ZZ_MaxAy()
-Dim A()
+Dim Ay()
 Dim Act
-Act = MaxAy(A)
+Act = MaxAy(Ay)
 Stop
 End Sub
 
@@ -511,8 +478,8 @@ ThwIfNE Exp, Act
 End Sub
 
 Private Sub ZZ_AyeEmpEleAtEnd()
-Dim A: A = Array(Empty, Empty, Empty, 1, Empty, Empty)
-Dim Act: Act = AyeEmpEleAtEnd(A)
+Dim Ay: Ay = Array(Empty, Empty, Empty, 1, Empty, Empty)
+Dim Act: Act = AyeEmpEleAtEnd(Ay)
 Ass Si(Act) = 4
 Ass Act(3) = 1
 End Sub
@@ -526,18 +493,18 @@ Ass Act(2) = 3
 End Sub
 
 Private Sub ZZ_AyTrim()
-DmpAy AyTrim(Array(1, 2, 3, "  a"))
+DmpAy AyTrim(Sy(1, 2, 3, "  a"))
 End Sub
 
 
-Private Sub Z_ChkAyDup()
+Private Sub Z_ChkDup()
 Dim Ay
 Ay = Array("1", "1", "2")
 Ept = Sy("This item[1] is duplicated")
 GoSub Tst
 Exit Sub
 Tst:
-    Act = ChkAyDup(Ay, "This item[?] is duplicated")
+    Act = ChkDup(Ay, "This item[?] is duplicated")
     C
     Return
 End Sub
@@ -546,10 +513,10 @@ Private Sub Z_ChkEqAy()
 DmpAy ChkEqAy(Array(1, 2, 3, 3, 4), Array(1, 2, 3, 4, 4))
 End Sub
 
-Private Sub Z_AyabCzFTIxIx()
-Dim A(): A = Array(1, 2, 3, 4)
+Private Sub Z_AyabcByFTIxIx()
+Dim Ay(): Ay = Array(1, 2, 3, 4)
 Dim M As FTIx: M = FTIx(1, 2)
-Dim Act As AyABC: Act = AyabCzFTIx(A, M)
+Dim Act As AyABC: Act = AyabcByFTIx(Ay, M)
 Ass IsEqAy(Act.A, Array(1))
 Ass IsEqAy(Act.B, Array(2, 3))
 Ass IsEqAy(Act.C, Array(4))
@@ -561,28 +528,28 @@ Ass HasEleDupEle(Array(1, 2, 3, 4, 4)) = True
 End Sub
 
 Private Sub Z_AyInsEle()
-Dim A, M, At&
+Dim Ay, M, At&
 '
-A = Array(1, 2, 3)
+Ay = Array(1, 2, 3)
 M = "X"
 Ept = Array("X", 1, 2, 3)
 GoSub Tst
 '
 Exit Sub
 Tst:
-    Act = AyInsEle(A, M, At)
+    Act = AyInsEle(Ay, M, At)
     C
 Return
 End Sub
 
 Private Sub Z_AyInsAy()
-Dim Act, Exp, A(), B(), At&
-A = Array(1, 2, 3, 4)
+Dim Act, Exp, Ay(), B(), At&
+Ay = Array(1, 2, 3, 4)
 B = Array("X", "Z")
 At = 1
 Exp = Array(1, "X", "Z", 2, 3, 4)
 
-Act = AyInsAyAt(A, B, At)
+Act = AyInsAyAt(Ay, B, At)
 Ass IsEqAy(Act, Exp)
 End Sub
 
@@ -621,29 +588,16 @@ PushI Dry, Array()
 PushI Dry, Array()
 PushI Dry, Array()
 'Ass Si(Act) = 4
-'Ass IsEqAy(Act(0), Array("A", 3, 1, 2, 3))
+'Ass IsEqAy(Act(0), Array("Ay", 3, 1, 2, 3))
 'Ass IsEqAy(Act(1), Array("B", 3, 2, 3, 4))
 'Ass IsEqAy(Act(2), Array("C", 0))
 'Ass IsEqAy(Act(3), Array("D", 1, "X"))
 End Sub
 
-Function CvAy(A) As Variant()
-CvAy = A
-End Function
-
-Function CvAyITM(Itm_or_Ay) As Variant()
-If IsArray(Itm_or_Ay) Then
-    CvAyITM = Itm_or_Ay
-Else
-    CvAyITM = Array(Itm_or_Ay)
-End If
-End Function
-
 
 Private Sub Z()
-Z_ChkAyDup
 Z_AyFlat
-Z_AyabCzFTIxIx
+Z_AyabcByFTIxIx
 Z_HasEleDupEle
 Z_ChkEqAy
 Z_AyMinus
@@ -652,30 +606,28 @@ Z_AyTrim
 MVb_Ay:
 End Sub
 
-Private Sub Z_SyPfxSsl()
-Dim A$, Exp$()
-A = "A B C D"
+Private Sub Z_AddPfxToSsl()
+Dim Ssl$, Exp$(), Pfx$
+Ssl = "B C D"
+Pfx = "A"
 Exp = SySsl("AB AC AD")
 GoSub Tst
 Exit Sub
 Tst:
     Dim Act$()
-    Act = SyPfxSsl(A)
+    Act = AddPfxToSsl(Pfx, Ssl)
     Debug.Assert IsEqAy(Act, Exp)
 Return
 End Sub
 
-Function SyPfxSsl(A) As String()
-Dim Ay$(), Pfx$
-Ay = SySsl(A)
-Pfx = AyShf(Ay)
-SyPfxSsl = AyAddPfx(Ay, Pfx)
+Function AddPfxToSsl(Pfx$, Ssl$) As String()
+AddPfxToSsl = SyAddPfx(SySsl(Ssl), Pfx)
 End Function
 
-Function StrItrzSsl(Ssl)
-Asg Itr(SySsl(Ssl)), StrItrzSsl
+Function ItrzSsl(Ssl$)
+Asg Itr(SySsl(Ssl)), ItrzSsl
 End Function
-Function SySsl(S) As String()
+Function SySsl(S$) As String()
 SySsl = SplitSpc(Trim(RplDblSpc(S)))
 End Function
 

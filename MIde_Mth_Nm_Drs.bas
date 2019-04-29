@@ -50,7 +50,7 @@ End Function
 Private Function MthNmDryzSrc(Src$(), Optional B As WhMth) As Variant()
 Dim MthLin
 For Each MthLin In Itr(MthLinAyzSrc(Src))
-    PushISomSz MthNmDryzSrc, MthNm3(MthLin, B).MthNmDr
+    PushISomSi MthNmDryzSrc, MthNm3(MthLin, B).MthNmDr
 Next
 End Function
 

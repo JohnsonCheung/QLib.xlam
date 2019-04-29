@@ -5,7 +5,7 @@ Option Explicit
 Sub MovFilUp(Pth)
 Dim I, Tar$
 Tar$ = ParPth(Pth)
-For Each I In Itr(FnAy(Pth))
+For Each I In Itr(FnSy(Pth))
     MovFfn CStr(I), Tar
 Next
 End Sub

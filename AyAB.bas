@@ -8,11 +8,19 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
-Private A_A, A_B
-
+Private Type A
+    A As Variant
+    B As Variant
+End Type
+Private X As A
+Friend Function Init(A, B) As Ayab
+ThwIfNotAy A, CSub
+ThwIfNotAy B, CSub
+Set Init = Me
+End Function
 Property Get A()
-A = A_A
+A = X.A
 End Property
 Property Get B()
-B = A_B
+B = X.B
 End Property

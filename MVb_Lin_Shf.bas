@@ -5,46 +5,46 @@ ShfDotSeg = ShfBef(OLin, ".")
 End Function
 Function ShfBef(OLin$, Sep$)
 With Brk2(OLin, Sep, NoTrim:=True)
-    ShfBef = .s1
-    OLin = .s2
+    ShfBef = .S1
+    OLin = .S2
 End With
 End Function
 Function ShfBktStr$(OLin$)
 ShfBktStr = BetBkt(OLin)
 OLin = AftBkt(OLin)
 End Function
-Function RmvChr$(S, ChrLis$) ' Rmv fst chr if it is in ChrLis
+Function RmvChr$(S$, ChrLis$) ' Rmv fst chr if it is in ChrLis
 If HasSubStr(ChrLis, FstChr(S)) Then
     RmvChr = RmvFstChr(S)
 Else
     RmvChr = S
 End If
 End Function
-Function TakChr$(S, ChrLis$) ' Ret fst chr if it is in ChrLis
+Function TakChr$(S$, ChrLis$) ' Ret fst chr if it is in ChrLis
 If HasSubStr(ChrLis, FstChr(S)) Then TakChr = FstChr(S)
 End Function
-Function RmvChrzSfx$(S, ChrLis$)
+Function RmvChrzSfx$(S$, ChrLis$)
 If HasSubStr(ChrLis, LasChr(S)) Then
     RmvChrzSfx = RmvLasChr(S)
 Else
     RmvChrzSfx = S
 End If
 End Function
-Function ShfChr$(OLin, ChrList$)
+Function ShfChr$(OLin$, ChrList$)
 Dim C$: C = TakChr(OLin, ChrList)
 If C = "" Then Exit Function
 ShfChr = C
 OLin = Mid(OLin, 2)
 End Function
 
-Function ShfPfx(OLin, Pfx) As Boolean
+Function ShfPfx(OLin$, Pfx$) As Boolean
 If HasPfx(OLin, Pfx) Then
     OLin = RmvPfx(OLin, Pfx)
     ShfPfx = True
 End If
 End Function
 
-Function ShfPfxSpc(OLin, Pfx) As Boolean
+Function ShfPfxSpc(OLin$, Pfx$) As Boolean
 If HitPfxSpc(OLin, Pfx) Then
     OLin = Mid(OLin, Len(Pfx) + 2)
     ShfPfxSpc = True

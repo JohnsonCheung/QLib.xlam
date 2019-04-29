@@ -14,6 +14,12 @@ End Sub
 
 Private Sub Z()
 End Sub
+Function RffzDistPj$(DistPj As VBProject)
+RffzDistPj = SrcpzDistPj(DistPj) & "Rf.txt"
+End Function
+Sub AddRfzDistPj(DistPj As VBProject)
+AddRfzRff DistPj, RffzDistPj(DistPj)
+End Sub
 Sub AddRfzRff(A As VBProject, Rff)
 Const CSub$ = CMod & "AddRf"
 If HasRff(A, Rff) Then

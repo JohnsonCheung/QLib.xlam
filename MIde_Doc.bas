@@ -1,4 +1,5 @@
 Attribute VB_Name = "MIde_Doc"
+Option Explicit
 Function DocLy(DclLy$()) As String()
 Dim Lin, N$
 For Each Lin In Itr(DclLy)
@@ -10,7 +11,7 @@ End Function
 Function NDocInPj%(A As VBProject)
 NDocInPj = NCmpzTy(A, vbext_ct_Document)
 End Function
-Function IsDocNm(S) As Boolean
+Function IsDocNm(S$) As Boolean
 If Not IsNm(S) Then Exit Function
 IsDocNm = Left(S, 5) = "DocOf"
 End Function

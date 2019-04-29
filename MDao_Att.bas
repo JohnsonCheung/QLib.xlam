@@ -2,8 +2,8 @@ Attribute VB_Name = "MDao_Att"
 Option Explicit
 Const CMod$ = "MDao_Att."
 Type Attd
-    TRs As Dao.Recordset
-    Ars As Dao.Recordset
+    TRs As DAO.Recordset
+    Ars As DAO.Recordset
 End Type
 
 Function FstAttFfn$(A As Database, Att)
@@ -11,8 +11,8 @@ FstAttFfn = RsMovFst(Attd(A, Att).Ars)!Filename
 End Function
 
 Function FnyzAttFld(A As Database) As String()
-Dim TRs As Dao.Recordset2: Set TRs = A.TableDefs("Att").OpenRecordset
-Dim Ars As Dao.Recordset2: Set Ars = TRs!Att.Value
+Dim TRs As DAO.Recordset2: Set TRs = A.TableDefs("Att").OpenRecordset
+Dim Ars As DAO.Recordset2: Set Ars = TRs!Att.Value
 FnyzAttFld = Itn(Ars.Fields)
 End Function
 
@@ -20,7 +20,7 @@ Function IsOldAtt(A As Database, Att$, Ffn$) As Boolean
 Const CSub$ = CMod & "IsOldAtt"
 Dim TAtt As Date, TFfn As Date, AttIs$
 TAtt = AttTim(A, Att)
-TFfn = TimFfn(Ffn)
+TFfn = TimFfn(Ffn$)
 AttIs = IIf(TAtt > TFfn, "new", "old")
 Dim M$
 M = "Att is " & AttIs
@@ -38,7 +38,7 @@ End Function
 Function AttFilCntzAttd%(A As Attd)
 AttFilCntzAttd = NReczRs(A.Ars)
 End Function
-Function AttFilCnt%(Db As Database, Att)
+Function AttFilCnt%(A As Database, Att)
 AttFilCnt = AttFilCntzAttd(Attd(Db, Att))
 End Function
 
@@ -63,7 +63,7 @@ AttNy = SyzRs(Rs(A, "Select AttNm from Att order by AttNm"))
 End Function
 
 Private Sub Z_AttFnAy()
-D AttFnAy(SampDb_ShpCst, "AA")
+D AttFnAy(SampDbzShpCst, "AA")
 End Sub
 
 Private Sub Z()

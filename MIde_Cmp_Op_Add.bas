@@ -1,15 +1,15 @@
 Attribute VB_Name = "MIde_Cmp_Op_Add"
 Option Explicit
-Function AddCmpM(Nm) As VBComponent
-Set AddCmpM = AddCmp(Nm, vbext_ct_StdModule)
+Function AddCmpzMd(Nm$) As VBComponent
+Set AddCmpzMd = AddCmp(Nm, vbext_ct_StdModule)
 End Function
-Function AddCmpC(Nm) As VBComponent
-Set AddCmpC = AddCmp(Nm, vbext_ct_ClassModule)
+Function AddCmpzCls(Nm$) As VBComponent
+Set AddCmpzCls = AddCmp(Nm, vbext_ct_ClassModule)
 End Function
-Function AddCmp(Nm, Ty As vbext_ComponentType) As VBComponent
+Function AddCmp(Nm$, Ty As vbext_ComponentType) As VBComponent
 Set AddCmp = AddCmpzPj(CurPj, Nm, Ty)
 End Function
-Function AddCmpzPj(A As VBProject, Nm, Ty As vbext_ComponentType) As VBComponent
+Function AddCmpzPj(A As VBProject, Nm$, Ty As vbext_ComponentType) As VBComponent
 If HasCmp(Nm) Then InfLin CSub, FmtQQ("?[?] already exist", ShtCmpTy(Ty), Nm): Exit Function
 Dim O As VBComponent
 Set O = A.VBComponents.Add(Ty)
@@ -17,14 +17,15 @@ O.Name = CStr(Nm) ' no CStr will break
 Set AddCmpzPj = O
 End Function
 
-Function AddModzPj(A As VBProject, ModNm) As CodeModule
+Function AddModzPj(A As VBProject, ModNm$) As CodeModule
 AddCmpzPj A, ModNm, vbext_ct_StdModule
 End Function
 
 Sub AddMod(ModNN$)
-Dim Sy$(), ModNm
+Dim Sy$(), ModNm$, I
 Sy = SySsl(ModNN)
-For Each ModNm In Sy
+For Each I In Sy
+    ModNm$ = I
     AddModzPj CurPj, ModNm
 Next
 JmpCmp Sy(0)
@@ -36,15 +37,16 @@ D Er
 IsErDmp = True
 End Function
 Sub AddCls(ClsNN$) 'To CurPj
-Dim ClsNm, Sy$()
+Dim ClsNm$, I, Sy$()
 Sy = SySsl(ClsNN)
-For Each ClsNm In Sy
+For Each I In Sy
+    ClsNm = I
     AddCmp ClsNm, vbext_ComponentType.vbext_ct_ClassModule
 Next
 JmpCmp Sy(0)
 End Sub
 
-Sub ApdLines(A As CodeModule, Lines)
+Sub ApdLines(A As CodeModule, Lines$)
 If Lines = "" Then Exit Sub
 Dim Bef&, Aft&, Exp&, Cnt&
 Bef = A.CountOfLines
@@ -66,11 +68,11 @@ Function CmpNew(Nm$, Ty As vbext_ComponentType) As VBComponent
 Set CmpNew = CurPj.VBComponents.Add(Ty)
 End Function
 
-Function EmpFunLines$(FunNm)
+Function EmpFunLines$(FunNm$)
 EmpFunLines = FmtQQ("Function ?()|End Function", FunNm)
 End Function
 
-Function EmpSubLines$(SubNm)
+Function EmpSubLines$(SubNm$)
 EmpSubLines = FmtQQ("Sub ?()|End Sub", SubNm)
 End Function
 Sub AddSub(SubNm$)
@@ -83,10 +85,10 @@ A.InsertLines 1, "Option Explicit"
 Set AddOptExpLinMd = A
 End Function
 
-Function HasCmp(CmpNm) As Boolean
+Function HasCmp(CmpNm$) As Boolean
 HasCmp = HasCmpzPj(CurPj, CmpNm)
 End Function
-Function AddCmpzLines(A As VBProject, Nm, SrcLines$) As VBComponent
+Function AddCmpzLines(A As VBProject, Nm$, SrcLines$) As VBComponent
 Dim O As VBComponent
 Set O = AddCmpzPj(A, Nm, vbext_ct_StdModule): If IsNothing(O) Then Stop
 ApdLines O.CodeModule, SrcLines
@@ -100,7 +102,7 @@ Function ModCmpItr(Pj As VBProject)
 End Function
 
 Function ModCmpAy(Pj As VBProject) As VBComponent()
-ModCmpAy = IntozItrPEv(ModCmpAy, Pj.VBComponents, "Type", vbext_ct_StdModule)
+ModCmpAy = IntozItrwPEv(ModCmpAy, Pj.VBComponents, "Type", vbext_ct_StdModule)
 End Function
 
 Sub RenCmpRplPfx(A As VBComponent, FmPfx$, ToPfx$)
@@ -120,14 +122,14 @@ Function EnsCls(A As VBProject, ClsNm$) As CodeModule
 Set EnsCls = EnsCmp(A, ClsNm, vbext_ct_ClassModule)
 End Function
 
-Function EnsCmp(A As VBProject, Nm, Optional Ty As vbext_ComponentType = vbext_ct_StdModule) As VBComponent
+Function EnsCmp(A As VBProject, Nm$, Optional Ty As vbext_ComponentType = vbext_ct_StdModule) As VBComponent
 If Not HasCmpzPj(A, Nm) Then
     A.VBComponents.Add(Ty).Name = Nm
 End If
 Set EnsCmp = A.VBComponents(Nm)
 End Function
 
-Function EnsMdzPj(A As VBProject, MdNm) As CodeModule
+Function EnsMdzPj(A As VBProject, MdNm$) As CodeModule
 Set EnsMdzPj = EnsCmp(A, MdNm, vbext_ct_StdModule).CodeModule
 End Function
 
@@ -144,8 +146,6 @@ Dim E As vbext_ComponentType
 Dim F As WhMd
 AddCls A
 AddFun A
-EnsCmp C, D, E
-EnsMdzPj C, D
 EnsMod C, A
 End Sub
 

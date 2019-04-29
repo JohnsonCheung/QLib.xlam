@@ -22,42 +22,30 @@ Else
 End If
 End Function
 
-Function SqzDry(A()) As Variant()
-SqzDry = SqzDrySkip(A, 0)
+Function SqzDry(Dry()) As Variant()
+SqzDry = SqzDrySkip(Dry, 0)
 End Function
 
-Function StrColzDry(Dry(), C) As String()
+Function StrColzDry(Dry(), C&) As String()
 StrColzDry = IntoColzDry(EmpSy, Dry, C)
 End Function
-
-Function SqzDrySkip(A(), SkipNRow%)
-Dim O(), C%, R&, Dr
-Dim NC%, NR&
-NC = NColzDry(A)
-NR = Si(A) + SkipNRow
-ReDim O(1 To NR, 1 To NC)
-Dim DryIx&
-For R = SkipNRow + 1 To NR
-    Dr = A(DryIx)
-    SetSqrzDr O, R, Dr
-    DryIx = DryIx + 1
-Next
-SqzDrySkip = O
+Function SqzDrySkip(Dry(), Optional SkipNRow& = 1)
+SqzDrySkip = SqzDry(CvAv(AySkip(Dry, SkipNRow)))
 End Function
 
-Function IntAyDryC(A(), C) As Integer()
-IntAyDryC = IntoColzDry(EmpIntAy, A, C)
+Function IntAyzDryC(Dry(), C&) As Integer()
+IntAyzDryC = IntoColzDry(EmpIntAy, Dry, C)
 End Function
 
-Function ColzDry(Dry(), C) As Variant()
+Function ColzDry(Dry(), C&) As Variant()
 ColzDry = IntoColzDry(EmpAv(), Dry, C)
 End Function
 
-Function IntoColzDry(Into, Dry(), C)
+Function IntoColzDry(Into, Dry(), C&)
 Dim O, J&, Dr, U&
 O = Into
 U = UB(Dry)
-ReSumSiU O, U
+Resi O, U
 For Each Dr In Itr(Dry)
     If UB(Dr) >= C Then
         O(J) = Dr(C)
@@ -66,5 +54,3 @@ For Each Dr In Itr(Dry)
 Next
 IntoColzDry = O
 End Function
-
-

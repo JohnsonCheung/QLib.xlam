@@ -1,127 +1,104 @@
 Attribute VB_Name = "MVb_PfxSfx"
 Option Explicit
 
-Function AddPfx$(A$, Pfx$)
-AddPfx = Pfx & A
+Function AddPfx$(S$, Pfx$)
+AddPfx = Pfx & S
 End Function
 
-Function AddPfxSfx$(A$, Pfx$, Sfx$)
-AddPfxSfx = Pfx & A & Sfx
+Function AddPfxSfx$(S$, Pfx$, Sfx$)
+AddPfxSfx = Pfx & S & Sfx
 End Function
 
-Function AddSfx$(A$, Sfx$)
-AddSfx = A & Sfx
+Function AddSfx$(S$, Sfx$)
+AddSfx = S & Sfx
 End Function
 
-Function AddPfxSpc_IfNonBlank$(A)
-If A = "" Then Exit Function
-AddPfxSpc_IfNonBlank = " " & A
+Function AddPfxSpczIfNonBlank$(S$)
+If S = "" Then Exit Function
+AddPfxSpczIfNonBlank = " " & S
 End Function
 
 
-Function AyAddPfx(A, Pfx) As String()
-If Si(A) = 0 Then Exit Function
+Function SyAddPfx(Sy$(), Pfx$) As String()
+If Si(Sy) = 0 Then Exit Function
 Dim O$(), U&, J&
-U = UB(A)
+U = UB(Sy)
 ReDim O(U)
 For J = 0 To U
-    O(J) = Pfx & A(J)
+    O(J) = Pfx & Sy(J)
 Next
-AyAddPfx = O
+SyAddPfx = O
 End Function
 
-Function AyAddPfxSfx(A, Pfx, Sfx) As String()
+Function SyAddPfxSfx(Sy$(), Pfx$, Sfx$) As String()
 Dim O$(), J&, U&
-If Si(A) = 0 Then Exit Function
-U = UB(A)
+If Si(Sy) = 0 Then Exit Function
+U = UB(Sy)
 ReDim Preserve O(U)
 For J = 0 To U
-    O(J) = Pfx & A(J) & Sfx
+    O(J) = Pfx & Sy(J) & Sfx
 Next
-AyAddPfxSfx = O
+SyAddPfxSfx = O
 End Function
 
-Function AyAddSfx(A, Sfx) As String()
-If Si(A) = 0 Then Exit Function
+Function SyAddSfx(Sy$(), Sfx$) As String()
+If Si(Sy) = 0 Then Exit Function
 Dim O$(), J&, U&
-U = UB(A)
+U = UB(Sy)
 ReDim Preserve O(U)
 For J = 0 To U
-    O(J) = A(J) & Sfx
+    O(J) = Sy(J) & Sfx
 Next
-AyAddSfx = O
+SyAddSfx = O
 End Function
 
-Function AyIsAllEleHitPfx(A, Pfx$) As Boolean
-If Si(A) = 0 Then Exit Function
+Function IsAllEleHasPfx(Sy$(), Pfx$) As Boolean
 Dim I
-For Each I In A
-   If Not HasPfx(I, Pfx) Then Exit Function
+For Each I In Itr(Sy)
+   If Not HasPfx(CStr(I), Pfx) Then Exit Function
 Next
-AyIsAllEleHitPfx = True
+IsAllEleHasPfx = True
 End Function
 
-
-Function AyAddCommaSpcSfxExlLas(Ay) As String()
-Dim X, J, U%
-U = UB(Ay)
-For Each X In Itr(Ay)
-    If J = U Then
-        Push AyAddCommaSpcSfxExlLas, X
-    Else
-        Push AyAddCommaSpcSfxExlLas, X & ", "
-    End If
-    J = J + 1
-Next
-End Function
-Function EnsSfx$(S, Sfx$)
+Function EnsSfx$(S$, Sfx$)
 If HasSfx(S, Sfx) Then
     EnsSfx = S
 Else
     EnsSfx = S & Sfx
 End If
 End Function
-Function TakSfxChr$(S, SfxChrLis$, Optional IsCasSen As Boolean)
-If HasSfxChrLis(S, SfxChrLis, IsCasSen) Then TakSfxChr = LasChr(S)
+Function SfxChr$(S$, SfxChrLis$, Optional IsCasSen As Boolean)
+If HasSfxChr(S, SfxChrLis, IsCasSen) Then SfxChr = LasChr(S)
 End Function
 
-Function HasSfxChrLis(A, SfxChrLis$, Optional IsCasSen As Boolean) As Boolean
+Function HasSfxChr(S$, SfxChrLis$, Optional IsCasSen As Boolean) As Boolean
 Dim J%
 For J = 1 To Len(SfxChrLis)
-    If HasSfx(A, Mid(SfxChrLis, J, 1), IsCasSen) Then HasSfxChrLis = True: Exit Function
+    If HasSfx(S, Mid(SfxChrLis, J, 1), IsCasSen) Then HasSfxChr = True: Exit Function
 Next
 End Function
-Function HasPfx(S, Pfx, Optional IsCasSen As Boolean) As Boolean
+Function HasPfx(S$, Pfx$, Optional IsCasSen As Boolean) As Boolean
 HasPfx = StrComp(Left(S, Len(Pfx)), Pfx, IsCasSen) = 0
 End Function
-Function HasSfx(S, Sfx, Optional IsCasSen As Boolean) As Boolean
-HasSfx = StrEq(Right(S, Len(Sfx)), Sfx, IsCasSen) = 0
+Function HasSfx(S$, Sfx$, Optional IsCasSen As Boolean) As Boolean
+HasSfx = IsStrEq(Right(S, Len(Sfx)), Sfx, IsCasSen) = 0
 End Function
-Function StrEq(A, B, Optional IsCasSen) As Boolean
-StrEq = StrComp(A, B, IIf(IsCasSen, VbCompareMethod.vbBinaryCompare, vbTextCompare))
+Function IsStrEq(A$, B$, Optional IsCasSen) As Boolean
+IsStrEq = StrComp(A, B, IIf(IsCasSen, VbCompareMethod.vbBinaryCompare, vbTextCompare))
 End Function
-Function HasSfxApIgnCas(A, ParamArray SfxAp()) As Boolean
+Function HasSfxApIgnCas(S$, ParamArray SfxAp()) As Boolean
 Dim Av(): Av = SfxAp
-HasSfxApIgnCas = HasSfxAv(A, Av)
+HasSfxApIgnCas = HasSfxAv(S, Av)
 End Function
-Function HasSfxAp(A, ParamArray SfxAp()) As Boolean
+Function HasSfxAp(S$, ParamArray SfxAp()) As Boolean
 Dim Av(): Av = SfxAp
-HasSfxAp = HasSfxAv(A, Av, vbBinaryCompare)
+HasSfxAp = HasSfxAv(S, Av, vbBinaryCompare)
 End Function
 
-Function HasSfxAv(A, SfxAv(), Optional IsCasSen As Boolean) As Boolean
+Function HasSfxAv(S$, SfxAv(), Optional IsCasSen As Boolean) As Boolean
 Dim Sfx
 For Each Sfx In SfxAv
-    If HasSfx(A, Sfx, IsCasSen) Then HasSfxAv = True: Exit Function
+    If HasSfx(S, CStr(Sfx), IsCasSen) Then HasSfxAv = True: Exit Function
 Next
-End Function
-
-Function SyIsAllEleHitPfx(A$(), Pfx$) As Boolean
-If Si(A) = 0 Then Exit Function
-Dim I
-For Each I In A
-   If Not HasPfx(CStr(I), Pfx) Then Exit Function
-Next
-SyIsAllEleHitPfx = True
 End Function
 
