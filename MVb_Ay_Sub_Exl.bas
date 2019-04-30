@@ -22,6 +22,7 @@ Debug.Print VarPtr(Ay)
 Debug.Print VarPtr(AA(Ay))
 If Not IsEqVar(Ay, AA(Ay)) Then Stop
 End Sub
+
 Private Function AA(Ay)
 AA = Ay
 End Function
@@ -65,7 +66,11 @@ Dim Ix&: Ix = IxzAy(Ay, Ele): If Ix = -1 Then AyeEle = Ay: Exit Function
 AyeEle = AyeEleAt(Ay, IxzAy(Ay, Ele))
 End Function
 
-Function AyeEleAt(Ay, Optional At = 0, Optional Cnt = 1)
+Function AyeFstNEle(Ay, Optional N& = 1)
+AyeFstNEle = AyeEleAt(Ay, , Cnt:=N)
+End Function
+
+Function AyeEleAt(Ay, Optional At& = 0, Optional Cnt& = 1)
 AyeEleAt = AyeAtCnt(Ay, At, Cnt)
 End Function
 
@@ -126,15 +131,6 @@ End Function
 
 Function AyeFstEle(Ay)
 AyeFstEle = AyeEleAt(Ay)
-End Function
-
-Function AyeFstNEle(Ay, Optional N = 1)
-Dim O: O = Ay: Erase O
-Dim J&
-For J = N To UB(Ay)
-    Push O, Ay(J)
-Next
-AyeFstNEle = O
 End Function
 
 Function AyeFTIx(Ay, B As FTIx)
@@ -248,10 +244,10 @@ Function SyePfx(Sy$(), ExlPfx$) As String()
 SyePfx = SyePred(Sy, PredzPfx(ExlPfx))
 End Function
 
-Function SyeT1Ay(Sy$(), ExlT1Sy$()) As String()
+Function SyeT1Sy(Sy$(), ExlT1Sy$()) As String()
 'Exclude those Lin in Array-Ay its T1 in ExlT1Ay0
-If Si(ExlT1Sy) = 0 Then SyeT1Ay = Sy: Exit Function
-SyeT1Ay = SyePred(Sy, PredzInT1Sy(ExlT1Sy))
+If Si(ExlT1Sy) = 0 Then SyeT1Sy = Sy: Exit Function
+SyeT1Sy = SyePred(Sy, PredzInT1Sy(ExlT1Sy))
 End Function
 
 Function PredzInT1Sy(T1Sy$()) As IPred

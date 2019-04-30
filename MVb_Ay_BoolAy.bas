@@ -17,10 +17,10 @@ Enum eAndOrOp
 End Enum
 
 Function AndBoolAy(A() As Boolean) As Boolean
-AndBoolAy = IsAllTrue(A)
+AndBoolAy = IsAllTruezB(A)
 End Function
 
-Function BoolOp(BoolOpStr) As eBoolOp
+Function BoolOp(BoolOpStr$) As eBoolOp
 Dim O As eBoolOp
 Select Case UCase(BoolOpStr)
 Case "AND": O = eBoolOp.eeOpAND

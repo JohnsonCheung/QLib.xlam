@@ -123,10 +123,10 @@ For Each I In SySsl(PP)
 Next
 End Function
 Function DryzOyPP(Oy, PP$) As Variant()
-Dim Obj As Object, PrpPthAy$()
-PrpPthAy = SySsl(PP)
+Dim Obj As Object, PrpPthSy$()
+PrpPthSy = SySsl(PP)
 For Each Obj In Itr(Oy)
-    PushI DryzOyPP, DrzObj(Obj, PrpPthAy)
+    PushI DryzOyPP, DrzObj(Obj, PrpPthSy)
 Next
 End Function
 

@@ -26,10 +26,11 @@ Brw ImPurePrpLyzSrc(SrczMdNm("MXls_Lo_LofVbl"))
 End Sub
 
 Function ImPurePrpLyzSrc(Src$()) As String()
-Dim L, M$(), S As New Aset
+Dim L$, I, M$(), S As New Aset
 M = MthLinAyzSrc(Src)
 Set S = LetSetPrpNset(M)
-For Each L In Itr(M)
+For Each I In Itr(M)
+    L = I
     If IsImPurePrpLin(L, S) Then
         PushI ImPurePrpLyzSrc, L
     End If
@@ -41,8 +42,9 @@ PurePrpLyInPj = PurePrpLyzPj(CurPj)
 End Property
 
 Function PurePrpLyzPj(A As VBProject) As String()
-Dim L
-For Each L In Itr(MthLinAyzPj(A))
+Dim L$, I
+For Each I In Itr(MthLinAyzPj(A))
+    L = I
     If IsPurePrpLin(L) Then PushI PurePrpLyzPj, L
 Next
 End Function
@@ -56,11 +58,11 @@ For Each C In A.VBComponents
 Next
 End Function
 
-Function PurePrpIxAy(Src$()) As Long()
+Function IxAyzPurePrp(Src$()) As Long()
 Dim Ix&
 For Ix = 0 To UB(Src)
     If IsPurePrpLin(Src(Ix)) Then
-        Push PurePrpIxAy, Ix
+        Push IxAyzPurePrp, Ix
     End If
 Next
 End Function
@@ -70,22 +72,24 @@ PurePrpLyAyzMd = PurePrpLyAyzSrc(Src(A))
 End Function
 
 Function PurePrpLyAyzSrc(Src$()) As Variant()
-Dim Ix
-For Each Ix In Itr(PurePrpIxAy(Src))
+Dim Ix&, I
+For Each I In Itr(IxAyzPurePrp(Src))
+    Ix = I
     PushI PurePrpLyAyzSrc, MthLyBySrcFm(Src, Ix)
 Next
 End Function
 Function PurePrpNy(A As CodeModule) As String()
 Dim O$(), Lno
-For Each Lno In Itr(PurePrpIxAy(Src(A)))
+For Each Lno In Itr(IxAyzPurePrp(Src(A)))
     PushNoDup O, PrpNm(A.Lines(Lno, 1))
 Next
 PurePrpNy = O
 End Function
 
 Function LetSetPrpNset(MthLinAy$()) As Aset
-Dim O As New Aset, N$, L
-For Each L In Itr(MthLinAy)
+Dim O As New Aset, N$, L$, I
+For Each I In Itr(MthLinAy)
+    L = I
     N = LetSetPrpNm(L)
     'If HasPfx(L, "Property Let") Then Stop
     If N <> "" Then O.PushItm N
@@ -93,21 +97,21 @@ Next
 Set LetSetPrpNset = O
 End Function
 
-Private Function LetSetPrpNm$(Lin)
+Private Function LetSetPrpNm$(Lin$)
 With MthNm3(Lin)
     Select Case .ShtTy
     Case "Set", "Let": LetSetPrpNm = .Nm: Exit Function
     End Select
 End With
 End Function
-Function IsImPurePrpLin(Lin, LetSetPrpNset As Aset) As Boolean
+Function IsImPurePrpLin(Lin$, LetSetPrpNset As Aset) As Boolean
 If Not MthTy(Lin) = "Property Get" Then Exit Function
 Stop
 If Not HasMthPm(Lin) Then Exit Function
 IsImPurePrpLin = Not LetSetPrpNset.Has(MthNm(Lin))
 End Function
 
-Function IsPurePrpLin(Lin) As Boolean
+Function IsPurePrpLin(Lin$) As Boolean
 Dim O As Boolean
 Select Case MthTy(Lin)
 Case "Property Get":  O = Not HasMthPm(Lin)
@@ -115,7 +119,7 @@ End Select
 IsPurePrpLin = O
 End Function
 
-Function HasMthPm(MthLin) As Boolean
+Function HasMthPm(MthLin$) As Boolean
 HasMthPm = MthPm(MthLin) <> ""
 End Function
 

@@ -26,8 +26,8 @@ Function DupMthQNyGp_IsDup(Ny) As Boolean
 'DupMthQNyGp_IsDup = IsAllEleEq(AyMap(Ny, "FunFNm_MthLines"))
 End Function
 
-Function DupMthQNyGp_IsVdt(A) As Boolean
-If Not IsSy(A) Then Exit Function
+Function DupMthQNyGp_IsVdt(DupMthQNyGp$()) As Boolean
+Dim A$(): A = DupMthQNyGp
 If Si(A) <= 1 Then Exit Function
 Dim N$: N = Brk(A(0), ":").S1
 Dim J%
@@ -47,11 +47,11 @@ DupMthQNyGpAyAllSameCnt = O
 End Function
 
 Function DupMthQNmDrsInPj() As Drs
-Set DupMthQNmDrsInPj = DupMthQNmDrszPj(CurPj)
+DupMthQNmDrsInPj = DupMthQNmDrszPj(CurPj)
 End Function
 
 Function DupMthQNmDrszPj(A As VBProject) As Drs
-Set DupMthQNmDrszPj = Drs("Pj Md Mth Ty Mdy", DupMthQNmDryzPj(A))
+DupMthQNmDrszPj = DrszFF("Pj Md Mth Ty Mdy", DupMthQNmDryzPj(A))
 End Function
 
 Function DupMthQNmDryPj() As Variant()
@@ -62,11 +62,11 @@ Function DupMthQNmDryzPj(A As VBProject) As Variant()
 Dim Dry(), Dry1(), Dry2()
 Dry = MthQNmDryzPj(A, "-Mod") ' PjNm MdNm MthNm Ty Mdy
 'Dry1 = DryeCEv(Dry, 4, "Prv")
-Dry2 = DrywDupCC(Dry, 2)
+Dry2 = DrywDupCC(Dry, LngAy(2))
 DupMthQNmDryzPj = DrySrtzCol(Dry2, 2)
 End Function
 
-Function DupIxAyzDry(Dry(), CC) As Long()
+Function DupIxAyzDry(Dry(), CCIxAy&()) As Long()
 
 End Function
 
@@ -75,7 +75,7 @@ DupMthQNmDryVbe = DupMthQNmDryzVbe(CurVbe)
 End Function
 
 Function DupMthQNmDryzMthQNy(MthQNy$()) As Variant()
-DupMthQNmDryzMthQNy = DrywDupCC(DryzDotAy(MthQNy), 2)
+DupMthQNmDryzMthQNy = DrywDupCC(DryzDotAy(MthQNy), LngAy(2))
 End Function
 
 Function DupMthQNmDryzVbe(A As Vbe) As Variant()

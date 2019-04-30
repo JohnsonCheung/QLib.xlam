@@ -71,7 +71,7 @@ If HasEle(Array("MIde_Ens_Mdy", "MIde_EnsCSub"), MdNm(A)) Then
 End If
 Dim Act() As ActMd: Act = ActMdAy01zEnsCSub(A)
 If Si(Act) = 0 Then Exit Sub
-MdMdy A, Act(0).ActLinAy, Silent
+MdyMd A, Act(0).ActLinAy, Silent
 End Sub
 
 Sub EnsCSubzPj(A As VBProject, Optional Silent As Boolean)

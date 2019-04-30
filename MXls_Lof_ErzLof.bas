@@ -69,7 +69,7 @@ A_Fny = Fny
 Set A_T1ToLnxAyDic = LnxAyDiczT1nn(A, LofT1nn)
 End Sub
 Private Property Get WAli_LeftRightCenter() As String()
-'ErzAli_LinErz = WMsgzAliLin(AyeT1Ay(Ali, "Left Right Center"))
+'ErzAli_LinErz = WMsgzAliLin(SyeT1Sy(Ali, "Left Right Center"))
 End Property
 Private Property Get WAny_Tot() As Boolean
 Dim Lc As ListColumn
@@ -85,7 +85,7 @@ ErzBdr = Sy(ErzBdrExcessFld, ErzBdrExcessLin, ErzBdrDup, ErzBdrFld)
 End Property
 Private Function ErzBdr1(X$) As String()
 'Return FldAy from Bdr & X
-'Dim FldssAy$(): FldssAy = SSSyzAy(AywRmvT1(Bdr, X))
+'Dim FldssAy$(): FldssAy = SSSyzAy(SywRmvT1(Bdr, X))
 End Function
 Private Property Get ErzBdrDup() As String()
 'ErzBdrDup = WMsgzDup(DupT1(Bdr), Bdr)
@@ -101,7 +101,7 @@ CFny = ErzBdr1("Center")
 End Property
 Private Property Get ErzBdrExcessLin() As String()
 Dim L
-'For Each L In Itr(AyeT1Ay(Bdr, "Left Right Center"))
+'For Each L In Itr(SyeT1Sy(Bdr, "Left Right Center"))
 '    PushI ErzBdrExcessLin, FmtQQ(M_Bdr_ExcessLin, L)
 'Next
 End Property
@@ -257,22 +257,22 @@ End Property
 Private Property Get ErzVal() As String() 'W-Erzror-of-LofLinVal:W means working-value. _
 which is using the some Module-Lvl-variables and it is private. _
 Val here means the LofValFld of LofLin
-ErzVal = SyAddAp(ErzValOfNotNum, ErzValOfNotInLis, ErzValOfFml, ErzValOfNotBet)
+ErzVal = SyAddAp(ErzValzNotNum, ErzValzNotInLis, ErzValzFml, ErzValzNotBet)
 End Property
-Private Function ErzValOfFml() As String()
+Private Function ErzValzFml() As String()
 
 End Function
-Private Function ErzValOfNotBet() As String()
-PushIAy ErzValOfNotBet, ErzValOfNotBetz("Wdt", 10, 200)
-PushIAy ErzValOfNotBet, ErzValOfNotBetz("Lvl", 2, 9)
+Private Function ErzValzNotBet() As String()
+PushIAy ErzValzNotBet, ErzValzNotBetz("Wdt", 10, 200)
+PushIAy ErzValzNotBet, ErzValzNotBetz("Lvl", 2, 9)
 End Function
-Private Function ErzValOfNotBetz(T1, FmNumVal, ToNumval) As String()
+Private Function ErzValzNotBetz(T1, FmNumVal, ToNumval) As String()
 'Dim Lnx(): Lnx = A_T1ToLnxAyDic(T1)
 End Function
-Private Function ErzValOfNotInLis() As String()
+Private Function ErzValzNotInLis() As String()
 
 End Function
-Private Function ErzValOfNotNum() As String()
+Private Function ErzValzNotNum() As String()
 Dim T
 For Each T In SySsl("Wdt Lvl")
 Next

@@ -165,7 +165,7 @@ End Function
 
 Function NxtFn$(Fn$, FnSy$(), Optional MaxN% = 999)
 If Not HasEle(FnSy, Fn) Then NxtFn = Fn: Exit Function
-NxtFn = AyMax(AywLik(FnSy, Fn & "(???)"))
+NxtFn = MaxzAy(SywLik(FnSy, Fn & "(???)"))
 End Function
 
 Function ItrzLines(Lines$)
@@ -305,32 +305,32 @@ For Each X In Itr(Sy)
     Push AyTrim, Trim(X)
 Next
 End Function
-Function AyMin(Ay)
+Function MinzAy(Ay)
 Dim O, I
 For Each I In Ay
     If I < O Then O = I
 Next
-AyMin = O
+MinzAy = O
 End Function
-Function AyMax(Ay)
+Function MaxzAy(Ay)
 Dim O, I
 For Each I In Ay
     If I > O Then O = I
 Next
-AyMax = O
+MaxzAy = O
 End Function
-Function AyWdt%(Ay)
+Function WdtzSy%(Sy$())
 Dim O%, J&
-For J = 0 To UB(Ay)
-    O = Max(O, Len(Ay(J)))
+For J = 0 To UB(Sy)
+    O = Max(O, Len(Sy(J)))
 Next
-AyWdt = O
+WdtzSy = O
 End Function
 
-Function AyWrpPad(Ay, W%) As String() ' Each Itm of Ay[Ay] is padded to line with AyWdt(Ay).  return all padded lines as String()
+Function SyWrpPad(Sy$(), W%) As String() ' Each Itm of Sy[Sy] is padded to line with WdtzSy(Sy).  return all padded lines as String()
 Dim O$(), X, I%
 ReDim O(0)
-For Each X In Itr(Ay)
+For Each X In Itr(Sy)
     If Len(O(I)) + Len(X) < W Then
         O(I) = O(I) & X
     Else
@@ -338,7 +338,7 @@ For Each X In Itr(Ay)
         I = I + 1
     End If
 Next
-AyWrpPad = O
+SyWrpPad = O
 End Function
 
 Sub WrtAy(Ay, Ft$, Optional OvrWrt As Boolean)

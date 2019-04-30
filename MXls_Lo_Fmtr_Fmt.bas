@@ -7,7 +7,7 @@ Function FmtLof(Lof$()) As String()
 FmtLof = FmtSpec(Lof, LofT1nn, 2)
 End Function
 
-Function FmtSpec(Spec$(), Optional T1nn, Optional FmtFstNTerm% = 1) As String()
+Function FmtSpec(Spec$(), Optional T1nn$, Optional FmtFstNTerm% = 1) As String()
 Dim mT1Ay$()
     If IsMissing(T1nn) Then
         mT1Ay = T1Sy(Spec)
@@ -15,11 +15,12 @@ Dim mT1Ay$()
         mT1Ay = TermAy(T1nn)
     End If
 Dim O$()
-    Dim T
-    For Each T In mT1Ay
+    Dim T$, I
+    For Each I In mT1Ay
+        T = I
         PushIAy O, AywT1(Spec, T)
     Next
-    Dim M$(): M = AyeT1Ay(Spec, mT1Ay)
+    Dim M$(): M = SyeT1Sy(Spec, mT1Ay)
     If Si(M) > 0 Then
         PushI O, FmtQQ("# Error: in not T1Sy(?)", TLin(mT1Ay))
         PushIAy O, M

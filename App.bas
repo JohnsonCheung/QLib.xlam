@@ -60,15 +60,15 @@ End Property
 Property Get OupFxzNxt$()
 OupFxzNxt = NxtFfn(PmOupFx)
 End Property
-Property Get PmOupPth$()
-PmOupPth = PmVal(Db, "OupPth")
+Property Get OupPth$()
+OupPth = ValzPm(Db, "OupPth")
 End Property
-Property Get PmFfn$(PmNm$)
-PmFfn = PmVal(Db, PmNm & "Ffn")
+Property Get FfnzPm$(PmNm$)
+FfnzPm = ValzPm(Db, PmNm & "Ffn")
 End Property
 
 Property Get PmOupFx$()
-PmOupFx = PmOupPth & A.Nm & ".xlsx"
+PmOupFx = OupPth & A.Nm & ".xlsx"
 End Property
 
 Property Get Fb$()

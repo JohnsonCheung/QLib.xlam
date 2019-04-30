@@ -71,17 +71,18 @@ Private Sub FmtDocWs(DocWs As Worksheet)
 
 End Sub
 Private Function DocSqzPj(A As VBProject) As Variant()
-Dim Dry(), K, D As Dictionary, TermAset As Aset
+Dim Dry(), K$, I, D As Dictionary, TermAset As Aset
 PushI Dry, SySsl("Term Lnk DfnStmt")
 Set D = DocDiczPj(A)
 Set TermAset = AsetzItr(D.Keys)
-For Each K In D.Keys
+For Each I In D.Keys
+    K = I
     PushIAy Dry, DryzDocDfn(K, D(K), TermAset)
 Next
 DocSqzPj = SqzDry(Dry)
 End Function
 
-Function DryzDocDfn(Nm, Lines, TermAset As Aset) As Variant()  'DocDfn = Nm + Lines.  DocDry = Term + Lnk + Stmt
+Function DryzDocDfn(Nm$, Lines$, TermAset As Aset) As Variant()  'DocDfn = Nm + Lines.  DocDry = Term + Lnk + Stmt
 Dim S$(): S = StmtLy(Lines)
 Dim N0$(): N0 = AywDist(NyzStr(Lines))
 Dim N1$(): N1 = AywInAset(N0, TermAset)
@@ -127,8 +128,9 @@ O.Ay(O.N) = M
 O.N = O.N + 1
 End Sub
 Function ConstVals(Ly$()) As ConstVals
-Dim L, O As ConstVals
-For Each L In Itr(ContLyzLy(Ly))
+Dim L$, I, O As ConstVals
+For Each I In Itr(ContLyzLy(Ly))
+    L = I
     ConstValsPushOpt O, ConstValOpt(L)
 Next
 ConstVals = O
@@ -139,7 +141,7 @@ ReDim Preserve O.Ay(O.N)
 O.Ay(O.N) = M.V
 O.N = O.N + 1
 End Sub
-Function ConstValOpt(Lin) As ConstValOpt
+Function ConstValOpt(Lin$) As ConstValOpt
 If HasSfx(Lin, "_") Then Thw CSub, "Cannot has Sfx [_]", "Lin", Lin
 Dim L$, N$: L = Lin
 Dim O As ConstValOpt
@@ -213,33 +215,21 @@ Property Get IsProd() As Boolean
 IsProd = Not IsDev
 End Property
 
-
-Function PgmDb_DtaDb(A As Database) As Database
-Set PgmDb_DtaDb = DBEngine.OpenDatabase(PgmDb_DtaFb(A))
-End Function
-
-Function PgmDb_DtaFb$(A As Database)
-End Function
-
 Property Get ProdPth$()
 ProdPth = "N:\SAPAccessReports\"
 End Property
 Property Get OHApnFb$()
 OHApnFb = ApnFb("OverHeadExpense6")
 End Property
-Private Sub ZZ()
-Dim Db As Database
-PgmDb_DtaDb A
-PgmDb_DtaFb A
-End Sub
+
 Function ApnFb$(Apn$)
 ApnFb = "C:\Users\Public\" & Apn & "\" & Apn & ".accdb"
 End Function
 Property Let ApnzDb(A As Database, V$)
-ValOfQ(A, SqlSel_F("Apn")) = V
+ValzQ(A, SqlSel_F("Apn")) = V
 End Property
 
 Property Get ApnzDb$(A As Database)
-ApnzDb = ValOfQ(A, "Select Apn from Apn")
+ApnzDb = ValzQ(A, "Select Apn from Apn")
 End Property
 

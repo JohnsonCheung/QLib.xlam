@@ -13,12 +13,12 @@ End Function
 
 Private Function CellWsnItmAy(FstGoCell) As CellWsnItm()
 Dim R As Range: Set R = FstGoCell
-Dim WsNy$():     WsNy = WsNyzRg(R)
+Dim Wsny$():     Wsny = WsNyzRg(R)
 Dim J%, Wsn$
 While R.Value = "Go"
     J = J + 1: If J = 1000 Then ThwLoopingTooMuch CSub
     Wsn = CellRight(R).Value
-    If HasEle(WsNy, Wsn) Then PushObj CellWsnItmAy, CellWsnItm(R, Wsn)
+    If HasEle(Wsny, Wsn) Then PushObj CellWsnItmAy, CellWsnItm(R, Wsn)
     Set R = CellBelow(R)
 Wend
 End Function
@@ -42,12 +42,12 @@ IsOkToFill = IsEmpty(A.Value) And IsEmpty(CellRight(A))
 End Function
 Sub FillGoWs(FstGoCell As Range)
 Dim R As Range:     Set FstGoCell = R
-Dim WsNy$():                 WsNy = WsNyzRg(R)
+Dim Wsny$():                 Wsny = WsNyzRg(R)
 Dim IsFill As Boolean:     IsFill = IsOkToFill(R)
 Dim I%
 While IsFill
     R.Value = "Go"
-    CellRight(R).Value = WsNy(I)
+    CellRight(R).Value = Wsny(I)
     I = I + 1
 Wend
 End Sub

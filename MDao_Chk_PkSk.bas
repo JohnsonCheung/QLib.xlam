@@ -1,7 +1,7 @@
 Attribute VB_Name = "MDao_Chk_PkSk"
 Option Explicit
 
-Function ChkPk$(A As Database, T)
+Function ChkPk$(A As Database, T$)
 If HasStdPk(A, T) Then Exit Function
 If HasPk(A, T) Then
     Dim Pk$(): Pk = PkFny(A, T)
@@ -14,7 +14,7 @@ End If
 ChkPk = "[?] does not have PrimaryKey-Idx"
 End Function
 
-Function ChkSsk$(A As Database, T)
+Function ChkSsk$(A As Database, T$)
 Dim O$, Sk$(): Sk = SkFny(A, T)
 O = ChkSk(A, T): If O <> "" Then ChkSsk = O: Exit Function
 If Si(Sk) <> 1 Then
@@ -22,8 +22,9 @@ If Si(Sk) <> 1 Then
 End If
 End Function
 Function ChkPkSk(A As Database) As String()
-Dim T
-For Each T In Tny(A)
+Dim T$, I
+For Each I In Tny(A)
+    T = I
     PushIAy ChkPkSk, ChkPkSkzT(A, T)
 Next
 End Function
@@ -32,8 +33,8 @@ PushNonBlankStr ChkPkSkzT, ChkPk(A, T)
 PushNonBlankStr ChkPkSkzT, ChkSk(A, T)
 End Function
 
-Function ChkSk$(A As Database, T)
-Dim SkIdx As DAO.Index, I As DAO.Index
+Function ChkSk$(A As Database, T$)
+Dim SkIdx As Dao.Index, I As Dao.Index
 If Not HasIdx(A, T, C_SkNm) Then
     ChkSk = FmtQQ("Not SecondaryKey for Table[?] in Db[?]", T, DbNm(A))
     Exit Function

@@ -40,10 +40,10 @@ Dim D() As Lnx
 Dim T() As Lnx
     Dim X()  As Lnx
     X = LnxAyzCln(Schm)
-    T = LnxAywRmvT1(X, "Tbl")
-    D = LnxAywRmvT1(X, "Des")
-    E = LnxAywRmvT1(X, "Ele")
-    F = LnxAywRmvT1(X, "Fld")
+    T = LnxSywRmvT1(X, "Tbl")
+    D = LnxSywRmvT1(X, "Des")
+    E = LnxSywRmvT1(X, "Ele")
+    F = LnxSywRmvT1(X, "Fld")
 
 Dim Tny$(), Eny$()
     Eny = T1Sy(LyzLnxAy(E))
@@ -230,8 +230,9 @@ If Si(Fny) = 0 Then
     Exit Function
 End If
 '7
-Dim F
-For Each F In Itr(Fny)
+Dim F$, I
+For Each I In Itr(Fny)
+    F = I
     If Not IsNm(F) Then
         PushI ErT_LinEr_zLnx, MsgT_FldIsNotANmEr(T, F)
     End If

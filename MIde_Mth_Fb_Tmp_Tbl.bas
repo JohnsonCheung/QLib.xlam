@@ -16,7 +16,7 @@ Option Explicit
 '    For Each K In O.Keys
 '        If IsNull(K) Then Stop
 '        MthNy = CvSy(O(K)) ' The value of the dic is MthNy
-'        O(K) = ValOfDicKyJn(MthNmDic, MthNy) ' return a LineszMd from MthNmDic using MthNy to look MthNmDic
+'        O(K) = ValzDicKyJn(MthNmDic, MthNy) ' return a LineszMd from MthNmDic using MthNy to look MthNmDic
 '    Next
 'Set AAAModDic = O
 'End Property
@@ -100,7 +100,7 @@ Option Explicit
 ''A = NRecDT(W, "#MthNy")
 ''B = NRecDT(W, "#MthMd")
 ''C = NRecDT(W, "#MthMd", "MdNm='AAAMod'")
-''C = ValOfQ(W, "Select count(*) from [#MthMd] where MdNm='AAAMod'")
+''C = ValzQ(W, "Select count(*) from [#MthMd] where MdNm='AAAMod'")
 'Debug.Print CSub, "A: #MthNy-Cnt "; A
 'Debug.Print CSub, "B: #MthMd-Cnt "; B
 'Debug.Print CSub, "C: #MthMd-Wh-MdNm=AAAMod-Cnt "; C

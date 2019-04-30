@@ -1,23 +1,27 @@
 Attribute VB_Name = "MApp_Git"
 Option Explicit
 Const CMod$ = "MApp_Git."
-Public Const DocOfFwcmd$ = "It is a TmpFfn and the content is given-CmdLines plus EchoLin which is creating a WaitgFfn."
-Public Const DocOfWaitgFfn$ = "WaitgFfn is a temp file without any content.  It is created at end of the Fwcmd."
+Public Const DocOfFwcmd$ = "It is a TmpFfn and the content is given-CmdLines plus EchoLin which is creating a Fcmdw."
+Public Const DocOfWaitgFfn$ = "Fcmdw is a temp file without any content.  It is created at end of the Fwcmd."
 
-Function CmitgFcmd$(Optional Msg$ = "commit", Optional ReInit As Boolean)
-CmitgFcmd = Fwcmd(CdLineszGitCmit(Srcp(CurPj), Msg, ReInit))
+Function FcmdwzCmitg$(Optional Msg$ = "commit", Optional ReInit As Boolean)
+FcmdwzCmitg = Fcmdw(CmdLineszCmitg(Srcp(CurPj), Msg, ReInit))
 End Function
 
 Sub GitCmit(Optional Msg$ = "commit", Optional ReInit As Boolean)
 Stop
-WaitFfn CmitgFcmd(Msg, ReInit)
+WaitFcmdw FcmdwzCmitg(Msg, ReInit)
 End Sub
+
+Function FcmdwzPushg$()
+FcmdwzPushg = Fcmdw(CmdLineszPushg(Srcp(CurPj)))
+End Function
 
 Sub GitPush()
-RunFcmdWait Fwcmd(GitPushCdLines(Srcp(CurPj)))
+WaitFcmdw FcmdwzPushg
 End Sub
 
-Private Function CdLineszGitCmit$(CmitgPth$, Msg$, ReInit As Boolean)
+Private Function CmdLineszCmitg$(CmitgPth$, Msg$, ReInit As Boolean)
 Erase XX
 Dim Pj$: Pj = PjNmzCmitgPth(CmitgPth)
 X "Cd """ & CmitgPth & """"
@@ -26,41 +30,29 @@ X "git init"        'If already init, it will do nothing
 X "git add -A"
 X FmtQQ("git commit -m ""?""", Msg)
 X "Pause"
-CdLineszGitCmit = JnCrLf(XX)
+CmdLineszCmitg = JnCrLf(XX)
 Erase XX
 End Function
 
-Private Sub Z_Fwcmd()
-Debug.Print LineszFt(Fwcmd("Dir"))
-End Sub
-Function WaitgFfn$(Fcmd$)
-WaitgFfn = Fcmd & ".wait.txt"
-End Function
-Private Function Fwcmd$(CmdLines$)
-Dim T$: T = TmpCmd
-Dim EchoLin$: EchoLin = FmtQQ("Echo > ""?""", WaitgFfn(T))
-Dim S$: S = CmdLines & vbCrLf & EchoLin
-Fwcmd = WrtStr(S, T)
-End Function
 
 Function HasInternet() As Boolean
 Stop
 End Function
 
-Private Function GitPushCdLines$(CmitgPth)
+Private Function CmdLineszPushg$(CmitgPth$)
 Dim O$(), Cd$, GitPush, T
 Push O, FmtQQ("Cd ""?""", CmitgPth)
-Push O, FmtQQ("git push -u https://johnsoncheung@github.com/johnsoncheung/?.git master", PjNm(CmitgPth))
+Push O, FmtQQ("git push -u https://johnsoncheung@github.com/johnsoncheung/?.git master", PjNmzCmitgPth(CmitgPth))
 Push O, "Pause"
-GitPushCdLines = JnCrLf(O)
+CmdLineszPushg = JnCrLf(O)
 End Function
 
-Sub BrwGitCmitCdLines()
-BrwFt CdLineszGitCmit("PthA", "Msg", ReInit:=True)
+Sub BrwCmdLineszCmitg()
+BrwFt CmdLineszCmitg("PthA", "Msg", ReInit:=True)
 End Sub
 
-Sub BrwGitPushCdLines()
-BrwFt GitPushCdLines("A")
+Sub BrwCmdLineszPushg()
+BrwFt CmdLineszPushg("A")
 End Sub
 Private Function PjNmzCmitgPth$(CmitgPth$)
 Const CSub$ = CMod & "PjNm"
@@ -82,8 +74,7 @@ Private Sub Z()
 MApp_Commit:
 End Sub
 
-Sub PowerRun(Ps1, ParamArray PmAp())
-Dim Av(): Av = PmAp
-RunFcmdAv "PowerShell", Av
-End Sub
+Function RunFps1&(Fps1$, Optional PmStr$)
+RunFps1 = RunFcmd("PowerShell", FmtQQ("""?""", Fps1) & PpdSpcIf(PmStr))
+End Function
 

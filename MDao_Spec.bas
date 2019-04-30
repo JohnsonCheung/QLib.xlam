@@ -15,7 +15,7 @@ Dim SamTim As Boolean
 Dim DifSz As Boolean
 Dim SamSz As Boolean
 Dim DifFt As Boolean
-Dim Rs As DAO.Recordset
+Dim Rs As Dao.Recordset
     Q = FmtQQ("Select SpecNm,Ft,Lines,Tim,Si,LTimStr_Dte from Spec where SpecNm = '?'", Spnm)
     Set Rs = A.OpenRecordset(Q)
     NoCur = Not HasFfn(Ft$)
@@ -25,7 +25,7 @@ Dim Rs As DAO.Recordset
     Dim CurS&, LasS&
     Dim LasFt$, LdTimStr_Dte$
     CurS = SizFfn(Ft$)
-    CurT = TimFfn(Ft$)
+    CurT = DtezFfn(Ft$)
     If Not NoLas Then
         With Rs
             LasS = Nz(Rs!Si, -1)
@@ -84,26 +84,25 @@ Sub BrwSpecPth(Apn$)
 BrwPth SpecPth(Apn)
 End Sub
 
-Sub ClrSpecPth(WPth$)
-ClrPth SpecPth(WPth)
-End Sub
-
 Sub EnsTblSpec(A As Database)
-'If Not HasTbl(A, "Spec") Then CrtSpecTbl A
+If Not HasTbl(A, "Spec") Then CrtTblSpec A
 End Sub
 
 Sub CrtTblSpec(A As Database)
 CrtSchm A, SplitVBar(SpecSchmVbl)
 End Sub
 
-Sub ExpSpec(A As Database, WPth$)
-ClrSpecPth WPth
-Dim N
-For Each N In Itr(SpecNy(Db))
-    'ExpSpnm N
+Sub ExpSpec(A As Database, ToPth$)
+ClrPth ToPth
+Dim N$, I
+For Each I In Itr(SpecNy(A))
+    N = I
+    ExpSpeczNm A, N, ToPth
 Next
 End Sub
+Sub ExpSpeczNm(A As Database, SpecNm$, ToPth$)
 
+End Sub
 Function SpecNy(A As Database) As String()
 SpecNy = SyzTF(A, "Spec", "SpecNm")
 End Function

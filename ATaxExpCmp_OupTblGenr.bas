@@ -8,10 +8,10 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Implements IGenr
-Sub GenOupTblFmTmpInp(A As DAO.Database)
+Sub GenOupTblFmTmpInp(A As Dao.Database)
 IGenr_GenOupTblFmTmpInp A
 End Sub
 
-Private Sub IGenr_GenOupTblFmTmpInp(A As DAO.Database)
+Private Sub IGenr_GenOupTblFmTmpInp(A As Dao.Database)
 
 End Sub

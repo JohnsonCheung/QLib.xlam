@@ -31,8 +31,9 @@ Function MthSrtKey$(ShtMthMdy$, MthNm$)
 MthSrtKey = ShtMthMdy & ":" & MthNm
 End Function
 Private Function DicOf_PjMdTyMdNm_To_MthQLy() As Dictionary
-Dim K$, MthQLin, O As New Dictionary, MthQLy$()
-For Each MthQLin In A_MthQLy
+Dim K$, MthQLin$, I, O As New Dictionary, MthQLy$()
+For Each I In MthQLyInVbe
+    MthQLin = I
     Dim Ay$(): Ay = SplitDot(MthQLin)
     ReDim Preserve Ay(2)
     K = JnDot(Ay)
@@ -47,7 +48,7 @@ Next
 Set DicOf_PjMdTyMdNm_To_MthQLy = O
 End Function
 
-Private Function MthSrtKeyzLin$(MthLin) ' MthKey is Mdy.Nm
+Private Function MthSrtKeyzLin$(MthLin$) ' MthKey is Mdy.Nm
 With MthNm3(MthLin)
 MthSrtKeyzLin = .ShtMdy & "." & .Nm
 End With
@@ -55,16 +56,15 @@ End Function
 
 Private Function MthQidLy(MthQLy$()) As String()
 If Si(MthQLy) = 0 Then Exit Function
-A_MthQLy = MthQLy
 Dim I
 For Each I In DicOf_PjMdTyMdNm_To_MthQLy.Items
     PushIAy MthQidLy, MthQidLyzSamMdMthQLy(CvSy(I))
 Next
 End Function
-Function DotLinRmvSegN$(DotLin, Optional SegN% = 1)
+Function RmvFstNSegzDotLin$(DotLin$, Optional FstNSeg% = 1)
 Dim Ay$(): Ay = SplitDot(DotLin)
-Dim Ay1$(): Ay1 = AyeEleAt(Ay, SegN - 1)
-DotLinRmvSegN = JnDot(Ay1)
+Dim Ay1$(): Ay1 = AyeEleAt(Ay, FstNSeg - 1)
+RmvFstNSegzDotLin = JnDot(Ay1)
 End Function
 Function FstNDotSeg$(DotLin$, Optional NSeg% = 1)
 FstNDotSeg = JnDot(AywFstNEle(SplitDot(DotLin), NSeg))
@@ -85,14 +85,16 @@ For J = 1 To U
 Next
 End Function
 Function DotLyRmvSegN(DotLy$(), Optional SegN% = 1) As String()
-Dim DotLin
-For Each DotLin In Itr(DotLy)
-    PushI DotLyRmvSegN, DotLinRmvSegN(DotLin, SegN)
+Dim DotLin$, I
+For Each I In Itr(DotLy)
+    DotLin = I
+    PushI DotLyRmvSegN, RmvFstNSegzDotLin(DotLin, SegN)
 Next
 End Function
 Private Function MthQMLy(MthQLy$()) As String()
-Dim O$(), MthQLin
-For Each MthQLin In Itr(MthQLy)
+Dim O$(), MthQLin$, I
+For Each I In Itr(MthQLy)
+    MthQLin = I
     PushI O, MthSQMLin(MthQLin)
 Next
 MthQMLy = DotLyRmvSegN(CvSy(AyQSrt(O)))
@@ -130,19 +132,20 @@ OShtMthTy = ShfShtMthTy(L)
 OMthNm = ShfNm(L)
 OMthNmRst = OMthNm & L
 End Sub
-Private Function MthQidLin$(MthQMLin, Id$)
+Private Function MthQidLin$(MthQMLin$, Id$)
 Dim Ay$(): Ay = SplitDot(MthQMLin): If Si(Ay) < 6 Then Thw CSub, "MtQMLin should have at least 5 dots", "MthQMLin", MthQMLin
 Dim Ay1$(): Ay1 = AyInsEle(Ay, Id, 3)
 MthQidLin = JnDot(Ay1)
 End Function
 
 Private Function MthQidLyzSamMdMthQLy(SamMdMthQLy$()) As String() 'Assume the MthQLy are from same module
-Dim N%, J&, MthQMLin, Id$
+Dim N&, J&, I, MthQMLin$, Id$
 N = NDig(Si(SamMdMthQLy))
 J = 0
 'Brw SamMdMthQLy
 'Stop
-For Each MthQMLin In Itr(MthQMLy(SamMdMthQLy))
+For Each I In Itr(MthQMLy(SamMdMthQLy))
+    MthQMLin = I
     J = J + 1
     Id = Pad0(J, N)
     PushI MthQidLyzSamMdMthQLy, MthQidLin(MthQMLin, Id)

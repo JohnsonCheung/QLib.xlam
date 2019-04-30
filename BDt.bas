@@ -71,7 +71,7 @@ IsEmpDt = Si(A.Dry) = 0
 End Function
 
 Function DtReOrd(A As Dt, BySubFF$) As Dt
-DtReOrd = DtzDrs(DrsReOrdBy(DrszDt(A), BySubFF), A.DtNm)
+DtReOrd = DtzDrs(ReOrdCol(DrszDt(A), BySubFF), A.DtNm)
 End Function
 
 Function DtzFF(DtNm$, FF$, Dry()) As Dt

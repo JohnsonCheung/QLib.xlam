@@ -182,7 +182,7 @@ Function CellBelow(Cell As Range, Optional N = 1) As Range
 Set CellBelow = RgRC(Cell, 1 + N, 1)
 End Function
 
-Sub SwapValOfRg(Cell1 As Range, Cell2 As Range)
+Sub SwapValzRg(Cell1 As Range, Cell2 As Range)
 Dim A: A = RgRC(Cell1, 1, 1).Value
 RgRC(Cell1, 1, 1).Value = RgRC(Cell2, 1, 1).Value
 RgRC(Cell2, 1, 1).Value = A

@@ -8,8 +8,8 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
-Public Nm$, Ty As DAO.DataTypeEnum, Extnm$
-Friend Property Get Init(Nm, Ty As DAO.DataTypeEnum, Extnm$)
+Public Nm$, Ty As Dao.DataTypeEnum, Extnm$
+Friend Property Get Init(Nm, Ty As Dao.DataTypeEnum, Extnm$)
 Me.Nm = Nm
 Me.Ty = Ty
 Me.Extnm = Extnm

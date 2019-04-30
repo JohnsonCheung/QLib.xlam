@@ -8,7 +8,9 @@ X = OA
 OA = OB
 OB = X
 End Sub
-
+Function CurUsr$()
+CurUsr = Environ$("USERNAME")
+End Function
 Sub Asg(Fm, OTo)
 Select Case True
 Case IsObject(Fm): Set OTo = Fm

@@ -1,7 +1,7 @@
 Attribute VB_Name = "MIde_Ens__Mdy"
 Option Explicit
 Sub MdyLinAy(A As CodeModule, B() As ActLin)
-ThwErMsg ErzActLinAy(B), CSub, "Error in ActLinAy", "ActLinAy Md", LyzActLinAy(B), MdNm(A)
+ThwIfErMsg ErzActLinAy(B), CSub, "Error in ActLinAy", "ActLinAy Md", LyzActLinAy(B), MdNm(A)
 Dim O$(), J&
 For J = UB(B) To 0 Step -1
     MdyLin A, B(J)
@@ -42,7 +42,7 @@ Dim I
 For Each I In Itr(B)
     With CvActMd(I)
         Debug.Print MdNm(.Md)
-        MdMdy .Md, .ActLinAy, Silent
+        MdyMd .Md, .ActLinAy, Silent
     End With
 Next
 Set PjMdy = A
@@ -144,7 +144,7 @@ Next
 FmtSrcMdy = O
 End Function
 Function SrcMdy(Src$(), B() As ActLin) As String()
-ThwErMsg ErzActLinAy(B), CSub, "Error in ActLinAy", "ActMd Src", LyzActLinAy(B), Src
+ThwIfErMsg ErzActLinAy(B), CSub, "Error in ActLinAy", "ActMd Src", LyzActLinAy(B), Src
 Dim O$(), J&
 O = Src
 For J = UB(B) To 0 Step -1
@@ -153,10 +153,10 @@ Next
 SrcMdy = O
 End Function
 
-Function MdMdy(A As CodeModule, B() As ActLin, Optional Silent As Boolean) As CodeModule
+Sub MdyMd(A As CodeModule, B() As ActLin, Optional Silent As Boolean)
 Dim NewLines$: NewLines = JnCrLf(SrcMdy(Src(A), B)): 'Brw NewLines: Stop
 RplMd A, NewLines
-End Function
+End Sub
 
 Private Sub PushActEr(O$(), Msg$, Ix, Cur As ActLin, Las As ActLin)
 Dim Nav(3)

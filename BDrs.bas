@@ -189,7 +189,7 @@ Function NRowDrs&(A As Drs)
 NRowDrs = Si(A.Dry)
 End Function
 
-Function DrwIxAy(Dr, IxAy)
+Function DrwIxAy(Dr(), IxAy&())
 Dim U&: U = MaxAy(IxAy)
 Dim O: O = Dr
 If UB(O) < U Then
@@ -197,22 +197,22 @@ If UB(O) < U Then
 End If
 DrwIxAy = AywIxAy(O, IxAy)
 End Function
-Function DrySelIxAy(Dry(), IxAy) As Variant()
+Function SelCol(Dry(), IxAy&()) As Variant()
 Dim Dr
 For Each Dr In Itr(Dry)
-    PushI DrySelIxAy, DrwIxAy(Dr, IxAy)
+    PushI SelCol, AywIxAy(Dr, IxAy)
 Next
 End Function
-Function DrsReOrdBy(A As Drs, BySubFF$) As Drs
+Function ReOrdCol(A As Drs, BySubFF$) As Drs
 Dim SubFny$(): SubFny = TermAy(BySubFF)
 Dim OFny$(): OFny = AyReOrd(A.Fny, SubFny)
 Dim IAy&(): IAy = IxAy(A.Fny, OFny)
-Dim ODry(): ODry = DrySelIxAy(A.Dry, IAy)
-DrsReOrdBy = Drs(OFny, ODry)
+Dim ODry(): ODry = SelCol(A.Dry, IAy)
+ReOrdCol = Drs(OFny, ODry)
 End Function
 
-Function NRowDrsCEv&(A As Drs, ColNm$, EqVal)
-NRowDrsCEv = NRowDryCEv(A.Dry, IxzAy(A.Fny, ColNm), EqVal)
+Function NRowzColEv&(A As Drs, ColNm$, EqVal)
+NRowzColEv = NRowzInDryzColEv(A.Dry, IxzAy(A.Fny, ColNm), EqVal)
 End Function
 
 Function SqzDrs(A As Drs) As Variant()

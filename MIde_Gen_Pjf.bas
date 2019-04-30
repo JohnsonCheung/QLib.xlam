@@ -7,34 +7,35 @@ Public Const DocOfDistPth$ = "It an InstPth with Fdr is InstPth and ParFdr is Di
 Public Const DocOfPthInst$ = "It a InstFdr of under a given Pth"
 Public Const DocOfInstPth$ = "It a Pth with Fdr is InstNm"
 
-Function SrcRoot$(Srcp)
+Function SrcRoot$(Srcp$)
 SrcRoot = ParPth(Srcp)
 End Function
 
-Function DistPth$(Srcp)
+Function DistPth$(Srcp$)
 DistPth = AddFdrEns(ParPth(Srcp), ".Dist")
 End Function
 
-Function DistFba$(Srcp)
+Function DistFba$(Srcp$)
 DistFba = DistPjf(Srcp, ".accdb")
 End Function
 
-Private Function DistPjf(Srcp, Ext$)
+Private Function DistPjf(Srcp$, Ext$)
 Dim P$: P = DistPth(Srcp)
 DistPjf = DistPth(Srcp) & RplExt(Fdr(ParPth(P)), Ext)
 End Function
 
-Function DistFxa$(Srcp)
+Function DistFxa$(Srcp$)
 DistFxa = DistPjf(Srcp, ".xlam")
 End Function
 
-Function DistFxazNxt$(Srcp)
+Function DistFxazNxt$(Srcp$)
 DistFxazNxt = NxtFfn(DistFxa(Srcp))
 End Function
 
 Private Sub Z_DistPjf()
-Dim Pth
-For Each Pth In ScrpAyOfExpgInst
+Dim Pth$, I
+For Each I In SrcpSyOfExpgInst
+    Pth = I
     Debug.Print Pth
     Debug.Print DistFba(Pth)
     Debug.Print DistFxa(Pth)

@@ -1,7 +1,7 @@
 Attribute VB_Name = "MDao_Db_DbInf_Stru"
 Option Explicit
 
-Function DbInfDtStru(A As Database) As Dt
+Function StruInf(A As Database) As Dt
 Dim T$, TT, Dry(), Des$, NRec&, Stru$
 'For Each TT In TnyDb(A)
     T = TT
@@ -10,7 +10,7 @@ Dim T$, TT, Dry(), Des$, NRec&, Stru$
 '    NRec = NRecDT(A, T)
     PushI Dry, Array(T, NRec, Des, Stru)
 'Next
-Set DbInfDtStru = Dt("Tbl", "Tbl NRec Des", Dry)
+StruInf = DtzFF("Tbl", "Tbl NRec Des", Dry)
 End Function
 
 Sub DmpStru(A As Database)
@@ -18,17 +18,19 @@ D Stru(A)
 End Sub
 
 Function StruFld(ParamArray Ap()) As Drs
-Dim Dry(), Av(), Ele$, LikFF, LikFld, X
+Dim Dry(), S$, I, Av(), Ele$, LikFF$, LikFld$, J
 Av = Ap
-For Each X In Av
-    AsgTRst X, Ele, LikFF
-    For Each LikFld In SySsl(LikFF)
+For Each I In Av
+    S = I
+    AsgTRst S, Ele, LikFF
+    For Each J In SySsl(LikFF)
+        LikFld = J
         PushI Dry, Array(Ele, LikFld)
     Next
 Next
-Set StruFld = Drs("Ele FldLik", Dry)
+StruFld = DrszFF("Ele FldLik", Dry)
 End Function
 
-Sub DmpStruTT(A As Database, TT)
+Sub DmpStruTT(A As Database, TT$)
 D StruzTT(A, TT)
 End Sub

@@ -99,7 +99,7 @@ FmtSyT4 = FmtAyNTerm(A, 4)
 End Function
 
 Function FmtAySamWdt(Ay) As String()
-Dim W%: W = AyWdt(Ay) + 1
+Dim W%: W = WdtzSy(Ay) + 1
 Dim I
 For Each I In Itr(Ay)
     Push FmtAySamWdt, AlignL(I, W)
@@ -107,7 +107,7 @@ Next
 End Function
 
 Function FmtAyR(Ay) As String()
-Dim W%: W = AyWdt(Ay)
+Dim W%: W = WdtzSy(Ay)
 Dim I
 For Each I In Itr(Ay)
     Push FmtAyR, AlignR(I, W)

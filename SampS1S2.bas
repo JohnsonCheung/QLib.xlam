@@ -24,19 +24,19 @@ X:
     Return
 End Sub
 
-Property Get S1S2AyzLines() As S1S2()
+Property Get S1S2szLines() As S1S2s
 Dim A1$(), A2$(), J%
 X A1, A2
 For J = 0 To UB(A1)
-    PushObj S1S2AyzLines, S1S2(LineszVbl(A1(J)), LineszVbl(A2(J)))
+    PushObj S1S2szLines, S1S2(LineszVbl(A1(J)), LineszVbl(A2(J)))
 Next
 End Property
 
-Property Get S1S2AyzLin() As S1S2()
+Property Get S1S2szLin() As S1S2s
 Dim A1$(), A2$(), J%
 X A1, A2
 For J = 0 To UB(A1)
-    PushObj S1S2AyzLin, S1S2(A1(J), A2(J))
+    PushObj S1S2szLin, S1S2(A1(J), A2(J))
 Next
 End Property
 

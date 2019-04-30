@@ -10,7 +10,7 @@ Function Fny(A As Database, T$) As String()
 Fny = Itn(A.TableDefs(T).Fields)
 End Function
 
-Function ColzRs(A As Database, T$, F$) As DAO.Recordset
+Function ColzRs(A As Database, T$, F$) As Dao.Recordset
 Set ColzRs = Rs(A, SqlSel_F_T(F, T))
 End Function
 
@@ -22,11 +22,11 @@ Function CntDiczTF(A As Database, T$, F$) As Dictionary
 Set CntDiczTF = CntDiczRs(ColzRs(A, T$, F$))
 End Function
 
-Function IdxzTd(A As DAO.TableDef, IdxNm$) As DAO.Index
+Function IdxzTd(A As Dao.TableDef, IdxNm$) As Dao.Index
 Set IdxzTd = FstItmzNm(A.Indexes, IdxNm$)
 End Function
 
-Function Idx(A As Database, T$, IdxNm$) As DAO.Index
+Function Idx(A As Database, T$, IdxNm$) As Dao.Index
 Set Idx = IdxzTd(A.TableDefs(T), IdxNm)
 End Function
 
@@ -38,7 +38,7 @@ Function HasIdx(A As Database, T$, IdxNm$) As Boolean
 HasIdx = HasItn(A.TableDefs(T).Indexes, IdxNm)
 End Function
 
-Function FstUniqIdx(A As Database, T$) As DAO.Index
+Function FstUniqIdx(A As Database, T$) As Dao.Index
 Set FstUniqIdx = FstItmTrueP(A.TableDefs(T).Indexes, "Unique")
 End Function
 
@@ -50,16 +50,16 @@ Function HasPk(A As Database, T$) As Boolean
 HasPk = HasPkzTd(A.TableDefs(T))
 End Function
 
-Function HasPkzTd(A As DAO.TableDef) As Boolean
+Function HasPkzTd(A As Dao.TableDef) As Boolean
 HasPkzTd = HasItn(A.Indexes, C_PkNm)
 End Function
 
-Function HasStdSkzTd(A As DAO.TableDef) As Boolean
+Function HasStdSkzTd(A As Dao.TableDef) As Boolean
 If Not HasItn(A.Indexes, C_SkNm) Then Exit Function
 HasStdSkzTd = A.Indexes(C_SkNm).Unique = True
 End Function
 
-Function HasStdPkzTd(A As DAO.TableDef) As Boolean
+Function HasStdPkzTd(A As Dao.TableDef) As Boolean
 If Not HasPkzTd(A) Then Exit Function
 Dim Pk$(): Pk = PkFnyzTd(A): If Si(Pk) <> 1 Then Exit Function
 Dim P$: P = A.Name & "Id"
@@ -89,7 +89,7 @@ For Each F In TermAy(FF)
 Next
 End Sub
 
-Function RszId(A As Database, T$, Id&) As DAO.Recordset
+Function RszId(A As Database, T$, Id&) As Dao.Recordset
 Set RszId = Rs(A, SqlSel_T_WhId(T, Id))
 End Function
 
@@ -109,19 +109,19 @@ DtzT = Dt(T, Fny(A, T$), DryzT(A, T$))
 End Function
 
 Function FdStrAy(A As Database, T$) As String()
-Dim F, Td As DAO.TableDef
+Dim F, Td As Dao.TableDef
 Set Td = A.TableDefs(T)
 For Each F In Fny(A, T$)
     PushI FdStrAy, FdStr(Td.Fields(F))
 Next
 End Function
 
-Function Fds(A As Database, T$) As DAO.Fields
+Function Fds(A As Database, T$) As Dao.Fields
 Set Fds = A.TableDefs(T).OpenRecordset.Fields
 End Function
 
 Sub ReSeqFldzFny(A As Database, T$, Fny$())
-Dim F, J%, Fds As DAO.Fields
+Dim F, J%, Fds As Dao.Fields
 Set Fds = A.TableDefs(T).Fields
 For Each F In AyReOrd(F, Fny)
     J = J + 1
@@ -138,10 +138,10 @@ NColzT = A.TableDefs(T).Fields.Count
 End Function
 
 Function NReczDbtBexpr&(A As Database, T$, Bexpr$)
-NReczDbtBexpr = ValOfQ(A, FmtQQ("Select Count(*) from [?]?", T$, SqpWh(Bexpr)))
+NReczDbtBexpr = ValzQ(A, FmtQQ("Select Count(*) from [?]?", T$, SqpWh(Bexpr)))
 End Function
 
-Function PkFnyzTd(A As DAO.TableDef) As String()
+Function PkFnyzTd(A As Dao.TableDef) As String()
 PkFnyzTd = FnyzIdx(NewPkIdxd(A))
 End Function
 
@@ -153,31 +153,31 @@ Function PkIdxNm$(A As Database, T$)
 PkIdxNm = ObjNm(PkIdx(A, T$))
 End Function
 
-Function NewPkIdxd(A As DAO.TableDef) As DAO.Index
+Function NewPkIdxd(A As Dao.TableDef) As Dao.Index
 Set NewPkIdxd = FstItn(A.Indexes, C_PkNm)
 End Function
 
-Function PkIdx(A As Database, T$) As DAO.Index
+Function PkIdx(A As Database, T$) As Dao.Index
 Set PkIdx = NewPkIdxd(A.TableDefs(T))
 End Function
 
-Function RszTFny(A As Database, T$, Fny$()) As DAO.Recordset
+Function RszTFny(A As Database, T$, Fny$()) As Dao.Recordset
 Set RszTFny = A.OpenRecordset(SqlSel_Fny_T(Fny, T))
 End Function
 
-Function RszTFF(A As Database, T$, FF$) As DAO.Recordset
+Function RszTFF(A As Database, T$, FF$) As Dao.Recordset
 Set RszTFF = RszTFny(A, T, Ny(FF))
 End Function
 
-Function RszTF(A As Database, T$, F$) As DAO.Recordset
+Function RszTF(A As Database, T$, F$) As Dao.Recordset
 Set RszTF = A.OpenRecordset(SqlSel_F_T(F, T))
 End Function
 
-Function RszT(A As Database, T$) As DAO.Recordset
+Function RszT(A As Database, T$) As Dao.Recordset
 Set RszT = A.TableDefs(T).OpenRecordset
 End Function
 
-Function FdzTF(A As Database, T$, F$) As DAO.Field2
+Function FdzTF(A As Database, T$, F$) As Dao.Field2
 Set FdzTF = A.TableDefs(T).Fields(F)
 End Function
 
@@ -228,7 +228,7 @@ Sub InsTblzDrs(A As Database, T$, B As Drs)
 InsRszDry RszTFny(A, T, B.Fny), B.Dry
 End Sub
 
-Sub AddFd(A As Database, T$, Fd As DAO.Fields)
+Sub AddFd(A As Database, T$, Fd As Dao.Fields)
 A.TableDefs(T).Fields.Append Fd
 End Sub
 
@@ -249,11 +249,11 @@ BrwDt DtzT(A, T$)
 End Sub
 
 Function IsSysTbl(A As Database, T$) As Boolean
-IsSysTbl = (A.TableDefs(T).Attributes And DAO.TableDefAttributeEnum.dbSystemObject) <> 0
+IsSysTbl = (A.TableDefs(T).Attributes And Dao.TableDefAttributeEnum.dbSystemObject) <> 0
 End Function
 
 Function IsHidTbl(A As Database, T$) As Boolean
-IsHidTbl = (A.TableDefs(T).Attributes And DAO.TableDefAttributeEnum.dbHiddenObject) <> 0
+IsHidTbl = (A.TableDefs(T).Attributes And Dao.TableDefAttributeEnum.dbHiddenObject) <> 0
 End Function
 
 Function Lnkinf(A As Database) As String()
@@ -339,15 +339,16 @@ Tst:
     Return
 End Sub
 
-Private Function ShtTyscfzCol$(Col, F)
-Dim ShtTysc$
+Function ShtTyszCol$(Col())
+Dim O$
 Select Case True
-Case IsColOfBool(Col): ShtTyscfzCol = "B:" & F
-Case IsColOfDte(Col): ShtTyscfzCol = "Dte:" & F
-Case IsColOfNum(Col): ShtTyscfzCol = ShtTyzNumCol(Col) & ":" & F
-Case IsColOfStr(Col): ShtTyscfzCol = IIf(IsMemCol(Col), "M:", "") & F
+Case IsBoolCol(Col): O = "B"
+Case IsDteCol(Col): O = "Dte"
+Case IsColOfNum(Col): O = ShtTyzNumCol(Col)
+Case IsColOfStr(Col): O = IIf(IsMemCol(Col), "M", "")
 Case Else: Thw CSub, "Col cannot determine its type: Not [Str* Num* Bool* Dte*:Col]", "Col", Col
 End Select
+ShtTyszCol = O
 End Function
 Function ShtTyzNumCol$(Col)
 ShtTyzNumCol = ShtTyzDao(DaoTyzNumCol(Col))
@@ -424,20 +425,20 @@ Case Else: Thw CSub, "NumVbTy is not numeric VbTy", "NumVbTyp", ShtTyzNumVbTy(Nu
 End Select
 End Function
 
-Function IsColOfBool(Col) As Boolean
+Function IsBoolCol(Col()) As Boolean
 Dim V
 For Each V In Col
     If Not IsBool(V) Then Exit Function
 Next
-IsColOfBool = True
+IsBoolCol = True
 End Function
 
-Function IsColOfDte(Col) As Boolean
+Function IsDteCol(Col()) As Boolean
 Dim V
 For Each V In Col
     If Not IsDte(V) Then Exit Function
 Next
-IsColOfDte = True
+IsDteCol = True
 End Function
 
 Sub InsTblzDry(A As Database, T$, Dry())
@@ -448,21 +449,24 @@ Sub CrtTblzJnFld(A As Database, T$, KK$, JnFld$, Optional Sep$ = " ")
 Dim Tar$, LisFld$
     Tar = T & "_Jn_" & JnFld
     LisFld = JnFld & "_Jn"
-RunQ A, SqlSel_FF_Into_T_WhFalse(KK, Tar, T$)
+RunQ A, SqlSel_Fny_Into_T(Ny(KK), Tar, T)
 AddFld A, T$, LisFld, dbMemo
-InsTblzDry A, T$, DryzJnFldKK(DryzT(A, T$), KK, FldIx(A, T$, JnFld))
+Dim KKIdx&(), JnFldIx&
+    KKIdx = IxAy(Fny(A, T), Ny(KK))
+    JnFldIx = IxzTF(A, T, JnFld)
+InsTblzDry A, T$, DryzJnFldKK(DryzT(A, T$), KKIdx, JnFldIx)
 End Sub
 
-Function FldIx%(A As Database, T$, Fld)
-Dim F As DAO.Field, O%
+Function IxzTF%(A As Database, T$, Fld$)
+Dim F As Dao.Field, O%
 For Each F In A.TableDefs(T).Fields
     If F.Name = Fld Then
-        FldIx = O
+        IxzTF = O
         Exit Function
     End If
     O = O + 1
 Next
-FldIx = -1
+IxzTF = -1
 End Function
 Sub CrtPk(A As Database, T$)
 A.Execute SqlCrtPkzT(T)
@@ -506,10 +510,10 @@ End Function
 
 Function NxtId&(A As Database, T$)
 Dim S$: S = FmtQQ("select Max(?Id) from [?]", T$, T$)
-NxtId = ValOfQ(A, S) + 1
+NxtId = ValzQ(A, S) + 1
 End Function
 
-Function DaoTyzTF(A As Database, T$, F$) As DAO.DataTypeEnum
+Function DaoTyzTF(A As Database, T$, F$) As Dao.DataTypeEnum
 DaoTyzTF = A.TableDefs(T).Fields(F).Type
 End Function
 
@@ -521,12 +525,12 @@ Function CnStrzLnkTbl$(A As Database, T$)
 CnStrzLnkTbl = A.TableDefs(T).Connect
 End Function
 
-Sub AddFldzExpr(A As Database, T$, F$, Expr$, Ty As DAO.DataTypeEnum)
+Sub AddFldzExpr(A As Database, T$, F$, Expr$, Ty As Dao.DataTypeEnum)
 A.TableDefs(T).Fields.Append Fd(F, Ty, Expr:=Expr)
 End Sub
 
-Function ValOfTFRecId(A As Database, T$, F$, RecId&) ' K is Pk value
-ValOfTFRecId = ValOfQ(A, SqlSel_FF_T(T, F, BexprRecId(T, RecId)))
+Function ValzTFRecId(A As Database, T$, F$, RecId&) ' K is Pk value
+ValzTFRecId = ValzQ(A, SqlSel_FF_T(T, F, BexprRecId(T, RecId)))
 End Function
 
 Sub CrtTblzCloneEmp(A As Database, T$, FmTbl$)
@@ -568,7 +572,7 @@ End Sub
 Private Sub ZZ()
 Dim Db As Database
 Dim B
-Dim C As DAO.Fields
+Dim C As Dao.Fields
 Dim D As DataTypeEnum
 Dim E%
 Dim F$
@@ -577,27 +581,27 @@ Dim H()
 Dim I$()
 Dim J&
 Dim L As Dictionary
-Dim M As DAO.Index
-Dim O As DAO.Database
+Dim M As Dao.Index
+Dim O As Dao.Database
 Dim XX
 End Sub
 
-Function ValOfArs(A As AdoDb.Recordset)
+Function ValzArs(A As AdoDb.Recordset)
 If NoReczAdo(A) Then Exit Function
 Dim V: V = A.Fields(0).Value
 If IsNull(V) Then Exit Function
-ValOfArs = V
+ValzArs = V
 End Function
 
 Function ValzCnq(A As AdoDb.Connection, Q$)
-ValzCnq = ValOfArs(A.Execute(Q))
+ValzCnq = ValzArs(A.Execute(Q))
 End Function
 
 Function NReczFxw&(Fx$, Wsn$, Optional Bexpr$)
 NReczFxw = ValzCnq(CnzFx(Fx$), SqlSelCnt_T(CatTn(Wsn), Bexpr))
 End Function
 Function NReczT&(A As Database, T$, Optional Bexpr$)
-NReczT = ValOfQ(A, SqlSelCnt_T(T, Bexpr))
+NReczT = ValzQ(A, SqlSelCnt_T(T, Bexpr))
 End Function
 
 Property Get LofVblPrp$(A As Database, T$)

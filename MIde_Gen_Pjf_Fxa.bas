@@ -1,28 +1,29 @@
 Attribute VB_Name = "MIde_Gen_Pjf_Fxa"
 Option Explicit
-Private Sub Z_FxaCompress()
-Debug.Print FxaCompress(Pjf(CurPj))
+Private Sub Z_CompressFxa()
+CompressFxa Pjf(CurPj)
 End Sub
 
-Function FxaCompress$(Fxa$, Optional Xls As Excel.Application)
-PjExp PjzPjfVbe(Xls.Vbe, Fxa)
-FxaCompress = FfnRpl(Fxa, DistFxazSrcp(SrcpzPjf(Fxa), Xls))
-End Function
+Sub CompressFxa(Fxa$, Optional Xls0 As Excel.Application)
+PjExp PjzPjfVbe(Xls0.Vbe, Fxa)
+Dim Srcp$: Srcp = SrcpzPjf(Fxa)
+CrtDistFxa Srcp, Xls0
+RplFfn Fxa, Srcp
+End Sub
 
-Function DistFxazSrcp$(Srcp$, Optional Xls As Excel.Application)
+Sub CrtDistFxa(Srcp$, Optional Xls0 As Excel.Application)
 If Not IsSrcp(Srcp) Then Thw CSub, "Not Srcp", "Srcp", Srcp
 Dim Fxa$
-Dim A As Excel.Application
-    Set A = DftXls(Xls)
+Dim Xls As Excel.Application
+    Set Xls = DftXls(Xls0)
     Fxa = DistFxa(Srcp)
     Dim Wb As Workbook
-    Set Wb = WbCrtNxtFxa(Fxa, A)
-DistFxazSrcp = Wb.FullName
+    Set Wb = CrtFxa(Fxa, Xls)
 AddRfzPj Wb.VBProject
 LoadBas Wb.VBProject
 Wb.Close True
-If IsNothing(Xls) Then QuitXls A
-End Function
+If IsNothing(Xls0) Then QuitXls Xls
+End Sub
 
 Function PjzFxa(Fxa$, A As Excel.Application) As VBProject
 If Not IsFxa(Fxa) Then Stop
@@ -31,19 +32,10 @@ Dim O As VBProject: Set O = PjzXls(A, Fxa): If Not IsNothing(O) Then Set PjzFxa 
 A.Workbooks.Open Fxa
 Set PjzFxa = PjzXls(A, Fxa)
 End Function
-Function CrtFxa(Fxa$) As Workbook
+
+Function CrtFxa(Fxa$, Xls As Excel.Application) As Workbook
 If Not IsFxa(Fxa) Then Thw CSub, "Not a Fxa", "Fxa", Fxa
-Dim Wb As Workbook: Set Wb = A.Workbooks.Add
-PjzFxa(F, A).Name = Fnn(Fxa)
+Dim Wb As Workbook: Set Wb = Xls.Workbooks.Add
+PjzFxa(Fxa, Xls).Name = Fnn(Fxa)
 Wb.SaveAs Fxa, XlFileFormat.xlOpenXMLAddIn
 End Function
-Function WbCrtNxtFxa(Fxa$, A As Excel.Application) As Workbook
-Dim F$: F = NxtFfn(Fxa)
-Wb.Close
-Set Wb = A.Workbooks.Open(F)
-Dim Pj As VBProject
-PjzFxa(F, A).Name = Fnn(Fxa)
-Wb.Save
-Set WbCrtNxtFxa = Wb
-End Function
-

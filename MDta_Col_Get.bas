@@ -7,19 +7,11 @@ End Function
 Function StrColzDrs(A As Drs, ColNm$) As String()
 StrColzDrs = StrColzDry(A.Dry, IxzAy(A.Fny, ColNm))
 End Function
-Function DrLinAy(Dry(), Optional CC, Optional FldSep$ = vbFldSep) As String()
+Function LyzDry(Dry(), Optional CC, Optional FldSep$ = vbFldSep) As String()
 Dim Dr
 For Each Dr In Itr(Dry)
-    PushI DrLinAy, DrLin(Dr, CC, FldSep)
+    PushI LyzDry, Jn(Dr, FldSep)
 Next
-End Function
-
-Function DrLin$(Dr, Optional CC, Optional FldSep$ = vbFldSep)
-If IsMissing(CC) Then
-    DrLin = Jn(Dr, FldSep)
-Else
-    DrLin = Jn(AywIxAy(Dr, IxAyzCC(CC)), FldSep)
-End If
 End Function
 
 Function SqzDry(Dry()) As Variant()

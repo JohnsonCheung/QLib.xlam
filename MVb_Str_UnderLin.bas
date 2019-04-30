@@ -1,11 +1,11 @@
 Attribute VB_Name = "MVb_Str_UnderLin"
 Option Explicit
-Function UnderLin$(A$)
-UnderLin = String(Len(A), "-")
+Function UnderLin$(Lin$)
+UnderLin = String(Len(Lin), "-")
 End Function
 
-Function UnderLinDbl$(A)
-UnderLinDbl = String(Len(A), "=")
+Function UnderLinDbl$(Lin$)
+UnderLinDbl = String(Len(Lin), "=")
 End Function
 
 Function PushMsgUnderLinDbl(O$(), M$)

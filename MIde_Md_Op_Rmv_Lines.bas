@@ -35,7 +35,7 @@ Sub RplMd(A As CodeModule, NewMdLines$)
 RplLines A, MdLineszMd(A), NewMdLines
 End Sub
 
-Sub RmvMdFTIx(A As CodeModule, FTIx As FTIx)
+Sub RmvLineszFTIx(A As CodeModule, FTIx As FTIx)
 Dim FstLin$
 FstLin = A.Lines(FTIx.FmNo, 1)
 With FTIx
@@ -45,7 +45,7 @@ With FTIx
 End With
 End Sub
 
-Sub RmvMdLineszFtIxAy(A As CodeModule, B() As FTIx)
+Sub RmvLineszFTIxAy(A As CodeModule, B() As FTIx)
 If Not FTIxAyIsInOrd(B) Then Stop
 Dim J%
 For J = UB(B) To 0 Step -1
@@ -56,9 +56,9 @@ Next
 End Sub
 
 
-Private Sub Z_RmvMdLineszFtIxAy()
+Private Sub Z_RmvLineszFTIxAy()
 Dim A() As FTIx
 A = MthFTIxAyzMth(Md("Md_"), "XXX")
-RmvMdLineszFtIxAy Md("Md_"), A
+RmvLineszFTIxAy Md("Md_"), A
 End Sub
 

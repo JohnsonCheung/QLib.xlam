@@ -1,13 +1,13 @@
 Attribute VB_Name = "MDao_Def_Fds"
 Option Explicit
 
-Function CsvzFds$(A As DAO.Fields)
+Function CsvzFds$(A As Dao.Fields)
 CsvzFds = CsvzDr(AvzItr(A))
 End Function
 
-Function DrzFds(A As DAO.Fields, Optional FF$) As Variant()
+Function DrzFds(A As Dao.Fields, Optional FF$) As Variant()
 If FF = "" Then
-    Dim F As DAO.Field
+    Dim F As Dao.Field
     For Each F In A
         PushI DrzFds, EmptyIfNull(F.Value)
     Next
@@ -16,7 +16,7 @@ End If
 DrzFds = DrzFdsFny(A, Ny(FF))
 End Function
 
-Function DrzFdsFny(A As DAO.Fields, Fny$()) As Variant()
+Function DrzFdsFny(A As Dao.Fields, Fny$()) As Variant()
 Dim I, O()
 For Each I In Fny
     Push O, EmptyIfNull(A(I).Value)
@@ -24,7 +24,7 @@ Next
 End Function
 
 Private Sub Z_DrzFds()
-Dim Rs As DAO.Recordset, Dry()
+Dim Rs As Dao.Recordset, Dry()
 Set Rs = Db(SampFbzShpRate).OpenRecordset("Select * from YMGRnoIR")
 With Rs
     While Not .EOF
@@ -37,7 +37,7 @@ BrwDry Dry
 End Sub
 
 Private Sub Z_DrzFds1()
-Dim Rs As DAO.Recordset, Dr(), D As Database
+Dim Rs As Dao.Recordset, Dr(), D As Database
 Set Rs = RszQ(SampDbzDutyDta, "Select * from SkuB")
 With Rs
     While Not .EOF

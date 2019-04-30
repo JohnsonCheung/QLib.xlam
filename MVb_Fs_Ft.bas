@@ -1,6 +1,10 @@
 Attribute VB_Name = "MVb_Fs_Ft"
 Option Explicit
 
+Sub DmpFt(Ft$)
+D LineszFt(Ft)
+End Sub
+
 Sub BrwFt(Ft$, Optional UseVc As Boolean)
 Shell IIf(UseVc, "code.cmd", "notepad.exe") & " """ & Ft & """", vbMaximizedFocus
 End Sub

@@ -1,6 +1,6 @@
 Attribute VB_Name = "MApp_Wrk"
 Option Explicit
-Private Db As Database
+Private A As Database
 Property Get W() As Database
 Set W = A
 End Property
@@ -21,7 +21,7 @@ Sub WOpn(Apn$)
 Set A = Db(WFb(Apn))
 End Sub
 
-Sub WRun(QQ, ParamArray Ap())
+Sub WRun(QQ$, ParamArray Ap())
 Dim Av(): Av = Ap
 RunQQAv A, QQ, Av
 End Sub
@@ -29,11 +29,11 @@ Function WTny() As String()
 WTny = Tny(W)
 End Function
 
-Function WStru(Optional TT) As String()
+Function WStru(Optional TT$) As String()
 WStru = StruzTT(W, TT)
 End Function
 
-Sub WDrp(TT)
+Sub WDrp(TT$)
 DrpTT W, TT
 End Sub
 
@@ -63,15 +63,16 @@ RenTbl W, Fm, ToTbl
 End Sub
 
 Sub WClr()
-Dim T, Tny$()
+Dim T$, I, Tny$()
 Tny = WTny: If Si(Tny) = 0 Then Exit Sub
-For Each T In Tny
+For Each I In Tny
+    T = I
     WDrp T
 Next
 End Sub
 
-Sub WImpTbl(TT)
-'ImpTbl W, TT
+Sub WImpTbl(TT$)
+'ImpTbl  W, TT
 End Sub
 
 

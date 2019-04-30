@@ -62,7 +62,7 @@ Function MthDicInPj(Optional WiTopRmk As Boolean)
 End Function
 
 Function S1S2_Of_TopRmk_And_MthLines(MthLinesWiTopRmk$) As S1S2
-Dim N%
+Dim N&
     Stop '
 With AyabByN(SplitCrLf(MthLinesWiTopRmk), N)
     Dim A$, B$

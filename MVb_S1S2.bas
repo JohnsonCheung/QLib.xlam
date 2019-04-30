@@ -1,46 +1,58 @@
 Attribute VB_Name = "MVb_S1S2"
 Option Explicit
-Function SwapS1S2Ay(A() As S1S2) As S1S2()
-Dim I
-For Each I In Itr(A)
-    With CvS1S2(I)
-    PushObj SwapS1S2Ay, S1S2(.S2, .S1)
-    End With
+Type S1S2: S1 As String: S2 As String: End Type
+Type S1S2s: N As Long: Ay() As S1S2: End Type
+Function SwapS1S2s(A As S1S2s) As S1S2s
+Dim J&, Ay() As S1S2: Ay = A.Ay
+Dim O As S1S2s: O = A
+For J = 1 To A.N - 1
+    O.Ay(J) = SwapS1S2(Ay(J))
 Next
+SwapS1S2s = O
 End Function
-Private Property Get ZZS1S2Ay1() As S1S2()
-Dim O() As S1S2
-PushObj O, S1S2("sldjflsdkjf", "lksdjf")
-PushObj O, S1S2("sldjflsdkjf", "lksdjf")
-PushObj O, S1S2("sldjf", "lksdjf")
-PushObj O, S1S2("sldjdkjf", "lksdjf")
-ZZS1S2Ay1 = O
+Function SwapS1S2(A As S1S2) As S1S2
+With SwapS1S2
+    .S1 = A.S2
+    .S2 = A.S1
+End With
+End Function
+Sub PushS1S2(O As S1S2s, M As S1S2)
+ReDim Preserve O.Ay(O.N)
+O.Ay(O.N) = M
+O.N = O.N + 1
+End Sub
+Function AddS1S2(A As S1S2, B As S1S2) As S1S2s
+Dim O As S1S2s
+O = S1S2szU(1)
+O.Ay(0) = A
+O.Ay(1) = B
+AddS1S2 = O
+End Function
+Private Property Get ZZS1S2s1() As S1S2s
+Dim O As S1S2s
+PushS1S2 O, S1S2("sldjflsdkjf", "lksdjf")
+PushS1S2 O, S1S2("sldjflsdkjf", "lksdjf")
+PushS1S2 O, S1S2("sldjf", "lksdjf")
+PushS1S2 O, S1S2("sldjdkjf", "lksdjf")
+ZZS1S2s1 = O
 End Property
-
-Function S1S2AyAyab(A, B, Optional NoTrim As Boolean) As S1S2()
+Function S1S2szU(U&) As S1S2s
+S1S2szU.N = U + 1
+ReDim S1S2szU.Ay(U)
+End Function
+Function S1S2szAyab(A, B, Optional NoTrim As Boolean) As S1S2s
 ThwDifSz A, B, CSub
-Dim U&, O() As S1S2
+Dim U&, O As S1S2s
 U = UB(A)
-Resi O, U
+O = S1S2szU(U)
 Dim J&
-For J = 0 To UB(A)
-    Set O(J) = S1S2(A(J), B(J), NoTrim)
+For J = 0 To U
+    O.Ay(J) = S1S2(A(J), B(J), NoTrim)
 Next
-S1S2AyAyab = O
+S1S2szAyab = O
 End Function
 
-Function CvS1S2(A) As S1S2
-Set CvS1S2 = A
-End Function
-Function S1S2Ay(ParamArray S1S2Ap()) As S1S2()
-Dim Av(): Av = S1S2Ap
-Dim I
-For Each I In Av
-    PushObj S1S2Ay, I
-Next
-End Function
 Function S1S2(S1, S2, Optional NoTrim As Boolean) As S1S2
-Set S1S2 = New S1S2
 If NoTrim Then
     S1S2.S1 = S1
     S1S2.S2 = S2
@@ -55,37 +67,45 @@ O1 = A.S1
 O2 = A.S2
 End Sub
 
-Function S1S2Clone(A As S1S2) As S1S2
-Set S1S2Clone = S1S2(A.S1, A.S2)
+Function LinzS1S2$(A As S1S2, Optional Sep$ = " ", Optional W%)
+LinzS1S2 = AlignL(A.S1, W) & Sep & A.S2
 End Function
-
-Function S1S2Lin$(A As S1S2, Optional Sep$ = " ", Optional W1%)
-S1S2Lin = AlignL(A.S1, W1) & Sep & A.S2
-End Function
-
-Function JnS1S2Ay(A() As S1S2, Optional Sep$ = "") As String()
-Dim O$(), J&
-For J = 0 To UB(A)
-   Push O, A(J).S1 & Sep & A(J).S2
+Function W1zS1S2s%(A As S1S2s)
+Dim O%, J&
+For J = 0 To A.N - 1
+    O = Max(O, Len(A.Ay(J).S1))
 Next
-JnS1S2Ay = O
+End Function
+Function W2zS1S2s%(A As S1S2s)
+Dim O%, J&
+For J = 0 To A.N - 1
+    O = Max(O, Len(A.Ay(J).S2))
+Next
+End Function
+Function LyzS1S2s(A As S1S2s, Optional Sep$ = "") As String()
+Dim O$(), J&, W%, Ay() As S1S2
+Ay = A.Ay
+W = W1zS1S2s(A)
+For J = 0 To A.N - 1
+   PushI LyzS1S2s, LinzS1S2(Ay(J), Sep, W)
+Next
 End Function
 
-Sub BrwS1S2Ay(A() As S1S2)
-BrwAy FmtS1S2Ay(A)
+Sub BrwS1S2s(A As S1S2s)
+BrwAy FmtS1S2s(A)
 End Sub
 
-Function S1S2AyzDic(A As Dictionary) As S1S2()
+Function S1S2szDic(A As Dictionary) As S1S2s
 Dim K
 For Each K In A.Keys
-    PushObj S1S2AyzDic, S1S2(K, LineszV(A(K)))
+    PushS1S2 S1S2szDic, S1S2(K, LineszV(A(K)))
 Next
 End Function
 
-Function DiczS1S2Ay(A() As S1S2, Optional Sep$ = " ") As Dictionary
+Function DiczS1S2s(A As S1S2s, Optional Sep$ = " ") As Dictionary
 Dim J&, O As New Dictionary
-For J = 0 To UB(A)
-    With A(J)
+For J = 0 To A.N - 1
+    With A.Ay(J)
         If O.Exists(.S1) Then
             O(.S1) = O(.S1) & " " & O(.S2)
         Else
@@ -93,68 +113,67 @@ For J = 0 To UB(A)
         End If
     End With
 Next
-Set DiczS1S2Ay = O
+Set DiczS1S2s = O
 End Function
 
-Function Sy1zS1S2Ay(A() As S1S2) As String()
-Dim O$(), J&
-For J = 0 To UB(A)
-   Push O, A(J).S1
+Function Sy1zS1S2s(A As S1S2s) As String()
+Dim J&
+For J = 0 To A.N - 1
+   PushI Sy1zS1S2s, A.Ay(J).S1
 Next
-Sy1zS1S2Ay = O
 End Function
 
-Function Sy2zS1S2Ay(A() As S1S2) As String()
+Function Sy2zS1S2s(A As S1S2s) As String()
 Dim O$(), J&
-For J = 0 To UB(A)
-   Push O, A(J).S2
+For J = 0 To A.N - 1
+   Push Sy2zS1S2s, A.Ay(J).S2
 Next
-Sy2zS1S2Ay = O
+Sy2zS1S2s = O
 End Function
 
-Function SqzS1S2Ay(A() As S1S2, Optional Nm1$ = "S1", Optional Nm2$ = "S2") As Variant()
-If Si(A) = 0 Then Exit Function
-Dim O(), I, R&
-ReDim O(1 To Si(A), 1 To 2)
+Function SqzS1S2s(A As S1S2s, Optional Nm1$ = "S1", Optional Nm2$ = "S2") As Variant()
+If A.N = 0 Then Exit Function
+Dim O(), I, R&, J&
+ReDim O(1 To A.N + 1, 1 To 2)
 R = 2
 O(1, 1) = Nm1
 O(1, 2) = Nm2
-For Each I In Itr(A)
-    With CvS1S2(I)
+For J = 0 To A.N - 1
+    With A.Ay(J)
         O(R, 1) = .S1
         O(R, 2) = .S2
         R = R + 1
     End With
 Next
-SqzS1S2Ay = O
+SqzS1S2s = O
 End Function
-Function S1S2AyzColonVbl(ColonVbl$) As S1S2()
+Function S1S2szColonVbl(ColonVbl$) As S1S2s
 Dim I
 For Each I In SplitVBar(ColonVbl)
-    PushObj S1S2AyzColonVbl, BrkBoth(CStr(I), ":")
+    PushS1S2 S1S2szColonVbl, BrkBoth(CStr(I), ":")
 Next
 End Function
 
-Function S1S2AyzSySep(Sy$(), Sep$, Optional NoTrim As Boolean) As S1S2()
-Dim O() As S1S2, J%
+Function S1S2szSySep(Sy$(), Sep$, Optional NoTrim As Boolean) As S1S2s
+Dim O As S1S2s, J%
 Dim U&: U = UB(Sy)
-Resi O, U
+O = S1S2szU(U)
 For J = 0 To U
-    Set O(J) = Brk1(Sy(J), Sep, NoTrim)
+    O.Ay(J) = Brk1(Sy(J), Sep, NoTrim)
 Next
-S1S2AyzSySep = O
+S1S2szSySep = O
 End Function
-Private Sub Z_S1S2AyzDic()
+Private Sub Z_S1S2szDic()
 Dim A As New Dictionary
 A.Add "A", "BB"
 A.Add "B", "CCC"
-Dim Act() As S1S2
-Act = S1S2AyzDic(A)
+Dim Act As S1S2s
+Act = S1S2szDic(A)
 Stop
 End Sub
 
 
 Private Sub Z()
-Z_S1S2AyzDic
+Z_S1S2szDic
 MVb__S1S2:
 End Sub

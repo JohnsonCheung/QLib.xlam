@@ -23,14 +23,14 @@ With A
         F2.LoadFromFile Ffn
         .Update
     End With
-    .TRs.Fields!FilTim = TimFfn(Ffn$)
+    .TRs.Fields!FilTim = DtezFfn(Ffn$)
     .TRs.Fields!FilSz = SizFfn(Ffn$)
     .TRs.Update
 End With
 End Sub
 
-Sub ImpAtt(A As Database, Att, FmFfn$)
-ImpAttzAttd Attd(Db, Att), FmFfn
+Sub ImpAtt(A As Database, Att$, FmFfn$)
+ImpAttzAttd Attd(A, Att), FmFfn
 End Sub
 
 Private Sub Z_ImpAtt()

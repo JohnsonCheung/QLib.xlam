@@ -60,9 +60,9 @@ Dim J%, Col()
 For J = 0 To NColzDry(WrpDry) - 1
     Col = ColzDry(WrpDry, J)
     If IsArray(Col(0)) Then
-        Push WrpDryWdt, AyWdt(AyFlat(Col))
+        Push WrpDryWdt, WdtzSy(AyFlat(Col))
     Else
-        Push WrpDryWdt, AyWdt(Col)
+        Push WrpDryWdt, WdtzSy(Col)
     End If
 Next
 End Function

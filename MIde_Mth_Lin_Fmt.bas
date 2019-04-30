@@ -1,14 +1,14 @@
 Attribute VB_Name = "MIde_Mth_Lin_Fmt"
 Option Explicit
-Function NArg(MthLin) As Byte
+Function NArg(MthLin$) As Byte
 NArg = Si(SplitComma(MthPm(MthLin)))
 End Function
 
-Function ArgNy(MthLin) As String()
-ArgNy = NyzOy(ArgAy(MthLin))
+Function ArgNy(MthLin$) As String()
+ArgNy = NyzOy(ArgSy(MthLin))
 End Function
-Function ArgAy(Lin) As String()
-ArgAy = SplitCommaSpc(MthPm(Lin))
+Function ArgSy(Lin$) As String()
+ArgSy = SplitCommaSpc(MthPm(Lin))
 End Function
 
 Function Arg(ArgStr$) As Arg

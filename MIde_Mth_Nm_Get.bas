@@ -10,8 +10,9 @@ Private Sub Z_DryOf_MthNm_Verb_InVbe()
 BrwDry DryOf_MthNm_Verb_InVbe
 End Sub
 Function DryOf_MthNm_Verb_InVbe() As Variant()
-Dim MthNm, ODry()
-For Each MthNm In Itr(MthNyInVbe)
+Dim MthNm$, I, ODry()
+For Each I In Itr(MthNyInVbe)
+    MthNm = I
     PushI ODry, Sy(MthNm, Verb(MthNm))
 Next
 DryOf_MthNm_Verb_InVbe = DrywDist(ODry)
@@ -21,8 +22,9 @@ MthNsetInVbeWoVerb.Srt.Vc
 End Sub
 
 Property Get MthNyInVbeWiVerb() As String()
-Dim MthNm, J&
-For Each MthNm In Itr(MthNyInVbe)
+Dim MthNm$, I, J&
+For Each I In Itr(MthNyInVbe)
+    MthNm = I
 '    If HasSubStr(MthNm, "Z_ExprDic") Then Stop
     If J Mod 100 = 0 Then Debug.Print J
     If HasVerb(MthNm) Then PushI MthNyInVbeWiVerb, MthNm
@@ -30,13 +32,14 @@ For Each MthNm In Itr(MthNyInVbe)
 Next
 End Property
 Property Get MthNyInVbeWoVerb() As String()
-Dim MthNm
-For Each MthNm In Itr(MthNyInVbe)
+Dim MthNm$, I
+For Each I In Itr(MthNyInVbe)
+    MthNm = I
     If Not HasVerb(MthNm) Then PushI MthNyInVbeWiVerb, MthNm
 Next
 End Property
 
-Function HasVerb(Nm) As Boolean
+Function HasVerb(Nm$) As Boolean
 HasVerb = Verb(Nm) <> ""
 End Function
 Property Get MthNsetInVbeWiVerb() As Aset

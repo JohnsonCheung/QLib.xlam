@@ -1,6 +1,6 @@
 Attribute VB_Name = "MIde_Fun_VerbPatn"
 Option Explicit
-Public Const C_VerbSs$ = "Zip Wrt Wrp Wait Vis Vc UnderLin UnRmk UnEsc Trim Tile Thw Tak Syw Sye Swap Sum Stop Srt Split Solve Shw Shf Set Sel Sav Run Rpl Rmv Rmk Rfh Reverse Resz Ren ReSz ReSeq ReOrd RTrim Quote Quit Push Prompt Pop Opn Nxt Norm New Mov Mk Minus Min Mid Mge Max Map Lnk Lis Lik Las Kill Jn Jmp Is Into Intersect Ins Initialize Init Inf Indent Inc Imp Hit Has Halt Gen Fst Fmt Flat Fill Extend Expand Exp Exl Evl Esc Ens EndTrim Edt Dryw Drye Drsw Drse Drp Down Do Dmp Dlt Cv Cut Crt Cpy Compress Cls Clr Clone Cln Clear Chk3 Chk2 Chk1 Chk Chg Change Cfm Brw Brk Box Bld Bet Below Bef Bdr Backup Ayw Aye AutoFit AutoExec Ass Asg And Align Aft Add Above"
+Public Const Verbss$ = "Zip Wrt Wrp Wait Vis Vc UnderLin UnRmk UnEsc Trim Tile Thw Tak Syw Sye Swap Sum Stop Srt Split Solve Shw Shf Set Sel Sav Run Rpl Rmv Rmk Rfh Reverse Resz Ren ReSz ReSeq ReOrd RTrim Quote Quit Push Prompt Pop Opn Nxt Norm New Mov Mk Minus Min Mid Mge Max Map Lnk Lis Lik Las Kill Jn Jmp Is Into Intersect Ins Initialize Init Inf Indent Inc Imp Hit Has Halt Gen Fst Fmt Flat Fill Extend Expand Exp Exl Evl Esc Ens EndTrim Edt Dryw Drye Drsw Drse Drp Down Do Dmp Dlt Cv Cut Crt Cpy Compress Cls Clr Clone Cln Clear Chk3 Chk2 Chk1 Chk Chg Change Cfm Brw Brk Box Bld Bet Below Bef Bdr Backup Ayw Aye AutoFit AutoExec Ass Asg And Align Aft Add Above"
 Public Const C_BRKCmlss$ = "Wi Wo By Of To"
 Public Const DocOfQBNm$ = "Quote-Brk-Nm.  If the Cml is BRKCml, quote-bkt."
 Property Get BRKCmlASet() As Aset
@@ -9,8 +9,9 @@ If IsNothing(X) Then Set X = AsetzSsl(C_BRKCmlss)
 Set BRKCmlASet = X
 End Property
 Property Get MthVNyInVbe() As String()
-Dim MthNm
-For Each MthNm In Itr(MthNyInVbe)
+Dim MthNm$, I
+For Each I In Itr(MthNyInVbe)
+    MthNm = I
     PushI MthVNyInVbe, MthVNm(MthNm)
 Next
 End Property
@@ -50,15 +51,17 @@ MthQVNyzVbe = QVNy(MthNyzVbe(A, WhStr))
 End Function
 
 Function QVNy(Ny$()) As String()
-Dim Nm
-For Each Nm In Itr(Ny)
+Dim Nm$, I
+For Each I In Itr(Ny)
+    Nm = I
     PushI QVNy, QVNm(Nm)
 Next
 End Function
 
-Function QBNm$(Nm)
-Dim Cml, O$()
-For Each Cml In Itr(Cml1Sy(Nm))
+Function QBNm$(Nm$)
+Dim Cml$, I, O$()
+For Each I In Itr(Cml1Sy(Nm))
+    Cml = I
     If IsBRKCml(Cml) Then
         PushI O, QuoteBkt(Cml)
     Else
@@ -68,7 +71,7 @@ Next
 QBNm = Jn(O)
 End Function
 
-Function QVBNm$(Nm) 'Quote-Verb-and-cmlBrk-Nm.
+Function QVBNm$(Nm$) 'Quote-Verb-and-cmlBrk-Nm.
 Dim V$: V = Verb(Nm)
 If V = "" Then
     QVBNm = "#" & QBNm(Nm)
@@ -78,7 +81,7 @@ Else
     End With
 End If
 End Function
-Function QVNm$(Nm)
+Function QVNm$(Nm$)
 Dim V$: V = Verb(Nm)
 If V = "" Then
     QVNm = "#" & Nm
@@ -86,16 +89,16 @@ Else
     QVNm = Replace(Nm, V, QuoteBkt(V), Count:=1)
 End If
 End Function
-Function MthVNm$(MthNm)
+Function MthVNm$(MthNm$)
 MthVNm = Verb(MthNm) & "." & MthNm
 End Function
 Property Get VerbRe() As RegExp
 Static X As RegExp
-If IsNothing(X) Then Set X = RegExp(PatnzVerbss(C_VerbSs))
+If IsNothing(X) Then Set X = RegExp(PatnzVerbss(Verbss))
 Set VerbRe = X
 End Property
 Sub BrwVerb()
-Vc SySsl(C_VerbSs)
+Vc SySsl(Verbss)
 End Sub
 Sub VcNVTDNmAsetInVbe()
 NVTDNmAsetInVbe.Srt.Vc
@@ -110,18 +113,19 @@ Private Function NVTDNyzVbe(A As Vbe) As String()
 NVTDNyzVbe = NVTDNy(MthNyzVbe(A))
 End Function
 Private Function NVTDNy(Ny$()) As String()
-Dim Nm
-For Each Nm In Itr(Ny)
+Dim Nm$, I
+For Each I In Itr(Ny)
+    Nm = I
     PushI NVTDNy, NVTDNm(Nm)
 Next
 End Function
-Private Function NVTDNm$(Nm) 'Nm.Verb.Ty.Dot-Nm
+Private Function NVTDNm$(Nm$) 'Nm.Verb.Ty.Dot-Nm
 NVTDNm = NVTy(Nm) & "." & Nm
 End Function
 Function FstVerbSubNyInVbe() As String()
 
 End Function
-Function NVTy$(Nm) 'Nm.Verb-Ty
+Function NVTy$(Nm$) 'Nm.Verb-Ty
 Select Case True
 Case IsNoVerbNm(Nm): NVTy = "NoVerb"
 Case IsFstVerbNm(Nm): NVTy = "FstVerb"
@@ -129,15 +133,15 @@ Case IsMidVerbNm(Nm): NVTy = "MidVerb"
 Case Else: Thw CSub, "Program error: a Nm must be any of [NoVerb | FstVerb | MidVerb]", "Nm", Nm
 End Select
 End Function
-Function IsNoVerbNm(Nm) As Boolean
+Function IsNoVerbNm(Nm$) As Boolean
 IsNoVerbNm = Verb(Nm) = ""
 End Function
-Function IsMidVerbNm(Nm) As Boolean
+Function IsMidVerbNm(Nm$) As Boolean
 Dim V$: V = Verb(Nm): If V = "" Then Exit Function
 IsMidVerbNm = Not HasPfx(Nm, Verb(Nm))
 End Function
 
-Function IsFstVerbNm(Nm) As Boolean
+Function IsFstVerbNm(Nm$) As Boolean
 IsFstVerbNm = HasPfx(Nm, Verb(Nm))
 End Function
 Function IsVerb(S) As Boolean
@@ -146,7 +150,7 @@ End Function
 
 Property Get VerbAset() As Aset
 Static X As Aset
-If IsNothing(X) Then Set X = AsetzSsl(C_VerbSs)
+If IsNothing(X) Then Set X = AsetzSsl(Verbss)
 Set VerbAset = X
 End Property
 Function RmvEndDig$(S)
@@ -159,37 +163,39 @@ For J = Len(S) To 1 Step -1
 Next
 RmvEndDig = Left(S, J)
 End Function
-Function Verb$(Nm)
-Dim Cml, LetterCml$
-For Each Cml In Cml1Sy(Nm)
+Function Verb$(Nm$)
+Dim Cml$, I, LetterCml$
+For Each I In Cml1Sy(Nm)
+    Cml = I
     LetterCml = RmvDigSfx(Cml)
     If VerbAset.Has(LetterCml) Then Verb = Cml: Exit Function
 Next
 End Function
 Property Get NormVerbss$()
-NormVerbss = NormSsl(C_VerbSs, IsDes:=True)
+NormVerbss = NormSsl(Verbss, IsDes:=True)
 End Property
-Function NormSsl$(Ssl, Optional IsDes As Boolean)
+Function NormSsl$(Ssl$, Optional IsDes As Boolean)
 NormSsl = JnSpc(AyQSrt(AywDist(SySsl(Ssl)), IsDes:=True))
 End Function
 
 Function PatnzVerbss$(Verbss$)
-Dim O$(), Verb
-For Each Verb In AsetzAy(SySsl(Verbss)).Itms
+Dim O$(), Verb$, I
+For Each I In AsetzAy(SySsl(Verbss)).Itms
+    Verb = I
     PushI O, PatnzVerb(Verb)
 Next
 PatnzVerbss = QuoteBkt(JnVBar(O))
 End Function
 
-Private Function PatnzVerb$(Verb)
+Private Function PatnzVerb$(Verb$)
 ThwIfNotVerb Verb, CSub
 PatnzVerb = Verb & "[^a-z|0-9]*"
 End Function
-Private Sub ThwIfNotVerb(S, Fun$)
+Private Sub ThwIfNotVerb(S$, Fun$)
 If Not IsNm(S) Then Thw Fun, "Verb must be a name", "Str", S
 If Not IsAscUCas(Asc(FstChr(S))) Then Thw Fun, "Verb must started with UCase", "Str", S
 End Sub
 
-Function QuoteVerb$(Nm)
+Function QuoteVerb$(Nm$)
 
 End Function

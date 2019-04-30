@@ -118,9 +118,7 @@ Dim ExprVblAy$()
 DmpAy SplitVBar(SqpGp_ExprVblAy(ExprVblAy))
 End Sub
 
-
-Function SqpSelX_FF_ExtNy$(FF$, ExtNy$())
-Dim Fny$(): Fny = TermAy(FF)
+Function SqpSelX_Fny_ExtNy$(Fny$(), ExtNy$(), Optional IsDis As Boolean)
 Dim P1$()
     Dim J%, M$
     For J = 0 To UB(Fny)
@@ -147,11 +145,11 @@ Dim P1$()
 
     End If
 Dim P2$(): If FmtSql Then P2 = FmtAySamWdt(Fny) Else P2 = Fny
-SqpSelX_FF_ExtNy = KwSel & C_T & JnComma(SyAddPfx(JnAyab(P1, P2), C_NLTT))
+SqpSelX_Fny_ExtNy = KwSel & C_T & JnComma(SyAddPfx(JnAyab(P1, P2), C_NLTT))
 End Function
 
 Function SqpSel_FF_Ey$(FF$, ExprAy$())
-SqpSel_FF_Ey = SqpSel_X(SqpSelX_FF_ExtNy(FF$, ExprAy))
+SqpSel_FF_Ey = SqpSel_X(SqpSelX_Fny_ExtNy(Ny(FF), ExprAy))
 End Function
 
 Function JnCommaSpcFF$(FF$)
@@ -197,7 +195,7 @@ Dim AFny$()
 Dim W%
     'W = VblWdtAy(Ey)
 Dim Ident%
-    W = AyWdt(AFny)
+    W = WdtzSy(AFny)
 Dim Ay$()
     Dim J%, U%, S$
     U = UB(AFny)
@@ -369,16 +367,13 @@ Next
 VblFmtAyAsLy = O
 End Function
 
-Function SqlSel_FF_EDic_T$(FF$, EDic As Dictionary, T$, Optional IsDis As Boolean)
-SqlSel_FF_EDic_T = SqlSel_FF_Ey_T(FF$, SyzDicKy(EDic, TermAy(FF)), T, IsDis)
+Function SqlSel_FF_EDic_Into_T$(FF$, EDic As Dictionary, Into$, T$, Optional Bexpr$, Optional IsDis As Boolean)
+Dim Ey$(): Ey = SyzDicKy(EDic, TermAy(FF))
+SqlSel_FF_EDic_Into_T = SqlSel_Fny_ExtNy_Into_T(Ny(FF), Ey, Into, T, Bexpr, IsDis)
 End Function
 
 Function SqlSel_FF_T$(FF$, T$, Optional IsDis As Boolean, Optional Bexpr$)
 SqlSel_FF_T = SqpSel_FF(FF$, IsDis) & SqpFm(T$) & SqpWh(Bexpr)
-End Function
-
-Function SqlSel_FF_Ey_T$(FF$, Ey$(), T$, Optional IsDis As Boolean, Optional Bexpr$)
-SqlSel_FF_Ey_T = SqpSel_X(SqpSelX_FF_ExtNy(FF$, Ey), IsDis) & SqpFm(T$) & SqpWh(Bexpr)
 End Function
 
 Function ItrzTT(TT$)
@@ -684,15 +679,16 @@ Function SqlSel_FF_Into_T$(FF$, Into$, T$, Optional Bexpr$, Optional Dis As Bool
 SqlSel_FF_Into_T = SqpSel_FF(FF) & SqpInto(Into) & SqpFm(T) & SqpWh(Bexpr)
 End Function
 
-Function SqlSel_FF_T_WhFny_EqVy$(FF$, T$, Fny$(), EqVy)
-SqlSel_FF_T_WhFny_EqVy = SqlSel_FF_T(FF$, T, SqpWh_FnyEqVy(Fny, EqVy))
+Function SqlSel_Fny_T_WhFny_EqVy$(Fny$(), T$, WhFny$(), EqVy)
+SqlSel_Fny_T_WhFny_EqVy = SqlSel_Fny_T(Fny, T, SqpWh_FnyEqVy(WhFny, EqVy))
 End Function
 
-Function SqlSel_FF_ExtNy_Into_T$(FF$, ExtNy$(), Into$, T$, Optional Bexpr$)
-SqlSel_FF_ExtNy_Into_T = SqpSelX_FF_ExtNy(FF$, ExtNy) & SqpInto_T(Into) & SqpFm(T$) & SqpWh(Bexpr)
+Function SqlSel_Fny_ExtNy_Into_T$(Fny$(), ExtNy$(), Into$, T$, Optional Bexpr$, Optional IsDis As Boolean)
+SqlSel_Fny_ExtNy_Into_T$ = SqpSelX_Fny_ExtNy(Fny, ExtNy, IsDis) & SqpInto_T(Into) & SqpFm(T$) & SqpWh(Bexpr)
 End Function
 
-Function SqlSel_FF_Into_T_WhFalse$(FF$, Into$, T$)
+
+Function SqlSel_Fny_Into_T$(Fny$(), Into$, T$, Optional Bexpr$)
 
 End Function
 

@@ -8,7 +8,7 @@ BkPthzPj = BkPth(Pjf(A))
 End Function
 
 Function BkPth$(Ffn$)
-BkPth = AddFdrEns(Pth(Ffn$), ".Backup", Fn(Ffn$))
+BkPth = AddFdrApEns(Pth(Ffn$), ".Backup", Fn(Ffn$))
 End Function
 Function LasBkFfn$(Ffn$)
 Dim BkPth1$: BkPth1 = BkPth(Ffn$)
@@ -18,13 +18,12 @@ Function BkFfn$(Ffn$)
 BkFfn = AddFdrEns(BkPth(Ffn$), TmpNm)
 End Function
 Function BackupFfn$(Ffn$)
-BackupFfn = CpyFilzToPth(Ffn$, BkFfn(Ffn$))
+BackupFfn = CpyFfnzToPth(Ffn$, BkFfn(Ffn$))
 End Function
 
-Function FfnRpl$(Ffn$, ByFfn)
+Sub RplFfn(Ffn$, ByFfn$)
 BackupFfn Ffn
 If DltFfnDone(Ffn$) Then
     Name Ffn As ByFfn
-    FfnRpl = ByFfn
 End If
-End Function
+End Sub

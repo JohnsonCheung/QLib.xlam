@@ -186,7 +186,7 @@ End Function
 Function WdtAyzDry(Dry()) As Integer()
 Dim J&
 For J = 0 To NColzDry(Dry) - 1
-    Push WdtAyzDry, AyWdt(ColzDry(Dry, J))
+    Push WdtAyzDry, WdtzSy(ColzDry(Dry, J))
 Next
 End Function
 

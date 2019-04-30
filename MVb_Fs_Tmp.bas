@@ -34,7 +34,7 @@ End Property
 
 Property Get TmpHom$()
 Static X$
-If X = "" Then X = TmpRoot & "JC": EnsPth X
+If X = "" Then X = TmpRoot & "JC\": EnsPth X
 TmpHom = X
 End Property
 
@@ -52,10 +52,7 @@ TmpNm = Pfx & Format(Now(), "YYYYMMDD_HHMMSS")
 End Function
 
 Function TmpFdr$(Fdr$)
-Dim A$, O$
-If Fdr <> "" Then A = Fdr & "\"
-O = TmpHom & A
-TmpFdr = O
+TmpFdr = AddFdrEns(TmpHom, Fdr)
 End Function
 
 Property Get TmpPth$()

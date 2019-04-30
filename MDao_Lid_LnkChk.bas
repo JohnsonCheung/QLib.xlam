@@ -1,7 +1,7 @@
 Attribute VB_Name = "MDao_Lid_LnkChk"
 Option Explicit
 Const CMod$ = "MDao_Lnk_Tbl."
-Function ErzLnkTblzTSrcCn(A As Database, T, S$, Cn$) As String()
+Function ErzLnkTblzTSrcCn(A As Database, T$, S$, Cn$) As String()
 Const CSub$ = CMod & "ErzLnkTblzTSrcCn"
 On Error GoTo X:
 LnkTbl A, T, S, Cn
@@ -10,28 +10,29 @@ X: ErzLnkTblzTSrcCn = _
     LyzFunMsgNap(CSub, "Cannot link", "Db Tbl SrcTbl CnStr Er", DbNm(A), T, S, Cn, Err.Description)
 End Function
 
-Function ChkFxww(Fx$, Wsnss$, Optional FxKind$ = "Excel file") As String()
-Dim W
-If Not HasFfn(Fx$) Then ChkFxww = MsgzMisFfn(Fx$, FxKind): Exit Function
-For Each W In TermAy(Wsnss)
-    PushIAy ChkFxww, ChkWs(Fx$, W, FxKind)
+Function ChkFxww(Fx$, Wsnn$, Optional FxKd$ = "Excel file") As String()
+Dim W$, I
+If Not HasFfn(Fx$) Then ChkFxww = MsgzMisFfn(Fx$, FxKd): Exit Function
+For Each I In Ny(Wsnn)
+    W = I
+    PushIAy ChkFxww, ChkWs(Fx$, W, FxKd)
 Next
 End Function
-Function ChkWs(Fx$, Wsn, FxKind$) As String()
+Function ChkWs(Fx$, Wsn$, FxKd$) As String()
 If HasFxw(Fx$, Wsn) Then Exit Function
 Dim M$
-M = FmtQQ("? does not have expected worksheet", FxKind)
+M = FmtQQ("? does not have expected worksheet", FxKd)
 ChkWs = LyzFunMsgNap(CSub, M, "Folder File Expected-Worksheet Worksheets-in-file", Pth(Fx$), Fn(Fx$), Wsn, Wny(Fx$))
 End Function
-Function ChkFxw(Fx$, Wsn, Optional FxKind$ = "Excel file") As String()
+Function ChkFxw(Fx$, Wsn$, Optional FxKd$ = "Excel file") As String()
 Const CSub$ = CMod & "ChkFxw"
-ChkFxw = ChkHasFfn(Fx$, FxKind): If Si(ChkFxw) > 0 Then Exit Function
-ChkFxw = ChkWs(Fx$, Wsn, FxKind)
+ChkFxw = ChkHasFfn(Fx$, FxKd): If Si(ChkFxw) > 0 Then Exit Function
+ChkFxw = ChkWs(Fx$, Wsn, FxKd)
 End Function
-Function ChkLnkWs(A As Database, T, Fx, Wsn, Optional FxKind$ = "Excel file") As String()
+Function ChkLnkWs(A As Database, T$, Fx$, Wsn$, Optional FxKd$ = "Excel file") As String()
 Const CSub$ = CMod & "ChkLnkWs"
 Dim O$()
-    O = ChkFxw(Fx$, Wsn, FxKind)
+    O = ChkFxw(Fx, Wsn, FxKd)
     If Si(O) > 0 Then
         ChkLnkWs = O
         Exit Function

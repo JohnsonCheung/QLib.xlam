@@ -32,25 +32,26 @@ Const CSub$ = CMod & "LnkCcm"
 Dim T$()  ' All ^xxx
     T = CcmTny(A)
     If Si(T) = 0 Then Thw CSub, "No ^xxx table in [Db]", A.Name 'Assume always
-Chk Db, T, IsLcl ' Chk if all T after rmv ^ is in TarFb
-LnkCcmzTny Db, T, IsLcl
+Chk A, T, IsLcl ' Chk if all T after rmv ^ is in TarFb
+LnkCcmzTny A, T, IsLcl
 End Sub
 
 Private Sub LnkCcmzTny(A As Database, CcmTny$(), IsLcl As Boolean)
 Const CSub$ = CMod & "LnkCcmzTny"
-Dim CcmTbl, TarFb$
+Dim CcmTbl$, I, TarFb$
 TarFb = A.Name
-For Each CcmTbl In CcmTny
+For Each I In CcmTny
+    CcmTbl = I
     If FstChr(CcmTbl) <> "^" Then Thw CSub, "All table in CcmTny must begin ^", "Tbl-without-^ CcmTny", CcmTbl, CcmTny
-    LnkFb Db, RmvFstChr(CcmTbl), TarFb, CcmTbl
+    LnkFb A, RmvFstChr(CcmTbl), TarFb, CcmTbl
 Next
 End Sub
 Private Sub Chk(A As Database, CcmTny$(), IsLcl As Boolean)
 Const CSub$ = CMod & "Chk"
-If Not IsLcl Then Chk2 Db, CcmTny: Exit Sub ' Asserting for TarFb is stored in CcmTny's description
+If Not IsLcl Then Chk2 A, CcmTny: Exit Sub ' Asserting for TarFb is stored in CcmTny's description
 
 'Asserting for TarFb = Db
-Dim Mis$(): Mis = Chk1(Db, CcmTny)
+Dim Mis$(): Mis = Chk1(A, CcmTny)
 If Si(Mis) = 0 Then Exit Sub
 Thw CSub, "[Some-Missing-Tar-Tbl] in [Db] cannot be found according to given [CcmTny] in [Db]", Mis, A.Name, CcmTny, A.Name
 End Sub
@@ -62,13 +63,14 @@ End Function
 
 Private Sub Chk2(A As Database, CcmTny$())
 'Throw if any Corresponding-Table in TarFb is not found
-Dim O$(), T
-For Each T In CcmTny
-    PushIAy O, Chk3(Db, T)
+Dim O$(), T$, I
+For Each I In CcmTny
+    T = I
+    PushIAy O, Chk3(A, T)
 Next
 'ErThw O
 End Sub
-Private Function Chk3(A As Database, CcmTbl) As String()
+Private Function Chk3(A As Database, CcmTbl$) As String()
 Dim TarFb$
 '    TarFb = Dbt_Des(Db, CcmTbl)
 Select Case True

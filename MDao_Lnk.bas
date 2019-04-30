@@ -1,9 +1,9 @@
 Attribute VB_Name = "MDao_Lnk"
 Option Explicit
 
-Function LnkTbl(A As Database, T, S, Cn) As String()
+Function LnkTbl(A As Database, T$, S$, Cn$) As String()
 On Error GoTo X
-DrpT Db, T
+DrpT A, T
 A.TableDefs.Append TdzTSCn(T, S, Cn)
 Exit Function
 X:
@@ -11,7 +11,7 @@ X:
     LnkTbl = LyzMsgNap("Error in linking table", "Er Db T SrcTbl Cn", Er, DbNm(A), T, S, Cn)
 End Function
 
-Function LnkFxw(A As Database, T, Fx, Optional Wsn = "Sheet1") As String()
+Function LnkFxw(A As Database, T$, Fx$, Optional Wsn = "Sheet1") As String()
 LnkFxw = LnkTbl(A, T, Wsn & "$", CnStrzFxDAO(Fx$))
 End Function
 
@@ -24,11 +24,11 @@ If Si(TnyzFb) <> Si(TnyCrt) Then
 End If
 Dim Cn$: Cn = CnStrzFbDao(Fb$)
 For J = 0 To UB(TnyCrt)
-    PushIAy LnkFbtt, LnkTbl(Db, TnyCrt(J), TnyzFb(J), Cn)
+    PushIAy LnkFbtt, LnkTbl(A, TnyCrt(J), TnyzFb(J), Cn)
 Next
 End Function
-Sub LnkFb(A As Database, T, Fb$, Optional Fbt)
+Sub LnkFb(A As Database, T$, Fb$, Optional Fbt$)
 Dim Cn$: Cn = CnStrzFbDao(Fb$)
-ThwEr ErzLnkTblzTSrcCn(A, T, IIf(Fbt = "", T, Fbt), Cn), CSub
+ThwIfEr ErzLnkTblzTSrcCn(A, T, IIf(Fbt = "", T, Fbt), Cn), CSub
 End Sub
 

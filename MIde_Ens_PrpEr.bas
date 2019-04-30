@@ -54,13 +54,13 @@ Dim O$()
 O = RmvOnErGoNonX(MthLy)
 EnsLinzOnEr = InsOnErGoX(O)
 End Function
-Function MthEndLin$(MthLin)
+Function MthEndLin$(MthLin$)
 MthEndLin = MthXXXLin(MthLin, "End")
 End Function
-Function MthExitLin$(MthLin)
+Function MthExitLin$(MthLin$)
 MthExitLin = MthXXXLin(MthLin, "Exit")
 End Function
-Private Function MthXXXLin$(MthLin, XXX$)
+Private Function MthXXXLin$(MthLin$, XXX$)
 Dim X$: X = MthKd(MthLin): If X = "" Then Thw CSub, "Given Lin is not MthLin", "Lin", MthLin
 MthXXXLin = XXX & " " & X
 End Function
@@ -92,7 +92,7 @@ End Function
 
 Private Sub Z_EnsPrpOnerzSrc()
 Dim Src$()
-Const TstId% = 2
+Const TstId& = 2
 GoSub ZZ
 'GoSub T1
 Exit Sub
@@ -168,8 +168,9 @@ EnsPrpOnErzSrc = O
 End Function
 
 Function TopRmkLyAndMthLy(MthLyWiTopRmk$()) As TopRmkLyAndMthLy
-Dim Lin, J&, TopRmkLy$(), MthLy$()
-For Each Lin In MthLyWiTopRmk
+Dim Lin$, I, J&, TopRmkLy$(), MthLy$()
+For Each I In MthLyWiTopRmk
+    Lin = I
     If FstChr(Lin) = "'" Then
         PushI TopRmkLy, Lin
     Else
@@ -207,7 +208,7 @@ Set EnsprpOnErDiczPj = O
 End Function
 
 Private Sub Z_MthLyOfEnsOnEr()
-Const TstId% = 1
+Const TstId& = 1
 Const CSub$ = CMod & "Z_MthLyOfEnsOnEr"
 Dim MthLy$(), Cas$, IsEdt As Boolean
 GoSub T1

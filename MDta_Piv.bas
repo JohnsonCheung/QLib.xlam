@@ -38,7 +38,7 @@ For Each CurKKDr In Itr(FstColIsKKDrDry)
 Next
 Ix = -1
 End Function
-Private Function KKDrToItmAyDualColDry(Dry(), KKColIx%(), ItmColIx%) As Variant()
+Private Function KKDrToItmAyDualColDry(Dry(), KKColIx&(), ItmColIx&) As Variant()
 Dim Dr, Ix&, KKDr(), Itm
 Dim O() 'KKDr_To_ItmAy_DualColDry
 For Each Dr In Itr(Dry)
@@ -53,7 +53,7 @@ For Each Dr In Itr(Dry)
 Next
 KKDrToItmAyDualColDry = O
 End Function
-Function KKCntMulItmColDry(Dry(), KKColIx%(), ItmColIx%) As Variant()
+Function KKCntMulItmColDry(Dry(), KKColIx&(), ItmColIx&) As Variant()
 Dim A(): A = KKDrToItmAyDualColDry(Dry, KKColIx, ItmColIx)
 KKCntMulItmColDry = KKCntMulItmColDryD(A)
 End Function

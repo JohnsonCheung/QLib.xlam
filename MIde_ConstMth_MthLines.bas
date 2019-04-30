@@ -43,7 +43,7 @@ CdLyzPushStr = O
 End Function
 
 Private Sub Z_ConstPrpLines()
-Const TstId% = 2
+Const TstId& = 2
 Const CSub$ = CMod & "Z_ConstPrpLines"
 GoSub ZZ
 Exit Sub

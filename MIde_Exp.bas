@@ -8,8 +8,9 @@ Sub ExpExpg()
 Stamp "ExpExpg: Begin"
 Dim Xls As Excel.Application: Set Xls = NewXls
 Dim Acs As Access.Application: Set Acs = NewAcs
-Dim Ffn
-For Each Ffn In Itr(FfnSy(ExpgPth))
+Dim Ffn$, I
+For Each I In Itr(FfnSy(ExpgPth))
+    Ffn = I
     ExpPjf Ffn, Xls, Acs
 Next
 QuitXls Xls
@@ -28,7 +29,7 @@ Stamp "ExpPj: End"
 End Sub
 
 Sub ExpFb(Fb$, Optional Acs As Access.Application)
-CpyFilzToPth Fb, EnsPth(SrcpzPjf(Fb$))
+CpyFfnzToPth Fb, EnsPth(SrcpzPjf(Fb$))
 Dim A As Access.Application: Set A = DftAcs(Acs)
 OpnFb A, Fb
 Dim Pj As VBProject: Set Pj = A.Vbe.ActiveVBProject

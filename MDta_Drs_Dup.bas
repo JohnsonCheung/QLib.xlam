@@ -1,15 +1,15 @@
 Attribute VB_Name = "MDta_Drs_Dup"
 Option Explicit
-Function DrswDup(A As Drs, FF) As Drs
+Function DrswDup(A As Drs, FF$) As Drs
 DrswDup = DrswRowIxAy(A, RowIxAyOfDupRow(A, FF))
 End Function
 
-Function DrseDup(A As Drs, FF) As Drs
+Function DrseDup(A As Drs, FF$) As Drs
 Dim RowIxAy&(): RowIxAy = RowIxAyOfDupRow(A, FF)
 DrseDup = DrseRowIxAy(A, RowIxAy)
 End Function
 
-Private Function RowIxAyOfDupRow(A As Drs, FF) As Long()
+Private Function RowIxAyOfDupRow(A As Drs, FF$) As Long()
 Dim Fny$(): Fny = TermAy(FF)
 If Si(Fny) = 1 Then
     RowIxAyOfDupRow = IxAyzDup(ColzDrs(A, Fny(0)))
@@ -93,11 +93,11 @@ Dim A As Drs, FF$, Act As Drs
 GoSub T0
 Exit Sub
 T0:
-    Set A = Drs("A B C", Av(Av(1, 2, "xxx"), Av(1, 2, "yyyy"), Av(1, 2), Av(1), Av(Empty, 2)))
+    A = DrszFF("A B C", Av(Av(1, 2, "xxx"), Av(1, 2, "yyyy"), Av(1, 2), Av(1), Av(Empty, 2)))
     FF = "A B"
     GoTo Tst
 Tst:
-    Set Act = DrswDup(A, FF)
+    Act = DrswDup(A, FF)
     DmpDrs Act
     Return
 End Sub

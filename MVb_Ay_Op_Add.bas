@@ -2,8 +2,18 @@ Attribute VB_Name = "MVb_Ay_Op_Add"
 Option Explicit
 Const CMod$ = "MVb_Ay_Add."
 
-Function AyAdd1(A)
-AyAdd1 = AyAddN(A, 1)
+Function AyInc1(Ay)
+AyInc1 = AyIncN(Ay, 1)
+End Function
+
+Function SyAlignL(Sy$(), Optional W0%) As String()
+Dim W%
+If W0 <= 0 Then W = WdtzSy(Sy) Else W = W0
+Dim I, S$
+For Each I In Itr(Sy)
+    S = I
+    PushI SyAlignL, AlignL(S, W)
+Next
 End Function
 
 Function SyAdd(A$(), B$()) As String()
@@ -86,11 +96,11 @@ Push O, Itm
 AyAddItm = O
 End Function
 
-Function AyAddN(A, N)
-AyAddN = AyCln(A)
+Function AyIncN(A, N)
+AyIncN = AyCln(A)
 Dim X
 For Each X In Itr(A)
-    PushI AyAddN, X + N
+    PushI AyIncN, X + N
 Next
 End Function
 

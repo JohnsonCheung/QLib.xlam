@@ -2,7 +2,7 @@ Attribute VB_Name = "MVb_Lin_Lines"
 Option Explicit
 Const CMod$ = "MVb_Lin_Lines."
 Function WdtzLines%(Lines$)
-WdtzLines = AyWdt(SplitCrLf(Lines))
+WdtzLines = WdtzSy(SplitCrLf(Lines))
 End Function
 
 Function WdtzLinesAy%(LinesAy$())

@@ -8,28 +8,28 @@ Sub AsgBrkDot(S$, OA$, OB$, Optional NoTrim As Boolean)
 AsgS1S2 BrkDot(S), OA, OB
 End Sub
 Function Brk1Dot(S$, Optional NoTrim As Boolean) As S1S2
-Set Brk1Dot = Brk1(S, ".", NoTrim)
+Brk1Dot = Brk1(S, ".", NoTrim)
 End Function
 Function Brk2Dot(S$, Optional NoTrim As Boolean) As S1S2
-Set Brk2Dot = Brk2(S, ".", NoTrim)
+Brk2Dot = Brk2(S, ".", NoTrim)
 End Function
 Function BrkDot(S$, Optional NoTrim As Boolean) As S1S2
-Set BrkDot = Brk(S, ".", NoTrim)
+BrkDot = Brk(S, ".", NoTrim)
 End Function
 Function BrkSpc(S$) As S1S2
-Set BrkSpc = Brk(S, " ")
+BrkSpc = Brk(S, " ")
 End Function
 Function Brk(S$, Sep$, Optional NoTrim As Boolean) As S1S2
 Const CSub$ = CMod & "Brk"
 Dim P&: P = InStr(S, Sep)
 If P = 0 Then Thw CSub, "{S} does not contains {Sep}", "S Sep", S, Sep
-Set Brk = BrkAtSep(S, P, Sep, NoTrim)
+Brk = BrkAtSep(S, P, Sep, NoTrim)
 End Function
 
 Function Brk1(S$, Sep$, Optional NoTrim As Boolean) As S1S2
 Dim P&: P = InStr(S, Sep)
-If P = 0 Then Set Brk1 = S1S2(S, "", NoTrim): Exit Function
-Set Brk1 = Brk1At(S, P, Sep, NoTrim)
+If P = 0 Then Brk1 = S1S2(S, "", NoTrim): Exit Function
+Brk1 = Brk1At(S, P, Sep, NoTrim)
 End Function
 
 Sub AsgBrk1(S$, Sep$, Optional O1, Optional O2, Optional NoTrim As Boolean)
@@ -38,25 +38,25 @@ End Sub
 
 Function Brk1Rev(S$, Sep, Optional NoTrim As Boolean) As S1S2
 Dim P&: P = InStrRev(S, Sep)
-If P = 0 Then Set Brk1Rev = S1S2(S, "", NoTrim): Exit Function
-Set Brk1Rev = Brk1At(S, P, Sep, NoTrim)
+If P = 0 Then Brk1Rev = S1S2(S, "", NoTrim): Exit Function
+Brk1Rev = Brk1At(S, P, Sep, NoTrim)
 End Function
 
 Function Brk2(S$, Sep, Optional NoTrim As Boolean) As S1S2
 Dim P&: P = InStr(S, Sep)
-Set Brk2 = Brk2__(S, P, Sep, NoTrim)
+Brk2 = Brk2__(S, P, Sep, NoTrim)
 End Function
 
 Function Brk2__(S$, P&, Sep, NoTrim As Boolean) As S1S2
 If P = 0 Then
     If NoTrim Then
-        Set Brk2__ = S1S2("", S)
+        Brk2__ = S1S2("", S)
     Else
-        Set Brk2__ = S1S2("", Trim(S))
+        Brk2__ = S1S2("", Trim(S))
     End If
     Exit Function
 End If
-Set Brk2__ = Brk1At(S, P, Sep, NoTrim)
+Brk2__ = Brk1At(S, P, Sep, NoTrim)
 End Function
 
 Sub AsgBrk2(S$, Sep$, O1, O2, Optional NoTrim As Boolean)
@@ -65,7 +65,7 @@ End Sub
 
 Function Brk2Rev(S$, Sep, Optional NoTrim As Boolean) As S1S2
 Dim P&: P = InStrRev(S, Sep)
-Set Brk2Rev = Brk2__(S, P, Sep, NoTrim)
+Brk2Rev = Brk2__(S, P, Sep, NoTrim)
 End Function
 
 Sub AsgBrk(S$, Sep$, Optional O1, Optional O2, Optional NoTrim As Boolean)
@@ -76,14 +76,14 @@ Private Function BrkAtSep(S$, P&, Sep, NoTrim As Boolean) As S1S2
 Dim S1$, S2$
 S1 = Left(S, P - 1)
 S2 = Mid(S, P + Len(Sep))
-Set BrkAtSep = S1S2(S1, S2, NoTrim)
+BrkAtSep = S1S2(S1, S2, NoTrim)
 End Function
 
 Function Brk1At(S$, P&, Sep, NoTrim As Boolean) As S1S2
 If P = 0 Then
-    Set Brk1At = S1S2(S, "", NoTrim)
+    Brk1At = S1S2(S, "", NoTrim)
 Else
-    Set Brk1At = BrkAtSep(S, P, Sep, NoTrim)
+    Brk1At = BrkAtSep(S, P, Sep, NoTrim)
 End If
 End Function
 
@@ -104,10 +104,10 @@ End Sub
 Function BrkBoth(S$, Sep, Optional NoTrim As Boolean) As S1S2
 Dim P&: P = InStr(S, Sep)
 If P = 0 Then
-    Set BrkBoth = S1S2(S, S, NoTrim)
+    BrkBoth = S1S2(S, S, NoTrim)
     Exit Function
 End If
-Set BrkBoth = Brk1At(S$, P, Sep, NoTrim)
+BrkBoth = Brk1At(S$, P, Sep, NoTrim)
 End Function
 
 Sub AsgBrkQuote(QuoteStr$, O1$, O2$)

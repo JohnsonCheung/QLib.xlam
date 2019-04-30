@@ -112,11 +112,11 @@ Set WszWb = A.Sheets(Wsn)
 End Function
 
 Function WsNyzRg(A As Range) As String()
-WsNyzRg = WsNy(WbzRg(A))
+WsNyzRg = Wsny(WbzRg(A))
 End Function
 
-Function WsNy(A As Workbook) As String()
-WsNy = Itn(A.Sheets)
+Function Wsny(A As Workbook) As String()
+Wsny = Itn(A.Sheets)
 End Function
 
 Private Sub Z_SetWsCdNm()
@@ -314,7 +314,7 @@ OleWcAy C
 WsCdNy C
 WcStrAyWbOLE C
 WszWb C, A
-WsNy C
+Wsny C
 WszCdNm C, D
 WszCdNm C, D
 AddWs C, D, F, F, D, D

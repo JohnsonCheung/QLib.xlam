@@ -32,7 +32,7 @@ Next
 End Function
 
 Function FmtAyab(A, B) As String()
-FmtAyab = FmtS1S2Ay(S1S2AyAyab(A, B))
+FmtAyab = FmtS1S2s(S1S2szAyab(A, B))
 End Function
 
 Function LyAyabJnsepForNonEmpB(A, B, Optional Sep$ = " ") As String()

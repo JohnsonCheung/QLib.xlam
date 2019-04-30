@@ -1,222 +1,205 @@
 Attribute VB_Name = "BLnkImp"
 Option Explicit
-Type LiIFld
-    FldNm       As String
-    ShtTyLis    As String
-    Extn        As String   'Extn
+Private Type A
+    WDb As Database
+    InpFilSrc() As String
+    LnkImpSrc() As String
 End Type
-Type LiIFlds: N As Integer: Ay() As LiIFld: End Type
+Private Type BLnk
+    Tny() As String
+    SrcNy() As String
+    CnSy() As String
+End Type
+Private Type B
+    ImpSqy() As String
+    Lnk As BLnk
+End Type
+Private A As A
+Private B As B
 
-Type LiITbl
-    T   As String
-    Flds As LiIFlds
-End Type
-Type LiITbls: N As Integer: Ay() As LiITbl: End Type
 
-Type LiIFb
-    Fbn  As String
-    Tbls As LiITbls
-End Type
-Type LiIFx
-    Fxn     As String
-    Tbls    As LiITbls
-End Type
-Type LiIFbs:  N As Integer: Ay() As LiIFb:  End Type
-Type LiIFxs:  N As Integer: Ay() As LiIFx:  End Type
-Type LnkImpPm
-    IFxs  As LiIFxs
-    IFbs  As LiIFbs
-End Type
-Function NewLnkImpPm(A As LiIFbs, B As LiIFxs) As LnkImpPm
-With NewLnkImpPm
+Sub LnkImp(InpFilSrc$(), LnkImpSrc$(), WDb As Database)
+A.InpFilSrc = InpFilSrc
+A.LnkImpSrc = LnkImpSrc
+Set A.WDb = WDb
+R0_B
+R1_Lnk
+R2_Imp
+End Sub
+
+Private Sub R1_Lnk()
+With B.Lnk
+    Dim J%, T$, S$, Cn$
+    For J = 0 To UB(B.Lnk.Tny)
+        T = .Tny(J)
+        S = .SrcNy(J)
+        Cn = .CnSy(J)
+        LnkTbl A.WDb, T, S, Cn
+    Next
 End With
+End Sub
+Private Sub R2_Imp()
+RunSqy A.WDb, B.ImpSqy
+End Sub
+Private Sub R0_B()
+R01_ThwIfErzInpFilSrc
+R02_ThwIfErzLnkImpSrc
+R03_ThwIfErzLnkImpSrcPlusInp
+R04_SetB_BLnk
+R05_SetB_ImpSqy
+End Sub
+
+Private Sub R05_SetB_ImpSqy()
+R051_SetB_ImpSqy_Fx
+R052_SetB_ImpSqy_Fb
+End Sub
+
+Private Sub R04_SetB_BLnk()
+Erase B.Lnk.CnSy
+Erase B.Lnk.Tny
+Erase B.Lnk.SrcNy
+R041_SetB_BLnk_Fx
+R042_SetB_BLnk_Fb
+End Sub
+
+Private Sub R0421_Asg_FbSy_Tny(OFbSy$(), OTny$())
+Stop
+End Sub
+Private Sub R041_SetB_BLnk_Fx()
+Dim FxSy$(), Tny$(), Wsny$()
+    R0411_Asg_FxSy_Tny_Wsny FxSy, Tny, Wsny
+Dim J%, Fx$, Wsn$, T$, M As LnkTblPm
+
+Dim SrcNy$(), CnSy$()
+    For J = 0 To UB(Tny)
+        PushI CnSy, CnStrzFxAdo(FxSy(J))
+        PushI SrcNy, Wsny(J) & "$"
+    Next
+With B.Lnk
+    PushIAy .Tny, Tny
+    PushIAy .CnSy, CnSy
+    PushIAy .SrcNy, SrcNy
+End With
+
+End Sub
+Function R0411_Asg_FxSy_Tny_Wsny(OFxSy$(), OTny$(), OWsny$())
+
 End Function
+Private Sub R042_SetB_BLnk_Fb()
+Dim FbSy$(), Tny$()
+    R0421_Asg_FbSy_Tny FbSy, Tny
 
-Private Property Get Fbs() As LiIFbs
-Dim L, Fbn$, T$, FF$, Fset As Aset, Bexpr$
-For Each L In Itr(AywRmvT1(A, "FbTbl"))
-    AsgN2tRst L, T, FF, Bexpr
-    PushObj Fb, LiFb(Fbn, T, NsetzNN(FF), Bexpr)
-Next
-End Property
+Dim SrcNy$(), CnSy$()
+    Dim J%
+    For J = 0 To UB(Tny)
+        PushI CnSy, CnStrzFbAdo(FbSy(J))
+        PushI SrcNy, ">" & Tny(J)
+    Next
+With B.Lnk
+    PushIAy .Tny, Tny
+    PushIAy .CnSy, CnSy
+    PushIAy .SrcNy, SrcNy
+End With
+End Sub
+Private Sub R02_ThwIfErzLnkImpSrc()
 
-Private Property Get Fxs() As LiIFxs
-Dim L, Fxn$, Wsn$, T$, Bexpr
-For Each L In Itr(AywRmvT1(A, "WszT"))
-    AsgN3tRst L, Fxn, Wsn, T, Bexpr
-    PushObj Fx, LiFx(Fxn, Wsn, T, FxcAy(T), Bexpr)
-Next
-End Property
+End Sub
+Private Sub R01_ThwIfErzInpFilSrc()
 
-Sub LnkImp(InpFilSrc$(), LnkSrc$())
-ThwIfEr ErzInpFilSrc(InpFilSrc)
-ThwIfEr ErzLnkSrc(LnkSrc)
-ThwIfEr ErOf_InpFil_and_LnkPm(InpFilzSrc(InpFilSrc), LnkPmzSrc(LnkInpSrc))
-CrtWFb
-LnkImp_Lnk
-WOpn A.Apn
-LnkTblzLtPm W, LtPm(A)
-RunSqy W, ImpSqyzLi(A)
-
-ThwEr ErzLidPmzV1(A), CSub
-WIniOpn A.Apn
-ThwEr ErzLnkTblzLtPm(W, LtPmzLid(A)), CSub
-RunSqy W, ImpSqyzLidPm(A)
-WCls
+End Sub
+Private Sub R03_ThwIfErzLnkImpSrcPlusInp()
 
 End Sub
 
-Private Function ImpSqy(A As LiIFbs, B As LiIFxs) As String()
-ImpSqy = SyAdd(ImpSqyzFb(A), ImpSqyzFx(B))
-End Function
-
-Private Function ImpSqyzFxs(A As LiIFxs) As String()
-Dim J%, Ay() As LiIFx
-Ay = A.Ay
-For J = 0 To A.N - 1
-    PushIAy ImpSqyzFxs, ImpSqyzFx(Ay(J))
-Next
-End Function
-
-Private Function ImpSqyzFx(A As LiIFx) As String()
-Dim Fm$: Fm = ">" & A.T
-Dim Into$: Into = "#I" & A.T
-Dim Bexpr$: Bexpr = A.Bexpr
-Dim Fny$(): Fny = FnyzLidFxcAy(A.Fxc)
-Dim ExtNy$(): ExtNy = ExTnyzLidFxcAy(A.Fxc)
-Dim O$()
-PushI O, SqlSel_FF_ExtNy_Into_Fm(Fny, ExtNy, Into, Fm, Bexpr)
-ImpSqyzFx = O
-End Function
-
-Private Function ImpSqyzFb(A As LiIFb) As String()
-With A
-Dim FF$(): FF = .Fset.Sy
-Dim Fm$: Fm = ">" & .T
-Dim Into$: Into = "#I" & .T
-Dim Bexpr$: Bexpr = .Bexpr
-End With
-Dim O$()
-PushI O, "Drop table [" & Into & "]"
-PushI O, SqlSel_FF_Into_Fm(FF, Into, FF, Bexpr)
-ImpSqyzFb = O
-End Function
 
 Private Property Get TaxAlertLnkPmLy() As String()
 Erase XX
 X "@Tbl  GLBal Uom CurRate MB52 Permit PermitD SkuRepackMulti SkuTaxBy3rdParty SkuNoLongerTax"
 X "@Stru GLBal Uom CurRate MB52 Permit PermitD SkuRepackMulti SkuTaxBy3rdParty SkuNoLongerTax"
-X "Tbl.Where MB52 Plant='8601' and [Storage Location] in ('0002','')"
-X "Tbl.Where Uom Plant='8601'"
-X "Stru.Fld ZHT0.Sku       Txt Material      "
-X "Stru.Fld ZHT0.CurRateAc Dbl [     Amount] "
-X "Stru.Fld ZHT0.VdtFm     Txt [Valid From]  "
-X "Stru.Fld ZHT0 VdtTo     Txt [Valid to] "
-X "Stru.Fld ZHT0.HKD       Txt Unit"
-X "Stru.Fld ZHT0.Per       Txt per "
-X "Stru.Fld ZHT0.CA_Uom    Txt Uom"
-X "Stru.Fld MB52.Sku    Txt Material "
-X "Stru.Fld MB52.Whs    Txt Plant    "
-X "Stru.Fld MB52.Loc    Txt [Storage Location] "
-X "Stru.Fld MB52.BchNo  Txt Batch "
-X "Stru.Fld MB52.QInsp  Dbl [In Quality Insp#]"
-X "Stru.Fld MB52.QUnRes Dbl UnRestricted"
-X "Stru.Fld MB52.QBlk   Dbl Blocked"
-X "Stru.Fld MB52.VInsp  Dbl [Value in QualInsp#] "
-X "Stru.Fld MB52.VUnRes Dbl [Value Unrestricted] "
-X "Stru.Fld MB52.VBlk   Dbl [Value BlockedStock]"
-X "Stru.Fld Uom.Sku     Txt Material "
-X "Stru.Fld Uom.Des     Txt [Material Description] "
-X "Stru.Fld Uom.AC_U    Txt [Unit per case] "
-X "Stru.Fld Uom.SkuUom  Txt [Base Unit of Measure] "
-X "Stru.Fld Uom.BusArea Txt [Business Area]"
-X "Stru.Fld GLBal.BusArea Txt [Business Area Code]"
-X "Stru.Fld GLBal.GLBal   Dbl                     "
-X "Stru.Fld Permit           GLBal   Dbl                     "
-X "Stru.Fld PermitD          GLBal   Dbl                     "
-X "Stru.Fld SkuRepackMulti   GLBal   Dbl                     "
-X "Stru.Fld SkuTaxBy3rdParty GLBal   Dbl                     "
-X "Stru.Fld  SkuNoLongerTax"
+X "TblWhere.MB52 Plant='8601' and [Storage Location] in ('0002','')"
+X "TblWhere.Uom  Plant='8601'"
+X "Stru.ZHT0"
+X " Sku       Txt Material   "
+X " CurRateAc Dbl Amount     "
+X " VdtFm     Txt Valid From "
+X " VdtTo     Txt Valid to   "
+X " HKD       Txt Unit       "
+X " Per       Txt per        "
+X " CA_Uom    Txt Uom        "
+X "Stru.MB52"
+X " Sku    Txt Material          "
+X " Whs    Txt Plant             "
+X " Loc    Txt Storage Location  "
+X " BchNo  Txt Batch             "
+X " QInsp  Dbl In Quality Insp#  "
+X " QUnRes Dbl UnRestricted      "
+X " QBlk   Dbl Blocked           "
+X " VInsp  Dbl Value in QualInsp#"
+X " VUnRes Dbl Value Unrestricted"
+X " VBlk   Dbl Value BlockedStock"
+X "Stru.Uom"
+X " Sku     Txt Material            "
+X " Des     Txt Material Description"
+X " AC_U    Txt Unit per case]      "
+X " SkuUom  Txt Base Unit of Measure"
+X " BusArea Txt Business Area       "
+X "Stru.GLBar"
+X " BusArea Txt Business Area Code"
+X " GLBal   Dbl                   "
+X "Stru.PermitD"
+X " Permit           GLBal   Dbl                     "
+X " PermitD          GLBal   Dbl                     "
+X "Stru.SkuRepackMulti"
+X " SkuRepackMulti   GLBal   Dbl                     "
+X "Stru.SkuTaxBy3rdParty"
+X " SkuTaxBy3rdParty GLBal   Dbl                     "
+X "Stru.SkuNoLongerTax"
+X " SkuNoLongerTax"
+End Property
+Private Property Get SampLnkImpSrc() As String()
+Erase XX
 X "#     T    Fx   Ws   S"
 X "FxTbl Z86  ZHT1.8601 ZHT1"
 X "FxTbl Z87  ZHT1.8701 ZHT1"
 X "FxTbl Uom  ZHT1      Uom"
 X "FxTbl Uom  ZHT1      Uom"
-X "#   Stru.Fld    S Extn       # S = ShtTy"
-
-X "Fld ZHT1.ZHT1   D Brand  "
-X "Fld ZHT1.RateSc M Amount "
-X "Fld ZHT1.VdtFm  M [Valid From]  "
-X "Fld ZHT1.VdtTo  M [Valid to]"
-X "Fld Uom.Sku    M Material "
-X "Fld Uom.Des    M [Material Description] "
-X "Fld Uom.Sc_U   M SC "
-X "Fld Uom.StkUom M [Base Unit of Measure] "
-X "Fld Uom.Topaz  M [Topaz Code] "
-X "Fld Uom.ProdH  M [Product hierarchy]"
-X "Fld MB52.Sku    M Material "
-X "Fld MB52.Whs    M Plant    "
-X "Fld MB52.QInsp  D [In Quality Insp#]"
-X "Fld MB52.QUnRes D Unrestricted"
-X "Fld MB52.QBlk   D Blocked"
-SampLnkPmLy = XX
+X "Stru.ZHT1"
+X " ZHT1   D Brand  "
+X " RateSc M Amount "
+X " VdtFm  M Valid From  "
+X " VdtTo  M Valid to"
+X "Stru.Uom"
+X " Sku     M Material"
+X " Des     M Material Description"
+X " Sc_U    M SC "
+X " StkUom  M Base Unit of Measure"
+X " Topaz   M Topaz Code "
+X " ProdH   M Product hierarchy"
+X "Stru.MB52"
+X " Sku    M Material "
+X " Whs    M Plant    "
+X " QInsp  D In Quality Insp#"
+X " QUnRes D Unrestricted"
+X " QBlk   D Blocked"
+SampLnkImpSrc = XX
 Erase XX
 End Property
-
-
-Function StruDotFld(T$) As String()
-
-Dim A$() 'Each Lin is [T.F ShtTy]
-StruDotFld = SyAddPfx(SyAlignNCol(A), "Stru.Fld ")
-End Function
-Function StruDotFldzFxw(Fx$, Wsn$) As String()
+Private Function SampInpFilSrc() As String()
 
 End Function
-
 
 Private Sub Z_LnkImp()
-Dim Db As Database
-Set Db = LnkImp(SampLnkPm)
-BrwFb A.Name
+Dim Db As Database: Set Db = TmpDb
+LnkImp SampInpFilSrc, SampLnkImpSrc, Db
+BrwDb Db
 Stop
 End Sub
 
-Private Sub Z_ChkColzLnkPm()
-Brw ChkColzLnkPm(ShpCstLnkPm)
-End Sub
 
-Private Function ImpSqlzFx$(A As LiIFx)
-Dim Fm$: Fm = ">" & A.T
-Dim Into$: Into = "#I" & A.T
-Dim Bexpr$: Bexpr = A.Bexpr
-ImpSqlzFx = SqlSel_FF_ExtNy_Into_Fm(A.Fny, A.ExtNy, Into, Fm, Bexpr)
-End Function
-
-Private Function ImpSqlzFb$(A As LiIFb)
-With A
-Dim FF$(): FF = .Fset.Sy
-Dim Fm$: Fm = ">" & .T
-Dim Into$: Into = "#I" & .T
-Dim Bexpr$: Bexpr = .Bexpr
-End With
-ImpSqlzFb = SqlSel_FF_Into_Fm(FF, Into, FF, Bexpr)
-End Function
-
-Property Get SampLnkImpPm() As LnkImpPm
-Set SampLnkPm = LnkPm(SampLnkPmSrc)
-End Property
-
-Function LnkImpPm(Src$()) As LnkImpPm
-If Si(Src) = 0 Then Thw CSub, "No lines in Src"
-If T1(Src(0)) <> "LidPm" Then Thw CSub, "First line must be LidPm", "Src", Src
-LnkPmzSrc = LnkPm()
-With LnkPm
-    
-End With
-LidPm.Init Apn, Fil, Fx, Fb
-End Function
-
-Function LnkImpSrcEr(LnkImpSrc$()) As String()
+Private Function R0521_SetB_ImpSqy_Fb_OneTbl(T$, Fny$(), Bexpr$) As String()
+Dim Fm$: Fm = ">" & T
+Dim Into$: Into = "#I" & T
+PushI B.ImpSqy, SqlSel_Fny_Into_T(Fny, Into, Fm, Bexpr)
 End Function
 
 Function SampSrczLnkImp() As String()
@@ -245,39 +228,18 @@ X "WsCol MB52 Whs    M Plant"
 X "WsCol MB52 QInsp  D In Quality Insp#"
 X "WsCol MB52 QUnRes D Unrestricted"
 X "WsCol MB52 QBlk   D Blocked"
-SampLnkPmSrc = XX
+SampSrczLnkImp = XX
 Erase XX
 End Function
 
-
-Private Function LnkTblPmszFx() As LnkTblPms
-'Private Function LnkTblPmszFx(A As LiFxs, FfnDic As Dictionary) As LnkTblPms
-Dim J%, Fx$, M As LtPm
-For J = 0 To UB(A)
-    Set M = New LtPm
-    With A(J)
-        'Fx = FfnDic(.Fxn)
-        PushLnkTblPm O, NewLnkTblPm()
-        'LtPmAyFx, M.Init(">" & .T, .Wsn & "$", CnStrzFxDAO(Fx$))
-    End With
+Private Sub R052_SetB_ImpSqy_Fb()
+Dim J%, Tny$(), T$, Fny$(), Bexpr$
+For J = 0 To UB(Tny)
+    T = Tny(J)
+    R0521_SetB_ImpSqy_Fb_OneTbl T, Fny, Bexpr
 Next
-End Function
+End Sub
 
-Private Function LnkPmszFbs(A As LiIFbs, FfnDic As Dictionary) As LnkTblPms
-Dim J%, Fb$, Ay() As LiIFb, O As LnkLnkPms
-For J = 0 To A.N - 1
-    With Ay(J)
+Private Sub R051_SetB_ImpSqy_Fx()
 
-        Fb = FfnDic(.Fbn)
-        S = 1
-        T = ">" & 1
-        Cn = LtPmAyFb , M.Init(">" & .T, .T, CnStrzFxAdo(Fb$))
-
-        PushLnkTblPm O, NewLnkTblPm(T, S, Cn)
-    End With
-Next
-End Function
-
-
-
-
+End Sub

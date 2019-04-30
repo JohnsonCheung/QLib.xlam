@@ -3,7 +3,7 @@ Option Explicit
 Const CMod$ = "MVb_Thw."
 Public Cfg_ShwInf As Boolean
 Public Cfg_ShwInfLinTim As Boolean
-Sub ThwIfNEgEle(Ay, Fun$)
+Sub ThwIfNegEle(Ay, Fun$)
 Const CSub$ = CMod & "ThwIfNEgEle"
 Dim I, J&, O$()
 For Each I In Itr(Ay)
@@ -25,8 +25,8 @@ Sub ThwIfNE(A, B, Optional ANm$ = "A", Optional BNm$ = "B")
 Const CSub$ = CMod & "ThwIfNE"
 ThwDifTy A, B, ANm, BNm
 Select Case True
-Case IsLines(A) Or IsLines(B): If A <> B Then CmpStr A, B, Hdr:=FmtQQ("Lines ? ? not eq.", ANm, BNm): Stop: Exit Sub
-Case IsStr(A):                 If A <> B Then CmpStr A, B, Hdr:=FmtQQ("String ? ? not eq.", ANm, BNm): Stop: Exit Sub
+Case IsLines(A) Or IsLines(B): If A <> B Then CmpLines CStr(A), CStr(B), Hdr:=FmtQQ("Lines ? ? not eq.", ANm, BNm): Stop: Exit Sub
+Case IsStr(A):                 If A <> B Then CmpStr CStr(A), CStr(B), Hdr:=FmtQQ("String ? ? not eq.", ANm, BNm): Stop: Exit Sub
 Case IsDic(A):                 If Not IsEqDic(CvDic(A), CvDic(B)) Then BrwCmpDicAB CvDic(A), CvDic(B): Stop: Exit Sub
 Case IsArray(A):               ThwIfNEAy A, B, ANm, BNm
 Case IsObject(A):              If ObjPtr(A) <> ObjPtr(B) Then Thw CSub, "Two object are diff", FmtQQ("Ty-? Ty-?", ANm, BNm), TypeName(A), TypeName(B)
@@ -150,8 +150,8 @@ End Sub
 Sub ThwLoopingTooMuch(Fun$)
 Thw Fun, "Looping too much"
 End Sub
-Sub ThwPmEr(PmVal, Fun$, Optional MsgWhyPmEr$ = "Invalid value")
-Thw Fun, "Parameter error: " & MsgWhyPmEr, "Pm-Type Pm-Val", TypeName(PmVal), FmtV(PmVal)
+Sub ThwPmEr(ValzPm, Fun$, Optional MsgWhyPmEr$ = "Invalid value")
+Thw Fun, "Parameter error: " & MsgWhyPmEr, "Pm-Type Pm-Val", TypeName(ValzPm), FmtV(ValzPm)
 End Sub
 
 
@@ -214,7 +214,7 @@ Dim Obj As Object, PP$
 GoSub T0
 Exit Sub
 T0:
-    Set Obj = New DAO.Field
+    Set Obj = New Dao.Field
     PP = "Name Type Size"
     GoTo Tst
 Tst:

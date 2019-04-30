@@ -12,7 +12,7 @@ For Each Wc In Wb.Connections
 Next
 End Sub
 
-Private Sub SetWczFb(A As WorkbookConnection, ToUseFb)
+Private Sub SetWczFb(A As WorkbookConnection, ToUseFb$)
 If IsNothing(A.OLEDBConnection) Then Exit Sub
 Dim Cn$
 #Const A = 2
@@ -27,7 +27,7 @@ Dim Cn$
 A.OLEDBConnection.Connection = Cn
 End Sub
 
-Private Sub RfhWc(A As WorkbookConnection, ToUseFb)
+Private Sub RfhWc(A As WorkbookConnection, ToUseFb$)
 If IsNothing(A.OLEDBConnection) Then Exit Sub
 SetWczFb A, ToUseFb
 A.OLEDBConnection.BackgroundQuery = False
@@ -49,7 +49,7 @@ Dim P As PivotTable: For Each P In A.PivotTables: P.Update: Next
 Dim L As ListObject: For Each L In A.ListObjects: L.Refresh: Next
 End Sub
 
-Function RfhWb(Wb As Workbook, Fb) As Workbook
+Function RfhWb(Wb As Workbook, Fb$) As Workbook
 RplLozFb Wb, Fb
 Dim C As WorkbookConnection
 Dim P As PivotCache, W As Worksheet
@@ -62,9 +62,9 @@ DltWc Wb
 Set RfhWb = Wb
 End Function
 
-Private Sub RplLozFb(Wb As Workbook, Fb)
+Private Sub RplLozFb(Wb As Workbook, Fb$)
 Dim I, Lo As ListObject, D As Database
-Set D = Db(Fb$)
+Set D = Db(Fb)
 For Each I In OupLoAy(Wb)
     Set Lo = I
     RplLozT Lo, D, "@" & Mid(Lo.Name, 3)
@@ -80,8 +80,8 @@ If Not IsSamAy(Fny1, Fny2) Then
     Thw CSub, "LoFny and TblFny are not same", "LoFny TblNm TblFny Db", Fny2, T, Fny1, DbNm(A)
 End If
 Dim Sq()
-    Dim R As DAO.Recordset
-    Set R = Rs(A, SqlSel_FF_Fm(Fny2, T))
+    Dim R As Dao.Recordset
+    Set R = Rs(A, SqlSel_Fny_T(Fny2, T))
     Sq = SqAddSngQuote(SqzRs(R))
 MinxLo A
 RgzSq Sq, A.DataBodyRange

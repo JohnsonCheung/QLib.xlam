@@ -1,23 +1,16 @@
 Attribute VB_Name = "MDao_Lid_Lnk"
 Option Explicit
-Function ErzLnkTblzLtPm(A As Database, A() As LtPm) As String()
-Dim J%
-For J = 0 To UB(A)
-    With A(J)
-        PushIAy ErzLnkTblzLtPm, ErzLnkTblzTSrcCn(Db, .T, .S, .Cn)
+Function ErzLnkTblPms(A As Database, B As LnkTblPms) As String()
+Dim J%, Ay() As LnkTblPm
+Ay = B.Ay
+For J = 0 To B.N - 1
+    With Ay(J)
+        PushIAy ErzLnkTblPms, ErzLnkTblzTSrcCn(A, .T, .S, .Cn)
     End With
 Next
 End Function
-Sub LnkTblzLtPm(A As Database, A() As LtPm)
-Dim J%
-For J = 0 To UB(A)
-    With A(J)
-        LnkTbl Db, .T, .S, .Cn
-    End With
-Next
-End Sub
-Function TdzTSCn(T, Src, Cn) As DAO.TableDef
-Set TdzTSCn = New DAO.TableDef
+Function TdzTSCn(T$, Src$, Cn$) As Dao.TableDef
+Set TdzTSCn = New Dao.TableDef
 With TdzTSCn
     .Connect = Cn
     .Name = T

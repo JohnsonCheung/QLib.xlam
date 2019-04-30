@@ -2,11 +2,11 @@ Attribute VB_Name = "MVb_Str_Cmp"
 Option Explicit
 Const CMod$ = "MVb_Str_Cmp."
 
-Sub CmpLines(A, B, Optional N1$ = "A", Optional N2$ = "B")
-Brw CmpLinesFmt(A, B, N1, N2)
+Sub CmpLines(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$)
+Brw FmtCmpLines(A, B, N1, N2, Hdr)
 End Sub
 
-Function CmpLinesFmt(A, B, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$) As String()
+Function FmtCmpLines(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$) As String()
 If A = B Then Exit Function
 Dim AA$(), BB$()
 AA = SplitCrLf(A)
@@ -27,7 +27,7 @@ Dim O$(), J&, MinU&
     PushIAy O, LyRest(AA, BB, MinU, N1, N2)
     PushIAy O, LyAll(AA, N1)
     PushIAy O, LyAll(BB, N2)
-CmpLinesFmt = O
+FmtCmpLines = O
 End Function
 Private Function LyAll(A$(), Nm$) As String()
 
@@ -54,40 +54,38 @@ For J = MinU + 1 To UB(Ay)
 Next
 End Function
 
-Sub CmpStr(A, B, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$)
-If Not IsStr(A) Then Stop
-If Not IsStr(B) Then Stop
+Sub CmpStr(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$)
 If A = B Then Exit Sub
-Brw CmpStrFmt(A, B, N1, N2, Hdr)
+Brw FmtCmpStr(A, B, N1, N2, Hdr)
 End Sub
 
-Function CmpStrFmt(A, B, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$) As String()
+Function FmtCmpStr(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$) As String()
 If Not IsStr(A) Then Stop
 If Not IsStr(B) Then Stop
-If IsLines(A) Or IsLines(B) Then CmpStrFmt = CmpLinesFmt(A, B, N1, N2, Hdr): Exit Function
+If IsLines(A) Or IsLines(B) Then FmtCmpStr = FmtCmpLines(A, B, N1, N2, Hdr): Exit Function
 If A = B Then Exit Function
-Dim DifAt&
-    DifAt = WDifAt(A, B)
+Dim At&
+    At = DifAt(A, B)
 Dim O$()
     PushI O, FmtQQ("Str-(?)-Len: ?", N1, Len(A))
     PushI O, FmtQQ("Str-(?)-Len: ?", N2, Len(B))
-    PushI O, "Dif At: " & DifAt
+    PushI O, "Dif At: " & At
     PushIAy O, Len_LblAy(Max(Len(A), Len(B)))
     PushI O, A
     PushI O, B
-    PushI O, Space(DifAt - 1) & "^"
-CmpStrFmt = O
+    PushI O, Space(At - 1) & "^"
+FmtCmpStr = O
 End Function
 
-Private Function WDifAt&(A, B)
+Private Function DifAt&(A$, B$)
 Dim O&
 For O = 1 To Min(Len(A), Len(B))
-    If Mid(A, O, 1) <> Mid(B, O, 1) Then WDifAt = O: Exit Function
+    If Mid(A, O, 1) <> Mid(B, O, 1) Then DifAt = O: Exit Function
 Next
 If Len(A) > Len(B) Then
-    WDifAt = Len(B) + 1
+    DifAt = Len(B) + 1
 Else
-    WDifAt = Len(A) + 1
+    DifAt = Len(A) + 1
 End If
 End Function
 
@@ -133,18 +131,13 @@ B = LineszVbl("AAAAAAA|bbbbbbbb |cc")
 GoSub Tst
 Exit Sub
 Tst:
-    Act = CmpLinesFmt(A, B)
+    Act = FmtCmpLines(A, B)
     Brw Act
     Return
 
 End Sub
 
 Private Sub ZZ()
-Dim A As Variant
-Dim B$
-CmpLines A, A, B, B
-CmpStr A, A, B, B
-CmpStrFmt A, A, B, B
 End Sub
 
 Private Sub Z()

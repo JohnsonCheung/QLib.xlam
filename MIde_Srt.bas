@@ -5,7 +5,7 @@ Function LineszJnLinesItr$(LinesItr, Optional Sep$ = vbCrLf)
 LineszJnLinesItr = Jn(IntozItr(EmpSy, LinesItr), Sep)
 End Function
 
-Function MthNm3zDNm(MthDNm) As MthNm3
+Function MthNm3zDNm(MthDNm$) As MthNm3
 Dim Nm$, Ty$, Mdy$
 If MthDNm = "*Dcl" Then
     Nm = "*Dcl"
@@ -27,7 +27,7 @@ With MthNm3zDNm
 End With
 End Function
 
-Function MthSrtKey$(MthDNm)
+Function MthSrtKey$(MthDNm$)
 If MthDNm = "*Dcl" Then MthSrtKey = "*Dcl": Exit Function
 Dim A$(): A = SplitDot(MthDNm): If Si(A) <> 3 Then Thw CSub, "Invalid MthDNm, should have 2 dot", "MthDNm", MthDNm
 If A(2) = "Pub" Then A(2) = ""
@@ -36,9 +36,10 @@ End Function
 
 Function SrcDic(Src$(), Optional WiTopRmk As Boolean) As Dictionary
 Dim D As Dictionary: Set D = MthDic(Src, WiTopRmk)
-Dim K
+Dim K$, I
 Set SrcDic = New Dictionary
-For Each K In D
+For Each I In D
+    K = I
     SrcDic.Add MthSrtKey(K), D(K)
 Next
 End Function

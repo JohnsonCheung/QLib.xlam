@@ -76,10 +76,10 @@ If A.Count = 0 Then Exit Function
 Dim O$(), K, S1$, S2$, S(0) As S1S2, Ly$(), KK$
 For Each K In A
     KK = K
-    S1 = "!" & "Er Dif" & vbCrLf & K & vbCrLf & LinesUnderLin(KK) & vbCrLf & A(K)
-    S2 = "!" & "Er Dif" & vbCrLf & K & vbCrLf & LinesUnderLin(KK) & vbCrLf & B(K)
+    S1 = "!" & "Er Dif" & vbCrLf & K & vbCrLf & UnderLinzLines(KK) & vbCrLf & A(K)
+    S2 = "!" & "Er Dif" & vbCrLf & K & vbCrLf & UnderLinzLines(KK) & vbCrLf & B(K)
     Set S(0) = S1S2(S1, S2)
-    Ly = FmtS1S2Ay(S)
+    Ly = FmtS1S2s(S)
     PushAy O, Ly
 Next
 FmtDif = O
@@ -87,23 +87,24 @@ End Function
 
 Private Function FmtExcess(A As Dictionary, Nm$) As String()
 If A.Count = 0 Then Exit Function
-Dim K, S1$, S2$, S(0) As S1S2
+Dim K$, I, S1$, S2$, S(0) As S1S2
 S2 = "!" & "Er Excess (" & Nm & ")"
-For Each K In A.Keys
-    S1 = K & vbCrLf & LinesUnderLin(K) & vbCrLf & A(K)
+For Each I In A.Keys
+    K = I
+    S1 = K & vbCrLf & UnderLinzLines(K) & vbCrLf & A(K)
     Set S(0) = S1S2(S1, S2)
-    PushAy FmtExcess, FmtS1S2Ay(S)
+    PushAy FmtExcess, FmtS1S2s(S)
 Next
 End Function
 
 Private Function FmtSam(A As Dictionary) As String()
 If A.Count = 0 Then Exit Function
-Dim O$(), K, S() As S1S2, KK$
+Dim O$(), K, S As S1S2s, KK$
 For Each K In A.Keys
     KK = K
-    PushObj S, S1S2("*Same", K & vbCrLf & LinesUnderLin(KK) & vbCrLf & A(K))
+    PushObj S, S1S2("*Same", K & vbCrLf & UnderLinzLines(KK) & vbCrLf & A(K))
 Next
-FmtSam = FmtS1S2Ay(S)
+FmtSam = FmtS1S2s(S)
 End Function
 
 Private Sub Z_BrwCmpDicAB()

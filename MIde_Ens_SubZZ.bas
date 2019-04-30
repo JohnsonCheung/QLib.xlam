@@ -51,9 +51,9 @@ For Each Pm In Itr(PmAy)
 Next
 End Function
 
-Private Function ArgSfxAy(ArgAy$()) As String()
+Private Function ArgSfxAy(ArgSy$()) As String()
 Dim Arg
-For Each Arg In Itr(ArgAy)
+For Each Arg In Itr(ArgSy)
     PushI ArgSfxAy, ArgSfx(Arg)
 Next
 End Function
@@ -183,7 +183,7 @@ vbCrLf & "IsDiczLines B" & _
 vbCrLf & "IsDiczStr B" & _
 vbCrLf & "KeySyzDic B" & _
 vbCrLf & "FmtDic1 B" & _
-vbCrLf & "ValOfDicKyJn B, A, D" & _
+vbCrLf & "ValzDicKyJn B, A, D" & _
 vbCrLf & "SyzDicKy B, E" & _
 vbCrLf & "FmtDicTit B, D" & _
 vbCrLf & "LineszDic B" & _
@@ -223,7 +223,7 @@ Cas2:
     Return
 Cas1:
     Set A = CurMd
-    'UpdMdConstValOfFt "Z_SubZZEptMd_1", SubZZEpt(A): Return
+    'UpdMdConstValzFt "Z_SubZZEptMd_1", SubZZEpt(A): Return
     'Ept = Z_SubZZEptMd_1
     GoSub Tst
     Return

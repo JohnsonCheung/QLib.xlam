@@ -93,9 +93,9 @@ Property Get ATaxExpCmp() As RptPm
 Static X As Boolean, XGenr As IGenr, XWbFmtr As IWbFmtr
 With ATaxExpCmp
 Set .Genr = XGenr
-.ImpWsSqy = EmpSy
-.InpFbAy = EmpSy
-.InpFbTny = SySsl("")
+'.ImpWsSqy = EmpSy
+'.InpFbAy = EmpSy
+'.InpFbTny = SySsl("")
 End With
 End Property
 Property Get App() As App
@@ -107,7 +107,7 @@ End If
 Set App = X
 End Property
 
-Private Function DSpecNm$(DSpec)
+Private Function DSpecNm$(DSpec$)
 DSpecNm = AftDotOrAll(T1(DSpec))
 End Function
 
@@ -283,7 +283,7 @@ O = AyAddAp(A, B, C, D, E)
 If Si(O) > 0 Then Thw CSub, "There are error in linking tables", "Er", O
 End Sub
 Private Function XFfn$(PmNm$)
-XFfn = PmFfn(App.Db, PmNm)
+XFfn = FfnzPm(App.Db, PmNm)
 End Function
 Private Function IFb_Duty$()
 IFb_Duty = XFfn("Duty")
@@ -329,7 +329,7 @@ End Sub
 
 Private Sub Rpt_Cpy()
 SetMainMsg "Copying 4 Excel files to C: temp folder ...."
-CpyFilzIfDif Sy(IFx_MB51, IFx_Duty, IFx_Anp, IFx_Uom), WPth
+CpyFfnSyzIfDif Sy(IFx_MB51, IFx_Duty, IFx_Anp, IFx_Uom), WPth
 End Sub
 
 Private Function Gen_OupPth$()
@@ -344,7 +344,7 @@ End Function
 
 Private Sub Gen_Crt(OupFx$, AppDb As Database, AppNm$, Tp$)
 ExpAtt AppDb, AppNm, Tp
-CpyFilzIfDif Tp, OupFx, True
+CpyFfnzIfDif Tp, OupFx, True
 End Sub
 Private Sub Rpt_Gen(OupFx$, AppDb As Database, AppNm$, Tp$, OupWb As Workbook, WFb$, Pm As Pm)
 SetMainMsg "Export to Excel ....."
@@ -390,17 +390,17 @@ OpnFx IFx_Duty
 End Sub
 
 Private Function IFx_MB51$()
-IFx_MB51 = App.PmFfn("MB51")
+IFx_MB51 = App.FfnzPm("MB51")
 End Function
 
 Private Function IFx_Duty$()
-IFx_Duty = App.PmFfn("GLDuty")
+IFx_Duty = App.FfnzPm("GLDuty")
 End Function
 Private Function IFx_Anp$()
-IFx_Anp = App.PmFfn("GLAnp")
+IFx_Anp = App.FfnzPm("GLAnp")
 End Function
 Private Function IFx_Uom$()
-IFx_Uom = App.PmFfn("Uom")
+IFx_Uom = App.FfnzPm("Uom")
 End Function
 
 Private Function IFx_WGLDuty$()
@@ -1129,12 +1129,12 @@ End Property
 'Private Function DbHasTbl(A as Database, T$) As Boolean
 'DbHasTbl = DbqAny(A, FmtQQ("Select * from MSysObjects where Name='?' and Type in (1,6)", T))
 'End Function
-'Private Function AyWdt%(A)
+'Private Function WdtzSy%(A)
 'Dim O%, J&
 'For J = 0 To UB(A)
 '    O = Max(O, Len(A(J)))
 'Next
-'AyWdt = O
+'WdtzSy = O
 'End Function
 'Private Function TblStru(Tny0) As String()
 'TblStru = DbtStru(CurrentDb, Tny0)
@@ -2144,7 +2144,7 @@ End Property
 'End Function
 '
 'Private Function AyAlignL(A) As String()
-'AyAlignL = AyMapXPSy(A, "AlignL", AyWdt(A))
+'AyAlignL = AyMapXPSy(A, "AlignL", WdtzSy(A))
 'End Function
 'Private Function LnkSpec_LnkColStr$(A)
 'Dim L$

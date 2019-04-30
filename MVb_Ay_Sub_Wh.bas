@@ -103,7 +103,7 @@ For Each Ix In Itr(IxAy)
     If Ix > U Then IsOutRange = True: Exit Function
 Next
 End Function
-Function AywIxAyzMust(Ay, IxAy)
+Function AywIxAyzMust(Ay, IxAy&())
 If IsOutRange(IxAy, UB(Ay)) Then Thw CSub, "Some element in IxAy is outsize Ay", "UB(Ay) IxAy", UB(Ay), IxAy
 Dim U&: U = UB(Ay)
 Dim O: O = AyCln(Ay)
@@ -120,33 +120,33 @@ For Each I In Itr(Ay)
     If Ay.Has(I) Then Push AywInAset, I
 Next
 End Function
-Function AywIxAy(Ay, IxAy)
-Dim U&: U = UB(Ay)
+Function AywIxAy(Ay, IxAy&())
+Dim U&: U = UB(IxAy)
 Dim O: O = AyCln(Ay)
-Dim Ix
+ReDim Preserve O(U)
+Dim Ix, J&
 For Each Ix In Itr(IxAy)
     If 0 > Ix Or Ix > U Then
-        ReDim Preserve O(Si(O))
-    Else
-        Push O, Ay(Ix)
+        Push O(J), Ay(Ix)
     End If
+    J = J + 1
 Next
 AywIxAy = O
 End Function
 
-Function AywLik(Ay, Lik) As String()
+Function SywLik(Sy$(), Lik$) As String()
 Dim I
-For Each I In Itr(Ay)
-    If I Like Lik Then PushI AywLik, I
+For Each I In Itr(Sy)
+    If I Like Lik Then PushI SywLik, I
 Next
 End Function
 
-Function AywLikAy(Ay, LikeAy$()) As String()
+Function SywLikAy(Ay, LikeAy$()) As String()
 Dim I, Lik
 For Each I In Itr(Ay)
     For Each Lik In LikeAy
         If I Like Lik Then
-            PushI AywLikAy, I
+            PushI SywLikAy, I
             Exit For
         End If
     Next
@@ -166,10 +166,6 @@ With Ay
 End With
 IsEmpWhNm = True
 End Function
-Function AywWhStrPfx(Sy$(), WhStr$, Optional NmPfx$) As String()
-AywWhStrPfx = AywNm(Sy, WhNmzStr(WhStr, NmPfx))
-End Function
-
 Function AywNmStr(Sy$(), WhStr$, Optional NmPfx$) As String()
 AywNmStr = AywNm(Sy, WhNmzStr(WhStr, NmPfx))
 End Function

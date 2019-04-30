@@ -70,11 +70,11 @@ Private Sub ZZ_FmtA()
 DmpAy FmtDry(SampDry1)
 End Sub
 
-Function DrywColHasDup(Dry(), C&) As Variant()
-DrywColHasDup = AywIxAy(Dry, IxAyzDup(ColzDry(Dry, C)))
+Function DrywDup(Dry(), C&) As Variant()
+DrywDup = AywIxAy(Dry, IxAyzDup(ColzDry(Dry, C)))
 End Function
 Private Sub Z_DryzJnFldKK()
-Dim Dry(), KKIxAy, JnFldIx, Sep$
+Dim Dry(), KKIxAy&(), JnFldIx&, Sep$
 Sep = " "
 Dry = Array(Array(1, 2, 3, 4, "A"), Array(1, 2, 3, 6, "B"), Array(1, 2, 2, 8, "C"), Array(1, 2, 2, 12, "DD"), _
 Array(2, 3, 1, 1, "x"), Array(12, 3), Array(12, 3, 1, 2, "XX"))
@@ -89,14 +89,11 @@ Tst:
     StopNE
     Return
 End Sub
-Function DrsJnFldKKFld(A As Drs, KK, JnFld, Optional Sep$ = " ") As Drs
 
-End Function
-
-Function DryzJnFldKK(Dry(), KKIxAy, JnFldIx, Optional Sep$ = " ") As Variant()
-Dim IxAy: IxAy = KKIxAy: PushI IxAy, JnFldIx
+Function DryzJnFldKK(Dry(), KKIxAy&(), JnFldIx&, Optional Sep$ = " ") As Variant()
+Dim IxAy&(): IxAy = KKIxAy: PushI IxAy, JnFldIx
 Dim N%: N = Si(IxAy)
-DryzJnFldKK = DryJnFldNFld(DrySelIxAy(Dry, IxAy), N)
+DryzJnFldKK = DryJnFldNFld(SelCol(Dry, IxAy), N)
 End Function
 
 Function RowIxOptzDryDr&(Dry(), Dr)
@@ -175,43 +172,39 @@ Case Else: Stop
 End Select
 End Function
 
-Function IsBrkDryIxC(A(), DrIx&, BrkColIx) As Boolean
-If Si(A) = 0 Then Exit Function
-If DrIx = 0 Then Exit Function
-If DrIx = UB(A) Then Exit Function
-If A(DrIx)(BrkColIx) = A(DrIx - 1)(BrkColIx) Then Exit Function
-IsBrkDryIxC = True
+Function IsRowBrk(Dry(), R&, BrkColIx&) As Boolean
+If Si(Dry) = 0 Then Exit Function
+If R& = 0 Then Exit Function
+If R = UB(Dry) Then Exit Function
+If Dry(R)(BrkColIx) = Dry(R - 1)(BrkColIx) Then Exit Function
+IsRowBrk = True
 End Function
 
-Function NColzDry%(A)
+Function NColzDry%(Dry())
 Dim O%, Dr
-For Each Dr In Itr(A)
+For Each Dr In Itr(Dry)
     O = Max(O, Si(Dr))
 Next
 NColzDry = O
 End Function
 
-
-
-Function NRowDryCEv&(A(), C, Ev)
+Function NRowzInDryzColEv&(Dry(), C&, Ev)
 Dim J&, O&, Dr
-For Each Dr In Itr(A)
+For Each Dr In Itr(Dry)
    If Dr(C) = Ev Then O = O + 1
 Next
-NRowDryCEv = O
+NRowzInDryzColEv = O
 End Function
 
-
-
-Function DrywCEv(A(), C, Ev) As Variant()
+Function DrywCEv(Dry(), C&, Ev) As Variant()
 Dim O()
 Dim Dr
-For Each Dr In Itr(A)
+For Each Dr In Itr(Dry)
    If Dr(C) = Ev Then PushI DrywCEv, Dr
 Next
 End Function
 
-Function DrywCCNe(A, C1, C2) As Variant()
+Function DrywCCNe(A, C1&, C2&) As Variant()
 Dim Dr
 For Each Dr In A
     If Dr(C1) <> Dr(C2) Then PushI DrywCCNe, Dr
@@ -236,31 +229,40 @@ For Each Dr In Itr(A)
 Next
 End Function
 
-Function DrywDupCC(Dry(), CC&()) As Variant()
+Function DrywDupCC(Dry(), CCIxAy&()) As Variant()
 Dim Dup$(), Dr
-Dup = AywDup(DrLinAy(Dry, CC))
+Dup = AywDup(LyzDry(Dry, CCIxAy))
 For Each Dr In Itr(Dry)
-    If HasEle(Dup, Jn(AywIxAy(Dr, CC), vbFldSep)) Then Push DrywDupCC, Dr
+    If HasEle(Dup, Jn(AywIxAy(Dr, CCIxAy), vbFldSep)) Then Push DrywDupCC, Dr
 Next
 End Function
 
-Private Function DrywDup(Dry(), C&) As Variant()
+Private Function DrywDup1(Dry(), C&) As Variant()
 Dim Dup$(), Dr, O()
 Dup = CvSy(AywDup(StrColzDry(Dry, C)))
 For Each Dr In Itr(Dry)
-    If HasEle(Dup, Dr(C)) Then PushI DrywDup, Dr
+    If HasEle(Dup, Dr(C)) Then PushI DrywDup1, Dr
 Next
 End Function
 
-Function DrywIxAyzy(A, IxAy, EqVy) As Variant()
-Dim Dr
-For Each Dr In A
-    If IsEqAy(AywIxAy(Dr, IxAy), EqVy) Then PushI DrywIxAyzy, Dr
+Function DrywIxAyzy(Dry(), IxAy&(), EqVy()) As Variant()
+Dim Drv
+For Each Drv In Itr(Dry)
+    If IsEqAy(AywIxAy(Drv, IxAy), EqVy) Then PushI DrywIxAyzy, Drv
 Next
 End Function
-
-Function DistSyzDry(A(), C) As String()
-DistSyzDry = AywDist(DrLin(A, C))
+Function ColzDryC(Dry(), C&) As Variant()
+Dim Drv
+For Each Drv In Itr(Dry)
+    If UB(Drv) < C Then
+        PushI ColzDryC, Empty
+    Else
+        PushI ColzDryC, Drv(C)
+    End If
+Next
+End Function
+Function DistColzDryC(Dry(), C&) As Variant()
+DistColzDryC = AywDist(ColzDryC(Dry, C))
 End Function
 
 Function DryzSqCol(Sq(), ColIxAy) As Variant()

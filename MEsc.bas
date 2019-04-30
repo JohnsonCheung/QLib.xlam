@@ -1,21 +1,23 @@
 Attribute VB_Name = "MEsc"
-Function HexzChr$(C$)
-If Len(C) <> 1 Then Thw CSub, "C should have len=1", "C Len", C, Len(C)
-Dim A%: A = Asc(C)
-If A < 16 Then
-    HexzChr = "0" & Hex(A)
+Function Hex2zAsc$(Asc%)
+If Asc < 16 Then
+    Hex2zAsc = "0" & Hex(Asc)
 Else
-    HexzChr = Hex(A)
+    Hex2zAsc = Hex(Asc)
 End If
 End Function
+Function Hex2$(C$)
+If Len(C) <> 1 Then Thw CSub, "C should have len=1", "C Len", C, Len(C)
+Hex2 = Hex2zAsc(Asc(C))
+End Function
 Function PerHex$(C$)
-PerHex = "%" & HexzChr(C)
+PerHex = "%" & Hex2(C)
 End Function
 Function EscChr$(S$, C$)
 EscChr = EscAsc(S, Asc(C))
 End Function
-Function EscAsc$(S$, A%)
-EscChr = Replace(S, "%" & Hex2(A))
+Function EscAsc$(S$, A%) 'Escaping the AscChr-A% in S$ as %HH
+EscAsc = Replace(S, Chr(A), "%" & Hex2zAsc(A))
 End Function
 Function EscSqBkt$(S$)
 EscSqBkt = EscChrLis(S, "[]")

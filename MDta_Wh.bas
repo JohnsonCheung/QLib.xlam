@@ -12,9 +12,9 @@ Fny = A.Fny
 End Function
 
 Function DrswColEq(A As Drs, C$, V) As Drs
-Dim Dry(), Ix%, Fny$()
+Dim Dry(), Ix&, Fny$()
 Fny = A.Fny
-'Ix = IxAy(Fny, C)
+Ix = IxzAy(Fny, C)
 DrswColEq = Drs(Fny, DrywCEv(A.Dry, Ix, V))
 End Function
 
@@ -49,8 +49,7 @@ Dim O(), Dry()
 DrswNotRowIxAy = Drs(A.Fny, O)
 End Function
 
-
-Function DrswRowIxAy(A As Drs, RowIxAy) As Drs
+Function DrswRowIxAy(A As Drs, RowIxAy&()) As Drs
 DrswRowIxAy = Drs(A.Fny, CvAv(AywIxAy(A.Dry, RowIxAy)))
 End Function
 

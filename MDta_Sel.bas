@@ -1,19 +1,14 @@
 Attribute VB_Name = "MDta_Sel"
 Option Explicit
 
-Function DrySel(A, IxAy) As Variant()
-Dim Dr
-For Each Dr In Itr(A)
-    PushI DrySel, AywIxAy(Dr, IxAy)
+Function DrySel(Dry(), IxAy&()) As Variant()
+Dim Drv
+For Each Drv In Itr(Dry)
+    PushI DrySel, AywIxAy(Drv, IxAy)
 Next
 End Function
 
-Function DrySelIxAp(A, ParamArray IxAp()) As Variant()
-Dim IxAy(): IxAy = IxAp
-DrySelIxAp = DrySel(A, IxAy)
-End Function
-
-Function DrsSel(A As Drs, FF) As Drs
+Function DrsSel(A As Drs, FF$) As Drs
 Dim Fny$(): Fny = TermAy(FF)
 If IsEqAy(A.Fny, Fny) Then DrsSel = A: Exit Function
 ThwNotSuperAy A.Fny, Fny
@@ -25,7 +20,7 @@ Private Sub Z_DrsSel()
 'BrwDrs Vmd.MthDrs
 End Sub
 
-Function DtSel(A As Dt, FF) As Dt
+Function DtSel(A As Dt, FF$) As Dt
 DtSel = DtzDrs(DrsSel(DrszDt(A), FF), A.DtNm)
 End Function
 

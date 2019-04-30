@@ -7,10 +7,11 @@ For Each BasItm In Itr(BasFfnAy(SrcpzDistPj(DistPj)))
 Next
 End Sub
 
-Private Function BasFfnAy(Srcp) As String()
-Dim Ffn
-For Each Ffn In FfnSy(Srcp)
-    If IsBasFfn(Ffn$) Then
+Private Function BasFfnAy(Srcp$) As String()
+Dim Ffn$, I
+For Each I In FfnSy(Srcp)
+    Ffn = I
+    If IsBasFfn(Ffn) Then
         PushI BasFfnAy, Ffn
     End If
 Next

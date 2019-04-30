@@ -5,11 +5,11 @@ Function CvCn(A) As AdoDb.Connection
 Set CvCn = A
 End Function
 
-Sub RplOleWcFb(Wc As WorkbookConnection, Fb)
-CvCn(Wc.OLEDBConnection.ADOConnection).ConnectionString = CnStrzFbAdo(Fb$)
+Sub RplOleWcFb(Wc As WorkbookConnection, Fb$)
+CvCn(Wc.OLEDBConnection.ADOConnection).ConnectionString = CnStrzFbAdo(Fb)
 End Sub
 
-Sub RplLozFbzFbt(Lo As ListObject, Fb As Database, T)
+Sub RplLozFbzFbt(Lo As ListObject, Fb$, T$)
 With Lo.QueryTable
     RplOleWcFb .Connection, Fb '<==
     .CommandType = xlCmdTable
@@ -32,15 +32,15 @@ End Sub
 
 Function WbzFb(Fb$, Optional Vis As Boolean) As Workbook
 Dim D As Database: Set D = Db(Fb$)
-Set WbzFb = SetViszWb(WbzTT(D, Tny(D)), Vis)
+Set WbzFb = SetViszWb(WbzTny(D, Tny(D)), Vis)
 End Function
 
-Function WbzTT(A As Database, TT, Optional UseWc As Boolean) As Workbook
+Function WbzTny(A As Database, Tny$(), Optional UseWc As Boolean) As Workbook
 Dim O As Workbook
 Set O = NewWb
-Set WbzTT = AddWszTT(O, Db, TT, UseWc)
+AddWszTny O, A, Tny, UseWc
 WszWb(O, "Sheet1").Delete
-Set WbzTT = O
+Set WbzTny = O
 End Function
 
 Function SetWsn(Ws As Worksheet, Nm$) As Worksheet
@@ -49,31 +49,31 @@ Ws.Name = Nm
 Set SetWsn = Ws
 End Function
 
-Sub AddWszT(Wb As Workbook, Db As Database, T$, Optional Wsn$, Optional UseWc As Boolean)
-Dim Wsn$: Wsn = StrDft(Wsn, T)
+Sub AddWszT(Wb As Workbook, Db As Database, T$, Optional Wsn0$, Optional UseWc As Boolean)
+Dim Wsn$: Wsn = StrDft(Wsn0, T)
 AddWs Wb, Wsn
-PutDbtAt A, T, A1zWs(LasWs(Wb))
+PutDbtAt Wb, T, A1zWs(LasWs(Wb))
 End Sub
 
 Function WbzOupTbl(A As Database) As Workbook
-Set WbzOupTbl = WbzTT(Db, OupTny(A))
+Set WbzOupTbl = WbzTny(A, OupTny(A))
 End Function
 
-Function WbzT(A As Database, T, Optional Wsn$ = "Data", Optional LoNm$, Optional Vis As Boolean) As Workbook
-Set WbzT = WszRg(AtAddDbt(NewA1(Wsn, Vis), Db, T, LoNm))
+Function WbzT(A As Database, T$, Optional Wsn$ = "Data", Optional LoNm$, Optional Vis As Boolean) As Workbook
+Set WbzT = WszRg(AtAddDbt(NewA1(Wsn, Vis), A, T, LoNm))
 End Function
-Function AtAddDbt(At As Range, Db As Database, T, Optional LoNm$) As Range
+Function AtAddDbt(At As Range, Db As Database, T$, Optional LoNm$) As Range
 'LozRg AtAddSq(At, Dbt(Db, T).Sq), LoNm
 Set AtAddDbt = At
 End Function
-Sub PutDbtWs(A As Database, T, Ws As Worksheet)
+Sub PutDbtWs(A As Database, T$, Ws As Worksheet)
 PutDbtAt A, T, A1zWs(Ws)
 End Sub
 
-Sub PutDbtAt(A As Database, T, At As Range, Optional LoNm$)
+Sub PutDbtAt(A As Database, T$, At As Range, Optional LoNm$)
 'LozRg AtAddSq(At, Dbt(A, T).Sq), Dft(LoNm, LoNm(T))
 End Sub
-Sub SetQtFbt(Qt As QueryTable, Fb$, T)
+Sub SetQtFbt(Qt As QueryTable, Fb$, T$)
 With Qt
     .CommandType = xlCmdTable
     .Connection = CnStrzFbAdoOle(Fb$) '<--- Fb
@@ -92,19 +92,19 @@ With Qt
     .Refresh BackgroundQuery:=False
 End With
 End Sub
-Sub PutFbtAt(Fb$, T, At As Range, Optional LoNm0$)
+Sub PutFbtAt(Fb$, T$, At As Range, Optional LoNm0$)
 Dim O As ListObject
 Set O = WszRg(At).ListObjects.Add(SourceType:=XlSourceType.xlSourceWorkbook, Destination:=At)
 SetLoNm O, Dft(LoNm0, LoNm(T))
 SetQtFbt O.QueryTable, Fb, T
 End Sub
-Sub FxzTT(Fx$, Db As Database, TT)
-WbzTT(Db, TT).SaveAs Fx
+Sub FxzTny(Fx$, Db As Database, Tny$())
+WbzTny(Db, Tny).SaveAs Fx
 End Sub
 
-Function WszT(A As Database, T, Optional Wsn$) As Worksheet
+Function WszT(A As Database, T$, Optional Wsn$) As Worksheet
 'set Wszt = WszT(NewWb(
-Dim Sq(): Sq = SqzT(Db, T)
+Dim Sq(): Sq = SqzT(A, T)
 Dim A1 As Range: Set A1 = NewA1(Wsn)
 Set WszT = WszLo(LozSq(Sq(), A1))
 End Function

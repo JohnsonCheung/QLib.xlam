@@ -81,7 +81,7 @@ End Function
 Function FmtSq(Sq(), Optional SepChr$ = " ") As String()
 If IsEmpSq(Sq) Then Exit Function
 With RRCCzSq(Sq)
-Dim I%
+Dim I&
 For I = .R1 To .R2
     PushI FmtSq, Jn(DrzSqR(Sq(), I), SepChr)
 Next

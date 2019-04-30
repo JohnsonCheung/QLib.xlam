@@ -18,14 +18,14 @@ Private Sub Ren_MthPth_AsAt()
 
 End Sub
 Private Sub Ren_CasPth_AsAt()
-Ren CasPthAy
+Ren CasPthSy
 End Sub
-Private Property Get CasPthAy() As String()
+Private Property Get CasPthSy() As String()
 
 End Property
-Private Sub Ren(PthAy)
+Private Sub Ren(PthSy)
 Dim I
-For Each I In Itr(PthAy)
+For Each I In Itr(PthSy)
     'RenPthAddPfx I, "@"
 Next
 End Sub

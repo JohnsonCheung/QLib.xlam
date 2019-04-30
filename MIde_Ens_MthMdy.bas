@@ -1,13 +1,13 @@
 Attribute VB_Name = "MIde_Ens_MthMdy"
 Option Explicit
 Const CMod$ = "MIde_EnsMdy."
-Function MthLinzEnsprv$(MthLin)
+Function MthLinzEnsprv$(MthLin$)
 Const CSub$ = CMod & "MthLinzEnsprv"
 If Not IsMthLin(MthLin) Then Thw CSub, "Given MthLin is not MthLin", "Lin", MthLin
 MthLinzEnsprv = "Private " & RmvMdy(MthLin)
 End Function
 
-Function MthLinzEnspub$(MthLin)
+Function MthLinzEnspub$(MthLin$)
 Const CSub$ = CMod & "MthLinzEnspub"
 If Not IsMthLin(MthLin) Then Thw CSub, "Given MthLin is not MthLin", MthLin
 MthLinzEnspub = RmvMdy(MthLin)
@@ -33,7 +33,7 @@ EnsPubzMd CurMd
 End Sub
 
 Sub EnsPrvZzMd(A As CodeModule)
-MdMdy A, ActLinAyOfEnsPrvZ(A)
+MdyMd A, ActLinAyOfEnsPrvZ(A)
 End Sub
 Function ActLinAyOfEnsPrvZ(A As CodeModule) As ActLin()
 
@@ -54,7 +54,7 @@ Asg Itr(LnoAyOfPubZ(A)), LnoItrOfPubZ
 End Function
 
 Sub EnsPubzMd(A As CodeModule)
-MdMdy A, ActLinAyOfEnsPubZ(A)
+MdyMd A, ActLinAyOfEnsPubZ(A)
 End Sub
 
 Function ActLinAyOfEnsPubZ(A As CodeModule) As ActLin()

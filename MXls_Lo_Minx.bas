@@ -26,6 +26,6 @@ Next
 Set MinxLozWszWb = A
 End Function
 
-Sub MinxLozWszFx(A)
-ClsWbNoSav SavWb(MinxLozWszWb(WbzFx(A)))
+Sub MinxLozWszFx(Fx$)
+ClsWbNoSav SavWb(MinxLozWszWb(WbzFx(Fx)))
 End Sub

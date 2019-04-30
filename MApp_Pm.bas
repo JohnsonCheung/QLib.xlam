@@ -1,27 +1,30 @@
 Attribute VB_Name = "MApp_Pm"
 Option Explicit
 
-Function PmOupPth$(A As Database)
-PmOupPth = EnsPthzAllSeg(PmVal(Db, "OupPth"))
+Function OupPth$(A As Database)
+Dim P$: P = ValzPm(A, "OupPth")
+EnsPthzAllSeg P
+OupPth = P
 End Function
 
-Function PmPth$(A As Database, PmNm$)
-PmPth = EnsPthSfx(PmVal(Db, PmNm & "Pth"))
+Function PthzPm$(A As Database, PmNm$)
+PthzPm = EnsPthSfx(ValzPm(A, PmNm & "Pth"))
 End Function
 
-Function PmFn$(A As Database, PmNm$)
-PmFn = PmVal(Db, PmNm & "Fn")
+Function FnzPm$(A As Database, PmNm$)
+FnzPm = ValzPm(A, PmNm & "Fn")
 End Function
 
-Function PmFfn(A As Database, PmNm$)
-PmFfn = PmPth(Db, PmNm) & PmFn(Db, PmNm)
+Function FfnzPm(A As Database, PmNm$)
+FfnzPm = PthzPm(A, PmNm) & FnzPm(A, PmNm)
 End Function
 
-Property Get PmVal$(A As Database, PmNm$)
-PmVal = ValOfTF(Db, "Pm", PmNm)
+Property Get ValzPm$(A As Database, PmNm$)
+Dim Q$: Q = FmtQQ("Select ? From Pm where CurUsr='?'", PmNm, CurUsr)
+ValzPm = ValzQ(A, Q)
 End Property
 
-Property Let PmVal(A As Database, PmNm$, V$)
+Property Let ValzPm(A As Database, PmNm$, V$)
 With A.TableDefs("Pm").OpenRecordset
     .Edit
     .Fields(PmNm).Value = V
@@ -29,7 +32,7 @@ With A.TableDefs("Pm").OpenRecordset
 End With
 End Property
 Sub BrwPm(A As Database)
-BrwTbl Db, "Pm"
+BrwTbl A, "Pm"
 End Sub
 
 Private Sub ZZ()

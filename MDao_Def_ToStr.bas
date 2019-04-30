@@ -2,14 +2,14 @@ Attribute VB_Name = "MDao_Def_ToStr"
 Option Explicit
 Const CMod$ = "MDao_Td_Str."
 
-Function FdStrAyFds(A As DAO.Fields) As String()
-Dim F As DAO.Field
+Function FdStrAyFds(A As Dao.Fields) As String()
+Dim F As Dao.Field
 For Each F In A
     PushI FdStrAyFds, FdStr(F)
 Next
 End Function
 
-Function TdStr$(A As DAO.TableDef)
+Function TdStr$(A As Dao.TableDef)
 Dim T$, Id$, S$, R$
     T = A.Name
     If HasStdPkzTd(A) Then Id = "*Id"
@@ -21,8 +21,9 @@ TdStr = JnSpc(SyzApNonBlank(T, Id, S, R))
 End Function
 
 Function FnyzTdLy(TdLy$()) As String()
-Dim O$(), TdStr
-For Each TdStr In Itr(TdLy)
+Dim O$(), TdStr$, I
+For Each I In Itr(TdLy)
+    TdStr = I
     PushIAy O, FnyzTdLin(TdStr)
 Next
 FnyzTdLy = CvSy(AywDist(O))
@@ -42,16 +43,16 @@ Rst = Replace(Rst, "*", T)
 SkFnyzTdLin = SySsl(Rst)
 End Function
 
-Function FdStr$(A As DAO.Field2)
+Function FdStr$(A As Dao.Field2)
 Dim D$, R$, Z$, VTxt$, VRul, E$, S$
-If A.Type = DAO.DataTypeEnum.dbText Then S = " TxtSz=" & A.Size
+If A.Type = Dao.DataTypeEnum.dbText Then S = " TxtSz=" & A.Size
 If A.DefaultValue <> "" Then D = "Dft=" & A.DefaultValue
 If A.Required Then R = "Req"
 If A.AllowZeroLength Then Z = "AlwZLen"
 If A.Expression <> "" Then E = "Expr=" & A.Expression
 If A.ValidationRule <> "" Then VRul = "VRul=" & A.ValidationRule
 If A.ValidationText <> "" Then VTxt = "VTxt=" & A.ValidationText
-FdStr = TLinzAp(A.Name, ShtTyzDao(A.Type), R, Z, VTxt, VRul, D, E, IIf((A.Attributes And DAO.FieldAttributeEnum.dbAutoIncrField) <> 0, "Auto", ""))
+FdStr = TLinzAp(A.Name, ShtTyzDao(A.Type), R, Z, VTxt, VRul, D, E, IIf((A.Attributes And Dao.FieldAttributeEnum.dbAutoIncrField) <> 0, "Auto", ""))
 End Function
 
 

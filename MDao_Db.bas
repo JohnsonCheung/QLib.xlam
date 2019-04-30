@@ -109,14 +109,18 @@ Dim Av(): Av = Ap
 RunQQAv A, QQ, Av
 End Sub
 
-Function RszQQ(A As Database, QQ$, ParamArray Ap()) As DAO.Recordset
+Function RszQQ(A As Database, QQ$, ParamArray Ap()) As Dao.Recordset
 Dim Av(): Av = Ap
 Set RszQQ = Rs(A, FmtQQAv(QQ, Av))
 End Function
-Function RszQ(A As Database, Q$) As DAO.Recordset
+Function RszQ(A As Database, Q$) As Dao.Recordset
 Set RszQ = Rs(A, Q)
 End Function
-Function Rs(A As Database, Q$) As DAO.Recordset
+Function MovFst(A As Dao.Recordset) As Dao.Recordset
+A.MoveFirst
+Set MovFst = A
+End Function
+Function Rs(A As Database, Q$) As Dao.Recordset
 Const CSub$ = CMod & "Rs"
 On Error GoTo X
 Set Rs = A.OpenRecordset(Q)
@@ -154,7 +158,7 @@ Function Qny(A As Database) As String()
 Qny = SyzQ(A, "Select Name from MSysObjects where Type=5 and Left(Name,4)<>'MSYS' and Left(Name,4)<>'~sq_'")
 End Function
 
-Function RszQry(A As Database, QryNm$) As DAO.Recordset
+Function RszQry(A As Database, QryNm$) As Dao.Recordset
 Set RszQry = A.QueryDefs(QryNm).OpenRecordset
 End Function
 
@@ -174,7 +178,7 @@ Asg Itr(Tny(A)), Tni
 End Function
 
 Function Tny(A As Database) As String()
-Set A = DAO.DBEngine.OpenDatabase(A.Name)
+Set A = Dao.DBEngine.OpenDatabase(A.Name)
 Dim T As TableDef
 For Each T In A.TableDefs
     If Not IsSysTd(T) Then
@@ -192,8 +196,8 @@ End Function
 
 Function Tny1(A As Database) As String()
 Dim T As TableDef, O$()
-Dim X As DAO.TableDefAttributeEnum
-X = DAO.TableDefAttributeEnum.dbHiddenObject Or DAO.TableDefAttributeEnum.dbSystemObject
+Dim X As Dao.TableDefAttributeEnum
+X = Dao.TableDefAttributeEnum.dbHiddenObject Or Dao.TableDefAttributeEnum.dbSystemObject
 For Each T In A.TableDefs
     Select Case True
     Case T.Attributes And X
@@ -227,7 +231,7 @@ End Sub
 
 Private Sub ZZ()
 Dim Db As Database
-Dim B As DAO.TableDef
+Dim B As Dao.TableDef
 Dim C$()
 Dim D As Variant
 Dim E$
@@ -293,11 +297,11 @@ Property Let TblDes(A As Database, T, Des$)
 PrpVal(A.TableDefs(T).Properties, C_Des) = Des
 End Property
 
-Property Get TblAttDes$(A As DAO.Database)
+Property Get TblAttDes$(A As Dao.Database)
 TblAttDes = TblDes(A, "Att")
 End Property
 
-Property Let TblAttDes(A As DAO.Database, Des$)
+Property Let TblAttDes(A As Dao.Database, Des$)
 TblDes(A, "Att") = Des
 End Property
 
@@ -371,7 +375,7 @@ Asg Itr(TnyzInp(A)), TnizInp
 End Function
 
 Function TnyzInp(A As Database) As String()
-TnyzInp = AywLik(Tny(A), ">*")
+TnyzInp = SywLik(Tny(A), ">*")
 End Function
 
 Sub CpyInpTblAsTmpz(A As Database)

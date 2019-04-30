@@ -1,6 +1,6 @@
 Attribute VB_Name = "MVb_Run"
 Option Explicit
-Function Pipe(Pm, MthNN)
+Function Pipe(Pm, MthNN$)
 Dim O: Asg Pm, O
 Dim I
 For Each I In Ny(MthNN)

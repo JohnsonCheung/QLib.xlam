@@ -13,12 +13,12 @@ Case 2
     S2 = Right(QuoteStr, 1)
 Case Else
     If InStr(QuoteStr, "*") > 0 Then
-        Set BrkQuote = Brk(QuoteStr, "*", NoTrim:=True)
+        BrkQuote = Brk(QuoteStr, "*", NoTrim:=True)
         Exit Function
     End If
     Stop
 End Select
-Set BrkQuote = S1S2(S1, S2)
+BrkQuote = S1S2(S1, S2)
 End Function
 Sub AsgQuote(OQ1$, OQ2$, QuoteStr$)
 With BrkQuote(QuoteStr)

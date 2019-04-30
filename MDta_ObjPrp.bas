@@ -6,8 +6,8 @@ Set B = CurPj
 Stop
 End Sub
 Function DrszItr(Itr, PP$) As Drs
-Dim PrpPthAy$(): PrpPthAy = Ny(PP)
-DrszItr = Drs(PrpPthAy, DryzItr(Itr, PrpPthAy))
+Dim PrpPthSy$(): PrpPthSy = Ny(PP)
+DrszItr = Drs(PrpPthSy, DryzItr(Itr, PrpPthSy))
 End Function
 
 Function DrszItrpp(Itr, PP) As Drs
@@ -68,10 +68,10 @@ Next
 Set AddColzFmlDrs = Drs(AyAddItm(A.Fny, NewFld), Dry)
 End Function
 
-Private Function DryzItr(Itr, PrpPthAy$()) As Variant()
+Private Function DryzItr(Itr, PrpPthSy$()) As Variant()
 Dim Obj
 For Each Obj In Itr
-    Push DryzItr, DrzObj(Obj, PrpPthAy)
+    Push DryzItr, DrzObj(Obj, PrpPthSy)
 Next
 End Function
 

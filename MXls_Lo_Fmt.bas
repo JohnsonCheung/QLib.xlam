@@ -146,7 +146,7 @@ Dim R1 As Range
 Dim R2 As Range
 Set R1 = WHdrCell(Fld)
 Set R2 = CellAbove(R1)
-SwapValOfRg R1, R2
+SwapValzRg R1, R2
 End Sub
 
 'Lvl----------------------------------------------------------

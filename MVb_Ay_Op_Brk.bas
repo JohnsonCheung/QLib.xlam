@@ -20,7 +20,7 @@ Dim O As New Ayab
 Set Ayab = O.Init(A, B)
 End Function
 
-Function AyabByN(Ay, N) As Ayab
+Function AyabByN(Ay, N&) As Ayab
 Set AyabByN = Ayab(AywFstNEle(Ay, N), AyeFstNEle(Ay, N))
 End Function
 

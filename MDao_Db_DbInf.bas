@@ -1,19 +1,20 @@
 Attribute VB_Name = "MDao_Db_DbInf"
 Option Explicit
+
 Sub BrwDbInf(A As Database)
-DbInfDs(A).Brw 2000, DtBrkColDicVbl:="TblFld Tbl"
+BrwDs DbInf(A), 2000, BrkColVbl:="TblFld Tbl"
 End Sub
 
-Function DbInfDs(A As Database) As Ds
+Function DbInf(A As Database) As Ds
 Dim O As Ds, T$()
 T = Tny(A)
-DsAddDt O, XLnk(A, T)
-DsAddDt O, XTbl(A, T)
-DsAddDt O, XTblF(A, T)
-DsAddDt O, XPrp(A)
-DsAddDt O, XFld(A, T)
+AddDt O, XLnk(A, T)
+AddDt O, XTbl(A, T)
+AddDt O, XTblF(A, T)
+AddDt O, XPrp(A)
+AddDt O, XFld(A, T)
 O.DsNm = A.Name
-DbInfDs = O
+DbInf = O
 End Function
 
 Private Sub Z_BrwDbInf()
@@ -31,11 +32,12 @@ DmpDt XTbl(D, Tny(D))
 End Sub
 
 Private Function XTbl(A As Database, Tny$()) As Dt
-Dim T, Dry()
-For Each T In Tny
+Dim T$, Dry(), I
+For Each I In Tny
+    T = I
     Push Dry, Array(T, NReczT(A, T), TblDes(A, T), StruzT(A, T))
 Next
-Set XTbl = Dt("DbTbl", "Tbl RecCnt Des Stru", Dry)
+XTbl = DtzFF("DbTbl", "Tbl RecCnt Des Stru", Dry)
 End Function
 
 Private Function XLnk(A As Database, Tny$()) As Dt
@@ -45,37 +47,39 @@ For Each T In Tni(A)
    If C <> "" Then Push Dry, Array(T, C)
 Next
 Dim O As Dt
-Set XLnk = Dt("DbLnk", "Tbl Connect", Dry)
+XLnk = DtzFF("DbLnk", "Tbl Connect", Dry)
 End Function
 
 Private Function XPrp(A As Database) As Dt
 Dim Dry()
-Set XPrp = Dt("DbPrp", "Prp Ty Val", Dry)
+XPrp = DtzFF("DbPrp", "Prp Ty Val", Dry)
 End Function
 Private Function XFld(A As Database, Tny$()) As Dt
 Dim Dry(), T
 For Each T In Tni(A)
 Next
-Set XFld = Dt("DbFld", "Tbl Fld Pk Ty Si Dft Req Des", Dry)
+XFld = DtzFF("DbFld", "Tbl Fld Pk Ty Si Dft Req Des", Dry)
 End Function
 
 Private Function XTblF(D As Database, Tny$()) As Dt
 Dim Dry()
-Dim T
-For Each T In Tni(D)
+Dim T$, I
+For Each I In Tni(D)
+    T = I
     PushIAy Dry, XTblFDry(D, T)
 Next
-Set XTblF = Dt("TblFld", "Tbl Seq Fld Ty Si ", Dry)
+XTblF = DtzFF("TblFld", "Tbl Seq Fld Ty Si ", Dry)
 End Function
 
 Private Function XTblFDry(D As Database, T$) As Variant()
-Dim F, Seq%
-For Each F In Fny(D, T)
+Dim F$, Seq%, I
+For Each I In Fny(D, T)
+    F = I
     Seq = Seq + 1
     Push XTblFDry, XTblFDr(T, Seq, FdzTF(D, T, F))
 Next
 End Function
-Private Function XTblFDr(T, Seq%, F As DAO.Field2) As Variant()
+Private Function XTblFDr(T$, Seq%, F As Dao.Field2) As Variant()
 XTblFDr = Array(T, Seq, F.Name, DtaTy(F.Type))
 End Function
 Private Sub Z()
@@ -83,8 +87,9 @@ MDao_Z_Db_DbInf:
 End Sub
 
 Private Function XLnkLy(A As Database) As String()
-Dim T
-For Each T In Tny(A)
+Dim T$, I
+For Each I In Tny(A)
+    T = I
     PushNonBlankStr XLnkLy, CnStrzT(A, T)
 Next
 End Function

@@ -73,7 +73,7 @@ If Left(R, 1) <> "_" Then GoTo Case1
 If Not IsNumeric(Mid(R, 2)) Then GoTo Case1
 
 Dim L$: L = Left(Nm, Len(Nm) - NDig)
-Dim Nxt%: Nxt = Val(Mid(R, 2)) + 1
+Dim Nxt&: Nxt = Val(Mid(R, 2)) + 1
 NxtSeqNm = Left(Nm, Len(Nm) - NDig) + Pad0(Nxt, NDig)
 Exit Function
 

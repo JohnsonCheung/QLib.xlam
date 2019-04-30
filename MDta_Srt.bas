@@ -2,7 +2,7 @@ Attribute VB_Name = "MDta_Srt"
 Option Explicit
 Dim A_SrtColIxAy%()
 Dim A_IsDesAy() As Boolean
-Private Sub Asg(Fny$(), SrtByFF$, OColIxAy%(), OIsDesAy() As Boolean) 'SrtByFF may have - as sfx which means IsDes
+Private Sub Asg(Fny$(), SrtByFF$, OColIxAy&(), OIsDesAy() As Boolean) 'SrtByFF may have - as sfx which means IsDes
 Erase OColIxAy
 Erase OIsDesAy
 '-- SrtByFF is not given, use fst col
@@ -21,8 +21,9 @@ Erase OIsDesAy
     ReDim OIsDesAy(U)
 
 '-- Set O*
-    Dim F, J%
-    For Each F In SrtFny
+    Dim F$, I, J%
+    For Each I In SrtFny
+        F = I
         If LasChr(F) = "-" Then
             OIsDesAy(J) = True
             OColIxAy(J) = IxzAy(Fny, RmvLasChr(F))
@@ -33,14 +34,14 @@ Erase OIsDesAy
 End Sub
 Function DrsSrt(A As Drs, Optional SrtByFF$ = "") As Drs 'If SrtByFF is blank use fst col.
 Dim Fny$(): Fny = TermAy(SrtByFF)
-Dim ColIxAy%(): ColIxAy = IntAyzLngAy(IxAy(A.Fny, Fny))
+Dim ColIxAy&(): ColIxAy = IxAy(A.Fny, Fny)
 Dim IsDesAy() As Boolean
     Asg Fny, SrtByFF, _
         ColIxAy, IsDesAy
 DrsSrt = Drs(A.Fny, DrySrt(A.Dry, ColIxAy, IsDesAy))
 End Function
 
-Function DrySrt(Dry(), ColIxAy%(), IsDesAy() As Boolean) As Variant()
+Function DrySrt(Dry(), ColIxAy&(), IsDesAy() As Boolean) As Variant()
 If Si(ColIxAy) <> Si(IsDesAy) Then Thw CSub, "Si of ColIxAy and IsDesAy are dif", "Si-ColIxAy Si-IsDesAy", Si(ColIxAy) <> Si(IsDesAy)
 If Si(ColIxAy) = 1 Then
     DrySrt = DrySrtzCol(Dry, ColIxAy(0), IsDesAy(0))
@@ -53,9 +54,9 @@ Function DtSrt(A As Dt, Optional SrtByFF$ = "") As Dt
 DtSrt = DtzDrs(DrsSrt(DrszDt(A), SrtByFF), A.DtNm)
 End Function
 
-Function DrySrtzCol(Dry(), ColIx%, Optional IsDes As Boolean) As Variant()
+Function DrySrtzCol(Dry(), C&, Optional IsDes As Boolean) As Variant()
 Attribute DrySrtzCol.VB_Description = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
-Dim Col: Col = ColzDry(Dry, ColIx)
+Dim Col(): Col = ColzDry(Dry, C)
 Dim Ix&(): Ix = IxAyzAySrt(Col, IsDes)
 Dim J%
 For J = 0 To UB(Ix)
@@ -63,10 +64,10 @@ For J = 0 To UB(Ix)
 Next
 End Function
 
-Private Function DrySrtzColIxAy(Dry(), SrtColIxAy%(), IsDesAy() As Boolean) As Variant()
+Private Function DrySrtzColIxAy(Dry(), SrtColIxAy&(), IsDesAy() As Boolean) As Variant()
 Dim O(): O = Dry
-A_SrtColIxAy = SrtColIxAy
-A_IsDesAy = IsDesAy
+'A_SrtColIxAy = SrtColIxAy
+'A_IsDesAy = IsDesAy
 DrySrtLH O, 0, UB(Dry)
 DrySrtzColIxAy = O
 End Function

@@ -1,16 +1,16 @@
 Attribute VB_Name = "MVb_Str_Align"
 Option Explicit
 
-Function AlignL$(A, W)
-Dim L%: L = Len(A)
+Function AlignL$(S$, W%)
+Dim L%: L = Len(S)
 If L >= W Then
-    AlignL = A
+    AlignL = S
 Else
-    AlignL = A & Space(W - Len(A))
+    AlignL = S & Space(W - Len(S))
 End If
 End Function
 
-Function AlignR$(S, W)
+Function AlignR$(S$, W%)
 Dim L%: L = Len(S)
 If W > L Then
     AlignR = Space(W - L) & S

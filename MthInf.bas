@@ -9,11 +9,11 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
 Public MdNm$, FmLno&, ToLno&, LinCnt%, Lines$, MthLin$, MthNm$, ShtMdy$, ShtKd$, TyChr$, RetTy$, LinRmk$, TopRmk$
-Private X_ArgAy$()
-Property Get ArgAy() As String()
-ArgAy = X_ArgAy
+Private X_ArgSy$()
+Property Get ArgSy() As String()
+ArgSy = X_ArgSy
 End Property
-Property Let ArgAy(V$())
-X_ArgAy = V
+Property Let ArgSy(V$())
+X_ArgSy = V
 End Property
 

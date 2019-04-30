@@ -1,8 +1,8 @@
 Attribute VB_Name = "MIde_ConstMth_Val"
 Option Explicit
 Const CMod$ = "MIde_Gen_Const_ConstVal."
-Function ConstValOfFt(ConstNm$)
-ConstValOfFt = LineszFt(FtzConstQNm(ConstNm))
+Function ConstValzFt(ConstNm$)
+ConstValzFt = LineszFt(FtzConstQNm(ConstNm))
 End Function
 Function ConstVal$(ConstQNm$)
 Dim Md As CodeModule, ConstNm$
@@ -16,7 +16,7 @@ End Sub
 Function ConstValByMd$(Md As CodeModule, ConstNm$)
 Dim M$: M = MthLinesByMdMth(Md, "C_" & ConstNm): If M = "" Then Exit Function
 If Not IsConstPrp(M) Then Thw CSub, "Not a const method.  It should be [Property Get]", "ConstNm MthLines", ConstNm, M
-ConstValByMd = ConstValOfMth(M)
+ConstValByMd = ConstValzMth(M)
 End Function
 
 Private Function IsConstPrp(MthLines$) As Boolean
@@ -25,22 +25,22 @@ If A.MthTy = "Property Get" Then Exit Function
 If Not HasPfx(A.Nm, "C_") Then Exit Function
 IsConstPrp = True
 End Function
-Function ConstValOfMth$(MthLines$)
+Function ConstValzMth$(MthLines$)
 Dim O$(), ConstLines
 For Each ConstLines In Itr(ConstLinesAy(MthLines))
-    PushI O, ConstValOfConst(ConstLines)
+    PushI O, ConstValzConst(ConstLines)
 Next
-ConstValOfMth = Jn(O)
+ConstValzMth = Jn(O)
 End Function
 
-Private Function ConstValOfConst$(C)
+Private Function ConstValzConst$(C)
 Dim I, O$(), A$, B$
 For Each I In SplitCrLf(C)
     A = BetFstLas(I, """", """")
     B = Replace(A, """""", """")
     PushI O, B
 Next
-ConstValOfConst = JnCrLf(O)
+ConstValzConst = JnCrLf(O)
 End Function
 
 Private Function ConstLinesAy(ConstPrpLines$) As String()
@@ -55,8 +55,8 @@ Lp:
     End If
 End Function
 
-Private Sub Z_ConstValOfMth()
-Const TstId% = 3
+Private Sub Z_ConstValzMth()
+Const TstId& = 3
 Const CSub$ = CMod & "Z_ConstValMthLines"
 Dim MthLines$, Cas$, IsEdt As Boolean
 GoSub T0
@@ -73,7 +73,7 @@ T1:
    
     Return
 Tst:
-    Act = ConstValOfMth(MthLines)
+    Act = ConstValzMth(MthLines)
     Brw Act
     Stop
     C
@@ -81,7 +81,7 @@ Tst:
 End Sub
 
 Private Sub Z()
-Z_ConstValOfMth
+Z_ConstValzMth
 MIde_Gen_Const_ConstVal:
 End Sub
 
@@ -89,18 +89,18 @@ Function ConstValByMd1$(A As CodeModule, ConstNm$)
 Dim J%, L$, O$
 For J = 1 To A.CountOfDeclarationLines
     L = A.Lines(J, 1)
-    O = ConstValOfLinNm(L, ConstNm)
+    O = ConstValzLinNm(L, ConstNm)
     If O <> "" Then ConstValByMd1 = O: Exit Function
 Next
 End Function
 
-Function ConstValOfLinNm$(Lin, ConstNm)
+Function ConstValzLinNm$(Lin, ConstNm)
 Dim L$: L = RmvMthMdy(Lin)
 If Not ShfPfx(L, "Const ") Then Exit Function
 If ShfNm(L) <> ConstNm Then Exit Function
 If ShfTyChr(L) = "$" Then Thw CSub, "Given constant name is found, but is not a Str", "ConstLin ConstNm", Lin, ConstNm
 Dim O$: O = Bet(L, """", """")
 If O = "" Then Thw CSub, "Between DblQuote is nothing", "ConstLin ConstNm", Lin, ConstNm
-ConstValOfLinNm = O
+ConstValzLinNm = O
 End Function
 

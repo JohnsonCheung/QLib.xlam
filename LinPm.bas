@@ -109,7 +109,7 @@ Dim Vy$()
 Select Case Si(Vy)
 Case 0
 Case 1: StrPmVal = Vy(0)
-Case Else: Thw CSub, FmtQQ("Parameter [-?] should have one value", PmNm), "Pm PmValSz PmVal-Sy", Fmt, Si(Vy), Vy
+Case Else: Thw CSub, FmtQQ("Parameter [-?] should have one value", PmNm), "Pm PmValSz ValzPm-Sy", Fmt, Si(Vy), Vy
 End Select
 End Function
 Function Patn$(NmPfx)

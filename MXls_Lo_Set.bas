@@ -1,8 +1,5 @@
 Attribute VB_Name = "MXls_Lo_Set"
 Option Explicit
-Function WszLo(A As ListObject) As Worksheet
-Set WszLo = A.Parent
-End Function
 
 Sub SetLoNm(A As ListObject, LoNm$)
 If LoNm <> "" Then

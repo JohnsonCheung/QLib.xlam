@@ -13,5 +13,5 @@ RgzResz(Vbar, Sq).Value = Sq
 End Sub
 
 Sub FillWsNy(At As Range)
-RgzAyV WsNy(WbzRg(At)), At
+RgzAyV Wsny(WbzRg(At)), At
 End Sub

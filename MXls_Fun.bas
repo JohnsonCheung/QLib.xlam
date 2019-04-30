@@ -91,8 +91,8 @@ Function N_ZerFill$(N, NDig&)
 N_ZerFill = Format(N, String(NDig, "0"))
 End Function
 
-Function WszS1S2Ay(A() As S1S2, Optional Nm1$ = "S1", Optional Nm2$ = "S2") As Worksheet
-Set WszS1S2Ay = WszSq(SqzS1S2Ay(A, Nm1, Nm2))
+Function WszS1S2s(A As S1S2s, Optional Nm1$ = "S1", Optional Nm2$ = "S2") As Worksheet
+Set WszS1S2s = WszSq(SqzS1S2s(A, Nm1, Nm2))
 End Function
 
 Private Sub Z_AyabWs()

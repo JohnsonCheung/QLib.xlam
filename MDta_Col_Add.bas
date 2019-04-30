@@ -27,11 +27,12 @@ End Function
 
 Function DrsAddColzMap(A As Drs, NewFldEqFunQuoteFmFldSsl$) As Drs
 Dim NewColVy(), FmVy()
-Dim I, NewFld$, Fun$, FmFld$
+Dim I, S$, NewFld$, Fun$, FmFld$
 For Each I In SySsl(NewFldEqFunQuoteFmFldSsl)
-    NewFld = Bef(I, "=")
-    Fun = Bet(I, "=", "(")
-    FmFld = BetBkt(I)
+    S = I
+    NewFld = Bef(S, "=")
+    Fun = Bet(S, "=", "(")
+    FmFld = BetBkt(S)
     FmVy = ColzDrs(A, FmFld)
     NewColVy = AyMap(FmVy, Fun)
     Stop '

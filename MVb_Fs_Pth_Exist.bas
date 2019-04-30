@@ -21,7 +21,7 @@ HasPth = IsPthExist(Pth)
 End Function
 
 Function HasFdr(Pth$, Fdr$) As Boolean
-HasFdr = HasEle(FdrAy(Pth), Fdr)
+HasFdr = HasEle(FdrSy(Pth), Fdr)
 End Function
 
 Sub ThwIfPthNotExist(Pth$)

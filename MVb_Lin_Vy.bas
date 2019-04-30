@@ -40,7 +40,7 @@ End Function
 
 Private Function ShfBool(OAy$(), Lbl$)
 If Si(OAy) = 0 Then Exit Function
-Dim J%, L$, Ay$()
+Dim J&, L$, Ay$()
 Ay = OAy
 L = RmvFstChr(Lbl)
 For J = 0 To UB(Ay)

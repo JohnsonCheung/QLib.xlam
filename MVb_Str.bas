@@ -4,7 +4,7 @@ Function IsEqStr(A$, B$, Optional IgnoreCase As Boolean) As Boolean
 IsEqStr = StrComp(A, B, IIf(IgnoreCase, vbTextCompare, vbBinaryCompare)) = 0
 End Function
 
-Function Pad0$(N%, NDig&)
+Function Pad0$(N&, NDig&)
 Pad0 = Format(N, Dup("0", NDig))
 End Function
 

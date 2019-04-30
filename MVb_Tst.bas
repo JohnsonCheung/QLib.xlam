@@ -21,11 +21,11 @@ Else
     ThwIfNE A, E, "Act", "Ept"
 End If
 End Sub
-Function TstCasPth$(TstId%, Cas$)
+Function TstCasPth$(TstId&, Cas$)
 TstCasPth = AddFdrEns(TstPth(TstId), "Cas-" & Cas)
 End Function
 
-Sub BrwTstPth(TstId%, Optional Cas$)
+Sub BrwTstPth(TstId&, Optional Cas$)
 If Cas = "" Then
     BrwPth TstCasPth(TstId, Cas)
 Else
@@ -33,13 +33,13 @@ Else
 End If
 End Sub
 
-Function TstPth$(TstId%)
+Function TstPth$(TstId&)
 TstPth = AddFdrEns(TstHom, Pad0(TstId, 4))
 End Function
-Private Function TstIdFt$(TstId%)
+Private Function TstIdFt$(TstId&)
 TstIdFt = TstPth(TstId) & "TstId.Txt"
 End Function
-Sub BrwTstIdPth(TstId%)
+Sub BrwTstIdPth(TstId&)
 BrwPth TstPth(TstId)
 End Sub
 
@@ -47,7 +47,7 @@ Sub BrwTstHom()
 BrwPth TstHom
 End Sub
 Function NxtIdFdr$(Pth$, Optional NDig& = 4) '
-Dim J%, F$
+Dim J&, F$
 ThwIfPthNotExist1 Pth, CSub
 If NDig < 0 Then Thw CSub, "NDig should between 1 to 5", "NDig", NDig
 For J = 1 To Val(Left("99999", NDig))
@@ -63,13 +63,13 @@ Sub ShwTstOk(Fun$, Cas$)
 Debug.Print "Tst OK | "; Fun; " | Case "; Cas
 End Sub
 
-Function TstLy(TstId%, Fun$, Cas$, Itm$, Optional IsEdt As Boolean) As String()
+Function TstLy(TstId&, Fun$, Cas$, Itm$, Optional IsEdt As Boolean) As String()
 TstLy = SplitCrLf(TstTxt(TstId, Fun, Cas, Itm, IsEdt))
 End Function
-Private Function TstIdStr$(TstId%, Fun$)
+Private Function TstIdStr$(TstId&, Fun$)
 TstIdStr = "TstId=" & TstId & ";CSub=" & Fun
 End Function
-Sub WrtTstPth(TstId%, Fun$)
+Sub WrtTstPth(TstId&, Fun$)
 Dim F$: F = TstIdFt(TstId)
 Dim IdStr$: IdStr = TstIdStr(TstId, Fun)
 Dim Exist As Boolean
@@ -79,7 +79,7 @@ Case (Exist And TrimCrLfAtEnd(LineszFt(F)) <> IdStr) Or Not Exist
     WrtStr TstIdStr(TstId, Fun), F
 End Select
 End Sub
-Sub EnsTstPth(TstId%, Fun$)
+Sub EnsTstPth(TstId&, Fun$)
 Dim F$: F = TstIdFt(TstId)
 Dim IdStr$: IdStr = TstIdStr(TstId, Fun)
 Dim Exist As Boolean
@@ -92,7 +92,7 @@ Case Else
     WrtStr TstIdStr(TstId, Fun), F
 End Select
 End Sub
-Function TstTxt$(TstId%, Fun$, Cas$, Itm$, Optional IsEdt As Boolean)
+Function TstTxt$(TstId&, Fun$, Cas$, Itm$, Optional IsEdt As Boolean)
 EnsTstPth TstId, Fun
 Dim F$: F = TstFt(TstId, Cas, Itm)
 Dim Exist As Boolean: Exist = HasFfn(F)
@@ -103,11 +103,11 @@ End Select
 TstTxt = LineszFt(F)
 End Function
 
-Private Function TstFt$(TstId%, Cas$, Itm$)
+Private Function TstFt$(TstId&, Cas$, Itm$)
 TstFt = TstFfn(TstId, Cas, Itm & ".Txt")
 End Function
 
-Private Function TstFfn$(TstId%, Cas$, Fn$)
+Private Function TstFfn$(TstId&, Cas$, Fn$)
 TstFfn = TstCasPth(TstId, Cas) & Fn
 End Function
 

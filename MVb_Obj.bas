@@ -52,24 +52,24 @@ X:
 ObjNm = "#" & Err.Description & "#"
 End Function
 
-Function DrzObj(Obj As Object, PrpPthAy$()) As Variant()
+Function DrzObj(Obj As Object, PrpPthSy$()) As Variant()
 Const CSub$ = CMod & "DrzObjPrpNy"
-If IsNothing(Obj) Then Inf CSub, "Given object is nothing", "PrpPthAy", PrpPthAy: Exit Function
+If IsNothing(Obj) Then Inf CSub, "Given object is nothing", "PrpPthSy", PrpPthSy: Exit Function
 Dim PrpPth
-For Each PrpPth In PrpPthAy
+For Each PrpPth In PrpPthSy
     Push DrzObj, Prp(Obj, CStr(PrpPth))
 Next
 End Function
 
 Function DiczObjPP(Obj As Object, PP$) As Dictionary
-Set DiczObjPP = DiczObjPrpPthAy(Obj, Ny(PP))
+Set DiczObjPP = DiczObjPrpPthSy(Obj, Ny(PP))
 End Function
-Function DiczObjPrpPthAy(Obj As Object, PrpPthNy$()) As Dictionary
+Function DiczObjPrpPthSy(Obj As Object, PrpPthNy$()) As Dictionary
 Dim PrpPth, O As New Dictionary
 For Each PrpPth In PrpPthNy
     O.Add PrpPth, Prp(Obj, CStr(PrpPth))
 Next
-Set DiczObjPrpPthAy = O
+Set DiczObjPrpPthSy = O
 End Function
 Function ObjToStr$(Obj As Excel.Application)
 On Error GoTo X

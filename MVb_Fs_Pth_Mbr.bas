@@ -5,7 +5,7 @@ Function DirzPth$(Pth$)
 DirzPth = Dir(EnsPthSfx(Pth) & "*.*", vbDirectory)
 End Function
 
-Function FdrAy(Pth$, Optional Spec$ = "*.*", Optional Atr As VbFileAttribute) As String()
+Function FdrSy(Pth$, Optional Spec$ = "*.*", Optional Atr As VbFileAttribute) As String()
 If Not HasPth(Pth) Then Exit Function
 Dim P$: P = EnsPthSfx(Pth)
 Dim M$, X&, Atr1&
@@ -21,19 +21,19 @@ While M <> ""
     Atr1 = GetAttr(P & M)
     If (Atr1 And VbFileAttribute.vbDirectory) = 0 Then GoTo Nxt
     If Not HitFilAtr(GetAttr(P & M), Atr) Then GoTo Nxt
-    PushI FdrAy, M    '<====
+    PushI FdrSy, M    '<====
 Nxt:
     M = Dir
 Wend
 End Function
 
-Function EntAy(Pth$) As String()
-'Function EntAy(A$, Optional FilSpec$ = "*.*", Optional Atr As FileAttribute) As String()
+Function EntSy(Pth$) As String()
+'Function EntSy(A$, Optional FilSpec$ = "*.*", Optional Atr As FileAttribute) As String()
 Dim A$: A$ = DirzPth(Pth)
 While A <> ""
     If A = "." Then GoTo X
     If A = ".." Then GoTo X
-    PushI EntAy, A
+    PushI EntSy, A
 X:
     A = Dir
 Wend
@@ -46,21 +46,21 @@ If Mid(S, 10, 1) <> "_" Then Exit Function
 If Not IsHHMMDD(Right(S, 6)) Then Exit Function
 IsInstNm = True
 End Function
-Function InstFdrAy(Pth$) As String()
+Function InstFdrSy(Pth$) As String()
 Dim Fdr
-For Each Fdr In Itr(FdrAy(Pth))
+For Each Fdr In Itr(FdrSy(Pth))
     If IsInstNm(CStr(Fdr)) Then
-        PushI InstFdrAy, Fdr
+        PushI InstFdrSy, Fdr
     End If
 Next
 End Function
-Function FdrAy1(Pth$) As String()
+Function FdrSy1(Pth$) As String()
 Dim P$: P = EnsPthSfx(Pth)
 Dim A$: A = DirzPth(P)
 While A <> ""
     If A = "." Then GoTo X
     If A = ".." Then GoTo X
-    If IsPth(P & A) Then PushI FdrAy1, A
+    If IsPth(P & A) Then PushI FdrSy1, A
 X:
     A = Dir
 Wend
@@ -87,12 +87,12 @@ End Function
 'End Function
 '
 
-Function SubPthAy(Pth$) As String()
-SubPthAy = SyAddPfxSfx(FdrAy(Pth), Pth, PthSep)
+Function SubPthSy(Pth$) As String()
+SubPthSy = SyAddPfxSfx(FdrSy(Pth), Pth, PthSep)
 End Function
 
-Sub AsgEnt(OFdrAy$(), OFnAy$(), Pth$)
-Erase OFdrAy
+Sub AsgEnt(OFdrSy$(), OFnAy$(), Pth$)
+Erase OFdrSy
 Erase OFnAy
 Dim A$, P$
 P = EnsPthSfx(Pth)
@@ -101,7 +101,7 @@ While A <> ""
     If A = "." Then GoTo X
     If A = ".." Then GoTo X
     If IsPth(P & A) Then
-        PushI OFdrAy, A
+        PushI OFdrSy, A
     Else
         PushI OFnAy, A
     End If
@@ -148,14 +148,14 @@ Function FfnSy(Pth$, Optional Spec$ = "*.*") As String()
 FfnSy = SyAddPfx(FnSy(Pth, Spec), Pth)
 End Function
 
-Private Sub Z_SubPthAy()
+Private Sub Z_SubPthSy()
 Dim Pth$
 Pth = "C:\Users\user\AppData\Local\Temp\"
 Ept = Sy()
 GoSub Tst
 Exit Sub
 Tst:
-    Act = SubPthAy(Pth)
+    Act = SubPthSy(Pth)
     Brw Act
     Return
 End Sub

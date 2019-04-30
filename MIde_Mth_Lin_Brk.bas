@@ -67,7 +67,7 @@ For Each MthQLin In Itr(MthQLy)
 Next
 End Function
 
-Function MthFLinzMthLin$(MthLin)
+Function MthFLinzMthLin$(MthLin$)
 Dim X As MthLinRec: X = MthLinRec(MthLin)
 With X
 Dim RetTy$: RetTy = ShtRetTy(.TyChr, .RetTy, .IsRetVal)
@@ -99,13 +99,14 @@ Set ShtRetTyAset = AsetzAy(ShtRetTyAy(MthLinAy))
 End Function
 
 Function ShtRetTyAy(MthLinAy$()) As String()
-Dim MthLin
-For Each MthLin In Itr(MthLinAy)
+Dim MthLin$, I
+For Each I In Itr(MthLinAy)
+    MthLin = I
     PushI ShtRetTyAy, ShtRetTyzLin(MthLin)
 Next
 End Function
 
-Function ShtRetTyzLin$(MthLin)
+Function ShtRetTyzLin$(MthLin$)
 Dim A$: A = MthLinRec(MthLin).ShtRetTy
 ShtRetTyzLin = A
 If LasChr(A) = ":" Then Stop

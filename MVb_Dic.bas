@@ -162,14 +162,14 @@ Function KeySyzDic(A As Dictionary) As String()
 KeySyzDic = SyzAy(A.Keys)
 End Function
 
-Function ValOfDicKyJn$(A As Dictionary, Ky, Optional Sep$ = vbCrLf & vbCrLf)
+Function ValzDicKyJn$(A As Dictionary, Ky, Optional Sep$ = vbCrLf & vbCrLf)
 Dim O$(), K
 For Each K In Itr(Ky)
     If A.Exists(K) Then
         PushI O, A(K)
     End If
 Next
-ValOfDicKyJn = Join(O, Sep)
+ValzDicKyJn = Join(O, Sep)
 End Function
 
 Function SyzDicKy(Dic As Dictionary, Ky$()) As String()
@@ -329,7 +329,7 @@ IsDiczEmp B
 ThwDifDic B, B, D, D, D
 IsDiczLines B
 IsDiczStr B
-ValOfDicKyJn B, A, D
+ValzDicKyJn B, A, D
 SyzDicKy B, E
 FmtDicTit B, D
 LineszDic B

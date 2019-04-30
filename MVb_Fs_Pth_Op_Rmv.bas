@@ -2,16 +2,16 @@ Attribute VB_Name = "MVb_Fs_Pth_Op_Rmv"
 Option Explicit
 Private Sub Z_RmvEmpPthR()
 Debug.Print "Before-----"
-D EmpPthAyR(TmpRoot)
+D EmpPthSyR(TmpRoot)
 RmvEmpPthR TmpRoot
 Debug.Print "After-----"
-D EmpPthAyR(TmpRoot)
+D EmpPthSyR(TmpRoot)
 End Sub
 Sub RmvEmpPthR(Pth)
 Dim Ay$(), I, J%
 Lp:
     J = J + 1: If J > 10000 Then Stop
-    Ay = EmpPthAyR(Pth): If Si(Ay) = 0 Then Exit Sub
+    Ay = EmpPthSyR(Pth): If Si(Ay) = 0 Then Exit Sub
     For Each I In Ay
         RmDir I
     Next
@@ -20,7 +20,7 @@ End Sub
 
 Sub RmvEmpSubDir(Pth)
 Dim SubPth
-For Each SubPth In Itr(SubPthAy(Pth))
+For Each SubPth In Itr(SubPthSy(Pth))
    RmvPthIfEmp SubPth
 Next
 End Sub
