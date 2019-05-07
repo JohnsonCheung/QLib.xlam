@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
+Private Const CMod$ = "Arg."
 Public Nm As String, IsOpt As Boolean, IsPmAy As Boolean, IsAy As Boolean, TyChr$, AsTy$, DftVal As String
 Friend Function Init(ArgStr$) As Arg
 Set Init = Me

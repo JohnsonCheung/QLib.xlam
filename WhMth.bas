@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
+Private Const CMod$ = "WhMth."
 Dim X_Nm As WhNm, X_ShtMdy$(), X_ShtTy$(), _
 X_ShtRetTy$(), X_FstArgNm$, X_FstArgShtTy$, X_ArgNy$(), X_ArgSfx$(), X_WiPmOpt As BoolOpt
 Dim X_IsEmp As Boolean
@@ -43,7 +44,7 @@ End Property
 Property Get ToStr$()
 If IsEmp Then ToStr = "WhMth(#Emp)": Exit Function
 Dim O$()
-PushIAy O, SyAddPfx(X_ShtMdy, "-")
-PushIAy O, SyAddPfx(X_ShtTy, "-")
+PushIAy O, AddPfxzSy(X_ShtMdy, "-")
+PushIAy O, AddPfxzSy(X_ShtTy, "-")
 ToStr = JnSpc(AyeEmpEle(O))
 End Property

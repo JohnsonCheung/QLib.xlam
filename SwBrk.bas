@@ -8,24 +8,25 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
+Private Const CMod$ = "SwBrk."
 Public Ix%, Nm$, OpStr$
-Private A_TermAy() As String
+Private A_TermSy() As String
 
-Friend Property Get TermAy() As String()
-TermAy = A_TermAy
+Friend Property Get TermSy() As String()
+TermSy = A_TermSy
 End Property
-Friend Property Let TermAy(A$())
-A_TermAy = A
+Friend Property Let TermSy(A$())
+A_TermSy = A
 End Property
-Friend Function Init(Ix%, Nm$, OpStr$, TermAy$()) As SwBrk
+Friend Function Init(Ix%, Nm$, OpStr$, TermSy$()) As SwBrk
 With Me
     .Ix = Ix
     .Nm = Nm
     .OpStr = OpStr
-    A_TermAy = TermAy
+    A_TermSy = TermSy
 End With
 End Function
 Property Get Lin$()
-Lin = Quote(Ix, "L#(*) ") & QuoteSq(JnSpc(Array(Nm, OpStr, JnSpc(A_TermAy))))
+Lin = Quote(Ix, "L#(*) ") & QuoteSq(JnSpc(Array(Nm, OpStr, JnSpc(A_TermSy))))
 End Property
 

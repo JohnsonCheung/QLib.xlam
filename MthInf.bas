@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
+Private Const CMod$ = "MthInf."
 Public MdNm$, FmLno&, ToLno&, LinCnt%, Lines$, MthLin$, MthNm$, ShtMdy$, ShtKd$, TyChr$, RetTy$, LinRmk$, TopRmk$
 Private X_ArgSy$()
 Property Get ArgSy() As String()

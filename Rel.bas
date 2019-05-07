@@ -8,7 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
-Const CMod$ = "Rel."
+Private Const CMod$ = "Rel."
 Public Nm$
 Private Dic As New Dictionary    ' Key is Par, Val is Aset of chd
 
@@ -32,7 +32,7 @@ End If
 End Sub
 Sub PushRelLin(RelLin$)
 Dim Ay$(), P$, C
-Ay = SySsl(RelLin)
+Ay = SyzSsLin(RelLin)
 If Si(Ay) = 0 Then Exit Sub
 P = Shf(Ay)
 For Each C In Itr(Ay)

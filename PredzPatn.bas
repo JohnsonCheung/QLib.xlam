@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Implements IPred
+Private Const CMod$ = "PredzPatn."
 Private A As New RegExp
 Friend Sub Init(Patn$)
 A.Pattern = Patn

@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
+Private Const CMod$ = "WhMd."
 Public Nm As WhNm
 Dim X_CmpTy() As vbext_ComponentType
 Function Init(CmpTy() As vbext_ComponentType, Nm As WhNm) As WhMd

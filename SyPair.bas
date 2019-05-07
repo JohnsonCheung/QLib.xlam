@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
+Private Const CMod$ = "SyPair."
 Private X_Sy1$(), X_Sy2$()
 Function Init(Sy1, Sy2) As SyPair
 X_Sy1 = Sy1

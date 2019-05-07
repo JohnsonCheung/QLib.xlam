@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
+Private Const CMod$ = "WhNm."
 Private X_Re As RegExp
 Dim X_ExlLikAy$()
 Dim X_LikeAy$()

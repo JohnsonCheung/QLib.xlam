@@ -1,13 +1,14 @@
 Attribute VB_Name = "ATaxExpCmp"
 Option Explicit
+Private Const CMod$ = "ATaxExpCmp."
 Private Type Pm
- OupPth As String: OupFxFn As String: InpPth As String: InpFxFnGLDutyFx As String: InpFxFnGLAnp As String: InpFxFnMB51 As String
- Tolerence As Long
+    OupPth As String: OupFxFn As String: InpPth As String: InpFxFnGLDutyFx As String: InpFxFnGLAnp As String: InpFxFnMB51 As String
+    Tolerence As Long
 End Type
 Type XlsLnkInf
     IsXlsLnk As Boolean
     Fx As String
-    WsNm As String
+    Wsn As String
 End Type
 Type Fxw
     Fx As String
@@ -95,7 +96,7 @@ With ATaxExpCmp
 Set .Genr = XGenr
 '.ImpWsSqy = EmpSy
 '.InpFbAy = EmpSy
-'.InpFbTny = SySsl("")
+'.InpFbTny = SyzSsLin("")
 End With
 End Property
 Property Get App() As App
@@ -279,7 +280,7 @@ B = LnkFxw(W, ">GLAnp", IFx_WGLAnp)
 C = LnkFxw(W, ">Uom", IFx_WUom)
 D = LnkFbtt(W, "Permit PermitD", IFb_Duty)
 E = LnkFbtt(W, "SkuRepackMulti SkuNoLongerTax SkuTaxBy3rdParty", IFb_StkHld)
-O = AyAddAp(A, B, C, D, E)
+O = AddAyAp(A, B, C, D, E)
 If Si(O) > 0 Then Thw CSub, "There are error in linking tables", "Er", O
 End Sub
 Private Function XFfn$(PmNm$)
@@ -470,12 +471,12 @@ W.Execute "Alter table [@Main] add column " & _
 
 Const S1$ = "set RateTy='*Bch' ,x.BchRateUX=a.BchRateU ,x.BchRateU=a.BchRateU,x.BchPermitD=a.PermitD,x.BchPermit=a.Permit, x.BchPermitDate=a.PermitDate"
 Const S2$ = "set RateTy='*Las' ,x.BchRateUX=a.BchRateU ,x.LasRateU=a.BchRateU,x.LasPermitD=a.PermitD,x.LasPermit=a.Permit, x.LasPermitDate=a.PermitDate,x.LasBchNo=a.LasBchNo"
-Const s3$ = "set RateTy='*Pac' ,x.BchRateUX=a.PackRateU,x.PackRateU=a.PackRateU,x.PackFmSkuCnt=a.FmSkuCnt,x.PackFmQty=a.FmQty"
-Const s4$ = "set RateTy='*3p'  ,x.BchRateUX=a.RateU    ,x.TaxBy3pRateU=a.RateU"
+Const S3$ = "set RateTy='*Pac' ,x.BchRateUX=a.PackRateU,x.PackRateU=a.PackRateU,x.PackFmSkuCnt=a.FmSkuCnt,x.PackFmQty=a.FmQty"
+Const S4$ = "set RateTy='*3p'  ,x.BchRateUX=a.RateU    ,x.TaxBy3pRateU=a.RateU"
 W.Execute "Update [@Main] x inner join [$T1] a on x.Id=a.Id " & S1
 W.Execute "Update [@Main] x inner join [$T2] a on x.Id=a.Id " & S2
-W.Execute "Update [@Main] x inner join [$T3] a on x.Id=a.Id " & s3
-W.Execute "Update [@Main] x inner join [$T4] a on x.Id=a.Id " & s4
+W.Execute "Update [@Main] x inner join [$T3] a on x.Id=a.Id " & S3
+W.Execute "Update [@Main] x inner join [$T4] a on x.Id=a.Id " & S4
 W.Execute "Alter Table [@Main] drop column Id"
 W.Execute "Alter Table [@Main] add column RecTy Text(8), Amt Currency"
 W.Execute "Update [@Main] set RecTy='*MB51', Amt = BchRateUX*Qty"
@@ -517,7 +518,7 @@ W.Execute "Select Distinct PstDte,Sku,RecTy,Sum(x.Amt) as Amt into [#A] from [@M
 W.Execute "Update [#A] set RecTy='*GL' where RecTy in ('*GLDuty','*GLAnp')"
 W.Execute "Select Distinct Sku,PstDte,RecTy,Sum(x.Amt) As Amt into [#B] from [#A] x group by Sku,PstDte,RecTy"
 W.Execute "Select Distinct Sku,PstDte,Count(*) As RecTyCnt, Sum(x.Amt) as Amt into [#C] from [#B] x group by Sku,PstDte"
-If HasReczQ(W, "Select * from [#C] where RecTyCnt>2") Then PgmEr CSub, "Table [#C] should have at most 2 different RecTy (*GLDuty | *GLAnp)"
+If HasReczQ(W, "Select * from [#C] where RecTyCnt>2") Then Thw CSub, "Table [#C] should have at most 2 different RecTy (*GLDuty | *GLAnp)"
 W.Execute "Select x.Sku,x.PstDte,RecTy into [#D] from [#C] x inner join [#B] a on x.Sku=a.Sku and x.PstDte=a.PstDte where RecTyCnt=1"
 
 W.Execute "Select x.Sku,x.PstDte,'*Only ' & Mid(x.RecTy,2) As IsAlert into [#Z] from [#D] x inner join [#B] a on x.Sku=a.Sku and a.PstDte=x.PstDte"
@@ -724,16 +725,16 @@ End Property
 'FbTny = CvSy(AyWhPredXPNot(CatTny(FbCat(A)), "HasPfx", "MSys"))
 'End Function
 '
-'Private Function AyCln(A)
+'Private Function Resi(A)
 'Dim O
 'O = A
 'Erase O
-'AyCln = O
+'Resi = O
 'End Function
 'Private Function AyWhPredXPNot(A, PredXP$, P)
-'If Si(A) = 0 Then AyWhPredXPNot = AyCln(A): Exit Function
+'If Si(A) = 0 Then AyWhPredXPNot = Resi(A): Exit Function
 'Dim O, X
-'O = AyCln(A)
+'O = Resi(A)
 'For Each X In A
 '    If Not Run(PredXP, X, P) Then
 '        Push O, X
@@ -742,9 +743,9 @@ End Property
 'AyWhPredXPNot = O
 'End Function
 'Private Function AyWhPredXP(A, PredXP$, P)
-'If Si(A) = 0 Then AyWhPredXP = AyCln(A): Exit Function
+'If Si(A) = 0 Then AyWhPredXP = Resi(A): Exit Function
 'Dim O, X
-'O = AyCln(A)
+'O = Resi(A)
 'For Each X In A
 '    If Run(PredXP, X, P) Then
 '        Push O, X
@@ -761,8 +762,8 @@ End Property
 'Private Function FxWsNy(A) As String()
 'FxWsNy = CatTny(FxCat(A))
 'End Function
-'Private Function FxHasWs(A, WsNm$) As Boolean
-'FxHasWs = AyHas(FxWsNy(A), WsNm)
+'Private Function FxHasWs(A, Wsn$) As Boolean
+'FxHasWs = AyHas(FxWsNy(A), Wsn)
 'End Function
 '
 'Private Sub DbtImpTbl(A as Database, Tny0)
@@ -801,7 +802,7 @@ End Property
 'Private Function LnkColStr_LnkColAy(A) As LnkCol()
 'Dim Emp() As LnkCol, Ay$()
 'Ay = SplitVBar(A): If Si(Ay) = 0 Then Stop
-'LnkColStr_LnkColAy = AyMapInto(Ay, "LinLnkCol", Emp)
+'LnkColStr_LnkColAy = MapAyInto(Ay, "LinLnkCol", Emp)
 'End Function
 '
 'Private Function SplitVBar(A) As String()
@@ -938,7 +939,7 @@ End Property
 'Private Function IsNothing(A) As Boolean
 'IsNothing = TypeName(A) = "Nothing"
 'End Function
-'Private Function SyAddPfx(A, Pfx) As String()
+'Private Function AddPfxzSy(A, Pfx) As String()
 'If Si(A) = 0 Then Exit Function
 'Dim O$(), U&, J&
 'U = UB(A)
@@ -946,7 +947,7 @@ End Property
 'For J = 0 To U
 '    O(J) = Pfx & A(J)
 'Next
-'SyAddPfx = O
+'AddPfxzSy = O
 'End Function
 'Private Function IsObjAy(A) As Boolean
 'IsObjAy = VarType(A) = vbArray + vbObject
@@ -1039,7 +1040,7 @@ End Property
 'End Function
 'Private Function FxWsCdNy(A) As String()
 'Dim Wb As Workbook
-'Set Wb = FxWb(A)
+'Set Wb = FxzWb(A)
 'FxWsCdNy = WbWsCdNy(Wb)
 'Wb.Close False
 'End Function
@@ -1047,7 +1048,7 @@ End Property
 'Dim Ay$(), Pfx$
 'Ay = SslSy(A)
 'Pfx = AyShift(Ay)
-'PfxSsl_Sy = SyAddPfx(Ay, Pfx)
+'PfxSsl_Sy = AddPfxzSy(Ay, Pfx)
 'End Function
 'Private Function ApnWAcs(A$)
 'Dim O As Access.Application
@@ -1082,7 +1083,7 @@ End Property
 'DBEngine.CreateDatabase A, dbLangGeneral
 'End Sub
 'Private Sub RfhWcStr(A, Fb$)
-'WbRfhCnStr(FxWb(A), Fb).Close True
+'WbRfhCnStr(FxzWb(A), Fb).Close True
 'End Sub
 'Private Function WbRfhCnStr(A As Workbook, Fb$) As Workbook
 'ItrDoXP A.Connections, "RfhWcCnStr", FbWbCnStr(Fb$)
@@ -1203,10 +1204,10 @@ End Property
 'If P = 0 Then Exit Function
 'FfnPth = Left(A, P)
 'End Function
-'Private Function ErzFws__2(Fx$, WsNm$, ColNy$()) As String()
+'Private Function ErzFws__2(Fx$, Wsn$, ColNy$()) As String()
 '
 'End Function
-'Private Function ErzFws__3(Fx$, WsNm$, ColNy$(), DtaTyAy() As Dao.DataTypeEnum) As String()
+'Private Function ErzFws__3(Fx$, Wsn$, ColNy$(), DtaTyAy() As Dao.DataTypeEnum) As String()
 '
 'End Function
 'Private Sub ZZ_ErAyzFxWsMissingCol()
@@ -1272,7 +1273,7 @@ End Property
 'Private Function UnderLinDbl$(A)
 'UnderLinDbl = String(Len(A), "=")
 'End Function
-'Private Function ErzFxWs(A, WsNm$) As String()
+'Private Function ErzFxWs(A, Wsn$) As String()
 ''ErThen "ErzFfnNotExist ErzFxHasNoWs"
 'Dim O$()
 'O = ErzFfnNotExist(A)
@@ -1281,7 +1282,7 @@ End Property
 '    Exit Function
 'End If
 '
-''B = ErzFxWs__1(A, WsNm)
+''B = ErzFxWs__1(A, Wsn)
 'If Si(A) > 0 Then
 ''    ErAyzFxWs = A
 '    Exit Function
@@ -1296,10 +1297,10 @@ End Property
 '    Exit Function
 'End If
 'Dim B$
-''B = FxWs_LnkErMsg(A, WsNm)
+''B = FxWs_LnkErMsg(A, Wsn)
 'If B <> "" Then
 '    Push O, "Excel File: " & A
-'    Push O, "Worksheet : " & WsNm
+'    Push O, "Worksheet : " & Wsn
 '    Push O, "System Msg: " & B
 '    Push O, "Above Excel file & Worksheet cannot be linked to Access"
 '    Push O, "-------------------------------------------------------"
@@ -1307,7 +1308,7 @@ End Property
 '    Exit Function
 'End If
 'On Error GoTo X
-'TblLnkFx "#", CStr(A), WsNm
+'TblLnkFx "#", CStr(A), Wsn
 'DrpT CurrentDb, "#"
 'Exit Function
 'X:
@@ -1418,11 +1419,11 @@ End Property
 'Private Function SqlSy(A) As String()
 'SqlSy = DbqSy(CurrentDb, A)
 'End Function
-'Private Function AyAdd(A, B)
+'Private Function AddAy(A, B)
 'Dim O
 'O = A
 'PushAy O, B
-'AyAdd = O
+'AddAy = O
 'End Function
 'Private Sub TblBrw(T)
 'DoCmd.OpenTable T
@@ -1533,16 +1534,16 @@ End Property
 'O(2) = L
 'LinTTRst = O
 'End Function
-'Private Function AyMinus(A, B)
-'If Si(B) = 0 Then AyMinus = A: Exit Function
-'If Si(A) = 0 Then AyMinus = A: Exit Function
+'Private Function MinusAy(A, B)
+'If Si(B) = 0 Then MinusAy = A: Exit Function
+'If Si(A) = 0 Then MinusAy = A: Exit Function
 'Dim O, I
 'O = A
 'Erase O
 'For Each I In A
 '    If Not AyHas(B, I) Then Push O, I
 'Next
-'AyMinus = O
+'MinusAy = O
 'End Function
 '
 'Private Sub DbtRen(A as Database, Fm$, ToTbl$)
@@ -1710,7 +1711,7 @@ End Property
 'Private Function DbtChkFny(A as Database, T, ExpFny$()) As String()
 'Dim Miss$(), TFny$(), O$(), I
 'TFny = DbtFny(A, T)
-'Miss = AyMinus(ExpFny, TFny)
+'Miss = MinusAy(ExpFny, TFny)
 'DbtChkFny = DbtMissFny_Er(A, T, Miss, TFny)
 'End Function
 'Private Function QuoteSqBkt$(A)
@@ -1859,7 +1860,7 @@ End Property
 'Private Sub WbVdtOupNy(A As Workbook, OupNy$())
 'Dim O$(), N$, B$(), WsCdNy$()
 'WsCdNy = WbWsCdNy(A)
-'O = AyMinus(SyAddPfx(OupNy, "WsO"), WsCdNy)
+'O = MinusAy(AddPfxzSy(OupNy, "WsO"), WsCdNy)
 'If Si(O) > 0 Then
 '    N = "OupNy":  B = OupNy:  GoSub Dmp
 '    N = "WbCdNy": B = WsCdNy: GoSub Dmp
@@ -1897,7 +1898,7 @@ End Property
 'Private Function LoHasFny(A As ListObject, Fny$()) As Boolean
 'Dim Miss$(), FnyzLo$()
 'FnyzLo = LoFny(A)
-'Miss = AyMinus(Fny, FnyzLo)
+'Miss = MinusAy(Fny, FnyzLo)
 'If Si(Miss) > 0 Then Exit Function
 'LoHasFny = True
 'End Function
@@ -1913,7 +1914,7 @@ End Property
 'Private Function DrsNRow&(A As Drs)
 'DrsNRow = Si(A.Dry)
 'End Function
-'Private Function SqAddSngQuote(A)
+'Private Function AddSngQuotezSq(A)
 'Dim NC%, C%, R&, O
 'O = A
 'NC = UBound(A, 2)
@@ -1924,7 +1925,7 @@ End Property
 '        End If
 '    Next
 'Next
-'SqAddSngQuote = O
+'AddSngQuotezSq = O
 'End Function
 'Private Function RsSq(A As Dao.Recordset) As Variant()
 'Dim O(), R&, NR&, NC&, C&
@@ -1954,7 +1955,7 @@ End Property
 '    D LoFny(Lo)
 '    Stop
 'End If
-'Sq = SqAddSngQuote(RsSq(Rs))
+'Sq = AddSngQuotezSq(RsSq(Rs))
 'LoMin Lo
 'SqPutAt Sq, Lo.DataBodyRange
 'End Sub
@@ -2099,11 +2100,11 @@ End Property
 'Private Function WbLasWs(A As Workbook) As Worksheet
 'Set WbLasWs = A.Sheets(A.Sheets.Count)
 'End Function
-'Private Function WbWs(A As Workbook, WsNm$) As Worksheet
-'Set WbWs = A.Sheets(WsNm)
+'Private Function WbWs(A As Workbook, Wsn$) As Worksheet
+'Set WbWs = A.Sheets(Wsn)
 'End Function
-'Private Function FxWb(A) As Workbook
-'Set FxWb = Xls.Workbooks.Open(A)
+'Private Function FxzWb(A) As Workbook
+'Set FxzWb = Xls.Workbooks.Open(A)
 'End Function
 'Private Function WszLo(A As Worksheet, LoNm$) As ListObject
 'Set WszLo = A.ListObjects(LoNm)
@@ -2114,37 +2115,37 @@ End Property
 'Private Function DbtPutAt(A as Database, T, At As Range) As Range
 'Set DbtPutAt = SqPutAt(DbtSq(A, T), At)
 'End Function
-'Private Function AyAddAp(ParamArray Ap())
+'Private Function AddAyAp(ParamArray Ap())
 'Dim Av(), O, J%
 'O = Ap(0)
 'Av = Ap
 'For J = 1 To UB(Av)
 '    PushAy O, Av(J)
 'Next
-'AyAddAp = O
+'AddAyAp = O
 'End Function
 'Private Function AlignL$(A, W%)
 'AlignL = A & Space(W - Len(A))
 'End Function
 '
-'Private Function AyMapXPSy(A, MapXPFunNm$, P) As String()
-'AyMapXPSy = AyMapXPInto(A, MapXPFunNm, P, EmpSy)
+'Private Function MapAyXPSy(A, MapXPFunNm$, P) As String()
+'MapAyXPSy = MapAyXPInto(A, MapXPFunNm, P, EmpSy)
 'End Function
 '
-'Private Function AyMapXPInto(A, MapXPFunNm$, P, OInto)
+'Private Function MapAyXPInto(A, MapXPFunNm$, P, OInto)
 'Dim O, J&
 'O = OInto
 'Erase O
-'If Si(A) = 0 Then AyMapXPInto = O: Exit Function
+'If Si(A) = 0 Then MapAyXPInto = O: Exit Function
 'ReDim O(UB(A))
 'For J = 0 To UB(A)
 '    Asg Run(MapXPFunNm, A(J), P), O(J)
 'Next
-'AyMapXPInto = O
+'MapAyXPInto = O
 'End Function
 '
 'Private Function AyAlignL(A) As String()
-'AyAlignL = AyMapXPSy(A, "AlignL", WdtzSy(A))
+'AyAlignL = MapAyXPSy(A, "AlignL", WdtzSy(A))
 'End Function
 'Private Function LnkSpec_LnkColStr$(A)
 'Dim L$
@@ -2198,7 +2199,7 @@ End Property
 'End Function
 'Private Sub FxMinLo(A)
 'Dim Wb As Workbook
-'Set Wb = FxWb(A)
+'Set Wb = FxzWb(A)
 'WbMinLo Wb
 'Wb.Save
 'Wb.Close
@@ -2220,7 +2221,7 @@ End Property
 'Next
 'End Sub
 'Private Sub WbVis(A As Workbook)
-'VisXls A.Application
+'ShwXls A.Application
 'End Sub
 '
 'Private Sub WbRfh(A As Workbook, Fb$)
@@ -2296,15 +2297,15 @@ End Property
 'Private Sub RfhPt(A As Excel.PivotTable)
 'A.Update
 'End Sub
-'Private Function LoVis(A As ListObject) As ListObject
-'VisXls A.Application
-'Set LoVis = A
+'Private Function ShwLo(A As ListObject) As ListObject
+'ShwXls A.Application
+'Set ShwLo = A
 'End Function
 'Private Function WsVis(A As Worksheet)
-'VisXls A.Application
+'ShwXls A.Application
 'Set WsVis = A
 'End Function
-'Private Sub VisXls(A As Excel.Application)
+'Private Sub ShwXls(A As Excel.Application)
 'If Not A.Visible Then A.Visible = True
 'End Sub
 'Private Function SqPutAt(A, At As Range) As Range
@@ -2330,25 +2331,25 @@ End Property
 'A = TblSq("@Oup")
 'Stop
 'End Sub
-'Private Function NewWb(Optional WsNm$ = "Sheet1") As Workbook
+'Private Function NewWb(Optional Wsn$ = "Sheet1") As Workbook
 'Dim O As Workbook, Ws As Worksheet
 'Set O = NewXls.Workbooks.Add
 'Set Ws = WbFstWs(O)
-'If Ws.Name <> WsNm Then Ws.Name = WsNm
+'If Ws.Name <> Wsn Then Ws.Name = Wsn
 'Set NewWb = O
 'End Function
 'Private Function WbFstWs(A As Workbook) As Worksheet
 'Set WbFstWs = A.Sheets(1)
 'End Function
-'Private Function NewWs(Optional WsNm$ = "Sheet") As Worksheet
-'Set NewWs = WbFstWs(NewWb(WsNm))
+'Private Function NewWs(Optional Wsn$ = "Sheet") As Worksheet
+'Set NewWs = WbFstWs(NewWb(Wsn))
 'End Function
-'Private Function NewA1(Optional WsNm$ = "Sheet1") As Range
-'Set NewA1 = WsA1(NewWs(WsNm))
+'Private Function NewA1(Optional Wsn$ = "Sheet1") As Range
+'Set NewA1 = WsA1(NewWs(Wsn))
 'End Function
-'Private Function SqA1(A, Optional WsNm$ = "Data") As Range
+'Private Function SqA1(A, Optional Wsn$ = "Data") As Range
 'Dim A1 As Range
-'Set A1 = NewA1(WsNm)
+'Set A1 = NewA1(Wsn)
 'Set SqA1 = SqPutAt(A, A1)
 'End Function
 'Private Function WsRC(A As Worksheet, R, C) As Range
@@ -2357,12 +2358,12 @@ End Property
 'Private Function WsRCRC(A As Worksheet, R1, C1, R2, C2) As Range
 'Set WsRCRC = A.Range(WsRC(A, R1, C1), WsRC(A, R2, C2))
 'End Function
-'Private Function RgA1LasCell(A As Range) As Range
+'Private Function A1zRgLasCell(A As Range) As Range
 'Dim L As Range, R, C
 'Set L = A.SpecialCells(xlCellTypeLastCell)
 'R = L.Row
 'C = L.Column
-'Set RgA1LasCell = WsRCRC(RgWs(A), A.Row, A.Column, R, C)
+'Set A1zRgLasCell = WsRCRC(RgWs(A), A.Row, A.Column, R, C)
 'End Function
 'Private Function RgLo(A As Range, Optional LoNm$) As ListObject
 'Dim O As ListObject
@@ -2370,21 +2371,21 @@ End Property
 'If LoNm <> "" Then O.Name = LoNm
 'Set RgLo = O
 'End Function
-'Private Function SqLo(A, Optional WsNm$ = "Data", Optional LoNm$ = "Data") As ListObject
+'Private Function SqLo(A, Optional Wsn$ = "Data", Optional LoNm$ = "Data") As ListObject
 'Dim R As Range
-'Set R = SqA1(A, WsNm)
+'Set R = SqA1(A, Wsn)
 'Set SqLo = RgLo(R, LoNm)
 'End Function
-'Private Sub RgVis(A As Range)
-'VisXls A.Application
+'Private Sub ShwRg(A As Range)
+'ShwXls A.Application
 'End Sub
-'Private Function DbtPutFx(A as Database, T, Fx$, Optional WsNm$ = "Data", Optional LoNm$ = "Data") As Workbook
+'Private Function DbtPutFx(A as Database, T, Fx$, Optional Wsn$ = "Data", Optional LoNm$ = "Data") As Workbook
 'Dim O As Workbook, Ws As Worksheet
-'Set O = FxWb(Fx$)
-'Set Ws = WbWs(O, WsNm)
+'Set O = FxzWb(Fx$)
+'Set Ws = WbWs(O, Wsn)
 'WsClrLo Ws
 'Stop ' LoNm need handle?
-'DbtPutWs A, T, WbWs(O, WsNm)
+'DbtPutWs A, T, WbWs(O, Wsn)
 'Set DbtPutFx = O
 'End Function
 'Private Sub WsClrLo(A As Worksheet)
@@ -2394,29 +2395,29 @@ End Property
 '    Ay(J).Delete
 'Next
 'End Sub
-'Private Function TblPutFx(T, Fx$, Optional WsNm$ = "Data", Optional LoNm$ = "Data") As Workbook
-'Set TblPutFx = DbtPutFx(CurrentDb, T, Fx, WsNm, LoNm)
+'Private Function TblPutFx(T, Fx$, Optional Wsn$ = "Data", Optional LoNm$ = "Data") As Workbook
+'Set TblPutFx = DbtPutFx(CurrentDb, T, Fx, Wsn, LoNm)
 'End Function
-'Private Function AddWs(A As Workbook, Optional WsNm$, Optional BefWsNm$, Optional AftWsNm$) As Worksheet
+'Private Function AddWs(A As Workbook, Optional Wsn$, Optional BefWsn$, Optional AftWsn$) As Worksheet
 'Dim O As Worksheet, Bef As Worksheet, Aft As Worksheet
-'WbDltWs A, WsNm
+'WbDltWs A, Wsn
 'Select Case True
-'Case BefWsNm <> ""
-'    Set Bef = A.Sheets(BefWsNm)
+'Case BefWsn <> ""
+'    Set Bef = A.Sheets(BefWsn)
 '    Set O = A.Sheets.Add(Bef)
-'Case AftWsNm <> ""
-'    Set Aft = A.Sheets(AftWsNm)
+'Case AftWsn <> ""
+'    Set Aft = A.Sheets(AftWsn)
 '    Set O = A.Sheets.Add(, Aft)
 'Case Else
 '    Set O = A.Sheets.Add
 'End Select
-'O.Name = WsNm
+'O.Name = Wsn
 'Set AddWs = O
 'End Function
-'Private Sub WbDltWs(A As Workbook, WsNm$)
-'If WbHasWs(A, WsNm) Then
+'Private Sub WbDltWs(A As Workbook, Wsn$)
+'If WbHasWs(A, Wsn) Then
 '    A.Application.DisplayAlerts = False
-'    WbWs(A, WsNm).Delete
+'    WbWs(A, Wsn).Delete
 '    A.Application.DisplayAlerts = True
 'End If
 'End Sub
@@ -2426,8 +2427,8 @@ End Property
 '    If I.Name = Nm Then ItrHasNm = True: Exit Function
 'Next
 'End Function
-'Private Function WbHasWs(A As Workbook, WsNm$) As Boolean
-'WbHasWs = ItrHasNm(A.Sheets, WsNm)
+'Private Function WbHasWs(A As Workbook, Wsn$) As Boolean
+'WbHasWs = ItrHasNm(A.Sheets, Wsn)
 'End Function
 'Private Sub FfnCpy(A, ToFfn$, Optional OvrWrt As Boolean)
 'If OvrWrt Then FfnDlt ToFfn
@@ -2494,8 +2495,8 @@ End Property
 'Private Function TakAftDotOrAll$(A)
 'TakAftDotOrAll = TakAftOrAll(A, ".")
 'End Function
-'Private Function TblWs(T, Optional WsNm$ = "Data", Optional LoNm$ = "Data") As Worksheet
-'Set TblWs = WszLo(SqLo(TblSq(T), WsNm, LoNm))
+'Private Function TblWs(T, Optional Wsn$ = "Data", Optional LoNm$ = "Data") As Worksheet
+'Set TblWs = WszLo(SqLo(TblSq(T), Wsn, LoNm))
 'End Function
 'Private Function WszLo(A As ListObject) As Worksheet
 'Set WszLo = A.Parent
@@ -2569,8 +2570,8 @@ End Property
 'End With
 'DbtSq = O
 'End Function
-'Private Function FxWs(A, Optional WsNm$ = "Data") As Worksheet
-'Set FxWs = WbWs(FxWb(A), WsNm)
+'Private Function FxWs(A, Optional Wsn$ = "Data") As Worksheet
+'Set FxWs = WbWs(FxzWb(A), Wsn)
 'End Function
 'Private Sub FldsPutSq(A As Dao.Fields, Sq, Optional R& = 1, Optional NoTxtSngQ As Boolean)
 'Dim F As Dao.Field, J%
@@ -2612,8 +2613,8 @@ End Property
 'Private Function WsA1(A As Worksheet) As Range
 'Set WsA1 = A.Cells(1, 1)
 'End Function
-'Private Function FxLo(A$, Optional WsNm$ = "Data", Optional LoNm$ = "Data") As ListObject
-'Set FxLo = WszLo(WbWs(FxWb(A), WsNm), LoNm)
+'Private Function FxLo(A$, Optional Wsn$ = "Data", Optional LoNm$ = "Data") As ListObject
+'Set FxLo = WszLo(WbWs(FxzWb(A), Wsn), LoNm)
 'End Function
 'Private Function TblCnStr$(T)
 'TblCnStr = CurrentDb.TableDefs(T).Connect
@@ -2645,7 +2646,7 @@ End Property
 'Next
 'ErzFileNotFound = O
 'End Function
-'Private Function DbtLnkFx(A as Database, T$, Fx$, Optional WsNm$ = "Sheet1") As String()
+'Private Function DbtLnkFx(A as Database, T$, Fx$, Optional Wsn$ = "Sheet1") As String()
 'Dim O$()
 'O = ErzFileNotFound(Fx$)
 'If Si(O) > 0 Then
@@ -2653,7 +2654,7 @@ End Property
 '    Exit Function
 'End If
 'Dim Cn$: Cn = FxDaoCnStr(Fx$)
-'Dim Src$: Src = WsNm & "$"
+'Dim Src$: Src = Wsn & "$"
 'DbtLnkFx = DbtLnk(A, T, Src, Cn)
 'End Function
 'Private Function TblLnkFb(Tny0, Fb$, Optional FbTny0) As String()
@@ -2673,12 +2674,12 @@ End Property
 'Dim Cn$: Cn = FbCnStr(Fb$)
 'Dim J%, O$()
 'For J = 0 To UB(Tny)
-'    O = AyAdd(O, DbtLnk(A, Tny(J), FbTny(J), Cn))
+'    O = AddAy(O, DbtLnk(A, Tny(J), FbTny(J), Cn))
 'Next
 'DbtLnkFb = O
 'End Function
-'Private Function TblLnkFx(T$, Fx$, Optional WsNm$ = "Sheet1") As String()
-'TblLnkFx = DbtLnkFx(CurrentDb, T, Fx, WsNm)
+'Private Function TblLnkFx(T$, Fx$, Optional Wsn$ = "Sheet1") As String()
+'TblLnkFx = DbtLnkFx(CurrentDb, T, Fx, Wsn)
 'End Function
 'Private Function FbCnStr$(A)
 'FbCnStr = ";DATABASE=" & A & ";"
@@ -2929,7 +2930,7 @@ End Property
 'Dim A$
 'A = Y.Name
 'Set Xls = Y
-'If Vis Then VisXls Y
+'If Vis Then ShwXls Y
 'Exit Function
 'xx:
 '    X = True
@@ -3151,15 +3152,15 @@ End Property
 'Stop
 'End Function
 '
-'Private Function FfnAddFnSfx$(A, Sfx$)
-'FfnAddFnSfx = FfnPth(A) & Fnn(A) & Sfx & FfnExt(A)
+'Private Function AddFnSfx$(A, Sfx$)
+'AddFnSfx = FfnPth(A) & Fnn(A) & Sfx & FfnExt(A)
 'End Function
 '
 'Private Function FfnNxtN$(A, N%)
 'If 1 > N Or N > 99 Then Stop
 'Dim Sfx$
 'Sfx = "(" & Format(N, "00") & ")"
-'FfnNxtN = FfnAddFnSfx(A, Sfx)
+'FfnNxtN = AddFnSfx(A, Sfx)
 'End Function
 '
 'Private Function PthSel$(A, Optional Tit$ = "Select a Path", Optional BtnNm$ = "Use this path")
@@ -3385,13 +3386,13 @@ End Property
 'Case Else: VarCsv = Nz(A, "")
 'End Select
 'End Function
-'Private Function AyMapInto(A, MapFunNm$, OInto)
+'Private Function MapAyInto(A, MapFunNm$, OInto)
 'Dim J&, O, I, U&
 'O = OInto
 'Erase O
 'U = UB(A)
 'If U = -1 Then
-'    AyMapInto = O
+'    MapAyInto = O
 '    Exit Function
 'End If
 'ReDim O(U)
@@ -3399,7 +3400,7 @@ End Property
 '    Asg Run(MapFunNm, I), O(J)
 '    J = J + 1
 'Next
-'AyMapInto = O
+'MapAyInto = O
 'End Function
 'Private Sub Asg(Fm, OTo)
 'If IsObject(Fm) Then
@@ -3408,8 +3409,8 @@ End Property
 '    OTo = Nz(Fm, "")
 'End If
 'End Sub
-'Private Function AyMapSy(A, MapFunNm$) As String()
-'AyMapSy = AyMapInto(A, MapFunNm, EmpSy)
+'Private Function MapAySy(A, MapFunNm$) As String()
+'MapAySy = MapAyInto(A, MapFunNm, EmpSy)
 'End Function
 'Private Function AyCsv$(A)
 'AyCsv = Join(A, ",")
@@ -3561,7 +3562,7 @@ End Property
 'If Si(TFny) = Si(Fny) Then
 '    F = Fny
 'Else
-'    F = AyAdd(Fny, AyMinus(TFny, Fny))
+'    F = AddAy(Fny, MinusAy(TFny, Fny))
 'End If
 'For Each FF In F
 '    J = J + 1

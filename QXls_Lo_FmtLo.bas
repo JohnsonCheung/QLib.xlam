@@ -1,0 +1,344 @@
+Attribute VB_Name = "QXls_Lo_FmtLo"
+Option Explicit
+Private Const Asm$ = "QXls"
+Private Const CMod$ = "MXls_Lo_Fmt."
+Public Const DoczLof$ = "It is Ly with T1 LofT1nn"
+Private A As ListObject, B$(), Fny$()
+
+Function AyzSqC(Sq(), Optional C = 1) As Variant()
+Stop
+End Function
+
+Sub GrpBrdLo(Lo As ListObject, Optional ByEmp As Boolean) ' Bdr each Gp in Lo by fst Col grouping by Empty or by SamVal
+Dim Ay(): Ay = AyzSqC(CvAv(A.ListColumns(1).DataBodyRange.Value), 1)
+Dim Ix&()
+    If ByEmp Then
+        Ix = GrpEndIxAyOfEmp(Ay)
+    Else
+        Ix = GrpEndIxAyOfEmp(Ay)
+    End If
+Dim R As Range: Set R = Lo.DataBodyRange
+Dim RR() As Range, R1&, R2&, J&
+    For J = 0 To UB(Ix)
+        PushObj RR, RgRR(R, R1, R2)
+    Next
+For J = 0 To UB(RR)
+    BdrRgAround RR(J)
+Next
+End Sub
+Sub FmtLo(Lo As ListObject, Lof$())
+Set A = Lo
+Fny = FnyzLo(Lo)
+B = Lof
+ThwIfEr ErzLof(Lof, Fny), CSub
+Dim L
+For Each L In WItr("Ali"): WFmtAli CStr(L): Next
+For Each L In WItr("Bdr"): WFmtBdr CStr(L): Next
+For Each L In WItr("Bet"): WFmtBet CStr(L): Next
+For Each L In WItr("Cor"): WFmtCor CStr(L): Next
+For Each L In WItr("Fml"): WFmtFml CStr(L): Next
+For Each L In WItr("Fmt"): WFmtFmt CStr(L): Next
+For Each L In WItr("Lvl"): WFmtLvl CStr(L): Next
+For Each L In WItr("Tot"): WFmtTot CStr(L): Next
+For Each L In WItr("Wdt"): WFmtWdt CStr(L): Next
+SetLoTit Lo, WLy("Tit")
+SetLoNm Lo, T2(FstElezT1(B, "Nm"))
+For Each L In WItr("Lbl"): WFmtLbl CStr(L): Next ' Must run Last
+End Sub
+
+'Ali -----------------------------------------------------------
+Private Sub WFmtAli(L$)
+Dim T1$, FldLikAy$(): AsgT1FldLikAy T1, FldLikAy, L
+Dim H As XlHAlign: H = HAlign(T1)
+Dim F$, I
+For Each I In Fny
+    F = I
+    If HitLikAy(F, FldLikAy) Then
+        WRg(F).HorizontalAlignment = H
+    End If
+Next
+End Sub
+Private Function HAlign(S$) As XlHAlign
+Select Case S
+Case "Left": HAlign = xlHAlignLeft
+Case "Right": HAlign = xlHAlignRight
+Case "Center": HAlign = xlHAlignCenter
+Case Else: Thw CSub, "Invalid HAlignStr", "HAlignStr", S
+End Select
+End Function
+'Bdr -----------------------------------------------------------
+Private Sub WFmtBdr(L$)
+Dim T1$, FldLikAy$(): AsgT1FldLikAy T1, FldLikAy, L
+Dim IsLeft As Boolean, IsRight As Boolean
+    Select Case T1
+    Case "Left"
+    Case "Right"
+    Case "Both"
+    Case Else: Thw CSub, "Invalid Bdr", "Invalid-Bdr-Str Valid-Bdr Lin", T1, "Left Right Both", L
+    End Select
+Dim F$, I
+For Each I In Fny
+    F = I
+    If HitLikAy(F, FldLikAy) Then
+        If IsLeft Then BdrRg WRg(F), xlEdgeLeft
+        If IsRight Then BdrRg WRg(F), xlEdgeRight
+    End If
+Next
+End Sub
+'Bet----------------------------------------------------------
+Private Sub WFmtBet(L$)
+Dim Fld$, FmFld$, ToFld$
+    AsgN2tRst L, Fld, FmFld, ToFld
+    Dim IsEr As Boolean
+    If Not HasEle(Fny, Fld) Then IsEr = True
+    If Not HasEle(Fny, FmFld) Then IsEr = True
+    If Not HasEle(Fny, ToFld) Then IsEr = True
+    If IsEr Then Thw CSub, "Bet-Lin error, the Fld,FmFld,ToFld not all in Fny", "Lin Fld FmFld ToFld Fny", L, Fld, FmFld, ToFld, Fny
+    Dim IxFld%, IxFm%, IxTo%
+        IxFld = IxzAy(Fny, Fld)
+        IxFm = IxzAy(Fny, FmFld)
+        IxTo = IxzAy(Fny, ToFld)
+    If IsBet(IxFld, IxFm, IxTo) Then
+        Thw CSub, "Fld cannot between FmFld ToFld", "Fld FmFld ToFmd IxFld IxFm IxTo Fny", Fld, FmFld, ToFld, IxFm, IxTo, Fny
+    End If
+    If IxFm > IxTo Then Thw CSub, "FmFld should be in front to ToFld", "FmFld ToFld FmIx ToIx Fny", FmFld, ToFld, IxFm, IxTo, Fny
+WRg(Fld).Formula = FmtQQ("=Sum([?]:[?])", FmFld, ToFld)
+End Sub
+'Cor----------------------------------------------------------
+Private Sub WFmtCor(L$)
+Dim T1$, FldLikAy$(): AsgT1FldLikAy T1, FldLikAy, L
+Dim C&: C = Colr(T1)
+Dim F$, I
+For Each I In Fny
+    F = I
+    If HitLikAy(F, FldLikAy) Then
+        WRg(F).Color = C
+    End If
+Next
+End Sub
+
+'Fml----------------------------------------------------------
+Private Sub WFmtFml(L$)
+Dim Fld$, Fml$: AsgTRst L, Fld, Fml
+If Not HasEle(Fny, Fld) Then Thw CSub, "Fld not in Fny", "Fld-not-in-Fny Fml-Lin", Fld, L
+WRg(Fld).Formula = Fml
+End Sub
+
+'Fmt----------------------------------------------------------
+Private Sub WFmtFmt(L$)
+Dim Fmt$, FldLikAy$()
+AsgT1FldLikAy Fmt, FldLikAy, L
+Dim F$, I
+For Each I In Fny
+    F = I
+    If HitLikAy(F, FldLikAy) Then
+        WRg(F).NumberFormat = Fmt
+    End If
+Next
+End Sub
+
+'Lbl----------------------------------------------------------
+'Must run after forumla & Between
+Private Sub WFmtLbl(L$)
+Dim Fld$, Lbl$
+    AsgTRst L, Fld, Lbl
+    If Not HasEle(Fny, Fld) Then Thw CSub, "Fld not in Fny", "Fld-with-er LblLin Fny", Fld, L, Fny
+Dim R1 As Range
+Dim R2 As Range
+Set R1 = WHdrCell(Fld)
+Set R2 = CellAbove(R1)
+SwapValzRg R1, R2
+End Sub
+
+'Lvl----------------------------------------------------------
+Private Sub WFmtLvl(L$)
+Dim T1$, Lvl As Byte, FldLikAy$()
+AsgT1FldLikAy T1, FldLikAy, L
+If Not IsBet(T1, "2", "8") And Len(T1) <> 1 Then Thw CSub, "Lvl should betwee 2 to 8", "Lvl LvlLin", Lvl, L
+Lvl = T1
+Dim F$, I
+For Each I In Fny
+    F = I
+    If HitLikAy(F, FldLikAy) Then
+        WCol(F).OutlineLevel = Lvl
+    End If
+Next
+End Sub
+
+'Tot----------------------------------------------------------
+Private Sub WFmtTot(L$)
+Dim T1$, T As XlTotalsCalculation, FldLikAy$(): AsgT1FldLikAy T1, FldLikAy, L
+Dim I, F$
+T = WTotCalczStr(T1)
+For Each I In Fny
+    F = I
+    If HitLikAy(F, FldLikAy) Then
+        A.ListColumns(F).Total = T
+    End If
+Next
+End Sub
+
+Private Function WTotCalczStr(S$) As XlTotalsCalculation
+Dim O As XlTotalsCalculation
+Select Case S
+Case "Sum": O = xlTotalsCalculationSum
+Case "Avg": O = xlTotalsCalculationAverage
+Case "Cnt": O = xlTotalsCalculationCount
+Case Else: Thw CSub, "Invalid TotCalcStr", "TotCalcStr Valid-TotCalcStr", S, "Sum Avg Cnt"
+End Select
+WTotCalczStr = O
+End Function
+
+'Wdt----------------------------------------------------------
+Private Sub WFmtWdt(L$)
+Dim T1$, FldLikAy$(): AsgT1FldLikAy T1, FldLikAy, L
+Dim W%: W = T1
+If Not IsBet(W, 5, 200) Then Thw CSub, "Invalid Wdt (should between 5 200)", "Wdt Lin", W, L
+Dim F$, I
+For Each I In Fny
+    F = I
+    If HitLikAy(F, FldLikAy) Then
+        WRg(F).EntireColumn.Width = W
+    End If
+Next
+End Sub
+'Tst-------------------------------------------------------------
+Private Sub Z_FmtLo()
+Dim Lo As ListObject, Fmtr() As String 'Lofr
+'------------
+Set Lo = SampLo
+Fmtr = SampLof
+GoSub Tst
+Exit Sub
+Tst:
+    FmtLo Lo, Fmtr
+    Return
+End Sub
+
+Private Sub Z_WFmtBdr()
+Dim L$, Lo As ListObject
+'--
+Set Lo = SampLo
+Fny = FnyzLo(Lo)
+'--
+GoSub T1
+GoSub T2
+Exit Sub
+T1: L = "Left A B C": GoTo Tst
+T2: L = "Left D E F": GoTo Tst
+T3: L = "Right A B C": GoTo Tst
+T4: L = "Center A B C": GoTo Tst
+Tst:
+    WFmtBdr L      '<=='
+    Stop
+    Return
+End Sub
+
+Private Sub ZZ()
+Dim A As ListObject
+Dim B$()
+Dim C As Workbook
+Dim XX
+End Sub
+
+'Fun===========================================================================
+Private Function WRg(F) As Range
+Set WRg = A.ListColumns(F).DataBodyRange
+End Function
+Private Function WCol(F) As Range
+Set WCol = A.ListColumns(F).DataBodyRange.EntireColumn
+End Function
+Private Function WLy(T1$) As String()
+WLy = SywRmvT1(B, T1)
+End Function
+Private Function WItr(T1$)
+Asg WLy(T1), WItr
+End Function
+
+Private Function WHdrCell(C) As Range
+Set WHdrCell = A1zRg(CellAbove(A.ListColumns(C).Range))
+End Function
+
+Sub FmtLozStdWb(A As Workbook)
+Dim Lo
+For Each Lo In LoAy(A)
+    FmtLozStd CvLo(Lo)
+Next
+End Sub
+Sub FmtLozStd(A As ListObject)
+FmtLo A, StdLof
+End Sub
+Property Get StdLof() As String()
+
+End Property
+
+Sub AddFml(Lo As ListObject, ColNm$, Fml$)
+Dim O As ListColumn
+Set O = Lo.ListColumns.Add
+O.Name = ColNm
+O.DataBodyRange.Formula = Fml
+End Sub
+
+Sub AutoFitLo(A As ListObject)
+Dim C As Range: Set C = LoAllEntCol(A)
+C.AutoFit
+Dim EntC As Range, J%
+For J = 1 To C.Columns.Count
+   Set EntC = EntRgC(C, J)
+   If EntC.ColumnWidth > 100 Then EntC.ColumnWidth = 100
+Next
+End Sub
+
+Function BdrLoAround(A As ListObject)
+Dim R As Range
+Set R = RgzMoreTop(A.DataBodyRange)
+If A.ShowTotals Then Set R = RgzMoreBelow(R)
+BdrRgAround R
+End Function
+
+
+Sub SetLoNm(A As ListObject, LoNm$)
+If LoNm <> "" Then
+    If Not HasLo(WszLo(A), LoNm) Then
+        A.Name = LoNm
+    Else
+        Inf CSub, "Lo"
+    End If
+End If
+End Sub
+
+
+Sub SetLccWrp(A As ListObject, CC$, Optional Wrp As Boolean)
+Dim C
+For Each C In TermSy(CC)
+    SetLcWrp A, C, Wrp
+Next
+End Sub
+Sub SetLcWrp(A As ListObject, C, Optional Wrp As Boolean)
+A.ListColumns(C).DataBodyRange.WrapText = Wrp
+End Sub
+
+Sub SetLccWdt(A As ListObject, CC$, W)
+Dim C
+For Each C In TermSy(CC)
+    SetLcWdt A, C, W
+Next
+End Sub
+Sub SetLcWdt(A As ListObject, C, W)
+EntColzLc(A, C).ColumnWidth = W
+End Sub
+Function EntColzLc(A As ListObject, C) As Range
+Set EntColzLc = A.ListColumns(C).DataBodyRange.EntireColumn
+End Function
+Sub SetLcTotLnk(A As ListObject, C)
+Dim R1 As Range, R2 As Range, R As Range, Ws As Worksheet
+Set R = A.ListColumns(C).DataBodyRange
+Set Ws = WszRg(R)
+Set R1 = RgRC(R, 0, 1)
+Set R2 = RgRC(R, R.Rows.Count + 1, 1)
+Ws.Hyperlinks.Add Anchor:=R1, Address:="", SubAddress:=R2.Address
+Ws.Hyperlinks.Add Anchor:=R2, Address:="", SubAddress:=R1.Address
+R1.Font.ThemeColor = xlThemeColorDark1
+End Sub
+
+

@@ -8,9 +8,10 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
+Private Const CMod$ = "ActLin."
 Const A$ = "A"
-Public Act As eActLin, Lin$, Lno&
-Friend Function Init(Act As eActLin, Lin$, Lno&) As ActLin
+Public Act As EmLinAct, Lin$, Lno&
+Friend Function Init(Act As EmLinAct, Lin$, Lno&) As ActLin
 With Me
     .Act = Act
     .Lin = Lin
@@ -22,7 +23,7 @@ Property Get Ix&()
 Ix = Lno - 1
 End Property
 Property Get ActStr$()
-ActStr = IIf(Act = eeDltLin, "Dlt", "Ins")
+ActStr = IIf(Act = EiDltLin, "Dlt", "Ins")
 End Property
 Function ToStr$()
 ToStr = ActStr & ":" & Lno & ":" & Lin

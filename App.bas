@@ -8,7 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
-Const CMod$ = ""
+Private Const CMod$ = "App."
 Private Type A
     Nm As String
     Ver As String
@@ -58,7 +58,7 @@ Set Db = A.Db
 End Property
 
 Property Get OupFxzNxt$()
-OupFxzNxt = NxtFfn(PmOupFx)
+OupFxzNxt = NxtFfnzAva(PmOupFx)
 End Property
 Property Get OupPth$()
 OupPth = ValzPm(Db, "OupPth")

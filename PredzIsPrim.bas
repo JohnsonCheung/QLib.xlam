@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Implements IPred
+Private Const CMod$ = "PredzIsPrim."
 Private Function IPred_Pred(V As Variant) As Boolean
 IPred_Pred = IsPrim(V)
 End Function

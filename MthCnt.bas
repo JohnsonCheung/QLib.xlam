@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
+Private Const CMod$ = "MthCnt."
 Public MdNm$, NPubSub%, NPubFun%, NPubPrp%, NPrvSub%, NPrvFun%, NPrvPrp%, NFrdSub%, NFrdFun%, NFrdPrp%
 Friend Function Init(MdNm$, NPubSub%, NPubFun%, NPubPrp%, NPrvSub%, NPrvFun%, NPrvPrp%, NFrdSub%, NFrdFun%, NFrdPrp%) As MthCnt
 With Me
@@ -27,8 +28,8 @@ End Function
 Property Get N%()
 N = NPubSub + NPubFun + NPubPrp + NPrvSub + NPrvFun + NPrvPrp + NFrdSub + NFrdFun + NFrdPrp
 End Property
-Function Lin$(Optional Hdr As eHdr)
-Dim Pfx$: If Hdr = eeWithHdr Then Pfx = "Pub* | Prv* | Frd* : *{Sub Fun Frd} "
+Function Lin$(Optional Hdr As EmHdr)
+Dim Pfx$: If Hdr = EiWiHdr Then Pfx = "Pub* | Prv* | Frd* : *{Sub Fun Frd} "
 Lin = Pfx & MdNm & " | " & N & " | " & NPubSub & " " & NPubFun & " " & NPubPrp & " | " & NPrvSub & " " & NPrvFun & " " & NPrvPrp & " | " & NFrdSub & " " & NFrdFun & " " & NFrdPrp
 End Function
 

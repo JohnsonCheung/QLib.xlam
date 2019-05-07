@@ -8,4 +8,5 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
+Private Const CMod$ = "CellWsnItm."
 Public Cell As Range, Wsn$

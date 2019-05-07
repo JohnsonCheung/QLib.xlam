@@ -1,0 +1,39 @@
+Attribute VB_Name = "QVb_Dic_Set"
+Option Explicit
+Private Const CMod$ = "MVb_Dic_Set."
+Private Const Asm$ = "QVb"
+Property Get EmpAset() As Aset
+Set EmpAset = New Aset
+End Property
+
+Function CvAset(V) As Aset
+Set CvAset = V
+End Function
+
+Function IsAset(V) As Boolean
+IsAset = TypeName(V) = "Aset"
+End Function
+
+Function AsetzAp(ParamArray Ap()) As Aset
+Dim Av(): Av = Ap
+Set AsetzAp = AsetzAy(Av)
+End Function
+Function AsetzItr(Itr) As Aset
+Set AsetzItr = EmpAset
+AsetzItr.PushItr Itr
+End Function
+Function AsetzFF(FF$) As Aset
+Set AsetzFF = AsetzAy(TermSy(FF))
+End Function
+Function AsetzSsl(Ssl$) As Aset
+Set AsetzSsl = EmpAset
+Dim Sy$(): Sy = SyzSsLin(Ssl)
+If HasDup(Sy) Then Thw CSub, "Ssl has dup", "Ssl DupEle", Ssl, AywDup(Sy)
+AsetzSsl.PushAy SyzSsLin(Ssl)
+End Function
+
+Function AsetzAy(Ay) As Aset
+Set AsetzAy = EmpAset
+AsetzAy.PushAy Ay
+End Function
+

@@ -8,10 +8,11 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
+Private Const CMod$ = "CmpCnt."
 Public NMod%, NCls%, NDoc%, NOth%, Locked As Boolean
-Enum eHdr
-    eeNoHdr
-    eeWithHdr
+Enum EmHdr
+    EiNoHdr
+    EiWiHdr
 End Enum
 Friend Function Init(NMod%, NCls%, NDoc%, NOth%) As CmpCnt
 With Me
@@ -27,8 +28,8 @@ Property Get NCmp%()
 NCmp = NMod + NCls + NDoc + NOth
 End Property
 
-Function Lin$(Optional Hdr As eHdr)
+Function Lin$(Optional Hdr As EmHdr)
 Dim Pfx$
-If Hdr = eeWithHdr Then Pfx = "Cmp Mod Cls Doc Oth "
+If Hdr = EiWiHdr Then Pfx = "Cmp Mod Cls Doc Oth "
 Lin = Pfx & NCmp & " " & NMod & " " & NCls & " " & NDoc & " " & NOth
 End Function

@@ -8,10 +8,10 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Implements IGenr
-Sub GenOupTblFmTmpInp(A As Dao.Database)
+Private Const CMod$ = "ATaxExpCmp_OupTblGenr."
+Const A$ = "A"
+Sub GenOupTblFmTmpInp(A As DAO.Database)
 IGenr_GenOupTblFmTmpInp A
 End Sub
-
-Private Sub IGenr_GenOupTblFmTmpInp(A As Dao.Database)
-
+Private Sub IGenr_GenOupTblFmTmpInp(A As DAO.Database)
 End Sub

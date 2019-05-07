@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
+Private Const CMod$ = "LtPm."
 Public T$, S$, Cn$
 Friend Function Init(T, S, Cn) As LtPm
 With Me

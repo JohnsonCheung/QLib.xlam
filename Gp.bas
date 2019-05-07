@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
+Private Const CMod$ = "Gp."
 Private A() As Lnx
 Friend Function Init(LnxAy() As Lnx) As Gp
 A = LnxAy

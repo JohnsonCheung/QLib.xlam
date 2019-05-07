@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
+Private Const CMod$ = "MthNm3."
 Public Nm$, MthTy$, MthMdy$
 Friend Function Init(MthMdy, MthTy, Nm) As MthNm3
 With Me
@@ -17,8 +18,8 @@ With Me
 End With
 Set Init = Me
 End Function
-Function Lin$(Optional Hdr As eHdr)
-Dim Pfx$: If Hdr = eeWithHdr Then Pfx = "Mdy Ty Nm: "
+Function Lin$(Optional Hdr As EmHdr)
+Dim Pfx$: If Hdr = EiWiHdr Then Pfx = "Mdy Ty Nm: "
 Lin = Pfx & ApdIf(MthMdy, " ") & MthTy & " " & Nm
 End Function
 Property Get DNm$()

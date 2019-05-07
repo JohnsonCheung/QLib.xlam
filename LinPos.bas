@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
+Private Const CMod$ = "LinPos."
 Public Lno&, Pos As Pos
 Friend Function Init(Lno, Pos As Pos) As LinPos
 Me.Lno = Lno

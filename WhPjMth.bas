@@ -8,4 +8,5 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
+Private Const CMod$ = "WhPjMth."
 Public Pj As WhNm, MdMth As WhMdMth

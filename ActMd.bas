@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
+Private Const CMod$ = "ActMd."
 Const Ns$ = "MdyPj"
 Public Md As CodeModule
 Private A() As ActLin

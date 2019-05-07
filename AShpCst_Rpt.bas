@@ -1,6 +1,6 @@
 Attribute VB_Name = "AShpCst_Rpt"
 Option Explicit
-Const CMod$ = "AShpCst_Rpt."
+Private Const CMod$ = "AShpCst_Rpt."
 Function RptAppDb() As Database
 'Set RptAppDb = AppDb(RptApn)
 End Function

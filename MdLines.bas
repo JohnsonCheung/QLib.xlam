@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
+Private Const CMod$ = "MdLines."
 Public StartLine&, InsLno&, Lines$
 Friend Function Init(StartLine, Lines, InsLno) As MdLines
 With Me

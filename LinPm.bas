@@ -8,7 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
-Const CMod$ = "LinPm."
+Private Const CMod$ = "LinPm."
 Public Dic As Dictionary ' it is a SyDic
 
 Private Sub ThwIfPmStrEr(PmNmToPmValSyDic As Dictionary, LinPmSpec$)
@@ -17,7 +17,7 @@ End Sub
 
 Function Init(PmStr$, LinPmSpec$) As LinPm
 Dic.RemoveAll
-Dim Ay$(): Ay = SySsl(PmStr)
+Dim Ay$(): Ay = SyzSsLin(PmStr)
     Dim I, S$
     Dim CurPmNm$
     For Each I In Itr(Ay)
@@ -36,9 +36,11 @@ Private Sub PushPmNm(PmNm$)
 If Dic.Exists(PmNm) Then Exit Sub
 Dic.Add PmNm, Sy()
 End Sub
+
 Function WhNm(Optional NmPfx$) As WhNm
-Set WhNm = MIde_Wh.WhNm(Patn(NmPfx), LikeAy(NmPfx), ExlLikAy(NmPfx))
+Set WhNm = QIde_Wh.WhNm(Patn(NmPfx), LikeAy(NmPfx), ExlLikAy(NmPfx))
 End Function
+
 Function HasSw(SwNm) As Boolean
 HasSw = HasEle(SwNy, SwNm)
 End Function
@@ -79,7 +81,7 @@ Dim PmNm, O$()
 For Each PmNm In Dic.Keys
     PushI O, FmtzNmSy(PmNm, CvSy(Dic(PmNm)))
 Next
-Fmt = FmtSyBySepss(O, "ValCnt Val(")
+Fmt = AlignzBySepss(O, "ValCnt Val(")
 End Function
 
 Private Function FmtzNmSy$(PmNm, Sy$())

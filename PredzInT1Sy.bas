@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Implements IPred
+Private Const CMod$ = "PredzInT1Sy."
 Private A_T1Sy$()
 Friend Sub Init(T1Sy$())
 A_T1Sy = T1Sy

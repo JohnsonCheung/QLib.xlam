@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
+Private Const CMod$ = "RRCC."
 Public R1&, R2&, C1%, C2%
 Friend Function Init(R1, R2, C1, C2) As RRCC
 With Me

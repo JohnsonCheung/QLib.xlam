@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
+Private Const CMod$ = "Pos."
 Public Cno1&, Cno2&
 Friend Function Init(Cno1, Cno2) As Pos
 If Cno1 > 0 Then Me.Cno1 = Cno1

@@ -8,7 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
-Const CMod$ = "Aset."
+Private Const CMod$ = "Aset."
 Private Aset As New Dictionary
 Property Get TermLin$()
 Dim I, O$()
@@ -32,7 +32,7 @@ Sub Brw(Optional Fnn$, Optional UseVc As Boolean)
 MVb_Fun.Brw Aset.Keys, DftStr(Fnn, "Aset"), UseVc
 End Sub
 Function Srt() As Aset
-Set Srt = AsetzAy(AyQSrt(Itms))
+Set Srt = AsetzAy(QSrt1(Itms))
 End Function
 Function AddAset(A As Aset) As Aset
 Dim O As New Aset

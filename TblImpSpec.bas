@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
+Private Const CMod$ = "TblImpSpec."
 Public Tbl$, LnkColStr$, WhBexpr$
 Friend Property Get Init(Tbl$, LnkColStr$, Optional WhBexpr$)
 Me.Tbl = Tbl

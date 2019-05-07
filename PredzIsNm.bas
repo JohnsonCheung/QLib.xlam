@@ -8,6 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Implements IPred
+Private Const CMod$ = "PredzIsNm."
 Private Function IPred_Pred(V As Variant) As Boolean
 If Not IsStr(V) Then Exit Function
 IPred_Pred = IsNm(CStr(V))
