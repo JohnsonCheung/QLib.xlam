@@ -1,6 +1,6 @@
 Attribute VB_Name = "QVb_Fs_Pth_Mbr_R_FfnAy"
 Option Explicit
-Private Const CMod$ = "MVb_Fs_Pth_Mbr_R_FfnAy."
+Private Const CMod$ = "MVb_Fs_Pth_Mbr_R_Ffny."
 Private Const Asm$ = "QVb"
 Private O$(), A_Spec$ ' Used in PthPthSyR/FFnAyR
 
@@ -30,7 +30,7 @@ For Each I In Itr(P)
     EntAyR1 I
 Next
 End Sub
-Private Sub Z_FfnAyR()
+Private Sub Z_FfnyR()
 Dim Pth, Spec$, Atr As FileAttribute
 GoSub T0
 GoSub T1
@@ -42,26 +42,26 @@ T1:
     Pth = "C:\Users\User\Documents\WindowsPowershell\"
     GoTo Tst
 Tst:
-    Act = FfnAyR(Pth, Spec)
+    Act = FfnyR(Pth, Spec)
     Brw Act
     Stop
     Return
 End Sub
-Function FfnAyR(Pth, Optional Spec$ = "*.*") As String()
+Function FfnyR(Pth, Optional Spec$ = "*.*") As String()
 Erase O
 A_Spec = Spec
-FfnAyR1 Pth
-FfnAyR = O
+FfnyR1 Pth
+FfnyR = O
 End Function
 
-Private Sub FfnAyR1(Pth)
+Private Sub FfnyR1(Pth)
 PushIAy O, Ffny(Pth, A_Spec)
 If Si(O) Mod 1000 = 0 Then InfLin CSub, "...Reading", "#Ffn-read", Si(O)
 Dim P$(): P = SubPthy(Pth)
 If Si(P) = 0 Then Exit Sub
 Dim I
 For Each I In P
-    FfnAyR1 I
+    FfnyR1 I
 Next
 End Sub
 

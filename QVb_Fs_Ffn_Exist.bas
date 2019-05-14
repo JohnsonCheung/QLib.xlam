@@ -4,30 +4,30 @@ Private Const CMod$ = "MVb_Fs_Ffn_Exist."
 Private Const Asm$ = "QVb"
 
 Sub AsgFfnExistMisAset(OExistFfn As Aset, OMisFfn As Aset, Ffny$())
-With FfnExistPair(Ffny)
+With FfnExist_FmFfny_ToExistNy_AndMisNy(Ffny)
     Set OExistFfn = AsetzAy(.Sy1)
     Set OMisFfn = AsetzAy(.Sy2)
 End With
 End Sub
 
-Function FfnExistPair(Ffny$()) As SyPair
-Dim Ffn$, I, Exist$(), NotE$()
-For Each I In Itr(Ffny)
-    Ffn = I
+Sub FfnExist_FmFfny_ToExist_AndMis(Ffny$(), OExist$(), OMis$())
+Dim Ffn
+Erase OExist
+Erase OMis
+For Each Ffn In Itr(Ffny)
     If HasFfn(Ffn) Then
-        PushI Exist, Ffn
+        PushI OExist, Ffn
     Else
-        PushI NotE, Ffn
+        PushI OMis, Ffn
     End If
 Next
-Set FfnExistPair = SyPair(Exist, NotE)
-End Function
-Function FfnAywExist(Ffny$()) As String()
+End Sub
+Function FfnywExist(Ffny$()) As String()
 Dim Ffn$, I
 For Each I In Itr(Ffny)
     Ffn = I
     If HasFfn(Ffn) Then
-        PushI FfnAywExist, Ffn
+        PushI FfnywExist, Ffn
     End If
 Next
 End Function
@@ -39,25 +39,25 @@ End Function
 
 
 Function ExistFfnAset(Ffny$()) As Aset
-Set ExistFfnAset = AsetzAy(ExistFfnAy(Ffny))
+Set ExistFfnAset = AsetzAy(ExistFfny(Ffny))
 End Function
 
 Function MisFfnAset(Ffny$()) As Aset
-Set MisFfnAset = AsetzAy(MisFfnAy(Ffny))
+Set MisFfnAset = AsetzAy(MisFfny(Ffny))
 End Function
 
-Function ExistFfnAy(Ffny$()) As String()
+Function ExistFfny(Ffny$()) As String()
 Dim Ffn$, I
 For Each I In Itr(Ffny)
     Ffn = I
-    If HasFfn(Ffn) Then PushI ExistFfnAy, Ffn
+    If HasFfn(Ffn) Then PushI ExistFfny, Ffn
 Next
 End Function
-Function MisFfnAy(Ffny$()) As String()
+Function MisFfny(Ffny$()) As String()
 Dim Ffn$, I
 For Each I In Itr(Ffny)
     Ffn = I
-    If Not HasFfn(Ffn) Then PushI MisFfnAy, Ffn
+    If Not HasFfn(Ffn) Then PushI MisFfny, Ffn
 Next
 End Function
 

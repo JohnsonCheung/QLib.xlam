@@ -4,17 +4,17 @@ Private Const CMod$ = "MIde_Gen_Pjf_Bas."
 Private Const Asm$ = "QIde"
 Sub LoadBas(P As VBProject, Srcp$)
 Dim BasItm
-For Each BasItm In Itr(BasFfnAy(Srcp))
+For Each BasItm In Itr(BasFfny(Srcp))
     P.VBComponents.Import BasItm
 Next
 End Sub
 
-Private Function BasFfnAy(Srcp$) As String()
+Private Function BasFfny(Srcp$) As String()
 Dim Ffn$, I
 For Each I In Itr(Ffny(Srcp))
     Ffn = I
     If IsBasFfn(Ffn) Then
-        PushI BasFfnAy, Ffn
+        PushI BasFfny, Ffn
     End If
 Next
 End Function
