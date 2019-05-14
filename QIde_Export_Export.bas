@@ -7,12 +7,12 @@ Sub ExpMd(A As CodeModule)
 A.Parent.Export SrcFfnzMd(A)
 End Sub
 
-Sub ExpRf(A As VBProject)
-WrtAy RfSrc(A), Frf(A)
+Sub ExpRf(P As VBProject)
+WrtAy RfSrc(P), Frf(P)
 End Sub
 
-Sub BrwSrcpC()
-BrwPth SrcpC
+Sub BrwSrcpP()
+BrwPth SrcpP
 End Sub
 
 Function ExtzCmpTy$(A As vbext_ComponentType)
@@ -28,11 +28,11 @@ ExtzCmpTy = O
 End Function
 
 Function SrcFfnzMd$(A As CodeModule)
-SrcFfnzMd = SrcpzPj(PjzMd(A)) & MdNm(A) & ExtzCmpTy(CmpTyzMd(A))
+SrcFfnzMd = SrcpzP(PjzM(A)) & Mdn(A) & ExtzCmpTy(CmpTyzM(A))
 End Function
 
-Function SrcpzPj$(A As VBProject)
-SrcpzPj = EnsPth(PjPth(A) & ".Src\" & Pjfn(A))
+Function SrcpzP$(P As VBProject)
+SrcpzP = EnsPth(Pjp(P) & ".Src\" & Pjfn(P))
 End Function
 
 

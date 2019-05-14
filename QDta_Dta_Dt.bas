@@ -40,7 +40,7 @@ Next
 End Function
 
 Function DtSelCol(A As Dt, CC$, Optional DtNm$) As Dt
-DtSelCol = DtzDrs(DrsSelCC(DrszDt(A), CC), Dft(DtNm, A.DtNm))
+DtSelCol = DtzDrs(SelDrsCC(DrszDt(A), CC), Dft(DtNm, A.DtNm))
 End Function
 
 Function DtDrpCol(A As Dt, CC$, Optional DtNm$) As Dt
@@ -79,7 +79,7 @@ Function DtzFF(DtNm$, FF$, Dry()) As Dt
 DtzFF = Dt(DtNm, Ny(FF), Dry)
 End Function
 
-Function Dt(DtNm$, Fny() As String, Dry() As Variant) As Dt
+Function Dt(DtNm, Fny() As String, Dry() As Variant) As Dt
 With Dt
     .DtNm = DtNm
     .Fny = Fny

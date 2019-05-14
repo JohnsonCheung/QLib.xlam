@@ -4,7 +4,7 @@ Private Const CMod$ = "MDta_Dic."
 Private Const Asm$ = "QDta"
 Function DrszDic(A As Dictionary, Optional InclDicValOptTy As Boolean, Optional Tit$ = "Key Val") As Drs
 Dim Fny$()
-Fny = SyzSsLin(Tit): If InclDicValOptTy Then Push Fny, "Val-TypeName"
+Fny = SyzSS(Tit): If InclDicValOptTy Then Push Fny, "Val-TypeName"
 DrszDic = Drs(Fny, DryzDic(A, InclDicValOptTy))
 End Function
 
@@ -21,5 +21,5 @@ DtzDic = DtzFF(DtNm, F, Dry)
 End Function
 
 Function FnyzDic(Optional InclValTy As Boolean) As String()
-FnyzDic = SyzSsLin("Key Val" & IIf(InclValTy, " Type", ""))
+FnyzDic = SyzSS("Key Val" & IIf(InclValTy, " Type", ""))
 End Function

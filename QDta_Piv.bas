@@ -12,9 +12,9 @@ Enum EmAgg
     EiCnt
     EiAvg
 End Enum
-Function DryGpAy(A, KIx%, GIx%) As Variant()
+Function DryBlk(A, KIx%, GIx%) As Variant()
 If Si(A) = 0 Then Exit Function
-Dim J%, O, K, GpAy(), O_Ix&, Gp, Dr, K_Ay()
+Dim J%, O, K, Blk(), O_Ix&, Gp, Dr, K_Ay()
 For Each Dr In A
     K = Dr(KIx)
     Gp = Dr(GIx)
@@ -26,7 +26,7 @@ For Each Dr In A
         Push O(O_Ix)(1), Gp
     End If
 Next
-DryGpAy = O
+DryBlk = O
 End Function
 Private Function KKDrIx&(KKDr, FstColIsKKDrDry)
 Dim Ix&, CurKKDr
@@ -43,7 +43,7 @@ Private Function KKDrToItmAyDualColDry(Dry(), KKColIx&(), ItmColIx&) As Variant(
 Dim Dr, Ix&, KKDr(), Itm
 Dim O() 'KKDr_To_ItmAy_DualColDry
 For Each Dr In Itr(Dry)
-    KKDr = AywIxAy(Dry, KKColIx)
+    KKDr = AywIxy(Dry, KKColIx)
     Itm = Dr(ItmColIx)
     Ix = KKDrIx(KKDr, O)
     If Ix = -1 Then
@@ -63,18 +63,28 @@ Private Function KKCntMulItmColDryD(KKDrToItmAyDualColDry()) As Variant()
 End Function
 Function GpDic(A As Drs, KK$, G$) As Dictionary
 Dim Fny$()
-Dim KeyIxAy&(), GIx%
-    Fny = TermSy(KK)
-    KeyIxAy = IxAy(A.Fny, Fny)
+Dim KeyIxy&(), GIx%
+    Fny = TermAy(KK)
+    KeyIxy = Ixy(A.Fny, Fny)
     PushI Fny, G & "_Gp"
     GIx = IxzAy(Fny, G)
-Set GpDic = DryGpDic(A.Dry, KeyIxAy, GIx)
+Set GpDic = DryGpDic(A.Dry, KeyIxy, GIx)
+End Function
+Function DryzDotLyz2Col(DotLy$()) As Variant()
+Dim O(), I, S$
+For Each I In Itr(DotLy)
+    S = I
+    With Brk1(S, ".")
+       Push O, Sy(.S1, .S2)
+   End With
+Next
+DryzDotLyz2Col = O
 End Function
 
 Function DryzDotLy(DotLy$()) As Variant()
-Dim IDotLin
-For Each IDotLin In Itr(DotLy)
-    PushI DryzDotLy, SplitDot(CStr(IDotLin))
+Dim I
+For Each I In Itr(DotLy)
+    PushI DryzDotLy, SplitDot(I)
 Next
 End Function
 Function DryzDotLyzTwoCol(DotLy$()) As Variant()
@@ -93,7 +103,7 @@ For Each I In Itr(LyWithColon)
 Next
 End Function
 
-Function DryGpDic(A, KeyIxAy, G) As Dictionary
+Function DryGpDic(A, KeyIxy, G) As Dictionary
 Const CSub$ = CMod & "DryGpDic"
 'If K < 0 Or G < 0 Then
 '    Thw CSub, "K-Idx and G-Idx should both >= 0", "K-Idx G-Idx", K, G
@@ -114,8 +124,8 @@ Const CSub$ = CMod & "DryGpDic"
 'Set DryGpDic = O
 End Function
 
-Function DrszFbt(Fb$, T$) As Drs
-DrszFbt = DrszT(Db(Fb$), T)
+Function DrszFbt(Fb, T) As Drs
+DrszFbt = DrszT(Db(Fb), T)
 End Function
 
 Function KE24Drs() As Drs

@@ -4,23 +4,23 @@ Private Const CMod$ = "MVb_Tst."
 Private Const Asm$ = "QVb"
 Public Act, Ept, Dbg As Boolean, Trc As Boolean
 Function TstHom$()
-TstHom = TstHomInPj
+TstHom = TstHomP
 End Function
-Function TstHomInPj$()
-Static X$: If X = "" Then X = TstHomzPj(CurPj)
-TstHomInPj = X
+Function TstHomP$()
+Static X$: If X = "" Then X = TstHomzP(CPj)
+TstHomP = X
 End Function
-Function TstHomzPj$(A As VBProject)
-TstHomzPj = AddFdrEns(Srcp(A), ".TstRes")
+Function TstHomzP$(P As VBProject)
+TstHomzP = AddFdrEns(Srcp(P), ".TstRes")
 End Function
 Sub StopNE()
 If Not IsEq(Act, Ept) Then Stop
 End Sub
 Sub C(Optional A, Optional E)
 If IsMissing(A) Then
-    ThwIfNE Act, Ept, "Act", "Ept"
+    ThwIf_NE Act, Ept, "Act", "Ept"
 Else
-    ThwIfNE A, E, "Act", "Ept"
+    ThwIf_NE A, E, "Act", "Ept"
 End If
 End Sub
 Function TstCasPth$(TstId&, Cas$)
@@ -48,9 +48,9 @@ End Sub
 Sub BrwTstHom()
 BrwPth TstHom
 End Sub
-Function NxtIdFdr$(Pth$, Optional NDig& = 4) '
+Function NxtIdFdr$(Pth, Optional NDig& = 4) '
 Dim J&, F$
-ThwIfPthNotExist1 Pth, CSub
+ThwIf_PthNotExist1 Pth, CSub
 If NDig < 0 Then Thw CSub, "NDig should between 1 to 5", "NDig", NDig
 For J = 1 To Val(Left("99999", NDig))
     F = Pad0(J, NDig)
@@ -77,7 +77,7 @@ Dim IdStr$: IdStr = TstIdStr(TstId, Fun)
 Dim Exist As Boolean
 Exist = HasFfn(F)
 Select Case True
-Case (Exist And TrimCrLfAtEnd(LineszFt(F)) <> IdStr) Or Not Exist
+Case (Exist And TrimRSpcCrLf(LineszFt(F)) <> IdStr) Or Not Exist
     WrtStr TstIdStr(TstId, Fun), F
 End Select
 End Sub
@@ -87,7 +87,7 @@ Dim IdStr$: IdStr = TstIdStr(TstId, Fun)
 Dim Exist As Boolean
 Exist = HasFfn(F)
 Select Case True
-Case Exist And TrimCrLfAtEnd(LineszFt(F)) <> IdStr
+Case Exist And TrimRSpcCrLf(LineszFt(F)) <> IdStr
     Thw CSub, "TstIdStr in TstIdFt is not expected", "TstIdFt Expected-TstIdStr Actual-TstIdStr-in-TstIdFt", F, IdStr, LineszFt(F)
 Case Exist:
 Case Else

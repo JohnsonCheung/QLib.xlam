@@ -28,7 +28,7 @@ For Each L In Itr(PrpFunLnoAy(Md))
 Next
 End Sub
 
-Sub EnsPrpFunzPj(Pj As VBProject, Optional WhatIf As Boolean)
+Sub EnsPrpFunzP(Pj As VBProject, Optional WhatIf As Boolean)
 Dim I
 Erase Inf
 'For Each I In MdItr(Pj)
@@ -38,12 +38,12 @@ Brw Inf
 End Sub
 
 Sub EnsPrpFun()
-EnsPjFunzMd CurMd
+EnsPjFunzMd CMd
 End Sub
 
 Private Sub EnsPrpFunMdLno(A As CodeModule, Lno, Optional WhatIf As Boolean)
-Dim OldLin$
-Dim NewLin$
+Dim OldLin
+Dim NewLin
     OldLin = A.Lines(Lno, 1)
     NewLin = Replace(A.Lines(Lno, 1), "Function", "Property Get")
 If Not WhatIf Then A.ReplaceLine Lno, NewLin

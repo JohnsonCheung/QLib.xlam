@@ -9,7 +9,7 @@ ResiToSamNCol.Dry = ResiToNCol(A.Dry, N - 1)
 End Function
 Function ResiToSamNColzDry(Dry()) As Variant()
 If Si(Dry) = 0 Then Exit Function
-ResiToSamNColzDry = ResiToUCol(O, NColzDry(Dry) - 1)
+'ResiToSamNColzDry = ResiToUCol(O, NColzDry(Dry) - 1)
 End Function
 
 Private Function ResiToNCol(Dry(), U%) As Variant()

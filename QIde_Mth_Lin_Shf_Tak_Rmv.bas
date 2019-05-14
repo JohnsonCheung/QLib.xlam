@@ -4,14 +4,14 @@ Private Const CMod$ = "MIde_Mth_Lin_Shf_Tak_Rmv."
 Private Const Asm$ = "QIde"
 
 Function ShfMthTy$(OLin$)
-Dim O$: O = TakMthTy(OLin)
+Dim O$: O = TakMthTy(OLin$)
 If O = "" Then Exit Function
 ShfMthTy = O
 OLin = LTrim(RmvPfx(OLin, O))
 End Function
 
-Function ShfTermAftAs$(OLin$)
-If Not ShfTermX(OLin, "As") Then Exit Function
+Function ShfTermAftAs(OLin$)
+If Not ShfTerm(OLin, "As") Then Exit Function
 ShfTermAftAs = ShfT1(OLin)
 End Function
 Function ShfShtMdy$(OLin$)
@@ -29,13 +29,6 @@ Dim O$
 O = MthMdy(OLin):
 ShfMdy = O
 OLin = LTrim(RmvPfx(OLin, O))
-End Function
-
-Function ShfMthNm3(OLin$) As MthNm3
-Set ShfMthNm3 = New MthNm3
-Dim M$: M = ShfShtMdy(OLin)
-Dim T$: T = ShfShtMthTy(OLin):: If T = "" Then Exit Function
-ShfMthNm3.Init M, T, ShfNm(OLin)
 End Function
 
 Function ShfKd$(OLin$)
@@ -64,19 +57,19 @@ If FstChr(L) = "'" Then
 End If
 End Function
 
-Function TakMthKd$(S$)
-TakMthKd = PfxSySpc(S, MthKdAy)
+Function TakMthKd$(Lin)
+TakMthKd = PfxSySpc(Lin, MthKdAy)
 End Function
 
-Function TakMthTy$(S$)
-TakMthTy = PfxSySpc(S, MthTyAy)
+Function TakMthTy$(Lin)
+TakMthTy = PfxSySpc(Lin, MthTyAy)
 End Function
 
-Function RmvMdy$(S$)
-RmvMdy = LTrim(RmvPfxSySpc(S$, MthMdyAy))
+Function RmvMdy$(Lin)
+RmvMdy = LTrim(RmvPfxSySpc(Lin, MthMdyAy))
 End Function
 
-Function RmvMthTy$(S$)
-RmvMthTy = RmvPfxSySpc(S, MthTyAy)
+Function RmvMthTy$(Lin)
+RmvMthTy = RmvPfxSySpc(Lin, MthTyAy)
 End Function
 

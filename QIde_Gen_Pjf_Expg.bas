@@ -14,12 +14,12 @@ Next
 End Function
 
 Function SrcpSyOfExpgInstWoNonEmpDist() As String()
-Dim Pth$, I, Dist$
+Dim Pth, I, Dist$
 For Each I In Itr(SrcpSyOfExpgInst)
     Pth = I
     Dist = SiblingPth(Pth, "Dist")
     Select Case True
-    Case Not IsPth(Dist), IsEmpPth(Dist): PushI SrcpSyOfExpgInstWoNonEmpDist, Pth
+    Case Not IsPth(Dist), IsPthOfEmp(Dist): PushI SrcpSyOfExpgInstWoNonEmpDist, Pth
     End Select
 Next
 End Function
@@ -33,8 +33,8 @@ For Each I In Itr(Ay)
     Srcp = I
     Stamp "GenExpg: Begin"
     Stamp "GenExpg: Srcp " & Srcp
-    CrtDistFxa Srcp, Xls
-    BldFba Srcp, Acs
+    'CrtTblMth Srcp, Xls
+    'GenFba Srcp, Acs
     Stamp "GenExpg: End"
 Next
 QuitAcs Acs

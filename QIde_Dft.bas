@@ -4,32 +4,32 @@ Private Const CMod$ = "MIde_Dft."
 Private Const Asm$ = "QIde"
 Function DftMd(A As CodeModule) As CodeModule
 If IsNothing(A) Then
-   Set DftMd = CurMd
+   Set DftMd = CMd
 Else
    Set DftMd = A
 End If
 End Function
 
-Function DftPj(A As VBProject) As VBProject
-If IsNothing(A) Then
-   Set DftPj = CurPj
+Function DftPj(P As VBProject) As VBProject
+If IsNothing(P) Then
+   Set DftPj = CPj
 Else
-   Set DftPj = A
+   Set DftPj = P
 End If
 End Function
 
 
-Function SizPj&(A As VBProject)
+Function SizP&(P As VBProject)
 Dim O&, C As VBComponent
-For Each C In A.VBComponents
+For Each C In P.VBComponents
     O = O + SizMd(C.CodeModule)
 Next
-SizPj = O
+SizP = O
 End Function
-Function SiInPj&()
-SiInPj = SizPj(CurPj)
+Function SiP&()
+SiP = SizP(CPj)
 End Function
 
-Private Sub Z()
+Private Sub ZZ()
 MIde__Dft:
 End Sub

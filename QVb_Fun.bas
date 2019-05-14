@@ -9,14 +9,19 @@ X = OA
 OA = OB
 OB = X
 End Sub
-Function CurUsr$()
-CurUsr = Environ$("USERNAME")
+Function CUsr$()
+CUsr = Environ$("USERNAME")
 End Function
 Sub Asg(Fm, OTo)
 Select Case True
 Case IsObject(Fm): Set OTo = Fm
 Case Else: OTo = Fm
 End Select
+End Sub
+
+Sub AssBet(Fun$, V, FmV, ToV)
+If FmV > V Then Thw Fun, "FmV > V", "V FmV ToV", V, FmV, ToV
+If ToV < V Then Thw Fun, "ToV < V", "V FmV ToV", V, FmV, ToV
 End Sub
 
 Function InStrWiIthSubStr&(S, SubStr, Optional Ith% = 1)
@@ -151,6 +156,7 @@ End Sub
 Function Fmt(A) As String()
 Select Case True
 Case IsStr(A): Fmt = Sy(A)
+Case IsLinesAy(A): Fmt = FmtLinesAy(A)
 Case IsArray(A): Fmt = SyzAy(A)
 Case IsAset(A):  Fmt = CvAset(A).Sy
 Case IsDic(A): Fmt = FmtDic(CvDic(A), InclValTy:=True, AddIx:=True)
@@ -174,7 +180,7 @@ End With
 Set RegExp = O
 End Function
 
-Private Sub Z()
+Private Sub ZZ()
 Z_InStrN
 MVb___Fun:
 End Sub
@@ -188,7 +194,7 @@ SumLngAy = O
 End Function
 
 Private Sub Z_SumLngAy()
-Dim S$: S = LineszFt(PjfPj)
+Dim S$: S = LineszFt(PjfP)
 Debug.Assert SumLngAy(AscCntAy(S)) = Len(S)
 End Sub
 
@@ -207,25 +213,5 @@ End Function
 
 Function NBlk&(N&, BlkSz%)
 NBlk = ((N - 1) \ BlkSz) + 1
-End Function
-
-
-Function IndentedLy(IndentSrc$(), Key$) As String()
-Dim J%, I, L$, Fnd As Boolean, IsNewSection As Boolean, IsFstChrSpc As Boolean, FstA%, Hit As Boolean
-Const SpcAsc% = 32
-For Each I In IndentSrc
-    L = I
-    FstA = FstAsc(L)
-    IsNewSection = IsAscUCas(FstA)
-    If IsNewSection Then
-        Hit = T1(L) = Key
-    End If
-    IsFstChrSpc = FstA = SpcAsc
-    Select Case True
-    Case IsNewSection And Not Fnd And Hit: Fnd = True
-    Case IsNewSection And Fnd:             Exit Function
-    Case Fnd And IsFstChrSpc:              PushI IndentedLy, Trim(L)
-    End Select
-Next
 End Function
 

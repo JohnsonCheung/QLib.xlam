@@ -16,17 +16,6 @@ For Each I In Itr(Ay)
     If Not Re.Test(I) Then PushI AyeRe, I
 Next
 End Function
-Private Sub Z_AA()
-Dim Ay
-Ay = Array(1)
-Debug.Print VarPtr(Ay)
-Debug.Print VarPtr(AA(Ay))
-If Not IsEqVar(Ay, AA(Ay)) Then Stop
-End Sub
-
-Private Function AA(Ay)
-AA = Ay
-End Function
 
 Function AyeAtCnt(Ay, Optional At = 0, Optional Cnt = 1)
 If Cnt <= 0 Then Thw CSub, "Cnt cannot <=0", "At Cnt Ay", At, Cnt, Ay
@@ -68,8 +57,14 @@ AyeEle = AyeEleAt(Ay, IxzAy(Ay, Ele))
 End Function
 
 Function AyeFstNEle(Ay, Optional N& = 1)
-AyeFstNEle = AyeEleAt(Ay, , Cnt:=N)
+Dim O: O = Resi(Ay)
+Dim J&
+For J = N To UB(Ay)
+    Push O, Ay(J)
+Next
+AyeFstNEle = O
 End Function
+
 
 Function AyeEleAt(Ay, Optional At& = 0, Optional Cnt& = 1)
 AyeEleAt = AyeAtCnt(Ay, At, Cnt)
@@ -110,22 +105,22 @@ End If
 AyeEmpEleAtEnd = O
 End Function
 
-Function AyeFmTo(Ay, FmIx, ToIx)
+Function AyeFmTo(Ay, FmIx, EIx)
 Const CSub$ = CMod & "AyeFmTo"
 Dim U&
 U = UB(Ay)
-If 0 > FmIx Or FmIx > U Then Thw CSub, "[FmIx] is out of range", "U FmIx ToIx Ay", UB(Ay), FmIx, ToIx, Ay
-If FmIx > ToIx Or ToIx > U Then Thw CSub, "[ToIx] is out of range", "U FmIx ToIx Ay", UB(Ay), FmIx, ToIx, Ay
+If 0 > FmIx Or FmIx > U Then Thw CSub, "[FmIx] is out of range", "U FmIx EIx Ay", UB(Ay), FmIx, EIx, Ay
+If FmIx > EIx Or EIx > U Then Thw CSub, "[EIx] is out of range", "U FmIx EIx Ay", UB(Ay), FmIx, EIx, Ay
 Dim O
     O = Ay
     Dim I&, J&
     I = 0
-    For J = ToIx + 1 To U
+    For J = EIx + 1 To U
         O(FmIx + I) = O(J)
         I = I + 1
     Next
     Dim Cnt&
-    Cnt = ToIx - FmIx + 1
+    Cnt = EIx - FmIx + 1
     ReDim Preserve O(U - Cnt)
 AyeFmTo = O
 End Function
@@ -134,10 +129,9 @@ Function AyeFstEle(Ay)
 AyeFstEle = AyeEleAt(Ay)
 End Function
 
-Function AyeFTIx(Ay, B As FTIx)
+Function AyeFEIx(Ay, B As FEIx)
 With B
-    If .IsEmp Then AyeFTIx = Ay: Exit Function
-    AyeFTIx = AyeFmTo(Ay, .FmIx, .ToIx)
+    AyeFEIx = AyeFmTo(Ay, .FmIx, .EIx)
 End With
 End Function
 
@@ -150,16 +144,16 @@ Next
 AyeIxSet = O
 End Function
 
-Function AyeIxAy(Ay, IxAy)
-'IxAy holds index if Ay to be remove.  It has been sorted else will be stop
+Function AyeIxy(Ay, Ixy)
+'Ixy holds index if Ay to be remove.  It has been sorted else will be stop
 Ass IsSrtAy(Ay)
-Ass IsSrtAy(IxAy)
+Ass IsSrtAy(Ixy)
 Dim J&
 Dim O: O = Ay
-For J = UB(IxAy) To 0 Step -1
-    O = AyeEleAt(O, CLng(IxAy(J)))
+For J = UB(Ixy) To 0 Step -1
+    O = AyeEleAt(O, CLng(Ixy(J)))
 Next
-AyeIxAy = O
+AyeIxy = O
 End Function
 
 Function AyeLasEle(Ay)
@@ -182,19 +176,19 @@ End Function
 Function SyeLik(Sy$(), Lik$) As String()
 SyeLik = SyePred(Sy, PredzLik(Lik))
 End Function
-Function PredzLikAy(LikAy$()) As IPred
+Function PredzLikSy(LikSy$()) As IPred
 
 End Function
 Function SyePred(Sy$(), P As IPred) As String()
 Dim I
 For Each I In Itr(Sy)
     If Not P.Pred(I) Then
-        PushS SyePred, CStr(I)
+        PushI SyePred, CStr(I)
     End If
 Next
 End Function
-Function SyeLikAy(Sy$(), LikAy$()) As String()
-SyeLikAy = SyePred(Sy, PredzLikAy(LikAy))
+Function SyeLikSy(Sy$(), LikSy$()) As String()
+SyeLikSy = SyePred(Sy, PredzLikSy(LikSy))
 End Function
 
 Function SyeLikssAy(Sy$(), LikssAy$()) As String()
@@ -251,9 +245,9 @@ If Si(ExlT1Sy) = 0 Then SyeT1Sy = Sy: Exit Function
 SyeT1Sy = SyePred(Sy, PredzInT1Sy(ExlT1Sy))
 End Function
 
-Function PredzInT1Sy(T1Sy$()) As IPred
+Function PredzInT1Sy(T1Ay$()) As IPred
 Dim O As PredzInT1Sy
-O.Init T1Sy
+O.Init T1Ay
 Set PredzInT1Sy = O
 End Function
 
@@ -278,53 +272,53 @@ Ass Si(Act) = 4
 Ass Act(3) = 1
 End Sub
 
-Private Sub Z_AyeFTIx()
+Private Sub Z_AyeFEIx()
 Dim Ay
-Dim FTIx1 As FTIx
+Dim FEIx1 As FEIx
 Dim Act
 Ay = SplitSpc("a b c d e")
-Set FTIx1 = FTIx(1, 2)
-Act = AyeFTIx(Ay, FTIx1)
+FEIx1 = FEIx(1, 2)
+Act = AyeFEIx(Ay, FEIx1)
 Ass Si(Act) = 3
 Ass JnSpc(Act) = "a d e"
 End Sub
 
-Private Sub Z_AyeFTIx1()
+Private Sub Z_AyeFEIx1()
 Dim Ay
 Dim Act
 Ay = SplitSpc("a b c d e")
-Act = AyeFTIx(Ay, FTIx(1, 2))
+Act = AyeFEIx(Ay, FEIx(1, 2))
 Ass Si(Act) = 3
 Ass JnSpc(Act) = "a d e"
 End Sub
 
-Private Sub Z_AyeIxAy()
-Dim Ay(), IxAy
+Private Sub Z_AyeIxy()
+Dim Ay(), Ixy
 Ay = Array("a", "b", "c", "d", "e", "f")
-IxAy = Array(1, 3)
+Ixy = Array(1, 3)
 Ept = Array("a", "c", "e", "f")
 GoSub Tst
 Exit Sub
 Tst:
-    Act = AyeIxAy(Ay, IxAy)
+    Act = AyeIxy(Ay, Ixy)
     C
     Return
 End Sub
 
-Private Sub Z()
+Private Sub ZZ()
 Z_AyeAtCnt
 Z_AyeEmpEleAtEnd
-Z_AyeFTIx
-Z_AyeFTIx1
-Z_AyeIxAy
+Z_AyeFEIx
+Z_AyeFEIx1
+Z_AyeIxy
 MVb_AySub_Exl:
 End Sub
 
-Function SyRmvBlank(Ay$()) As String()
+Function RmvBlankzAy(Ay) As String()
 Dim I
 For Each I In Itr(Ay)
     If Trim(I) <> "" Then
-        PushI SyRmvBlank, I
+        PushI RmvBlankzAy, I
     End If
 Next
 End Function

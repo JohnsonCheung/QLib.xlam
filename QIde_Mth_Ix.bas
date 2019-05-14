@@ -2,7 +2,7 @@ Attribute VB_Name = "QIde_Mth_Ix"
 Option Explicit
 Private Const CMod$ = "MIde_Mth_Ix."
 Private Const Asm$ = "QIde"
-Private Sub Z_MthIxAy()
+Private Sub Z_MthIxy()
 Dim Ix, Src$()
 Src = CurSrc
 For Each Ix In MthIxItr(Src)
@@ -12,7 +12,7 @@ For Each Ix In MthIxItr(Src)
 Next
 End Sub
 Function MthIxItr(Src$(), Optional WhStr$)
-Asg Itr(MthIxAy(Src, WhStr)), MthIxItr
+Asg Itr(MthIxy(Src, WhStr)), MthIxItr
 End Function
 
 Function EndLinIx&(Src$(), EndLinItm$, FmIx)
@@ -25,135 +25,135 @@ For O = FmIx + 1 To UB(Src)
 Next
 Thw CSub, "Cannot find EndLin", "EndLin FmIx Src", C, FmIx, Src
 End Function
-Function MthIx&(Src$(), MthNm)
-Dim Ix
-For Ix = 0 To UB(Src)
-    If IsMthLinzNm(Src(Ix), MthNm) Then
-        MthIx = Ix
-        Exit Function
-    End If
-Next
-MthIx = -1
-End Function
 
-Function MthIxAy(Src$(), Optional WhStr$) As Long()
+Function MthIxy(Src$(), Optional WhStr$) As Long()
 Dim Ix
 If WhStr = "" Then
     For Ix = 0 To UB(Src)
         If IsMthLin(Src(Ix)) Then
-            PushI MthIxAy, Ix
+            PushI MthIxy, Ix
         End If
     Next
 Else
     Dim B As WhMth: Set B = WhMthzStr(WhStr)
     For Ix = 0 To UB(Src)
         If HitMthLin(Src(Ix), B) Then
-            PushI MthIxAy, Ix
+            PushI MthIxy, Ix
         End If
     Next
 End If
 End Function
-Function MthIxzSrcNmTy(Src$(), MthNm, ShtMthTy$) As LngOpt
+Function FstMthIxzSN&(Src$(), Mthn)
 Dim Ix&
 For Ix = 0 To UB(Src)
-    With MthNm3(Src(Ix))
-        If .Nm = MthNm Then
+    With Mthn3(Src(Ix))
+        If .Nm = Mthn Then
+            FstMthIxzSN = Ix
+            Exit Function
+        End If
+    End With
+Next
+FstMthIxzSN = -1
+End Function
+
+Function MthIxyzMN(A As CodeModule, Mthn) As Long()
+MthIxyzMN = MthIxyzSN(Src(A), Mthn)
+End Function
+
+Function MthIxzMTN&(A As CodeModule, ShtMthTy$, Mthn)
+MthIxzMTN = MthIxzSTN(Src(A), ShtMthTy, Mthn)
+End Function
+
+Function MthIxzSTN&(Src$(), ShtMthTy$, Mthn)
+Dim Ix&
+For Ix = 0 To UB(Src)
+    With Mthn3(Src(Ix))
+        If .Nm = Mthn Then
             If .ShtTy = ShtMthTy Then
-                MthIxzSrcNmTy = SomLng(CLng(Ix))
+                MthIxzSTN = Ix
                 Exit Function
             End If
         End If
     End With
 Next
-Stop
+MthIxzSTN = -1
 End Function
 
-Function MthIxAyzNm(Src$(), MthNm$) As Long()
+Function MthIxyzSN(Src$(), Mthn) As Long()
 Dim Ix&
-Ix = MthIxzFst(Src, MthNm)
+Ix = FstMthIx(Src, Mthn)
 If Ix = -1 Then Exit Function
-PushI MthIxAyzNm, Ix
+PushI MthIxyzSN, Ix
 If IsPrpLin(Src(Ix)) Then
-    Ix = MthIxzFst(Src, MthNm, Ix + 1)
-    If Ix > 0 Then Push MthIxAyzNm, Ix
+    Ix = FstMthIx(Src, Mthn, Ix + 1)
+    If Ix > 0 Then PushI MthIxyzSN, Ix
 End If
 End Function
 
-Function MthIxzFst&(Src$(), MthNm, Optional SrcFmIx& = 0)
+Function FstMthIx&(Src$(), Mthn, Optional SrcFmIx& = 0)
 Dim I
 For I = SrcFmIx To UB(Src)
-    If MthNmzLin(Src(I)) = MthNm Then
-        MthIxzFst = I
+    If MthnzLin(Src(I)) = Mthn Then
+        FstMthIx = I
         Exit Function
     End If
-Next
-MthIxzFst = -1
-End Function
-
-Function MthToIxAy(Src$(), FmIxAy&()) As Long()
-Dim Ix
-For Each Ix In Itr(FmIxAy)
-    PushI MthToIxAy, MthToIx(Src, Ix)
-Next
-End Function
-
-Function MthToIx&(Src$(), MthIx)
-MthToIx = EndLinIx(Src, MthKd(Src(MthIx)), MthIx)
-End Function
-
-Function FstMthLnozMd&(Md As CodeModule)
-Dim J&
-For J = 1 To Md.CountOfLines
-   If IsMthLin(Md.Lines(J, 1)) Then
-       FstMthLnozMd = J
-       Exit Function
-   End If
-Next
-End Function
-
-Function FstMthIx&(Src$())
-Dim J&
-For J = 0 To UB(Src)
-   If IsMthLin(Src(J)) Then
-       FstMthIx = J
-       Exit Function
-   End If
 Next
 FstMthIx = -1
 End Function
 
-Function MthLnoMdMth&(A As CodeModule, MthNm$)
-MthLnoMdMth = 1 + MthIxzFst(Src(A), MthNm, 0)
+Function MthEIxy(Src$(), FmIxy&()) As Long()
+Dim Ix
+For Each Ix In Itr(FmIxy)
+    PushI MthEIxy, MthEIx(Src, Ix)
+Next
+End Function
+Function MthIxzSIW&(Src$(), MthIx, WiTopRmk As Boolean)
+If WiTopRmk Then
+    MthIxzSIW = TopRmkIx(Src, MthIx)
+Else
+    MthIxzSIW = MthIx
+End If
 End Function
 
-Function MthLnoAyMdMth(A As CodeModule, MthNm$) As Long()
-MthLnoAyMdMth = AyIncEle1(MthIxAyzNm(Src(A), MthNm))
+Function MthFEIxzSIW(Src$(), MthIx, Optional WiTopRmk As Boolean) As FEIx
+MthFEIxzSIW = FEIx(MthIxzSIW(Src, MthIx, WiTopRmk), MthEIx(Src, MthIx))
 End Function
 
-Private Sub Z()
+Function MthEIx&(Src$(), MthIx)
+MthEIx = EndLinIx(Src, MthKd(Src(MthIx)), MthIx)
+End Function
+
+Function FstMthLnozM&(Md As CodeModule)
+Dim J&
+For J = 1 To Md.CountOfLines
+   If IsMthLin(Md.Lines(J, 1)) Then
+       FstMthLnozM = J
+       Exit Function
+   End If
+Next
+End Function
+
+Function FstMthIxzS&(Src$())
+Dim J&
+For J = 0 To UB(Src)
+   If IsMthLin(Src(J)) Then
+       FstMthIxzS = J
+       Exit Function
+   End If
+Next
+FstMthIxzS = -1
+End Function
+
+Function MthLnoMdMth&(A As CodeModule, Mthn)
+MthLnoMdMth = 1 + FstMthIx(Src(A), Mthn, 0)
+End Function
+
+Function MthLnoAyzMN(A As CodeModule, Mthn) As Long()
+MthLnoAyzMN = AyIncEle1(MthIxyzSN(Src(A), Mthn))
+End Function
+
+Private Sub ZZZ()
 MIde_Mth_Ix:
 End Sub
 
-Function MthRgAy(Src$()) As MthRg()
-If Si(Src) = 0 Then Exit Function
-Dim F&(), T&(), N$()
-F = MthIxAy(Src)
-N = MthNyzSrcFm(Src, F)
-T = MthToIxAy(Src, F)
-Dim S&
-S = Si(F)
-If S = 0 Then Exit Function
-Dim O() As MthRg
-ReDim O(S - 1)
-Dim J&
-For J = 0 To S - 1
-    Set O(J) = New MthRg
-    With O(J)
-        .MthNm = N(J)
-        .FmIx = F(J)
-        .ToIx = T(J)
-    End With
-Next
-MthRgAy = O
-End Function
 

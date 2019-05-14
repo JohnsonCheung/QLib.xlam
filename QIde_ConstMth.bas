@@ -5,12 +5,12 @@ Private Const Asm$ = "QIde"
 Public Const DoczQNm$ = "newtype AOptDotNm.  "
 Public Const DoczAOptDotNm$ = "type Nm | ADotNm."
 Sub EdtConst(CnstQNm$)
-EdtStr CnstBrk(CnstQNm), FtzCnstQNm(CnstQNm)
+'EdtStr CnstBrk(CnstQNm), FtzCnstQNm(CnstQNm)
 End Sub
 
 Sub UpdConst(CnstQNm$, Optional IsPub As Boolean)
 With MdMth(CnstQNm)
-    RplMthByDicInMd .Md, .MthNm, ConstPrpLines(CnstQNm, IsPub)
+    RplMthzMNL .Md, .Mthn, ConstPrpLines(CnstQNm, IsPub)
 End With
 End Sub
 

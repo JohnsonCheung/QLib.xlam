@@ -22,30 +22,30 @@ End Sub
 
 Private Function FmtCmpDic(A, Optional OIx% = -1, Optional OSam% = -1, Optional InclSam As Boolean) As String()
 'DupMthFNyGp is Variant/String()-of-MthFNm with all mth-nm is same
-'MthFNm is MthNm in FNm-fmt
+'MthFNm is Mthn in FNm-fmt
 '          Mth is Prp/Sub/Fun in Md-or-Cls
 '          FNm-fmt which is 'Nm:Pj.Md'
-'DupMthFNm is 2 or more MthFNy with same MthNm
+'DupMthFNm is 2 or more MthFNy with same Mthn
 'Ass DupMthFNyGp_IsVdt(A)
 Dim J%, I%
 Dim LinesAy$()
 Dim UniqLinesAy$()
 '    LinesAy = SyzMapAy(A, "FunFNm_MthLines")
     UniqLinesAy = AywDist(LinesAy)
-Dim MthNm$: MthNm = Brk(A(0), ":").S1
-Dim Hdr$(): Hdr = FmtCmpDic__1Hdr(OIx, MthNm, Si(A))
+Dim Mthn: Mthn = Brk(A(0), ":").S1
+Dim Hdr$(): Hdr = FmtCmpDic__1Hdr(OIx, Mthn, Si(A))
 Dim Sam$(): Sam = FmtCmpDic__2Sam(InclSam, OSam, A, LinesAy)
 Dim Syn$(): Syn = FmtCmpDic__3Syn(UniqLinesAy, LinesAy, A)
 Dim Cmp$(): Cmp = FmtCmpDic__4Cmp(UniqLinesAy, LinesAy, A)
 FmtCmpDic = AddAyAp(Hdr, Sam, Syn, Cmp)
 End Function
 
-Private Function FmtCmpDic__1Hdr(OIx%, MthNm$, Cnt%) As String()
+Private Function FmtCmpDic__1Hdr(OIx%, Mthn, Cnt%) As String()
 Dim O$(1)
 O(0) = "================================================================"
 Dim A$
     If OIx >= 0 Then A = FmtQQ("#DupMthNo(?) ", OIx): OIx = OIx + 1
-O(1) = A + FmtQQ("DupMthNm(?) Cnt(?)", MthNm, Cnt)
+O(1) = A + FmtQQ("DupMthn(?) Cnt(?)", Mthn, Cnt)
 FmtCmpDic__1Hdr = O
 End Function
 
@@ -118,10 +118,10 @@ Nxt:
 'FmtCmpDic__4Cmp = SplitCrLfAyPad(L2)
 End Function
 
-Function MthNmCmpFmt(A, Optional InclSam As Boolean) As String()
-Dim N$(): ' N = MthNm_DupMthFNy(A)
+Function MthnCmpFmt(A, Optional InclSam As Boolean) As String()
+Dim N$(): ' N = Mthn_DupMthFNy(A)
 If Si(N) > 1 Then
-    MthNmCmpFmt = FmtCmpDic(N, InclSam:=InclSam)
+    MthnCmpFmt = FmtCmpDic(N, InclSam:=InclSam)
 End If
 End Function
 
@@ -129,9 +129,9 @@ End Function
 Function VbeDupMthCmpLy(A As Vbe, B As WhPjMth, Optional InclSam As Boolean) As String()
 Stop
 Dim N$(): 'N = VbeDupMthFNm(A, B)
-Dim Ay(): 'Ay = DupMthFNy_GpAy(N)
+Dim Ay(): 'Ay = DupMthFNy_Blk(N)
 Dim O$(), J%
-'Push O, FmtQQ("Total ? dup function.  ? of them has mth-lines are same", Si(Ay), DupMthFNyGpAyAllSameCnt(Ay))
+'Push O, FmtQQ("Total ? dup function.  ? of them has mth-lines are same", Si(Ay), DupMthFNyBlkAllSameCnt(Ay))
 Dim Cnt%, Sam%
 For J = 0 To UB(Ay)
     PushAy O, FmtCmpDic(Ay(J), Cnt, Sam, InclSam:=InclSam)
@@ -140,10 +140,10 @@ VbeDupMthCmpLy = O
 End Function
 
 Private Sub ZZ_VbeDupMthCmpLy()
-'Brw VbeDupMthCmpLy(CurVbe, WhEmpPjMth)
+'Brw VbeDupMthCmpLy(CVbe, WhEmpPjMth)
 End Sub
 
-Private Sub Z()
+Private Sub ZZ()
 Z_FunCmp
 MIde_Mth_Dup_Compare:
 End Sub

@@ -4,18 +4,18 @@ Private Const CMod$ = "MIde_Mth_PurePrp."
 Private Const Asm$ = "QIde"
 
 Sub ImPurePrpPjBrw()
-Brw ImpPurePrpLyInPj
+Brw ImpPurePrpLyP
 End Sub
 
-Function ImpPurePrpLyInPj() As String()
-ImpPurePrpLyInPj = ImPurePrpLyzPj(CurPj)
+Function ImpPurePrpLyP() As String()
+ImpPurePrpLyP = ImPurePrpLyzP(CPj)
 End Function
 
-Function ImPurePrpLyzPj(A As VBProject) As String()
-If IsProtect(A) Then Exit Function
+Function ImPurePrpLyzP(P As VBProject) As String()
+If IsProtect(P) Then Exit Function
 Dim C As VBComponent
-For Each C In A.VBComponents
-    PushIAy ImPurePrpLyzPj, ImPurePrpLyzMd(C.CodeModule)
+For Each C In P.VBComponents
+    PushIAy ImPurePrpLyzP, ImPurePrpLyzMd(C.CodeModule)
 Next
 End Function
 
@@ -24,12 +24,12 @@ ImPurePrpLyzMd = ImPurePrpLyzSrc(Src(A))
 End Function
 
 Private Sub Z_ImPurePrpLyzSrc()
-Brw ImPurePrpLyzSrc(SrczMdNm("MXls_Lo_LofVbl"))
+Brw ImPurePrpLyzSrc(SrczMdn("MXls_Lo_LofVbl"))
 End Sub
 
 Function ImPurePrpLyzSrc(Src$()) As String()
 Dim L$, I, M$(), S As New Aset
-M = MthLinSyzSrc(Src)
+M = MthLinyzSrc(Src)
 Set S = LetSetPrpNset(M)
 For Each I In Itr(M)
     L = I
@@ -39,32 +39,32 @@ For Each I In Itr(M)
 Next
 End Function
 
-Property Get PurePrpLyInPj() As String()
-PurePrpLyInPj = PurePrpLyzPj(CurPj)
+Property Get PurePrpLyP() As String()
+PurePrpLyP = PurePrpLyzP(CPj)
 End Property
 
-Function PurePrpLyzPj(A As VBProject) As String()
+Function PurePrpLyzP(P As VBProject) As String()
 Dim L$, I
-For Each I In Itr(MthLinSyzPj(A))
+For Each I In Itr(MthLinyzP(P))
     L = I
-    If IsPurePrpLin(L) Then PushI PurePrpLyzPj, L
+    If IsPurePrpLin(L) Then PushI PurePrpLyzP, L
 Next
 End Function
 
-Function PurePrpLyAyzPj(A As VBProject) As Variant()
+Function PurePrpLyAyzP(P As VBProject) As Variant()
 Dim Ly, C As VBComponent
-For Each C In A.VBComponents
+For Each C In P.VBComponents
     For Each Ly In Itr(PurePrpLyAyzMd(C.Codmodule))
-        PushI PurePrpLyAyzPj, Ly
+        PushI PurePrpLyAyzP, Ly
     Next
 Next
 End Function
 
-Function IxAyzPurePrp(Src$()) As Long()
+Function IxyzPurePrp(Src$()) As Long()
 Dim Ix&
 For Ix = 0 To UB(Src)
     If IsPurePrpLin(Src(Ix)) Then
-        Push IxAyzPurePrp, Ix
+        Push IxyzPurePrp, Ix
     End If
 Next
 End Function
@@ -75,22 +75,22 @@ End Function
 
 Function PurePrpLyAyzSrc(Src$()) As Variant()
 Dim Ix&, I
-For Each I In Itr(IxAyzPurePrp(Src))
+For Each I In Itr(IxyzPurePrp(Src))
     Ix = I
-    PushI PurePrpLyAyzSrc, MthLyBySrcFm(Src, Ix)
+'    PushI PurePrpLyAyzSrc, MthLyBySrcFm(Src, Ix)
 Next
 End Function
 Function PurePrpNy(A As CodeModule) As String()
 Dim O$(), Lno
-For Each Lno In Itr(IxAyzPurePrp(Src(A)))
+For Each Lno In Itr(IxyzPurePrp(Src(A)))
     PushNoDup O, PrpNm(A.Lines(Lno, 1))
 Next
 PurePrpNy = O
 End Function
 
-Function LetSetPrpNset(MthLinSy$()) As Aset
+Function LetSetPrpNset(MthLiny$()) As Aset
 Dim O As New Aset, N$, L$, I
-For Each I In Itr(MthLinSy)
+For Each I In Itr(MthLiny)
     L = I
     N = LetSetPrpNm(L)
     'If HasPfx(L, "Property Let") Then Stop
@@ -99,21 +99,21 @@ Next
 Set LetSetPrpNset = O
 End Function
 
-Private Function LetSetPrpNm$(Lin$)
-With MthNm3(Lin)
+Private Function LetSetPrpNm$(Lin)
+With Mthn3(Lin)
     Select Case .ShtTy
     Case "Set", "Let": LetSetPrpNm = .Nm: Exit Function
     End Select
 End With
 End Function
-Function IsImPurePrpLin(Lin$, LetSetPrpNset As Aset) As Boolean
+Function IsImPurePrpLin(Lin, LetSetPrpNset As Aset) As Boolean
 If Not MthTy(Lin) = "Property Get" Then Exit Function
 Stop
 If Not HasMthPm(Lin) Then Exit Function
-IsImPurePrpLin = Not LetSetPrpNset.Has(MthNm(Lin))
+IsImPurePrpLin = Not LetSetPrpNset.Has(Mthn(Lin))
 End Function
 
-Function IsPurePrpLin(Lin$) As Boolean
+Function IsPurePrpLin(Lin) As Boolean
 Dim O As Boolean
 Select Case MthTy(Lin)
 Case "Property Get":  O = Not HasMthPm(Lin)
@@ -121,7 +121,7 @@ End Select
 IsPurePrpLin = O
 End Function
 
-Function HasMthPm(MthLin$) As Boolean
+Function HasMthPm(MthLin) As Boolean
 HasMthPm = MthPm(MthLin) <> ""
 End Function
 

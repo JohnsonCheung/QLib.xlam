@@ -47,8 +47,8 @@ Dim Ly1$(), Ly2$()
     Ly1 = SplitCrLf(Lines1)
     Ly2 = SplitCrLf(Lines2)
     ResiMax Ly1, Ly2
-    Ly1 = AlignLzSy(Ly1, W1)
-    Ly2 = AlignLzSy(Ly2, W2)
+    Ly1 = AlignLzAy(Ly1, W1)
+    Ly2 = AlignLzAy(Ly2, W2)
 Dim J%, O$()
 For J = 0 To UB(Ly1)
     PushI O, "| " & Ly1(J) & " | " & Ly2(J) & " |"
@@ -56,7 +56,7 @@ Next
 LyzS1S2 = O
 End Function
 
-Private Function LyzS1S2s(A As S1S2s, W1%, W2%, S1S2sHasLines As Boolean, SepLin$) As String()
+Private Function LyzS1S2s(A As S1S2s, W1%, W2%, S1S2sHasLines As Boolean, SepLin) As String()
 If S1S2sHasLines Then
     Dim J&
     For J = 0 To A.N - 1
@@ -76,7 +76,7 @@ End Function
 Function LinzDrvW$(Drv, WdtAy%())
 Dim O$(), J%
 For J = 0 To UB(Drv)
-    PushI O, AlignL(CStr(Drv(J)), WdtAy(J))
+    PushI O, AlignL(Drv(J), WdtAy(J))
 Next
 For J = UB(Drv) + 1 To UB(WdtAy)
     PushI O, Space(WdtAy(J))
@@ -130,6 +130,6 @@ Tst:
     Return
 End Sub
 
-Private Sub Z()
+Private Sub ZZ()
 Z_FmtS1S2s
 End Sub

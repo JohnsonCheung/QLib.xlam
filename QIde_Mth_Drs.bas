@@ -3,18 +3,18 @@ Option Explicit
 Private Const CMod$ = "MIde_Mth_Drs."
 Private Const Asm$ = "QIde"
 
-Function MthDrszFb(Fb$, Optional WhStr$) As Drs
-MthDrszFb = MthDrszVbe(VbezPjf(Fb$), WhStr)
+Function MthDrszFb(Fb, Optional WhStr$) As Drs
+MthDrszFb = MthDrszV(VbezPjf(Fb), WhStr)
 ClsPjf Fb
 End Function
 
 Function MthDrsInVbe(Optional WhStr$) As Drs
-MthDrsInVbe = MthDrszVbe(CurVbe, WhStr)
+MthDrsInVbe = MthDrszV(CVbe, WhStr)
 End Function
 
 Function MthDrszFxa(Fxa$, Optional WhStr$, Optional Xls As Excel.Application) As Drs
 Dim A As Excel.Application: Set A = DftXls(Xls)
-MthDrszFxa = MthDrszPj(PjzFxa(Fxa, A), WhStr)
+MthDrszFxa = MthDrszP(PjzFxa(Fxa), WhStr)
 If IsNothing(Xls) Then QuitXls Xls
 End Function
 
@@ -22,12 +22,12 @@ Function MthDrszMd(A As CodeModule, Optional WhStr$) As Drs
 MthDrszMd = Drs(MthFny, MthDryzMd(A, WhStr))
 End Function
 
-Function MthDrszPj(A As VBProject, Optional WhStr$) As Drs
+Function MthDrszP(P As VBProject, Optional WhStr$) As Drs
 Dim O As Drs
-O = Drs(MthFny, MthDryzPj(A, WhStr))
+O = Drs(MthFny, MthDryzP(P, WhStr))
 O = AddColzValIdzCntzDrs(O, "Lines", "Pj")
 O = AddColzValIdzCntzDrs(O, "Nm", "PjMth")
-MthDrszPj = O
+MthDrszP = O
 End Function
 
 Function MthDrszPjf(Pjf$, Optional WhStr$) As Drs
@@ -40,7 +40,7 @@ Case IsFb(Pjf):  PjDte = PjDtezAcs(CvAcs(App))
 Case IsFxa(Pjf): PjDte = DtezFfn(Pjf)
 Case Else: Stop
 End Select
-MthDrszPjf = DrsAddCol(MthDrszPj(P), "PjDte", PjDte)
+MthDrszPjf = DrsAddCol(MthDrszP(P), "PjDte", PjDte)
 If IsFb(Pjf) Then
     CvAcs(App).CloseCurrentDatabase
 End If
@@ -53,70 +53,70 @@ End Function
 Function MthDrszPjfSy(PjfSy$(), Optional WhStr$) As Drs
 Dim I
 For Each I In PjfSy
-    MgeDrs MthDrszPjfSy, MthDrszPjf(CStr(I), WhStr)
+    ApdDrs MthDrszPjfSy, MthDrszPjf(CStr(I), WhStr)
 Next
 End Function
 
-Function MthDrszVbe(A As Vbe, Optional WhStr$) As Drs
-MthDrszVbe = Drs(MthFny, MthDryzVbe(A, WhStr))
+Function MthDrszV(A As Vbe, Optional WhStr$) As Drs
+MthDrszV = Drs(MthFny, MthDryzV(A, WhStr))
 End Function
 
 Function MthDryzMd(A As CodeModule, Optional WhStr$) As Variant()
 Dim P$, T$, M$
-P = PjNmzMd(A)
+P = PjnzM(A)
 T = ShtCmpTyzMd(A)
-M = MdNm(A)
+M = Mdn(A)
 MthDryzMd = DryInsColzV3(MthDryzSrc(Src(A), WhStr), P, T, M)
 End Function
 
-Function MthDryzPj(A As VBProject, Optional WhStr$) As Variant()
+Function MthDryzP(P As VBProject, Optional WhStr$) As Variant()
 Dim M
-For Each M In MdItr(A, WhStr)
-    PushIAy MthDryzPj, MthDryzMd(CvMd(M), WhStr)
+For Each M In MdItr(P, WhStr)
+    PushIAy MthDryzP, MthDryzMd(CvMd(M), WhStr)
 Next
 End Function
 
 Function MthDryzSrc(Src$(), Optional WhStr$) As Variant()
 Dim MthLin
-For Each MthLin In Itr(MthLinSyzSrc(Src, WhStr))
-    PushI MthDryzSrc, MthLinDr(CStr(MthLin))
+For Each MthLin In Itr(MthLinyzSrc(Src, WhStr))
+    PushI MthDryzSrc, DrOfMthLin(CStr(MthLin))
 Next
 End Function
 
-Function MthDryzVbe(A As Vbe, Optional WhStr$) As Variant()
+Function MthDryzV(A As Vbe, Optional WhStr$) As Variant()
 Dim P
 For Each P In PjItr(A, WhStr)
-    PushIAy MthDryzVbe, MthDryzPj(CvPj(P), WhStr)
+    PushIAy MthDryzV, MthDryzP(CvPj(P), WhStr)
 Next
 End Function
 
 Function MthInfAy_Md(A As CodeModule) As MthInf()
-'MthInfAy_Md = MthInfAy_Src(PjNmMth(A), MdNm(A), CurSrc(A))
+'MthInfAy_Md = MthInfAy_Src(PjnMth(A), Mdn(A), CurSrc(A))
 End Function
 
-Function MthInfAy_MdzPjSrc(PjNm$, MdNm$, Src$()) As MthInf()
-Dim Ix&():  Ix = MthIxAy(Src)
+Function MthInfAy_MdzPjSrc(Pjn$, Mdn, Src$()) As MthInf()
+Dim Ix&():  Ix = MthIxy(Src)
 Dim I
 For Each I In Itr(Ix)
-    PushObj MthInfAy_MdzPjSrc, MthInfMdzPjSrcFm(PjNm, MdNm, Src, I)
+    PushObj MthInfAy_MdzPjSrc, MthInfMdzPjSrcFm(Pjn, Mdn, Src, CLng(I))
 Next
 End Function
 
-Function MthInfAy_Pj(A As VBProject) As MthInf()
+Function MthInfAy_Pj(P As VBProject) As MthInf()
 Dim C As VBComponent
-For Each C In A.VBComponents
+For Each C In P.VBComponents
     PushObjAy MthInfAy_Pj, MthInfAy_Md(C.CodeModule)
 Next
 End Function
 
-Function MthInfAyzVbe(A As Vbe) As MthInf()
+Function MthInfAyzV(A As Vbe) As MthInf()
 Dim P As VBProject
 For Each P In A.VBProjects
-    PushObjAy MthInfAyzVbe, MthInfAy_Pj(P)
+    PushObjAy MthInfAyzV, MthInfAy_Pj(P)
 Next
 End Function
 
-Function MthInfMdzPjSrcFm(PjNm$, MdNm$, Src$(), FmIx) As MthInf
+Function MthInfMdzPjSrcFm(Pjn$, Mdn, Src$(), FmIx&) As MthInf
 Dim O As New MthInf, L$
 O.MthLin = ContLin(Src, FmIx)
 L = Src(FmIx)
@@ -125,26 +125,26 @@ O.ShtKd = ShtMthKd(ShfMthTy(L))
 Set MthInfMdzPjSrcFm = O
 End Function
 
-Function MthInfSrcFm(Src$(), MthFmIx&) As Variant()
-Dim L$, Lines$, TopRmk$, Lno&, Cnt%
-'    L = ContLin(A, MthFmIx)
-    Lno = MthFmIx + 1
-'    Lines = MthLinesBySrcNm(A, MthFmIx)
+Function DrOfMthzSI(Src$(), MthIx) As Variant()
+Dim L$, Lines$, Rmk$(), Lno, Cnt%
+    L = ContLin(Src, MthIx)
+    Lno = MthIx + 1
+    Lines = MthLineszSIW(Src, MthIx)
     Cnt = LinCnt(Lines)
-    TopRmk = MthTopRmkIx(Src, MthFmIx)
-Dim Dr(): ' Dr = MthLinDr_Lin(L): If Si(Dr) = 0 Then Stop
-MthInfSrcFm = AddAy(Dr, Array(Lno, Cnt, Lines, TopRmk))
+    Rmk = TopRmkLy(Src, MthIx)
+Dim Dr():  Dr = DrOfMthLin(L): If Si(Dr) = 0 Then Stop
+DrOfMthzSI = AddAy(Dr, Array(Lno, Cnt, Lines, Rmk))
 End Function
 
-Function MthLinDr(MthLin$, Optional B As WhMth) As Variant()
+Function DrOfMthLin(MthLin, Optional B As WhMth) As Variant()
 If Not HitMthLin(MthLin, B) Then Exit Function
 Dim X As MthLinRec
 X = MthLinRec(MthLin)
 With X
-MthLinDr = Array(.ShtMdy, .ShtTy, .Nm, .ShtRetTy, FmtPm(.Pm, IsNoBkt:=True), .Rmk)
+DrOfMthLin = Array(.ShtMdy, .ShtTy, .Nm, .ShtRetTy, FmtPm(.Pm, IsNoBkt:=True), .Rmk)
 End With
 End Function
-Function MthDr(Src$(), MthLin$, MthFmIx&, Optional B As WhMth) As Variant()
+Function MthDr(Src$(), MthLin, MthIx, Optional B As WhMth) As Variant()
 If Not HitMthLin(MthLin, B) Then Exit Function
 Dim X As MthLinRec
 X = MthLinRec(MthLin)
@@ -153,39 +153,39 @@ MthDr = Array(.ShtMdy, .ShtTy, .Nm, .ShtRetTy, FmtPm(.Pm, IsNoBkt:=True), .Rmk)
 End With
 End Function
 
-Function MthLinDrsInPj(Optional WhStr$) As Drs
-MthLinDrsInPj = MthLinDrszPj(CurPj, WhStr)
+Function DrOfMthLinsP(Optional WhStr$) As Drs
+DrOfMthLinsP = DrOfMthLinszP(CPj, WhStr)
 End Function
 
-Function MthLinDrszPj(A As VBProject, Optional WhStr$) As Drs
-MthLinDrszPj = Drs(MthLinFny, MthLinDryzPj(CurPj, WhStr))
+Function DrOfMthLinszP(P As VBProject, Optional WhStr$) As Drs
+DrOfMthLinszP = Drs(MthLinFny, DryOfMthLinzP(CPj, WhStr))
 End Function
 
-Function MthLinDryzMd(A As CodeModule, Optional WhStr$) As Variant()
+Function DryOfMthLinzM(A As CodeModule, Optional WhStr$) As Variant()
 Dim P$, T$, M$
-P = PjNmzMd(A)
+P = PjnzM(A)
 T = ShtCmpTyzMd(A)
-M = MdNm(A)
-MthLinDryzMd = DryInsColzV3(MthLinDryzSrc(Src(A)), P, T, M)
+M = Mdn(A)
+DryOfMthLinzM = DryInsColzV3(DryOfMthLinzS(Src(A)), P, T, M)
 End Function
 
-Function MthLinDryzPj(A As VBProject, Optional WhStr$) As Variant()
+Function DryOfMthLinzP(P As VBProject, Optional WhStr$) As Variant()
 Dim M
-For Each M In MdItr(A, WhStr)
-    PushAy MthLinDryzPj, MthLinDryzMd(CvMd(M), WhStr)
+For Each M In MdItr(P, WhStr)
+    PushAy DryOfMthLinzP, DryOfMthLinzM(CvMd(M), WhStr)
 Next
 End Function
 
-Function MthLinDryzSrc(Src$(), Optional WhStr$) As Variant()
+Function DryOfMthLinzS(Src$(), Optional WhStr$) As Variant()
 Dim MthLin, W As WhMth
 Set W = WhMthzStr(WhStr)
-For Each MthLin In Itr(MthLinSyzSrc(Src))
-    PushISomSi MthLinDryzSrc, MthLinDr(CStr(MthLin), W)
+For Each MthLin In Itr(MthLinyzSrc(Src))
+    PushISomSi DryOfMthLinzS, DrOfMthLin(CStr(MthLin), W)
 Next
 End Function
 
 Function MthWb(Optional WhStr$) As Workbook
-Set MthWb = WbVis(MthWbPjfSy(PjfSy, WhStr))
+Set MthWb = ShwWb(MthWbPjfSy(PjfSy, WhStr))
 End Function
 
 Function MthWbFmt(A As Workbook) As Workbook
@@ -238,11 +238,11 @@ Set MthWbPjfSy = MthWbFmt(WbzWs(MthWszPjfSy(PjfSy, WhStr)))
 End Function
 
 Function MthWsInVbe(Optional WhStr$) As Worksheet
-Set MthWsInVbe = MthWszVbe(CurVbe, WhStr)
+Set MthWsInVbe = MthWszV(CVbe, WhStr)
 End Function
 
-Function MthWszPj(A As VBProject, Optional WhStr$, Optional Vis As Boolean) As Worksheet
-Set MthWszPj = SetVisOfWs(WszDrs(MthDrszPj(A, WhStr)), Vis)
+Function MthWszP(P As VBProject, Optional WhStr$, Optional Vis As Boolean) As Worksheet
+Set MthWszP = SetVisOfWs(WszDrs(MthDrszP(P, WhStr)), Vis)
 End Function
 
 Function MthWszPjfSy(PjfSy$(), Optional WhStr$) As Worksheet
@@ -256,38 +256,38 @@ SetWsCdNmAndLoNm Ws, "MthFull"
 Set MthWszPjfSy = Ws
 End Function
 
-Function MthWszVbe(A As Vbe, Optional WhStr$) As Worksheet
-Set MthWszVbe = WszDrs(MthDrszVbe(A, WhStr))
+Function MthWszV(A As Vbe, Optional WhStr$) As Worksheet
+Set MthWszV = WszDrs(MthDrszV(A, WhStr))
 End Function
 
-Function PjNmMth$(A As CodeModule)
-PjNmMth = A.Parent.Collection.Parent.Name
+Function PjnMth$(A As CodeModule)
+PjnMth = A.Parent.Collection.Parent.Name
 End Function
 
-Function MthDrszVbeAy(A() As Vbe) As Drs
+Function MthDrszVAy(A() As Vbe) As Drs
 Dim I, R%, M As Drs
 For Each I In Itr(A)
-    M = DrsInsCV(MthDrszVbe(CvVbe(I)), "Vbe", R)
+    M = DrsInsCV(MthDrszV(CvVbe(I)), "Vbe", R)
     If R = 0 Then
-        MthDrszVbeAy = M
+        MthDrszVAy = M
     Else
-        MgeDrs MthDrszVbeAy, M
+        ApdDrs MthDrszVAy, M
     End If
     R = R + 1
-    Debug.Print R; "<=== MthDrszVbeAy"
+    Debug.Print R; "<=== MthDrszVAy"
 Next
 End Function
 
-Function MthWszVbeAy(A() As Vbe) As Worksheet
-'Set MthWszVbeAy = WszDrs(MthDrszVbeAy(A))
+Function MthWszVAy(A() As Vbe) As Worksheet
+'Set MthWszVAy = WszDrs(MthDrszVAy(A))
 End Function
 
 Property Get MthFny() As String()
-MthFny = SyzSsLin("Pj MdTy Md Mdy Ty Nm Ret Pm Rmk Lno Cnt Lines TopRmk")
+MthFny = SyzSS("Pj MdTy Md Mdy Ty Nm Ret Pm Rmk Lno Cnt Lines TopRmk")
 End Property
 
 Property Get MthLinFny() As String()
-MthLinFny = SyzSsLin("Pj MdTy Md Mdy Ty Nm Ret Pm Rmk")
+MthLinFny = SyzSS("Pj MdTy Md Mdy Ty Nm Ret Pm Rmk")
 End Property
 
 Property Get MthWs() As Worksheet
@@ -297,14 +297,11 @@ End Property
 Property Get PjfSy() As String()
 End Property
 
-Private Property Get ZZVbeAy() As Vbe()
-PushObj ZZVbeAy, CurVbe
+Private Property Get ZzVAy() As Vbe()
+PushObj ZzVAy, CVbe
 Const Fb$ = "C:\Users\user\Desktop\MHD\SAPAccessReports\StockShipRate\StockShipRate\StockShipRate (ver 1.0).accdb"
-'PushObj ZZVbeAy, AcsOpnFb(Fb$).Vbe
+'PushObj ZzVAy, AcsOpnFb(Fb).Vbe
 End Property
-
-Private Sub Z()
-End Sub
 
 Private Sub ZZ()
 Dim A As WhPjMth
@@ -322,7 +319,7 @@ Dim L As Vbe
 End Sub
 
 Private Sub Z_MthDrszMd()
-BrwDrs MthDrszMd(CurMd)
+BrwDrs MthDrszMd(CMd)
 End Sub
 
 Private Sub Z_MthDrszPjf()
@@ -331,13 +328,13 @@ Pjf = PjfSy()(0)
 ShwWs WszDrs(MthDrszPjf(Pjf))
 End Sub
 
-Private Sub Z_MthLinDryzPj()
-Dim A(): A = MthLinDryzPj(CurPj)
+Private Sub Z_DryOfMthLinzP()
+Dim A(): A = DryOfMthLinzP(CPj)
 Stop
 End Sub
 
-Private Sub Z_MthLinDryzVbe()
-BrwDry MthLinDryzVbe(CurVbe)
+Private Sub Z_DrOfMthLinyzV()
+BrwDry DrOfMthLinyzV(CVbe)
 End Sub
 
 Private Sub Z_MthWb()
@@ -347,10 +344,10 @@ End Sub
 Private Sub Z_MthWbFmt()
 Dim Wb As Workbook
 Const Fx$ = "C:\Users\user\Desktop\Vba-Lib-1\Mth.xlsx"
-MthWbFmt WbVis(WbzFx(Fx$))
+MthWbFmt ShwWb(WbzFx(Fx))
 Stop
 End Sub
 
-Private Sub Z_MthWszVbeAy()
-WsVis MthWszVbeAy(ZZVbeAy)
+Private Sub Z_MthWszVAy()
+ShwWs MthWszVAy(ZzVAy)
 End Sub

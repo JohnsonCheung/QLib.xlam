@@ -2,11 +2,11 @@ Attribute VB_Name = "QVb_Str_UnderLin"
 Option Explicit
 Private Const CMod$ = "MVb_Str_UnderLin."
 Private Const Asm$ = "QVb"
-Function UnderLin$(Lin$)
+Function UnderLin(Lin)
 UnderLin = String(Len(Lin), "-")
 End Function
 
-Function UnderLinDbl$(Lin$)
+Function UnderLinDbl$(Lin)
 UnderLinDbl = String(Len(Lin), "=")
 End Function
 

@@ -2,19 +2,19 @@ Attribute VB_Name = "QIde_Mth_Fb"
 Option Explicit
 Private Const CMod$ = "MIde_Mth_Fb."
 Private Const Asm$ = "QIde"
-Function MthFbInPj$()
-MthFbInPj = MthFbzPj(CurPj)
+Function MthFbP$()
+MthFbP = MthFbzP(CPj)
 End Function
 Function MthFb$()
-MthFb = MthFbInPj
+MthFb = MthFbP
 End Function
-Function MthFbzPj$(A As VBProject)
-MthFbzPj = MthPthzPj(A) & Fn(Pjf(A)) & ".MthDb.accdb"
+Function MthFbzP$(P As VBProject)
+MthFbzP = MthPthzP(P) & Fn(Pjf(P)) & ".MthDb.accdb"
 End Function
 
-Function MthPthzPj$(A As VBProject)
-Dim F$: F = Pjf(A)
-MthPthzPj = AddFdrEns(Pth(F), ".MthDb")
+Function MthPthzP$(P As VBProject)
+Dim F$: F = Pjf(P)
+MthPthzP = AddFdrEns(Pth(F), ".MthDb")
 End Function
 
 Function EnsMthFb(MthFb$) As Database
@@ -24,14 +24,14 @@ Set EnsMthFb = Db(MthFb)
 EnsSchm D, MthSchm
 End Function
 
-Function MthDbzPj(A As VBProject) As Database
-Dim Fb$: Fb = MthFbzPj(A)
+Function MthDbzP(P As VBProject) As Database
+Dim Fb$: Fb = MthFbzP(P)
 EnsMthFb Fb
-Set MthDbzPj = Db(Fb$)
+Set MthDbzP = Db(Fb)
 End Function
 
-Property Get MthDbInPj() As Database
-Set MthDbInPj = MthDbzPj(CurPj)
+Property Get MthDbP() As Database
+Set MthDbP = MthDbzP(CPj)
 End Property
 
 Sub BrwMthFb()
@@ -48,9 +48,9 @@ X "Fld T3  Ty Mdy"
 X "Fld T4  MdTy"
 X "Fld Lng Lno"
 X "Fld Mem Lines TopRmk"
-X "Tbl Pj  *Id Pjf | PjNm PjDte"
-X "Tbl Md  *Id PjId MdNm | MdTy"
-X "Tbl Mth *Id MdId MthNm ShtTy | ShtMdy Prm Ret LinRmk TopRmk Lines Lno"
+X "Tbl Pj  *Id Pjf | Pjn PjDte"
+X "Tbl Md  *Id PjId Mdn | MdTy"
+X "Tbl Mth *Id MdId Mthn ShtTy | ShtMdy Prm Ret LinRmk TopRmk Lines Lno"
 MthSchm = XX
 Erase XX
 End Property

@@ -90,7 +90,7 @@ Private Sub Z_CcmTny()
 Dim D As Database
 '
 Set D = Db(SampFbzShpRate)
-Ept = SyzSsLin("^CurYM ^IniRate ^IniRateH ^InvD ^InvH ^YM ^YMGR ^YMGRnoIR ^YMOH ^YMRate")
+Ept = SyzSS("^CurYM ^IniRate ^IniRateH ^InvD ^InvH ^YM ^YMGR ^YMGRnoIR ^YMOH ^YMRate")
 GoSub Tst
 Exit Sub
 Tst:
@@ -99,7 +99,7 @@ Tst:
     Return
 End Sub
 
-Private Sub Z()
+Private Sub ZZ()
 Z_LnkCcm
 Z_CcmTny
 MDao__Ccm:

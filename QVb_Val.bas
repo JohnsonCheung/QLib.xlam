@@ -40,8 +40,8 @@ Case Else
 End Select
 StrCellzV = O
 End Function
-Function FmtLines(Lines$) As String()
-FmtLines = AddIxPfx(SplitCrLf(Lines))
+Function AddIxPfxzLines(Lines) As String()
+AddIxPfxzLines = AddIxPfx(SplitCrLf(Lines))
 End Function
 Function FmtPrim$(Prim)
 FmtPrim = Prim & " (" & TypeName(Prim) & ")"
@@ -51,7 +51,7 @@ Function FmtV(V) As String()
 Select Case True
 Case IsDic(V): FmtV = FmtDic(CvDic(V))
 Case IsAset(V): FmtV = CvAset(V).Sy
-Case IsLines(V): FmtV = FmtLines(CStr(V))
+Case IsLines(V): FmtV = AddIxPfxzLines(V)
 Case IsPrim(V): FmtV = Sy(FmtPrim(V))
 Case IsSy(V): FmtV = AddIxPfx(CvSy(V))
 Case IsNothing(V): FmtV = Sy("#Nothing")

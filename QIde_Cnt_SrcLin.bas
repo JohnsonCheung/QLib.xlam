@@ -5,15 +5,15 @@ Private Const Asm$ = "QIde"
 
 
 Property Get NSrcLin&()
-NSrcLin = NSrcLinzPj(CurPj)
+NSrcLin = NSrcLinzP(CPj)
 End Property
 
-Function NSrcLinzPj&(A As VBProject)
+Function NSrcLinzP&(P As VBProject)
 Dim O&, C As VBComponent
-If A.Protection = vbext_pp_locked Then Exit Function
-For Each C In A.VBComponents
+If P.Protection = vbext_pp_locked Then Exit Function
+For Each C In P.VBComponents
     O = O + C.CodeModule.CountOfLines
 Next
-NSrcLinzPj = O
+NSrcLinzP = O
 End Function
 

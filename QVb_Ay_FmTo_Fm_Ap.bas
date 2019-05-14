@@ -15,16 +15,27 @@ End Function
 Function AvzAp(ParamArray Ap()) As Variant()
 AvzAp = Ap
 End Function
-Function SyzApNonBlank(ParamArray Ap()) As String()
-Dim Av(): Av = Ap: SyzApNonBlank = SyRmvBlank(SyzAv(Av))
+Function SyNonBlank(ParamArray Ap()) As String()
+Dim Av(): Av = Ap: SyNonBlank = RmvBlankzAy(SyzAv(Av))
+End Function
+Private Function SyzAv(AvOf_Itm_or_Ay()) As String()
+Dim I, Av()
+Av = AvOf_Itm_or_Ay
+For Each I In Itr(Av)
+    Select Case True
+    Case IsArray(I): PushIAy SyzAv, I
+    Case Else: PushI SyzAv, I
+    End Select
+Next
+End Function
+Function SyzAp(ParamArray ApOf_Itm_or_Ay()) As String()
+Dim Av(): Av = ApOf_Itm_or_Ay
+SyzAp = SyzAv(Av)
 End Function
 
-Function SyzAp(ParamArray Ap()) As String()
-Dim Av(): Av = Ap: SyzAp = SyzAv(Av)
-End Function
-
-Function Sy(ParamArray Ap()) As String()
-Dim Av(): Av = Ap: Sy = SyzAv(Av)
+Function Sy(ParamArray ApOf_Itm_or_Ay()) As String()
+Dim Av(): Av = ApOf_Itm_or_Ay
+Sy = SyzAv(Av)
 End Function
 
 Function DteAy(ParamArray Ap()) As Date()
@@ -54,15 +65,15 @@ Dim Av(): Av = Ap
 SngAy = IntozAy(SngAy, Av)
 End Function
 
-Function SyNoBlank(ParamArray Itm_or_AyAp()) As String()
-Dim Av(): Av = Itm_or_AyAp
+Function SyNoBlank(ParamArray S_or_Sy()) As String()
+Dim Av(): Av = S_or_Sy
 Dim I
 For Each I In Av
-    If IsArray(I) Then
-        PushNonBlankSy SyNoBlank, CvSy(I)
-    Else
-        PushNonBlank SyNoBlank, I
-    End If
+    Select Case True
+    Case IsSy(I): PushNonBlankAy SyNoBlank, CvSy(I)
+    Case IsStr(I): PushNonBlank SyNoBlank, CStr(I)
+    Case Else: Thw CSub, "Itm must be S or Sy", "TypeName(Itm)", TypeName(I)
+    End Select
 Next
 End Function
 
@@ -89,18 +100,8 @@ End Function
 
 '=========================================================
 
-Function SyzAv(Av() As Variant) As String()
-SyzAv = IntozAy(EmpSy, Av)
-End Function
-
 Function SyzAy(Ay) As String()
 SyzAy = IntozAy(EmpSy, Ay)
 End Function
 
-Function SyzAyNonBlank(Ay) As String()
-Dim I
-For Each I In Itr(Ay)
-    PushNonBlank SyzAyNonBlank, I
-Next
-End Function
 

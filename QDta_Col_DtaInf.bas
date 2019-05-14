@@ -9,10 +9,10 @@ End Function
 Function StrColzDrs(A As Drs, ColNm$) As String()
 StrColzDrs = StrColzDry(A.Dry, IxzAy(A.Fny, ColNm))
 End Function
-Function LyzDryCC(Dry(), CCIxAy&(), Optional FldSep$ = vbFldSep) As String()
+Function LyzDryCC(Dry(), CCIxy&(), Optional FldSep$ = vbFldSep) As String()
 Dim Dr
 For Each Dr In Itr(Dry)
-    PushI LyzDryCC, Jn(AyeIxAy(Dr, CCIxAy), FldSep)
+    PushI LyzDryCC, Jn(AyeIxy(Dr, CCIxy), FldSep)
 Next
 End Function
 

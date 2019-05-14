@@ -1,65 +1,52 @@
 Attribute VB_Name = "QVb_Str_Term"
 Option Explicit
 Private Const CMod$ = "MTerm."
-Const Ns$ = "Vb.Str.Term"
+Const NS$ = "Vb.Str.Term"
 Private Const Asm$ = "Q"
-Function RmvTermSy$(S$, TermSy$())
-Dim T$, I
-T = T1(S)
-For Each I In TermSy
-    If I = T Then
-        RmvTermSy = LTrim(Mid(LTrim(S), Len(T) + 1))
-        Exit Function
-    End If
-Next
-RmvTermSy = S
+Function RmvTerm$(Lin, Term$())
+RmvTerm = JnTerm(MinusAy(TermAy(Lin), Term))
 End Function
-Function TermLin$(TermSy$())
-TermLin = TLin(TermSy)
+Function TermLin(TermAy)
+TermLin = TLin(TermAy)
 End Function
-Function TLin$(TermSy$())
-TLin = JnTermSy(TermSy)
+Function TLin(TermAy)
+TLin = JnTerm(TermAy)
 End Function
 
 Function TLinzAp$(ParamArray TermAp())
 Dim Av(): Av = TermAp
-TLinzAp = JnTermSy(SyzAv(Av))
+TLinzAp = JnTerm(Av)
 End Function
 
-Function JnTermAp$(ParamArray Ap())
-Dim Av(): Av = Ap
-JnTermAp = JnTermSy(SyzAv(Av))
+Function JnTerm$(TermAy)
+JnTerm = JnSpc(QuoteSqzAyIf(RmvBlankzAy(TermAy)))
 End Function
 
-Function JnTermSy$(TermSy$())
-JnTermSy = JnSpc(SyQuoteSqIf(SyRmvBlank(TermSy)))
+Function LinzTermAy$(TermAy)
+LinzTermAy = TLin(TermAy)
 End Function
 
-Function LinzTermSy$(TermSy$())
-LinzTermSy = TLin(TermSy)
+Function TermAset(S) As Aset
+Set TermAset = AsetzAy(TermAy(S))
 End Function
 
-Function TermAset(S$) As Aset
-Set TermAset = AsetzAy(TermSy(S))
+Function TermItr(S)
+Asg Itr(TermAy(S)), TermItr
 End Function
-
-Function TermItr(S$)
-Asg Itr(TermSy(S)), TermItr
-End Function
-Function TermSyzDr(Dr()) As String()
+Function TermAyzDr(Dr()) As String()
 
 End Function
-Function TermSy(Lin$) As String()
+Function TermAy(Lin) As String()
 Dim L$, J%
 L = Lin
 While L <> ""
     J = J + 1: If J > 5000 Then Stop
-    PushNonBlank TermSy, ShfT1(L)
+    PushNonBlank TermAy, ShfT1(L)
 Wend
 End Function
-Function ShfTermX(OLin$, X$) As Boolean
+Function ShfTerm(OLin$, X$) As Boolean
 If T1(OLin) = X Then
-    ShfTermX = True
+    ShfTerm = True
     OLin = RmvT1(OLin)
 End If
 End Function
@@ -97,7 +84,7 @@ Tst:
 End Sub
 
 
-Private Sub Z()
+Private Sub ZZ()
 Z_ShfT1
 MVb_Lin_Term:
 End Sub

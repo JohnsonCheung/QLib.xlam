@@ -16,16 +16,16 @@ End Function
 Function PerHex2$(C$)
 PerHex2 = "%" & Hex2(C)
 End Function
-Function EscChr$(S$, C$)
+Function EscChr$(S, C$)
 EscChr = EscAsc(S, Asc(C))
 End Function
-Function EscAsc$(S$, A%) 'Escaping the AscChr-A% in S$ as %HH
+Function EscAsc$(S, A%) 'Escaping the AscChr-A% in S$ as %HH
 EscAsc = Replace(S, Chr(A), "%" & Hex2zAsc(A))
 End Function
-Function EscSqBkt$(S$)
+Function EscSqBkt$(S)
 EscSqBkt = EscChrLis(S, "[]")
 End Function
-Function EscChrLis$(S$, ChrLis$)
+Function EscChrLis$(S, ChrLis$)
 Dim O$, J: O = S
 For J = 1 To Len(ChrLis)
     O = EscChr(O, Mid(ChrLis, J, 1))

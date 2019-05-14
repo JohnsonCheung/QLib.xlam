@@ -8,37 +8,6 @@ Property Get SampLo() As ListObject
 Set SampLo = CrtLozRg(RgzSq(SampSqWithHdr, NewA1), "Sample")
 End Property
 
-Property Get SampLof() As String()
-Erase XX
-X "Bet A B C"
-X "Lo Nm ABC"
-X "Lo Fld A B C D E F G"
-X "Lo Hid B C X"
-X "Ali Left A B"
-X "Ali Right D E"
-X "Ali Center F"
-X "Wdt 10 A B X"
-X "Wdt 20 D C C"
-X "Wdt 3000 E F G C"
-X "Fmt #,## A B C"
-X "Fmt #,##.## D E"
-X "Lvl 2 A C"
-X "Bdr Left A"
-X "Bdr Right G"
-X "Bdr Col F"
-X "Tot Sum A B"
-X "Tot Cnt C"
-X "Tot Avg D"
-X "Tit A abc | sdf"
-X "Tit B abc | sdkf | sdfdf"
-X "Cor 12345 A B"
-X "Fml F A + B"
-X "Fml C A * 2"
-X "Lbl A lksd flks dfj"
-X "Lbl B lsdkf lksdf klsdj f"
-SampLof = XX
-Erase XX
-End Property
 
 Property Get SampLofTp() As String()
 Dim O$()
@@ -96,5 +65,5 @@ Dim O As Worksheet
 Set O = NewWs
 LozDrs SampDrs, WsRC(O, 2, 2)
 Set SampWs = O
-WsVis O
+ShwWs O
 End Property

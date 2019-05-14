@@ -2,7 +2,7 @@ Attribute VB_Name = "QVb_Itp"
 Option Explicit
 Private Const CMod$ = "MVb_Itp."
 Private Const Asm$ = "QVb"
-Function IntozItrP(OInto, Itr, P$) As String()
+Function IntozItrP(OInto, Itr, P As PrpPth) As String()
 Dim O: O = OInto
 Dim Obj As Object
 For Each Obj In Itr
@@ -10,7 +10,7 @@ For Each Obj In Itr
 Next
 IntozItrP = O
 End Function
-Function SyzItrP(Itr, P$) As String()
+Function SyzItrP(Itr, P As PrpPth) As String()
 SyzItrP = IntozItrP(EmpSy, Itr, P)
 End Function
 

@@ -3,7 +3,7 @@ Option Explicit
 Private Const CMod$ = "MSudoku."
 Private Const Asm$ = "Q"
 Private Type RRCC
-    R1 As Byte
+    R1 As Byte 'all started from 1
     R2 As Byte
     C1 As Byte
     C2 As Byte
@@ -224,7 +224,7 @@ Dim M
 Dim I, J%
 For Each I In NineEle
     If IsBytAy(I) Then
-        M = Intersect(CvBytAy(I), Should)
+        M = IntersectAy(CvBytAy(I), Should)
         If Si(I) > Si(M) Then
             SolveNineEle.HasSolve = True
             O(J) = M
@@ -237,9 +237,9 @@ Next
 SolveNineEle.NineEle = O
 End Function
 
-Private Function Intersect(A() As Byte, B() As Byte)
-Dim O: O = AyIntersect(A, B)
-Intersect = IIf(Si(O) = 1, O(0), O)
+Private Function IntersectAy(A() As Byte, B() As Byte)
+Dim O: O = IntersectAy(A, B)
+IntersectAy = IIf(Si(O) = 1, O(0), O)
 End Function
 
 Private Function ShouldBe(NineEle()) As Byte()
@@ -326,4 +326,3 @@ Tst:
     SolveSudoku Ws
     Return
 End Sub
-

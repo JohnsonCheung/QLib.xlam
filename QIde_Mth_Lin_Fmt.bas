@@ -2,18 +2,20 @@ Attribute VB_Name = "QIde_Mth_Lin_Fmt"
 Option Explicit
 Private Const CMod$ = "MIde_Mth_Lin_Fmt."
 Private Const Asm$ = "QIde"
-Function NArg(MthLin$) As Byte
+Function NArg(MthLin) As Byte
 NArg = Si(SplitComma(MthPm(MthLin)))
 End Function
 
-Function ArgNy(MthLin$) As String()
+Function ArgNy(MthLin) As String()
 ArgNy = NyzOy(ArgSy(MthLin))
 End Function
-Function ArgSy(Lin$) As String()
+Function ArgSy(Lin) As String()
 ArgSy = SplitCommaSpc(MthPm(Lin))
 End Function
+Function ArgSfx$(ArgStr)
 
-Function Arg(ArgStr$) As Arg
+End Function
+Function Arg(ArgStr) As Arg
 Dim L$: L = ArgStr
 Const Opt$ = "Optional"
 Const PA$ = "ParamArray"
@@ -31,19 +33,4 @@ End Function
 Function ArgNyzArgAy(A() As Arg) As String()
 ArgNyzArgAy = NyzOy(A)
 End Function
-
-Private Sub Z()
-Exit Sub
-'Lin_NArg
-'Lin_PmNy A
-'MthMthPmzLinStr
-'MthLinPmAy
-'MthPm
-'MthPmAyNy
-'MthPmSz
-'MthPmTyAsTyNm
-'MthPmTyShtNm
-'MthPmUB
-'PushMthPm
-End Sub
 

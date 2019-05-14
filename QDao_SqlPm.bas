@@ -13,7 +13,7 @@ With SelIntoPm
 End With
 End Function
 
-Sub PushSelIntoPm(O As SelIntoPms, M As SelIntoPm)
+Sub PushIelIntoPm(O As SelIntoPms, M As SelIntoPm)
 ReDim Preserve O.Ay(O.N)
 O.Ay(O.N) = M
 O.N = O.N + 1
@@ -28,7 +28,7 @@ End Function
 
 Function SqlzSelIntoPm$(A As SelIntoPm)
 With A
-SqlzSelIntoPm = SqlSel_Fny_ExtNy_Into_T(.Fny, .ExtNy, .Into, .T, .Bexpr)
+'SqlzSelIntoPm = SqlSel_Fny_ExtNy_Into_T(.Fny, .ExtNy, .Into, .T, .Bexpr)
 End With
 End Function
 

@@ -2,6 +2,10 @@ Attribute VB_Name = "QVb_RunFil"
 Option Explicit
 Private Const CMod$ = "MVb_RunFil."
 Private Const Asm$ = "QVb"
+Enum EmWaitRslt
+    EiTimUp
+    EiCnl
+End Enum
 Type WaitOpt
     TimOutSec As Integer
     ChkIntervalDeciSec As Integer
@@ -24,7 +28,7 @@ Sub KillProcessId(ProcessId&)
 End Sub
 
 Function RunFcmd&(Fcmd$, Optional PmStr$, Optional Sty As VbAppWinStyle = vbMaximizedFocus)
-Dim Lin$
+Dim Lin
     Lin = QuoteDbl(Fcmd) & PpdSpcIf(PmStr)
 RunFcmd = Shell(Lin, Sty)
 End Function
@@ -64,7 +68,7 @@ End Function
 Function Fcmdw$(CmdLines$)
 Stop
 Dim T$: T = TmpCmd
-Dim EchoLin$: EchoLin = FmtQQ("Echo > ""?""", Fwaitg(T))
+Dim EchoLin: EchoLin = FmtQQ("Echo > ""?""", Fwaitg(T))
 Dim S$: S = CmdLines & vbCrLf & EchoLin
 Fcmdw = WrtStr(S, T)
 End Function
@@ -74,14 +78,11 @@ RunFcmd "Cmd"
 MsgBox "AA"
 End Sub
 
-Function Wait(Optional Sec% = 1) As Boolean
-Wait = WaitDeci(Sec / 10)
+Function Wait(Optional Sec% = 1) As EmWaitRslt
+Dim Till As Date: Till = AftSec(Sec)
+Wait = IIf(Xls.Wait(Till), EiTimUp, EiCnl)
 End Function
 
-Function WaitDeci(Optional DeciSec% = 10) As Boolean
-WaitDeci = Xls.Wait(NxtDeciSec(DeciSec))
-End Function
-
-Function NxtDeciSec(DeciSec%) As Date
-NxtDeciSec = DateAdd("S", DeciSec / 10, Now)
+Function AftSec(Sec%) As Date 'Return the Date after Sec from Now
+AftSec = DateAdd("S", Sec, Now)
 End Function

@@ -7,7 +7,7 @@ Type InpFils: N As Integer: Ay() As InpFil: End Type
 Private Function InpFil(Fn$, Ffn$) As InpFil
 With InpFil: .Fn = Fn: .Ffn = Ffn: End With
 End Function
-Private Function InpFilzLin(InpFilLin$) As InpFil
+Private Function InpFilzLin(InpFilLin) As InpFil
 With BrkSpc(InpFilLin)
 InpFilzLin = InpFil(.S1, .S2)
 End With
@@ -18,8 +18,8 @@ O.Ay(O.N) = M
 O.N = O.N + 1
 End Sub
 Function InpFils(Src$()) As InpFils
-Dim Lin$, I
-For Each I In Itr(RmvRmkLin(Src))
+Dim Lin, I
+For Each I In Itr(RmvRmkzLy(Src))
     Lin = I
     PushInpFil InpFils, InpFilzLin(Lin)
 Next

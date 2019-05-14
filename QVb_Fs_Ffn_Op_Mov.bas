@@ -7,13 +7,13 @@ Private Const Asm$ = "QVb"
 Sub MovFilUp(Pth)
 Dim I, Tar$
 Tar$ = ParPth(Pth)
-For Each I In Itr(FnSy(Pth))
+For Each I In Itr(FnAy(Pth))
     MovFfn CStr(I), Tar
 Next
 End Sub
 
 
-Sub MovFfn(Ffn$, ToPth$)
+Sub MovFfn(Ffn, ToPth$)
 Fso.MoveFile Ffn, ToPth
 End Sub
 

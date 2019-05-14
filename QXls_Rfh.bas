@@ -41,8 +41,8 @@ A.MissingItemsLimit = xlMissingItemsNone
 A.Refresh
 End Sub
 
-Sub RfhFx(Fx$, Fb$)
-RfhWb(WbzFx(Fx$), Fb).Close SaveChanges:=True
+Sub RfhFx(Fx, Fb)
+RfhWb(WbzFx(Fx), Fb).Close SaveChanges:=True
 End Sub
 
 Private Sub RfhWs(A As Worksheet)
@@ -51,11 +51,11 @@ Dim P As PivotTable: For Each P In A.PivotTables: P.Update: Next
 Dim L As ListObject: For Each L In A.ListObjects: L.Refresh: Next
 End Sub
 
-Function RfhWb(Wb As Workbook, Fb$) As Workbook
+Function RfhWb(Wb As Workbook, Fb) As Workbook
 RplLozFb Wb, Fb
 Dim C As WorkbookConnection
 Dim P As PivotCache, W As Worksheet
-For Each C In Wb.Connections: RfhWc C, Fb:                                          Next
+'For Each C In Wb.Connections: RfhWc C, Fb:                                          Next
 For Each P In Wb.PivotCaches: P.MissingItemsLimit = xlMissingItemsNone: P.Refresh:  Next
 For Each W In Wb.Sheets:      RfhWs W:                                              Next
 FmtLozStdWb Wb
@@ -64,7 +64,7 @@ DltWc Wb
 Set RfhWb = Wb
 End Function
 
-Private Sub RplLozFb(Wb As Workbook, Fb$)
+Private Sub RplLozFb(Wb As Workbook, Fb)
 Dim I, Lo As ListObject, D As Database
 Set D = Db(Fb)
 For Each I In OupLoAy(Wb)
@@ -75,14 +75,14 @@ D.Close
 Set D = Nothing
 End Sub
 
-Private Function RplLozT(A As ListObject, Db As Database, T$) As ListObject
+Private Function RplLozT(A As ListObject, Db As Database, T) As ListObject
 Dim Fny1$(): Fny1 = Fny(Db, T)
 Dim Fny2$(): Fny2 = FnyzLo(A)
 If Not IsSamAy(Fny1, Fny2) Then
-    Thw CSub, "LoFny and TblFny are not same", "LoFny TblNm TblFny Db", Fny2, T, Fny1, DbNm(A)
+    Thw CSub, "LoFny and TblFny are not same", "LoFny TblNm TblFny Db", Fny2, T, Fny1, Dbn(A)
 End If
 Dim Sq()
-    Dim R As DAO.Recordset
+    Dim R As Dao.Recordset
     Set R = Rs(A, SqlSel_Fny_T(Fny2, T))
     Sq = AddSngQuotezSq(SqzRs(R))
 MinxLo A

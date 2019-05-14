@@ -3,17 +3,17 @@ Option Explicit
 Private Const CMod$ = "MIde_Wh."
 Private Const Asm$ = "QIde"
 Public Const C_WhMthSpec$ = ""
-Function WhMthzPfx(WhMthNmPfx$, Optional InclPrv As Boolean) As WhMth
+Function WhMthzPfx(WhMthnPfx$, Optional InclPrv As Boolean) As WhMth
 
 End Function
-Function WhMthzSfx(WhMthNmSfx$, Optional InclPrv As Boolean) As WhMth
+Function WhMthzSfx(WhMthnSfx$, Optional InclPrv As Boolean) As WhMth
 
 End Function
 
 Function WhMthzStr(WhStr$) As WhMth
 Dim ShtMdy$(), ShtKd$()
 Const C$ = ""
-Dim A As LinPm: Set A = LinPm(WhStr, C)
+Dim A As Lpm: Set A = Lpm(WhStr, C)
 With A
     PushNonBlank ShtMdy, .SwNm("Pub")
     PushNonBlank ShtMdy, .SwNm("Prv")
@@ -54,9 +54,9 @@ With WhPjMth
 End With
 End Function
 
-Function WhNm(Patn$, LikeAy$(), ExlLikAy$()) As WhNm
+Function WhNm(Patn$, LikeAy$(), ExlLikSy$()) As WhNm
 Dim O As New WhNm
-Set WhNm = O.Init(Patn, LikeAy, ExlLikAy)
+Set WhNm = O.Init(Patn, LikeAy, ExlLikSy)
 End Function
 
 Function WhMd(CmpTy() As vbext_ComponentType, Nm As WhNm) As WhMd
@@ -64,7 +64,7 @@ Set WhMd = New WhMd
 WhMd.Init CmpTy, Nm
 End Function
 Function WhMdzStr(WhStr$) As WhMd
-With LinPm(WhStr, C_WhMthSpec)
+With Lpm(WhStr, C_WhMthSpec)
     Dim CmpTy() As vbext_ComponentType
     If .HasSw("Cls") Then PushI CmpTy, vbext_ct_ClassModule
     If .HasSw("Mod") Then PushI CmpTy, vbext_ct_StdModule

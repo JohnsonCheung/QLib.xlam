@@ -23,7 +23,7 @@ A = OFmNo
 PushI O, A
 WrdLblLinPos = Jn(O)
 End Function
-Function WrdLblLin$(Lin, OFmNo&)
+Function WrdLblLin(Lin, OFmNo&)
 WrdLblLin = WrdLblLinPos(WrdPosAy(Lin), OFmNo)
 End Function
 
@@ -41,10 +41,10 @@ For J = 1 To Len(Lin)
     End Select
 Next
 End Function
-Function WrdLblLinPairLno(Lin, Lno&, LnoWdt, OFmNo&) As String()
+Function WrdLblLinPairLno(Lin, Lno, LnoWdt, OFmNo&) As String()
 Dim O$(): O = WrdLblLinPair(Lin, OFmNo)
 O(0) = Space(LnoWdt) & " : " & O(0)
-O(1) = AlignL(Lno, LnoWdt) & " : " & O(1)
+'O(1) = AlignL(Lno, LnoWdt) & " : " & O(1)
 WrdLblLinPairLno = O
 End Function
 Function WrdLblLinPair(Lin, OFmNo&) As String()
@@ -62,7 +62,7 @@ End Function
 
 
 Private Sub Z_WrdLblLin()
-Dim Lin$, FmNo&
+Dim Lin, FmNo&
 GoSub T0
 Exit Sub
 T0:
@@ -78,7 +78,7 @@ Tst:
     Return
 End Sub
 Private Sub Z_WrdPosAy()
-Dim Lin$
+Dim Lin
 GoSub T0
 Exit Sub
 T0:
@@ -95,6 +95,6 @@ End Sub
 
 Private Sub Z_WrdLblLy()
 Dim Fm&: Fm = 1
-Brw WrdLblLy(SrczPj(CurPj), Fm)
+Brw WrdLblLy(SrczP(CPj), Fm)
 End Sub
 

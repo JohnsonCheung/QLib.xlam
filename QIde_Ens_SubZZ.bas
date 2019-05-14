@@ -5,11 +5,11 @@ Private Const CMod$ = "MIde_Ens_SubZZ."
 
 Function SubZZEpt$(A As CodeModule) ' SubZZ is Sub ZZ() bodyLines
 'Sub ZZ() has all calling of public method with dummy parameter so that it can Shf-F2
-Dim mPubMthLinSy$()        ' Mth mPubMthLinSy PUB
+Dim mPMthLiny$()        ' Mth mPMthLiny PUB
 Dim mPubPrpGetNm As Aset
-Dim mPubMthPmAy$()         ' From mPubMthLinSy    mPubMthLinSy & mPm same sz     ' mPubMthPmAy is the string in the bracket of the MthmPubMthLinSyLin
-Dim mMthNyPub$()      ' From mPubMthLinSy    mPubMthLinSy & mMthNm same sz
-Dim mArgAy$()         ' Each mArgAy in mArgAy become on mPubMthPmAy   Eg, 1-mArgAy = A$, B$, C%, D As XYZ => 4-mPubMthPmAy
+Dim mPMthPmAy$()         ' From mPMthLiny    mPMthLiny & mPm same sz     ' mPMthPmAy is the string in the bracket of the MthmPMthLinyLin
+Dim mMthnyPub$()      ' From mPMthLiny    mPMthLiny & mMthn same sz
+Dim mArgAy$()         ' Each mArgAy in mArgAy become on mPMthPmAy   Eg, 1-mArgAy = A$, B$, C%, D As XYZ => 4-mPMthPmAy
                      ' ArgSfxDic is Key=ArgSfx and Val=A, B, C
                      ' ArgSfx is mArgAy-without-Nm
 Dim ArgSfx$()
@@ -18,21 +18,21 @@ Dim ArgSfxToAbcDic As Dictionary
 Dim mCallingPmAy$()
 Dim mHasPrp As Boolean
 
-    mPubMthLinSy = MthLinSyzPub(Src(A))
-    Set mPubPrpGetNm = WPrpGetAset(mPubMthLinSy)
-    mPubMthPmAy = SyTakBetBkt(mPubMthLinSy) ' Each Mth return an-Ele to call
-    mMthNyPub = MthNyzMthLinSy(mPubMthLinSy)
-    mArgAy = ArgAyzPmAy(mPubMthPmAy)
-    ArgSfx = ArgSfxSy(mArgAy)
+    mPMthLiny = MthLinyzPub(Src(A))
+    Set mPubPrpGetNm = WPrpGetAset(mPMthLiny)
+    mPMthPmAy = SyTakBetBkt(mPMthLiny) ' Each Mth return an-Ele to call
+    mMthnyPub = MthnyzMthLiny(mPMthLiny)
+    mArgAy = ArgAyzPmAy(mPMthPmAy)
+    ArgSfx = ArgSfxy(mArgAy)
     Set ArgAset = AsetzAy(ArgSfx)
     Set ArgSfxToAbcDic = ArgAset.AbcDic
-    mCallingPmAy = WCallingPmAy(mPubMthPmAy, ArgSfxToAbcDic)
+    mCallingPmAy = WCallingPmAy(mPMthPmAy, ArgSfxToAbcDic)
     mHasPrp = mPubPrpGetNm.Cnt > 0
 '-------------
 Dim mDimLy$()
 Dim mCallingLy$()
     mDimLy = WDimLy(ArgSfxToAbcDic, mHasPrp)   ' 1-mArgAy => 1-DimLin
-    mCallingLy = WCallingLy(mMthNyPub, mPubMthPmAy, ArgSfxToAbcDic, mPubPrpGetNm)
+    mCallingLy = WCallingLy(mMthnyPub, mPMthPmAy, ArgSfxToAbcDic, mPubPrpGetNm)
 D mDimLy
 Stop
 Dim O$()
@@ -52,31 +52,31 @@ For Each Pm In Itr(PmAy)
 Next
 End Function
 
-Private Function ArgSfxSy(ArgSy$()) As String()
+Private Function ArgSfxy(ArgSy$()) As String()
 Dim Arg
 For Each Arg In Itr(ArgSy)
-    PushI ArgSfxSy, ArgSfx(Arg)
+    PushI ArgSfxy, ArgSfx(Arg)
 Next
 End Function
 
-Private Function WCallingLin$(MthNm, CallingPm$, PrpGetAset As Aset)
-If PrpGetAset.Has(MthNm) Then
-    WCallingLin = "XX = " & MthNm & "(" & CallingPm & ")"  ' The MthNm is object, no need to add [Set] XX =, the compiler will not check for this
+Private Function WCallingLin(Mthn, CallingPm$, PrpGetAset As Aset)
+If PrpGetAset.Has(Mthn) Then
+    WCallingLin = "XX = " & Mthn & "(" & CallingPm & ")"  ' The Mthn is object, no need to add [Set] XX =, the compiler will not check for this
 Else
-    WCallingLin = MthNm & AddPfxSpczIfNonBlank(CallingPm)
+    WCallingLin = Mthn & AddPfxSpczIfNonBlank(CallingPm)
 End If
 End Function
 
-Private Function WCallingLy(MthNy$(), PmAy$(), ArgDic As Dictionary, PrpGetAset As Aset) As String()
+Private Function WCallingLy(Mthny$(), PmAy$(), ArgDic As Dictionary, PrpGetAset As Aset) As String()
 'A$() & PmAy$() are same sz
 'ArgDic: Key is ArgSfx(Arg-without-Name), Val is A,B,..
-'CallingLin is {MthNm} A,B,C,...
+'CallingLin is {Mthn} A,B,C,...
 'PrpGetAset    is PrpNm set
-Dim MthNm, CallingPm$, Pm$, J%, O$()
-For Each MthNm In Itr(MthNy)
+Dim Mthn, CallingPm$, Pm$, J%, O$()
+For Each Mthn In Itr(Mthny)
     Pm = PmAy(J)
     CallingPm = WCallingPm(Pm, ArgDic)
-    PushI O, WCallingLin(MthNm, CallingPm, PrpGetAset)
+    PushI O, WCallingLin(Mthn, CallingPm, PrpGetAset)
     J = J + 1
 Next
 WCallingLy = QSrt1(O)
@@ -114,7 +114,7 @@ Private Function WPrpGetAset(MthDclAy$()) As Aset
 Dim Lin, O As Aset
 Set O = EmpAset
 For Each Lin In Itr(MthDclAy)
-'    If IsPrpLin(Lin) Then AsetPush O, MthNm(Lin)
+'    If IsPrpLin(Lin) Then AsetPush O, Mthn(Lin)
 Next
 Set WPrpGetAset = O
 End Function
@@ -128,7 +128,7 @@ T1:
     Set M = Md("MDamZ_Db_Dbt")
     GoTo Tst
 T2:
-    Set M = CurMd
+    Set M = CMd
     GoTo Tst
 Tst:
     Act = SubZZEpt(M)
@@ -145,12 +145,7 @@ Dim C$()
 Dim XX
 ArgSfx A
 SubZZEpt B
-MthNyzMthLinSy C
-End Sub
-
-Private Sub Z()
-'MIde_EnsSubZZ.ArgSfx
-Z_SubZZEpt
+MthnyzMthLiny C
 End Sub
 
 Private Property Get Z_SubZZzMd__Ept2$()
@@ -172,14 +167,14 @@ vbCrLf & "DicAllKeyIsStr B" & _
 vbCrLf & "DicAllValIsStr B" & _
 vbCrLf & "DicAyKy C" & _
 vbCrLf & "DicByDry A" & _
-vbCrLf & "DicClone B" & _
+vbCrLf & "CloneDic B" & _
 vbCrLf & "DrDicKy B, E"
 
 Const A_2$ = "DicFny F" & _
-vbCrLf & "DicIntersect B, B" & _
+vbCrLf & "DicIntersectAy B, B" & _
 vbCrLf & "IsDiczEmp B" & _
 vbCrLf & "IsEqDic B, B" & _
-vbCrLf & "ThwIfDifDic B, B, D, D, D" & _
+vbCrLf & "ThwIf_DifDic B, B, D, D, D" & _
 vbCrLf & "IsDiczLines B" & _
 vbCrLf & "IsDiczStr B" & _
 vbCrLf & "KeySyzDic B" & _
@@ -193,7 +188,7 @@ vbCrLf & "FmtDic2 B" & _
 vbCrLf & "FmtDic2__1 D, D" & _
 vbCrLf & "DicMap B, D" & _
 vbCrLf & "MaxSizAyDic B" & _
-vbCrLf & "DicMge B, D, G" & _
+vbCrLf & "MgeDic B, D, G" & _
 vbCrLf & "DicMinus B, B"
 
 Const A_3$ = "DicSelIntozAy B, E" & _
@@ -223,7 +218,7 @@ Cas2:
     GoSub Tst
     Return
 Cas1:
-    Set A = CurMd
+    Set A = CMd
     'UpdMdCnstBrkzFt "Z_SubZZEptMd_1", SubZZEpt(A): Return
     'Ept = Z_SubZZEptMd_1
     GoSub Tst

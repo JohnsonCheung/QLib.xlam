@@ -2,45 +2,37 @@ Attribute VB_Name = "QIde_Loc_Jmp"
 Option Explicit
 Private Const CMod$ = "MIde_Loc_Jmp."
 Private Const Asm$ = "QIde"
-Sub MdJmpLno(A As CodeModule, Lno&)
+Sub MdJmpLno(A As CodeModule, Lno)
 JmpMd A
 JmpLno Lno
 End Sub
-Function HasMdNm(MdNm$, Optional Inf As Boolean) As Boolean
-If HasItn(CurPj.VBComponents, MdNm) Then HasMdNm = True: Exit Function
-If Inf Then InfLin CSub, FmtQQ("Md[?] not exist", MdNm)
+Function HasMdn(Mdn, Optional Inf As Boolean) As Boolean
+If HasItn(CPj.VBComponents, Mdn) Then HasMdn = True: Exit Function
+If Inf Then InfLin CSub, FmtQQ("Md[?] not exist", Mdn)
 End Function
-Sub Jmp(MdNmDotLno$)
-JmpMdNm BefOrAll(MdNmDotLno, ".")
-JmpLno Aft(MdNmDotLno, ".")
+Sub Jmp(MdnDotLno$)
+JmpMdn BefOrAll(MdnDotLno, ".")
+JmpLno Aft(MdnDotLno, ".")
 End Sub
-Function JmpMdNm%(MdNm$)
-If Not HasMdNm(MdNm, Inf:=True) Then JmpMdNm = 1: Exit Function
-JmpMd Md(MdNm)
+Function JmpMdn%(Mdn)
+If Not HasMdn(Mdn, Inf:=True) Then JmpMdn = 1: Exit Function
+JmpMd Md(Mdn)
 TileV
 End Function
 Sub JmpMdPos(A As MdPos)
 JmpMd A.Md
-JmpLinPos A.Pos
+JmpLinPos A.LinPos
 End Sub
 
-Sub LinPosAsg(A As LinPos, OLno&, OC1%, OC2%)
-With A
-    OLno = .Lno
-    OC1 = .Pos.Cno1
-    OC2 = .Pos.Cno2
-End With
-End Sub
-
-Sub JmpLin(Lno&)
+Sub JmpLin(Lno)
 With CurCdPne
     .TopLine = Lno
-    .SetSelection Lno, 1, Lno, Len(CurMd.Lines(Lno, 1))
+    .SetSelection Lno, 1, Lno, Len(CMd.Lines(Lno, 1))
 End With
 
 End Sub
 
-Sub JmpLinPos(A As LinPos)
+Sub JmpRRCC(A As RRCC)
 Dim L&, C1%, C2%
 LinPosAsg A, L, C1, C2
 With CurCdPne
@@ -54,59 +46,70 @@ End With
 'SendKeys "^{F4}"
 End Sub
 
-Sub JmpLno(Lno&)
-JmpLinPos LinPos(Lno)
+Sub JmpLno(Lno)
+JmpLinPos LinPos(Lno, EmpPos)
 End Sub
-Function MdPoszLno(A As CodeModule, Lno&) As MdPos
-MdPoszLno = MdPos(A, LinPos(Lno))
+Function MdPoszML(A As CodeModule, Lno) As MdPos
+MdPoszML = MdPos(A, LinPoszL(Lno))
 End Function
-Function EmpPos() As Pos
-Static O As New Pos
-Set EmpPos = O
-End Function
-Sub JmpMdMth(A As CodeModule, MthNm$)
+
+Sub JmpMthzMN(A As CodeModule, Mthn)
 JmpMd A
-JmpMth MthNm
+JmpMth Mthn
 End Sub
-Function MdPosAyzMth(MthNm$) As MdPos()
-Dim MdNm
-For Each MdNm In Itr(MdNyzMth(MthNm))
-Dim MthLin$, Src$(), FmIx&
-Src = CurSrc
-FmIx = MthIxzFst(Src, MthNm)
-If FmIx = -1 Then Exit Function
-MthLin = Src(FmIx)
-MdPosAyzMth = LinPos(FmIx + 1, MthPos(MthLin))
+
+Function MdPoseszMM(A As CodeModule, Mthn) As MdPoses
+Dim I, IMthLin$, ILno, IPos As Pos
+For Each I In MthIxyzMN(A, Mthn)
+    ILno = I + 1
+    IMthLin = ContLinzML(A, ILno)
+    IPos = PoszSS(IMthLin, Mthn)
+    PushMdPos MdPoseszMM, MdPoszMLP(A, ILno, IPos)
+Next
+End Function
+Sub PushMdPos(O As MdPoses, M As MdPos)
+
+End Sub
+Sub PushMdPoses(O As MdPoses, M As MdPoses)
+Dim J&
+For J = 0 To M.N - 1
+    PushMdPos O, M.Ay(J)
+Next
+End Sub
+
+Function MdPoseszPM(P As VBProject, Mthn) As MdPoses
+Dim M, Md As CodeModule
+For Each M In Itr(MdNyzPPm(P, Mthn))
+    Set Md = M
+    PushMdPoses MdPoseszPM, MdPoseszMM(Md, Mthn)
 Next
 End Function
 
-Sub JmpMth(MthNm$)
-Dim A() As MdPos: A = MdPosAyzMth(MthNm)
-Stop
-Select Case Si(A)
-Case 0: Debug.Print FmtQQ("Mth[?] not found", MthNm)
-Case 1: JmpLinPos A(0)
+Sub JmpMthzP(Pj As VBProject, Mthn)
+Dim A As MdPoses: A = MdPoseszPM(Pj, Mthn)
+Select Case A.N
+Case 0: Debug.Print FmtQQ("Mth[?] not found", Mthn)
+Case 1: JmpMdPos A.Ay(0)
 Case 2:
-    Dim I
-    For Each I In A
-        Debug.Print "JmpLinPos " & LinPosStr(CvLinPos(I))
+    Dim J%
+    For J = 0 To A.N - 1
+        Debug.Print "JmpMdPos " & MdPosStr(A.Ay(J))
     Next
 End Select
+
+End Sub
+Sub JmpMth(Mthn)
+JmpMthzP CPj, Mthn
 End Sub
 
-Function LinPosStr$(A As LinPos)
-With A
-LinPosStr = FmtQQ("Lin ? C1 ? C2 ?", .Lno, .Pos.Cno1, .Pos.Cno1)
-End With
-End Function
-Sub JmpCurMd()
-JmpMd CurMd
+Sub JmpM()
+JmpzM CMd
 End Sub
 
-Sub JmpPj(A As VBProject)
+Sub JmpPj(P As VBProject)
 ClsWin
 Dim Md As CodeModule
-Set Md = FstMd(A)
+Set Md = FstMd(P)
 If IsNothing(Md) Then
     Exit Sub
 End If
@@ -115,21 +118,31 @@ TileVBtn.Execute
 DoEvents
 End Sub
 
-Sub JmpPjMd(A As VBProject, MdNm$)
-ClsWinzExl WinzMd(Md(MdNm))
+Sub JmpzMR(M As CodeModule, R As RRCC)
+JmpzM M
+JmpzRRCC R
 End Sub
 
-Sub JmpMd(A As CodeModule)
+Sub JmpMd(Mdnn$)
+Dim MdAy() As CodeModule: MdAy = MdAyzNN(Mdnn)
+Dim I
+For Each I In Itr(MdAy)
+    JmpzM CvMd(I)
+Next
+ClsWinOfExlAp WinAyzMdAy(MdAy)
+BtnOf TileV.Execute
+End Sub
+
+Sub JmpzM(A As CodeModule)
 A.CodePane.Show
 End Sub
 
-Sub JmpCls(ClsNm$)
+Sub JmpCls(Clsn$)
 End Sub
 
-
-Sub JmpCmp(CmpNm$)
-ClsWinzExlCmpOoImm CmpNm
-ShwCmp CmpNm
+Sub JmpCmp(Cmpn$)
+ClsWinOfExlCmpOoImm Cmpn
+ShwCmp Cmpn
 TileV
 End Sub
 

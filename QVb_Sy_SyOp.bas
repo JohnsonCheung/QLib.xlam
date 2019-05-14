@@ -23,10 +23,10 @@ For Each I In Itr(Sy)
 Next
 End Function
 
-Function RmvPfxzSy(Sy$(), Pfx$) As String()
+Function RmvPfxzAy(Sy$(), Pfx$) As String()
 Dim I
 For Each I In Itr(Sy)
-    PushI RmvPfxzSy, RmvPfx(CStr(I), Pfx)
+    PushI RmvPfxzAy, RmvPfx(CStr(I), Pfx)
 Next
 End Function
 
@@ -62,7 +62,7 @@ End Function
 Function RplSy(Sy$(), Fm$, By$, Optional Cnt& = 1) As String()
 Dim I
 For Each I In Itr(Sy)
-    PushS RplSy, Replace(I, Fm, By, Count:=Cnt)
+    PushI RplSy, Replace(I, Fm, By, Count:=Cnt)
 Next
 End Function
 Function Rmv2DashzSy(Sy$()) As String()
@@ -72,15 +72,15 @@ For Each I In Itr(Sy)
 Next
 End Function
 
-Function RplStarzSy(Sy$(), By$) As String()
+Function RplStarzSy(Sy$(), By) As String()
 Dim I
 For Each I In Itr(Sy)
     PushI RplStarzSy, Replace(I, By, "*")
 Next
 End Function
 
-Function RplT1zSy(Sy$(), NewT1$) As String()
-RplT1zSy = AddPfxzSy(RmvT1zSy(Sy), NewT1 & " ")
+Function RplT1zSy(Sy$(), NewT1) As String()
+RplT1zSy = AddPfxzAy(RmvT1zSy(Sy), NewT1 & " ")
 End Function
 
 Function AddIxPfx(Sy$(), Optional BegFm&) As String()
@@ -93,10 +93,10 @@ For Each I In Itr(Sy)
 Next
 End Function
 
-Function T1Sy(Sy$()) As String()
+Function T1Ay(Sy$()) As String()
 Dim I
 For Each I In Itr(Sy)
-    PushI T1Sy, T1(CStr(I))
+    PushI T1Ay, T1(CStr(I))
 Next
 End Function
 

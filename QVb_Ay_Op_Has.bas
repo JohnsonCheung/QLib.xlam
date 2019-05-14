@@ -18,11 +18,10 @@ For Each I In Ay
 Next
 End Function
 
-Function HasEleS(Sy$(), StrEle$, Optional Cas As EmCas) As Boolean
-Dim I, S$
-For Each I In Sy
-    S = I
-    If IsEqStr(S, StrEle, Cas) Then HasEleS = True: Exit Function
+Function HasEleS(Ay, StrEle$, Optional C As VbCompareMethod = vbBinaryCompare) As Boolean
+Dim I
+For Each I In Itr(Ay)
+    If IsEqStr(I, StrEle, C) Then HasEleS = True: Exit Function
 Next
 End Function
 Function HasEle(Ay, Ele) As Boolean

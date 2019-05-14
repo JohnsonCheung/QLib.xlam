@@ -4,8 +4,8 @@ Private Const CMod$ = "MVb_Ay."
 Private Const Asm$ = "QVb"
 Public Const DoczStmt$ = "Stmt is a string between StmtBrkPatn"
 Public Const StmtBrkPatn$ = "(\.  |\r\n|\r)"
-Public Const DoczSsLin$ = "Spc-Sep-Lin.  SplitSpc after trim and rmvDblSpc."
-Public Const DoczSsl$ = "Spc-Sep-Lin-Escaped.  SpcSepStrRev each ele after SyzSsLin"
+Public Const DoczSsLin = "Spc-Sep-Lin.  SplitSpc after trim and rmvDblSpc."
+Public Const DoczSsl$ = "Spc-Sep-Lin-Escaped.  SpcSepStrRev each ele after SyzSS"
 
 Sub AsgAp(Ay, ParamArray OAp())
 Dim J%, OAv()
@@ -16,7 +16,7 @@ Next
 End Sub
 
 Sub AsgT1SyRestSy(Sy$(), OT1Sy$(), ORestSy$())
-OT1Sy = T1Sy(Sy)
+OT1Sy = T1Ay(Sy)
 ORestSy = RmvT1zSy(Sy)
 End Sub
 
@@ -39,9 +39,12 @@ Dup = AywDup(Ay)
 If Si(Dup) = 0 Then Exit Function
 PushI ChkDup, FmtQQ(QMsg, JnSpc(Dup))
 End Function
-
-Function DupT1(Sy$()) As String()
-DupT1 = CvSy(AywDup(T1Sy(Sy)))
+Function LyzVbl(Vbl) As String()
+LyzVbl = SplitVBar(Vbl)
+End Function
+Function DupT1Ay(Ly$(), Optional C As VbCompareMethod = vbTextCompare) As String()
+Dim A$(): A = T1Ay(Ly)
+DupT1Ay = AywDup(A, C)
 End Function
 
 Function ChkAyEmp(Ay, Msg$) As String()
@@ -96,8 +99,8 @@ End Function
 
 Private Sub Z_AyFlat()
 Dim AyOfAy()
-AyOfAy = Array(SyzSsLin("a b c d"), SyzSsLin("a b c"))
-Ept = SyzSsLin("a b c d a b c")
+AyOfAy = Array(SyzSS("a b c d"), SyzSS("a b c"))
+Ept = SyzSS("a b c d a b c")
 GoSub Tst
 Exit Sub
 Tst:
@@ -117,6 +120,13 @@ For Each X In Itr(Ay)
     If X = M Then O = O + 1
 Next
 AyItmCnt = O
+End Function
+
+Function AywPfx(Ay, Pfx) As String()
+Dim I
+For Each I In Itr(Ay)
+    If HasPfx(I, Pfx) Then PushI AywPfx, I
+Next
 End Function
 
 Function AywLasN(Ay, N)
@@ -160,9 +170,9 @@ Function NxtNm$(Ny$(), Optional MaxN% = 0)
 Stop
 End Function
 
-Function NxtFn$(Fn$, FnSy$(), Optional MaxN% = 999)
-If Not HasEle(FnSy, Fn) Then NxtFn = Fn: Exit Function
-NxtFn = MaxzAy(SywLik(FnSy, Fn & "(???)"))
+Function NxtFn$(Fn$, FnAy$(), Optional MaxN% = 999)
+If Not HasEle(FnAy, Fn) Then NxtFn = Fn: Exit Function
+NxtFn = MaxzAy(SywLik(FnAy, Fn & "(???)"))
 End Function
 
 Function ItrzLines(Lines$)
@@ -231,8 +241,8 @@ Next
 ReverseOy = O
 End Function
 
-Function RplAyzMid(Ay, B As FTIx, ByAy)
-Dim M As AyABC: Set M = AyabcByFTIx(Ay, B)
+Function RplAyzMid(Ay, B As FEIx, ByAy)
+Dim M As Ayabc: Set M = AyabcByFEIx(Ay, B)
 RplAyzMid = AddAyAp(M.A, ByAy, M.C)
 End Function
 
@@ -265,8 +275,8 @@ For Each X In Itr(Ay)
 Next
 Set SeqCntDic = O
 End Function
-SqHzN
-Function SqzAyH(Ay) As Variant()
+
+Function Sqh(Ay) As Variant()
 Dim N&: N = Si(Ay)
 If N = 0 Then Exit Function
 Dim J&, V
@@ -276,10 +286,10 @@ For Each V In Ay
     J = J + 1
     O(1, J) = V
 Next
-SqzAyH = O
+Sqh = O
 End Function
 
-Function SqzAyV(Ay) As Variant()
+Function Sqv(Ay) As Variant()
 Dim N&: N = Si(Ay)
 If N = 0 Then Exit Function
 Dim J&, V
@@ -289,10 +299,10 @@ For Each V In Ay
     J = J + 1
     O(J, 1) = V
 Next
-SqzAyV = O
+Sqv = O
 End Function
 
-Function AywT1SelRst(Sy$(), T1$) As String()
+Function AywT1SelRst(Sy$(), T1) As String()
 AywT1SelRst = RmvT1zSy(AywT1(Sy, T1))
 End Function
 
@@ -323,12 +333,12 @@ For Each I In Ay
 Next
 MaxzAy = O
 End Function
-Function WdtzSy%(Sy$())
-Dim O%, J&
-For J = 0 To UB(Sy)
-    O = Max(O, Len(Sy(J)))
+Function WdtzAy%(Ay)
+Dim O%, V
+For Each V In Itr(Ay)
+    O = Max(O, Len(V))
 Next
-WdtzSy = O
+WdtzAy = O
 End Function
 
 Sub WrtAy(Ay, Ft$, Optional OvrWrt As Boolean)
@@ -349,7 +359,7 @@ For Each I In Itr(Sy)
     PushI SyEnsSfx, EnsSfx(CStr(I), Sfx)
 Next
 End Function
-Function StmtLy(StmtLin$) As String()
+Function StmtLy(StmtLin) As String()
 StmtLy = SyEnsSfxDot(AyLTrim(Split(StmtLin, ". ")))
 End Function
 Function AyZip(A1, A2) As Variant()
@@ -418,7 +428,7 @@ Dim ODry()
 AyZip_Ap = ODry
 End Function
 
-Function StrAddSy(S$, Sy$()) As String()
+Function StrAddSy(S, Sy$()) As String()
 StrAddSy = CvSy(ItmAddAy(S, Sy))
 End Function
 
@@ -429,7 +439,7 @@ End Function
 
 Private Sub ZZZ_AyabcByFmTo()
 Dim Ay(): Ay = Array(1, 2, 3, 4)
-Dim Act As AyABC: Act = AyabcByFmTo(Ay, 1, 2)
+Dim Act As Ayabc: Act = AyabcByFmTo(Ay, 1, 2)
 Ass IsEqAy(Act.A, Array(1))
 Ass IsEqAy(Act.B, Array(2, 3))
 Ass IsEqAy(Act.C, Array(4))
@@ -460,11 +470,11 @@ Ay1 = Array(1, 2, 2, 2, 4, 5)
 Ay2 = Array(2, 2)
 Act = MinusAy(Ay1, Ay2)
 Exp = Array(1, 2, 4, 5)
-ThwIfNE Exp, Act
+ThwIf_NE Exp, Act
 '
 Act = MinusAyAp(Array(1, 2, 2, 2, 4, 5), Array(2, 2), Array(5))
 Exp = Array(1, 2, 4)
-ThwIfNE Exp, Act
+ThwIf_NE Exp, Act
 End Sub
 
 Private Sub ZZ_AyeEmpEleAtEnd()
@@ -503,10 +513,10 @@ Private Sub Z_ChkEqAy()
 DmpAy ChkEqAy(Array(1, 2, 3, 3, 4), Array(1, 2, 3, 4, 4))
 End Sub
 
-Private Sub Z_AyabcByFTIxIx()
+Private Sub Z_AyabcByFEIxIx()
 Dim Ay(): Ay = Array(1, 2, 3, 4)
-Dim M As FTIx: M = FTIx(1, 2)
-Dim Act As AyABC: Act = AyabcByFTIx(Ay, M)
+Dim M As FEIx: M = FEIx(1, 2)
+Dim Act As Ayabc: Act = AyabcByFEIx(Ay, M)
 Ass IsEqAy(Act.A, Array(1))
 Ass IsEqAy(Act.B, Array(2, 3))
 Ass IsEqAy(Act.C, Array(4))
@@ -550,11 +560,11 @@ Ay1 = Array(1, 2, 2, 2, 4, 5)
 Ay2 = Array(2, 2)
 Act = MinusAy(Ay1, Ay2)
 Exp = Array(1, 2, 4, 5)
-ThwIfAyabNE Exp, Act
+ThwIf_AyabNE Exp, Act
 '
 Act = MinusAyAp(Array(1, 2, 2, 2, 4, 5), Array(2, 2), Array(5))
 Exp = Array(1, 2, 4)
-ThwIfAyabNE Exp, Act
+ThwIf_AyabNE Exp, Act
 End Sub
 
 Private Sub Z_SyzAy()
@@ -585,9 +595,9 @@ PushI Dry, Array()
 End Sub
 
 
-Private Sub Z()
+Private Sub ZZ()
 Z_AyFlat
-Z_AyabcByFTIxIx
+Z_AyabcByFEIxIx
 Z_HasEleDupEle
 Z_ChkEqAy
 Z_MinusAy
@@ -600,7 +610,7 @@ Private Sub Z_AddPfxzSslIn()
 Dim Ssl$, Exp$(), Pfx$
 Ssl = "B C D"
 Pfx = "A"
-Exp = SyzSsLin("AB AC AD")
+Exp = SyzSS("AB AC AD")
 GoSub Tst
 Exit Sub
 Tst:
@@ -610,15 +620,15 @@ Tst:
 Return
 End Sub
 
-Function AddPfxzSslIn(Pfx$, SsLin$) As String()
-AddPfxzSslIn = AddPfxzSy(SyzSsLin(SsLin), Pfx)
+Function AddPfxzSslIn(Pfx$, SsLin) As String()
+AddPfxzSslIn = AddPfxzAy(SyzSS(SsLin), Pfx)
 End Function
 
-Function ItrzSsLin(SsLin$)
-Asg Itr(SyzSsLin(SsLin)), ItrzSsLin
+Function ItrzSsLin(SsLin)
+Asg Itr(SyzSS(SsLin)), ItrzSsLin
 End Function
 
-Function SpcSepStr$(S$)
+Function SpcSepStr$(S)
 If S = "" Then SpcSepStr = ".": Exit Function
 SpcSepStr = QuoteSqIf(EscSqBkt(SlashCrLf(EscBackSlash(S))))
 End Function
@@ -640,18 +650,15 @@ SslzDrv = JnSpc(O)
 End Function
 Function SyzSsl(Ssl$) As String()
 Dim I
-For Each I In SyzSsLin(Ssl)
+For Each I In SyzSS(Ssl)
     PushI SyzSsl, RevSpcSepStr(CStr(I))
 Next
 End Function
-Function AftNSsv$(SsLin$, N%)
-Dim O$: O = SsLin
-For J = 0 To N - 1
-    O = RmvSsv(O)
-Next
+Function ItrzSS(SS)
+Asg SyzSS(SS), ItrzSS
 End Function
-Function SyzSsLin(SsLin$) As String()
-SyzSsLin = SplitSpc(RplDblSpc(Trim(SsLin)))
+Function SyzSS(SS) As String()
+SyzSS = SplitSpc(RplDblSpc(Trim(SS)))
 End Function
 
 Function IntSeq(N&, Optional Fm% = 0) As Integer()
@@ -661,5 +668,9 @@ Dim J&
         O(J) = J + Fm
     Next
 IntSeq = O
+End Function
+
+Function ItrzTT(TT$)
+Asg Itr(TermAy(TT)), ItrzTT
 End Function
 

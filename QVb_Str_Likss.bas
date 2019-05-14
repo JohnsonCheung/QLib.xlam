@@ -3,13 +3,13 @@ Option Explicit
 Private Const CMod$ = "MVb_Str_Likss."
 Private Const Asm$ = "QVb"
 Function StrLikss(A, Likss) As Boolean
-StrLikss = StrLikAy(A, SyzSsLin(Likss))
+StrLikss = StrLikSy(A, SyzSS(Likss))
 End Function
 
-Function StrLikAy(A, LikeAy$()) As Boolean
+Function StrLikSy(A, LikeAy$()) As Boolean
 Dim I
 For Each I In Itr(LikeAy)
-    If A Like I Then StrLikAy = True: Exit Function
+    If A Like I Then StrLikSy = True: Exit Function
 Next
 End Function
 
@@ -20,7 +20,7 @@ For Each Likss In LikssAy
 Next
 End Function
 
-Private Sub Z_T1zT1LikTLinAy()
+Private Sub Z_T1zT1LikTLiny()
 Dim A$(), Nm$
 GoSub T1
 GoSub T2
@@ -36,25 +36,25 @@ T2:
     Ept = "a"
     GoTo Tst
 Tst:
-    Act = T1zT1LikTLinAy(A, Nm)
+    Act = T1zT1LikTLiny(A, Nm)
     C
     Return
 End Sub
 
-Function T1zT1LikTLinAy$(T1LikTLinAy$(), Nm)
+Function T1zT1LikTLiny$(T1LikTLiny$(), Nm)
 Dim L, T1$
-If Si(T1LikTLinAy) = 0 Then Exit Function
-For Each L In T1LikTLinAy
-    T1 = ShfT1(L)
+If Si(T1LikTLiny) = 0 Then Exit Function
+For Each L In T1LikTLiny
+    'T1 = ShfT1(L)
     If StrLikss(Nm, L) Then
-        T1zT1LikTLinAy = T1
+        T1zT1LikTLiny = T1
         Exit Function
     End If
 Next
 End Function
 
 
-Private Sub Z()
-Z_T1zT1LikTLinAy
+Private Sub ZZ()
+Z_T1zT1LikTLiny
 MVb_Str_Likss:
 End Sub

@@ -3,148 +3,117 @@ Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Pj."
 
-Sub ThwIfCompileBtn(NEPjNm$)
-Dim Act$, Ept$
-Act = CompileBtn.Caption
-Ept = "Compi&le " & NEPjNm
-If Act <> Ept Then Thw CSub, "Cur CompileBtn.Caption <> Compi&le {PjNm}", "Compile-Btn-Caption PjNm Ept-Btn-Caption", Act, NEPjNm, Ept
-End Sub
 Function CvPj(I) As VBProject
 Set CvPj = I
 End Function
 
-Function IsPjNm(A) As Boolean
-IsPjNm = HasEle(PjNyInVbe, A)
+Function IsPjn(A) As Boolean
+IsPjn = HasEle(PjNyInVbe, A)
 End Function
 
-Function Pj(PjNm) As VBProject
-Set Pj = CurVbe.VBProjects(PjNm)
+Function Pj(Pjn) As VBProject
+Set Pj = CVbe.VBProjects(Pjn)
 End Function
 
 Sub RmvPj(Pj As VBProject)
 Const CSub$ = CMod & "RmvPj"
 On Error GoTo X
-Dim PjNm$: PjNm = Pj.Name
+Dim Pjn$: Pjn = Pj.Name
 Pj.Collection.Remove Pj
 Exit Sub
 X:
 Dim E$: E = Err.Description
-WarnLin CSub, FmtQQ("Cannot remove Pj[?] Er[?]", PjNm, E)
+WarnLin CSub, FmtQQ("Cannot remove Pj[?] Er[?]", Pjn, E)
 End Sub
-Function StrzCurPjf$()
-StrzCurPjf = LineszFt(PjfPj)
+Function StrOfPjfP$()
+StrOfPjfP = LineszFt(PjfP)
 End Function
-Function PjfPj$()
-PjfPj = Pjf(CurPj)
+Function PjfP$()
+PjfP = Pjf(CPj)
 End Function
-Function PjPth$(A As VBProject)
-PjPth = Pth(Pjf(A))
+Function PthP$()
+PthP = Pjp(CPj)
 End Function
-Function Pjfn$(A As VBProject)
-Pjfn = Fn(Pjf(A))
+Function PjpP$()
+PjpP = Pjp(CPj)
 End Function
-Function PjfyC() As String()
-PjfyC = Pjfy(CurVbe)
+Function Pjp$(P As VBProject)
+Pjp = Pth(Pjf(P))
+End Function
+Function Pjfn$(P As VBProject)
+Pjfn = Fn(Pjf(P))
+End Function
+Function PjfyV() As String()
+PjfyV = PjfyzV(CVbe)
 End Function
 
-Function PjFfnSy(A As Vbe) As String()
+Function PjfyzV(A As Vbe) As String()
 Dim P As VBProject
 For Each P In A.VBProjects
-    PushNonBlank PjFfnSy, Pjf(P)
+    PushNonBlank PjfyzV, Pjf(P)
 Next
 End Function
-Function PjFnSyC() As String()
-PjFnSyC = PjFnSy(CurVbe)
+Function PjfnAyV() As String()
+PjfnAyV = PjfnAyzV(CVbe)
 End Function
-Function PjFnSy(A As Vbe) As String()
-PjFnSy = FnSyzFfnSy(PjFfnSy(A))
+Function PjfnAyzV(A As Vbe) As String()
+PjfnAyzV = FnAyzFfny(PjfyzV(A))
 End Function
 
-Function PjfzPj(A As VBProject)
-PjfzPj = Pjf(A)
+Function Pjf$(P As VBProject)
+Pjf = PjfzP(P)
 End Function
-Function WbnzPj$(A As VBProject)
 
-End Function
-Function PjfC$()
-PjfC = Pjf(CurPj)
-End Function
-Function Pjf$(A As VBProject)
+Function PjfzP$(P As VBProject)
 On Error GoTo X
-Pjf = A.Filename
+PjfzP = P.Filename
 Exit Function
-X: Debug.Print FmtQQ("Cannot get Pjf for Pj(?) of Wbn(?). Err[?]", A.Name, WbnzPj(A), Err.Description)
+X: Debug.Print FmtQQ("Cannot get Pjf for Pj(?). Err[?]", P.Name, Err.Description)
 End Function
 
-Function PjFnn$(A As VBProject)
-PjFnn = Fnn(Pjf(A))
+Function PjFnn$(P As VBProject)
+PjFnn = Fnn(Pjf(P))
 End Function
 
-Function IsUsrLibPj(A As VBProject) As Boolean
-IsUsrLibPj = IsFxa(Pjf(A))
+Function MdzPN(P As VBProject, Mdn) As CodeModule
+Set MdzPN = P.VBComponents(Mdn).CodeModule
 End Function
 
-Function MdzPj(A As VBProject, Nm) As CodeModule
-Set MdzPj = A.VBComponents(Nm).CodeModule
-End Function
-
-Sub Compile()
-CompilePj CurPj
+Sub ActPj(P As VBProject)
+Set P.Collection.Vbe.ActiveVBProject = P
 End Sub
 
-Sub CompilePj(A As VBProject)
-JmpPj A
-ThwIfCompileBtn A.Name
-With CompileBtn
-    If .Enabled Then
-        .Execute
-        Debug.Print A.Name, "<--- Compiled"
-    Else
-        Debug.Print A.Name, "already Compiled"
-    End If
-End With
-TileVBtn.Execute
-SavBtn.Execute
-End Sub
-
-Sub ActPj(A As VBProject)
-Set A.Collection.Vbe.ActiveVBProject = A
-End Sub
-
-Sub SavPj(A As VBProject)
+Sub SavPj(P As VBProject)
 Const CSub$ = CMod & "SavPj"
-If A.Saved Then
-    Debug.Print FmtQQ("SavPj: Pj(?) is already saved", A.Name)
+If P.Saved Then
+    Debug.Print FmtQQ("SavPj: Pj(?) is already saved", P.Name)
     Exit Sub
 End If
 'Chk Vbe
     Dim Vbe As Vbe
-    Set Vbe = A.Collection.Vbe
-    If ObjPtr(Vbe.ActiveVBProject) <> ObjPtr(A) Then Stop: Exit Sub
+    Set Vbe = P.Collection.Vbe
+    If ObjPtr(Vbe.ActiveVBProject) <> ObjPtr(P) Then Stop: Exit Sub
 Dim Fnn$
-    Fnn = PjFnn(A)
+    Fnn = PjFnn(P)
     If Fnn = "" Then
-        Thw CSub, "Pj file name is blank.  The pj needs to saved first in order to have a pj file name", "Pj", A.Name
+        Thw CSub, "Pj file name is blank.  The pj needs to saved first in order to have a pj file name", "Pj", P.Name
     End If
-ActPj A
-'Chk SavBtn
-    Dim B As CommandBarButton: Set B = SavBtn(Vbe)
+ActPj P
+'Chk BtnOfSav
+    Dim B As CommandBarButton: Set B = BtnOfSav(Vbe)
     If B.Caption <> "&Save " & Fnn Then Thw CSub, "Caption is not expected", "Save-Bottun-Caption Expected", B.Caption, "&Save " & Fnn
 B.Execute '<===== Save
-If A.Saved Then
-    Debug.Print FmtQQ("SavPj: Pj(?) is saved <---------------", A.Name)
+If P.Saved Then
+    Debug.Print FmtQQ("SavPj: Pj(?) is saved <---------------", P.Name)
 Else
-    Debug.Print FmtQQ("SavPj: Pj(?) cannot be saved for unknown reason <=================================", A.Name)
+    Debug.Print FmtQQ("SavPj: Pj(?) cannot be saved for unknown reason <=================================", P.Name)
 End If
 End Sub
 
 Private Sub ZZ_SavPj()
-SavPj CurPj
+SavPj CPj
 End Sub
 
-Private Sub Z_PjCompile()
-CompilePj CurPj
-End Sub
 
 Private Sub ZZ()
 Dim A$
@@ -152,30 +121,28 @@ Dim B As Variant
 Dim C As VBProject
 Dim D As Dictionary
 Dim E As vbext_ComponentType
-ThwIfCompileBtn A
+ThwIf_BtnOfCompile A
 CvPj B
-IsPjNm B
+IsPjn B
 Pj B
-IsUsrLibPj C
-MdzPj C, B
-NModzPj C
+NModzP C
 End Sub
-Function IsProtectzInf(A As VBProject) As Boolean
-If Not IsProtect(A) Then Exit Function
-InfLin CSub, FmtQQ("Skip protected Pj{?)", A.Name)
-IsProtectzInf = True
+Function IsProtectzvInf(P As VBProject) As Boolean
+If Not IsProtect(P) Then Exit Function
+InfLin CSub, FmtQQ("Skip protected Pj{?)", P.Name)
+IsProtectzvInf = True
 End Function
-Function IsProtect(A As VBProject) As Boolean
-IsProtect = A.Protection = vbext_pp_locked
+Function IsProtect(P As VBProject) As Boolean
+IsProtect = P.Protection = vbext_pp_locked
 End Function
 
-Sub BrwPthPj()
-BrwPth PthPj
+Sub BrwPjp()
+BrwPth PjpP
 End Sub
 
-Function FstMd(A As VBProject) As CodeModule
+Function FstMd(P As VBProject) As CodeModule
 Dim Cmp As VBComponent
-For Each Cmp In A.VBComponents
+For Each Cmp In P.VBComponents
     If IsMd(CvCmp(Cmp)) Then
         Set FstMd = Cmp.CodeModule
         Exit Function
@@ -183,9 +150,9 @@ For Each Cmp In A.VBComponents
 Next
 End Function
 
-Function FstMod(A As VBProject) As CodeModule
+Function FstMod(P As VBProject) As CodeModule
 Dim Cmp As VBComponent
-For Each Cmp In A.VBComponents
+For Each Cmp In P.VBComponents
     If IsMod(Cmp) Then
         Set FstMod = Cmp.CodeModule
         Exit Function
@@ -193,6 +160,6 @@ For Each Cmp In A.VBComponents
 Next
 End Function
 
-Function IsFbaPj(A As VBProject) As Boolean
-IsFbaPj = IsFba(Pjf(A))
+Function IsFbaPj(P As VBProject) As Boolean
+IsFbaPj = IsFba(Pjf(P))
 End Function

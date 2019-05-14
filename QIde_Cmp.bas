@@ -2,43 +2,40 @@ Attribute VB_Name = "QIde_Cmp"
 Option Explicit
 Private Const CMod$ = "MIde_Cmp."
 Private Const Asm$ = "QIde"
-Function Cmp(CmpNm$) As VBComponent
-Set Cmp = CurPj.VBComponents(CmpNm)
+Function PjzC(A As VBComponent) As VBProject
+Set PjzC = A.Collection.Parent
+End Function
+Function HasCmp(Cmpn) As Boolean
+HasCmp = HasCmpzPN(CPj, Cmpn)
+End Function
+Function HasCmpzPN(P As VBProject, Cmpn) As Boolean
+If IsProtectzvInf(P) Then Exit Function
+HasCmpzPN = HasItn(P.VBComponents, Cmpn)
+End Function
+Function PjnzC$(A As VBComponent)
+PjnzC = PjzC(A).Name
 End Function
 
-Function PjzCmp(A As VBComponent) As VBProject
-Set PjzCmp = A.Collection.Parent
-End Function
-
-Function HasCmpzPj(A As VBProject, CmpNm$) As Boolean
-If IsProtect(A) Then Exit Function
-HasCmpzPj = HasItn(A.VBComponents, CmpNm)
-End Function
-Function PjNmzCmp$(A As VBComponent)
-PjNmzCmp = PjzCmp(A).Name
-End Function
-
-Property Get CurCmp() As VBComponent
-Set CurCmp = CurMd.Parent
+Property Get CCmp() As VBComponent
+Set CCmp = CMd.Parent
 End Property
 
 Function CvCmp(A) As VBComponent
 Set CvCmp = A
 End Function
 
-Private Function HasCmpzPjTy(A As VBProject, Nm$, Ty As vbext_ComponentType) As Boolean
+Private Function HasCmpzPTN(P As VBProject, Ty As vbext_ComponentType, Cmpn) As Boolean
 Dim T As vbext_ComponentType
-If Not HasItn(A.VBComponents, Nm) Then Exit Function
-T = A.VBComponents(Nm).Type
-If T = Ty Then HasCmpzPjTy = True: Exit Function
-Thw CSub, "Pj has Cmp not as expected type", "PjNmzCmp EptTy ActTy", A.Name, Nm, ShtCmpTy(Ty), ShtCmpTy(T)
+If Not HasCmpzPN(P, Cmpn) Then Exit Function
+T = CmpTyzPN(P, Cmpn)
+If T = Ty Then HasCmpzPTN = True: Exit Function
+Thw CSub, "Pj has Cmp not as expected type", "PjnzC EptTy ActTy", P.Name, Cmpn, ShtCmpTy(Ty), ShtCmpTy(T)
 End Function
 
-
-Function MdAyzCmp(A() As VBComponent) As CodeModule()
+Function MdAyzC(CmpAy() As VBComponent) As CodeModule()
 Dim I
-For Each I In Itr(A)
-    PushObj MdAyzCmp, CvCmp(I).CodeModule
+For Each I In Itr(CmpAy)
+    PushObj MdAyzC, CvCmp(I).CodeModule
 Next
 End Function
 

@@ -2,21 +2,21 @@ Attribute VB_Name = "QIde_Mth_Rmk"
 Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Mth_Rmk."
-Sub UnRmkMth(A As CodeModule, MthNm$)
-UnRmkMdzFTIxAy A, MthCxtFTIxAy(Src(A), MthNm)
+Sub UnRmkMth(A As CodeModule, Mthn)
+UnRmkMdzFEIxs A, MthCxtFEIxs(Src(A), Mthn)
 End Sub
 
-Sub RmkMth(A As CodeModule, MthNm$)
-RmkMdzFTIxAy A, MthCxtFTIxAy(Src(A), MthNm)
+Sub RmkMth(A As CodeModule, Mthn)
+RmkMdzFEIxs A, MthCxtFEIxs(Src(A), Mthn)
 End Sub
 
 Private Sub ZZ_RmkMth()
-Dim Md As CodeModule, MthNm$
+Dim Md As CodeModule, Mthn
 '            Ass LineszVbl(MthLines(M)) = "Property Get ZZA()|End Property||Property Let YYA(V)||End Property"
 'RmkMth M:   Ass LineszVbl(MthLines(M)) = "Property Get ZZA()|Stop '|End Property||Property Let YYA(V)|Stop '|'|End Property"
 'UnRmkMth M: Ass LineszVbl(MthLines(M)) = "Property Get ZZA()|End Property||Property Let YYA(V)||End Property"
 End Sub
-Function NxtMdLno&(A As CodeModule, Lno&)
+Function NxtMdLno(A As CodeModule, Lno)
 Const CSub$ = CMod & "NxtMdLno"
 Dim J&
 For J = Lno To A.CountOfLines
@@ -25,43 +25,44 @@ For J = Lno To A.CountOfLines
         Exit Function
     End If
 Next
-Thw CSub, "All line From Lno has _ as LasChr", "Lno Md Src", Lno, MdNm(A), AddIxPfx(Src(A), 1)
+Thw CSub, "All line From Lno has _ as LasChr", "Lno Md Src", Lno, Mdn(A), AddIxPfx(Src(A), 1)
 End Function
 
-Sub UnRmkMdzFTIxAy(A As CodeModule, B() As FTIx)
-Dim I
-For Each I In Itr(B)
-    UnRmkMdzFTIx A, CvFTIx(I)
+Sub UnRmkMdzFEIxs(A As CodeModule, B As FEIxs)
+Dim J&
+For J = 0 To B.N - 1
+    UnRmkMdzFEIx A, B.Ay(J)
 Next
 End Sub
 
-Sub UnRmkMdzFTIx(A As CodeModule, B As FTIx)
-If Not IsRmkedzSrc(LyzMdFTIx(A, B)) Then Exit Sub
+Sub UnRmkMdzFEIx(A As CodeModule, B As FEIx)
+'If Not IsRmkedzSrc(LyzMdFEIx(A, B)) Then Exit Sub
+Stop
 Dim J%, L$
-For J = NxtMdLno(A, B.FmNo) To B.ToNo - 1
+'For J = NxtMdLno(A, B.FmNo) To B.ToNo - 1
     L = A.Lines(J, 1)
     If Left(L, 1) <> "'" Then Stop
     A.ReplaceLine J, Mid(L, 2)
+'Next
+End Sub
+
+Sub RmkMdzFEIxs(A As CodeModule, B As FEIxs)
+Dim J%
+For J = 0 To B.N - 1
+    RmkMdzFEIx A, B.Ay(J)
 Next
 End Sub
 
-Sub RmkMdzFTIxAy(A As CodeModule, B() As FTIx)
+Sub RmkMdzFEIx(A As CodeModule, B As FEIx)
+If IsRmkedzMdFEIx(A, B) Then Exit Sub
 Dim J%
-For J = 0 To UB(B)
-    RmkMdzFTIx A, B(J)
-Next
-End Sub
-
-Sub RmkMdzFTIx(A As CodeModule, B As FTIx)
-If IsRmkedzMdFTIx(A, B) Then Exit Sub
-Dim J%
-For J = 0 To UB(B)
+'For J = 0 To UB(B)
     A.ReplaceLine J, "'" & A.Lines(J, 1)
-Next
+'Next
 End Sub
 
-Function IsRmkedzMdFTIx(A As CodeModule, B As FTIx) As Boolean
-IsRmkedzMdFTIx = IsRmkedzSrc(LyzMdFTIx(A, B))
+Function IsRmkedzMdFEIx(A As CodeModule, B As FEIx) As Boolean
+'IsRmkedzMdFEIx = IsRmkedzSrc(LyzMdFEIx(A, B))
 End Function
 
 Function IsRmkedzSrc(A$()) As Boolean
@@ -74,31 +75,32 @@ Next
 IsRmkedzSrc = True
 End Function
 
-Function MthCxtFTIx(Src$(), MthFTIx As FTIx) As FTIx
-Set MthCxtFTIx = FTIx(NxtSrcIx(Src, MthFTIx.FmIx), MthFTIx.ToIx - 1)
+Function MthCxtFEIx(Src$(), MthFEIx As FEIx) As FEIx
+MthCxtFEIx = FEIx(NxtSrcIx(Src, MthFEIx.FmIx), MthFEIx.EIx - 1)
 End Function
 
 Function MthCxtLy(MthLy$()) As String()
-MthCxtLy = CvSy(AywFTIx(MthLy, FTIx(1, Si(MthLy))))
+MthCxtLy = CvSy(AywFEIx(MthLy, FEIx(1, Si(MthLy))))
 End Function
 
-Function MthCxtFTIxAy(Src$(), MthNm$) As FTIx()
-Dim FTIx
-For Each FTIx In Itr(MthFTIxAyzSrcMth(Src, MthNm))
-    PushObj MthCxtFTIxAy, MthCxtFTIx(Src, CvFTIx(FTIx))
+Function MthCxtFEIxs(Src$(), Mthn) As FEIxs
+Dim A As FEIxs, J&
+A = MthFEIxszSN(Src, Mthn)
+For J = 0 To A.N - 1
+    PushFEIx MthCxtFEIxs, MthCxtFEIx(Src, A.Ay(J))
 Next
 End Function
 
-Private Sub ZZ_MthCxtFTIxAy _
+Private Sub ZZ_MthCxtFEIxs _
  _
 ()
-
+Stop
 Dim I
-For Each I In MthCxtFTIxAy(CurSrc, CurMthNm)
-    With CvFTIx(I)
-        Debug.Print .FmNo, .ToNo
-    End With
-Next
+'For Each I In MthCxtFEIxs(CurSrc, CurMthn)
+    'With CvFEIx(I)
+'        Debug.Print .FmNo, .ToNo
+    'End With
+'Next
 End Sub
 
 

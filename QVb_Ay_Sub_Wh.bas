@@ -54,15 +54,16 @@ End Sub
 
 
 Function AywDistT1(Sy$()) As String()
-AywDistT1 = AywDist(T1Sy(Sy))
+AywDistT1 = AywDist(T1Ay(Sy))
 End Function
 
-Function AywDup(Ay)
+Function AywDup(Ay, Optional C As VbCompareMethod = vbTextCompare)
 Dim O: O = Resi(Ay)
-AywDup = IntozItr(O, CntDic(Ay, EiCntDup).Keys)
+Dim D As Dictionary: Set D = CntDic(Ay, EiCntDup, C)
+AywDup = IntozItr(O, D.Keys)
 End Function
 
-Function AywFmIx(Ay, FmIx&)
+Function AywFmIx(Ay, FmIx)
 Dim O: O = Ay: Erase O
 If 0 <= FmIx And FmIx <= UB(Ay) Then
     Dim J&
@@ -73,15 +74,16 @@ End If
 AywFmIx = O
 End Function
 
-Function AywFT(Ay, FmIx&, ToIx&)
+Function AywFE(Ay, FmIx, EIx)
+AywFE = AywFT(Ay, FmIx, EIx - 1)
+End Function
+
+Function AywFT(Ay, FmIx, ToIx)
 Dim J&
 AywFT = Resi(Ay)
 For J = FmIx To ToIx
     Push AywFT, Ay(J)
 Next
-End Function
-Function SywFT(Sy$(), FmIx&, ToIx&) As String()
-SywFT = CvSy(AywFT(Sy, FmIx, ToIx))
 End Function
 Function AywFstUEle(Ay, U)
 Dim O: O = Ay
@@ -90,30 +92,29 @@ AywFstUEle = O
 End Function
 
 Function AywFstNEle(Ay, N)
-Dim O: O = Ay
-ReDim Preserve O(N - 1)
-AywFstNEle = O
+AywFstNEle = AywFstUEle(Ay, N - 1)
 End Function
 
-Function AywFTIx(Ay, B As FTIx)
-AywFTIx = AywFT(Ay, B.FmIx, B.ToIx)
+Function AywFEIx(Ay, B As FEIx)
+AywFEIx = AywFE(Ay, B.FmIx, B.EIx)
 End Function
-Function IsOutRange(IxAy, U&) As Boolean
+
+Function IsOutRange(Ixy, U&) As Boolean
 Dim Ix
-For Each Ix In Itr(IxAy)
+For Each Ix In Itr(Ixy)
     If 0 > Ix Then IsOutRange = True: Exit Function
     If Ix > U Then IsOutRange = True: Exit Function
 Next
 End Function
-Function AywIxAyzMust(Ay, IxAy&())
-If IsOutRange(IxAy, UB(Ay)) Then Thw CSub, "Some element in IxAy is outsize Ay", "UB(Ay) IxAy", UB(Ay), IxAy
+Function AywIxyzMust(Ay, Ixy&())
+If IsOutRange(Ixy, UB(Ay)) Then Thw CSub, "Some element in Ixy is outsize Ay", "UB(Ay) Ixy", UB(Ay), Ixy
 Dim U&: U = UB(Ay)
 Dim O: O = Resi(Ay)
 Dim Ix
-For Each Ix In Itr(IxAy)
+For Each Ix In Itr(Ixy)
     Push O, Ay(Ix)
 Next
-AywIxAyzMust = O
+AywIxyzMust = O
 End Function
 Function AywInAset(Ay, B As Aset)
 AywInAset = Resi(Ay)
@@ -122,18 +123,18 @@ For Each I In Itr(Ay)
     If Ay.Has(I) Then Push AywInAset, I
 Next
 End Function
-Function AywIxAy(Ay, IxAy&())
-Dim U&: U = UB(IxAy)
+Function AywIxy(Ay, Ixy&())
+Dim U&: U = UB(Ixy)
 Dim O: O = Resi(Ay)
 ReDim Preserve O(U)
 Dim Ix, J&
-For Each Ix In Itr(IxAy)
+For Each Ix In Itr(Ixy)
     If 0 > Ix Or Ix > U Then
         Push O(J), Ay(Ix)
     End If
     J = J + 1
 Next
-AywIxAy = O
+AywIxy = O
 End Function
 
 Function SywLik(Sy$(), Lik$) As String()
@@ -143,12 +144,12 @@ For Each I In Itr(Sy)
 Next
 End Function
 
-Function SywLikAy(Ay, LikeAy$()) As String()
+Function SywLikSy(Ay, LikeAy$()) As String()
 Dim I, Lik
 For Each I In Itr(Ay)
     For Each Lik In LikeAy
         If I Like Lik Then
-            PushI SywLikAy, I
+            PushI SywLikSy, I
             Exit For
         End If
     Next
@@ -159,7 +160,7 @@ IsEmpWhNm = True
 If IsNothing(Ay) Then Exit Function
 With Ay
     If IsNothing(.Re) Then
-        If Si(.ExlLikAy) = 0 Then
+        If Si(.ExlLikSy) = 0 Then
             If Si(.LikeAy) = 0 Then
                 Exit Function
             End If
@@ -232,17 +233,17 @@ Function PredzLikss(Likss$) As IPred
 
 
 End Function
-Function IxAyzAyPatn(Ay, Patn$) As Long()
-IxAyzAyPatn = IxAyzAyRe(Ay, RegExp(Patn))
+Function IxyzAyPatn(Ay, Patn$) As Long()
+IxyzAyPatn = IxyzAyRe(Ay, RegExp(Patn))
 End Function
-Function IxAyzAyRe(Ay, B As RegExp) As Long()
+Function IxyzAyRe(Ay, B As RegExp) As Long()
 If Si(Ay) = 0 Then Exit Function
 Dim I, O&(), J&
 For Each I In Ay
     If B.Test(I) Then Push O, J
     J = J + 1
 Next
-IxAyzAyRe = O
+IxyzAyRe = O
 End Function
 
 Function SywPfx(Sy$(), Pfx$) As String()
@@ -321,19 +322,19 @@ For Each I In Itr(Ay)
     If I <> Ele Then PushI AywRmvEle, I
 Next
 End Function
-Function ItrzSywRmvT1(Sy$(), T1$)
+Function ItrzSywRmvT1(Sy$(), T1)
 Asg Itr(SywRmvT1(Sy, T1)), ItrzSywRmvT1
 End Function
 
 Function ItrzSsLin(Ssl$)
-Asg SyzSsLin(Ssl), ItrzSsLin
+Asg SyzSS(Ssl), ItrzSsLin
 End Function
 
-Function SywRmvT1(Sy$(), T1$) As String()
+Function SywRmvT1(Sy$(), T1) As String()
 SywRmvT1 = RmvT1zSy(AywT1(Sy, T1))
 End Function
 
-Function SywRmvTT(Sy$(), T1$, T2$) As String()
+Function SywRmvTT(Sy$(), T1, T2) As String()
 SywRmvTT = RmvTTzSy(SywTT(Sy, T1, T2))
 End Function
 
@@ -382,7 +383,7 @@ For Each K In D.Keys
 Next
 End Function
 
-Function AywT1(Sy$(), T1$) As String()
+Function AywT1(Ay, T1) As String()
 Dim L$, I
 For Each I In Itr(Sy)
     L = I
@@ -392,7 +393,7 @@ For Each I In Itr(Sy)
 Next
 End Function
 
-Function AywT1InAy(Sy$(), InAy) As String()
+Function AywT1InAy(Ay, InAy) As String()
 If Si(Sy) = 0 Then Exit Function
 Dim O$(), L
 For Each L In Sy
@@ -401,7 +402,7 @@ Next
 AywT1InAy = O
 End Function
 
-Function AywT1SelRst(Sy$(), T1$) As String()
+Function AywT1SelRst(Sy$(), T1) As String()
 Dim I, L$
 For Each I In Itr(Sy)
     L = I
@@ -409,15 +410,15 @@ For Each I In Itr(Sy)
 Next
 End Function
 
-Function SywTT(Sy$(), T1$, T2$) As String()
+Function SywTT(Sy$(), T1, T2) As String()
 Dim I, L$
 For Each I In Itr(Sy)
     L = I
-    If HasTT(L, T1, T2) Then PushS SywTT, L
+    If HasTT(L, T1, T2) Then PushI SywTT, L
 Next
 End Function
 
-Function SywTTSelRst(Sy$(), T1$, T2$) As String()
+Function SywTTSelRst(Sy$(), T1, T2) As String()
 Dim L$, I, X1$, X2$, Rst$
 For Each I In Itr(Sy)
     L = I
@@ -435,7 +436,7 @@ Dim Ay As Variant
 Dim B$
 Dim C As Boolean
 Dim D&
-Dim E As FTIx
+Dim E As FEIx
 Dim F$()
 Dim G As WhNm
 Dim H()
@@ -444,5 +445,3 @@ AywDist Ay, C
 FmtCntDic Ay
 End Sub
 
-Private Sub Z()
-End Sub

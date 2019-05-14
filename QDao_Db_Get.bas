@@ -3,11 +3,11 @@ Option Explicit
 Private Const CMod$ = "MDao_Db_Get."
 Private Const Asm$ = "QDao"
 
-Function LngAyzQ(A As Database, Q$) As Long()
+Function LngAyzQ(A As Database, Q) As Long()
 LngAyzQ = LngAyzRs(Rs(A, Q))
 End Function
 
-Function SyzQ(A As Database, Q$) As String()
+Function SyzQ(A As Database, Q) As String()
 SyzQ = SyzRs(Rs(A, Q))
 End Function
 

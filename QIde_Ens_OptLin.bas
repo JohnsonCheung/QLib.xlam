@@ -3,59 +3,54 @@ Option Explicit
 Option Compare Text
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Ens_OptLin."
-Const OptLinzExplicit$ = "Option Explicit"
-Const OptLinzCmpBin$ = "Option Compare Binary"
-Const OptLinzCmpDb$ = "Option Compare Database"
-Const OptLinzCmpTxt$ = "Option Compare Text"
+Const OptLinOfExplicit$ = "Option Explicit"
+Const OptLinOfCmpBin$ = "Option Compare Binary"
+Const OptLinOfCmpDb$ = "Option Compare Database"
+Const OptLinOfCmpTxt$ = "Option Compare Text"
 
-Sub EnsOptLinPj()
-EnsOptLinzPj CurPj
+Sub EnsOptLinP()
+EnsOptLinzP CPj
 End Sub
 
-Sub EnsMdOptLin()
-EnsOptLinzMd CurMd
+Sub EnsOptLinM()
+EnsOptLinzM CMd
 End Sub
 
-Private Sub EnsOptLinzPj(Pj As VBProject)
+Private Sub EnsOptLinzP(P As VBProject)
 Dim C As VBComponent
-For Each C In Pj.VBComponents
-    EnsOptLinzMd C.CodeModule
+For Each C In P.VBComponents
+    EnsOptLinzM C.CodeModule
 Next
 End Sub
-Private Sub Z_EnsOptLinzMd()
+Private Sub Z_EnsOptLinOfMd()
 Dim Md As CodeModule
-Const MdNm$ = "AA"
+Const Mdn = "AA"
 GoSub Setup
 GoSub T0
 GoSub Clean
 Exit Sub
 T0:
-    Set Md = MdzDNm(MdNm)
+    Set Md = MdzDNm(Mdn)
     GoTo Tst
 Tst:
-    EnsOptLinzMd Md
+    EnsOptLinzM Md
     Return
 Setup:
-    CrtCls MdNm
+    AddCls Mdn
     Return
 Clean:
-    RmvMd MdNm
+    RmvMd Mdn
     Return
 End Sub
-Private Sub EnsOptLinzMd(A As CodeModule)
-RmvOptLin A, OptLinzCmpDb
-RmvOptLin A, OptLinzCmpBin
-EnsOptLin A, OptLinzCmpTxt
-EnsOptLin A, OptLinzExplicit
+Private Sub EnsOptLinzM(A As CodeModule)
+If IsMdOfEmp(A) Then Exit Sub
+DltOptLin A, OptLinOfCmpDb
+DltOptLin A, OptLinOfCmpBin
+EnsOptLin A, OptLinOfCmpTxt
+EnsOptLin A, OptLinOfExplicit
 End Sub
-Private Sub EnsCLibzPj(A As VBProject, Optional B As EmLibNmTy)
-If A.Protection = vbext_pp_locked Then Exit Sub
-Dim C As VBComponent
-For Each C In A.VBComponents
-    EnsCLib C.CodeModule, B
-Next
-End Sub
-Private Sub Z_LnozAftOptzAndImp()
+
+Private Sub Z_LnoOf_AftOpt_AndImpl()
 Dim Md As CodeModule
 GoSub T0
 Exit Sub
@@ -64,43 +59,57 @@ T0:
     Ept = 2&
     GoTo Tst
 Tst:
-    Act = LnozAftOptzAndImpl(Md)
+    Act = LnoOf_AftOpt_AndImpl(Md)
     C
     Return
 End Sub
-Function LnozAftOptzAndImpl&(A As CodeModule)
+Function IxOfAftOptAndImplzS&(Src$())
 Dim Fnd As Boolean, J%, IsOpt As Boolean, L$
-For J = 1 To A.CountOfDeclarationLines
-    L = A.Lines(J, 1)
-    IsOpt = IsOptLinzOrImplzOrBlank(L)
+For J = 0 To UB(Src)
+    L = Src(J)
+    IsOpt = IsLin_OfOpt_OrImpl_OrBlank(L)
     Select Case True
     Case Fnd And IsOpt:
-    Case Fnd: LnozAftOptzAndImpl = J: Exit Function
+    Case Fnd: IxOfAftOptAndImplzS = J: Exit Function
     Case IsOpt: Fnd = True
     End Select
 Next
-LnozAftOptzAndImpl = J
+IxOfAftOptAndImplzS = J
 End Function
 
-Private Function OptLno%(A As CodeModule, OptLin$)
+Function LnoOf_AftOpt_AndImpl&(A As CodeModule)
+Dim Fnd As Boolean, J%, IsOpt As Boolean, L$
+For J = 1 To A.CountOfDeclarationLines
+    L = A.Lines(J, 1)
+    IsOpt = IsLin_OfOpt_OrImpl_OrBlank(L)
+    Select Case True
+    Case Fnd And IsOpt:
+    Case Fnd: LnoOf_AftOpt_AndImpl = J: Exit Function
+    Case IsOpt: Fnd = True
+    End Select
+Next
+LnoOf_AftOpt_AndImpl = J
+End Function
+
+Private Function OptLno%(A As CodeModule, OptLin)
 Dim J&
 For J = 1 To A.CountOfDeclarationLines
    If A.Lines(J, 1) = OptLin Then OptLno = J: Exit Function
 Next
 End Function
 
-Private Sub EnsOptLin(A As CodeModule, OptLin$)
+Private Sub EnsOptLin(A As CodeModule, OptLin)
 Const CSub$ = CMod & "EnsOptLin"
 If A.CountOfLines = 0 Then Exit Sub
 If OptLno(A, OptLin) > 0 Then Exit Sub
 A.InsertLines 1, OptLin
-InfLin CSub, "[" & OptLin & "] is Inserted", "Md", MdNm(A)
+InfLin CSub, "[" & OptLin & "] is Inserted", "Md", Mdn(A)
 End Sub
 
-Private Sub RmvOptLin(A As CodeModule, OptLin$)
-Const CSub$ = CMod & "RmvOptLin"
+Private Sub DltOptLin(A As CodeModule, OptLin)
+Const CSub$ = CMod & "DltOptLin"
 Dim I%: I = OptLno(A, OptLin)
 If I = 0 Then Exit Sub
 A.DeleteLines I
-Inf CSub, "[" & OptLin & "] line is deleted", "Md Lno", MdNm(A), I
+Inf CSub, "[" & OptLin & "] line is deleted", "Md Lno", Mdn(A), I
 End Sub

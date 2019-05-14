@@ -2,12 +2,10 @@ Attribute VB_Name = "QVb_Ay_Push"
 Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Ay_Push."
-Sub PushS(O$(), S$)
-PushI O, S
-End Sub
+
 Function Shf(OAy)
 Shf = OAy(0)
-OAy = RmvFstNEle(OAy)
+OAy = AyeFstNEle(OAy)
 End Function
 
 Sub Push(O, M)
@@ -42,33 +40,18 @@ For Each I In Itr(Ay)
 Next
 End Sub
 
-Sub PushDic(O As Dictionary, A As Dictionary)
-Const CSub$ = CMod & "PushDic"
-If IsNothing(O) Then
-    Set O = A
-    Exit Sub
-End If
-Dim K
-For Each K In A.Keys
-    If O.Exists(K) Then
-        Thw CSub, "Key is found in both Dic", "Key Dic1 Dic2", K, O, A
-    Else
-        O.Add K, A(K)
-    End If
-Next
-End Sub
-
 Sub PushI(O, M)
 Dim N&
 N = Si(O)
 ReDim Preserve O(N)
 O(N) = M
 End Sub
-Sub PushSy(OSy$(), Sy$())
+Sub PushIy(OSy$(), Sy$())
 PushIAy OSy, Sy
 End Sub
 
 Sub PushIAy(O, MAy)
+ThwIf_NotAy MAy, CSub
 Dim M
 For Each M In Itr(MAy)
     PushI O, M
@@ -100,13 +83,13 @@ For Each I In Itr(Ay)
 Next
 End Sub
 
-Sub PushNonBlank(O$(), M$)
-If M <> "" Then PushI O, M
+Sub PushNonBlank(O$(), M)
+If Trim(M) <> "" Then PushI O, M
 End Sub
 
-Sub PushNonBlankSy(O, Sy$())
+Sub PushNonBlankAy(O$(), MAy)
 Dim I
-For Each I In Itr(Sy)
+For Each I In Itr(MAy)
     PushNonBlank O, I
 Next
 End Sub

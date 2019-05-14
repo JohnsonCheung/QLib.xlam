@@ -3,7 +3,7 @@ Option Explicit
 Private Const CMod$ = "MVb_Fs_Pth_Op_Ren."
 Private Const Asm$ = "QVb"
 Sub RenPthAddPfx(Pth, Pfx)
-RenPth Pth, PthAddPfx(Pth, Pfx)
+RenPth Pth, AddPfxzPth(Pth, Pfx)
 End Sub
 
 Sub RenPth(Pth, NewPth)

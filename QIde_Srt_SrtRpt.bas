@@ -15,24 +15,24 @@ Brw SrtRpt(CurSrc)
 End Sub
 
 Property Get SrtRptMd() As String()
-SrtRptMd = SrtRptzMd(CurMd)
+SrtRptMd = SrtRptzMd(CMd)
 End Property
 
-Function SrtRptzPj(A As VBProject) As String()
+Function SrtRptzP(P As VBProject) As String()
 Dim O$(), C As VBComponent
-For Each C In A.VBComponents
+For Each C In P.VBComponents
     PushIAy O, SrtRptzMd(C.CodeModule)
 Next
-SrtRptzPj = O
+SrtRptzP = O
 End Function
 
-Function SrtRptDiczPj(A As VBProject) As Dictionary
+Function SrtRptDiczP(P As VBProject) As Dictionary
 Dim C As VBComponent, O As New Dictionary, Md As CodeModule
-    For Each C In A.VBComponents
+    For Each C In P.VBComponents
         Set Md = C.CodeModule
-        O.Add MdNm(Md), SrtRptzMd(Md)
+        O.Add Mdn(Md), SrtRptzMd(Md)
     Next
-Set SrtRptDiczPj = O
+Set SrtRptDiczP = O
 End Function
 
 Function SrtRptzMd(A As CodeModule) As String()
@@ -40,6 +40,6 @@ SrtRptzMd = SrtRpt(Src(A))
 End Function
 
 Function SrtDicMd(A As CodeModule) As Dictionary
-Set SrtDicMd = AddDicKeyPfx(SrtedSrcDic(Src(A)), MdNm(A) & ".")
+Set SrtDicMd = AddDicKeyPfx(SSrcDic(Src(A)), Mdn(A) & ".")
 End Function
 

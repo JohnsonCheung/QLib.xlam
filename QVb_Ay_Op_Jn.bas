@@ -6,7 +6,8 @@ Private Const Asm$ = "QVb"
 
 Function JnSpcApNoBlank$(ParamArray Ap())
 Dim Av(): Av = Ap
-JnSpcApNoBlank = JnCrLf(SyzAyNonBlank(Av))
+Stop
+'JnSpcApNoBlank = JnCrLf(SyzAyNonBlank(Av))
 End Function
 
 Function JnDollarAp$(ParamArray Ap())
@@ -47,5 +48,3 @@ Dim B As Variant
 Sy A
 End Sub
 
-Private Sub Z()
-End Sub

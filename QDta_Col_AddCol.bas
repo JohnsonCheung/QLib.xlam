@@ -130,7 +130,7 @@ End Function
 Function DrsAddColzMap(A As Drs, NewFldEqFunQuoteFmFldSsl$) As Drs
 Dim NewColVy(), FmVy()
 Dim I, S$, NewFld$, Fun$, FmFld$
-For Each I In SyzSsLin(NewFldEqFunQuoteFmFldSsl)
+For Each I In SyzSS(NewFldEqFunQuoteFmFldSsl)
     S = I
     NewFld = Bef(S, "=")
     Fun = Bet(S, "=", "(")

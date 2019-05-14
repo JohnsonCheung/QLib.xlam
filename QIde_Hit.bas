@@ -6,14 +6,14 @@ Private Const Asm$ = "QIde"
 Function WhMthKd(S) As String()
 
 End Function
-Function WhMthMdyPm(A As LinPm) As String()
+Function WhMthMdyPm(A As Lpm) As String()
 PushNonBlank WhMthMdyPm, A.SwNm("Pub")
 PushNonBlank WhMthMdyPm, A.SwNm("Prv")
 PushNonBlank WhMthMdyPm, A.SwNm("Frd")
 End Function
 
 Function WhMthMdy(WhStr$) As String()
-WhMthMdy = WhMthMdyPm(LinPm(WhStr, C_WhMthSpec))
+WhMthMdy = WhMthMdyPm(Lpm(WhStr, C_WhMthSpec))
 End Function
 
 Function HitCmp(A As VBComponent, B As WhMd) As Boolean

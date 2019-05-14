@@ -11,7 +11,7 @@ Function TmpFcsv$(Optional Fdr$, Optional Fnn$)
 TmpFcsv = TmpFfn(".csv", Fdr, Fnn)
 End Function
 
-Function TmpFfn$(Ext$, Optional Fdr$, Optional Fnn0$)
+Function TmpFfn$(Ext, Optional Fdr$, Optional Fnn0$)
 Dim Fnn$
 Fnn = IIf(Fnn0 = "", TmpNm, Fnn0)
 TmpFfn = TmpFdr(Fdr) & Fnn & Ext

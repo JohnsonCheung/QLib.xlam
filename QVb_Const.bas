@@ -66,9 +66,9 @@ Property Get SampDbzShpCst() As Database
 Set SampDbzShpCst = Db(SampFbzShpCst)
 End Property
 Property Get DbEng() As DBEngine
-Set DbEng = DAO.DBEngine
+Set DbEng = Dao.DBEngine
 End Property
-Private Function Db(A) As DAO.Database
+Private Function Db(A) As Dao.Database
 Set Db = DbEng.OpenDatabase(A)
 End Function
 Property Get SampCnzDutyDta() As AdoDb.Connection
@@ -77,7 +77,7 @@ End Property
 Property Get SampFb$()
 SampFb = SampFbzDutyDta
 End Property
-Property Get SampDb() As DAO.Database
+Property Get SampDb() As Dao.Database
 Set SampDb = Db(SampFb)
 End Property
 Property Get SampDbzDutyDta() As Database
@@ -90,8 +90,3 @@ Dim A
 Set A = Interaction.CreateObject("{00024500-0000-0000-C000-000000000046}", "Excel.Application")
 Stop
 End Sub
-
-Function LinPm(PmStr$, LinPmSpec$) As LinPm
-Dim O As New LinPm
-Set LinPm = O.Init(PmStr, LinPmSpec)
-End Function

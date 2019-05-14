@@ -20,7 +20,7 @@ End Function
 
 Private Sub WAsg3PP(PP_with_NewFldEqQuoteFmFld$, OPPzPrp$(), OPPzFml$(), OPPzAll$())
 Dim I, S$
-For Each I In SyzSsLin(PP_with_NewFldEqQuoteFmFld)
+For Each I In SyzSS(PP_with_NewFldEqQuoteFmFld)
     S = I
     If HasSubStr(S, "=") Then
         PushI OPPzAll, Bef(S, "=")
@@ -47,12 +47,12 @@ End Function
 Function AddFml(A As Drs, NewFld$, FunNm$, PmAy$()) As Drs
 Dim Dry(): Dry = A.Dry
 If Si(Dry) = 0 Then AddFml = A: Exit Function
-Dim Dr, U&, IxAy1&(), Av()
-IxAy1 = IxAy(A.Fny, PmAy)
+Dim Dr, U&, Ixy1&(), Av()
+Ixy1 = Ixy(A.Fny, PmAy)
 U = UB(A.Fny)
 For Each Dr In Dry
     If UB(Dr) <> U Then Thw CSub, "Dr-Si is diff", "Dr-Si U", UB(Dr), U
-    Av = AywIxAy(Dr, IxAy1)
+    Av = AywIxy(Dr, Ixy1)
     Push Dr, RunAv(FunNm, Av)
 Next
 AddFml = Drs(AddSyItm(A.Fny, NewFld), Dry)
@@ -69,10 +69,10 @@ Private Sub Z_DrszItrPrpPthSy()
 'BrwDrs DrszItrPP(Excel.Application.Addins, "Name Installed IsOpen FullName CLSId ")
 'BrwDrs DrszItrPP(Fds(Db(SampFbzDutyDta), "Permit"), "Name Type Required")
 'BrwDrs ItrPrpDrs(Application.VBE.VBProjects, "Name Type")
-BrwDrs DrszItrPrpPthSy(CurPj.VBComponents, SyzSsLin("Name Type CmpTy=ShpCmpTy(Type)"))
+BrwDrs DrszItrPrpPthSy(CPj.VBComponents, SyzSS("Name Type CmpTy=ShpCmpTy(Type)"))
 End Sub
 
-Private Sub Z()
+Private Sub ZZ()
 MDta_Prp:
 End Sub
 

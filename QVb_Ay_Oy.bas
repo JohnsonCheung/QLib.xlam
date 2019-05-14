@@ -8,56 +8,56 @@ PushObjAy O, Oy2
 OyAdd = O
 End Function
 
-Sub DoItoMth(Ito, ObjMth$)
+Sub DoItoMth(Ito, ObjMth)
 Dim Obj As Object
 For Each Obj In Ito
     CallByName Obj, ObjMth, VbMethod
 Next
 End Sub
 
-Sub DoOyMth(Oy() As Object, ObjMth$)
+Sub DoOyMth(Oy, ObjMth)
 Dim Obj As Object
 For Each Obj In Itr(Oy)
     CallByName Obj, ObjMth, VbMethod
 Next
 End Sub
 
-Function FstItmzOyPEv(Oy, P$, Ev)
+Function FstItmzOyPEv(Oy, P As PrpPth, Ev)
 Dim Obj As Object
 For Each Obj In Itr(Oy)
     If Prp(Obj, P) = Ev Then Asg Obj, FstItmzOyPEv: Exit Function
 Next
 End Function
 
-Function AvzOyP(Oy, P$) As Variant()
-AvzOyP = IntozOyP(EmpAv, Oy, P)
+Function AvzOP(Oy, P As PrpPth) As Variant()
+AvzOP = IntozOP(EmpAv, Oy, P)
 End Function
 
-Function IntozOyP(Into, Oy, P$)
+Function IntozOP(Into, Oy, P As PrpPth)
 Dim O: O = Into: Erase O
-Dim Obj As Object
-For Each Obj In Itr(Oy)
-    Push O, Prp(Obj, P)
+Dim I
+For Each I In Itr(Oy)
+    Push O, Prp(CvObj(I), P)
 Next
-IntozOyP = O
+IntozOP = O
 End Function
 
-Function IntAyzOyP(Oy, P$) As Integer()
-IntAyzOyP = IntozOyP(EmpIntAy, Oy, P)
+Function IntAyzOyP(Oy, P As PrpPth) As Integer()
+IntAyzOyP = IntozOP(EmpIntAy, Oy, P)
 End Function
 
-Function SyzOyPrp(Oy, P$) As String()
-SyzOyPrp = IntozOyP(EmpSy, Oy, P)
+Function SyzOyPrp(Oy, P As PrpPth) As String()
+SyzOyPrp = IntozOP(EmpSy, Oy, P)
 End Function
 
-Function OyRmvFstNEle(Oy, N&)
+Function OyeFstNEle(Oy, N&)
 Dim O: O = Oy
 ReDim O(N - 1)
 Dim J&
 For J = 0 To UB(Oy) - N
     Set O(J) = Oy(N + J)
 Next
-OyRmvFstNEle = O
+OyeFstNEle = O
 End Function
 
 Function OyeNothing(Oy)
@@ -97,7 +97,7 @@ Next
 OywPredXPTrue = O
 End Function
 
-Function OywPEv(Oy, P$, Ev)
+Function OywPEv(Oy, P As PrpPth, Ev)
 Dim O
    O = Oy
    Erase O
@@ -108,7 +108,7 @@ Dim O
 OywPEv = O
 End Function
 
-Function OywPInAy(Oy, P$, InAy)
+Function OywPInAy(Oy, P As PrpPth, InAy)
 Dim Obj As Object, O
 If Si(Oy) = 0 Or Si(InAy) Then OywPInAy = Oy: Exit Function
 O = Oy
@@ -120,18 +120,18 @@ OywPInAy = O
 End Function
 Function LyzObjPP(Obj As Object, PP$) As String()
 Dim I
-For Each I In SyzSsLin(PP)
-    PushS LyzObjPP, I & " " & Prp(Obj, CStr(I))
+For Each I In SyzSS(PP)
+    PushI LyzObjPP, I & " " & Prp(Obj, PrpPth(I))
 Next
 End Function
 
 Private Sub ZZ_OyDrs()
-'WsVis DrsNewWs(OyDrs(CurrentDb.TableDefs("ZZ_UpdSeqFld").Fields, "Name Type OrdinalPosition"))
+'ShwWs DrsNewWs(OyDrs(CurrentDb.TableDefs("ZZ_UpdSeqFld").Fields, "Name Type OrdinalPosition"))
 End Sub
 
 Private Sub ZZ_OyP_Ay()
 Dim CdPanAy() As CodePane
 Stop
-'CdPanAy = Oy(CurPj.MdAy).PrpVy("CodePane", CdPanAy)
+'CdPanAy = Oy(CPj.MdAy).PrpVy("CodePane", CdPanAy)
 Stop
 End Sub

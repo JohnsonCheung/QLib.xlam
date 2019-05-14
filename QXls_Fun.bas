@@ -5,7 +5,7 @@ Private Const CMod$ = "MXls_Fun."
 Private Const Asm$ = "QXls"
 
 Sub FillAtV(At As Range, Ay)
-FillSq SqzAyV(Ay), At
+FillSq Sqv(Ay), At
 End Sub
 
 Sub FillLc(Lo As ListObject, ColNm$, Ay)
@@ -22,7 +22,7 @@ Sub FillSq(Sq(), At As Range)
 ResiRg(At, Sq).Value = Sq
 End Sub
 Sub FillAtH(Ay, At As Range)
-FillSq SqzAyH(Ay), At
+FillSq Sqh(Ay), At
 End Sub
 Function DryzAyab(A, B) As Variant()
 Dim J&
@@ -101,9 +101,9 @@ Private Sub Z_AyabWs()
 GoTo ZZ
 Dim A, B
 ZZ:
-    A = SyzSsLin("A B C D E")
-    B = SyzSsLin("1 2 3 4 5")
-    WsVis WszAyab(A, B)
+    A = SyzSS("A B C D E")
+    B = SyzSS("1 2 3 4 5")
+    ShwWs WszAyab(A, B)
 End Sub
 
 Private Sub Z_WbFbOupTbl()
@@ -111,7 +111,7 @@ GoTo ZZ
 ZZ:
     Dim W As Workbook
     'Set W = WbFbOupTbl(WFb)
-    'WbVis W
+    'ShwWb W
     Stop
     'W.Close False
     Set W = Nothing

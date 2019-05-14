@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 Option Explicit
 Private Const CMod$ = "Aset."
 Private Aset As New Dictionary
-Property Get TermLin$()
+Property Get TermLin()
 Dim I, O$()
 For Each I In Itms
     PushI O, QuoteSqIf(CStr(I))
@@ -29,7 +29,7 @@ Sub Vc()
 Brw UseVc:=True
 End Sub
 Sub Brw(Optional Fnn$, Optional UseVc As Boolean)
-MVb_Fun.Brw Aset.Keys, DftStr(Fnn, "Aset"), UseVc
+B Aset.Keys, DftStr(Fnn, "Aset"), UseVc
 End Sub
 Function Srt() As Aset
 Set Srt = AsetzAy(QSrt1(Itms))
@@ -97,7 +97,6 @@ Next
 IsEq = True
 End Function
 
-
 Function IsEmp() As Boolean
 IsEmp = Aset.Count = 0
 End Function
@@ -128,7 +127,7 @@ Function Itms()
 Itms = Aset.Keys
 End Function
 
-Function Lin$()
+Function Lin()
 Lin = JnSpc(Aset.Keys)
 End Function
 
@@ -147,6 +146,4 @@ Dim C$
 
 End Sub
 
-Private Sub Z()
-End Sub
 

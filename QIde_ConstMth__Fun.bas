@@ -3,20 +3,20 @@ Option Explicit
 Private Const CMod$ = "MIde_ConstMth__Fun."
 Private Const Asm$ = "QIde"
 Function FtzCnstQNm$(CnstQNm$)
-Dim MdNm$, Nm$
-FtzCnstQNm = ConstPrpPth(MdNm) & Nm & ".txt"
+Dim Mdn, Nm$
+FtzCnstQNm = ConstPrpPth(Mdn) & Nm & ".txt"
 End Function
-Private Function ConstPrpPth$(MdNm$)
-ConstPrpPth = AddFdrEns(TmpHom, "ConstPrp", MdNm)
+Private Function ConstPrpPth$(Mdn)
+'ConstPrpPth = AddFdrEns(TmpHom, "ConstPrp", Mdn)
 End Function
 
-Function IsMthLinzConstStr(Lin$) As Boolean
+Function IsMthLinzConstStr(Lin) As Boolean
 If Not IsMthLin(Lin) Then Exit Function
 If BetBkt(Lin) <> "" Then Exit Function
 If TakTyChr(Lin) = "$" Then Exit Function
 IsMthLinzConstStr = True
 End Function
-Function IsMthLinzConstLy(Lin$) As Boolean
+Function IsMthLinzConstLy(Lin) As Boolean
 If Not IsMthLin(Lin) Then Exit Function
 If BetBkt(Lin) <> "" Then Exit Function
 If MthRetTy(Lin) <> "String()" Then Exit Function

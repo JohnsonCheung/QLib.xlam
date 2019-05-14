@@ -2,7 +2,7 @@ Attribute VB_Name = "QIde_Mth_Lin_Is_Hit"
 Option Explicit
 Private Const CMod$ = "MIde_Mth_Lin_Is_Hit."
 Private Const Asm$ = "QIde"
-Function IsPrpLin(Lin$) As Boolean
+Function IsPrpLin(Lin) As Boolean
 IsPrpLin = MthKd(Lin) = "Property"
 End Function
 
@@ -27,42 +27,28 @@ Next
 Brw O
 End Sub
 
-Function HitCnstNm(SrcLin$, CnstNm$) As Boolean
-HitCnstNm = CnstNmzSrcLin(SrcLin) = CnstNm
+Function HitCnstn(SrcLin, Cnstn$) As Boolean
+HitCnstn = CnstnzSrcLin(SrcLin) = Cnstn
 End Function
 
-Function HitCnstNmDic(SrcLin$, CnstNm As Aset) As Boolean
-HitCnstNmDic = CnstNm.Has(CnstNmzSrcLin(SrcLin))
+Function HitCnstnDic(SrcLin, Cnstn As Aset) As Boolean
+HitCnstnDic = Cnstn.Has(CnstnzSrcLin(SrcLin))
 End Function
 
-Function HitMthLin(Lin$, B As WhMth) As Boolean
+Function HitMthLin(Lin, B As WhMth) As Boolean
 If Not IsMthLin(Lin) Then Exit Function
 If IsNothing(B) Then HitMthLin = True: Exit Function
 If B.IsEmp Then HitMthLin = True: Exit Function
-If Not HitMthNm3(MthNm3(Lin), B) Then Exit Function
+If Not HitMthn3(Mthn3(Lin), B) Then Exit Function
 HitMthLin = True
-End Function
-
-Function HitMthNm3(A As MthNm3, B As WhMth) As Boolean
-Select Case True
-Case A.Nm = "":
-Case IsNothing(B), B.IsEmp
-    HitMthNm3 = True
-Case _
-    Not HitNm(A.Nm, B.WhNm), _
-    Not HitShtMdy(A.ShtMdy, B.ShtMthMdyAy), _
-    Not HitAy(A.ShtTy, B.ShtTyAy)
-Case Else
-    HitMthNm3 = True
-End Select
 End Function
 
 Function HitShtMdy(ShtMdy$, ShtMthMdyAy$()) As Boolean
 HitShtMdy = HitAy(IIf(ShtMdy = "", "Pub", ShtMdy), ShtMthMdyAy)
 End Function
 
-Function IsMthLinzPubZ(Lin$) As Boolean
-With MthNm3(Lin)
+Function IsMthLinzPubZ(Lin) As Boolean
+With Mthn3(Lin)
     If FstChr(.Nm) <> "Z" Then Exit Function
     If .MthMdy <> "" Then
         If .MthMdy <> "Public" Then
@@ -72,18 +58,18 @@ With MthNm3(Lin)
 End With
 IsMthLinzPubZ = True
 End Function
-Function IsOptLinzOrImplzOrBlank(Lin$) As Boolean
-IsOptLinzOrImplzOrBlank = True
+Function IsOptLinOfOrImplzOrBlank(Lin) As Boolean
+IsOptLinOfOrImplzOrBlank = True
 If IsOptLin(Lin) Then Exit Function
 If IsImplLin(Lin) Then Exit Function
 If Lin = "" Then Exit Function
-IsOptLinzOrImplzOrBlank = False
+IsOptLinOfOrImplzOrBlank = False
 End Function
-Function IsImplLin(Lin$) As Boolean
+Function IsImplLin(Lin) As Boolean
 IsImplLin = HasPfx(Lin, "Implements ")
 End Function
 
-Function IsOptLin(Lin$) As Boolean
+Function IsOptLin(Lin) As Boolean
 If Not HasPfx(Lin, "Option ") Then Exit Function
 Select Case True
 Case _
@@ -96,8 +82,8 @@ End Select
 
 End Function
 
-Function IsMthLinzPub(Lin$) As Boolean
-With MthNm3(Lin)
+Function IsMthLinzPub(Lin) As Boolean
+With Mthn3(Lin)
     Select Case True
     Case .Nm <> "":
     Case .MthMdy <> "" And .MthMdy <> "Public":

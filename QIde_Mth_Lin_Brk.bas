@@ -13,6 +13,15 @@ Public Type MthLinRec
     IsRetVal As Boolean
     ShtRetTy As String
 End Type
+Type Arg
+    Nm As String
+    IsOpt As Boolean
+    IsPmAy As Boolean
+    IsAy As Boolean
+    TyChr As String
+    AsTy As String
+    DftVal As String
+End Type
 Private Function ShfRetTyzAftPm$(OAftPm$)
 Dim A$: A = ShfTermAftAs(OAftPm)
 If LasChr(A) = ":" Then
@@ -40,12 +49,12 @@ With MthLinRec
     .Pm = ShfBktStr(L)
     .RetTy = ShfRetTyzAftPm(L)
     .Rmk = RmkzAftRetTy(L)
-    .IsRetVal = HasEle(SyzSsLin("Get Fun"), .ShtTy)
+    .IsRetVal = HasEle(SyzSS("Get Fun"), .ShtTy)
     .ShtRetTy = ShtRetTy(.TyChr, .RetTy, .IsRetVal)
 End With
 End Function
 
-Function MthFLin$(MthQLin)
+Function MthFLin(MthQLin)
 Dim P$, T$, M$, L$
 L = MthQLin
 P = ShfTermDot(L)
@@ -55,11 +64,11 @@ MthFLin = JnDotAp(P, T, M, MthFLinzMthLin(L))
 End Function
 
 Function MthFLyInVbe(Optional WhStr$) As String()
-MthFLyInVbe = MthFLyzVbe(CurVbe, WhStr)
+MthFLyInVbe = MthFLyzV(CVbe, WhStr)
 End Function
 
-Function MthFLyzVbe(A As Vbe, Optional WhStr$) As String()
-MthFLyzVbe = MthFLy(MthQLyzVbe(A, WhStr))
+Function MthFLyzV(A As Vbe, Optional WhStr$) As String()
+MthFLyzV = MthFLy(MthQLyzV(A, WhStr))
 End Function
 
 Function MthFLy(MthQLy$()) As String()
@@ -69,7 +78,7 @@ For Each MthQLin In Itr(MthQLy)
 Next
 End Function
 
-Function MthFLinzMthLin$(MthLin$)
+Function MthFLinzMthLin(MthLin)
 Dim X As MthLinRec: X = MthLinRec(MthLin)
 With X
 Dim RetTy$: RetTy = ShtRetTy(.TyChr, .RetTy, .IsRetVal)
@@ -89,26 +98,26 @@ End If
 End Function
 
 Function ShtRetTyAsetInVbe(Optional WhStr$) As Aset
-Set ShtRetTyAsetInVbe = ShtRetTyAsetzVbe(CurVbe, WhStr)
+Set ShtRetTyAsetInVbe = ShtRetTyAsetzV(CVbe, WhStr)
 End Function
 
-Function ShtRetTyAsetzVbe(A As Vbe, Optional WhStr$) As Aset
-Set ShtRetTyAsetzVbe = ShtRetTyAset(MthLinSyzVbe(A, WhStr))
+Function ShtRetTyAsetzV(A As Vbe, Optional WhStr$) As Aset
+Set ShtRetTyAsetzV = ShtRetTyAset(MthLinyzV(A, WhStr))
 End Function
 
-Function ShtRetTyAset(MthLinSy$()) As Aset
-Set ShtRetTyAset = AsetzAy(ShtRetTyAy(MthLinSy))
+Function ShtRetTyAset(MthLiny$()) As Aset
+Set ShtRetTyAset = AsetzAy(ShtRetTyAy(MthLiny))
 End Function
 
-Function ShtRetTyAy(MthLinSy$()) As String()
-Dim MthLin$, I
-For Each I In Itr(MthLinSy)
+Function ShtRetTyAy(MthLiny$()) As String()
+Dim MthLin, I
+For Each I In Itr(MthLiny)
     MthLin = I
     PushI ShtRetTyAy, ShtRetTyzLin(MthLin)
 Next
 End Function
 
-Function ShtRetTyzLin$(MthLin$)
+Function ShtRetTyzLin(MthLin)
 Dim A$: A = MthLinRec(MthLin).ShtRetTy
 ShtRetTyzLin = A
 If LasChr(A) = ":" Then Stop

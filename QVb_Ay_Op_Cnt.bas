@@ -31,12 +31,12 @@ Next
 SumSi = O
 End Function
 Private Sub Z_CntSiLin()
-Debug.Print CntSiLin(SrczPj(CurPj))
+Debug.Print CntSiLin(SrczP(CPj))
 End Sub
-Function CntSiLin$(Ay)
+Function CntSiLin(Ay)
 CntSiLin = "AyCntSi(" & Si(Ay) & "." & SumSi(Ay) & ")"
 End Function
-Private Sub Z()
+Private Sub ZZ()
 Z_CntDryzAy
 MVb_AyCnt:
 End Sub

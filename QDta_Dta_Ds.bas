@@ -52,13 +52,11 @@ Function ValzDicIf$(A As Dictionary, K)
 If A.Exists(K) Then ValzDicIf = A(K)
 End Function
 
-Function ValzDic(A As Dictionary, K, Optional DicNm$ = "Dic", Optional KeyNm$ = "Key", Optional Fun$)
-If Not A.Exists(K) Then
-    Dim M$: M = FmtQQ("[?] does not [?]", DicNm, KeyNm)
-    Dim NN$: NN = FmtQQ("[?] [?]", DicNm, KeyNm)
-    Thw Fun, M, NN, K, A
-End If
-ValzDic = A(K)
+Function ValzDicK(A As Dictionary, K, Optional Dicn$ = "Dic", Optional Kn$ = "Key", Optional Fun$)
+If A.Exists(K) Then ValzDicK = A(K): Exit Function
+Dim M$: M = FmtQQ("[?] does not [?]", Dicn, Kn)
+Dim NN$: NN = FmtQQ("[?] [?]", Dicn, Kn)
+Thw Fun, M, NN, A, K
 End Function
 Function FmtDs(A As Ds, Optional MaxColWdt% = 100, Optional BrkColVbl$, Optional ShwZer As Boolean, Optional NoIxCol As Boolean) As String()
 PushI FmtDs, "*Ds " & A.DsNm & " " & String(10, "=")

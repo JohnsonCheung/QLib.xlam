@@ -2,7 +2,7 @@ Attribute VB_Name = "QIde_Pj_Dte"
 Option Explicit
 Private Const CMod$ = "MIde_Pj_Dte."
 Private Const Asm$ = "QIde"
-Function PjDtezFb(Fb$) As Date
+Function PjDtezFb(Fb) As Date
 Static Y As New Access.Application
 Y.OpenCurrentDatabase Fb
 Y.Visible = False
@@ -10,7 +10,7 @@ PjDtezFb = PjDtezAcs(Y)
 Y.CloseCurrentDatabase
 End Function
 
-Function PjDtezPjf(Pjf$) As Date
+Function PjDtezPjf(Pjf) As Date
 Select Case True
 Case IsFxa(Pjf): PjDtezPjf = DtezFfn(Pjf)
 Case IsFb(Pjf): PjDtezPjf = PjDtezFb(Pjf)

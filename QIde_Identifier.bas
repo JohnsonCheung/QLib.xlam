@@ -8,9 +8,9 @@ GoSub ZZ
 'GoSub T0
 Exit Sub
 ZZ:
-    Dim Lines$: Lines = SrcLinesInPj
+    Dim Lines$: Lines = SrcLinesP
     Dim Ny1$(): Ny1 = NyzStr(Lines)
-    Dim Ny2$(): Ny2 = WrdAy(Lines)
+    Dim Ny2$(): Ny2 = WrdSy(Lines)
     If Not IsEqAy(Ny1, Ny2) Then Stop
     Return
 T0:
@@ -23,12 +23,12 @@ Tst:
     Return
 End Sub
 Private Sub Z_NsetzStr()
-NsetzStr(SrcLinesInPj).Srt.Vc
+NsetzStr(SrcLinesP).Srt.Vc
 End Sub
-Function NsetzStr(S$) As Aset
+Function NsetzStr(S) As Aset
 Set NsetzStr = AsetzAy(NyzStr(S))
 End Function
-Function RplPun$(S$)
+Function RplPun$(S)
 Dim O$(), C$, A%, J&, L&
 L = Len(S)
 ReDim O(L - 1)
@@ -48,60 +48,59 @@ For Each I In Sy
 Next
 End Function
 
-Function NyzStr(S$) As String()
-NyzStr = SyeNonNm(SyzSsLin(RplLf(RplCr(RplPun(S)))))
+Function NyzStr(S) As String()
+NyzStr = SyeNonNm(SyzSS(RplLf(RplCr(RplPun(S)))))
 End Function
 
-Function RelzPubMthNmToModNyP() As Rel
-Set RelzPubMthNmToModNyP = RelOf_PubMthNm_To_ModNy_zPj(CurPj)
+Function PMthnzRlModNyP() As Rel
+Set PMthnzRlModNyP = PMthzRlModNyzP(CPj)
 End Function
-Function RelOfMthNmToCmlInVbe(Optional WhStr$) As Rel
-Set RelOfMthNmToCmlInVbe = RelOfMthNmToCmlzVbe(CurVbe, WhStr)
+Function MthnzRlCmlV(Optional WhStr$) As Rel
+Set MthnzRlCmlV = MthnzRlCmlzV(CVbe, WhStr)
 End Function
-Function RelOfMthNmToCmlzVbe(A As Vbe, Optional WhStr$) As Rel
-Dim O As New Rel, MthNm$, I
-For Each I In MthNyzVbe(A, WhStr)
-    MthNm = I
-    O.PushRelLin CmlLin(MthNm)
+Function MthnzRlCmlzV(A As Vbe, Optional WhStr$) As Rel
+Dim O As New Rel, I
+For Each I In MthNyzV(A, WhStr)
+    O.PushRelLin CmlLin(I)
 Next
-Set RelOfMthNmToCmlzVbe = O
+Set MthnzRlCmlzV = O
 End Function
-Function RelOf_PubMthNm_To_ModNy_zPj(A As VBProject) As Rel
-Dim C, S$(), O As New Rel, MthNm, ModNm$, Cmp As VBComponent, B As WhMth
+Function PMthzRlModNyzP(P As VBProject) As Rel
+Dim C, S$(), O As New Rel, Mthn, Modn, Cmp As VBComponent, B As WhMth
 Set B = WhMthzStr("-Pub")
-For Each C In CmpItr(A, "-Mod")
+For Each C In CmpItr(P, "-Mod")
     Set Cmp = C
-    ModNm = Cmp.Name
+    Modn = Cmp.Name
     S = Src(Cmp.CodeModule)
-    For Each MthNm In Itr(MthNyzSrc(S, B))
-        O.PushParChd MthNm, ModNm
+    For Each Mthn In Itr(MthnyzSrc(S, B))
+        O.PushParChd Mthn, Modn
     Next
 Next
-Set RelOf_PubMthNm_To_ModNy_zPj = O
+Set PMthzRlModNyzP = O
 End Function
-Function RelzMthMdzPj(A As VBProject) As Rel
-Dim C As VBComponent, O As New Rel, MthNm, MdNm$
-For Each C In A.VBComponents
-    MdNm = C.Name
-    For Each MthNm In Itr(MthNyzSrc(Src(C.CodeModule)))
-        O.PushParChd MthNm, MdNm
+Function MthnzRlMdnzP(P As VBProject) As Rel
+Dim C As VBComponent, O As New Rel, Mthn, Mdn
+For Each C In P.VBComponents
+    Mdn = C.Name
+    For Each Mthn In Itr(MthnyzSrc(Src(C.CodeModule)))
+        O.PushParChd Mthn, Mdn
     Next
 Next
-Set RelzMthMdzPj = O
+Set MthnzRlMdnzP = O
 End Function
-Function RelzMthMdP() As Rel
+Function MthnzRlMdnP() As Rel
 Static O As Rel
-If IsNothing(O) Then Set O = RelzMthMdzPj(CurPj)
-Set RelzMthMdP = O
+If IsNothing(O) Then Set O = MthnzRlMdnzP(CPj)
+Set MthnzRlMdnP = O
 End Function
-Function MthExtNy(MthPjDotMdNm$, PubMthLy$(), PubMthNm_To_PjDotModNy As Dictionary) As String()
-Dim Cxt$: Cxt = JnSpc(MthCxtLy(PubMthLy))
+Function MthExtNy(MthPjDotMdn, PMthLy$(), PMthn_To_PjDotModNy As Dictionary) As String()
+Dim Cxt$: Cxt = JnSpc(MthCxtLy(PMthLy))
 Dim Ny$(): Ny = NyzStr(Cxt)
 Dim Nm
 For Each Nm In Itr(Ny)
-    If PubMthNm_To_PjDotModNy.Exists(Nm) Then
+    If PMthn_To_PjDotModNy.Exists(Nm) Then
         Dim PjDotModNy$():
-            PjDotModNy = AyeEle(PubMthNm_To_PjDotModNy(Nm), MthPjDotMdNm)
+            PjDotModNy = AyeEle(PMthn_To_PjDotModNy(Nm), MthPjDotMdn)
         If HasEle(PjDotModNy, Nm) Then
             PushI MthExtNy, Nm
         End If
@@ -112,7 +111,7 @@ End Function
 Property Get VbKwAy() As String()
 Static X$()
 If Si(X) = 0 Then
-    X = SyzSsLin("Function Sub Then If As For To Each End While Wend Loop Do Static Dim Option Explicit Compare Text")
+    X = SyzSS("Function Sub Then If As For To Each End While Wend Loop Do Static Dim Option Explicit Compare Text")
 End If
 VbKwAy = X
 End Property

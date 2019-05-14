@@ -16,7 +16,7 @@ A.TableDefs.Append TmpTd
 End Sub
 
 Function PthzDb$(A As Database)
-PthzDb = Pth(DbNm(A))
+PthzDb = Pth(Dbn(A))
 End Function
 Function IsTmpDb(A As Database) As Boolean
 IsTmpDb = PthzDb(A) = TmpPthzDb
@@ -26,7 +26,7 @@ End Function
 Sub DrpDbIfTmp(A As Database)
 If IsTmpDb(A) Then
     Dim N$
-    N = DbNm(A)
+    N = Dbn(A)
     A.Close
     DltFfn N
 End If
@@ -66,18 +66,18 @@ End Sub
 Sub DrpTmp(A As Database)
 DrpTny A, TmpTny(A)
 End Sub
-Sub DrpT(A As Database, T$)
+Sub DrpT(A As Database, T)
 If HasTbl(A, T) Then A.TableDefs.Delete T
 End Sub
 
-Sub CrtTbl(A As Database, T$, FldDclAy)
+Sub CrtTbl(A As Database, T, FldDclAy)
 A.Execute FmtQQ("Create Table [?] (?)", T, JnComma(FldDclAy))
 End Sub
 
 Function DszDb(A As Database, Optional DsNm$) As Ds
 Dim Nm$
 If DsNm = "" Then
-    Nm = DbNm(A)
+    Nm = Dbn(A)
 Else
     Nm = DsNm
 End If
@@ -95,12 +95,12 @@ If HasTbl(A, "#Tmp") Then Exit Sub
 A.Execute "Create Table [#Tmp] (AA Int, BB Text 10)"
 End Sub
 
-Sub RunQ(A As Database, Q$)
+Sub RunQ(A As Database, Q)
 Const CSub$ = CMod & "RunQ"
 On Error GoTo X
 A.Execute Q
 Exit Sub
-X: Dim E$: E = Err.Description: Thw CSub, "Running Sql error", "Er Sql Db", E, Q, DbNm(A)
+X: Dim E$: E = Err.Description: Thw CSub, "Running Sql error", "Er Sql Db", E, Q, Dbn(A)
 End Sub
 Sub RunQQAv(A As Database, QQ$, Av())
 RunQ A, FmtQQAv(QQ, Av)
@@ -110,38 +110,38 @@ Dim Av(): Av = Ap
 RunQQAv A, QQ, Av
 End Sub
 
-Function RszQQ(A As Database, QQ$, ParamArray Ap()) As DAO.Recordset
+Function RszQQ(A As Database, QQ$, ParamArray Ap()) As Dao.Recordset
 Dim Av(): Av = Ap
 Set RszQQ = Rs(A, FmtQQAv(QQ, Av))
 End Function
-Function RszQ(A As Database, Q$) As DAO.Recordset
+Function RszQ(A As Database, Q) As Dao.Recordset
 Set RszQ = Rs(A, Q)
 End Function
-Function MovFst(A As DAO.Recordset) As DAO.Recordset
+Function MovFst(A As Dao.Recordset) As Dao.Recordset
 A.MoveFirst
 Set MovFst = A
 End Function
-Function Rs(A As Database, Q$) As DAO.Recordset
+Function Rs(A As Database, Q) As Dao.Recordset
 Const CSub$ = CMod & "Rs"
 On Error GoTo X
 Set Rs = A.OpenRecordset(Q)
 Exit Function
-X: Thw CSub, "Error in opening Rs", "Er Sql Db", Err.Description, Q, DbNm(A)
+X: Thw CSub, "Error in opening Rs", "Er Sql Db", Err.Description, Q, Dbn(A)
 End Function
 
-Function HasReczQ(A As Database, Q$) As Boolean
+Function HasReczQ(A As Database, Q) As Boolean
 HasReczQ = HasRec(Rs(A, Q))
 End Function
 
-Function HasQryz(A As Database, Q$) As Boolean
+Function HasQryz(A As Database, Q) As Boolean
 HasQryz = HasReczQ(A, FmtQQ("Select * from MSysObjects where Name='?' and Type=5", Q))
 End Function
 
-Function HasTbl(A As Database, T$) As Boolean
+Function HasTbl(A As Database, T) As Boolean
 HasTbl = HasItn(A.TableDefs, T)
 End Function
 
-Function HasTblByMSys(A As Database, T$) As Boolean
+Function HasTblByMSys(A As Database, T) As Boolean
 HasTblByMSys = HasRec(Rs(A, FmtQQ("Select Name from MSysObjects where Type in (1,6) and Name='?'", T)))
 End Function
 
@@ -152,14 +152,14 @@ Exit Function
 X:
 End Function
 Function DbPth$(A As Database)
-DbPth = Pth(DbNm(A))
+DbPth = Pth(Dbn(A))
 End Function
 
 Function Qny(A As Database) As String()
 Qny = SyzQ(A, "Select Name from MSysObjects where Type=5 and Left(Name,4)<>'MSYS' and Left(Name,4)<>'~sq_'")
 End Function
 
-Function RszQry(A As Database, QryNm$) As DAO.Recordset
+Function RszQry(A As Database, QryNm$) As Dao.Recordset
 Set RszQry = A.QueryDefs(QryNm).OpenRecordset
 End Function
 
@@ -179,7 +179,7 @@ Asg Itr(Tny(A)), Tni
 End Function
 
 Function Tny(A As Database) As String()
-Set A = DAO.DBEngine.OpenDatabase(A.Name)
+Set A = Dao.DBEngine.OpenDatabase(A.Name)
 Dim T As TableDef
 For Each T In A.TableDefs
     If Not IsSysTd(T) Then
@@ -197,8 +197,8 @@ End Function
 
 Function Tny1(A As Database) As String()
 Dim T As TableDef, O$()
-Dim X As DAO.TableDefAttributeEnum
-X = DAO.TableDefAttributeEnum.dbHiddenObject Or DAO.TableDefAttributeEnum.dbSystemObject
+Dim X As Dao.TableDefAttributeEnum
+X = Dao.TableDefAttributeEnum.dbHiddenObject Or Dao.TableDefAttributeEnum.dbSystemObject
 For Each T In A.TableDefs
     Select Case True
     Case T.Attributes And X
@@ -232,7 +232,7 @@ End Sub
 
 Private Sub ZZ()
 Dim Db As Database
-Dim B As DAO.TableDef
+Dim B As Dao.TableDef
 Dim C$()
 Dim D As Variant
 Dim E$
@@ -269,7 +269,7 @@ Sub CrtTblzTmp(A As Database)
 DrpT A, "#Tmp"
 A.TableDefs.Append TmpTd
 End Sub
-Sub RenTbl(A As Database, T$, ToNm$)
+Sub RenTbl(A As Database, T, ToNm$)
 A.TableDefs(T).Name = ToNm
 End Sub
 
@@ -298,11 +298,11 @@ Property Let TblDes(A As Database, T, Des$)
 PrpVal(A.TableDefs(T).Properties, C_Des) = Des
 End Property
 
-Property Get TblAttDes$(A As DAO.Database)
+Property Get TblAttDes$(A As Dao.Database)
 TblAttDes = TblDes(A, "Att")
 End Property
 
-Property Let TblAttDes(A As DAO.Database, Des$)
+Property Let TblAttDes(A As Dao.Database, Des$)
 TblDes(A, "Att") = Des
 End Property
 
@@ -391,11 +391,28 @@ Function ReOpnDb(A As Database) As Database
 Set ReOpnDb = Db(A.Name)
 End Function
 
-Function DbNm$(A As Database)
+Function Dbn$(A As Database)
 On Error GoTo X
-DbNm = A.Name
+Dbn = A.Name
 Exit Function
 X:
-DbNm = Err.Description
+Dbn = Err.Description
 End Function
+
+Function FmtNRec(D As Database) As String()
+Dim T$(): T = Tny(D)
+Erase XX
+X "Fb   " & Dbn(D)
+X "NTbl " & Si(T)
+Dim I, J%
+For Each I In Itr(T)
+    J = J + 1
+    X AlignR(J, 3) & " " & AlignR(NReczT(D, I), 7) & " " & I
+Next
+FmtNRec = XX
+Erase XX
+End Function
+Sub DmpNRec(D As Database)
+Dmp FmtNRec(D)
+End Sub
 

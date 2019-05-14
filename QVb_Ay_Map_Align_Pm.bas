@@ -11,15 +11,15 @@ Next
 End Function
 
 Private Function FmtAyPmzT1(Ay, T1, AlignNCol) As String()
-FmtAyPmzT1 = FmtAyNTerm(AywT1(Ay, T1), CInt(AlignNCol))
+FmtAyPmzT1 = FmtSyzNTerm(AywT1(Ay, T1), CInt(AlignNCol))
 End Function
 
 Private Function T1ToAlignNColDic(PmStr$) As Dictionary
 Set T1ToAlignNColDic = New Dictionary
     Dim Ay$(), F, D As Dictionary
-    Ay = TermSy(PmStr)
+    Ay = TermAy(PmStr)
     Set D = T1ToAlignNColDiczNoSrt(Ay)
-    For Each F In TermSy(Ay(0))
+    For Each F In TermAy(Ay(0))
         If D.Exists(F) Then
             T1ToAlignNColDic.Add F, D(F)
         Else
@@ -34,7 +34,7 @@ Set T1ToAlignNColDiczNoSrt = New Dictionary
 For J = 2 To UB(PmLy)
     With Brk(PmLy(J), ":")
         W = .S1
-        For Each F In TermSy(.S2)
+        For Each F In TermAy(.S2)
             T1ToAlignNColDiczNoSrt.Add F, W
         Next
     End With

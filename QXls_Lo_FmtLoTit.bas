@@ -8,22 +8,22 @@ Dim Sq(), R As Range
     Sq = TitSq(TitLy, FnyzLo(A)): If Si(Sq) = 0 Then Exit Sub
     Set R = TitAt(A, UBound(Sq(), 1))
 Set R = RgzSq(Sq(), R)
-MgeTitRg R
+MgeRg R
 BdrRgInner R
 BdrRgAround R
 End Sub
 
-Private Sub MgeTitRg(TitRg As Range)
+Private Sub MgeRg(TitRg As Range)
 Dim J%
 For J = 1 To TitRg.Rows.Count
-    MgeTitRgH RgR(TitRg, J)
+    MgeRgH RgR(TitRg, J)
 Next
 For J = 1 To TitRg.Columns.Count
-    MgeTitRgV RgC(TitRg, J)
+    MgeRgV RgC(TitRg, J)
 Next
 End Sub
 
-Private Sub MgeTitRgH(TitRg As Range)
+Private Sub MgeRgH(TitRg As Range)
 TitRg.Application.DisplayAlerts = False
 Dim J%, C1%, C2%, V, LasV
 LasV = RgRC(TitRg, 1, 1).Value
@@ -42,7 +42,7 @@ Next
 TitRg.Application.DisplayAlerts = True
 End Sub
 
-Private Sub MgeTitRgV(A As Range)
+Private Sub MgeRgV(A As Range)
 Dim J%
 For J = A.Rows.Count To 2 Step -1
     MgeCellAbove RgRC(A, J, 1)
@@ -80,9 +80,9 @@ Dim A$(), Act(), Ept()
     Push A, "C C1"
     Push A, "E E1"
     TitLy = A
-Fny = SyzSsLin("A B C D E")
+Fny = SyzSS("A B C D E")
 Ept = TitSq(TitLy, Fny)
-    SetSqzDrv Ept, 1, SyzSsLin("A1 B1 C1 D E1")
+    SetSqzDrv Ept, 1, SyzSS("A1 B1 C1 D E1")
     SetSqzDrv Ept, 2, Array("A2 11", "B2")
     SetSqzDrv Ept, 3, Array(Empty, "B3")
 GoSub Tst
@@ -104,7 +104,7 @@ Tst:
     Return
 End Sub
 
-Private Sub Z()
+Private Sub ZZ()
+QXls_Lo_FmtLoTit:
 Z_TitSq
-MXls_Z_Lo_Fmt_Tit:
 End Sub

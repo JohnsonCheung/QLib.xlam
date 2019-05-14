@@ -3,89 +3,89 @@ Option Explicit
 Private Const CMod$ = "MVb_Str_Tak."
 Private Const Asm$ = "QVb"
 
-Function BefDot$(S$)
+Function BefDot$(S)
 BefDot = Bef(S, ".")
 End Function
 
-Function Aft$(S$, Sep$, Optional NoTrim As Boolean)
+Function Aft$(S, Sep$, Optional NoTrim As Boolean)
 Aft = Brk1(S, Sep, NoTrim).S2
 End Function
 
-Function AftAt$(S$, At&, Sep$)
+Function AftAt$(S, At&, Sep$)
 If At = 0 Then Exit Function
 AftAt = Mid(S, At + Len(Sep))
 End Function
 
-Function AftDotOrAll$(S$)
+Function AftDotOrAll$(S)
 AftDotOrAll = AftOrAll(S, ".")
 End Function
 
-Function AftDot$(S$)
+Function AftDot$(S)
 AftDot = Aft(S, ".")
 End Function
 
-Function AftMust$(S$, Sep$, Optional NoTrim As Boolean)
+Function AftMust$(S, Sep$, Optional NoTrim As Boolean)
 AftMust = Brk(S, Sep, NoTrim).S2
 End Function
 
-Function AftOrAll$(S$, Sep$, Optional NoTrim As Boolean)
+Function AftOrAll$(S, Sep$, Optional NoTrim As Boolean)
 AftOrAll = Brk2(S, Sep, NoTrim).S2
 End Function
 
-Function AftOrAllRev$(S$, Sep$)
+Function AftOrAllRev$(S, Sep$)
 AftOrAllRev = StrDft(AftRev(S, Sep), Sep)
 End Function
 
-Function AftRev$(S$, Sep$, Optional NoTrim As Boolean)
+Function AftRev$(S, Sep$, Optional NoTrim As Boolean)
 AftRev = Brk1Rev(S, Sep, NoTrim).S2
 End Function
 
-Function BefSpcOrAll$(S$)
+Function BefSpcOrAll$(S)
 BefSpcOrAll = BefOrAll(S, " ")
 End Function
 Function BefSy(Sy$(), Sep$, Optional NoTrim As Boolean) As String()
 Dim I
 For Each I In Itr(Sy)
-    PushI BefSy, Bef(CStr(I), Sep, NoTrim)
+    PushI BefSy, Bef(I, Sep, NoTrim)
 Next
 End Function
-Function Bef$(S$, Sep$, Optional NoTrim As Boolean)
+Function Bef$(S, Sep$, Optional NoTrim As Boolean)
 Bef = Brk2(S, Sep, NoTrim).S1
 End Function
 
-Function RmvBef$(S$, Sep$, Optional NoTrim As Boolean)
-Bef = Brk2(S, Sep, NoTrim).S2
+Function RmvBef$(S, Sep$, Optional NoTrim As Boolean)
+RmvBef = Brk2(S, Sep, NoTrim).S2
 End Function
 
-Function BefAt(S$, At&)
+Function BefAt(S, At&)
 If At = 0 Then Exit Function
 BefAt = Left(S, At - 1)
 End Function
 
-Function BefDD$(S$)
+Function BefDD$(S)
 BefDD = RTrim(BefOrAll(S, "--"))
 End Function
 
-Function BefDDD$(S$)
+Function BefDDD$(S)
 BefDDD = RTrim(BefOrAll(S, "---"))
 End Function
 
-Function BefMust$(S$, Sep$, Optional NoTrim As Boolean)
+Function BefMust$(S, Sep$, Optional NoTrim As Boolean)
 BefMust = Brk(S, Sep, NoTrim).S1
 End Function
 
-Function BefOrAll$(S$, Sep$, Optional NoTrim As Boolean)
+Function BefOrAll$(S, Sep$, Optional NoTrim As Boolean)
 BefOrAll = Brk1(S, Sep, NoTrim).S1
 End Function
 
-Function BefOrAllRev$(S$, Sep$)
+Function BefOrAllRev$(S, Sep$)
 BefOrAllRev = StrDft(BefRev(S, Sep), Sep$)
 End Function
 
-Function BefRev$(S$, Sep$, Optional NoTrim As Boolean)
+Function BefRev$(S, Sep$, Optional NoTrim As Boolean)
 BefRev = Brk2Rev(S, Sep, NoTrim).S1
 End Function
-Function P123(S$, S1$, S2$) As String()
+Function P123(S, S1$, S2$) As String()
 Dim P1&, P2&
 P1 = InStr(S, S1)
 P2 = InStr(P1 + Len(S1), S, S2)
@@ -97,11 +97,11 @@ If P2 > P1 And P1 > 0 And P2 > 0 Then
     PushI P123, Mid(S, P2 + Len(S2))
 End If
 End Function
-Sub AsgP123(S$, S1$, S2$, O1$, O2$, O3$)
+Sub AsgP123(S, S1$, S2$, O1$, O2$, O3$)
 AsgAp P123(S, S1, S2), O1, O2, O3
 End Sub
 Private Sub Z_Tak_BefFstLas()
-Dim S$, Fst$, Las$
+Dim S, Fst$, Las$
 S = " A_1$ = ""Private Function ZChunk$(ConstLy$(), IChunk%)"" & _"
 Fst = vbDblQuote
 Las = vbDblQuote
@@ -113,13 +113,13 @@ Tst:
     C
     Return
 End Sub
-Function BetFstLas$(S$, Fst$, Las$)
+Function BetFstLas$(S, Fst$, Las$)
 BetFstLas = BefRev(Aft(S, Fst), Las)
 End Function
 Function BetLng(L&, A&, B&) As Boolean
 BetLng = A <= L And L <= B
 End Function
-Function Bet$(S$, S1$, S2$, Optional NoTrim As Boolean, Optional InclMarker As Boolean)
+Function Bet$(S, S1$, S2$, Optional NoTrim As Boolean, Optional InclMarker As Boolean)
 With Brk1(S, S1, NoTrim)
    If .S2 = "" Then Exit Function
    Dim O$: O = Brk1(.S2, S2, NoTrim).S1
@@ -128,45 +128,53 @@ With Brk1(S, S1, NoTrim)
 End With
 End Function
 
-Private Sub Z_Tak_BetBkt()
+Private Sub Z_BetBkt()
 Dim Act$
-   Dim S$
+   Dim S
    S = "sdklfjdsf(1234()567)aaa("
    Act = BetBkt(S)
    Ass Act = "1234()567"
 End Sub
-
-Function Nm$(S$)
+Function Nm$(S)
+Nm = TakNm(S)
+End Function
+Function TakNmzSy(Sy$()) As String()
+Dim S
+For Each S In Itr(Sy)
+    PushI TakNmzSy, TakNm(S)
+Next
+End Function
+Function TakNm$(S)
 Dim J%
-If Not IsLetter(Left(S, 1)) Then Exit Function
+If Not IsLetter(FstChr(S)) Then Exit Function
 For J = 2 To Len(S)
     If Not IsNmChr(Mid(S, J, 1)) Then
-        Nm = Left(S, J - 1)
+        TakNm = Left(S, J - 1)
         Exit Function
     End If
 Next
-Nm = S
+TakNm = S
 End Function
 
-Function Pfx$(S$, P$) ' Return Pfx-P if S has such Pfx else return ""
+Function Pfx$(S, P$) ' Return Pfx-P if S has such Pfx else return ""
 If HasPfx(S, P) Then Pfx = P
 End Function
 
-Function PfxSySpc$(S$, PfxSy$()) ' Return Fst ele-P of [PfxSy] if [S] has pfx ele-P and a space
+Function PfxSySpc$(S, PfxSy$()) ' Return Fst ele-P of [PfxSy] if [S] has pfx ele-P and a space
 Dim P
 For Each P In PfxSy
     If HasPfx(S, P & " ") Then PfxSySpc = P: Exit Function
 Next
 End Function
 
-Function PfxzAy$(S$, PfxSy$()) ' Return Fst ele-P of [PfxSy] if [S] has pfx ele-P
+Function PfxzAy$(S, PfxSy$()) ' Return Fst ele-P of [PfxSy] if [S] has pfx ele-P
 Dim P
 For Each P In PfxSy
-    If HasPfx(S, CStr(P)) Then PfxzAy = P: Exit Function
+    If HasPfx(S, P) Then PfxzAy = P: Exit Function
 Next
 End Function
 
-Function SfxzAySpc$(S$, SfxSy$()) ' Return Fst ele-P of [PfxSy] if [S$] has pfx ele-P
+Function SfxzAySpc$(S, SfxSy$()) ' Return Fst ele-P of [PfxSy] if [S] has pfx ele-P
 Dim Sfx$, I
 For Each I In SfxSy
     Sfx = I
@@ -174,7 +182,7 @@ For Each I In SfxSy
 Next
 End Function
 
-Function PfxS$(S$, Pfx$) ' Return [Pfx] if [S] has such pfx+" " else return ""
+Function PfxS(S, Pfx$) ' Return [Pfx] if [S] has such pfx+" " else return ""
 If HasPfx(S, Pfx) Then If Mid(S, Len(Pfx) + 1, 1) = " " Then PfxS = Pfx
 End Function
 
@@ -191,7 +199,7 @@ Tst:
 End Sub
 
 Private Sub Z_Bet()
-Dim Lin$
+Dim Lin
 Lin = "Excel 8.0;HDR=YES;IMEX=2;DATABASE=??       | DATABASE= | ; | ??":            GoSub Tst
 Lin = "Excel 8.0;HDR=YES;IMEX=2;DATABASE=??;AA=XX | DATABASE= | ; | ??":            GoSub Tst
 Lin = "lkjsdf;dkfjl;Data Source=Johnson;lsdfjldf  | Data Source= | ; | Johnson":    GoSub Tst
@@ -217,11 +225,10 @@ Tst:
     Return
 End Sub
 
-Private Sub Z()
+Private Sub ZZ()
 Z_AftBkt
 Z_Tak_BefFstLas
 Z_Bet
-Z_Tak_BetBkt
 MVb_Str_Tak:
 End Sub
 

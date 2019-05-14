@@ -2,45 +2,37 @@ Attribute VB_Name = "QIde_Loc"
 Option Explicit
 Private Const CMod$ = "MIde_Loc."
 Private Const Asm$ = "QIde"
-Function MthPos(MthNm) As MdPos()
-Dim R As Rel: Set R = RelOf_MthNm_To_MdNy_zPj
-Dim MdNm, M As CodeModule, MthLnx
-For Each MdNm In R.ParChd(MthNm).Itms
-    Set M = Md(MdNm)
-    For Each MthLnx In MthLnxAyzMd(M)
-        Dim Lno&, MthLin$
-            With CvLnx(MthLnx)
-            Lno = .Ix + 1
-            MthLin = .Lin
-            End With
-        Dim P As Pos
-            Pos
-            Set P = SubStrPos(MthLin, MthNm)
-        PushObj MthPos, MdPos(M, LinPos(Lno, SubStrPos(MthLin, MthNm)))
-    Next
+Function MthPoses(Mthn) As MdPoses
+Dim R As Rel: 'Set R = MthPfxSyMd
+Dim Mdn, M As CodeModule, MthLnx
+For Each Mdn In R.ParChd(Mthn).Itms
+    Set M = Md(Mdn)
+    With MthLnxszM(M)
+        Dim J&
+        For J = 0 To .N - 1
+            Dim Lno, MthLin
+                With .Ay(J)
+                    Lno = .Ix + 1
+                    MthLin = .Lin
+                End With
+            PushMdPos MthPoses, MdPos(M, LinPos(Lno, SubStrPos(MthLin, Mthn)))
+        Next
+    End With
 Next
 End Function
 
-Function LocLyPatn(Patn$) As String()
-LocLyPatn = LocLyzPjPatn(CurPj, Patn)
+Function LocLyzPatn(Patn$) As String()
+LocLyzPatn = LocLyzPPatn(CPj, Patn)
 End Function
 
-Function LocLyzPjPatn(A As VBProject, Patn$) As String()
-LocLyzPjPatn = SywPatn(SrczPj(A), Patn)
+Function LocLyzPPatn(P As VBProject, Patn$) As String()
+LocLyzPPatn = SywPatn(SrczP(P), Patn)
 End Function
 
-Function CurLocLyPjRe(Re_Or_Patn) As String()
-
-End Function
-
-Function LocLyPjRe(A As VBProject, Re As RegExp) As String()
+Function LocLyzRlzP(P As VBProject, Re As RegExp) As String()
 Dim C As VBComponent
-For Each C In A.VBComponents
-    PushAy LocLyPjRe, LocLyMdRe(C.CodeModule, Re)
+For Each C In P.VBComponents
+'    PushAy LocLyzPjRe, LocLyzMRe(C.CodeModule, Re)
 Next
-End Function
-
-Function LocLyMdRe(A As CodeModule, Re As RegExp) As String()
-
 End Function
 

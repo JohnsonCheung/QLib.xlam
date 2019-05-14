@@ -3,28 +3,28 @@ Option Explicit
 Private Const CMod$ = "MVb_Str_SubStr."
 Private Const Asm$ = "QVb"
 
-Function LasChr$(S$)
+Function LasChr$(S)
 LasChr = Right(S, 1)
 End Function
 
-Function SndChr$(S$)
+Function SndChr$(S)
 SndChr = Mid(S, 2, 1)
 End Function
-Function FstAsc%(S$)
+Function FstAsc%(S)
 FstAsc = Asc(FstChr(S))
 End Function
-Function SndAsc%(S$)
+Function SndAsc%(S)
 SndAsc = Asc(SndChr(S))
 End Function
-Function FstChr$(S$)
+Function FstChr$(S)
 FstChr = Left(S, 1)
 End Function
 
-Function FstTwoChr$(S$)
+Function FstTwoChr$(S)
 FstTwoChr = Left(S, 2)
 End Function
 
-Function SubStrCnt&(S$, SubStr$)
+Function SubStrCnt&(S, SubStr$)
 Dim P&: P = 1
 Dim O&, L%
 L = Len(SubStr)
@@ -36,7 +36,7 @@ While P > 0
 Wend
 End Function
 
-Function PoszSubStr(S$, SubStr$) As Pos
+Function PoszSubStr(S, SubStr$) As Pos
 Dim P&: P = InStr(S, SubStr)
 If P = 0 Then Exit Function
 PoszSubStr = Pos(P, P + Len(SubStr) - 1)
@@ -54,7 +54,7 @@ Tst:
     Return
 End Sub
 
-Function DotCnt&(S$)
+Function DotCnt&(S)
 DotCnt = SubStrCnt(S, ".")
 End Function
 

@@ -22,13 +22,13 @@ End Sub
 
 Sub RmvEmpSubDir(Pth)
 Dim SubPth
-For Each SubPth In Itr(SubPthSy(Pth))
+For Each SubPth In Itr(SubPthy(Pth))
    RmvPthIfEmp SubPth
 Next
 End Sub
 
 Sub RmvPthIfEmp(Pth)
-If IsEmpPth(Pth) Then Exit Sub
+If IsPthOfEmp(Pth) Then Exit Sub
 RmDir Pth
 End Sub
 

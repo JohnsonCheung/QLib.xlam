@@ -2,30 +2,60 @@ Attribute VB_Name = "QVb_Lin_Lines"
 Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Lin_Lines."
-Function WdtzLines%(Lines$)
-WdtzLines = WdtzSy(SplitCrLf(Lines))
+Function WdtzLines%(Lines)
+WdtzLines = WdtzAy(SplitCrLf(Lines))
 End Function
 
-Function WdtzLinesAy%(LinesAy$())
+Function WdtzLinesAy%(LinesAy)
 Dim O%, Lines
 For Each Lines In Itr(LinesAy)
-    O = Max(O, WdtzLines(CStr(Lines)))
+    O = Max(O, WdtzLines(Lines))
 Next
 WdtzLinesAy = O
 End Function
+Sub VcLinesAy(LinesAy)
+Vc FmtLinesAy(LinesAy)
+End Sub
 
-Function FmtLinesAy(LinesAy$()) As String()
+Sub BrwLinesAy(LinesAy)
+B FmtLinesAy(LinesAy)
+End Sub
+Private Sub ZZ_FmtLinesAy()
+Dim LinesAy
+GoSub ZZ
+Exit Sub
+ZZ:
+    BrwLinesAy Y_LinesAy
+    Return
+End Sub
+
+Private Function Y_LinesAy() As String()
+Erase XX
+X RplVbl("sdklf|lskdjflsdf|lsdkjflsdkfjsdflsdf|skldfjdsf|dklfsjdlksjfsldkf")
+X RplVbl("sdklf2-49230  sdfjldf|lskdjflsdf|lsdkjflsdkfjsdflsdf|skldfjdsf|dklfsjdlksjfsldkf")
+X RplVbl("sdsdfklf2-49230  sdfjldf|lskdjflsdf|lsdkjflsdkfjsdflsdf|skldfjdsf|dklfsjdlksjfsldkf")
+Y_LinesAy = XX
+Erase XX
+End Function
+
+Function FmtLinesAy(LinesAy) As String()
 If Si(LinesAy) = 0 Then Exit Function
 Dim W%: W = WdtzLinesAy(LinesAy)
-Dim O$()
-ReDim O(UB(LinesAy))
-Dim Lines, J&
+Dim SepLin: SepLin = Quote(Dup("-", W + 2), "|")
+Dim Lines
+PushI FmtLinesAy, SepLin
 For Each Lines In Itr(LinesAy)
-    O(J) = LinesAlignL(CStr(Lines), W)
-    J = J + 1
+    PushIAy FmtLinesAy, AddIxPfxzLineszW(Lines, W)
+    PushI FmtLinesAy, SepLin
 Next
-FmtLinesAy = O
 End Function
+Private Function AddIxPfxzLineszW(Lines, W%) As String()
+Dim L
+For Each L In Itr(SplitCrLf(Lines))
+    PushI AddIxPfxzLineszW, "| " & AlignL(L, W) & " |"
+Next
+End Function
+
 Function CntSiStrzLines$(Lines$)
 CntSiStrzLines = CntSiStr(LinCnt(Lines), Len(Lines))
 End Function
@@ -73,7 +103,7 @@ End Select
 End Function
 
 Function WrpLy(Ly$(), Optional Wdt% = 80) As String()
-Dim W%, Lin$, I
+Dim W%, Lin, I
 W = EnsBet(Wdt, 10, 200)
 For Each I In Itr(Ly)
     Lin = I
@@ -81,7 +111,7 @@ For Each I In Itr(Ly)
 Next
 End Function
 
-Private Function ShfWrpgLin$(OLin$, W%, LasLinLasChr$)
+Private Function ShfWrpgLin(OLin, W%, LasLinLasChr$)
 If OLin = "" Then Exit Function
 Dim O$, OL$, F$
 O = Left(OLin, W)
@@ -101,7 +131,7 @@ ShfWrpgLin = Trim(O)
 OLin = OL
 End Function
 
-Private Function WrpLin(Lin$, W%) As String()
+Private Function WrpLin(Lin, W%) As String()
 If Len(Lin) > W Then WrpLin = Sy(Lin): Exit Function
 Dim L$: L = RTrim(Lin)
 Dim J%
@@ -113,9 +143,9 @@ While L <> ""
 Wend
 End Function
 
-Private Sub ZZ_TrimCrLfAtEnd()
+Private Sub ZZ_TrimRSpcCrLf()
 Dim Lines$: Lines = LineszVbl("lksdf|lsdfj|||")
-Dim Act$: Act = TrimCrLfAtEnd(Lines)
+Dim Act$: Act = TrimRSpcCrLf(Lines)
 Debug.Print Act & "<"
 Stop
 End Sub
@@ -129,7 +159,7 @@ A = Join(Ay, vbCrLf)
 Debug.Print LasNLines(A, 3)
 End Sub
 
-Function FstLin$(Lines$)
+Function FstLin(Lines$)
 FstLin = BefOrAll(Lines, vbCrLf)
 End Function
 
@@ -154,13 +184,13 @@ End Function
 Function LyzLinesAy(LinesAy$()) As String()
 Dim Lines
 For Each Lines In Itr(LinesAy)
-    PushIAy LyzLinesAy, SplitCrLf(CStr(Lines))
+    PushIAy LyzLinesAy, SplitCrLf(Lines)
 Next
 End Function
 
-Private Sub Z_TrimCrLfAtEnd()
+Private Sub Z_TrimRSpcCrLf()
 Dim Lines$: Lines = LineszVbl("lksdf|lsdfj|||")
-Dim Act$: Act = TrimCrLfAtEnd(Lines)
+Dim Act$: Act = TrimRSpcCrLf(Lines)
 Debug.Print Act & "<"
 Stop
 End Sub
@@ -173,36 +203,36 @@ Function LinCnt&(Lines$)
 LinCnt = Si(SplitCrLf(Lines))
 End Function
 
-Function HSqByLines(Lines$) As Variant()
-HSqByLines = SqzAyH(SplitCrLf(Lines))
+Function SqhzLines(Lines$) As Variant()
+SqhzLines = Sqh(SplitCrLf(Lines))
 End Function
 
-Function VSqByLines(Lines$) As Variant()
-VSqByLines = SqzAyV(SplitCrLf(Lines))
+Function SqvzLines(Lines$) As Variant()
+SqvzLines = Sqv(SplitCrLf(Lines))
 End Function
 
-Function TrimR$(S$)
-TrimR = TrimCrLfAtEnd(RTrim(S))
+Function TrimR$(S)
+TrimR = TrimRSpcCrLf(RTrim(S))
 End Function
-
-Function TrimCrLfAtEnd$(S$)
-Dim J&
-For J = Len(S) To 1 Step -1
-    If Not IsAscCrLf(AscAt(S, J)) Then TrimCrLfAtEnd = Left(S, J): Exit Function
+Function TrimRSpcCrLf$(Lines)
+Dim At&
+For At = Len(Lines) To 1 Step -1
+    If Not IsStrAtSpcCrLf(Lines, At) Then TrimRSpcCrLf = Left(Lines, At): Exit Function
 Next
 End Function
 
-Function LasLinLines$(Lines$)
-LasLinLines = LasEle(SplitCrLf(Lines))
+Function LasLin(Lines$)
+LasLin = LasEle(SplitCrLf(Lines))
 End Function
-Function LinesAlignL$(Lines$, W%)
-Dim Las$: Las = LasLinLines(Lines)
+
+Function AlignLines$(Lines$, W%)
+Dim Las$: Las = LasLin(Lines)
 Dim N%: N = W - Len(Las)
 If N > 0 Then
-    LinesAlignL = Lines & Space(N)
+    AlignLines = Lines & Space(N)
 Else
     Warn CSub, "W is too small", "Lines.LasLin W", Las, W
-    LinesAlignL = Lines
+    AlignLines = Lines
 End If
 End Function
 

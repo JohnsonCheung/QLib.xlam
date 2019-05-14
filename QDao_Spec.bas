@@ -16,17 +16,17 @@ Dim SamTim As Boolean
 Dim DifSz As Boolean
 Dim SamSz As Boolean
 Dim DifFt As Boolean
-Dim Rs As DAO.Recordset
+Dim Rs As Dao.Recordset
     Q = FmtQQ("Select SpecNm,Ft,Lines,Tim,Si,LTimStr_Dte from Spec where SpecNm = '?'", Spnm)
     Set Rs = A.OpenRecordset(Q)
-    NoCur = Not HasFfn(Ft$)
+    NoCur = Not HasFfn(Ft)
     'NoLas = HasRec(Rs)
     
     Dim CurT As Date, LasT As Date 'CurTim and LasTim
     Dim CurS&, LasS&
     Dim LasFt$, LdTimStr_Dte$
-    CurS = SizFfn(Ft$)
-    CurT = DtezFfn(Ft$)
+    CurS = SizFfn(Ft)
+    CurT = DtezFfn(Ft)
     If Not NoLas Then
         With Rs
             LasS = Nz(Rs!Si, -1)
@@ -55,7 +55,7 @@ Const CurIsNew__$ = "Cur is new."
 Const C$ = "|[SpecNm] [Db] [Cur-Ft] [Las-Ft] [Cur-Tim] [Las-Tim] [Cur-Si] [Las-Si] [Imported-Time]."
 
 Dim Dr()
-Dr = Array(Spnm, Ft, LineszFt(Ft$), CurT, CurS, Now)
+Dr = Array(Spnm, Ft, LineszFt(Ft), CurT, CurS, Now)
 Select Case True
 Case NoCur, SamTim:
 'Case NoLas: InsDrzRs Dr, Rs
@@ -64,7 +64,7 @@ Case Else: Stop
 End Select
 
 Dim Av()
-Av = Array(Spnm, DbNm(A), Ft, LasFt, CurT, LasT, CurS, LasS, LdTimStr_Dte)
+Av = Array(Spnm, Dbn(A), Ft, LasFt, CurT, LasT, CurS, LasS, LdTimStr_Dte)
 Select Case True
 'Case NoCur:            XDmp_Lin_AV CSub, NoImport & NoCur______ & C, Av
 'Case NoLas:            XDmp_Lin_AV CSub, Imported & NoLas______ & C, Av

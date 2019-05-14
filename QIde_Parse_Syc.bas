@@ -16,20 +16,20 @@ Function SycFt$(SycQNm$)
 SycFt = SycHom & SycQNm & ".txt"
 End Function
 Property Get SycHom$()
-Static X$: If X = "" Then X = AddFdrEns(TmpHom & "Syc\")
-SycHom = X
+'Static X$: If X = "" Then X = AddFdrEns(TmpHom & "Syc\")
+'SycHom = X
 End Property
 Function SycValzFt(SycNm$) As String()
 SycValzFt = LyzFt(FtzCnstQNm(SycNm))
 End Function
 Function SycVal(A As MdSyc) As String()
-SycVal = SycValzMdSyc(MdSyc(CnstQNm))
+'SycVal = SycValzMdSyc(MdSyc(CnstQNm))
 End Function
-Function MdzSycNm(SycNm$) As CodeModule
-Dim A$(): A = MdNyzSycNm(SycNm)
+Function MdzSycn(SycNm$) As CodeModule
+Dim A$(): A = MdNyzSycn(SycNm)
 Select Case Si(A)
 Case 0: Thw CSub, "SycNm not in any Md", "SycNm", SycNm
-Case 1: Set MdSyc = Md(A(0))
+Case 1: Set MdzSycn = Md(A(0))
 Case Else: Thw CSub, "SycNm is found in more than one module", "SycNm MdNy", SycNm, A
 End Select
 End Function
@@ -37,7 +37,7 @@ Private Function MdSyc(CnstQNm$) As MdSyc
 Dim O As MdSyc
 With Brk2Dot(CnstQNm)
     If .S1 = "" Then
-        Set O.Md = MdSyc(.S2)
+        Set O.Md = MdzSycn(.S2)
     Else
         Set O.Md = Md(.S1)
     End If
@@ -45,37 +45,37 @@ With Brk2Dot(CnstQNm)
 End With
 End Function
 
-Private Sub Z_MdNyzSycNm()
-D MdNyzSycNm("CMod")
+Private Sub Z_MdNyzSycn()
+D MdNyzSycn("CMod")
 End Sub
 
-Function MdNyzSycNm(SycNm$) As String()
-MdNyzSycNm = MdNyzSycNmPj(CurPj, SycNm)
+Function MdNyzSycn(SycNm$) As String()
+MdNyzSycn = MdNyzPSycn(CPj, SycNm)
 End Function
 
-Function MdNyzSycNmPj(Pj As VBProject, SycNm$) As String()
+Function MdNyzPSycn(Pj As VBProject, SycNm$) As String()
 Dim C As VBComponent
 For Each C In Pj.VBComponents
-    If HasSycNm(C.CodeModule, SycNm) Then
-        PushI MdNyzSycNmPj, C.Name
-    End If
+    'If HasSycNm(C.CodeModule, SycNm) Then
+        PushI MdNyzPSycn, C.Name
+    'End If
 Next
 End Function
 Function CnstBrkzMd$(Md As CodeModule, SycNm$)
-Dim M$: M = MthLinesByMdMth(Md, "C_" & SycNm): If M = "" Then Exit Function
+Dim M$: 'M = MthLineszNmzMd(Md, "C_" & SycNm): If M = "" Then Exit Function
 If Not IsMthLinzSyc(M) Then Thw CSub, "Not a const method.  It should be [Property Get]", "SycNm MthLines", SycNm, M
-CnstBrkzMd = SycVal(M)
+'CnstBrkzMd = SycVal(Md)
 End Function
 
-Private Function IsMthLinzSyc(MthLin$) As Boolean
-Dim A As MthNm3: Set A = MthNm3(FstLin(MthLin))
-If A.MthTy = "Property Get" Then Exit Function
+Private Function IsMthLinzSyc(MthLin) As Boolean
+Dim A As Mthn3: Set A = Mthn3(MthLin)
+If A.ShtTy <> "Get" Then Exit Function
 If Not HasPfx(A.Nm, "C_") Then Exit Function
 IsMthLinzSyc = True
 End Function
 Function SycValzSycMLines(MthLines$) As String()
-Dim XLinSy$(): XLinSy = RmvPfxzSy(SywPfx(SplitCrLf(MthLines), "X """), "X ")
-SycValzSycMLines = TakVbStrzSy(XLinSy)
+Dim XLiny$(): XLiny = RmvPfxzAy(SywPfx(SplitCrLf(MthLines), "X """), "X ")
+SycValzSycMLines = TakVbStrzSy(XLiny)
 End Function
 Function TakVbStr$(VbStr$)
 If FstChr(VbStr) <> """" Then Thw CSub, "FstChr of VbStr must be DblQuote", "VbStr", VbStr
@@ -129,14 +129,14 @@ T1:
    
     Return
 Tst:
-    Act = SycVal(MthLines)
+'    Act = SycVal(MthLines)
     Brw Act
     Stop
     C
     Return
 End Sub
 
-Private Sub Z()
+Private Sub ZZ()
 Z_SycVal
 MIde_Gen_Const_CnstBrk:
 End Sub

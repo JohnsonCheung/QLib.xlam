@@ -5,10 +5,28 @@ Private Const Asm$ = "QVb"
 Function IsDiczEmp(A As Dictionary) As Boolean
 IsDiczEmp = A.Count = 0
 End Function
-Function ValTyNyzDic(A As Dictionary) As String()
-For Each V In A.Items
-    PushI ValTyNyzDic, TypeName(V)
+Function TyNy(Ay) As String()
+Dim V
+For Each V In Itr(Ay)
+    PushI TyNy, TypeName(V)
 Next
+End Function
+Function VyzNy(A As Dictionary, Ny$()) As Variant()
+VyzNy = Vy(DicwNy(A, Ny))
+End Function
+Function DicwNy(A As Dictionary, Ny$()) As Dictionary
+Set DicwNy = New Dictionary
+Dim N
+For Each N In Ny
+    If Not A.Exists(N) Then Thw CSub, "Some N in Ny not found in Dic.Keys", "[N in Ny not fnd in Dic.Keys] DicKeys Ny", N, AvzItr(A.Keys), Ny
+    DicwNy.Add N, A(N)
+Next
+End Function
+Function Vy(A As Dictionary) As Variant()
+Vy = IntozItr(EmpAv, A.Items)
+End Function
+Function TyNyzDic(A As Dictionary) As String()
+TyNyzDic = TyNy(Vy(A))
 End Function
 Function IsDiczSy(A As Dictionary) As Boolean
 Dim D As Dictionary, I, V

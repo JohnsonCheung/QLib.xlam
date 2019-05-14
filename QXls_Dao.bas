@@ -7,11 +7,11 @@ Function CvCn(A) As AdoDb.Connection
 Set CvCn = A
 End Function
 
-Sub RplOleWcFb(Wc As WorkbookConnection, Fb$)
+Sub RplOleWcFb(Wc As WorkbookConnection, Fb)
 CvCn(Wc.OLEDBConnection.ADOConnection).ConnectionString = CnStrzFbzAsAdo(Fb)
 End Sub
 
-Sub RplLozFbzFbt(Lo As ListObject, Fb$, T$)
+Sub RplLozFbzFbt(Lo As ListObject, Fb, T)
 With Lo.QueryTable
     RplOleWcFb .Connection, Fb '<==
     .CommandType = xlCmdTable
@@ -31,26 +31,19 @@ With Lo.QueryTable
     .Refresh BackgroundQuery:=False
 End With
 End Sub
-
-Function WbzFb(Fb$, Optional Vis As Boolean) As Workbook
-Dim D As Database: Set D = Db(Fb$)
-Set WbzFb = SetViszWb(WbzTny(D, Tny(D)), Vis)
-End Function
-
-Sub PutTny(A As Database, Tny$(), ToWb As Workbook, Optional AddgWay As EmAddgWay)
-For Each I In Tny
-    T = I
-    PutTbl A, T, A1, AddgWay
+Function WbzTny(A As Database, Tny$()) As Workbook
+Dim T, O As Workbook
+Set O = NewWb
+For Each T In Itr(Tny)
+    AddWszT O, A, CStr(T)
 Next
-End Sub
-
-Sub PutTbl(A As Database, T$, At As Range, Optional AddgWay As EmAddgWay)
-Select Case AddgWay
-Case EmAddgWay.EiSqWay: PutSq SqzT(A, T), At
-Case EmAddgWay.EiWcWay: AddLo At, A.Name, T
-Case Else: Thw CSub, "Invalid AddgWay"
-End Select
-End Sub
+DltSheet1 O
+Set WbzTny = O
+End Function
+Function WbzFb(Fb, Optional Vis As Boolean) As Workbook
+Dim D As Database: Set D = Db(Fb)
+Set WbzFb = ShwWb(WbzTny(D, Tny(D)))
+End Function
 
 Function SetWsn(Ws As Worksheet, Nm$) As Worksheet
 Set SetWsn = Ws
@@ -96,7 +89,7 @@ Sub AddLozSamp()
 '    End With
 
 End Sub
-Function AddLo(At As Range, Fb$, T$) As ListObject
+Function AddLo(At As Range, Fb, T) As ListObject
 Dim Ws As Worksheet: Set Ws = WszRg(At)
 Dim Lo As ListObject: Set Lo = Ws.ListObjects.Add(xlSrcExternal, CnStrzFbzAsAdoOle(Fb), Destination:=At)
 Dim Qt As QueryTable: Set Qt = Lo.QueryTable
@@ -114,7 +107,7 @@ With Qt
     .AdjustColumnWidth = False
     .RefreshPeriod = 0
     .PreserveColumnInfo = True
-    .ListObject.DisplayName = LoNmzTblNm(T)
+    .ListObject.DisplayName = LoNmzT(T)
     .Refresh BackgroundQuery:=False
 End With
 LoAutoFit Lo
@@ -122,13 +115,13 @@ End Function
 Sub LoAutoFit(A As ListObject)
 A.DataBodyRange.EntireColumn.AutoFit
 End Sub
-Function AddWszT(Wb As Workbook, Db As Database, T$, Optional Wsn0$, Optional AddgWay As EmAddgWay) As Worksheet
+Function AddWszT(Wb As Workbook, Db As Database, T, Optional Wsn0$, Optional AddgWay As EmAddgWay) As Worksheet
 Dim O As Worksheet: Set O = AddWs(Wb, StrDft(Wsn0, T))
 Dim A1 As Range: Set A1 = A1zWs(O)
 PutTbl Db, T, A1, AddgWay
 End Function
 
-Function NewWbzOupTbl(Fb$, Optional AddgWay As EmAddgWay) As Workbook '
+Function NewWbzOupTbl(Fb, Optional AddgWay As EmAddgWay) As Workbook '
 Dim O As Workbook, D As Database
 Set O = NewWb
 Set D = Db(Fb)
@@ -137,24 +130,24 @@ DltWsIf O, "Sheet1"
 Set NewWbzOupTbl = O
 End Function
 
-Function WbzT(A As Database, T$, Optional Wsn$ = "Data", Optional LoNm$, Optional Vis As Boolean) As Workbook
+Function WbzT(A As Database, T, Optional Wsn$ = "Data", Optional LoNm$, Optional Vis As Boolean) As Workbook
 Set WbzT = WszRg(AtAddDbt(NewA1(Wsn, Vis), A, T, LoNm))
 End Function
-Function AtAddDbt(At As Range, Db As Database, T$, Optional LoNm$) As Range
+Function AtAddDbt(At As Range, Db As Database, T, Optional LoNm$) As Range
 'CrtLozRg PutSq(At, Dbt(Db, T).Sq), LoNm
 Set AtAddDbt = At
 End Function
-Sub PutDbtWs(A As Database, T$, Ws As Worksheet)
+Sub PutDbtWs(A As Database, T, Ws As Worksheet)
 PutDbtAt A, T, A1zWs(Ws)
 End Sub
 
-Sub PutDbtAt(A As Database, T$, At As Range, Optional AddgWay As EmAddgWay)
-CrtLozRg PutSq(SqzDbt(A, T), At), LoNm(T)
+Sub PutDbtAt(A As Database, T, At As Range, Optional AddgWay As EmAddgWay)
+CrtLozRg PutSq(SqzT(A, T), At), LoNm(T)
 End Sub
-Sub SetQtFbt(Qt As QueryTable, Fb$, T$)
+Sub SetQtFbt(Qt As QueryTable, Fb, T)
 With Qt
     .CommandType = xlCmdTable
-    .Connection = CnStrzFbzAsAdoOle(Fb$) '<--- Fb
+    .Connection = CnStrzFbzAsAdoOle(Fb) '<--- Fb
     .CommandText = T '<-----  T
     .RowNumbers = False
     .FillAdjacentFormulas = False
@@ -170,18 +163,17 @@ With Qt
     .Refresh BackgroundQuery:=False
 End With
 End Sub
-Sub PutFbtAt(Fb$, T$, At As Range, Optional LoNm0$)
+Sub PutFbtAt(Fb, T$, At As Range, Optional LoNm0$)
 Dim O As ListObject
 Set O = WszRg(At).ListObjects.Add(SourceType:=XlSourceType.xlSourceWorkbook, Destination:=At)
 SetLoNm O, Dft(LoNm0, LoNm(T))
 SetQtFbt O.QueryTable, Fb, T
 End Sub
-Sub FxzTny(Fx$, Db As Database, Tny$())
+Sub FxzTny(Fx, Db As Database, Tny$())
 WbzTny(Db, Tny).SaveAs Fx
 End Sub
 
-Function WszT(A As Database, T$, Optional Wsn$) As Worksheet
-'set Wszt = WszT(NewWb(
+Function WszT(A As Database, T, Optional Wsn$) As Worksheet
 Dim Sq(): Sq = SqzT(A, T)
 Dim A1 As Range: Set A1 = NewA1(Wsn)
 Set WszT = WszLo(CrtLozSq(Sq(), A1))

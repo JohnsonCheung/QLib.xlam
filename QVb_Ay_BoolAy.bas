@@ -4,18 +4,18 @@ Option Explicit
 Private Const CMod$ = "MVb_Ay_BoolAy."
 Private Const Asm$ = "QVb"
 Enum EmBoolOp
-    EiOpEQ = 1
-    EiOpNE = 2
-    EiOpAND = 3
-    EiOpOR = 4
+    EiOpEq = 1
+    EiOpNe = 2
+    EiOpAnd = 3
+    EiOpOr = 4
 End Enum
 Enum EmEqNeOp
-    EiOpEQ = EmBoolOp.EiOpEQ
-    EiOpNE = EmBoolOp.EiOpNE
+    EiOpEq = EmBoolOp.EiOpEq
+    EiOpNe = EmBoolOp.EiOpNe
 End Enum
 Enum EmAndOrOp
-    EiOpAND = EmBoolOp.EiOpAND
-    EiOpOR = EmBoolOp.EiOpOR
+    EiOpAnd = EmBoolOp.EiOpAnd
+    EiOpOr = EmBoolOp.EiOpOr
 End Enum
 
 Function AndBoolAy(A() As Boolean) As Boolean
@@ -25,10 +25,10 @@ End Function
 Function BoolOp(BoolOpStr$) As EmBoolOp
 Dim O As EmBoolOp
 Select Case UCase(BoolOpStr)
-Case "AND": O = EmBoolOp.EiOpAND
-Case "OR": O = EmBoolOp.EiOpOR
-Case "EQ": O = EmBoolOp.EiOpEQ
-Case "NE": O = EmBoolOp.EiOpNE
+Case "AND": O = EmBoolOp.EiOpAnd
+Case "OR": O = EmBoolOp.EiOpOr
+Case "EQ": O = EmBoolOp.EiOpEq
+Case "NE": O = EmBoolOp.EiOpNe
 Case Else: Stop
 End Select
 BoolOp = O
@@ -85,14 +85,14 @@ IsVdtBoolOpStr = HitAy(BoolOpStr, BoolOpSy)
 End Function
 
 Function OrBoolAy(A() As Boolean) As Boolean
-OrBoolAy = IsSomTrue(A)
+OrBoolAy = IsSomTruezB(A)
 End Function
 
 Property Get BoolOpSy() As String()
 Static Y$(), X As Boolean
 If Not X Then
     X = True
-    Y = SyzSsLin("AND OR")
+    Y = SyzSS("AND OR")
 End If
 BoolOpSy = Y
 End Property

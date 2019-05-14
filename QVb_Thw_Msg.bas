@@ -10,7 +10,7 @@ End Function
 Function LinzFunMsg$(Fun$, Msg$)
 Dim F$: F = IIf(Fun = "", "", " | @" & Fun)
 Dim A$: A = Msg & F
-If Cfg.ShwTim Then
+If Cfg.Inf.ShwTim Then
     LinzFunMsg = NowStr & " | " & A
 Else
     LinzFunMsg = A
@@ -86,7 +86,7 @@ End Sub
 Function LyzNyAv(Ny$(), Av(), Optional Sep$ = ": ") As String()
 Dim J%, O$(), N$()
 ResiMax Ny, Av
-N = AlignLzSy(Ny)
+N = AlignLzAy(Ny)
 For J = 0 To UB(Ny)
     PushIAy LyzNyAv, LyzNv(N(J), Av(J), Sep)
 Next
@@ -121,7 +121,7 @@ If Si(Nav) = 0 Then
     Exit Sub
 End If
 Dim TT$: TT = Nav(0)
-ONy = TermSy(TT)
+ONy = TermAy(TT)
 OAv = AyeFstEle(Nav)
 End Sub
 Private Sub Z_LyzNav()

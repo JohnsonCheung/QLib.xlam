@@ -24,13 +24,13 @@ For J = UB(A) To 0 Step -1
 Next
 End Function
 
-Function AyIntersect(A, B)
-AyIntersect = Resi(A)
+Function IntersectAy(A, B)
+IntersectAy = Resi(A)
 If Si(A) = 0 Then Exit Function
 If Si(A) = 0 Then Exit Function
 Dim V
 For Each V In A
-    If HasEle(B, V) Then PushI AyIntersect, V
+    If HasEle(B, V) Then PushI IntersectAy, V
 Next
 End Function
 Function MinAy(A)
@@ -73,14 +73,14 @@ Next
 MaxAy = O
 End Function
 
-Function Ny(S$) As String()
-Ny = TermSy(S)
+Function Ny(S) As String()
+Ny = TermAy(S)
 End Function
 
 Function CvVy(Vy)
 Const CSub$ = CMod & "CvVy"
 Select Case True
-Case IsStr(Vy): CvVy = SyzSsLin(CStr(Vy))
+Case IsStr(Vy): CvVy = SyzSS(CStr(Vy))
 Case IsArray(Vy): CvVy = Vy
 Case Else: Thw CSub, "VyzDicKK should either be string or array", "Vy-TypeName Vy", TypeName(Vy), Vy
 End Select
@@ -129,8 +129,5 @@ Dim XX
 CvSy A
 Sy B
 SyShow C, D
-End Sub
-
-Private Sub Z()
 End Sub
 

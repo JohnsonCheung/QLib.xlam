@@ -3,9 +3,6 @@ Option Explicit
 Private Const CMod$ = "MXls_Ws."
 Private Const Asm$ = "QXls"
 
-Sub ShwWs(A As Worksheet)
-A.Application.Visible = True
-End Sub
 Function AddWs(A As Workbook, Optional Wsn$, Optional AtBeg As Boolean, Optional AtEnd As Boolean, Optional BefWsn$, Optional AftWsn$) As Worksheet
 Dim O As Worksheet
 DltWsIf A, Wsn
@@ -121,7 +118,7 @@ End Function
 Function CvWs(A) As Worksheet
 Set CvWs = A
 End Function
-Sub SavAszAndCls(Wb As Workbook, Fx$)
+Sub SavAszAndCls(Wb As Workbook, Fx)
 Wb.SaveAs Fx
 Wb.Close
 End Sub

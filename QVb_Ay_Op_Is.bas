@@ -51,5 +51,5 @@ Function IsSamAy(A, B) As Boolean
 IsSamAy = IsEqDic(CntDic(A), CntDic(B))
 End Function
 
-Private Sub Z()
+Private Sub ZZ()
 End Sub

@@ -9,12 +9,12 @@ End Function
 
 Private Function ConstPrpLy(CnstQNm$, IsPub As Boolean) As String() 'Ret Ly from ConstPrpFt
 Const CSub$ = CMod & "ConstPrpLines"
-Dim Ft$: Ft = FtzCnstQNm(CnstQNm): If Not HasFfn(Ft$) Then Exit Function
+Dim Ft$: Ft = FtzCnstQNm(CnstQNm): If Not HasFfn(Ft) Then Exit Function
 Dim O$()
-'    PushI O, IIf(IsPub, "", "Private ") & "Property Get " & CnstNm & "() As String()"
+'    PushI O, IIf(IsPub, "", "Private ") & "Property Get " & Cnstn & "() As String()"
     Dim L, Fst As Boolean: Fst = True
-    For Each L In Itr(LyzFt(Ft$))
-        PushIAy O, CdLyzPushStr(L, Fst)
+    For Each L In Itr(LyzFt(Ft))
+        PushIAy O, CdLyzPushItr(L, Fst)
         If Fst Then
             Fst = False
         End If
@@ -24,10 +24,10 @@ Dim O$()
 End Function
 
 Private Sub Z_ExprLyzStr()
-Brw ExprLyzStr(StrzCurPjf)
+'Brw ExprLyzStr(StrOfPjfP)
 End Sub
 
-Private Function CdLyzPushStr(S, ByVal Fst As Boolean) As String()
+Private Function CdLyzPushItr(S, ByVal Fst As Boolean) As String()
 Dim CdLin, LasL%, O$()
 Dim CdLy$(): CdLy = ExprLyzStr(S)
 LasL = Si(CdLy)
@@ -40,7 +40,7 @@ For Each CdLin In Itr(CdLy(S))
     End Select
     J = J + 1
 Next
-CdLyzPushStr = O
+CdLyzPushItr = O
 End Function
 
 Private Sub Z_ConstPrpLines()
@@ -66,7 +66,7 @@ T0:
 
 T1:
     IsEdt = True
-    CnstBrk = MthLinesByMdMth(CurMd, "Chunk")
+    'CnstBrk = MthLineszNmzMd(CMd, "Chunk")
     BrwStr CnstBrk
     Stop
     Nm = "ZZ_A"
@@ -94,7 +94,7 @@ Tst:
     ShwTstOk CSub, Cas
     Return
 ZZ:
-    Dim V$: V = JnCrLf(AywFstNEle(SrczPj(CurPj), 5000))
+    Dim V$: V = JnCrLf(AywFstNEle(SrczP(CPj), 5000))
     Stop
 '    Brw ConstPrpLines("AA", V, IsPub:=True)
     Return
@@ -105,9 +105,6 @@ Dim A$
 Dim B As Boolean
 End Sub
 
-Private Sub Z()
-Z_ConstPrpLines
-End Sub
 Private Property Get C_A$()
 Const A_1$ = "sldkfj skldjf slkdfj sd" & _
 vbCrLf & "sdfkljsdf" & _

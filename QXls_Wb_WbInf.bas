@@ -37,7 +37,7 @@ LoItr = Itr(LoAy(A))
 End Function
 
 Function CrtLozAyH(Ay, Wb As Workbook, Optional Wsn$, Optional LoNm$) As ListObject
-Set CrtLozAyH = CrtLozRg(RgzSq(SqzAyV(Ay), A1zWb(Wb, Wsn)), LoNm)
+Set CrtLozAyH = CrtLozRg(RgzSq(Sqv(Ay), A1zWb(Wb, Wsn)), LoNm)
 End Function
 
 Function MainLo(A As Workbook) As ListObject
@@ -94,28 +94,28 @@ If IsNothing(T) Then Exit Function
 TxtWcStr = T.Connection
 End Function
 
-Function OleWcAy(A As Workbook) As OLEDBConnection()
+Function WcyzOle(A As Workbook) As OLEDBConnection()
 Dim O() As OLEDBConnection, Wc As WorkbookConnection
 For Each Wc In A.Connections
     PushObjzExlNothing O, Wc.OLEDBConnection
 Next
-OleWcAy = OyeNothing(IntozItrPrp(OleWcAy, A.Connections, "OLEDBConnection"))
+WcyzOle = OyeNothing(IntozItrPrp(WcyzOle, A.Connections, "OLEDBConnection"))
 End Function
 
-Function WcNyWb(A As Workbook) As String()
-WcNyWb = Itn(A.Connections)
+Function WcnyzWb(A As Workbook) As String()
+WcnyzWb = Itn(A.Connections)
 End Function
 
-Function WcStrAyWbOLE(A As Workbook) As String()
-WcStrAyWbOLE = SyzOyPrp(OleWcAy(A), "Connection")
+Function WcsyzWbOLE(A As Workbook) As String()
+WcsyzWbOLE = SyzOyPrp(WcyzOle(A), PrpPth("Connection"))
 End Function
 
 Function WszWb(A As Workbook, WsIx) As Worksheet
 Set WszWb = A.Sheets(WsIx)
 End Function
 
-Function WsNyzRg(A As Range) As String()
-WsNyzRg = Wsny(WbzRg(A))
+Function WsnyzRg(A As Range) As String()
+WsnyzRg = Wsny(WbzRg(A))
 End Function
 
 Function Wsny(A As Workbook) As String()
@@ -125,7 +125,7 @@ End Function
 Private Sub Z_SetWsCdNm()
 Dim A As Worksheet: Set A = NewWs
 SetWsCdNm A, "XX"
-WsVis A
+ShwWs A
 Stop
 End Sub
 
@@ -153,19 +153,26 @@ Function WbFullNm$(A As Workbook)
 On Error Resume Next
 WbFullNm = A.FullName
 End Function
-Sub PutTblzByWc(ClnWs As Worksheet, Db As Database, T$)
-AddWcToWbFmFbt
+Function RgzDbtzByWc(Db As Database, T, At As Range) As Range
 
-End Sub
-Sub PutTblzBySq(ClnWs As Workbook, Db As Database, T$)
-RgzSq SqzT(A, T), A1(ClnWs)
-End Sub
+End Function
+Function RgzDbt(Db As Database, T, At As Range) As Range
+Set RgzDbt = RgzSq(SqzT(Db, T), At)
+End Function
 
-Sub AddWszFmT(Wb As Workbook, Db As Database, T$, Optional Wsn0$, Optional AddgWay As EmAddgWay)
-If AddgWay Then AddWszT_AddgWay Wb, Db, T, Wsn0: Exit Sub
+Sub AddWszT1(A As Workbook, Db As Database, T, Optional Wsn0$, Optional AddgWay As EmAddgWay)
+If AddgWay = EiSqWay Then AddWszT A, Db, T, Wsn0, AddgWay: Exit Sub
 Dim Wsn$: Wsn = DftStr(Wsn0, T)
 Dim Sq(): Sq = SqzT(Db, T)
-Dim A1 As Range: Set A1 = A1zWs(AddWs(Wb, Wsn))
+Dim A1 As Range: Set A1 = A1zWs(AddWs(A, Wsn))
+End Sub
+
+Sub PutTbl(A As Database, T, At As Range, Optional AddgWay As EmAddgWay)
+Select Case AddgWay
+Case EmAddgWay.EiSqWay: PutSq SqzT(A, T), At
+Case EmAddgWay.EiWcWay: AddLo At, A.Name, T
+Case Else: Thw CSub, "Invalid AddgWay"
+End Select
 End Sub
 
 Sub AddWszTny(A As Workbook, Db As Database, Tny$(), Optional AddgWay As EmAddgWay)
@@ -183,14 +190,14 @@ LozDrs DrszDt(Dt), A1(O)
 Set WszWbDt = O
 End Function
 
-Function AddWc(ToWb As Workbook, FmFb$, T$) As WorkbookConnection
+Function AddWc(ToWb As Workbook, FmFb, T) As WorkbookConnection
 Set AddWc = ToWb.Connections.Add2(T, T, CnStrzFbzForWc(FmFb), T, XlCmdType.xlCmdTable)
 End Function
 
 Sub ThwWbMisOupNy(A As Workbook, OupNy$())
 Dim O$(), N$, B$(), Wny$()
 Wny = WsCdNy(A)
-O = MinusAy(AddPfxzSy(OupNy, "WsO"), Wny)
+O = MinusAy(AddPfxzAy(OupNy, "WsO"), Wny)
 If Si(O) > 0 Then
     N = "OupNy":  B = OupNy:  GoSub Dmp
     N = "WbCdNy": B = Wny: GoSub Dmp
@@ -269,7 +276,7 @@ End If
 HasWs = HasItn(A.Sheets, CStr(W))
 End Function
 
-Private Sub ZZ_WbWcSy()
+Private Sub ZZ_WbWcsy()
 'D WcStrAyWbOLE(WbzFx(TpFx))
 End Sub
 
@@ -314,10 +321,6 @@ Wbs C
 TxtWc C
 TxtWcCnt C
 TxtWcStr C
-OleWcAy C
-WsCdNy C
-WcStrAyWbOLE C
-WszWb C, A
 Wsny C
 WszCdNm C, D
 WszCdNm C, D
@@ -326,10 +329,7 @@ ThwWbMisOupNy C, H
 ClsWbNoSav C
 DltWc C
 WbSavAs C, A
-WbVis C
+ShwWb C
 XX = CurWb()
 End Sub
 
-Private Sub Z()
-Z_TxtWcCnt
-End Sub

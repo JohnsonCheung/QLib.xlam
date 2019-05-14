@@ -20,7 +20,7 @@ Sub SetPtffOri(A As PivotTable, FF$, Ori As XlPivotFieldOrientation)
 Dim F, J%, T
 T = Array(False, False, False, False, False, False, False, False, False, False, False, False)
 J = 1
-For Each F In Itr(SyzSsLin(FF))
+For Each F In Itr(SyzSS(FF))
     With PivFld(A, F)
         .Orientation = Ori
         .Position = J
@@ -81,7 +81,7 @@ End Function
 Sub SetPtWdt(A As PivotTable, Colss$, ColWdt As Byte)
 If ColWdt <= 1 Then Stop
 Dim C
-For Each C In Itr(SyzSsLin(Colss))
+For Each C In Itr(SyzSS(Colss))
     ColEntPt(A, C).ColumnWidth = ColWdt
 Next
 End Sub
@@ -89,14 +89,14 @@ End Sub
 Sub SetPtOutLin(A As PivotTable, Colss$, Optional Lvl As Byte = 2)
 If Lvl <= 1 Then Stop
 Dim F, C As VBComponent
-For Each C In Itr(SyzSsLin(Colss))
+For Each C In Itr(SyzSS(Colss))
     ColEntPt(A, F).OutlineLevel = Lvl
 Next
 End Sub
 
 Sub SetPtRepeatLbl(A As PivotTable, Rowss$)
 Dim F
-For Each F In Itr(SyzSsLin(Rowss))
+For Each F In Itr(SyzSS(Rowss))
     PivFld(A, F).RepeatLabels = True
 Next
 End Sub
@@ -116,7 +116,7 @@ Function SampPt() As PivotTable
 Set SampPt = PtzRg(SampRg)
 End Function
 Function SampRg() As Range
-Set SampRg = ShwRg(PutSq(NewA1, SampSq))
+Set SampRg = ShwRg(PutSq(SampSq, NewA1))
 End Function
 
 Function PutSq(Sq(), At As Range) As Range

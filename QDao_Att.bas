@@ -3,8 +3,8 @@ Option Explicit
 Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Att."
 Type Attd
-    TRs As DAO.Recordset
-    Ars As DAO.Recordset
+    TRs As Dao.Recordset
+    Ars As Dao.Recordset
 End Type
 
 Function FfnzFstAtt$(A As Database, Att$)
@@ -15,8 +15,8 @@ FnyzAttTbl = Fny(A, "Att")
 End Function
 
 Function FnyzAttFld(A As Database) As String()
-Dim TRs As DAO.Recordset2: Set TRs = A.TableDefs("Att").OpenRecordset
-Dim Ars As DAO.Recordset2: Set Ars = TRs!Att.Value
+Dim TRs As Dao.Recordset2: Set TRs = A.TableDefs("Att").OpenRecordset
+Dim Ars As Dao.Recordset2: Set Ars = TRs!Att.Value
 FnyzAttFld = Itn(Ars.Fields)
 End Function
 
@@ -24,7 +24,7 @@ Function IsOldAtt(A As Database, Att$, Ffn$) As Boolean
 Const CSub$ = CMod & "IsOldAtt"
 Dim TAtt As Date, TFfn As Date, AttIs$
 TAtt = TimzAtt(A, Att)
-TFfn = DtezFfn(Ffn$)
+TFfn = DtezFfn(Ffn)
 AttIs = IIf(TAtt > TFfn, "new", "old")
 Dim M$
 M = "Att is " & AttIs
@@ -70,7 +70,7 @@ Private Sub Z_AttFnAy()
 D AttFnAy(SampDbzShpCst, "AA")
 End Sub
 
-Private Sub Z()
+Private Sub ZZ()
 Z_AttFnAy
 MDao_Att_Inf:
 End Sub

@@ -2,7 +2,7 @@ Attribute VB_Name = "QDta_Bql_ReadBql"
 Option Explicit
 Private Const CMod$ = "BBqlRead."
 Const Asm$ = "Dao"
-Const Ns$ = "Dao.Bql"
+Const NS$ = "Dao.Bql"
 Const ShtTyBql$ = "Short-Type-Si-Colon-FldNm-Bql:Sht.Ty.s.c.f.Bql: It is a [Bql] with each field is a [ShtTyscf]"
 Public Const DoczBql$ = "Full:Back-Quote-Line.  BasLin:Lin.  Brk:B.q.l.  Back-Quote is (`) and it is a String.  Each field is separated by (`)"
 Public Const DoczFbql$ = "Fullfilename-Bql:F.bql:it is a [Ft]|Each line is a [Bql]|Fst line is [ShtTyBql]"
@@ -38,13 +38,13 @@ BrwDb A
 End Sub
 
 Sub CrtTTzFbqlPth(A As Database, FbqlPth$)
-CrtTTzFbqlPthFnnSy A, FbqlPth, FnnSy(FbqlPth, "*.bql.txt")
+CrtTTzFbqlPthFnny A, FbqlPth, Fnny(FbqlPth, "*.bql.txt")
 End Sub
 
-Sub CrtTTzFbqlPthFnnSy(A As Database, FbqlPth$, FnnSy$())
+Sub CrtTTzFbqlPthFnny(A As Database, FbqlPth$, Fnny$())
 Dim T, P$, Fbql$
 P = EnsPthSfx(FbqlPth)
-For Each T In FnnSy
+For Each T In Fnny
     Fbql = P & T & ".txt"
     CrtTblzFbql A, Fbql
 Next
@@ -66,8 +66,8 @@ Dim Fb$
 DltFfnIf Fb
 CrtFb Fb
 Dim D As Database, IFfn, T$
-Set D = Db(Fb$)
-For Each IFfn In FfnSy(FbqlPth, "*.bql.txt")
+Set D = Db(Fb)
+For Each IFfn In Ffny(FbqlPth, "*.bql.txt")
     CrtTblzFbql D, CStr(IFfn)
 Next
 End Sub
@@ -82,7 +82,7 @@ Dim T$
     T = T0
     If T = "" Then T = TblNmzFbql(Fbql)
 
-Dim F%, L$, R As DAO.Recordset
+Dim F%, L$, R As Dao.Recordset
 F = FnoI(Fbql)
 Line Input #F, L
 CrtTblzShtTyscfBql A, T, L
@@ -96,8 +96,8 @@ R.Close
 Close #F
 End Sub
 
-Sub CrtTblzShtTyscfBql(A As Database, T$, ShtTyscfBql$)
-Dim Td As New DAO.TableDef
+Sub CrtTblzShtTyscfBql(A As Database, T, ShtTyscfBql$)
+Dim Td As New Dao.TableDef
 Td.Name = T
 Dim I
 For Each I In Split(ShtTyscfBql, "`")
@@ -106,8 +106,8 @@ Next
 A.TableDefs.Append Td
 End Sub
 
-Private Function FdzShtTyscf(ShtTyscf$) As DAO.Field
-Dim T As DAO.DataTypeEnum
+Private Function FdzShtTyscf(ShtTyscf$) As Dao.Field
+Dim T As Dao.DataTypeEnum
 Dim S As Byte
 With Brk2(ShtTyscf, ":")
     Select Case True
@@ -119,15 +119,15 @@ With Brk2(ShtTyscf, ":")
 End With
 End Function
 
-Function ShtTyBqlzT$(A As Database, T$)
-Dim Ay$(), F As DAO.Field
+Function ShtTyBqlzT$(A As Database, T)
+Dim Ay$(), F As Dao.Field
 For Each F In A.TableDefs(T).Fields
     PushI Ay, ShtTyszFd(F) & ":" & F.Name
 Next
 ShtTyBqlzT = Jn(Ay, "`")
 End Function
 
-Private Function ShtTyszFd$(A As DAO.Field)
+Private Function ShtTyszFd$(A As Dao.Field)
 Dim B$: B = ShtTyzDao(A.Type)
 If A.Type = dbText Then
     B = B & A.Size

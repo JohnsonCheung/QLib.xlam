@@ -2,10 +2,10 @@ Attribute VB_Name = "QVb_Str_Expand"
 Option Explicit
 Private Const CMod$ = "MVb_Str_Expand."
 Private Const Asm$ = "QVb"
-Function Expand$(QVbl$, ExpandByTLin$)
+Function Expand$(QVbl$, ExpandByTLin)
 Dim T, O$(), L$
 L = RplVbl(QVbl)
-For Each T In TermSy(ExpandByTLin)
+For Each T In TermAy(ExpandByTLin)
     PushI O, RplQ(L, T)
 Next
 Expand = JnCrLf(O)

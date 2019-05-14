@@ -32,7 +32,7 @@ Brw FmtDryGpCntzAy(Ay)
 End Sub
 
 Function FmtDryGpCntzAy(Ay) As String()
-FmtDryGpCntzAy = FmtDryAsSpcSep(DryGpCntzAy(Ay))
+FmtDryGpCntzAy = FmtDryzAsSpcSep(DryGpCntzAy(Ay))
 End Function
 
 Private Sub ZZ_FmtDryGpCntzAy()

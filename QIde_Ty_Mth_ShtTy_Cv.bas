@@ -70,15 +70,15 @@ Private Sub Z_ShtMthTyzLin()
 GoSub ZZ
 Exit Sub
 ZZ:
-    Dim O$(), I, Lin$
-    For Each I In MthLinSyInVbe
+    Dim O$(), I, Lin
+    For Each I In MthLinyV
         Lin = I
         PushI O, ShtMthTyzLin(Lin)
     Next
     Brw O
     Return
 End Sub
-Function ShtMthTyzLin$(Lin$)
+Function ShtMthTyzLin(Lin)
 ShtMthTyzLin = ShtMthTy(TakMthTy(RmvMthMdy(Lin)))
 End Function
 

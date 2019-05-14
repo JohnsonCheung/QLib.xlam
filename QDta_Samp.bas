@@ -39,7 +39,7 @@ SampDrs = DrszFF("A B C D E G H I J K", SampDry)
 End Property
 
 Property Get SampDFnyRs() As String()
-SampDFnyRs = SyzSsLin("A B C D E F G")
+SampDFnyRs = SyzSS("A B C D E F G")
 End Property
 
 Property Get SampDry1() As Variant()

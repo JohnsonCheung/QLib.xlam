@@ -13,20 +13,20 @@ End With
 End Function
 Function ShfBktStr$(OLin$)
 ShfBktStr = BetBkt(OLin)
-OLin = AftBkt(OLin)
+OLin = AftBkt(OLin$)
 End Function
-Function RmvChr$(S$, ChrLis$) ' Rmv fst chr if it is in ChrLis
+Function RmvChr$(S, ChrLis$) ' Rmv fst chr if it is in ChrLis
 If HasSubStr(ChrLis, FstChr(S)) Then
     RmvChr = RmvFstChr(S)
 Else
     RmvChr = S
 End If
 End Function
-Function TakChr$(S$, ChrLis$) ' Ret fst chr if it is in ChrLis
+Function TakChr$(S, ChrLis$) ' Ret fst chr if it is in ChrLis
 If HasSubStr(ChrLis, FstChr(S)) Then TakChr = FstChr(S)
 End Function
 
-Function RmvChrzSfx$(S$, ChrLis$)
+Function RmvChrzSfx$(S, ChrLis$)
 If HasSubStr(ChrLis, LasChr(S)) Then
     RmvChrzSfx = RmvLasChr(S)
 Else
@@ -73,7 +73,7 @@ End Property
 
 
 
-Private Sub Z()
+Private Sub ZZ()
 Z_ShfBktStr
 
 MVb_Lin_Shf:

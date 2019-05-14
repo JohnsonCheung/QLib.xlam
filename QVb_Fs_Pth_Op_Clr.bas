@@ -3,19 +3,19 @@ Option Explicit
 Private Const CMod$ = "MVb_Fs_Pth_Op_Clr."
 Private Const Asm$ = "QVb"
 
-Sub ClrPth(Pth$)
-DltFfnyAyIf FfnSy(Pth)
+Sub ClrPth(Pth)
+DltFfnyAyIf Ffny(Pth)
 End Sub
 
 Private Sub Z_ClrPthFil()
 ClrPthFil TmpRoot
 End Sub
 
-Sub ClrPthFil(Pth$)
+Sub ClrPthFil(Pth)
 If Not IsPth(Pth) Then Exit Sub
 Dim F
-For Each F In Itr(FfnSy(Pth))
-   DltFfn CStr(F)
+For Each F In Itr(Ffny(Pth))
+   DltFfn F
 Next
 End Sub
 

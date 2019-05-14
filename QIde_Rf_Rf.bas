@@ -1,12 +1,12 @@
 Attribute VB_Name = "QIde_Rf_Rf"
 Option Explicit
 Const Asm$ = "MIde"
-Const Ns$ = "Ide.PjInf"
+Const NS$ = "Ide.PjInf"
 Private Const CMod$ = "BRf."
 Type RfLin: Lin As String: End Type
 Public Const DoczFrf$ = "It a file Rf.Txt in Srcp with RfLin"
-Public Const FFzRfLin$ = "Nm Guid Mjr Mnr Frfee"
-Function RfLin(Lin$) As RfLin
+Public Const FFzRfLin = "Nm Guid Mjr Mnr Frfee"
+Function RfLin(Lin) As RfLin
 RfLin.Lin = Lin
 End Function
 Function RfLinzRf(A As VBIDE.Reference) As RfLin
@@ -14,24 +14,24 @@ With A
 RfLinzRf = RfLin(JnSpcAp(.Name, .Guid, .Major, .Minor, .FullPath))
 End With
 End Function
-Function FrfeezRfLin$(A As RfLin)
+Function FrfeezRfLin(A As RfLin)
 Dim P%: P = InStr(Replace(A.Lin, " ", "-", Count:=3), " ")
 FrfeezRfLin = Mid(A.Lin, P + 1)
 End Function
 
-Function HasFrfee(A As VBProject, Frfee$) As Boolean
-HasFrfee = HasItrPEv(A.References, "FullPath", Frfee)
+Function HasFrfee(P As VBProject, Frfee) As Boolean
+HasFrfee = HasItrPEv(P.References, "FullPath", Frfee)
 End Function
 Property Get FrfC$()
-FrfC = Frf(CurPj)
+FrfC = Frf(CPj)
 End Property
 
 Function FrfzSrcp$(Srcp$)
 FrfzSrcp = EnsPthSfx(Srcp) & "Rf.txt"
 End Function
 
-Function Frf$(A As VBProject)
-Frf = FrfzSrcp(Srcp(A))
+Function Frf$(P As VBProject)
+Frf = FrfzSrcp(Srcp(P))
 End Function
 
 Function FrfzDistPj$(DistPj As VBProject)
@@ -39,37 +39,38 @@ FrfzDistPj = SrcpzDistPj(DistPj) & "Rf.txt"
 End Function
 
 Function RfSrcC() As String()
-RfSrcC = RfSrc(CurPj)
+RfSrcC = RfSrc(CPj)
 End Function
 
 Function RfSrczSrcp(Srcp$) As String()
 RfSrczSrcp = LyzFt(FrfzSrcp(Srcp))
 End Function
-Function RfSrc(A As VBProject) As String()
+Function RfSrc(P As VBProject) As String()
 Dim R As VBIDE.Reference
-For Each R In A.References
+For Each R In P.References
     PushI RfSrc, RfLinzRf(R).Lin
 Next
 End Function
 
 Property Get RffSy() As String()
-RffSy = RffSyzPj(CurPj)
+RffSy = RffyzP(CPj)
 End Property
 
 Property Get FmtRfPj() As String()
-FmtRfPj = FmtSyT3(RfLyPj)
+FmtRfPj = FmtSy3Term(RfLyPj)
 End Property
 
 Property Get RfLyPj() As String()
-RfLyPj = RfSrczPj(CurPj)
+Stop
+'RfLyPj = RfSrczP(CPj)
 End Property
 
-Function RfNyzPj(A As VBProject) As String()
-RfNyzPj = Itn(A.References)
+Function RfNyzP(P As VBProject) As String()
+RfNyzP = Itn(P.References)
 End Function
 
 Property Get RfNyP() As String()
-RfNy = RfNyPj(CurPj)
+RfNyP = RfNyzP(CPj)
 End Property
 
 Function CvRf(A) As VBIDE.Reference
@@ -82,24 +83,24 @@ For Each Rf In Pj.References
 Next
 End Function
 
-Function HasRfGuid(A As VBProject, RfGuid)
-HasRfGuid = HasItrPEv(A.References, "GUID", RfGuid)
+Function HasRfGuid(P As VBProject, RfGuid)
+HasRfGuid = HasItrPEv(P.References, "GUID", RfGuid)
 End Function
 
 Sub BrwRf()
 BrwAy FmtRfPj
 End Sub
 
-Function RffSyzPj(A As VBProject) As String()
-RffSyzPj = SyzItrPrp(A.References, "FullPath")
+Function RffyzP(P As VBProject) As String()
+RffyzP = SyzItrPrp(P.References, "FullPath")
 End Function
 
-Function RffPjNm$(A As VBProject, RfNm$)
-RffPjNm = PjPth(A) & RfNm & ".xlam"
+Function RffPjn$(P As VBProject, RfNm$)
+RffPjn = Pjp(P) & RfNm & ".xlam"
 End Function
 
-Function PjRfNy(A As VBProject) As String()
-PjRfNy = Itn(A.References)
+Function PjRfNy(P As VBProject) As String()
+PjRfNy = Itn(P.References)
 End Function
 
 Function Frfee$(A As VBIDE.Reference)
@@ -107,10 +108,11 @@ On Error Resume Next
 Frfee = A.FullPath
 End Function
 
-Private Sub Z()
+Private Sub ZZ()
 End Sub
 
 Sub AddRfzDistPj1(DistPj As VBProject)
-AddRfzRff DistPj, RffzDistPj(DistPj)
+Stop
+'AddRfzRff DistPj, RffzDistPj(DistPj)
 End Sub
 

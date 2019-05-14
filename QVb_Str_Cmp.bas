@@ -3,11 +3,13 @@ Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Str_Cmp."
 
-Sub CmpLines(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$)
+Sub CmpLines(A, B, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$)
 Brw FmtCmpLines(A, B, N1, N2, Hdr)
 End Sub
 
-Function FmtCmpLines(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$) As String()
+Function FmtCmpLines(A, B, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$) As String()
+ThwIf_NotStr A, CSub
+ThwIf_NotAy B, CSub
 If A = B Then Exit Function
 Dim AA$(), BB$()
 AA = SplitCrLf(A)
@@ -33,7 +35,7 @@ End Function
 Private Function LyAll(A$(), Nm$) As String()
 
 End Function
-Private Function LyzCmpStr(A$, B$, Ix&) As String()
+Private Function LyzCmpStr(A$, B$, Ix) As String()
 If A = B Then PushI LyzCmpStr, Ix & ":" & A: Exit Function
 PushI LyzCmpStr, Ix & ":" & A & "<" & Len(A)
 Dim W%
@@ -141,5 +143,3 @@ End Sub
 Private Sub ZZ()
 End Sub
 
-Private Sub Z()
-End Sub

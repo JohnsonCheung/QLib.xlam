@@ -4,16 +4,16 @@ Private Const CMod$ = "MIde_Md_Max."
 Private Const Asm$ = "QIde"
 
 
-Function MaxLinCntMdNm$()
-MaxLinCntMdNm = MaxLinCntMdNmzPj(CurPj)
+Function MaxLinCntMdn()
+MaxLinCntMdn = MaxLinCntMdnzP(CPj)
 End Function
 
-Function MaxLinCntMdNmzPj$(A As VBProject)
-MaxLinCntMdNmzPj = MdNm(MaxLinCntMd(A))
+Function MaxLinCntMdnzP$(P As VBProject)
+MaxLinCntMdnzP = Mdn(MaxLinCntMd(P))
 End Function
-Function MaxLinCntMd(A As VBProject) As CodeModule
+Function MaxLinCntMd(P As VBProject) As CodeModule
 Dim C As VBComponent, M&, N&, I
-For Each C In A.VBComponents
+For Each C In P.VBComponents
     N = C.CodeModule.CountOfLines
     If N > M Then
         M = N

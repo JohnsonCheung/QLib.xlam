@@ -3,53 +3,29 @@ Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Mth_Op."
 
-Function TmpMod() As CodeModule
-Set TmpMod = AddCmp(TmpModNm, vbext_ct_StdModule).CodeModule
-End Function
 
-Sub ClrTmpMod()
-Dim C As VBComponent
-For Each C In CurPj.VBComponents
-    If HasPfx(C.Name, "TmpMod") Then C.Delete
+Sub RmvMthzMNn(A As CodeModule, Mthnn, Optional WiTopRmk As Boolean)
+Dim I
+For Each I In TermAy(Mthnn)
+    RmvMthzMN A, I
 Next
 End Sub
 
-Property Get TmpModNm$()
-TmpModNm = "TmpMod" & NowNm
-End Property
-
-Function NowNm$()
-Static N&
-NowNm = Format(Now, "HHMMSS") & N
-N = N + 1
-End Function
-
-Sub RmvMth(A As CodeModule, MthNmNN$, Optional WiTopRmk As Boolean)
-Dim MthNm$, I
-For Each I In TermSy(MthNmNN)
-    MthNm = I
-    RmvMthzNm A, MthNm
-Next
+Sub RmvMth(A As CodeModule, Mthn)
+RmvMthzMN A, Mthn
 End Sub
 
-Sub RmvMthzNm(A As CodeModule, MthNm$, Optional WiTopRmk As Boolean)
-RmvFTIxAy A, MthFTIxAyzMth(A, MthNm, WiTopRmk)
+Sub RmvMthzMN(A As CodeModule, Mthn)
+DltLinzF A, MthFEIxszMN(A, Mthn, WiTopRmk:=True)
 End Sub
 
-Sub RmvMdMth(Md As CodeModule, MthNm$)
-Const CSub$ = CMod & "RmvMdMth"
-Dim X() As FTIx: X = MthFTIxAyzMth(Md, MthNm)
-Inf CSub, "Remove method", "Md Mth FTIx-WiTopRmk", MdNm(Md), Md, LyzFTIxAy(X)
-RmvLineszFTIxAy Md, X
-End Sub
-
-Private Sub Z_RmvMdMth()
+Private Sub Z_RmvMthzMN()
 Const N$ = "ZZModule"
-Dim Md As CodeModule, MthNm$
+Dim Md As CodeModule, Mthn
 GoSub Crt
 'RmvMdEndBlankLin Md
 Tst:
-    RmvMdMth Md, MthNm
+    RmvMthzMN Md, Mthn
     If Md.CountOfLines <> 0 Then Stop
     Return
 Crt:
@@ -59,32 +35,49 @@ Crt:
     Return
 End Sub
 
-Private Sub Z()
+Private Sub ZZ()
 End Sub
-Sub CpyMth(Md As CodeModule, MthNm$, ToMd As CodeModule, Optional IsSilent As Boolean)
+Sub CpyMth(Md As CodeModule, Mthn, ToMd As CodeModule, Optional IsSilent As Boolean)
 Const CSub$ = CMod & "CpyMdMthToMd"
 Dim Nav(): ReDim Nav(2)
-GoSub BldNav: ThwIfObjNE Md, ToMd, CSub, "Fm & To md cannot be same", Nav
-If Not HasMthMd(Md, MthNm) Then GoSub BldNav: ThwNav CSub, "Fm Mth not Exist", Nav
-If HasMthMd(ToMd, MthNm) Then GoSub BldNav: ThwNav CSub, "To Mth exist", Nav
-ToMd.AddFromString MthLinesByMdMth(Md, MthNm)
-RmvMdMth Md, MthNm
-If Not IsSilent Then Inf CSub, FmtQQ("Mth[?] in Md[?] is copied ToMd[?]", MthNm, MdNm(Md), MdNm(ToMd))
+GoSub BldNav: ThwIf_ObjNE Md, ToMd, CSub, "Fm & To md cannot be same", Nav
+If Not HasMthzM(Md, Mthn) Then GoSub BldNav: ThwNav CSub, "Fm Mth not Exist", Nav
+If HasMthzM(ToMd, Mthn) Then GoSub BldNav: ThwNav CSub, "To Mth exist", Nav
+ToMd.AddFromString MthLineszMN(Md, Mthn)
+RmvMth Md, Mthn
+If Not IsSilent Then Inf CSub, FmtQQ("Mth[?] in Md[?] is copied ToMd[?]", Mthn, Mdn(Md), Mdn(ToMd))
 Exit Sub
 BldNav:
     Nav(0) = "FmMd Mth ToMd"
-    Nav(1) = MdNm(Md)
-    Nav(2) = MthNm
-    Nav(3) = MdNm(ToMd)
+    Nav(1) = Mdn(Md)
+    Nav(2) = Mthn
+    Nav(3) = Mdn(ToMd)
     Return
 End Sub
 
-Sub MovMth(MthNm$, ToMdNm$)
-MovMthzMd CurMd, MthNm, Md(ToMdNm)
+Sub MovMthzNM(Mthn, ToMdn)
+MovMthzMNM CMd, Mthn, Md(ToMdn)
 End Sub
 
-Sub MovMthzMd(Md As CodeModule, MthNm$, ToMd As CodeModule)
-CpyMth Md, MthNm, ToMd
-RmvMth Md, MthNm
+Sub MovMthzMNM(Md As CodeModule, Mthn, ToMd As CodeModule)
+CpyMth Md, Mthn, ToMd
+RmvMthzMN Md, Mthn
+End Sub
+
+Function EmpFunLines$(FunNm)
+EmpFunLines = FmtQQ("Function ?()|End Function", FunNm)
+End Function
+
+Function EmpSubLines$(Subn)
+EmpSubLines = FmtQQ("Sub ?()|End Sub", Subn)
+End Function
+Sub AddSub(Subn)
+ApdLines CMd, EmpSubLines(Subn)
+JmpMth Subn
+End Sub
+
+Sub AddFun(FunNm)
+ApdLines CMd, EmpFunLines(FunNm)
+JmpMth FunNm
 End Sub
 

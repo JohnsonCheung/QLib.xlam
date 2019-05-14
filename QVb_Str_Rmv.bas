@@ -2,31 +2,31 @@ Attribute VB_Name = "QVb_Str_Rmv"
 Option Explicit
 Private Const CMod$ = "MRmv."
 Private Const Asm$ = "QVb"
-Private Const Ns$ = "Str"
-Function RmvDotComma$(S$)
+Private Const NS = "Str"
+Function RmvDotComma$(S)
 RmvDotComma = Replace(Replace(S, ",", ""), ".", "")
 End Function
-Function Rmv2Dash$(S$)
+Function Rmv2Dash$(S)
 Rmv2Dash = RTrim(RmvAft(S, "--"))
 End Function
 
-Function Rmv3Dash$(S$)
+Function Rmv3Dash$(S)
 Rmv3Dash = RTrim(RmvAft(S, "---"))
 End Function
 
-Function Rmv3T$(S$)
+Function Rmv3T$(S)
 Rmv3T = RmvTT(RmvT1(S))
 End Function
 
-Function RmvAft$(S$, Sep$)
+Function RmvAft$(S, Sep$)
 RmvAft = Brk1(S, Sep, NoTrim:=True).S1
 End Function
 
-Function RmvDDRmk$(S$)
+Function RmvDDRmk$(S)
 RmvDDRmk = BefOrAll(S, "--")
 End Function
 
-Function RmvDblSpc$(S$)
+Function RmvDblSpc$(S)
 Dim O$: O = S
 While HasSubStr(O, "  ")
     O = Replace(O, "  ", " ")
@@ -34,11 +34,11 @@ Wend
 RmvDblSpc = O
 End Function
 
-Function RmvFstChr$(S$)
+Function RmvFstChr$(S)
 RmvFstChr = Mid(S, 2)
 End Function
 
-Function RmvFstLasChr$(S$)
+Function RmvFstLasChr$(S)
 RmvFstLasChr = RmvFstChr(RmvLasChr(S))
 End Function
 
@@ -46,7 +46,7 @@ Function RmvFstNChr$(S, Optional N% = 1)
 RmvFstNChr = Mid(S, N + 1)
 End Function
 
-Function RmvFstNonLetter$(S$)
+Function RmvFstNonLetter$(S)
 If IsAscLetter(Asc(S)) Then
     RmvFstNonLetter = S
 Else
@@ -54,15 +54,15 @@ Else
 End If
 End Function
 
-Function RmvLasChr$(S$)
+Function RmvLasChr$(S)
 RmvLasChr = RmvLasNChr(S, 1)
 End Function
 
-Function RmvLasNChr$(S$, N%)
+Function RmvLasNChr$(S, N%)
 RmvLasNChr = Left(S, Len(S) - N)
 End Function
 
-Function RmvNm$(S$)
+Function RmvNm$(S)
 Dim O%
 If Not IsAscFstNmChr(Asc(FstChr(S))) Then GoTo X
 For O = 1 To Len(S)
@@ -76,31 +76,31 @@ End Function
 Function RmvSqBktzSy(Sy$()) As String()
 Dim I
 For Each I In Itr(Sy)
-    PushI RmvSqBktzSy, RmvSqBkt(CStr(I))
+    PushI RmvSqBktzSy, RmvSqBkt(I)
 Next
 End Function
-Function RmvSqBkt$(S$)
+Function RmvSqBkt$(S)
 If Not HasSqBkt(S) Then RmvSqBkt = S: Exit Function
 RmvSqBkt = RmvFstLasChr(S)
 End Function
 
-Function RmvPfx$(S$, Pfx$)
+Function RmvPfx$(S, Pfx$, Optional C As VbCompareMethod = vbTextCompare)
 If HasPfx(S, Pfx) Then RmvPfx = Mid(S, Len(Pfx) + 1) Else RmvPfx = S
 End Function
 
-Function RmvPfxSy$(S$, PfxSy$())
+Function RmvPfxSy$(S, PfxSy$(), Optional C As VbCompareMethod = vbTextCompare)
 Dim Pfx$, I
 For Each I In PfxSy
     Pfx = I
-    If HasPfx(S, Pfx) Then RmvPfxSy = RmvPfx(S, Pfx): Exit Function
+    If HasPfx(S, Pfx, C) Then RmvPfxSy = RmvPfx(S, Pfx, C): Exit Function
 Next
 RmvPfxSy = S
 End Function
-Function RmvPfxSpc$(S$, Pfx$)
+Function RmvPfxSpc$(S, Pfx$)
 If Not HitPfxSpc(S, Pfx) Then RmvPfxSpc = S: Exit Function
 RmvPfxSpc = LTrim(Mid(S, Len(Pfx) + 2))
 End Function
-Function RmvPfxSySpc$(S$, PfxSy$())
+Function RmvPfxSySpc$(S, PfxSy$())
 Dim I, Pfx$
 For Each I In PfxSy
     Pfx = I
@@ -112,24 +112,24 @@ Next
 RmvPfxSySpc = S
 End Function
 
-Function RmvBkt$(S$)
+Function RmvBkt$(S)
 RmvBkt = RmvSfxzBkt(S)
 End Function
 
-Function RmvSfxzBkt$(S$)
+Function RmvSfxzBkt$(S)
 RmvSfxzBkt = RmvSfx(S, "()")
 End Function
 
-Function RmvSfx$(S$, Sfx$, Optional IgnCas As Boolean)
-If HasSfx(S, Sfx, IgnCas) Then RmvSfx = Left(S, Len(S) - Len(Sfx)) Else RmvSfx = S
+Function RmvSfx$(S, Sfx$, Optional B As VbCompareMethod = vbBinaryCompare)
+If HasSfx(S, Sfx, B) Then RmvSfx = Left(S, Len(S) - Len(Sfx)) Else RmvSfx = S
 End Function
 
-Function RmvSngQuote$(S$)
+Function RmvSngQuote$(S)
 If Not IsSngQuoted(S) Then RmvSngQuote = S: Exit Function
 RmvSngQuote = RmvFstLasChr(S)
 End Function
 
-Function RmvT1$(S$)
+Function RmvT1$(S)
 Dim L$: L = LTrim(S): If L = "" Then Exit Function
 If FstChr(L) = "[" Then
     RmvT1 = Aft(L, "]")
@@ -138,7 +138,7 @@ Else
 End If
 End Function
 
-Function RmvTT$(S$)
+Function RmvTT$(S)
 RmvTT = RmvT1(RmvT1(S))
 End Function
 
@@ -164,8 +164,8 @@ Ass RmvPfx("aaBB", "aa") = "BB"
 End Sub
 
 Private Sub Z_RmvPfxSy()
-Dim S$, PfxSy$()
-PfxSy = SyzSsLin("ZZ_ Z_"): Ept = "ABC"
+Dim S, PfxSy$()
+PfxSy = SyzSS("ZZ_ Z_"): Ept = "ABC"
 S = "Z_ABC": GoSub Tst
 S = "ZZ_ABC": GoSub Tst
 Exit Sub
@@ -175,6 +175,6 @@ Tst:
     Return
 End Sub
 
-Private Sub Z()
+Private Sub ZZ()
 MVb_Str_Rmv:
 End Sub

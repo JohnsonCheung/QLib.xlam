@@ -3,19 +3,19 @@ Option Explicit
 Private Const CMod$ = "MXls_AddIn."
 Private Const Asm$ = "QXls"
 
-Function AddinsDrs(A As Excel.Application) As Drs
-Set AddinsDrs = DrszItrPP(A.AddIns, "Name FullName Installed IsOpen ProgId CLSID")
+Function DrsOfAddins(A As Excel.Application) As Drs
+'DrsOfAddins = DrszItrPP(A.AddIns, "Name FullName Installed IsOpen ProgId CLSID")
 End Function
 Sub DmpAddinsXls()
 DmpAddins Xls
 End Sub
 
 Sub DmpAddins(A As Excel.Application)
-DmpDrs AddinsDrs(A)
+DmpDrs DrsOfAddins(A)
 End Sub
 
 Function AddinsWs(A As Excel.Application) As Worksheet
-Set AddinsWs = WsVis(WszDrs(AddinsDrs(A)))
+Set AddinsWs = ShwWs(WszDrs(DrsOfAddins(A)))
 End Function
 
 Function Addin(A As Excel.Application, FxaNm) As Excel.Addin

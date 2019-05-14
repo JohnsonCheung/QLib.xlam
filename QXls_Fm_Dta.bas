@@ -15,7 +15,7 @@ Function WszAy(Ay, Optional Wsn$ = "Sheet1") As Worksheet
 Dim O As Worksheet, R As Range
 Set O = NewWs(Wsn)
 O.Range("A1").Value = "Array"
-Set R = RgzSq(SqzAyV(Ay), O.Range("A2"))
+Set R = RgzSq(Sqv(Ay), O.Range("A2"))
 CrtLozRg RgzMoreTop(R)
 Set WszAy = O
 End Function
@@ -27,11 +27,11 @@ Set WszDrs = O
 End Function
 
 Function RgzAyV(Ay, At As Range) As Range
-Set RgzAyV = RgzSq(SqzAyV(Ay), At)
+Set RgzAyV = RgzSq(Sqv(Ay), At)
 End Function
 
 Function RgzAyH(Ay, At As Range) As Range
-Set RgzAyH = RgzSq(SqzAyH(Ay), At)
+Set RgzAyH = RgzSq(Sqh(Ay), At)
 End Function
 
 Function RgzDry(Dry(), At As Range) As Range
@@ -44,19 +44,6 @@ RgzDry Dry, A1zWs(O)
 Set WszDry = O
 End Function
 
-Function WbzDs(A As Ds) As Workbook
-Dim O As Workbook
-Set O = NewWb
-With FstWs(O)
-   .Name = "Ds"
-   .Range("A1").Value = A.DsNm
-End With
-Dim J%, Ay() As Dt
-For J = 0 To A.N - 1
-    WszWbDt O, Ay(J)
-Next
-Set WbzDs = O
-End Function
 
 Function WszDs(A As Ds) As Worksheet
 Dim O As Worksheet: Set O = NewWs
@@ -107,7 +94,7 @@ Set RgzSq = O
 End Function
 
 Private Sub ZZ_WszDs()
-WsVis WszDs(SampDs)
+ShwWs WszDs(SampDs)
 End Sub
 
 Private Sub ZZ()
@@ -124,5 +111,3 @@ RgzDrs A, B
 LozDrs A, B
 End Sub
 
-Private Sub Z()
-End Sub

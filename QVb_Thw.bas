@@ -6,12 +6,25 @@ Type CfgInf
     ShwInf As Boolean
     ShwTim As Boolean
 End Type
+Type CfgSql
+    FmtSql As Boolean
+End Type
 Type Cfg
     Inf As CfgInf
+    Sql As CfgSql
 End Type
-Public Cfg As Cfg
-Sub ThwIfNegEle(Ay, Fun$)
-Const CSub$ = CMod & "ThwIfNEgEle"
+Public Property Get Cfg() As Cfg
+Static X As Boolean, Y As Cfg
+If Not X Then
+    X = True
+    Y.Sql.FmtSql = True
+    Y.Inf.ShwInf = True
+    Y.Inf.ShwTim = True
+End If
+Cfg = Y
+End Property
+Sub ThwIf_NegEle(Ay, Fun$)
+Const CSub$ = CMod & "ThwIf_NEgEle"
 Dim I, J&, O$()
 For Each I In Itr(Ay)
     If I < 0 Then
@@ -24,16 +37,16 @@ If Si(O) > 0 Then
 End If
 End Sub
 
-Sub ThwIfNE(A, B, Optional ANm$ = "A", Optional BNm$ = "B")
-Const CSub$ = CMod & "ThwIfNE"
-ThwIfDifTy A, B, ANm, BNm
+Sub ThwIf_NE(A, B, Optional ANm$ = "A", Optional BNm$ = "B")
+Const CSub$ = CMod & "ThwIf_NE"
+ThwIf_DifTy A, B, ANm, BNm
 Dim IsBothLines As Boolean
     IsBothLines = IsLines(A) Or IsLines(B)
 Select Case True
-Case IsBothLines: If A <> B Then CmpLines CStr(A), CStr(B), Hdr:=FmtQQ("Lines ? ? not eq.", ANm, BNm): Stop: Exit Sub
+Case IsBothLines: If A <> B Then CmpLines A, B, Hdr:=FmtQQ("Lines ? ? not eq.", ANm, BNm): Stop: Exit Sub
 Case IsStr(A):    If A <> B Then CmpStr CStr(A), CStr(B), Hdr:=FmtQQ("String ? ? not eq.", ANm, BNm): Stop: Exit Sub
 Case IsDic(A):    If Not IsEqDic(CvDic(A), CvDic(B)) Then BrwCmpDicAB CvDic(A), CvDic(B): Stop: Exit Sub
-Case IsArray(A):  ThwIfNEAy A, B, ANm, BNm
+Case IsArray(A):  ThwIf_DifAy A, B, ANm, BNm
 Case IsObject(A): If ObjPtr(A) <> ObjPtr(B) Then Thw CSub, "Two object are diff", FmtQQ("Ty-? Ty-?", ANm, BNm), TypeName(A), TypeName(B)
 Case Else:
     If A <> B Then
@@ -42,9 +55,9 @@ Case Else:
     End If
 End Select
 End Sub
-Private Sub ThwIfNEAy(AyA, AyB, ANm$, BNm$)
-ThwIfDifSi AyA, AyB, ANm, BNm
-ThwIfDifTy AyA, AyB, ANm, BNm
+Private Sub ThwIf_DifAy(AyA, AyB, ANm$, BNm$)
+ThwIf_DifSi AyA, AyB, CSub
+ThwIf_DifTy AyA, AyB, ANm, BNm
 Dim J&, A
 For Each A In Itr(AyA)
     If Not IsEq(A, AyB(J)) Then
@@ -54,7 +67,7 @@ For Each A In Itr(AyA)
     J = J + 1
 Next
 End Sub
-Sub ThwIfDifTy(A, B, Optional ANm$ = "A", Optional BNm$ = "B")
+Sub ThwIf_DifTy(A, B, Optional ANm$ = "A", Optional BNm$ = "B")
 If TypeName(A) = TypeName(B) Then Exit Sub
 Dim NN$
 NN = FmtQQ("?-TyNm ?-TyNm", ANm, BNm)
@@ -62,15 +75,15 @@ Thw CSub, "Type Diff", NN, TypeName(A), TypeName(B)
 End Sub
 
 
-Sub ThwIfDifSi(A, B, Fun$)
+Sub ThwIf_DifSi(A, B, Fun$)
 If Si(A) <> Si(B) Then Thw Fun, "Si-A <> Si-B", "Si-A Si-B", Si(A), Si(B)
 End Sub
 
-Sub ThwIfObjNE(A, B, Fun$, Msg$, Nav())
+Sub ThwIf_ObjNE(A, B, Fun$, Msg$, Nav())
 If IsEqObj(A, B) Then ThwNav Fun, Msg, Nav
 End Sub
 
-Sub ThwIfNoSrt(Ay, Fun$)
+Sub ThwIf_NoSrt(Ay, Fun$)
 If IsSrtAy(Ay) Then Thw Fun, "Array should be sorted", "Ay-Ty Ay", TypeName(Ay), Ay
 End Sub
 Sub ThwOpt(Thw As EmThw, Fun$, Msg$, ParamArray Nap())
@@ -99,15 +112,20 @@ End Sub
 Sub Ass(A As Boolean)
 Debug.Assert A
 End Sub
-Sub ThwIfNothing(A, Fun$)
+
+Sub ThwIf_Nothing(A, VarNm$, Fun$)
 If Not IsNothing(A) Then Exit Sub
-Thw Fun, "Given parameter is nothing"
+Thw Fun, FmtQQ("Given[?] is nothing", VarNm)
 End Sub
-Sub ThwIfNotAy(A, Fun$)
+Sub ThwIf_NotAy(A, Fun$)
 If IsArray(A) Then Exit Sub
 Thw Fun, "Given parameter should be array, but now TypeName=" & TypeName(A)
 End Sub
-Sub ThwIfNEver(Fun$, Optional Msg$ = "Program should not reach here")
+Sub ThwIf_NotStr(A, Fun$)
+If IsStr(A) Then Exit Sub
+Thw Fun, "Given parameter should be str, but now TypeName=" & TypeName(A)
+End Sub
+Sub ThwIf_Never(Fun$, Optional Msg$ = "Program should not reach here")
 Thw Fun, Msg
 End Sub
 
@@ -133,12 +151,12 @@ End Function
 Function AddNmV(Nav(), Nm$, V) As Variant()
 AddNmV = AddNNAv(Nav, Nm, Av(V))
 End Function
-Sub ThwIfErMsg(Er$(), Fun$, Msg$, ParamArray Nap())
+Sub ThwIf_ErMsg(Er$(), Fun$, Msg$, ParamArray Nap())
 If Si(Er) = 0 Then Exit Sub
 Dim Nav(): Nav = Nap
 ThwNav Fun, Msg, AddNmV(Nav, "Er", Er)
 End Sub
-Sub ThwIfEr(Er$(), Fun$)
+Sub ThwIf_Er(Er$(), Fun$)
 If Si(Er) = 0 Then Exit Sub
 BrwAy AddSy(LyzFunMsgNap(Fun, ""), Er)
 Halt
@@ -208,7 +226,7 @@ Dim Obj As Object, PP$
 GoSub T0
 Exit Sub
 T0:
-    Set Obj = New DAO.Field
+    Set Obj = New Dao.Field
     PP = "Name Type Size"
     GoTo Tst
 Tst:

@@ -13,18 +13,18 @@ Next
 End Sub
 
 Sub RplModPfx(FmPfx$, ToPfx$)
-RplModPfxzPj CurPj, FmPfx, ToPfx
+RplModPfxzP CPj, FmPfx, ToPfx
 End Sub
 
 Sub RenCmp(A As VBComponent, NewNm$)
-If HasCmp(NewNm) Then
+If HasCmpzN(NewNm) Then
     InfLin CSub, "New cmp exists", "OldCmp NewCmp", A.Name, NewNm
 Else
     A.Name = NewNm
 End If
 End Sub
 
-Sub RplModPfxzPj(Pj As VBProject, FmPfx$, ToPfx$)
+Sub RplModPfxzP(Pj As VBProject, FmPfx$, ToPfx$)
 Dim C As VBComponent, N$
 For Each C In Pj.VBComponents
     If C.Type = vbext_ct_StdModule Then
@@ -35,25 +35,25 @@ For Each C In Pj.VBComponents
 Next
 End Sub
 
-Sub AddCmpSfxPj(Sfx)
-AddCmpSfx CurPj, Sfx
+Sub AddCmpSfxP(Sfx)
+AddCmpSfx CPj, Sfx
 End Sub
-Sub AddCmpSfx(A As VBProject, Sfx)
-If A.Protection = vbext_pp_locked Then Exit Sub
+Sub AddCmpSfx(P As VBProject, Sfx)
+If P.Protection = vbext_pp_locked Then Exit Sub
 Dim C As VBComponent
-For Each C In A.VBComponents
+For Each C In P.VBComponents
     RenCmp C, C.Name & Sfx
 Next
 End Sub
 
 Function SetCmpNm(A As VBComponent, Nm, Optional Fun$ = "SetCmpNm") As VBComponent
 Dim Pj As VBProject
-Set Pj = PjzCmp(A)
-If HasCmpzPj(Pj, Nm) Then
+Set Pj = PjzC(A)
+If HasCmpzPN(Pj, Nm) Then
     Thw Fun, "Cmp already Has", "Cmp Has-in-Pj", Nm, Pj.Name
 End If
 If Pj.Name = Nm Then
-    Thw Fun, "CmpNm same as PjNm", "CmpNm", Nm
+    Thw Fun, "Cmpn same as Pjn", "Cmpn", Nm
 End If
 A.Name = Nm
 Set SetCmpNm = A

@@ -25,7 +25,7 @@ Av = Ap
 For Each I In Av
     S = I
     AsgTRst S, Ele, LikFF
-    For Each J In SyzSsLin(LikFF)
+    For Each J In SyzSS(LikFF)
         LikFld = J
         PushI Dry, Array(Ele, LikFld)
     Next

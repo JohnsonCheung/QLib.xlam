@@ -2,27 +2,23 @@ Attribute VB_Name = "QIde_Ens__Mdy"
 Option Explicit
 Private Const CMod$ = "MIde_Ens__Mdy."
 Private Const Asm$ = "QIde"
-Sub MdyLinAy(A As CodeModule, B() As ActLin)
-ThwIfErMsg ErzActLinAy(B), CSub, "Error in ActLinAy", "ActLinAy Md", LyzActLinAy(B), MdNm(A)
-Dim O$(), J&
-For J = UB(B) To 0 Step -1
-    MdyLin A, B(J)
+
+Sub MdyLins(A As CodeModule, B As Mdygs)
+Dim J&
+For J = 0 To B.N - 1
+    MdyLin A, B.Ay(J)
 Next
 End Sub
 
-Sub MdyLin(A As CodeModule, B As ActLin)
+Sub MdyLin(A As CodeModule, B As Mdyg)
 Select Case B.Act
-Case EmLinAct.EiInsLin
-    A.InsertLines B.Lno, B.Lin  '<== Inserted
-    Inf CSub, "Lin is inserted", "Lno Lin", B.Lno, B.Lin
-Case EmLinAct.EiDltLin
-    Dim ActualLin$
-    ActualLin = A.Lines(B.Lno, 1)
-    If A.Lines(B.Lno, 1) <> B.Lin Then Thw CSub, "To MdLin to be deleted is not expected", "Lin-Expected-To-Delete Lin-Actual-In-Md Lno", B.Lin, ActualLin, B.Lno
-    A.DeleteLines B.Lno, 1  '<== Deleted
-    Inf CSub, "MdLin is deleted", "Lno Lin", B.Lno, ActualLin
+Case EmMdyg.EiIns: InsLinzMI A, B.Ins
+Case EmMdyg.EiDlt: DltLinzMD A, B.Dlt
+Case EmMdyg.EiRpl: RplLinzMR A, B.Rpl
+Case EmMdyg.EiNop
 Case Else
-    Thw CSub, "Invalid ActLin.Act", "Vdt-ActLin.Act ActLin", "eeDltIn EiInsLin", B.ToStr
+Stop
+    Thw CSub, "Invalid Mdyg.Act" ', "Vdt-ActLin.Act ActLin", "Mdyg.Act", LB.ToStr
 End Select
 End Sub
 
@@ -39,16 +35,15 @@ Case Else
 End Select
 End Function
 
-Function PjMdy(A As VBProject, B() As ActMd, Optional Silent As Boolean) As VBProject
+Sub MdyPj(P As VBProject, B As Mdygs)
 Dim I
-For Each I In Itr(B)
-    With CvActMd(I)
-        Debug.Print MdNm(.Md)
-        MdyMd .Md, .ActLinAy, Silent
-    End With
-Next
-Set PjMdy = A
-End Function
+'For Each I In Itr(B)
+'    With CvActMd(I)
+'        Debug.Print Mdn(.Md)
+'        MdyMd .Md, .ActLiny, Silent
+'    End With
+'Next
+End Sub
 
 Private Sub Z_MdySrc()
 Dim Mdy() As ActLin
@@ -56,12 +51,12 @@ GoSub ZZ2
 Exit Sub
 ZZ2:
     Dim M, J%
-    For Each M In MdItr(CurPj)
+    For Each M In MdItr(CPj)
         If J > 10 Then Exit For
         Dim A() As ActMd
-        A = ActMdAy01zEnsCSub(CvMd(M))
+        'A = EnsgCModSub(CvMd(M))
         If Si(A) > 0 Then
-            Brw MdySrc(Src(CvMd(M)), A(0).ActLinAy), MdNm(CvMd(M))
+            Brw MdySrc(Src(CvMd(M)), A(0).ActLiny), Mdn(CvMd(M))
         End If
     Next
     Return
@@ -75,14 +70,14 @@ Dim Md As CodeModule
 GoSub ZZ2
 Exit Sub
 ZZ1:
-    Set Md = CurMd
+    Set Md = CMd
     GoTo Tst
 ZZ2:
     Dim M
-    For Each M In MdItr(CurPj)
+    For Each M In MdItr(CPj)
         Dim O$()
         O = FmtEnsCSubzMd(CvMd(M))
-        If Si(O) > 0 Then Brw O, MdNm(CvMd(M))
+        If Si(O) > 0 Then Brw O, Mdn(CvMd(M))
     Next
     Return
 Tst:
@@ -92,16 +87,16 @@ Tst:
 End Sub
 Function FmtEnsCSubzMd(A As CodeModule) As String()
 Dim ActMdAy01() As ActMd
-ActMdAy01 = ActMdAy01zEnsCSub(A)
+'ActMdAy01 = EnsgCModSub(A)
 Select Case Si(ActMdAy01)
 Case 0:
-Case 1: FmtEnsCSubzMd = FmtMdySrc(Src(A), ActMdAy01(0).ActLinAy)
+Case 1: FmtEnsCSubzMd = FmtMdySrc(Src(A), ActMdAy01(0).ActLiny)
 Case Else: Thw CSub, "Err in ActMdAy01zEnsCS: Should return Ay of si 1 or 0"
 End Select
 End Function
-Function FmtMdySrc(Src$(), B() As ActLin) As String()
+Function FmtMdygs(B As Mdygs, Src$()) As String()
 Dim N%: N = NDig(Si(Src))
-Dim J&, Middle$, Lno$, Lin$, O$()
+Dim J&, Middle$, Lno$, Lin, O$()
 Dim DltDic As New Dictionary
     For J = 0 To UB(B)
         If B(J).Act = EiDltLin Then
@@ -117,10 +112,10 @@ Dim InsDic As New Dictionary
 
 For J = 0 To UB(Src)
     Dim IsIns As Boolean, IsDlt As Boolean
-    Dim InsLin$, DltLin$
+    Dim InsLin, DltLin
         If DltDic.Exists(J) Then
             IsDlt = True
-            DltLin = CvActLin(DltDic(J)).Lin
+            'DltLin = CvActLin(DltDic(J)).Lin
         Else
             IsDlt = False
             DltLin = ""
@@ -128,7 +123,7 @@ For J = 0 To UB(Src)
         
         If InsDic.Exists(J) Then
             IsIns = True
-            InsLin = CvActLin(InsDic(J)).Lin
+            'InsLin = CvActLin(InsDic(J)).Lin
         Else
             IsIns = False
             InsLin = ""
@@ -145,19 +140,23 @@ For J = 0 To UB(Src)
 Next
 FmtMdySrc = O
 End Function
-Function MdySrc(Src$(), B() As ActLin) As String()
-ThwIfErMsg ErzActLinAy(B), CSub, "Error in ActLinAy", "ActMd Src", LyzActLinAy(B), Src
+Function SrcAftMdy(Src$(), B As Mdygs) As String()
+ThwIf_Er ErOf_MdgyLins(B), CSub, "Error in Mdygs", "Mdygs Src", LyzActLiny(B), Src
 Dim O$(), J&
 O = Src
 For J = UB(B) To 0 Step -1
-    O = MdySrcLin(O, B(J))
+    O = SrcAftMdy(O, B(J))
 Next
-MdySrc = O
+SrcAftMdy = O
 End Function
 
-Sub MdyMd(A As CodeModule, B() As ActLin, Optional Silent As Boolean)
-Dim NewLines$: NewLines = JnCrLf(MdySrc(Src(A), B)): 'Brw NewLines: Stop
-RplMd A, NewLines
+Sub MdyMd(A As MdygMd)
+Dim J&
+'For J = 0 To A.N - 1
+'    MdyLin A, A.Ay(J)
+'Next
+'Dim NewLines$: NewLines = JnCrLf(MdySrc(Src(A), B)): 'Brw NewLines: Stop
+'RplMd A, NewLines
 End Sub
 
 Private Sub PushActEr(O$(), Msg$, Ix, Cur As ActLin, Las As ActLin)
@@ -194,20 +193,20 @@ End With
 ErzActLinCurLas = O
 End Function
 
-Private Function ErzActLinAy(A() As ActLin) As String()
-Dim Ix%, Las As ActLin, Msg$, Cur As ActLin
+Private Function ErzMdygs(A As Mdygs) As String()
+Dim Ix%, Las As ActLin, Msg$, Cur Asg ActLin
 If Si(A) <= 1 Then Exit Function
 Set Las = A(0)
 For Ix = 1 To UB(A)
     Set Cur = A(Ix)
-    PushIAy ErzActLinAy, ErzActLinCurLas(Ix, Cur, Las) '<===
+    PushIAy ErzActLiny, ErzActLinCurLas(Ix, Cur, Las) '<===
     Set Las = Cur
 Next
 End Function
 
-Private Function LyzActLinAy(A() As ActLin) As String()
+Private Function LyzActLiny(A() As ActLin) As String()
 Dim J%
 For J = 0 To UB(A)
-    PushI LyzActLinAy, A(J).ToStr
+    PushI LyzActLiny, A(J).ToStr
 Next
 End Function

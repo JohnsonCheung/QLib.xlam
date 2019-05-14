@@ -2,57 +2,63 @@ Attribute VB_Name = "QIde_Mth_TopRmk"
 Option Explicit
 Private Const CMod$ = "MIde_Mth_TopRmk."
 Private Const Asm$ = "QIde"
-Private Sub Z_MthFTIxAyzSrcMth()
-Dim Src$(), MthNm$, WiTopRmk As Boolean
-Dim Ept() As FTIx, Act() As FTIx
+Private Sub Z_MthFEIxszSrcMth()
+Dim Src$(), Mthn, WiTopRmk As Boolean
+Dim Ept As FEIxs, Act As FEIxs
 
-Src = SrczMdNm("IdeMthFTIx")
-PushObj Ept, FTIx(2, 11)
+Src = SrczMdn("IdeMthFEIx")
+PushFEIx Ept, FEIx(2, 11)
 GoSub Tst
 
 Exit Sub
 Tst:
-    Act = MthFTIxAyzSrcMth(Src, MthNm, WiTopRmk)
-    If Not IsEqFTIxAy(Act, Ept) Then Stop
+    Act = MthFEIxszSN(Src, Mthn, WiTopRmk)
+    If Not IsEqFEIxs(Act, Ept) Then Stop
     Return
 End Sub
 
-Function RmvBlankLin(Sy$()) As String()
-Dim L$, I
-For Each I In Itr(Sy)
-    L = I
-    PushNonBlank RmvBlankLin, L
+Function RmvBlankLin(Ay) As String()
+Dim I
+For Each I In Itr(Ay)
+    PushNonBlank RmvBlankLin, I
 Next
 End Function
 
-Function MthTopRmkLy(Src$(), MthFmIx&) As String()
-Dim Fm&: Fm = MthTopRmkIx(Src, MthFmIx): If Fm = -1 Then Exit Function
-MthTopRmkLy = RmvBlankLin(SywFT(Src, Fm, MthFmIx - 1))
+Function TopRmkLines$(Src$(), MthIx)
+TopRmkLines = JnCrLf(TopRmkLy(Src, MthIx))
+End Function
+Function TopRmkLyzSIW(Src$(), MthIx, WiTopRmk As Boolean) As String()
+If Not WiTopRmk Then Exit Function
+TopRmkLyzSIW = TopRmkLy(Src, MthIx)
+End Function
+Function TopRmkLy(Src$(), MthIx) As String()
+Dim Fm&: Fm = TopRmkIx(Src, MthIx): If Fm = -1 Then Exit Function
+TopRmkLy = RmvBlankLin(AywFT(Src, Fm, MthIx - 1))
 End Function
 
-Function MthTopRmkIx&(Src$(), MthFmIx&)
+Function TopRmkIx&(Src$(), MthIx)
+If MthIx <= 0 Then Exit Function
 Dim J&, L$
-MthTopRmkIx = MthFmIx
-If MthFmIx = 0 Then Exit Function
-For J = MthFmIx - 1 To 0 Step -1
+TopRmkIx = MthIx
+For J = MthIx - 1 To 0 Step -1
     L = LTrim(Src(J))
     Select Case True
     Case L = ""
-    Case FstChr(L) = "'": MthTopRmkIx = J
+    Case FstChr(L) = "'": TopRmkIx = J
     Case Else: Exit Function
     End Select
 Next
 End Function
 
-Function MthTopRmkLno&(Md As CodeModule, MthLno)
+Function TopRmkLno(Md As CodeModule, MthLno)
 Dim J&, L$
-MthTopRmkLno = MthLno
+TopRmkLno = MthLno
 If MthLno = 0 Then Exit Function
 For J = MthLno - 1 To 1 Step -1
     L = LTrim(Md.Lines(J, 1))
     Select Case True
     Case L = ""
-    Case FstChr(L) = "'": MthTopRmkLno = J
+    Case FstChr(L) = "'": TopRmkLno = J
     Case Else: Exit Function
     End Select
 Next

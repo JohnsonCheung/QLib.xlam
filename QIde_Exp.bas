@@ -3,7 +3,7 @@ Option Explicit
 Private Const CMod$ = "MIde_Exp."
 Private Const Asm$ = "QIde"
 Function ExpgPth$()
-ExpgPth = PthPj & "Exporting\"
+ExpgPth = PjpP & "Exporting\"
 End Function
 
 Sub ExpExpg()
@@ -11,7 +11,7 @@ Stamp "ExpExpg: Begin"
 Dim Xls As Excel.Application: Set Xls = NewXls
 Dim Acs As Access.Application: Set Acs = NewAcs
 Dim Ffn$, I
-For Each I In Itr(FfnSy(ExpgPth))
+For Each I In Itr(Ffny(ExpgPth))
     Ffn = I
     ExpPjf Ffn, Xls, Acs
 Next
@@ -20,58 +20,64 @@ QuitAcs Acs
 Stamp "ExpExpg: End"
 End Sub
 
-Sub ExpPjf(Pjf$, Optional Xls As Excel.Application, Optional Acs As Access.Application)
+Sub ExpPjf(Pjf, Optional Xls As Excel.Application, Optional Acs As Access.Application)
 Stamp "ExpPj: Begin"
 Stamp "ExpPj: Pjf " & Pjf
 Select Case True
-Case IsFxa(Pjf): ExpFxa Pjf, Xls
-Case IsFba(Pjf): ExpFb Pjf, Acs
+Case IsFxa(Pjf): ExpFxa Pjf
+Case IsFba(Pjf): ExpFba Pjf, Acs
 End Select
 Stamp "ExpPj: End"
 End Sub
 
-Sub ExpFb(Fb$, Optional Acs As Access.Application)
-CpyFfnzToPth Fb, EnsPth(SrcpzPjf(Fb$))
+Sub ExpFba(Fba, Optional Acs As Access.Application)
+CpyFfnzToPth Fba, EnsPth(SrcpzPjf(Fba))
 Dim A As Access.Application: Set A = DftAcs(Acs)
-OpnFb A, Fb
+OpnFb A, Fba
 Dim Pj As VBProject: Set Pj = A.Vbe.ActiveVBProject
-PjExp Pj
-If IsNothing(Acs) Then QuitAcs A
+ExpPj Pj
+QuitAcs A
 End Sub
 
-Sub ExpFxa(Fxa$)
+Sub ExpFxa(Fxa)
 ExpPj PjzFxa(Fxa)
 End Sub
 
 Sub ExpP()
-ExpPj CurPj
+ExpPj CPj
 End Sub
 
 Sub ExpPj(Pj As VBProject)
 Dim P$
 P = Srcp(Pj)
-EnsPthzAllSeg P
-ClrPthFil P
-CpyFfnzToPth Pj.Filename, P
-ExpSrc Pj
-ExpRf Pj
-ExpFrm Pj
+InfLin CSub, "... Clr src pth"
+    EnsPthzAllSeg P
+    ClrPthFil P
+InfLin CSub, "... Cpy pj to src pth"
+    CpyFfnzToPth Pj.Filename, P
+InfLin CSub, "... Exp src"
+    ExpSrc Pj
+InfLin CSub, "... Exp rf"
+    ExpRf Pj
+InfLin CSub, "... Exp frm"
+    ExpFrm Pj
+InfLin CSub, "Done"
 End Sub
 
-Private Sub ExpSrc(A As VBProject)
+Private Sub ExpSrc(P As VBProject)
 Dim C As VBComponent
-For Each C In A.VBComponents
+For Each C In P.VBComponents
     DoEvents
     C.Export SrcFfn(C)
 Next
 End Sub
 
-Private Sub ExpRf(A As VBProject)
-WrtAy RfSrc(A), Frf(A)
+Private Sub ExpRf(P As VBProject)
+WrtAy RfSrc(P), Frf(P)
 End Sub
 
-Private Sub ExpFrm(A As VBProject)
-If Not IsFbaPj(A) Then Exit Sub
+Private Sub ExpFrm(P As VBProject)
+If Not IsFbaPj(P) Then Exit Sub
 Stop
 End Sub
 

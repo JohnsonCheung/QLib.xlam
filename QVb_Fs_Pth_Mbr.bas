@@ -3,98 +3,92 @@ Option Explicit
 Private Const CMod$ = "MVb_Fs_Pth_Mbr."
 Private Const Asm$ = "QVb"
 
-Function DirzPth$(Pth$)
-DirzPth = Dir(EnsPthSfx(Pth) & "*.*", vbDirectory)
+Function DirzPSA$(Pth, Optional Spec$ = "*.*", Optional A As VbFileAttribute = VbFileAttribute.vbDirectory)
+DirzPSA = Dir(EnsPthSfx(Pth) & Spec, A)
 End Function
 
-Function FdrSyzIsInst(Pth$) As String()
+Function FdrAyzIsInst(Pth) As String()
 Dim I, Fdr$
-For Each I In Itr(FdrSy(Pth))
+For Each I In Itr(FdrAy(Pth))
     Fdr = I
-    If IsInstNm(Fdr) Then PushI FdrSyzIsInst, Fdr
+    If IsInstNm(Fdr) Then PushI FdrAyzIsInst, Fdr
 Next
 End Function
-Function FdrSy(Pth$, Optional Spec$ = "*.*", Optional Atr As VbFileAttribute) As String()
+
+Function FdrAy(Pth, Optional Spec$ = "*.*") As String()
 If Not HasPth(Pth) Then Exit Function
 Dim P$: P = EnsPthSfx(Pth)
-Dim M$, X&, Atr1&
-X = Atr Or vbDirectory
-M = Dir(P & Spec, vbDirectory)
-While M <> ""
-    If InStr(M, "?") > 0 Then
-        Inf CSub, "Unicode entry is skipped", "UniCode-Entry Pth Spec Atr", M, Pth, Spec, Atr
-        GoTo Nxt
+Dim F, X&, Atr1&
+For Each F In Itr(EntAy(P, Spec))
+    Atr1 = GetAttr(P & F)
+    If (Atr1 And VbFileAttribute.vbDirectory) <> 0 Then
+        PushI FdrAy, F    '<====
     End If
-    If M = "." Then GoTo Nxt
-    If M = ".." Then GoTo Nxt
-    Atr1 = GetAttr(P & M)
-    If (Atr1 And VbFileAttribute.vbDirectory) = 0 Then GoTo Nxt
-    If Not HitFilAtr(GetAttr(P & M), Atr) Then GoTo Nxt
-    PushI FdrSy, M    '<====
-Nxt:
-    M = Dir
-Wend
+Next
 End Function
 
-Function EntSy(Pth$) As String()
-'Function EntSy(A$, Optional FilSpec$ = "*.*", Optional Atr As FileAttribute) As String()
-Dim A$: A$ = DirzPth(Pth)
+Function EntAy(Pth, Optional Spec$ = "*.*", Optional Atr As FileAttribute = vbDirectory) As String()
+Dim A$: A$ = DirzPSA(EnsPthSfx(Pth), Spec, Atr)
 While A <> ""
     If A = "." Then GoTo X
     If A = ".." Then GoTo X
-    PushI EntSy, A
+    If InStr(A, "?") > 0 Then
+        Inf CSub, "Unicode entry is skipped", "UniCode-Entry Pth Spec", A, Pth, Spec
+        GoTo X
+    End If
+    PushI EntAy, A
 X:
     A = Dir
 Wend
 End Function
-Function IsInstNm(S$) As Boolean
-If FstChr(S) <> "N" Then Exit Function      'FstChr = N
-If Len(S) <> 16 Then Exit Function          'Len    =16
-If Not IsYYYYMMDD(Mid(S, 2, 8)) Then Exit Function 'NYYYYMMDD_HHMMDD
-If Mid(S, 10, 1) <> "_" Then Exit Function
-If Not IsHHMMDD(Right(S, 6)) Then Exit Function
+Function IsInstNm(Nm) As Boolean
+If FstChr(Nm) <> "N" Then Exit Function      'FstChr = N
+If Len(Nm) <> 16 Then Exit Function          'Len    =16
+If Not IsYYYYMMDD(Mid(Nm, 2, 8)) Then Exit Function 'NYYYYMMDD_HHMMDD
+If Mid(Nm, 10, 1) <> "_" Then Exit Function
+If Not IsHHMMDD(Right(Nm, 6)) Then Exit Function
 IsInstNm = True
 End Function
 
-Function FdrSy1(Pth$) As String()
+Function FdrAy1(Pth) As String()
 Dim P$: P = EnsPthSfx(Pth)
-Dim A$: A = DirzPth(P)
+Dim A$: A = DirzPSA(P)
 While A <> ""
     If A = "." Then GoTo X
     If A = ".." Then GoTo X
-    If IsPth(P & A) Then PushI FdrSy1, A
+    If IsPth(P & A) Then PushI FdrAy1, A
 X:
     A = Dir
 Wend
 End Function
 
-Function FfnItr(Pth$)
-Asg Itr(FfnSy(Pth)), FfnItr
+Function FfnItr(Pth)
+Asg Itr(Ffny(Pth)), FfnItr
 End Function
 
-'Function FnSy(Pth) As String()
+'Function FnAy(Pth) As String()
 'Dim A$: A = Dir(Pth)
 'While A <> ""
 '    If HasSubStr(A, "?") Then
 '        Debug.Print FmtQQ("File name has ?, skipped.  Pth[?] Fn[?]", Pth, A)
 '    Else
-'        PushI FnSy, A
+'        PushI FnAy, A
 '    End If
 '    A = Dir
 'Wend
 'End Function
 '
-'Function FfnSy(Pth) As String()
-'FfnSy = AddPfxzSy(FnSy(Pth), EnsPthSfx(Pth))
+'Function Ffny(Pth) As String()
+'Ffny = AddPfxzAy(FnAy(Pth), EnsPthSfx(Pth))
 'End Function
 '
 
-Function SubPthSy(Pth$) As String()
-SubPthSy = AddPfxzSySfx(FdrSy(Pth), Pth, PthSep)
+Function SubPthy(Pth) As String()
+SubPthy = AddPfxSfxzAy(FdrAy(Pth), Pth, PthSep)
 End Function
 
-Sub AsgEnt(OFdrSy$(), OFnAy$(), Pth$)
-Erase OFdrSy
+Sub AsgEnt(OFdrAy$(), OFnAy$(), Pth)
+Erase OFdrAy
 Erase OFnAy
 Dim A$, P$
 P = EnsPthSfx(Pth)
@@ -103,7 +97,7 @@ While A <> ""
     If A = "." Then GoTo X
     If A = ".." Then GoTo X
     If IsPth(P & A) Then
-        PushI OFdrSy, A
+        PushI OFdrAy, A
     Else
         PushI OFnAy, A
     End If
@@ -112,66 +106,54 @@ X:
 Wend
 End Sub
 
-Function FnnSy(Pth$, Optional Spec$ = "*.*") As String()
+Function Fnny(Pth, Optional Spec$ = "*.*") As String()
 Dim I
-For Each I In FnSy(Pth, Spec)
-    PushI FnnSy, RmvExt(CStr(I))
+For Each I In FnAy(Pth, Spec)
+    PushI Fnny, RmvExt(CStr(I))
 Next
 End Function
 
-Function FnSyzFfnSy(FfnSy$()) As String()
+Function FnAyzFfny(Ffny$()) As String()
 Dim I, Ffn$
-For Each I In Itr(FfnSy)
+For Each I In Itr(Ffny)
     Ffn = I
-    PushI FnSyzFfnSy, Fn(Ffn)
+    PushI FnAyzFfny, Fn(Ffn)
 Next
 End Function
 
-Function FnSy(Pth$, Optional Spec$ = "*.*") As String()
-ThwIfPthNotExist1 Pth, CSub
+Function FnAy(Pth, Optional Spec$ = "*.*") As String()
+ThwIf_PthNotExist1 Pth, CSub
 Dim O$()
 Dim M$
 M = Dir(EnsPthSfx(Pth) & Spec)
 While M <> ""
-   PushI FnSy, M
+   PushI FnAy, M
    M = Dir
 Wend
 End Function
 
-Function FxAy(Pth$) As String()
-Dim O$(), B$, P$
-P = EnsPthSfx(P)
-B = Dir(Pth & "*.xls")
-Dim J%
-While B <> ""
-    J = J + 1
-    If J > 1000 Then Stop
-    If Ext(B) = ".xls" Then
-        PushI O, Pth & B
-    End If
-    B = Dir
-Wend
-FxAy = O
+Function Fxy(Pth) As String()
+Fxy = Ffny(Pth, "*.xls*")
 End Function
 
-Function FfnSy(Pth$, Optional Spec$ = "*.*") As String()
-FfnSy = AddPfxzSy(FnSy(Pth, Spec), Pth)
+Function Ffny(Pth, Optional Spec$ = "*.*") As String()
+Ffny = AddPfxzAy(FnAy(Pth, Spec), Pth)
 End Function
 
-Private Sub Z_SubPthSy()
-Dim Pth$
+Private Sub Z_SubPthy()
+Dim Pth
 Pth = "C:\Users\user\AppData\Local\Temp\"
 Ept = Sy()
 GoSub Tst
 Exit Sub
 Tst:
-    Act = SubPthSy(Pth)
+    Act = SubPthy(Pth)
     Brw Act
     Return
 End Sub
 
-Private Sub ZZ_FxAy()
+Private Sub ZZ_Fxy()
 Dim A$()
-A = FxAy(CurDir)
+A = Fxy(CurDir)
 DmpAy A
 End Sub

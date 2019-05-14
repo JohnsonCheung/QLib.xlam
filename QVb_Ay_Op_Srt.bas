@@ -212,23 +212,23 @@ Next
 AySrt__Ix = O
 End Function
 
-Function IxAyzAySrt(Ay, Optional Des As Boolean) As Long()
+Function IxyzAySrt(Ay, Optional Des As Boolean) As Long()
 If Si(Ay) = 0 Then Exit Function
 Dim Ix&, V, J&
 Dim O&():
 Push O, 0
 For J = 1 To UB(Ay)
-    O = AyInsEle(O, J, IxAyzAySrt_Ix(O, Ay, Ay(J), Des))
+    O = AyInsEle(O, J, IxyzAySrt_Ix(O, Ay, Ay(J), Des))
 Next
-IxAyzAySrt = O
+IxyzAySrt = O
 End Function
 
 Private Sub Z_AySrt()
 Dim Exp, Act
 Dim A
-A = Array(1, 2, 3, 4, 5): Exp = A:                   Act = AySrt(A):       ThwIfAyabNE Exp, Act
-A = Array(1, 2, 3, 4, 5): Exp = Array(5, 4, 3, 2, 1): Act = AySrt(A, True): ThwIfAyabNE Exp, Act
-A = Array(":", "~", "P"): Exp = Array(":", "P", "~"): Act = AySrt(A):       ThwIfAyabNE Exp, Act
+A = Array(1, 2, 3, 4, 5): Exp = A:                   Act = AySrt(A):       ThwIf_AyabNE Exp, Act
+A = Array(1, 2, 3, 4, 5): Exp = Array(5, 4, 3, 2, 1): Act = AySrt(A, True): ThwIf_AyabNE Exp, Act
+A = Array(":", "~", "P"): Exp = Array(":", "P", "~"): Act = AySrt(A):       ThwIf_AyabNE Exp, Act
 '-----------------
 Erase A
 Push A, ":PjUpdTm:Sub"
@@ -249,47 +249,47 @@ Push Exp, "Private:SrcMthLx_ToLx:Function"
 Push Exp, "~Private:JnContinueLin:Sub"
 Push Exp, "~~:Tst:Sub"
 Act = QSrt1(A)
-ThwIfAyabNE Exp, Act
+ThwIf_AyabNE Exp, Act
 End Sub
 
-Private Function IxAyzAySrt_Ix&(Ix&(), A, V, Des As Boolean)
+Private Function IxyzAySrt_Ix&(Ix&(), A, V, Des As Boolean)
 Dim I, O&
 If Des Then
     For Each I In Ix
-        If V > A(I) Then IxAyzAySrt_Ix& = O: Exit Function
+        If V > A(I) Then IxyzAySrt_Ix& = O: Exit Function
         O = O + 1
     Next
-    IxAyzAySrt_Ix& = O
+    IxyzAySrt_Ix& = O
     Exit Function
 End If
 For Each I In Ix
-    If V < A(I) Then IxAyzAySrt_Ix& = O: Exit Function
+    If V < A(I) Then IxyzAySrt_Ix& = O: Exit Function
     O = O + 1
 Next
-IxAyzAySrt_Ix& = O
+IxyzAySrt_Ix& = O
 End Function
 
-Private Sub Z_IxAyzAySrt()
+Private Sub Z_IxyzAySrt()
 Dim A: A = Array("A", "B", "C", "D", "E")
-ThwIfAyabNE Array(0, 1, 2, 3, 4), IxAyzAySrt(A)
-ThwIfAyabNE Array(4, 3, 2, 1, 0), IxAyzAySrt(A, True)
+ThwIf_AyabNE Array(0, 1, 2, 3, 4), IxyzAySrt(A)
+ThwIf_AyabNE Array(4, 3, 2, 1, 0), IxyzAySrt(A, True)
 End Sub
 
-Private Function AySrtInToIxIxAy&(Ix&(), A, V, Des As Boolean)
+Private Function AySrtInEIxIxy&(Ix&(), A, V, Des As Boolean)
 Dim I, O&
 If Des Then
     For Each I In Ix
-        If V > A(I) Then AySrtInToIxIxAy& = O: Exit Function
+        If V > A(I) Then AySrtInEIxIxy& = O: Exit Function
         O = O + 1
     Next
-    AySrtInToIxIxAy& = O
+    AySrtInEIxIxy& = O
     Exit Function
 End If
 For Each I In Ix
-    If V < A(I) Then AySrtInToIxIxAy& = O: Exit Function
+    If V < A(I) Then AySrtInEIxIxy& = O: Exit Function
     O = O + 1
 Next
-AySrtInToIxIxAy& = O
+AySrtInEIxIxy& = O
 End Function
 
 Function DicAddIxToKey(A As Dictionary) As Dictionary
@@ -301,21 +301,21 @@ Next
 Set DicAddIxToKey = O
 End Function
 
-Function DicSrt(A As Dictionary, Optional IsDesc As Boolean) As Dictionary
-If A.Count = 0 Then Set DicSrt = New Dictionary: Exit Function
+Function SrtDic(A As Dictionary, Optional IsDesc As Boolean) As Dictionary
+If A.Count = 0 Then Set SrtDic = New Dictionary: Exit Function
 Dim K
-Set DicSrt = New Dictionary
+Set SrtDic = New Dictionary
 For Each K In QSrt1(A.Keys, IsDesc)
-   DicSrt.Add K, A(K)
+   SrtDic.Add K, A(K)
 Next
 End Function
 
 Private Sub ZZ_AySrt()
 Dim Exp, Act
 Dim A
-A = Array(1, 2, 3, 4, 5): Exp = A:                    Act = AySrt(A):        ThwIfNE Exp, Act
-A = Array(1, 2, 3, 4, 5): Exp = Array(5, 4, 3, 2, 1): Act = AySrt(A, True): ThwIfNE Exp, Act
-A = Array(":", "~", "P"): Exp = Array(":", "P", "~"): Act = AySrt(A):       ThwIfNE Exp, Act
+A = Array(1, 2, 3, 4, 5): Exp = A:                    Act = AySrt(A):        ThwIf_NE Exp, Act
+A = Array(1, 2, 3, 4, 5): Exp = Array(5, 4, 3, 2, 1): Act = AySrt(A, True): ThwIf_NE Exp, Act
+A = Array(":", "~", "P"): Exp = Array(":", "P", "~"): Act = AySrt(A):       ThwIf_NE Exp, Act
 '-----------------
 Erase A
 Push A, ":PjUpdTm:Sub"
@@ -336,18 +336,18 @@ Push Exp, "Private:SrcMthLx_ToLx:Function"
 Push Exp, "~Private:JnContinueLin:Sub"
 Push Exp, "~~:Tst:Sub"
 Act = AySrt(A)
-ThwIfNE Exp, Act
+ThwIf_NE Exp, Act
 End Sub
 
-Private Sub ZZ_IxAyzAySrt()
+Private Sub ZZ_IxyzAySrt()
 Dim A: A = Array("A", "B", "C", "D", "E")
-ThwIfNE Array(0, 1, 2, 3, 4), IxAyzAySrt(A)
-ThwIfNE Array(4, 3, 2, 1, 0), IxAyzAySrt(A, True)
+ThwIf_NE Array(0, 1, 2, 3, 4), IxyzAySrt(A)
+ThwIf_NE Array(4, 3, 2, 1, 0), IxyzAySrt(A, True)
 End Sub
 
 
-Private Sub Z()
+Private Sub ZZ()
 Z_AySrt
-Z_IxAyzAySrt
+Z_IxyzAySrt
 MVb__Srt:
 End Sub

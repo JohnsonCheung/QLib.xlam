@@ -21,34 +21,34 @@ End Sub
 Private Sub ZZ_RplPfx()
 Ass RplPfx("aaBB", "aa", "xx") = "xxBB"
 End Sub
-Function RmvCr$(S$)
+Function RmvCr$(S)
 RmvCr = Replace(S, vbCr, "")
 End Function
 
-Function RplCr$(S$)
+Function RplCr$(S)
 RplCr = Replace(S, vbCr, " ")
 End Function
-Function RplLf$(S$)
+Function RplLf$(S)
 RplLf = Replace(S, vbLf, " ")
 End Function
-Function RplVbl$(S$)
+Function RplVbl$(S)
 RplVbl = RplVBar(S)
 End Function
-Function RplVBar$(S$)
+Function RplVBar$(S)
 RplVBar = Replace(S, "|", vbCrLf)
 End Function
-Function RplBet$(S$, By$, S1$, S2$)
+Function RplBet$(S, By$, S1$, S2$)
 Dim P1%, P2%, B$, C$
 P1 = InStr(S, S1)
 If P1 = 0 Then Stop
-P2 = InStr(P1 + Len(S1), CStr(S), S2)
+P2 = InStr(P1 + Len(S1), S, S2)
 If P2 = 0 Then Stop
 B = Left(S, P1 + Len(S1) - 1)
 C = Mid(S, P2 + Len(S2) - 1)
 RplBet = B & By & C
 End Function
 
-Function RplDblSpc$(S$)
+Function RplDblSpc$(S)
 Dim O$: O = Trim(S)
 Dim J&
 While HasSubStr(O, "  ")
@@ -58,11 +58,11 @@ Wend
 RplDblSpc = O
 End Function
 
-Function RplFstChr$(S$, By$)
+Function RplFstChr$(S, By$)
 RplFstChr = By & RmvFstChr(S)
 End Function
 
-Function RplPfx(S$, Fm$, ToPfx$)
+Function RplPfx(S, Fm$, ToPfx$)
 If HasPfx(S, Fm) Then
     RplPfx = ToPfx & RmvPfx(S, Fm)
 Else
@@ -74,7 +74,7 @@ Private Sub Z_RplPfx()
 Ass RplPfx("aaBB", "aa", "xx") = "xxBB"
 End Sub
 
-Function RplPun$(S$)
+Function RplPun$(S)
 Dim O$(), J&, L&, C$
 L = Len(S)
 If L = 0 Then Exit Function
@@ -111,7 +111,7 @@ Return
 End Sub
 
 
-Private Sub Z()
+Private Sub ZZ()
 Z_RplBet
 Z_RplPfx
 MVb_Str_Rpl:

@@ -7,37 +7,36 @@ Function CvVbe(A) As Vbe
 Set CvVbe = A
 End Function
 Sub DmpIsPjSav()
-DmpDrs DrszIsPjSav(CurVbe)
+DmpDrs DrszIsPjSav(CVbe)
 End Sub
 Function DryOfIsPjSav(A As Vbe) As Variant()
 Dim I As VBProject
 For Each I In A.VBProjects
-    PushI DryOfIsPjSav, Array(I.Saved, I.Name, I.BldFileName)
+    PushI DryOfIsPjSav, Array(I.Saved, I.Name, I.GenFileName)
 Next
 End Function
 Function DrszIsPjSav(A As Vbe) As Drs
-DrszIsPjSav = DrszFF("IsSav PjNm BldFfn", DryOfIsPjSav(A))
+DrszIsPjSav = DrszFF("IsSav Pjn GenFfn", DryOfIsPjSav(A))
 End Function
 
-Function PjzVbe(A As Vbe, PjNm$) As VBProject
-Set PjzVbe = A.VBProjects(PjNm)
+Function PjzV(A As Vbe, Pjn$) As VBProject
+Set PjzV = A.VBProjects(Pjn)
 End Function
-PjzPjfC
 
-Function PjzPjf(Vbe As Vbe, Pjf$) As VBProject
+Function PjzPjf(Vbe As Vbe, Pjf) As VBProject
 Dim I As VBProject
 For Each I In Vbe.VBProjects
-    If PjfzPj(I) = Pjf Then Set PjzPjf = I: Exit Function
+    If PjfzP(I) = Pjf Then Set PjzPjf = I: Exit Function
 Next
 End Function
 
-Function MdDryzVbe(A As Vbe, Optional WhStr$) As Variant()
+Function MdDryzV(A As Vbe, Optional WhStr$) As Variant()
 Dim P, C, Pnm$, Pj As VBProject
 For Each P In PjItr(A, WhStr)
     Set Pj = P
     Pnm = Pj.Name
-    For Each C In CmpAyzPj(Pj, WhStr)
-        Push MdDryzVbe, MdDr(CvMd(C))
+    For Each C In CmpAyzP(Pj, WhStr)
+        Push MdDryzV, MdDr(CvMd(C))
     Next
 Next
 End Function
@@ -56,13 +55,10 @@ Function VisWinCntz%(A As Vbe)
 VisWinCntz = NItrPrpTrue(A.Windows, "Visible")
 End Function
 
-Sub CompileVbe(A As Vbe)
-DoItrFun A.VBProjects, "PjCompile"
-End Sub
-Function MthLinDryzVbe(A As Vbe, Optional WhStr$) As Variant()
+Function DrOfMthLinyzV(A As Vbe, Optional WhStr$) As Variant()
 Dim P
 For Each P In PjItr(A, WhStr)
-    PushObjAy MthLinDryzVbe, MthLinDryzPj(CvPj(P), WhStr)
+    PushObjAy DrOfMthLinyzV, DryOfMthLinzP(CvPj(P), WhStr)
 Next
 End Function
 Function PjAy(A As Vbe, Optional WhStr$, Optional NmPfx$) As VBProject()
@@ -91,24 +87,24 @@ End If
 End Function
 
 Property Get PjfSyInVbe() As String()
-PjfSyInVbe = PjfSyzVbe(CurVbe)
+PjfSyInVbe = PjfSyzV(CVbe)
 End Property
 
-Function PjfSyzVbe(A As Vbe) As String()
+Function PjfSyzV(A As Vbe) As String()
 Dim P As VBProject
 For Each P In A.VBProjects
-    PushNonBlank PjfSyzVbe, Pjf(P)
+    PushNonBlank PjfSyzV, Pjf(P)
 Next
 End Function
 
 Function PjNyInVbe(Optional WhStr$, Optional NmPfx$) As String()
-PjNyInVbe = PjNyzVbe(CurVbe, WhStr, NmPfx)
+PjNyInVbe = PjNyzV(CVbe, WhStr, NmPfx)
 End Function
 
-Function PjNyzVbe(A As Vbe, Optional WhStr$, Optional NmPfx$) As String()
+Function PjNyzV(A As Vbe, Optional WhStr$, Optional NmPfx$) As String()
 Dim P
 For Each P In PjItr(A, WhStr, NmPfx)
-    PushI PjNyzVbe, CvPj(P).Name
+    PushI PjNyzV, CvPj(P).Name
 Next
 End Function
 
@@ -122,46 +118,46 @@ For Each I In A.VBProjects
 Next
 End Function
 
-Function MthWbzVbe(A As Vbe) As Workbook
-Set MthWbzVbe = WbVis(WbzWs(MthWszVbe(A)))
+Function MthWbzV(A As Vbe) As Workbook
+Set MthWbzV = ShwWb(WbzWs(MthWszV(A)))
 End Function
 
 Function SrtRpt() As String()
-SrtRpt = SrtRptzVbe(CurVbe)
+SrtRpt = SrtRptzV(CVbe)
 End Function
 
-Function HasBarzVbe(A As Vbe, BarNm$) As Boolean
-HasBarzVbe = HasItn(A.CommandBars, BarNm)
+Function HasBarzV(A As Vbe, BarNm) As Boolean
+HasBarzV = HasItn(A.CommandBars, BarNm)
 End Function
 
-Function HasPj(A As Vbe, PjNm$) As Boolean
-HasPj = HasItn(A.VBProjects, PjNm)
+Function HasPj(A As Vbe, Pjn$) As Boolean
+HasPj = HasItn(A.VBProjects, Pjn)
 End Function
 
-Function HasPjfzVbe(A As Vbe, Pjf$) As Boolean
+Function HasPjfzV(A As Vbe, Pjf) As Boolean
 Dim P As VBProject
 For Each P In A.VBProjects
-    If PjfzPj(P) = Pjf Then HasPjfzVbe = True: Exit Function
+    If PjfzP(P) = Pjf Then HasPjfzV = True: Exit Function
 Next
 End Function
 
-Function SrtRptzVbe(A As Vbe) As String()
+Function SrtRptzV(A As Vbe) As String()
 Dim P As VBProject
 For Each P In A.VBProjects
-    PushIAy SrtRptzVbe, SrtRptzPj(P)
+    PushIAy SrtRptzV, SrtRptzP(P)
 Next
 End Function
 
 Private Sub ZZ_VbeFunPfx()
-'D Vbe_MthPfx(CurVbe)
+'D Vbe_MthPfx(CVbe)
 End Sub
 
-Private Sub ZZ_MthNyzVbe()
-'Brw MthNyzVbe(CurVbe)
+Private Sub ZZ_MthNyzV()
+'Brw MthNyzV(CVbe)
 End Sub
 
-Private Sub ZZ_MthNyzVbeWh()
-'Brw MthNyzVbe(CurVbe)
+Private Sub ZZ_MthNyzVWh()
+'Brw MthNyzV(CVbe)
 End Sub
 
 Private Sub ZZ()
@@ -173,10 +169,5 @@ Dim E As WhPjMth
 Dim F As WhNm
 Dim XX
 CvVbe A
-PjzPjf B, A
-'VbezPjf B, A
-PjzPjf B, A
 End Sub
 
-Private Sub Z()
-End Sub

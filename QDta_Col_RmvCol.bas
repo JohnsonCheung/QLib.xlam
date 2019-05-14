@@ -9,10 +9,10 @@ For Each Drv In Itr(Dry)
 Next
 End Function
 
-Function RmvColzDryIxAy(Dry(), IxAy&()) As Variant()
+Function RmvColzDryIxy(Dry(), Ixy&()) As Variant()
 Dim Dr
 For Each Dr In Itr(Dry)
-   Push RmvColzDryIxAy, AyeIxAy(Dr, IxAy)
+   Push RmvColzDryIxy, AyeIxy(Dr, Ixy)
 Next
 End Function
 

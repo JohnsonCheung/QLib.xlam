@@ -3,18 +3,28 @@ Option Explicit
 Private Const CMod$ = "MXls_Vis."
 Private Const Asm$ = "QXls"
 
-Sub ShwWb(A As Workbook)
+Function ShwWb(A As Workbook) As Workbook
 ShwXls A.Application
-End Sub
-Sub ShwXls(A As Excel.Application)
+Set ShwWb = A
+End Function
+
+Function ShwXls(A As Excel.Application) As Excel.Application
 If Not A.Visible Then A.Visible = True
-End Sub
+Set ShwXls = A
+End Function
 
-Sub ShwRg(A As Range)
+Function ShwRg(A As Range) As Range
 ShwXls A.Application
-End Sub
+Set ShwRg = A
+End Function
 
-Sub ShwLo(A As ListObject)
+Function ShwLo(A As ListObject) As ListObject
 ShwXls A.Application
-End Sub
+Set ShwLo = A
+End Function
+
+Function ShwWs(A As Worksheet) As Worksheet
+ShwXls A.Application
+Set ShwWs = A
+End Function
 

@@ -24,7 +24,7 @@ For Each X In A
 Next
 End Function
 
-Function FstElezPfxSy$(PfxSy$(), Lin$)
+Function FstElezPfxSy$(PfxSy$(), Lin)
 Dim I, P$
 For Each I In PfxSy
     P = I
@@ -61,11 +61,11 @@ For Each X In Itr(A)
 Next
 End Function
 
-Function FstElezRmvT1$(Sy$(), T1$)
+Function FstElezRmvT1$(Sy$(), T1)
 FstElezRmvT1 = RmvT1(FstElezT1(Sy, T1))
 End Function
 
-Function FstElezT1$(Sy$(), T1$)
+Function FstElezT1$(Sy$(), T1)
 Dim I, S$
 For Each I In Itr(Sy)
     S = I
@@ -73,7 +73,7 @@ For Each I In Itr(Sy)
 Next
 End Function
 
-Function FstElezT2$(Sy$(), T2$)
+Function FstElezT2$(Sy$(), T2)
 Dim I, S$
 For Each I In Itr(Sy)
     S = I
@@ -81,16 +81,23 @@ For Each I In Itr(Sy)
 Next
 End Function
 
-Function FstElezTT$(Sy$(), T1$, T2$)
+Function FstElezTT$(Sy$(), T1, T2)
 Dim I, S$
 For Each I In Itr(Sy)
     S = I
     If HasTT(S, T1, T2) Then FstElezTT = S: Exit Function
 Next
 End Function
-
-
-Function FstEleRmvTT$(Sy$(), T1$, T2$)
+Function FstElewT1$(Ay, T1)
+Dim I
+For Each I In Itr(Ay)
+    If T1zS(I) = T1 Then FstElewT1 = I: Exit Function
+Next
+End Function
+Function FstElewRmvT1$(Sy$(), T1)
+FstElewRmvT1 = RmvT1(FstElewT1(Sy, T1))
+End Function
+Function FstEleRmvTT$(Sy$(), T1, T2)
 Dim I, L$, X1$, X2$, Rst$
 For Each I In Itr(Sy)
     L = I

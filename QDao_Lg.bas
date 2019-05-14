@@ -8,7 +8,7 @@ Private X_L As Database
 Private X_Sess&
 Private X_Msg&
 Private X_Lg&
-Private O$() ' Used by EntSyR
+Private O$() ' Used by EntAyR
 
 Sub CurLgLis(Optional Sep$ = " ", Optional Top% = 50)
 D CurLgLy(Sep, Top)
@@ -17,10 +17,10 @@ End Sub
 Function CurLgLy(Optional Sep$ = " ", Optional Top% = 50) As String()
 CurLgLy = RsLy(CurLgRs(Top), Sep)
 End Function
-Private Function RsLy(A As DAO.Database, Sep$) As String()
+Private Function RsLy(A As Dao.Database, Sep$) As String()
 
 End Function
-Function CurLgRs(Optional Top% = 50) As DAO.Recordset
+Function CurLgRs(Optional Top% = 50) As Dao.Recordset
 Set CurLgRs = L.OpenRecordset(FmtQQ("Select Top ? x.*,Fun,MsgTxt from Lg x left join Msg a on x.Msg=a.Msg order by Sess desc,Lg", Top))
 End Function
 
@@ -32,7 +32,7 @@ Function CurSessLy(Optional Sep$, Optional Top% = 50) As String()
 CurSessLy = RsLy(CurSessRs(Top), Sep)
 End Function
 
-Function CurSessRs(Optional Top% = 50) As DAO.Recordset
+Function CurSessRs(Optional Top% = 50) As Dao.Recordset
 Set CurSessRs = L.OpenRecordset(FmtQQ("Select Top ? * from sess order by Sess desc", Top))
 End Function
 Private Function CvSess&(A&)
@@ -105,7 +105,7 @@ With L.TableDefs("LgV").OpenRecordset
 End With
 End Sub
 
-Private Sub AsgRs(A As DAO.Recordset, ParamArray OAp())
+Private Sub AsgRs(A As Dao.Recordset, ParamArray OAp())
 
 End Sub
 
@@ -137,30 +137,30 @@ End Sub
 
 Sub LgCrt()
 CrtFb LgFb
-Dim A As Database, T As DAO.TableDef
+Dim A As Database, T As Dao.TableDef
 Set A = Db(LgFb)
 '
-Set T = New DAO.TableDef
+Set T = New Dao.TableDef
 T.Name = "Sess"
 AddFldzId T
 AddFldzTimstmp T, "Dte"
 A.TableDefs.Append T
 '
-Set T = New DAO.TableDef
+Set T = New Dao.TableDef
 T.Name = "Msg"
 AddFldzId T
 AddFldzTxt T, "Fun MsgTxt"
 AddFldzTimstmp T, "Dte"
 A.TableDefs.Append T
 '
-Set T = New DAO.TableDef
+Set T = New Dao.TableDef
 T.Name = "Lg"
 AddFldzId T
 AddFldzLng T, "Sess Msg"
 AddFldzTimstmp T, "Dte"
 A.TableDefs.Append T
 '
-Set T = New DAO.TableDef
+Set T = New Dao.TableDef
 T.Name = "LgV"
 AddFldzId T
 AddFldzLng T, "Lg Val"
@@ -173,8 +173,8 @@ End Sub
 Sub LgCrt_v1()
 Dim Fb$
 Fb = LgFb
-If HasFfn(Fb$) Then Exit Sub
-'DbCrtSchm CrtFb(Fb$), LgSchmLines
+If HasFfn(Fb) Then Exit Sub
+'DbCrtSchm CrtFb(Fb), LgSchmLines
 End Sub
 
 Property Get LgDb() As Database
@@ -255,8 +255,8 @@ Static Y$
 LgPth = Y
 End Property
 
-Sub FTIxDmp(A As FTIx)
-Debug.Print A.ToStr
+Sub DmpFEIx(A As FEIx)
+'Debug.Print A.ToStr
 End Sub
 
 Sub SessBrw(Optional A&)
@@ -301,7 +301,7 @@ Debug.Assert Dir(LgFb) = LgFn
 End Sub
 
 
-Private Sub Z()
+Private Sub ZZ()
 Z_Lg
 MDao_Lg:
 End Sub

@@ -3,7 +3,7 @@ Option Explicit
 Private Const CMod$ = "MVb_Lin_Vy."
 Private Const Asm$ = "QVb"
 
-Function ShfVy(OLin$, Lblss$) As Variant() ' _
+Function ShfVy(OLin, Lblss$) As Variant() ' _
 'Return Ay, which is _
 '   Same sz as Lblss-cnt _
 '   Ay-ele will be either string of boolean _
@@ -17,8 +17,8 @@ Function ShfVy(OLin$, Lblss$) As Variant() ' _
 'OLin is _
 '   VVV VVV=LLL [VVV=L L]
 Dim L$, I, Ay$(), O()
-Ay = TermSy(OLin)
-For Each I In Itr(SyzSsLin(Lblss))
+Ay = TermAy(OLin)
+For Each I In Itr(SyzSS(Lblss))
     L = I
     Select Case FstChr(L)
     Case "*":
@@ -78,7 +78,7 @@ GoSub T0
 'GoSub T2
 'GoSub T3
 Exit Sub
-Dim Lin$, Lblss$, Act(), Ept()
+Dim Lin, Lblss$, Act(), Ept()
 T0:
     Lin = "Loc Txt Req Dft=ABC AlwZLen [VTxt=Loc cannot be blank] [VRul=IsNull([Loc]) or Trim(Loc)='']"
     Lblss = EleLblss ' "*Fld *Ty ?Req ?AlwZLen Dft VTxt VRul TxtSz Expr"

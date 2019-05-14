@@ -3,26 +3,26 @@ Option Explicit
 Private Const CMod$ = "MIde_Mth_Dcl."
 Private Const Asm$ = "QIde"
 
-Property Get MthLinSyM() As String()
-MthLinSyM = MthLinSyzMd(CurMd)
+Property Get MthLinyM() As String()
+MthLinyM = MthLinyzMd(CMd)
 End Property
 
-Function MthLinSyzNmSrc(Src$(), MthNm$) As String()
+Function MthLinyzNmSrc(Src$(), Mthn) As String()
 Dim Ix
-For Each Ix In Itr(MthIxAyzNm(Src, MthNm))
-    PushI MthLinSyzNmSrc, ContLin(Src, Ix)
-Next
+'For Each Ix In Itr(MthIxyzNm(Src, Mthn))
+    PushI MthLinyzNmSrc, ContLin(Src, Ix)
+'Next
 End Function
 
-Private Sub Z_Src_PthMthLinSy()
-Dim MthNy$(), Src$()
+Private Sub Z_Src_PthMthLiny()
+Dim Mthny$(), Src$()
 Src = CurSrc
-MthNy = Sy("Src_MthDclDry", "Mth_MthDclLin")
-Ept = Sy("Function Mth_MthDclLin$(A As Mth)", "Function Src_MthDclDry(A$()) As Variant()")
+Mthny = Sy("Src_MthDclDry", "Mth_MthDclLin")
+Ept = Sy("Function Mth_MthDclLin(A As Mth)", "Function Src_MthDclDry(A$()) As Variant()")
 GoSub Tst
 Exit Sub
 Tst:
-    Act = MthLinSyzSrc(Src)
+    Act = MthLinyzSrc(Src)
     C
     Return
 End Sub

@@ -55,7 +55,7 @@ Function VyczSqc(Sq(), Optional C& = 1) As Variant()
 VyczSqc = IntozSqc(EmpAv, Sq, C)
 End Function
 
-Function IntozSqr(Into, Sq(), R&)
+Function IntozSqr(Into, Sq(), R)
 Dim NC&, O
     NC = UBound(Sq, 2)
     O = ResiN(Into, NC)
@@ -63,13 +63,14 @@ Dim C&
 For C = 1 To NC
     O(C - 1) = Sq(R, C)
 Next
+IntozSqr = O
 End Function
 
 Function SyzSq(Sq(), Optional C& = 1) As String()
 SyzSq = IntozSqc(EmpSy, Sq(), C)
 End Function
 
-Function DrzSqr(Sq(), Optional R& = 1) As Variant()
+Function DrzSqr(Sq(), Optional R = 1) As Variant()
 DrzSqr = IntozSqr(EmpAv, Sq, R)
 End Function
 
@@ -114,7 +115,7 @@ End Function
 Function LyzSq(Sq()) As String()
 Dim R&
 For R = 1 To UBound(Sq(), 1)
-    Push LyzSq, TermSyzDr(DrzSqr(Sq, R))
+    Push LyzSq, TermAyzDr(DrzSqr(Sq, R))
 Next
 End Function
 
@@ -160,7 +161,6 @@ Dim D%
 Dim E&()
 Dim F As ListObject
 Sq A, A
-ColzSq B, D
 IsEqSq B, B
 End Sub
 

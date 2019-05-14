@@ -28,40 +28,43 @@ With BrkQuote(QuoteStr)
     OQ2 = .S2
 End With
 End Sub
+Function QuoteBigBkt$(S)
+QuoteBigBkt = "{" & S & "}"
+End Function
 
-Function QuoteBkt$(S$)
+Function QuoteBkt$(S)
 QuoteBkt = "(" & S & ")"
 End Function
-Function QuoteDot$(S$)
+Function QuoteDot$(S)
 QuoteDot = "." & S & "."
 End Function
-Function Quote$(S$, QuoteStr$)
+Function Quote$(S, QuoteStr$)
 With BrkQuote(QuoteStr)
     Quote = .S1 & S & .S2
 End With
 End Function
 
-Function QuoteDblVb$(S$)
+Function QuoteDblVb$(S)
 QuoteDblVb = QuoteDbl(Replace(S, vbDblQuote, vbTwoDblQuote))
 End Function
 
-Function QuoteDbl$(S$)
+Function QuoteDbl$(S)
 QuoteDbl = vbDblQuote & S & vbDblQuote
 End Function
 
-Function QuoteSng$(S$)
+Function QuoteSng$(S)
 QuoteSng = "'" & S & "'"
 End Function
-Function QuoteSq$(S$)
+Function QuoteSq$(S)
 QuoteSq = "[" & S & "]"
 End Function
-Function QuoteSqIf$(S$)
+Function QuoteSqIf$(S)
 If IsNeedQuote(S) Then QuoteSqIf = QuoteSq(S) Else QuoteSqIf = S
 End Function
 Function QuoteSqAv(Av()) As String()
 Dim I
 For Each I In Av
-    PushI QuoteSqAv, QuoteSq(CStr(I))
+    PushI QuoteSqAv, QuoteSq(I)
 Next
 End Function
 

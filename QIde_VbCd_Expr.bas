@@ -50,25 +50,25 @@ While LasLen > 0
         OvrFlwTerm = .OvrFlwTerm
     End With
     CurLen = Len(S)
-    If CurLen >= LasLen Then ThwIfNEver CSub, "Str is not shifted by ShfLin"
+    If CurLen >= LasLen Then ThwIf_Never CSub, "Str is not shifted by ShfLin"
     LasLen = CurLen
 Wend
 End Function
 
 Private Function ShfLin(Str$, OvrFlwTerm$, W%) As LinRslt
-Dim T$, OExprTermSy$(), TotW&
+Dim T$, OExprTermAy, TotW&
 If OvrFlwTerm <> "" Then
-    PushI OExprTermSy, OvrFlwTerm
+    PushI OExprTermAy, OvrFlwTerm
     TotW = Len(OvrFlwTerm) + 3
 End If
 Dim S$: S = Str
 Dim J&, OStr$, OExprTerm$
 
 X:
-ShfLin = LinRslt(ExprLin:=Jn(OExprTermSy, " & "), OvrFlwTerm:=OvrFlwTerm, S:=OStr)
+ShfLin = LinRslt(ExprLin:=Jn(OExprTermAy, " & "), OvrFlwTerm:=OvrFlwTerm, S:=OStr)
 End Function
 Private Function Z_ShfTermzPrintable()
-Dim S$: S = StrzCurPjf
+Dim S$: S = StrOfPjfP
 Dim Las&, Cur&, O$()
 Las = Len(S)
 While Len(S) > 0
@@ -98,7 +98,7 @@ OStr = ""
 End Function
 
 'Fun=================================================
-Private Function LinRslt(ExprLin$, OvrFlwTerm$, S$) As LinRslt
+Private Function LinRslt(ExprLin, OvrFlwTerm$, S$) As LinRslt
 With LinRslt
     .ExprLin = ExprLin
     .OvrFlwTerm = OvrFlwTerm
@@ -137,11 +137,11 @@ GoSub T0
 GoSub T1
 Exit Sub
 ZZ2:
-    S = StrzCurPjf
+    S = StrOfPjfP
     Brw ExprLyzStr(S)
     Return
 ZZ1:
-    S = StrzCurPjf
+    S = StrOfPjfP
     Brw ExprLyzStr(S)
     Return
 T0:
@@ -157,17 +157,9 @@ Tst:
     C
     Return
 End Sub
-Private Sub AAA()
-Dim J%, A
-Erase XX
-For J = 0 To 255
-    X FmtQQ("If Asc(""?"")<>? Then Debug.Print ?", Chr(J), J, J)
-Next
-Brw XX
-Erase XX
-End Sub
+
 Private Sub Z_BrwRepeatedBytes()
-BrwRepeatedBytes StrzCurPjf
+BrwRepeatedBytes StrOfPjfP
 End Sub
 
 Function AscStr$(S)
@@ -180,10 +172,10 @@ End Function
 
 Private Sub Z_BrkAyzPrintable1()
 Dim T, O$(), J&
-For Each T In BrkAyzPrintable(JnCrLf(SrcInPj))
+'For Each T In BrkAyzPrintable(JnCrLf(Srcp))
     J = J + 1
     Push O, FmtPrintableStr(T)
-Next
+'Next
 Brw AddIxPfx(O)
 End Sub
 
@@ -199,7 +191,7 @@ Case Else
 End Select
 End Function
 Private Sub Z_BrkAyzPrintable()
-Brw BrkAyzPrintable(StrzCurPjf)
+Brw BrkAyzPrintable(StrOfPjfP)
 End Sub
 
 Private Function BrkAyzRepeat(S) As String()

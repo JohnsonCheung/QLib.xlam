@@ -8,7 +8,7 @@ End Sub
 Private Sub CpyCls(A As CodeModule, ToPj As VBProject)
 Const CSub$ = CMod & "CpyCls"
 ThwNotCls A, CSub
-ThwEqObj ToPj, PjzMd(A), CSub, "From Md's Pj cannot eq to ToPj"
+ThwEqObj ToPj, PjzM(A), CSub, "From Md's Pj cannot eq to ToPj"
 Dim T$: T = TmpFt(Fnn:=A.Name)
 A.Parent.Export T
 ToPj.VBComponents.Import T
@@ -40,7 +40,7 @@ If A.Parent.Type <> vbext_ct_StdModule Then Thw Fun, "Should be Mod", "Type", Sh
 End Sub
 
 Sub CpyMod(A As CodeModule, ToPj As VBProject)
-AddCmpzLines ToPj, A.Name, SrcLineszMd(A)
+AddCmpzPNL ToPj, A.Name, SrcLineszMd(A)
 End Sub
 
 Private Sub ZZ()
@@ -51,5 +51,3 @@ CpyCmp A, B
 CpyMod D, B
 End Sub
 
-Private Sub Z()
-End Sub

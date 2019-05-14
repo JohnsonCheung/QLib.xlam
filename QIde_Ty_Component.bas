@@ -4,7 +4,7 @@ Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Ty_Component."
 
 Function ShtCmpTyzMd$(A As CodeModule)
-ShtCmpTyzMd = ShtCmpTy(CmpTyzMd(A))
+ShtCmpTyzMd = ShtCmpTy(CmpTyzM(A))
 End Function
 
 Function ShtCmpTy$(A As vbext_ComponentType)
@@ -19,8 +19,12 @@ Case Else: Stop
 End Select
 ShtCmpTy = O
 End Function
-Function CmpTyzMd(Md As CodeModule) As vbext_ComponentType
-CmpTyzMd = Md.Parent.Type
+Function CmpTyzPN(P As VBProject, Cmpn) As vbext_ComponentType
+CmpTyzPN = P.VBComponents(Cmpn).Type
+End Function
+
+Function CmpTyzM(Md As CodeModule) As vbext_ComponentType
+CmpTyzM = Md.Parent.Type
 End Function
 Function CmpTy(ShtCmpTy) As vbext_ComponentType
 Dim O As vbext_ComponentType

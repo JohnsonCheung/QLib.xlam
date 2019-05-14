@@ -4,70 +4,27 @@ Private Const CMod$ = "MIde_Mth_Drs_Cache."
 Private Const Asm$ = "QIde"
 Public Const DoczTof$ = "DashNm: tbl-of.  IsCml. After Tof, it is a table-name."
 
-Function CacheDtevPjf(Pjf) As Date
-CacheDtevPjf = ValzQ(MthDbInPj, FmtQQ("Select PjDte from Mth where Pjf='?'", Pjf))
+Function CacheDtezPjf(Pjf) As Date
+CacheDtezPjf = ValzQ(MthDbP, FmtQQ("Select PjDte from Mth where Pjf='?'", Pjf))
 End Function
 
-Function MthDrszPjfzFmCache(Pjf, Optional WhStr$) As Drs
+Function DrsOfMthzPjfzFmCache(Pjf, Optional WhStr$) As Drs
 Dim Sql$: Sql = FmtQQ("Select * from MthCache where Pjf='?'", Pjf)
-Set MthDrszPjfzFmCache = DrszFbq(MthDbInPj, Sql)
+DrsOfMthzPjfzFmCache = DrszFbq(MthDbP, Sql)
 End Function
-Sub EnsTofMthCachezPjf(Pjf)
-Dim D1 As Date
-Dim D2 As Date
-    D1 = PjDtePjf(Pjf)
-    D2 = CacheDtevPjf(Pjf)
-Select Case True
-Case D1 = 0:  Stop
-Case D2 = 0:
-Case D1 = D2: Exit Sub
-Case D2 > D1: Stop
-End Select
-Stop '
-IupDbt MthDbInPj, "MthCache", MthDrszPjf(Pjf, FmtQQ("Pjf='?'", Pjf))
-End Sub
-Sub ThwIfDrsGoodToIupDbt(Fun$, Drs As Drs, Db As Database, T)
 
-End Sub
-
-Function BexprzFnyzSqlQPfxSy$(Fny$(), SqlQPfxSy$())
-
-End Function
-Function SqlQuMk$(A As DAO.DataTypeEnum)
-Select Case A
-Case _
-    DAO.DataTypeEnum.dbBigInt, _
-    DAO.DataTypeEnum.dbByte, _
-    DAO.DataTypeEnum.dbCurrency, _
-    DAO.DataTypeEnum.dbDecimal, _
-    DAO.DataTypeEnum.dbDouble, _
-    DAO.DataTypeEnum.dbFloat, _
-    DAO.DataTypeEnum.dbInteger, _
-    DAO.DataTypeEnum.dbLong, _
-    DAO.DataTypeEnum.dbNumeric, _
-    DAO.DataTypeEnum.dbSingle: Exit Function
-Case _
-    DAO.DataTypeEnum.dbChar, _
-    DAO.DataTypeEnum.dbMemo, _
-    DAO.DataTypeEnum.dbText: SqlQuMk = "'"
-Case _
-    DAO.DataTypeEnum.dbDate: SqlQuMk = "#"
-Case Else
-    Thw CSub, "Invalid DaoTy", "DaoTy", A
-End Select
-End Function
-Function SkFnyWiSqlQPfx(A As Database, T$) As String()
+Function SkFnyWiSqlQPfx(A As Database, T) As String()
 Dim F
 For Each F In Itr(SkFny(A, T))
-    PushI SkFnyWiSqlQPfx, SqlQuMk(DaoTyzTF(A, T, F)) & F
+    PushI SkFnyWiSqlQPfx, SqlQuoteChrzT(DaoTyzTF(A, T, F)) & F
 Next
 End Function
 Sub IupDbt(A As Database, T, Drs As Drs)
 Dim Dry(): Dry = Drs.Dry
 If Si(Dry) = 0 Then Exit Sub
-ThwIfDrsGoodToIupDbt CSub, Drs, A, T
-Dim R As DAO.Recordset, Q$, Sql$, Dr
-Sql = SqlSel_T_Wh(T, BexprzFnyzSqlQPfxSy(SkFny(A, T), SkSqlQPfxSy(A, T)))
+'ThwIf_DrsGoodToIupDbt CSub, Drs, A, T
+Dim R As Dao.Recordset, Q$, Sql$, Dr
+'Sql = SqlSel_T_Wh(T, BexprzFnyzSqlQPfxSy(SkFny(A, T), SkSqlQPfxSy(A, T)))
 For Each Dr In Dry
     Q = FmtQQAv(Sql, CvAv(Dr))
     Set R = Rs(A, Q)

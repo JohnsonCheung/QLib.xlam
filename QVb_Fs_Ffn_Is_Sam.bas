@@ -2,17 +2,17 @@ Attribute VB_Name = "QVb_Fs_Ffn_Is_Sam"
 Option Explicit
 Private Const CMod$ = "MVb_Fs_Ffn_Is_Sam."
 Private Const Asm$ = "QVb"
-Enum EmFilCmpMth
-    EiUseEq
-    EiUseSam
+Enum EmFilCmp
+    EiCmpEq
+    EiCmpSam
 End Enum
 
-Function IsEqFfn(A$, B$, Optional CmpMth As EmFilCmpMth = EiUseEq) As Boolean
-ThwIfFfnNotExist A, CSub, "Fst File"
+Function IsEqFfn(A, B, Optional FilCmp As EmFilCmp = EiCmpEq) As Boolean
+ThwIf_FfnNotExist A, CSub, "Fst File"
 If A = B Then Thw CSub, "Fil A and B are eq name", "A", A
 If Not HasFfn(B) Then Exit Function
 If Not IsSamzFfn(A, B) Then Exit Function
-If CmpMth = EiUseSam Then
+If FilCmp = EiCmpEq Then
     IsEqFfn = True
     Exit Function
 End If
@@ -29,14 +29,14 @@ Close #F1, F2
 IsEqFfn = True
 End Function
 
-Function IsSamzFfn(A$, B$) As Boolean
+Function IsSamzFfn(A, B) As Boolean
 If DtezFfn(A) <> DtezFfn(B) Then Exit Function
 If Not IsSamzSi(A, B) Then Exit Function
 IsSamzFfn = True
 End Function
 
-Function IsSamzSi(Ffn1$, Ffn2$) As Boolean
-IsSamzFfn = SizFfn(Ffn1) = SizFfn(Ffn2)
+Function IsSamzSi(Ffn1, Ffn2) As Boolean
+IsSamzSi = SizFfn(Ffn1) = SizFfn(Ffn2)
 End Function
 
 Function MsgSamFfn(A, B, Si&, Tim$, Optional Msg$) As String()
@@ -66,8 +66,8 @@ Get #Fno, IBlk, A
 FnoBlk = A
 End Function
 
-Function FfnBlk$(Ffn$, IBlk)
-Dim F%: F = FnoRnd(Ffn$, 128)
+Function FfnBlk$(Ffn, IBlk)
+Dim F%: F = FnoRnd(Ffn, 128)
 FfnBlk = FnoBlk(F, IBlk)
 Close #F
 End Function

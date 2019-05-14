@@ -5,7 +5,7 @@ Function NRowzLo&(A As ListObject)
 NRowzLo = A.DataBodyRange.Rows.Count
 End Function
 
-Function LoNm$(T$)
+Function LoNm$(T)
 LoNm = "T_" & RmvFstNonLetter(T)
 End Function
 
@@ -39,12 +39,12 @@ End Function
 Function DryLo(A As ListObject) As Variant()
 DryLo = DryzSq(SqzLo(A))
 End Function
-Function DryRgColAy(Rg As Range, ColIxAy) As Variant()
-DryRgColAy = DryzSqCol(SqzRg(Rg), ColIxAy)
+Function DryRgColAy(Rg As Range, ColIxy) As Variant()
+DryRgColAy = DryzSqCol(SqzRg(Rg), ColIxy)
 End Function
 Function DryRgzLoCC(Lo As ListObject, CC) As Variant() _
 ' Return as many column as columns in [CC] from Lo
-DryRgzLoCC = DryRgColAy(Lo.DataBodyRange, IxAy(FnyzLo(Lo), CC))
+DryRgzLoCC = DryRgColAy(Lo.DataBodyRange, Ixy(FnyzLo(Lo), CC))
 End Function
 
 Function DtaAdrzLo$(A As ListObject)

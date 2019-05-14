@@ -2,23 +2,25 @@ Attribute VB_Name = "QIde_Gen_Rf_InfDta"
 Option Explicit
 Private Const CMod$ = "MIde_Gen_Rf_InfDta."
 Private Const Asm$ = "QIde"
-Private Sub Z_PjRfDrs()
-DmpDrs PjRfDrs(CurPj)
+Private Sub Z_DrsOfRf()
+DmpDrs DrsOfRf(CPj)
 End Sub
-Sub DmpPjRf(A As VBProject)
-DmpDrs PjRfDrs(A)
+Sub DmpPjRf(P As VBProject)
+DmpDrs DrsOfRf(P)
 End Sub
-Function PjRfDrs(A As VBProject) As Drs
-Set PjRfDrs = Drs(PjRfFny, PjRfDry(A))
+
+Function DrsOfRf(P As VBProject) As Drs
+DrsOfRf = Drs(FnyOfRf, DryOfRf(P))
 End Function
-Property Get PjRfFny() As String()
-PjRfFny = ItmAddAy("Pj", RfFny)
+
+Property Get FnyOfRf() As String()
+FnyOfRf = ItmAddAy("Pj", RfFny)
 End Property
-Function PjRfDry(A As VBProject) As Variant()
+Function DryOfRf(P As VBProject) As Variant()
 Dim R As VBIDE.Reference, N$
-N = A.Name
-For Each R In A.References
-    PushI PjRfDry, ItmAddAy(N, DrRf(R))
+N = P.Name
+For Each R In P.References
+    PushI DryOfRf, ItmAddAy(N, DrRf(R))
 Next
 End Function
 Function DrRf(A As VBIDE.Reference) As Variant()
@@ -27,12 +29,12 @@ DrRf = Array(.Name, .Guid, .Major, .Minor, .FullPath, .Description, .BuiltIn, .T
 End With
 End Function
 Property Get RfFny() As String()
-RfFny = SyzSsLin(RmvDotComma(".Name, .GUID, .Major, .Minor, .FullPath, .Description, .BuiltIn, .Type, .IsBroken"))
+RfFny = SyzSS(RmvDotComma(".Name, .GUID, .Major, .Minor, .FullPath, .Description, .BuiltIn, .Type, .IsBroken"))
 End Property
 
-Function PjAyRfDrs(A() As VBProject) As Drs
+Function DrsOfRfzPjAy(A() As VBProject) As Drs
 Dim P
 For Each P In Itr(A)
-    PushDrs PjAyRfDrs, PjRfDrs(CvPj(P))
+    ApdDrs DrsOfRfzPjAy, DrsOfRf(CvPj(P))
 Next
 End Function

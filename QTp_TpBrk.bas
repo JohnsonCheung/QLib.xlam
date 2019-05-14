@@ -4,7 +4,7 @@ Private Const CMod$ = "MTp_TpBrk."
 Private Const Asm$ = "QTp"
 Public Type TpSec
     Nm As String
-    GpAy() As Gp
+    Blk As Blk
 End Type
 Public Type TpBrk
     Er() As String
@@ -24,37 +24,6 @@ Next
 'Set ORmkDic = O(U + 2)
 End Function
 
-Function LnxAyzT1(Ly$(), T1$) As Lnx()
-Dim J&, O() As Lnx
-For J = 0 To UB(Ly)
-    If T1zS(Ly(J)) = T1 Then
-        PushObj O, Lnx(J, Ly(J))
-    End If
-Next
-LnxAyzT1 = O
-End Function
-
-Function LnxAyDic(Ly$()) As Dictionary
-Set LnxAyDic = LnxAyDiczT1nn(Ly, AywDist(T1Sy(Ly)))
-End Function
-
-Function LnxAyDiczT1nn(Ly$(), T1nn$) As Dictionary
-Dim T$, I
-Set LnxAyDiczT1nn = New Dictionary
-For Each I In TermSy(T1nn)
-    T = I
-    LnxAyDiczT1nn.Add T, LnxAyzT1(Ly, T)
-Next
-End Function
-
-Function LnxAy(Ly$()) As Lnx()
-Dim J&, O() As Lnx
-If Si(Ly) = 0 Then Exit Function
-For J = 0 To UB(Ly)
-    PushObj O, Lnx(J, Ly(J))
-Next
-LnxAy = O
-End Function
 
 Function HasMajPfx(Ly$(), MajPfx$) As Boolean
 Dim Cnt%, J%

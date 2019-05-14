@@ -3,32 +3,32 @@ Option Explicit
 Private Const CMod$ = "MIde_Mth_Ix_FT."
 Private Const Asm$ = "QIde"
 
-Function MthFTIxAyzSrcMth(Src$(), MthNm$, Optional WiTopRmk As Boolean) As FTIx()
-Dim FmIx&, ToIx&, Ix&, I
-For Each I In Itr(MthIxAyzNm(Src, MthNm))
+Function MthFEIxszSN(Src$(), Mthn, Optional WiTopRmk As Boolean) As FEIxs
+Dim FmIx&, EIx&, Ix&, I
+For Each I In Itr(MthIxyzSN(Src, Mthn))
     Ix = I
     If WiTopRmk Then
         FmIx = Ix
     Else
-        FmIx = MthTopRmkIx(Src, Ix)
+        FmIx = TopRmkIx(Src, Ix)
     End If
-   PushObj MthFTIxAyzSrcMth, FTIx(FmIx, MthToIx(Src, FmIx))
+   PushFEIx MthFEIxszSN, FEIx(FmIx, MthEIx(Src, FmIx))
 Next
 End Function
 
-Function MthFTIxAyzMth(A As CodeModule, MthNm$, Optional WiTopRmk As Boolean) As FTIx()
-MthFTIxAyzMth = MthFTIxAyzSrcMth(Src(A), MthNm, WiTopRmk)
+Function MthFEIxszMN(A As CodeModule, Mthn, Optional WiTopRmk As Boolean) As FEIxs
+MthFEIxszMN = MthFEIxszSN(Src(A), Mthn, WiTopRmk)
 End Function
 
-Function MthFTIxAy(Src$(), Optional WiTopRmk As Boolean) As FTIx()
-Dim Ix&, FmIx&, ToIx&, I
+Function MthFEIxs(Src$(), Optional WiTopRmk As Boolean) As FEIxs
+Dim Ix&, FmIx&, EIx&, I
 For Each I In MthIxItr(Src)
     Ix = I
     If WiTopRmk Then
         FmIx = Ix
     Else
-        FmIx = MthTopRmkIx(Src, Ix)
+        FmIx = TopRmkIx(Src, Ix)
     End If
-    PushObj MthFTIxAy, FTIx(FmIx, ToIx)
+    PushFEIx MthFEIxs, FEIx(FmIx, EIx)
 Next
 End Function

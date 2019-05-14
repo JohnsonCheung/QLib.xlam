@@ -2,12 +2,13 @@ Attribute VB_Name = "QVb_Ay_Map_Quote"
 Option Explicit
 Private Const CMod$ = "MVb_Ay_Map_Quote."
 Private Const Asm$ = "QVb"
-Function QuoteSqBkt$(S$)
+Function QuoteSqBkt$(S)
 QuoteSqBkt = "[" & S & "]"
 End Function
 Function QuoteSqBktIfzSy$(Sy$())
+Dim I
 For Each I In Itr(Sy)
-    PushI QuoteSqBktIfzSy, QuoteSqBktIf(CStr(I))
+    PushI QuoteSqBktIfzSy, QuoteSqIf(CStr(I))
 Next
 End Function
 Function SyQuote(Sy$(), QuoteStr$) As String()
@@ -36,14 +37,14 @@ Function SyQuoteSng(Sy$()) As String()
 SyQuoteSng = SyQuote(Sy, "'")
 End Function
 
-Function SyQuoteSq(Sy$()) As String()
-SyQuoteSq = SyQuote(Sy, "[]")
+Function QuoteSqzAy(Sy$()) As String()
+QuoteSqzAy = SyQuote(Sy, "[]")
 End Function
 
-Function SyQuoteSqIf(Sy$()) As String()
+Function QuoteSqzAyIf(Sy$()) As String()
 Dim I
 For Each I In Itr(Sy)
-    PushI SyQuoteSqIf, QuoteSqIf(CStr(I))
+    PushI QuoteSqzAyIf, QuoteSqIf(CStr(I))
 Next
 End Function
 

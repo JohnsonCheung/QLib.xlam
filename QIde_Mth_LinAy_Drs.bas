@@ -1,83 +1,86 @@
 Attribute VB_Name = "QIde_Mth_LinAy_Drs"
 Option Explicit
 Private Const Asm$ = "QIde"
-Private Const CMod$ = "MIde_Mth_LinAy_Drs."
-Function MthLinDic(Optional WhStr$) As Dictionary
-Set MthLinDic = MthLinDiczVbe(CurVbe, WhStr)
+Private Const CMod$ = "MIde_Mth_Liny_Drs."
+
+Function MthDnzDiLinV(Optional WhStr$) As Dictionary
+Set MthDnzDiLinV = MthDnzDiLinzV(CVbe, WhStr)
 End Function
-Private Function MthLinDiczVbe(A As Vbe, Optional WhStr$) As Dictionary
+
+Private Function MthDnzDiLinzV(A As Vbe, Optional WhStr$) As Dictionary
 Dim O As New Dictionary, I
 For Each I In PjItr(A, WhStr)
-    PushDic O, MthLinDiczPj(CvPj(I), WhStr)
+    PushDic O, MthDnzDiLinzP(CvPj(I), WhStr)
 Next
-Set MthLinDiczVbe = O
+Set MthDnzDiLinzV = O
 End Function
-Function MthLinDiczPj(A As VBProject, Optional WhStr$) As Dictionary
+
+Function MthDnzDiLinzP(P As VBProject, Optional WhStr$) As Dictionary
 Dim O As New Dictionary, I, Pfx$, M As CodeModule
-For Each I In MdItr(A, WhStr)
+For Each I In MdItr(P, WhStr)
     Set M = I
-    PushDic O, DicAddKeyPfx(MthLinDiczSrc(Src(M)), MdDNm(M) & ".")
+    PushDic O, DicAddKeyPfx(MthDnzDiLinzS(Src(M)), MdDNm(M) & ".")
 Next
-Set MthLinDiczPj = O
+Set MthDnzDiLinzP = O
 End Function
 
-Function MthLinDiczSrc(Src$(), Optional WhStr$) As Dictionary
+Function MthDnzDiLinzS(Src$(), Optional WhStr$) As Dictionary
 Dim L$, I
-Set MthLinDiczSrc = New Dictionary
-For Each I In Itr(MthLinSyzSrc(Src, WhStr))
+Set MthDnzDiLinzS = New Dictionary
+For Each I In Itr(MthLinyzSrc(Src, WhStr))
     L = I
-    MthLinDiczSrc.Add MthDNm(L), L
+    MthDnzDiLinzS.Add MthDn(L), L
 Next
 End Function
 
-Function MthLinSyzPj(A As VBProject, Optional WhStr$) As String()
+Function MthLinyzP(P As VBProject, Optional WhStr$) As String()
 Dim I
-For Each I In MdItr(A, WhStr)
-    PushIAy MthLinSyzPj, MthLinSyzSrc(Src(CvMd(I)), WhStr)
+For Each I In MdItr(P, WhStr)
+    PushIAy MthLinyzP, MthLinyzSrc(Src(CvMd(I)), WhStr)
 Next
 End Function
 
-Function MthLinSyInVbe(Optional WhStr$) As String()
-MthLinSyInVbe = MthLinSyzVbe(CurVbe, WhStr)
+Function MthLinyV(Optional WhStr$) As String()
+MthLinyV = MthLinyzV(CVbe, WhStr)
 End Function
 
-Function MthLinSyzVbe(V As Vbe, Optional WhStr$) As String()
+Function MthLinyzV(V As Vbe, Optional WhStr$) As String()
 Dim P As VBProject
 For Each P In V.VBProjects
-    PushIAy MthLinSyzVbe, MthLinSyzPj(P, WhStr)
+    PushIAy MthLinyzV, MthLinyzP(P, WhStr)
 Next
 End Function
 
-Function MthLnxAyzMd(A As CodeModule, Optional WhStr$) As Lnx()
-MthLnxAyzMd = MthLnxAyzSrc(Src(A), WhStr)
+Function MthLnxszM(A As CodeModule, Optional WhStr$) As Lnxs
+MthLnxszM = MthLnxszSrc(Src(A), WhStr)
 End Function
 
-Function MthLnxAyzSrc(Src$(), Optional WhStr$) As Lnx()
+Function MthLnxszSrc(Src$(), Optional WhStr$) As Lnxs
 Dim O$(), J&, B As WhMth
 Set B = WhMthzStr(WhStr)
 For J = 0 To UB(Src)
     If HitMthLin(Src(J), B) Then
-        PushObj MthLnxAyzSrc, Lnx(J, ContLin(Src, J, OneLin:=True))
+        PushLnx MthLnxszSrc, Lnx(ContLin(Src, J, OneLin:=True), J)
     End If
 Next
 End Function
 
-Function MthLinSyzMd(A As CodeModule, Optional WhStr$) As String()
-MthLinSyzMd = MthLinSyzSrc(Src(A), WhStr)
+Function MthLinyzMd(A As CodeModule, Optional WhStr$) As String()
+MthLinyzMd = MthLinyzSrc(Src(A), WhStr)
 End Function
 
-Function MthLinSyzSrc(Src$(), Optional WhStr$) As String()
+Function MthLinyzSrc(Src$(), Optional WhStr$) As String()
 Dim O$(), J&, B As WhMth
 Set B = WhMthzStr(WhStr)
 For J = 0 To UB(Src)
     If HitMthLin(Src(J), B) Then
-        PushI MthLinSyzSrc, ContLin(Src, J, OneLin:=True)
+        PushI MthLinyzSrc, ContLin(Src, J, OneLin:=True)
     End If
 Next
 End Function
 
-Function MthNmFny() As String()
-MthNmFny = SyzSsLin("MthNm Ty Mdy Md MdTy Pj")
+Function FnyOfMthn() As String()
+FnyOfMthn = SyzSS("Mthn Ty Mdy Md MdTy Pj")
 End Function
 Private Function MthQ1LyzMthQLy(MthQLy$()) As String()
 Dim MthQLin
@@ -85,34 +88,34 @@ For Each MthQLin In Itr(MthQLy)
 Next
 End Function
 Function MthQ1LyInVbe(Optional WhStr$) As String()
-MthQ1LyInVbe = MthQ1LyzMthQLy(MthQLyzVbe(CurVbe, WhStr))
+MthQ1LyInVbe = MthQ1LyzMthQLy(MthQLyzV(CVbe, WhStr))
 End Function
 
 Function MthQLyV(Optional WhStr$) As String()
 Static X
 If IsEmpty(X) Then
-    X = MthQLyzVbe(CurVbe, WhStr)
+    X = MthQLyzV(CVbe, WhStr)
 End If
 MthQLyV = X
 End Function
 
-Function MthQLyzVbe(A As Vbe, Optional WhStr$) As String()
+Function MthQLyzV(A As Vbe, Optional WhStr$) As String()
 Dim P
 For Each P In PjItr(A, WhStr)
-    PushIAy MthQLyzVbe, MthQLyzPj(CvPj(P), WhStr)
+    PushIAy MthQLyzV, MthQLyzP(CvPj(P), WhStr)
 Next
 End Function
 
-Function MthQLyzMd(A As CodeModule, Optional WhStr$) As String()
+Function MthQLyzM(A As CodeModule, Optional WhStr$) As String()
 Dim P$
-P = PjNmzMd(A) & "." & ShtCmpTy(A.Parent.Type) & "." & A.Parent.Name & "."
-MthQLyzMd = AddPfxzSy(MthLinSyzSrc(Src(A), WhStr), P)
+P = PjnzM(A) & "." & ShtCmpTy(A.Parent.Type) & "." & A.Parent.Name & "."
+MthQLyzM = AddPfxzAy(MthLinyzSrc(Src(A), WhStr), P)
 End Function
 
-Function MthQLyzPj(A As VBProject, Optional WhStr$) As String()
+Function MthQLyzP(P As VBProject, Optional WhStr$) As String()
 Dim C
-If A.Protection = vbext_pp_locked Then Exit Function
-For Each C In CmpItr(A, WhStr)
-    PushIAy MthQLyzPj, MthQLyzMd(CvCmp(C).CodeModule, WhStr)
+If P.Protection = vbext_pp_locked Then Exit Function
+For Each C In CmpItr(P, WhStr)
+    PushIAy MthQLyzP, MthQLyzM(CvCmp(C).CodeModule, WhStr)
 Next
 End Function

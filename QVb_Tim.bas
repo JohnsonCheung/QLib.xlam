@@ -13,7 +13,7 @@ Sub TimEnd(Optional Halt As Boolean)
 Debug.Print M & " " & DateDiff("S", Beg, Now) & "(s)"
 If Halt Then Stop
 End Sub
-Sub Stamp(S$)
+Sub Stamp(S)
 If Not NoStamp Then Debug.Print NowStr; " "; S
 End Sub
 

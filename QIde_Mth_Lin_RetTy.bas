@@ -4,7 +4,7 @@ Private Const CMod$ = "MIde_Mth_Lin_RetTy."
 Private Const Asm$ = "QIde"
 
 Private Sub Z_MthRetTy()
-'Dim MthLin$
+'Dim MthLin
 'Dim A$:
 'MthLin = "Function MthPm(MthPm$) As MthPm"
 'A = MthRetTy(MthLin)

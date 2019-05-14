@@ -3,16 +3,16 @@ Option Explicit
 Private Const CMod$ = "MVb_Fs_Ffn_Exist."
 Private Const Asm$ = "QVb"
 
-Sub AsgFfnExistMisAset(OExistFfn As Aset, OMisFfn As Aset, FfnSy$())
-With FfnExistPair(FfnSy)
+Sub AsgFfnExistMisAset(OExistFfn As Aset, OMisFfn As Aset, Ffny$())
+With FfnExistPair(Ffny)
     Set OExistFfn = AsetzAy(.Sy1)
     Set OMisFfn = AsetzAy(.Sy2)
 End With
 End Sub
 
-Function FfnExistPair(FfnSy$()) As SyPair
+Function FfnExistPair(Ffny$()) As SyPair
 Dim Ffn$, I, Exist$(), NotE$()
-For Each I In Itr(FfnSy)
+For Each I In Itr(Ffny)
     Ffn = I
     If HasFfn(Ffn) Then
         PushI Exist, Ffn
@@ -22,9 +22,9 @@ For Each I In Itr(FfnSy)
 Next
 Set FfnExistPair = SyPair(Exist, NotE)
 End Function
-Function FfnAywExist(FfnSy$()) As String()
+Function FfnAywExist(Ffny$()) As String()
 Dim Ffn$, I
-For Each I In Itr(FfnSy)
+For Each I In Itr(Ffny)
     Ffn = I
     If HasFfn(Ffn) Then
         PushI FfnAywExist, Ffn
@@ -33,45 +33,45 @@ Next
 End Function
 
 
-Function HasFfn(Ffn$) As Boolean
-HasFfn = Fso.FileExists(Ffn$)
+Function HasFfn(Ffn) As Boolean
+HasFfn = Fso.FileExists(Ffn)
 End Function
 
 
-Function ExistFfnAset(FfnSy$()) As Aset
-Set ExistFfnAset = AsetzAy(ExistFfnAy(FfnSy))
+Function ExistFfnAset(Ffny$()) As Aset
+Set ExistFfnAset = AsetzAy(ExistFfnAy(Ffny))
 End Function
 
-Function MisFfnAset(FfnSy$()) As Aset
-Set MisFfnAset = AsetzAy(MisFfnAy(FfnSy))
+Function MisFfnAset(Ffny$()) As Aset
+Set MisFfnAset = AsetzAy(MisFfnAy(Ffny))
 End Function
 
-Function ExistFfnAy(FfnSy$()) As String()
+Function ExistFfnAy(Ffny$()) As String()
 Dim Ffn$, I
-For Each I In Itr(FfnSy)
+For Each I In Itr(Ffny)
     Ffn = I
-    If HasFfn(Ffn) Then PushS ExistFfnAy, Ffn
+    If HasFfn(Ffn) Then PushI ExistFfnAy, Ffn
 Next
 End Function
-Function MisFfnAy(FfnSy$()) As String()
+Function MisFfnAy(Ffny$()) As String()
 Dim Ffn$, I
-For Each I In Itr(FfnSy)
+For Each I In Itr(Ffny)
     Ffn = I
     If Not HasFfn(Ffn) Then PushI MisFfnAy, Ffn
 Next
 End Function
 
-Function IsFfn(Ffn$) As Boolean
+Function IsFfn(Ffn) As Boolean
 IsFfn = Fso.FileExists(Ffn)
 End Function
 
 
-Function ChkHasFfn(Ffn$, Optional FileKind$ = "File") As String()
-If Not HasFfn(Ffn) Then ChkHasFfn = MsgzMisFfn(Ffn$, FileKind)
+Function ChkHasFfn(Ffn, Optional FileKind$ = "File") As String()
+If Not HasFfn(Ffn) Then ChkHasFfn = MsgzMisKdFil(KdFil(Ffn, FileKind))
 End Function
 
-Sub ThwIfFfnNotExist(Ffn$, Fun$, Optional FilKd$)
-If Not HasFfn(Ffn) Then Thw Fun, "File not found", "File-Pth File-Name File-Kind", Pth(Ffn$), Fn(Ffn$), FilKd
+Sub ThwIf_FfnNotExist(Ffn, Fun$, Optional KdFil$)
+If Not HasFfn(Ffn) Then Thw Fun, "File not found", "File-Pth File-Name File-Kind", Pth(Ffn), Fn(Ffn), KdFil
 End Sub
 
 
@@ -99,7 +99,7 @@ Dim O$()
 
 LyzGpPth = O
 End Function
-Sub EnsFfn(Ffn$)
+Sub EnsFfn(Ffn)
 If Not HasFfn(Ffn) Then WrtStr "", Ffn
 End Sub
 

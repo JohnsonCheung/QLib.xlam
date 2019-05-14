@@ -30,9 +30,9 @@ Else
     Dic.Add P, S
 End If
 End Sub
-Sub PushRelLin(RelLin$)
+Sub PushRelLin(RelLin)
 Dim Ay$(), P$, C
-Ay = SyzSsLin(RelLin)
+Ay = SyzSS(RelLin)
 If Si(Ay) = 0 Then Exit Sub
 P = Shf(Ay)
 For Each C In Itr(Ay)
@@ -120,8 +120,8 @@ Stop '
 'Rel_IsEq = True
 End Function
 
-Sub ThwIfNE(A As Rel, Optional Msg$ = "Two rel are diff", Optional ANm$ = "Rel-B")
-Const CSub$ = CMod & "ThwIfNE"
+Sub ThwIf_NE(A As Rel, Optional Msg$ = "Two rel are diff", Optional ANm$ = "Rel-B")
+Const CSub$ = CMod & "ThwIf_NE"
 If IsEq(A) Then Exit Sub
 Dim O$()
 PushI O, Msg
@@ -130,7 +130,7 @@ PushI O, Nm & " --------------------"
 PushIAy O, Fmt
 PushI O, ANm & " --------------------"
 PushIAy O, A.Fmt
-ThwIfErMsg O, CSub, "Two rel not eq"
+ThwIf_ErMsg O, CSub, "Two rel not eq"
 End Sub
 
 Sub ThwNotVdt()
@@ -221,7 +221,7 @@ Next
 Set NoChdPar = O
 End Function
 
-Sub ThwIfNotPar(Par, Fun$)
+Sub ThwIf_NotPar(Par, Fun$)
 If IsPar(Par) Then Exit Sub
 Thw Fun, "Given Par is not a parent", "Rel Par", Fmt, Par: Stop
 End Sub
@@ -246,7 +246,7 @@ If Not IsPar(P) Then Exit Function
 ParIsNoChd = CvAset(Dic(P)).IsEmp
 End Function
 
-Function ParLin$(P)
+Function ParLin(P)
 If Not IsPar(P) Then Exit Function
 ParLin = P & " " & ParChd(P).Lin
 End Function

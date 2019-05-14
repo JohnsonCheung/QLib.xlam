@@ -21,6 +21,6 @@ If Not X Then
         WrtStr Ps1Str, F
     End If
 End If
-PowerRun F
+'PowerRun F
 End Sub
 

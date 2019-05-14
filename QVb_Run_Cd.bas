@@ -15,26 +15,26 @@ Run N
 End Sub
 
 Private Function RunCdMd() As CodeModule
-EnsMd "ZTmpModForRun"
+'EnsMd "ZTmpModForRun"
 End Function
-Private Sub AddMthzCd(MthNm$, CdLines$)
-RunCdMd.AddFromString MthLines(MthNm$, CdLines)
+Private Sub AddMthzCd(Mthn, CdLines$)
+RunCdMd.AddFromString MthLines(Mthn, CdLines)
 End Sub
-Private Function MthLines$(MthNm$, CdLines$)
+Private Function MthLines$(Mthn, CdLines$)
 Dim Lines$, L1$, L2$
-L1 = "Sub ZZZ_" & MthNm & "()"
+L1 = "Sub ZZZ_" & Mthn & "()"
 L2 = "End Sub"
 MthLines = L1 & vbCrLf & CdLines & vbCrLf & L2
 End Function
 
-Private Property Get ZZCdLines$()
-ZZCdLines = "MsgBox Now"
-End Property
+Private Function Y_CdLines$()
+Y_CdLines = "MsgBox Now"
+End Function
 
 
 Sub TimFun(FunNN)
 Dim B!, E!, F
-For Each F In TermSy(FunNN)
+For Each F In TermAy(FunNN)
     B = Timer
     Run F
     E = Timer

@@ -4,10 +4,10 @@ Private Const CMod$ = "MVb_Fs_Pth_Sfx."
 Private Const Asm$ = "QVb"
 Public Const PthSep$ = "\"
 
-Function HasPthSfx(Pth$) As Boolean
+Function HasPthSfx(Pth) As Boolean
 HasPthSfx = LasChr(Pth) = PthSep
 End Function
-Function EnsPthSfx$(Pth$)
+Function EnsPthSfx$(Pth)
 If HasPthSfx(Pth) Then
     EnsPthSfx = Pth
 Else
@@ -15,7 +15,7 @@ Else
 End If
 End Function
 
-Function RmvPthSfx$(Pth$)
+Function RmvPthSfx$(Pth)
 RmvPthSfx = RmvSfx(Pth, PthSep)
 End Function
 

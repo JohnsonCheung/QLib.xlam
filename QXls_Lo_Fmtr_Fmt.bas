@@ -12,9 +12,9 @@ End Function
 Function FmtSpec(Spec$(), Optional T1nn$, Optional FmtFstNTerm% = 1) As String()
 Dim mT1Ay$()
     If IsMissing(T1nn) Then
-        mT1Ay = T1Sy(Spec)
+        mT1Ay = T1Ay(Spec)
     Else
-        mT1Ay = TermSy(T1nn)
+        mT1Ay = TermAy(T1nn)
     End If
 Dim O$()
     Dim T$, I
@@ -24,8 +24,8 @@ Dim O$()
     Next
     Dim M$(): M = SyeT1Sy(Spec, mT1Ay)
     If Si(M) > 0 Then
-        PushI O, FmtQQ("# Error: in not T1Sy(?)", TLin(mT1Ay))
+        PushI O, FmtQQ("# Error: in not T1Ay(?)", TLin(mT1Ay))
         PushIAy O, M
     End If
-FmtSpec = FmtAyNTerm(O, FmtFstNTerm)
+FmtSpec = FmtSyzNTerm(O, FmtFstNTerm)
 End Function

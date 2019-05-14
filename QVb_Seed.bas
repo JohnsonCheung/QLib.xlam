@@ -7,7 +7,7 @@ Function Expand$(Seed$, Ny0)
 'Seed is a VblQQ-String
 Dim A$, J%, O$()
 Dim Ny$()
-Ny = TermSy(Ny0)
+Ny = TermAy(Ny0)
 A = RplVbl(Seed)
 For J = 0 To UB(Ny)
     Push O, Replace(A, "?", Ny(J))
@@ -32,7 +32,7 @@ Tst:
     Return
 End Sub
 
-Private Sub Z()
+Private Sub ZZ()
 Z_Expand
 MVb__Seed:
 End Sub

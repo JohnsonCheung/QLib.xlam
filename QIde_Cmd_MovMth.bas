@@ -13,12 +13,12 @@ Private Sub Z_Mov_MthBar()
 MsgBox BarzMovMth.Name
 End Sub
 
-Function BarszVbe(A As Vbe) As Office.CommandBars
-Set BarszVbe = A.CommandBars
+Function BarszV(A As Vbe) As Office.CommandBars
+Set BarszV = A.CommandBars
 End Function
 
 Property Get Bars() As Office.CommandBars
-Set Bars = BarszVbe(CurVbe)
+Set Bars = BarszV(CVbe)
 End Property
 
 Function HasBar(BarNm$) As Boolean
@@ -53,11 +53,11 @@ End Sub
 Private Property Get BarzMovMth() As Office.CommandBar
 Set BarzMovMth = Bars(BarNmzMovMth)
 End Property
-Private Property Get BtnzMovMth() As Office.CommandBarControl
-Set BtnzMovMth = BarzMovMth.Controls(BtnNmzMovMth)
+Private Property Get BtnOfMovMth() As Office.CommandBarControl
+Set BtnOfMovMth = BarzMovMth.Controls(BtnNmzMovMth)
 End Property
 
-Private Sub Z()
+Private Sub ZZ()
 Z_Mov_MthBar
 MIde_CMdMov_Mth:
 End Sub

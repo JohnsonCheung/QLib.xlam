@@ -8,21 +8,21 @@ Ass MthPfx("Add_Cls") = "Add"
 End Sub
 
 Private Sub ZZ_MthPfx()
-'Dim Ay$(): Ay = MthNyzVbe(CurVbe)
+'Dim Ay$(): Ay = MthNyzV(CVbe)
 'Dim Ay1$(): Ay1 = SyzMapAy(Ay, "MthPfx")
-'WsVis AyabWs(Ay, Ay1)
+'ShwWs AyabWs(Ay, Ay1)
 End Sub
 
-Function MthPfxSyMd(A As CodeModule) As String()
+Function MthPfxSyzMd(A As CodeModule) As String()
 Dim N
-For Each N In Itr(MthNyzMd(A))
-    PushI MthPfxSyMd, MthPfx(N)
+For Each N In Itr(MthnyzMd(A))
+    PushI MthPfxSyzMd, MthPfx(N)
 Next
 End Function
 
-Function MthPfx$(MthNm)
+Function MthPfx$(Mthn)
 Dim A0$
-    A0 = Brk1(RmvPfxSy(MthNm, SplitVBar("ZZ_|Z_")), "__").S1
+    A0 = Brk1(RmvPfxSy(Mthn, SplitVBar("ZZ_|Z_")), "__").S1
 With Brk2(A0, "_")
     If .S1 <> "" Then
         MthPfx = .S1
@@ -50,11 +50,11 @@ If Fnd Then
     MthPfx = Left(A0, P3 - 1)
     Exit Function
 End If
-MthPfx = MthNm
+MthPfx = Mthn
 End Function
 
 
-Private Sub Z()
+Private Sub ZZ()
 Z_MthPfx
 MIde_Mth_Pfx:
 End Sub

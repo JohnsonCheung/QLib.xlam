@@ -2,13 +2,13 @@ Attribute VB_Name = "QVb_Fs_Pth_Exist"
 Option Explicit
 Private Const CMod$ = "MVb_Fs_Pth_Exist."
 Private Const Asm$ = "QVb"
-Function EnsPth$(Pth$)
+Function EnsPth(Pth)
 Dim P$: P = EnsPthSfx(Pth)
 If Not Fso.FolderExists(Pth) Then MkDir RmvLasChr(P)
 EnsPth = Pth
 End Function
 
-Sub EnsPthzAllSeg(Pth$)
+Sub EnsPthzAllSeg(Pth)
 Dim J%, O$, Ay$()
 Ay = Split(RmvSfx(Pth, PthSep), PthSep)
 O = Ay(0)
@@ -18,25 +18,25 @@ For J = 1 To UBound(Ay)
 Next
 End Sub
 
-Function HasPth(Pth$) As Boolean
+Function HasPth(Pth) As Boolean
 HasPth = IsPthExist(Pth)
 End Function
 
-Function HasFdr(Pth$, Fdr$) As Boolean
-HasFdr = HasEle(FdrSy(Pth), Fdr)
+Function HasFdr(Pth, Fdr$) As Boolean
+HasFdr = HasEle(FdrAy(Pth), Fdr)
 End Function
 
-Sub ThwIfPthNotExist(Pth$)
-If Not HasPth(Pth) Then Err.Raise 1, , "Pth(" & Pth & ") not exist"
+Sub ThwIf_PthNotExist(Pth, Fun$)
+If Not HasPth(Pth) Then Thw Fun, "Pth not exist", "Pth", Pth
 End Sub
 
-Function AnyFil(Pth$) As Boolean
+Function AnyFil(Pth) As Boolean
 AnyFil = Dir(Pth) <> ""
 End Function
-Function IsPth(Pth$) As Boolean
+Function IsPth(Pth) As Boolean
 IsPth = IsPthExist(Pth)
 End Function
-Function IsPthExist(Pth$) As Boolean
+Function IsPthExist(Pth) As Boolean
 IsPthExist = Fso.FolderExists(Pth)
 End Function
 
@@ -44,7 +44,7 @@ Function HasSubFdr(Pth) As Boolean
 HasSubFdr = Fso.GetFolder(Pth).SubFolders.Count > 0
 End Function
 
-Sub ThwIfPthNotExist1(Pth$, Optional Fun$ = "ThwIfPthNotExist1")
+Sub ThwIf_PthNotExist1(Pth, Optional Fun$ = "ThwIf_PthNotExist1")
 If Not HasPth(Pth) Then Thw Fun, "Path not exist", "Path", Pth
 End Sub
 

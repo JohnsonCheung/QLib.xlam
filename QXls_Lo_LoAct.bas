@@ -42,7 +42,7 @@ Next
 Set MinxLozWszWb = A
 End Function
 
-Sub MinxLozWszFx(Fx$)
+Sub MinxLozWszFx(Fx)
 ClsWbNoSav SavWb(MinxLozWszWb(WbzFx(Fx)))
 End Sub
 
@@ -105,8 +105,8 @@ Function WsCnozLc&(A As ListObject, Col)
 WsCnozLc = A.ListColumns(Col).Range.Column
 End Function
 
-Function LoNmzTblNm$(TblNm$)
-LoNmzTblNm = "T_" & RmvFstNonLetter(TblNm)
+Function LoNmzT$(T)
+LoNmzT = "T_" & RmvFstNonLetter(T)
 End Function
 
 Private Sub ZZ_KeepFstCol()
@@ -163,6 +163,3 @@ WbzLo B
 WszLo B
 End Sub
 
-Private Sub Z()
-Z_AutoFitLo
-End Sub

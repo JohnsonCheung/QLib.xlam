@@ -114,6 +114,6 @@ Set B = DiczVbl("X AA|C Line|D Line1|D line2|B Line1|B line2|B line3|B Line4")
 BrwCmpDicAB A, B
 End Sub
 
-Private Sub Z()
+Private Sub ZZ()
 Z_BrwCmpDicAB
 End Sub

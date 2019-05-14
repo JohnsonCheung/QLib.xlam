@@ -14,6 +14,6 @@ Sq = SqHzN(Vbar.Rows.Count)
 ResiRg(Vbar, Sq).Value = Sq
 End Sub
 
-Sub FillWsNy(At As Range)
+Sub FillWsny(At As Range)
 RgzAyV Wsny(WbzRg(At)), At
 End Sub

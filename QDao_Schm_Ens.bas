@@ -5,7 +5,7 @@ Private Const Asm$ = "QDao"
 
 Sub EnsSchm(A As Database, Schm$())
 Stop
-ThwIfErMsg ErzSchm(Schm), CSub, "there is error in the Schm"
+ThwIf_ErMsg ErzSchm(Schm), CSub, "there is error in the Schm"
 'AppDbTdAy A, TdAy(Smt, SywRmvT1(Schm, CCF), SywRmvT1(Schm, CCE))
 'RunSqy A, SqyCrtPk_Tny(PkTnySmt(Smt))
 'RunSqy A, SqyCrtSkSmt(Smt)

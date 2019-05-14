@@ -11,8 +11,8 @@ For J = 0 To B.N - 1
     End With
 Next
 End Function
-Function TdzTSCn(T$, Src$, Cn$) As DAO.TableDef
-Set TdzTSCn = New DAO.TableDef
+Function TdzTSCn(T, Src$, Cn$) As Dao.TableDef
+Set TdzTSCn = New Dao.TableDef
 With TdzTSCn
     .Connect = Cn
     .Name = T

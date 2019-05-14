@@ -15,7 +15,7 @@ End Function
 
 Private Function CellWsnItmAy(FstGoCell) As CellWsnItm()
 Dim R As Range: Set R = FstGoCell
-Dim Wsny$():     Wsny = WsNyzRg(R)
+Dim Wsny$():     Wsny = WsnyzRg(R)
 Dim J%, Wsn$
 While R.Value = "Go"
     J = J + 1: If J = 1000 Then ThwLoopingTooMuch CSub
@@ -44,7 +44,7 @@ IsOkToFill = IsEmpty(A.Value) And IsEmpty(CellRight(A))
 End Function
 Sub FillGoWs(FstGoCell As Range)
 Dim R As Range:     Set FstGoCell = R
-Dim Wsny$():                 Wsny = WsNyzRg(R)
+Dim Wsny$():                 Wsny = WsnyzRg(R)
 Dim IsFill As Boolean:     IsFill = IsOkToFill(R)
 Dim I%
 While IsFill

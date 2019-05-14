@@ -2,47 +2,54 @@ Attribute VB_Name = "QVb_Wrd_Cnt"
 Option Explicit
 Private Const CMod$ = "MVb_Wrd_Cnt."
 Private Const Asm$ = "QVb"
-Private Const WrdReStr$ = "[a-zA-Z][a-zA-Z0-9_]*"
 Private Sub Z_WrdCntDic()
 Dim A As Dictionary
-Set A = DicSrt(WrdCntDic(JnCrLf(SrcInPj)))
+Set A = SrtDic(WrdCntDic(JnCrLf(SrczP(CPj))))
 BrwDic A
 End Sub
 Function WrdCntDic(S) As Dictionary
-Set WrdCntDic = CntDic(WrdAy(S))
+Set WrdCntDic = CntDic(WrdSy(S))
 End Function
 Function WrdAset(S) As Aset
-Set WrdAset = AsetzAy(WrdAy(S))
+Set WrdAset = AsetzAy(WrdSy(S))
 End Function
 
 Function CvMch(A) As IMatch
 Set CvMch = A
 End Function
-Function FstWrdAsetInPjSrc() As Aset
-Dim I
-Set FstWrdAsetInPjSrc = New Aset
-For Each I In SrcInPj
-    FstWrdAsetInPjSrc.PushItm FstWrd(I)
+
+Function FstWrdAsetP() As Aset
+Dim I, F$
+Set FstWrdAsetP = New Aset
+For Each I In SrczP(CPj)
+    F = FstWrd(CStr(I))
+    FstWrdAsetP.PushItm F
 Next
 End Function
 Function FstWrd$(S)
 Dim A As MatchCollection
-Set A = WrdMch(S)
+Set A = MchWrd(S)
 Select Case A.Count
 Case 0: Exit Function
-Case 1: FstWrd = CvMch(A.Item(0)).Value
-Case Else: ThwIfNEver CSub
+Case Else: FstWrd = CvMch(A(0)).Value
 End Select
 End Function
 
-Function WrdMch(S) As MatchCollection
-Set WrdMch = RegExp(WrdReStr, IsGlobal:=True).Execute(S)
+Function MchgWrdRe() As RegExp
+Static X As RegExp
+Const C$ = "[a-zA-Z][a-zA-Z0-9_]*"
+If IsNothing(X) Then Set X = RegExp(C, IsGlobal:=True)
+Set MchgWrdRe = X
 End Function
 
-Function WrdAy(S) As String()
+Function MchWrd(S) As MatchCollection
+Set MchWrd = MchgWrdRe.Execute(S)
+End Function
+
+Function WrdSy(S) As String()
 Dim I As Match
-For Each I In WrdMch(S)
-    PushI WrdAy, I.Value
+For Each I In MchWrd(S)
+    PushI WrdSy, I.Value
 Next
 End Function
 

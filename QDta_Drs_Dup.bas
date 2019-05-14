@@ -3,26 +3,26 @@ Option Explicit
 Private Const CMod$ = "MDta_Drs_Dup."
 Private Const Asm$ = "QDta"
 Function DrswDup(A As Drs, FF$) As Drs
-DrswDup = DrswRowIxAy(A, RowIxAyOfDupRow(A, FF))
+DrswDup = DrswRowIxy(A, RowIxyOfDupRow(A, FF))
 End Function
 
 Function DrseDup(A As Drs, FF$) As Drs
-Dim RowIxAy&(): RowIxAy = RowIxAyOfDupRow(A, FF)
-DrseDup = DrseRowIxAy(A, RowIxAy)
+Dim RowIxy&(): RowIxy = RowIxyOfDupRow(A, FF)
+DrseDup = DrseRowIxy(A, RowIxy)
 End Function
 
-Private Function RowIxAyOfDupRow(A As Drs, FF$) As Long()
-Dim Fny$(): Fny = TermSy(FF)
+Private Function RowIxyOfDupRow(A As Drs, FF$) As Long()
+Dim Fny$(): Fny = TermAy(FF)
 If Si(Fny) = 1 Then
-    RowIxAyOfDupRow = IxAyzDup(ColzDrs(A, Fny(0)))
+    RowIxyOfDupRow = IxyzDup(ColzDrs(A, Fny(0)))
     Exit Function
 End If
-Dim ColIxAy&(): ColIxAy = IxAy(A.Fny, Fny, ThwNotFnd:=True)
-Dim Dry(): Dry = DrySel(A.Dry, ColIxAy)
-RowIxAyOfDupRow = RowIxAyzOfDupzDry(Dry)
+Dim ColIxy&(): ColIxy = Ixy(A.Fny, Fny, ThwNotFnd:=True)
+Dim Dry(): Dry = DrySel(A.Dry, ColIxy)
+RowIxyOfDupRow = RowIxyzOfDupzDry(Dry)
 End Function
 
-Private Function RowIxAyzOfDupzDry(Dry()) As Long()
+Private Function RowIxyzOfDupzDry(Dry()) As Long()
 Dim DupD(): DupD = DrywDup(Dry)
 Dim Dr, Ix&, O&()
 For Each Dr In Dry
@@ -30,7 +30,7 @@ For Each Dr In Dry
     Ix = Ix + 1
 Next
 If Si(O) < Si(DupD) * 2 Then Stop
-RowIxAyzOfDupzDry = O
+RowIxyzOfDupzDry = O
 End Function
 
 Function DrywDup(Dry()) As Variant()
@@ -95,7 +95,7 @@ Dim A As Drs, FF$, Act As Drs
 GoSub T0
 Exit Sub
 T0:
-    A = DrszFF("A B C", Av(Av(1, 2, "xxx"), Av(1, 2, "yyyy"), Av(1, 2), Av(1), Av(Empty, 2)))
+    A = DrszFF("A B C", Av(Av(1, 2, "xxx"), Av(1, 2, "eyey"), Av(1, 2), Av(1), Av(Empty, 2)))
     FF = "A B"
     GoTo Tst
 Tst:
@@ -104,7 +104,7 @@ Tst:
     Return
 End Sub
 '======================================================================
-Private Function RowIxAyzOfDupzDryColIx(Dry(), ColIx&) As Long()
+Private Function RowIxyzOfDupzDryColIx(Dry(), ColIx&) As Long()
 Dim D As New Dictionary, FstIx&, V, O As New Rel, Ix&, I
 For Ix = 0 To UB(Dry)
     V = Dry(Ix)(ColIx)
@@ -116,11 +116,11 @@ For Ix = 0 To UB(Dry)
     End If
 Next
 For Each I In O.SetOfPar.Itms
-    PushIAy RowIxAyzOfDupzDryColIx, O.ParChd(I).Av
+    PushIAy RowIxyzOfDupzDryColIx, O.ParChd(I).Av
 Next
 End Function
 
-Private Sub Z_RowIxAyzOfDupzDryColIx()
+Private Sub Z_RowIxyzOfDupzDryColIx()
 Dim Dry(), ColIx&, Act&(), Ept&()
 GoSub T0
 Exit Sub
@@ -130,7 +130,7 @@ T0:
     Ept = Lngy(0, 1)
     GoTo Tst
 Tst:
-    Act = RowIxAyzOfDupzDryColIx(Dry, ColIx)
+    Act = RowIxyzOfDupzDryColIx(Dry, ColIx)
     If Not IsEqAy(Act, Ept) Then Stop
     C
     Return

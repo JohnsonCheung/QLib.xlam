@@ -3,7 +3,7 @@ Option Explicit
 Private Const CMod$ = "MDao_Db_Get_Fny."
 Private Const Asm$ = "QDao"
 
-Function FnyzQ(A As Database, Q$) As String()
+Function FnyzQ(A As Database, Q) As String()
 FnyzQ = FnyzRs(Rs(A, Q))
 End Function
 

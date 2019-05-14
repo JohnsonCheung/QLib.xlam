@@ -39,6 +39,13 @@ OC1 = A.Column
 OC2 = OC1 + A.Columns.Count - 1
 End Sub
 
+Sub BdrRgAy(A() As Range, Ix As XlBordersIndex, Optional Wgt As XlBorderWeight = xlMedium)
+Dim I
+For Each I In Itr(A)
+    BdrRg CvRg(I), Ix, Wgt
+Next
+End Sub
+
 Sub BdrRg(A As Range, Ix As XlBordersIndex, Optional Wgt As XlBorderWeight = xlMedium)
 With A.Borders(Ix)
   .LineStyle = xlContinuous
@@ -254,7 +261,7 @@ Debug.Print RgRR(R, 1, 2).Address
 Stop
 End Sub
 
-Private Sub Z()
+Private Sub ZZ()
 Z_RgzMoreBelow
 MXls_Z_Rg:
 End Sub

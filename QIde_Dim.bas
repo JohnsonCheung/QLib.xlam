@@ -4,7 +4,7 @@ Private Const CMod$ = "MIde_Dim."
 Private Const Asm$ = "QIde"
 
 Function IsDimItmzAs(DimItm$) As Boolean
-Dim A$(): A = SyzSsLin(DimItm)
+Dim A$(): A = SyzSS(DimItm)
 If Si(A) <> 3 Then Exit Function
 If A(1) <> "As" Then Thw CSub, "2nd term is not a [As]", "DimItm", DimItm
 If IsNm(A(0)) Then Thw CSub, "1st term is not a name", "DimItm", DimItm

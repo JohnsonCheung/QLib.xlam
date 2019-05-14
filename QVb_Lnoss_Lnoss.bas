@@ -4,8 +4,8 @@ Type AySubAy
     SubAy As Variant
 End Type
 Function AySubAy(Ay, SubAy) As AySubAy
-ThwIfNotAy Ay, CSub
-ThwIfNotAy SubAy, CSub
+ThwIf_NotAy Ay, CSub
+ThwIf_NotAy SubAy, CSub
 AySubAy.Ay = Ay
 AySubAy.SubAy = SubAy
 End Function

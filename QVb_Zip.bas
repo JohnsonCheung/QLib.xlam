@@ -3,5 +3,5 @@ Option Explicit
 Private Const CMod$ = "MVb_Zip."
 Private Const Asm$ = "QVb"
 Sub ZipPth(Pth, Optional PthKd$ = "Path")
-ThwNoPth Pth, CSub
+ThwIf_PthNotExist Pth, CSub
 End Sub

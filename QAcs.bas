@@ -35,20 +35,20 @@ On Error Resume Next
 A.CloseCurrentDatabase
 End Sub
 
-Sub BrwFb(Fb$)
+Sub BrwFb(Fb)
 Static Acs As New Access.Application
 OpnFb Acs, Fb
 Acs.Visible = True
 End Sub
 
-Sub ClsTTz(A As Access.Application, TT$)
+Sub ClsTT(A As Access.Application, TT$)
 Dim T$, I
-For Each I In TermSy(TT)
+For Each I In TermAy(TT)
     T = I
     ClsTbl A, T
 Next
 End Sub
-Sub ClsTbl(A As Access.Application, T$)
+Sub ClsTbl(A As Access.Application, T)
 DoCmd.Close acTable, T
 End Sub
 
@@ -59,9 +59,9 @@ For Each T In A.CodeData.AllTables
 Next
 End Sub
 
-Function AcsVis(A As Access.Application) As Access.Application
+Function ShwAcs(A As Access.Application) As Access.Application
 If Not A.Visible Then A.Visible = True
-Set AcsVis = A
+Set ShwAcs = A
 End Function
 
 Function CvAcs(A) As Access.Application
@@ -73,43 +73,43 @@ Static X As Access.Application: If IsNothing(X) Then Set X = New Access.Applicat
 Set Acs = X
 End Function
 
-Sub CpyAllAcsFrm(A As Access.Application, Fb$)
+Sub CpyAcsFrm(A As Access.Application, Fb)
 Dim I As AccessObject
 For Each I In A.CodeProject.AllForms
     A.DoCmd.CopyObject Fb, , acForm, I.Name
 Next
 End Sub
 
-Sub CpyAcsMd(A As Access.Application, ToFb$)
+Sub CpyAcsMd(A As Access.Application, ToFb)
 Dim I As AccessObject
 For Each I In A.CodeProject.AllModules
     A.DoCmd.CopyObject ToFb, , acModule, I.Name
 Next
 End Sub
 
-Sub CpyAcsObj(A As Access.Application, ToFb$)
+Sub CpyAcsObj(A As Access.Application, ToFb)
 Dim Fb$
 If HasFfn(ToFb) Then
     Fb = NxtFfnzAva(A.CurrentDb.Name)
 Else
     'Fb = Fb0
 End If
-Ass HasPth(Pth(Fb$))
-Ass Not HasFfn(Fb$)
+Ass HasPth(Pth(Fb))
+Ass Not HasFfn(Fb)
 CrtFb Fb
-'AcsCpyTbl A, Fb
-'AcsCpyFrm A, Fb
-'AcsCpyMd A, Fb
-'AcsCpyRf A, Fb
+CpyAcsTbl A, Fb
+CpyAcsFrm A, Fb
+CpyAcsMd A, Fb
+CpyAcsRf A, Fb
 End Sub
 
-Sub TxtbSelPth(A As Access.TextBox)
+Sub SelPthzTxtb(A As Access.TextBox)
 Dim R$
-R = PthSel(A.Value)
+R = SelPth(A.Value)
 If R = "" Then Exit Sub
 A.Value = R
 End Sub
-Sub CmdTurnOffTabStop(AcsCtl As Access.Control)
+Sub TurnOffTabStop(AcsCtl As Access.Control)
 Dim A As Access.Control
 Set A = AcsCtl
 If Not HasPfx(A.Name, "Cmd") Then Exit Sub
@@ -185,14 +185,9 @@ End Function
 Function PjzAcs(A As Access.Application) As VBProject
 Set PjzAcs = A.Vbe.ActiveVBProject
 End Function
-QuitzA
-Sub QuitzA(A As Access.Application)
-ClsDbzAcs A
-A.Quit
-Set A = Nothing
-End Sub
 
 Sub QuitAcs(A As Access.Application)
+If IsNothing(A) Then Exit Sub
 On Error Resume Next
 Stamp "QuitAcs: Begin"
 Stamp "QuitAcs: Cls":         A.CloseCurrentDatabase
@@ -225,4 +220,37 @@ Else
     Set DftAcs = A
 End If
 End Function
+
+'http://www.utteraccess.com/forum/USysRegInf-table-t353963.html
+''able Name = USysRegInf
+'Fields: Subkey (text), Type (number), ValName (text), Value (text)
+'At least 3 records.
+'Subkey in all 3 records = 'HKEY_CURRENT_ACCESS_PROFILE\Menu Add-Ins\&NameOfYourAdd-inHere'
+'Type in 1st record = '0' then '1' in last 2 records
+'ValName is blank in first record, then 'Expression' in second and 'Library' in the thid record.
+'Value is blank in first record, then '=NameOfFunctionToOpenFormInYourDatabase()' in the second record and '|ACCDIR\NameOfYourDatabase.mde' in the third record.
+'That is the best I can suggest. You may need more records depending on your Add-in. Do not add the single quotes (') in the description of what goes in each record.
+'hth,
+'Jac"
+'SK = 'HKEY_CURRENT_ACCESS_PROFILE\Menu Add-Ins\&NameOfYourAdd-inHere
+' Rec#  SubKey Type ValName        Value
+' 1      SK    0     ""            ""
+' 2      SK    1     "Expression"  "={FunNm}()"
+' 3      SK    1     "Library"     "|ACCDIDR\{fba}"
+Sub CrtTblzUSysRegInf(A As Database)
+RunQ A, "Create Table [USysRegInf] (Subky Text,Type Long,ValName Text,Value Text)"
+End Sub
+Sub EnsTblzUSysRegInf(A As Database)
+If HasTbl(A, "USysRegInf") Then CrtTblzUSysRegInf A
+End Sub
+
+Sub InstallAddin(A As Database, Fb, Optional AutoFunNm$ = "AutoExec")
+Dim Sk$: Sk = "HKEY_CURRENT_ACCESS_PROFILE\Menu Add-Ins\&NameOfYourAdd-inHere"
+Dim Fba$: Fba = ""
+Dim FunNm$
+Stop '
+RunQQ A, "Insert into [USysRegInf] Values('?',0,'','')"
+RunQQ A, "Insert into [USysRegInf] Values('?',1,'Expression','?')", Sk, FunNm
+RunQQ A, "Insert into [USysRegInf] Values('?',1,'Library','?')", Sk, Fba
+End Sub
 

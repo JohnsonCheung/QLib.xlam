@@ -16,7 +16,7 @@ DryzMulStmtSrc = ODry
 End Function
 
 Function FmtMulStmtSrc(MulStmtSrc$()) As String()
-FmtMulStmtSrc = FmtDryAsSpcSep(DryzMulStmtSrc(MulStmtSrc), MaxColWdt:=200)
+FmtMulStmtSrc = FmtDryzAsSpcSep(DryzMulStmtSrc(MulStmtSrc), MaxColWdt:=200)
 End Function
 
 

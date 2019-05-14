@@ -32,15 +32,15 @@ DicHasK = A.Exists(K)
 End Function
 
 Function DicHasKeyLvs(A As Dictionary, KeyLvs) As Boolean
-DicHasKeyLvs = DicHasKy(A, SyzSsLin(KeyLvs))
+DicHasKeyLvs = DicHasKy(A, SyzSS(KeyLvs))
 End Function
 
 Sub DicHasKeyssAss(A As Dictionary, KeySS$)
-DicHasKyAss A, SyzSsLin(KeySS)
+DicHasKyAss A, SyzSS(KeySS)
 End Sub
 
 Function DicHasKeySsl(A As Dictionary, KeySsl) As Boolean
-DicHasKeySsl = A.Exists(SyzSsLin(KeySsl))
+DicHasKeySsl = A.Exists(SyzSS(KeySsl))
 End Function
 
 Function DicHasKy(A As Dictionary, Ky) As Boolean

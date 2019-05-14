@@ -11,6 +11,10 @@ Enum EmThw
     EiNoThwInf
     EiNoThwQuiet
 End Enum
+
+Function PrpPth(P) As PrpPth
+PrpPth.P = P
+End Function
 Function IsEqObj(A, B) As Boolean
 IsEqObj = ObjPtr(A) = ObjPtr(B)
 End Function
@@ -28,16 +32,16 @@ Next
 End Function
 
 Function LngAyzOyPrp(Oy, Prp) As Long()
-LngAyzOyPrp = CvLngAy(IntozOyPrp(EmpLngAy, Oy, Prp))
+LngAyzOyPrp = CvLngAy(IntozOPrp(EmpLngAy, Oy, Prp))
 End Function
 
-Function IntozOyPrp(OInto, Oy, Prp)
+Function IntozOPrp(OInto, Oy, Prp)
 Dim O, I
 O = Resi(OInto)
 For Each I In Itr(Oy)
     Push O, Prp(I, Prp)
 Next
-IntozOyPrp = O
+IntozOPrp = O
 End Function
 
 Function ObjAddAy(Obj As Object, Oy)
@@ -60,19 +64,20 @@ End Function
 Function DrzObjPrpPthSy(Obj As Object, PrpPthSy$()) As Variant()
 Const CSub$ = CMod & "DrzObjPrpNy"
 If IsNothing(Obj) Then Inf CSub, "Given object is nothing", "PrpPthSy", PrpPthSy: Exit Function
-Dim PrpPth
-For Each PrpPth In PrpPthSy
-    Push DrzObjPrpPthSy, Prp(Obj, CStr(PrpPth))
+Dim P, PP As PrpPth
+For Each P In PrpPthSy
+    PP = PrpPth(P)
+    Push DrzObjPrpPthSy, Prp(Obj, PrpPth(P))
 Next
 End Function
 
 Function DiczObjPP(Obj As Object, PP$) As Dictionary
 Set DiczObjPP = DiczObjPrpPthSy(Obj, Ny(PP))
 End Function
-Function DiczObjPrpPthSy(Obj As Object, PrpPthNy$()) As Dictionary
-Dim PrpPth, O As New Dictionary
-For Each PrpPth In PrpPthNy
-    O.Add PrpPth, Prp(Obj, CStr(PrpPth))
+Function DiczObjPrpPthSy(Obj As Object, PrpPthSy$()) As Dictionary
+Dim P, O As New Dictionary
+For Each P In PrpPthSy
+    O.Add P, Prp(Obj, PrpPth(P))
 Next
 Set DiczObjPrpPthSy = O
 End Function
@@ -82,16 +87,12 @@ ObjToStr = Obj.ToStr: Exit Function
 X: ObjToStr = QuoteSq(TypeName(Obj))
 End Function
 
-Private Sub ZZZ_Prp()
-Dim Act$: Act = Prp(Excel.Application.Vbe.ActiveVBProject, "FileName Name")
-Ass Act = "C:\Users\user\Desktop\Vba-Lib-1\QVb.xlam|QVb"
-End Sub
-Function PrpzNm(Obj As Object, N As Nm, Optional Thw As EmThw)
+Function PrpzNm(Obj As Object, N As Nm, Optional Thw As EmThw = EmThw.EiThw)
 
 End Function
 Function Prp(Obj As Object, P As PrpPth, Optional Thw As EmThw)
 Const CSub$ = CMod & "Prp"
-'ThwIfNothing Obj, CSub
+'ThwIf_Nothing Obj, CSub
 On Error GoTo X
 'Ret the Obj's Get-Property-Value using Pth, which is dot-separated-string
 Dim SegSy$()

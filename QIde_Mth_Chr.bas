@@ -36,7 +36,7 @@ End Select
 TyNmzTyChr = O
 End Function
 
-Function RmvTyChr$(S$)
+Function RmvTyChr$(S)
 RmvTyChr = RmvChrzSfx(S, TyChrLis)
 End Function
 
@@ -44,10 +44,10 @@ Function ShfTyChr$(OLin$)
 ShfTyChr = ShfChr(OLin, TyChrLis)
 End Function
 
-Function TyChr$(Lin$)
-If IsMthLin(Lin) Then TyChr = TakTyChr(RmvMthNm3(Lin))
+Function TyChr$(Lin)
+If IsMthLin(Lin) Then TyChr = TakTyChr(RmvMthn3(Lin))
 End Function
 
-Function TakTyChr$(S$)
+Function TakTyChr$(S)
 TakTyChr = TakChr(S, TyChrLis)
 End Function

@@ -1,7 +1,7 @@
 Attribute VB_Name = "QDta_Drs_Drs"
 Option Explicit
 Const Asm$ = "QDta"
-Const Ns$ = "Dta.Ds"
+Const NS$ = "Dta.Ds"
 Private Const CMod$ = "BDrs."
 Type Drs: Fny() As String: Dry() As Variant: End Type
 Type Drss: N As Integer: Ay() As Drs: End Type
@@ -16,7 +16,7 @@ Enum EmCntSrtOpt
     eSrtByItm
 End Enum
 Function DrszFF(FF$, Dry()) As Drs
-DrszFF = Drs(TermSy(FF), Dry)
+DrszFF = Drs(TermAy(FF), Dry)
 End Function
 Function Drs(Fny$(), Dry()) As Drs
 With Drs
@@ -62,29 +62,50 @@ For Each Dr In Dry
 Next
 IntoDrsC = O
 End Function
+Function DmpRec(A As Drs)
+D FmtRec(A)
+End Function
+Function FmtRec(A As Drs) As String()
+Dim Fny$(), Dr, N&, Ix&, Fny$()
+Fny = AlignLzAy(A.Fny)
+For Each Dr In Itr(A.Dry)
+    PushIAy FmtRec, FmtRec_FmAlignedFny_AndDr(Fny, Dr, Ix, N)
+    Ix = Ix + 1
+Next
+End Function
+Function IxOfUStr$(Ix&, U&)
 
+End Function
+Function FmtReczFnyDr(Fny$(), Dr, Optional Ix& = -1, Optional N& = -1)
+FmtReczFnyDr = FmtRec_FmAlignedFny_AndDr(AlignLzAy(Fny), Dr, Ix, N)
+End Function
+
+Function FmtRec_FmAlignedFny_AndDr(AlignedFny$(), Dr, Optional Ix& = -1, Optional N& = -1)
+PushNonBlank FmtReczFnyDr, IxOfUStr(Ix, U)
+
+End Function
 Sub DmpDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColNm$)
 DmpAy FmtDrs(A, MaxColWdt, BrkColNm$)
 End Sub
 
 Function DrpCny(A As Drs, CC$) As Drs
-DrpCny = DrsSelCC(A, MinusAy(A.Fny, Ny(CC)))
+DrpCny = SelDrsCC(A, MinusAy(A.Fny, Ny(CC)))
 End Function
 
-Function DrsSelCC(A As Drs, CC$) As Drs
-Const CSub$ = CMod & "DrsSelCC"
-Dim OFny$(): OFny = TermSy(CC)
+Function SelDrsCC(A As Drs, CC$) As Drs
+Const CSub$ = CMod & "SelDrsCC"
+Dim OFny$(): OFny = TermAy(CC)
 If Not IsAySub(A.Fny, OFny) Then Thw CSub, "Given FF has some field not in Drs.Fny", "CC Drs.Fny", CC, A.Fny
 Dim ODry()
     Dim IAy&()
-    IAy = IxAy(A.Fny, OFny)
-    ODry = DrySelColIxAy(A.Dry, IAy)
-DrsSelCC = Drs(OFny, ODry)
+    IAy = Ixy(A.Fny, OFny)
+    ODry = DrySelColIxy(A.Dry, IAy)
+SelDrsCC = Drs(OFny, ODry)
 End Function
-Function DrySelColIxAy(Dry(), IxAy&()) As Variant()
+Function DrySelColIxy(Dry(), Ixy&()) As Variant()
 Dim Dr
 For Each Dr In Itr(Dry)
-    PushI DrySelColIxAy, AywIxAy(Dr, IxAy)
+    PushI DrySelColIxy, AywIxy(Dr, Ixy)
 Next
 End Function
 
@@ -145,41 +166,10 @@ Case eNoSrt
 Case eSrtByCnt
     CntLy = QSrt1(CntLyzCntDic(D, W), IsDesc)
 Case eSrtByItm
-    CntLy = CntLyzCntDic(DicSrt(D, IsDesc), W)
+    CntLy = CntLyzCntDic(SrtDic(D, IsDesc), W)
 Case Else
     Thw CSub, "Invalid SrtOpt", "SrtOpt", SrtOpt
 End Select
-End Function
-
-Function CntDic(Ay, Optional Opt As EmCnt) As Dictionary
-Dim O As New Dictionary, I, C&
-For Each I In Itr(Ay)
-    If O.Exists(I) Then
-        O(I) = O(I) + 1
-    Else
-        O.Add I, 1
-    End If
-Next
-Dim K
-Select Case Opt
-Case EmCnt.EiCntDup
-    Set CntDic = New Dictionary
-    For Each K In O.Keys
-        C = O(K)
-        If C > 1 Then CntDic.Add K, C
-    Next
-Case EmCnt.EiCntSng
-    Set CntDic = New Dictionary
-    For Each K In O.Keys
-        C = O(K)
-        If C = 1 Then CntDic.Add K, C
-    Next
-Case Else: Set CntDic = O
-End Select
-End Function
-
-Function CntDiczDrs(A As Drs, C$) As Dictionary
-Set CntDiczDrs = CntDic(ColzDrs(A, C))
 End Function
 
 Function NColzDrs%(A As Drs)
@@ -190,24 +180,24 @@ Function NRowDrs&(A As Drs)
 NRowDrs = Si(A.Dry)
 End Function
 
-Function DrwIxAy(Dr(), IxAy&())
-Dim U&: U = MaxAy(IxAy)
+Function DrwIxy(Dr(), Ixy&())
+Dim U&: U = MaxAy(Ixy)
 Dim O: O = Dr
 If UB(O) < U Then
     ReDim Preserve O(U)
 End If
-DrwIxAy = AywIxAy(O, IxAy)
+DrwIxy = AywIxy(O, Ixy)
 End Function
-Function SelCol(Dry(), IxAy&()) As Variant()
+Function SelCol(Dry(), Ixy&()) As Variant()
 Dim Dr
 For Each Dr In Itr(Dry)
-    PushI SelCol, AywIxAy(Dr, IxAy)
+    PushI SelCol, AywIxy(Dr, Ixy)
 Next
 End Function
 Function ReOrdCol(A As Drs, BySubFF$) As Drs
-Dim SubFny$(): SubFny = TermSy(BySubFF)
+Dim SubFny$(): SubFny = TermAy(BySubFF)
 Dim OFny$(): OFny = AyReOrd(A.Fny, SubFny)
-Dim IAy&(): IAy = IxAy(A.Fny, OFny)
+Dim IAy&(): IAy = Ixy(A.Fny, OFny)
 Dim ODry(): ODry = SelCol(A.Dry, IAy)
 ReOrdCol = Drs(OFny, ODry)
 End Function
@@ -248,7 +238,7 @@ With O
     .N = .N + 1
 End With
 End Sub
-Sub MgeDrs(O As Drs, M As Drs)
+Sub ApdDrs(O As Drs, M As Drs)
 If Not IsEqAy(O.Fny, M.Fny) Then Thw CSub, "Fny are dif", "O.Fny M.Fny", O.Fny, M.Fny
 Dim UO&, UM&, U&, J&
 UO = UB(O.Dry)
@@ -275,13 +265,13 @@ End Sub
 
 Private Sub ZZ_CntDiczDrs()
 Dim Drs As Drs, Dic As Dictionary
-'Drs = Vbe_Mth12Drs(CurVbe)
+'Drs = Vbe_Mth12Drs(CVbe)
 Set Dic = CntDiczDrs(Drs, "Nm")
 BrwDic Dic
 End Sub
 
-Private Sub ZZ_DrsSel()
-BrwDrs DrsSel(SampDrs1, "A B D")
+Private Sub ZZ_SelDrs()
+BrwDrs SelDrs(SampDrs1, "A B D")
 End Sub
 
 Private Property Get Z_FmtDrs()
@@ -305,12 +295,10 @@ DtzDrs C, D
 DrsInsCV C, D, A
 End Sub
 
-Private Sub Z()
-End Sub
 
 Function DrsAddCC(A As Drs, FF$, C1, C2) As Drs
 Dim Fny$(), Dry()
-Fny = AddAy(A.Fny, TermSy(FF))
+Fny = AddAy(A.Fny, TermAy(FF))
 Dry = DryAddColzCC(A.Dry, C1, C2)
 DrsAddCC = Drs(Fny, Dry)
 End Function

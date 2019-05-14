@@ -77,11 +77,11 @@ JnQSngSpc = JnSpc(SyQuoteSng(Sy))
 End Function
 
 Function JnQSqCommaSpc$(Sy$())
-JnQSqCommaSpc = JnCommaSpc(SyQuoteSqIf(Sy))
+JnQSqCommaSpc = JnCommaSpc(QuoteSqzAyIf(Sy))
 End Function
 
 Function JnQSqBktSpc$(Ay)
-JnQSqBktSpc = JnSpc(SyQuoteSq(SyzAy(Ay)))
+JnQSqBktSpc = JnSpc(QuoteSqzAy(SyzAy(Ay)))
 End Function
 
 Function JnSemi$(Ay)
@@ -103,7 +103,7 @@ End Function
 Function JnTerm$(Ay)
 Dim O$(), X
 For Each X In Itr(Ay)
-'    PushI O, QuoteSq(CStr(X))
+    PushI O, QuoteSq(X)
 Next
 JnTerm = Join(O, " ")
 End Function

@@ -3,29 +3,25 @@ Option Explicit
 Private Const CMod$ = "MIde_Vbe_Cur."
 Private Const Asm$ = "QIde"
 
-Property Get CurVbe() As Vbe
-Set CurVbe = Application.Vbe
-End Property
-
 Function HasBar(BarNm$) As Boolean
-HasBar = HasBarzVbe(CurVbe, BarNm)
+HasBar = HasBarzV(CVbe, BarNm)
 End Function
 
-Function HasPjf(Pjf$) As Boolean
-HasPjf = HasPjfzVbe(CurVbe, Pjf)
+Function HasPjf(Pjf) As Boolean
+HasPjf = HasPjfzV(CVbe, Pjf)
 End Function
 
-Function PjzPjfC(Pjf$) As VBProject
-Set PjzPjfC = PjzPjf(CurVbe, Pjf)
+Function PjzPjfC(Pjf) As VBProject
+Set PjzPjfC = PjzPjf(CVbe, Pjf)
 End Function
 
-Function MdDrszVbe(A As Vbe, Optional WhStr$) As Drs
-MdDrszVbe = Drs(MdTblFny, MdDryzVbe(A, WhStr))
+Function MdDrszV(A As Vbe, Optional WhStr$) As Drs
+MdDrszV = Drs(MdTblFny, MdDryzV(A, WhStr))
 End Function
 Function MdTblFny() As String()
 
 End Function
 
 Sub SavCurVbe()
-SavVbe CurVbe
+SavVbe CVbe
 End Sub

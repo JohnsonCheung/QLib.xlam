@@ -9,15 +9,15 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Implements IPred
 Private Const CMod$ = "PredzInT1Sy."
-Private A_T1Sy$()
-Friend Sub Init(T1Sy$())
-A_T1Sy = T1Sy
+Private A_T1Ay$()
+Friend Sub Init(T1Ay$())
+A_T1Ay = T1Ay
 End Sub
 
 Private Function IPred_Pred(V As Variant) As Boolean
-Dim I, Lin$, T1$
+Dim I, Lin, T1$
 Lin = V
-For Each I In A_T1Sy
+For Each I In A_T1Ay
     T1 = I
     If HasT1(Lin, T1) Then IPred_Pred = True: Exit Function
 Next

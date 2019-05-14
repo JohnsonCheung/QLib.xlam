@@ -19,5 +19,5 @@ Public Const DoczSfxSS = "Tag:NmRul. NmRul means variable or function name."
 Public Const DoczSpecDocTerm_VdtVerbss$ = "Tag:Definition.  P1.Opt: Each module may one DoczVdtVerbss.  P2.OneOccurance: "
 Public Const DoczNounVerbExtra$ = "Tag: FunNmRule.  Prp1.TakAndRetNoun: Fst Cml is Noun and Return Noun.  Prp2.OneCmlNoun: Noun should be 1 Cml.  " & _
 "Prp3.VdtVerb: Snd Cml should be approved/valid noun.  Prp4.OptExtra: Extra is optional."
-
+Public Const DoczNN$ = "It a Str or Sy will give Ny.  See TermAy"
 

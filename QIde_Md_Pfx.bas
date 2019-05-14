@@ -5,16 +5,17 @@ Private Const Asm$ = "QIde"
 Sub BrwMdPfx()
 BrwDic MdPfxCntDic
 End Sub
-Function MdPfxSyzPj(A As VBProject) As String()
-MdPfxSyzPj = MdPfxSy(MdNyzPj(A))
+
+Function MdPfxSyzP(P As VBProject) As String()
+MdPfxSyzP = MdPfxSy(MdNyzP(P))
 End Function
 
-Function MdPfxCntDiczPj(A As VBProject) As Dictionary
-Set MdPfxCntDiczPj = CntDic(QSrt1(MdPfxSyzPj(A)))
+Function MdPfxCntDiczP(P As VBProject) As Dictionary
+Set MdPfxCntDiczP = CntDic(QSrt1(MdPfxSyzP(P)))
 End Function
 
 Function MdPfxCntDic() As Dictionary
-Set MdPfxCntDic = MdPfxCntDiczPj(CurPj)
+Set MdPfxCntDic = MdPfxCntDiczP(CPj)
 End Function
 
 Function MdPfxSy(MdNy$()) As String()
@@ -24,6 +25,6 @@ For Each I In MdNy
     PushI MdPfxSy, MdPfx(N)
 Next
 End Function
-Function MdPfx$(MdNm$)
-MdPfx = FstCmlzWithSng(MdNm)
+Function MdPfx$(Mdn)
+'MdPfx = FstCmlzWithSng(Mdn)
 End Function

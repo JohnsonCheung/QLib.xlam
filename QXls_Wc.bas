@@ -39,7 +39,7 @@ With Lo.QueryTable
 End With
 End Sub
 
-Sub AddWczTT(ToWb As Workbook, FmFb$, TT$)
+Sub AddWczTT(ToWb As Workbook, FmFb, TT$)
 Dim T$, I
 For Each I In Ny(TT)
     T = I
@@ -52,7 +52,7 @@ Dim Fx$: Fx = TmpFx
 CrtFxzOupTbl Fx, SampFbzDutyDta
 OpnFx Fx
 End Sub
-Sub CrtFxzOupTbl(Fx$, Fb$, Optional AddgWay As EmAddgWay)
+Sub CrtFxzOupTbl(Fx, Fb, Optional AddgWay As EmAddgWay)
 SavAszAndCls NewWbzOupTbl(Fb, AddgWay), Fx
 End Sub
 

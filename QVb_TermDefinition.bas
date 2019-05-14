@@ -9,6 +9,6 @@ X "Cml Cml is a string contains only letter-and-digit, (no underscore)"
 X "Cml CmlSy is breaking Cml in Ay of (CmlFstTerm + N-CmlTerm) "
 X "Cml CmlTerm is One-UCase + N-(LCase-or-Digit)"
 X "Cml CmlFstTerm is CmlTerm or (Lcase + N-(LCase-or-Digit))"
-DefzCml = FmtSyT3(XX)
+DefzCml = FmtSy3Term(XX)
 Erase XX
 End Function

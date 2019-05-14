@@ -2,45 +2,45 @@ Attribute VB_Name = "QIde_Md_Emp"
 Option Explicit
 Private Const CMod$ = "MIde_Md_Emp."
 Private Const Asm$ = "QIde"
-Function IsEmpMd(A As CodeModule) As Boolean
-If A.CountOfLines = 0 Then IsEmpMd = True: Exit Function
+Function IsMdOfEmp(A As CodeModule) As Boolean
+If A.CountOfLines = 0 Then IsMdOfEmp = True: Exit Function
 Dim J&, L$
 For J = 1 To A.CountOfLines
     If Not IsEmpSrcLin(A.Lines(J, 1)) Then Exit Function
 Next
-IsEmpMd = True
+IsMdOfEmp = True
 End Function
 
 Sub RmvEmpMd()
 Dim N
 For Each N In Itr(EmpMdNy)
-    RmvCmp CurPj.VBComponents(N)
+    RmvCmp CPj.VBComponents(N)
 Next
 End Sub
 
 Property Get EmpMdNy() As String()
-EmpMdNy = EmpMdNyzPj(CurPj)
+EmpMdNy = EmpMdNyzP(CPj)
 End Property
 
-Function EmpMdNyzPj(A As VBProject) As String()
+Function EmpMdNyzP(P As VBProject) As String()
 Dim C As VBComponent
-For Each C In A.VBComponents
+For Each C In P.VBComponents
     If IsMd(C) Then
-        If IsEmpMd(C.CodeModule) Then
-            PushI EmpMdNyzPj, C.Name
+        If IsMdOfEmp(C.CodeModule) Then
+            PushI EmpMdNyzP, C.Name
         End If
     End If
 Next
 End Function
 
-Private Sub Z_IsEmpMd()
+Private Sub Z_IsMdOfEmp()
 Dim M As CodeModule
 'GoSub T1
 'GoSub T2
 GoSub T3
 Exit Sub
 T3:
-    Debug.Assert IsEmpMd(Md("Dic"))
+    Debug.Assert IsMdOfEmp(Md("Dic"))
     Return
 T2:
     Set M = Md("Module2")
@@ -49,16 +49,16 @@ T2:
 T1:
     '-----
     Dim T$, P As VBProject
-        Set P = CurPj
+        Set P = CPj
         T = TmpNm
     '---
 '    Set M = PjAdd_Md(P, T)
     Ept = True
     GoSub Tst
-    DltCmpzPjNm P, T
+    DltCmpzPjn P, T
     Return
 Tst:
-    Act = IsEmpMd(M)
+    Act = IsMdOfEmp(M)
     C
     Return
 End Sub
@@ -79,10 +79,10 @@ If L = "" Then Exit Function
 IsEmpSrcLin = False
 End Function
 
-Function EmpMdNyzVbe(A As Vbe) As String()
+Function EmpMdNyzV(A As Vbe) As String()
 Dim P As VBProject
 For Each P In A.VBProjects
-    PushIAy EmpMdNyzVbe, EmpMdNyzPj(P)
+    PushIAy EmpMdNyzV, EmpMdNyzP(P)
 Next
 End Function
 

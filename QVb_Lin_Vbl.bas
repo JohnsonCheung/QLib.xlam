@@ -3,17 +3,17 @@ Option Explicit
 Private Const CMod$ = "MVb_Lin_Vbl."
 Private Const Asm$ = "QVb"
 
-Function DryzTLinAy(TLinAy$()) As Variant()
+Function DryzTLiny(TLiny$()) As Variant()
 Dim I
-For Each I In Itr(TLinAy)
-    PushI DryzTLinAy, TermSy(I)
+For Each I In Itr(TLiny)
+    PushI DryzTLiny, TermAy(I)
 Next
 End Function
 
 Function DryzVblLy(A$()) As Variant()
 Dim I
 For Each I In Itr(A)
-    PushI DryzVblLy, AyTrim(SplitVBar(CStr(I)))
+    PushI DryzVblLy, AyTrim(SplitVBar(I))
 Next
 End Function
 
@@ -23,12 +23,12 @@ Push VblLy, "1 | 2 | 3"
 Push VblLy, "4 | 5 6 |"
 Push VblLy, "| 7 | 8 | 9 | 10 | 11 |"
 Push VblLy, "12"
-Ept = Array(SyzSsLin("1 2 3"), Sy("4", "5 6", ""), Sy("", "7", "8", "9", "10", "11", ""), Sy("12"))
+Ept = Array(SyzSS("1 2 3"), Sy("4", "5 6", ""), Sy("", "7", "8", "9", "10", "11", ""), Sy("12"))
 GoSub Tst
 Exit Sub
 Tst:
     Act = DryzVblLy(VblLy)
-    Ass IsEqDry(CvAy(Act), CvAy(Ept))
+'    Ass IsEqDry(CvAy(Act), CvAy(Ept))
     Return
 End Sub
 
@@ -41,7 +41,7 @@ Push VblLy, "|sdf"
 DmpDry DryzVblLy(VblLy)
 End Sub
 
-Private Sub Z()
+Private Sub ZZ()
 Z_DryzVblLy
 MVb_Lin_Vbl:
 End Sub

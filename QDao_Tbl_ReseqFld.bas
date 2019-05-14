@@ -3,11 +3,11 @@ Option Explicit
 Private Const CMod$ = "MDao_Tbl_ReseqFld."
 Private Const Asm$ = "QDao"
 
-Sub ReSeqFldzSpec(A As Database, T$, ReSeqSpec$)
+Sub ReSeqFldzSpec(A As Database, T, ReSeqSpec$)
 ReSeqFldzFny A, T, FnyzReseqSpec(ReSeqSpec)
 End Sub
 
-Private Sub ZZ_FnyzReseqSpec()
+Private Sub Y_FnyzReseqSpec()
 BrwAy FnyzReseqSpec("*Flg RecTy Amt *Key *Uom MovTy Qty BchRateUX RateTy *Bch *Las *GL |" & _
 " *Flg IsAlert IsWithSku |" & _
 " *Key Sku PstMth PstDte |" & _
@@ -25,10 +25,10 @@ Dim D As Dictionary
     L1 = Shf(Ay)
     Set D = Dic(Ay)
 Dim L1Itm$, I, O$()
-For Each I In SyzSsLin(L1)
+For Each I In SyzSS(L1)
     L1Itm = I
     If FstChr(L1Itm) = "*" Then
-        PushIAy O, SyzSsLin(D(L1Itm))
+        PushIAy O, SyzSS(D(L1Itm))
     Else
         PushI O, L1Itm
     End If
@@ -36,26 +36,17 @@ Next
 FnyzReseqSpec = O
 End Function
 
-Sub ReSeqFldzFny(A As Database, T$, ByFny$())
+Sub ReSeqFldzFny(A As Database, T, ByFny$())
 Dim F, J%
-For Each F In AyReSeq(Fny(A, T), ByFny)
+For Each F In ReSeqAy(Fny(A, T), ByFny)
     J = J + 1
     A.TableDefs(T).Fields(F).OrdinalPosition = J
 Next
 End Sub
 
-Function RmvFstNEle(Ay, Optional FstNEle& = 1)
-Dim O: O = Ay: Erase O
-Dim J&
-For J = FstNEle To UB(Ay)
-    Push O, Ay(J)
-Next
-RmvFstNEle = O
-End Function
-
-Function AyReSeq(Ay, ByAy)
+Function ReSeqAy(Ay, ByAy)
 Dim O
-O = AyIntersect(ByAy, Ay)
-AyReSeq = MinusAy(Ay, O)
+O = IntersectAy(ByAy, Ay)
+ReSeqAy = MinusAy(Ay, O)
 End Function
 

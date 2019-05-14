@@ -2,7 +2,7 @@ Attribute VB_Name = "QVb_Ay_Map_Transform"
 Option Explicit
 Private Const CMod$ = "MVb_Ay_Map_Transform."
 Private Const Asm$ = "QVb"
-Public Const DoczTLin$ = "Is a line with Terms separated by spc."
+Public Const DoczTLin = "Is a line with Terms separated by spc."
 Function AyIncEle1(Ay)
 AyIncEle1 = AyIncEleN(Ay, 1)
 End Function
@@ -16,12 +16,12 @@ Next
 AyIncEleN = O
 End Function
 
-Function TermAsetzTLinAy(TLinAy$()) As Aset
-Dim I, O$(), TLin$
-For Each I In Itr(TLinAy)
+Function TermAsetzTLiny(TLiny$()) As Aset
+Dim I, O$(), TLin
+For Each I In Itr(TLiny)
     TLin = I
-    PushIAy O, TermSy(TLin)
+    PushIAy O, TermAy(TLin)
 Next
-Set TermAsetzTLinAy = AsetzAy(O)
+Set TermAsetzTLiny = AsetzAy(O)
 End Function
 

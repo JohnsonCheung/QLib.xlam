@@ -3,7 +3,7 @@ Option Explicit
 Private Const CMod$ = "MIde_Mth_Fb_Gen."
 Private Const Asm$ = "QIde"
 
-Sub CrtDistMth()
+Sub CrtTblMth()
 Dim W As Database
 'WDrp "DistMth #A #B"
 Q = "Select Distinct Nm,Count(*) as LinesIdCnt Into DistMth from DistLines group by Nm": W.Execute Q
@@ -31,7 +31,4 @@ End Sub
 
 Private Sub ZZ()
 UpdMthLoc
-End Sub
-
-Private Sub Z()
 End Sub

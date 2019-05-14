@@ -44,7 +44,7 @@ End Property
 Property Get ToStr$()
 If IsEmp Then ToStr = "WhMth(#Emp)": Exit Function
 Dim O$()
-PushIAy O, AddPfxzSy(X_ShtMdy, "-")
-PushIAy O, AddPfxzSy(X_ShtTy, "-")
+PushIAy O, AddPfxzAy(X_ShtMdy, "-")
+PushIAy O, AddPfxzAy(X_ShtTy, "-")
 ToStr = JnSpc(AyeEmpEle(O))
 End Property

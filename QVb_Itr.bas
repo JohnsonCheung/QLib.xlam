@@ -92,7 +92,7 @@ For Each O In Itr
 Next
 Set FstItmzNm = Nothing
 End Function
-Function FstItmPEv(Itr, P$, Ev) 'Return first element in Itr-Itr with its Prp-P eq to V
+Function FstItmPEv(Itr, P As PrpPth, Ev) 'Return first element in Itr-Itr with its Prp-P eq to V
 Dim I, Obj As Object
 For Each I In Itr
     If Prp(CvObj(I), P) = Ev Then Set FstItmPEv = I: Exit Function
@@ -100,19 +100,14 @@ Next
 Set FstItmPEv = Nothing
 End Function
 Function FstItn(Itr, Nm$) 'Return first element in Itr with its PrpNm=Nm being true
-Set FstItn = FstItmPEv(Itr, "Name", Nm)
+Set FstItn = FstItmPEv(Itr, PrpPth("Name"), Nm)
 End Function
 
-Function FstItmTrueP(Itr, TruePrpPth$) 'Return first element in Itr with its Prp-P being true
+Function FstItmTrueP(Itr, TruePrpPth As PrpPth) 'Return first element in Itr with its Prp-P being true
 Set FstItmTrueP = FstItmPEv(Itr, TruePrpPth, True)
 End Function
-Function HasItrTrueP(Itr, TruePrpPth$) As Boolean
-Dim Obj
-For Each Obj In Itr
-    If Prp(CvObj(Obj), TruePrpPth) Then HasItrTrueP = True: Exit Function
-Next
-End Function
-Function HasItn(Itr, Nm$) As Boolean
+
+Function HasItn(Itr, Nm) As Boolean
 Dim O
 For Each O In Itr
     If O.Name = Nm Then HasItn = True: Exit Function
@@ -129,7 +124,7 @@ End Function
 Function HasItrTruePrp(Itr, P$) As Boolean
 Dim I
 For Each I In Itr
-    If Prp(CvObj(I), P) Then HasItrTruePrp = True: Exit Function
+    If Prp(CvObj(I), PrpPth(P)) Then HasItrTruePrp = True: Exit Function
 Next
 End Function
 
@@ -156,12 +151,8 @@ IntozItrMap = O
 End Function
 
 Private Sub Z_PrpVy()
-Vc PrpVy(CurPj.VBComponents, PrpPth("CodeModule.CountOfLines"))
+Vc PrpVy(CPj.VBComponents, PrpPth("CodeModule.CountOfLines"))
 End Sub
-
-Function PrpPth(P$) As PrpPth
-PrpPth.P = P
-End Function
 
 Function PrpVy(Itr, P As PrpPth) As Variant()
 Dim O As Object
@@ -172,7 +163,7 @@ End Function
 Function MaxzItrPrp(Itr, P$)
 Dim I, O
 For Each I In Itr
-    O = Max(O, Prp(CvObj(I), P))
+    O = Max(O, Prp(CvObj(I), PrpPth(P)))
 Next
 MaxzItrPrp = O
 End Function
@@ -183,7 +174,7 @@ End Function
 Function ItnPEv(Itr, WhPrp$, Ev) As String()
 Dim Obj As Object
 For Each Obj In Itr
-    If Prp(Obj, WhPrp) = Ev Then PushI ItnPEv, ObjNm(Obj)
+    If Prp(Obj, PrpPth(WhPrp)) = Ev Then PushI ItnPEv, ObjNm(Obj)
 Next
 End Function
 Function NyzOy(Oy) As String()
@@ -192,7 +183,7 @@ End Function
 Function PvyzItr(Itr, P$) As Variant()
 Dim Obj As Object
 For Each Obj In Itr
-    Push PvyzItr, Prp(Obj, P)
+    Push PvyzItr, Prp(Obj, PrpPth(P))
 Next
 End Function
 Function Itn(Itr) As String()
@@ -250,7 +241,7 @@ Function IntozItrwPEv(Into, Itr, P$, Ev)
 IntozItrwPEv = Resi(Into)
 Dim Obj As Object
 For Each Obj In Itr
-    If Prp(Obj, P) = Ev Then PushObj IntozItrwPEv, Obj
+    If Prp(Obj, PrpPth(P)) = Ev Then PushObj IntozItrwPEv, Obj
 Next
 End Function
 Function Into(OInto, Itr)
@@ -264,7 +255,7 @@ Function IntozItrPrp(Into, Itr, P$)
 IntozItrPrp = Resi(Into)
 Dim Obj As Object
 For Each Obj In Itr
-    Push IntozItrPrp, Prp(Obj, P)
+    Push IntozItrPrp, Prp(Obj, PrpPth(P))
 Next
 End Function
 
@@ -276,7 +267,7 @@ Function ItrwPrpEqval(Itr, P$, EqVal)
 ItrwPrpEqval = ItrClnAy(Itr)
 Dim O As Object
 For Each O In Itr
-    If Prp(O, P) = EqVal Then PushObj ItrwPrpEqval, O
+    If Prp(O, PrpPth(P)) = EqVal Then PushObj ItrwPrpEqval, O
 Next
 ItrwPrpEqval = O
 End Function
@@ -285,7 +276,7 @@ Function ItrwPrpTrue(Itr, P$)
 ItrwPrpTrue = ItrClnAy(Itr)
 Dim O As Object
 For Each O In Itr
-    If Prp(O, P) Then
+    If Prp(O, PrpPth(P)) Then
         Push ItrwPrpTrue, O
     End If
 Next
@@ -316,24 +307,19 @@ DoItrFunXP Itr, B, Itr
 FstItm Itr
 FstItm Itr
 Itn Itr
-IsAllFalsezItrPred Itr, B
-IsAllTruezItrPred Itr, B
-IsSomFalsezItrPred Itr, B
 End Sub
 
-Private Sub Z()
-End Sub
-Function NItrPEv&(Itr, P$, Ev)
+Function NItrPEv&(Itr, P As PrpPth, Ev)
 Dim O&, Obj As Object
 For Each Obj In Itr
     If Prp(Obj, P) = Ev Then O = O + 1
 Next
 NItrPEv = O
 End Function
-Function VyzItrPrp(Itr, P$) As String()
+Function VyzItrp(Itr, P As PrpPth) As String()
 Dim Obj As Object
 For Each Obj In Itr
-    Push VyzItrPrp, Prp(Obj, P)
+    Push VyzItrp, Prp(Obj, P)
 Next
 End Function
 

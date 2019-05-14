@@ -3,49 +3,35 @@ Option Explicit
 Private Const CMod$ = "MIde_Pj_Cur."
 Private Const Asm$ = "QIde"
 
-Property Get CurPj() As VBProject
-Set CurPj = CurVbe.ActiveVBProject
+Property Get CPj() As VBProject
+Set CPj = CVbe.ActiveVBProject
 End Property
 
-Function EnsMd(MdNm$) As CodeModule
-Set EnsMd = EnsMdzPj(CurPj, MdNm)
-End Function
 
-Function EnsModzPj(A As VBProject, ModNm$) As CodeModule
-If Not HasMd(A, ModNm) Then AddModzPj A, ModNm
-Set EnsModzPj = MdzPj(A, ModNm)
-End Function
-
-Function HasMd(A As VBProject, MdNm) As Boolean
+Function HasMd(P As VBProject, Mdn) As Boolean
 Dim C As VBComponent
-For Each C In A.VBComponents
-    If C.Name = MdNm Then HasMd = True: Exit Function
+For Each C In P.VBComponents
+    If C.Name = Mdn Then HasMd = True: Exit Function
 Next
 End Function
 
-Sub ThwIfNotMod(A As CodeModule, Fun$)
-If Not IsMod(A) Then Thw Fun, "Should be a Mod", "MdNm MdTy", MdNm(A), ShtCmpTy(CmpTyzMd(A))
+Sub ThwIf_NotMod(A As CodeModule, Fun$)
+If Not IsMod(A) Then Thw Fun, "Should be a Mod", "Mdn MdTy", Mdn(A), ShtCmpTy(CmpTyzM(A))
 End Sub
 
-Function HasMod(A As VBProject, ModNm) As Boolean
-If Not HasMd(A, ModNm) Then Exit Function
-ThwIfNotMod MdzPj(A, ModNm), CSub
+Function HasMod(P As VBProject, Modn) As Boolean
+If Not HasMd(P, Modn) Then Exit Function
+ThwIf_NotMod MdzPN(P, Modn), CSub
 End Function
-Function PjNyzXls(A As Excel.Application) As String()
-PjNyzXls = PjNyzVbe(A.Vbe)
+Function PjNyzX(X As Excel.Application) As String()
+PjNyzX = PjNyzV(X.Vbe)
 End Function
-Function PjNyzVbe(A As Vbe) As String()
-PjNyzVbe = Itn(A.VBProjects)
-End Function
-Property Get PjNy() As String()
-PjNy = PjNyzXls(Xls)
+Property Get PjNyX() As String()
+PjNyX = PjNyzX(Xls)
 End Property
-Property Get PjNm$()
-PjNm = CurPj.Name
+Property Get Pjn$()
+Pjn = CPj.Name
 End Property
-Function PthPj$()
-PthPj = PjPth(CurPj)
-End Function
-Sub BrwPjPth()
-BrwPth PthPj
+Sub BrwPjp()
+BrwPth PjpP
 End Sub

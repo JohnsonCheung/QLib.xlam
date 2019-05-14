@@ -20,12 +20,12 @@ UsrPjRfLy = XX
 Erase XX
 End Property
 
-Property Get PjNmToStdRfNNDic() As Dictionary
+Property Get PjnToStdRfNNDic() As Dictionary
 Static O As Dictionary
-If IsNothing(O) Then Set O = Dic(PjNmToStdRfNNLy)
-Set PjNmToStdRfNNDic = O
+If IsNothing(O) Then Set O = Dic(PjnToStdRfNNLy)
+Set PjnToStdRfNNDic = O
 End Property
-Private Property Get PjNmToStdRfNNLy() As String()
+Private Property Get PjnToStdRfNNLy() As String()
 Erase XX
 X "MVb   Scripting VBScript_RegExp_55 DAO VBIDE Office"
 X "MIde  Scripting VBIDE Excel"
@@ -39,7 +39,7 @@ X "MTp   Scripting"
 X "MSql  Scripting"
 X "AStkShpCst Scripting"
 X "MAcs  Scripting Office Access"
-PjNmToStdRfNNLy = XX
+PjnToStdRfNNLy = XX
 Erase XX
 End Property
 
@@ -65,14 +65,14 @@ Private Sub Z_FAny_DPD_ORD()
 GoSub T1
 Exit Sub
 T1:
-    Ept = SyzSsLin("MVb MXls MAdo MAdoX MApp MDta MTp MSql MDao MAcs MIde AStkShpCst")
+    Ept = SyzSS("MVb MXls MAdo MAdoX MApp MDta MTp MSql MDao MAcs MIde AStkShpCst")
     GoTo Tst
 Tst:
 '    Act = FAny_DPD_ORD
     C
     Return
 ZZ:
-    ClrWinzImm
+    ClrWinOfImm
     D "Rel --------------------"
     D UsrPjRfLy
     D "Itms-DPD-ORD --------------------"
@@ -83,16 +83,14 @@ End Sub
 Private Sub ZZ()
 End Sub
 
-Private Sub Z()
-End Sub
 Sub BrwRf()
-Brw FmtSyT4(RfSrczPj(CurPj))
+Brw FmtSyT4(RfSrczSrcp(SrcpP))
 End Sub
 Sub DmpRf()
-DmpRfzPj CurPj
+DmpRfzP CPj
 End Sub
-Sub DmpRfzPj(A As VBProject)
-D FmtSyT4(RfSrczPj(A))
+Sub DmpRfzP(P As VBProject)
+D FmtSyT4(RfSrc(P))
 End Sub
 
 Private Function GuidLinRfNm$(RfNm)
@@ -102,20 +100,20 @@ If D.Exists(RfNm) Then GuidLinRfNm = D(RfNm): Exit Function
 Thw CSub, "Given RfNm cannot find the STD GUID Dic", "RfNm RfDfn_STD", RfNm, FmtDic(D)
 End Function
 
-Private Function GuidLinAyPjNm(PjNm$) As String()
+Private Function GuidLinyPjn(Pjn$) As String()
 Dim RfNm
-For Each RfNm In Itr(StdRfNyPj(PjNm))
-    PushI GuidLinAyPjNm, RfNm & " " & GuidLinRfNm(RfNm)
+For Each RfNm In Itr(StdRfNyPj(Pjn))
+    PushI GuidLinyPjn, RfNm & " " & GuidLinRfNm(RfNm)
 Next
 End Function
 
-Private Function StdRfNyPj(PjNm$) As String()
+Private Function StdRfNyPj(Pjn$) As String()
 Dim D As Dictionary
-Set D = PjNmToStdRfNNDic
-If Not D.Exists(PjNm) Then
-    Thw CSub, "Given Pj not found in RfDfn_STD", "Pj RfDfn_STD", PjNm, FmtDic(PjNmToStdRfNNDic)
+Set D = PjnToStdRfNNDic
+If Not D.Exists(Pjn) Then
+    Thw CSub, "Given Pj not found in RfDfn_STD", "Pj RfDfn_STD", Pjn, FmtDic(PjnToStdRfNNDic)
 End If
-StdRfNyPj = SyzSsLin(D(PjNm))
+StdRfNyPj = SyzSS(D(Pjn))
 End Function
 
 

@@ -3,5 +3,5 @@ Option Explicit
 Private Const CMod$ = "MIde_Pj_Backup."
 Private Const Asm$ = "QIde"
 Sub BackupPj()
-BackupFfn Pjf(CurPj)
+BackupFfn Pjf(CPj)
 End Sub

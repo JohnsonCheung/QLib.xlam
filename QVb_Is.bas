@@ -21,8 +21,7 @@ Function IsNBet(V, A, B) As Boolean
 IsNBet = Not IsBet(V, A, B)
 End Function
 
-
-Function IsSqBktQuoted(S$) As Boolean
+Function IsSqBktQuoted(S) As Boolean
 IsSqBktQuoted = IsQuoted(S, "[", "]")
 End Function
 

@@ -30,20 +30,20 @@ O.Ay(0) = A
 O.Ay(1) = B
 AddS1S2 = O
 End Function
-Private Property Get ZZS1S2s1() As S1S2s
+Private Function Y_S1S2s() As S1S2s
 Dim O As S1S2s
 PushS1S2 O, S1S2("sldjflsdkjf", "lksdjf")
 PushS1S2 O, S1S2("sldjflsdkjf", "lksdjf")
 PushS1S2 O, S1S2("sldjf", "lksdjf")
 PushS1S2 O, S1S2("sldjdkjf", "lksdjf")
-ZZS1S2s1 = O
-End Property
+Y_S1S2s = O
+End Function
 Function S1S2szU(U&) As S1S2s
 S1S2szU.N = U + 1
 ReDim S1S2szU.Ay(U)
 End Function
 Function S1S2szAyab(A, B, Optional NoTrim As Boolean) As S1S2s
-ThwIfDifSi A, B, CSub
+ThwIf_DifSi A, B, CSub
 Dim U&, O As S1S2s
 U = UB(A)
 O = S1S2szU(U)
@@ -152,7 +152,7 @@ End Function
 Function S1S2szColonVbl(ColonVbl$) As S1S2s
 Dim I
 For Each I In SplitVBar(ColonVbl)
-    PushS1S2 S1S2szColonVbl, BrkBoth(CStr(I), ":")
+    PushS1S2 S1S2szColonVbl, BrkBoth(I, ":")
 Next
 End Function
 
@@ -175,7 +175,7 @@ Stop
 End Sub
 
 
-Private Sub Z()
+Private Sub ZZ()
 Z_S1S2szDic
 MVb__S1S2:
 End Sub

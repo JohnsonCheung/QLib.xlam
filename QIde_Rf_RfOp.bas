@@ -1,60 +1,60 @@
 Attribute VB_Name = "QIde_Rf_RfOp"
-Sub AddRfzRff(A As VBProject, Frfee$)
+Private Const CMod$ = "QIde_Rf_RfOp."
+Sub AddRfzRff(P As VBProject, Frfee$)
 Const CSub$ = CMod & "AddRf"
-If HasFrfee(A, Frfee) Then
-    InfLin CSub, "Frfee exists in Pj", "Frfee Pj", Frfee, A.Name
+If HasFrfee(P, Frfee) Then
+    InfLin CSub, "Frfee exists in Pj", "Frfee Pj", Frfee, P.Name
     Exit Sub
 End If
-A.References.AddFromFile Frfee
-InfLin CSub, "Frfee is added to Pj", "Frfee Pj", Frfee, A.Name
+P.References.AddFromFile Frfee
+InfLin CSub, "Frfee is added to Pj", "Frfee Pj", Frfee, P.Name
 End Sub
 
-Sub AddRfzSrc(A As VBProject, RfSrc$())
+Sub AddRfzSrc(P As VBProject, RfSrc$())
 Dim I
 For Each I In Itr(RfSrc)
-    AddRf A, RfLin(CStr(I))
+    AddRf P, RfLin(CStr(I))
 Next
 End Sub
 
-Sub AddRf(A As VBProject, B As RfLin)
+Sub AddRf(P As VBProject, B As RfLin)
 Dim F$: F = FrfeezRfLin(B)
-If HasFrfee(A, F) Then Exit Sub
-A.References.AddFromFile F
+If HasFrfee(P, F) Then Exit Sub
+P.References.AddFromFile F
 End Sub
 
 
 
-Sub AddRfzAy(A As VBProject, RffAy$())
+Sub AddRfzAy(P As VBProject, RffAy$())
 Dim F
 For Each F In RffAy
-    If Not HasFrfee(A, F) Then
-        A.References.AddFromFile F
+    If Not HasFrfee(P, F) Then
+        P.References.AddFromFile F
     End If
 Next
 End Sub
-Sub CpyPjRfToPj(Pj As VBProject, ToPj As VBProject)
-AddRfzAy ToPj, RffAyPj(Pj)
+Sub CpyPjRfToPj(P As VBProject, ToPj As VBProject)
+AddRfzAy ToPj, RffyzP(P)
 End Sub
+Sub RmvRf(P As VBProject, Rfn)
 
-
-
-
-Sub RmvPjRfNN(A As VBProject, RfNN$)
+End Sub
+Sub RmvRfzPRr(P As VBProject, RfNN$)
 Dim N
 For Each N In Ny(RfNN)
-    'RmvPjRf A, N
+    RmvRf P, N
 Next
-SavPj A
+SavPj P
 End Sub
 
-Sub AddPjStdRf(A As VBProject, StdRfNm)
+Sub AddPjStdRf(P As VBProject, StdRfNm)
 Const CSub$ = CMod & "AddPjStdRf"
-If HasRfNm(A, StdRfNm) Then
-    Debug.Print FmtQQ("AddPjStdRf: Pj(?) already has StdRfNm(?)", A.Name, StdRfNm)
+'If HasRfNm(P, StdRfNm) Then
+    Debug.Print FmtQQ("AddPjStdRf: Pj(?) already has StdRfNm(?)", P.Name, StdRfNm)
     Exit Sub
-End If
-Dim Frfee$: Frfee = StdRff(StdRfNm)
-ThwNotExistFfn Frfee, CSub, "StdRfFil"
-A.References.AddFromFile Frfee
+'End If
+Dim Frfee$: 'Frfee = StdRff(StdRfNm)
+'ThwNotExistFfn Frfee, CSub, "StdRfFil"
+P.References.AddFromFile Frfee
 End Sub
 

@@ -32,12 +32,12 @@ End Sub
 Private Sub ShwEntzHom(Hom$)
 ShwEnt Hom, 1
 End Sub
-Private Sub ShwEnt(Pth$, Cno%)
-Dim FnSy$(), FdrSy$()
-AsgEnt FdrSy, FnSy, Pth
-ShwEntzPut Cno, FdrSy, FnSy
+Private Sub ShwEnt(Pth, Cno%)
+Dim FnAy$(), FdrAy$()
+AsgEnt FdrAy, FnAy, Pth
+ShwEntzPut Cno, FdrAy, FnAy
 End Sub
-Private Sub ShwEntzPut(Cno%, FdrSy$(), FnSy$())
+Private Sub ShwEntzPut(Cno%, FdrAy$(), FnAy$())
 
 End Sub
 Private Sub ShwFstHomFdr(Hom$)
@@ -54,18 +54,18 @@ End Sub
 
 Private Sub ShwCurEnt(Cur As Range)
 ClrCurCol Cur
-Dim SubPthSy$(), FnSy$()
-AsgEnt SubPthSy, FnSy, PthzCur(Cur)
-PutCurEnt Cur, SubPthSy, FnSy
-MgeCurSubPthCol Si(SubPthSy)
-MgeCurFnCol Si(SubPthSy), Si(FnSy)
+Dim SubPthy$(), FnAy$()
+AsgEnt SubPthy, FnAy, PthzCur(Cur)
+PutCurEnt Cur, SubPthy, FnAy
+MgeCurSubPthCol Si(SubPthy)
+MgeCurFnCol Si(SubPthy), Si(FnAy)
 End Sub
 
 Private Function PthzCur$(Cur As Range)
 PthzCur = EnsPthSfx(A1zRg(Cur).Value)
 End Function
-Private Sub PutCurEnt(Cur As Range, SubPthSy$(), FnSy$())
-EntRg(Cur, Si(SubPthSy) + Si(FnSy)).Value = SqzAyV(AddAy(SubPthSy, FnSy))
+Private Sub PutCurEnt(Cur As Range, SubPthy$(), FnAy$())
+EntRg(Cur, Si(SubPthy) + Si(FnAy)).Value = Sqv(AddAy(SubPthy, FnAy))
 End Sub
 Private Function EntRg(Cur As Range, EntCnt%) As Range
 Dim Ws As Worksheet: Set Ws = WszRg(Cur)

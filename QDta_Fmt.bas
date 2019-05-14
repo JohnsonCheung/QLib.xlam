@@ -14,18 +14,18 @@ Function FmtDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColnn$, Optiona
 'If BrkColNm changed, insert a break line if BrkColNm is given
 Dim Drs As Drs
     Drs = DrsAddIxCol(A, HidIxCol)
-Dim BrkColIxAy&()
-    BrkColIxAy = IxAy(A.Fny, TermSy(BrkColnn))
+Dim BrkColIxy&()
+    BrkColIxy = Ixy(A.Fny, TermAy(BrkColnn))
 Dim Dry()
     Dry = Drs.Dry
     PushI Dry, Drs.Fny
 
 Dim Ay$()
-    Ay = FmtDry(Dry, MaxColWdt, BrkColIxAy, ShwZer) '<== Will insert break line if BrkColIx>=0
+    Ay = FmtDry(Dry, MaxColWdt, BrkColIxy, ShwZer) '<== Will insert break line if BrkColIx>=0
 
 Dim U&: U = UB(Ay)
 Dim Hdr$: Hdr = Ay(U - 1)
-Dim Lin$: Lin = Ay(U)
+Dim Lin: Lin = Ay(U)
 FmtDrs = AyeLasNEle(AddAy(Sy(Lin, Hdr), Ay), 2)
 PushI FmtDrs, Lin
 End Function
@@ -63,17 +63,6 @@ Tst:
 End Sub
 
 Private Sub ZZ()
-Dim A As Drs
-Dim B%
-Dim C$
-Dim D As Boolean
-Dim E As Ds
-Dim F As Dt
-FmtDrs A, B, C, D, D
-FmtDt F, B, C, D, D
-End Sub
-
-Private Sub Z()
 Z_FmtDrs
 'Z_FmtDt
 End Sub
