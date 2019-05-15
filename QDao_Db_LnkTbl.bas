@@ -2,7 +2,7 @@ Attribute VB_Name = "QDao_Db_LnkTbl"
 Option Explicit
 Private Const CMod$ = "BLnkTbl."
 Type LnkTblPm: T As String: S As String: Cn As String: End Type
-Type LnkTblPms: N As Integer: Ay() As LnkTblPm: End Type
+Type LnkTblPms: N As Long: Ay() As LnkTblPm: End Type
 Function TnyzL(A As LnkTblPms) As String()
 Dim J&
 For J = 0 To A.N - 1

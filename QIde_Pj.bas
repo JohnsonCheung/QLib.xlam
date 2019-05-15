@@ -8,7 +8,7 @@ Set CvPj = I
 End Function
 
 Function IsPjn(A) As Boolean
-IsPjn = HasEle(PjNyInVbe, A)
+IsPjn = HasEle(PjnyV, A)
 End Function
 
 Function Pj(Pjn) As VBProject
@@ -143,7 +143,7 @@ End Sub
 Function FstMd(P As VBProject) As CodeModule
 Dim Cmp As VBComponent
 For Each Cmp In P.VBComponents
-    If IsMd(CvCmp(Cmp)) Then
+    If IsCmpzMd(CvCmp(Cmp)) Then
         Set FstMd = Cmp.CodeModule
         Exit Function
     End If

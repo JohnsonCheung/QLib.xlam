@@ -139,8 +139,8 @@ Function NColzT&(A As Database, T)
 NColzT = A.TableDefs(T).Fields.Count
 End Function
 
-Function NReczDbtBexpr&(A As Database, T, Bexpr$)
-NReczDbtBexpr = ValzQ(A, FmtQQ("Select Count(*) from [?]?", T, SqpWh(Bexpr)))
+Function NReczTBexpr&(A As Database, T, Bexpr$)
+NReczTBexpr = ValzQ(A, SqlSelCnt_T_OB(T, Bexpr))
 End Function
 
 Function PkFnyzTd(A As Dao.TableDef) As String()
@@ -212,11 +212,11 @@ Dim Sk$()
 Dim R$
     Dim I
     Dim Rst$()
-    Rst = RplStarzSy(CvSy(MinusAy(F, Sk)), T)
+    Rst = RplStarzAy(MinusAy(F, Sk), T)
     R = " " & JnSpc(QuoteSqzAyIf(Rst))
 
 Dim S$
-    S = JnSpc(QuoteSqzAyIf(RplStarzSy(Sk, T)))
+    S = JnSpc(QuoteSqzAyIf(RplStarzAy(Sk, T)))
     If S <> "" Then S = " " & S & " |"
 
 StruzT = T & P & S & R
@@ -451,7 +451,7 @@ Sub CrtTblzJnFld(A As Database, T, KK$, JnFld$, Optional Sep$ = " ")
 Dim Tar$, LisFld$
     Tar = T & "_Jn_" & JnFld
     LisFld = JnFld & "_Jn"
-RunQ A, SqlSel_Fny_Into_T(Ny(KK), Tar, T)
+RunQ A, SqlSel_Fny_Into_T_OB(Ny(KK), Tar, T)
 AddFld A, T, LisFld, dbMemo
 Dim KKIdx&(), JnFldIx&
     KKIdx = Ixy(Fny(A, T), Ny(KK))
@@ -471,7 +471,7 @@ Next
 IxzTF = -1
 End Function
 Sub CrtPk(A As Database, T)
-A.Execute SqlCrtPkzT(T)
+A.Execute SqlCrtPk_T(T)
 End Sub
 
 Function JnQSqCommaSpcAp$(ParamArray Ap())
@@ -532,7 +532,7 @@ A.TableDefs(T).Fields.Append Fd(F, Ty, Expr:=Expr)
 End Sub
 
 Function ValzTFRecId(A As Database, T, F$, RecId&) ' K is Pk value
-ValzTFRecId = ValzQ(A, SqlSel_FF_T(F, T, BexprRecId(T, RecId)))
+'ValzTFRecId = ValzQ(A, SqlSel_FF_T(F, T, BexprRecId(T, RecId)))
 End Function
 
 Sub CrtTblzCloneEmp(A As Database, T, FmTbl$)
@@ -600,7 +600,7 @@ ValzCnq = ValzArs(A.Execute(Q))
 End Function
 
 Function NReczFxw&(Fx, Wsn, Optional Bexpr$)
-NReczFxw = ValzCnq(CnzFx(Fx), SqlSelCnt_T(CatTn(Wsn), Bexpr))
+NReczFxw = ValzCnq(CnzFx(Fx), SqlSelCnt_T_OB(CatTn(Wsn), Bexpr))
 End Function
 Function NReczT&(A As Database, T, Optional Bexpr$)
 NReczT = ValzQ(A, SqlSelCnt_T_OB(T, Bexpr))

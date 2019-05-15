@@ -2,8 +2,8 @@ Attribute VB_Name = "QApp_App_Rpt"
 Option Explicit
 Private Const CMod$ = "BRpt."
 Type CpyOneWsPm: InpWsn As String: AsWsn As String: InpColNy() As String: AsFny() As String: End Type
-Type CpyOneWbPm: InpFx As String: N As Integer: Ay() As CpyOneWsPm: End Type
-Type CpyInpWsPm: N As Integer: Ay() As CpyOneWbPm: End Type
+Type CpyOneWbPm: InpFx As String: N As Long: Ay() As CpyOneWsPm: End Type
+Type CpyInpWsPm: N As Long: Ay() As CpyOneWbPm: End Type
 Type RptPm
     Apn As String
     InpFilSrc() As String

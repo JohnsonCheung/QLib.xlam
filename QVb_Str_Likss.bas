@@ -3,13 +3,13 @@ Option Explicit
 Private Const CMod$ = "MVb_Str_Likss."
 Private Const Asm$ = "QVb"
 Function StrLikss(A, Likss) As Boolean
-StrLikss = StrLikSy(A, SyzSS(Likss))
+StrLikss = StrLikAy(A, SyzSS(Likss))
 End Function
 
-Function StrLikSy(A, LikeAy$()) As Boolean
+Function StrLikAy(A, LikAy$()) As Boolean
 Dim I
-For Each I In Itr(LikeAy)
-    If A Like I Then StrLikSy = True: Exit Function
+For Each I In Itr(LikAy)
+    If A Like I Then StrLikAy = True: Exit Function
 Next
 End Function
 

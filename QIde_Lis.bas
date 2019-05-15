@@ -2,28 +2,25 @@ Attribute VB_Name = "QIde_Lis"
 Option Explicit
 Private Const CMod$ = "MIde_Lis."
 Private Const Asm$ = "QIde"
-Function MdzPjLisDt(P As VBProject, Optional B As WhMd) As Dt
-Stop '
-End Function
 
-Sub MdzPjLisBrwDt(P As VBProject, Optional B As WhMd)
+Sub MdzPjLisBrwDt(P As VBProject)
 BrwDt MdzPjLisDt(P, B)
 End Sub
 
-Sub MdzPjLisDmpDt(P As VBProject, Optional B As WhMd)
+Sub MdzPjLisDmpDt(P As VBProject)
 DmpDt MdzPjLisDt(P, B)
 End Sub
 
-Sub LisMd(Optional Patn$, Optional Exl$)
+Sub LIsCmpzMd(Optional Patn$, Optional Exl$)
 Dim A$()
 '    A = CmpNyPj(CPj, WhMd("Std", WhNm(Patn, Exl)))
-    A = AySrt(A)
+    A = SrtAy(A)
     A = AddPfxzAy(A, "ShwMbr """)
 D A
 End Sub
 Sub LisPj()
 Dim A$()
-    A = PjNyzV(CVbe)
+    A = PjnyzV(CVbe)
     D AddPfxzAy(A, "ShwPj """)
 D A
 End Sub
@@ -31,8 +28,8 @@ End Sub
 Sub LisStopLin()
 
 End Sub
-Sub LisMth(Optional WhStr$)
-Dim Ay$(): Ay = MthQNyzV(CVbe, WhStr)
+Sub LisMth()
+Dim Ay$(): Ay = QMthnyzV(CVbe)
 Debug.Print "Fst 30 of " & Si(Ay) & " methods"
 D AywFstNEle(Ay, 30)
 End Sub
@@ -54,11 +51,11 @@ WhStrzSfx = WhStrzMthPatn(MthSfx & "$", PubOnly)
 End Function
 
 Sub LisMthPfx(Pfx$, Optional PubOnly As Boolean)
-D MthQNyV(WhStrzPfx(Pfx, PubOnly))
+D QMthnyV(WhStrzPfx(Pfx, PubOnly))
 End Sub
 
 Sub LisMthSfx(Sfx$, Optional PubOnly As Boolean)
-D MthQNyV(WhMthzSfx(Sfx, PubOnly))
+D QMthnyV(WhMthzSfx(Sfx, PubOnly))
 End Sub
 
 Sub LisMthPatn(Patn$, Optional InclPrv As Boolean)

@@ -2,7 +2,7 @@ Attribute VB_Name = "QIde_Mth_CntMth"
 Option Explicit
 Private Const CMod$ = "MIde_Mth_Cnt."
 Private Const Asm$ = "QIde"
-Const MthCntPP$ = "NPubSub NPubFun NPubPrp NPrvSub NPrvFun NPrvPrp NFrdSub NFrdFun NFrdPrp"
+Const CntgMthPP$ = "NPubSub NPubFun NPubPrp NPrvSub NPrvFun NPrvPrp NFrdSub NFrdFun NFrdPrp"
 Type CntgMth
     Mdn As String
     NPubSub As Integer
@@ -15,7 +15,8 @@ Type CntgMth
     NFrdFun As Integer
     NFrdPrp As Integer
 End Type
-Function CntgMth(Mdn, NPubSub%, NPubFun%, NPubPrp%, NPrvSub%, NPrvFun%, NPrvPrp%, NFrdSub%, NFrdFun%, NFrdPrp%) As MthCnt
+Type CntgMths: N As Long: Ay() As CntgMth: End Type
+Function CntgMth(Mdn, NPubSub%, NPubFun%, NPubPrp%, NPrvSub%, NPrvFun%, NPrvPrp%, NFrdSub%, NFrdFun%, NFrdPrp%) As CntgMth
 With CntgMth
 .Mdn = Mdn
 .NPubSub = NPubSub
@@ -58,35 +59,35 @@ Next
 NMthzP = O
 End Function
 
-Function MthDotCmlNyInVbe(Optional WhStr$) As String()
-MthDotCmlNyInVbe = MthDotCmlNyzV(CVbe, WhStr)
+Function MthDotCmlNyInVbe() As String()
+MthDotCmlNyInVbe = MthDotCmlNyzV(CVbe)
 End Function
-Private Function MthDotCmlNyzV(A As Vbe, Optional WhStr$) As String()
+Private Function MthDotCmlNyzV(A As Vbe) As String()
 Dim Mthn
-For Each Mthn In MthNyzV(A, WhStr)
+For Each Mthn In MthnyzV(A)
     PushI MthDotCmlNyzV, DotCml(Mthn)
 Next
 End Function
-Function MthCmlGpAsetInVbe(Optional WhStr$) As Aset
-Set MthCmlGpAsetInVbe = MthCmlGpAsetzV(CVbe, WhStr)
+Function MthCmlGpAsetInVbe() As Aset
+Set MthCmlGpAsetInVbe = MthCmlGpAsetzV(CVbe)
 End Function
 
-Function MthCmlGpAsetzV(A As Vbe, Optional WhStr$) As Aset
+Function MthCmlGpAsetzV(A As Vbe) As Aset
 Dim Mthn
 Set MthCmlGpAsetzV = New Aset
-For Each Mthn In Itr(MthNyzV(A, WhStr))
+For Each Mthn In Itr(MthnyzV(A))
     MthCmlGpAsetzV.PushAy CmlGp(Mthn)
 Next
 End Function
 
-Function MthCmlAsetzP(P As VBProject, Optional WhStr$) As Aset
+Function MthCmlAsetzP(P As VBProject) As Aset
 Set MthCmlAsetzP = CmlAset(MthnyzP(P))
 End Function
 
-Function CntgMthzM(A As CodeModule) As MthCnt
+Function CntgMthzM(A As CodeModule) As CntgMth
 Dim NPubSub%, NPubFun%, NPubPrp%, NPrvSub%, NPrvFun%, NPrvPrp%, NFrdSub%, NFrdFun%, NFrdPrp%
 Dim MthLin
-For Each MthLin In Itr(MthLinyzSrc(Src(A)))
+For Each MthLin In Itr(MthLinyzS(Src(A)))
     With Mthn3(MthLin)
         Select Case True
         Case .IsPub And .IsSub: NPubSub = NPubSub + 1
@@ -102,11 +103,11 @@ For Each MthLin In Itr(MthLinyzSrc(Src(A)))
         End Select
     End With
 Next
-Set MthCnt = New MthCnt
-MthCnt.Init Mdn(A), NPubSub, NPubFun, NPubPrp, NPrvSub, NPrvFun, NPrvPrp, NFrdSub, NFrdFun, NFrdPrp
+Set CntgMth = New CntgMth
+CntgMth.Init Mdn(A), NPubSub, NPubFun, NPubPrp, NPrvSub, NPrvFun, NPrvPrp, NFrdSub, NFrdFun, NFrdPrp
 End Function
-Function MthCntMd() As MthCnt
-Set MthCntMd = MthCnt(CMd)
+Function CntgMthMd() As CntgMth
+Set CntgMthMd = CntgMth(CMd)
 End Function
 Sub CntMthP()
 CntMthzP CPj
@@ -136,13 +137,13 @@ Function CntgMths(P As VBProject) As CntgMths
 If P.Protection = vbext_pp_locked Then Exit Function
 Dim C As VBComponent
 For Each C In P.VBComponents
-    PushObj MthCntAy, MthCnt(C.CodeModule)
+    PushObj CntgMthAy, CntgMth(C.CodeModule)
 Next
 End Function
 
 
-Function NMthzMd%(A As CodeModule, Optional WhStr$)
-NMthzMd = NMthzS(Src(A), WhStr)
+Function NMthzMd%(A As CodeModule)
+NMthzMd = NMthzS(Src(A))
 End Function
 
 Function NSrcLinPj&(P As VBProject)

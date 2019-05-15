@@ -40,6 +40,9 @@ Function MdDNm$(A As CodeModule)
 MdDNm = PjnzM(A) & "." & Mdn(A)
 End Function
 
+Function SMdDiczP(P As VBProject) As Dictionary
+Set SMdDiczP = SrtDic(MdDic(P))
+End Function
 Function MdDic(P As VBProject) As Dictionary
 Dim C As VBComponent
 Set MdDic = New Dictionary
@@ -60,8 +63,8 @@ Function Mdn(A As CodeModule)
 Mdn = A.Parent.Name
 End Function
 
-Function MdQNmzMd$(A As CodeModule)
-MdQNmzMd = PjnzM(A) & "." & Mdn(A)
+Function QMdnzM$(A As CodeModule)
+QMdnzM = PjnzM(A) & "." & Mdn(A)
 End Function
 
 Function MdTy(A As CodeModule) As vbext_ComponentType
@@ -73,7 +76,7 @@ ShtCmpTyzM = ShtCmpTy(CmpTyzM(A))
 End Function
 
 Function NUsrTyMd%(A As CodeModule)
-NUsrTyMd = NUsrTySrc(DclLyzMd(A))
+NUsrTyMd = NUsrTySrc(DclLyzM(A))
 End Function
 
 Function PjnzC(A As VBComponent)
@@ -97,7 +100,7 @@ SrcLines = JnCrLf(Src(A))
 End Function
 
 Function RmvMthInSrc(Src$(), MthnSet As Aset) As String()
-Dim D As Dictionary: Set D = DiceKeySet(MthnDic(Src), MthnSet): 'Brw D: Stop
+Dim D As Dictionary: 'Set D = DiceKeySet(MthnDic(Src), MthnSet): 'Brw D: Stop
 RmvMthInSrc = LyzLinesDicItems(D)
 End Function
 
@@ -106,18 +109,18 @@ Set CMd = CPne.CodeModule
 End Property
 
 Property Get CMdDNm$()
-CMdDNm = MdQNmzMd(CMd)
+CMdDNm = QMdnzM(CMd)
 End Property
 
 Sub ClsMd(A As CodeModule)
 A.CodePane.Window.Close
 End Sub
 
-Sub CmpMdAB(A As CodeModule, B As CodeModule)
-BrwCmpDicAB MthDiczMd(A), MthDiczMd(B), MdQNmzMd(A), MdQNmzMd(B)
+Sub CmprMd(A As CodeModule, B As CodeModule)
+'BrwCmprDicAB MthDiczM(A), MthDiczMd(B), QMdnzM(A), QMdnzM(B)
 End Sub
 
-Sub RmvMdLno(A As CodeModule, Lno)
+Sub DltLin(A As CodeModule, Lno)
 A.DeleteLines Lno, 1
 End Sub
 
@@ -133,7 +136,7 @@ Private Sub ZZ_MthLnoMdMth()
 Dim O$()
     Dim Lno, L&(), M, A As CodeModule, Ny$(), J%
     Set A = Md("Fct")
-    Ny = MthnyzMd(A)
+    Ny = MthnyzM(A)
     For Each M In Ny
         DoEvents
         J = J + 1

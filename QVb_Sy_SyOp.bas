@@ -1,116 +1,116 @@
 Attribute VB_Name = "QVb_Sy_SyOp"
 Option Explicit
-Private Const CMod$ = "BSyOp."
+Private Const CMod$ = "BAyOp."
 
-Function RmvFstChrzSy(Sy$()) As String()
+Function RmvFstChrzAy(Ay) As String()
 Dim I
-For Each I In Itr(Sy)
-    PushI RmvFstChrzSy, RmvFstChr(CStr(I))
+For Each I In Itr(Ay)
+    PushI RmvFstChrzAy, RmvFstChr(CStr(I))
 Next
 End Function
 
-Function RmvFstNonLetterzSy(Sy$()) As String() 'Gen:SyXXX
+Function RmvFstNonLetterzAy(Ay) As String() 'Gen:AyXXX
 Dim I
-For Each I In Itr(Sy)
-    PushI RmvFstNonLetterzSy, RmvFstNonLetter(CStr(I))
+For Each I In Itr(Ay)
+    PushI RmvFstNonLetterzAy, RmvFstNonLetter(CStr(I))
 Next
 End Function
-Function RmvLasChrzSy(Sy$()) As String()
-'Gen:SyFor RmvLasChr
+Function RmvLasChrzAy(Ay) As String()
+'Gen:AyFor RmvLasChr
 Dim I
-For Each I In Itr(Sy)
-    PushI RmvLasChrzSy, RmvLasChr(CStr(I))
+For Each I In Itr(Ay)
+    PushI RmvLasChrzAy, RmvLasChr(CStr(I))
 Next
 End Function
 
-Function RmvPfxzAy(Sy$(), Pfx$) As String()
+Function RmvPfxzAy(Ay, Pfx$) As String()
 Dim I
-For Each I In Itr(Sy)
+For Each I In Itr(Ay)
     PushI RmvPfxzAy, RmvPfx(CStr(I), Pfx)
 Next
 End Function
 
-Function SyeSngQRmk(Sy$()) As String()
+Function AyeSngQRmk(Ay) As String()
 Dim I, S$
-For Each I In Itr(Sy)
+For Each I In Itr(Ay)
     S = I
-    If Not IsSngQRmk(S) Then PushI SyeSngQRmk, S
+    If Not IsSngQRmk(S) Then PushI AyeSngQRmk, S
 Next
 End Function
 
-Function RmvSngQuotezSy(Sy$()) As String()
+Function RmvSngQuotezAy(Ay) As String()
 Dim I
-For Each I In Itr(Sy)
-    PushI RmvSngQuotezSy, RmvSngQuote(CStr(I))
+For Each I In Itr(Ay)
+    PushI RmvSngQuotezAy, RmvSngQuote(CStr(I))
 Next
 End Function
 
-Function RmvT1zSy(Sy$()) As String()
+Function RmvT1zAy(Ay) As String()
 Dim I
-For Each I In Itr(Sy)
-    PushI RmvT1zSy, RmvT1(CStr(I))
+For Each I In Itr(Ay)
+    PushI RmvT1zAy, RmvT1(CStr(I))
 Next
 End Function
 
-Function RmvTTzSy(Sy$()) As String()
+Function RmvTTzAy(Ay) As String()
 Dim I
-For Each I In Itr(Sy)
-    PushI RmvTTzSy, RmvTT(CStr(I))
+For Each I In Itr(Ay)
+    PushI RmvTTzAy, RmvTT(CStr(I))
 Next
 End Function
 
-Function RplSy(Sy$(), Fm$, By$, Optional Cnt& = 1) As String()
+Function RplAy(Ay, Fm$, By$, Optional Cnt& = 1) As String()
 Dim I
-For Each I In Itr(Sy)
-    PushI RplSy, Replace(I, Fm, By, Count:=Cnt)
+For Each I In Itr(Ay)
+    PushI RplAy, Replace(I, Fm, By, Count:=Cnt)
 Next
 End Function
-Function Rmv2DashzSy(Sy$()) As String()
+Function Rmv2DashzAy(Ay) As String()
 Dim I
-For Each I In Itr(Sy)
-    PushI Rmv2DashzSy, Rmv2Dash(CStr(I))
+For Each I In Itr(Ay)
+    PushI Rmv2DashzAy, Rmv2Dash(CStr(I))
 Next
 End Function
 
-Function RplStarzSy(Sy$(), By) As String()
+Function RplStarzAy(Ay, By) As String()
 Dim I
-For Each I In Itr(Sy)
-    PushI RplStarzSy, Replace(I, By, "*")
+For Each I In Itr(Ay)
+    PushI RplStarzAy, Replace(I, By, "*")
 Next
 End Function
 
-Function RplT1zSy(Sy$(), NewT1) As String()
-RplT1zSy = AddPfxzAy(RmvT1zSy(Sy), NewT1 & " ")
+Function RplT1zAy(Ay, NewT1) As String()
+RplT1zAy = AddPfxzAy(RmvT1zAy(Ay), NewT1 & " ")
 End Function
 
-Function AddIxPfx(Sy$(), Optional BegFm&) As String()
+Function AddIxPfx(Ay, Optional BegFm&) As String()
 Dim I, J&, N%
 J = BegFm
-N = Len(CStr(Si(Sy)))
-For Each I In Itr(Sy)
+N = Len(CStr(Si(Ay)))
+For Each I In Itr(Ay)
     PushI AddIxPfx, AlignR(CStr(J), N) & ": " & I
     J = J + 1
 Next
 End Function
 
-Function T1Ay(Sy$()) As String()
+Function T1Ay(Ay) As String()
 Dim I
-For Each I In Itr(Sy)
+For Each I In Itr(Ay)
     PushI T1Ay, T1(CStr(I))
 Next
 End Function
 
-Function T2Sy(Sy$()) As String()
+Function T2Ay(Ay) As String()
 Dim L
-For Each L In Itr(Sy)
-    PushI T2Sy, T2(CStr(L))
+For Each L In Itr(Ay)
+    PushI T2Ay, T2(CStr(L))
 Next
 End Function
 
-Function T3Sy(Sy$()) As String()
+Function T3Ay(Ay) As String()
 Dim L
-For Each L In Itr(Sy)
-    PushI T3Sy, T3(CStr(L))
+For Each L In Itr(Ay)
+    PushI T3Ay, T3(CStr(L))
 Next
 End Function
 

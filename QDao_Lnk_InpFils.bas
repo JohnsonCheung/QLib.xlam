@@ -2,7 +2,7 @@ Attribute VB_Name = "QDao_Lnk_InpFils"
 Option Explicit
 Private Const CMod$ = "BInpFils."
 Type InpFil: Fn As String: Ffn As String: End Type
-Type InpFils: N As Integer: Ay() As InpFil: End Type
+Type InpFils: N As Long: Ay() As InpFil: End Type
 
 Private Function InpFil(Fn$, Ffn$) As InpFil
 With InpFil: .Fn = Fn: .Ffn = Ffn: End With

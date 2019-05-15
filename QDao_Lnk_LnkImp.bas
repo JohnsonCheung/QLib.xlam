@@ -23,7 +23,7 @@ Tst:
 End Sub
 
 Sub LnkImp(InpFilSrc$(), LnkImpSrc$(), Db As Database)
-ThwIf_LnkImpPmEr InpFilSrc, LnkImpSrc
+'ThwIf_LnkImpPmEr InpFilSrc, LnkImpSrc
 Dim a___FbTbl__fm_TblLy
     Dim FbTblLy$():                      FbTblLy = IndentedLy(LnkImpSrc, "FbTbl")
     Dim b___FbTbl$
@@ -140,9 +140,9 @@ For Each I In Itr(Tny)
     Into = "#I" & I
 LnkColLy = ValzDicK(TzDiLnkColLy, I, Dicn:="TzDiLnkColLy", Kn:="TblNm", Fun:=CSub)
      Fny = T1Ay(LnkColLy)
-      Ey = RmvSqBktzSy(RmvTTzSy(LnkColLy))
+      Ey = RmvSqBktzSy(RmvTTzAy(LnkColLy))
    Bexpr = ValzDicIf(TzDiBexpr, I)
-    PushI B__ImpSqy, SqlSel_Fny_ExtNy_Into_T_OB(Fny, Ey, Into, T, Bexpr)
+    PushI B__ImpSqy, SqlSel_Fny_Extny_Into_T_OB(Fny, Ey, Into, T, Bexpr)
 Next
 End Function
 
@@ -317,3 +317,6 @@ Private Sub ZZZ()
 QDao_Lnk_LnkImp.ZZ_LnkImp
 End Sub
 ThwIf_LnkImpPmEr
+Sub Z1()
+ZZ_LnkImp
+End Sub

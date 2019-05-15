@@ -20,6 +20,12 @@ If S = "" Then Exit Function
 AddPfxSpczIfNonBlank = " " & S
 End Function
 
+Function TrimAy(Ay) As String()
+Dim V
+For Each V In Itr(Ay)
+    PushI TrimAy, Trim(V)
+Next
+End Function
 
 Function AddPfxzAy(Ay, Pfx) As String()
 Dim I

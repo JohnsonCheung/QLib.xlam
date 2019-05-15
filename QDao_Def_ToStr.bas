@@ -16,7 +16,7 @@ Dim T$, Id$, S$, R$
     If HasStdPkzTd(A) Then Id = "*Id"
     Dim Pk$(): Pk = Sy(T & "Id")
     Dim Sk$(): Sk = SkFnyzTd(A)
-    If HasStdSkzTd(A) Then S = TLin(RplSy(Sk, T, "*")) & " |"
+    If HasStdSkzTd(A) Then S = TLin(RplAy(Sk, T, "*")) & " |"
     R = TLin(CvSy(MinusAyAp(FnyzTd(A), Pk, Sk)))
 TdStr = JnSpc(SyNonBlank(T, Id, S, R))
 End Function

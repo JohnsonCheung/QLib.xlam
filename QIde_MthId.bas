@@ -21,8 +21,8 @@ Dim Ret$
     Ret = ShtRetTy(TyChr, RetTy, IsRetVal)
 MthRetNmRstLinzMthnRstLin = JnDotAp(Ret, Mthn, FmtPm(Pm), Rmk)
 End Function
-Function MthQidLyV(Optional WhStr$) As String()
-MthQidLyV = QSrt1(MthQidLy(MthQLyV(WhStr)))
+Function MthQidLyV() As String()
+MthQidLyV = QSrt1(MthQidLy(MthQLyV))
 End Function
 
 Private Sub Z_MthQidLyInVbe()
@@ -51,7 +51,7 @@ Set DicOf_PjMdTyMdn_To_MthQLy = O
 End Function
 
 Private Function MthSrtKeyzLin(MthLin) ' MthKey is Mdy.Nm
-With Mthn3(MthLin)
+With Mthn3zL(MthLin)
 MthSrtKeyzLin = .ShtMdy & "." & .Nm
 End With
 End Function

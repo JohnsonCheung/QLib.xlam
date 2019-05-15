@@ -70,6 +70,9 @@ For Each K In A.Keys
     PushI LyzDic, K & " " & A(K)
 Next
 End Function
+Function JnStrDic$(StrDic As Dictionary, Optional Sep$)
+JnStrDic = Join(SyzItr(StrDic.Items), Sep)
+End Function
 Function Dic(Ly$(), Optional JnSep$ = vbCrLf) As Dictionary
 Dim O As New Dictionary
 Dim I, L$, T$, Rst$

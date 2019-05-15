@@ -6,9 +6,9 @@ Public Const DoczFwcmd$ = "It is a TmpFfn and the content is given-CmdLines plus
 Public Const DoczWaitgFfn$ = "Fcmdw is a temp file without any content.  It is created at end of the Fwcmd."
 
 Sub GitCmit(Optional Msg$ = "commit", Optional ReInit As Boolean)
-Dim mCmdLines$: mCmdLines = CmdLineszCmitg(SrcpP, Msg, ReInit)
-Dim mFcmdw$: mFcmdw = Fcmdw(mCmdLines)
-WaitFcmdw mFcmdw, DftWaitOpt
+Dim CLines$: CLines = CmdLineszCmitg(SrcpP, Msg, ReInit)
+Dim Fw$: Fw = Fcmdw(CLines)
+WaitFcmdw Fw, DftWait
 End Sub
 
 Function FcmdwzPushg$()
@@ -16,7 +16,7 @@ FcmdwzPushg = Fcmdw(CmdLineszPushg(Srcp(CPj)))
 End Function
 
 Sub GitPush()
-WaitFcmdw FcmdwzPushg, DftWaitOpt
+WaitFcmdw FcmdwzPushg, DftWait
 End Sub
 
 Private Function CmdLineszCmitg$(CmitgPth$, Msg$, ReInit As Boolean)

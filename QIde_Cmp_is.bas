@@ -3,18 +3,17 @@ Option Explicit
 Private Const CMod$ = "MIde_Cmp_is."
 Private Const Asm$ = "QIde"
 
-Function IsModCmp(A As VBComponent) As Boolean
-IsModCmp = A.Type = vbext_ct_StdModule
+Function IsCmpzMod(A As VBComponent) As Boolean
+IsCmpzMod = A.Type = vbext_ct_StdModule
 End Function
 
-Function IsClsCmp(A As VBComponent) As Boolean
-IsClsCmp = A.Type = vbext_ct_ClassModule
+Function IsCmpzCls(A As VBComponent) As Boolean
+IsCmpzCls = A.Type = vbext_ct_ClassModule
 End Function
 
-
-Function IsMd(A As VBComponent) As Boolean
+Function IsCmpzMd(A As VBComponent) As Boolean
 Select Case A.Type
-Case vbext_ct_ClassModule, vbext_ct_StdModule: IsMd = True
+Case vbext_ct_ClassModule, vbext_ct_StdModule: IsCmpzMd = True
 End Select
 End Function
 

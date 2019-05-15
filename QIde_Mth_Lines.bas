@@ -32,7 +32,7 @@ Function MthLineszSP$(Src$(), PMthn, Optional WiTopRmk As Boolean)
 End Function
 '
 Property Get CMthLines$() 'Cur
-CMthLines = MthLineszMN(CMd, CurMthn, WiTopRmk:=True)
+CMthLines = MthLineszMN(CMd, CMthn, WiTopRmk:=True)
 End Property
 
 Sub VcMthLinesAyP()
@@ -54,7 +54,7 @@ MthLinesAyzM = MthLinesAyzS(Src(A), WiTopRmk)
 End Function
 
 Function MthLineszSIW$(Src$(), MthIx, Optional WiTopRmk As Boolean)
-MthLineszSIW = JnCrLf(AywFEIx(Src, MthFEIxzSIW(Src, MthIx, WiTopRmk)))
+MthLineszSIW = JnCrLf(AywFei(Src, MthFeizSIW(Src, MthIx, WiTopRmk)))
 End Function
 
 Function MthLinesAyzS(Src$(), Optional WiTopRmk As Boolean) As String()

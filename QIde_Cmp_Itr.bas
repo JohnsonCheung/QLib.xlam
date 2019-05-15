@@ -3,42 +3,39 @@ Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Cmp_Itr."
 
-Function ClsAyPj(P As VBProject, Optional WhStr$) As CodeModule()
-If WhStr = "" Then
-    Dim C As VBComponent
-    For Each C In P.VBComponents
-        If C.Type = vbext_ct_ClassModule Then
-            PushObj ClsAyPj, C
-        End If
-    Next
-Else
-'    ClsAyPj = MdAyzP(A, WhStr & " -Cls")
-End If
-End Function
-
-Function ClsNyPj(P As VBProject) As String()
+Function ClsAyzP(P As VBProject) As CodeModule()
 Dim C As VBComponent
 For Each C In P.VBComponents
-    If IsClsCmp(C) Then PushI ClsNyPj, C.Name
+    If IsCmpzCls(C) Then
+        PushObj ClsAyzP, C
+    End If
 Next
 End Function
+
+Function ClsNyzP(P As VBProject) As String()
+Dim C As VBComponent
+For Each C In P.VBComponents
+    If IsCmpzCls(C) Then
+        PushI ClsNyzP, C.Name
+    End If
+Next
+End Function
+
 Private Sub Z_CmpAyzP()
 Dim Act() As VBComponent
-Dim C
-For Each C In CmpAyzP(CPj, "-Mod")
-    If CvCmp(C).Type <> vbext_ct_StdModule Then Stop
-Next
-For Each C In CmpAyzP(CPj, "-Cls")
-    If CvCmp(C).Type <> vbext_ct_ClassModule Then Stop
+Dim C, T As vbext_ComponentType
+For Each C In CmpAyzP(CPj)
+    T = CvCmp(C).Type
+    If T <> vbext_ct_StdModule And T <> vbext_ct_ClassModule Then Stop
 Next
 End Sub
-Function CmpAyzP(P As VBProject, Optional WhStr$) As VBComponent()
+
+Function CmpAyzP(P As VBProject) As VBComponent()
 If IsProtectzvInf(P) Then Exit Function
-Dim C As VBComponent, W As WhMd
-Set W = WhMdzStr(WhStr): If IsNothing(W) Then Stop '
+Dim C As VBComponent
 For Each C In P.VBComponents
-    If IsMd(C) Then
-        If HitCmp(C, W) Then PushObj CmpAyzP, C
+    If IsCmpzMd(C) Then
+        PushObj CmpAyzP, C
     End If
 Next
 End Function
@@ -51,58 +48,52 @@ For Each C In P.VBComponents
 Next
 IsNoClsNoModPj = True
 End Function
-Function ModItrzP(P As VBProject, Optional WhStr$)
-Asg Itr(ModAyzP(P, WhStr)), ModItrzP
+Function ModItrzP(P As VBProject)
+Asg Itr(ModAyzP(P)), ModItrzP
 End Function
 
-Function ModAyzP(P As VBProject, Optional WhStr$) As CodeModule()
+Function ModAyzP(P As VBProject) As CodeModule()
 If P.Protection = vbext_pp_locked Then Exit Function
 Dim C As VBComponent
-If WhStr = "" Then
-    For Each C In P.VBComponents
-        PushObj ModAyzP, C.CodeModule
-    Next
-Else
-    Dim W As WhMd: Set W = WhMdzStr(WhStr)
-    For Each C In P.VBComponents
-        Stop
-        If HitCmp(C, W) Then
-            PushObj ModAyzP, C.CodeModule
-        End If
-    Next
-End If
+For Each C In P.VBComponents
+    PushObj ModAyzP, C.CodeModule
+Next
 End Function
 
-Function MdNyP(Optional WhStr$) As String()
-MdNyP = MdNyzP(CPj, WhStr)
+Function MdNyP() As String()
+MdNyP = MdNyzP(CPj)
 End Function
-Function MdNyWiPrpV(Optional WhStr$) As String()
-MdNyWiPrpV = MdNyWiPrpzV(CVbe, WhStr)
+Function MdNyWiPrpV() As String()
+MdNyWiPrpV = MdNyWiPrpzV(CVbe)
 End Function
-Function MdNyWiPrpzV(A As Vbe, Optional WhStr$) As String()
+Function MdNyWiPrpzV(A As Vbe) As String()
 Dim Mdn, I
-For Each I In MdNyzV(A, WhStr)
+For Each I In MdNyzV(A)
     Mdn = I
-    If IsMdnWiPrp(Mdn) Then
+    If IsCmpzMdnWiPrp(Mdn) Then
         PushI MdNyWiPrpzV, Mdn
     End If
 Next
 End Function
 
-Function IsMdnWiPrp(Mdn) As Boolean
+Function IsCmpzMdnWiPrp(Mdn) As Boolean
 Dim M As CodeModule: Set M = Md(Mdn)
 Dim J&
 For J = 1 To M.CountOfLines
-    If IsPrpLin(M.Lines(J, 1)) Then IsMdnWiPrp = True: Exit Function
+    If IsPrpLin(M.Lines(J, 1)) Then IsCmpzMdnWiPrp = True: Exit Function
 Next
 End Function
 
-Function MdNyV(Optional WhStr$) As String()
-MdNyV = MdNyzV(CVbe, WhStr)
+Function MdNyV() As String()
+MdNyV = MdNyzV(CVbe)
 End Function
 
 Function MdNyzM(Mthn) As String()
 MdNyzM = MdnsetzM(Mthn).Sy
+End Function
+
+Function MdAyzNN(Mdnn$) As CodeModule()
+
 End Function
 
 Function MdAyzNy(MdNy$()) As CodeModule()
@@ -140,46 +131,43 @@ Function PMthnzRlMdnzV(A As Vbe) As Rel
 Stop
 End Function
 
-Function MdNyzP(P As VBProject, Optional WhStr$) As String()
+Function MdNyzP(P As VBProject) As String()
 Dim C
-For Each C In CmpItr(P, WhStr)
-    If IsMd(CvCmp(C)) Then
+For Each C In CmpItr(P)
+    If IsCmpzMd(CvCmp(C)) Then
         PushI MdNyzP, C.Name
     End If
 Next
 End Function
-Function MdNyzV(A As Vbe, WhStr$) As String()
-Dim P
-For Each P In PjItr(A, WhStr)
-    PushIAy MdNyzV, MdNyzP(CvPj(P))
+
+Function MdNyzV(A As Vbe) As String()
+Dim P As VBProject
+For Each P In A.VBProjects
+    PushIAy MdNyzV, MdNyzP(P)
 Next
 End Function
 
-Function ModNy(Optional WhStr$) As String()
-ModNy = ModNyzP(CPj, WhStr)
+Function ModNy() As String()
+ModNy = ModNyzP(CPj)
 End Function
 
-Function ModNyzP(P As VBProject, Optional WhStr$) As String()
+Function ModNyzP(P As VBProject) As String()
 Dim C As VBComponent, O$()
 For Each C In P.VBComponents
-    If IsModCmp(C) Then PushI O, C.Name
+    If IsCmpzMod(C) Then PushI O, C.Name
 Next
-If WhStr = "" Then
-    ModNyzP = O
-Else
-    ModNyzP = AywNmStr(O, WhStr)
-End If
+'ModNyzP = AywNmStr(O)
 End Function
 
-Private Sub Z_ClsNyPj()
-DmpAy ClsNyPj(CPj)
+Private Sub Z_ClsNyzP()
+DmpAy ClsNyzP(CPj)
 End Sub
 
 
 
 Private Sub Z_MdAy()
 Dim O() As CodeModule
-O = MdAy(CPj)
+O = MdAyzP(CPj)
 Dim I, Md As CodeModule
 For Each I In O
     Set Md = I
@@ -187,32 +175,26 @@ For Each I In O
 Next
 End Sub
 
-Private Sub Z_MdzPjNy()
-'DmpAy MdzPjNy(CPj)
+Private Sub Z_MdzPjny()
+'DmpAy MdzPjny(CPj)
 End Sub
 
-Private Sub ZZ()
-Z_ClsNyPj
-Z_MdAy
-Z_MdzPjNy
-MIde_Z_Pj_Cmp:
-End Sub
-Function CmpAy(Optional WhStr$) As VBComponent()
-CmpAy = CmpAyzP(CPj, WhStr)
+Function CmpAyP() As VBComponent()
+CmpAyP = CmpAyzP(CPj)
 End Function
-Function MdAy(Optional WhStr$) As CodeModule()
-MdAy = MdAyzP(CPj, WhStr)
+Function MdAy() As CodeModule()
+MdAy = MdAyzP(CPj)
 End Function
 
-Function CmpItr(P As VBProject, Optional WhStr$)
-Asg Itr(CmpAyzP(P, WhStr)), CmpItr
+Function CmpItr(P As VBProject)
+Asg Itr(CmpAyzP(P)), CmpItr
 End Function
 
-Function MdItr(P As VBProject, Optional WhStr$)
-Asg Itr(MdAyzP(P, WhStr)), MdItr
+Function MdItr(P As VBProject)
+Asg Itr(MdAyzP(P)), MdItr
 End Function
 
-Function MdAyzP(P As VBProject, Optional WhStr$) As CodeModule()
-MdAyzP = MdAyzC(CmpAyzP(P, WhStr))
+Function MdAyzP(P As VBProject) As CodeModule()
+MdAyzP = MdAyzC(CmpAyzP(P))
 End Function
 

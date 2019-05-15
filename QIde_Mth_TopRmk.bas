@@ -2,18 +2,18 @@ Attribute VB_Name = "QIde_Mth_TopRmk"
 Option Explicit
 Private Const CMod$ = "MIde_Mth_TopRmk."
 Private Const Asm$ = "QIde"
-Private Sub Z_MthFEIxszSrcMth()
+Private Sub Z_MthFeiszSrcMth()
 Dim Src$(), Mthn, WiTopRmk As Boolean
-Dim Ept As FEIxs, Act As FEIxs
+Dim Ept As Feis, Act As Feis
 
-Src = SrczMdn("IdeMthFEIx")
-PushFEIx Ept, FEIx(2, 11)
+Src = SrczMdn("IdeMthFei")
+PushFei Ept, Fei(2, 11)
 GoSub Tst
 
 Exit Sub
 Tst:
-    Act = MthFEIxszSN(Src, Mthn, WiTopRmk)
-    If Not IsEqFEIxs(Act, Ept) Then Stop
+    Act = MthFeiszSN(Src, Mthn, WiTopRmk)
+    If Not IsEqFeis(Act, Ept) Then Stop
     Return
 End Sub
 

@@ -22,7 +22,7 @@ Property Get BarNy() As String()
 BarNy = BarNyzV(CVbe)
 End Property
 
-Property Get WinOfBrwObj() As VBIDE.Window
+Property Get WinOfBrwObj() As vbide.Window
 Set WinOfBrwObj = FstWinTy(vbext_wt_Browser)
 End Property
 

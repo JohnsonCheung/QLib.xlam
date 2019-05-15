@@ -16,13 +16,13 @@ End Function
 
 Private Sub Z_Src_PthMthLiny()
 Dim Mthny$(), Src$()
-Src = CurSrc
+Src = CSrc
 Mthny = Sy("Src_MthDclDry", "Mth_MthDclLin")
 Ept = Sy("Function Mth_MthDclLin(A As Mth)", "Function Src_MthDclDry(A$()) As Variant()")
 GoSub Tst
 Exit Sub
 Tst:
-    Act = MthLinyzSrc(Src)
+    Act = MthLinyzS(Src)
     C
     Return
 End Sub

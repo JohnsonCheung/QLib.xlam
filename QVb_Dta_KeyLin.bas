@@ -1,9 +1,9 @@
 Attribute VB_Name = "QVb_Dta_KeyLin"
 Option Compare Text
 Type KLx: K As String: KLno As Long: L As Lnxs: End Type
-Type KLxs: N As Integer: Ay() As KLx: End Type
+Type KLxs: N As Long: Ay() As KLx: End Type
 Type KLy: K As String: Ly() As String: End Type
-Type KLys: N As Integer: Ay() As KLy: End Type
+Type KLys: N As Long: Ay() As KLy: End Type
 Function KLy(K$, Ly$()) As KLy
 KLy.K = K
 KLy.Ly = Ly
@@ -31,12 +31,14 @@ Function KLys_ForTakT1_AsK(Ly$()) As KLys
 Dim A$(): A = RplEle_OfNonBlankFstChr_ByT1(Ly)
 KLys_ForTakT1_AsK = KLys(A)
 End Function
+
 Function HasKPfx_InKLys(KPfx$, A As KLys) As Boolean
 Dim J%
 For J = 0 To A.N - 1
     If HasPfx(A.Ay(J).K, KPfx) Then HasKPfx_InKLys = True: Exit Function
 Next
 End Function
+
 Function KAy_FmKLys_WhKPfx(A As KLys, KPfx$) As String()
 Dim J%, K$
 For J = 0 To A.N - 1
@@ -44,6 +46,14 @@ For J = 0 To A.N - 1
     If HasPfx(K, KPfx) Then PushI KAy_FmKLys_WhKPfx, K
 Next
 End Function
+
+Function KLyseFstNEle(A As KLys, Optional N& = 1) As KLys
+Dim J&
+For J = N To A.N - 1
+    PushKLy KLyseFstNEle, A.Ay(J)
+Next
+End Function
+
 Function KLys(Ly$()) As KLys
 Dim L$(): L = RmvEle_ForLTrimPfx_Is2Hypron(Ly)
 If Si(L) = 0 Then Exit Function
@@ -99,29 +109,29 @@ Case Else
 End Select
 End Function
 
-Function ShfKLyOLy(O As KLys, K$) As String() 'Shift-KLy-Opt-Ly
+Function ShfOptLy_FmKLys(O As KLys, K$) As String() 'Shift-KLy-Opt-Ly
 If O.N = 0 Then Exit Function
 If O.Ay(0).K <> K Then Exit Function
-ShfKLyOLy = O.Ay(0).Ly
+ShfOptLy_FmKLys = O.Ay(0).Ly
 O = KLyseFstNEle(O)
 End Function
 
-Function ShfKLyOLin$(O As KLys, K$) ' Shift-KLy-Must-Lin
-ShfKLyOLin = JnSpc(ShftKLyOLy(O, K))
+Function ShfOptLin_FmKLys$(O As KLys, K$) ' Shift-KLy-Must-Lin
+ShfOptLin_FmKLys = JnSpc(ShfOptLy_FmKLys(O, K))
 End Function
 
-Function ShfKLyMLyzKK(O As KLys, KK$) As String()
-
-End Function
-Function ShfKLyMLin$(O As KLys, K$) ' Shift-KLy-Must-Lin
-ShfKLyMLin = JnSpc(ShfKLyMLy(O, K))
+Function ShfMusLy_FmKLys_ByKK(O As KLys, KK$) As String()
 End Function
 
-Function ShfKLyMLy(O As KLys, K$) As String() ' Shift-KLy-Must-Ly
+Function ShfMusLin_FmKLys$(O As KLys, K$) ' Shift-KLy-Must-Lin
+ShfMusLin_FmKLys = JnSpc(ShfMusLy_FmKLys(O, K))
+End Function
+
+Function ShfMusLy_FmKLys(O As KLys, K$) As String() ' Shift-KLy-Must-Ly
 Dim X As KLys: X = O
-Dim Ly$(): Ly = ShftKLyOLy(O, K)
+Dim Ly$(): Ly = ShfOptLy_FmKLys(O, K)
 If Si(Ly) Then Thw CSub, "Fst ele of given KLys is expected to have given K and have non-0-Ly.", "Given-K Given-KLys", K, FmtKLys(O)
-ShfKLyMLy = Ly
+ShfMusLy_FmKLys = Ly
 End Function
 
 Function RmvFstElezKLys(A As KLys) As KLys
@@ -137,23 +147,32 @@ O.Ay(O.N) = M
 O.N = O.N + 1
 End Sub
 
-Function KLxs(K, KLno, L As Lnxs) As KLxs
-KLxs.K = K
-KLxs.KLno = KLno
-KLxs.L = L
+Function KLx(K, KLno, L As Lnxs) As KLx
+KLx.K = K
+KLx.KLno = KLno
+KLx.L = L
 End Function
+
 Private Sub PushKLxs(O As KLxs, M As KLxs)
+Dim J&
+For J = 0 To M.N - 1
+    PushKLx O, M.Ay(J)
+Next
+End Sub
+
+Private Sub PushKLx(O As KLxs, M As KLx)
 ReDim Preserve O.Ay(O.N)
 O.Ay(O.N) = M
 O.N = O.N + 1
 End Sub
+
 Function KLxszLy(Ly$()) As KLxs
 Dim T1Ay$(): T1Ay = SyzSS(T1nn)
 Dim L, T1$, Rst$, Ix&
 For Each L In Itr(Ly)
     AsgTRst L, T1, Rst
     If HasEle(T1Ay, T1) Then
-        SetLin KLxszLyT1nn, T1, Lnx(Rst, Ix)
+'        SetLin KLxszLyT1nn, T1, Lnx(Rst, Ix)
     End If
     Ix = Ix + 1
 Next
@@ -170,44 +189,44 @@ For J = 0 To A.N - 1
 Next
 End Function
 Function KLxszLyT1nn(Ly$(), T1nn$) As KLxs
-KLxszLyT1nn = KLxszLyT1nn(KLxs(Ly), T1nn)
+'KLxszLyT1nn = KLxszLyT1nn(KLxs(Ly), T1nn)
 End Function
 
 Private Sub SetLin(O As KLxs, K, L As Lnx)
-Dim Ix&: Ix = IxzKKlnxes(K, O)
+Dim Ix&: ' Ix = IxzKKlnxes(K, O)
 If Ix >= 0 Then
     PushLnx O.Ay(Ix).L, L
 Else
-    PushKLxs O, KLxs(K, SngLnx(L))
+'    PushKLxs O, KLxs(K, SngLnx(L))
 End If
 End Sub
 
-Function LnxszKKlnxes(K, A As KLxs) As Lnxs
-Dim Ix&: Ix = IxzKKlnxes(K, A)
-If Ix >= 0 Then LnxszKKLxs = A.Ay(Ix)
+Function LnxszKLxsK(A As KLxs, K) As Lnxs
+Dim Ix&: Ix = IxzKLxsK(A, K)
+'If Ix >= 0 Then LnxszKLxsK = A.Ay(Ix)
 End Function
-Private Function IxzKKlnxes&(K, A As KLxs)
+Private Function IxzKLxsK&(A As KLxs, K)
 Dim J&
 For J = 0 To A.N - 1
     With A.Ay(J)
         If .K = K Then
-            IxzKKlnxes = J
+            IxzKLxsK = J
             Exit Function
         End If
     End With
 Next
-IxzKKlnxes = -1
+IxzKLxsK = -1
 End Function
 Function FmtKLx(A As KLx, Optional Ix& = -1) As String()
 If Ix >= 0 Then P = "Itm-Ix:" & Ix & " "
 PushI FmtKLx, P & "KLno:" & A.KLno & " LinCnt:" & A.L.N
-PushIAy FmtKLx, TabAy(FmtLnxs(A.L))
+'PushIAy FmtKLx, TabAy(FmtLnxs(A.L))
 End Function
 Function FmtKLxs(A As KLxs) As String()
 PushI FmtKLxs, "KLxsItmCnt=" & A.N
 Dim J&
 For J = 0 To A.N - 1
-    PushIAy FmtKLxs, TabAy(FmtKLx(A.Ay(J), J))
+'    PushIAy FmtKLxs, TabAy(FmtKLx(A.Ay(J), J))
 Next
 End Function
 
@@ -222,10 +241,10 @@ Dim T1$, KLxs As KLxs, Act As Lnxs, Ept As Lnxs
 GoSub ZZ
 Exit Sub
 ZZ:
-    BrwLnxs LnxszT1("Wdt", Y_KLxs)
+'    BrwLnxs LnxszT1(Y_KLxs, "Wdt")
     Return
 Tst:
-    Act = LnxszT1("Wdt", KLxs)
+'    Act = LnxszT1("Wdt", KLxs)
     C
     Return
 End Sub
@@ -240,7 +259,7 @@ ZZ:
 End Sub
 
 Private Function Y_KLxs() As KLxs
-Y_KLxs = KLxs(Y_Lof, Y_LofT1nn)
+'Y_KLxs = KLxs(Y_Lof, Y_LofT1nn)
 End Function
 Function FstLyOrDie_FmKLys_ByK(A As KLys, K) As String()
 Dim O$(): O = FstLy_FmKLys_ByK(A, K)

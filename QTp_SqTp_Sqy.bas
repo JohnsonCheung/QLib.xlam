@@ -36,7 +36,7 @@ Type SwLin
     T2 As String
     TermAy() As String
 End Type
-Private Type SwLins: N As Integer: Ay() As SwLin: End Type
+Private Type SwLins: N As Long: Ay() As SwLin: End Type
 Private Type EvlSwLinsRslt
     HasEvl As Boolean
     SwDic As Dictionary

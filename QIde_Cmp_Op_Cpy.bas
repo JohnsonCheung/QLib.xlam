@@ -29,7 +29,7 @@ Next
 End Sub
 
 Sub CpyCmp(A As VBComponent, ToPj As VBProject)
-If IsClsCmp(A) Then
+If IsCmpzCls(A) Then
     CpyCls A.CodeModule, ToPj 'If ClassModule need to export and import due to the Public/Private class property can only the set by Export/Import
 Else
     CpyMod A.CodeModule, ToPj
@@ -40,7 +40,7 @@ If A.Parent.Type <> vbext_ct_StdModule Then Thw Fun, "Should be Mod", "Type", Sh
 End Sub
 
 Sub CpyMod(A As CodeModule, ToPj As VBProject)
-AddCmpzPNL ToPj, A.Name, SrcLineszMd(A)
+AddCmpzPNL ToPj, A.Name, SrcLineszM(A)
 End Sub
 
 Private Sub ZZ()

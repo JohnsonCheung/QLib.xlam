@@ -3,114 +3,114 @@ Type FCnt
     FmLno As Long
     Cnt As Long
 End Type
-Type FEIx
+Type Fei
 FmIx As Long
 EIx As Long ' To loop For J=FmIx To EIx-1, Always ToIx <-- EIx-1
 End Type
-Type FEIxs: N As Long: Ay() As FEIx: End Type
+Type Feis: N As Long: Ay() As Fei: End Type
 Function FCnt(FmLno, Cnt) As FCnt
 If FmLno <= 0 Then Exit Function
 If Cnt <= 0 Then Exit Function
 FCnt.FmLno = FmLno
 FCnt.Cnt = Cnt
 End Function
-Function FCntzFEIx(A As FEIx) As FCnt
+Function FCntzFei(A As Fei) As FCnt
 With A
-    FCntzFEIx = FCnt(.FmIx + 1, LinCntzFEIx(A))
+    FCntzFei = FCnt(.FmIx + 1, LinCntzFei(A))
 End With
 End Function
-Function FEIx(FmIx, EIx) As FEIx
+Function Fei(FmIx, EIx) As Fei
 If 0 > FmIx Then Exit Function
 If 0 > EIx Then Exit Function
 If FmIx > EIx Then Exit Function
-FEIx.FmIx = FmIx
-FEIx.EIx = EIx
+Fei.FmIx = FmIx
+Fei.EIx = EIx
 End Function
-Sub PushFEIx(O As FEIxs, M As FEIx)
+Sub PushFei(O As Feis, M As Fei)
 ReDim Preserve O.Ay(O.N)
 O.Ay(O.N) = M
 O.N = O.N + 1
 End Sub
-Sub PushFEIxs(O As FEIxs, M As FEIxs)
+Sub PushFeis(O As Feis, M As Feis)
 Dim J&
 For J = 0 To M.N - 1
-    PushFEIx O, M.Ay(J)
+    PushFei O, M.Ay(J)
 Next
 End Sub
-Function AddFEIxs(A As FEIxs, B As FEIxs) As FEIxs
-AddFEIxs = A
-PushFEIxs A, B
+Function AddFeis(A As Feis, B As Feis) As Feis
+AddFeis = A
+PushFeis A, B
 End Function
-Function SngFEIx(A As FEIx) As FEIxs
-PushFEIx SngFEIx, A
+Function SngFei(A As Fei) As Feis
+PushFei SngFei, A
 End Function
 
-Function BetFEIx(Ix, A As FEIx) As Boolean
+Function BetFei(Ix, A As Fei) As Boolean
 If Ix < 0 Then Thw CSub, "Ix cannot be -ve", "Ix", Ix
 If A.FmIx > U Then Exit Function
 If A.EIx < U Then Exit Function
-BetFEIx = True
+BetFei = True
 End Function
 
-Function CntzFEIx&(A As FEIx)
+Function CntzFei&(A As Fei)
 Dim O&
 O = A.EIx - A.FmIx
 If O < 0 Then Stop
-CntzFEIx = O
+CntzFei = O
 End Function
-Function FEIxzFC(FmIx, Cnt) As FEIx
-FEIxzFC = FEIx(FmIx, FmIx + Cnt - 1)
+Function FeizFC(FmIx, Cnt) As Fei
+FeizFC = Fei(FmIx, FmIx + Cnt - 1)
 End Function
 
-Function IsEqFEIxs(A As FEIxs, B As FEIxs) As Boolean
+Function IsEqFeis(A As Feis, B As Feis) As Boolean
 If A.N <> B.N Then Exit Function
 Dim J&
 For J = 0 To A.N - 1
-    If Not IsEqFEIx(A.Ay(J), B.Ay(J)) Then Exit Function
+    If Not IsEqFei(A.Ay(J), B.Ay(J)) Then Exit Function
     J = J + 1
 Next
-IsEqFEIxs = True
+IsEqFeis = True
 End Function
-Function IsFEIxzEmp(A As FEIx) As Boolean
+Function IsFeizEmp(A As Fei) As Boolean
 
 End Function
-Function IsFEIxsInOrd(A As FEIxs) As Boolean
+Function IsFeisInOrd(A As Feis) As Boolean
 Dim J%
 For J = 0 To A.N - 1
-    With FCntzFEIx(A.Ay(J))
+    With FCntzFei(A.Ay(J))
         If .FmLno = 0 Then Exit Function
         If .Cnt = 0 Then Exit Function
-        If .FmLno + .Cnt > FCntzFEIx(A.Ay(J + 1)).FmLno Then Exit Function
+        If .FmLno + .Cnt > FCntzFei(A.Ay(J + 1)).FmLno Then Exit Function
     End With
 Next
-IsFEIxsInOrd = True
+IsFeisInOrd = True
 End Function
 
 Function Positive(N)
 If N > 0 Then Positive = N
 End Function
-Function LinCntzFEIx&(A As FEIx)
-LinCntzFEIx = Positive(A.EIx - A.FmIx)
+Function LinCntzFei&(A As Fei)
+LinCntzFei = Positive(A.EIx - A.FmIx)
 End Function
-Function LinCntzFEIxs&(A As FEIxs)
+Function LinCntzFeis&(A As Feis)
 Dim J&, O&
 For J = 0 To A.N - 1
-    O = O + LinCntzFEIx(A.Ay(J))
+    O = O + LinCntzFei(A.Ay(J))
 Next
-LinCntzFEIxs = O
+LinCntzFeis = O
 End Function
 
-Function IsEqFEIx(A As FEIx, B As FEIx) As Boolean
+Function IsEqFei(A As Fei, B As Fei) As Boolean
 With A
     If .FmIx <> B.FmIx Then Exit Function
     If .EIx <> B.EIx Then Exit Function
 End With
-IsEqFEIx = True
+IsEqFei = True
 End Function
 
 Private Sub ZZ()
 Dim A As Variant
-Dim C As FEIx
-IsEqFEIx C, C
+Dim C As Fei
+IsEqFei C, C
 End Sub
 

@@ -140,7 +140,7 @@ End Function
 
 Function TnyzFbByAdo(Fb) As String()
 'TnyzAdoFb = TnyzCat(CatzFb(Fb))
-TnyzFbByAdo = SyeLikss(TnyzCat(CatzFb(Fb)), "MSys* f_*_Data")
+TnyzFbByAdo = AyeLikss(TnyzCat(CatzFb(Fb)), "MSys* f_*_Data")
 End Function
 
 Function WnyzWb(A As Workbook) As String()

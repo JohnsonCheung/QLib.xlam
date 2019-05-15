@@ -52,7 +52,7 @@ Stru = StruzTny(A, Tny(A))
 End Function
 
 Function OupTny(A As Database) As String()
-OupTny = SywPfx(Tny(A), "@")
+OupTny = AywPfx(Tny(A), "@")
 End Function
 Sub DrpTny(A As Database, Tny$())
 Dim T
@@ -171,7 +171,7 @@ Next
 End Function
 
 Function TmpTny(A As Database) As String()
-TmpTny = SywPfx(Tny(A), "#")
+TmpTny = AywPfx(Tny(A), "#")
 End Function
 
 Function Tni(A As Database)
@@ -376,16 +376,8 @@ Asg Itr(TnyzInp(A)), TnizInp
 End Function
 
 Function TnyzInp(A As Database) As String()
-TnyzInp = SywLik(Tny(A), ">*")
+TnyzInp = AywLik(Tny(A), ">*")
 End Function
-
-Sub CpyInpTblAsTmpz(A As Database)
-Dim T
-For Each T In TnizInp(A)
-    DrpTT A, "#I" & T
-    RunQQ A, "Select * into [#I?] from [?]", T, T
-Next
-End Sub
 
 Function ReOpnDb(A As Database) As Database
 Set ReOpnDb = Db(A.Name)
@@ -412,6 +404,7 @@ Next
 FmtNRec = XX
 Erase XX
 End Function
+
 Sub DmpNRec(D As Database)
 Dmp FmtNRec(D)
 End Sub

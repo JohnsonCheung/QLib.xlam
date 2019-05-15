@@ -43,7 +43,7 @@ Clean:
     Return
 End Sub
 Private Sub EnsOptLinzM(A As CodeModule)
-If IsMdOfEmp(A) Then Exit Sub
+If IsCmpzMdOfEmp(A) Then Exit Sub
 DltOptLin A, OptLinOfCmpDb
 DltOptLin A, OptLinOfCmpBin
 EnsOptLin A, OptLinOfCmpTxt

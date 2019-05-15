@@ -7,7 +7,7 @@ If Not HasCmpzPN(P, Mdn) Then Exit Sub
 P.VBComponents.Remove P.VBComponents(Mdn)
 End Sub
 Sub RmvMdzPfx(Pfx$)
-Dim Ny$(): Ny = SywPfx(MdNyP, Pfx)
+Dim Ny$(): Ny = AywPfx(MdNyP, Pfx)
 If Si(Ny) = 0 Then InfLin CSub, "no module begins with " & Pfx: Exit Sub
 Brw Ny
 Dim N

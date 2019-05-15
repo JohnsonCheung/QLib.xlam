@@ -1,15 +1,15 @@
-Attribute VB_Name = "QDao_Lnk_ThwIfErOfLnkImpSrc"
+Attribute VB_Name = "QDao_Lnk_ThwIf_ErOfLnkImpSrc"
 Private Type MisExtn
     Stru As String
     MisFny() As String
 End Type
-Private Type MisExtns: N As Integer: Ay() As MisExtn: End Type
+Private Type MisExtns: N As Long: Ay() As MisExtn: End Type
 Private Type DupFld
     Stru As String
     Fld As String
     Lnoss As String
 End Type
-Private Type DupFlds: N As Integer: Ay() As DupFld: End Type
+Private Type DupFlds: N As Long: Ay() As DupFld: End Type
 Private Type StruLnkCol
     Stru As String
     LnkCol As Lnxs
@@ -71,28 +71,27 @@ Dim a___EI_ErMsgFor_Inp$
 
 Dim a__LISpec__LnkImpSpec_WhichIsKLys$
     Dim LISpec As KLxs
-    LISpec.N
 Dim a__StruSy$
-    Dim StruSy$(): StruSy = RmvPfxzAy(KAy_FmKLys_WhKPfx(KLys, "Stru."))
+    Dim StruSy$(): 'StruSy = RmvPfxzAy(KAy_FmKLys_WhKPfx(LISpec, "Stru."))
     
 Dim Tny$()
 
 Dim a___ES_ErMsg_ForStru
-KLys
     Dim IsNoStru As Boolean: IsNoStru = Si(StruSy) = 0
     Dim LnkCol As Lnxses:    LnkCol = B_LnkCol(StruSy, LnkImpSrc)
     Dim DupFlds As DupFlds: 'DupFlds = B_DupFlds(StruSy, LnkCol)
     Dim MisExtn$()
+    Dim NoFldStru As Lnxs
     
-    Dim S1$(), S2$(), S3$(), S4$(), S5$(), S6$(), S7$(), S8$()
+    Dim S1$(), S2$(), S3$(), S4$(), S5$(), S6$(), S7$, S8$()
     S1 = B_Stru_DupStru(LnkImpSrc, StruSy)
     S2 = B_Stru_DupFld(DupFlds)
     S3 = B_Stru_ErFldTy
     S4 = B_Stru_ExcessStru
-    S5 = B_Stru_MisExtNm(SMisExtn)
+    S5 = B_Stru_MisExtNm(MisExtn)
     S6 = B_Stru_MisFldTy
     S7 = B_Stru_NoStru(IsNoStru)
-    S8 = B_Stru_NoFld(LnkImpSrc, StruSyzNoFld)
+    S8 = B_Stru_NoFld(NoFldStru)
     Dim a___ES$
     Dim ES$(): ES = Sy(S1, S2, S3, S4, S5, S6, S7, S8) '<= ES
 
@@ -266,15 +265,14 @@ For Each I In StruSy
 '    If Si(B_Ly("Stru." & I)) = 0 Then PushI B_StruSyzNoFld, I
 Next
 End Function
-Private Function B_Stru_NoFld(LnkImpSrc$(), StruSyzNoFld$()) As String()
+Private Function B_Stru_NoFld(NoFldStru As Lnxs) As String()
 Dim I
-For Each I In Itr(StruSyzNoFld)
+'For Each I In Itr(StruSyzNoFld)
 '    PushI B_Stru_NoFld, FmtQQ(Msg_Stru_NoFld, JnSpc(B_LnoAyzStru(LnkImpSrc, CStr(I))), I)
-Next
+'Next
 End Function
-Private Function B_Stru_NoStru(StruSy$()) As String()
-If Si(StruSy) > 0 Then Exit Function
-B_Stru_NoStru = Sy("There is no Stru.XXX")
+Private Function B_Stru_NoStru$(IsNoStru As Boolean)
+If IsNoStru Then B_Stru_NoStru = M_Stru_NoStru
 End Function
 Private Function B_Stru_DupFld(A As DupFlds) As String()
 Dim J%
@@ -288,9 +286,9 @@ End Function
 Private Function B_TblWh_DupTbl() As String()
 
 End Function
-Private Function B_Stru_DupFld_PerStru$(Stru$, StruIx As FEIx)
-Dim A As FEIx
-'If Not B_Stru_DupFld_FEIxHasDupFld(Stru) Then Exit Function
+Private Function B_Stru_DupFld_PerStru$(Stru$, StruIx As Fei)
+Dim A As Fei
+'If Not B_Stru_DupFld_FeiHasDupFld(Stru) Then Exit Function
 
 End Function
 
@@ -317,7 +315,7 @@ Private Function B_Stru_ExcessStru() As String()
 End Function
 
 
-Private Function B_Stru_MisExtNm(MisExtNy$()) As String()
+Private Function B_Stru_MisExtNm(MisExtny$()) As String()
 End Function
 
 Private Function B_Stru_MisFldTy() As String()

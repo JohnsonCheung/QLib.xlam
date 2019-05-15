@@ -62,13 +62,13 @@ Function HasT2(Lin, T2) As Boolean
 HasT2 = T2zS(Lin) = T2
 End Function
 Function HitLikss(S, Likss) As Boolean
-HitLikss = HitLikSy(S, SyzSS(Likss))
+HitLikss = HitLikAy(S, SyzSS(Likss))
 End Function
 
-Function HitLikSy(S, LikeAy$()) As Boolean
+Function HitLikAy(S, LikAy$()) As Boolean
 Dim Lik
-For Each Lik In Itr(LikeAy)
-    If S Like Lik Then HitLikSy = True: Exit Function
+For Each Lik In Itr(LikAy)
+    If S Like Lik Then HitLikAy = True: Exit Function
 Next
 End Function
 
@@ -76,15 +76,17 @@ Function HitAp(V, ParamArray Ap()) As Boolean
 Dim Av(): Av = Ap
 HitAp = HasEle(Av, V)
 End Function
-Function HitNmStr(S, WhStr$, Optional NmPfx$) As Boolean
-HitNmStr = HitNm(S, WhNmzStr(WhStr, NmPfx))
+Function HitNmStr(S, WhNmStr$) As Boolean
+HitNmStr = HitNm(S, WhNmzS(WhNmStr))
 End Function
-Function HitNm(S, B As WhNm) As Boolean
+Function HitNm(S, A As WhNm) As Boolean
 HitNm = True
-If B.IsEmp Then Exit Function
-If HitLikSy(S, B.ExlLikSy) Then HitNm = False: Exit Function
-If HitRe(S, B.Re) Then Exit Function
-If HitLikSy(S, B.LikeAy) Then Exit Function
+With A
+If .IsEmp Then Exit Function
+If HitLikAy(S, .ExlLikAy) Then HitNm = False: Exit Function
+If HitRe(S, .Re) Then Exit Function
+If HitLikAy(S, .LikAy) Then Exit Function
+End With
 HitNm = False
 End Function
 Function HitAy(V, Ay) As Boolean

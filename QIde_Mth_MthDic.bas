@@ -1,11 +1,13 @@
 Attribute VB_Name = "QIde_Mth_MthDic"
 Option Explicit
-Private Const CMod$ = "MIde_Mth_Dic."
-Private Const Asm$ = "QIde"
+Const CMod$ = "MIde_Mth_Dic."
+Const Asm$ = "QIde"
+Public Const DoczSMdDic$ = "SMdDic is Sorted-Mdn-To-SrcLines."
+
 Function MthDiczP(P As VBProject) As Dictionary
 Dim C As VBComponent
 For Each C In P.VBComponents
-    PushDic MthDiczP, MthDic(C.CodeModule)
+    PushDic MthDiczP, MthDiczM(C.CodeModule)
 Next
 End Function
 
@@ -19,24 +21,10 @@ Function SMthDIczM(A As CodeModule) As Dictionary
 Set SMthDIczM = SrtDic(MthDiczM(A))
 End Function
 
-Private Sub Z_PjMthDic()
-Dim A As Dictionary, V, K
-Set A = Pj_MthDic(CPj)
-Ass IsDiczSy(A) '
-For Each K In A
-    If InStr(K, ".") > 0 Then Stop
-    If Si(A(K)) = 0 Then Stop
-Next
-End Sub
-
-Private Sub Z_PjMthDic1()
-Dim A As Dictionary, V, K
-Set A = Pj_MthDic(CPj)
-Ass IsDiczSy(A) '
-For Each K In A
-    If InStr(K, ".") > 0 Then Stop
-    If Si(A(K)) = 0 Then Stop
-Next
+Private Sub ZZ_MthDiczP()
+Dim A As Dictionary: Set A = MthDiczP(CPj)
+Ass IsDicOfLines(A) '
+Vc A
 End Sub
 
 Private Sub ZZ_MthDicM()
@@ -56,31 +44,19 @@ End If
 Set CSMthDicP = Y
 End Function
 
-Function MthDicByDicDic(MthDicWiTopRmk As Dictionary, TopRmkDic As Dictionary) As Dictionary
-Dim K, O As New Dictionary
-For Each K In MthDicWiTopRmk.Keys
-    If TopRmkDic.Exists(K) Then
-        O.Add K, TopRmkDic(K) & vbCrLf & MthDicWiTopRmk(K)
-    Else
-        O.Add K, MthDicWiTopRmk(K)
-    End If
-Next
-Set MthDicByDicDic = O
-End Function
-
 Function MthDicM() As Dictionary
-Set MthDicM = MthDic(CMd)
+Set MthDicM = MthDiczM(CMd)
 End Function
 
 Private Function MthDnzLin$(Lin)
-MthDnzLin = MthDnzMthn3(Mthn3zLin(Lin))
+MthDnzLin = MthDnzMthn3(Mthn3zL(Lin))
 End Function
 
-Function MthDiczSN(Src$(), Mdn) As Dictionary 'Key is MthDn, Val is MthLinesWiTopRmk
+Function MthDic(Src$(), Optional Mdn$) As Dictionary 'Key is MthDn, Val is MthLinesWiTopRmk
 Dim Ix, Lines$, Dn$
-Set MthDiczSN = New Dictionary
-Dim P$: P = Mdn & "."
-With MthDiczSN
+Set MthDic = New Dictionary
+Dim P$: If Mdn <> "" Then P = Mdn & "."
+With MthDic
     .Add P & "*Dcl", Dcl(Src)
     For Each Ix In MthIxItr(Src)
         Dn = MthDnzLin(Src(Ix))
@@ -90,50 +66,50 @@ With MthDiczSN
 End With
 End Function
 
-Function MthDic(A As CodeModule) As Dictionary
-Set MthDic = MthDiczSN(Src(A), Mdn(A))
+Function MthDiczM(M As CodeModule) As Dictionary
+Set MthDiczM = MthDic(Src(M), Mdn(M))
 End Function
 
 Function LineszJnLinesItr$(LinesItr, Optional Sep$ = vbCrLf)
 LineszJnLinesItr = Jn(IntozItr(EmpSy, LinesItr), Sep)
 End Function
-
+Function SMthDiczP(P As VBProject) As Dictionary
+Set SMthDiczP = SrtDic(MthDiczP(P))
+End Function
 Function SMthDicP() As Dictionary
 Set SMthDicP = SMthDiczP(CPj)
 End Function
 
-Function SMthDiczP1(P As VBProject) As Dictionary
-Set SMthDiczP1 = SrtDic(MthDiczP(P))
+Function SSrcLineszS$(Src$())
+SSrcLineszS = JnStrDic(SrtDic(MthDic(Src)), vbDblCrLf)
 End Function
 
-Function SSrcDicM() As Dictionary
-Set SSrcDicM = SSrcDic(CSrc)
+Function SSrcLineszM$(A As CodeModule)
+SSrcLineszM = SSrcLineszS(Src(A))
 End Function
 
-Function SSrcDic(Src$(), Mdn) As Dictionary
-Set SSrcDic = SrtDic(SrcDic(Src, Mdn))
+Function SrcLineszM$(A As CodeModule)
+If A.CountOfLines > 0 Then
+    SrcLineszM = A.Lines(1, A.CountOfLines)
+End If
 End Function
 
-Function SSrcDiczM$(A As CodeModule)
-SrtedSrcLineszMd = JnCrLf(SrcSrt(Src(A)))
-End Function
-
-Sub BrwSrtRptzMd(A As CodeModule)
-Dim Old$: Old = SrcLineszMd(A)
-Dim NewLines$: NewLines = SrtedSrcLineszMd(A)
+Sub BrwSrtRptzM(A As CodeModule)
+Dim Old$: Old = SrcLineszM(A)
+Dim NewLines$: NewLines = SSrcLineszM(A)
 Dim O$: O = IIf(Old = NewLines, "(Same)", "<====Diff")
 Debug.Print Mdn(A), O
 End Sub
 
-Sub BrwSrtedMdDic()
-BrwDic SrtedMdDicP(CPj)
+Sub BrwSMdDiczP()
+BrwDic SMdDiczP(CPj)
 End Sub
 
-Sub RplPj(P As VBProject, MdDic As Dictionary)
-Dim Mdn
-For Each Mdn In MdDic.Keys
+Sub RplPj(A As RplgPj)
+Dim Mdn, J&
+For J = 0 To A.RplgMds.N - 1
     If Mdn <> "MIde_Srt" Then
-        RplMd MdzPN(P, Mdn), MdDic(Mdn)
+        RplMd A.RplgMds.Ay(J)
     End If
 Next
 End Sub
@@ -142,35 +118,53 @@ Sub SrtP()
 SrtzP CPj
 End Sub
 Sub SrtM()
-SrtMd CMd
+SrtzM CMd
 End Sub
 Sub SrtMd()
-SrtMdzM CMd
+SrtzM CMd
 End Sub
-Sub SrtMdzM(A As CodeModule)
-RplMd A, SrtedSrcLineszMd(A)
-Exit Sub
-Dim Nm$: Nm = Mdn(A)
-Debug.Print "Sorting: "; AlignL(Nm, 20); " ";
-Dim LinesN$: LinesN = SrtedSrcLineszMd(A)
-Dim LinesO$: LinesO = SrcLineszMd(A)
-'Exit if same
-    If LinesO = LinesN Then
-        Debug.Print "<== Same"
-        Exit Sub
-    End If
-'Delete
-    Debug.Print FmtQQ("<--- Deleted (?) lines", A.CountOfLines);
-    ClrMd A
-'Add sorted lines
-    A.AddFromString LinesN
-    Debug.Print "<----Sorted Lines added...."
+
+Sub SrtzM(M As CodeModule)
+With SomSrtgzM(M)
+    If .Som Then RplMd .RplgMd
+End With
 End Sub
 
 Private Sub SrtzP(P As VBProject)
 BackupFfn Pjf(P)
-RplPj P, MdygPOfSrt(P)
+RplPj SrtgzP(P)
 End Sub
+
+Function SrtgzP(P As VBProject) As RplgPj
+Dim O As RplgPj, M As CodeModule
+Set O.Pj = P
+Dim C As VBComponent
+For Each C In P.VBComponents
+    Set M = C.CodeModule
+    With SomSrtgzM(M)
+        If .Som Then
+            PushRplgMd O.RplgMds, .RplgMd
+        End If
+    End With
+Next
+End Function
+
+Function SomSrtgzM(M As CodeModule) As SomRplgMd
+Dim Srted$
+    Dim S$(): S = Src(M)
+    Srted = SSrcLineszS(S)
+Dim NotSrted$
+    NotSrted = JnCrLf(S)
+If Srted = NotSrted Then Exit Function
+SomSrtgzM = SomRplgMd(RplgMd(M, Srted))
+End Function
+
+Function SomRplgMd(RplgMd As RplgMd) As SomRplgMd
+With SomRplgMd
+    .Som = True
+    .RplgMd = RplgMd
+End With
+End Function
 
 Private Sub ZZ_Dcl_BefAndAft_Srt()
 Const Mdn = "VbStrRe"
@@ -179,7 +173,7 @@ Dim B$() ' Src->Srt
 Dim A1$() 'Src->Dcl
 Dim B1$() 'Src->Src->Dcl
 A = Src(Md(Mdn))
-B = SrcSrt(A)
+B = SrtSrc(A)
 A1 = DclLy(A)
 B1 = DclLy(B)
 Stop
@@ -204,7 +198,7 @@ Ass:
     Debug.Print Mdn(Md); vbTab;
     Dim BefSrt$(), AftSrt$()
     BefSrt = Src(Md)
-    AftSrt = SplitCrLf(SrtedSrcLineszMd(Md))
+    AftSrt = SplitCrLf(SSrcLineszM(Md))
     If JnCrLf(BefSrt) = JnCrLf(AftSrt) Then
         Debug.Print "Is Same of before and after sorting ......"
         Return

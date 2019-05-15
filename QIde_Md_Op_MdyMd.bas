@@ -9,23 +9,23 @@ With A
     .DeleteLines 1, .CountOfLines
 End With
 End Sub
-Function LinzFEIx$(A As FEIx)
+Function LinzFei$(A As Fei)
 With A
-LinzFEIx = "FmEndIx " & .FmIx & " " & .EIx
+LinzFei = "FmEndIx " & .FmIx & " " & .EIx
 End With
 End Function
-Function LyzFEIxs(A As FEIxs) As String()
+Function LyzFeis(A As Feis) As String()
 Dim J&
 For J = 0 To A.N - 1
-    PushI LyzFEIxs, J & " " & LinzFEIx(A.Ay(J))
+    PushI LyzFeis, J & " " & LinzFei(A.Ay(J))
 Next
 End Function
 
-Sub DltLinzF(A As CodeModule, B As FEIxs)
-If Not IsFEIxsInOrd(B) Then Thw CSub, "Given FEIxs is not in order", "FEIxs", LyzFEIxs(B)
+Sub DltLinzF(A As CodeModule, B As Feis)
+If Not IsFeisInOrd(B) Then Thw CSub, "Given Feis is not in order", "Feis", LyzFeis(B)
 Dim J%
 For J = B.N - 1 To 0 Step -1
-    With FCntzFEIx(B.Ay(J))
+    With FCntzFei(B.Ay(J))
         A.DeleteLines .FmLno, .Cnt
     End With
 Next
@@ -35,64 +35,54 @@ Function CntSiStrzMd$(A As CodeModule)
 CntSiStrzMd = CntSiStrzLines(SrcLines(A))
 End Function
 
-Sub RplMd(A As CodeModule, NewMdLines$)
-'RplLines A, MdLineszMd(A), NewMdLines
+Sub RplMd(A As RplgMd)
+ClrMd A.Md
+A.Md.InsertLines 1, A.NewLines
 End Sub
 
-Sub DltLinzFEIx(A As CodeModule, B As FEIx, OldLines$)
+Sub DltLinzFei(A As CodeModule, B As Fei, OldLines$)
 Stop
 Dim FstLin
-'FstLin = A.Lines(FEIx.FmNo, 1)
+'FstLin = A.Lines(Fei.FmNo, 1)
 With B
 '    If .Cnt = 0 Then Exit Sub
 '    A.DeleteLines .FmNo, .Cnt
 End With
 End Sub
 
-Sub DltLinzFEIxs(A As CodeModule, B As FEIxs)
-If Not IsFEIxsInOrd(B) Then Stop
+Sub DltLinzFeis(A As CodeModule, B As Feis)
+If Not IsFeisInOrd(B) Then Stop
 Dim J&
 For J = B.N - 1 To 0 Step -1
 '    DltLinzFEITx B.Ay(J)
 Next
 End Sub
 
-Private Sub Z_DltLinzFEIxs()
-Dim A As FEIxs
-'A = MthFEIxszMth(Md("Md_"), "XXX")
-DltLinzFEIxs Md("Md_"), A
+Private Sub Z_DltLinzFeis()
+Dim A As Feis
+'A = MthFeiszMth(Md("Md_"), "XXX")
+DltLinzFeis Md("Md_"), A
 End Sub
 
 Sub MdyMdzMM(A As CodeModule, B As Mdyg)
 With B
 Select Case .Act
-Case EiIns: InsLinzMI A, .Ins
-Case EiDlt: DltLinzMD A, .Dlt
-Case EiRpl: RplLinzMR A, .Rpl
+Case EiIns: InsLinzM A, .Ins
+Case EiDlt: DltLinzM A, .Dlt
 Case Else: Thw CSub, "Unexpected Act.  Should be Ins or Rpl only", "Act", Act
 End Select
 End With
 End Sub
-Sub InsLinzMI(A As CodeModule, Ins As InsgLin)
-
+Sub InsLinzM(A As CodeModule, B As Insg)
+InsLines A, B.Lno, B.Lin
 End Sub
-Sub DltLinzMD(A As CodeModule, Dlt As DltgLin)
-
-End Sub
-Sub RplLinzMR(A As CodeModule, Rpl As RplgLin)
-
-End Sub
-Sub InsLinzInsg(A As CodeModule, B As InsgLin)
-InsLin A, B.Lno, B.Lines
+Sub DltLinzM(A As CodeModule, B As Dltg)
+If A.Lines(B.Lno, 1) <> B.Lin Then Thw CSub, "Ept-Lin <> Act-Lin", "Md At-Lno# Ept-Lin Act-Lin", Mdn(A), B.Lno, B.Lin, A.Lines(B.Lno, 1)
+A.DeleteLines B.Lno
 End Sub
 
 Sub InsLines(A As CodeModule, Lno, Lines$)
-A.InsertLines Lno, Lin
-End Sub
-
-Sub RplLin(A As CodeModule, Lno, OldLin$, NewLin$)
-If A.Lines(Lno, 1) <> OldLines Then Thw CSub, "Md-Lin <> OldLno", "Md Lno Md-Lin OldLin NewLin", Mdn(A), Lno, A.Lines(Lno, 1), OldLines
-A.ReplaceLine Lno, NewLines
+A.InsertLines Lno, Lines
 End Sub
 
 Sub RplLines(A As CodeModule, Lno, NLin, OldLines$, NewLines$)
@@ -101,8 +91,8 @@ InsLines A, Lno, NewLines
 End Sub
 
 Sub DltLines(A As CodeModule, Lno, NLin, OldLines$)
-Dim LinesFmMd$: LinesFmMd = A.Lines(Lno, NLin)
-If LinesFmMd <> OldLines Then Thw CSub, "Lines from Md <> OldLines", "Md Lno Lines-from-Md OldLines", Mdn(A), Lno, LinFmMd, OldLin
+Dim OldLinesFmMd$: OldLinesFmMd = A.Lines(Lno, NLin)
+If OldLinesFmMd <> OldLines Then Thw CSub, "Lines from Md <> OldLines", "Md Lno Lines-from-Md OldLines", Mdn(A), Lno, OldLinesFmMd, OldLines
 A.DeleteLines Lno, NLin
 End Sub
 

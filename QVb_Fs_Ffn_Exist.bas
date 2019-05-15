@@ -3,14 +3,7 @@ Option Explicit
 Private Const CMod$ = "MVb_Fs_Ffn_Exist."
 Private Const Asm$ = "QVb"
 
-Sub AsgFfnExistMisAset(OExistFfn As Aset, OMisFfn As Aset, Ffny$())
-With FfnExist_FmFfny_ToExistNy_AndMisNy(Ffny)
-    Set OExistFfn = AsetzAy(.Sy1)
-    Set OMisFfn = AsetzAy(.Sy2)
-End With
-End Sub
-
-Sub FfnExist_FmFfny_ToExist_AndMis(Ffny$(), OExist$(), OMis$())
+Sub FfnExist_IntoExist_AndMis(Ffny$(), OExist$(), OMis$())
 Dim Ffn
 Erase OExist
 Erase OMis

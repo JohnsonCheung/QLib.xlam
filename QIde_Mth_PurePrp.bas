@@ -20,21 +20,21 @@ Next
 End Function
 
 Function ImPurePrpLyzMd(A As CodeModule) As String()
-ImPurePrpLyzMd = ImPurePrpLyzSrc(Src(A))
+ImPurePrpLyzMd = ImPurePrpLyzS(Src(A))
 End Function
 
-Private Sub Z_ImPurePrpLyzSrc()
-Brw ImPurePrpLyzSrc(SrczMdn("MXls_Lo_LofVbl"))
+Private Sub Z_ImPurePrpLyzS()
+Brw ImPurePrpLyzS(SrczMdn("MXls_Lo_LofVbl"))
 End Sub
 
-Function ImPurePrpLyzSrc(Src$()) As String()
+Function ImPurePrpLyzS(Src$()) As String()
 Dim L$, I, M$(), S As New Aset
-M = MthLinyzSrc(Src)
+M = MthLinyzS(Src)
 Set S = LetSetPrpNset(M)
 For Each I In Itr(M)
     L = I
     If IsImPurePrpLin(L, S) Then
-        PushI ImPurePrpLyzSrc, L
+        PushI ImPurePrpLyzS, L
     End If
 Next
 End Function
@@ -70,14 +70,14 @@ Next
 End Function
 
 Function PurePrpLyAyzMd(A As CodeModule) As Variant()
-PurePrpLyAyzMd = PurePrpLyAyzSrc(Src(A))
+PurePrpLyAyzMd = PurePrpLyAyzS(Src(A))
 End Function
 
-Function PurePrpLyAyzSrc(Src$()) As Variant()
+Function PurePrpLyAyzS(Src$()) As Variant()
 Dim Ix&, I
 For Each I In Itr(IxyzPurePrp(Src))
     Ix = I
-'    PushI PurePrpLyAyzSrc, MthLyBySrcFm(Src, Ix)
+'    PushI PurePrpLyAyzS, MthLyBySrcFm(Src, Ix)
 Next
 End Function
 Function PurePrpNy(A As CodeModule) As String()
@@ -100,7 +100,7 @@ Set LetSetPrpNset = O
 End Function
 
 Private Function LetSetPrpNm$(Lin)
-With Mthn3(Lin)
+With Mthn3zL(Lin)
     Select Case .ShtTy
     Case "Set", "Let": LetSetPrpNm = .Nm: Exit Function
     End Select

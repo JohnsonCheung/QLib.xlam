@@ -8,18 +8,18 @@ Type SLnoy
     S As String
     Lnoy() As Long
 End Type
-Type SLnoys: N As Integer: Ay() As SLnoy: End Type
+Type SLnoys: N As Long: Ay() As SLnoy: End Type
 Type SIxy
     S As String
     Ixy() As Long
 End Type
-Type SIxys: N As Integer: Ay() As SIxy: End Type
+Type SIxys: N As Long: Ay() As SIxy: End Type
 Type Lnx
     Lin As String
     Ix As Long
 End Type
 Type Lnxs: N As Long: Ay() As Lnx: End Type
-Type Lnxses: N As Integer: Ay() As Lnxs: End Type
+Type Lnxses: N As Long: Ay() As Lnxs: End Type
 Type LnxsRslt: Er() As String: Lnxs As Lnxs: End Type
 Type SomLnx
     Som As Boolean
@@ -109,7 +109,7 @@ Next
 End Function
 
 Function BrwLnxs(A As Lnxs)
-B LyzLnxszWiLno(A)
+B FmtLnxsWiLno(A)
 End Function
 
 Sub BrwSIxys(A As SIxys)
@@ -329,26 +329,26 @@ Function DupT1ErzLnxs(A As Lnxs) As String()
 
 End Function
 Function DupT2AyzLnxs(A As Lnxs) As String()
-DupT2AyzLnxs = AywDup(T2Sy(LyzLnxs(A)))
+DupT2AyzLnxs = AywDup(T2Ay(LyzLnxs(A)))
 End Function
 
-Function LnxszWhT1Sy(A As Lnxs, T1Ay$()) As Lnxs
+Function LnxswT1Ay(A As Lnxs, T1Ay$()) As Lnxs
 Dim J&
 For J = 0 To A.N - 1
     With A.Ay(J)
-    If Not HasEle(T1Ay, T1(.Lin)) Then PushLnx LnxszWhT1Sy, A.Ay(J)
+    If Not HasEle(T1Ay, T1(.Lin)) Then PushLnx LnxswT1Ay, A.Ay(J)
     End With
 Next
 End Function
 
-Function LyzLnxszWiLno(A As Lnxs) As String()
+Function FmtLnxsWiLno(A As Lnxs) As String()
 Dim J&, O$()
 For J = 0 To A.N - 1
     With A.Ay(J)
     PushI O, FmtQQ("Lno#?:[?]", .Ix, .Lin)
     End With
 Next
-LyzLnxszWiLno = O ' AlignzBySepss(O, ":")
+FmtLnxsWiLno = O ' AlignzBySepss(O, ":")
 End Function
 
 Function ErzLnxsT1ss(A As Lnxs, T1ss$) As String()

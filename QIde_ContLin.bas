@@ -2,26 +2,36 @@ Attribute VB_Name = "QIde_ContLin"
 Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_ContLin."
-Function ContLinzMdLno$(A As CodeModule, Lno)
-Dim J&, L&
-L = Lno
-Dim O$: O = A.Lines(L, 1)
-While LasChr(O) = "_"
-    L = L + 1
-    O = RmvLasChr(O) & A.Lines(L, 1)
-Wend
-ContLinzMdLno = O
+Function ContLin$(Src$(), Ix)
+Dim O$, I&
+O = Src(Ix)
+For I = Ix + 1 To UB(Src)
+    If LasChr(O) <> "_" Then ContLin = O: Exit Function
+    O = RmvLasChr(O) & LTrim(Src(Ix))
+Next
+ThwImpossible CSub
 End Function
-Function NxtSrcIx&(Src$(), Optional Ix& = 0)
-Const CSub$ = CMod & "NxtSrcIx"
+
+Function ContLinzML$(M As CodeModule, Lno)
+Dim L&, O$
+O = M.Lines(Lno, 1)
+For L = Lno + 1 To M.CountOfLines
+    If LasChr(O) <> "_" Then ContLinzML = O: Exit Function
+    O = RmvLasChr(O) & LTrim(M.Lines(Lno, 1))
+Next
+ThwImpossible CSub
+End Function
+Function NxtSrcIx&(Src$(), Optional FmIx&)
 Dim J&
-For J = Ix To UB(Src)
-    If LasChr(Src(J)) <> "_" Then
-        NxtSrcIx = J + 1
+For J = FmIx + 1 To UB(Src)
+    If LasChr(Src(J - 1)) <> "_" Then
+        NxtSrcIx = J
         Exit Function
     End If
 Next
-Thw CSub, "All line From Ix is Src has _ as LasChr", "Ix Src", Ix, AddIxPfx(Src, 1)
+'No need to throw error, just exit it returns -1
+'Thw CSub, "Cannot find Lno where to insert CSub of a given method", "Mthn MthLy", A.Mthn, AywFT(Src, A.FmIx, A.EIx)
+NxtSrcIx = -1
 End Function
 
 Private Sub Z_ContLin()
@@ -65,14 +75,14 @@ For J = Ix To UB(Src)
 Next
 Thw CSub, "LasLin of Src cannot be end of [_]", "LasLin-Of-Src Src", LasEle(Src), Src
 End Function
+Function JnContLin$(ContLy)
+Dim J%, L$, O$()
+PushI O, ContLy(0)
+For J = 1 To UB(ContLy) - 1
 
-Function ContLin$(Src$(), Ix)
-ContLin = JnContLin(CvSy(AywIxCnt(Src, Ix, ContLinCnt(Src, Ix))))
-Else
-    ContLin = JnCrLf(AywIxCnt(Src, Ix, ContLinCnt(Src, Ix)))
-End If
+    PushI O, ContLy(J)
+Next
 End Function
-
 
 Private Function ContToLno(A As CodeModule, Lno)
 Dim J&
@@ -84,13 +94,4 @@ For J = Lno To A.CountOfLines
 Next
 ThwImpossible CSub ' CSub, "each lines ends with sfx _ started from Lno, which is impossible", "Md Started-Fm-Lno", Mdn(A), Lno
 End Function
-
-Function ContLinzML$(A As CodeModule, Lno)
-Dim J&, O$()
-For J = Lno To ContToLno(A, Lno)
-    PushI O, RmvSfx(A.Lines(J, 1), "_")
-Next
-ContLinzML = JnSpc(O)
-End Function
-
 

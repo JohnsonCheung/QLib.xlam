@@ -1,10 +1,7 @@
 Attribute VB_Name = "QVb_Dta_Lpm"
-Type Lpm
-    DicK_ToSy As Dictionary 'Its name is LpmDic
-End Type
-Function Lpm(PmStr$, LpmSpec$) As Lpm
+Function Lpm(PmStr$, LpmSpec$) As Dictionary
 Dim O As New Dictionary
-Lpm.DicK_ToSy = O
+Set Lpm.DicK_ToSy = O
 Dim Ay$(): Ay = SyzSS(PmStr)
     Dim I, S$
     Dim CurPmNm$
@@ -12,67 +9,58 @@ Dim Ay$(): Ay = SyzSS(PmStr)
         S = I
         If FstChr(S) = "-" Then
             CurPmNm = RmvFstChr(S)
-            PushPmNm CurPmNm
+            LpmPushPmNm O, CurPmNm
         Else
-            PushPm CurPmNm, S
+            LpmPushPm O, CurPmNm, S
         End If
     Next
-Set Init = Me
 ThwIf_LpmEr O, LpmSpec
 End Function
-Private Sub ThwIf_LpmEr(LpmDic As Dictionary, LpmSpec$)
+Private Sub ThwIf_LpmEr(Lpm As Dictionary, LpmSpec$)
 
 End Sub
-Private Sub PushPmNm(LpmDic As Dictionary, PmNm$)
-If Dic.Exists(PmNm) Then Exit Sub
-Dic.Add PmNm, Sy()
+Private Sub LpmPushPmNm(Lpm As Dictionary, PmNm$)
+If Lpm.Exists(PmNm) Then Exit Sub
+Lpm.Add PmNm, Sy()
 End Sub
 
-Function WhNm(Optional NmPfx$) As WhNm
-Set WhNm = QIde_Wh.WhNm(Patn(NmPfx), LikeAy(NmPfx), ExlLikSy(NmPfx))
+Function WhNmzLpm(Lpm As Dictionary) As WhNm
+WhNmzLpm = WhNm(LpmPatn(Lpm, NmPfx), LpmLikAy(Lpm, NmPfx), LpmExlLikAy(Lpm, NmPfx))
 End Function
 
-Function HasSw(SwNm) As Boolean
-HasSw = HasEle(SwNy, SwNm)
+Function LpmHasSw(Lpm As Dictionary, SwNm) As Boolean
+LpmHasSw = HasEle(LpmSwNy(Lpm), SwNm)
 End Function
-Property Get SwNy() As String()
+Function LpmSwNy(Lpm As Dictionary) As String()
 Dim K, V
-For Each K In Dic.Keys
-    V = Dic(K)
-    If IsSy(Dic(K)) Then
+For Each K In Lpm.Keys
+    V = Lpm(K)
+    If IsSy(Lpm(K)) Then
         PushI SwNy, K
     End If
 Next
-End Property
-Function SwNm$(Nm)
-If HasSw(Nm) Then SwNm = Nm
 End Function
-Property Get Cnt%()
-Cnt = Dic.Count
-End Property
-Function HasPm(PmNm$) As Boolean
-HasPm = Dic.Exists(PmNm)
-End Function
-Private Sub PushPm(Nm$, Optional V$)
+
+Private Sub LpmPushPm(Lpm As Dictionary, Nm$, Optional V$)
 Dim J%, S$()
-If HasPm(Nm) Then
+If Lpm.Exists(Nm) Then
     If V = "" Then Exit Sub
-    S = Dic(Nm)
+    S = Lpm(Nm)
     PushI S, V
-    Dic(Nm) = S
+    Lpm(Nm) = S
 Else
-    Dic.Add Nm, Sy(V)
+    Lpm.Add Nm, Sy(V)
 End If
 End Sub
-Sub Dmp()
-D Fmt
+Sub DmpLpm(Lpm As Dictionary)
+D FmtLpm(Lpm)
 End Sub
-Function Fmt() As String()
+Function FmtLpm(Lpm As Dictionary) As String()
 Dim PmNm, O$()
-For Each PmNm In Dic.Keys
-    PushI O, FmtzNmSy(PmNm, CvSy(Dic(PmNm)))
+For Each PmNm In A.Keys
+    PushI O, FmtzNmSy(PmNm, CvSy(Lpm(PmNm)))
 Next
-Fmt = AlignzBySepss(O, "ValCnt Val(")
+FmtLpm = AlignzBySepss(O, "ValCnt Val(")
 End Function
 
 Private Function FmtzNmSy$(PmNm, Sy$())
@@ -82,36 +70,30 @@ Case Else: FmtzNmSy = FmtQQ("Pm(?) ValCnt(?) Val(?)", PmNm, Si(Sy), JnSpc(Sy))
 End Select
 End Function
 
-Function LikeAy(NmPfx) As String()
-LikeAy = SyPmVal(NmPfx & "LikeAy")
+Function LpmLikAy(Lpm As Dictionary, NmPfx) As String()
+LmpLikAy = LpmSyVal(Lpm, NmPfx & "LikAy")
 End Function
 
-Function ExlLikSy(NmPfx) As String()
-ExlLikSy = SyPmVal(NmPfx & "ExlLikSy")
+Function LpmExlLikAy(Lpm As Dictionary, NmPfx) As String()
+LmpExlLikAy = LpmSyVal(Lpm, NmPfx & "ExlLikAy")
 End Function
 
-Function SyPmVal(PmNm, Optional NmPfx$) As String()
-If Dic.Exists(NmPfx & PmNm) Then
-    SyPmVal = Dic(PmNm)
+Function LpmSyVal(Lpm As Dictionary, PmNm) As String()
+If Lpm.Exists(NmPfx & PmNm) Then
+    LpmSyVal = Lpm(PmNm)
 End If
 End Function
-Function StrPmVal$(PmNm, Optional NmPfx$)
-Const CSub$ = CMod & "StrPmVal"
+Function LpmStrVal$(Lpm As Dictionary, PmNm)
 Dim Vy$()
-    Vy = SyPmVal(PmNm, NmPfx)
+    Vy = LpmSyVal(Lpm, PmNm)
 Select Case Si(Vy)
 Case 0
-Case 1: StrPmVal = Vy(0)
-Case Else: Thw CSub, FmtQQ("Parameter [-?] should have one value", PmNm), "Pm PmValSz ValzPm-Sy", Fmt, Si(Vy), Vy
+Case 1: LpmStrVal = Vy(0)
+'Case Else: Thw CSub, FmtQQ("Parameter [-?] should have one value", PmNm), "Pm PmValSz ValzPm-Sy", Fmt, Si(Vy), Vy
 End Select
 End Function
-Function Patn$(NmPfx)
-Patn = StrPmVal(NmPfx & "Patn")
+Function LpmPatn$(Lpm As Dictionary, NmPfx)
+Patn = LpmStrVal(Lpm, NmPfx & "Patn")
 End Function
-
-Private Sub Class_Initialize()
-Set Dic = New Dictionary
-Dic.CompareMode = TextCompare
-End Sub
 
 

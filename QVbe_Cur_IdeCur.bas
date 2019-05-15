@@ -11,24 +11,25 @@ End Property
 Property Get CMthn()
 CMthn = MthnzM(CMd)
 End Property
+Function WinyzV(V As Vbe) As vbide.Window
+End Function
+Function WinyV() As vbide.Window()
+WinyV = WinyzV(CVbe)
+End Function
 
-Property Get CCdWiny() As VBIDE.Window()
-CCdWiny = Winyw(CWiny, vbext_wt_CodeWindow)
-End Property
-
-Property Get CWin() As VBIDE.Window
+Function CWin() As vbide.Window
 Dim A As CodePane
 Set A = CPne
-If IsNothing(A) Then Exit Property
+If IsNothing(A) Then Exit Function
 Set CWin = A.Window
-End Property
+End Function
 
-Property Get CPne() As VBIDE.CodePane
+Property Get CPne() As vbide.CodePane
 Set CPne = CVbe.ActiveCodePane
 End Property
 Property Get CMthLin()
 Dim A As CodeModule: Set A = CMd
-Dim Lno: Lno = CurLno
+Dim Lno: Lno = CLno
 Dim J&
 For J = Lno To 1 Step -1
     If IsMthLin(A.Lines(J, 1)) Then

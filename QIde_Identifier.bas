@@ -52,48 +52,49 @@ Function NyzStr(S) As String()
 NyzStr = SyeNonNm(SyzSS(RplLf(RplCr(RplPun(S)))))
 End Function
 
-Function PMthnzRlModNyP() As Rel
-Set PMthnzRlModNyP = PMthzRlModNyzP(CPj)
+Function RelOfPMthn_ToMdny_P() As Rel
+Set RelOfPMthn_ToMdny_P = RelOfPMthn_ToMdny_zP(CPj)
 End Function
-Function MthnzRlCmlV(Optional WhStr$) As Rel
-Set MthnzRlCmlV = MthnzRlCmlzV(CVbe, WhStr)
+Function RelOfMthn_ToCml_V() As Rel
+Set RelOfMthn_ToCml_V = RelOfMthn_ToCml_zV(CVbe)
 End Function
-Function MthnzRlCmlzV(A As Vbe, Optional WhStr$) As Rel
+
+Function RelOfMthn_ToCml_zV(A As Vbe) As Rel
 Dim O As New Rel, I
-For Each I In MthNyzV(A, WhStr)
+For Each I In MthnyzV(A)
     O.PushRelLin CmlLin(I)
 Next
-Set MthnzRlCmlzV = O
+Set RelOfMthn_ToCml_zV = O
 End Function
-Function PMthzRlModNyzP(P As VBProject) As Rel
-Dim C, S$(), O As New Rel, Mthn, Modn, Cmp As VBComponent, B As WhMth
-Set B = WhMthzStr("-Pub")
-For Each C In CmpItr(P, "-Mod")
+
+Function RelOfPMthn_ToMdny_zP(P As VBProject) As Rel
+Dim C As VBComponent, S$(), O As New Rel, Mthn, Modn, Cmp As VBComponent, B As WhMth
+For Each C In P.VBComponents
     Set Cmp = C
     Modn = Cmp.Name
     S = Src(Cmp.CodeModule)
-    For Each Mthn In Itr(MthnyzSrc(S, B))
-        O.PushParChd Mthn, Modn
+    For Each Mthn In Itr(MthnyzS(S))
+        O.PushParChd Mthn, C.Name
     Next
 Next
-Set PMthzRlModNyzP = O
+Set RelOfPMthn_ToMdny_zP = O
 End Function
-Function MthnzRlMdnzP(P As VBProject) As Rel
+Function RelOfMthn_ToMdny_zP(P As VBProject) As Rel
 Dim C As VBComponent, O As New Rel, Mthn, Mdn
 For Each C In P.VBComponents
     Mdn = C.Name
-    For Each Mthn In Itr(MthnyzSrc(Src(C.CodeModule)))
+    For Each Mthn In Itr(MthnyzS(Src(C.CodeModule)))
         O.PushParChd Mthn, Mdn
     Next
 Next
-Set MthnzRlMdnzP = O
+Set RelOfMthn_ToMdny_zP = O
 End Function
 Function MthnzRlMdnP() As Rel
 Static O As Rel
-If IsNothing(O) Then Set O = MthnzRlMdnzP(CPj)
+If IsNothing(O) Then Set O = RelOfMthn_ToMdny_zP(CPj)
 Set MthnzRlMdnP = O
 End Function
-Function MthExtNy(MthPjDotMdn, PMthLy$(), PMthn_To_PjDotModNy As Dictionary) As String()
+Function MthExtny(MthPjDotMdn, PMthLy$(), PMthn_To_PjDotModNy As Dictionary) As String()
 Dim Cxt$: Cxt = JnSpc(MthCxtLy(PMthLy))
 Dim Ny$(): Ny = NyzStr(Cxt)
 Dim Nm
@@ -102,7 +103,7 @@ For Each Nm In Itr(Ny)
         Dim PjDotModNy$():
             PjDotModNy = AyeEle(PMthn_To_PjDotModNy(Nm), MthPjDotMdn)
         If HasEle(PjDotModNy, Nm) Then
-            PushI MthExtNy, Nm
+            PushI MthExtny, Nm
         End If
     End If
 Next

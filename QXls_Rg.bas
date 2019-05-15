@@ -102,7 +102,11 @@ End Sub
 Function RgCEnt(A As Range, C) As Range
 Set RgCEnt = RgC(A, C).EntireColumn
 End Function
-
+Function NxtCellBelow(A As Range) As Range
+Dim O As Range: Set O = RgRC(A, 2, 1)
+If IsEmpty(O.Value) Then Exit Function
+Set NxtCellBelow = O
+End Function
 Function RgC(A As Range, C) As Range
 Set RgC = RgCC(A, C, C)
 End Function

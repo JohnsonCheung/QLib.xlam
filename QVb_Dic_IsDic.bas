@@ -2,75 +2,66 @@ Attribute VB_Name = "QVb_Dic_IsDic"
 Option Explicit
 Private Const CMod$ = "MVb_Dic_Is."
 Private Const Asm$ = "QVb"
-Function IsDiczEmp(A As Dictionary) As Boolean
-IsDiczEmp = A.Count = 0
+Function IsEmpDic(A As Dictionary) As Boolean
+IsEmpDic = A.Count = 0
 End Function
-Function TyNy(Ay) As String()
+Function TyNmAy(Ay) As String()
 Dim V
 For Each V In Itr(Ay)
-    PushI TyNy, TypeName(V)
+    PushI TyNmAy, TypeName(V)
 Next
 End Function
-Function VyzNy(A As Dictionary, Ny$()) As Variant()
-VyzNy = Vy(DicwNy(A, Ny))
+Function VyzDKy(D As Dictionary, Ky) As Variant()
+Dim K
+For Each K In Itr(Ky)
+    If Not D.Exists(K) Then Thw CSub, "Some N in Ny not found in Dic.Keys", "[N in Ny not fnd in Dic.Keys] DicKeys Ky", K, AvzItr(D.Keys), Ky
+    Push VyzDKy, D(K)
+Next
 End Function
-Function DicwNy(A As Dictionary, Ny$()) As Dictionary
-Set DicwNy = New Dictionary
-Dim N
-For Each N In Ny
-    If Not A.Exists(N) Then Thw CSub, "Some N in Ny not found in Dic.Keys", "[N in Ny not fnd in Dic.Keys] DicKeys Ny", N, AvzItr(A.Keys), Ny
-    DicwNy.Add N, A(N)
+Function DicwKy(D As Dictionary, Ky) As Dictionary
+Set DicwKy = New Dictionary
+Dim Vy(): Vy = VyzDKy(D, Ky)
+Dim K, J&
+For Each K In Itr(Ky)
+    DicwKy.Add K, Vy(J)
+    J = J + 1
 Next
 End Function
 Function Vy(A As Dictionary) As Variant()
 Vy = IntozItr(EmpAv, A.Items)
 End Function
-Function TyNyzDic(A As Dictionary) As String()
-TyNyzDic = TyNy(Vy(A))
+Function TyNmAyzDic(A As Dictionary) As String()
+TyNmAyzDic = TyNmAy(Vy(A))
 End Function
-Function IsDiczSy(A As Dictionary) As Boolean
+
+Function IsDicOfSy(A As Dictionary) As Boolean
 Dim D As Dictionary, I, V
 If Not IsDic(A) Then Exit Function
-IsDiczSy = IsItrzSy(CvDic(A).Items)
-End Function
-Function IsDiczLines2(A As Dictionary) As Boolean
-If Not IsAllStrAy(A.Keys) Then Exit Function
-IsDiczLines2 = IsItrzLines(A.Items)
+IsDicOfSy = IsItrOfSy(CvDic(A).Items)
 End Function
 
-Function IsDiczLines(A As Dictionary) As Boolean
-If Not IsDiczPrim(A) Then Exit Function
-IsDiczLines = True
-If IsItrzLines(A.Items) Then Exit Function
-If IsItrzLines(A.Keys) Then Exit Function
-IsDiczLines = False
+Function IsDicOfLines(A As Dictionary) As Boolean
+IsDicOfLines = True
+If IsItrOfLines(A.Items) Then Exit Function
+If IsItrOfStr(A.Keys) Then Exit Function
+IsDicOfLines = False
 End Function
-Function IsDiczPrim(A As Dictionary) As Boolean
-If Not IsItrzPrim(A.Keys) Then Exit Function
-IsDiczPrim = IsItrzPrim(A.Items)
+Function IsDicOfPrim(A As Dictionary) As Boolean
+If Not IsItrOfPrim(A.Keys) Then Exit Function
+IsDicOfPrim = IsItrOfPrim(A.Items)
 End Function
-Function IsDiczStr(A As Dictionary) As Boolean
-If Not IsItrzStr(A.Keys) Then Exit Function
-IsDiczStr = IsItrzStr(A.Items)
-End Function
-
-Private Function IsDiczLines1(A As Dictionary) As Boolean
-IsDiczLines1 = True
-Dim K
-For Each K In A.Keys
-    If IsLines(K) Then Exit Function
-    If IsLines(A(K)) Then Exit Function
-Next
-IsDiczLines1 = False
+Function IsDicOfStr(A As Dictionary) As Boolean
+If Not IsItrOfStr(A.Keys) Then Exit Function
+IsDicOfStr = IsItrOfStr(A.Items)
 End Function
 
 Function DicTy$(A As Dictionary)
 Dim O$
 Select Case True
-Case IsDiczEmp(A):   O = "EmpDic"
-Case IsDiczStr(A):   O = "StrDic"
-Case IsDiczLines(A): O = "LineszDic"
-Case IsDiczSy(A):    O = "SyDic"
+Case IsEmpDic(A):   O = "EmpDic"
+Case IsDicOfStr(A):   O = "StrDic"
+Case IsDicOfLines(A): O = "LineszDic"
+Case IsDicOfSy(A):    O = "SyDic"
 Case Else:           O = "Dic"
 End Select
 End Function

@@ -127,17 +127,17 @@ Dim EBet$(): EBet = Sy(EBet1)
 B = Sy(ELo, EAli, EBdr, ETot, EWdt, EFmt, ELvl, ECor, EFml, ELbl, ETit, EBet)
 End Function
 Function FnywLikssAy(Fny$(), LikssAy$()) As String()
-Dim F$, I, LikeAy$()
-LikeAy = TermAsetzTLiny(LikssAy).Sy
+Dim F$, I, LikAy$()
+LikAy = TermAsetzTLiny(LikssAy).Sy
 For Each I In Itr(Fny)
     F = I
-    If HitLikSy(F, LikeAy) Then PushI FnywLikssAy, F
+    If HitLikAy(F, LikAy) Then PushI FnywLikssAy, F
 Next
 End Function
 Private Sub Init(Lof$(), LoFny$())
 A.Lof = Lof
 A.Fny = LoFny
-A.KLxs = KLxs(A.Lof, LofT1nn)
+'A.KLxs = KLxs(A.Lof, LofT1nn)
 End Sub
 Private Function WAli_LeftRightCenter() As String()
 'ErzAli_LinErz = WMsgzAliLin(SyeT1Sy(Ali, "Left Right Center"))
@@ -150,7 +150,7 @@ Dim Lc As ListColumn
 End Function
 Private Function ErzBdr1(X$) As String()
 'Return FldAy from Bdr & X
-'Dim FldssAy$(): FldssAy = SSSyzAy(SywRmvT1(Bdr, X))
+'Dim FldssAy$(): FldssAy = SSSyzAy(AywRmvT1(Bdr, X))
 End Function
 Private Function B_EBdr_Dup() As String()
 'ErzBdrDup = WMsgzDup(DupT1(Bdr), Bdr)

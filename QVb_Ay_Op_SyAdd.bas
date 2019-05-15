@@ -13,10 +13,10 @@ AddAy = A
 PushAy AddAy, B
 End Function
 
-Function TyNyzAy(Ay) As String()
+Function TynyzAy(Ay) As String()
 Dim I
 For Each I In Itr(Ay)
-    PushI TyNyzAy, TypeName(I)
+    PushI TynyzAy, TypeName(I)
 Next
 End Function
 

@@ -13,7 +13,7 @@ End Function
 Function WhMthzStr(WhStr$) As WhMth
 Dim ShtMdy$(), ShtKd$()
 Const C$ = ""
-Dim A As Lpm: Set A = Lpm(WhStr, C)
+Dim A As Dictionary: Set A = Lpm(WhStr, C)
 With A
     PushNonBlank ShtMdy, .SwNm("Pub")
     PushNonBlank ShtMdy, .SwNm("Prv")
@@ -22,14 +22,13 @@ With A
     PushNonBlank ShtKd, .SwNm("Fun")
     PushNonBlank ShtKd, .SwNm("Prp")
 End With
-Set WhMthzStr = WhMth(ShtMdy, ShtKd, WhNmzStr(WhStr, "Mth"))
+WhMthzStr = WhMth(ShtMdy, ShtKd, WhNmzS(WhStr))
 End Function
 
-Function WhMdMth(Optional Md As WhMd, Optional Mth As WhMth) As WhMdMth
-Set WhMdMth = New WhMdMth
+Function WhMdMth(WhMd As WhMd, WhMth As WhMth) As WhMdMth
 With WhMdMth
-    Set .Md = Md
-    Set .Mth = Mth
+    .WhMd = WhMd
+    .WhMth = WhMth
 End With
 End Function
 
@@ -46,17 +45,16 @@ Dim O As New WhMth
 Set WhMth = O.Init(ShtMdy, ShtKd, Nm)
 End Function
 
-Function WhPjMth(Optional Pj As WhNm, Optional MdMth As WhMdMth) As WhPjMth
-Set WhPjMth = New WhPjMth
+Function WhPjMth(Pj As WhNm, Md As WhMdMth) As WhPjMth
 With WhPjMth
-    Set .Pj = Pj
-    Set .MdMth = MdMth
+    Set .WhPjNm = Pj
+    Set .WhMdMth = Md
 End With
 End Function
 
-Function WhNm(Patn$, LikeAy$(), ExlLikSy$()) As WhNm
+Function WhNm(Patn$, LikAy$(), ExlLikAy$()) As WhNm
 Dim O As New WhNm
-Set WhNm = O.Init(Patn, LikeAy, ExlLikSy)
+Set WhNm = O.Init(Patn, LikAy, ExlLikAy)
 End Function
 
 Function WhMd(CmpTy() As vbext_ComponentType, Nm As WhNm) As WhMd

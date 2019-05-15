@@ -1,7 +1,7 @@
 Attribute VB_Name = "QDta_Dta_Ds"
 Option Explicit
 Private Const CMod$ = "BDs."
-Type Ds: DsNm As String: N As Integer: Ay() As Dt: End Type
+Type Ds: DsNm As String: N As Long: Ay() As Dt: End Type
 Sub AddDt(O As Ds, M As Dt)
 If HasDt(O, M.DtNm) Then Err.Raise 1, , FmtQQ("DsAddDt: Ds[?] already has Dt[?]", O.DsNm, M.DtNm)
 PushDt O, M

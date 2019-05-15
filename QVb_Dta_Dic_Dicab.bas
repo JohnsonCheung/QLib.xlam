@@ -4,6 +4,6 @@ Public Type Dicab
     B As Dictionary
 End Type
 Function Dicab(A As Dictionary, B As Dictionary) As Dicab
-ThwIf_Nothing A, CSub
-ThwIf_Nothing B, CSub
+ThwIf_Nothing A, "DicA", CSub
+ThwIf_Nothing B, "DicB", CSub
 End Function

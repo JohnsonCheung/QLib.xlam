@@ -25,31 +25,31 @@ Set MthDnToMdDNmRelInVbe = MthDnToMdDNmRelzV(CVbe)
 End Property
 
 Private Function MthDnToMdDNmRelzV(A As Vbe) As Rel
-Set MthDnToMdDNmRelzV = RelzDotLy(MthQNyzV(A))
+Set MthDnToMdDNmRelzV = RelzDotLy(QMthnyzV(A))
 End Function
 Property Get MthVNsetInVbe() As Aset
 Set MthVNsetInVbe = AsetzAy(MthVNyInVbe)
 End Property
 
-Function MthQVNsetInVbe(Optional WhStr$) As Aset
-Dim Ay$(): Ay = MthQVNyInVbe(WhStr)
+Function MthQVNsetInVbe() As Aset
+Dim Ay$(): Ay = MthQVNyInVbe
 Set MthQVNsetInVbe = AsetzAy(Ay)
 End Function
 
-Sub VcMthQVNsetInVbe(Optional WhStr$)
-MthQVNsetInVbe(WhStr).Srt.Vc
+Sub VcMthQVNsetInVbe()
+MthQVNsetInVbe.Srt.Vc
 End Sub
 
-Sub VcMthQVNyInVbe(Optional WhStr$)
-AsetzAy(MthQVNyInVbe(WhStr)).Srt.Vc
+Sub VcMthQVNyInVbe()
+AsetzAy(MthQVNyInVbe).Srt.Vc
 End Sub
 
-Function MthQVNyInVbe(Optional WhStr$) As String() '6204
-MthQVNyInVbe = MthQVNyzV(CVbe, WhStr)
+Function MthQVNyInVbe() As String() '6204
+MthQVNyInVbe = MthQVNyzV(CVbe)
 End Function
 
-Function MthQVNyzV(A As Vbe, Optional WhStr$) As String()
-MthQVNyzV = QVNy(MthNyzV(A, WhStr))
+Function MthQVNyzV(A As Vbe) As String()
+MthQVNyzV = QVNy(MthnyzV(A))
 End Function
 
 Function QVNy(Ny$()) As String()
@@ -112,7 +112,7 @@ Property Get NVTDNyInVbe() As String()
 NVTDNyInVbe = NVTDNyzV(CVbe)
 End Property
 Private Function NVTDNyzV(A As Vbe) As String()
-NVTDNyzV = NVTDNy(MthNyzV(A))
+NVTDNyzV = NVTDNy(MthnyzV(A))
 End Function
 Private Function NVTDNy(Ny$()) As String()
 Dim Nm$, I

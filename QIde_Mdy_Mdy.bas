@@ -4,23 +4,24 @@ Enum EmMdyg
     EiIns
     EiDlt
 End Enum
-Type InsgLin
+Type Insg
     Lno As Long
     Lin As String
 End Type
-Type DltgLin
+Type Dltg
     Lno As Long
-    OldLin As String
+    Lin As String
 End Type
 Type Mdyg
     Act As EmMdyg
-    Ins As InsgLin
-    Dlt As DltgLin
+    Ins As Insg
+    Dlt As Dltg
 End Type
-Type Mdygs: N As Integer: Ay() As Mdyg: End Type
-Type MdygMd: Md As CodeModule: MdgyLins As Mdygs: End Type
-Type MdygMds: N As Integer: Ay() As MdygMd: End Type
-Type MdygPj: Pj As VBProject: MdygMds As MdygMds: End Type
+Type Mdygs: N As Long: Ay() As Mdyg: End Type
+Type RplgMd: Md As CodeModule: NewLines As String: End Type
+Type SomRplgMd: Som As Boolean: RplgMd As RplgMd: End Type
+Type RplgMds: N As Long: Ay() As RplgMd: End Type
+Type RplgPj: Pj As VBProject: RplgMds As RplgMds: End Type
 
 Function AddMdygs(A As Mdygs, B As Mdygs) As Mdygs
 AddMdygs = A
@@ -47,31 +48,32 @@ Function SngMdyg(A As Mdyg) As Mdygs
 PushMdyg SngMdyg, A
 End Function
 
-Sub MdyMds(A As MdygMds)
+Sub MdyMds(A As RplgMds)
 Dim J%
 For J = 0 To A.N - 1
     MdyMd A.Ay(J)
 Next
 End Sub
 
-Sub PushMdygMd(O As MdygMds, M As MdygMd)
+Sub PushRplgMd(O As RplgMds, M As RplgMd)
 ReDim Preserve O.Ay(O.N)
 O.Ay(O.N) = M
 O.N = O.N + 1
 End Sub
 
-Function LyzMdygMds(A As MdygMds) As String()
+Function FmtRplgMds(A As RplgMds) As String()
 Dim J%
 For J = 0 To A.N - 1
-    PushIAy LyzMdygMds, LyzMdygMd(A.Ay(J))
+    PushI FmtRplgMds, FmtRplgMd(A.Ay(J))
 Next
 End Function
-Sub VcMdygMds(A As MdygMds)
-Vc FmtMdygMds(A)
+
+Sub VcRplgMds(A As RplgMds)
+Vc FmtRplgMds(A)
 End Sub
-Function FmtMdygMd(A As MdygMd) As String()
-PushI FmtMdygMd, "Md=" & Mdn(A.Md)
-PushIAy FmtMdygMd, FmtMdygs(A.MdgyLins)
+
+Function FmtRplgMd$(A As RplgMd)
+PushI FmtRplgMd, "Md=" & Mdn(A.Md) & vbCrLf & A.NewLines
 End Function
 Function FmtMdygs(A As Mdygs) As String()
 For J = 0 To A.N - 1
@@ -79,24 +81,23 @@ For J = 0 To A.N - 1
 Next
 Stop
 End Function
-Function FmtDltgLin$(A As DltgLin)
+Function FmtDltg$(A As Dltg)
 With A
-    FmtDltgLin = "Dlt " & .Lno & " " & .OldLines
+    FmtDltg = "Dlt " & .Lno & " " & .Lin
 End With
 End Function
-Function FmtInsgLin$(A As InsgLin)
+Function FmtInsg$(A As Insg)
 With A
-    FmtInsgLin = "Ins " & .Lno & " " & .Lines
+    FmtInsg = "Ins " & .Lno & " " & .Lin
 End With
 End Function
 Function FmtMdyg$(A As Mdyg)
 Dim O$
 With A
 Select Case True
-Case .Act = EiDlt: O = FmtDltgLin(.Dlt)
-Case .Act = EiIns: O = FmtInsgLin(.Ins)
+Case .Act = EiDlt: O = FmtDltg(.Dlt)
+Case .Act = EiIns: O = FmtInsg(.Ins)
 Case .Act = EiNop: O = "Nop"
-Case .Act = EiRpl: O = FmtRplgLin(.Rpl)
 Case Else: ThwImpossible CSub
 End Select
 End With
@@ -105,22 +106,16 @@ Debug.Print O
 Stop
 End Function
 
-Function FmtMdygMds(A As MdygMds) As String()
-Dim J&
-For J = 0 To A.N - 1
-    PushIAy FmtMdygMds, FmtMdygMd(A.Ay(J))
-Next
-End Function
-Sub BrwMdygMds(A As MdygMds)
-B FmtMdygMds(A)
+Sub BrwRplgMds(A As RplgMds)
+BrwLinesAy FmtRplgMds(A)
 End Sub
 
-Sub BrwMdygMd(A As MdygMd)
-B FmtMdygMd(A)
+Sub BrwRplgMd(A As RplgMd)
+B FmtRplgMd(A)
 End Sub
 
-Function MdygMd(A As CodeModule, B As Mdygs) As MdygMd
-Set MdygMd.Md = A
-MdygMd.MdgyLins = B
+Function RplgMd(M As CodeModule, NewLines$) As RplgMd
+Set RplgMd.Md = M
+RplgMd.NewLines = NewLines
 End Function
 

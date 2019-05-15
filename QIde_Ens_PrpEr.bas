@@ -91,7 +91,7 @@ Next
 IxOfOnEr = -1
 End Function
 
-Private Sub Z_EnsPrpOnerzSrc()
+Private Sub Z_EnsPrpOnerzS()
 Dim Src$()
 Const TstId& = 2
 GoSub ZZ
@@ -103,18 +103,18 @@ T1:
     GoTo Tst
     Return
 Tst:
-    Act = EnsPrpOnErzSrc(Src)
+    Act = EnsPrpOnErzS(Src)
     C
     Return
 ZZ:
-    Src = CurSrc
-    Vc EnsPrpOnErzSrc(Src)
+    Src = CSrc
+    Vc EnsPrpOnErzS(Src)
     Return
 End Sub
 
 Private Function SrcOptOfEnsprpOnEr(Src$()) As LyOpt ' Ret None is no change in Src
 If Si(Src) = 0 Then Exit Function
-Dim D As Dictionary: Set D = MthDic(Src, WiTopRmk:=True)
+Dim D As Dictionary: 'Set D = MthDic(Src, WiTopRmk:=True)
 Dim Mthn, MthLin, MthLyWiTopRmk$()
 Dim O$(): Erase O
 If D.Exists("*Dcl") Then
@@ -140,9 +140,9 @@ If Si(O) = 0 Then Thw CSub, "O$() should have something"
 SrcOptOfEnsprpOnEr = SomLy(O)
 End Function
 
-Private Function EnsPrpOnErzSrc(Src$()) As String()
+Private Function EnsPrpOnErzS(Src$()) As String()
 If Si(Src) = 0 Then Exit Function
-Dim D As Dictionary: Set D = MthDic(Src, WiTopRmk:=True)
+Dim D As Dictionary: 'Set D = MthDic(Src, WiTopRmk:=True)
 Dim Mthn, MthLin, MthLyWiTopRmk$()
 Dim O$(): Erase O
 If D.Exists("*Dcl") Then
@@ -165,7 +165,7 @@ For Each Mthn In D.Keys
     End If
 Next
 If Si(O) = 0 Then Thw CSub, "O$() should have something"
-EnsPrpOnErzSrc = O
+EnsPrpOnErzS = O
 End Function
 
 Function TopRmkLyAndMthLy(MthLyWiTopRmk$()) As TopRmkLyAndMthLy
@@ -199,7 +199,7 @@ For Each C In P.VBComponents
     S = Src(C.CodeModule)
     If Si(S) > 0 Then
         Old = JnCrLf(S)
-        N = JnCrLf(EnsPrpOnErzSrc(S))
+        N = JnCrLf(EnsPrpOnErzS(S))
         If Old <> N Then
             O.Add C.Name, N
         End If
@@ -266,11 +266,11 @@ IxOfOnEr(PurePrpLy), _
 IxOfLblX(PurePrpLy))
 RmvPrpOnErzPurePrpLy = CvSy(AyeIxy(PurePrpLy, L))
 End Function
-Private Function RmvPrpOnzSrc(Src$()) As String()
+Private Function RmvPrpOnzS(Src$()) As String()
 
 End Function
 Private Sub RmvPrpOnErzMd(A As CodeModule)
-RplMd A, JnCrLf(RmvPrpOnzSrc(Src(A)))
+'RplMd A, JnCrLf(RmvPrpOnzS(Src(A)))
 End Sub
 
 Sub RmvPrpOnErM()
@@ -278,7 +278,7 @@ RmvPrpOnErzMd CMd
 End Sub
 
 Sub EnsPrpOnErzMd(A As CodeModule)
-RplMd A, JnCrLf(EnsPrpOnErzSrc(Src(A)))
+'RplMd A, JnCrLf(EnsPrpOnErzS(Src(A)))
 End Sub
 
 Sub EnsPrpOnErM()

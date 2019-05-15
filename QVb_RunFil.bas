@@ -8,20 +8,20 @@ Enum EmWaitRslt
 End Enum
 Type WaitOpt
     TimOutSec As Integer
-    ChkIntervalDeciSec As Integer
+    ChkSec As Integer
     KeepFcmd As Boolean
 End Type
 
-Function WaitOpt(TimOutSec%, ChkIntervalDeciSec%, KeepFcmd As Boolean) As WaitOpt
+Function WaitOpt(TimOutSec%, ChkSec%, KeepFcmd As Boolean) As WaitOpt
 With WaitOpt
 .TimOutSec = TimOutSec
-.ChkIntervalDeciSec = ChkIntervalDeciSec
+.ChkSec = ChkSec
 .KeepFcmd = KeepFcmd
 End With
 End Function
 
-Property Get DftWaitOpt() As WaitOpt
-DftWaitOpt = WaitOpt(30, 5, False)
+Property Get DftWait() As WaitOpt
+DftWait = WaitOpt(30, 5, False)
 End Property
 
 Sub KillProcessId(ProcessId&)
@@ -37,7 +37,7 @@ Function WaitFcmdw(Fcmdw$, W As WaitOpt, Optional Sty As VbAppWinStyle = VbAppWi
 'Return True, if Fcmdw has generated the Fwaitg
 Dim ProcessId&: ProcessId = Shell(Fcmdw, Sty)
 Dim Fw$: Fw = Fwaitg(Fcmdw)
-If WaitFwaitg(Fw, W.ChkIntervalDeciSec, W.TimOutSec) Then
+If WaitFwaitg(Fw, W.ChkSec, W.TimOutSec) Then
     Kill Fw
     WaitFcmdw = True
 Else
@@ -46,15 +46,15 @@ End If
 If Not W.KeepFcmd Then Kill Fcmdw
 End Function
 
-Private Function WaitFwaitg(Fwaitg$, Optional ChkIntervalDeciSec% = 10, Optional TimOutSec% = 60, Optional Sty As VbAppWinStyle = VbAppWinStyle.vbMaximizedFocus) As Boolean _
+Private Function WaitFwaitg(Fwaitg$, Optional ChkSec% = 10, Optional TimOutSec% = 60, Optional Sty As VbAppWinStyle = VbAppWinStyle.vbMaximizedFocus) As Boolean _
 'Return True, if Fwaitg is found.
 Dim J%
-For J = 1 To TimOutSec \ ChkIntervalDeciSec
+For J = 1 To TimOutSec \ ChkSec
     If HasFfn(Fwaitg) Then
         Kill Fwaitg
         Exit Function
     End If
-    If Not Wait(ChkIntervalDeciSec%) Then Exit Function
+    If Not Wait(ChkSec%) Then Exit Function
 Next
 End Function
 

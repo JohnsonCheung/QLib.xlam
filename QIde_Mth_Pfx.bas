@@ -8,14 +8,14 @@ Ass MthPfx("Add_Cls") = "Add"
 End Sub
 
 Private Sub ZZ_MthPfx()
-'Dim Ay$(): Ay = MthNyzV(CVbe)
+'Dim Ay$(): Ay = MthnyzV(CVbe)
 'Dim Ay1$(): Ay1 = SyzMapAy(Ay, "MthPfx")
 'ShwWs AyabWs(Ay, Ay1)
 End Sub
 
 Function MthPfxSyzMd(A As CodeModule) As String()
 Dim N
-For Each N In Itr(MthnyzMd(A))
+For Each N In Itr(MthnyzM(A))
     PushI MthPfxSyzMd, MthPfx(N)
 Next
 End Function

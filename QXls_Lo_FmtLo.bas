@@ -51,14 +51,14 @@ End Select
 End Function
 
 Private Sub WAsgT1zFny(OT1, OFny$(), Lin)
-Dim FldLikSy$(): AsgT1FldLikSy OT1, FldLikSy, Lin
-OFny = WFnyzFldLikSy(FldLikSy)
+Dim FldLikAy$(): AsgT1FldLikAy OT1, FldLikAy, Lin
+OFny = WFnyzFldLikAy(FldLikAy)
 End Sub
-Private Function WFnyzFldLikSy(FldLikSy$()) As String()
+Private Function WFnyzFldLikAy(FldLikAy$()) As String()
 Dim F$, I
 For Each I In A.Fny
     F = I
-    If HitLikSy(F, FldLikSy) Then PushI WFnyzFldLikSy, F
+    If HitLikAy(F, FldLikAy) Then PushI WFnyzFldLikAy, F
 Next
 End Function
 'Bdr -----------------------------------------------------------
@@ -226,7 +226,7 @@ Private Function WCol(F) As Range
 Set WCol = A.Lo.ListColumns(F).DataBodyRange.EntireColumn
 End Function
 Private Function WLy(T1) As String()
-WLy = SywRmvT1(A.Lof, T1)
+WLy = AywRmvT1(A.Lof, T1)
 End Function
 Private Function WItr(T1)
 Asg WLy(T1), WItr

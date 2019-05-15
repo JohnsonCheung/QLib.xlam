@@ -63,12 +63,12 @@ M = ShfTermDot(L)
 MthFLin = JnDotAp(P, T, M, MthFLinzMthLin(L))
 End Function
 
-Function MthFLyInVbe(Optional WhStr$) As String()
-MthFLyInVbe = MthFLyzV(CVbe, WhStr)
+Function MthFLyInVbe() As String()
+MthFLyInVbe = MthFLyzV(CVbe)
 End Function
 
-Function MthFLyzV(A As Vbe, Optional WhStr$) As String()
-MthFLyzV = MthFLy(MthQLyzV(A, WhStr))
+Function MthFLyzV(A As Vbe) As String()
+MthFLyzV = MthFLy(MthQLyzV(A))
 End Function
 
 Function MthFLy(MthQLy$()) As String()
@@ -97,12 +97,12 @@ Else
 End If
 End Function
 
-Function ShtRetTyAsetInVbe(Optional WhStr$) As Aset
-Set ShtRetTyAsetInVbe = ShtRetTyAsetzV(CVbe, WhStr)
+Function ShtRetTyAsetInVbe() As Aset
+Set ShtRetTyAsetInVbe = ShtRetTyAsetzV(CVbe)
 End Function
 
-Function ShtRetTyAsetzV(A As Vbe, Optional WhStr$) As Aset
-Set ShtRetTyAsetzV = ShtRetTyAset(MthLinyzV(A, WhStr))
+Function ShtRetTyAsetzV(A As Vbe) As Aset
+Set ShtRetTyAsetzV = ShtRetTyAset(MthLinyzV(A))
 End Function
 
 Function ShtRetTyAset(MthLiny$()) As Aset

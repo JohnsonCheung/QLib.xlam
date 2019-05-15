@@ -17,7 +17,7 @@ End Sub
 
 Sub AsgT1SyRestSy(Sy$(), OT1Sy$(), ORestSy$())
 OT1Sy = T1Ay(Sy)
-ORestSy = RmvT1zSy(Sy)
+ORestSy = RmvT1zAy(Sy)
 End Sub
 
 Function VcAy(Ay, Optional Fnn$)
@@ -70,7 +70,7 @@ Dim O1$()
             Exit For
         End If
     Next
-If IsEmp(O1) Then Exit Function
+'If IsEmp(O1) Then Exit Function
 Dim O2$()
     Push O2, FmtQQ("Array [?] and [?] both having size[?] have differnt element(s):", N1, N2, Si(Ay1))
     If ReachLimit Then
@@ -172,7 +172,7 @@ End Function
 
 Function NxtFn$(Fn$, FnAy$(), Optional MaxN% = 999)
 If Not HasEle(FnAy, Fn) Then NxtFn = Fn: Exit Function
-NxtFn = MaxzAy(SywLik(FnAy, Fn & "(???)"))
+NxtFn = MaxzAy(AywLik(FnAy, Fn & "(???)"))
 End Function
 
 Function ItrzLines(Lines$)
@@ -241,9 +241,10 @@ Next
 ReverseOy = O
 End Function
 
-Function RplAyzMid(Ay, B As FEIx, ByAy)
-Dim M As Ayabc: Set M = AyabcByFEIx(Ay, B)
-RplAyzMid = AddAyAp(M.A, ByAy, M.C)
+Function RplAyzMid(Ay, B As Fei, ByAy)
+With AyabczAyFei(Ay, B)
+RplAyzMid = AddAyAp(.A, ByAy, .C)
+End With
 End Function
 
 Function SampLinzAy$(Ay)
@@ -303,7 +304,7 @@ Sqv = O
 End Function
 
 Function AywT1SelRst(Sy$(), T1) As String()
-AywT1SelRst = RmvT1zSy(AywT1(Sy, T1))
+AywT1SelRst = RmvT1zAy(AywT1(Sy, T1))
 End Function
 
 Function IndentSy(Sy$(), Optional Indent% = 4) As String()
@@ -428,18 +429,13 @@ Dim ODry()
 AyZip_Ap = ODry
 End Function
 
-Function StrAddSy(S, Sy$()) As String()
-StrAddSy = CvSy(ItmAddAy(S, Sy))
-End Function
-
-
 Function ItmAddAy(Itm, Ay)
 ItmAddAy = AyInsEle(Ay, Itm)
 End Function
 
-Private Sub ZZZ_AyabcByFmTo()
+Private Sub ZZ_AyabczAyFE()
 Dim Ay(): Ay = Array(1, 2, 3, 4)
-Dim Act As Ayabc: Act = AyabcByFmTo(Ay, 1, 2)
+Dim Act As Ayabc: Act = AyabczAyFE(Ay, 1, 2)
 Ass IsEqAy(Act.A, Array(1))
 Ass IsEqAy(Act.B, Array(2, 3))
 Ass IsEqAy(Act.C, Array(4))
@@ -513,10 +509,10 @@ Private Sub Z_ChkEqAy()
 DmpAy ChkEqAy(Array(1, 2, 3, 3, 4), Array(1, 2, 3, 4, 4))
 End Sub
 
-Private Sub Z_AyabcByFEIxIx()
+Private Sub Z_AyabczAyFei()
 Dim Ay(): Ay = Array(1, 2, 3, 4)
-Dim M As FEIx: M = FEIx(1, 2)
-Dim Act As Ayabc: Act = AyabcByFEIx(Ay, M)
+Dim M As Fei: M = Fei(1, 2)
+Dim Act As Ayabc: Act = AyabczAyFei(Ay, M)
 Ass IsEqAy(Act.A, Array(1))
 Ass IsEqAy(Act.B, Array(2, 3))
 Ass IsEqAy(Act.C, Array(4))
@@ -597,7 +593,6 @@ End Sub
 
 Private Sub ZZ()
 Z_AyFlat
-Z_AyabcByFEIxIx
 Z_HasEleDupEle
 Z_ChkEqAy
 Z_MinusAy
@@ -624,8 +619,8 @@ Function AddPfxzSslIn(Pfx$, SsLin) As String()
 AddPfxzSslIn = AddPfxzAy(SyzSS(SsLin), Pfx)
 End Function
 
-Function ItrzSsLin(SsLin)
-Asg Itr(SyzSS(SsLin)), ItrzSsLin
+Function ItrzSS(SsLin)
+Asg Itr(SyzSS(SsLin)), ItrzSS
 End Function
 
 Function SpcSepStr$(S)
@@ -654,9 +649,7 @@ For Each I In SyzSS(Ssl)
     PushI SyzSsl, RevSpcSepStr(CStr(I))
 Next
 End Function
-Function ItrzSS(SS)
-Asg SyzSS(SS), ItrzSS
-End Function
+
 Function SyzSS(SS) As String()
 SyzSS = SplitSpc(RplDblSpc(Trim(SS)))
 End Function

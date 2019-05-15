@@ -15,11 +15,11 @@ Function MthDnzN3(A As Mthn3)
 With A
 If .Nm = "" Then Exit Function
 MthDnzN3 = JnDotAp(.ShtMdy, .Nm, .ShtTy)
-End If
+End With
 End Function
 
-Function Mthn3zLin(Lin) As Mthn3
-Mthn3zLin = ShfMthn3(CStr(Lin))
+Function Mthn3zL(Lin) As Mthn3
+Mthn3zL = ShfMthn3(CStr(Lin))
 End Function
 Function ShfMthn3(OLin$) As Mthn3
 Dim M$: M = ShfShtMdy(OLin)
@@ -31,9 +31,9 @@ End Function
 Function HitMthn3(A As Mthn3, B As WhMth) As Boolean
 Select Case True
 Case A.Nm = "":
-Case IsNothing(B), B.IsEmp
+Case True 'IsEmpWhMth(B)
     HitMthn3 = True
-Case _
+Case True ' _
     Not HitNm(A.Nm, B.WhNm), _
     Not HitShtMdy(A.ShtMdy, B.ShtMthMdyAy), _
     Not HitAy(A.ShtTy, B.ShtTyAy)
@@ -77,12 +77,7 @@ Else
     Ty = MthTyBySht(ShtTy)
     Mdy = ShtMthMdy(ShtMdy)
 End If
-Set Mthn3zDNm = New Mthn3
-With Mthn3zDNm
-    .Nm = Nm
-    .MthMdy = Mdy
-    .MthTy = Ty
-End With
+Mthn3zDNm = Mthn3(Nm, Mdy, Ty)
 End Function
 
 

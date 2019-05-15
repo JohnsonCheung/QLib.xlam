@@ -233,7 +233,7 @@ Private Sub SetColr_ToDo()
 'AutoImp will show msg if import/noImport
 'ColrLy
 '   what is the common color name in DotNet Library
-'       Use Enums: System.Drawing.KnownColor is no good, because the EnmNm is in seq, it is not return
+'       Use Enums: System.Drawing.KnownColor is no good, because the Enmn is in seq, it is not return
 '       Use VBA.ColorConstants-module is good, but there is few constant
 '       Answer: Use *KnownColor to feed in struct-*Color, there is *Color.ToArgb & *KnownColor has name
 '               Run the FSharp program.

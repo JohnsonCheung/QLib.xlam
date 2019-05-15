@@ -95,7 +95,7 @@ IsLines = HasSubStr(V, vbLf)
 End Function
 
 Function IsLinesAy(V) As Boolean
-If Not IsAllStrAy(V) Then Exit Function
+If Not IsItrOfSy(V) Then Exit Function
 Dim L
 For Each L In Itr(V)
     If IsLines(L) Then IsLinesAy = True: Exit Function
@@ -265,5 +265,9 @@ For Each I In V
 Next
 IsAllBlankSy = True
 End Function
-
+Function IsBlankStr(V) As Boolean
+If IsStr(V) Then
+    If Trim(V) = "" Then IsBlankStr = True
+End If
+End Function
 

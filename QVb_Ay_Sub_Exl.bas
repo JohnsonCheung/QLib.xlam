@@ -129,9 +129,9 @@ Function AyeFstEle(Ay)
 AyeFstEle = AyeEleAt(Ay)
 End Function
 
-Function AyeFEIx(Ay, B As FEIx)
+Function AyeFei(Ay, B As Fei)
 With B
-    AyeFEIx = AyeFmTo(Ay, .FmIx, .EIx)
+    AyeFei = AyeFmTo(Ay, .FmIx, .EIx)
 End With
 End Function
 
@@ -146,8 +146,8 @@ End Function
 
 Function AyeIxy(Ay, Ixy)
 'Ixy holds index if Ay to be remove.  It has been sorted else will be stop
-Ass IsSrtAy(Ay)
-Ass IsSrtAy(Ixy)
+Ass IsSrtedAy(Ay)
+Ass IsSrtedAy(Ixy)
 Dim J&
 Dim O: O = Ay
 For J = UB(Ixy) To 0 Step -1
@@ -176,7 +176,7 @@ End Function
 Function SyeLik(Sy$(), Lik$) As String()
 SyeLik = SyePred(Sy, PredzLik(Lik))
 End Function
-Function PredzLikSy(LikSy$()) As IPred
+Function PredzLikAy(LikAy$()) As IPred
 
 End Function
 Function SyePred(Sy$(), P As IPred) As String()
@@ -187,8 +187,8 @@ For Each I In Itr(Sy)
     End If
 Next
 End Function
-Function SyeLikSy(Sy$(), LikSy$()) As String()
-SyeLikSy = SyePred(Sy, PredzLikSy(LikSy))
+Function SyeLikAy(Sy$(), LikAy$()) As String()
+SyeLikAy = SyePred(Sy, PredzLikAy(LikAy))
 End Function
 
 Function SyeLikssAy(Sy$(), LikssAy$()) As String()
@@ -272,22 +272,22 @@ Ass Si(Act) = 4
 Ass Act(3) = 1
 End Sub
 
-Private Sub Z_AyeFEIx()
+Private Sub Z_AyeFei()
 Dim Ay
-Dim FEIx1 As FEIx
+Dim Fei1 As Fei
 Dim Act
 Ay = SplitSpc("a b c d e")
-FEIx1 = FEIx(1, 2)
-Act = AyeFEIx(Ay, FEIx1)
+Fei1 = Fei(1, 2)
+Act = AyeFei(Ay, Fei1)
 Ass Si(Act) = 3
 Ass JnSpc(Act) = "a d e"
 End Sub
 
-Private Sub Z_AyeFEIx1()
+Private Sub Z_AyeFei1()
 Dim Ay
 Dim Act
 Ay = SplitSpc("a b c d e")
-Act = AyeFEIx(Ay, FEIx(1, 2))
+Act = AyeFei(Ay, Fei(1, 2))
 Ass Si(Act) = 3
 Ass JnSpc(Act) = "a d e"
 End Sub
@@ -308,8 +308,8 @@ End Sub
 Private Sub ZZ()
 Z_AyeAtCnt
 Z_AyeEmpEleAtEnd
-Z_AyeFEIx
-Z_AyeFEIx1
+Z_AyeFei
+Z_AyeFei1
 Z_AyeIxy
 MVb_AySub_Exl:
 End Sub

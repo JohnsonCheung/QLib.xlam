@@ -2,33 +2,37 @@ Attribute VB_Name = "QIde_Ens_CModSub"
 Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Ens_CSub."
+Type MdMdyg
+    Md As CodeModule
+    Mdygs As Mdygs
+End Type
 
-Private Function EnsgCModSub(A As CodeModule) As MdygMd
-Dim S$():                     S = Src(A)
+Private Function EnsgCModSub(A As CodeModule) As MdMdyg
+Dim S$():                  S = Src(A)
 Dim MC As Mdygs:          MC = EnsgCSubs(S, MthRgs(S))               'MC = Mdyg-CSub
 Dim MM As Mdyg:           MM = EnsgCMod(DclLy(S), IsUsingCMod(MC))   'MM = Mdyg-CMod
 Dim M As Mdygs:            M = AddMdygs(SngMdyg(MM), MC)
-                    EnsgCModSub = MdygMd(A, M)
+                 EnsgCModSub = MdMdyg(M, M)
 End Function
 
 Private Sub Z_EnsgCModSubzP()
-Dim Pj As VBProject, Act As MdygMds, Ept As MdygMds
+Dim Pj As VBProject, Act As RplgMds, Ept As RplgMds
 GoSub ZZ
 Exit Sub
 ZZ:
-    BrwMdygMds EnsgCModSubzP(CPj)
+    BrwRplgMds EnsgCModSubzP(CPj)
     Return
 Tst:
     Act = EnsgCModSub(Pj)
-    Brw LyzMdygMds(Act): Stop
+    Brw LyzRplgMds(Act): Stop
     Return
 End Sub
 
-Private Function EnsgCModSubzP(P As VBProject) As MdygMds
+Private Function EnsgCModSubzP(P As VBProject) As RplgMds
 If P.Protection = vbext_pp_locked Then Thw CSub, "Pj is locked", "Pj", P.Name
 Dim C As VBComponent
 For Each C In P.VBComponents
-    PushMdygMd MdygMdszEnsCMSub, EnsgCModSub(C.CodeModule) '<===
+    PushRplgMd RplgMdszEnsCMSub, EnsgCModSub(C.CodeModule) '<===
 Next
 End Function
 
@@ -83,19 +87,6 @@ For Ix = FmIx + 1 To EIx - 2
 Next
 End Function
 
-Function NxtSrcIx&(Src$(), Optional FmIx&)
-Dim J&
-For J = FmIx + 1 To UB(Src)
-    If LasChr(Src(J - 1)) <> "_" Then
-        NxtSrcIx = J
-        Exit Function
-    End If
-Next
-'No need to throw error, just exit it returns -1
-'Thw CSub, "Cannot find Lno where to insert CSub of a given method", "Mthn MthLy", A.Mthn, AywFT(Src, A.FmIx, A.EIx)
-NxtSrcIx = -1
-End Function
-
 Private Function IsUsingCMod(EnsgCSubs As Mdygs) As Boolean
 Dim J%
 For J = 0 To EnsgCSubs.N - 1
@@ -135,25 +126,48 @@ CModCnstLin = FmtQQ("Private Const CMod$ = ""?.""", Mdn(A))
 End Function
 
 Private Sub ZZ_EnsgCModSub()
-Dim Md As CodeModule, Act As MdygMd, Ept As MdygMd
+Dim Md As CodeModule, Act As RplgMd, Ept As RplgMd
 GoSub ZZ
 'GoSub T0
 Exit Sub
 ZZ:
-    BrwMdygMd EnsgCModSub(CMd)
+    BrwRplgMd EnsgCModSub(CMd)
     Return
 T0:
     Set Md = CMd
-    'Ept = SomInsgLin(2, "Private Const CMod$ = ""BEnsCMod.""")
+    'Ept = SomInsg(2, "Private Const CMod$ = ""BEnsCMod.""")
     GoTo Tst
 Tst:
     Act = EnsgCModSub(Md)
-'    If Not IsEqMdygMd(Act, Ept) Then Stop
+'    If Not IsEqRplgMd(Act, Ept) Then Stop
     Return
 End Sub
 Sub Z2()
 ZZ_EnsgCModSub
 End Sub
+EnsgCModSub
 Private Sub ZZZ()
 QIde_Ens_CModSub:
 End Sub
+Private Sub ZZ_FmtEnsCSubzMd()
+Dim Md As CodeModule
+'GoSub ZZ1
+GoSub ZZ2
+Exit Sub
+ZZ1:
+    Set Md = CMd
+    GoTo Tst
+ZZ2:
+    Dim M
+    For Each M In MdItr(CPj)
+        Dim O$()
+        O = FmtEnsCSubzMd(CvMd(M))
+        If Si(O) > 0 Then Brw O, Mdn(CvMd(M))
+    Next
+    Return
+Tst:
+    Act = FmtEnsCSubzMd(Md)
+    Brw Act
+    Return
+End Sub
+

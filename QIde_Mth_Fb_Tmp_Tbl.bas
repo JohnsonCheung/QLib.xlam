@@ -52,7 +52,7 @@ Private Const Asm$ = "QIde"
 ''DrpTblD W, T
 ''W.Execute "Create Table [#Mthny] (Mthn Text)"
 ''W.Execute SqlCrtSk(T, "Mthn")
-''AyIns_Dbt MthnyzMd(Md("AAAMod")), W, T
+''AyIns_Dbt MthnyzM(Md("AAAMod")), W, T
 'Stop '
 'End Sub
 '
@@ -66,9 +66,9 @@ Private Const Asm$ = "QIde"
 'Set WMchDic = X
 'End Property
 '
-'Private Function WMthnyzMd(A As CodeModule) As String()
+'Private Function WMthnyzM(A As CodeModule) As String()
 ''WMthny_EnsCache A
-''WMthnyzMd = ColSyD(W, "#Mthny", "Mthn")
+''WMthnyzM = ColSyD(W, "#Mthny", "Mthn")
 'End Function
 '
 'Private Sub WMthny_EnsCache(A As CodeModule)
@@ -76,7 +76,7 @@ Private Const Asm$ = "QIde"
 ''If HasDbt(W, T) Then Exit Sub
 'W.Execute "Create Table [#Mthny] (Mthn Text(255) Not Null)"
 ''W.Execute SqlCrtSk(T, "Mthn")
-''AyIns_Dbt MthnyzMd(A), W, T
+''AyIns_Dbt MthnyzM(A), W, T
 'End Sub
 '
 'Private Function XDr(Mthn, XDic As Dictionary) As Variant()
@@ -114,7 +114,7 @@ Private Const Asm$ = "QIde"
 'End Property
 '
 'Private Function Y_Mthny() As String()
-'ZZMthny = WMthnyzMd(ZZMd)
+'ZZMthny = WMthnyzM(ZZMd)
 'End Property
 '
 'Private Sub Z_ZZMthny()

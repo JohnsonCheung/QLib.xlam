@@ -5,8 +5,8 @@ Private Const Asm$ = "QIde"
 #Const Sav = True
 Public Const DoczMthCml$ = "NewType:Sy."
 
-Function AsetzMthCmlP(Optional WhStr$) As Aset
-Set AsetzMthCmlP = CmlAset(MthnsetP(WhStr).Sy)
+Function AsetzMthCmlP() As Aset
+Set AsetzMthCmlP = CmlAset(MthnsetP.Sy)
 End Function
 
 Function FnyzMthCml(NDryCol%) As String()
@@ -37,6 +37,6 @@ MthCmlLyV = MthCmlLyzV(CVbe)
 End Function
 
 Function MthCmlLyzV(A As Vbe) As String()
-MthCmlLyzV = CmlLy(MthNyzV(A))
+MthCmlLyzV = CmlLy(MthnyzV(A))
 End Function
 

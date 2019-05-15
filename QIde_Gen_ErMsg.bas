@@ -25,7 +25,7 @@ Dim Dcl$(): Dcl = DclLy(Src)
 Dim SrcLy$(): SrcLy = CvSy(AywBetEle(Dcl, "'GenErMsg-Src-Beg.", "'GenErMsg-Src-End."))
 'Brw SrcLy, CSub
 A.ErNy = T1Ay(RmvFstChrzSy(SrcLy))
-A.ErMsgAy = RmvT1zSy(SrcLy)
+A.ErMsgAy = RmvT1zAy(SrcLy)
 End Sub
 
 Private Sub Z_SrcGenErMsg()
@@ -90,24 +90,24 @@ Private Sub Z_ErConstDic()
 Brw ErConstDic
 End Sub
 
-Function ConstFEIxzMd(A As CodeModule, Cnstn$) As FEIx
+Function ConstFeizMd(A As CodeModule, Cnstn$) As Fei
 Dim L$, I, Lno
-For Each I In Itr(DclLyzMd(A))
+For Each I In Itr(DclLyzM(A))
     L = I
     Lno = Lno + 1
     If HitCnstn(L, Cnstn) Then
         If MthMdy(L) <> "Private" Then Thw CSub, "The given Cnstn should Prv", "Lin Cnstn Lno Md", L, Cnstn, Lno, Mdn(A)
-        'ConstFEIxzMd = ContFEIxzMd(A, Lno)
+        'ConstFeizMd = ContFeizMd(A, Lno)
         Exit Function
     End If
 Next
 End Function
 
-Function ConstFEIx(DclLy$(), Cnstn$) As FEIx
+Function ConstFei(DclLy$(), Cnstn$) As Fei
 Dim J&
 For J = 0 To UB(DclLy)
     If HitCnstn(DclLy(J), Cnstn) Then
-        'ConstFEIx = ContFEIxzS(DclLy, J)
+        'ConstFei = ContFeizS(DclLy, J)
         Exit Function
     End If
 Next

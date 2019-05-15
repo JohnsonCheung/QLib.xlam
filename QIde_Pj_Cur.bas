@@ -23,11 +23,11 @@ Function HasMod(P As VBProject, Modn) As Boolean
 If Not HasMd(P, Modn) Then Exit Function
 ThwIf_NotMod MdzPN(P, Modn), CSub
 End Function
-Function PjNyzX(X As Excel.Application) As String()
-PjNyzX = PjNyzV(X.Vbe)
+Function PjnyzX(X As Excel.Application) As String()
+PjnyzX = PjnyzV(X.Vbe)
 End Function
-Property Get PjNyX() As String()
-PjNyX = PjNyzX(Xls)
+Property Get PjnyX() As String()
+PjnyX = PjnyzX(Xls)
 End Property
 Property Get Pjn$()
 Pjn = CPj.Name

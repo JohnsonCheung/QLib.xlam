@@ -22,13 +22,26 @@ With CntgCmp
     .NOth = NOth
 End With
 End Function
+
 Sub CntCmpP()
 CntCmpzP CPj
 End Sub
+Function FnyOfCntgCmp() As String()
+
+End Function
+
+Function DryOfCntgCmp(P As VBProject) As Variant()
+
+End Function
+
+Function DrsOfCntgCmpzP(P As VBProject) As Drs
+DrsOfCntgCmpzP = Drs(FnyOfCntgCmp, DryOfCntgCmp(P))
+End Function
+
 Sub CntCmpzP(A As VBProject)
-DmpRec DrsOfCntCmpzP(P)
+DmpRec DrsOfCntgCmpzP(A)
 End Sub
-DmpDrs
+
 Function NCmp%(A As CntgCmp)
 With A
 NCmp = .NMod + .NCls + .NDoc + .NOth

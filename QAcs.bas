@@ -86,7 +86,9 @@ For Each I In A.CodeProject.AllModules
     A.DoCmd.CopyObject ToFb, , acModule, I.Name
 Next
 End Sub
+Sub CpyAcsTbl(A As Access.Application, ToFb)
 
+End Sub
 Sub CpyAcsObj(A As Access.Application, ToFb)
 Dim Fb$
 If HasFfn(ToFb) Then
@@ -102,7 +104,9 @@ CpyAcsFrm A, Fb
 CpyAcsMd A, Fb
 CpyAcsRf A, Fb
 End Sub
+Sub CpyAcsRf(A As Access.Application, ToFb)
 
+End Sub
 Sub SelPthzTxtb(A As Access.TextBox)
 Dim R$
 R = SelPth(A.Value)

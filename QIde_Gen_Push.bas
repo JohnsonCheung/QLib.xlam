@@ -10,10 +10,10 @@ GenPushzP CPj
 End Sub
 
 Private Sub GenPushzMd(A As CodeModule)
-Dim Gen$(): Gen = TyNyzGen(A) 'TyNy need to generate Push
-Dim Dlt$(): Dlt = TyNyzDlt(A) ' TyNy need to delete
+Dim Gen$(): 'Gen = TynyzGen(A) 'Tyny need to generate Push
+Dim Dlt$(): Dlt = TynyzDlt(A) ' Tyny need to delete
 EnsMth A, MthDic(Gen)
-'RmvMth A, MthnyzDltTyNy(Dlt)
+'RmvMth A, MthnyzDltTyny(Dlt)
 End Sub
 
 Sub EnsMth(A As CodeModule, MthDic As Dictionary)
@@ -25,14 +25,15 @@ If Not ShfTermTy(L) Then Exit Function
 TynzLin = Nm(L)
 End Function
 
-Function TyNyzM(A As CodeModule) As String()
-TynyzM = TynyzS(DclLyzMd
-For Each L In DclLy Itr(A)
-    PushNonBlank TyNyzM, TynzLin(L)
+Function TynyzM(M As CodeModule) As String()
+TynyzM = TynyzS(DclLyzM(M))
+Dim L
+For Each L In Itr(M)
+    PushNonBlank TynyzM, TynzLin(L)
 Next
 End Function
 
-Private Function TyNyzDlt(A As CodeModule) As String()
+Private Function TynyzDlt(A As CodeModule) As String()
 
 End Function
 Private Sub GenPushzP(P As VBProject)
@@ -42,9 +43,9 @@ For Each C In P.VBComponents
 Next
 End Sub
 
-Private Function MthDic(TyNyzGen$()) As Dictionary
+Private Function MthDic(TynyzGen$()) As Dictionary
 End Function
 
-Private Function MthnyzDltTyNy(TyNyzDlt$()) As String()
+Private Function MthnyzDltTyny(TynyzDlt$()) As String()
 End Function
 

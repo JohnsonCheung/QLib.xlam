@@ -3,7 +3,7 @@ Option Explicit
 Private Const CMod$ = "MTp_SqyRslt_1_Blks."
 Private Const Asm$ = "QTp"
 Type Blk: BlkTy As String: SepLin As String: Lnxs As Lnxs: End Type
-Type Blks: N As Integer: Ay() As Blk: End Type
+Type Blks: N As Long: Ay() As Blk: End Type
 Function Blks(Tp$, Optional SepLinPfx$ = "==") As Blks
 If Trim(Tp) = "" Then Exit Function
 Dim M As Blk, L

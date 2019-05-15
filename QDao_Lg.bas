@@ -255,7 +255,7 @@ Static Y$
 LgPth = Y
 End Property
 
-Sub DmpFEIx(A As FEIx)
+Sub DmpFei(A As Fei)
 'Debug.Print A.ToStr
 End Sub
 

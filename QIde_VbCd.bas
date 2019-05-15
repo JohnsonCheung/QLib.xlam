@@ -3,20 +3,20 @@ Option Explicit
 Private Const CMod$ = "MIde_VbCd."
 Private Const Asm$ = "QIde"
 Function CdLyP() As String()
-CdLyP = CdLyzSrc(SrczP(CPj))
+CdLyP = CdLyzS(SrczP(CPj))
 End Function
 Function CdLyzMd(A As CodeModule) As String()
-CdLyzMd = CdLyzSrc(Src(A))
+CdLyzMd = CdLyzS(Src(A))
 End Function
 Function CdLyzP(P As VBProject) As String()
-CdLyzP = CdLyzSrc(SrczP(P))
+CdLyzP = CdLyzS(SrczP(P))
 End Function
-Function CdLyzSrc(Src$()) As String()
+Function CdLyzS(Src$()) As String()
 Dim L$, I
 For Each I In Itr(Src)
     I = L
     If IsCdLin(L) Then
-        PushI CdLyzSrc, L
+        PushI CdLyzS, L
     End If
 Next
 End Function

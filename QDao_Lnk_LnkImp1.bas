@@ -5,13 +5,13 @@ Private Type MisExtn
     Stru As String
     MisFny() As String
 End Type
-Private Type MisExtns: N As Integer: Ay() As MisExtn: End Type
+Private Type MisExtns: N As Long: Ay() As MisExtn: End Type
 Private Type DupFld
     Stru As String
     Fld As String
     Lnoss As String
 End Type
-Private Type DupFlds: N As Integer: Ay() As DupFld: End Type
+Private Type DupFlds: N As Long: Ay() As DupFld: End Type
 Private Type FxtRec
     T As String
     Fxn As String
@@ -353,10 +353,10 @@ End Function
 Private Function B_TblWh_DupTbl() As String()
 
 End Function
-Private Function B_Stru_DupFld_PerStru$(Stru$, StruIx As FEIx)
-Dim A As FEIx
+Private Function B_Stru_DupFld_PerStru$(Stru$, StruIx As Fei)
+Dim A As Fei
     'A.FmIx
-'If Not B_Stru_DupFld_FEIxHasDupFld(Stru) Then Exit Function
+'If Not B_Stru_DupFld_FeiHasDupFld(Stru) Then Exit Function
 
 End Function
 

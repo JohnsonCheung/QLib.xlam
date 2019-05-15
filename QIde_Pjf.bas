@@ -13,19 +13,26 @@ Case IsFb(Pjf):  ClsDbzAcs PjfAcs
 Case Else: Thw CSub, "Invalid Pjf, should be Fxa or Fb", "Pjf", Pjf
 End Select
 End Sub
+Function VbezFba(Fba) As Vbe
+OpnPjf Pjf
+
+End Function
+Function VbezFxa(Fxa) As Vbe
+OpnPjf Pjf
+
+End Function
 Function VbezPjf(Pjf) As Vbe
 Const CSub$ = CMod & "VbezPjf"
-OpnPjf Pjf
 Select Case True
-Case IsFxa(Pjf): Set VbezPjf = PjfXls.Vbe
-Case IsFb(Pjf):  Set VbezPjf = PjfAcs.Vbe
-Case Else: Thw CSub, "Invalid Pjf, should be Fxa or Fb", "Pjf", Pjf
+Case IsFxa(Pjf): Set VbezPjf = VbezFba(Pjf)
+Case IsFba(Pjf):  Set VbezPjf = VbezFxa(Pjf)
+Case Else: Thw CSub, "Invalid Pjf, should be Fxa or Fba", "Pjf", Pjf
 End Select
 End Function
 Sub OpnPjf(Pjf)  ' Return either Xls.Application (Xls) or Acs.Application (Function-static)
 Select Case True
 Case IsFxa(Pjf): PjfXls.Workbooks.Open Pjf
-Case IsFb(Pjf):  OpnFb PjfAcs, Pjf
+Case IsFba(Pjf):  OpnFb PjfAcs, Pjf
 Case Else: Stop
 End Select
 End Sub

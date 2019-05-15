@@ -9,7 +9,7 @@ End Function
 Private Sub Z_IsMthLin()
 GoTo ZZ
 Dim A$
-A = "Function IsMthLin(A, Optional B As WhMth) As Boolean"
+A = "Function IsMthLin(A) As Boolean"
 Ept = True
 GoSub Tst
 Exit Sub
@@ -19,7 +19,7 @@ Tst:
     Return
 ZZ:
 Dim L, O$()
-For Each L In CurSrc
+For Each L In CSrc
     If IsMthLin(CStr(L)) Then
         PushI O, L
     End If
@@ -37,9 +37,8 @@ End Function
 
 Function HitMthLin(Lin, B As WhMth) As Boolean
 If Not IsMthLin(Lin) Then Exit Function
-If IsNothing(B) Then HitMthLin = True: Exit Function
-If B.IsEmp Then HitMthLin = True: Exit Function
-If Not HitMthn3(Mthn3(Lin), B) Then Exit Function
+'If IsEmpWhMth(B) Then HitMthLin = True: Exit Function
+If Not HitMthn3(Mthn3zL(Lin), B) Then Exit Function
 HitMthLin = True
 End Function
 
@@ -47,17 +46,6 @@ Function HitShtMdy(ShtMdy$, ShtMthMdyAy$()) As Boolean
 HitShtMdy = HitAy(IIf(ShtMdy = "", "Pub", ShtMdy), ShtMthMdyAy)
 End Function
 
-Function IsMthLinzPubZ(Lin) As Boolean
-With Mthn3(Lin)
-    If FstChr(.Nm) <> "Z" Then Exit Function
-    If .MthMdy <> "" Then
-        If .MthMdy <> "Public" Then
-            Exit Function
-        End If
-    End If
-End With
-IsMthLinzPubZ = True
-End Function
 Function IsOptLinOfOrImplzOrBlank(Lin) As Boolean
 IsOptLinOfOrImplzOrBlank = True
 If IsOptLin(Lin) Then Exit Function
@@ -82,12 +70,11 @@ End Select
 
 End Function
 
-Function IsMthLinzPub(Lin) As Boolean
-With Mthn3(Lin)
+Function IsPMthLin(Lin) As Boolean
+With Mthn3zL(Lin)
     Select Case True
-    Case .Nm <> "":
-    Case .MthMdy <> "" And .MthMdy <> "Public":
-    Case Else: IsMthLinzPub = True
+    Case .Nm = "":
+    Case .ShtMdy = "Pub": IsPMthLin = True
     End Select
 End With
 End Function

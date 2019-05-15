@@ -9,11 +9,11 @@ Sub TileV()
 BtnOfTileV.Execute
 End Sub
 Sub Compile(Pjn$)
-JmpPj Pj(Pjn)
+JmpzP Pj(Pjn)
 BtnOfCompile.Execute
 End Sub
 Sub CompilePj(P As VBProject)
-JmpPj P
+JmpzP P
 ThwIf_BtnOfCompile P.Name
 With BtnOfCompile
     If .Enabled Then
@@ -23,7 +23,7 @@ With BtnOfCompile
         Debug.Print P.Name, "already Compiled"
     End If
 End With
-TileVBtn.Execute
+BtnOfTileV.Execute
 BtnOfSav.Execute
 End Sub
 

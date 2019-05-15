@@ -13,12 +13,12 @@ End Function
 
 
 Private Function DrsOfDupMthzP(P As VBProject) As Drs
-Dim B As Drs: B = DrsOfMthnzP(P, "-Mod -Pub")
+Dim B As Drs: B = DrsOfMthnzP(P)
 Dim C As Drs: C = DrswDup(B, "Mthn")
 Dim D As Drs: D = DrseDup(C, "Mthn Md") '<==
 Dim E As Drs: E = AddColzMthLines(D)
 Dim F As Drs: F = AddColzValIdzCntzDrs(E, "MthLines")
-DrsOfDupMthzP = DrsSrt(F)
+DrsOfDupMthzP = SrtDrs(F)
 End Function
 
 
@@ -61,11 +61,11 @@ End Sub
 
 
 
-Function SamMthLinesMthDnDry(MthQNmLDrs As Drs, Vbe As Vbe) As Variant()
-Dim Gp(): 'Gp = DupMthQNy_Blk(A)
+Function SamMthLinesMthDnDry(QMthnLDrs As Drs, Vbe As Vbe) As Variant()
+Dim Gp(): 'Gp = DupQMthny_Blk(A)
 Dim O$(), N, Ny
 For Each Ny In Gp
-    If DupMthQNyGp_IsDup(Ny) Then
+    If DupQMthnyGp_IsDup(Ny) Then
         For Each N In Ny
             Push O, N
         Next
@@ -83,64 +83,64 @@ Case Else: IfShwNoDupMsg = True
 End Select
 End Function
 
-Function DupMthQNyGp_IsDup(Ny) As Boolean
-'DupMthQNyGp_IsDup = IsEqzAllEle(MapAy(Ny, "FunFNm_MthLines"))
+Function DupQMthnyGp_IsDup(Ny) As Boolean
+'DupQMthnyGp_IsDup = IsEqzAllEle(MapAy(Ny, "FunFNm_MthLines"))
 End Function
 
-Function DupMthQNyGp_IsVdt(DupMthQNyGp$()) As Boolean
-Dim A$(): A = DupMthQNyGp
+Function DupQMthnyGp_IsVdt(DupQMthnyGp$()) As Boolean
+Dim A$(): A = DupQMthnyGp
 If Si(A) <= 1 Then Exit Function
 Dim N$: N = Brk(A(0), ":").S1
 Dim J%
 For J = 1 To UB(A)
     If N <> Brk(A(J), ":").S1 Then Exit Function
 Next
-DupMthQNyGp_IsVdt = True
+DupQMthnyGp_IsVdt = True
 End Function
 
-Function DupMthQNyBlkAllSameCnt%(A)
+Function DupQMthnyBlkAllSameCnt%(A)
 If Si(A) = 0 Then Exit Function
 Dim O%, Gp
 For Each Gp In A
-    If DupMthQNyGp_IsDup(Gp) Then O = O + 1
+    If DupQMthnyGp_IsDup(Gp) Then O = O + 1
 Next
-DupMthQNyBlkAllSameCnt = O
+DupQMthnyBlkAllSameCnt = O
 End Function
 
-Function DupMthQNmDrsP() As Drs
-DupMthQNmDrsP = DupMthQNmDrszP(CPj)
+Function DupQDrOfMthnsP() As Drs
+DupQDrOfMthnsP = DupQDrOfMthnszP(CPj)
 End Function
 
-Function DupMthQNmDrszP(P As VBProject) As Drs
-'DupMthQNmDrszP = DrszFF("Pj Md Mth Ty Mdy", DupMthQNmDryzP(A))
+Function DupQDrOfMthnszP(P As VBProject) As Drs
+'DupQDrOfMthnszP = DrszFF("Pj Md Mth Ty Mdy", DupQDryOfMthnzP(A))
 End Function
 
-Function DupMthQNmDryPj() As Variant()
-DupMthQNmDryPj = DupMthQNmDryzP(CPj)
+Function DupQDryOfMthnPj() As Variant()
+DupQDryOfMthnPj = DupQDryOfMthnzP(CPj)
 End Function
 
-Function DupMthQNmDryzP(P As VBProject) As Variant()
+Function DupQDryOfMthnzP(P As VBProject) As Variant()
 Dim Dry(), Dry1(), Dry2()
-'Dry = MthQNmDryzP(A, "-Mod") ' Pjn Mdn Mthn Ty Mdy
+'Dry = QDryOfMthnzP(A, "-Mod") ' Pjn Mdn Mthn Ty Mdy
 'Dry1 = DryeCEv(Dry, 4, "Prv")
 Dry2 = DrywDupCC(Dry, Lngy(2))
-DupMthQNmDryzP = DrySrtzCol(Dry2, 2)
+DupQDryOfMthnzP = SrtDryzCol(Dry2, 2)
 End Function
 
 Function DupIxyzDry(Dry(), CCIxy&()) As Long()
 
 End Function
 
-Function DupMthQNmDryVbe() As Variant()
-DupMthQNmDryVbe = DupMthQNmDryzV(CVbe)
+Function DupQDryOfMthnVbe() As Variant()
+DupQDryOfMthnVbe = DupQDryOfMthnzV(CVbe)
 End Function
 
-Function DupMthQNmDryzMthQNy(MthQNy$()) As Variant()
-DupMthQNmDryzMthQNy = DrywDupCC(DryzDotAy(MthQNy), Lngy(2))
+Function DupQDryOfMthnzQMthny(QMthny$()) As Variant()
+DupQDryOfMthnzQMthny = DrywDupCC(DryzDotAy(QMthny), Lngy(2))
 End Function
 
-Function DupMthQNmDryzV(A As Vbe) As Variant()
-DupMthQNmDryzV = DupMthQNmDryzMthQNy(MthQNyzV(A, "-Mod -Pub"))
+Function DupQDryOfMthnzV(A As Vbe) As Variant()
+DupQDryOfMthnzV = DupQDryOfMthnzQMthny(QMthnyzV(A))
 End Function
 
 Private Sub ZZ()

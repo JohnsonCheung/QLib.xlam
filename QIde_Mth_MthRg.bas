@@ -1,10 +1,10 @@
 Attribute VB_Name = "QIde_Mth_MthRg"
 Type MthRg
     Mthn As String
-    FmIx As Long
-    EIx As Long
+    FmIx As Long 'Fm-Lno   always from 1, 0 means empyt
+    EIx As Long 'End-Lno  End-Lno = To-Lno + 1
 End Type
-Type MthRgs:   N As Integer: Ay() As MthRg:   End Type
+Type MthRgs:   N As Long: Ay() As MthRg:   End Type
     
 Function MthRg(Mthn, FmIx, EIx) As MthRg
 With MthRg

@@ -206,7 +206,7 @@ Next
 End Function
 
 Function MaxSizAyDic%(AyDic As Dictionary) ' MthDic is DicOf_Mthn_zz_MthLinesAy
-'MaxMthCnt is max-of-#-of-method per Mthn
+'MaxCntgMth is max-of-#-of-method per Mthn
 Dim O%, K
 For Each K In AyDic.Items
     O = Max(O, Si(AyDic(K)))
@@ -273,12 +273,12 @@ If IsNothing(A) Then Exit Function
 If A.Exists(K) Then Asg A(K), DicValOpt
 End Function
 
-Function KeyzLikSyDic_Itm$(Dic As Dictionary, Itm$)
-Dim K, LikeAy$()
+Function KeyzLikAyDic_Itm$(Dic As Dictionary, Itm$)
+Dim K, LikAy$()
 For Each K In Dic.Keys
-    LikeAy = Dic(K)
-    If HitLikSy(Itm, LikeAy) Then
-        KeyzLikSyDic_Itm = K
+    LikAy = Dic(K)
+    If HitLikAy(Itm, LikAy) Then
+        KeyzLikAyDic_Itm = K
         Exit Function
     End If
 Next
@@ -314,10 +314,10 @@ AddDicKeyPfx B, A
 DicAddOrUpd B, D, A, D
 DicAllKeyIsNm B
 DicAyKy C
-IsDiczEmp B
+IsEmpDic B
 ThwIf_DifDic B, B, D, D, D
-IsDiczLines B
-IsDiczStr B
+IsDicOfLines B
+IsDicOfStr B
 ValzDicIfKyJn B, A, D
 SyzDicKy B, E
 FmtDicTit B, D
@@ -336,8 +336,8 @@ End Sub
 Function WbzNmzDiLines(NmzDiLines As Dictionary) As Workbook 'Assume each dic keys is name and each value is lines. _
 create a new Wb with worksheet as the dic key and the lines are break to each cell of the sheet
 Dim A As Dictionary: Set A = NmzDiLines
-Ass IsItrzNm(A.Keys)
-Ass IsItrzStr(A.Items)
+Ass IsItrOfNm(A.Keys)
+Ass IsItrOfStr(A.Items)
 Dim K, ThereIsSheet1 As Boolean
 Dim O As Workbook: Set O = NewWb
 Dim Ws As Worksheet

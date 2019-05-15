@@ -57,9 +57,9 @@ For Each I In Itr(DimItmAy)
 Next
 End Function
 
-Function DimNyzSrc(Src$()) As String()
+Function DimNyzS(Src$()) As String()
 Dim L
 For Each L In Itr(Src)
-    PushIAy DimNyzSrc, DimNy(L)
+    PushIAy DimNyzS, DimNy(L)
 Next
 End Function

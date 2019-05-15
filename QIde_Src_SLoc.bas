@@ -17,7 +17,7 @@ End Function
 Function SLocyzSRN(Src$(), R, Mdn$) As String()
 Dim L, Lno&, C1, C2
 For Each L In Itr(Src)
-    PushI SLocyzSR, SLoc(Mdn, Lno, C1, C2)
+'    PushI SLocyzSR, SLoc(Mdn, Lno, C1, C2)
 Next
 End Function
 Function MdzSLoc(SLoc$) As CodeModule
@@ -27,7 +27,7 @@ Function RRCCzSLoc(SLoc$) As RRCC
 
 End Function
 Function JmpSLoc$(SLoc$)
-JmpMd MdzSLoc(SLoc)
+'JmpMd MdzSLoc(SLoc)
 JmpRRCC RRCCzSLoc(SLoc)
 End Function
 

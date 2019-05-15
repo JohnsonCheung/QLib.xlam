@@ -48,18 +48,20 @@ ReDim Preserve O.Ay(O.N)
 O.Ay(O.N) = M
 O.N = O.N + 1
 End Sub
-Function CnstBrks(Ly$()) As CnstBrks
-Dim L$, I, O As CnstBrks
-For Each I In Itr(ConstLy(Ly))
-    L = I
-    CnstBrksPushOpt O, SomCnstBrk(L)
-Next
-CnstBrks = O
+Function CnstLy(Src$()) As String()
+
 End Function
-Sub CnstBrksPushOpt(O As CnstBrks, M As SomCnstBrk)
-If Not M.Som Then Exit Sub
+
+Function CnstBrks(Src$()) As CnstBrks
+Dim L
+For Each L In Itr(CnstLy(Src))
+    PushCnstBrk CnstBrks, CnstBrk(L)
+Next
+End Function
+
+Sub PushCnstBrk(O As CnstBrks, M As CnstBrk)
 ReDim Preserve O.Ay(O.N)
-O.Ay(O.N) = M.Itm
+O.Ay(O.N) = M
 O.N = O.N + 1
 End Sub
 Function SomCnstBrk(Lin) As SomCnstBrk
@@ -122,19 +124,17 @@ If ShfPfx(L, "Const") Then Cnstn = Nm(L)
 End Function
 Function CnstLnozMN(M As CodeModule, Cnstn$) As Lnx
 Dim J&, L$
-For J = 1 To Md.CountOfDeclarationLines
-    L = Md.Lines(J, 1)
+For J = 1 To M.CountOfDeclarationLines
+    L = M.Lines(J, 1)
     If HasPfx(L, "Const CMod$") Then
-        CModLnx = Lnx(L, J - 1)
+        CnstLnozMN = Lnx(L, J - 1)
         Exit Function
     End If
 Next
 End Function
 
-
-
-Function ShfConst(OLin$) As Boolean
-ShfConst = ShfPfx(OLin, "Const")
+Function ShfTermCnst(OLin$) As Boolean
+ShfTermCnst = ShfTerm(OLin, "Const")
 End Function
 
 Private Sub Z_HasCnstn()
@@ -149,10 +149,10 @@ End Function
 
 Function CnstnzSrcLin(SrcLin)
 Dim L$: L = RmvMdy(SrcLin)
-If ShfConst(L) Then CnstnzSrcLin = Nm(LTrim(L))
+If ShfTermCnst(L) Then CnstnzSrcLin = Nm(LTrim(L))
 End Function
 
-Function CnstBrk(Lin) As CnstBrk
+Function CnstBrk(CnstLin) As CnstBrk
 
 End Function
 

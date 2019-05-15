@@ -35,9 +35,9 @@ Function PredzIsPrim() As IPred:  Static X As New PredzIsPrim:  Set PredzIsPrim 
 Function PredzIsStr() As IPred:   Static X As New PredzIsStr:   Set PredzIsStr = X:   End Function
 Function PredzIsSy() As IPred:    Static X As New PredzIsSy:    Set PredzIsSy = X:    End Function
 
-Function IsItrzStr(Itr) As Boolean:   IsItrzStr = IsAllTrue(Itr, PredzIsStr):   End Function
-Function IsItrzPrim(Itr) As Boolean:  IsItrzPrim = IsAllTrue(Itr, PredzIsPrim): End Function
-Function IsItrzNm(Itr) As Boolean:    IsItrzNm = IsAllTrue(Itr, PredzIsNm):     End Function
-Function IsItrzSy(Itr) As Boolean:    IsItrzSy = IsAllTrue(Itr, PredzIsSy):     End Function
-Function IsItrzLines(Itr) As Boolean: IsItrzLines = IsItrzStr(Itr) And IsSomTrue(Itr, PredzIsLines): End Function
+Function IsItrOfStr(Itr) As Boolean:   IsItrOfStr = IsAllTrue(Itr, PredzIsStr):   End Function
+Function IsItrOfPrim(Itr) As Boolean:  IsItrOfPrim = IsAllTrue(Itr, PredzIsPrim): End Function
+Function IsItrOfNm(Itr) As Boolean:    IsItrOfNm = IsAllTrue(Itr, PredzIsNm):     End Function
+Function IsItrOfSy(Itr) As Boolean:    IsItrOfSy = IsAllTrue(Itr, PredzIsSy):     End Function
+Function IsItrOfLines(Itr) As Boolean: IsItrOfLines = IsItrOfStr(Itr) And IsSomTrue(Itr, PredzIsLines): End Function
 

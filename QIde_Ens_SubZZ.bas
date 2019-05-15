@@ -172,11 +172,11 @@ vbCrLf & "DrDicKy B, E"
 
 Const A_2$ = "DicFny F" & _
 vbCrLf & "DicIntersectAy B, B" & _
-vbCrLf & "IsDiczEmp B" & _
+vbCrLf & "IsEmpDic B" & _
 vbCrLf & "IsEqDic B, B" & _
 vbCrLf & "ThwIf_DifDic B, B, D, D, D" & _
-vbCrLf & "IsDiczLines B" & _
-vbCrLf & "IsDiczStr B" & _
+vbCrLf & "IsDicOfLines B" & _
+vbCrLf & "IsDicOfStr B" & _
 vbCrLf & "KeySyzDic B" & _
 vbCrLf & "FmtDic1 B" & _
 vbCrLf & "ValzDicIfKyJn B, A, D" & _

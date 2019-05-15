@@ -2,7 +2,7 @@ Attribute VB_Name = "QDta_Dta_Dt"
 Option Explicit
 Private Const CMod$ = "BDt."
 Type Dt: DtNm As String: Fny() As String: Dry() As Variant: End Type
-Type Dts: N As Integer: Ay() As Dt: End Type
+Type Dts: N As Long: Ay() As Dt: End Type
 Function PushDt(O As Dts, M As Dt)
 With O
     ReDim Preserve .Ay(.N)

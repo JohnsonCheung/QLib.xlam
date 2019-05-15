@@ -11,8 +11,8 @@ Private Type DicCmp
     BDif As Dictionary
     Sam As Dictionary
 End Type
-Function FmtCmpDic(A As Dictionary, B As Dictionary, Optional Nm1$ = "Fst", Optional Nm2$ = "Snd") As String()
-FmtCmpDic = FmtDicCmp(DicCmp(A, B, Nm1, Nm2))
+Function FmtCmprDic(A As Dictionary, B As Dictionary, Optional Nm1$ = "Fst", Optional Nm2$ = "Snd") As String()
+FmtCmprDic = FmtDicCmp(DicCmp(A, B, Nm1, Nm2))
 End Function
 
 Function FmtDicCmp(A As DicCmp, Optional ExlSam As Boolean) As String()
@@ -40,8 +40,8 @@ With DicCmp
 End With
 End Function
 
-Sub BrwCmpDicAB(A As Dictionary, B As Dictionary, Optional Nm1$ = "Fst", Optional Nm2$ = "Snd")
-BrwAy FmtCmpDic(A, B, Nm1, Nm2)
+Sub BrwCmprDicAB(A As Dictionary, B As Dictionary, Optional Nm1$ = "Fst", Optional Nm2$ = "Snd")
+BrwAy FmtCmprDic(A, B, Nm1, Nm2)
 End Sub
 
 Function DicSamKV(A As Dictionary, B As Dictionary) As Dictionary
@@ -107,13 +107,13 @@ Next
 FmtSam = FmtS1S2s(S)
 End Function
 
-Private Sub Z_BrwCmpDicAB()
+Private Sub Z_BrwCmprDicAB()
 Dim A As Dictionary, B As Dictionary
 Set A = DiczVbl("X AA|A BBB|A Lines1|A Line3|B Line1|B line2|B line3..")
 Set B = DiczVbl("X AA|C Line|D Line1|D line2|B Line1|B line2|B line3|B Line4")
-BrwCmpDicAB A, B
+BrwCmprDicAB A, B
 End Sub
 
 Private Sub ZZ()
-Z_BrwCmpDicAB
+Z_BrwCmprDicAB
 End Sub

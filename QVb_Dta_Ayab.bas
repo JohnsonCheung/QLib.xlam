@@ -16,7 +16,8 @@ With Ayab
     .B = B
 End With
 End Function
-Function Ayabc(A, B, C) As Ayab
+
+Function Ayabc(A, B, C) As Ayabc
 ThwIf_NotAy A, CSub
 ThwIf_NotAy B, CSub
 ThwIf_NotAy C, CSub
@@ -26,8 +27,9 @@ With Ayabc
     .C = C
 End With
 End Function
+
 Function AyabzAyPfx(Ay, Pfx$) As Ayab
-Dim O As New Ayab
+Dim O As Ayab
 O.A = Resi(Ay)
 O.B = O.A
 Dim S$, I
@@ -42,35 +44,20 @@ Next
 AyabzAyPfx = O
 End Function
 
-Function AyabByN(Ay, N&) As Ayab
-Set AyabByN = Ayab(AywFstNEle(Ay, N), AyeFstNEle(Ay, N))
+Function AyabzAyN(Ay, N&) As Ayab
+AyabzAyN = Ayab(AywFstNEle(Ay, N), AyeFstNEle(Ay, N))
 End Function
 
-Function AyabByEle(Ay, Ele) As Ayab
-Dim O As Ayab
-O.A = Resi(Ay)
-O.B = O.A
-Dim J%
-For J = 0 To UB(Ay)
-    If Ay(J) = Ele Then Exit For
-    PushI O.A, Ay(J)
-Next
-For J = J + 1 To UB(Ay)
-    PushI O.B, Ay(J)
-Next
-AyabByEle = O
+Function AyabczAyFE(Ay, FmIx&, EIx&) As Ayabc
+Dim O As Ayabc
+AyabczAyFE = Ayabc( _
+    AywFE(Ay, 0, FmIx), _
+    AywFE(Ay, FmIx, EIx), _
+    AywFmIx(Ay, EIx))
 End Function
 
-Function AyabcByFmTo(Ay, FmIx&, EIx&) As Ayabc
-Dim O As New Ayabc
-Set AyabcByFmTo = O.Init( _
-    AywFT(Ay, 0, FmIx - 1), _
-    AywFT(Ay, FmIx, EIx), _
-    AywFmIx(Ay, EIx + 1))
-End Function
-
-Function AyabcByFEIx(Ay, B As FEIx) As Ayabc
-Set AyabcByFEIx = AyabcByFmTo(Ay, B.FmIx, B.EIx)
+Function AyabczAyFei(Ay, B As Fei) As Ayabc
+AyabczAyFei = AyabczAyFE(Ay, B.FmIx, B.EIx)
 End Function
 
 

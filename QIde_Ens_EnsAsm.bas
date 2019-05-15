@@ -3,14 +3,16 @@ Option Explicit
 Private Const Asm$ = "QIde"
 Private Const NS$ = "QIde.Qualify"
 Private Const CMod$ = "BEnsAsm."
+
 Function MdygszON(SOld As SomLnx, SNew As SomLnx) As Mdygs
-Select Case EmMdygzON(SOld, SNew)
-If ShouldDltLin(SOld, SNew) Then PUshMdyLin MdygszON, MdygOfDlt(SOld)
-If ShouldInsLin(SOld, SNew) Then PUshMdyLin MdygszON, MdygOfIns(NOld)
+'If ShouldDltLin(SOld, SNew) Then PUshMdyLin MdygszON, MdygOfDltzSomLnx(SOld)
+'If ShouldInsLin(SOld, SNew) Then PUshMdyLin MdygszON, MdygOfIns zSomLnx(NOld)
 End Function
+
 Private Function ShouldDltLin(SOld As SomLnx, SNew As SomLnx) As Boolean
 
 End Function
+
 Private Function ShouldInsLin(SOld As SomLnx, SNew As SomLnx) As Boolean
 
 End Function
@@ -21,8 +23,8 @@ For J = 0 To A.N - 1
     If A.Ay(J).Act <> EiNop Then PushMdyg RmvNop, A.Ay(J)
 Next
 End Function
-Function InsgLin(Lno, Lines$) As InsgLin
-With InsgLin
+Function Insg(Lno, Lines$) As Insg
+With Insg
 End With
 End Function
 Private Sub Z_EnsAsmzMd()
@@ -87,18 +89,27 @@ Function IsEqMdyg(A As Mdyg, B As Mdyg) As Boolean
 If A.Act <> B.Act Then Exit Function
 Stop '
 End Function
-
+Function MdygOfInszLnx(A As Lnx) As Mdyg
+With A
+    MdygOfInszLnx = MdygOfIns(.Ix + 1, .Lin)
+End With
+End Function
+Function MdygOfDltzLnx(A As Lnx) As Mdyg
+With A
+    'MdygOfInszLnx = MdygOfDlt(.Ix + 1, .Lin)
+End With
+End Function
 Function MdygOfIns(Lno, Lines$) As Mdyg
 MdygOfIns.Act = EiIns
-MdygOfIns.Ins = InsgLin(Lno, Lines)
+MdygOfIns.Ins = Insg(Lno, Lines)
 End Function
 Function MdygOfDlt(Lno, OldLines$) As Mdyg
 MdygOfDlt.Act = EiDlt
-MdygOfDlt.Dlt = DltgLin(Lno, OldLines)
+MdygOfDlt.Dlt = Dltg(Lno, OldLines)
 End Function
-Function DltgLin(Lno, OldLines$) As DltgLin
-DltgLin.Lno = Lno
-DltgLin.OldLines = OldLines
+Function Dltg(Lno, OldLines$) As Dltg
+Dltg.Lno = Lno
+'Dltg.OldLines = OldLines
 End Function
 
 Function LnoOfAsmCnst(A As CodeModule)
@@ -111,10 +122,10 @@ Dim O As Mdyg
 Dim Lno: Lno = LnoOfAsmCnst(A)
 Dim OldLines$: OldLines = ContLinzML(A, Lno)
 Select Case True
-Case Lno = 0: O = MdygOfIns(LnoOfAftOptAndImpl(A), NewLines)
+'Case Lno = 0: O = MdygOfIns(LnoOfAftOptAndImpl(A), NewLines)
 Case Lno > 0 And OldLines = "": Thw CSub, "Lno>0, OldLin must have value", "Md Lno", Mdn(A), Lno
 Case Lno > 0 And OldLines = NewLines:
-Case Lno > 0 And OldLines <> NewLines: O = MdygOfRpl(Lno, OldLines, NewLines)
+'Case Lno > 0 And OldLines <> NewLines: O = MdygOfRpl(Lno, OldLines, NewLines)
 Case Else: ThwImpossible CSub
 End Select
 MdygOfSetgAsm = O
@@ -125,7 +136,7 @@ Dim O&: O = LnoOfCnstOfAftOpt(A, Cnstn)
 If O > 0 Then
     LnoOfCnstOrAftOpt = O
 Else
-    LnoOfCnstOrAftOpt = LnoOfAftOptAndImpl(A)
+'    LnoOfCnstOrAftOpt = LnoOfAftOptAndImpl(A)
 End If
 End Function
 

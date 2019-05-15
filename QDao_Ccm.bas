@@ -83,7 +83,7 @@ End Select
 End Function
 
 Private Function CcmTny(A As Database) As String()
-CcmTny = SywPfx(Tny(A), "^")
+CcmTny = AywPfx(Tny(A), "^")
 End Function
 
 Private Sub Z_CcmTny()

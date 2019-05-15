@@ -34,7 +34,7 @@ EnsPubzMd CMd
 End Sub
 
 Sub EnsPrvZzMd(A As CodeModule)
-'MdyMd A, ActLinyOfEnsPrvZ(A)
+'MdyMd A, MdygsOfEnsPrvZ(A)
 End Sub
 
 Function LnoAyOfPubZ(A As CodeModule) As Long()
@@ -52,7 +52,7 @@ Asg Itr(LnoAyOfPubZ(A)), LnoItrOfPubZ
 End Function
 
 Sub EnsPubzMd(A As CodeModule)
-'MdyMd A, ActLinyOfEnsPubZ(A)
+'MdyMd A, MdygsOfEnsPubZ(A)
 End Sub
 
 

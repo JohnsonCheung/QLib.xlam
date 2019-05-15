@@ -74,7 +74,7 @@ If Not HasPfx(A.Nm, "C_") Then Exit Function
 IsMthLinzSyc = True
 End Function
 Function SycValzSycMLines(MthLines$) As String()
-Dim XLiny$(): XLiny = RmvPfxzAy(SywPfx(SplitCrLf(MthLines), "X """), "X ")
+Dim XLiny$(): XLiny = RmvPfxzAy(AywPfx(SplitCrLf(MthLines), "X """), "X ")
 SycValzSycMLines = TakVbStrzSy(XLiny)
 End Function
 Function TakVbStr$(VbStr$)

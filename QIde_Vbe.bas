@@ -30,14 +30,10 @@ For Each I In Vbe.VBProjects
 Next
 End Function
 
-Function MdDryzV(A As Vbe, Optional WhStr$) As Variant()
-Dim P, C, Pnm$, Pj As VBProject
-For Each P In PjItr(A, WhStr)
-    Set Pj = P
-    Pnm = Pj.Name
-    For Each C In CmpAyzP(Pj, WhStr)
-        Push MdDryzV, MdDr(CvMd(C))
-    Next
+Function MdDryzV(A As Vbe) As Variant()
+Dim C, Pnm$, P As VBProject
+For Each P In A.VBProjects
+    Push MdDryzV, MdDr(C.CodeModule)
 Next
 End Function
 Function MdDr(A As CodeModule) As Variant()
@@ -51,60 +47,36 @@ For Each P In A.VBProjects
 Next
 End Sub
 
-Function VisWinCntz%(A As Vbe)
-VisWinCntz = NItrPrpTrue(A.Windows, "Visible")
+Function VisWinCntzV%(A As Vbe)
+VisWinCntzV = NItrPrpTrue(A.Windows, "Visible")
 End Function
 
-Function DrOfMthLinyzV(A As Vbe, Optional WhStr$) As Variant()
-Dim P
-For Each P In PjItr(A, WhStr)
-    PushObjAy DrOfMthLinyzV, DryOfMthLinzP(CvPj(P), WhStr)
-Next
-End Function
-Function PjAy(A As Vbe, Optional WhStr$, Optional NmPfx$) As VBProject()
-Dim P As VBProject, W As WhNm
-Set W = WhNmzStr(WhStr, NmPfx)
-For Each P In A.VBProjects
-    If HitNm(P.Name, W) Then
-        PushObj PjAy, P
-    End If
-Next
-End Function
-
-Function ItrwNmStr(Itr, WhStr$, Optional NmPfx$)
-Stop '
-End Function
-Function ItrwNm(Itr, B As WhNm)
-Stop '
-End Function
-
-Function PjItr(A As Vbe, Optional WhStr$, Optional NmPfx$)
-If WhStr = "" Then
-    Set PjItr = A.VBProjects
-Else
-    Asg PjAy(A, WhStr, NmPfx), PjItr
-End If
-End Function
-
-Property Get PjfSyInVbe() As String()
-PjfSyInVbe = PjfSyzV(CVbe)
-End Property
-
-Function PjfSyzV(A As Vbe) As String()
+Function DryOfMthLinzV(A As Vbe) As Variant()
 Dim P As VBProject
 For Each P In A.VBProjects
-    PushNonBlank PjfSyzV, Pjf(P)
+    PushIAy DryOfMthLinzV, DryOfMthLinzP(P)
 Next
 End Function
 
-Function PjNyInVbe(Optional WhStr$, Optional NmPfx$) As String()
-PjNyInVbe = PjNyzV(CVbe, WhStr, NmPfx)
+Property Get PjfyV() As String()
+PjfyV = PjfyzV(CVbe)
+End Property
+
+Function PjfyzV(A As Vbe) As String()
+Dim P As VBProject
+For Each P In A.VBProjects
+    PushNonBlank PjfyzV, Pjf(P)
+Next
 End Function
 
-Function PjNyzV(A As Vbe, Optional WhStr$, Optional NmPfx$) As String()
-Dim P
-For Each P In PjItr(A, WhStr, NmPfx)
-    PushI PjNyzV, CvPj(P).Name
+Function PjnyV() As String()
+PjnyV = PjnyzV(CVbe)
+End Function
+
+Function PjnyzV(A As Vbe) As String()
+Dim P As VBProject
+For Each P In A.VBProjects
+    PushI PjnyzV, P.Name
 Next
 End Function
 
@@ -122,8 +94,8 @@ Function MthWbzV(A As Vbe) As Workbook
 Set MthWbzV = ShwWb(WbzWs(MthWszV(A)))
 End Function
 
-Function SrtRpt() As String()
-SrtRpt = SrtRptzV(CVbe)
+Function SrtRptV() As String()
+SrtRptV = SrtRptzV(CVbe)
 End Function
 
 Function HasBarzV(A As Vbe, BarNm) As Boolean
@@ -152,13 +124,10 @@ Private Sub ZZ_VbeFunPfx()
 'D Vbe_MthPfx(CVbe)
 End Sub
 
-Private Sub ZZ_MthNyzV()
-'Brw MthNyzV(CVbe)
+Private Sub ZZ_MthnyzV()
+Brw MthnyzV(CVbe)
 End Sub
 
-Private Sub ZZ_MthNyzVWh()
-'Brw MthNyzV(CVbe)
-End Sub
 
 Private Sub ZZ()
 Dim A

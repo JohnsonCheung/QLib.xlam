@@ -6,7 +6,7 @@ Private Const Asm$ = "QIde"
 Private Function SubZEptzNy$(MthnySubZDash$()) ' Sub Z() bodylines
 Dim O$()
 PushI O, "Private Sub ZZ()"
-PushIAy O, AySrt(MthnySubZDash)
+PushIAy O, SrtAy(MthnySubZDash)
 PushI O, "End Sub"
 SubZEptzNy = JnCrLf(O)
 End Function

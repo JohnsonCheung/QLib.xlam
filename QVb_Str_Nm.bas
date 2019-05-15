@@ -25,8 +25,9 @@ If IsDigit(A) Then Exit Function
 IsNmChr = False
 End Function
 
-Function WhNmzStr(WhStr$, Optional NmPfx$) As WhNm
-Set WhNmzStr = Lpm(WhStr, "-Sw Prv Pub Frd Sub Fun Prp Get Set Let WiRet WoRet").WhNm(NmPfx)
+Function WhNmzS(WhStr$) As WhNm
+Dim P As Dictionary: Set P = Lpm(WhStr, "-Sw Prv Pub Frd Sub Fun Prp Get Set Let WiRet WoRet")
+'WhNmzS = WhNmzP(P,WhNm(NmPfx)
 End Function
 
 Function ChrQuote$(S, Chr$)

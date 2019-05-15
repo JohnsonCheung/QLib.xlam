@@ -4,7 +4,7 @@ Const Asm$ = "QDta"
 Const NS$ = "Dta.Ds"
 Private Const CMod$ = "BDrs."
 Type Drs: Fny() As String: Dry() As Variant: End Type
-Type Drss: N As Integer: Ay() As Drs: End Type
+Type Drss: N As Long: Ay() As Drs: End Type
 Enum EmCnt
     EiCntAll
     EiCntDup
@@ -66,7 +66,7 @@ Function DmpRec(A As Drs)
 D FmtRec(A)
 End Function
 Function FmtRec(A As Drs) As String()
-Dim Fny$(), Dr, N&, Ix&, Fny$()
+Dim Fny$(), Dr, N&, Ix&
 Fny = AlignLzAy(A.Fny)
 For Each Dr In Itr(A.Dry)
     PushIAy FmtRec, FmtRec_FmAlignedFny_AndDr(Fny, Dr, Ix, N)
@@ -80,8 +80,8 @@ Function FmtReczFnyDr(Fny$(), Dr, Optional Ix& = -1, Optional N& = -1)
 FmtReczFnyDr = FmtRec_FmAlignedFny_AndDr(AlignLzAy(Fny), Dr, Ix, N)
 End Function
 
-Function FmtRec_FmAlignedFny_AndDr(AlignedFny$(), Dr, Optional Ix& = -1, Optional N& = -1)
-PushNonBlank FmtReczFnyDr, IxOfUStr(Ix, U)
+Function FmtRec_FmAlignedFny_AndDr(AlignedFny$(), Dr, Optional Ix& = -1, Optional U& = -1) As String()
+PushNonBlank FmtRec_FmAlignedFny_AndDr, IxOfUStr(Ix, U)
 
 End Function
 Sub DmpDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColNm$)

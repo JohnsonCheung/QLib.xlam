@@ -27,10 +27,10 @@ Sub AsgN2t(Lin, O1, O2)
 AsgAp Syz2TRst(Lin), O1, O2
 End Sub
 
-Sub AsgT1FldLikSy(OT1, OFldLikSy$(), Lin)
+Sub AsgT1FldLikAy(OT1, OFldLikAy$(), Lin)
 Dim Rst$
 AsgTRst Lin, OT1, Rst
-OFldLikSy = SyzSS(Rst)
+OFldLikAy = SyzSS(Rst)
 End Sub
 
 

@@ -6,7 +6,7 @@ Function DicAyzAp(ParamArray DicAp()) As Dictionary()
 Dim Av(): Av = DicAp: If Si(Av) = 0 Then Exit Function
 Dim I
 For Each I In Av
-    If Not IsDic(I) Then Thw CSub, "Some itm is not Dic", "TypeName-Ay", TyNyzAy(Av)
+    If Not IsDic(I) Then Thw CSub, "Some itm is not Dic", "TypeName-Ay", TynyzAy(Av)
     PushObj DicAyzAp, CvDic(I)
 Next
 End Function

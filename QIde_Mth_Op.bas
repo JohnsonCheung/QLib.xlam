@@ -16,7 +16,7 @@ RmvMthzMN A, Mthn
 End Sub
 
 Sub RmvMthzMN(A As CodeModule, Mthn)
-DltLinzF A, MthFEIxszMN(A, Mthn, WiTopRmk:=True)
+DltLinzF A, MthFeiszMN(A, Mthn, WiTopRmk:=True)
 End Sub
 
 Private Sub Z_RmvMthzMN()

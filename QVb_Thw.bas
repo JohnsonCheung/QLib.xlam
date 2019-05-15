@@ -45,7 +45,7 @@ Dim IsBothLines As Boolean
 Select Case True
 Case IsBothLines: If A <> B Then CmpLines A, B, Hdr:=FmtQQ("Lines ? ? not eq.", ANm, BNm): Stop: Exit Sub
 Case IsStr(A):    If A <> B Then CmpStr CStr(A), CStr(B), Hdr:=FmtQQ("String ? ? not eq.", ANm, BNm): Stop: Exit Sub
-Case IsDic(A):    If Not IsEqDic(CvDic(A), CvDic(B)) Then BrwCmpDicAB CvDic(A), CvDic(B): Stop: Exit Sub
+Case IsDic(A):    If Not IsEqDic(CvDic(A), CvDic(B)) Then BrwCmprDicAB CvDic(A), CvDic(B): Stop: Exit Sub
 Case IsArray(A):  ThwIf_DifAy A, B, ANm, BNm
 Case IsObject(A): If ObjPtr(A) <> ObjPtr(B) Then Thw CSub, "Two object are diff", FmtQQ("Ty-? Ty-?", ANm, BNm), TypeName(A), TypeName(B)
 Case Else:
@@ -84,7 +84,7 @@ If IsEqObj(A, B) Then ThwNav Fun, Msg, Nav
 End Sub
 
 Sub ThwIf_NoSrt(Ay, Fun$)
-If IsSrtAy(Ay) Then Thw Fun, "Array should be sorted", "Ay-Ty Ay", TypeName(Ay), Ay
+If IsSrtedAy(Ay) Then Thw Fun, "Array should be sorted", "Ay-Ty Ay", TypeName(Ay), Ay
 End Sub
 Sub ThwOpt(Thw As EmThw, Fun$, Msg$, ParamArray Nap())
 Dim Nav(): Nav = Nap

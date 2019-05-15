@@ -24,29 +24,40 @@ With RRCC
 End With
 End Function
 
-Function IsRRCCzEmp(A As RRCC) As Boolean
-IsRRCCEmp = True
-With A
-Select Case True
-Case .R1 <= 0, .R2 <= 0, .C1 <= 0, .C2 <= 0
-Case Else: IsRRCCzEmp = True
+Function IsEqRRCC(A As RRCC, B As RRCC) As Boolean
+
+End Function
+
+Function NormRRCC(A As RRCC) As RRCC
+Dim O As RRCC
+With O
+    If A.R1 < 0 Then .R1 = 0
+    If A.R2 < 0 Then .R2 = 0
+    If A.C1 < 0 Then .C1 = 0
+    If A.C2 < 0 Then .C2 = 0
+    If .R1 > .R2 Then .R1 = 0: .R2 = 0
+End With
+End Function
+
+Function IsEmpRRCC(A As RRCC) As Boolean
+IsEmpRRCC = IsEqRRCC(A, EmpRRCC)
 End Function
 Function EmpRRCC() As RRCC
 End Function
 Function RRCCTy(A As RRCC) As EmRRCCTy
 
 End Function
-Property Get RRCCLin$(A As RRCC)
+Function RRCCLin$(A As RRCC)
 Dim O$
-Select Case RRCCTy(A)
-Case EiRCC
-    O = FmtQQ("RCC(? ? ?) ", R1, C1, C2)
-Case EiRR
-    O = FmtQQ("RR(? ?) ", R1, R2)
-Case EiRow
-    O = FmtQQ("R(?)", R1)
-Case Else
-    'Thw CSub TpPos_FmtStr", "Invalid {TpPos}", A.Ty
-End Select
-End Property
+'Select Case RRCCTy(A)
+'Case EiRCC
+'    O = FmtQQ("RCC(? ? ?) ", R1, C1, C2)
+'Case EiRR
+'    O = FmtQQ("RR(? ?) ", R1, R2)
+'Case EiRow
+'    O = FmtQQ("R(?)", R1)
+'Case Else
+'    'Thw CSub TpPos_FmtStr", "Invalid {TpPos}", A.Ty
+'End Select
+End Function
 

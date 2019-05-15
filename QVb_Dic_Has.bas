@@ -11,12 +11,12 @@ Next
 DicHasAllKeyIsNm = True
 End Function
 
-Function IsDiczAllStrVal(A As Dictionary) As Boolean
+Function IsDicOfAllStrVal(A As Dictionary) As Boolean
 Dim K
 For Each K In A.Keys
     If Not IsStr(A(K)) Then Exit Function
 Next
-IsDiczAllStrVal = True
+IsDicOfAllStrVal = True
 End Function
 
 Function DicHasBlankKey(A As Dictionary) As Boolean
@@ -64,7 +64,7 @@ Next
 End Sub
 
 Function DicKeysIsAllStr(A As Dictionary) As Boolean
-DicKeysIsAllStr = IsAllStrAy(A.Keys)
+DicKeysIsAllStr = IsItrOfSy(A.Keys)
 End Function
 
 Private Sub Z_DicKeysIsAllStr()

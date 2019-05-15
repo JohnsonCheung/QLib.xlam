@@ -28,7 +28,7 @@ End Function
 
 Function SqlzSelIntoPm$(A As SelIntoPm)
 With A
-'SqlzSelIntoPm = SqlSel_Fny_ExtNy_Into_T(.Fny, .ExtNy, .Into, .T, .Bexpr)
+'SqlzSelIntoPm = SqlSel_Fny_Extny_Into_T(.Fny, .Extny, .Into, .T, .Bexpr)
 End With
 End Function
 

@@ -3,7 +3,7 @@ Option Explicit
 Private Const CMod$ = "MIde_Mth_Ix_FT."
 Private Const Asm$ = "QIde"
 
-Function MthFEIxszSN(Src$(), Mthn, Optional WiTopRmk As Boolean) As FEIxs
+Function MthFeiszSN(Src$(), Mthn, Optional WiTopRmk As Boolean) As Feis
 Dim FmIx&, EIx&, Ix&, I
 For Each I In Itr(MthIxyzSN(Src, Mthn))
     Ix = I
@@ -12,15 +12,15 @@ For Each I In Itr(MthIxyzSN(Src, Mthn))
     Else
         FmIx = TopRmkIx(Src, Ix)
     End If
-   PushFEIx MthFEIxszSN, FEIx(FmIx, MthEIx(Src, FmIx))
+   PushFei MthFeiszSN, Fei(FmIx, MthEIx(Src, FmIx))
 Next
 End Function
 
-Function MthFEIxszMN(A As CodeModule, Mthn, Optional WiTopRmk As Boolean) As FEIxs
-MthFEIxszMN = MthFEIxszSN(Src(A), Mthn, WiTopRmk)
+Function MthFeiszMN(A As CodeModule, Mthn, Optional WiTopRmk As Boolean) As Feis
+MthFeiszMN = MthFeiszSN(Src(A), Mthn, WiTopRmk)
 End Function
 
-Function MthFEIxs(Src$(), Optional WiTopRmk As Boolean) As FEIxs
+Function MthFeis(Src$(), Optional WiTopRmk As Boolean) As Feis
 Dim Ix&, FmIx&, EIx&, I
 For Each I In MthIxItr(Src)
     Ix = I
@@ -29,6 +29,6 @@ For Each I In MthIxItr(Src)
     Else
         FmIx = TopRmkIx(Src, Ix)
     End If
-    PushFEIx MthFEIxs, FEIx(FmIx, EIx)
+    PushFei MthFeis, Fei(FmIx, EIx)
 Next
 End Function

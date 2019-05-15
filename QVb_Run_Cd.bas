@@ -9,7 +9,7 @@ RunCd JnCrLf(CdLy)
 End Sub
 
 Sub RunCd(CdLines$)
-Dim N$: N = "ZZZ_" & TmpNm
+Dim N$: N = "ZZ_" & TmpNm
 AddMthzCd N, CdLines
 Run N
 End Sub
@@ -22,7 +22,7 @@ RunCdMd.AddFromString MthLines(Mthn, CdLines)
 End Sub
 Private Function MthLines$(Mthn, CdLines$)
 Dim Lines$, L1$, L2$
-L1 = "Sub ZZZ_" & Mthn & "()"
+L1 = "Sub ZZ_" & Mthn & "()"
 L2 = "End Sub"
 MthLines = L1 & vbCrLf & CdLines & vbCrLf & L2
 End Function

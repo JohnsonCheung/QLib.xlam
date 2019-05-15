@@ -44,16 +44,13 @@ End Property
 Private Property Get Y_SrcLin()
 Y_SrcLin = "Private Sub IsMthLin()"
 End Property
-Private Sub Z_MthnyzSrc()
-BrwAy MthnyzSrc(SrczMdn("AAAMod"))
-End Sub
 
 Sub AsgMthDr(MthDr, OMdy$, OTy$, ONm$, OPrm$, ORet$, OLinRmk$, OLines$, OTopRmk$)
 AsgAp MthDr, OMdy, OTy, ONm, OPrm, ORet, OLinRmk, OLines, OTopRmk
 End Sub
 
 Private Sub Z_DryOfMthLinzS()
-BrwDry DryOfMthLinzS(CurSrc)
+BrwDry DryOfMthLinzS(CSrc)
 End Sub
 
 Function DryOfMthLinzS(Src$()) As Variant()
@@ -63,15 +60,15 @@ For Each L In Itr(Src)
 Next
 End Function
 
-Function MthDNyzP(P As VBProject, Optional WhStr$) As String()
+Function MthDNyzP(P As VBProject) As String()
 If P.Protection = vbext_pp_locked Then Exit Function
 For Each C In P.VBComponents
     PushIAy MthDNyzP, MthDNyzM(C.CodeModule)
 Next
 End Function
 
-Function CurSrcLines$()
-CurSrcLines = SrcLineszMd(CMd)
+Function CSrcLines$()
+CSrcLines = SrcLineszM(CMd)
 End Function
 
 Function SrcLinesP$()
@@ -82,11 +79,6 @@ Function SrcLineszP$(P As VBProject)
 SrcLineszP = JnCrLf(SrczP(P))
 End Function
 
-Function SrcLineszMd$(A As CodeModule)
-If A.CountOfLines = 0 Then Exit Function
-SrcLineszMd = A.Lines(1, A.CountOfLines)
-End Function
-
 Function SrczMd(A As CodeModule) As String()
 SrczMd = Src(A)
 End Function
@@ -94,7 +86,7 @@ Function CSrc() As String()
 CSrc = Src(CMd)
 End Function
 Function Src(A As CodeModule) As String()
-Src = SplitCrLf(SrcLineszMd(A))
+Src = SplitCrLf(SrcLineszM(A))
 End Function
 
 Function SrcV() As String()
@@ -109,17 +101,12 @@ For Each C In P.VBComponents
     PushIAy SrczP, Src(C.CodeModule)
 Next
 End Function
-
 Function SrczV(A As Vbe) As String()
-Dim P
+Dim P As VBProject
 For Each P In A.VBProjects
-    PushIAy SrczV, SrczP(CvPj(P))
+    PushIAy SrczV, SrczP(P)
 Next
 End Function
-
-Property Get CurSrc() As String()
-CurSrc = Src(CMd)
-End Property
 
 Function NMthzS%(Src$())
 NMthzS = Si(MthIxy(Src))

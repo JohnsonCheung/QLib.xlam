@@ -6,7 +6,7 @@ Private Const Asm$ = "QIde"
 Function WhMthKd(S) As String()
 
 End Function
-Function WhMthMdyPm(A As Lpm) As String()
+Function WhMthMdyPm(A As Dictionary) As String()
 PushNonBlank WhMthMdyPm, A.SwNm("Pub")
 PushNonBlank WhMthMdyPm, A.SwNm("Prv")
 PushNonBlank WhMthMdyPm, A.SwNm("Frd")

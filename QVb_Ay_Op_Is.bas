@@ -21,20 +21,12 @@ Next
 IsEqzAllEle = True
 End Function
 
-Function IsAllStrAy(Ay) As Boolean
-If Not IsArray(Ay) Then Exit Function
-If IsSy(Ay) Then IsAllStrAy = True: Exit Function
-Dim I
-For Each I In Itr(Ay)
-    If Not IsStr(I) Then Exit Function
-Next
-IsAllStrAy = True
-End Function
-
 Function IsEqSi(A, B) As Boolean
 IsEqSi = Si(A) = Si(B)
 End Function
-
+Function IsNeAy(A, B) As Boolean
+IsNeAy = Not IsEqAy(A, B)
+End Function
 Function IsEqAy(A, B) As Boolean
 If Not IsArray(A) Then Exit Function
 If Not IsArray(B) Then Exit Function

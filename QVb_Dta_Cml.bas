@@ -6,8 +6,8 @@ Private Const Asm$ = "QVb"
 Public Const DoczCml0$ = "It a String with FstChr is UCase"
 Public Const DoczCml1$ = "It a String with FstChr is UCase"
 Public Const DoczCmlLin = "It a Lin of Cml separated by spc"
-Private Function MthDotCmlGpAsetzV(A As Vbe, Optional WhStr$) As Aset
-Set MthDotCmlGpAsetzV = AsetzAy(MthDotCmlGpzV(A, WhStr))
+Private Function MthDotCmlGpAsetzV(A As Vbe) As Aset
+Set MthDotCmlGpAsetzV = AsetzAy(MthDotCmlGpzV(A))
 End Function
 
 Private Sub Z_CmlAset()
@@ -228,17 +228,17 @@ Case Else: IsULCml = LCase(FstChr(Cml)) = SndChr(Cml)
 End Select
 End Function
 
-Function MthDotCmlGpAsetInVbe(Optional WhStr$) As Aset
-Set MthDotCmlGpAsetInVbe = MthDotCmlGpAsetzV(CVbe, WhStr)
+Function MthDotCmlGpAsetInVbe() As Aset
+Set MthDotCmlGpAsetInVbe = MthDotCmlGpAsetzV(CVbe)
 End Function
 
-Function MthDotCmlGpInVbe(Optional WhStr$) As String()
-MthDotCmlGpInVbe = MthDotCmlGpzV(CVbe, WhStr)
+Function MthDotCmlGpInVbe() As String()
+MthDotCmlGpInVbe = MthDotCmlGpzV(CVbe)
 End Function
 
-Function MthDotCmlGpzV(A As Vbe, Optional WhStr$) As String()
+Function MthDotCmlGpzV(A As Vbe) As String()
 Dim Mthn
-For Each Mthn In MthNyzV(A, WhStr)
+For Each Mthn In MthnyzV(A)
     PushI MthDotCmlGpzV, DotCmlGp(CStr(Mthn))
 Next
 End Function
@@ -363,7 +363,7 @@ While True
 Wend
 End Function
 
-Sub VcMthDotCmlGpAsetInVbe(Optional WhStr$)
+Sub VcMthDotCmlGpAsetInVbe()
 MthDotCmlGpAsetInVbe.Srt.Vc
 End Sub
 

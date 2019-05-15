@@ -14,16 +14,16 @@ End If
 End Sub
 
 Sub ThwNotSyDic(A As Dictionary, Fun$)
-If Not IsDiczSy(A) Then Thw Fun, "Given dictionary is not SyDic, all key is string and val is Sy", "Give-Dictionary", FmtDic(A)
+If Not IsDicOfSy(A) Then Thw Fun, "Given dictionary is not SyDic, all key is string and val is Sy", "Give-Dictionary", FmtDic(A)
 End Sub
 
-Function KeyToLikSyDic_T1LikssLy(TLikssLy$()) As Dictionary
+Function KeyToLikAyDic_T1LikssLy(TLikssLy$()) As Dictionary
 Dim O As Dictionary
     Set O = Dic(TLikssLy)
 Dim K
 For Each K In O.Keys
     O(K) = SyzSS(O(K))
 Next
-Set KeyToLikSyDic_T1LikssLy = O
+Set KeyToLikAyDic_T1LikssLy = O
 End Function
 

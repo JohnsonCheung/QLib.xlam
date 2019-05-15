@@ -5,29 +5,29 @@ Private Const Asm$ = "QIde"
 Public Const DoczDclDic$ = "Key is Pjn.Mdn.  Value is Dcl (which is Lines)"
 Public Const DoczDcl$ = "It is Lines."
 
-Function EnmBdyLyzSrc(Src$(), EnmNm$) As String()
-EnmBdyLyzSrc = EnmBdyLy(EnmLy(Src, EnmNm$))
+Function EnmBdyLyzS(Src$(), Enmn) As String()
+EnmBdyLyzS = EnmBdyLy(EnmLy(Src, Enmn))
 End Function
 
 Function EnmBdyLy(EnmLy$()) As String()
 
 End Function
 
-Function EnmFEIx(Src$(), EnmNm) As FEIx
-Dim Fm&: Fm = EnmFmIx(Src, EnmNm)
-EnmFEIx = FEIx(Fm, EndEnmIx(Src, Fm))
+Function EnmFei(Src$(), Enmn) As Fei
+Dim Fm&: Fm = EnmFmIx(Src, Enmn)
+EnmFei = Fei(Fm, EndEnmIx(Src, Fm))
 End Function
 
-Function EnmLy(Src$(), EnmNm$) As String()
-EnmLy = AywFEIx(Src, EnmFEIx(Src, EnmNm))
+Function EnmLy(Src$(), Enmn) As String()
+EnmLy = AywFei(Src, EnmFei(Src, Enmn))
 End Function
 
-Function EnmFmIx&(Src$(), EnmNm)
+Function EnmFmIx&(Src$(), Enmn)
 Dim J&, L, Lin$
 For Each L In Itr(Src)
     Lin = RmvMdy(L)
     If ShfTermEnm(Lin) Then
-        If Nm(Lin) = EnmNm Then
+        If Nm(Lin) = Enmn Then
             EnmFmIx = J
             Exit Function
         End If
@@ -39,25 +39,25 @@ EnmFmIx = -1
 End Function
 
 Function EnmNyMd(A As CodeModule) As String()
-EnmNyMd = EnmNy(DclLyzMd(A))
+EnmNyMd = EnmNy(DclLyzM(A))
 End Function
-Function EnmNyPj(Pj As VBProject, Optional WhStr$) As String()
+Function EnmNyPj(Pj As VBProject) As String()
 Dim M
-For Each M In MdItr(Pj, WhStr)
+For Each M In MdItr(Pj)
     PushIAy EnmNyPj, EnmNyMd(CvMd(M))
 Next
 End Function
 Function EnmNy(Src$()) As String()
 Dim L
 For Each L In Itr(Src)
-   PushNonBlank EnmNy, EnmNm(L)
+   PushNonBlank EnmNy, Enmn(L)
 Next
 End Function
 
-Function HasUsrTyNm(Src$(), Nm$) As Boolean
+Function HasTyn(Src$(), Nm$) As Boolean
 Dim L
 For Each L In Itr(Src)
-    If UsrTyNm(L) = Nm Then HasUsrTyNm = True: Exit Function
+    If Tyn(L) = Nm Then HasTyn = True: Exit Function
 Next
 End Function
 
@@ -69,10 +69,10 @@ Next
 NEnm = O
 End Function
 
-Function UsrTyFEIx(Src$(), TyNm$) As FEIx
+Function UsrTyFei(Src$(), TyNm$) As Fei
 Dim FmI&: FmI = UsrTyFmIx(Src, TyNm)
 Dim ToI&: ToI = EndTyIx(Src, FmI)
-UsrTyFEIx = FEIx(FmI, ToI)
+UsrTyFei = Fei(FmI, ToI)
 End Function
 
 Function EndEnmIx&(Src$(), FmIx)
@@ -83,12 +83,12 @@ Function EndTyIx&(Src$(), FmIx)
 EndTyIx = EndLinIx(Src, "Type", FmIx)
 End Function
 
-Function UsrTyLines$(Src$(), UsrTyNm$)
-UsrTyLines = JnCrLf(UsrTyLy(Src, UsrTyNm))
+Function UsrTyLines$(Src$(), Tyn$)
+UsrTyLines = JnCrLf(UsrTyLy(Src, Tyn))
 End Function
 
 Function UsrTyLy(Src$(), TyNm$) As String()
-UsrTyLy = AywFEIx(Src, UsrTyFEIx(Src, TyNm))
+UsrTyLy = AywFei(Src, UsrTyFei(Src, TyNm))
 End Function
 
 Function UsrTyFmIx&(Src$(), TyNm)
@@ -100,10 +100,10 @@ Next
 UsrTyFmIx = -1
 End Function
 
-Function TyNyzS(Src$()) As String()
+Function TynyzS(Src$()) As String()
 Dim L
 For Each L In Itr(Src)
-    PushNonBlank TyNyzS, TynzLin(L)
+    PushNonBlank TynyzS, TynzLin(L)
     If IsMthLin(L) Then Exit Function
 Next
 End Function
@@ -116,48 +116,57 @@ Function IsUsrTyLin(A) As Boolean
 IsUsrTyLin = HasPfx(RmvMdy(A), "Type ")
 End Function
 
-Function EnmNm$(Lin)
+Function Enmn(Lin)
 Dim L$: L = RmvMdy(Lin)
-If ShfPfx(L, "Enum ") Then EnmNm = Nm(LTrim(L))
+If ShfPfx(L, "Enum ") Then Enmn = Nm(LTrim(L))
 End Function
 
-Function UsrTyNm$(Lin)
+Function Tyn$(Lin)
 Dim L$: L = RmvMdy(Lin)
-If ShfPfx(L, "Type ") Then UsrTyNm = Nm(LTrim(L))
+If ShfTermTy(L) Then Tyn = Nm(L)
 End Function
 
-Function EnmLyMd(Md As CodeModule, EnmNm$) As String()
-EnmLyMd = EnmLy(DclLyzMd(Md), EnmNm)
+Function EnmLyzMN(M As CodeModule, Enmn) As String()
+EnmLyzMN = EnmLy(DclLyzM(M), Enmn)
 End Function
 
-Function NEnmMbrzMN%(A As CodeModule, Enmn$)
-NEnmMbrzMN = Si(EnmMbrLyzMN(A, EnmNm))
-End Function
-Function CdLyzSrc(Src$()) As String()
-
-End Function
-Function EnmMbrLyzMN(A As CodeModule, Enmn$) As String()
-EnmMbrLyzMN = CdLyzSrc(EnmLyzMN(A, Enmn))
+Function NEnmMbrzMN%(M As CodeModule, Enmn)
+NEnmMbrzMN = Si(EnmMbrLyzMN(M, Enmn))
 End Function
 
-Function NEnmzM%(A As CodeModule)
-NEnmMd = NEnm(DclLyzMd(A))
+Function CdLyzL(Lin) As String()
+Dim L$: L = Trim(Lin)
+If L = "" Then Exit Function
+If FstChr(L) = "'" Then Exit Function
+CdLyzL = TrimAy(Split(Lin, ":"))
+End Function
+Private Sub ZZ_CdLyzS()
+Brw CdLyzS(SrczP(CPj))
+End Sub
+Function CdLyzS(Src$()) As String()
+Dim L
+For Each L In Itr(Src)
+    PushIAy CdLyzS, CdLyzL(L)
+Next
 End Function
 
-Function TyNyzM(A As CodeModule) As String()
-UsrTyNyMd = AySrt(UsrTyNy(DclLyzMd(A)))
+Function EnmMbrLyzMN(M As CodeModule, Enmn) As String()
+EnmMbrLyzMN = CdLyzS(EnmLyzMN(M, Enmn))
 End Function
 
-Function TyNyzP(P As VBProject, Optional WhStr$) As String()
-Dim I, M As CodeModule, O$(), W As WhNm
-Set W = WhNmzStr(WhStr)
-'For Each I In MdItr(A, WhStr)
-    Set M = CvMd(I)
-    O = UsrTyNy(Src(M))
-    O = AywNm(O, W)
-    PushIAy UsrTyNyPj, AddPfxzAy(O, Mdn(M) & ".")
-'Next
-UsrTyNyPj = QSrt1(O)
+Function NEnmzM%(M As CodeModule)
+NEnmzM = NEnm(DclLyzM(M))
+End Function
+
+Function TynyzM(M As CodeModule) As String()
+TynyzM = TynyzS(DclLyzM(M))
+End Function
+
+Function TynyzP(P As VBProject) As String()
+Dim I, C As VBComponent
+For Each C In P.VBComponents
+    PushIAy TynyzP, TynyzM(C.CodeModule)
+Next
 End Function
 
 Function ShfTermEnm(OLin$) As Boolean
@@ -172,16 +181,16 @@ Private Sub ZZ()
 MIde_Dcl_EnmAndTy:
 End Sub
 
-Private Sub Z_NEnmMbrMd()
-Ass NEnmMbrMd(Md("Ide"), "AA") = 1
+Private Sub Z_NEnmMbrzMN()
+Ass NEnmMbrzMN(Md("Ide"), "AA") = 1
 End Sub
 
-
 Private Sub Z_DclLinCnt()
-Dim B1$(): B1 = CurSrc
-Dim B2$(): B2 = SrcSrt(B1)
+Dim B1$(): B1 = CSrc
+Dim B2$(): B2 = SrtSrc(B1)
 Dim A1%: A1 = DclLinCnt(B1)
 Dim A2%: A2 = DclLinCnt(B2)
+Debug.Assert A1 = A2
 End Sub
 
 Sub BrwDclLinCntDryPj()
@@ -191,7 +200,7 @@ End Sub
 Function DclLinCntDryzP(P As VBProject) As Variant()
 Dim C As VBComponent
 For Each C In P.VBComponents
-    PushI DclLinCntDryzP, Array(C.Name, DclLinCntzMd(C.CodeModule))
+    PushI DclLinCntDryzP, Array(C.Name, DclLinCntzM(C.CodeModule))
 Next
 End Function
 
@@ -272,7 +281,7 @@ End Sub
 Function DclzM$(A As CodeModule)
 DclzM = TrimRSpcCrLf(LineszMLC(A, 1, DclLinCntzM(A)))
 End Function
-Function DclLyzMd(A As CodeModule) As String()
+Function DclLyzM(A As CodeModule) As String()
 DclLyzM = SplitCrLf(DclzM(A))
 End Function
 Function CnstLnxszS(Src$()) As Lnxs
@@ -293,23 +302,22 @@ End Function
 Function IsLin_OfCnst_WhNmPfx(L, CnstnPfx$) As Boolean
 Dim Lin$: Lin = RmvMdy(L)
 If Not ShfTermCnst(Lin) Then Exit Function
-IsLin_OfCnst_WhNmPfx = HasPfx(L, NmPfx)
+IsLin_OfCnst_WhNmPfx = HasPfx(L, CnstnPfx)
 End Function
 Function IsLin_OfCnst(L) As Boolean
 IsLin_OfCnst = T1(RmvMdy(L)) = "Const"
 End Function
 Function CnstLnxszM(M As CodeModule) As Lnxs
 Dim J&, L$, P$, L1$, L2$
-P = "Const " & Cnstn
+P = "Const "
 For J = 1 To M.CountOfDeclarationLines
     L = M.Lines(J, 1)
     L1 = RmvMdy(L)
     If HasPfx(L1, P) Then
         L2 = ContLinzML(M, J)
-        PushLnx CnstLnxszM, Lnx(L2, J - 1)
+        PushLnx CnstLnxszM, Lnx(L, J - 1)
     End If
 Next
-
 End Function
 
 Function CnstLnxzMN(M As CodeModule, Cnstn$) As Lnx

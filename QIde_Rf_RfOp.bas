@@ -10,7 +10,7 @@ P.References.AddFromFile Frfee
 InfLin CSub, "Frfee is added to Pj", "Frfee Pj", Frfee, P.Name
 End Sub
 
-Sub AddRfzSrc(P As VBProject, RfSrc$())
+Sub AddRfzS(P As VBProject, RfSrc$())
 Dim I
 For Each I In Itr(RfSrc)
     AddRf P, RfLin(CStr(I))

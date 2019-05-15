@@ -15,8 +15,8 @@ Function PjzPjfC(Pjf) As VBProject
 Set PjzPjfC = PjzPjf(CVbe, Pjf)
 End Function
 
-Function MdDrszV(A As Vbe, Optional WhStr$) As Drs
-MdDrszV = Drs(MdTblFny, MdDryzV(A, WhStr))
+Function MdDrszV(A As Vbe) As Drs
+MdDrszV = Drs(MdTblFny, MdDryzV(A))
 End Function
 Function MdTblFny() As String()
 

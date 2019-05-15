@@ -4,15 +4,15 @@ Private Const CMod$ = "MIde_Mth_Ix."
 Private Const Asm$ = "QIde"
 Private Sub Z_MthIxy()
 Dim Ix, Src$()
-Src = CurSrc
+Src = CSrc
 For Each Ix In MthIxItr(Src)
     If MthKd(Src(Ix)) <> "" Then
         Debug.Print Ix; Src(Ix)
     End If
 Next
 End Sub
-Function MthIxItr(Src$(), Optional WhStr$)
-Asg Itr(MthIxy(Src, WhStr)), MthIxItr
+Function MthIxItr(Src$())
+Asg Itr(MthIxy(Src)), MthIxItr
 End Function
 
 Function EndLinIx&(Src$(), EndLinItm$, FmIx)
@@ -26,27 +26,18 @@ Next
 Thw CSub, "Cannot find EndLin", "EndLin FmIx Src", C, FmIx, Src
 End Function
 
-Function MthIxy(Src$(), Optional WhStr$) As Long()
+Function MthIxy(Src$()) As Long()
 Dim Ix
-If WhStr = "" Then
-    For Ix = 0 To UB(Src)
-        If IsMthLin(Src(Ix)) Then
-            PushI MthIxy, Ix
-        End If
-    Next
-Else
-    Dim B As WhMth: Set B = WhMthzStr(WhStr)
-    For Ix = 0 To UB(Src)
-        If HitMthLin(Src(Ix), B) Then
-            PushI MthIxy, Ix
-        End If
-    Next
-End If
+For Ix = 0 To UB(Src)
+    If IsMthLin(Src(Ix)) Then
+        PushI MthIxy, Ix
+    End If
+Next
 End Function
 Function FstMthIxzSN&(Src$(), Mthn)
 Dim Ix&
 For Ix = 0 To UB(Src)
-    With Mthn3(Src(Ix))
+    With Mthn3zL(Src(Ix))
         If .Nm = Mthn Then
             FstMthIxzSN = Ix
             Exit Function
@@ -67,7 +58,7 @@ End Function
 Function MthIxzSTN&(Src$(), ShtMthTy$, Mthn)
 Dim Ix&
 For Ix = 0 To UB(Src)
-    With Mthn3(Src(Ix))
+    With Mthn3zL(Src(Ix))
         If .Nm = Mthn Then
             If .ShtTy = ShtMthTy Then
                 MthIxzSTN = Ix
@@ -115,8 +106,8 @@ Else
 End If
 End Function
 
-Function MthFEIxzSIW(Src$(), MthIx, Optional WiTopRmk As Boolean) As FEIx
-MthFEIxzSIW = FEIx(MthIxzSIW(Src, MthIx, WiTopRmk), MthEIx(Src, MthIx))
+Function MthFeizSIW(Src$(), MthIx, Optional WiTopRmk As Boolean) As Fei
+MthFeizSIW = Fei(MthIxzSIW(Src, MthIx, WiTopRmk), MthEIx(Src, MthIx))
 End Function
 
 Function MthEIx&(Src$(), MthIx)

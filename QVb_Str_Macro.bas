@@ -40,7 +40,7 @@ Next
 End Function
 Function FmtMacrozDic$(Macro, Dic As Dictionary)
 Dim Ny$(): Ny = NyzMacro(Macro)
-Dim Vy(): Vy = VyzNy(Dic, Ny)
+Dim Vy(): Vy = VyzDKy(Dic, Ny)
 FmtMacrozDic = FmtMacrozAv(Macro, Vy)
 End Function
 Function NNAv(NN$, Av()) As NNAv
