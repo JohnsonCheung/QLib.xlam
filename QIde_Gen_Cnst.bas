@@ -1,11 +1,11 @@
 Attribute VB_Name = "QIde_Gen_Cnst"
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Const."
-Public Type StrCnst
+Type StrCnst
     Nm As String
     S As String
 End Type
-Public Type CnstBrk ' It comes from a ConstLin
+Type CnstBrk ' It comes from a ConstLin
     IsPrv As Boolean
     Nm As String
     TyChr As String
@@ -13,12 +13,12 @@ Public Type CnstBrk ' It comes from a ConstLin
     Val As String
     Rmk As String
 End Type
-Public Type SomCnstBrk ' It comes a Lin
+Type SomCnstBrk ' It comes a Lin
     Som As Boolean
     Itm As CnstBrk
 End Type
-Public Type StrCnsts:    N As Long: Ay() As StrCnst:    End Type
-Public Type CnstBrks:    N As Long: Ay() As CnstBrk:    End Type
+Type StrCnsts:    N As Long: Ay() As StrCnst:    End Type
+Type CnstBrks:    N As Long: Ay() As CnstBrk:    End Type
 Public Const DoczCnstVal$ = "It is CnstBrk.Val"
 Function StrValzCnstBrk$(A As CnstBrk)
 If IsStrCnst(A) Then StrValzCnstBrk = StrValzCnstVal(A.Val)

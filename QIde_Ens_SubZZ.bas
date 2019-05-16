@@ -43,22 +43,6 @@ Dim O$()
 SubZZEpt = JnCrLf(O)
 End Function
 
-Function ArgAyzPmAy(PmAy$()) As String()
-Dim Pm, Arg
-For Each Pm In Itr(PmAy)
-    For Each Arg In Itr(SplitCommaSpc(Pm))
-        PushI ArgAyzPmAy, Arg
-    Next
-Next
-End Function
-
-Private Function ArgSfxy(ArgSy$()) As String()
-Dim Arg
-For Each Arg In Itr(ArgSy)
-    PushI ArgSfxy, ArgSfx(Arg)
-Next
-End Function
-
 Private Function WCallingLin(Mthn, CallingPm$, PrpGetAset As Aset)
 If PrpGetAset.Has(Mthn) Then
     WCallingLin = "XX = " & Mthn & "(" & CallingPm & ")"  ' The Mthn is object, no need to add [Set] XX =, the compiler will not check for this
@@ -213,7 +197,7 @@ GoSub Cas1
 Exit Sub
 Cas2:
     Set A = Md("MVb_Dic")
-    UpdConst "SubZZEptzMd_Ept2", SubZZEpt(A): Return
+    'UpdConst "SubZZEptzMd_Ept2", SubZZEpt(A): Return
     Ept = Z_SubZZzMd__Ept2
     GoSub Tst
     Return

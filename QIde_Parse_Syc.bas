@@ -68,7 +68,7 @@ If Not IsMthLinzSyc(M) Then Thw CSub, "Not a const method.  It should be [Proper
 End Function
 
 Private Function IsMthLinzSyc(MthLin) As Boolean
-Dim A As Mthn3: Set A = Mthn3(MthLin)
+Dim A As Mthn3: A = Mthn3zL(MthLin)
 If A.ShtTy <> "Get" Then Exit Function
 If Not HasPfx(A.Nm, "C_") Then Exit Function
 IsMthLinzSyc = True

@@ -14,11 +14,11 @@ Case Else: Thw CSub, "Invalid Pjf, should be Fxa or Fb", "Pjf", Pjf
 End Select
 End Sub
 Function VbezFba(Fba) As Vbe
-OpnPjf Pjf
+'OpnPjf Pjf
 
 End Function
 Function VbezFxa(Fxa) As Vbe
-OpnPjf Pjf
+'OpnPjf Pjf
 
 End Function
 Function VbezPjf(Pjf) As Vbe

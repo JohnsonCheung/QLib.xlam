@@ -68,22 +68,22 @@ Dim Dry()
 Dim T$, I
 For Each I In Tni(D)
     T = I
-    PushIAy Dry, InfDryOfTblF(D, T)
+    PushIAy Dry, InfDry_TblF(D, T)
 Next
 InfDtOfTblF = DtzFF("TblFld", "Tbl Seq Fld Ty Si ", Dry)
 End Function
 
-Private Function InfDryOfTblF(D As Database, T) As Variant()
+Private Function InfDry_TblF(D As Database, T) As Variant()
 Dim F$, Seq%, I
 For Each I In Fny(D, T)
     F = I
     Seq = Seq + 1
-    Push InfDryOfTblF, InfDrOfTblF(T, Seq, FdzTF(D, T, F))
+    Push InfDry_TblF, InfDr_TblF(T, Seq, FdzTF(D, T, F))
 Next
 End Function
 
-Private Function InfDrOfTblF(T, Seq%, F As Dao.Field2) As Variant()
-InfDrOfTblF = Array(T, Seq, F.Name, DtaTy(F.Type))
+Private Function InfDr_TblF(T, Seq%, F As Dao.Field2) As Variant()
+InfDr_TblF = Array(T, Seq, F.Name, DtaTy(F.Type))
 End Function
 Private Sub ZZ()
 MDao_Z_Db_DbInf:

@@ -2,30 +2,54 @@ Attribute VB_Name = "QVb_Str_Expand"
 Option Explicit
 Private Const CMod$ = "MVb_Str_Expand."
 Private Const Asm$ = "QVb"
-Function Expand$(QVbl$, ExpandByTLin)
-Dim T, O$(), L$
-L = RplVbl(QVbl)
-For Each T In TermAy(ExpandByTLin)
-    PushI O, RplQ(L, T)
+Function Expand$(QVblTp$, Seed$())
+Dim O$(), Tp$, ISeed
+Tp = RplVBar(QVblTp)
+For Each ISeed In Itr(Seed)
+    PushI O, RplQ(Tp, ISeed)
 Next
-Expand = JnCrLf(O)
+Expand = Join(O, "")
 End Function
-Private Sub Z_Expand()
-Dim QVbl$
-Erase XX
-X "Sub Push?(O() As ?, M As ?)"
-X "Dim N&"
-X "N = ?Si(O)"
-X "ReDim Preserve O(N)"
-X "O(N) = M"
-X "End Sub"
-X ""
-X "Function ?Si&(A() As ?)"
-X "On Error Resume Next"
-X "?Si = Ubound(A) + 1"
-X "End Function"
-X ""
-QVbl = JnVBar(XX)
-Brw Expand(QVbl, "S1S2 XX")
+
+Function Expandss$(QVblTp$, Seedss$)
+Expandss = Expand(QVblTp, SyzSS(Seedss))
+End Function
+Private Sub ZZ_Expandss()
+Dim QVblTp$, Seed$()
+ZZ:
+    Erase XX
+    X "Sub Push?(O() As ?, M As ?)"
+    X "Dim N&"
+    X "N = ?Si(O)"
+    X "ReDim Preserve O(N)"
+    X "O(N) = M"
+    X "End Sub"
+    X ""
+    X "Function ?Si&(A() As ?)"
+    X "On Error Resume Next"
+    X "?Si = Ubound(A) + 1"
+    X "End Function"
+    X ""
+    X ""
+    QVblTp = JnVBar(XX)
+    Erase XX
+    Brw Expandss(QVblTp, "S1S2 XX")
+T0:
+    QVblTp = "Sub Tst?()|Dim A As New ?: A.Tst|End Sub"
+    Seed = SyzSS("Xws Xwb Xfx Xrg")
+    Erase XX
+    X ""
+    X ""
+    Ept = JnCrLf(XX)
+    Erase XX
+    GoTo Tst
+Tst:
+    Act = Expand(QVblTp, Seed)
+    C
+    Return
+End Sub
+
+Private Sub ZZ()
+ZZ_Expandss
 End Sub
 

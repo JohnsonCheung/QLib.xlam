@@ -72,7 +72,7 @@ Tst:
     C
     Return
 ZZ:
-    ClrWinOfImm
+    ClrImm
     D "Rel --------------------"
     D UsrPjRfLy
     D "Itms-DPD-ORD --------------------"

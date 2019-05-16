@@ -12,7 +12,7 @@ Private Type SomLnkg
 End Type
 Private Type Lnkgs: N As Long: Ay() As Lnkg: End Type
 Sub CrtHypLnkzWsnA1(A1 As Range) 'WsnA1 is an A1 with cell value is Wsn
-CrtHypLnks LnkgszWsnA1(A)
+CrtHypLnks LnkgszWsnA1(A1)
 End Sub
 Private Function LnkgszWsnA1(A1 As Range) As Lnkgs
 Dim FmCell As Range
@@ -20,7 +20,7 @@ Dim LnkToCell As Range
 Dim I As SomLnkg
 While I.Som
     
-End With
+Wend
 End Function
 
 Private Function IsWsnCell(Cell As Range, Wsny$()) As Boolean
@@ -35,11 +35,11 @@ End Sub
 Private Sub CrtHypLnk(A As Lnkg)
 With A.FmCell.Hyperlinks
     If .Count > 0 Then .Delete
-    .Add , "", AdrzCell(A.JmpToCell)
+'    .Add , "", AdrzCell(A.JmpToCell)
 End With
 End Sub
 Private Function LnkAdr$(A As Range)
-LnkAdr = FmtQQ("'?'!?", Wsn, AdrzCell(A))
+'LnkAdr = FmtQQ("'?'!?", Wsn, AdrzCell(A))
 End Function
 Function AdrzCell$(A As Range)
 AdrzCell = A1zRg(A).Address
@@ -51,14 +51,13 @@ With SomLnkg
 End With
 End Function
 Private Function LnkgszWsnA1_Ver1(A1 As Range) As Lnkgs
-
-Dim R As Range: Set R = FstGoCell
+Dim R As Range
 Dim Wsny$():     Wsny = WsnyzRg(R)
 Dim J%, Wsn$
 While R.Value = "Go"
     J = J + 1: If J = 1000 Then ThwLoopingTooMuch CSub
     Wsn = CellRight(R).Value
-    If HasEle(Wsny, Wsn) Then PushObj CellWsnItmAy, CellWsnItm(R, Wsn)
+'    If HasEle(Wsny, Wsn) Then PushObj CellWsnItmAy, CellWsnItm(R, Wsn)
     Set R = CellBelow(R)
 Wend
 End Function
@@ -78,10 +77,11 @@ End Function
 Sub FillWsn(At As Range)
 THwIf_NoSpace_ToFillWsn At
 Dim I As Range: Set I = At
-Dim Ny$():         Ny = OthWsny(WszAt(At))
+Dim Ny$():    '     Ny = OthWsny(WszAt(At))
+Dim Wsn
 For Each Wsn In Ny
     I.Value = Wsn
     Set I = NxtCellBelow(I)
 Next
 End Sub
-D
+

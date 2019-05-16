@@ -10,7 +10,7 @@ Dim Z$
     End If
     Z = AyeFstEle(Z)
     Z = AyeLasEle(Z)
-'ResLyMd = RmvFstChrzSy(Z)
+'ResLyMd = RmvFstChrzAy(Z)
 End Function
 
 Function ReStrMd$(A As CodeModule, ResNm$)

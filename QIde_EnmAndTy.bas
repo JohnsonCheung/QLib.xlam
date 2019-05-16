@@ -6,19 +6,19 @@ Private Const Asm$ = "QIde"
 Function MdPosStr$(A As MdPos)
 Dim B$
 With A
-    With .LinPos.Pos
-        If .Cno1 > 0 Then B = " " & .Cno1 & " " & .Cno2
-    End With
-    MdPosStr = "MdPos " & Mdn(A.Md) & A.LinPos.Lno & B
+    'With .LinPos.Pos
+        'If .Cno1 > 0 Then B = " " & .Cno1 & " " & .Cno2
+    'End With
+    'MdPosStr = "MdPos " & Mdn(A.Md) & A.LinPos.Lno & B
 End With
 End Function
 
 Function MdPoszMLCC(Md As CodeModule, L, Cno1, Cno2) As MdPos
-MdPoszMLCC = MdPos(Md, LinPoszLCC(L, Cno1, Cno2))
+'MdPoszMLCC = MdPos(Md, LinPoszLCC(L, Cno1, Cno2))
 End Function
 
 Function MdPoszMLP(Md As CodeModule, Lno, P As Pos) As MdPos
-MdPoszMLP = MdPos(Md, LinPos(Lno, P))
+'MdPoszMLP = MdPos(Md, LinPos(Lno, P))
 End Function
 
 Function MdPos(Md As CodeModule, RRCC As RRCC) As MdPos

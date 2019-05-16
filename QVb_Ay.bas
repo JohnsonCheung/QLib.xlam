@@ -179,17 +179,25 @@ Function ItrzLines(Lines$)
 Asg Itr(SplitCrLf(Lines$)), ItrzLines
 End Function
 
+Function NItr&(Itr)
+Dim O&, V
+For Each V In Itr
+    O = O + 1
+Next
+NItr = O
+End Function
+
 Function Itr(Ay)
 If Si(Ay) = 0 Then Set Itr = New Collection Else Itr = Ay
 End Function
 
-Function AyRTrim(Sy$()) As String()
-If Si(Sy) = 0 Then Exit Function
+Function RTrimAy(Ay) As String()
+If Si(Ay) = 0 Then Exit Function
 Dim O$(), I
-For Each I In Sy
+For Each I In Ay
     Push O, RTrim(I)
 Next
-AyRTrim = O
+RTrimAy = O
 End Function
 
 Function ResiN(Ay, N&)
@@ -617,10 +625,6 @@ End Sub
 
 Function AddPfxzSslIn(Pfx$, SsLin) As String()
 AddPfxzSslIn = AddPfxzAy(SyzSS(SsLin), Pfx)
-End Function
-
-Function ItrzSS(SsLin)
-Asg Itr(SyzSS(SsLin)), ItrzSS
 End Function
 
 Function SpcSepStr$(S)

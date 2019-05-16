@@ -58,7 +58,7 @@ Thw CSub, "[Some-Missing-Tar-Tbl] in [Db] cannot be found according to given [Cc
 End Sub
 Private Function Chk1(A As Database, CcmTny$()) As String()
 Dim N1$(): N1 = Tny(A)
-Dim N2$(): N2 = RmvFstChrzSy(CcmTny)
+Dim N2$(): N2 = RmvFstChrzAy(CcmTny)
 Chk1 = MinusAy(N2, N1)
 End Function
 

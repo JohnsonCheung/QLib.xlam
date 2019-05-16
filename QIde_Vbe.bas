@@ -9,14 +9,14 @@ End Function
 Sub DmpIsPjSav()
 DmpDrs DrszIsPjSav(CVbe)
 End Sub
-Function DryOfIsPjSav(A As Vbe) As Variant()
+Function Dry_IsPjSav(A As Vbe) As Variant()
 Dim I As VBProject
 For Each I In A.VBProjects
-    PushI DryOfIsPjSav, Array(I.Saved, I.Name, I.GenFileName)
+    PushI Dry_IsPjSav, Array(I.Saved, I.Name, I.GenFileName)
 Next
 End Function
 Function DrszIsPjSav(A As Vbe) As Drs
-DrszIsPjSav = DrszFF("IsSav Pjn GenFfn", DryOfIsPjSav(A))
+DrszIsPjSav = DrszFF("IsSav Pjn GenFfn", Dry_IsPjSav(A))
 End Function
 
 Function PjzV(A As Vbe, Pjn$) As VBProject
@@ -51,10 +51,10 @@ Function VisWinCntzV%(A As Vbe)
 VisWinCntzV = NItrPrpTrue(A.Windows, "Visible")
 End Function
 
-Function DryOfMthLinzV(A As Vbe) As Variant()
+Function Dry_MthLinzV(A As Vbe) As Variant()
 Dim P As VBProject
 For Each P In A.VBProjects
-    PushIAy DryOfMthLinzV, DryOfMthLinzP(P)
+    PushIAy Dry_MthLinzV, Dry_MthLinzP(P)
 Next
 End Function
 

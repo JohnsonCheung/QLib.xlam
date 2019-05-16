@@ -7,18 +7,18 @@ Set DupMthWsP = DupMthWszP(CPj)
 End Function
 
 
-Function DrsOfDupMthP() As Drs
-DrsOfDupMthP = DrsOfDupMthzP(CPj)
+Function Drs_DupMthP() As Drs
+Drs_DupMthP = Drs_DupMthzP(CPj)
 End Function
 
 
-Private Function DrsOfDupMthzP(P As VBProject) As Drs
-Dim B As Drs: B = DrsOfMthnzP(P)
+Private Function Drs_DupMthzP(P As VBProject) As Drs
+Dim B As Drs: B = Drs_MthnzP(P)
 Dim C As Drs: C = DrswDup(B, "Mthn")
 Dim D As Drs: D = DrseDup(C, "Mthn Md") '<==
 Dim E As Drs: E = AddColzMthLines(D)
 Dim F As Drs: F = AddColzValIdzCntzDrs(E, "MthLines")
-DrsOfDupMthzP = SrtDrs(F)
+Drs_DupMthzP = SrtDrs(F)
 End Function
 
 
@@ -38,7 +38,7 @@ End Function
 
 
 Function DupMthWszP(P As VBProject) As Worksheet
-Set DupMthWszP = FmtDupMthWs(WszDrs(DrsOfDupMthzP(P), "DupMth"))
+Set DupMthWszP = FmtDupMthWs(WszDrs(Drs_DupMthzP(P), "DupMth"))
 End Function
 
 
@@ -53,8 +53,8 @@ For Each Dr In Itr(Dry)
 Next
 End Function
 
-Private Sub Z_DrsOfDupMthP()
-BrwDrs DrsOfDupMthP
+Private Sub Z_Drs_DupMthP()
+BrwDrs Drs_DupMthP
 End Sub
 
 
@@ -107,40 +107,40 @@ Next
 DupQMthnyBlkAllSameCnt = O
 End Function
 
-Function DupQDrOfMthnsP() As Drs
-DupQDrOfMthnsP = DupQDrOfMthnszP(CPj)
+Function DupQDr_MthnsP() As Drs
+DupQDr_MthnsP = DupQDr_MthnszP(CPj)
 End Function
 
-Function DupQDrOfMthnszP(P As VBProject) As Drs
-'DupQDrOfMthnszP = DrszFF("Pj Md Mth Ty Mdy", DupQDryOfMthnzP(A))
+Function DupQDr_MthnszP(P As VBProject) As Drs
+'DupQDr_MthnszP = DrszFF("Pj Md Mth Ty Mdy", DupQDry_MthnzP(A))
 End Function
 
-Function DupQDryOfMthnPj() As Variant()
-DupQDryOfMthnPj = DupQDryOfMthnzP(CPj)
+Function DupQDry_MthnPj() As Variant()
+DupQDry_MthnPj = DupQDry_MthnzP(CPj)
 End Function
 
-Function DupQDryOfMthnzP(P As VBProject) As Variant()
+Function DupQDry_MthnzP(P As VBProject) As Variant()
 Dim Dry(), Dry1(), Dry2()
-'Dry = QDryOfMthnzP(A, "-Mod") ' Pjn Mdn Mthn Ty Mdy
+'Dry = QDry_MthnzP(A, "-Mod") ' Pjn Mdn Mthn Ty Mdy
 'Dry1 = DryeCEv(Dry, 4, "Prv")
 Dry2 = DrywDupCC(Dry, Lngy(2))
-DupQDryOfMthnzP = SrtDryzCol(Dry2, 2)
+DupQDry_MthnzP = SrtDryzCol(Dry2, 2)
 End Function
 
 Function DupIxyzDry(Dry(), CCIxy&()) As Long()
 
 End Function
 
-Function DupQDryOfMthnVbe() As Variant()
-DupQDryOfMthnVbe = DupQDryOfMthnzV(CVbe)
+Function DupQDry_MthnVbe() As Variant()
+DupQDry_MthnVbe = DupQDry_MthnzV(CVbe)
 End Function
 
-Function DupQDryOfMthnzQMthny(QMthny$()) As Variant()
-DupQDryOfMthnzQMthny = DrywDupCC(DryzDotAy(QMthny), Lngy(2))
+Function DupQDry_MthnzQMthny(QMthny$()) As Variant()
+DupQDry_MthnzQMthny = DrywDupCC(DryzDotAy(QMthny), Lngy(2))
 End Function
 
-Function DupQDryOfMthnzV(A As Vbe) As Variant()
-DupQDryOfMthnzV = DupQDryOfMthnzQMthny(QMthnyzV(A))
+Function DupQDry_MthnzV(A As Vbe) As Variant()
+DupQDry_MthnzV = DupQDry_MthnzQMthny(QMthnyzV(A))
 End Function
 
 Private Sub ZZ()

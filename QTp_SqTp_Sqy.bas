@@ -181,7 +181,7 @@ End Sub
 
 Private Sub ZZ()
 ZZ_SwLins
-ZZ_SwzLyPm
+ZZ_Sw
 End Sub
 Private Sub ZZ_SwLins()
 Dim SwLy$()
@@ -197,16 +197,13 @@ For Each L In Itr(SwLy)
     PushSwLin SwLins, SwLinzLin(L)
 Next
 End Function
-Private Function Sw(StmtSw As Dictionary, FldSw As Dictionary) As Sw
-Set Sw.StmtSw = StmtSw
-Set Sw.FldSw = FldSw
-End Function
-Private Function SwzLyPm(SwLy$(), Pm As Dictionary) As Sw
+Private Function Sw(SwLy$(), Pm As Dictionary) As Sw
 Dim FldSwLy$():              FldSwLy = AyePfx(SwLy, "?:")
 Dim StmtSwLy$():            StmtSwLy = AywPfx(SwLy, "?:")
 Dim StmtSw As Dictionary: Set StmtSw = EvlSwLy(StmtSwLy, Pm)
 Dim FldSw As Dictionary:  Set FldSw = EvlSwLy(FldSwLy, Pm)
-SwzLyPm = Sw(StmtSw, FldSw)
+Set Sw.StmtSw = StmtSw
+Set Sw.FldSw = FldSw
 End Function
 
 Private Function EvlSwLy(SwLy$(), Pm As Dictionary) As Dictionary
@@ -259,22 +256,27 @@ For J = 0 To A.N - 1
 Next
 End Function
 
-Private Sub ZZ_SwzLyPm()
+Private Sub ZZ_Sw()
 Dim SwLy$(), Pm As Dictionary
 GoSub ZZ
 Exit Sub
 ZZ:
-    BrwSw SwzLyPm(Y_SwLy, Y_Pm)
+    BrwSw Sw(Y_SwLy, Y_Pm)
     Return
 End Sub
+
+Private Function Y_Pm() As Dictionary
+Set Y_Pm = Dic(Y_PmLy)
+End Function
 
 Private Sub BrwSw(A As Sw)
 B FmtSw(A)
 End Sub
+
 Private Function FmtSw(A As Sw) As String()
 PushI FmtSw, "== StmtSw =================================="
 PushIAy FmtSw, FmtDic(A.StmtSw)
-PushI FmtSw, "== FldSw =================================="
+PushI FmtSw, "== FldSw ==================================="
 PushIAy FmtSw, FmtDic(A.FldSw)
 End Function
 
@@ -301,9 +303,8 @@ Y_SwLy = XX
 Erase XX
 End Function
 Private Sub ZZZ()
-QTp_SqTp_Sw.SwLinOpStr
+QTp_SqTp_Sqy:
 End Sub
-
 
 Private Sub ZZ_SqyzTp()
 Dim SqTp$
@@ -313,54 +314,31 @@ ZZ:
     B SqyzTp(Y_SqTp)
     Return
 End Sub
+
 Function SqyzTp(SqTp$) As String()
-'ThwIf_Er ErzSqTp(SqTp), CSub
+ThwIf_Er ErzSqTp(SqTp), CSub
 Dim B As Blks:             B = BlkszSqTp(SqTp)
-Dim Pm As Dictionary: Set Pm = PmzLy(LyzBlksTy(B, "PM"))
-Dim Sw As Sw:             Sw = SwzLyPm(LyzBlksTy(B, "SW"), Pm)
-SqyzTp = SqyzLyPmSw(LyAyzBlksTy(B, "SQ"), Pm, Sw)
+Dim Pm As Dictionary: Set Pm = Dic(LyzBlksTy(B, "PM"))
+Dim S As Sw:               S = Sw(LyzBlksTy(B, "SW"), Pm)
+SqyzTp = Sqy(LyAyzBlksTy(B, "SQ"), Pm, S)
 End Function
-Function PmzLy(PmLy$()) As Dictionary
-Dim O As Dictionary: Set O = Dic(PmLy)
-Dim B As Boolean, K, V
-For Each K In O.Keys
-    Select Case True
-    Case HasPfx(K, ">?"):
-        V = O(K)
-        Select Case V
-        Case "0": B = False
-        Case "1": B = True
-        Case Else: Thw CSub, "If K='>?xxx', V should be 0 or 1", "K V PmLy", K, V, PmLy
-        End Select
-        O(K) = B
-    Case HasPfx(K, ">")
-    Case Else: Thw CSub, "Pm line should beg with (>? | >)", "K V PmLy", K, O(K), PmLy
-    End Select
-Next
-Set PmzLy = O
-End Function
-Private Sub ZZ_PmzLy()
-B Y_PmLy
-End Sub
 
 Private Sub ZZ_Pm()
 BrwDic Y_Pm
-End Sub
-Sub Z3()
-ZZ_SqyzTp
 End Sub
 
 Private Function Y_Blks() As Blks
 Y_Blks = BlkszSqTp(Y_SqTp)
 End Function
+
 Private Function Y_PmLy() As String()
 Y_PmLy = LyzBlksTy(Y_Blks, "PM")
 End Function
 
-Private Function SqyzLyPmSw(SqLyAy(), Pm As Dictionary, Sw As Sw) As String()
+Private Function Sqy(SqLyAy(), Pm As Dictionary, Sw As Sw) As String()
 Dim SqLy
 For Each SqLy In Itr(SqLyAy)
-    PushI SqyzLyPmSw, SqlzLyPmSw(CvSy(SqLy), Pm, Sw)
+    PushI Sqy, Sql(CvSy(SqLy), Pm, Sw)
 Next
 End Function
 
@@ -385,7 +363,7 @@ Dim Ly$()
 GoSub ZZ
 Exit Sub
 ZZ:
-    Debug.Assert IsSqLy(Sy("Drp sdf"))
+    Debug.Assert IsSq(Sy("Drp sdf"))
     Return
 End Sub
 Private Function IsSq(Ly$()) As Boolean
@@ -398,9 +376,7 @@ End Function
 Private Function IsSw(Ly$()) As Boolean
 IsSw = HasPfxOfAllEle(Ly, "?")
 End Function
-Private Function Y_Pm() As Dictionary
-Set Y_Pm = PmzLy(Y_PmLy)
-End Function
+
 
 Private Property Get Y_SwLnxs() As Lnxs
 End Property
@@ -584,16 +560,11 @@ End Select
 BlkTy = O
 End Function
 
-Function SqlSel_X_Into_T_Wh_Gp_Ord$(X$, Into$, T$, Gp$, Ord$)
-
-End Function
-
 Private Function SQ_ExprLis$(Fny$(), EDic As Dictionary, FzDiAlias As Dictionary)
-SqpSelX_Fny_ExtNy_ODis
+'SqpSelX_Fny_ExtNy_ODis
 End Function
-Private Function SqlSel$(Sel As KLys, EDic As Dictionary, FldSw As Dictionary)
+Private Function SqlSel$(Sel$(), EDic As Dictionary, FldSw As Dictionary)
 'BrwKLys Sel
-Dim X As KLys: X = Sel
 Dim LFm$, LInto$, LSel$, LOrd$, LWh$, LGp$, LAndOr$(), LAlias$()
 '    LSel = ShfKLyMLin(X, "Sel")
 '    LInto = ShfKLyMLin(X, "Into")
@@ -605,7 +576,7 @@ Dim LFm$, LInto$, LSel$, LOrd$, LWh$, LGp$, LAndOr$(), LAlias$()
 '    LOrd = ShfKLyOLin(X, "Ord")
 Dim ADic As Dictionary: Set ADic = DiczVkkLy(LAlias)
 Dim Ffny$(), FGp$()
-    Ffny = SQ_SelFny(LSel, FldSw)
+'    Ffny = SQ_SelFny(LSel, FldSw)
     FGp = SQ_SelFld(LGp, FldSw)
 Dim OX$, OInto$, OT$, OWh$, OGp$, OOrd$
 '    Dim Fny$()
@@ -613,10 +584,10 @@ Dim OX$, OInto$, OT$, OWh$, OGp$, OOrd$
 '    '
     OInto = RmvT1(LInto)
     OGp = SQ_ExprLis(FGp, EDic, ADic)
-    OOrd = SQ_ExprLis(FOrd, EDic, ADic)
+'    OOrd = SQ_ExprLis(FOrd, EDic, ADic)
 '    OWh = SQ_Wh()
 '    OT = RmvT1(LFm)
-SqlSel = SqlSel_X_Into_T_Wh_Gp_Ord(OX, OInto, OT, OGp, OOrd)
+'SqlSel = SqlSel_X_Into_T_Wh_Gp_Ord(OX, OInto, OT, OGp, OOrd)
 End Function
 
 Private Function SQ_SelFld(FF$, FldSw As Dictionary) As String()
@@ -628,21 +599,21 @@ For Each F In Fny
     Case F1 = "?"
         If Not FldSw.Exists(F) Then Thw CSub, "An option fld not found in FldSw", "Opt-Fld FF FldSw", F, FF, FldSw
         If FldSw(F) Then
-            PushI XFny, RmvFstChr(F)
+            'PushI XFny, RmvFstChr(F)
         End If
     Case F1 = "$"
-        PushI XFny, RmvFstChr(F)
+        'PushI XFny, RmvFstChr(F)
     Case Else
-        PushI XFny, F
+        'PushI XFny, F
     End Select
 Next
 Stop
 End Function
 
-Private Function SqlUpd$(Upd As KLys, EDic As Dictionary, FldSw As Dictionary)
+Private Function SqlUpd$(Upd$(), EDic As Dictionary, FldSw As Dictionary)
 End Function
 
-Private Function SqlDrp$(SqLy$())
+Private Function SqlDrp$(Drp$())
 End Function
 
 Private Function IsSkip(FstSqLin$, SqLy$(), Ty As EmStmtTy, StmtSw As Dictionary) As Boolean
@@ -652,7 +623,7 @@ If Not StmtSw.Exists(Key) Then Thw CSub, "StmtSw does not contain the StmtSwKey"
 IsSkip = Not StmtSw(Key)
 End Function
 
-Private Function SqlzLyPmSw$(SqLy$(), Pm As Dictionary, Sw As Sw)
+Private Function Sql$(SqLy$(), Pm As Dictionary, Sw As Sw)
 Dim FstSqLin$:    FstSqLin = SqLy(0)
 Dim Ty As EmStmtTy:     Ty = StmtTy(FstSqLin)
 Dim Skip As Boolean:  Skip = IsSkip(FstSqLin, SqLy, Ty, Sw.StmtSw)
@@ -662,11 +633,11 @@ Dim E As Dictionary: Set E = SQ_ExprDic(SqLy)
 Dim O$
     Select Case True
     Case Ty = EiDrpStmt: O = SqlDrp(S)
-    Case Ty = EiUpdStmt: O = SqlUpd(KLys(S), E, Sw.FldSw)
-    Case Ty = EiSelStmt: O = SqlSel(KLys(S), E, Sw.FldSw)
+    Case Ty = EiUpdStmt: O = SqlUpd(S, E, Sw.FldSw)
+    Case Ty = EiSelStmt: O = SqlSel(S, E, Sw.FldSw)
     Case Else: ThwImpossible CSub
     End Select
-SqlzLyPmSw = O
+Sql = O
 End Function
 
 Private Function SQ_RmvExprLin(SqLy$()) As String()
@@ -747,7 +718,7 @@ Private Function SQ_And(A$(), E As Dictionary)
 Dim F$, I, L$, Ix%, M As Lnx
 For Each I In Itr(A)
     'Set M = I
-    LnxAsg M, L, Ix
+    'LnxAsg M, L, Ix
     If ShfT1(L) <> "and" Then Stop
     F = ShfT1(L)
     Select Case ShfT1(L)
@@ -770,16 +741,6 @@ Private Function SQ_JnOrLeftJn(A$(), E As Dictionary) As String()
 
 End Function
 
-Private Function PopJnOrLeftJn(A$()) As String()
-PopJnOrLeftJn = PopMulXorYOpt(A, U_Jn, U_LeftJn)
-End Function
-
-Private Function PopXXXOpt$(A$(), XXX$)
-'Return No-Q-T1-of-LasEle-of-A$() if No-Q-T1-of it = XXX else return ''
-If Si(A) = 0 Then Exit Function
-PopXXXOpt = PopXXX(A, XXX)
-End Function
-
 Private Function SQ_Sel$(A$, E As Dictionary)
 Dim Fny$()
     Dim T1$, L$
@@ -797,9 +758,9 @@ Dim F
 For Each F In Fny
     If FstChr(F) = "?" Then
         If Not FldSw.Exists(F) Then Stop
-        If FldSw(F) Then PushI XSelFny, F
+        'If FldSw(F) Then PushI XSelFny, F
     Else
-        PushI XSelFny, F
+        'PushI XSelFny, F
     End If
 Next
 End Function
@@ -837,31 +798,44 @@ Private Function SQ_WhInNbrLis$(A As Lnx, E As Dictionary, OEr$())
 
 End Function
 
-Private Sub Z_SqlRsltSel()
-Dim E As Dictionary, Ly$(), Act As SqlRslt
+Function CvVy_ToTF_Fm01(A As Dictionary) As Dictionary
+Dim O As Dictionary: Set O = CloneDic(A)
+Dim K
+For Each K In O.Keys
+    Select Case O(K)
+    Case "0": O(K) = False
+    Case "1": O(K) = True
+    End Select
+Next
+Set CvVy_ToTF_Fm01 = O
+End Function
+
+Private Sub Z_SqlSel()
+Dim E As Dictionary, Ly$(), FldSw As Dictionary
+
 '---
-Erase Ly
-    Push Ly, "?XX Fld-XX"
-    Push Ly, "BB Fld-BB-LINE-1"
-'    Push Ly, "BB Fld-BB-LINE-2"
-'    Set E = LyDic(Ly)           '<== Set ExprDic
-Erase Ly
-    'Set FldSw = New Dictionary
-    'FldSw.Add "?XX", False       '<=== Set FldSw
-Erase Ly
-    Erase Ly
-    PushI Ly, "sel ?XX BB CC"
-    PushI Ly, "into #AA"
-    PushI Ly, "fm   #AA"
-    PushI Ly, "jn   #AA"
-    PushI Ly, "jn   #AA"
-    PushI Ly, "wh   A bet $a $b"
-    PushI Ly, "and  B in $c"
-    PushI Ly, "gp   D C"        '<== LySq
+Erase XX
+    X "?XX Fld-XX"
+    X "BB Fld-BB-LINE-1"
+    X "BB Fld-BB-LINE-2"
+    Set E = Dic(XX)           '<== Set ExprDic
+Erase XX
+    X "?XX 0"
+    Set FldSw = Dic(XX)
+    Set FldSw = CvVy_ToTF_Fm01(FldSw)
+Erase XX
+    X "sel ?XX BB CC"
+    X "into #AA"
+    X "fm   #AA"
+    X "jn   #AA"
+    X "jn   #AA"
+    X "wh   A bet $a $b"
+    X "and  B in $c"
+    X "gp   D C"        '<== LySq
 GoSub Tst
 Exit Sub
 Tst:
-    Act = SqlRsltSel(Ly, E)
+    Act = SqlSel(Ly, E, FldSw)
     C
     Return
 End Sub

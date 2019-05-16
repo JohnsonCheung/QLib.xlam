@@ -11,7 +11,7 @@ Dim OFxa$:               OFxa = DistFxa(P)
                                 ExpPj Pj
                                 CrtFxa OFxa
 Dim OPj As VBProject: Set OPj = PjzFxa(OFxa)
-                                AddRfzSrc OPj, RfSrczSrcp(P)
+                                AddRfzS OPj, RfSrczSrcp(P)
                                 LoadBas OPj, P
 End Sub
 Private Sub ZZ()

@@ -29,11 +29,19 @@ If Src(A.Lno - 1) <> A.Lin Then Stop
 DltLinzS = AyeEleAt(Src, A.Lno - 1)
 End Function
 
-Function MdySrc(Src$(), B As Mdyg) As String()
-Select Case B.Act
-Case EmMdyg.EiIns: MdySrc = InsLinzS(Src, B.Ins)
-Case EmMdyg.EiDlt: MdySrc = DltLinzS(Src, B.Dlt)
-Case Else:         Thw CSub, "Invalid Mdyg.Act, it should EiInsLin or EiDltLin, ", "Mdyg.Act", B.Act
+Function MdySrc(Src$(), M As Mdygs) As String()
+Dim J&, O$()
+O = Src
+For J = 0 To M.N - 1
+    O = MdySrczSM(O, M.Ay(J))
+Next
+End Function
+
+Function MdySrczSM(Src$(), M As Mdyg) As String()
+Select Case M.Act
+Case EmMdyg.EiIns: MdySrczSM = InsLinzS(Src, M.Ins)
+Case EmMdyg.EiDlt: MdySrczSM = DltLinzS(Src, M.Dlt)
+Case Else:         Thw CSub, "Invalid Mdyg.Act, it should EiInsLin or EiDltLin, ", "Mdyg.Act", M.Act
 End Select
 End Function
 
@@ -119,7 +127,7 @@ ThwIf_Er ErzMdygs(B), CSub
 Dim O$(), J&
 O = Src
 For J = B.N - 1 To 0 Step -1
-    O = MdySrc(O, B.Ay(J))
+    O = MdySrczSM(O, B.Ay(J))
 Next
 SrcAftMdyg = O
 End Function

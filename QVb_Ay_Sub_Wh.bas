@@ -297,8 +297,8 @@ Function ItrzAywRmvT1(Ay, T1)
 Asg Itr(AywRmvT1(Ay, T1)), ItrzAywRmvT1
 End Function
 
-Function ItrzSS(SS$)
-Asg SyzSS(SS), ItrzSS
+Function ItrzSS(SS)
+Asg Itr(SyzSS(SS)), ItrzSS
 End Function
 
 Function AywRmvT1(Ay, T1) As String()

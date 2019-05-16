@@ -1,5 +1,5 @@
 Attribute VB_Name = "QVb_Dta_Dic_Dicab"
-Public Type Dicab
+Type Dicab
     A As Dictionary
     B As Dictionary
 End Type

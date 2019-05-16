@@ -34,10 +34,12 @@ End Sub
 Function CntSiStrzMd$(A As CodeModule)
 CntSiStrzMd = CntSiStrzLines(SrcLines(A))
 End Function
-
+Sub RplzML(M As CodeModule, NewLines$)
+ClrMd M
+M.InsertLines 1, NewLines
+End Sub
 Sub RplMd(A As RplgMd)
-ClrMd A.Md
-A.Md.InsertLines 1, A.NewLines
+RplzML A.Md, A.NewLines
 End Sub
 
 Sub DltLinzFei(A As CodeModule, B As Fei, OldLines$)

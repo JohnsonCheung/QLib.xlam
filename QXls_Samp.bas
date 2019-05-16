@@ -34,11 +34,11 @@ SampLofTp = O
 End Property
 
 
-Property Get SampDrOfAToJ() As Variant()
+Property Get SampDr_AToJ() As Variant()
 Const NC% = 10
 Dim J%
 For J = 0 To NC - 1
-    PushI SampDrOfAToJ, Chr(Asc("A") + J)
+    PushI SampDr_AToJ, Chr(Asc("A") + J)
 Next
 End Property
 
@@ -57,7 +57,7 @@ End Property
 
 
 Property Get SampSqWithHdr() As Variant()
-SampSqWithHdr = InsSqr(SampSq, SampDrOfAToJ)
+SampSqWithHdr = InsSqr(SampSq, SampDr_AToJ)
 End Property
 
 Property Get SampWs() As Worksheet

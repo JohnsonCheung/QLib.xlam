@@ -24,7 +24,7 @@ SrczMRe = O
 End Function
 
 Function SrczPjPatn(P As VBProject, Patn$) As String()
-SrczPjPatn = SywPatn(SrczP(P), Patn)
+SrczPjPatn = AywPatn(SrczP(P), Patn)
 End Function
 
 

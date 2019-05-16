@@ -108,12 +108,11 @@ End Sub
 
 
 Function RRCCzSq(Sq()) As RRCC
-Set RRCCzSq = New RRCC
 With RRCCzSq
-    .R1 = LBound(Sq(), 1)
-    .R2 = UBound(Sq(), 1)
-    .C1 = LBound(Sq(), 2)
-    .C2 = UBound(Sq(), 2)
+    .R1 = LBound(Sq, 1)
+    .R2 = UBound(Sq, 1)
+    .C1 = LBound(Sq, 2)
+    .C2 = UBound(Sq, 2)
 End With
 End Function
 

@@ -38,67 +38,69 @@ If CntBlk(A, "SW") > 1 Then
 '    PushIAy ErzExcessSwBlk, ErzBlk(CvBlk(AyeFstEle(Blk)), "Excess Sw block, they are ignored")
 End If
 End Function
-Blks
+
 Function ErzBlk(Blk As Blk, Msg$) As String()
 
 End Function
 
 Private Function MsgzLeftOvrAftEvl(A() As SwLin, Sw As Sw) As String()
-If Si(A) = 0 Then Exit Function
+'If Si(A) = 0 Then Exit Function
 Dim I
 PushI MsgzLeftOvrAftEvl, "Following lines cannot be further evaluated:"
-For Each I In A
-    PushI MsgzLeftOvrAftEvl, vbTab & CvSwLin(I).Lin
-Next
-PushIAy MsgzLeftOvrAftEvl, FmtDicTit(Sw, "Following is the [Sw] after evaluated:")
+'For Each I In A
+'    PushI MsgzLeftOvrAftEvl, vbTab & CvSwLin(I).Lin
+'Next
+'PushIAy MsgzLeftOvrAftEvl, FmtDicTit(Sw, "Following is the [Sw] after evaluated:")
 End Function
 
 Private Function MsgzNoNm$(A As SwLin)
-MsgzNoNm = Msgz(A, "No name")
+'MsgzNoNm = SwLinMsg(A, "No name")
 End Function
 
 Private Function MsgzOpStrEr$(A As SwLin)
-MsgzOpStrEr = Msgz(A, "2nd Term [Op] is invalid operator.  Valid operation [NE EQ AND OR]")
+MsgzOpStrEr = SwLinMsg(A, "2nd Term [Op] is invalid operator.  Valid operation [NE EQ AND OR]")
 Stop
 End Function
 
 Private Function MsgzPfx$(A As SwLin)
-MsgzPfx = Msgz(A, "First Char must be @")
+MsgzPfx = SwLinMsg(A, "First Char must be @")
 End Function
+Private Function SwLinMsg$(A As SwLin, ParamArray Ap())
 
+End Function
 Private Function MsgzTermCntAndOr$(A As SwLin)
-MsgzTermCntAndOr = Msgz(A, "When 2nd-Term (Operator) is [AND OR], at least 1 term")
+MsgzTermCntAndOr = SwLinMsg(A, "When 2nd-Term (Operator) is [AND OR], at least 1 term")
 End Function
 
 Private Function MsgzTermCntEqNe$(A As SwLin)
-MsgzTermCntEqNe = Msgz(A, "When 2nd-Term (Operator) is [EQ NE], only 2 terms are allowed")
+MsgzTermCntEqNe = SwLinMsg(A, "When 2nd-Term (Operator) is [EQ NE], only 2 terms are allowed")
 End Function
 
 Private Function MsgzTermMustBegWithQuestOrAt$(TermAy, A As SwLin)
-MsgzTermMustBegWithQuestOrAt = Msgz(A, "Terms[" & JnSpc(TermAy) & "] must begin with either [?] or [@?]")
+MsgzTermMustBegWithQuestOrAt = SwLinMsg(A, "Terms[" & JnSpc(TermAy) & "] must begin with either [?] or [@?]")
 End Function
 
 Private Function MsgzTermNotInPm$(TermAy, A As SwLin)
-MsgzTermNotInPm = Msgz(A, "Terms[" & JnSpc(TermAy) & "] begin with [@?] must be found in Pm")
+MsgzTermNotInPm = SwLinMsg(A, "Terms[" & JnSpc(TermAy) & "] begin with [@?] must be found in Pm")
 End Function
 
 Private Function MsgzTermNotInSw$(TermAy, A As SwLin, SwNm As Dictionary)
-MsgzTermNotInSw = Msgz(A, "Terms[" & JnSpc(TermAy) & "] begin with [?] must be found in Switch")
+MsgzTermNotInSw = SwLinMsg(A, "Terms[" & JnSpc(TermAy) & "] begin with [?] must be found in Switch")
 End Function
 
 Private Function ErzDupNm(A() As SwLin, O() As SwLin) As String()
 Dim Ny$(), Nm$
 Dim J%, M As SwLin, Er() As SwLin
-For J = 0 To UB(A)
-    Set M = A(J)
+'For J = 0 To UB(A)
+    'Set M = A(J)
     If HasEle(Ny, M.Nm) Then
-        PushObj Er, M
+        'PushObj Er, M
     Else
-        PushObj O, M
+        'PushObj O, M
         PushI Ny, M.Nm
     End If
-Next
-ErzDupNm = MsgzDupNm(Er)
+'Next
+'ErzDupNm = MsgzDupNm(Er)
 End Function
 
 Private Function ErzFld(A() As SwLin, O() As SwLin) As String()
@@ -109,14 +111,14 @@ A1 = A
 While IsEr
     J = J + 1: If J > 1000 Then Stop
     IsEr = False
-    For Each I In Itr(A1)
+'    For Each I In Itr(A1)
 '        Set M = ErzFldLin(CvSwLin(I), SwNmDic(A), OEr)
-        If IsNothing(M) Then
+'        If IsNothing(M) Then
             IsEr = True
-        Else
-            PushObj A2, M
-        End If
-    Next
+'        Else
+            'PushObj A2, M
+'        End If
+    'Next
     A1 = A2
 Wend
 'ErzFld = A2
@@ -135,18 +137,38 @@ Next
 PushIAy OEr, MsgzTermNotInSw(O0, A, SwNm)
 PushIAy OEr, MsgzTermNotInPm(O1, A)
 PushIAy OEr, MsgzTermMustBegWithQuestOrAt(O2, A)
-If HasElezInSomAyzOfAp(O0, O1, O2) Then Set ErzFldLin = A
+'If HasElezInSomAyzOfAp(O0, O1, O2) Then Set ErzFldLin = A
 End Function
 
 Private Function ErzLin1$(IO As SwLin)
-Dim Msgz$
+Dim SwLinMsg$
 With IO
     If .Nm = "" Then ErzLin1 = MsgzNoNm(IO): Exit Function
-    Select Case .OpStr
-    Case "OR", "AND": If Si(.TermAy) = 0 Then ErzLin1 = MsgzTermCntAndOr(IO): Exit Function
-    Case "EQ", "NE":  If Si(.TermAy) <> 2 Then ErzLin1 = MsgzTermCntEqNe(IO): Exit Function
-    Case Else:        ErzLin1 = MsgzOpStrEr(IO): Exit Function
-    End Select
+'    Select Case .OpStr
+'    Case "OR", "AND": If Si(.TermAy) = 0 Then ErzLin1 = MsgzTermCntAndOr(IO): Exit Function
+'    Case "EQ", "NE":  If Si(.TermAy) <> 2 Then ErzLin1 = MsgzTermCntEqNe(IO): Exit Function
+'    Case Else:        ErzLin1 = MsgzOpStrEr(IO): Exit Function
+'    End Select
 End With
+End Function
+
+Function ErzPm(Pm As Dictionary) As String()
+'Dim O As Dictionary: Set O = Dic(PmLy)
+'Dim B As Boolean, K, V
+'For Each K In O.Keys
+'    Select Case True
+'    Case HasPfx(K, ">?"):
+'        V = O(K)
+'        Select Case V
+'        Case "0": B = False
+'        Case "1": B = True
+'        Case Else: Thw CSub, "If K='>?xxx', V should be 0 or 1", "K V PmLy", K, V, PmLy
+'        End Select
+'        O(K) = B
+'    Case HasPfx(K, ">")
+'    Case Else: Thw CSub, "Pm line should beg with (>? | >)", "K V PmLy", K, O(K), PmLy
+'    End Select
+'Next
+'Set SqPm = O
 End Function
 

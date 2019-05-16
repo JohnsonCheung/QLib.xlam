@@ -4,19 +4,23 @@ Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Ens_CSub."
 Type MdMdyg
     Md As CodeModule
-    Mdygs As Mdygs
+    NewLines As String
 End Type
 
-Private Function EnsgCModSub(A As CodeModule) As MdMdyg
-Dim S$():                  S = Src(A)
-Dim MC As Mdygs:          MC = EnsgCSubs(S, MthRgs(S))               'MC = Mdyg-CSub
-Dim MM As Mdyg:           MM = EnsgCMod(DclLy(S), IsUsingCMod(MC))   'MM = Mdyg-CMod
-Dim M As Mdygs:            M = AddMdygs(SngMdyg(MM), MC)
-                 EnsgCModSub = MdMdyg(M, M)
+Private Function EnsgCModSub(M As CodeModule) As MdMdyg
+Dim S$():          S = Src(M)
+Dim MC As Mdygs:  MC = EnsgCSubs(S, MthRgs(S))                      'MC = Mdyg-CSub
+Dim MM As Mdygs:  MM = EnsgCMod(DclLy(S), Mdn(M), IsUsingCMod(MC))  'MM = Mdyg-CMod
+Dim Ms As Mdygs:  Ms = AddMdygs(MM, MC)
+Dim NL$:          NL = JnCrLf(MdySrc(S, Ms))
+         EnsgCModSub = MdMdyg(M, NL)
 End Function
-
+Function MdMdyg(M As CodeModule, NewLines$) As MdMdyg
+Set MdMdyg.Md = M
+MdMdyg.NewLines = NewLines
+End Function
 Private Sub Z_EnsgCModSubzP()
-Dim Pj As VBProject, Act As RplgMds, Ept As RplgMds
+Dim Pj As VBProject, Act As MdMdyg, Ept As MdMdyg
 GoSub ZZ
 Exit Sub
 ZZ:
@@ -24,7 +28,7 @@ ZZ:
     Return
 Tst:
     Act = EnsgCModSub(Pj)
-    Brw LyzRplgMds(Act): Stop
+'    Brw FmtMdMdyg(Act): Stop
     Return
 End Sub
 
@@ -32,7 +36,7 @@ Private Function EnsgCModSubzP(P As VBProject) As RplgMds
 If P.Protection = vbext_pp_locked Then Thw CSub, "Pj is locked", "Pj", P.Name
 Dim C As VBComponent
 For Each C In P.VBComponents
-    PushRplgMd RplgMdszEnsCMSub, EnsgCModSub(C.CodeModule) '<===
+    'PushRplgMd RplgMdszEnsCMSub, EnsgCModSub(C.CodeModule) '<===
 Next
 End Function
 
@@ -47,22 +51,39 @@ For J = 0 To Mths.N - 1
     PushMdygs EnsgCSubs, EnsgCSub(Src, Mths.Ay(J))
 Next
 End Function
-Private Function EnsgCMod(Dcl$(), UseMod As Boolean) As Mdyg
-Dim N$: N = Mdn(A)
-.Lnx = CModLnx(A)
-.InsLno = LnoOfAftOptAndImpl(A)
-.IsUsingCMod = IsUsingCMod
-If UseCMod Then
-Dim NLno&:  NLno = A.InsLno
-Dim NLin$: NLin = CModLin(IsUsing, A.Mdn)
-End If
-Dim L As Lnx: L = CnstLnxzSN(Dcl, "CMod$")
-Dim NLno&: If UseMod Then NLno = LnoOfAftOptAndImpl
-Dim NLin$: If UseMod Then A
-Dim OLno&: OLno = L.Ix + 1
-Dim OLno$: OLin = L.Lin
-EnsgCMod = MdygzOONN(OLno, OLin, NLno, NLin)
+Function CnstLinIx&(Src$(), Cnstn)
+Dim L, O&
+For Each L In Itr(Src)
+    If IsLinzCnstn(L, Cnstn) Then CnstLinIx = O: Exit Function
+    O = O - 1
+Next
+CnstLinIx = -1
 End Function
+Function IsLinzCnstn(L, Cnstn) As Boolean
+End Function
+Sub AA()
+Dim A
+A = "ASD"
+Debug.Print StrPtr(A)
+End Sub
+Private Function EnsgCMod(Dcl$(), Mdn$, UseMod As Boolean) As Mdygs
+Dim OL As SomLnx, NL As SomLnx, NewLno&, OldCModLno&
+OldCModLno = CnstLinIx(Dcl, "CMod") + 1
+OL = OldCModLin(Dcl, OldCModLno)
+NL = NewCModLin(UseMod, Mdn, NewLno)
+EnsgCMod = MdygszON(OL, NL)
+End Function
+
+Private Function OldCModLin(Dcl$(), OldCModLno&) As SomLnx
+
+End Function
+
+Private Function NewCModLin(UseMod As Boolean, Mdn$, Lno&) As SomLnx
+If Not UseMod Then Exit Function
+Dim L$: L = FmtQQ("Private CMod$ = ""?.""", Mdn)
+NewCModLin = SomLnx(Lnx(L, Lno - 1))
+End Function
+
 Private Function EnsgCSub(Src$(), Mth As MthRg) As Mdygs
 Dim MthLy$(): MthLy = AywFE(Src, Mth.FmIx, Mth.EIx)
 Dim O As SomLnx: O = SomOldCSub(MthLy, Mth.FmIx, Mth.EIx)
@@ -91,7 +112,7 @@ Private Function IsUsingCMod(EnsgCSubs As Mdygs) As Boolean
 Dim J%
 For J = 0 To EnsgCSubs.N - 1
     Select Case EnsgCSubs.Ay(J).Act
-    Case EmMdyg.EiIns, EmMdyg.EiRpl: IsUsingCMod = True: Exit Function
+'    Case EmMdyg.EiIns, EmMdyg.EiRpl: IsUsingCMod = True: Exit Function
     End Select
 Next
 End Function
@@ -118,7 +139,7 @@ For Each C In P.VBComponents
 Next
 End Sub
 Sub EnsCModSubzM(A As CodeModule)
-MdyMd EnsgCModSub(A)
+'MdyMd EnsgCModSub(A)
 End Sub
 
 Private Function CModCnstLin$(A As CodeModule)
@@ -131,21 +152,21 @@ GoSub ZZ
 'GoSub T0
 Exit Sub
 ZZ:
-    BrwRplgMd EnsgCModSub(CMd)
+    'BrwRplgMd EnsgCModSub(CMd)
     Return
 T0:
     Set Md = CMd
     'Ept = SomInsg(2, "Private Const CMod$ = ""BEnsCMod.""")
     GoTo Tst
 Tst:
-    Act = EnsgCModSub(Md)
+'    Act = EnsgCModSub(Md)
 '    If Not IsEqRplgMd(Act, Ept) Then Stop
     Return
 End Sub
 Sub Z2()
 ZZ_EnsgCModSub
 End Sub
-EnsgCModSub
+
 Private Sub ZZZ()
 QIde_Ens_CModSub:
 End Sub
@@ -161,12 +182,12 @@ ZZ2:
     Dim M
     For Each M In MdItr(CPj)
         Dim O$()
-        O = FmtEnsCSubzMd(CvMd(M))
+        'O = FmtEnsCSubzMd(CvMd(M))
         If Si(O) > 0 Then Brw O, Mdn(CvMd(M))
     Next
     Return
 Tst:
-    Act = FmtEnsCSubzMd(Md)
+    'Act = FmtEnsCSubzMd(Md)
     Brw Act
     Return
 End Sub

@@ -5,8 +5,8 @@ Private Const Asm$ = "QIde"
 Sub SLis(Patn$)
 SLiszPP CPj, Patn
 End Sub
-Sub SBrwzPP(P As VBProject, Patn$)
-Brw SLocyzPP(P, P)
+Sub BrwzPP(Pj As VBProject, Patn$)
+Brw SLocyzPP(Pj, Patn)
 End Sub
 Sub SLiszPP(P As VBProject, Patn$) 'SLis = SrcLis
 D SLocyzPP(P, Patn$)

@@ -41,9 +41,9 @@ Function LnoAyOfPubZ(A As CodeModule) As Long()
 Dim L, J&
 For Each L In Itr(Src(A))
     J = J + 1
-    If IsMthLinzPub(L) Then
+    'If IsMthLinzPub(L) Then
         PushI LnoAyOfPubZ, J
-    End If
+    'End If
 Next
 End Function
 
@@ -66,10 +66,12 @@ End Sub
 Sub EnsPrv(A As CodeModule, Mthn)
 EnsMdy A, Mthn, "Private"
 End Sub
+
 Function EnsgPub(A As CodeModule, Mthn) As Mdyg
 End Function
+
 Sub EnsPub(A As CodeModule, Mthn)
-MdyLin EnsgPub(A, Mthn)
+'MdyLin EnsgPub(A, Mthn)
 End Sub
 
 Function EnsgPrv(A As CodeModule, Mthn) As Mdyg

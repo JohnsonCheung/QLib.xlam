@@ -33,40 +33,44 @@ End With
 End Function
 
 Function WhMdzWhMdMth(A As WhMdMth) As WhMd
-If Not IsNothing(A) Then Set WhMdzWhMdMth = A.Md
+'If Not IsNothing(A) Then Set WhMdzWhMdMth = A.Md
 End Function
 
 Function WhMthzWhMdMth(A As WhMdMth) As WhMth
-If Not IsNothing(A) Then Set WhMthzWhMdMth = A.Mth
+'If Not IsNothing(A) Then Set WhMthzWhMdMth = A.Mth
 End Function
 
 Function WhMth(ShtMdy$(), ShtKd$(), Nm As WhNm) As WhMth
-Dim O As New WhMth
-Set WhMth = O.Init(ShtMdy, ShtKd, Nm)
+With WhMth
+    
+End With
 End Function
 
 Function WhPjMth(Pj As WhNm, Md As WhMdMth) As WhPjMth
 With WhPjMth
-    Set .WhPjNm = Pj
-    Set .WhMdMth = Md
+    .WhPjNm = Pj
+    .WhMdMth = Md
 End With
 End Function
 
 Function WhNm(Patn$, LikAy$(), ExlLikAy$()) As WhNm
-Dim O As New WhNm
-Set WhNm = O.Init(Patn, LikAy, ExlLikAy)
+With WhNm
+    .ExlLikAy = ExlLikAy
+    .LikAy = LikAy
+    If Patn <> "" Then Set .Re = RegExp(Patn)
+End With
 End Function
 
 Function WhMd(CmpTy() As vbext_ComponentType, Nm As WhNm) As WhMd
-Set WhMd = New WhMd
-WhMd.Init CmpTy, Nm
+'Set WhMd = New WhMd
+'WhMd.Init CmpTy, Nm
 End Function
 Function WhMdzStr(WhStr$) As WhMd
 With Lpm(WhStr, C_WhMthSpec)
     Dim CmpTy() As vbext_ComponentType
     If .HasSw("Cls") Then PushI CmpTy, vbext_ct_ClassModule
     If .HasSw("Mod") Then PushI CmpTy, vbext_ct_StdModule
-    Set WhMdzStr = WhMd(CmpTy, .WhNm)
+'    WhMdzStr = WhMd(CmpTy, .WhNm)
 End With
 End Function
 

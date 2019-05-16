@@ -8,9 +8,9 @@ Function CacheDtezPjf(Pjf) As Date
 CacheDtezPjf = ValzQ(MthDbP, FmtQQ("Select PjDte from Mth where Pjf='?'", Pjf))
 End Function
 
-Function DrsOfMthzPjfzFmCache(Pjf) As Drs
+Function Drs_MthzPjfzFmCache(Pjf) As Drs
 Dim Sql$: Sql = FmtQQ("Select * from MthCache where Pjf='?'", Pjf)
-DrsOfMthzPjfzFmCache = DrszFbq(MthDbP, Sql)
+Drs_MthzPjfzFmCache = DrszFbq(MthDbP, Sql)
 End Function
 
 Function SkFnyWiSqlQPfx(A As Database, T) As String()

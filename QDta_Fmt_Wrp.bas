@@ -11,7 +11,7 @@ Next
 WrpDrNRow = R
 End Function
 
-Function SyWrpPad(Sy$(), W%) As String() ' Each Itm of Sy[Sy] is padded to line with WdtzAy(Sy).  return all padded lines as String()
+Function AywrpPad(Sy$(), W%) As String() ' Each Itm of Sy[Sy] is padded to line with WdtzAy(Sy).  return all padded lines as String()
 Dim O$(), X, I%
 ReDim O(0)
 For Each X In Itr(Sy)
@@ -22,7 +22,7 @@ For Each X In Itr(Sy)
         I = I + 1
     End If
 Next
-SyWrpPad = O
+AywrpPad = O
 End Function
 
 Function WrpDrPad(WrpDr, W%()) As Variant() _
@@ -32,7 +32,7 @@ O = WrpDr
 For Each Cell In Itr(O)
     If IsArray(Cell) Then
         Stop
-'        O(J) = SyWrpPad(Cell, W(J))
+'        O(J) = AywrpPad(Cell, W(J))
     End If
     J = J + 1
 Next

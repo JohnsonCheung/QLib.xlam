@@ -31,24 +31,28 @@ With CntgMth
 End With
 End Function
 Property Get NMth%(A As CntgMth)
-NMth = NPubSub + NPubFun + NPubPrp + NPrvSub + NPrvFun + NPrvPrp + NFrdSub + NFrdFun + NFrdPrp
+With A
+NMth = .NPubSub + .NPubFun + .NPubPrp + .NPrvSub + .NPrvFun + .NPrvPrp + .NFrdSub + .NFrdFun + .NFrdPrp
+End With
 End Property
-Function CntgMthLin(A As CntgMth, Optional Hdr As EmHdr)
+Function FmtCntgMth(A As CntgMth, Optional Hdr As EmHdr)
 Dim Pfx$: If Hdr = EiWiHdr Then Pfx = "Pub* | Prv* | Frd* : *{Sub Fun Frd} "
-CntgMthLin = Pfx & Mdn & " | " & N & " | " & NPubSub & " " & NPubFun & " " & NPubPrp & " | " & NPrvSub & " " & NPrvFun & " " & NPrvPrp & " | " & NFrdSub & " " & NFrdFun & " " & NFrdPrp
+With A
+Dim N%: N = NMth(A)
+FmtCntgMth = JnAp(" | ", Pfx, .Mdn, N) & " | " & JnSpcAp(.NPubSub, .NPubFun, .NPubPrp, .NPrvSub, .NPrvFun, .NPrvPrp, .NFrdSub, .NFrdFun, .NFrdPrp)
+End With
 End Function
-
 
 Function NMthzS%(Src$())
 NMthzS = Si(MthIxy(Src))
 End Function
 
-Function NMthPj%()
-NMthPj = NMthzP(CPj)
+Function NMthP%()
+NMthP = NMthzP(CPj)
 End Function
 
-Function NMthMd%()
-NMthMd = NMthzMd(CMd)
+Function NMthM%()
+NMthM = NMthzM(CMd)
 End Function
 
 Function NMthzP%(Pj As VBProject)
@@ -85,30 +89,44 @@ Set MthCmlAsetzP = CmlAset(MthnyzP(P))
 End Function
 
 Function CntgMthzM(A As CodeModule) As CntgMth
-Dim NPubSub%, NPubFun%, NPubPrp%, NPrvSub%, NPrvFun%, NPrvPrp%, NFrdSub%, NFrdFun%, NFrdPrp%
-Dim MthLin
-For Each MthLin In Itr(MthLinyzS(Src(A)))
-    With Mthn3(MthLin)
+Dim L
+Dim Pub As Boolean, Prv As Boolean, Frd As Boolean
+Dim Sbr As Boolean, Fun As Boolean, Prp As Boolean
+For Each L In Itr(MthLinyzS(Src(A)))
+    With Mthn3zL(L)
+        Select Case .ShtMdy
+        Case "Prv": Prv = True
+        Case "Pub": Pub = True
+        Case "Frd": Frd = True
+        Case Else: Thw CSub, "Out of valid value: Prv PUb Frd", "ShtMdy", .ShtMdy
+        End Select
+        Select Case ShtMthKdzShtMthTy(.ShtTy)
+        Case "Fun": Fun = True
+        Case "Sub": Sbr = True
+        Case "Prp": Prp = True
+        Case Else: Thw CSub, "Out of valid value: Sub Fun Prp", "ShtMdy", .ShtMdy
+        End Select
+    End With
+    With CntgMthzM
         Select Case True
-        Case .IsPub And .IsSub: NPubSub = NPubSub + 1
-        Case .IsPub And .IsFun: NPubFun = NPubFun + 1
-        Case .IsPub And .IsPrp: NPubPrp = NPubPrp + 1
-        Case .IsPrv And .IsSub: NPrvSub = NPrvSub + 1
-        Case .IsPrv And .IsFun: NPrvFun = NPrvFun + 1
-        Case .IsPrv And .IsPrp: NPrvPrp = NPrvPrp + 1
-        Case .IsFrd And .IsSub: NFrdSub = NFrdSub + 1
-        Case .IsFrd And .IsFun: NFrdFun = NFrdFun + 1
-        Case .IsFrd And .IsPrp: NFrdPrp = NFrdPrp + 1
-        Case Else: Thw CSub, "Invalid Mthn3", "MthLin Mthn3", MthLin, .Lin
+        Case Pub And Sbr: .NPubSub = .NPubSub + 1
+        Case Pub And Fun: .NPubFun = .NPubFun + 1
+        Case Pub And Prp: .NPubPrp = .NPubPrp + 1
+        Case Prv And Sbr: .NPrvSub = .NPrvSub + 1
+        Case Prv And Fun: .NPrvFun = .NPrvFun + 1
+        Case Prv And Prp: .NPrvPrp = .NPrvPrp + 1
+        Case Frd And Sbr: .NFrdSub = .NFrdSub + 1
+        Case Frd And Fun: .NFrdFun = .NFrdFun + 1
+        Case Frd And Prp: .NFrdPrp = .NFrdPrp + 1
+        Case Else: Thw CSub, "Invalid Mthn3", "MthLin", L
         End Select
     End With
 Next
-Set CntgMth = New CntgMth
-CntgMth.Init Mdn(A), NPubSub, NPubFun, NPubPrp, NPrvSub, NPrvFun, NPrvPrp, NFrdSub, NFrdFun, NFrdPrp
 End Function
-Function CntgMthMd() As CntgMth
-Set CntgMthMd = CntgMth(CMd)
+Function CntgMthM() As CntgMth
+CntgMthM = CntgMthzM(CMd)
 End Function
+
 Sub CntMthP()
 CntMthzP CPj
 End Sub
@@ -126,10 +144,10 @@ O.Ay(O.N) = M
 O.N = O.N + 1
 End Function
 
-Function LyzCntgMths(A As CntgMths) As String()
+Function FmtCntgMths(A As CntgMths) As String()
 Dim J&
 For J = 0 To A.N - 1
-    PushIAy LyzCntgMths, CntgMthLin(A.Ay(J))
+    PushIAy FmtCntgMths, FmtCntgMth(A.Ay(J))
 Next
 End Function
 
@@ -137,13 +155,12 @@ Function CntgMths(P As VBProject) As CntgMths
 If P.Protection = vbext_pp_locked Then Exit Function
 Dim C As VBComponent
 For Each C In P.VBComponents
-    PushObj CntgMthAy, CntgMth(C.CodeModule)
+    PushCntgMth CntgMths, CntgMthzM(C.CodeModule)
 Next
 End Function
 
-
-Function NMthzMd%(A As CodeModule)
-NMthzMd = NMthzS(Src(A))
+Function NMthzM%(A As CodeModule)
+NMthzM = NMthzS(Src(A))
 End Function
 
 Function NSrcLinPj&(P As VBProject)
@@ -153,26 +170,41 @@ For Each C In P.VBComponents
 Next
 NSrcLinPj = O
 End Function
-
-Function NPMthMd%(A As CodeModule)
-NPMthMd = NMthzS(Src(A), "-Pub")
+Function PMthLinAy(Src$()) As String()
+Dim L
+For Each L In Itr(Src)
+    If IsPMthLin(L) Then PushI PMthLinAy, L
+Next
 End Function
-Function NPMthVbe%(A As Vbe)
+
+Function PMthLinItr(Src$())
+Asg Itr(PMthLinAy(Src)), PMthLinItr
+End Function
+
+Function NPMthzS%(Src$())
+NPMthzS = NItr(PMthLinItr(Src))
+End Function
+
+Function NPMthzM%(A As CodeModule)
+NPMthzM = NPMthzS(Src(A))
+End Function
+
+Function NPMthzV%(A As Vbe)
 Dim O%, P As VBProject
 For Each P In A.VBProjects
-    O = O + NPMthPj(P)
+    O = O + NPMthzP(P)
 Next
-NPMthVbe = O
+NPMthzV = O
 End Function
-Property Get NPMth%()
-NPMth = NPMthVbe(CVbe)
+
+Property Get NPMthV%()
+NPMthV = NPMthzV(CVbe)
 End Property
 
-Function NPMthPj%(P As VBProject)
+Function NPMthzP%(P As VBProject)
 Dim O%, C As VBComponent
 For Each C In P.VBComponents
-    O = O + NPMthMd(C.CodeModule)
+    O = O + NPMthzM(C.CodeModule)
 Next
-NPMthPj = O
+NPMthzP = O
 End Function
-

@@ -18,9 +18,8 @@ End Function
 
 Function HitCmp(A As VBComponent, B As WhMd) As Boolean
 HitCmp = True
-If IsNothing(B) Then Exit Function
 If HitAy(A.Type, B.CmpTy) Then
-    If HitNm(A.Name, B.Nm) Then
+    If HitNm(A.Name, B.WhNm) Then
         Exit Function
     End If
 End If

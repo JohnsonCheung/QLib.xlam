@@ -67,7 +67,7 @@ Function IxOfAftOptAndImplzS&(Src$())
 Dim Fnd As Boolean, J%, IsOpt As Boolean, L$
 For J = 0 To UB(Src)
     L = Src(J)
-    IsOpt = IsLin_OfOpt_OrImpl_OrBlank(L)
+    'IsOpt = IsLin_OfOpt_OrImpl_OrBlank(L)
     Select Case True
     Case Fnd And IsOpt:
     Case Fnd: IxOfAftOptAndImplzS = J: Exit Function
@@ -81,7 +81,7 @@ Function LnoOf_AftOpt_AndImpl&(A As CodeModule)
 Dim Fnd As Boolean, J%, IsOpt As Boolean, L$
 For J = 1 To A.CountOfDeclarationLines
     L = A.Lines(J, 1)
-    IsOpt = IsLin_OfOpt_OrImpl_OrBlank(L)
+    'IsOpt = IsLin_OfOpt_OrImpl_OrBlank(L)
     Select Case True
     Case Fnd And IsOpt:
     Case Fnd: LnoOf_AftOpt_AndImpl = J: Exit Function

@@ -49,14 +49,14 @@ Sub AsgMthDr(MthDr, OMdy$, OTy$, ONm$, OPrm$, ORet$, OLinRmk$, OLines$, OTopRmk$
 AsgAp MthDr, OMdy, OTy, ONm, OPrm, ORet, OLinRmk, OLines, OTopRmk
 End Sub
 
-Private Sub Z_DryOfMthLinzS()
-BrwDry DryOfMthLinzS(CSrc)
+Private Sub Z_Dry_MthLinzS()
+BrwDry Dry_MthLinzS(CSrc)
 End Sub
 
-Function DryOfMthLinzS(Src$()) As Variant()
+Function Dry_MthLinzS(Src$()) As Variant()
 Dim L
 For Each L In Itr(Src)
-    PushISomSi DryOfMthLinzS, DrOfMthLin(CStr(L))
+    PushISomSi Dry_MthLinzS, Dr_MthLin(CStr(L))
 Next
 End Function
 

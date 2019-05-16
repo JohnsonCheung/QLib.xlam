@@ -77,8 +77,8 @@ For J = 0 To UB(Src)
 Next
 End Function
 
-Function FnyOfMthn() As String()
-FnyOfMthn = SyzSS("Mthn Ty Mdy Md MdTy Pj")
+Function Fny_Mthn() As String()
+Fny_Mthn = SyzSS("Mthn Ty Mdy Md MdTy Pj")
 End Function
 Private Function MthQ1LyzMthQLy(MthQLy$()) As String()
 Dim MthQLin

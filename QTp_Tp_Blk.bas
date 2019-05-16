@@ -37,7 +37,7 @@ End Sub
 Function IsBlkOfEmp(A As Blk) As Boolean
 If A.BlkTy <> "" Then Exit Function
 If A.SepLin <> "" Then Exit Function
-If Not IsLnxsOfEmp(A.Lnxs) Then Exit Function
+'If Not IsLnxsOfEmp(A.Lnxs) Then Exit Function
 IsBlkOfEmp = True
 End Function
 Function BlkzSepLin(SepLin) As Blk
@@ -54,10 +54,11 @@ CntBlk = O
 End Function
 
 Function FstBlkOrDie(A As Blks, BlkTy$) As Blk
-If IsBlkOfEmp(O) Then Thw CSub, "BlkTy not found", "BlkTy Blks", BlkTy, FmtBlks(A)
+'Blk.Lnxs
+'If IsBlkOfEmp(A) Then Thw CSub, "BlkTy not found", "BlkTy Blks", BlkTy, FmtBlks(A)
 End Function
 Function FstLyOrDiezBlksTy(A As Blks, BlkTy$) As String()
-FstLyOrDiezBlksTy = LyzBlk(LyzBlk(FstBlkOrDie(A, Ty)))
+'FstLyOrDiezBlksTy = LyzBlk(LyzBlk(FstBlkOrDie(A, Ty)))
 End Function
 Function LyzBlk(A As Blk) As String()
 LyzBlk = LinAyzLnxs(A.Lnxs)
@@ -103,10 +104,9 @@ Next
 BlkzLy = Blk(OBlkTy, OLnxs)
 End Function
 Function LnxszBlksTy(A As Blks, BlkTy$) As Lnxs
-FstBlkOrDie
 Dim J&
 For J = 0 To A.N - 1
-    If A.Ay(J).BlkTy = BlkTy Then LnxszBlksTy = A.Ay(J): Exit Function
+'    If A.Ay(J).BlkTy = BlkTy Then LnxszBlksTy = A.Ay(J): Exit Function
 Next
 End Function
 Function BlkswTy(A As Blks, BlkTy$) As Blks

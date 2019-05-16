@@ -19,7 +19,7 @@ End Function
 Function MthLinyzPubZM(A As CodeModule) As String()
 Dim MthLin
 For Each MthLin In Itr(MthLinyzS(Src(A)))
-    If IsMthLinzPubZ(MthLin) Then PushI MthLinyzPubZM, MthLin
+    'If IsMthLinzPubZ(MthLin) Then PushI MthLinyzPubZM, MthLin
 Next
 End Function
 
@@ -36,16 +36,16 @@ End Function
 Function IsWiPubZMd(A As CodeModule) As Boolean
 Dim MthLin
 For Each MthLin In Itr(MthLinyzS(Src(A)))
-    If IsMthLinzPubZ(MthLin) Then IsWiPubZMd = True: Exit Function
+    'If IsMthLinzPubZ(MthLin) Then IsWiPubZMd = True: Exit Function
 Next
 End Function
 
 Function MthLinyzPub(Src$()) As String()
 Dim L
 For Each L In Itr(Src)
-    If IsMthLinzPub(L) Then
+    'If IsMthLinzPub(L) Then
         PushI MthLinyzPub, L
-    End If
+    'End If
 Next
 End Function
 

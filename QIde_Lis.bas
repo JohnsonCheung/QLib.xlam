@@ -3,14 +3,6 @@ Option Explicit
 Private Const CMod$ = "MIde_Lis."
 Private Const Asm$ = "QIde"
 
-Sub MdzPjLisBrwDt(P As VBProject)
-BrwDt MdzPjLisDt(P, B)
-End Sub
-
-Sub MdzPjLisDmpDt(P As VBProject)
-DmpDt MdzPjLisDt(P, B)
-End Sub
-
 Sub LIsCmpzMd(Optional Patn$, Optional Exl$)
 Dim A$()
 '    A = CmpNyPj(CPj, WhMd("Std", WhNm(Patn, Exl)))
@@ -51,13 +43,13 @@ WhStrzSfx = WhStrzMthPatn(MthSfx & "$", PubOnly)
 End Function
 
 Sub LisMthPfx(Pfx$, Optional PubOnly As Boolean)
-D QMthnyV(WhStrzPfx(Pfx, PubOnly))
+'D QMthnyV(WhStrzPfx(Pfx, PubOnly))
 End Sub
 
 Sub LisMthSfx(Sfx$, Optional PubOnly As Boolean)
-D QMthnyV(WhMthzSfx(Sfx, PubOnly))
+'D QMthnyV(WhMthzSfx(Sfx, PubOnly))
 End Sub
 
 Sub LisMthPatn(Patn$, Optional InclPrv As Boolean)
-D MthQLyV(WhStrzMthPatn(Patn, InclPrv))
+'D MthQLyV(WhStrzMthPatn(Patn, InclPrv))
 End Sub

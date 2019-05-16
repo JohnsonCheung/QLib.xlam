@@ -81,7 +81,7 @@ For Each I In Itr(A)
 Next
 End Function
 
-Function DiczDryOfTwoCol(Dry(), Optional Sep$ = " ") As Dictionary
+Function DiczDry_TwoCol(Dry(), Optional Sep$ = " ") As Dictionary
 Dim O As New Dictionary
 If Si(Dry) <> 0 Then
    Dim Dr
@@ -89,7 +89,7 @@ If Si(Dry) <> 0 Then
        O.Add Dr(0), Dr(1)
    Next
 End If
-Set DiczDryOfTwoCol = O
+Set DiczDry_TwoCol = O
 End Function
 
 Function CloneDic(A As Dictionary) As Dictionary

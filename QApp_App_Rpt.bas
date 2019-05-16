@@ -122,12 +122,12 @@ Dim W As Database, OupFx$
 
 End Sub
 Private Sub Z_Rpt()
-Dim WDb As Database, B As IGenr
+Dim WDb As Database, B As IOupGenr
 GoSub ZZ
 Exit Sub
 ZZ:
     Set WDb = Nothing
-    Set B = New ATaxExpCmp_OupTblGenr
+    Set B = New OupGenrzTaxCmp
     GoTo Tst
 Tst:
     'Rpt_Oup WDb, B

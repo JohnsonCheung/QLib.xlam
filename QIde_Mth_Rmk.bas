@@ -1,13 +1,107 @@
 Attribute VB_Name = "QIde_Mth_Rmk"
 Option Explicit
+Type Fc
+    FmLno As Long
+    Cnt As Long
+End Type
+Type Fcs: N As Long: Ay() As Fc: End Type
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Mth_Rmk."
+
 Sub UnRmkMth(A As CodeModule, Mthn)
 'UnRmkMdzFes A, MthCxtFes(Src(A), Mthn)
 End Sub
 
-Sub RmkMth(A As CodeModule, Mthn)
-'RmkMdzFes A, MthCxtFes(Src(A), Mthn)
+Function Fc(FmLno, Cnt) As Fc
+If Cnt <= 0 Then Exit Function
+If FmLno <= 0 Then Exit Function
+Fc.FmLno = FmLno
+Fc.Cnt = Cnt
+End Function
+
+Sub RmkLineszFc(M As CodeModule, Fc As Fc)
+RmkLines M, Fc.FmLno, Fc.Cnt
+End Sub
+
+Function MthCxtFcs(Src$(), Mthn) As Fcs
+MthCxtFcs = MthCxtFcszzSM(Src, MthCxtFcs(Src, Mthn))
+End Function
+
+Function MthCxtFcszzSM(Src$(), Mth As Fcs) As Fcs
+Dim J&
+For J = 0 To Mth.N - 1
+    PushFc MthCxtFcszzSM, MthCxtFczzSM(Src, Mth.Ay(J))
+Next
+End Function
+
+Function NContLin(Src$(), MthIx) As Byte
+Dim J&, O&
+For J = MthIx To UB(Src)
+    O = O + 1
+    If LasChr(Src(J)) <> "_" Then NContLin = O: Exit Function
+Next
+Thw CSub, "LasEle of Src has LasChr = _", "Src", Src
+End Function
+
+Function AddFc(A As Fc, B As Fc) As Fcs
+PushFc AddFc, A
+PushFc AddFc, B
+End Function
+
+Function FmtFcs$(A As Fcs)
+Dim O$(), J&
+For J = 0 To A.N - 1
+    PushI O, FmtFc(A.Ay(J))
+Next
+FmtFcs = JnCrLf(O)
+End Function
+
+Function FmtFc$(Fc As Fc)
+With Fc
+FmtFc = "Fc " & .FmLno & " " & .Cnt
+End With
+End Function
+
+Function MthCxtFczzSM(Src$(), Mth As Fc) As Fc
+With Mth
+Dim N%: N = NContLin(Src, .FmLno)
+MthCxtFczzSM = Fc(.FmLno - N, .Cnt - N - 1)
+End With
+End Function
+Function MthCxtFc(M As CodeModule, Mthn) As Fc
+
+End Function
+Sub RmkMthzN(M As CodeModule, Mthn)
+RmkLineszFc M, MthCxtFc(M, Mthn)
+End Sub
+
+Function MthFcs(M As CodeModule, Mthn) As Fcs
+Dim Ix, S$()
+S = Src(M)
+For Each Ix In Itr(MthIxyzSN(S, Mthn))
+    PushFc MthFcs, Fc(Ix + 1, ContLinCnt(S, Ix))
+Next
+End Function
+
+Sub PushFc(O As Fcs, M As Fc)
+ReDim Preserve O.Ay(O.N)
+O.Ay(O.N) = M
+O.N = O.N + 1
+End Sub
+
+Sub RmkLines(M As CodeModule, Lno&, N&)
+Dim J&
+For J = Lno To Lno + N - 1
+    RmkLin M, J
+Next
+End Sub
+
+Sub RmkLin(M As CodeModule, Lno&)
+M.ReplaceLine M, "'" & M.Lines(Lno, 1)
+End Sub
+
+Sub RmkMth()
+RmkMthzN CMd, CMthn
 End Sub
 
 Private Sub ZZ_RmkMth()

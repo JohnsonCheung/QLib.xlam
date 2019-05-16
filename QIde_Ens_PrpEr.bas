@@ -3,7 +3,7 @@ Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Ens_PrpEr."
 Private Const LinOfLblX$ = "X: Debug.Print CSub & "".PrpEr["" &  Err.Description & ""]"""
-Public Type TopRmkLyAndMthLy
+Type TopRmkLyAndMthLy
     TopRmkLy() As String
     MthLy() As String
 End Type

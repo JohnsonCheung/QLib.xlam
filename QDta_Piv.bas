@@ -2,7 +2,7 @@ Attribute VB_Name = "QDta_Piv"
 Option Explicit
 Private Const Asm$ = "QDta"
 Private Const CMod$ = "MDta_Piv."
-Public Type KKCntMulItmColDry
+Type KKCntMulItmColDry
     NKK As Integer
     Dry() As Variant
 End Type

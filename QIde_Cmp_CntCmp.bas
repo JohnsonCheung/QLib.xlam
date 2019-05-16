@@ -26,20 +26,20 @@ End Function
 Sub CntCmpP()
 CntCmpzP CPj
 End Sub
-Function FnyOfCntgCmp() As String()
+Function Fny_CntgCmp() As String()
 
 End Function
 
-Function DryOfCntgCmp(P As VBProject) As Variant()
+Function Dry_CntgCmp(P As VBProject) As Variant()
 
 End Function
 
-Function DrsOfCntgCmpzP(P As VBProject) As Drs
-DrsOfCntgCmpzP = Drs(FnyOfCntgCmp, DryOfCntgCmp(P))
+Function Drs_CntgCmpzP(P As VBProject) As Drs
+Drs_CntgCmpzP = Drs(Fny_CntgCmp, Dry_CntgCmp(P))
 End Function
 
 Sub CntCmpzP(A As VBProject)
-DmpRec DrsOfCntgCmpzP(A)
+DmpRec Drs_CntgCmpzP(A)
 End Sub
 
 Function NCmp%(A As CntgCmp)

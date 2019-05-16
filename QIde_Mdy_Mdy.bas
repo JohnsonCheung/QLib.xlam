@@ -25,10 +25,12 @@ Type RplgPj: Pj As VBProject: RplgMds As RplgMds: End Type
 
 Function AddMdygs(A As Mdygs, B As Mdygs) As Mdygs
 AddMdygs = A
-Dim J&
-For J = 0 To B.N - 1
-    PushMdyg AddMdygs, B.Ay(J)
-Next
+PushMdygs AddMdygs, B
+End Function
+
+Function AddMdyg(A As Mdyg, B As Mdyg) As Mdygs
+PushMdyg AddMdyg, A
+PushMdyg AddMdyg, B
 End Function
 
 Sub PushMdygs(O As Mdygs, M As Mdygs)

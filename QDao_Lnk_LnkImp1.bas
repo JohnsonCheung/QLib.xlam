@@ -188,11 +188,11 @@ Dim J%, Fny$(), Ey$(), T$, Into$, LnkColLy$(), Bexpr$
 For J = 0 To UB(Tny)
     T = ">" & Tny(J)
     Into = "#I" & Tny(J)
-    LnkColLy = ValzDicKNN(TzDiLnkColLy, Tny(J), "TzDiLnkColLy", "TblNm")
+    'LnkColLy = ValzDicKNN(TzDiLnkColLy, Tny(J), "TzDiLnkColLy", "TblNm")
     Fny = T1Ay(LnkColLy)
-    Ey = RmvSqBktzSy(RmvTTzSy(LnkColLy))
+    'Ey = RmvSqBktzSy(RmvTTzSy(LnkColLy))
     Bexpr = ValzDicIf(TzDiBexpr, T)
-    PushI B_ImpSqy, SqlSel_Fny_ExtNy_Into_T(Fny, Ey, Into, T, Bexpr)
+    'PushI B_ImpSqy, SqlSel_Fny_ExtNy_Into_T(Fny, Ey, Into, T, Bexpr)
 Next
 End Function
 
@@ -498,8 +498,9 @@ Erase XX
 End Property
 
 Private Sub ZZZ()
-'QDao_Lnk_LnkImp1.Z_LnkImp1.:
+QDao_Lnk_LnkImp1:
 End Sub
+
 Private Sub ZZ()
 ZZ_LnkImp1
 End Sub

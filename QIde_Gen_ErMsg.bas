@@ -24,7 +24,7 @@ Private Sub Init(Src$())
 Dim Dcl$(): Dcl = DclLy(Src)
 Dim SrcLy$(): SrcLy = CvSy(AywBetEle(Dcl, "'GenErMsg-Src-Beg.", "'GenErMsg-Src-End."))
 'Brw SrcLy, CSub
-A.ErNy = T1Ay(RmvFstChrzSy(SrcLy))
+A.ErNy = T1Ay(RmvFstChrzAy(SrcLy))
 A.ErMsgAy = RmvT1zAy(SrcLy)
 End Sub
 
@@ -78,13 +78,15 @@ Private Sub A_Prim()
 SrcGenErMsg:
 End Sub
 
-Private Sub MdGenErMsg(Md As CodeModule)  'eMthnTy.eeNve
-Dim O$(): O = SrcGenErMsg(Src(Md)): 'Brw O: Stop 'Rmk: There is an error when Md is [MXls_Lof_ErzLof].  Er:CannotRmvMth:.
-RplMd Md, JnCrLf(O)
+Private Sub MdGenErMsg(M As CodeModule)  'eMthnTy.eeNve
+'Brw O: Stop 'Rmk: There is an error when Md is [MXls_Lof_ErzLof].  Er:CannotRmvMth:.
+RplMd RplgMd(M, JnCrLf(SrcGenErMsg(Src(M))))
 End Sub
+
 Private Sub Z_MdGenErMsg()
 MdGenErMsg Md("MXls_Lof_ErzLof")
 End Sub
+
 Private Sub Z_ErConstDic()
 'Init Y_Src
 Brw ErConstDic
@@ -174,20 +176,30 @@ End Function
 Sub IupMthByDicM(A As CodeModule, MthDic As Dictionary)
 Dim NewSrc$(): NewSrc = IupMthByDic(Src(A), MthDic)
 Dim NewLines$: NewLines = JnCrLf(NewSrc)
-RplMd A, NewLines
+RplMd RplgMd(A, NewLines)
 End Sub
 
-Function RplConstMByDic(A As CodeModule, ConstDic As Dictionary) As CodeModule
-Dim K, Cnstn$
-For Each K In ConstDic.Keys
-    Cnstn = K
-    RplConstM A, Cnstn, ConstDic(K)
+Sub RplCnstzMD(M As CodeModule, CnstDic As Dictionary)
+Dim K
+For Each K In CnstDic.Keys
+    RplCnstzMNL M, K, CnstDic(K)
 Next
-Set RplConstMByDic = A
+End Sub
+Function SomIxOfCnstLin(M As CodeModule, Cnstn) As LngOpt
 End Function
+Sub RplCnstzMNL(M As CodeModule, Cnstn, NewLines)
+Dim I As LngOpt: I = SomIxOfCnstLin(M, Cnstn)
+Dim Lno&
+Select Case True
+Case I.Som:
+    Lno = I.Lng
+    If ContLinzML(M, Lno) = NewLines Then Exit Sub
+    DltContLin M, Lno
+End Select
+M.InsertLines Lno, NewLines
+End Sub
+Sub DltContLin(M As CodeModule, Lno&)
 
-Sub RplConstM(A As CodeModule, Cnstn$, NewLines$)
-RplLines A, MdLineszConst(A, Cnstn), NewLines, "MdConst"
 End Sub
 
 Private Property Get ErMthnSet() As Aset

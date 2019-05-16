@@ -1,4 +1,4 @@
-Attribute VB_Name = "QIde_ConstMth"
+Attribute VB_Name = "QIde_CnstMth"
 Option Explicit
 Private Const CMod$ = "MIde_ConstMth."
 Private Const Asm$ = "QIde"
@@ -8,10 +8,10 @@ Sub EdtConst(CnstQNm$)
 'EdtStr CnstBrk(CnstQNm), FtzCnstQNm(CnstQNm)
 End Sub
 
-Sub UpdConst(CnstQNm$, Optional IsPub As Boolean)
-With MdMth(CnstQNm)
-    RplMthzMNL .Md, .Mthn, ConstPrpLines(CnstQNm, IsPub)
-End With
+Sub RpldCnst(CnstQn, Optional IsPub As Boolean)
+'With MdMth(CnstQn)
+    'RplMthzMNL .Md, .Mthn, ConstPrpLines(CnstQNm, IsPub)
+'End With
 End Sub
 
 Private Property Get Z_CrtSchm1() As String()

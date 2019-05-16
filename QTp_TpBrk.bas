@@ -2,11 +2,11 @@ Attribute VB_Name = "QTp_TpBrk"
 Option Explicit
 Private Const CMod$ = "MTp_TpBrk."
 Private Const Asm$ = "QTp"
-Public Type TpSec
+Type TpSec
     Nm As String
     Blk As Blk
 End Type
-Public Type TpBrk
+Type TpBrk
     Er() As String
     RmkDic As New Dictionary
     SecAy() As TpSec
