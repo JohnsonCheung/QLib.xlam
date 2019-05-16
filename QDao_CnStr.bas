@@ -2,11 +2,11 @@ Attribute VB_Name = "QDao_CnStr"
 Option Explicit
 Private Const CMod$ = "MDao_CnStr."
 Private Const Asm$ = "QDao"
-Function CnStrzFbzAsDao$(A)
-CnStrzFbzAsDao = ";DATABASE=" & A & ";"
+Function CnStrzFbDao$(A)
+CnStrzFbDao = ";DATABASE=" & A & ";"
 End Function
 
-Function CnStrzFxDAO$(Fx)
+Function CnStrzFxDao$(Fx)
 'Excel 8.0;HDR=YES;IMEX=2;DATABASE=D:\Data\MyDoc\Development\ISS\Imports\PO\PUR904 (On-Line).xls;TABLE='PUR904 (On-Line)'
 'INTO [Excel 8.0;HDR=YES;IMEX=2;DATABASE={0}].{1} FROM {2}"
 'Excel 12.0 Xml;HDR=YES;IMEX=2;ACCDB=YES;DATABASE=C:\Users\sium\Desktop\TaxRate\sales text.xlsx;TABLE=Sheet1$
@@ -16,7 +16,7 @@ Case ".xlsx":: O = "Excel 12.0 Xml;HDR=YES;IMEX=2;ACCDB=YES;DATABASE=" & Fx & ";
 Case ".xls": O = "Excel 8.0;HDR=YES;IMEX=2;DATABASE=" & Fx & ";"
 Case Else: Stop
 End Select
-CnStrzFxDAO = O
+CnStrzFxDao = O
 End Function
 
 Function CnStrzFbzAsAdoOle$(Fb) 'Return a connection used as WbConnection

@@ -1,8 +1,8 @@
 Attribute VB_Name = "QVb_Fun"
 Option Explicit
 Private Const Asm$ = "QVb"
-Private Const CMod$ = "MVb_Fun."
 Public CSub$
+Public Const CMod$ = ""
 Sub Swap(OA, OB)
 Dim X
 X = OA

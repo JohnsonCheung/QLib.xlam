@@ -13,7 +13,7 @@ Dim InpFilSrc$(), LnkImpSrc$(), Db As Database
 GoSub T0
 Exit Sub
 T0:
-    InpFilSrc = Y_inpFilSrc
+    InpFilSrc = Y_InpFilSrc
     LnkImpSrc = Y_LnkImpSrc
     Set Db = TmpDb
     GoTo Tst
@@ -180,7 +180,7 @@ For Each T In Itr(TFb)
     If Not TzDiFbFx.Exists(T) Then
         Thw CSub, "TzDiFbFx does not contains T", "T TzDiFbFx TFb", Fbn, TzDiFbFx, T, TFb
     End If
-    Cn = CnStrzFbzAsDao(TzDiFbFx(T))
+    Cn = CnStrzFbDao(TzDiFbFx(T))
     PushLnkTblPm B__LnkTblPms_Fb, LnkTblPm(">" & T, T, Cn)
 Next
 End Function
@@ -196,7 +196,7 @@ For J = 0 To A.N - 1
     Else
         S = .Wsn & "$"
     End If
-    Cn = CnStrzFxDAO(Fx)
+    Cn = CnStrzFxDao(Fx)
     PushLnkTblPm B__LnkTblPms_Fx, LnkTblPm(">" & .T, S, Cn)
     End With
 Next
@@ -215,14 +215,14 @@ End Function
 
 
 
-Private Property Get Y_inpFilSrc() As String()
+Private Property Get Y_InpFilSrc() As String()
 Erase XX
 X "DutyPay C:\Users\User\Desktop\SAPAccessReports\DutyPrepay5\DutyPrepay5_Data.mdb"
 X "ZHT0  C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\Pricing report(ForUpload).xls"
 X "MB52  C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\2018\MB52 2018-01-30.xls"
 X "Uom   C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\sales text.xlsx"
 X "GLBal C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\DutyPrepayGLTot.xlsx"
-Y_inpFilSrc = XX
+Y_InpFilSrc = XX
 Erase XX
 SampSrczInpFil
 End Property

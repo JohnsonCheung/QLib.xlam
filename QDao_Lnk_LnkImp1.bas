@@ -66,8 +66,8 @@ End Function
 
 Sub LnkImp1(LnkImpSpecDb As Database, Db As Database)
 
-Dim Inp As KdFils: 'Inp = KdFils(InpFilSrc)
-                         ThwIf_MisKdFils Inp, CSub
+Dim Inp As KFs: 'Inp = KFs(InpFilSrc)
+                         ThwIf_MisKFs Inp, CSub
 
 Dim TblWhLy$():   '      TblWhLy = IndentedLy(LnkImpSrc, "Tbl.Where")
 Dim FxTblLy$():    '     FxTblLy = IndentedLy(LnkImpSrc, "FxTbl")
@@ -77,8 +77,8 @@ Dim Fbt$():                 Fbt = B_Fbt(FbTblLy)
 Dim Fxt$():                 Fxt = B_Fxt(FxtRecs)
 Dim Tny$():                 Tny = AddSy(Fbt, Fxt)
 Dim StruSy() As String: '  StruSy = B_StruSy(LnkImpSrc)
-Dim FbxnSy$():           FbxnSy = KdAyzKdFils(Inp)
-Dim FbxSy$():             FbxSy = FfnyzKdFils(Inp)
+Dim FbxnSy$():           FbxnSy = KdAy(Inp)
+Dim FbxSy$():             FbxSy = FfnyzKFs(Inp)
 '--
 Dim DupFbxn$(): DupFbxn = AywDup(FbxnSy)
 Dim DupFbx$():   DupFbx = AywDup(FbxSy)
@@ -229,7 +229,7 @@ Dim J%, Fbn$, A$, I, T$, Cn$
 For J = 0 To UB(FbTblLy)
     AsgBrk FbTblLy(J), " ", Fbn, A
     If Not TzDiFbFx.Exist(Fbn) Then Thw CSub, "TzDiFbFx does not contains Fbn", "Fbn TzDiFbFx FbTblLin", Fbn, TzDiFbFx, FbTblLy(J)
-    Cn = CnStrzFbzAsDao(TzDiFbFx(Fbn))
+    Cn = CnStrzFbDao(TzDiFbFx(Fbn))
     For Each I In SyzSS(A)
         T = I
         PushLnkTblPm B_FbLnkPms, LnkTblPm(T, T, Cn)
@@ -248,7 +248,7 @@ For J = 0 To A.N - 1
     Else
         S = .Wsn & "$"
     End If
-    Cn = CnStrzFxDAO(Fx)
+    Cn = CnStrzFxDao(Fx)
     PushLnkTblPm B_FInfDtOfLnkPms, LnkTblPm(">" & .T, S, Cn)
     End With
 Next

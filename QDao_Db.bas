@@ -178,6 +178,10 @@ Function Tni(A As Database)
 Asg Itr(Tny(A)), Tni
 End Function
 
+Function Tbli(A As Database)
+Asg Itr(Tny(A)), Tbli
+End Function
+
 Function Tny(A As Database) As String()
 Set A = Dao.DBEngine.OpenDatabase(A.Name)
 Dim T As TableDef

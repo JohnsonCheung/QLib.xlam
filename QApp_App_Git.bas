@@ -11,12 +11,18 @@ Dim Fw$: Fw = Fcmdw(CLines)
 WaitFcmdw Fw, DftWait
 End Sub
 
-Function FcmdwzPushg$()
-FcmdwzPushg = Fcmdw(CmdLineszPushg(Srcp(CPj)))
-End Function
-
 Sub GitPush()
-WaitFcmdw FcmdwzPushg, DftWait
+Dim L$
+    Dim P$: P = SrcpP
+    Erase XX
+    X FmtQQ("Cd ""?""", P)
+    X FmtQQ("git push -u https://johnsoncheung@github.com/johnsoncheung/?.git master", PjnzSrcp(P))
+    X "Pause ....."
+    L = JnCrLf(XX)
+Dim F$
+    F = TmpCmd("Push")
+    WrtStr L, F
+Shell F, vbMaximizedFocus
 End Sub
 
 Private Function CmdLineszCmitg$(CmitgPth$, Msg$, ReInit As Boolean)
@@ -37,14 +43,6 @@ Function HasInternet() As Boolean
 Stop
 End Function
 
-Private Function CmdLineszPushg$(CmitgPth$)
-Dim O$(), Cd$, GitPush, T
-Push O, FmtQQ("Cd ""?""", CmitgPth)
-Push O, FmtQQ("git push -u https://johnsoncheung@github.com/johnsoncheung/?.git master", PjnzCmitgPth(CmitgPth))
-Push O, "Pause"
-CmdLineszPushg = JnCrLf(O)
-End Function
-
 Sub BrwCmdLineszCmitg()
 BrwFt CmdLineszCmitg("PthA", "Msg", ReInit:=True)
 End Sub
@@ -52,10 +50,10 @@ End Sub
 Sub BrwCmdLineszPushg()
 BrwFt CmdLineszPushg("A")
 End Sub
-Private Function PjnzCmitgPth$(CmitgPth$)
-Const CSub$ = CMod & "Pjn"
-If Fdr(ParPth(CmitgPth)) <> ".Src" Then Thw CSub, "Not source path", "CmitgPth", CmitgPth
-PjnzCmitgPth = Fdr(CmitgPth)
+
+Private Function PjnzSrcp$(Srcp$)
+If Fdr(ParPth(Srcp)) <> ".Src" Then Thw CSub, "Not source path", "CmitgPth", CmitgPth
+PjnzSrcp = Fdr(Srcp)
 End Function
 
 Private Sub XX1()

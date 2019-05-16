@@ -56,8 +56,8 @@ X "Inp_DupFbxn"
 
 End Property
 Sub ThwIf_LnkImpPmEr(InpFilSrc$(), LnkImpSrc$())
-Dim Inp As KdFils: Inp = KdFils(InpFilSrc)
-                         ThwIf_MisKdFils Inp, CSub
+Dim Inp As KFs: Inp = KFs(InpFilSrc)
+                         ThwIf_MisKFs Inp, CSub
 
 Dim a___EI_ErMsgFor_Inp$
     Dim InpLnxs As Lnxs: InpLnxs = Lnxs(InpFilSrc)
@@ -150,16 +150,15 @@ Private Function B_FbTbl_DupFbt() As String()
 
 End Function
 
-Private Property Get Y_inpFilSrc() As String()
+Private Property Get Y_InpFilSrc() As String()
 Erase XX
 X "DutyPay C:\Users\User\Desktop\SAPAccessReports\DutyPrepay5\DutyPrepay5_Data.mdb"
 X "ZHT0  C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\Pricing report(ForUpload).xls"
 X "MB52  C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\2018\MB52 2018-01-30.xls"
 X "Uom   C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\sales text.xlsx"
 X "GLBal C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\DutyPrepayGLTot.xlsx"
-Y_inpFilSrc = XX
+Y_InpFilSrc = XX
 Erase XX
-SampSrczInpFil
 End Property
 
 
@@ -348,7 +347,41 @@ Private Function B_LnkCol(StruSy$(), ImpLnkSrc$()) As Lnxses
 End Function
 
 Private Sub ZZ_ThwIf_LnkImpPmEr()
-ThwIf_LnkImpPmEr Y_inpFilSrc, Y_LnkImpSrc
+ThwIf_LnkImpPmEr Y_InpFilSrc, Y_LnkImpSrc
 End Sub
+
+
+Function ChkFxww(Fx, Wsnn$, Optional FxKd$ = "Excel file") As String()
+Dim W$, I
+'If Not HasFfn(Fx) Then ChkFxww = MsgzMisFfn(Fx, FxKd): Exit Function
+For Each I In Ny(Wsnn)
+    W = I
+    PushIAy ChkFxww, ChkWs(Fx, W, FxKd)
+Next
+End Function
+Function ChkWs(Fx, Wsn, FxKd$) As String()
+If HasFxw(Fx, Wsn) Then Exit Function
+Dim M$
+M = FmtQQ("? does not have expected worksheet", FxKd)
+ChkWs = LyzFunMsgNap(CSub, M, "Folder File Expected-Worksheet Worksheets-in-file", Pth(Fx), Fn(Fx), Wsn, Wny(Fx))
+End Function
+Function ChkFxw(Fx, Wsn, Optional FxKd$ = "Excel file") As String()
+ChkFxw = ChkHasFfn(Fx, FxKd): If Si(ChkFxw) > 0 Then Exit Function
+ChkFxw = ChkWs(Fx, Wsn, FxKd)
+End Function
+Function ChkLnkWs(A As Database, T, Fx, Wsn, Optional FxKd$ = "Excel file") As String()
+Const CSub$ = CMod & "ChkLnkWs"
+Dim O$()
+    O = ChkFxw(Fx, Wsn, FxKd)
+    If Si(O) > 0 Then
+        ChkLnkWs = O
+        Exit Function
+    End If
+On Error GoTo X
+LnkFx A, T, Fx, Wsn
+Exit Function
+X: ChkLnkWs = _
+    LyzMsgNap("Error in linking Xls file", "Er LnkFx LnkWs ToDb AsTbl", Err.Description, Fx, Wsn, Dbn(A), T)
+End Function
 
 

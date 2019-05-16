@@ -3,18 +3,17 @@ Option Explicit
 Private Const CMod$ = "MVb_Fs_Tmp."
 Private Const Asm$ = "QVb"
 
-Function TmpCmd$(Optional Fdr$, Optional Fnn$)
-TmpCmd = TmpFfn(".cmd", Fdr, Fnn)
+Function TmpCmd$(Optional FnPfx$)
+TmpCmd = TmpFfn(".cmd", "Cmd", FnPfx)
 End Function
 
-Function TmpFcsv$(Optional Fdr$, Optional Fnn$)
-TmpFcsv = TmpFfn(".csv", Fdr, Fnn)
+Function TmpFcsv$(Optional Fdr$, Optional FnPfx$)
+TmpFcsv = TmpFfn(".csv", Fdr, FnPfx)
 End Function
 
-Function TmpFfn$(Ext, Optional Fdr$, Optional Fnn0$)
-Dim Fnn$
-Fnn = IIf(Fnn0 = "", TmpNm, Fnn0)
-TmpFfn = TmpFdr(Fdr) & Fnn & Ext
+Function TmpFfn$(Ext, Optional Fdr$, Optional FnPfx$)
+Dim P$: P = DftStr(FnPfx, "N")
+TmpFfn = TmpFdr(Fdr) & TmpNm(P) & Ext
 End Function
 
 Function TmpFt$(Optional Fdr$, Optional Fnn$)

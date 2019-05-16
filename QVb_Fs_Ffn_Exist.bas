@@ -60,11 +60,11 @@ End Function
 
 
 Function ChkHasFfn(Ffn, Optional FileKind$ = "File") As String()
-If Not HasFfn(Ffn) Then ChkHasFfn = MsgzMisKdFil(KdFil(Ffn, FileKind))
+If Not HasFfn(Ffn) Then ChkHasFfn = MsgzMisKF(KF(Ffn, FileKind))
 End Function
 
-Sub ThwIf_FfnNotExist(Ffn, Fun$, Optional KdFil$)
-If Not HasFfn(Ffn) Then Thw Fun, "File not found", "File-Pth File-Name File-Kind", Pth(Ffn), Fn(Ffn), KdFil
+Sub ThwIf_FfnNotExist(Ffn, Fun$, Optional KF$)
+If Not HasFfn(Ffn) Then Thw Fun, "File not found", "File-Pth File-Name File-Kind", Pth(Ffn), Fn(Ffn), KF
 End Sub
 
 

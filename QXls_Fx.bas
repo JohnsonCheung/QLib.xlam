@@ -61,7 +61,7 @@ Dim O As Database
    Set O = TmpDb
 Dim W
 For Each W In Itr(Wny)
-    LnkFxw O, ">" & W, Fx, W
+    LnkFx O, ">" & W, Fx, W
 Next
 Set TmpDbzFxWny = O
 End Function
