@@ -1,4 +1,5 @@
 Attribute VB_Name = "QIde_Loc_Jmp"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Loc_Jmp."
 Private Const Asm$ = "QIde"
@@ -114,7 +115,7 @@ Sub JmpzMR(M As CodeModule, R As RRCC)
 JmpzM M
 JmpzRRCC R
 End Sub
-Function WinyzMdAy(MdAy() As CodeModule) As vbide.Window()
+Function WinyzMdAy(MdAy() As CodeModule) As vbIde.Window()
 
 End Function
 Sub JmpMdnn(Mdnn$)

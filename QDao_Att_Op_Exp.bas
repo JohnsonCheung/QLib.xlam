@@ -1,4 +1,5 @@
 Attribute VB_Name = "QDao_Att_Op_Exp"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Att_Op_Exp."
@@ -6,7 +7,7 @@ Public Const DoczTblAtt$ = ""
 Public Const DoczAtt$ = "Attachment:It a Key-string of Table-Att in a database.  It can retrieve a record from Table-Att."
 Private Function ExpAttzAttd$(A As Attd, ToFfn$) 'Export the only File in {Attds} {ToFfn}
 Const CSub$ = CMod & "ExpAttzAttd"
-Dim Fn$, T$, F2 As Dao.Field2
+Dim Fn$, T$, F2 As DAO.Field2
 With A.Ars
     If Ext(!Filename) <> Ext(ToFfn) Then Thw CSub, "The Ext in the Att should be same", "Att-Ext ToFfn-Ext", Ext(!Filename), Ext(ToFfn)
     Set F2 = !FileData
@@ -43,7 +44,7 @@ If HasFfn(ToFfn) Then
         "A AttNm AttFn ToFfn", _
         Dbn(A), Att, AttFn, ToFfn
 End If
-Dim Fd2 As Dao.Field2
+Dim Fd2 As DAO.Field2
     Set Fd2 = AttFd2(A, Att, AttFn$)
 
 If IsNothing(Fd2) Then
@@ -55,7 +56,7 @@ Fd2.SaveToFile ToFfn
 ExpAttzFn = ToFfn
 End Function
 
-Private Function AttFd2(A As Database, Att$, AttFn$) As Dao.Field2
+Private Function AttFd2(A As Database, Att$, AttFn$) As DAO.Field2
 With Attd(A, Att)
     With .Ars
         .MoveFirst

@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Str_Esc"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Str_Esc."
@@ -22,7 +23,7 @@ Function SlashCrLf$(S)
 SlashCrLf = SlashLf(SlashCr(S))
 End Function
 Function SlashLf$(S)
-SlashLf = SlashAsc(S, vbLf, "n")
+SlashLf = SlashAsc(S, 10, "n")
 End Function
 Function UnSlashChr$(S, C$, SlashC$)
 UnSlashChr = Replace(S, "\" & SlashC, C)
@@ -54,7 +55,7 @@ EscCrLf = EscCr(EscLf(S))
 End Function
 
 Function EscLf$(S)
-EscLf = EscChr(S, Chr(vbLf))
+EscLf = EscChr(S, vbLf)
 End Function
 
 Function SlashTab$(S)
@@ -64,6 +65,7 @@ Function SlashChr$(S, C$, SlashC$)
 SlashChr = Replace(S, C, "\" & SlashC)
 End Function
 Function Esc$(S, C$)
+Esc = EscAsc(S, Asc(C))
 End Function
 
 Function UnSlashCr$(S)

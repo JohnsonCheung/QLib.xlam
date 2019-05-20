@@ -1,4 +1,5 @@
 Attribute VB_Name = "QDta_Dta_Dry"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QDta"
 Private Const CMod$ = "MDta_Dry."
@@ -133,14 +134,25 @@ For Each Dr In Itr(Dry)
 Next
 NRowzInDryzColEv = O
 End Function
+Function KeepFstNColzDrs(A As Drs, N%) As Drs
+KeepFstNColzDrs = Drs(CvSy(AywFstNEle(A.Fny, N)), KeepFstNCol(A.Dry, N))
+End Function
 
-Function DrywCEv(Dry(), C&, Ev) As Variant()
-Dim O()
-Dim Dr
+Function KeepFstNCol(Dry(), N%) As Variant()
+Dim Dr, U%
+U = N - 1
 For Each Dr In Itr(Dry)
-   If Dr(C) = Ev Then PushI DrywCEv, Dr
+    ReDim Preserve Dr(U)
+    PushI KeepFstNCol, Dr
 Next
 End Function
+Function DrywColPfx(Dry(), C&, Pfx, Optional Cmp As VbCompareMethod = vbTextCompare) As Variant()
+Dim Dr
+For Each Dr In Itr(Dry)
+   If HasPfx(Dr(C), Pfx, Cmp) Then PushI DrywColPfx, Dr
+Next
+End Function
+
 
 Sub ThwIf_NEDry(Dry(), B())
 If Not IsEqDry(Dry, B) Then Stop
@@ -153,17 +165,17 @@ For Each Dr In Dry
 Next
 End Function
 
-Function DrywColEq(Dry(), C%, V) As Variant()
+Function DrywColGt(Dry(), C%, GtV) As Variant()
 Dim Dr
-For Each Dr In Dry
-    If Dr(C) = V Then PushI DrywColEq, Dr
+For Each Dr In Itr(Dry)
+    If Dr(C) > GtV Then PushI DrywColGt, Dr
 Next
 End Function
 
-Function DrywCGt(Dry(), C%, GtV) As Variant()
+Function DrywColEq(Dry(), C, Eq) As Variant()
 Dim Dr
 For Each Dr In Itr(Dry)
-    If Dr(C) > GtV Then PushI DrywCGt, Dr
+    If Dr(C) = Eq Then PushI DrywColEq, Dr
 Next
 End Function
 

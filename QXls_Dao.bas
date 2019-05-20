@@ -1,4 +1,5 @@
 Attribute VB_Name = "QXls_Dao"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MXls_Dao."
 Private Const Asm$ = "QXls"
@@ -27,10 +28,72 @@ With Lo.QueryTable
     .AdjustColumnWidth = True
     .RefreshPeriod = 0
     .PreserveColumnINF = True
-    .ListObject.DisplayName = LoNm(T) '<==
+    .ListObject.DisplayName = Lon(T) '<==
     .Refresh BackgroundQuery:=False
 End With
 End Sub
+Function TmpInpTny(A As Database) As String()
+TmpInpTny = AywPfx(Tny(A), "#I")
+End Function
+
+Sub ZZ_LoIxSq()
+Dim Wb As Workbook: Set Wb = NewWb
+AddWszzWbSq Wb, SampSq
+AddWszzWbSq Wb, SampSq1
+BrwSq LoIxSq(Wb)
+End Sub
+
+Sub AddWszzWbSq(Wb As Workbook, Sq())
+LozSq Sq, A1zWs(AddWs(Wb))
+End Sub
+
+Function LoIxSq(Wb As Workbook) As Variant()
+Dim Ws As Worksheet, M(), O(), Fnd As Boolean
+For Each Ws In Wb.Sheets
+    M = LoIxSqzWs(Ws)
+    If Si(M) > 0 Then
+        If Fnd Then
+            PushSq O, M
+        Else
+            O = M
+        End If
+    End If
+Next
+LoIxSq = O
+End Function
+
+Private Function LoIxSqzWs(Ws As Worksheet) As Variant()
+Dim Lo As ListObject, R&, NR&
+NR = Ws.ListObjects.Count
+ReDim O(1 To NR, 1 To 4)
+For Each Lo In Ws.ListObjects
+    R = R + 1
+    SetSqr O, LoDr(Lo), R
+Next
+End Function
+
+Private Sub ZZ_LoDr()
+Dim Lo As ListObject: Set Lo = SampLo
+D LoDr(Lo)
+ClsWbNoSav WbzLo(Lo)
+End Sub
+
+Private Function LoDr(A As ListObject) As Variant()
+Dim WN$: WN = WsnzLo(A)
+Dim LN$:: LN = A.Name
+Dim NR&: NR = NRowzLo(A)
+Dim NC&: NC = A.ListColumns.Count
+LoDr = Array(WN, LN, NR, NC)
+End Function
+
+Sub AddLoIx(At As Range)
+LozSq LoIxSq(WbzRg(At)), At
+End Sub
+
+Function WbzTmpInp(A As Database) As Workbook
+Set WbzTmpInp = WbzTny(A, TmpInpTny(A))
+End Function
+
 Function WbzTny(A As Database, Tny$()) As Workbook
 Dim T, O As Workbook
 Set O = NewWb
@@ -40,7 +103,7 @@ Next
 DltSheet1 O
 Set WbzTny = O
 End Function
-Function WbzFb(Fb, Optional Vis As Boolean) As Workbook
+Function WbzFb(Fb) As Workbook
 Dim D As Database: Set D = Db(Fb)
 Set WbzFb = ShwWb(WbzTny(D, Tny(D)))
 End Function
@@ -50,7 +113,7 @@ Set SetWsn = Ws
 If Nm = "" Then Exit Function
 If HasWs(WbzWs(Ws), Nm) Then
     Dim Wb As Workbook: Set Wb = WbzWs(Ws)
-    Thw CSub, FmtQQ("Wsn exists in Wb", "Wsn WbNm Wny-in-Wb", Nm, WbNm(Wb), WnyzWb(Wb))
+    Thw CSub, FmtQQ("Wsn exists in Wb", "Wsn Wbn Wny-in-Wb", Nm, Wbn(Wb), WnyzWb(Wb))
 End If
 Ws.Name = Nm
 End Function
@@ -130,11 +193,11 @@ DltWsIf O, "Sheet1"
 Set NewWbzOupTbl = O
 End Function
 
-Function WbzT(A As Database, T, Optional Wsn$ = "Data", Optional LoNm$, Optional Vis As Boolean) As Workbook
-Set WbzT = WszRg(AtAddDbt(NewA1(Wsn, Vis), A, T, LoNm))
+Function WbzT(A As Database, T, Optional Wsn$ = "Data", Optional Lon$) As Workbook
+Set WbzT = WszRg(AtAddDbt(NewA1(Wsn), A, T, Lon))
 End Function
-Function AtAddDbt(At As Range, Db As Database, T, Optional LoNm$) As Range
-'CrtLozRg PutSq(At, Dbt(Db, T).Sq), LoNm
+Function AtAddDbt(At As Range, Db As Database, T, Optional Lon$) As Range
+'LozRg PutSq(At, Dbt(Db, T).Sq), Lon
 Set AtAddDbt = At
 End Function
 Sub PutDbtWs(A As Database, T, Ws As Worksheet)
@@ -142,7 +205,7 @@ PutDbtAt A, T, A1zWs(Ws)
 End Sub
 
 Sub PutDbtAt(A As Database, T, At As Range, Optional AddgWay As EmAddgWay)
-CrtLozRg PutSq(SqzT(A, T), At), LoNm(T)
+LozRg PutSq(SqzT(A, T), At), Lon(T)
 End Sub
 Sub SetQtFbt(Qt As QueryTable, Fb, T)
 With Qt
@@ -166,7 +229,7 @@ End Sub
 Sub PutFbtAt(Fb, T$, At As Range, Optional LoNm0$)
 Dim O As ListObject
 Set O = WszRg(At).ListObjects.Add(SourceType:=XlSourceType.xlSourceWorkbook, Destination:=At)
-SetLoNm O, Dft(LoNm0, LoNm(T))
+SetLoNm O, Dft(LoNm0, Lon(T))
 SetQtFbt O.QueryTable, Fb, T
 End Sub
 Sub FxzTny(Fx, Db As Database, Tny$())
@@ -176,6 +239,6 @@ End Sub
 Function WszT(A As Database, T, Optional Wsn$) As Worksheet
 Dim Sq(): Sq = SqzT(A, T)
 Dim A1 As Range: Set A1 = NewA1(Wsn)
-Set WszT = WszLo(CrtLozSq(Sq(), A1))
+Set WszT = WszLo(LozSq(Sq(), A1))
 End Function
 

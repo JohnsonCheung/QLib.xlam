@@ -1,4 +1,5 @@
 Attribute VB_Name = "QDao_Db_LnkTbl"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "BLnkTbl."
 Type LnkTblPm: T As String: S As String: Cn As String: End Type

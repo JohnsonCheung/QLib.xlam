@@ -1,16 +1,17 @@
 Attribute VB_Name = "QDao_Dic"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDao_Dic."
 Private Const Asm$ = "QDao"
 
 
-Function AyDaoTy(A As Dao.DataTypeEnum)
+Function AyDaoTy(A As DAO.DataTypeEnum)
 Dim O
 Select Case A
-Case Dao.DataTypeEnum.dbBigInt: O = EmpLngAy
+Case DAO.DataTypeEnum.dbBigInt: O = EmpLngAy
 End Select
 End Function
-Function AyDic_RsKF(A As Dao.Recordset, DicKeyFld, AyFld) As Dictionary _
+Function AyDic_RsKF(A As DAO.Recordset, DicKeyFld, AyFld) As Dictionary _
 'Return a dictionary of Ay using KeyFld and AyFld.  The Val-of-returned-Dic is Ay using the AyFld.Type to create
 Dim O As New Dictionary
 Dim K, V
@@ -42,11 +43,11 @@ Set AyDic_RsKF = O
 End Function
 
 
-Function JnStrDicTwoFldRs(A As Dao.Recordset, Optional Sep$ = " ") As Dictionary
+Function JnStrDicTwoFldRs(A As DAO.Recordset, Optional Sep$ = " ") As Dictionary
 Set JnStrDicTwoFldRs = JnStrDicRsKeyJn(A, 0, 1, Sep)
 End Function
 
-Function JnStrDicRsKeyJn(A As Dao.Recordset, KeyFld, JnStrFld, Optional Sep$ = " ") As Dictionary
+Function JnStrDicRsKeyJn(A As DAO.Recordset, KeyFld, JnStrFld, Optional Sep$ = " ") As Dictionary
 Dim O As New Dictionary
 Dim K, V$
 While Not A.EOF
@@ -62,7 +63,7 @@ Wend
 Set JnStrDicRsKeyJn = O
 End Function
 
-Function CntDiczRs(A As Dao.Recordset, Optional Fld = 0) As Dictionary
+Function CntDiczRs(A As DAO.Recordset, Optional Fld = 0) As Dictionary
 Set CntDiczRs = CntDic(AvRsCol(A))
 End Function
 

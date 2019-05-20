@@ -1,4 +1,6 @@
 Attribute VB_Name = "QIde_Mdy_Mdy"
+Option Explicit
+Option Compare Text
 Enum EmMdyg
     EiNop
     EiIns
@@ -78,6 +80,7 @@ Function FmtRplgMd$(A As RplgMd)
 PushI FmtRplgMd, "Md=" & Mdn(A.Md) & vbCrLf & A.NewLines
 End Function
 Function FmtMdygs(A As Mdygs) As String()
+Dim J%
 For J = 0 To A.N - 1
     PushI FmtMdygs, FmtMdyg(A.Ay(J))
 Next

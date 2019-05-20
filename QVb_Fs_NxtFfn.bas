@@ -1,4 +1,6 @@
 Attribute VB_Name = "QVb_Fs_NxtFfn"
+Option Explicit
+Option Compare Text
 Private Const CMod$ = "BNxtFfn."
 Function NxtNozFfn%(Ffn)
 Dim A$: A = Right(RmvExt(Ffn), 5)

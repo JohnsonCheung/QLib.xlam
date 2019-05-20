@@ -1,4 +1,5 @@
 Attribute VB_Name = "QIde_Mth_Drs"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Mth_Drs."
 Private Const Asm$ = "QIde"
@@ -262,8 +263,8 @@ Function MthWsInVbe() As Worksheet
 Set MthWsInVbe = MthWszV(CVbe)
 End Function
 
-Function MthWszP(P As VBProject, Optional Vis As Boolean) As Worksheet
-Set MthWszP = SetVisOfWs(WszDrs(MthDrszP(P)), Vis)
+Function MthWszP(P As VBProject) As Worksheet
+Set MthWszP = WszDrs(MthDrszP(P))
 End Function
 
 Function MthWszPjfy(Pjfy$()) As Worksheet

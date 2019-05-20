@@ -1,4 +1,5 @@
 Attribute VB_Name = "QIde_Md"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Md."
@@ -117,7 +118,7 @@ A.CodePane.Window.Close
 End Sub
 
 Sub CmprMd(A As CodeModule, B As CodeModule)
-'BrwCmprDicAB MthDiczM(A), MthDiczMd(B), QMdnzM(A), QMdnzM(B)
+'BrwCmpgDicAB MthDiczM(A), MthDiczMd(B), QMdnzM(A), QMdnzM(B)
 End Sub
 
 Sub DltLin(A As CodeModule, Lno)

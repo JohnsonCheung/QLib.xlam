@@ -1,8 +1,9 @@
-Attribute VB_Name = "QVb_Dic_CmpDic"
+Attribute VB_Name = "QVb_Dic_CmprDic"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Dic_Cmp."
 Private Const Asm$ = "QVb"
-Private Type DicCmp
+Private Type CmpgDic
     Nm1 As String
     Nm2 As String
     AExcess As Dictionary
@@ -11,11 +12,11 @@ Private Type DicCmp
     BDif As Dictionary
     Sam As Dictionary
 End Type
-Function FmtCmprDic(A As Dictionary, B As Dictionary, Optional Nm1$ = "Fst", Optional Nm2$ = "Snd") As String()
-FmtCmprDic = FmtDicCmp(DicCmp(A, B, Nm1, Nm2))
+Function FmtCmpgDic(A As Dictionary, B As Dictionary, Optional Nm1$ = "Fst", Optional Nm2$ = "Snd") As String()
+FmtCmpgDic = FmtCmpgDiczCmpg(CmpgDic(A, B, Nm1, Nm2))
 End Function
 
-Function FmtDicCmp(A As DicCmp, Optional ExlSam As Boolean) As String()
+Function FmtCmpgDiczCmpg(A As CmpgDic, Optional ExlSam As Boolean) As String()
 Dim O$()
 With A
     O = AddAyAp( _
@@ -26,22 +27,22 @@ End With
 If Not ExlSam Then
     O = AddAy(O, FmtSam(A.Sam))
 End If
-FmtDicCmp = O
+FmtCmpgDiczCmpg = O
 End Function
 
-Function DicCmp(A As Dictionary, B As Dictionary, Nm1$, Nm2$) As DicCmp
-With DicCmp
+Function CmpgDic(A As Dictionary, B As Dictionary, Nm1$, Nm2$) As CmpgDic
+With CmpgDic
     .Nm1 = Nm1
     .Nm2 = Nm2
-    Set .AExcess = DicMinus(A, B)
-    Set .BExcess = DicMinus(B, A)
+    Set .AExcess = MinusDic(A, B)
+    Set .BExcess = MinusDic(B, A)
     Set .Sam = DicSamKV(A, B)
     AsgADifBDif A, B, .ADif, .BDif
 End With
 End Function
 
-Sub BrwCmprDicAB(A As Dictionary, B As Dictionary, Optional Nm1$ = "Fst", Optional Nm2$ = "Snd")
-BrwAy FmtCmprDic(A, B, Nm1, Nm2)
+Sub BrwCmpgDicAB(A As Dictionary, B As Dictionary, Optional Nm1$ = "Fst", Optional Nm2$ = "Snd")
+BrwAy FmtCmpgDic(A, B, Nm1, Nm2)
 End Sub
 
 Function DicSamKV(A As Dictionary, B As Dictionary) As Dictionary
@@ -107,13 +108,13 @@ Next
 FmtSam = FmtS1S2s(S)
 End Function
 
-Private Sub Z_BrwCmprDicAB()
+Private Sub Z_BrwCmpgDicAB()
 Dim A As Dictionary, B As Dictionary
 Set A = DiczVbl("X AA|A BBB|A Lines1|A Line3|B Line1|B line2|B line3..")
 Set B = DiczVbl("X AA|C Line|D Line1|D line2|B Line1|B line2|B line3|B Line4")
-BrwCmprDicAB A, B
+BrwCmpgDicAB A, B
 End Sub
 
 Private Sub ZZ()
-Z_BrwCmprDicAB
+Z_BrwCmpgDicAB
 End Sub

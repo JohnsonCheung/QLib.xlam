@@ -1,4 +1,6 @@
 Attribute VB_Name = "QVb_Dta_Ayab"
+Option Explicit
+Option Compare Text
 Type Ayabc
     A As Variant
     B As Variant
@@ -60,4 +62,14 @@ Function AyabczAyFei(Ay, B As Fei) As Ayabc
 AyabczAyFei = AyabczAyFE(Ay, B.FmIx, B.EIx)
 End Function
 
+
+Function DryzAyab(A, B) As Variant()
+Dim J&
+For J = 0 To Min(UB(A), UB(B))
+    PushI DryzAyab, Array(A(J), B(J))
+Next
+End Function
+Function DrszAyab(A, B, Optional N1$ = "Ay1", Optional N2$ = "Ay2") As Drs
+DrszAyab = Drs(Sy(N1, N2), DryzAyab(A, B))
+End Function
 

@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Str_Align"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Str_Align."
 Private Const Asm$ = "QVb"

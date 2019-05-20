@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Tp_Lnx"
+Option Compare Text
 Option Explicit
 Enum EmIxFm 'Ix is always 0.  When present as Lno, Ix=0 will be Lno=1.
     EiFm1   'Or, presenting Ix=0 as 1 for Lno
@@ -50,6 +51,11 @@ ZZ:
     Brw FmtLnxs(A)
     Return
 End Sub
+
+Function FmtLnx(A As Lnx)
+FmtLnx = LnxStr(A)
+End Function
+
 Function FmtLnxs(A As Lnxs) As String()
 Dim B$(): B = AlignRzAy(IxyzLnxs(A))
 FmtLnxs = JnAyab(B, LinAyzLnxs(A), " ")
@@ -57,7 +63,8 @@ End Function
 Function SngLnx(A As Lnx) As Lnxs
 PushLnx SngLnx, A
 End Function
-
+Function EmpLnxs() As Lnxs
+End Function
 Function Lnx(Lin, Ix) As Lnx
 If Ix < 0 Then Thw CSub, "Ix cannot be negative", "Ix Lin", Ix, Lin
 Lnx.Ix = Ix
@@ -144,8 +151,8 @@ ZZ:
     Return
 T0:
     A = Lnxs(Sy("A B", " B X", "A", "B", "C"))
-    PushIIxy Ept, SIxy("A", Lngy(1, 3))
-    PushIIxy Ept, SIxy("B", Lngy(2, 4))
+    PushIIxy Ept, SIxy("A", LngAp(1, 3))
+    PushIIxy Ept, SIxy("B", LngAp(2, 4))
     GoTo Tst
 Tst:
     Act = DupT1zLnxs(A)
@@ -246,7 +253,8 @@ End Function
 Private Function T1AyzLnxs(A As Lnxs) As String()
 T1AyzLnxs = T1Ay(LinAyzLnxs(A))
 End Function
-Private Function DupT1AyzLnxs(A As Lnxs) As String()
+
+Function DupT1AyzLnxs(A As Lnxs) As String()
 DupT1AyzLnxs = AywDup(T1AyzLnxs(A))
 End Function
 Private Function ErOfDupT1zLnxs(A As Lnxs) As String()
@@ -261,6 +269,7 @@ For J = 0 To A.N - 1
     If T1zS(A.Ay(J).Lin) = T1 Then FstT1Lno = A.Ay(J).Ix + 1: Exit Function
 Next
 End Function
+
 Function LnxswT1(A As Lnxs, T1) As Lnxs
 Dim J&
 For J = 0 To A.N - 1
@@ -302,13 +311,6 @@ End Function
 Function LnxzStr(LnxStr$) As Lnx
 With BrkSpc(LnxStr): LnxzStr = Lnx(.S2, .S1): End With
 End Function
-Private Sub ZZ_LnxsRsltOfDupT1()
-GoSub T1
-Exit Sub
-T1:
-    
-Stop
-End Sub
 
 Private Function ErOfDupT1zLnxsDup$(A As Lnxs, Dup)
 Dim Ix, M$
@@ -429,6 +431,7 @@ ZZ:
     D ActLnossAy
     Return
 End Sub
+
 Sub DupT1_FmLnxs_ToDupT1Ay_AndLnossAy(A As Lnxs, ODupT1Ay$(), OLnossAy$())
 ODupT1Ay = DupT1AyzLnxs(A)
 OLnossAy = LnossAy_FmLnxs_WhT1Ay(A, ODupT1Ay)

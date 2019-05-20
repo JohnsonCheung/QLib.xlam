@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Str_Macro"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Str_Macro."
 Private Const Asm$ = "QVb"
@@ -28,19 +29,19 @@ For Each N In NyzMacro(Macro)
 Next
 FmtMacrozAv = O
 End Function
-Function FmtMacrozRs$(Macro, Rs As Dao.Recordset)
+Function FmtMacrozRs$(Macro, Rs As DAO.Recordset)
 FmtMacrozRs = FmtMacrozDic(Macro, DiczRs(Rs))
 End Function
-Function DiczRs(A As Dao.Recordset) As Dictionary
+Function DiczRs(A As DAO.Recordset) As Dictionary
 Set DiczRs = New Dictionary
-Dim F As Dao.Field
+Dim F As DAO.Field
 For Each F In A.Fields
     DiczRs.Add F.Name, F.Value
 Next
 End Function
 Function FmtMacrozDic$(Macro, Dic As Dictionary)
 Dim Ny$(): Ny = NyzMacro(Macro)
-Dim Vy(): Vy = VyzDKy(Dic, Ny)
+Dim Vy(): Vy = VyzDicKy(Dic, Ny)
 FmtMacrozDic = FmtMacrozAv(Macro, Vy)
 End Function
 Function NNAv(NN$, Av()) As NNAv

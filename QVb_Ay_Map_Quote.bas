@@ -1,16 +1,19 @@
 Attribute VB_Name = "QVb_Ay_Map_Quote"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Ay_Map_Quote."
 Private Const Asm$ = "QVb"
 Function QuoteSqBkt$(S)
 QuoteSqBkt = "[" & S & "]"
 End Function
-Function QuoteSqBktIfzSy$(Sy$())
+
+Function QuoteSqBktIfzAy(Ay) As String()
 Dim I
-For Each I In Itr(Sy)
-    PushI QuoteSqBktIfzSy, QuoteSqIf(CStr(I))
+For Each I In Itr(Ay)
+    PushI QuoteSqBktIfzAy, QuoteSqIf(I)
 Next
 End Function
+
 Function SyQuote(Sy$(), QuoteStr$) As String()
 If Si(Sy) = 0 Then Exit Function
 Dim U&: U = UB(Sy)

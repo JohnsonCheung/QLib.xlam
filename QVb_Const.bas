@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Const"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Const."
 Private Const Asm$ = "QVb"
@@ -66,9 +67,9 @@ Property Get SampDbzShpCst() As Database
 Set SampDbzShpCst = Db(SampFbzShpCst)
 End Property
 Property Get DbEng() As DBEngine
-Set DbEng = Dao.DBEngine
+Set DbEng = DAO.DBEngine
 End Property
-Private Function Db(A) As Dao.Database
+Private Function Db(A) As DAO.Database
 Set Db = DbEng.OpenDatabase(A)
 End Function
 Property Get SampCnzDutyDta() As AdoDb.Connection
@@ -77,7 +78,7 @@ End Property
 Property Get SampFb$()
 SampFb = SampFbzDutyDta
 End Property
-Property Get SampDb() As Dao.Database
+Property Get SampDb() As DAO.Database
 Set SampDb = Db(SampFb)
 End Property
 Property Get SampDbzDutyDta() As Database

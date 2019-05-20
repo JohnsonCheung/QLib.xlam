@@ -1,4 +1,5 @@
 Attribute VB_Name = "QIde_Ens_SubZZ"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Ens_SubZZ."
@@ -173,7 +174,7 @@ vbCrLf & "FmtDic2__1 D, D" & _
 vbCrLf & "DicMap B, D" & _
 vbCrLf & "MaxSizAyDic B" & _
 vbCrLf & "MgeDic B, D, G" & _
-vbCrLf & "DicMinus B, B"
+vbCrLf & "MinusDic B, B"
 
 Const A_3$ = "DicSelIntozAy B, E" & _
 vbCrLf & "DicSelIntoSy B, E" & _

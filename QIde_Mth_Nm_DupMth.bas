@@ -1,8 +1,9 @@
 Attribute VB_Name = "QIde_Mth_Nm_DupMth"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Mth_Nm_Dup_X."
 Private Const Asm$ = "QIde"
-Function DupMthWsP(Optional Vis As Boolean) As Worksheet
+Function DupMthWsP() As Worksheet
 Set DupMthWsP = DupMthWszP(CPj)
 End Function
 
@@ -123,7 +124,7 @@ Function DupQDry_MthnzP(P As VBProject) As Variant()
 Dim Dry(), Dry1(), Dry2()
 'Dry = QDry_MthnzP(A, "-Mod") ' Pjn Mdn Mthn Ty Mdy
 'Dry1 = DryeCEv(Dry, 4, "Prv")
-Dry2 = DrywDupCC(Dry, Lngy(2))
+Dry2 = DrywDupCC(Dry, LngAp(2))
 DupQDry_MthnzP = SrtDryzCol(Dry2, 2)
 End Function
 
@@ -136,7 +137,7 @@ DupQDry_MthnVbe = DupQDry_MthnzV(CVbe)
 End Function
 
 Function DupQDry_MthnzQMthny(QMthny$()) As Variant()
-DupQDry_MthnzQMthny = DrywDupCC(DryzDotAy(QMthny), Lngy(2))
+DupQDry_MthnzQMthny = DrywDupCC(DryzDotAy(QMthny), LngAp(2))
 End Function
 
 Function DupQDry_MthnzV(A As Vbe) As Variant()

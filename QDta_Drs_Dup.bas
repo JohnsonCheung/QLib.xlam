@@ -1,4 +1,5 @@
 Attribute VB_Name = "QDta_Drs_Dup"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDta_Drs_Dup."
 Private Const Asm$ = "QDta"
@@ -18,7 +19,7 @@ If Si(Fny) = 1 Then
     Exit Function
 End If
 Dim ColIxy&(): ColIxy = Ixy(A.Fny, Fny, ThwNotFnd:=True)
-Dim Dry(): Dry = DrySel(A.Dry, ColIxy)
+Dim Dry(): Dry = SelDry(A.Dry, ColIxy)
 RowIxyOfDupRow = RowIxyzOfDupzDry(Dry)
 End Function
 
@@ -127,7 +128,7 @@ Exit Sub
 T0:
     ColIx = 0
     Dry = Array(Array(1, 2, 3, 4), Array(1, 2, 3), Array(2, 4, 3))
-    Ept = Lngy(0, 1)
+    Ept = LngAp(0, 1)
     GoTo Tst
 Tst:
     Act = RowIxyzOfDupzDryColIx(Dry, ColIx)

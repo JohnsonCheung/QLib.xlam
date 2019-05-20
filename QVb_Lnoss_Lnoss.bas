@@ -1,4 +1,6 @@
 Attribute VB_Name = "QVb_Lnoss_Lnoss"
+Option Explicit
+Option Compare Text
 Type AySubAy
     Ay As Variant
     SubAy As Variant

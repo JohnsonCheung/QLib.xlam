@@ -1,4 +1,5 @@
 Attribute VB_Name = "QDta_Bql_ReadBql"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "BBqlRead."
 Const Asm$ = "Dao"
@@ -82,7 +83,7 @@ Dim T$
     T = T0
     If T = "" Then T = TblNmzFbql(Fbql)
 
-Dim F%, L$, R As Dao.Recordset
+Dim F%, L$, R As DAO.Recordset
 F = FnoI(Fbql)
 Line Input #F, L
 CrtTblzShtTyscfBql A, T, L
@@ -97,7 +98,7 @@ Close #F
 End Sub
 
 Sub CrtTblzShtTyscfBql(A As Database, T, ShtTyscfBql$)
-Dim Td As New Dao.TableDef
+Dim Td As New DAO.TableDef
 Td.Name = T
 Dim I
 For Each I In Split(ShtTyscfBql, "`")
@@ -106,8 +107,8 @@ Next
 A.TableDefs.Append Td
 End Sub
 
-Private Function FdzShtTyscf(ShtTyscf$) As Dao.Field
-Dim T As Dao.DataTypeEnum
+Private Function FdzShtTyscf(ShtTyscf$) As DAO.Field
+Dim T As DAO.DataTypeEnum
 Dim S As Byte
 With Brk2(ShtTyscf, ":")
     Select Case True
@@ -120,14 +121,14 @@ End With
 End Function
 
 Function ShtTyBqlzT$(A As Database, T)
-Dim Ay$(), F As Dao.Field
+Dim Ay$(), F As DAO.Field
 For Each F In A.TableDefs(T).Fields
     PushI Ay, ShtTyszFd(F) & ":" & F.Name
 Next
 ShtTyBqlzT = Jn(Ay, "`")
 End Function
 
-Private Function ShtTyszFd$(A As Dao.Field)
+Private Function ShtTyszFd$(A As DAO.Field)
 Dim B$: B = ShtTyzDao(A.Type)
 If A.Type = dbText Then
     B = B & A.Size

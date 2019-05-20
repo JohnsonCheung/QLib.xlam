@@ -1,4 +1,5 @@
 Attribute VB_Name = "QDao_Schm_Ens"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDao_Schm_Ens."
 Private Const Asm$ = "QDao"

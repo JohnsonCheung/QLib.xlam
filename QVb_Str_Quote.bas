@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Str_Quote"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Str_Quote."
 Private Const Asm$ = "QVb"
@@ -38,6 +39,15 @@ End Function
 Function QuoteDot$(S)
 QuoteDot = "." & S & "."
 End Function
+Function QuoteAy(Ay, QuoteStr$) As String()
+Dim P$, S$
+With BrkQuote(QuoteStr)
+    P = .S1
+    S = .S2
+End With
+QuoteAy = AddPfxSfxzAy(Ay, P, S)
+End Function
+
 Function Quote$(S, QuoteStr$)
 With BrkQuote(QuoteStr)
     Quote = .S1 & S & .S2

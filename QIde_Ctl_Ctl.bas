@@ -1,4 +1,5 @@
 Attribute VB_Name = "QIde_Ctl_Ctl"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Btn."
 Private Const Asm$ = "QIde"
@@ -22,7 +23,7 @@ Property Get BarNy() As String()
 BarNy = BarNyzV(CVbe)
 End Property
 
-Property Get WinOfBrwObj() As vbide.Window
+Property Get WinOfBrwObj() As vbIde.Window
 Set WinOfBrwObj = FstWinTy(vbext_wt_Browser)
 End Property
 

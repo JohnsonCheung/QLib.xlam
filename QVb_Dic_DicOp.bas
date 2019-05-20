@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Dic_DicOp"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Dic."
@@ -21,13 +22,6 @@ Dim J%
 For J = 0 To UB(Dy)
    PushDic AddDicAy, Dy(J)
 Next
-End Function
-Function LineszLinesDic(LinesDic As Dictionary, Optional LinesSep$ = vbCrLf) ' Return the joined Lines from LinesDic
-Dim O$(), I, Lines$
-For Each I In LinesDic.Items
-    PushI O, I
-Next
-LineszLinesDic = Jn(O, LinesSep)
 End Function
 
 Function IupDic(A As Dictionary, By As Dictionary) As Dictionary 'Return New dictionary from A-Dic by Ins-or-upd By-Dic.  Ins: if By-Dic has key and A-Dic. _
@@ -230,14 +224,14 @@ Dim D As Dictionary
 Set MgeDic = AddDicAy(A, Dy)
 End Function
 
-Function DicMinus(A As Dictionary, B As Dictionary) As Dictionary
-If A.Count = 0 Then Set DicMinus = New Dictionary: Exit Function
-If B.Count = 0 Then Set DicMinus = CloneDic(A): Exit Function
+Function MinusDic(A As Dictionary, B As Dictionary) As Dictionary
+If A.Count = 0 Then Set MinusDic = New Dictionary: Exit Function
+If B.Count = 0 Then Set MinusDic = CloneDic(A): Exit Function
 Dim O As New Dictionary, K
 For Each K In A.Keys
    If Not B.Exists(K) Then O.Add K, A(K)
 Next
-Set DicMinus = O
+Set MinusDic = O
 End Function
 
 Function DicSelIntozAy(A As Dictionary, Ky$()) As Variant()
@@ -325,7 +319,7 @@ LineszDic B
 FmtDic2 B
 MaxSizAyDic B
 MgeDic B, D, G
-DicMinus B, B
+MinusDic B, B
 DicSelIntozAy B, E
 DicSelIntoSy B, E
 SyzDicKey B
@@ -365,12 +359,23 @@ For Each A In AzDiB.Keys
 Next
 End Function
 
-
-Function AddDic(A As Dictionary, B As Dictionary) As Dictionary
-Set AddDic = New Dictionary
-PushDic AddDic, A
-PushDic AddDic, B
+Function DicAzDifVal(A As Dictionary, B As Dictionary) As Dictionary
+Set DicAzDifVal = New Dictionary
+Dim K, V
+For Each K In A.Keys
+    If B.Exists(K) Then
+        V = A(K)
+        If V <> B(K) Then DicAzDifVal.Add K, V
+    End If
+Next
 End Function
+Sub SetKv(O As Dictionary, K, V)
+If O.Exists(K) Then
+    Asg V, O(K)
+Else
+    O.Add K, V
+End If
+End Sub
 
 
 Sub PushDic(O As Dictionary, A As Dictionary)
@@ -383,6 +388,22 @@ For Each K In A.Keys
     If O.Exists(A) Then Thw CSub, "O already has K.  Cannot push Dic-A to Dic-O", "K Dic-O Dic-A", K, O, A
     O.Add K, A(K)
 Next
+End Sub
+
+
+Sub PushItmzSyDic(A As Dictionary, K, Itm)
+Dim M$()
+If A.Exists(K) Then
+    M = A(K)
+    PushI M, Itm
+    A(K) = M
+Else
+    A.Add K, Sy(Itm)
+End If
+End Sub
+
+Sub ThwNotSyDic(A As Dictionary, Fun$)
+If Not IsDicOfSy(A) Then Thw Fun, "Given dictionary is not SyDic, all key is string and val is Sy", "Give-Dictionary", FmtDic(A)
 End Sub
 
 

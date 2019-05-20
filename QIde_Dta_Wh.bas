@@ -1,4 +1,6 @@
 Attribute VB_Name = "QIde_Dta_Wh"
+Option Explicit
+Option Compare Text
 Type WhMth
     WhNm As WhNm
     ShtMdy() As String

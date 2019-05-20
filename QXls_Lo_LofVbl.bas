@@ -1,10 +1,11 @@
 Attribute VB_Name = "QXls_Lo_LofVbl"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MXls_Lo_LofVbl."
 Private Const Asm$ = "QXls"
 
 Function LofVblzQt$(A As QueryTable)
-LofVblzQt = LofVblzFbtStr(FbtStrQt(A))
+LofVblzQt = LofVblzFbtStr(FbtStrzQt(A))
 End Function
 
 Property Get LofVblzT$(A As Database, T)

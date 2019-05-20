@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Ay_Op_IxAy"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Ay_Op_Ixy."
 Private Const Asm$ = "QVb"
@@ -6,6 +7,32 @@ Type NumPos
     Num As Long
     Pos As Long
 End Type
+
+Sub ZZ_AsgIxy()
+Dim Fny$(), FF$, A%, B%, C%, EA%, EB%, EC%
+GoSub T1
+Exit Sub
+T1:
+    Fny = SyzSS("A B C")
+    FF = "C B A"
+    EA = 0
+    EB = 1
+    EC = 2
+    GoTo Tst
+Tst:
+    AsgIxy Fny, FF, "C,B,A"
+    Debug.Print A = EA
+    Debug.Print B = EB
+    Debug.Print C = EC
+    Return
+End Sub
+Sub AsgIxy(Fny$(), FF$, ParamArray OAp())
+Dim F, J%, I&
+For Each F In SyzSS(FF)
+    I = IxzAy(Fny, F): If I < 0 Then Thw CSub, "F in FF not found in Fny", "Fny FF, F", Fny, FF, F
+    OAp(J) = IxzAy(Fny, F)
+Next
+End Sub
 
 Function IxzAy&(Ay, Itm, Optional FmIx& = 0)
 Dim J&

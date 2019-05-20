@@ -1,4 +1,5 @@
 Attribute VB_Name = "QXls_Lo_FmtLoTit"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MXls_Lo_Fmt_Tit."
 Private Const Asm$ = "QXls"
@@ -82,9 +83,9 @@ Dim A$(), Act(), Ept()
     TitLy = A
 Fny = SyzSS("A B C D E")
 Ept = TitSq(TitLy, Fny)
-    SetSqzDrv Ept, 1, SyzSS("A1 B1 C1 D E1")
-    SetSqzDrv Ept, 2, Array("A2 11", "B2")
-    SetSqzDrv Ept, 3, Array(Empty, "B3")
+    SetSqr Ept, 1, SyzSS("A1 B1 C1 D E1")
+    SetSqr Ept, 2, Array("A2 11", "B2")
+    SetSqr Ept, 3, Array(Empty, "B3")
 GoSub Tst
 Exit Sub
 '---

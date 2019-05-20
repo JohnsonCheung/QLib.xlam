@@ -1,4 +1,5 @@
 Attribute VB_Name = "QDao_Lg"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Lg."
@@ -17,10 +18,10 @@ End Sub
 Function CurLgLy(Optional Sep$ = " ", Optional Top% = 50) As String()
 CurLgLy = RsLy(CurLgRs(Top), Sep)
 End Function
-Private Function RsLy(A As Dao.Database, Sep$) As String()
+Private Function RsLy(A As DAO.Database, Sep$) As String()
 
 End Function
-Function CurLgRs(Optional Top% = 50) As Dao.Recordset
+Function CurLgRs(Optional Top% = 50) As DAO.Recordset
 Set CurLgRs = L.OpenRecordset(FmtQQ("Select Top ? x.*,Fun,MsgTxt from Lg x left join Msg a on x.Msg=a.Msg order by Sess desc,Lg", Top))
 End Function
 
@@ -32,7 +33,7 @@ Function CurSessLy(Optional Sep$, Optional Top% = 50) As String()
 CurSessLy = RsLy(CurSessRs(Top), Sep)
 End Function
 
-Function CurSessRs(Optional Top% = 50) As Dao.Recordset
+Function CurSessRs(Optional Top% = 50) As DAO.Recordset
 Set CurSessRs = L.OpenRecordset(FmtQQ("Select Top ? * from sess order by Sess desc", Top))
 End Function
 Private Function CvSess&(A&)
@@ -105,7 +106,7 @@ With L.TableDefs("LgV").OpenRecordset
 End With
 End Sub
 
-Private Sub AsgRs(A As Dao.Recordset, ParamArray OAp())
+Private Sub AsgRs(A As DAO.Recordset, ParamArray OAp())
 
 End Sub
 
@@ -137,30 +138,30 @@ End Sub
 
 Sub LgCrt()
 CrtFb LgFb
-Dim A As Database, T As Dao.TableDef
+Dim A As Database, T As DAO.TableDef
 Set A = Db(LgFb)
 '
-Set T = New Dao.TableDef
+Set T = New DAO.TableDef
 T.Name = "Sess"
 AddFldzId T
 AddFldzTimstmp T, "Dte"
 A.TableDefs.Append T
 '
-Set T = New Dao.TableDef
+Set T = New DAO.TableDef
 T.Name = "Msg"
 AddFldzId T
 AddFldzTxt T, "Fun MsgTxt"
 AddFldzTimstmp T, "Dte"
 A.TableDefs.Append T
 '
-Set T = New Dao.TableDef
+Set T = New DAO.TableDef
 T.Name = "Lg"
 AddFldzId T
 AddFldzLng T, "Sess Msg"
 AddFldzTimstmp T, "Dte"
 A.TableDefs.Append T
 '
-Set T = New Dao.TableDef
+Set T = New DAO.TableDef
 T.Name = "LgV"
 AddFldzId T
 AddFldzLng T, "Lg Val"

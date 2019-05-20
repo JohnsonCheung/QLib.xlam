@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Ay_FmTo_Fm_Ap"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Ay_FmTo_Fm_Ap."
 Private Const Asm$ = "QVb"
@@ -43,9 +44,9 @@ Dim Av(): Av = Ap
 DteAy = IntozAy(DteAy, Av)
 End Function
 
-Function IntAyzLngAy(Lngy&()) As Integer()
+Function IntAyzLngAy(LngAp&()) As Integer()
 Dim I
-For Each I In Itr(Lngy)
+For Each I In Itr(LngAp)
     PushI IntAyzLngAy, I
 Next
 End Function
@@ -55,9 +56,9 @@ IntAy = IntozAy(EmpIntAy, Av)
 End Function
 
 
-Function Lngy(ParamArray Ap()) As Long()
+Function LngAp(ParamArray Ap()) As Long()
 Dim Av(): Av = Ap
-Lngy = IntozAy(Lngy, Av)
+LngAp = IntozAy(EmpLngAy, Av)
 End Function
 
 Function SngAy(ParamArray Ap()) As Single()

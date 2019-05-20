@@ -1,4 +1,6 @@
 Attribute VB_Name = "QIde_Rf_RfOp"
+Option Explicit
+Option Compare Text
 Private Const CMod$ = "QIde_Rf_RfOp."
 Sub AddRfzRff(P As VBProject, Frfee$)
 Const CSub$ = CMod & "AddRf"

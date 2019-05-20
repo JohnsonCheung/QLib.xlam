@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Ay_Map_Transform"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Ay_Map_Transform."
 Private Const Asm$ = "QVb"

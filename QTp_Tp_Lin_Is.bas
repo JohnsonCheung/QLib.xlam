@@ -1,4 +1,5 @@
 Attribute VB_Name = "QTp_Tp_Lin_Is"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MTp_Tp_Lin_Is."
 Private Const Asm$ = "QTp"

@@ -1,4 +1,6 @@
 Attribute VB_Name = "QDao_SqlPm"
+Option Explicit
+Option Compare Text
 Type SelIntoPm: Fny() As String: Ey() As String: Into As String: T As String: Bexpr As String: End Type
 Type SelIntoPms: N As Byte: Ay() As SelIntoPm: End Type
 Private Const Asm$ = "QDao"
@@ -6,7 +8,7 @@ Private Const CMod$ = "MDao_SqlPm."
 Function SelIntoPm(Fny$(), Ey$(), Into$, T$, Optional Bexpr$) As SelIntoPm
 With SelIntoPm
     .Fny = Fny
-    .Ey = EX
+    .Ey = Ey
     .Into = Into
     .T = T
     .Bexpr = Bexpr

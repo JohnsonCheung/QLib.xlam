@@ -1,13 +1,53 @@
 Attribute VB_Name = "QVb_Dta_KeyLin"
+Option Explicit
 Option Compare Text
-Type KLx: K As String: KLno As Long: L As Lnxs: End Type
-Type KLxs: N As Long: Ay() As KLx: End Type
-Type KLy: K As String: Ly() As String: End Type
-Type KLys: N As Long: Ay() As KLy: End Type
+Type KL: K As String: Lno As Long: End Type:            Type KLs: N As Integer: Ay() As KL: End Type
+Type KLx: KL As KL: Lnxs As Lnxs: End Type:             Type KLxs: N As Long: Ay() As KLx: End Type
+Type KLy: K As String: Ly() As String: End Type:        Type KLys: N As Long: Ay() As KLy: End Type
+Type KLss: K As String: Lnoss As String: End Type:      Type KLsses: N As Integer: Ay() As KLss: End Type
+Type KLssOpt: Som As Boolean: KLss As KLss: End Type
+Sub PushKLsses(O As KLsses, M As KLsses)
+Dim J%
+For J = 0 To M.N - 1
+    PushKLss O, M.Ay(J)
+Next
+End Sub
+Function PushKL(O As KLs, M As KL)
+ReDim Preserve O.Ay(O.N)
+O.Ay(O.N) = M
+O.N = O.N + 1
+End Function
+
 Function KLy(K$, Ly$()) As KLy
 KLy.K = K
 KLy.Ly = Ly
 End Function
+
+Sub PushKLss(O As KLsses, M As KLss)
+ReDim Preserve O.Ay(O.N)
+O.Ay(O.N) = M
+O.N = O.N + 1
+End Sub
+
+Function KLss(K$, Lnoss$) As KLss
+KLss.K = K
+KLss.Lnoss = Lnoss
+End Function
+
+Function SomKLss(KLss As KLss) As KLssOpt
+SomKLss.Som = True
+SomKLss.KLss = KLss
+End Function
+
+Function RmvEle_ForLTrimPfx_Is2Hypron_FmLnxs(A As Lnxs) As Lnxs
+Dim J%
+For J = 0 To A.N - 1
+    If Not HasPfx(LTrim(A.Ay(J).Lin), "--") Then
+        PushLnx RmvEle_ForLTrimPfx_Is2Hypron_FmLnxs, A.Ay(J)
+    End If
+Next
+End Function
+
 Function RmvEle_ForLTrimPfx_Is2Hypron(Ly$()) As String()
 Dim L
 For Each L In Itr(Ly)
@@ -17,7 +57,7 @@ For Each L In Itr(Ly)
 Next
 End Function
 Function RplEle_OfNonBlankFstChr_ByT1(Ly$()) As String()
-Dim J%
+Dim J%, L
 For Each L In Itr(Ly)
     If FstChr(L) = " " Then
         PushI RplEle_OfNonBlankFstChr_ByT1, L
@@ -36,14 +76,6 @@ Function HasKPfx_InKLys(KPfx$, A As KLys) As Boolean
 Dim J%
 For J = 0 To A.N - 1
     If HasPfx(A.Ay(J).K, KPfx) Then HasKPfx_InKLys = True: Exit Function
-Next
-End Function
-
-Function KAy_FmKLys_WhKPfx(A As KLys, KPfx$) As String()
-Dim J%, K$
-For J = 0 To A.N - 1
-    K = A.Ay(J).K
-    If HasPfx(K, KPfx) Then PushI KAy_FmKLys_WhKPfx, K
 Next
 End Function
 
@@ -70,10 +102,30 @@ For Each I In L
 Next
 If Not IsEmpKLy(M) Then PushKLy KLys, M: M = EmpKLy
 End Function
+Function IsEmpKLx(A As KLx) As Boolean
+With A
+    If Not IsEmpKL(A.KL) Then Exit Function
+    If Not IsEmpLnxs(A.Lnxs) Then Exit Function
+End With
+IsEmpKLx = True
+End Function
+
+Function IsEmpKL(A As KL) As Boolean
+If A.K <> "" Then Exit Function
+If A.Lno > 0 Then Exit Function
+IsEmpKL = True
+End Function
+
+Function IsEmpLnxs(A As Lnxs) As Boolean
+IsEmpLnxs = A.N <= 0
+End Function
 Function IsEmpKLy(A As KLy) As Boolean
 If A.K <> "" Then Exit Function
 If Si(A.Ly) <> 0 Then Exit Function
 IsEmpKLy = True
+End Function
+
+Function EmpKLx() As KLx
 End Function
 
 Function EmpKLy() As KLy
@@ -147,10 +199,28 @@ O.Ay(O.N) = M
 O.N = O.N + 1
 End Sub
 
-Function KLx(K, KLno, L As Lnxs) As KLx
-KLx.K = K
-KLx.KLno = KLno
-KLx.L = L
+Function KLs_FmKLxs_WhNoLin(A As KLxs) As KLs
+Dim J%
+For J = 0 To A.N - 1
+    With A.Ay(J)
+        If .Lnxs.N = 0 Then
+            PushKL KLs_FmKLxs_WhNoLin, .KL
+        End If
+    End With
+Next
+End Function
+Function KLzLnx(A As Lnx) As KL
+Dim K$:       K = BefOrAll(A.Lin, " ")
+Dim Lno&:   Lno = A.Ix + 1
+         KLzLnx = KL(K, Lno)
+End Function
+Function KL(K, Lno) As KL
+KL.K = K
+KL.Lno = Lno
+End Function
+Function KLx(KL As KL, Lnxs As Lnxs) As KLx
+KLx.KL = KL
+KLx.Lnxs = Lnxs
 End Function
 
 Private Sub PushKLxs(O As KLxs, M As KLxs)
@@ -166,19 +236,80 @@ O.Ay(O.N) = M
 O.N = O.N + 1
 End Sub
 
-Function KLxszLy(Ly$()) As KLxs
-Dim T1Ay$(): T1Ay = SyzSS(T1nn)
-Dim L, T1$, Rst$, Ix&
-For Each L In Itr(Ly)
-    AsgTRst L, T1, Rst
-    If HasEle(T1Ay, T1) Then
-'        SetLin KLxszLyT1nn, T1, Lnx(Rst, Ix)
+Function RmvKeyPfxzKLxs(A As KLxs, Pfx$, Optional C As VbCompareMethod = vbTextCompare) As KLxs
+Dim J%, O As KLxs
+O = A
+For J = 0 To O.N - 1
+    O.Ay(J).KL.K = RmvPfx(O.Ay(J).KL.K, Pfx, C)
+Next
+RmvKeyPfxzKLxs = O
+End Function
+
+Function KLxs_WhPfx(A As KLxs, Pfx$, Optional C As VbCompareMethod = vbTextCompare) As KLxs
+Dim J%, M As KLx
+For J = 0 To A.N - 1
+    M = A.Ay(J)
+    If HasPfx(M.KL.K, Pfx, C) Then
+        PushKLx KLxs_WhPfx, M
     End If
-    Ix = Ix + 1
 Next
 End Function
+Function LnoAyzKLsK(A As KLs, K) As Long()
+Dim J%
+For J = 0 To A.N - 1
+    With A.Ay(J)
+        If .K = K Then
+            PushI LnoAyzKLsK, .Lno
+        End If
+    End With
+Next
+End Function
+Function KyzKLs(A As KLs) As String()
+Dim J%
+For J = 0 To A.N - 1
+    PushI KyzKLs, A.Ay(J).K
+Next
+End Function
+
+
+Function KLszKLxs(A As KLxs) As KLs
+Dim J%
+For J = 0 To A.N - 1
+    PushKL KLszKLxs, A.Ay(J).KL
+Next
+End Function
+
+Function KLxs_WhPfx_RmvPfx(A As KLxs, Pfx$, Optional C As VbCompareMethod = vbTextCompare) As KLxs
+Dim B As KLxs: B = KLxs_WhPfx(A, Pfx, C)
+KLxs_WhPfx_RmvPfx = RmvKeyPfxzKLxs(B, Pfx, C)
+End Function
+
+Function KLxszLy(Ly$()) As KLxs
+Dim A As Lnxs: A = Lnxs(Ly)
+Dim B As Lnxs: B = RmvEle_ForLTrimPfx_Is2Hypron_FmLnxs(A)
+KLxszLy = KLxszLnxs(B)
+End Function
+
+Function KLxszLnxs(A As Lnxs) As KLxs
+If A.N = 0 Then Exit Function
+Dim L As Lnx: L = A.Ay(0)
+If FstChr(L.Lin) = " " Then Thw CSub, "FstLin fstChr must be non blank", "L", FmtLnx(L)
+Dim M As KLx
+Dim J%
+For J = 0 To A.N - 1
+    L = A.Ay(J)
+    If FstChr(L.Lin) = " " Then
+        PushLnx M.Lnxs, Lnx(Trim(L.Lin), L.Ix)
+    Else
+        If Not IsEmpKLx(M) Then PushKLx KLxszLnxs, M: M = EmpKLx
+        M = KLx(KLzLnx(L), EmpLnxs)
+    End If
+Next
+If Not IsEmpKLx(M) Then PushKLx KLxszLnxs, M
+End Function
+
 Function T1zKLx$(A As KLx)
-T1zKLx = T1(A.K)
+T1zKLx = T1(A.KL.K)
 End Function
 Function KLxs_WhT1nn(A As KLxs, T1nn$) As KLxs
 Dim J&, T1Ay$(), M As KLx
@@ -195,7 +326,7 @@ End Function
 Private Sub SetLin(O As KLxs, K, L As Lnx)
 Dim Ix&: ' Ix = IxzKKlnxes(K, O)
 If Ix >= 0 Then
-    PushLnx O.Ay(Ix).L, L
+    PushLnx O.Ay(Ix).Lnxs, L
 Else
 '    PushKLxs O, KLxs(K, SngLnx(L))
 End If
@@ -209,7 +340,7 @@ Private Function IxzKLxsK&(A As KLxs, K)
 Dim J&
 For J = 0 To A.N - 1
     With A.Ay(J)
-        If .K = K Then
+        If .KL.K = K Then
             IxzKLxsK = J
             Exit Function
         End If
@@ -218,8 +349,8 @@ Next
 IxzKLxsK = -1
 End Function
 Function FmtKLx(A As KLx, Optional Ix& = -1) As String()
-If Ix >= 0 Then P = "Itm-Ix:" & Ix & " "
-PushI FmtKLx, P & "KLno:" & A.KLno & " LinCnt:" & A.L.N
+Dim P$: If Ix >= 0 Then P = "Itm-Ix:" & Ix & " "
+PushI FmtKLx, P & "KLno:" & A.KL.K & " LinCnt:" & A.Lnxs.N
 'PushIAy FmtKLx, TabAy(FmtLnxs(A.L))
 End Function
 Function FmtKLxs(A As KLxs) As String()
@@ -364,3 +495,13 @@ ZZ_FmtKLxs
 ZZ_FmtKLys
 ZZ_IndentedLy
 End Sub
+Function DupKey(A As KLs) As KLsses
+Dim D$(): D = AywDup(KyzKLs(A))
+Dim ILnoss$, IStru$, I%
+For I = 0 To UB(D)
+    IStru = D(I)
+    ILnoss = JnSpc(LnoAyzKLsK(A, IStru))
+    PushKLss DupKey, KLss(IStru, ILnoss)
+Next
+End Function
+

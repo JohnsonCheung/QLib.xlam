@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Ay_Oy"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Ay_Oy."
 Private Const Asm$ = "QVb"
@@ -16,7 +17,7 @@ Next
 End Sub
 
 Sub DoOyMth(Oy, ObjMth)
-Dim Obj As Object
+Dim Obj
 For Each Obj In Itr(Oy)
     CallByName Obj, ObjMth, VbMethod
 Next

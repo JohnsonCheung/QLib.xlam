@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Thw"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Thw."
@@ -45,7 +46,7 @@ Dim IsBothLines As Boolean
 Select Case True
 Case IsBothLines: If A <> B Then CmpLines A, B, Hdr:=FmtQQ("Lines ? ? not eq.", ANm, BNm): Stop: Exit Sub
 Case IsStr(A):    If A <> B Then CmpStr CStr(A), CStr(B), Hdr:=FmtQQ("String ? ? not eq.", ANm, BNm): Stop: Exit Sub
-Case IsDic(A):    If Not IsEqDic(CvDic(A), CvDic(B)) Then BrwCmprDicAB CvDic(A), CvDic(B): Stop: Exit Sub
+Case IsDic(A):    If Not IsEqDic(CvDic(A), CvDic(B)) Then BrwCmpgDicAB CvDic(A), CvDic(B): Stop: Exit Sub
 Case IsArray(A):  ThwIf_DifAy A, B, ANm, BNm
 Case IsObject(A): If ObjPtr(A) <> ObjPtr(B) Then Thw CSub, "Two object are diff", FmtQQ("Ty-? Ty-?", ANm, BNm), TypeName(A), TypeName(B)
 Case Else:
@@ -226,7 +227,7 @@ Dim Obj As Object, PP$
 GoSub T0
 Exit Sub
 T0:
-    Set Obj = New Dao.Field
+    Set Obj = New DAO.Field
     PP = "Name Type Size"
     GoTo Tst
 Tst:

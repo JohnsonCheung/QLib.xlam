@@ -1,8 +1,9 @@
 Attribute VB_Name = "QVb_Fs_Pth_Exist"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Fs_Pth_Exist."
 Private Const Asm$ = "QVb"
-Function EnsPth(Pth)
+Function EnsPth$(Pth)
 Dim P$: P = EnsPthSfx(Pth)
 If Not Fso.FolderExists(Pth) Then MkDir RmvLasChr(P)
 EnsPth = Pth

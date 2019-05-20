@@ -1,4 +1,5 @@
 Attribute VB_Name = "QApp_App_Rpt"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "BRpt."
 Type CpyOneWsPm: InpWsn As String: AsWsn As String: InpColNy() As String: AsFny() As String: End Type

@@ -1,4 +1,6 @@
 Attribute VB_Name = "QIde_Gen_Cnst"
+Option Explicit
+Option Compare Text
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Const."
 Type StrCnst
@@ -74,7 +76,7 @@ Case Not ShfPfx(L, " = """)
 Case Else
     Dim P%:
     P = InStr(L, """"): If P = 0 Then Thw CSub, "Should  have 2 dbl-quote", "Lin", Lin
-    ValzCnstLin = Left(L, P - 1)
+    'ValzCnstLin = Left(L, P - 1)
     Exit Function
 End Select
 Exit Function
@@ -116,12 +118,12 @@ Function StrCnsts(Ly$()) As StrCnsts
 'StrCnsts = StrCnstzCnstBrks(CnstBrks(Ly))
 End Function
 
-
 Function Cnstn$(Lin)
 Dim L$: L = Lin
 ShfMdy L
-If ShfPfx(L, "Const") Then Cnstn = Nm(L)
+If ShfPfx(L, "Const") Then Cnstn = TakNm(L)
 End Function
+
 Function CnstLnozMN(M As CodeModule, Cnstn$) As Lnx
 Dim J&, L$
 For J = 1 To M.CountOfDeclarationLines

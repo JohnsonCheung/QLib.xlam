@@ -1,4 +1,5 @@
 Attribute VB_Name = "QDao_Spec"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Spec."
@@ -16,7 +17,7 @@ Dim SamTim As Boolean
 Dim DifSz As Boolean
 Dim SamSz As Boolean
 Dim DifFt As Boolean
-Dim Rs As Dao.Recordset
+Dim Rs As DAO.Recordset
     Q = FmtQQ("Select SpecNm,Ft,Lines,Tim,Si,LTimStr_Dte from Spec where SpecNm = '?'", Spnm)
     Set Rs = A.OpenRecordset(Q)
     NoCur = Not HasFfn(Ft)

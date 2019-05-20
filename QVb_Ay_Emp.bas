@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Ay_Emp"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Ay_Emp."
 Private Const Asm$ = "QVb"
@@ -34,3 +35,4 @@ End Property
 
 Function EmpSy(Optional Anything) As String()
 End Function
+

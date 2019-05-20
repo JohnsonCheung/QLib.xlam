@@ -1,4 +1,5 @@
 Attribute VB_Name = "QApp_App_RegisteredApp"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MApp_EApp."
 Private Const Asm$ = "QApp"

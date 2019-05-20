@@ -1,4 +1,6 @@
 Attribute VB_Name = "QIde_Pos"
+Option Explicit
+Option Compare Text
 Type Pos
     Cno1 As Long
     Cno2 As Long

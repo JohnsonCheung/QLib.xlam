@@ -1,10 +1,11 @@
 Attribute VB_Name = "QDao_Att"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Att."
 Type Attd
-    TRs As Dao.Recordset
-    Ars As Dao.Recordset
+    TRs As DAO.Recordset
+    Ars As DAO.Recordset
 End Type
 
 Function FfnzFstAtt$(A As Database, Att$)
@@ -15,8 +16,8 @@ FnyzAttTbl = Fny(A, "Att")
 End Function
 
 Function FnyzAttFld(A As Database) As String()
-Dim TRs As Dao.Recordset2: Set TRs = A.TableDefs("Att").OpenRecordset
-Dim Ars As Dao.Recordset2: Set Ars = TRs!Att.Value
+Dim TRs As DAO.Recordset2: Set TRs = A.TableDefs("Att").OpenRecordset
+Dim Ars As DAO.Recordset2: Set Ars = TRs!Att.Value
 FnyzAttFld = Itn(Ars.Fields)
 End Function
 

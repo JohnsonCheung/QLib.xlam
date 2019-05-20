@@ -1,4 +1,5 @@
 Attribute VB_Name = "QIde_Mth"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Mth."
 Private Const Asm$ = "QIde"
@@ -10,10 +11,10 @@ End Property
 Function SqzMthDNy(MthDNy$()) As Variant()
 Dim O()
 ReDim O(1 To Si(MthDNy) + 1, 1 To 6)
-SetSqzDrv O, 1, MthKeyFny
+SetSqr O, 1, MthKeyFny
 Dim MthDn, J&
 For Each MthDn In MthDNy
-    SetSqzDrv O, J + 2, Split(MthDn, ":")
+    SetSqr O, J + 2, Split(MthDn, ":")
     J = J + 1
 Next
 SqzMthDNy = O

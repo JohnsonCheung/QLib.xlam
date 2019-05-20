@@ -1,4 +1,5 @@
 Attribute VB_Name = "AShpCst_Rpt"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "AShpCst_Rpt."
 Function RptAppDb() As Database

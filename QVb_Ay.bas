@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Ay"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Ay."
 Private Const Asm$ = "QVb"
@@ -143,11 +144,18 @@ Next
 ReDim Preserve O(NewU)
 AywLasN = O
 End Function
-
+Function LasSndEle(Ay)
+Dim N%: N = Si(Ay)
+If N <= 1 Then
+    Thw CSub, "Only 1 or no ele in Ay"
+Else
+    Asg Ay(N - 2), LasSndEle
+End If
+End Function
 Function LasEle(Ay)
 Dim N%: N = Si(Ay)
 If N = 0 Then
-    Warn CSub, "No ele in Ay"
+    Thw CSub, "No ele in Ay"
 Else
     Asg Ay(N - 1), LasEle
 End If
@@ -204,6 +212,11 @@ Function ResiN(Ay, N&)
 ResiN = Resi(Ay, N - 1)
 End Function
 
+Function IfNmLy(A As Boolean, Nm, Ly$(), Optional B As EmBeg01 = EiBeg0) As String()
+PushI IfNmLy, Nm
+PushIAy IfNmLy, TabAy(AddIxPfx(Ly, B))
+End Function
+
 Function ResiMax(OAy1, OAy2) 'Resi the smaller Ay to same si as the larger Ay and return fst Ay
 Dim U1&, U2&: U1 = UB(OAy1): U2 = UB(OAy2)
 Select Case True
@@ -212,6 +225,7 @@ Case U2 > U1: OAy1 = Resi(OAy1, U2)
 End Select
 ResiMax = OAy1
 End Function
+
 Function Resi(Ay, Optional U& = -1) 'Return the resized Ay
 Dim O: O = Ay
 If U < 0 Then Erase O: Resi = O: Exit Function
@@ -268,7 +282,7 @@ End If
 SampLinzAy = "*Ay:[" & U & "]" & S
 End Function
 
-Function SeqCntDic(Ay) As Dictionary 'The return dic of key=AyEle pointing to 2-Ele-Lngy with Ele-0 as Seq#(0..) and Ele- as Cnt
+Function SeqCntDic(Ay) As Dictionary 'The return dic of key=AyEle pointing to 2-Ele-LngAp with Ele-0 as Seq#(0..) and Ele- as Cnt
 Dim S&, O As New Dictionary, L&(), X
 For Each X In Itr(Ay)
     If O.Exists(X) Then
@@ -284,7 +298,13 @@ For Each X In Itr(Ay)
 Next
 Set SeqCntDic = O
 End Function
-
+Function StrColzSqc(Sq(), Optional C = 1) As String()
+If Si(Sq) = 0 Then Exit Function
+Dim R&
+For R = 1 To UBound(Sq, 1)
+    PushI StrColzSqc, Sq(R, C)
+Next
+End Function
 Function Sqh(Ay) As Variant()
 Dim N&: N = Si(Ay)
 If N = 0 Then Exit Function
@@ -460,10 +480,10 @@ Private Sub ZZ_ChkEqAy()
 DmpAy ChkEqAy(Array(1, 2, 3, 3, 4), Array(1, 2, 3, 4, 4))
 End Sub
 
-Private Sub ZZ_MaxAy()
+Private Sub ZZ_MaxEle()
 Dim Ay()
 Dim Act
-Act = MaxAy(Ay)
+Act = MaxEle(Ay)
 Stop
 End Sub
 

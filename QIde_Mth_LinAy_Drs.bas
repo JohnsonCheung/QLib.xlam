@@ -1,4 +1,5 @@
 Attribute VB_Name = "QIde_Mth_LinAy_Drs"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Mth_Liny_Drs."
@@ -111,9 +112,9 @@ MthQLyzM = AddPfxzAy(MthLinyzS(Src(A)), P)
 End Function
 
 Function MthQLyzP(P As VBProject) As String()
-Dim C
+Dim C As VBComponent
 If P.Protection = vbext_pp_locked Then Exit Function
-For Each C In CmpItr(P)
-    PushIAy MthQLyzP, MthQLyzM(CvCmp(C).CodeModule)
+For Each C In P.VBComponents
+    PushIAy MthQLyzP, MthQLyzM(C.CodeModule)
 Next
 End Function

@@ -1,4 +1,5 @@
-Attribute VB_Name = "QXls_Colr"
+Attribute VB_Name = "QXls_Xls_Colr"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MXls_Colr."
 Private Const Asm$ = "QXls"

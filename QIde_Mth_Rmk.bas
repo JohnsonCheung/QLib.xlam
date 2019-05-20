@@ -1,4 +1,5 @@
 Attribute VB_Name = "QIde_Mth_Rmk"
+Option Compare Text
 Option Explicit
 Type Fc
     FmLno As Long

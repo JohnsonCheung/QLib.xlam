@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Fs_Ffn_Backup"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Fs_Ffn_Backup."
 Private Const Asm$ = "QVb"
@@ -21,7 +22,7 @@ End Function
 Function LasBkFfn$(Ffn)
 Dim H$: H = BkHom(Ffn)
 Dim F$(): F = FdrAyzIsInst(H)
-Dim Fdr$: Fdr = MaxAy(F)
+Dim Fdr$: Fdr = MaxEle(F)
 LasBkFfn = H & Fdr & "\" & Fn(Ffn)
 End Function
 Function BkPth$(Ffn)

@@ -1,4 +1,6 @@
 Attribute VB_Name = "QIde_Mth_MthRg"
+Option Explicit
+Option Compare Text
 Type MthRg
     Mthn As String
     FmIx As Long 'Fm-Lno   always from 1, 0 means empyt

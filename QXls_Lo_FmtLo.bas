@@ -1,4 +1,5 @@
 Attribute VB_Name = "QXls_Lo_FmtLo"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QXls"
 Private Const CMod$ = "MXls_Lo_Fmt."
@@ -236,14 +237,20 @@ Private Function WHdrCell(C) As Range
 Set WHdrCell = A1zRg(CellAbove(A.Lo.ListColumns(C).Range))
 End Function
 
-Sub FmtLozStdWb(A As Workbook)
-Dim Lo
-For Each Lo In LoAy(A)
-    FmtLozStd CvLo(Lo)
+Sub StdFmtLozWb(A As Workbook)
+Dim W As Worksheet
+For Each W In A.Sheets
+    StdFmtLozWs W
 Next
 End Sub
-Sub FmtLozStd(A As ListObject)
+Sub StdFmtLo(A As ListObject)
 FmtLo A, StdLof
+End Sub
+Sub StdFmtLozWs(A As Worksheet)
+Dim Lo As ListObject
+For Each Lo In A.ListObjects
+    FmtLo Lo, StdLof
+Next
 End Sub
 Property Get StdLof() As String()
 
@@ -273,17 +280,18 @@ If A.ShowTotals Then Set R = RgzMoreBelow(R)
 BdrRgAround R
 End Function
 
-
-Sub SetLoNm(A As ListObject, LoNm$)
-If LoNm <> "" Then
-    If Not HasLo(WszLo(A), LoNm) Then
-        A.Name = LoNm
+Sub SetLoNmUgTbl(A As ListObject)
+SetLoNm A, A.QueryTable.CommandText
+End Sub
+Sub SetLoNm(A As ListObject, Lon$)
+If Lon <> "" Then
+    If Not HasLo(WszLo(A), Lon) Then
+        A.Name = Lon
     Else
         Inf CSub, "Lo"
     End If
 End If
 End Sub
-
 
 Sub SetLccWrp(A As ListObject, CC$, Optional Wrp As Boolean)
 Dim C

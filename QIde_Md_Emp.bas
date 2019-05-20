@@ -1,14 +1,15 @@
 Attribute VB_Name = "QIde_Md_Emp"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Md_Emp."
 Private Const Asm$ = "QIde"
-Function IsCmpzMdOfEmp(A As CodeModule) As Boolean
-If A.CountOfLines = 0 Then IsCmpzMdOfEmp = True: Exit Function
+Function IsEmpMd(A As CodeModule) As Boolean
+If A.CountOfLines = 0 Then IsEmpMd = True: Exit Function
 Dim J&, L$
 For J = 1 To A.CountOfLines
     If Not IsEmpSrcLin(A.Lines(J, 1)) Then Exit Function
 Next
-IsCmpzMdOfEmp = True
+IsEmpMd = True
 End Function
 
 Sub RmvEmpMd()
@@ -26,21 +27,21 @@ Function EmpMdNyzP(P As VBProject) As String()
 Dim C As VBComponent
 For Each C In P.VBComponents
     If IsCmpzMd(C) Then
-        If IsCmpzMdOfEmp(C.CodeModule) Then
+        If IsEmpMd(C.CodeModule) Then
             PushI EmpMdNyzP, C.Name
         End If
     End If
 Next
 End Function
 
-Private Sub Z_IsCmpzMdOfEmp()
+Private Sub Z_IsEmpMd()
 Dim M As CodeModule
 'GoSub T1
 'GoSub T2
 GoSub T3
 Exit Sub
 T3:
-    Debug.Assert IsCmpzMdOfEmp(Md("Dic"))
+    Debug.Assert IsEmpMd(Md("Dic"))
     Return
 T2:
     Set M = Md("Module2")
@@ -58,7 +59,7 @@ T1:
     DltCmpzPjn P, T
     Return
 Tst:
-    Act = IsCmpzMdOfEmp(M)
+    Act = IsEmpMd(M)
     C
     Return
 End Sub

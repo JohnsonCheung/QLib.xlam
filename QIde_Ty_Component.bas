@@ -1,4 +1,5 @@
 Attribute VB_Name = "QIde_Ty_Component"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Ty_Component."

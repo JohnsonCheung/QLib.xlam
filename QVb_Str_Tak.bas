@@ -1,10 +1,14 @@
 Attribute VB_Name = "QVb_Str_Tak"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Str_Tak."
 Private Const Asm$ = "QVb"
 
 Function BefDot$(S)
 BefDot = Bef(S, ".")
+End Function
+Function BefDotOrAll$(S)
+BefDotOrAll = BefOrAll(S, ".")
 End Function
 
 Function Aft$(S, Sep$, Optional NoTrim As Boolean)

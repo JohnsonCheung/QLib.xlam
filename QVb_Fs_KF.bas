@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Fs_KF"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Fs_Ffn_MisEr."
@@ -25,7 +26,7 @@ Function FmtKF$(A As KF)
 FmtKF = A.Kd & " " & A.Ffn
 End Function
 
-Private Sub ThwIf_DupKd(A As KFs)
+Private Sub ThwIf_DupKd(A As KFs, Fun$)
 Dim Dup$(): Dup = AywDup(KdAy(A))
 If Si(Dup) Then Thw CSub, "There is dup Kd in KFs", "Dup-Kd KFs", Dup, FmtKFs(A)
 End Sub
@@ -35,7 +36,7 @@ Dim Dup$(): Dup = AywDup(FfnyzKFs(A))
 If Si(Dup) Then Thw CSub, "There is dup Ffn in KFs", "Dup-Ffn KFs", Dup, FmtKFs(A)
 End Function
 
-Private Sub ThwIf_DupFfn(A As KFs)
+Private Sub ThwIf_DupFfn(A As KFs, Fun$)
 Dim Dup$(): Dup = DupFfn(A)
 If Si(Dup) Then Thw CSub, "There is dup Kd in KFs", "Dup-Kd KFs", Dup, FmtKFs(A)
 End Sub
@@ -90,8 +91,12 @@ With BrkSpc(Lin)
 KFzLin = KF(.S1, .S2)
 End With
 End Function
-
-Sub ThwIf_MisKFs(A As KFs, Fun$)
+Sub ThwIf_KFsEr(A As KFs, Fun$)
+ThwIf_DupKd A, Fun
+ThwIf_DupFfn A, Fun
+ThwIf_MisFfn A, Fun
+End Sub
+Private Sub ThwIf_MisFfn(A As KFs, Fun$)
 ThwIf_Er MsgzMisKFs(KFszWhMis(A)), Fun
 End Sub
 
@@ -109,17 +114,23 @@ End Function
 
 Function MsgzMisKFs(Mis As KFs) As String()
 If Mis.N = 0 Then Exit Function
-Dim M$, Ny$(), Av(), NN$
-M = FmtQQ("? file not found", Mis.N)
-Dim J%
+Dim O$(), T$
+PushI O, FmtQQ("? file not found", Mis.N)
+Dim J%, L$(), R$()
+T = Space(4)
 For J = 0 To Mis.N - 1
     With Mis.Ay(J)
-    PushI Ny, "In Path":        PushI Av, Pth(.Ffn)
-    PushI Ny, "Missing " & .Kd: PushI Av, Fn(.Ffn)
+    PushI L, T & "In Path":
+    PushI L, T & "Missing [" & .Kd & "] file"
+    PushI L, ""
+    PushI R, Pth(.Ffn)
+    PushI R, Fn(.Ffn)
+    PushI R, ""
     End With
 Next
-NN = JnSpc(QuoteSqBktIfzSy(Ny))
-MsgzMisKFs = LyzMsgNap(M, NN, Av)
+L = AddSfxIfNonBlankzAy(AlignLzAy(L), ": ")
+PushIAy O, JnAyab(L, R)
+MsgzMisKFs = O
 End Function
 
 Function KFszWhMis(A As KFs) As KFs

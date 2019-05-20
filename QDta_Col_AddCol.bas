@@ -1,4 +1,5 @@
 Attribute VB_Name = "QDta_Col_AddCol"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDta_Col_Add."
 Private Const Asm$ = "QDta"

@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVbe_Cur_IdeCur"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Cur_CdPne_Md_Mth."
 Private Const Asm$ = "QIde"
@@ -11,20 +12,20 @@ End Property
 Property Get CMthn()
 CMthn = MthnzM(CMd)
 End Property
-Function WinyzV(V As Vbe) As vbide.Window
+Function WinyzV(V As Vbe) As vbIde.Window
 End Function
-Function WinyV() As vbide.Window()
+Function WinyV() As vbIde.Window()
 WinyV = WinyzV(CVbe)
 End Function
 
-Function CWin() As vbide.Window
+Function CWin() As vbIde.Window
 Dim A As CodePane
 Set A = CPne
 If IsNothing(A) Then Exit Function
 Set CWin = A.Window
 End Function
 
-Property Get CPne() As vbide.CodePane
+Property Get CPne() As vbIde.CodePane
 Set CPne = CVbe.ActiveCodePane
 End Property
 Property Get CMthLin()

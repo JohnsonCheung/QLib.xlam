@@ -1,4 +1,6 @@
 Attribute VB_Name = "QVbIde_Doc_DocWs"
+Option Explicit
+Option Compare Text
 
 Function DocWsP() As Worksheet
 Set DocWsP = DocWszP(CPj)

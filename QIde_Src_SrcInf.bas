@@ -1,4 +1,5 @@
 Attribute VB_Name = "QIde_Src_SrcInf"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Src."
 Private Const Asm$ = "QIde"

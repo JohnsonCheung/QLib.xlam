@@ -1,4 +1,5 @@
 Attribute VB_Name = "QIde_Ens_EnsAsm"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QIde"
 Private Const NS$ = "QIde.Qualify"

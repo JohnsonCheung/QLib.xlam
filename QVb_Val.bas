@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Val"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Val."
 Private Const Asm$ = "QVb"
@@ -40,8 +41,8 @@ Case Else
 End Select
 StrCellzV = O
 End Function
-Function AddIxPfxzLines(Lines) As String()
-AddIxPfxzLines = AddIxPfx(SplitCrLf(Lines))
+Function AddIxPfxzLines(Lines, Optional B As EmBeg01 = EiBeg0) As String()
+AddIxPfxzLines = AddIxPfx(SplitCrLf(Lines), B)
 End Function
 Function FmtPrim$(Prim)
 FmtPrim = Prim & " (" & TypeName(Prim) & ")"

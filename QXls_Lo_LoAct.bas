@@ -1,4 +1,5 @@
 Attribute VB_Name = "QXls_Lo_LoAct"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QXls"
 Private Const CMod$ = "MXls_Lo_Get_Prp."
@@ -97,6 +98,7 @@ End Function
 Function WszLo(A As ListObject) As Worksheet
 Set WszLo = A.Parent
 End Function
+
 Function WbzLo(A As ListObject) As Workbook
 Set WbzLo = WbzWs(WszLo(A))
 End Function
@@ -155,8 +157,6 @@ BdrLoAround B
 RgzLoCC B, A, A, C, C
 RgzLc B, A, C, C
 RgzLc B, A
-FbtStrLo B
-FnyzLo B
 SqzLo B
 ShwLo B
 WbzLo B

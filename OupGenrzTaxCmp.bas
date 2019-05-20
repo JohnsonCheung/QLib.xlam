@@ -7,11 +7,13 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
+Option Explicit
+Option Compare Text
 Implements IOupGenr
 Private Const CMod$ = "ATaxExpCmp_OupTblGenr."
 Const A$ = "A"
-Sub GenOupTblFmTmpInp(A As Dao.Database)
+Sub GenOupTblFmTmpInp(A As DAO.Database)
 IOupGenr_GenOupTblFmTmpInp A
 End Sub
-Private Sub IOupGenr_GenOupTblFmTmpInp(A As Dao.Database)
+Private Sub IOupGenr_GenOupTblFmTmpInp(A As DAO.Database)
 End Sub

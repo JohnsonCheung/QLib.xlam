@@ -1,4 +1,5 @@
 Attribute VB_Name = "QDao_Ty_ShtTyDic"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDao_Ty_ShtTyDic."
 Private Const Asm$ = "QDao"
@@ -12,7 +13,7 @@ End Select
 End Function
 
 Private Function ShtTyDiczFbt(Fb, T) As Dictionary
-Dim F As Dao.Field
+Dim F As DAO.Field
 Set ShtTyDiczFbt = New Dictionary
 For Each F In Db(Fb).TableDefs(T).Fields
     ShtTyDiczFbt.Add F.Name, ShtTyzDao(F.Type)

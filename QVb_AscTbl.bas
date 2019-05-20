@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_AscTbl"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_AscTbl."
@@ -7,7 +8,7 @@ Function Chr99$()
 Chr99 = Chr(Asc99)
 End Function
 Function AscWs() As Worksheet
-RgzSq AscSqOfNoNonPrt, NewA1(Vis:=True)
+RgzSq AscSqOfNoNonPrt, ShwWs(NewA1())
 End Function
 
 Property Get AscSqOfNoNonPrt() As Variant()
@@ -77,16 +78,6 @@ End Function
 
 Function FmtAsc(Optional RplNonPrtByAsc% = 8) As String()
 FmtAsc = FmtSq(AscSqAddLbl(AscSqOfNoNonPrt))
-End Function
-
-Function FmtSq(Sq(), Optional SepChr$ = " ") As String()
-If Si(Sq) = 0 Then Exit Function
-With RRCCzSq(Sq)
-Dim I&
-For I = .R1 To .R2
-    PushI FmtSq, Jn(DrzSqr(Sq(), I), SepChr)
-Next
-End With
 End Function
 
 Property Get FmtAscSq() As String()

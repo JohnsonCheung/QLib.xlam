@@ -1,10 +1,11 @@
 Attribute VB_Name = "QDao_Schm_Samp"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDao_Schm_Samp."
 Private Const Asm$ = "QDao"
 Property Get SampSchm() As String()
 Erase XX
-X "Tbl LoFmt   *Id LoNm"
+X "Tbl LoFmt   *Id Lon"
 X "Tbl LoFmtWdt LoFmtId Wdt | Fldss"
 X "Tbl LoFmtLvl LoFmtId Lvl | Fldss"
 X "Tbl LoFmtBet LoFmtId Fld | FmFld ToFld"

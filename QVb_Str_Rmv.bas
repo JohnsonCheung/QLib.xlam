@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Str_Rmv"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MRmv."
 Private Const Asm$ = "QVb"
@@ -58,8 +59,12 @@ Function RmvLasChr$(S)
 RmvLasChr = RmvLasNChr(S, 1)
 End Function
 
+Function RmvLasTwoChr$(S)
+RmvLasTwoChr = RmvLasNChr(S, 2)
+End Function
 Function RmvLasNChr$(S, N%)
-RmvLasNChr = Left(S, Len(S) - N)
+Dim L&: L = Len(S) - N: If L <= 0 Then Exit Function
+RmvLasNChr = Left(S, L)
 End Function
 
 Function RmvNm$(S)

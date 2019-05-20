@@ -7,6 +7,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "Aset."
 Private Aset As New Dictionary

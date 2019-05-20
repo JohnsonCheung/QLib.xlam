@@ -1,17 +1,20 @@
 Attribute VB_Name = "QVb_PfxSfx"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_PfxSfx."
 Private Const Asm$ = "QVb"
 
-Function AddPfx$(S, Pfx$)
+Function AddPfx(S, Pfx)
 AddPfx = Pfx & S
 End Function
 
-Function AddPfxSfx$(S, Pfx$, Sfx$)
+Function AddPfxSfx(S, Pfx, Sfx)
 AddPfxSfx = Pfx & S & Sfx
 End Function
-
-Function AddSfx$(S, Sfx$)
+Function AddSfxIfNonBlank$(S, Sfx)
+If Trim(S) <> "" Then AddSfxIfNonBlank = S & Sfx
+End Function
+Function AddSfx(S, Sfx)
 AddSfx = S & Sfx
 End Function
 
@@ -41,6 +44,13 @@ For Each I In Itr(Ay)
 Next
 End Function
 
+Function AddSfxIfNonBlankzAy(Ay, Sfx) As String()
+Dim I, S$
+For Each I In Itr(Ay)
+    PushI AddSfxIfNonBlankzAy, AddSfxIfNonBlank(I, Sfx)
+Next
+End Function
+
 Function AddSfxzAy(Ay, Sfx) As String()
 Dim I
 For Each I In Itr(Ay)
@@ -48,7 +58,7 @@ For Each I In Itr(Ay)
 Next
 End Function
 
-Function IsSyzAllEleHasPfx(Sy$(), Pfx$) As Boolean
+Function IsSyzAllEleHasPfx(Sy$(), Pfx) As Boolean
 Dim I
 For Each I In Itr(Sy)
    If Not HasPfx(I, Pfx) Then Exit Function
@@ -56,7 +66,7 @@ Next
 IsSyzAllEleHasPfx = True
 End Function
 
-Function EnsSfx$(S, Sfx$)
+Function EnsSfx(S, Sfx)
 If HasSfx(S, Sfx) Then
     EnsSfx = S
 Else

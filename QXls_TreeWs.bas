@@ -1,4 +1,5 @@
 Attribute VB_Name = "QXls_TreeWs"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MXls_TreeWs."
 Private Const Asm$ = "QXls"
@@ -29,9 +30,11 @@ ShwCurCol Target
 ShwNxtCol Target
 WIP = False
 End Sub
+
 Private Sub ShwEntzHom(Hom$)
 ShwEnt Hom, 1
 End Sub
+
 Private Sub ShwEnt(Pth, Cno%)
 Dim FnAy$(), FdrAy$()
 AsgEnt FdrAy, FnAy, Pth

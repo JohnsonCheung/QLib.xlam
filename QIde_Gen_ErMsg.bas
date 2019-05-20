@@ -1,4 +1,5 @@
 Attribute VB_Name = "QIde_Gen_ErMsg"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Gen_ErMsg."
 Private Const Asm$ = "QIde"
@@ -61,9 +62,9 @@ Set_Src:
     "|'Fld_Dup         Lno#{Lno} is [{T1$}] line having Fld({F}) which is duplicated and ignored due to it has defined in Lno#{AlreadyInLno}" & _
     "|'Fldss_NotSel    Lno#{Lno} is [{T1$}] line having Fldss({Fldss$}) which should select one for Fny value.  See [Fny-Value]" & _
     "|'Fldss_DupSel    Lno#{Lno} is [{T1$}] line having" & _
-    "|'LoNm            Lno#{Lno} is [Lo-Nm] line having value({Val$}) which is not a good name" & _
-    "|'LoNm_Mis        [Lo-Nm] line is missing" & _
-    "|'LoNm_Dup        Lno#{Lno} is [Lo-Nm] which is duplicated and ignored due to there is already a [Lo-Nm] in Lno#{AlreadyInLno}" & _
+    "|'Lon            Lno#{Lno} is [Lo-Nm] line having value({Val$}) which is not a good name" & _
+    "|'Lon_Mis        [Lo-Nm] line is missing" & _
+    "|'Lon_Dup        Lno#{Lno} is [Lo-Nm] which is duplicated and ignored due to there is already a [Lo-Nm] in Lno#{AlreadyInLno}" & _
     "|'Tot_DupSel      Lno#{Lno} is [Tot-{TotKd$}] line having Fldss({Fldss$}) selecting SelFld({SelFld$}) which is already selected by Lno#{AlreadyInLno} of [Tot-{AlreadyTotKd$}].  The SelFld is ignored." & _
     "|'Bet_N3Fld        Lno#{Lno} is [Bet] line.  It should have 3 fields, but now it has (?) fields of [?]" & _
     "|'Bet_EqFmTo      Lno#{Lno} is [Bet] line and ignored due to FmFld(?) and ToFld(?) are equal." & _

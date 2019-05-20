@@ -1,4 +1,6 @@
 Attribute VB_Name = "QVb_Dta_FTIx"
+Option Explicit
+Option Compare Text
 Type FCnt
     FmLno As Long
     Cnt As Long
@@ -46,10 +48,7 @@ PushFei SngFei, A
 End Function
 
 Function BetFei(Ix, A As Fei) As Boolean
-If Ix < 0 Then Thw CSub, "Ix cannot be -ve", "Ix", Ix
-If A.FmIx > U Then Exit Function
-If A.EIx < U Then Exit Function
-BetFei = True
+BetFei = IsBet(Ix, A.FmIx, A.EIx - 1)
 End Function
 
 Function CntzFei&(A As Fei)

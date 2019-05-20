@@ -1,4 +1,5 @@
 Attribute VB_Name = "QIde_Gen_Rf_InfDta"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Gen_Rf_InfDta."
 Private Const Asm$ = "QIde"
@@ -17,13 +18,13 @@ Property Get Fny_Rf() As String()
 Fny_Rf = ItmAddAy("Pj", RfFny)
 End Property
 Function Dry_Rf(P As VBProject) As Variant()
-Dim R As vbide.Reference, N$
+Dim R As vbIde.Reference, N$
 N = P.Name
 For Each R In P.References
     PushI Dry_Rf, ItmAddAy(N, DrRf(R))
 Next
 End Function
-Function DrRf(A As vbide.Reference) As Variant()
+Function DrRf(A As vbIde.Reference) As Variant()
 With A
 DrRf = Array(.Name, .Guid, .Major, .Minor, .FullPath, .Description, .BuiltIn, .Type, .IsBroken)
 End With

@@ -1,11 +1,12 @@
 Attribute VB_Name = "QDao_Fb"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDao_Fb."
 Private Const Asm$ = "QDao"
 
 Function CrtFb(Fb, Optional IsDltFst As Boolean) As Database
 If IsDltFst Then DltFfnIf Fb
-Set CrtFb = Dao.DBEngine.CreateDatabase(Fb, dbLangGeneral)
+Set CrtFb = DAO.DBEngine.CreateDatabase(Fb, dbLangGeneral)
 End Function
 
 Private Sub Z_BrwFb()
@@ -13,7 +14,7 @@ BrwFb SampFbzDutyDta
 End Sub
 
 Function DbzFb(Fb) As Database
-Set DbzFb = Dao.DBEngine.OpenDatabase(Fb)
+Set DbzFb = DAO.DBEngine.OpenDatabase(Fb)
 End Function
 
 Function CntrNyzFb(Fb) As String()
@@ -29,7 +30,7 @@ Next
 End Function
 
 Function Db(Fb) As Database
-Set Db = Dao.DBEngine.OpenDatabase(Fb)
+Set Db = DAO.DBEngine.OpenDatabase(Fb)
 End Function
 
 Sub EnsFb(Fb)

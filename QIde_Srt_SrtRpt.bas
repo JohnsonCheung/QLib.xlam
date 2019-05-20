@@ -1,4 +1,5 @@
 Attribute VB_Name = "QIde_Srt_SrtRpt"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Srt_Rpt."
 Private Const Asm$ = "QIde"
@@ -7,7 +8,7 @@ Dim X As Dictionary
 Dim Y As Dictionary
 Set X = MthDic(Src, Mdn)
 Set Y = SrtDic(X)
-SrtRpt = FmtCmprDic(X, Y, "BefSrt", "AftSrt")
+SrtRpt = FmtCmpgDic(X, Y, "BefSrt", "AftSrt")
 End Function
 
 Private Sub Z_SrtRpt()

@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Is_Var"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Is_Var."
 Private Const Asm$ = "QVb"
@@ -95,7 +96,8 @@ IsLines = HasSubStr(V, vbLf)
 End Function
 
 Function IsLinesAy(V) As Boolean
-If Not IsItrOfSy(V) Then Exit Function
+If Not IsArray(V) Then Exit Function
+If Not IsItrOfSy(Itr(V)) Then Exit Function
 Dim L
 For Each L In Itr(V)
     If IsLines(L) Then IsLinesAy = True: Exit Function

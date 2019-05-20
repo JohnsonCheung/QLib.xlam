@@ -1,4 +1,6 @@
 Attribute VB_Name = "QIde_Cd_TyCd"
+Option Explicit
+Option Compare Text
 Function TyCd$(Tyn, Optional IsPrv As Boolean)
 Dim C1$: C1 = Tp_Tys(IsPrv)
 Dim C2$: C2 = Tp_Push(IsPrv)
@@ -20,7 +22,7 @@ X "ReDim Preserve O.Ay(O.N)"
 X "O.Ay(O.N) = M"
 X "O.N = O.N + 1"
 X "End Sub"
-Tp_PushTy = JnCrLf(XX)
+Tp_Push = JnCrLf(XX)
 Erase XX
 End Function
 
@@ -52,7 +54,7 @@ X Prv(IsPrv) & "Sub Add?(A As ?, B As ?) As ?s"
 X "Push? Add?, A"
 X "Push? Add?, B"
 X "End Sub"
-Tp_AddTy = JnCrLf(XX)
+Tp_Add = JnCrLf(XX)
 Erase XX
 End Function
 
@@ -62,7 +64,7 @@ X ""
 X Prv(IsPrv) & "Sub Sng?(A As ?) As ?s"
 X "Push? Sng?, A"
 X "End Sub"
-Tp_SngTy = JnCrLf(XX)
+Tp_Sng = JnCrLf(XX)
 Erase XX
 End Function
 

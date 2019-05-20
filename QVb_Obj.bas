@@ -1,10 +1,10 @@
 Attribute VB_Name = "QVb_Obj"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Obj."
 Const DoczP$ = "PrpPth."
 Const DoczPn$ = "PrpNm."
-Type Nm: Nm As String: End Type
 Type PrpPth: P As String: End Type
 Enum EmThw
     EiThw
@@ -87,7 +87,7 @@ ObjToStr = Obj.ToStr: Exit Function
 X: ObjToStr = QuoteSq(TypeName(Obj))
 End Function
 
-Function PrpzNm(Obj As Object, N As Nm, Optional Thw As EmThw = EmThw.EiThw)
+Function PrpzNm(Obj As Object, N, Optional Thw As EmThw = EmThw.EiThw)
 
 End Function
 Function Prp(Obj As Object, P As PrpPth, Optional Thw As EmThw)

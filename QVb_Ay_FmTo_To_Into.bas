@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Ay_FmTo_To_Into"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Ay_FmTo_To_Into."
 Private Const Asm$ = "QVb"

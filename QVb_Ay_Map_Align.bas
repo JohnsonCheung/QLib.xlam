@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Ay_Map_Align"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Ay_Map_Align."
 Private Const Asm$ = "QVb"
@@ -81,11 +82,11 @@ Brw FmtDotLy(DotLy)
 End Sub
 
 Function FmtDotLy(DotLy$()) As String()
-FmtDotLy = FmtDryzAsSpcSep(DryzDotLy(DotLy))
+FmtDotLy = FmtDryAsJnSep(DryzDotLy(DotLy))
 End Function
 
 Function FmtDotLyzTwoCol(DotLy$()) As String()
-FmtDotLyzTwoCol = FmtDryzAsSpcSep(DryzDotLyzTwoCol(DotLy))
+FmtDotLyzTwoCol = FmtDryAsJnSep(DryzDotLyzTwoCol(DotLy))
 End Function
 
 Function FmtSyz1Term(Sy$()) As String()

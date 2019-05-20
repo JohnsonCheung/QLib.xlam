@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Ay_Push"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Ay_Push."
@@ -46,6 +47,7 @@ N = Si(O)
 ReDim Preserve O(N)
 O(N) = M
 End Sub
+
 Sub PushIy(OSy$(), Sy$())
 PushIAy OSy, Sy
 End Sub

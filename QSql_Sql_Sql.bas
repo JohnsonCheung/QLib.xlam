@@ -531,25 +531,25 @@ End Select
 SqlQuote = O
 End Function
 
-Function SqlQuoteChrzT$(A As Dao.DataTypeEnum)
+Function SqlQuoteChrzT$(A As DAO.DataTypeEnum)
 Select Case A
 Case _
-    Dao.DataTypeEnum.dbBigInt, _
-    Dao.DataTypeEnum.dbByte, _
-    Dao.DataTypeEnum.dbCurrency, _
-    Dao.DataTypeEnum.dbDecimal, _
-    Dao.DataTypeEnum.dbDouble, _
-    Dao.DataTypeEnum.dbFloat, _
-    Dao.DataTypeEnum.dbInteger, _
-    Dao.DataTypeEnum.dbLong, _
-    Dao.DataTypeEnum.dbNumeric, _
-    Dao.DataTypeEnum.dbSingle: Exit Function
+    DAO.DataTypeEnum.dbBigInt, _
+    DAO.DataTypeEnum.dbByte, _
+    DAO.DataTypeEnum.dbCurrency, _
+    DAO.DataTypeEnum.dbDecimal, _
+    DAO.DataTypeEnum.dbDouble, _
+    DAO.DataTypeEnum.dbFloat, _
+    DAO.DataTypeEnum.dbInteger, _
+    DAO.DataTypeEnum.dbLong, _
+    DAO.DataTypeEnum.dbNumeric, _
+    DAO.DataTypeEnum.dbSingle: Exit Function
 Case _
-    Dao.DataTypeEnum.dbChar, _
-    Dao.DataTypeEnum.dbMemo, _
-    Dao.DataTypeEnum.dbText: SqlQuoteChrzT = "'"
+    DAO.DataTypeEnum.dbChar, _
+    DAO.DataTypeEnum.dbMemo, _
+    DAO.DataTypeEnum.dbText: SqlQuoteChrzT = "'"
 Case _
-    Dao.DataTypeEnum.dbDate: SqlQuoteChrzT = "#"
+    DAO.DataTypeEnum.dbDate: SqlQuoteChrzT = "#"
 Case Else
     Thw CSub, "Invalid DaoTy", "DaoTy", A
 End Select

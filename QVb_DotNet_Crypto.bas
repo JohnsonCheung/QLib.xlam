@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_DotNet_Crypto"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_DotNet_Crypto."
 Private Const Asm$ = "QVb"

@@ -1,4 +1,5 @@
 Attribute VB_Name = "QApp_NDrive"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MApp_NDrive."
 Private Const Asm$ = "QApp"

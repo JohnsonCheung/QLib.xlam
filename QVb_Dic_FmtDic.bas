@@ -1,9 +1,10 @@
 Attribute VB_Name = "QVb_Dic_FmtDic"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Dic_Fmt."
 Private Const Asm$ = "QVb"
 Private Sub Z_BrwDic()
-Dim R As Dao.Recordset
+Dim R As DAO.Recordset
 Set R = Rs(SampDbzDutyDta, "Select Sku,BchNo from PermitD where BchNo<>''")
 BrwDic JnStrDicTwoFldRs(R), True
 End Sub

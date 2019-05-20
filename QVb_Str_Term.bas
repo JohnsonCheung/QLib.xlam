@@ -1,14 +1,18 @@
 Attribute VB_Name = "QVb_Str_Term"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MTerm."
 Const NS$ = "Vb.Str.Term"
 Private Const Asm$ = "Q"
+
 Function RmvTerm$(Lin, Term$())
 RmvTerm = JnTerm(MinusAy(TermAy(Lin), Term))
 End Function
+
 Function TermLin(TermAy)
 TermLin = TLin(TermAy)
 End Function
+
 Function TLin(TermAy)
 TLin = JnTerm(TermAy)
 End Function
@@ -21,7 +25,11 @@ End Function
 Function JnTerm$(TermAy)
 JnTerm = JnSpc(QuoteSqzAyIf(RmvBlankzAy(TermAy)))
 End Function
-
+Function CommaTerm$(Lin, Ix)
+Dim Ay$(): Ay = Split(Lin, ",")
+If Not IsBet(Ix, 0, UB(Ay)) Then Exit Function
+CommaTerm = Ay(Ix)
+End Function
 Function LinzTermAy$(TermAy)
 LinzTermAy = TLin(TermAy)
 End Function

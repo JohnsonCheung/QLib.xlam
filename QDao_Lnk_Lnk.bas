@@ -1,4 +1,5 @@
 Attribute VB_Name = "QDao_Lnk_Lnk"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDao_Lnk."
 Private Const Asm$ = "QDao"
@@ -21,8 +22,8 @@ Sub LnkFb(A As Database, T, Fb, Optional Fbt$)
 LnkTbl A, T, DftStr(Fbt, T), CnStrzFbDao(Fb)
 End Sub
 
-Private Function TdzzTSC(T, Src$, Cn$) As Dao.TableDef
-Set TdzzTSC = New Dao.TableDef
+Private Function TdzzTSC(T, Src$, Cn$) As DAO.TableDef
+Set TdzzTSC = New DAO.TableDef
 With TdzzTSC
     .Connect = Cn
     .Name = T

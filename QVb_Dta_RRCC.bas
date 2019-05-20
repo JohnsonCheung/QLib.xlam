@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Dta_RRCC"
+Option Compare Text
 Option Explicit
 Enum EmRRCCTy
     EiRCC = 1

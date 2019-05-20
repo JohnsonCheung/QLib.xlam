@@ -1,4 +1,5 @@
 Attribute VB_Name = "QIde_Rf_Rf"
+Option Compare Text
 Option Explicit
 Const Asm$ = "MIde"
 Const NS$ = "Ide.PjInf"
@@ -9,7 +10,7 @@ Public Const FFzRfLin = "Nm Guid Mjr Mnr Frfee"
 Function RfLin(Lin) As RfLin
 RfLin.Lin = Lin
 End Function
-Function RfLinzRf(A As vbide.Reference) As RfLin
+Function RfLinzRf(A As vbIde.Reference) As RfLin
 With A
 RfLinzRf = RfLin(JnSpcAp(.Name, .Guid, .Major, .Minor, .FullPath))
 End With
@@ -46,7 +47,7 @@ Function RfSrczSrcp(Srcp$) As String()
 RfSrczSrcp = LyzFt(FrfzSrcp(Srcp))
 End Function
 Function RfSrc(P As VBProject) As String()
-Dim R As vbide.Reference
+Dim R As vbIde.Reference
 For Each R In P.References
     PushI RfSrc, RfLinzRf(R).Lin
 Next
@@ -73,11 +74,11 @@ Property Get RfNyP() As String()
 RfNyP = RfNyzP(CPj)
 End Property
 
-Function CvRf(A) As vbide.Reference
+Function CvRf(A) As vbIde.Reference
 Set CvRf = A
 End Function
 Function HasRfNm(Pj As VBProject, RfNm$)
-Dim Rf As vbide.Reference
+Dim Rf As vbIde.Reference
 For Each Rf In Pj.References
     If Rf.Name = RfNm Then HasRfNm = True: Exit Function
 Next
@@ -103,7 +104,7 @@ Function PjRfNy(P As VBProject) As String()
 PjRfNy = Itn(P.References)
 End Function
 
-Function Frfee$(A As vbide.Reference)
+Function Frfee$(A As vbIde.Reference)
 On Error Resume Next
 Frfee = A.FullPath
 End Function

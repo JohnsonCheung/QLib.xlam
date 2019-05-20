@@ -1,4 +1,5 @@
 Attribute VB_Name = "QIde_Ens_PrpEr"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Ens_PrpEr."
@@ -260,7 +261,7 @@ Dim O$(): O = EnsLinExitAndLblX(MthLy, LinOfExit)
 End Function
 
 Private Function RmvPrpOnErzPurePrpLy(PurePrpLy$()) As String()
-Dim L&(): L = Lngy( _
+Dim L&(): L = LngAp( _
 IxOfExit(PurePrpLy), _
 IxOfOnEr(PurePrpLy), _
 IxOfLblX(PurePrpLy))

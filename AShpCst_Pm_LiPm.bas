@@ -1,4 +1,5 @@
 Attribute VB_Name = "AShpCst_Pm_LiPm"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "AShpCst_Pm_LiPm."
 Private Db As Database

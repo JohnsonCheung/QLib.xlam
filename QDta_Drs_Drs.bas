@@ -1,4 +1,5 @@
 Attribute VB_Name = "QDta_Drs_Drs"
+Option Compare Text
 Option Explicit
 Const Asm$ = "QDta"
 Const NS$ = "Dta.Ds"
@@ -15,9 +16,16 @@ Enum EmCntSrtOpt
     eSrtByCnt
     eSrtByItm
 End Enum
+Function DrszF(FF$) As Drs
+DrszF = DrszFF(FF, EmpAv)
+End Function
 Function DrszFF(FF$, Dry()) As Drs
 DrszFF = Drs(TermAy(FF), Dry)
 End Function
+Function HasReczDrs(A As Drs) As Boolean
+HasReczDrs = Si(A.Dry) > 0
+End Function
+
 Function Drs(Fny$(), Dry()) As Drs
 With Drs
     .Fny = Fny
@@ -99,13 +107,13 @@ If Not IsAySub(A.Fny, OFny) Then Thw CSub, "Given FF has some field not in Drs.F
 Dim ODry()
     Dim IAy&()
     IAy = Ixy(A.Fny, OFny)
-    ODry = DrySelColIxy(A.Dry, IAy)
+    ODry = SelDryColIxy(A.Dry, IAy)
 SelDrsCC = Drs(OFny, ODry)
 End Function
-Function DrySelColIxy(Dry(), Ixy&()) As Variant()
+Function SelDryColIxy(Dry(), Ixy&()) As Variant()
 Dim Dr
 For Each Dr In Itr(Dry)
-    PushI DrySelColIxy, AywIxy(Dr, Ixy)
+    PushI SelDryColIxy, AywIxy(Dr, Ixy)
 Next
 End Function
 
@@ -181,7 +189,7 @@ NRowDrs = Si(A.Dry)
 End Function
 
 Function DrwIxy(Dr(), Ixy&())
-Dim U&: U = MaxAy(Ixy)
+Dim U&: U = MaxEle(Ixy)
 Dim O: O = Dr
 If UB(O) < U Then
     ReDim Preserve O(U)
@@ -237,6 +245,32 @@ With O
     .Ay(.N) = M
     .N = .N + 1
 End With
+End Sub
+Private Function IxyWiNegzSupSubAy(SupAy, SubAy) As Long()
+If Not IsSuperAy(SupAy, SubAy) Then Thw CSub, "SupAy & SubAy error", "SupAy SubAy", SupAy, SubAy
+Dim J%
+For J = 0 To UB(SupAy)
+    PushI IxyWiNegzSupSubAy, IxzAy(SubAy, SupAy(J))
+Next
+End Function
+Private Function SelDr(Dr(), IxyWiNeg&()) As Variant()
+Dim Ix, U%: U = UB(IxyWiNeg)
+For Each Ix In IxyWiNeg
+    If IsBet(Ix, 0, U) Then
+        PushI SelDr, Dr(Ix)
+    Else
+        PushI SelDr, Empty
+    End If
+Next
+End Function
+Sub ApdDrsSub(O As Drs, M As Drs)
+Dim Ixy&(): Ixy = IxyWiNegzSupSubAy(O.Fny, M.Fny)
+Dim ODry(): ODry = O.Dry
+Dim Dr
+For Each Dr In Itr(M.Dry)
+    PushI ODry, SelDr(CvAv(Dr), Ixy)
+Next
+O.Dry = ODry
 End Sub
 Sub ApdDrs(O As Drs, M As Drs)
 If Not IsEqAy(O.Fny, M.Fny) Then Thw CSub, "Fny are dif", "O.Fny M.Fny", O.Fny, M.Fny

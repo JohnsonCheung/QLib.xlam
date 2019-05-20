@@ -1,4 +1,5 @@
 Attribute VB_Name = "QIde_Bld_BldFxa"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "BCrtFxa."
 Sub GenFxaP()

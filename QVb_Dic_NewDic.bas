@@ -1,11 +1,12 @@
 Attribute VB_Name = "QVb_Dic_NewDic"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Dic_New."
 Private Const Asm$ = "QVb"
 Function DiczFt(Ft) As Dictionary
 Set DiczFt = Dic(LyzFt(Ft))
 End Function
-Function NewSyDic(TermLiny$()) As Dictionary
+Function SyDic(TermLiny$()) As Dictionary
 Dim L$, I, T$, Ssl$
 Dim O As New Dictionary
 For Each I In Itr(TermLiny)
@@ -17,16 +18,8 @@ For Each I In Itr(TermLiny)
         O.Add T, SyzSS(Ssl)
     End If
 Next
-Set NewSyDic = O
+Set SyDic = O
 End Function
-
-Sub DicSetKv(O As Dictionary, K, V)
-If O.Exists(K) Then
-    Asg V, O(K)
-Else
-    O.Add K, V
-End If
-End Sub
 
 Sub AddDiczNonBlankStr(ODic As Dictionary, K, S$)
 If S = "" Then Exit Sub
@@ -64,6 +57,7 @@ For Each I In Itr(VkkLy)
     Next
 Next
 End Function
+
 Function LyzDic(A As Dictionary) As String()
 Dim K
 For Each K In A.Keys
@@ -72,6 +66,14 @@ Next
 End Function
 Function JnStrDic$(StrDic As Dictionary, Optional Sep$)
 JnStrDic = Join(SyzItr(StrDic.Items), Sep)
+End Function
+
+Function DiczDryCC(Dry(), Optional C1 = 0, Optional C2 = 1) As Dictionary
+Set DiczDryCC = New Dictionary
+Dim Dr
+For Each Dr In Itr(Dry)
+    DiczDryCC.Add Dr(C1), Dr(C2)
+Next
 End Function
 Function Dic(Ly$(), Optional JnSep$ = vbCrLf) As Dictionary
 Dim O As New Dictionary

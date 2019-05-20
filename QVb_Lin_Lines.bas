@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Lin_Lines"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Lin_Lines."
@@ -38,18 +39,18 @@ Y_LinesAy = XX
 Erase XX
 End Function
 
-Function FmtLinesAy(LinesAy) As String()
+Function FmtLinesAy(LinesAy, Optional B As EmBeg01 = EiBeg0) As String()
 If Si(LinesAy) = 0 Then Exit Function
 Dim W%: W = WdtzLinesAy(LinesAy)
 Dim SepLin: SepLin = Quote(Dup("-", W + 2), "|")
 Dim Lines
 PushI FmtLinesAy, SepLin
 For Each Lines In Itr(LinesAy)
-    PushIAy FmtLinesAy, AddIxPfxzLineszW(Lines, W)
+    PushIAy FmtLinesAy, AddIxPfxzLineszW(Lines, W, B)
     PushI FmtLinesAy, SepLin
 Next
 End Function
-Private Function AddIxPfxzLineszW(Lines, W%) As String()
+Private Function AddIxPfxzLineszW(Lines, W%, Optional B As EmBeg01 = EiBeg0) As String()
 Dim L
 For Each L In Itr(SplitCrLf(Lines))
     PushI AddIxPfxzLineszW, "| " & AlignL(L, W) & " |"
@@ -96,7 +97,7 @@ Tst:
 End Sub
 Function EnsBet%(I%, A%, B%)
 Select Case True
-Case A > I: EnsBet = A
+Case I < A: EnsBet = A
 Case I > B: EnsBet = B
 Case Else: EnsBet = I
 End Select

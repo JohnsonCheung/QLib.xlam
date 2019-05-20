@@ -1,4 +1,5 @@
 Attribute VB_Name = "QXls_Lof_ErzLof"
+Option Compare Text
 Option Explicit
 Private Type A
     Fny() As String

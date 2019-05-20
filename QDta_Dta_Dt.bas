@@ -1,4 +1,5 @@
 Attribute VB_Name = "QDta_Dta_Dt"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "BDt."
 Type Dt: DtNm As String: Fny() As String: Dry() As Variant: End Type

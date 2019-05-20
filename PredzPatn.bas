@@ -7,6 +7,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
+Option Explicit
+Option Compare Text
 Implements IPred
 Private Const CMod$ = "PredzPatn."
 Private A As New RegExp

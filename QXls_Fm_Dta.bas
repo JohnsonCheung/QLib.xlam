@@ -1,4 +1,5 @@
 Attribute VB_Name = "QXls_Fm_Dta"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MXls_Fm_Dta."
 Private Const Asm$ = "QXls"
@@ -7,8 +8,8 @@ Function RgzDrs(A As Drs, At As Range) As Range
 Set RgzDrs = RgzSq(SqzDrs(A), At)
 End Function
 
-Function LozDrs(A As Drs, At As Range, Optional LoNm$) As ListObject
-Set LozDrs = CrtLozRg(RgzDrs(A, At), LoNm)
+Function LozDrs(A As Drs, At As Range, Optional Lon$) As ListObject
+Set LozDrs = LozRg(RgzDrs(A, At), Lon)
 End Function
 
 Function WszAy(Ay, Optional Wsn$ = "Sheet1") As Worksheet
@@ -16,7 +17,7 @@ Dim O As Worksheet, R As Range
 Set O = NewWs(Wsn)
 O.Range("A1").Value = "Array"
 Set R = RgzSq(Sqv(Ay), O.Range("A2"))
-CrtLozRg RgzMoreTop(R)
+LozRg RgzMoreTop(R)
 Set WszAy = O
 End Function
 

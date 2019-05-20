@@ -1,7 +1,36 @@
-Attribute VB_Name = "QXls_Sq"
+Attribute VB_Name = "QVb_Dta_Sq"
 Option Explicit
-Private Const CMod$ = "MXls_Sq."
-Private Const Asm$ = "QXls"
+Option Compare Text
+Sub SetSqr(OSq(), Drv, Optional R = 1, Optional NoTxtSngQ As Boolean)
+Dim J&
+If NoTxtSngQ Then
+    For J = 0 To UB(Drv)
+        If IsStr(Drv(J)) Then
+            OSq(R, J + 1) = QuoteSng(CStr(Drv(J)))
+        Else
+            OSq(R, J + 1) = Drv(J)
+        End If
+    Next
+Else
+    For J = 0 To UB(Drv)
+        OSq(R, J + 1) = Drv(J)
+    Next
+End If
+End Sub
+
+Sub PushSq(OSq(), Sq())
+Dim NR&: NR = UBound(OSq, 1) + UBound(Sq, 1)
+Dim NC&: NC = UBound(OSq, 2)
+Dim NC2&: NC2 = UBound(Sq, 2)
+If NC <> NC2 Then Thw CSub, "NC of { OSq, Sq } are dif", "OSq-NC Sq-NC", NC, NC2
+ReDim Preserve OSq(1 To NR, 1 To NC)
+Dim R&, C&
+For R = 1 To NC2
+    For C = 1 To NC
+        OSq(R + NR, C) = Sq(R, C)
+    Next
+Next
+End Sub
 
 Function Sq(R&, C&) As Variant()
 Dim O()
@@ -22,11 +51,56 @@ For R = 1 To UBound(Sq, 1)
 Next
 AddSngQuotezSq = O
 End Function
+Function JnSq(Sq$(), SepChr$) As String()
+Dim NC&: NC = UBound(Sq, 2)
+Dim R&
+For R = 1 To UBound(Sq, 1)
+    PushI JnSq, JnSqr(Sq, NC, R, SepChr)
+Next
+End Function
+
+Private Function JnSqr$(Sq$(), NC&, R&, SepChr$)
+JnSqr = Join(SyzSqr(Sq, NC, R), SepChr)
+End Function
+
+Function SyzSqr(Sq$(), NC&, R&) As String()
+Dim J&
+For J = 1 To NC
+    PushI SyzSqr, Sq(R, J)
+Next
+End Function
+
+Function FmtSq(Sq(), Optional SepChr$ = " ") As String()
+FmtSq = JnSq(AlignSq(Sq), SepChr)
+End Function
 
 Sub BrwSq(Sq())
-BrwDry DryzSq(Sq)
+Brw FmtSq(Sq)
 End Sub
-
+Function AlignSq(Sq()) As String()
+If Si(Sq) = 0 Then Exit Function
+Dim C&, O$(), NR&, NC&
+NR = UBound(Sq, 1)
+NC = UBound(Sq, 2)
+ReDim O(1 To NR, 1 To NC)
+For C = 1 To UBound(O, 2)
+    AlignColzSCW O, Sq, C, ColWdtzSC(Sq, C)
+Next
+AlignSq = O
+End Function
+Private Function ColWdtzSC%(Sq(), C&)
+Dim R&, O%
+For R = 1 To UBound(Sq, 1)
+    O = Max(O, Len(Sq(R, C)))
+Next
+ColWdtzSC = O
+End Function
+Private Sub AlignColzSCW(OSq$(), Sq(), C&, W%)
+Dim R&
+For R = 1 To UBound(Sq, 1)
+    OSq(R, C) = Align(Sq(R, C), W)
+Next
+End Sub
 Function ColzSq(Sq(), C&) As Variant()
 Dim O()
 Dim NR&, J&
@@ -124,14 +198,14 @@ On Error Resume Next
 NColzSq = UBound(Sq(), 2)
 End Function
 Function NewLoSqAt(Sq(), At As Range) As ListObject
-Set NewLoSqAt = CrtLozRg(RgzSq(Sq(), At))
+Set NewLoSqAt = LozRg(RgzSq(Sq(), At))
 End Function
 Function NewLoSq(Sq(), Optional Wsn$ = "Data") As ListObject
 Set NewLoSq = NewLoSqAt(Sq(), NewA1(Wsn))
 End Function
 
 Function WszSq(Sq(), Optional Wsn$) As Worksheet
-Set WszSq = CrtLozRg(RgzSq(Sq(), NewA1(Wsn)))
+Set WszSq = LozRg(RgzSq(Sq(), NewA1(Wsn)))
 End Function
 
 Function NRowzSq&(Sq())
@@ -164,7 +238,7 @@ Sq A, A
 IsEqSq B, B
 End Sub
 
-Property Get SampSq() As Variant()
+Function SampSq() As Variant()
 Const NR% = 10
 Const NC% = 10
 Dim O(), R%, C%
@@ -176,5 +250,6 @@ For R = 1 To NR
     Next
 Next
 SampSq = O
-End Property
+End Function
+
 

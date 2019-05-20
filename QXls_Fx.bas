@@ -1,49 +1,9 @@
 Attribute VB_Name = "QXls_Fx"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MXls_Fx."
 Private Const Asm$ = "QXls"
 
-Function BrwFx(Fx)
-If HasFfn(Fx) Then Debug.Print "No Fx:" & Fx
-ShwWb WbzFx(Fx)
-End Function
-
-Sub CrtFx(Fx)
-WbSavAs(NewWb, Fx).Close
-End Sub
-
-Function FxEns$(Fx)
-If Not HasFfn(Fx) Then CrtFx Fx
-FxEns = Fx
-End Function
-
-Function FstWsn$(Fx)
-FstWsn = FstItm(Wny(Fx))
-End Function
-
-Function FxOleCnStr$(A)
-FxOleCnStr = "OLEDb;" & CnStrzFxAdo(A)
-End Function
-Function HasFx(Fx) As Boolean
-Dim Wb As Workbook
-For Each Wb In Xls.Workbooks
-    If Wb.FullName = Fx Then HasFx = True: Exit Function
-Next
-End Function
-
-Function OpnFx(Fx) As Workbook
-ThwIf_FfnNotExist Fx, CSub
-Set OpnFx = Xls.Workbooks.Open(Fx)
-End Function
-
-Sub RmvWsIf(Fx, Wsn$)
-If HasFxw(Fx, Wsn) Then
-   Dim B As Workbook: Set B = WbzFx(Fx)
-   WszWb(B, Wsn).Delete
-   SavWb B
-   ClsWbNoSav B
-End If
-End Sub
 
 Function DrszFxq(Fx, Q) As Drs
 DrszFxq = DrszArs(CnzFx(Fx).Execute(Q))
@@ -52,6 +12,7 @@ End Function
 Sub RunFxqByCn(Fx, Q)
 CnzFx(Fx).Execute Q
 End Sub
+
 Function TmpDbzFx(Fx) As Database
 Set TmpDbzFx = TmpDbzFxWny(Fx, Wny(Fx))
 End Function
@@ -146,3 +107,40 @@ End Sub
 Private Sub ZZ()
 Z_FstWsn
 End Sub
+
+Function ChkFxww(Fx, Wsnn$, Optional FxKd$ = "Excel file") As String()
+Dim W$, I
+'If Not HasFfn(Fx) Then ChkFxww = MsgzMisFfn(Fx, FxKd): Exit Function
+For Each I In Ny(Wsnn)
+    W = I
+    PushIAy ChkFxww, ChkWs(Fx, W, FxKd)
+Next
+End Function
+
+Function ChkWs(Fx, Wsn, FxKd$) As String()
+If HasFxw(Fx, Wsn) Then Exit Function
+Dim M$
+M = FmtQQ("? does not have expected worksheet", FxKd)
+ChkWs = LyzFunMsgNap(CSub, M, "Folder File Expected-Worksheet Worksheets-in-file", Pth(Fx), Fn(Fx), Wsn, Wny(Fx))
+End Function
+
+Function ChkFxw(Fx, Wsn, Optional FxKd$ = "Excel file") As String()
+ChkFxw = ChkHasFfn(Fx, FxKd): If Si(ChkFxw) > 0 Then Exit Function
+ChkFxw = ChkWs(Fx, Wsn, FxKd)
+End Function
+Function ChkLnkWs(A As Database, T, Fx, Wsn, Optional FxKd$ = "Excel file") As String()
+Const CSub$ = CMod & "ChkLnkWs"
+Dim O$()
+    O = ChkFxw(Fx, Wsn, FxKd)
+    If Si(O) > 0 Then
+        ChkLnkWs = O
+        Exit Function
+    End If
+On Error GoTo X
+LnkFx A, T, Fx, Wsn
+Exit Function
+X: ChkLnkWs = _
+    LyzMsgNap("Error in linking Xls file", "Er LnkFx LnkWs ToDb AsTbl", Err.Description, Fx, Wsn, Dbn(A), T)
+End Function
+
+

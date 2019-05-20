@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_Ay_Sub_Wh"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Ay_Sub_Wh."
 Private Const Asm$ = "QVb"
@@ -129,15 +130,15 @@ Dim O: O = Resi(Ay)
 ReDim Preserve O(U)
 Dim Ix, J&
 For Each Ix In Itr(Ixy)
-    If 0 > Ix Or Ix > U Then
-        Push O(J), Ay(Ix)
+    If Ix > -1 Then
+        O(J) = Ay(Ix)
     End If
     J = J + 1
 Next
 AywIxy = O
 End Function
 
-Function AywLik(Ay, Lik$) As String()
+Function AywLik(Ay, Lik) As String()
 Dim I
 For Each I In Itr(Ay)
     If I Like Lik Then PushI AywLik, I

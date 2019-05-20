@@ -1,4 +1,5 @@
 Attribute VB_Name = "QDao_Lnk_LnkImp"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "BLnkImp."
 Private Type FxtRec
@@ -8,7 +9,7 @@ Private Type FxtRec
     Stru As String
 End Type
 Private Type FxtRecs: N As Byte: Ay() As FxtRec: End Type
-Private Sub ZZ_LnkImp()
+Sub ZZ_LnkImp()
 Dim InpFilSrc$(), LnkImpSrc$(), Db As Database
 GoSub T0
 Exit Sub
@@ -23,8 +24,8 @@ Tst:
 End Sub
 
 Sub LnkImp(InpFilSrc$(), LnkImpSrc$(), Db As Database)
-'ThwIf_LnkImpPmEr InpFilSrc, LnkImpSrc
-Dim a___FbTbl__fm_TblLy
+ThwIf_Er ErzLnk(InpFilSrc, LnkImpSrc), CSub
+Dim a___FbTbl__Fm_TblLy$
     Dim FbTblLy$():                      FbTblLy = IndentedLy(LnkImpSrc, "FbTbl")
     Dim b___FbTbl$
     Dim FbTny$():                          FbTny = B_TnyFb(FbTblLy)
@@ -224,7 +225,6 @@ X "Uom   C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sa
 X "GLBal C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\DutyPrepayGLTot.xlsx"
 Y_InpFilSrc = XX
 Erase XX
-SampSrczInpFil
 End Property
 
 

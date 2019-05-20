@@ -1,4 +1,6 @@
 Attribute VB_Name = "QIde_Bld_Compress"
+Option Explicit
+Option Compare Text
 Private Sub Z_CompressFxa()
 CompressFxa Pjf(CPj)
 End Sub

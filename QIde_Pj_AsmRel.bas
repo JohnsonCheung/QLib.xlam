@@ -1,4 +1,6 @@
 Attribute VB_Name = "QIde_Pj_AsmRel"
+Option Explicit
+Option Compare Text
 Function AsmRelP() As Rel
 Set AsmRelP = AsmRelzP(CPj)
 End Function

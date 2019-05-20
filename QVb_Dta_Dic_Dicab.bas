@@ -1,4 +1,6 @@
 Attribute VB_Name = "QVb_Dta_Dic_Dicab"
+Option Explicit
+Option Compare Text
 Type Dicab
     A As Dictionary
     B As Dictionary

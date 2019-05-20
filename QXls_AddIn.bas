@@ -1,4 +1,5 @@
 Attribute VB_Name = "QXls_AddIn"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MXls_AddIn."
 Private Const Asm$ = "QXls"

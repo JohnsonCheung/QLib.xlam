@@ -1,4 +1,5 @@
 Attribute VB_Name = "QXls_TreeWs_Install"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MXls_TreeWs_Install."
 Private Const Asm$ = "QXls"
@@ -57,9 +58,9 @@ Set Md = MdzWs(A)
 Stop
 If Md.CountOfLines = 0 Then
     Md.AddFromString TreeWsMdLines
-    InfLin CSub, "TreeWs in Wb is installed with code", "Wb", WbNmzWs(A)
+    InfLin CSub, "TreeWs in Wb is installed with code", "Wb", WbnzWs(A)
 Else
-    InfLin CSub, "TreeWs in Wb already has code", "Wb", WbNmzWs(A)
+    InfLin CSub, "TreeWs in Wb already has code", "Wb", WbnzWs(A)
 End If
 End Sub
 

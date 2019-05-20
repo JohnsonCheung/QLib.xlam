@@ -1,4 +1,6 @@
 Attribute VB_Name = "QVb_Dta_Lpm"
+Option Explicit
+Option Compare Text
 Function Lpm(PmStr$, LpmSpec$) As Dictionary
 Dim O As New Dictionary
 Set Lpm.DicK_ToSy = O
@@ -25,7 +27,7 @@ Lpm.Add PmNm, Sy()
 End Sub
 
 Function WhNmzLpm(Lpm As Dictionary) As WhNm
-WhNmzLpm = WhNm(LpmPatn(Lpm, NmPfx), LpmLikAy(Lpm, NmPfx), LpmExlLikAy(Lpm, NmPfx))
+'WhNmzLpm = WhNm(LpmPatn(Lpm, NmPfx), LpmLikAy(Lpm, NmPfx), LpmExlLikAy(Lpm, NmPfx))
 End Function
 
 Function LpmHasSw(Lpm As Dictionary, SwNm) As Boolean
@@ -36,7 +38,7 @@ Dim K, V
 For Each K In Lpm.Keys
     V = Lpm(K)
     If IsSy(Lpm(K)) Then
-        PushI SwNy, K
+        PushI LpmSwNy, K
     End If
 Next
 End Function
@@ -57,7 +59,7 @@ D FmtLpm(Lpm)
 End Sub
 Function FmtLpm(Lpm As Dictionary) As String()
 Dim PmNm, O$()
-For Each PmNm In A.Keys
+For Each PmNm In Lpm.Keys
     PushI O, FmtzNmSy(PmNm, CvSy(Lpm(PmNm)))
 Next
 FmtLpm = AlignzBySepss(O, "ValCnt Val(")
@@ -71,29 +73,29 @@ End Select
 End Function
 
 Function LpmLikAy(Lpm As Dictionary, NmPfx) As String()
-LmpLikAy = LpmSyVal(Lpm, NmPfx & "LikAy")
+LpmLikAy = SyzLpm(Lpm, NmPfx & "LikAy")
 End Function
 
 Function LpmExlLikAy(Lpm As Dictionary, NmPfx) As String()
-LmpExlLikAy = LpmSyVal(Lpm, NmPfx & "ExlLikAy")
+LpmExlLikAy = SyzLpm(Lpm, NmPfx & "ExlLikAy")
 End Function
 
-Function LpmSyVal(Lpm As Dictionary, PmNm) As String()
-If Lpm.Exists(NmPfx & PmNm) Then
-    LpmSyVal = Lpm(PmNm)
-End If
+Function SyzLpm(Lpm As Dictionary, PmNm) As String()
+'If Lpm.Exists(NmPfx & PmNm) Then
+'    SyzLpm = Lpm(PmNm)
+'End If
 End Function
-Function LpmStrVal$(Lpm As Dictionary, PmNm)
+Function StrValzLpm$(Lpm As Dictionary, PmNm)
 Dim Vy$()
-    Vy = LpmSyVal(Lpm, PmNm)
+    Vy = SyzLpm(Lpm, PmNm)
 Select Case Si(Vy)
 Case 0
-Case 1: LpmStrVal = Vy(0)
+Case 1: StrValzLpm = Vy(0)
 'Case Else: Thw CSub, FmtQQ("Parameter [-?] should have one value", PmNm), "Pm PmValSz ValzPm-Sy", Fmt, Si(Vy), Vy
 End Select
 End Function
 Function LpmPatn$(Lpm As Dictionary, NmPfx)
-Patn = LpmStrVal(Lpm, NmPfx & "Patn")
+LpmPatn = StrValzLpm(Lpm, NmPfx & "Patn")
 End Function
 
 

@@ -1,5 +1,6 @@
 Attribute VB_Name = "QXls_Fun"
 Attribute VB_Description = "aaa"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MXls_Fun."
 Private Const Asm$ = "QXls"
@@ -24,15 +25,7 @@ End Sub
 Sub FillAtH(Ay, At As Range)
 FillSq Sqh(Ay), At
 End Sub
-Function DryzAyab(A, B) As Variant()
-Dim J&
-For J = 0 To Min(UB(A), UB(B))
-    PushI DryzAyab, Array(A(J), B(J))
-Next
-End Function
-Function DrszAyab(A, B, Optional N1$ = "Ay1", Optional N2$ = "Ay2") As Drs
-DrszAyab = Drs(Sy(N1, N2), DryzAyab(A, B))
-End Function
+
 Function WszAyab(A, B, Optional N1$ = "Ay1", Optional N2$ = "Ay2") As Worksheet
 Set WszAyab = WszDrs(DrszAyab(A, B, N1, N2))
 End Function
@@ -52,11 +45,8 @@ Function NyzFml(Fml$) As String()
 NyzFml = NyzMacro(Fml)
 End Function
 
-
-Function WszLy(Ly$(), Optional Wsn$ = "Sheet1", Optional Vis As Boolean) As Worksheet
-Dim O As Worksheet: Set O = NewWs(Wsn)
-RgzAyV Ly, A1zWs(O)
-Set WszLy = SetVisOfWs(O, Vis)
+Function WszLy(Ly$(), Optional Wsn$ = "Sheet1") As Worksheet
+Set WszLy = WszRg(RgzAyV(Ly, A1zWs(NewWs(Wsn))))
 End Function
 
 Property Get MaxWsCol&()

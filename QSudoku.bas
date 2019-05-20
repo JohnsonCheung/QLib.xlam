@@ -1,4 +1,5 @@
 Attribute VB_Name = "QSudoku"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MSudoku."
 Private Const Asm$ = "Q"

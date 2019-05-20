@@ -1,4 +1,5 @@
 Attribute VB_Name = "QVb_SyPair"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_SyPair."
 Type Syab

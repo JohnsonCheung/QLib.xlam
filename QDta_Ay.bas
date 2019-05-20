@@ -1,4 +1,5 @@
 Attribute VB_Name = "QDta_Ay"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDta_Ay."
 Private Const Asm$ = "QDta"
@@ -25,14 +26,14 @@ DryGpCntzAy = O
 End Function
 
 Function DryGpCntzAyWhDup(A) As Variant()
-DryGpCntzAyWhDup = DrywCGt(DryGpCntzAy(A), 1, 1)
+DryGpCntzAyWhDup = DrywColGt(DryGpCntzAy(A), 1, 1)
 End Function
 Sub BrwDryGpCntzAy(Ay)
 Brw FmtDryGpCntzAy(Ay)
 End Sub
 
 Function FmtDryGpCntzAy(Ay) As String()
-FmtDryGpCntzAy = FmtDryzAsSpcSep(DryGpCntzAy(Ay))
+FmtDryGpCntzAy = FmtDryAsJnSep(DryGpCntzAy(Ay))
 End Function
 
 Private Sub ZZ_FmtDryGpCntzAy()

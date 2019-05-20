@@ -1,4 +1,5 @@
 Attribute VB_Name = "QIde_Fun_FmtMulLinSrc"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Fun_FmtMulLinSrc."
 Private Const Asm$ = "QIde"
@@ -16,7 +17,7 @@ DryzMulStmtSrc = ODry
 End Function
 
 Function FmtMulStmtSrc(MulStmtSrc$()) As String()
-FmtMulStmtSrc = FmtDryzAsSpcSep(DryzMulStmtSrc(MulStmtSrc), MaxColWdt:=200)
+FmtMulStmtSrc = FmtDryAsJnSep(DryzMulStmtSrc(MulStmtSrc), MaxColWdt:=200)
 End Function
 
 

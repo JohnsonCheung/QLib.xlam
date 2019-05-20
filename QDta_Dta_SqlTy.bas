@@ -1,4 +1,6 @@
 Attribute VB_Name = "QDta_Dta_SqlTy"
+Option Explicit
+Option Compare Text
 Function SqlTyzDryC$(Dry(), C&)
 SqlTyzDryC = SqlTyzAv(ColzDry(Dry, C))
 End Function

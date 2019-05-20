@@ -1,4 +1,5 @@
 Attribute VB_Name = "QDta_Dta_ResiToSamNCol"
+Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDta_Dry_ReSzToSamColCnt."
 Private Const Asm$ = "QDta"

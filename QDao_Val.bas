@@ -1,4 +1,5 @@
 Attribute VB_Name = "QDao_Val"
+Option Compare Text
 Option Explicit
 Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Val."
@@ -34,7 +35,7 @@ Dim Av(): Av = Ap
 ValzQQ = ValzQ(A, FmtQQAv(QQSql, Av))
 End Function
 
-Property Let ValzRs(A As Dao.Recordset, V)
+Property Let ValzRs(A As DAO.Recordset, V)
 If NoRec(A) Then
     A.AddNew
 Else
@@ -44,14 +45,14 @@ A.Fields(0).Value = V
 A.Update
 End Property
 
-Property Get ValzRs(A As Dao.Recordset)
+Property Get ValzRs(A As DAO.Recordset)
 If NoRec(A) Then Exit Property
 Dim V: V = A.Fields(0).Value
 If IsNull(V) Then Exit Property
 ValzRs = V
 End Property
 
-Property Let ValzRsFld(Rs As Dao.Recordset, Fld, V)
+Property Let ValzRsFld(Rs As DAO.Recordset, Fld, V)
 With Rs
     .Edit
     .Fields(Fld).Value = V
@@ -59,7 +60,7 @@ With Rs
 End With
 End Property
 
-Property Get ValzRsFld(Rs As Dao.Recordset, Fld)
+Property Get ValzRsFld(Rs As DAO.Recordset, Fld)
 With Rs
     If .EOF Then Exit Property
     If .BOF Then Exit Property
