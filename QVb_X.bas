@@ -4,11 +4,13 @@ Option Explicit
 Private Const CMod$ = "MVb_X."
 Private Const Asm$ = "QVb"
 Public XX$()
-Sub X(S)
-PushI XX, S
-End Sub
-Sub XAy(Ay)
-PushIAy XX, Ay
+
+Sub X(V)
+If IsArray(V) Then
+    PushIAy XX, V
+Else
+    PushI XX, V
+End If
 End Sub
 
 Function Y(A)

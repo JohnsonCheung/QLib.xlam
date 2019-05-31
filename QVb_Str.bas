@@ -29,7 +29,7 @@ Function StrDft$(S, Dft)
 StrDft = IIf(S = "", Dft, S)
 End Function
 
-Function Dup$(S, N&)
+Function Dup$(S, N)
 Dim O$, J&
 For J = 0 To N - 1
     O = O & S

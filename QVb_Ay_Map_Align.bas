@@ -82,11 +82,11 @@ Brw FmtDotLy(DotLy)
 End Sub
 
 Function FmtDotLy(DotLy$()) As String()
-FmtDotLy = FmtDryAsJnSep(DryzDotLy(DotLy))
+FmtDotLy = FmtDry(DryzDotLy(DotLy), Fmt:=EiSSFmt)
 End Function
 
 Function FmtDotLyzTwoCol(DotLy$()) As String()
-FmtDotLyzTwoCol = FmtDryAsJnSep(DryzDotLyzTwoCol(DotLy))
+FmtDotLyzTwoCol = FmtDry(DryzDotLyzTwoCol(DotLy), Fmt:=EiSSFmt)
 End Function
 
 Function FmtSyz1Term(Sy$()) As String()

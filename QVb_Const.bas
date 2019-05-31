@@ -13,6 +13,7 @@ Public Const vbDblCrLf$ = vbCrLf & vbCrLf
 Public Const vbTwoDblQuote$ = vbDblQuote & vbDblQuote
 Public Const vbDblQuoteAsc As Byte = 34
 Public Const vbSngQuote$ = "'"
+Public Const vbExcM$ = "!"
 Public Const vbOpnSqBkt$ = "["
 Public Const vbOpnBigBkt$ = "{"
 Public Fso As New Scripting.FileSystemObject

@@ -61,29 +61,11 @@ Next
 DicAllKeyIsNm = True
 End Function
 
-Function DicAddKeyPfx(A As Dictionary, KeyPfx$) As Dictionary
-Set DicAddKeyPfx = New Dictionary
-Dim K
-For Each K In A.Keys
-    DicAddKeyPfx.Add KeyPfx & K, A(K)
-Next
-End Function
 Function DicAyKy(A() As Dictionary) As Variant()
 Dim I
 For Each I In Itr(A)
    PushNoDupAy DicAyKy, CvDic(I).Keys
 Next
-End Function
-
-Function DiczDry_TwoCol(Dry(), Optional Sep$ = " ") As Dictionary
-Dim O As New Dictionary
-If Si(Dry) <> 0 Then
-   Dim Dr
-   For Each Dr In Dry
-       O.Add Dr(0), Dr(1)
-   Next
-End If
-Set DiczDry_TwoCol = O
 End Function
 
 Function CloneDic(A As Dictionary) As Dictionary
@@ -251,7 +233,7 @@ DicSelIntoSy = SyzAy(DicSelIntozAy(A, Ky))
 End Function
 
 Function SyzDicKey(A As Dictionary) As String()
-SyzDicKey = SyzAy(A.Keys)
+SyzDicKey = SyzItr(A.Keys)
 End Function
 
 Function DiczSwapKV(A As Dictionary) As Dictionary
@@ -347,15 +329,26 @@ Next
 X: Set WbzNmzDiLines = O
 End Function
 
-
-Function AzDiC(AzDiB As Dictionary, BzDiC As Dictionary) As Dictionary
+Function DicACzOuter(DicAB As Dictionary, DicBC As Dictionary) As Dictionary
 Dim A, B, C
-Set AzDiC = New Dictionary
-For Each A In AzDiB.Keys
-    B = AzDiB(A)
-    If Not BzDiC.Exists(B) Then Thw CSub, "BzDiC does not contain B", "A B AzDiB BzDiC", A, B, AzDiB, BzDiC
-    C = BzDiC(B)
-    AzDiC.Add A, C
+Set DicACzOuter = New Dictionary
+For Each A In DicAB.Keys
+    B = DicAB(A)
+    If DicBC.Exists(B) Then
+        DicACzOuter.Add A, C
+    Else
+        DicACzOuter.Add A, Empty
+    End If
+Next
+End Function
+Function DicAC(DicAB As Dictionary, DicBC As Dictionary) As Dictionary
+Dim A, B, C
+Set DicAC = New Dictionary
+For Each A In DicAB.Keys
+    B = DicAB(A)
+    If DicBC.Exists(B) Then
+        DicAC.Add A, DicBC(B)
+    End If
 Next
 End Function
 

@@ -25,6 +25,7 @@ End Function
 Function JnTerm$(TermAy)
 JnTerm = JnSpc(QuoteSqzAyIf(RmvBlankzAy(TermAy)))
 End Function
+
 Function CommaTerm$(Lin, Ix)
 Dim Ay$(): Ay = Split(Lin, ",")
 If Not IsBet(Ix, 0, UB(Ay)) Then Exit Function

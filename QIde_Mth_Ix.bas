@@ -15,14 +15,17 @@ End Sub
 Function MthIxItr(Src$())
 Asg Itr(MthIxy(Src)), MthIxItr
 End Function
+Function MthELno&(M As CodeModule, EndLin$, FmIx)
 
-Function EndLinIx&(Src$(), EndLinItm$, FmIx)
-If 0 > FmIx Then EndLinIx = -1: Exit Function
+End Function
+
+Function MthEix&(Src$(), EndLinItm$, FmIx)
+If 0 > FmIx Then MthEix = -1: Exit Function
 Dim C$: C = "End " & EndLinItm
-If HasSubStr(Src(FmIx), C) Then EndLinIx = FmIx: Exit Function
+If HasSubStr(Src(FmIx), C) Then MthEix = FmIx: Exit Function
 Dim O&
 For O = FmIx + 1 To UB(Src)
-   If HasPfx(Src(O), C) Then EndLinIx = O: Exit Function
+   If HasPfx(Src(O), C) Then MthEix = O: Exit Function
 Next
 Thw CSub, "Cannot find EndLin", "EndLin FmIx Src", C, FmIx, Src
 End Function
@@ -73,30 +76,38 @@ End Function
 
 Function MthIxyzSN(Src$(), Mthn) As Long()
 Dim Ix&
-Ix = FstMthIx(Src, Mthn)
+Ix = FstMthIxzN(Src, Mthn)
 If Ix = -1 Then Exit Function
 PushI MthIxyzSN, Ix
 If IsPrpLin(Src(Ix)) Then
-    Ix = FstMthIx(Src, Mthn, Ix + 1)
+    Ix = FstMthIxzN(Src, Mthn, Ix + 1)
     If Ix > 0 Then PushI MthIxyzSN, Ix
 End If
 End Function
+Function FstMthIx&(Src$())
+Dim O&
+Dim L
+For Each L In Itr(Src)
+    If IsMthLin(L) Then FstMthIx = O: Exit Function
+Next
+FstMthIx = -1
+End Function
 
-Function FstMthIx&(Src$(), Mthn, Optional SrcFmIx& = 0)
+Function FstMthIxzN&(Src$(), Mthn, Optional SrcFmIx& = 0)
 Dim I
 For I = SrcFmIx To UB(Src)
     If MthnzLin(Src(I)) = Mthn Then
-        FstMthIx = I
+        FstMthIxzN = I
         Exit Function
     End If
 Next
-FstMthIx = -1
+FstMthIxzN = -1
 End Function
 
 Function MthEIxy(Src$(), FmIxy&()) As Long()
 Dim Ix
 For Each Ix In Itr(FmIxy)
-    PushI MthEIxy, MthEIx(Src, Ix)
+    PushI MthEIxy, MthEix(Src, Ix)
 Next
 End Function
 Function MthIxzSIW&(Src$(), MthIx, WiTopRmk As Boolean)
@@ -108,11 +119,7 @@ End If
 End Function
 
 Function MthFeizSIW(Src$(), MthIx, Optional WiTopRmk As Boolean) As Fei
-MthFeizSIW = Fei(MthIxzSIW(Src, MthIx, WiTopRmk), MthEIx(Src, MthIx))
-End Function
-
-Function MthEIx&(Src$(), MthIx)
-MthEIx = EndLinIx(Src, MthKd(Src(MthIx)), MthIx)
+MthFeizSIW = Fei(MthIxzSIW(Src, MthIx, WiTopRmk), MthEix(Src, MthIx))
 End Function
 
 Function FstMthLnozM&(Md As CodeModule)
@@ -137,7 +144,7 @@ FstMthIxzS = -1
 End Function
 
 Function MthLnoMdMth&(A As CodeModule, Mthn)
-MthLnoMdMth = 1 + FstMthIx(Src(A), Mthn, 0)
+MthLnoMdMth = 1 + FstMthIxzN(Src(A), Mthn, 0)
 End Function
 
 Function MthLnoAyzMN(A As CodeModule, Mthn) As Long()

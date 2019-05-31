@@ -90,7 +90,7 @@ End Sub
 
 Sub RplLines(A As CodeModule, Lno, NLin, OldLines$, NewLines$)
 DltLines A, Lno, NLin, OldLines
-InsLines A, Lno, NewLines
+A.InsertLines Lno, NewLines
 End Sub
 
 Sub DltLines(A As CodeModule, Lno, NLin, OldLines$)

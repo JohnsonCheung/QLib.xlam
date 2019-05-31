@@ -4,6 +4,13 @@ Option Explicit
 Const Asm$ = "QDta"
 Const NS$ = "Dta.Ds"
 Private Const CMod$ = "BDrs."
+Type DrSepr
+    DtaSep As String
+    DtaQuote As String
+    LinSep As String
+    LinQuote As String
+End Type
+Enum EmTblFmt: EiTblFmt: EiSSFmt: End Enum
 Type Drs: Fny() As String: Dry() As Variant: End Type
 Type Drss: N As Long: Ay() As Drs: End Type
 Enum EmCnt
@@ -16,6 +23,25 @@ Enum EmCntSrtOpt
     eSrtByCnt
     eSrtByItm
 End Enum
+
+Function DrSepr(DtaSep$, DtaQuote$, LinSep$, LinQuote$) As DrSepr
+With DrSepr
+    .DtaQuote = DtaQuote
+    .DtaSep = DtaSep
+    .LinQuote = LinQuote
+    .LinSep = LinSep
+End With
+End Function
+
+Function DrSeprzEmTblFmt(A As EmTblFmt) As DrSepr
+Dim DS$, DQ$, LS$, LQ$
+Select Case True
+   Case A = EiTblFmt: DQ = "| * |": DS = " | ": LQ = "|-*-|": LS = "-|-"
+   Case A = EiSSFmt: DS = " ": LS = " "
+End Select
+DrSeprzEmTblFmt = DrSepr(DS, DQ, LS, LQ)
+End Function
+
 Function DrszF(FF$) As Drs
 DrszF = DrszFF(FF, EmpAv)
 End Function
@@ -25,7 +51,32 @@ End Function
 Function HasReczDrs(A As Drs) As Boolean
 HasReczDrs = Si(A.Dry) > 0
 End Function
-
+Function NoReczDry(Dry()) As Boolean
+NoReczDry = Si(Dry) = 0
+End Function
+Function NoReczDrs(A As Drs) As Boolean
+NoReczDrs = NoReczDry(A.Dry)
+End Function
+Function ValzDrsC(A As Drs, C)
+If Si(A.Dry) = 0 Then Thw CSub, "No Rec", "Drs.Fny", A.Fny
+ValzDrsC = A.Dry(0)(IxzAy(A.Fny, C))
+End Function
+Function LasRec(A As Drs) As Drs
+If Si(A.Dry) = 0 Then Thw CSub, "No LasRec", "Drs.Fny", A.Fny
+LasRec = Drs(A.Fny, Av((LasEle(A.Dry))))
+End Function
+Function DrszSSAy(SSAy$(), FF$) As Drs
+DrszSSAy = DrszFF(FF, DryzSSAy(SSAy))
+End Function
+Function DryzSSAy(SSAy$()) As Variant()
+Dim SS
+For Each SS In Itr(SSAy)
+    PushI DryzSSAy, TermAy(SS)
+Next
+End Function
+Function IxdzDrs(A As Drs) As Dictionary
+Set IxdzDrs = DiczAyIx(A.Fny)
+End Function
 Function Drs(Fny$(), Dry()) As Drs
 With Drs
     .Fny = Fny
@@ -37,38 +88,59 @@ Function DrsAddCol(A As Drs, ColNm$, CnstBrk) As Drs
 DrsAddCol = Drs(CvSy(AddAyItm(A.Fny, ColNm)), DryAddColzC(A.Dry, CnstBrk))
 End Function
 
-Function DrsAddIxCol(A As Drs, HidIxCol As Boolean) As Drs
-If HidIxCol Then
-    DrsAddIxCol = A
-    Exit Function
-End If
-
-Dim Fny$()
-    Fny = AyInsEle(A.Fny, "Ix")
-Dim Dry()
-    Dim J&, I, Dr
-    For Each I In Itr(A.Dry)
-        Dr = AyInsEle(I, J): J = J + 1
-        Push Dry, Dr
-    Next
+Function DrsAddIxCol(A As Drs, IxCol As EmIxCol) As Drs
+Dim J&, Fny$(), Dry(), I, Dr
+Select Case True
+Case IxCol = EiNoIx: DrsAddIxCol = A: Exit Function
+Case IxCol = EiBeg0
+Case IxCol = EiBeg1: J = 1
+End Select
+Fny = AyInsEle(A.Fny, "Ix")
+For Each Dr In Itr(A.Dry)
+    Push Dry, AyInsEle(Dr, J)
+    J = J + 1
+Next
 DrsAddIxCol = Drs(Fny, Dry)
 End Function
 
 Function AvDrsC(A As Drs, C) As Variant()
-AvDrsC = IntoDrsC(Array(), A, C)
+AvDrsC = IntozDrsC(Array(), A, C)
 End Function
+Function DrswDist(A As Drs, CC$) As Drs
+DrswDist = DrszFF(CC, DrywDist(SelDrs(A, CC).Dry))
+End Function
+Sub IntoColApzDrs(A As Drs, CC$, ParamArray OColAp())
+Dim OColAv(), J%, Col, C$()
+OColAv = OColAp
+C = SyzSS(CC)
+For J = 0 To UB(OColAv)
+    Col = IntozDrsC(OColAv(J), A, C(J))
+    OColAp(J) = Col
+Next
+End Sub
 
-Function IntoDrsC(Into, A As Drs, C)
+Sub IntoColApzDistDrs(A As Drs, CC$, ParamArray OColAp())
+Dim OColAv(), J%, Col, B As Drs, C$()
+B = DrswDist(A, CC)
+OColAv = OColAp
+C = SyzSS(CC)
+For J = 0 To UB(OColAv)
+    Col = IntozDrsC(OColAv(J), B, C(J))
+    OColAp(J) = Col
+Next
+End Sub
+
+Function IntozDrsC(Into, A As Drs, C)
 Dim O, Ix%, Dry(), Dr
 Ix = IxzAy(A.Fny, C): If Ix = -1 Then Stop
 O = Into
 Erase O
 Dry = A.Dry
-If Si(Dry) = 0 Then IntoDrsC = O: Exit Function
+If Si(Dry) = 0 Then IntozDrsC = O: Exit Function
 For Each Dr In Dry
     Push O, Dr(Ix)
 Next
-IntoDrsC = O
+IntozDrsC = O
 End Function
 Function DmpRec(A As Drs)
 D FmtRec(A)
@@ -84,16 +156,17 @@ End Function
 Function IxOfUStr$(Ix&, U&)
 
 End Function
+
 Function FmtReczFnyDr(Fny$(), Dr, Optional Ix& = -1, Optional N& = -1)
 FmtReczFnyDr = FmtRec_FmAlignedFny_AndDr(AlignLzAy(Fny), Dr, Ix, N)
 End Function
 
 Function FmtRec_FmAlignedFny_AndDr(AlignedFny$(), Dr, Optional Ix& = -1, Optional U& = -1) As String()
 PushNonBlank FmtRec_FmAlignedFny_AndDr, IxOfUStr(Ix, U)
-
 End Function
-Sub DmpDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColNm$)
-DmpAy FmtDrs(A, MaxColWdt, BrkColNm$)
+
+Sub DmpDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColnn$, Optional Fmt As EmTblFmt = EiTblFmt)
+DmpAy FmtDrs(A, MaxColWdt, BrkColnn$)
 End Sub
 
 Function DrpCny(A As Drs, CC$) As Drs
@@ -142,9 +215,10 @@ DrsInsCVIsAftFld = Drs(Fny1, Dry)
 End Function
 
 Function IsEqDrs(A As Drs, B As Drs) As Boolean
-If Not IsEqAy(A.Fny, B.Fny) Then Exit Function
-If Not IsEqDry(A.Dry, B.Dry) Then Exit Function
-IsEqDrs = True
+Select Case True
+Case IsEqAy(A.Fny, B.Fny), IsEqDry(A.Dry, B.Dry)
+Case Else: IsEqDrs = True
+End Select
 End Function
 
 Sub BrwCnt(Ay, Optional Opt As EmCnt)
@@ -184,8 +258,8 @@ Function NColzDrs%(A As Drs)
 NColzDrs = Max(Si(A.Fny), NColzDry(A.Dry))
 End Function
 
-Function NRowDrs&(A As Drs)
-NRowDrs = Si(A.Dry)
+Function NReczDrs&(A As Drs)
+NReczDrs = Si(A.Dry)
 End Function
 
 Function DrwIxy(Dr(), Ixy&())
@@ -235,10 +309,29 @@ Dim C&, R&, Dr
 SqzDrs = O
 End Function
 
-Function SyzDrsC(A As Drs, ColNm$) As String()
-SyzDrsC = IntoDrsC(EmpSy, A, ColNm)
+Sub ColApzDrs(A As Drs, CC$, ParamArray OColAp())
+Dim Av(): Av = OColAp
+Dim C$(): C = SyzSS(CC)
+Dim J%, O
+For J = 0 To UB(Av)
+    O = OColAp(J)
+    O = IntozDrsC(O, A, C(J)) 'Must put into O first!!
+                              'This will die: OColAp(J) = IntozDrsC(O, A, C(J))
+    OColAp(J) = O
+Next
+End Sub
+
+Function SyzDryC(Dry(), C) As String()
+SyzDryC = IntozDryC(EmpSy, Dry, C)
 End Function
 
+Function SyzDrsC(A As Drs, ColNm$) As String()
+SyzDrsC = IntozDrsC(EmpSy, A, ColNm)
+End Function
+Function AddDrs(A As Drs, B As Drs) As Drs
+If Not IsEqAy(A.Fny, B.Fny) Then Thw CSub, "Dif Fny: Cannot add", "A-Fny B-Fny", A.Fny, B.Fny
+AddDrs = Drs(A.Fny, CvAv(AddAy(A.Dry, B.Dry)))
+End Function
 Sub PushDrs(O As Drss, M As Drs)
 With O
     ReDim Preserve .Ay(.N)
@@ -324,7 +417,6 @@ Dim F$()
 DrsAddCol C, D, A
 DrsAddCol C, D, A
 AddColzValIdzCntzDrs C, D, D
-BrwDrs C, E, D, D
 DtzDrs C, D
 DrsInsCV C, D, A
 End Sub
@@ -335,5 +427,28 @@ Dim Fny$(), Dry()
 Fny = AddAy(A.Fny, TermAy(FF))
 Dry = DryAddColzCC(A.Dry, C1, C2)
 DrsAddCC = Drs(Fny, Dry)
+End Function
+
+Function IxyzJnA(Fny$(), Jn$) As Long()
+IxyzJnA = IxyzSubAy(Fny, FnyAzJn(Jn))
+End Function
+Function IxyzJnB(Fny$(), Jn$) As Long()
+IxyzJnB = IxyzSubAy(Fny, FnyBzJn(Jn))
+End Function
+Function AddColzExiB(A As Drs, B As Drs, Jn$, ExiB_FldNm$) As Drs
+Dim IA&(), IB&(), Dr, KA(), BKeyDry(), ODry()
+IA = IxyzJnA(A.Fny, Jn)
+IB = IxyzJnB(B.Fny, Jn)
+BKeyDry = SelDry(B.Dry, IB)
+For Each Dr In Itr(A.Dry)
+    KA = AywIxy(Dr, IA)
+    If HasDr(BKeyDry, KA) Then
+        PushI Dr, True
+    Else
+        PushI Dr, False
+    End If
+    PushI ODry, Dr
+Next
+AddColzExiB = Drs(AddFF(A.Fny, ExiB_FldNm), ODry)
 End Function
 

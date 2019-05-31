@@ -43,7 +43,12 @@ End Function
 Function AftRev$(S, Sep$, Optional NoTrim As Boolean)
 AftRev = Brk1Rev(S, Sep, NoTrim).S2
 End Function
-
+Function BefSpc$(S)
+BefSpc = Bef(S, " ")
+End Function
+Function AftSpc$(S)
+AftSpc = Aft(S, " ")
+End Function
 Function BefSpcOrAll$(S)
 BefSpcOrAll = BefOrAll(S, " ")
 End Function

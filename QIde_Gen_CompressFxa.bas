@@ -1,4 +1,4 @@
-Attribute VB_Name = "QIde_Bld_Compress"
+Attribute VB_Name = "QIde_Gen_CompressFxa"
 Option Explicit
 Option Compare Text
 Private Sub Z_CompressFxa()

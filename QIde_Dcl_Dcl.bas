@@ -70,26 +70,33 @@ Next
 NEnm = O
 End Function
 
-Function UsrTyFei(Src$(), TyNm$) As Fei
-Dim FmI&: FmI = UsrTyFmIx(Src, TyNm)
-Dim ToI&: ToI = EndTyIx(Src, FmI)
+Function UsrTyFei(Dcl$(), TyNm$) As Fei
+Dim FmI&: FmI = UsrTyFmIx(Dcl, TyNm)
+Dim ToI&: ToI = EndTyIx(Dcl, FmI)
 UsrTyFei = Fei(FmI, ToI)
 End Function
 
+Function MthELin$(MthLin)
+Dim K$: K = MthKd(MthLin)
+If K = "" Then Thw CSub, "MthLin Error", "MthLin", MthLin
+MthELin = "End " & K
+End Function
+
+
 Function EndEnmIx&(Src$(), FmIx)
-EndEnmIx = EndLinIx(Src, "Enum", FmIx)
+EndEnmIx = MthEix(Src, "Enum", FmIx)
 End Function
 
-Function EndTyIx&(Src$(), FmIx)
-EndTyIx = EndLinIx(Src, "Type", FmIx)
+Function EndTyIx&(Dcl$(), FmIx)
+EndTyIx = MthEix(Dcl, "Type", FmIx)
 End Function
 
-Function UsrTyLines$(Src$(), Tyn$)
-UsrTyLines = JnCrLf(UsrTyLy(Src, Tyn))
+Function UsrTyLines$(Dcl$(), Tyn$)
+UsrTyLines = JnCrLf(UsrTyLy(Dcl, Tyn))
 End Function
 
-Function UsrTyLy(Src$(), TyNm$) As String()
-UsrTyLy = AywFei(Src, UsrTyFei(Src, TyNm))
+Function UsrTyLy(Dcl$(), TyNm$) As String()
+UsrTyLy = AywFei(Dcl, UsrTyFei(Src, TyNm))
 End Function
 
 Function UsrTyFmIx&(Src$(), TyNm)
@@ -194,14 +201,14 @@ Dim A2%: A2 = DclLinCnt(B2)
 Debug.Assert A1 = A2
 End Sub
 
-Sub BrwDclLinCntDryPj()
-BrwDry DclLinCntDryzP(CPj)
+Sub BrwDclLinCntP()
+BrwDry DclLinCntzP(CPj)
 End Sub
 
-Function DclLinCntDryzP(P As VBProject) As Variant()
+Function DclLinCntzP(P As VBProject) As Variant()
 Dim C As VBComponent
 For Each C In P.VBComponents
-    PushI DclLinCntDryzP, Array(C.Name, DclLinCntzM(C.CodeModule))
+    PushI DclLinCntzP, Array(C.Name, DclLinCntzM(C.CodeModule))
 Next
 End Function
 

@@ -16,8 +16,8 @@ Function JnAyabSpc(A, B) As String()
 JnAyabSpc = JnAyab(A, B, " ")
 End Function
 
-Function FmtAyab(A, B) As String()
-FmtAyab = FmtS1S2s(S1S2szAyab(A, B))
+Function FmtAyab(A, B, Optional N1$ = "Ay1", Optional N2$ = "Ay2") As String()
+FmtAyab = FmtS1S2s(S1S2szAyab(A, B), N1, N2)
 End Function
 
 Function LyzAyabJnSepForEmpB(A, B, Optional Sep$ = " ") As String()

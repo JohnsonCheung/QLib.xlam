@@ -195,7 +195,7 @@ End Function
 
 Function NColzSq&(Sq())
 On Error Resume Next
-NColzSq = UBound(Sq(), 2)
+NColzSq = UBound(Sq, 2)
 End Function
 Function NewLoSqAt(Sq(), At As Range) As ListObject
 Set NewLoSqAt = LozRg(RgzSq(Sq(), At))
@@ -209,7 +209,8 @@ Set WszSq = LozRg(RgzSq(Sq(), NewA1(Wsn)))
 End Function
 
 Function NRowzSq&(Sq())
-NRowzSq = UBound(Sq(), 1)
+On Error Resume Next
+NRowzSq = UBound(Sq, 1)
 End Function
 
 

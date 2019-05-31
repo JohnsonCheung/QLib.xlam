@@ -3,6 +3,25 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Thw_Msg."
 Private Const Asm$ = "QVb"
+Type Er: M As Variant: End Type
+Function NoEr(A As Er) As Boolean
+If IsArray(A.M) Then
+    NoEr = Si(A.M)
+Else
+    NoEr = A.M = ""
+End If
+End Function
+Sub BrwEr(A As Er)
+Brw A.M
+End Sub
+Function Er(V) As Er
+Select Case True
+Case IsSy(V): Er.M = V
+Case IsArray(V): Er.M = SyzAy(V)
+Case IsEmpty(V) Or IsMissing(V): Er.M = ""
+Case Else: Er.M = CStr(V)
+End Select
+End Function
 
 Function VblzLines$(Lines$)
 VblzLines = Replace(RmvCr(Lines), vbLf, "|")
@@ -59,6 +78,25 @@ Function LyzMsgNap(Msg$, ParamArray Nap()) As String()
 Dim Nav(): Nav = Nap
 LyzMsgNap = LyzMsgNav(Msg, Nav)
 End Function
+Function LyzNmDrs(Nm$, A As Drs, Optional MaxColWdt% = 100) As String()
+LyzNmDrs = LyzNmLy(Nm, FmtDrs(A, MaxColWdt), EiNoIx)
+End Function
+
+Function LyzNmLy(Nm$, Ly$(), Optional B As EmIxCol = EiBeg1) As String()
+Dim L$(), J&, S$
+If Si(Ly) = 0 Then
+    PushI LyzNmLy, Nm & "(No Lin)"
+    Exit Function
+End If
+L = AddIxPfx(Ly, B)
+'Brw L:Stop
+S = Space(Len(Nm))
+PushI LyzNmLy, Nm & L(0)
+For J = 1 To UB(L)
+    PushI LyzNmLy, S & L(J)
+Next
+End Function
+
 Function LyzMsg(Msg$) As String()
 LyzMsg = LyzFunMsg("", Msg)
 End Function
@@ -142,6 +180,7 @@ End Function
 
 Function Box(S) As String()
 Dim H$: H = Dup("*", Len(S) + 6)
+PushI Box, ""
 PushI Box, H
 PushI Box, "** " & S & " **"
 PushI Box, H

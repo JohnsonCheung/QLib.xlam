@@ -167,7 +167,7 @@ Case Else:
         Set O = FdzTxt(F, Si)
         Exit Function
     End If
-    ThwShtTyEr CSub, ShtTys
+    Thw CSub, "ShtTys Err", "ShtTys", ShtTys
 End Select
 Set FdzShtTys = O
 End Function

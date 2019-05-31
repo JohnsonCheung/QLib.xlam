@@ -500,7 +500,7 @@ Next
 End Function
 
 Function HasMth(Src$(), Mthn) As Boolean
-HasMth = FstMthIx(Src, Mthn) >= 0
+HasMth = FstMthIxzN(Src, Mthn) >= 0
 End Function
 
 Function HasMthzM(A As CodeModule, Mthn) As Boolean

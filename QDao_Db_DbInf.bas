@@ -8,8 +8,8 @@ Sub BrwDbInf(A As Database)
 BrwDs DbInf(A), 2000, BrkColVbl:="TblFld Tbl"
 End Sub
 
-Function DbInf(A As Database) As Ds
-Dim O As Ds, T$()
+Function DbInf(A As Database) As DS
+Dim O As DS, T$()
 T = Tny(A)
 AddDt O, InfDtOfLnk(A, T)
 AddDt O, InfDtOfTbl(A, T)

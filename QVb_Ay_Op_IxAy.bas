@@ -8,7 +8,7 @@ Type NumPos
     Pos As Long
 End Type
 
-Sub ZZ_AsgIxy()
+Private Sub ZZ_AsgIxy()
 Dim Fny$(), FF$, A%, B%, C%, EA%, EB%, EC%
 GoSub T1
 Exit Sub
@@ -31,6 +31,7 @@ Dim F, J%, I&
 For Each F In SyzSS(FF)
     I = IxzAy(Fny, F): If I < 0 Then Thw CSub, "F in FF not found in Fny", "Fny FF, F", Fny, FF, F
     OAp(J) = IxzAy(Fny, F)
+    J = J + 1
 Next
 End Sub
 

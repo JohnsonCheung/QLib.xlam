@@ -8,6 +8,19 @@ Dim A As Dictionary
 Set A = SrtDic(WrdCntDic(JnCrLf(SrczP(CPj))))
 BrwDic A
 End Sub
+Function WrdCntg$(S)
+Dim NW&, ND&, Sy$()
+Sy = WrdSy(S)
+NW = Si(Sy)
+ND = Si(AywDist(Sy))
+WrdCntg = FmtQQ("Len: ?|Lines: ?|Words: ?|Distinct Words: ?", Len(S), NLines(S), NW, ND)
+End Function
+Function NWrd&(S)
+NWrd = Si(WrdSy(S))
+End Function
+Function NDistWrd&(S)
+NDistWrd = Si(AywDist(WrdSy(S)))
+End Function
 Function WrdCntDic(S) As Dictionary
 Set WrdCntDic = CntDic(WrdSy(S))
 End Function

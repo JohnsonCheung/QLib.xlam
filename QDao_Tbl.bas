@@ -601,7 +601,7 @@ ValzCnq = ValzArs(A.Execute(Q))
 End Function
 
 Function NReczFxw&(Fx, Wsn, Optional Bexpr$)
-NReczFxw = ValzCnq(CnzFx(Fx), SqlSelCnt_T_OB(CatTn(Wsn), Bexpr))
+NReczFxw = ValzCnq(CnzFx(Fx), SqlSelCnt_T_OB(CatTnzWsn(Wsn), Bexpr))
 End Function
 Function NReczT&(A As Database, T, Optional Bexpr$)
 NReczT = ValzQ(A, SqlSelCnt_T_OB(T, Bexpr))

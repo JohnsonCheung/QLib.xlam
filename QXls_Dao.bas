@@ -36,7 +36,7 @@ Function TmpInpTny(A As Database) As String()
 TmpInpTny = AywPfx(Tny(A), "#I")
 End Function
 
-Sub ZZ_LoIxSq()
+Private Sub ZZ_LoIxSq()
 Dim Wb As Workbook: Set Wb = NewWb
 AddWszzWbSq Wb, SampSq
 AddWszzWbSq Wb, SampSq1
@@ -203,7 +203,9 @@ End Function
 Sub PutDbtWs(A As Database, T, Ws As Worksheet)
 PutDbtAt A, T, A1zWs(Ws)
 End Sub
-
+Sub PutAyAtV(Ay, At As Range)
+PutSq SqzAyV(Ay), At
+End Sub
 Sub PutDbtAt(A As Database, T, At As Range, Optional AddgWay As EmAddgWay)
 LozRg PutSq(SqzT(A, T), At), Lon(T)
 End Sub

@@ -39,7 +39,19 @@ Y_LinesAy = XX
 Erase XX
 End Function
 
-Function FmtLinesAy(LinesAy, Optional B As EmBeg01 = EiBeg0) As String()
+Function BoxLy(Ly$()) As String()
+If Si(Ly) = 0 Then Exit Function
+Dim W%, L$, I
+W = WdtzAy(Ly)
+L = Quote(Dup("-", W), "|-*-|")
+PushI BoxLy, L
+For Each I In Ly
+    PushI BoxLy, "| " & AlignL(I, W) & " |"
+Next
+PushI BoxLy, L
+End Function
+
+Function FmtLinesAy(LinesAy, Optional B As EmIxCol = EiBeg0) As String()
 If Si(LinesAy) = 0 Then Exit Function
 Dim W%: W = WdtzLinesAy(LinesAy)
 Dim SepLin: SepLin = Quote(Dup("-", W + 2), "|")
@@ -50,7 +62,7 @@ For Each Lines In Itr(LinesAy)
     PushI FmtLinesAy, SepLin
 Next
 End Function
-Private Function AddIxPfxzLineszW(Lines, W%, Optional B As EmBeg01 = EiBeg0) As String()
+Private Function AddIxPfxzLineszW(Lines, W%, Optional B As EmIxCol = EiBeg0) As String()
 Dim L
 For Each L In Itr(SplitCrLf(Lines))
     PushI AddIxPfxzLineszW, "| " & AlignL(L, W) & " |"
@@ -237,7 +249,7 @@ Else
 End If
 End Function
 
-Function NLines&(Lines$)
+Function NLines&(Lines)
 NLines = SubStrCnt(Lines, vbLf) + 1
 End Function
 

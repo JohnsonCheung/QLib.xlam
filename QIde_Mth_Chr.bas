@@ -5,11 +5,11 @@ Private Const CMod$ = "MIde_Mth_Chr."
 Private Const Asm$ = "QIde"
 Public Const TyChrLis$ = "!@#$%^&"
 
-Function IsTyChr(A$) As Boolean
+Function IsTyChr(A) As Boolean
 If Len(A) <> 1 Then Exit Function
 IsTyChr = HasSubStr(TyChrLis, A)
 End Function
-Function TyChrzTyNm$(TyNm$)
+Function TyChrzTyNm$(TyNm)
 Select Case TyNm
 Case "String":   TyChrzTyNm = "$"
 Case "Integer":  TyChrzTyNm = "%"
@@ -17,7 +17,6 @@ Case "Long":     TyChrzTyNm = "&"
 Case "Double":   TyChrzTyNm = "#"
 Case "Single":   TyChrzTyNm = "!"
 Case "Currency": TyChrzTyNm = "@"
-Case Else:       TyChrzTyNm = TyNm
 End Select
 End Function
 

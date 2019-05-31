@@ -1,12 +1,6 @@
 Attribute VB_Name = "QXls_Lof_ErzLof"
 Option Compare Text
 Option Explicit
-Private Type A
-    Fny() As String
-    Lof() As String
-    KLxs As KLxs
-End Type
-Private A As A
 Private Const Asm$ = "QXls"
 Private Const CMod$ = "MXls_Lof_ErzLof."
 Public Const LofT1nn$ = _
@@ -50,11 +44,6 @@ Private Function B_ELo_DupNm(Dup As Lnxses) As String()
 
 End Function
 
-Function ErzLof(Lof$(), LoFny$()) As String() 'Erzror-of-ListObj-Formatter:Erz.z.Lo.f
-Const CSub$ = CMod & "LofErz"
-Init Lof, LoFny
-ErzLof = B
-End Function
 Private Function B_ELo_MisFld(IsMisLoFld As Boolean) As String()
 
 End Function
@@ -72,7 +61,7 @@ End Function
 Private Function B_ELo_MisNm(IsMisNm As Boolean)
 
 End Function
-Private Function B() As String()
+Function ErzLof(Lof$(), LoFny$()) As String() 'Erzror-of-ListObj-Formatter:Erz.z.Lo.f
 Dim Lo_IsMisNm As Boolean
 Dim Lo_DupNm As Lnxses
 Dim Lo_ErNmLnoAy&()
@@ -125,7 +114,7 @@ Dim EFml$(): EFml = Sy(EFml1, EFml2, EFml3)
 Dim ELbl$(): ELbl = Sy(ELbl1, ELbl2, ELbl3)
 Dim ETit$(): ETit = Sy(ETit1)
 Dim EBet$(): EBet = Sy(EBet1)
-B = Sy(ELo, EAli, EBdr, ETot, EWdt, EFmt, ELvl, ECor, EFml, ELbl, ETit, EBet)
+ErzLof = Sy(ELo, EAli, EBdr, ETot, EWdt, EFmt, ELvl, ECor, EFml, ELbl, ETit, EBet)
 End Function
 Function FnywLikssAy(Fny$(), LikssAy$()) As String()
 Dim F$, I, LikAy$()
@@ -135,11 +124,7 @@ For Each I In Itr(Fny)
     If HitLikAy(F, LikAy) Then PushI FnywLikssAy, F
 Next
 End Function
-Private Sub Init(Lof$(), LoFny$())
-A.Lof = Lof
-A.Fny = LoFny
-'A.KLxs = KLxs(A.Lof, LofT1nn)
-End Sub
+
 Private Function WAli_LeftRightCenter() As String()
 'ErzAli_LinErz = WMsgzAliLin(SyeT1Sy(Ali, "Left Right Center"))
 End Function
@@ -224,7 +209,7 @@ End Function
 Private Function ErzFldss() As String()
 
 End Function
-Private Function ErzFldSngzDup() As String() 'It is for [SngFldLin] only.  That means T2 of LofLin is field name.  Return error msg for any FldNm is dup.
+Private Function ErzFldSngzDup(Fny$(), Lof$()) As String() 'It is for [SngFldLin] only.  That means T2 of LofLin is field name.  Return error msg for any FldNm is dup.
 Dim T1$, I
 For Each I In SyzSS(LofT1nnzSng) 'It is for [SngFldLin] only
     T1 = I
@@ -247,10 +232,10 @@ For Each I In Itr(DupT2AyzLnxs(Lnxs))
 '    PushIAy ErzFldSngzDup__WithinT1, ErzFldSngzDup__DupFld_is_fnd(DupFld, Lnxs, T1)
 Next
 End Function
-Private Function ErzFml() As String()
-ErzFml = ErzFml__InsideFmlHasInvalidFld
+Private Function ErzFml(Fny$()) As String()
+ErzFml = ErzFml__InsideFmlHasInvalidFld(Fny)
 End Function
-Private Function ErzFml__InsideFmlHasInvalidFld() As String()
+Private Function ErzFml__InsideFmlHasInvalidFld(Fny$()) As String()
 Dim J&, Fld$, Fml$, O$(), S$, T1
 Dim Lnxs As Lnxs: Lnxs = WLnxszT1("Fml")
 For J = 0 To Lnxs.N - 1
@@ -259,7 +244,7 @@ For J = 0 To Lnxs.N - 1
         If FstChr(Fml) <> "=" Then
             'PushI O, WMsg_Fml_FstChr(.Lno)
         Else
-            Dim ErzFny$(): ErzFny = ErzFnyzFml(Fld, Fml, A.Fny)
+            Dim ErzFny$(): ErzFny = ErzFnyzFml(Fld, Fml, Fny)
 '            PushIAy O, ErzFml__InsideFmlHasInvalidFld1(ErzFny, .Lno, Fld, Fml)
         End If
     End With
@@ -348,13 +333,14 @@ Next
 End Function
 Private Function WMsgzFny(Fny$(), Lin_Ty$) As String()
 'Return Msg if given-Fny has some field not in A.Fny
-Dim ErzFny$(): ErzFny = MinusAy(Fny, A.Fny)
+Dim ErzFny$(): ErzFny = MinusAy(Fny, Fny)
 If Si(ErzFny) = 0 Then Exit Function
 'PushI WMsgzFny, FmtQQ(M_Fny, ErzFny, Lin_Ty)
 End Function
 Private Sub Z_ErzBet()
+Dim Fny$()
 '---------------
-A.Fny = SyzSS("A B")
+Fny = SyzSS("A B")
 'Erzase Bet
 '    PushI Bet, "A B C"
 '    PushI Bet, "A B C"
@@ -376,8 +362,7 @@ T1:
     Lof = SplitVBar("Fml AA sdlkfsdflk|Fml AA skldf|Fml BB sdklfjdlf|Fml BB sdlfkjsdf|Fml BB sdklfjsdf|Fml CC sdfsdf")
     GoTo Tst
 Tst:
-    Init Lof, Fny
-    Act = ErzFldSngzDup
+    Act = ErzFldSngzDup(Fny, Lof)
 End Sub
 Private Sub Z_ErzLof()
 Dim Lof$(), LoFny$()

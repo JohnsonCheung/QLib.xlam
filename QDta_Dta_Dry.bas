@@ -153,10 +153,25 @@ For Each Dr In Itr(Dry)
 Next
 End Function
 
-
+Function AlignRzDryC(Dry(), C) As Variant()
+Dim Ay$(): Ay = AlignRzAy(ColzDryC(Dry, C))
+Dim O(): O = Dry
+Dim J&
+For J = 0 To UB(O)
+    O(J)(C) = Ay(J)
+Next
+AlignRzDryC = O
+End Function
 Sub ThwIf_NEDry(Dry(), B())
 If Not IsEqDry(Dry, B) Then Stop
 End Sub
+Function DrywDist(Dry()) As Variant()
+Dim O(), Dr
+For Each Dr In Itr(Dry)
+    PushNoDupDr O, Dr
+Next
+DrywDist = O
+End Function
 
 Function DrywCCNe(Dry(), C1&, C2&) As Variant()
 Dim Dr
@@ -172,11 +187,42 @@ For Each Dr In Itr(Dry)
 Next
 End Function
 
-Function DrywColEq(Dry(), C, Eq) As Variant()
+Function DrywColNe(Dry(), C, Ne) As Variant()
+Dim Dr
+For Each Dr In Itr(Dry)
+    If Dr(C) <> Ne Then PushI DrywColNe, Dr
+Next
+End Function
+
+Function DrywColIn(Dry(), C, InVy) As Variant()
+If Not IsArray(InVy) Then Thw CSub, "Given InVy is not an array", "Ty-InVy", TypeName(InVy)
+Dim Dr
+For Each Dr In Itr(Dry)
+    If HasEle(InVy, Dr(C)) Then
+        PushI DrywColIn, Dr
+    End If
+Next
+End Function
+
+Function DrywColEq(Dry(), C&, Eq) As Variant()
 Dim Dr
 For Each Dr In Itr(Dry)
     If Dr(C) = Eq Then PushI DrywColEq, Dr
 Next
+End Function
+Function FstRecEqzDry(Dry(), C, Eq, SelIxy&()) As Variant()
+Dim Dr
+For Each Dr In Itr(Dry)
+    If Dr(C) = Eq Then FstRecEqzDry = Array(AywIxy(Dr, SelIxy)): Exit Function
+Next
+Thw CSub, "No first rec in Dry of Col-A eq to Val-B", "Col-A Val-B Dry", C, Eq, FmtDry(Dry)
+End Function
+Function FstDrEqzDry(Dry(), C, Eq, SelIxy&()) As Variant()
+Dim Dr
+For Each Dr In Itr(Dry)
+    If Dr(C) = Eq Then FstDrEqzDry = AywIxy(Dr, SelIxy): Exit Function
+Next
+Thw CSub, "No first Dr in Dry of Col-A eq to Val-B", "Col-A Val-B Dry", C, Eq, FmtDry(Dry)
 End Function
 
 Function DrywDupCC(Dry(), CCIxy&()) As Variant()
@@ -201,7 +247,7 @@ For Each Drv In Itr(Dry)
     If IsEqAy(AywIxy(Drv, Ixy), EqVy) Then PushI DrywIxyzy, Drv
 Next
 End Function
-Function ColzDryC(Dry(), C&) As Variant()
+Function ColzDryC(Dry(), C) As Variant()
 Dim Drv
 For Each Drv In Itr(Dry)
     If UB(Drv) < C Then
@@ -211,8 +257,13 @@ For Each Drv In Itr(Dry)
     End If
 Next
 End Function
-Function DistColzDryC(Dry(), C&) As Variant()
-DistColzDryC = AywDist(ColzDryC(Dry, C))
+
+Function DistColzDry(Dry(), C&) As Variant()
+DistColzDry = AywDist(ColzDryC(Dry, C))
+End Function
+
+Function DistColzDrs(A As Drs, C$) As Variant()
+DistColzDrs = AywDist(ColzDryC(A.Dry, IxzAy(A.Fny, C)))
 End Function
 
 Function DryzSqCol(Sq(), ColIxy) As Variant()
@@ -229,7 +280,13 @@ For R = 1 To UBound(Sq(), 1)
 Next
 End Function
 
-
+Function HasIxyDr(Dry(), Ixy&(), Dr) As Boolean
+Dim IDr, A()
+For Each IDr In Itr(Dry)
+    A = AywIxy(Dr, Ixy)
+    If IsEqAy(A, Dr) Then HasIxyDr = True: Exit Function
+Next
+End Function
 Function HasDr(Dry(), Dr) As Boolean
 Dim IDr
 For Each IDr In Itr(Dry)

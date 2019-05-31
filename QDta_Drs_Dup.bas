@@ -7,6 +7,12 @@ Function DrswDup(A As Drs, FF$) As Drs
 DrswDup = DrswRowIxy(A, RowIxyOfDupRow(A, FF))
 End Function
 
+Function SelDrsExlCC(A As Drs, ExlCCLik$) As Drs
+Dim LikC
+For Each LikC In SyzSS(ExlCCLik)
+'    MinusAy(
+Next
+End Function
 Function DrseDup(A As Drs, FF$) As Drs
 Dim RowIxy&(): RowIxy = RowIxyOfDupRow(A, FF)
 DrseDup = DrseRowIxy(A, RowIxy)
@@ -41,13 +47,6 @@ For Each Dr In DryGpCnt(Dry)
     If Dr(0) > 1 Then
         PushI DrywDup, AyeFstEle(Dr)
     End If
-Next
-End Function
-Function DrywDist(Dry()) As Variant()
-If Si(Dry) = 0 Then Exit Function
-Dim Dr
-For Each Dr In DryGpCnt(Dry)
-    PushI DrywDist, Dr
 Next
 End Function
 

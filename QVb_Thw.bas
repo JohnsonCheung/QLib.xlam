@@ -87,14 +87,6 @@ End Sub
 Sub ThwIf_NoSrt(Ay, Fun$)
 If IsSrtedAy(Ay) Then Thw Fun, "Array should be sorted", "Ay-Ty Ay", TypeName(Ay), Ay
 End Sub
-Sub ThwOpt(Thw As EmThw, Fun$, Msg$, ParamArray Nap())
-Dim Nav(): Nav = Nap
-Select Case Thw
-Case EiNoThwInf: InfNav Fun, Msg, Nav
-Case EiNoThwQuiet:
-Case Else:   ThwNav Fun, Msg, Nav
-End Select
-End Sub
 
 Sub Thw(Fun$, Msg$, ParamArray Nap())
 Dim Nav(): Nav = Nap

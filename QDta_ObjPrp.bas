@@ -3,6 +3,31 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDta_ObjPrp."
 Private Const Asm$ = "QDta"
+Function DrszItrPP(Itr, PP$) As Drs
+Dim P$(): P = SyzSS(PP)
+Dim Dry()
+    Dim Obj
+    For Each Obj In Itr
+        PushI Dry, DrzObjPny(Obj, P)
+    Next
+DrszItrPP = Drs(P, Dry)
+End Function
+Function DrzObjPny(Obj, Pny$(), Optional Thw As EmThw = EmThw.EiQuietEmp) As Variant()
+Dim P
+For Each P In Pny
+    Push DrzObjPny, PrpzP(Obj, P, Thw)
+Next
+End Function
+Function PrpzP(Obj, P, Optional Thw As EmThw = EmThw.EiQuietEmp)
+Select Case True
+Case Thw = EiQuietEmp: Asg P_QuietEmp(Obj, P), PrpzP
+Case Else: Stop
+End Select
+End Function
+Private Function P_QuietEmp(Obj, P)
+On Error Resume Next
+Asg CallByName(Obj, P, VbGet), P_QuietEmp
+End Function
 
 Function DrszItrPrpPthSy(Itr, PrpPthSy$()) As Drs
 DrszItrPrpPthSy = Drs(PrpPthSy, DryzItrPrpPthSy(Itr, PrpPthSy))

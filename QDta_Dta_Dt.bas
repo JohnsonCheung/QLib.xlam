@@ -55,6 +55,9 @@ End Function
 Function DtzDrs(A As Drs, Optional DtNm$ = "Dt") As Dt
 DtzDrs = Dt(DtNm, A.Fny, A.Dry)
 End Function
+Function DtzNmDrs(DtNm$, A As Drs) As Dt
+DtzNmDrs = DtzDrs(A, DtNm)
+End Function
 
 Function NRowzDt&(A As Dt)
 NRowzDt = Si(A.Dry)

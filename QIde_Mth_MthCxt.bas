@@ -1,4 +1,4 @@
-Attribute VB_Name = "QIde_Mth_Rmk"
+Attribute VB_Name = "QIde_Mth_MthCxt"
 Option Compare Text
 Option Explicit
 Type Fc
@@ -159,7 +159,26 @@ End Sub
 Function IsRmkedzMFe(A As CodeModule, B As Fei) As Boolean
 'IsRmkedzMFe = IsRmkedzS(LyzMdFei(A, B))
 End Function
-
+Function CDMthCxt() As Drs
+CDMthCxt = DMthCxt(CMd, CMthLno)
+End Function
+Function DMthCxt(M As CodeModule, MthLno&) As Drs
+'*DMthCxt::Drs{L Lin}
+Dim Dry(), L&, ELin$, MthLin$, Lin$
+MthLin = M.Lines(MthLno, 1)
+ELin = MthELin(MthLin)
+For L = SrcLnozNxt(M, MthLno) To M.CountOfLines
+    Lin = M.Lines(L, 1)
+    If Lin = ELin Then
+        GoTo X
+    End If
+    Lin = M.Lines(L, 1)
+    PushI Dry, Array(L, Lin)
+Next
+ThwImpossible CSub
+X:
+DMthCxt = DrszFF("L Lin", Dry)
+End Function
 Function IsRmkedzMthLy(MthLy$()) As Boolean
 If Si(MthLy) = 0 Then Exit Function
 If Not HasPfx(MthLy(0), "Stop '") Then Exit Function
@@ -169,13 +188,21 @@ For Each L In MthLy
 Next
 IsRmkedzMthLy = True
 End Function
-
 Function MthCxtFe(MthLy$(), Fe As Fei) As Fei
-MthCxtFe = Fei(NxtSrcIx(MthLy, Fe.FmIx), Fe.EIx - 1)
+MthCxtFe = Fei(SrcIxzNxt(MthLy, Fe.FmIx), Fe.EIx - 1)
+End Function
+
+Function MthCxt$(MthLy$())
+MthCxt = JnCrLf(MthCxtLy(MthLy))
 End Function
 
 Function MthCxtLy(MthLy$()) As String()
-MthCxtLy = CvSy(AywFei(MthLy, Fei(1, Si(MthLy))))
+If Si(MthLy) = 0 Then Exit Function
+Dim L&: L = FstMthIx(MthLy): If L = -1 Then Thw CSub, "Given MthLy is not MthLy", "MthLy", MthLy
+Dim J%
+For J = SrcIxzNxt(MthLy, L) To UB(MthLy) - 1
+    PushI MthCxtLy, MthLy(J)
+Next
 End Function
 
 Function MthCxtRgs(Src$(), Mthn) As MthRgs

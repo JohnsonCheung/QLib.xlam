@@ -48,7 +48,7 @@ Next
 End Function
 
 Private Function InsOnErGoX(MthLy$()) As String()
-InsOnErGoX = AyInsEle(MthLy, "On Error Goto X", NxtSrcIx(MthLy))
+InsOnErGoX = AyInsEle(MthLy, "On Error Goto X", SrcIxzNxt(MthLy))
 End Function
 
 Private Function EnsLinzOnEr(MthLy$()) As String()
@@ -56,10 +56,8 @@ Dim O$()
 O = RmvOnErGoNonX(MthLy)
 EnsLinzOnEr = InsOnErGoX(O)
 End Function
-Function MthEndLin(MthLin)
-MthEndLin = MthXXXLin(MthLin, "End")
-End Function
-Function MthExitLin(MthLin)
+
+Function MthExitLin$(MthLin)
 MthExitLin = MthXXXLin(MthLin, "Exit")
 End Function
 Private Function MthXXXLin(MthLin, XXX$)

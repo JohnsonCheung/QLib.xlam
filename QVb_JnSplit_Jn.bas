@@ -38,6 +38,11 @@ Function JnCrLf$(Ay)
 JnCrLf = Jn(Ay, vbCrLf)
 End Function
 
+Function JnCrLfAp$(ParamArray Ap())
+Dim Av(): Av = Ap
+JnCrLfAp = Jn(Av, vbCrLf)
+End Function
+
 Function JnDblCrLf$(Ay)
 JnDblCrLf = Jn(Ay, vbCrLf & vbCrLf)
 End Function

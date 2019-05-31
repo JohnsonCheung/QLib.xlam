@@ -22,7 +22,9 @@ End Function
 Function LasTmpDb() As Database
 Set LasTmpDb = Db(LasTmpFb)
 End Function
-
+Sub BrwLasTmpDb()
+BrwDb LasTmpDb
+End Sub
 Function LasTmpFb$()
 Dim Fn$: Fn = MaxEle(FnAy(TmpPthzDb, "*.accdb"))
 If Fn = "" Then Thw CSub, "No *.accdb TmpDbPth", "TmpDbPth", TmpPthzDb

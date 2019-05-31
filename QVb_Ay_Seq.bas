@@ -23,9 +23,11 @@ End If
 IntoSeq_FmTo = OAy
 End Function
 Function CvIntAy(A) As Integer()
+On Error Resume Next
 CvIntAy = A
 End Function
 Function CvLngAy(A) As Long()
+On Error Resume Next
 CvLngAy = A
 End Function
 Function IntSeq_FmTo(FmNum%, ToNum%) As Integer()

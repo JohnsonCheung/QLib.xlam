@@ -41,7 +41,7 @@ Case Else
 End Select
 StrCellzV = O
 End Function
-Function AddIxPfxzLines(Lines, Optional B As EmBeg01 = EiBeg0) As String()
+Function AddIxPfxzLines(Lines, Optional B As EmIxCol = EiBeg0) As String()
 AddIxPfxzLines = AddIxPfx(SplitCrLf(Lines), B)
 End Function
 Function FmtPrim$(Prim)

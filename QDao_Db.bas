@@ -80,7 +80,7 @@ Sub CrtTbl(A As Database, T, FldDclAy)
 A.Execute FmtQQ("Create Table [?] (?)", T, JnComma(FldDclAy))
 End Sub
 
-Function DszDb(A As Database, Optional DsNm$) As Ds
+Function DszDb(A As Database, Optional DsNm$) As DS
 Dim Nm$
 If DsNm = "" Then
     Nm = Dbn(A)
@@ -90,7 +90,7 @@ End If
 DszDb = DszTny(A, Tny(A), Nm)
 End Function
 
-Function DszTny(A As Database, Tny$(), Optional DsNm$) As Ds
+Function DszTny(A As Database, Tny$(), Optional DsNm$) As DS
 Dim T
 For Each T In Tny
     AddDt DszTny, DtzT(A, CStr(T))
@@ -184,6 +184,10 @@ Function TmpTny(A As Database) As String()
 TmpTny = AywPfx(Tny(A), "#")
 End Function
 
+Function Tntt$(A As Database)
+Tntt = TermLin(Tny(A))
+End Function
+
 Function Tni(A As Database)
 Asg Itr(Tny(A)), Tni
 End Function
@@ -231,7 +235,7 @@ Private Sub ZZ_Qny()
 End Sub
 
 Private Sub Z_DszDb()
-Dim A As Database, Tny0, Act As Ds, Ept As Ds
+Dim A As Database, Tny0, Act As DS, Ept As DS
 Stop
 ZZ1:
     Set A = Db(SampFbzDutyDta)

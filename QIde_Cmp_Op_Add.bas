@@ -62,15 +62,21 @@ If HasPfx(A.Name, FmPfx) Then
     A.Name = RplPfx(A.Name, FmPfx, ToPfx)
 End If
 End Sub
-
-Sub EnsClszPN(P As VBProject, Clsn)
+Sub EnsClsLines(Clsn$, ClsLines$)
+EnsCls CPj, Clsn
+EnsModLines Md(Clsn), ClsLines
+End Sub
+Sub EnsCls(P As VBProject, Clsn)
 EnsCmpzPTN P, vbext_ct_ClassModule, Clsn
 End Sub
 
 Sub EnsCmpzPTN(P As VBProject, Ty As vbext_ComponentType, Nm)
 If Not HasCmpzPN(P, Nm) Then AddCmpzPTN P, Ty, Nm
 End Sub
-
+Sub EnsModLines(M As CodeModule, Lines$)
+If Lines = SrcLines(M) Then Inf CSub, "Same module lines, no need to replace", "Mdn", Mdn(M): Exit Sub
+RplzML M, Lines
+End Sub
 Sub EnsModzPN(P As VBProject, Mdn)
 EnsCmpzPTN P, vbext_ct_StdModule, Mdn
 End Sub

@@ -3,6 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_ContLin."
+
 Function ContLin$(Src$(), Ix)
 Dim O$, I&
 O = Src(Ix)
@@ -22,17 +23,30 @@ For L = Lno + 1 To M.CountOfLines
 Next
 ThwImpossible CSub
 End Function
-Function NxtSrcIx&(Src$(), Optional FmIx&)
+
+Function SrcLnozNxt&(M As CodeModule, Lno&)
 Dim J&
-For J = FmIx + 1 To UB(Src)
-    If LasChr(Src(J - 1)) <> "_" Then
-        NxtSrcIx = J
+For J = Lno + 1 To M.CountOfLines
+    If LasChr(M.Lines(J - 1, 1)) <> "_" Then
+        SrcLnozNxt = J
         Exit Function
     End If
 Next
 'No need to throw error, just exit it returns -1
 'Thw CSub, "Cannot find Lno where to insert CSub of a given method", "Mthn MthLy", A.Mthn, AywFT(Src, A.FmIx, A.EIx)
-NxtSrcIx = -1
+End Function
+
+Function SrcIxzNxt&(Src$(), Optional FmIx&)
+Dim J&
+For J = FmIx + 1 To UB(Src)
+    If LasChr(Src(J - 1)) <> "_" Then
+        SrcIxzNxt = J
+        Exit Function
+    End If
+Next
+'No need to throw error, just exit it returns -1
+'Thw CSub, "Cannot find Lno where to insert CSub of a given method", "Mthn MthLy", A.Mthn, AywFT(Src, A.FmIx, A.EIx)
+SrcIxzNxt = -1
 End Function
 
 Private Sub Z_ContLin()

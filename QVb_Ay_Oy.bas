@@ -108,7 +108,12 @@ Dim O
    Next
 OywPEv = O
 End Function
-
+Function OyzItr(Itr) As Variant()
+Dim O
+For Each O In Itr
+    PushObj OyzItr, O
+Next
+End Function
 Function OywPInAy(Oy, P As PrpPth, InAy)
 Dim Obj As Object, O
 If Si(Oy) = 0 Or Si(InAy) Then OywPInAy = Oy: Exit Function

@@ -9,7 +9,7 @@ Private Sub Y__SrcDcl()
 BrwAy DclLy(Y_Src)
 End Sub
 
-Private Sub Y__FstMthIx()
+Private Sub Y__FstMthIxzN()
 Dim Act%
 Act = FstMthIxzS(Y_Src)
 Ass Act = 2

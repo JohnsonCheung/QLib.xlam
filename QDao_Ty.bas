@@ -3,18 +3,18 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Ty."
-Public Const ShtTyLis$ = "AAttBBoolBytCChrDDteDecIIntLLngMMemSTTimTxt"
+Public Const ShtTyss$ = " A Att B Bool Byt C Chr D Dbl Dte Dec I Int L Lng M Mem S T Tim Txt "
 
-Property Get ShtTyDrs() As Drs
+Property Get DrsOfShtTy() As Drs
 Dim Dry(), I
-For Each I In CmlSy(ShtTyLis)
-    PushI Dry, Sy(I, DtaTyzShtTy(CStr(I)))
+For Each I In SyzSS(ShtTyss)
+    PushI Dry, Sy(I, DtaTyzShtTy(I))
 Next
-ShtTyDrs = DrszFF("ShtTy DtaTy", Dry)
+DrsOfShtTy = DrszFF("ShtTy DtaTy", Dry)
 End Property
 
 Property Get ShtTySy() As String()
-ShtTySy = CmlSy(ShtTyLis)
+ShtTySy = SyzSS(ShtTyss)
 End Property
 
 Property Get ShtTyDtaTyLy() As String()
@@ -31,12 +31,13 @@ End Property
 
 Function IsShtTy(S) As Boolean
 Select Case Len(S)
-Case 1, 3: If Not IsAscUCas(Asc(S)) Then Exit Function
-    IsShtTy = HasSubStr(ShtTyLis, S, IgnCas:=True)
+Case 1, 3
+    If Not IsAscUCas(Asc(S)) Then Exit Function
+    IsShtTy = HasSubStr(ShtTyss, " " & S & " ", IgnCas:=True)
 End Select
 End Function
 
-Function DaoTyzShtTy(ShtTy$) As DAO.DataTypeEnum
+Function DaoTyzShtTy(ShtTy) As DAO.DataTypeEnum
 Dim O As DAO.DataTypeEnum
 Select Case ShtTy
 Case "A", "Att":  O = dbAttachment
@@ -53,7 +54,7 @@ Case "M", "Mem":  O = dbMemo
 Case "S", "Sng":  O = dbSingle
 Case "T", "Txt":  O = dbText
 Case "Tim": O = dbTime
-Case Else: ThwShtTyEr CSub, ShtTy
+Case Else: Thw CSub, "Invalid ShtTy", "The-Invalid-ShtTy Valid-ShtTy", ShtTy, ShtTyDtaTyLy
 End Select
 DaoTyzShtTy = O
 End Function
@@ -187,7 +188,7 @@ End Function
 Function IsVdtShtTy(S) As Boolean
 Select Case Len(S)
 Case 1, 3: If Not IsAscUCas(Asc(FstChr(S))) Then Exit Function
-    IsVdtShtTy = HasSubStr(ShtTyLis, S)
+    IsVdtShtTy = HasSubStr(ShtTyss, " " & S & " ")
 End Select
 End Function
 
@@ -198,7 +199,7 @@ For Each ShtTy In Itr(ShtTySy)
 Next
 End Function
 
-Function DtaTyzShtTy$(ShtTy$)
+Function DtaTyzShtTy$(ShtTy)
 DtaTyzShtTy = DtaTy(DaoTyzShtTy(ShtTy))
 End Function
 
@@ -229,8 +230,4 @@ End Function
 Function ShtTyAyzShtTyLis(ShtTyLis$) As String()
 ShtTyAyzShtTyLis = CmlSy(ShtTyLis)
 End Function
-
-Sub ThwShtTyEr(Fun$, ShtTy$)
-Thw Fun, "Invalid ShtTy", "The-Invalid-ShtTy Valid-ShtTy", ShtTy, ShtTyDtaTyLy
-End Sub
 

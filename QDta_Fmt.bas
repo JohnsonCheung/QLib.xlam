@@ -3,49 +3,124 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDta_Fmt."
 Private Const Asm$ = "QDta"
-Sub VcDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColnn$, Optional Fnn$)
-BrwDrs A, MaxColWdt, BrkColnn, Fnn, UseVc:=True
+
+Sub VcDrs(A As Drs, _
+Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EiBeg1, _
+Optional Fmt As EmTblFmt = EiTblFmt, _
+Optional Fnn$, Optional UseVc As Boolean)
+BrwDrs A, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Fnn, UseVc
 End Sub
 
-Sub BrwDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColnn$, Optional Fnn$, Optional UseVc As Boolean)
-BrwAy FmtDrs(A, MaxColWdt, BrkColnn), Fnn, UseVc
+Sub BrwDrs2(A As Drs, B As Drs, _
+Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EiBeg1, _
+Optional Fmt As EmTblFmt = EiTblFmt, Optional NN$, Optional Tit$ = "Brw 2 Drs", _
+Optional Fnn$, Optional UseVc As Boolean)
+Dim Ay$(), AyA$(), AyB$(), N1$, N2$, T$()
+N1 = DftStr(BefSpc(NN), "Drs-A")
+N2 = DftStr(AftSpc(NN), " Drs-B")
+AyA = FmtDrs(A, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Nm:=N1)
+AyB = FmtDrs(B, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Nm:=N2)
+T = Sy(Tit, UnderLinDbl(Tit))
+Ay = Sy(T, AyA, AyB)
+Brw Ay, Fnn, UseVc
+End Sub
+
+Sub BrwDrs3(A As Drs, B As Drs, C As Drs, _
+Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EmIxCol.EiBeg1, _
+Optional Fmt As EmTblFmt = EiTblFmt, Optional NN$, Optional Tit$ = "Brw 3 Drs", _
+Optional Fnn$, Optional UseVc As Boolean)
+Dim Ay$(), AyA$(), AyB$(), AyC$(), N1$, N2$, N3$, T$()
+N1 = DftStr(T1(NN), "Drs-A")
+N2 = DftStr(T2(NN), " Drs-B")
+N3 = DftStr(RmvTT(NN), " Drs-C")
+AyA = FmtDrs(A, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Nm:=N1)
+AyB = FmtDrs(B, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Nm:=N2)
+AyC = FmtDrs(C, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Nm:=N3)
+T = Sy(Tit, UnderLinDbl(Tit))
+Ay = Sy(T, AyA, AyB, AyC)
+Brw Ay, Fnn, UseVc
+End Sub
+
+Sub BrwDrs4(A As Drs, B As Drs, C As Drs, D As Drs, _
+Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EiBeg1, _
+Optional Fmt As EmTblFmt = EiTblFmt, _
+Optional Fnn$, Optional UseVc As Boolean)
+Dim Ay$(), AyA$(), AyB$(), AyC$(), AyD$()
+AyA = FmtDrs(A, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt)
+AyB = FmtDrs(B, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt)
+AyC = FmtDrs(C, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt)
+AyD = FmtDrs(D, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt)
+Ay = Sy(AyA, AyB, AyC, AyD)
+Brw Ay, Fnn, UseVc
+End Sub
+
+Sub BrwDrs(A As Drs, _
+Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EmIxCol.EiNoIx, _
+Optional Fmt As EmTblFmt = EiTblFmt, _
+Optional Fnn$, Optional UseVc As Boolean)
+Dim Ay$()
+Ay = FmtDrs(A, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt)
+BrwAy Ay, Fnn, UseVc
 End Sub
 
 Function BoxFny(Fny$()) As String()
-Dim L$: L = Quote(Jn(Fny, " | "), "|")
-Dim H$: H = Quote(Dup("-", Len(L) - 2), "|")
+If Si(Fny) = 0 Then Exit Function
+Const S$ = " | ", Q$ = "| * |"
+Const LS$ = "-|-", LQ$ = "|-*-|"
+Dim L$, H$, Ay$(), J%
+    ReDim Ay(UB(Fny))
+    For J = 0 To UB(Fny)
+        Ay(J) = Dup("-", Len(Fny(J)))
+    Next
+L = Quote(Jn(Fny, S), Q)
+H = Quote(Jn(Ay, LS), LQ)
 BoxFny = Sy(H, L, H)
 End Function
-Function FmtDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional HidIxCol As Boolean) As String() ' _
-If BrkColNm changed, insert a break line if BrkColNm is given
-If Not HasReczDrs(A) Then
-    FmtDrs = BoxFny(A.Fny)
-    Exit Function
-End If
-Dim Drs As Drs:    Drs = DrsAddIxCol(A, HidIxCol)
-Dim BrkColIxy&():  BrkColIxy = Ixy(A.Fny, TermAy(BrkColnn))
-Dim Dry():         Dry = Drs.Dry
-                         PushI Dry, Drs.Fny
-Dim Ay$():          Ay = FmtDry(Dry, MaxColWdt, BrkColIxy, ShwZer) '<== Will insert break line if BrkColIx>=0
-Dim Hdr$:          Hdr = LasSndEle(Ay)
-Dim Lin$:          Lin = LasEle(Ay)
-                    Ay = AyeLasNEle(Ay, 2)
-                FmtDrs = Sy(Lin, Hdr, Ay, Lin)
+
+Function DrszFmtg(DrsFmtg$()) As Drs
+Dim TitLin$: TitLin = DrsFmtg(1)
+Dim Fny$(): Fny = AyeFstLas(TrimAy(Split(TitLin, "|")))
+Dim Dry()
+    Dim J&
+    For J = 3 To UB(DrsFmtg) - 1
+        PushI Dry, AyeFstLas(RmvFstChrzAy(RTrimAy(Split(DrsFmtg(J), "|"))))
+    Next
+DrszFmtg = Drs(Fny, Dry)
 End Function
 
+Function FmtDrs(A As Drs, _
+Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EmIxCol.EiBeg1, _
+Optional Fmt As EmTblFmt = EiTblFmt, Optional Nm$) As String() ' _
+If BrkColNm changed, insert a break line if BrkColNm is given
+Dim Drs As Drs, BrkColIxy&(), Dry(), Ay$(), Hdr$, Lin$, B$()
+            If Nm <> "" Then B = Box(Nm)
+            If Not HasReczDrs(A) Then
+                FmtDrs = Sy(B, BoxFny(A.Fny))
+                Exit Function
+            End If
+      Drs = DrsAddIxCol(A, IxCol)
+BrkColIxy = Ixy(A.Fny, TermAy(BrkColnn))
+      Dry = Drs.Dry
+            PushI Dry, Drs.Fny
+       Ay = FmtDry(Dry, MaxColWdt, BrkColIxy, ShwZer, Fmt) '<== Will insert break line if BrkColIx>=0
+      Hdr = LasSndEle(Ay)
+      Lin = LasEle(Ay)
+       Ay = AyeLasNEle(Ay, 2)
+   FmtDrs = Sy(B, Lin, Hdr, Ay, Lin)
+End Function
 
-Function FmtDt(A As Dt, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional ShwZer As Boolean, Optional HidIxCol As Boolean) As String()
+Function FmtDt(A As Dt, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EiBeg1) As String()
 PushI FmtDt, "*Tbl " & A.DtNm
-PushIAy FmtDt, FmtDrs(DrszDt(A), MaxColWdt, BrkColNm, ShwZer, HidIxCol)
+PushIAy FmtDt, FmtDrs(DrszDt(A), MaxColWdt, BrkColNm, ShwZer, IxCol)
 End Function
 
 Private Sub Z_FmtDrs()
-Dim A As Drs, MaxColWdt%, BrkColVbl$, ShwZer As Boolean, HidIxCol As Boolean
+Dim A As Drs, MaxColWdt%, BrkColVbl$, ShwZer As Boolean, IxCol As EmIxCol
 A = SampDrs
 GoSub Tst
 Exit Sub
 Tst:
-    Act = FmtDrs(A, MaxColWdt, BrkColVbl, ShwZer, HidIxCol)
+    Act = FmtDrs(A, MaxColWdt, BrkColVbl, ShwZer, IxCol)
     Brw Act: Stop
     C
     Return

@@ -23,7 +23,7 @@ End Function
 Private Function ShtTyDiczFxw(Fx, W$) As Dictionary
 Dim C As Column, Cat As Catalog, I
 Set Cat = CatzFx(Fx)
-For Each I In Cat.Tables(CatTn(W)).Columns
+For Each I In Cat.Tables(CatTnzWsn(W)).Columns
     ShtTyDiczFxw.Add C.Name, ShtTyzAdo(C.Type)
 Next
 End Function

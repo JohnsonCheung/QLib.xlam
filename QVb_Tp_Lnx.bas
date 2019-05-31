@@ -111,7 +111,7 @@ Function SIxyszDup(A As Lnxs) As SIxys
 Dim Dup$, I
 For Each I In Itr(AywDup(LinyzLnxs(A)))
     Dup = I
-    PushIIxy SIxyszDup, SIxy(Dup, IxyzLin(A, Dup))
+    PushIIxy SIxyszDup, SIxy(Dup, IxyzLnxsLin(A, Dup))
 Next
 End Function
 
@@ -186,7 +186,7 @@ Function DupLinzLnxs(A As Lnxs) As SIxys
 Dim Dup$, I
 For Each I In Itr(AywDup(LinyzLnxs(A)))
     Dup = I
-    PushIIxy DupLinzLnxs, SIxy(Dup, IxyzLin(A, Dup))
+    PushIIxy DupLinzLnxs, SIxy(Dup, IxyzLnxsLin(A, Dup))
 Next
 End Function
 Function T1Lnxs(A As Lnxs) As Lnxs 'Take the T1 of A().Lin to return Lnxs
@@ -220,11 +220,11 @@ Next
 MaxIx = O
 End Function
 
-Function IxyzLin(A As Lnxs, Lin) As Long()
+Function IxyzLnxsLin(A As Lnxs, Lin) As Long()
 Dim J&
 For J = 0 To A.N - 1
     With A.Ay(J)
-        If .Lin = Lin Then PushI IxyzLin, .Ix
+        If .Lin = Lin Then PushI IxyzLnxsLin, .Ix
     End With
 Next
 End Function

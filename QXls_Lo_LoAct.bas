@@ -8,15 +8,6 @@ Sub BrwLo(A As ListObject)
 BrwDrs DrszLo(A)
 End Sub
 
-
-Sub DltLo(A As ListObject)
-Dim R As Range, R1, C1, R2, C2, Ws As Worksheet
-Set Ws = WszLo(A)
-Set R = RgzMoreBelow(RgzMoreTop(A.DataBodyRange))
-AsgRRRCCRg R, R1, C1, R2, C2
-A.QueryTable.Delete
-WsRCRC(Ws, R1, C1, R2, C2).ClearContents
-End Sub
 Sub MinxLo(A As ListObject)
 If FstTwoChr(A.Name) <> "T_" Then Exit Sub
 Dim R1 As Range

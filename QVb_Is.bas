@@ -9,7 +9,9 @@ If A > V Then Exit Function
 If V > B Then Exit Function
 IsBet = True
 End Function
-
+Function IsErObj(A) As Boolean
+IsErObj = TypeName(A) = "Error"
+End Function
 Function IsEmp(A) As Boolean
 Select Case True
 Case IsStr(A):    IsEmp = Trim(A) = ""

@@ -42,7 +42,7 @@ ShwWb OupWb
 End Sub
 
 Sub R3_LnkImp()
-LnkImp A.InpFilSrc, A.LnkImpSrc, B.WDb
+LnkImp Sy(A.InpFilSrc, A.LnkImpSrc), B.WDb
 End Sub
 Sub Rpt(A As RptPm) 'Gen&Vis OupFx using LidPm as NxtFfnzAva.
 R A

@@ -121,10 +121,11 @@ For Each V In Itr(Ay)
     PushI TyNmAy, TypeName(V)
 Next
 End Function
+
 Function VyzDicKy(D As Dictionary, Ky) As Variant()
 Dim K
 For Each K In Itr(Ky)
-    If Not D.Exists(K) Then Thw CSub, "Some K in Ky not found in Dic.Keys", "[K not fnd in Dic.Keys] DicKeys Ky", K, AvzItr(D.Keys), Ky
+    If Not D.Exists(K) Then Thw CSub, "Some K in given Ky not found in given Dic keys", "[K with error] [given Ky] [given dic keys]", K, AvzItr(D.Keys), Ky
     Push VyzDicKy, D(K)
 Next
 End Function

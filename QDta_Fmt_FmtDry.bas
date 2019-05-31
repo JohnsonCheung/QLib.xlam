@@ -65,11 +65,6 @@ Tst:
     C
 End Sub
 
-Function ShfBef$(OLin, Sep$)
-ShfBef = Bef(OLin, Sep)
-OLin = RmvBef(OLin, Sep)
-End Function
-
 Function BrkLin(Lin, SepSy$()) As String()
 Dim L$: L = Lin
 Dim I, Sep$
@@ -95,18 +90,14 @@ AlignzBySepss = JnAlignDry(DryzSyzBySepSy(Sy, SyzSS(Sepss)))
 End Function
 
 '=======================
-Function DryFmtCommon(Dry(), MaxColWdt%, ShwZer As Boolean) As Variant()
-DryFmtCommon = AlignDry(CellgDry(Dry, ShwZer, MaxColWdt))
-End Function
-
-Function AlignDryW(Dry(), WdtAy%()) As Variant()
+Function AlignDryzW(Dry(), WdtAy%()) As Variant()
 Dim Drv
 For Each Drv In Itr(Dry)
-    PushI AlignDryW, AlignzDrvW(Drv, WdtAy)
+    PushI AlignDryzW, AlignzDrvW(Drv, WdtAy)
 Next
 End Function
 Function AlignDry(Dry()) As Variant()
-AlignDry = AlignDryW(Dry, WdtAyzDry(Dry))
+AlignDry = AlignDryzW(Dry, WdtAyzDry(Dry))
 End Function
 
 Private Function CellgDry(Dry(), ShwZer As Boolean, MaxColWdt%) As Variant()
@@ -144,14 +135,16 @@ End If
 End Function
 Function CellgV$(V, Optional ShwZer As Boolean, Optional MaxWdt0% = 30) ' Convert V into a string fit in a cell
 Dim O$, MaxWdt%
-MaxWdt = EnsBet(MaxWdt0, 1, 100)
+MaxWdt = EnsBet(MaxWdt0, 1, 1000)
 Select Case True
 Case IsStr(V):     O = CellgStr(V, MaxWdt)
+Case IsBool(V):    O = V
 Case IsNumeric(V): O = CellgNum(V, MaxWdt, ShwZer)
 Case IsEmp(V):     O = "#Emp#"
 Case IsNull(V):    O = "#Null#"
 Case IsArray(V):   O = CellgAy(V, MaxWdt)
 Case IsObject(V):  O = "#O:" & TypeName(V)
+Case IsErObj(V)
 Case Else:         O = V
 End Select
 CellgV = O
@@ -165,20 +158,19 @@ Next
 IsEqAyzIxy = True
 End Function
 
-Function InsBrk(SrtedDry(), SepDr$(), Optional BrkCCIxy0) As Variant()
-If IsMissing(BrkCCIxy0) Then InsBrk = SrtedDry: Exit Function
-Dim BrkCCIxy&(): BrkCCIxy = BrkCCIxy0
-Dim Drv, IsBrk As Boolean, LasDrv, J&
-LasDrv = SrtedDry(0)
-PushI InsBrk, LasDrv
-For J = 1 To UB(SrtedDry)
-    Drv = SrtedDry(J)
-    If Not IsEqAyzIxy(LasDrv, Drv, BrkCCIxy) Then
-        PushI InsBrk, SepDr
-        LasDrv = Drv
-    End If
-    Push InsBrk, Drv
-Next
+Function InsBrk(SrtedDry(), SepDr$(), BrkCCIxy0) As Variant()
+Dim BrkCCIxy&(), Drv, IsBrk As Boolean, LasDrv, J&, IsNE As Boolean
+BrkCCIxy = CvLngAy(BrkCCIxy0)
+           If Si(BrkCCIxy) = 0 Then InsBrk = SrtedDry: Exit Function
+  LasDrv = SrtedDry(0)
+           PushI InsBrk, LasDrv
+           For J = 1 To UB(SrtedDry)
+                 Drv = SrtedDry(J)
+                IsNE = Not IsEqAyzIxy(LasDrv, Drv, BrkCCIxy)
+                       If IsNE Then PushI InsBrk, SepDr
+                       If IsNE Then LasDrv = Drv
+                       Push InsBrk, Drv
+           Next
 End Function
 
 Function WdtAyzDry(Dry()) As Integer()
@@ -188,82 +180,80 @@ For J = 0 To NColzDry(Dry) - 1
 Next
 End Function
 
-Function SepLin(W%(), Sep$)
-SepLin = SepLinzSepDr(SepDr(W), Sep)
+Function FmtDr(Dr, A As DrSepr, Optional IsLin As Boolean)
+If IsLin Then
+    FmtDr = Quote(Jn(Dr, A.LinSep), A.LinQuote)
+Else
+    FmtDr = Quote(Jn(Dr, A.DtaSep), A.DtaQuote)
+End If
+End Function
+
+Function SepLin$(W%())
+Dim A As DrSepr
+     A = DrSeprzEmTblFmt(EiTblFmt)
+SepLin = FmtDr(SepDr(W), A, IsLin:=True)
 End Function
 
 Function SepDr(W%()) As String()
 Dim I
 For Each I In W
-    Push SepDr, Dup("-", I + 2)
+    Push SepDr, Dup("-", I)
 Next
-End Function
-
-Function SepLinzSepDr$(SepDr$(), Sep$)
-SepLinzSepDr = "|" & Join(SepDr, Sep) & "|"
-End Function
-
-Function JnCellzDr$(Dr, Optional Sep$ = "|", Optional Pfx$ = "|", Optional Sfx$ = "|")
-JnCellzDr = Pfx & Jn(Dr, Sep) & Sfx
 End Function
 
 Private Sub A_Main()
 FmtDryAsJnSep:
 FmtDry:
 End Sub
-Sub BrwDry(A(), Optional MaxColWdt% = 100, Optional BrkCC, Optional ShwZer As Boolean)
-BrwAy FmtDry(A, MaxColWdt, BrkCC, ShwZer)
+Sub BrwDry(A(), Optional MaxColWdt% = 100, Optional BrkCCIxy, Optional ShwZer As Boolean, Optional Fmt As EmTblFmt = EmTblFmt.EiTblFmt)
+BrwAy FmtDry(A, MaxColWdt, BrkCCIxy, ShwZer, Fmt)
 End Sub
-Sub BrwDryzSpc(A(), Optional MaxColWdt% = 100, Optional ShwZer As Boolean)
-BrwAy FmtDryAsJnSep(A, " ", MaxColWdt, ShwZer)
+
+Sub BrwDryzSpc(A(), Optional MaxColWdt% = 100, Optional BrkCCIxy, Optional ShwZer As Boolean)
+BrwAy FmtDry(A, MaxColWdt, BrkCCIxy, ShwZer, Fmt:=EiSSFmt)
 End Sub
 
 Function FmtDry(Dry(), _
 Optional MaxColWdt% = 100, _
 Optional BrkCCIxy0, _
-Optional ShwZer As Boolean) _
+Optional ShwZer As Boolean, _
+Optional Fmt As EmTblFmt) _
 As String()
-If Si(Dry) = 0 Then Exit Function
-Dim Dry1(): Dry1 = CellgDry(Dry, ShwZer, MaxColWdt)
-Dim W%(): W = WdtAyzDry(Dry1)
-Dim Sep$(): Sep = SepDr(W)
-Dim Dry2(): Dry2 = AlignDryW(Dry1, W)
-If IsArray(BrkCCIxy0) Then
-    Dry2 = InsBrk(Dry2, Sep, BrkCCIxy0)
-End If
-Dim SepLin: SepLin = Quote(Jn(Sep, "|"), "|")
-FmtDry = Sy(SepLin, QuoteAy(JnDrzDry(Dry2, " | "), "| * |"), SepLin)
-End Function
-Function JnDrzDry(Dry(), Sep$) As String()
-Dim Drv
-For Each Drv In Itr(Dry)
-    PushI JnDrzDry, Jn(Drv, Sep)
-Next
-End Function
-Sub DmpDryzSpcSep(Dry())
-D FmtDryAsJnSep(Dry)
-End Sub
-Sub DmpDry(Dry())
-D FmtDry(Dry)
-End Sub
+Dim Dry2()
+    Dim Dry1(), W%(), Sep$()
+         If Si(Dry) = 0 Then Exit Function
+  Dry1 = CellgDry(Dry, ShwZer, MaxColWdt)
+     W = WdtAyzDry(Dry1)
+  Dry2 = AlignDryzW(Dry1, W)
+   Sep = SepDr(W)
+         If IsArray(BrkCCIxy0) Then Dry2 = InsBrk(Dry2, Sep, BrkCCIxy0)
 
-Function FmtDryAsJnSep(Dry(), _
-Optional Sep$ = " ", _
-Optional MaxColWdt% = 100, _
-Optional ShwZer As Boolean) As String()
-If Si(Dry) = 0 Then Exit Function
-Dim Dr
-For Each Dr In DryFmtCommon(Dry, MaxColWdt, ShwZer)
-    PushI FmtDryAsJnSep, JnSpc(Dr)
-Next
+Dim L$, M$(), Sepr As DrSepr
+  Sepr = DrSeprzEmTblFmt(Fmt)
+     M = JnDrzDry(Dry2, Sepr)
+     L = FmtDr(Sep, Sepr, IsLin:=True)
+FmtDry = Sy(L, M, L)
 End Function
 
-
-
-Function JnCell(Dry(), Optional Sep$ = "|", Optional Pfx$ = "|", Optional Sfx$ = "|") As String()
+Function JnDrzDry(Dry(), A As DrSepr) As String()
 Dim Dr
 For Each Dr In Itr(Dry)
-    PushI JnCell, JnCellzDr(Dr, Sep, Pfx, Sfx)
+    PushI JnDrzDry, FmtDr(Dr, A)
 Next
 End Function
+
+Sub DmpDryzSpc(Dry(), _
+Optional MaxColWdt% = 100, _
+Optional BrkCCIxy0, _
+Optional ShwZer As Boolean)
+D FmtDry(Dry, MaxColWdt, BrkCCIxy0, ShwZer, Fmt:=EiSSFmt)
+End Sub
+
+Sub DmpDry(Dry(), _
+Optional MaxColWdt% = 100, _
+Optional BrkCCIxy0, _
+Optional ShwZer As Boolean, _
+Optional Fmt As EmTblFmt)
+D FmtDry(Dry, MaxColWdt, BrkCCIxy0, ShwZer, Fmt)
+End Sub
 

@@ -4,7 +4,7 @@ Option Explicit
 Private Const CMod$ = "MIde_Vbe_Cur."
 Private Const Asm$ = "QIde"
 
-Function HasBar(BarNm$) As Boolean
+Function HasBar(BarNm) As Boolean
 HasBar = HasBarzV(CVbe, BarNm)
 End Function
 

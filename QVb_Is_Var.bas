@@ -97,7 +97,7 @@ End Function
 
 Function IsLinesAy(V) As Boolean
 If Not IsArray(V) Then Exit Function
-If Not IsItrOfSy(Itr(V)) Then Exit Function
+If Not IsSy(V) Then Exit Function
 Dim L
 For Each L In Itr(V)
     If IsLines(L) Then IsLinesAy = True: Exit Function
@@ -112,8 +112,8 @@ Function IsLngAy(V) As Boolean
 IsLngAy = VarType(V) = vbArray + vbLong
 End Function
 
-Function IsNe(V, B) As Boolean
-IsNe = Not IsEq(V, B)
+Function IsNE(V, B) As Boolean
+IsNE = Not IsEq(V, B)
 End Function
 
 Function IsNoLinMd(V As CodeModule) As Boolean

@@ -67,6 +67,17 @@ End Function
 Function JnStrDic$(StrDic As Dictionary, Optional Sep$)
 JnStrDic = Join(SyzItr(StrDic.Items), Sep)
 End Function
+Function DiczDrsCC(A As Drs, Optional CC$) As Dictionary
+If CC = "" Then
+    Set DiczDrsCC = DiczDryCC(A.Dry)
+Else
+    With BrkSpc(CC)
+        Dim C1%: C1 = IxzAy(A.Fny, .S1)
+        Dim C2%: C2 = IxzAy(A.Fny, .S2)
+        Set DiczDrsCC = DiczDryCC(A.Dry, C1, C2)
+    End With
+End If
+End Function
 
 Function DiczDryCC(Dry(), Optional C1 = 0, Optional C2 = 1) As Dictionary
 Set DiczDryCC = New Dictionary
@@ -75,11 +86,17 @@ For Each Dr In Itr(Dry)
     DiczDryCC.Add Dr(C1), Dr(C2)
 Next
 End Function
+Function DiczUniq(Ly$()) As Dictionary 'T1 of each Ly must be uniq
+Set DiczUniq = New Dictionary
+Dim I
+For Each I In Itr(Ly)
+    DiczUniq.Add T1(I), RmvT1(I)
+Next
+End Function
 Function Dic(Ly$(), Optional JnSep$ = vbCrLf) As Dictionary
 Dim O As New Dictionary
-Dim I, L$, T$, Rst$
-For Each I In Itr(Ly)
-    L = I
+Dim L, T$, Rst$
+For Each L In Itr(Ly)
     AsgTRst L, T, Rst
     If T <> "" Then
         If O.Exists(T) Then
@@ -103,7 +120,14 @@ End Function
 Function DiczVbl(Vbl$, Optional JnSep$ = vbCrLf) As Dictionary
 Set DiczVbl = Dic(SplitVBar(Vbl), JnSep)
 End Function
-
+Function DiczAyIx(Ay) As Dictionary
+Dim V&, K
+Set DiczAyIx = New Dictionary
+For Each K In Ay
+    DiczAyIx.Add K, V
+    V = V + 1
+Next
+End Function
 Function DiczAyab(A, B) As Dictionary
 ThwIf_DifSi A, B, CSub
 Dim N1&, N2&

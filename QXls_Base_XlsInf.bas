@@ -1,4 +1,4 @@
-Attribute VB_Name = "QXls_Xls_XlsInf"
+Attribute VB_Name = "QXls_Base_XlsInf"
 Option Compare Text
 Option Explicit
 Public Const XlsPgmFfn$ = "C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE"
@@ -30,6 +30,10 @@ DtaRgzWs(A).Clear
 End Sub
 Function DtaRgzWs(Ws As Worksheet) As Range
 Set DtaRgzWs = Ws.Range(A1zWs(Ws), LasCell(Ws))
+End Function
+
+Function A1zLo(Lo As ListObject) As Range
+Set A1zLo = RgRC(Lo.ListColumns(1).Range, 2, 1)
 End Function
 
 Function A1zWb(A As Workbook, Optional NewWsn$) As Range ' Return A1 of a new Ws (with NewWsn) in Wb
@@ -659,7 +663,7 @@ Function A1(Ws As Worksheet) As Range
 Set A1 = WsRC(Ws, 1, 1)
 End Function
 Function A1zRg(A As Range) As Range
-Set A1zRg = A1(WszRg(A))
+Set A1zRg = RgRC(A, 1, 1)
 End Function
 Function IsA1(A As Range) As Boolean
 If A.Row <> 1 Then Exit Function
@@ -670,12 +674,14 @@ Function WsRgAdr$(A As Range)
 WsRgAdr = "'" & WszRg(A).Name & "'!" & A.Address
 End Function
 
-Sub AsgRRRCCRg(A As Range, OR1, OR2, OC1, OC2)
-OR1 = A.Row
-OR2 = OR1 + A.Rows.Count - 1
-OC1 = A.Column
-OC2 = OC1 + A.Columns.Count - 1
-End Sub
+Function RRRCCzRg(A As Range) As RRCC
+With RRRCCzRg
+.R1 = A.Row
+.R2 = .R1 + A.Rows.Count - 1
+.C1 = A.Column
+.C2 = .C1 + A.Columns.Count - 1
+End With
+End Function
 
 Function RgCEnt(A As Range, C) As Range
 Set RgCEnt = RgC(A, C).EntireColumn
@@ -851,7 +857,6 @@ Function WszRg(A As Range) As Worksheet
 Set WszRg = A.Parent
 End Function
 
-
 Private Sub ZZ()
 Z_RgzMoreBelow
 MXls_Z_Rg:
@@ -859,11 +864,11 @@ End Sub
 Function DrszWL(Ws As Worksheet, LoNm$) As Drs
 DrszWL = DrszLo(Ws.ListObjects(LoNm))
 End Function
-Function StrColzWsLC(Ws As Worksheet, LoNm$, Col$) As String()
-Dim Lo As ListObject: Set Lo = Ws.ListObjects(LoNm)
-Dim Lc As ListColumn: Set Lc = Lo.ListColumns(Col)
-Dim Sq(): Sq = SqzRg(Lc.DataBodyRange)
-StrColzWsLC = StrColzSqc(Sq)
+Function StrColzLC(Lo As ListObject, C$) As String()
+StrColzLC = StrColzSqc(SqzRg(Lo.DataBodyRange))
+End Function
+Function StrColzWsLC(Ws As Worksheet, LoNm$, C$) As String()
+StrColzWsLC = StrColzLC(Ws.ListObjects(LoNm), C)
 End Function
 Function VbarAy(A As Range) As Variant()
 Ass IsVbarRg(A)
@@ -882,4 +887,224 @@ Function RgzBelowCell(Cell As Range)
 Dim Ws As Worksheet: Set Ws = WszRg(Cell)
 Set RgzBelowCell = WsCRR(Ws, Cell.Column, Cell.Row, LasRno(Ws))
 End Function
+
+Function DrszFxq(Fx, Q) As Drs
+DrszFxq = DrszArs(CnzFx(Fx).Execute(Q))
+End Function
+Function TmpDbzFx(Fx) As Database
+Set TmpDbzFx = TmpDbzFxWny(Fx, Wny(Fx))
+End Function
+
+Function TmpDbzFxWny(Fx, Wny$()) As Database
+Dim O As Database
+   Set O = TmpDb
+Dim W
+For Each W In Itr(Wny)
+    LnkFx O, ">" & W, Fx, W
+Next
+Set TmpDbzFxWny = O
+End Function
+
+Function Wb(Fx) As Workbook
+Set Wb = Xls.Workbooks(Fx)
+End Function
+Function WbzFx(Fx) As Workbook
+Set WbzFx = Wb(Fx)
+End Function
+
+Function WszFxw(Fx, Optional Wsn$ = "Data") As Worksheet
+Set WszFxw = WszWb(WbzFx(Fx), Wsn)
+End Function
+
+Function ArszFxwf(Fx, W$, F$) As AdoDb.Recordset
+Set ArszFxwf = ArsCnq(CnzFx(Fx), SqlSel_F_T(F, W & "$"))
+End Function
+
+Function WsCdNyzFx(Fx) As String()
+Dim Wb As Workbook
+Set Wb = WbzFx(Fx)
+WsCdNyzFx = WsCdNy(Wb)
+Wb.Close False
+End Function
+
+Function DtzFxw(Fx, Optional Wsn0$) As Dt
+Dim N$: N = DftWsn(Wsn0, Fx)
+Dim Q$: Q = FmtQQ("Select * from [?$]", N)
+DtzFxw = DtzDrs(DrszFxq(Fx, Q), N)
+End Function
+
+Function IntAyFxwf(Fx, W$, F$) As Integer()
+IntAyFxwf = IntAyzArs(ArszFxwf(Fx, W, F))
+End Function
+
+Function SyzFxwf(Fx, W$, F$) As String()
+SyzFxwf = SyzArs(ArszFxwf(Fx, W, F))
+End Function
+
+Private Sub ZZ_Wny()
+Const Fx$ = "Users\user\Desktop\Invoices 2018-02.xlsx"
+D Wny(Fx)
+End Sub
+
+Private Sub Z_FstWsn()
+Dim Fx$
+Fx = SampFxzKE24
+Ept = "Sheet1"
+GoSub T1
+Exit Sub
+T1:
+    Act = FstWsn(Fx)
+    C
+    Return
+End Sub
+
+
+
+
+Private Sub Z_TmpDbzFx()
+Dim Db As Database: Set Db = TmpDbzFx("N:\SapAccessReports\DutyPrepay5\SAPDownloadExcel\KE24 2010-01c.xls")
+DmpAy Tny(Db)
+Db.Close
+End Sub
+
+Private Sub Z_Wny()
+Dim Fx$
+'GoTo ZZ
+GoSub T1
+Exit Sub
+T1:
+    Fx = SampFxzKE24
+    Ept = SyzSS("Sheet1 Sheet21")
+    GoSub Tst
+    Return
+Tst:
+    Act = Wny(Fx)
+    C
+    Return
+ZZ:
+    DmpAy Wny(SampFxzKE24)
+End Sub
+
+Function ChkFxww(Fx, Wsnn$, Optional FxKd$ = "Excel file") As String()
+Dim W$, I
+'If Not HasFfn(Fx) Then ChkFxww = MsgzMisFfn(Fx, FxKd): Exit Function
+For Each I In Ny(Wsnn)
+    W = I
+    PushIAy ChkFxww, ChkWs(Fx, W, FxKd)
+Next
+End Function
+
+Function ChkWs(Fx, Wsn, FxKd$) As String()
+If HasFxw(Fx, Wsn) Then Exit Function
+Dim M$
+M = FmtQQ("? does not have expected worksheet", FxKd)
+ChkWs = LyzFunMsgNap(CSub, M, "Folder File Expected-Worksheet Worksheets-in-file", Pth(Fx), Fn(Fx), Wsn, Wny(Fx))
+End Function
+
+Function ChkFxw(Fx, Wsn, Optional FxKd$ = "Excel file") As String()
+ChkFxw = ChkHasFfn(Fx, FxKd): If Si(ChkFxw) > 0 Then Exit Function
+ChkFxw = ChkWs(Fx, Wsn, FxKd)
+End Function
+Function ChkLnkWs(A As Database, T, Fx, Wsn, Optional FxKd$ = "Excel file") As String()
+Const CSub$ = CMod & "ChkLnkWs"
+Dim O$()
+    O = ChkFxw(Fx, Wsn, FxKd)
+    If Si(O) > 0 Then
+        ChkLnkWs = O
+        Exit Function
+    End If
+On Error GoTo X
+LnkFx A, T, Fx, Wsn
+Exit Function
+X: ChkLnkWs = _
+    LyzMsgNap("Error in linking Xls file", "Er LnkFx LnkWs ToDb AsTbl", Err.Description, Fx, Wsn, Dbn(A), T)
+End Function
+
+
+
+Function WszAyab(A, B, Optional N1$ = "Ay1", Optional N2$ = "Ay2") As Worksheet
+Set WszAyab = WszDrs(DrszAyab(A, B, N1, N2))
+End Function
+Function WszCd(WsCdn$) As Worksheet
+Dim Ws As Worksheet
+For Each Ws In CWb.Sheets
+    If Ws.CodeName = WsCdn Then Set WszCd = Ws: Exit Function
+Next
+End Function
+Function WszDic(Dic As Dictionary, Optional InclDicValOptTy As Boolean) As Worksheet
+Set WszDic = WszDrs(DrszDic(Dic, InclDicValOptTy))
+End Function
+
+Function WszDt(A As Dt) As Worksheet
+Dim O As Worksheet
+Set O = NewWs(A.DtNm)
+LozDrs DrszDt(A), A1zWs(O)
+WszDt = O
+End Function
+
+Function NyzFml(Fml$) As String()
+NyzFml = NyzMacro(Fml)
+End Function
+
+Function WszLy(Ly$(), Optional Wsn$ = "Sheet1") As Worksheet
+Set WszLy = WszRg(RgzAyV(Ly, A1zWs(NewWs(Wsn))))
+End Function
+
+Property Get MaxWsCol&()
+Static C&, Y As Boolean
+If Not Y Then
+    Y = True
+    C = IIf(Xls.Version = "16.0", 16384, 255)
+End If
+MaxWsCol = C
+End Property
+
+Property Get MaxWsRow&()
+Static R&, Y As Boolean
+If Not Y Then
+    Y = True
+    R = IIf(Xls.Version = "16.0", 1048576, 65535)
+End If
+MaxWsRow = R
+End Property
+
+Function SqHzN(N%) As Variant()
+Dim O()
+ReDim O(1 To 1, 1 To N)
+SqHzN = O
+End Function
+
+Function SqVzN(N%) As Variant()
+Dim O(), J%
+ReDim O(1 To N, 1 To 1)
+SqVzN = O
+End Function
+
+Function N_ZerFill$(N, NDig&)
+N_ZerFill = Format(N, String(NDig, "0"))
+End Function
+
+Function WszS1S2s(A As S1S2s, Optional Nm1$ = "S1", Optional Nm2$ = "S2") As Worksheet
+Set WszS1S2s = WszSq(SqzS1S2s(A, Nm1, Nm2))
+End Function
+
+Private Sub Z_AyabWs()
+GoTo ZZ
+Dim A, B
+ZZ:
+    A = SyzSS("A B C D E")
+    B = SyzSS("1 2 3 4 5")
+    ShwWs WszAyab(A, B)
+End Sub
+
+Private Sub Z_WbFbOupTbl()
+GoTo ZZ
+ZZ:
+    Dim W As Workbook
+    'Set W = WbFbOupTbl(WFb)
+    'ShwWb W
+    Stop
+    'W.Close False
+    Set W = Nothing
+End Sub
 

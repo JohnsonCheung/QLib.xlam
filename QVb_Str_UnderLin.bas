@@ -3,12 +3,12 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Str_UnderLin."
 Private Const Asm$ = "QVb"
-Function UnderLin(Lin)
-UnderLin = String(Len(Lin), "-")
+Function UnderLin(Lin, Optional IncLin As Boolean)
+UnderLin = IIf(IncLin, Lin & vbCrLf, "") & String(Len(Lin), "-")
 End Function
 
-Function UnderLinDbl$(Lin)
-UnderLinDbl = String(Len(Lin), "=")
+Function UnderLinDbl$(Lin, Optional IncLin As Boolean)
+UnderLinDbl = IIf(IncLin, Lin & vbCrLf, "") & String(Len(Lin), "=")
 End Function
 
 Function PushMsgUnderLinDbl(O$(), M$)

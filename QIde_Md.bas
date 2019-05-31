@@ -106,7 +106,9 @@ RmvMthInSrc = LyzLinesDicItems(D)
 End Function
 
 Property Get CMd() As CodeModule
-Set CMd = CPne.CodeModule
+Dim P As CodePane: Set P = CPne
+If IsNothing(P) Then Exit Property
+Set CMd = P.CodeModule
 End Property
 
 Property Get CMdDNm$()

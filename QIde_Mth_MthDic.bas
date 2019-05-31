@@ -53,12 +53,12 @@ Private Function MthDnzLin$(Lin)
 MthDnzLin = MthDnzMthn3(Mthn3zL(Lin))
 End Function
 
-Function MthDic(Src$(), Optional Mdn$) As Dictionary 'Key is MthDn, Val is MthLinesWiTopRmk
+Function MthDic(Src$(), Optional Mdn$, Optional ExlDcl As Boolean) As Dictionary 'Key is MthDn, Val is MthLinesWiTopRmk
 Dim Ix, Lines$, Dn$
 Set MthDic = New Dictionary
 Dim P$: If Mdn <> "" Then P = Mdn & "."
 With MthDic
-    .Add P & "*Dcl", Dcl(Src)
+    If Not ExlDcl Then .Add P & "*Dcl", Dcl(Src)
     For Each Ix In MthIxItr(Src)
         Dn = MthDnzLin(Src(Ix))
         Lines = MthLineszSI(Src, Ix, WiTopRmk:=True)

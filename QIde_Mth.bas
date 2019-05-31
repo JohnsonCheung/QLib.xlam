@@ -21,7 +21,7 @@ SqzMthDNy = O
 End Function
 
 Sub RplMthzMNL(Md As CodeModule, Mthn, ByLines$)
-Dim Ix&: Ix = FstMthIx(Src(Md), Mthn)
+Dim Ix&: Ix = FstMthIxzN(Src(Md), Mthn)
 RmvMth Md, Mthn
 If Ix = -1 Then
     Md.AddFromString ByLines

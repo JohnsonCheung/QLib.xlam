@@ -132,6 +132,53 @@ End Function
 Function ArgSfx$(ArgStr)
 
 End Function
+
+Function BrwrzRet$(Ret$)
+Select Case True
+Case IsTyChr(FstChr(Ret)): BrwrzRet = "Brw"
+Case Ret = "Drs": BrwrzRet = "BrwDrs"
+Case Else: BrwrzRet = "Brw"
+End Select
+End Function
+Function DclAsAndChrAyzRet(Ret) As S1S2
+Dim DclAs$, DclChrAy$
+Select Case True
+Case IsTyChr(FstChr(Ret)): DclChrAy = Ret
+Case HasSfx(Ret, "()")
+    Dim TyChr$: TyChr = TyChrzTyNm(RmvSfx(Ret, "()"))
+    If TyChr = "" Then
+        DclAs = " As " & Ret
+    Else
+        DclChrAy = TyChr & "()"
+    End If
+Case Else: DclAs = " As " & Ret
+End Select
+DclAsAndChrAyzRet = S1S2(DclAs, DclChrAy)
+End Function
+Function RetAs$(Ret)
+If IsTyChr(FstChr(Ret)) Then
+    RetAs = TyNmzTyChr(FstChr(Ret)) & RmvFstChr(Ret)
+    Exit Function
+End If
+If TyChrzTyNm(Ret) <> "" Then Exit Function
+RetAs = " As " & Ret
+End Function
+Function RetAszRet$(Ret)
+RetAszRet = RetAs(Ret)
+End Function
+Function TyChrzRet$(Ret)
+If Len(Ret) = 1 And IsTyChr(Ret) Then TyChrzRet = Ret: Exit Function
+Dim O$: O = TyChrzTyNm(Ret): If O <> "" Then TyChrzRet = O: Exit Function
+End Function
+Function ArgSfxzRet$(Ret)
+'Ret is either FunRetTyChr (in Sht-TyChr) or
+'              FunRetAs    (The Ty-Str without As)
+Select Case True
+Case IsTyChr(FstChr(Ret)): ArgSfxzRet = Ret
+Case HasSfx(Ret, "()") And TyChrzTyNm(RmvSfx(Ret, "()")) <> "": ArgSfxzRet = TyChrzTyNm(RmvSfx(Ret, "()")) & "()"
+Case Else: ArgSfxzRet = " As " & Ret
+End Select
+End Function
 Function Arg(ArgStr) As Arg
 Dim L$: L = ArgStr
 Const Opt$ = "Optional"

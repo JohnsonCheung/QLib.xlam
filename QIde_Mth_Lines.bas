@@ -64,12 +64,19 @@ For Each Ix In Itr(MthIxy(Src))
     PushI MthLinesAyzS, MthLineszSIW(Src, Ix, WiTopRmk)
 Next
 End Function
-Function EOneMdzPM(P As VBProject, Mthn) As CodeModule
-Stop '
+Function MdzMthn(P As VBProject, Mthn) As CodeModule
+Dim C As VBComponent, O As CodeModule
+For Each C In P.VBComponents
+    If HasEle(PMthnyzM(C.CodeModule), Mthn) Then
+        If Not IsNothing(O) Then Thw CSub, FmtQQ("Mthn fnd in 2 or more md: [?] & [?]", Mdn(O), C.Name)
+        Set O = C.CodeModule
+    End If
+Next
+If IsNothing(O) Then Thw CSub, "Mthn not fnd in any codemodule of given pj", "Pj Mthn", "P.Name,Mthn"
 End Function
 
 Function MthLineszPN$(P As VBProject, Mthn, Optional WiTopRmk As Boolean)
-MthLineszPN = MthLineszMN(EOneMdzPM(P, Mthn), Mthn)
+MthLineszPN = MthLineszMN(MdzMthn(P, Mthn), Mthn)
 End Function
 
 Function MthLineszN$(Mthn, Optional WiTopRmk As Boolean)
@@ -89,7 +96,7 @@ End Function
 
 Function MthLineszSI$(Src$(), MthIx, Optional WiTopRmk As Boolean)
 Dim TopLy$(): TopLy = TopRmkLyzSIW(Src, MthIx, WiTopRmk)
-Dim EIx&:       EIx = MthEIx(Src, MthIx)
+Dim EIx&:       EIx = MthEix(Src, MthIx)
 Dim MthLy$(): MthLy = AywFT(Src, MthIx, EIx)
 MthLineszSI = JnCrLf(Sy(TopLy, MthLy))
 End Function

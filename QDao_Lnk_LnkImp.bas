@@ -2,227 +2,159 @@ Attribute VB_Name = "QDao_Lnk_LnkImp"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "BLnkImp."
-Private Type FxtRec
-    T As String
-    Fxn As String
-    Wsn As String
-    Stru As String
-End Type
-Private Type FxtRecs: N As Byte: Ay() As FxtRec: End Type
-Sub ZZ_LnkImp()
-Dim InpFilSrc$(), LnkImpSrc$(), Db As Database
+Private Sub ZZ_LnkImp()
+Dim LnkImpSrc$(), Db As Database
 GoSub T0
 Exit Sub
 T0:
-    InpFilSrc = Y_InpFilSrc
     LnkImpSrc = Y_LnkImpSrc
     Set Db = TmpDb
     GoTo Tst
 Tst:
-    LnkImp InpFilSrc, LnkImpSrc, Db
+    LnkImp LnkImpSrc, Db
     Return
 End Sub
 
-Sub LnkImp(InpFilSrc$(), LnkImpSrc$(), Db As Database)
-ThwIf_Er ErzLnk(InpFilSrc, LnkImpSrc), CSub
-Dim a___FbTbl__Fm_TblLy$
-    Dim FbTblLy$():                      FbTblLy = IndentedLy(LnkImpSrc, "FbTbl")
-    Dim b___FbTbl$
-    Dim FbTny$():                          FbTny = B_TnyFb(FbTblLy)
-    Dim Dic_Fbt_Fn As Dictionary: Set Dic_Fbt_Fn = DiczVkkLy(FbTblLy)
+Sub LnkImp(LnkImpSrc$(), Db As Database)
+'ThwIf_Er ErzLnk(InpFilSrc, LnkImpSrc), CSub
+Dim Dic_Fbt_Fbn As Dictionary, FbTny$(), DFx As Drs
+    Dim FbTblLy$(), FxTblLy$(), FxTny$()
+           FbTblLy = IndentedLy(LnkImpSrc, "FbTbl")
+   Set Dic_Fbt_Fbn = DiczVkkLy(FbTblLy)
+           FxTblLy = IndentedLy(LnkImpSrc, "FxTbl")
+               DFx = WDFx(FxTblLy)   'Dry{T Fxn Wsn Stru}
+             FxTny = StrColzDrs(DFx, "T")
+             FbTny = SyzDicKey(Dic_Fbt_Fbn)
 
-Dim a___FxtRecs__fm_FxTblLy$
-    Dim FxTblLy$():         FxTblLy = IndentedLy(LnkImpSrc, "FxTbl")
-    Dim b___FxtRecs$
-    Dim FxtRecs As FxtRecs: FxtRecs = B_Fnd_FxtRecs(FxTblLy)   'T* :: TnyOf*
-    
-Dim b___Tny
-    Dim FxTny$():             FxTny = B_TnyFx(FxtRecs)
-    Dim Tny$():                 Tny = AddSy(FbTny, FxTny)
-
-Dim a___Stru$
-    Dim StruSy() As String:  StruSy = B_Fnd_StruSy(LnkImpSrc)
-
-Dim a___Dic_T_Stru__$
-    Dim Dic_Fn_Ffn As Dictionary:         Set Dic_Fn_Ffn = Dic(InpFilSrc)
-    Dim Dic_Fxt_Fn As Dictionary:         Set Dic_Fxt_Fn = B_Dic_Fxt_Fn(FxtRecs)
-    Dim Dic_T_Fn As Dictionary:             Set Dic_T_Fn = AddDic(Dic_Fxt_Fn, Dic_Fbt_Fn)
-    Dim b___Dic_T_Stru$
-    Dim T_zDi_Ffn As Dictionary:           Set T_zDi_Ffn = AzDiC(Dic_T_Fn, Dic_Fn_Ffn)
-    Dim Dic_T_Stru As Dictionary:         Set Dic_T_Stru = B_Dic_T_Stru(FbTny, FxtRecs)
-
-Dim a___ImpSqy$
-    Dim Dic_T_LnkColLy As Dictionary: Set Dic_T_LnkColLy = B_Dic_T_LnkColLy(LnkImpSrc, Dic_T_Stru, StruSy)
-    Dim LTblWh$():                                LTblWh = IndentedLy(LnkImpSrc, "Tbl.Where")
-    Dim Dic_T_Wh As Dictionary:             Set Dic_T_Wh = Dic(LTblWh)
-    Dim b____ImpSqy$
-    Dim ImpSqy$():                                ImpSqy = B__ImpSqy(Tny, Dic_T_LnkColLy, Dic_T_Wh)
-
-Dim a___Lnk__AllInpTbl_LnkTblPms$
-    Dim LnkFb As LnkTblPms, LnkFx As LnkTblPms
-    LnkFx = B__LnkTblPms_Fx(FxtRecs, T_zDi_Ffn)
-    LnkFb = B__LnkTblPms_Fb(FbTny, T_zDi_Ffn)
-    Dim b___Lnk$
-    Dim Lnk As LnkTblPms: Lnk = AddLnkTblPms(LnkFb, LnkFx)
-    
-Dim a___doing_Lnk_and_Imp$
-LnkImpzLnkpmSqyDb Lnk, ImpSqy, Db
+Dim Dic_Fn_Ffn As Dictionary
+    Set Dic_Fn_Ffn = Dic(IndentedLy(LnkImpSrc, "Inp"))
+                     LnkTblzDrs Db, WLnkFx(DFx, Dic_Fn_Ffn) ' @LnkFx::Drs{T S Cn}
+                     LnkTblzDrs Db, WLnkFb(Dic_Fbt_Fbn, Dic_Fn_Ffn)
+            
+Dim ImpSqy$()
+    Dim LTDH As DLTDH, Wh As Dictionary, DStru As Drs, Dic_T_Stru As Dictionary
+        LTDH = DLTDH(LnkImpSrc)
+     DStru = WDStru(LTDH)
+Set Dic_T_Stru = WDic_T_Stru(FbTny, DFx)
+        Set Wh = Dic(IndentedLy(LnkImpSrc, "Tbl.Where"))
+        ImpSqy = WImpSqy(Dic_T_Stru, DStru, Wh)
+                 RunSqy Db, ImpSqy    '<==========
+                 DmpNRec Db
 End Sub
-Private Function B_Fnd_StruSy(LnkImpSrc$()) As String()
-Static X As Boolean, Y
-If Not X Then
-    Y = Sy()
-    X = True
-    Dim I, L$
-    For Each I In LnkImpSrc
-        L = I
-        If HasPfx(L, "Stru.") Then
-            PushI Y, BefSpcOrAll(RmvPfx(L, "Stru."))
-        End If
-    Next
-End If
-B_Fnd_StruSy = Y
+Private Function WDStru(I As DLTDH) As Drs
+'Fm::@IL::Drs{T1 Dta IsHdr}
+Dim A As Drs, Dr, Dry(), B As Drs, T1$, Dta$
+A = DrswColEqSel(I.D, "IsHdr", False, "T1 Dta")
+B = DrswColPfx(A, "T1", "Stru.") 'T1 Dta
+For Each Dr In Itr(B.Dry)
+    T1 = Dr(0)
+    Dta = Dr(1)
+    PushI Dry, XDrOfStru(T1, Dta)
+Next
+WDStru = DrszFF("Stru F Ty E", Dry)
+End Function
+Private Function XDrOfStru(T1$, Dta$) As Variant()
+Dim F$, Ty$, E$, Stru$
+Stru = RmvPfx(T1, "Stru.")
+F = ShfT1(Dta)
+Ty = ShfT1(Dta)
+E = RmvSqBkt(Dta)
+XDrOfStru = Array(Stru, F, Ty, E)
 End Function
 
-
-Sub LnkImpzLnkpmSqyDb(L As LnkTblPms, ImpSqy$(), Db As Database)
-LnkTblzPms Db, L '<==============
-RunSqy Db, ImpSqy    '<==========
-DmpNRec Db
-End Sub
-Private Function B_Dic_T_Stru(Fbt$(), A As FxtRecs) As Dictionary
-Set B_Dic_T_Stru = New Dictionary
-Dim T, J%
-For Each T In Itr(Fbt)
-    B_Dic_T_Stru.Add T, T
+Private Function WDic_T_Stru(FbTny$(), DFx As Drs) As Dictionary
+Dim T, Dr, Ix As Dictionary, IxT%, IxStru%
+Set WDic_T_Stru = New Dictionary
+For Each T In Itr(FbTny)
+    WDic_T_Stru.Add T, T
 Next
-For J = 0 To A.N - 1
-    With A.Ay(J)
-        B_Dic_T_Stru.Add .T, .Stru
-    End With
-Next
-End Function
-
-Private Function B_Dic_Fxt_Ffn(A As FxtRecs, T_Ffn As Dictionary) As Dictionary
-Dim J%
-Set B_Dic_Fxt_Ffn = New Dictionary
-For J = 0 To A.N - 1
-    With A.Ay(J)
-        B_Dic_Fxt_Ffn.Add .T, T_Ffn(.Fxn)
-    End With
-Next
-End Function
-Private Function B_Dic_Fxt_Fn(A As FxtRecs) As Dictionary
-Set B_Dic_Fxt_Fn = New Dictionary
-Dim J%
-For J = 0 To A.N - 1
-    With A.Ay(J)
-    B_Dic_Fxt_Fn.Add .T, .Fxn
-    End With
-Next
-End Function
-Private Function B_TnyFx(A As FxtRecs) As String()
-Dim J%
-For J = 0 To A.N - 1
-    PushI B_TnyFx, A.Ay(J).T
-Next
-End Function
-Private Function B_TnyFb(LFbTbl$()) As String()
-Dim J%
-For J = 0 To UB(LFbTbl)
-    PushIAy B_TnyFb, SyzSS(RmvT1(LFbTbl(J)))
+Set Ix = DiczAyIx(DFx.Fny)
+IxT = Ix("T")
+IxStru = Ix("Stru")
+For Each Dr In Itr(DFx.Dry)
+    WDic_T_Stru.Add Dr(IxT), Dr(IxStru)
 Next
 End Function
 
-Private Function B__ImpSqy(Tny$(), TzDiLnkColLy As Dictionary, TzDiBexpr As Dictionary) As String()
-Dim I, Fny$(), Ey$(), T$, Into$, LnkColLy$(), Bexpr$
-For Each I In Itr(Tny)
+Private Function WImpSqy(Dic_T_Stru As Dictionary, DStru As Drs, Dic_T_Bexpr As Dictionary) As String()
+Dim I, Fny$(), Ix As Dictionary, Ey$(), T$, Into$, LnkColLy$(), Bexpr$, A As Drs, Stru$
+For Each I In Dic_T_Stru.Keys
+    Stru = Dic_T_Stru(I)
        T = ">" & I
     Into = "#I" & I
-LnkColLy = ValzDicK(TzDiLnkColLy, I, Dicn:="TzDiLnkColLy", Kn:="TblNm", Fun:=CSub)
-     Fny = T1Ay(LnkColLy)
-      Ey = RmvSqBktzSy(RmvTTzAy(LnkColLy))
-   Bexpr = ValzDicIf(TzDiBexpr, I)
-    PushI B__ImpSqy, SqlSel_Fny_Extny_Into_T_OB(Fny, Ey, Into, T, Bexpr)
+       A = DrswColEqSel(DStru, "Stru", Stru, "F Ty E")
+     Fny = StrColzDrs(A, "F")
+      Ey = RmvSqBktzSy(StrColzDrs(A, "E"))
+   Bexpr = ValzDicIf(Dic_T_Bexpr, I)
+    PushI WImpSqy, SqlSel_Fny_Extny_Into_T_OB(Fny, Ey, Into, T, Bexpr)
 Next
 End Function
 
-Private Function B_Fnd_FxtRecs(FxTblLy$()) As FxtRecs
-Dim OAy() As FxtRec, J%, L$, A$
-For J = 0 To UB(FxTblLy)
-    L = FxTblLy(J)
-    ReDim Preserve OAy(J)
-    With OAy(J)
-        .T = ShfT1(L)
-        A = ShfT1(L)
-        .Fxn = B_Fnd_Fxn(A, .T)
-        .Wsn = B_Fnd_Wsn(A)
-        .Stru = StrDft(L, .T)
-    End With
+Private Function WDFx(FxTblLy$()) As Drs
+'Ret: *DFx{T Fxn Ws Stru}
+Dim Lin, L$, A$, T$, Fxn$, Ws$, Stru$, Dry()
+For Each Lin In Itr(FxTblLy)
+    L = Lin
+    T = ShfT1(L)
+    A = ShfT1(L)
+    Fxn = BefDotOrAll(A)
+    Ws = AftDot(A)
+    If Fxn = "" Then Fxn = T
+    If Ws = "" Then Ws = "Sheet1"
+    Stru = StrDft(L, T)
+    PushI Dry, Array(T, Fxn, Ws, Stru)
 Next
-B_Fnd_FxtRecs.N = Si(FxTblLy)
-B_Fnd_FxtRecs.Ay = OAy
+WDFx = DrszFF("T Fxn Ws Stru", Dry)
 End Function
-Private Function B_Fnd_Wsn(Fxn_dot_Wsn)
-Dim A$: A = Fxn_dot_Wsn
-If A = "" Then B_Fnd_Wsn = "Sheet1": Exit Function
-If Not HasDot(A) Then B_Fnd_Wsn = "Sheet1": Exit Function
-B_Fnd_Wsn = AftDot(A)
-End Function
-Private Function B_Fnd_Fxn(Fxn_dot_Wsn, T)
-Dim A$: A = Fxn_dot_Wsn
-If A = "" Then B_Fnd_Fxn = T: Exit Function
-If HasDot(A) Then B_Fnd_Fxn = BefDot(A): Exit Function
-B_Fnd_Fxn = Fxn_dot_Wsn
-End Function
-Private Function B__LnkTblPms_Fb(TFb$(), TzDiFbFx As Dictionary) As LnkTblPms
-Dim Fbn$, A$, T, Cn$
-For Each T In Itr(TFb)
-    If Not TzDiFbFx.Exists(T) Then
-        Thw CSub, "TzDiFbFx does not contains T", "T TzDiFbFx TFb", Fbn, TzDiFbFx, T, TFb
+Private Function WLnkFb(Dic_Fbt_Fbn As Dictionary, Dic_Fbn_Fb As Dictionary) As Drs
+'Ret: *LnkFb::Drs{T S Cn)
+Dim Fbn$, A$, S$, Fbt, T$, Cn$, Fb$, Dry()
+For Each Fbt In Dic_Fbt_Fbn.Keys
+    Fbn = Dic_Fbt_Fbn(Fbt)
+    If Not Dic_Fbn_Fb.Exists(Fbn) Then
+        Thw CSub, "Dic_Fbn_Fb does not contains Fbn", "Fbn Dic_Fbn_Fb", Fbn, Dic_Fbn_Fb
     End If
-    Cn = CnStrzFbDao(TzDiFbFx(T))
-    PushLnkTblPm B__LnkTblPms_Fb, LnkTblPm(">" & T, T, Cn)
+    Fb = Dic_Fbn_Fb(Fbn)
+    Cn = CnStrzFbDao(Fb)
+    T = ">" & Fbt
+    S = Fbt
+    PushI Dry, Array(T, S, Cn)
 Next
+WLnkFb = DrszFF("T S Cn", Dry)
 End Function
 
-Private Function B__LnkTblPms_Fx(A As FxtRecs, TzDiFbFx As Dictionary) As LnkTblPms
-Dim J%, S$, Fx$, Cn$
-For J = 0 To A.N - 1
-    With A.Ay(J)
-    Fx = TzDiFbFx(.T)
-    If Fx = "" Then Thw CSub, "TzDiFbFx does not have Key", "Tbl-Key TblNmToTzDiFbFx", .T, TzDiFbFx
-    If IsNeedQuote(.Wsn) Then
-        S = "'" & .Wsn & "$'"
+Private Function WLnkFx(DFx As Drs, Dic_Fxn_Fx As Dictionary) As Drs
+'Fm : @DFx :: Drs{T Fxn Ws Stru}
+'Ret: *LnkFx::Drs{T S Cn}
+Dim Dry(), Dr, S$, Fx$, Ws$, Cn$, T$, Fxn$, Ix As Dictionary
+Set Ix = DiczAyIx(DFx.Fny)
+For Each Dr In Itr(DFx.Dry)
+    T = Dr(Ix("T"))
+    Ws = Dr(Ix("Ws"))
+    Fxn = Dr(Ix("Fxn"))
+    If Not Dic_Fxn_Fx.Exists(Fxn) Then Thw CSub, "Dic_Fxn_Fx does not have Key", "Fxn-Key Dic_Fxn_Fx", T, Dic_Fxn_Fx
+    Fx = Dic_Fxn_Fx(Fxn)
+    If IsNeedQuote(Ws) Then
+        S = "'" & Ws & "$'"
     Else
-        S = .Wsn & "$"
+        S = Ws & "$"
     End If
     Cn = CnStrzFxDao(Fx)
-    PushLnkTblPm B__LnkTblPms_Fx, LnkTblPm(">" & .T, S, Cn)
-    End With
+    T = ">" & T
+    PushI Dry, Array(T, S, Cn)
 Next
+WLnkFx = DrszFF("T S Cn", Dry)
 End Function
-
-
-Private Function B_Dic_T_LnkColLy(LnkImpSrc$(), TzDiStru As Dictionary, StruSy$()) As Dictionary
-Dim T, Stru$, LnkColLy$()
-Set B_Dic_T_LnkColLy = New Dictionary
-For Each T In TzDiStru.Keys
-    Stru = TzDiStru(T)
-    LnkColLy = IndentedLy(LnkImpSrc, "Stru." & Stru)
-    B_Dic_T_LnkColLy.Add T, LnkColLy
-Next
-End Function
-
 
 
 Private Property Get Y_InpFilSrc() As String()
 Erase XX
-X "DutyPay C:\Users\User\Desktop\SAPAccessReports\DutyPrepay5\DutyPrepay5_Data.mdb"
-X "ZHT0  C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\Pricing report(ForUpload).xls"
-X "MB52  C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\2018\MB52 2018-01-30.xls"
-X "Uom   C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\sales text.xlsx"
-X "GLBal C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\DutyPrepayGLTot.xlsx"
+X "Inp"
+X " DutyPay C:\Users\User\Desktop\SAPAccessReports\DutyPrepay5\DutyPrepay5_Data.mdb"
+X " ZHT0  C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\Pricing report(ForUpload).xls"
+X " MB52  C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\2018\MB52 2018-01-30.xls"
+X " Uom   C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\sales text.xlsx"
+X " GLBal C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\DutyPrepayGLTot.xlsx"
 Y_InpFilSrc = XX
 Erase XX
 End Property
@@ -230,6 +162,7 @@ End Property
 
 Private Property Get Y_LnkImpSrc() As String()
 Erase XX
+X Y_InpFilSrc
 X "FbTbl"
 X "--  Fbn TblNm.."
 X " DutyPay Permit PermitD"
@@ -298,9 +231,6 @@ X " BusArea Txt Business Area       "
 X "Stru.GLBal"
 X " BusArea Txt Business Area Code"
 X " GLBal   Dbl                   "
-X "Stru.PermitD"
-X " Permit           GLBal   Dbl                     "
-X " PermitD          GLBal   Dbl                     "
 X "Stru.SkuRepackMulti"
 X " SkuRepackMulti   GLBal   Dbl                     "
 X "Stru.SkuTaxBy3rdParty"
@@ -310,13 +240,10 @@ X " SkuNoLongerTax"
 Y_LnkImpSrc = XX
 Erase XX
 End Property
-Private Sub ZZ()
-ZZ_LnkImp
-End Sub
 Private Sub ZZZ()
-QDao_Lnk_LnkImp.ZZ_LnkImp
+QDao_Lnk_LnkImp:
 End Sub
 
-Sub Z1()
-ZZ_LnkImp
-End Sub
+
+
+

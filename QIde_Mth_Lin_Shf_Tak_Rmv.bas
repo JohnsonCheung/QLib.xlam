@@ -43,6 +43,27 @@ Function ShfMthSfx$(OLin$)
 ShfMthSfx = ShfChr(OLin, "#!@#$%^&")
 End Function
 
+Function ShfBef$(OLin$, Sep$, Optional NoTrim As Boolean)
+Dim P%: P = InStr(OLin, Sep)
+If P = 0 Then Exit Function
+ShfBef = Bef(OLin, Sep, NoTrim)
+OLin = Aft(OLin, Sep, NoTrim)
+End Function
+
+Function ShfBefOrAll$(OLin$, Sep$, Optional NoTrim As Boolean)
+Dim P%: P = InStr(OLin, Sep)
+If P = 0 Then
+    If NoTrim Then
+        ShfBefOrAll = OLin
+    Else
+        ShfBefOrAll = Trim(OLin)
+    End If
+    OLin = ""
+    Exit Function
+End If
+ShfBefOrAll = Bef(OLin, Sep, NoTrim)
+OLin = Aft(OLin, Sep, NoTrim)
+End Function
 Function ShfNm$(OLin$)
 Dim O$: O = Nm(OLin): If O = "" Then Exit Function
 ShfNm = O

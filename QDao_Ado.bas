@@ -39,11 +39,30 @@ Set CT = Cat.Tables(T)
 FnyzCatT = Itn(Cat.Tables(T).Columns)
 End Function
 
+Function DFxwFTy(Fx, W) As Drs
+Dim A As Drs
+A = DFTyzFxw(Fx, W)
+DFxwFTy = InsColzDrsCCBef(A, "Fx W", Fx, W)
+End Function
+Function DFTyzFxw(Fx, W) As Drs
+DFTyzFxw = DFTy(CatzFx(Fx), CatTnzWsn(W))
+End Function
+
+Function DFTy(Cat As ADOX.Catalog, T) As Drs
+Dim CT As ADOX.Table, ODry()
+Set CT = Cat.Tables(T)
+Dim C As Column
+For Each C In Cat.Tables(T).Columns
+    PushI ODry, Array(C.Name, ShtTyzAdo(C.Type))
+Next
+DFTy = DrszFF("T Ty", ODry)
+End Function
+
 Function DrszFxw(Fx, Wsn) As Drs
 DrszFxw = DrszArs(ArszFxw(Fx, Wsn))
 End Function
 Function ArszFxw(Fx, Wsn) As AdoDb.Recordset
-Set ArszFxw = ArsCnq(CnzFx(Fx), SqlSel_T(CatTn(Wsn)))
+Set ArszFxw = ArsCnq(CnzFx(Fx), SqlSel_T(CatTnzWsn(Wsn)))
 End Function
 Sub RunCnSqy(Cn As AdoDb.Connection, Sqy$())
 Dim Q
@@ -147,11 +166,19 @@ End Function
 Function WnyzWb(A As Workbook) As String()
 WnyzWb = Wny(A.FullName)
 End Function
-
-Function Wny(Fx) As String()
-Dim T
-For Each T In Itr(TnyzCat(CatzFx(Fx)))
-    PushNonBlank Wny, WsnzCatTn(CStr(T))
+Private Sub ZZ_Wny()
+Const Fx$ = "C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\2018\MB52 2018-01-30.xls"
+D Wny(Fx)
+End Sub
+Function Wny(Fx, Optional InclAllOtherTbl As Boolean) As String()
+Dim Tny$(), T
+Tny = TnyzCat(CatzFx(Fx))
+If InclAllOtherTbl Then
+    Wny = Tny
+    Exit Function
+End If
+For Each T In Itr(Tny)
+    PushNonBlank Wny, WsnzCatTn(T)
 Next
 End Function
 
@@ -285,23 +312,28 @@ Case IsFb(Ffn): FnyzFfnTblNm = FnyzFbt(Ffn, TblNm$)
 Case Else: Thw CSub, "Ffn must be Fx or Fb", "Ffn TblNm", Ffn, TblNm
 End Select
 End Function
+Function DWsfzFxw(Fx, W) As Drs
+Stop
+'DWsfzFxw = DrszFF("Fx Wsn F Ty", ODry)
+End Function
 Function FnyzFxw(Fx, W) As String()
-FnyzFxw = FnyzCatT(CatzFx(Fx), CatTn(W))
+FnyzFxw = FnyzCatT(CatzFx(Fx), CatTnzWsn(W))
 End Function
 Function CvAdoTy(A) As AdoDb.DataTypeEnum
 CvAdoTy = A
 End Function
 
-Function CatTn$(Wsn)
+Function CatTnzWsn$(Wsn)
 If IsNeedQuote(Wsn) Then
-    CatTn = QuoteSng(Wsn & "$")
+    CatTnzWsn = QuoteSng(Wsn & "$")
 Else
-    CatTn = Wsn & "$"
+    CatTnzWsn = Wsn & "$"
 End If
 End Function
 
-Function WsnzCatTn$(CatTn)
-WsnzCatTn = RmvSfx(RmvSngQuote(CatTn), "$")
+Function WsnzCatTn$(CatTnzWsn)
+If HasSfx(CatTnzWsn, "FilterDatabase") Then Exit Function
+WsnzCatTn = RmvSfx(RmvSngQuote(CatTnzWsn), "$")
 End Function
 
 Private Sub ZZ()

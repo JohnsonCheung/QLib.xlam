@@ -1,4 +1,4 @@
-Attribute VB_Name = "QXls_Xls_XlsOp"
+Attribute VB_Name = "QXls_Base_XlsOp"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "MXls_Wb."
@@ -247,11 +247,11 @@ For Each I In Tny
 Next
 End Sub
 
-Function WszWbDt(A As Workbook, Dt As Dt) As Worksheet
+Function WszDt(Wb As Workbook, Dt As Dt) As Worksheet
 Dim O As Worksheet
-Set O = AddWs(A, Dt.DtNm)
-LozDrs DrszDt(Dt), A1(O)
-Set WszWbDt = O
+Set O = AddWs(Wb, Dt.DtNm)
+LozDrs DrszDt(Dt), A1zWs(O)
+Set WszDt = O
 End Function
 
 Function AddWc(ToWb As Workbook, FmFb, T) As WorkbookConnection
@@ -327,7 +327,12 @@ Dim T As TextConnection: Set T = TxtWc(A)
 Dim C$: C = T.Connection: If Not HasPfx(C, "TEXT;") Then Stop
 T.Connection = "TEXT;" & Fcsv
 End Sub
-
+Function HasWsCd(WsCdn$) As Boolean
+Dim Ws As Worksheet
+For Each Ws In CWb.Sheets
+    If Ws.CodeName = WsCdn Then HasWsCd = True: Exit Function
+Next
+End Function
 Function HasWs(A As Workbook, WsIx) As Boolean
 If IsNumeric(WsIx) Then
     HasWs = IsBet(WsIx, 1, A.Sheets.Count)
@@ -405,8 +410,17 @@ End Select
 SetWsn O, Wsn
 Set AddWs = O
 End Function
-
-
+Private Sub ZZ_ClrLoRow()
+DltLoRow CWs.ListObjects("T_SrcCd")
+End Sub
+Sub DltLoRow(A As ListObject)
+Dim R As Range: Set R = A.DataBodyRange
+If IsNothing(R) Then Exit Sub
+R.ClearContents
+Set R = A1zRg(A.ListColumns(1).Range)
+Dim R1 As Range: Set R1 = RgRR(R, 1, 2)
+A.Resize R1
+End Sub
 
 Sub DltLo(A As Worksheet)
 Dim Ay() As ListObject, J%
@@ -525,11 +539,28 @@ End Sub
 Sub ShwPt(A As PivotTable)
 ShwXls A.Application
 End Sub
-
+Sub PutCd(Cd$(), CdLo As ListObject)
+If ChkCdLo(CdLo) Then Exit Sub
+DltLoRow CdLo
+PutAyAtV Cd, A1zLo(CdLo)
+End Sub
+Private Function ChkCdLo(Lo As ListObject) As Boolean
+If IsCdLo(Lo) Then Exit Function
+MsgBox "Given Lo is not CdLo", "Lo-Name", Lo.Name
+ChkCdLo = True
+End Function
+Private Function IsCdLo(A As ListObject) As Boolean
+If A.ListColumns.Count <> 1 Then Exit Function
+If A.ListColumns(1).Name <> "SrcCd" Then Exit Function
+IsCdLo = True
+End Function
 Function PutSq(Sq(), At As Range) As Range
 Dim O As Range
+If NRowzSq(Sq) = 0 Then
+    Set PutSq = A1zRg(At)
+    Exit Function
+End If
 Set O = ResiRg(At, Sq)
-LozRg O
 O.Value = Sq
 Set PutSq = O
 End Function
@@ -726,7 +757,7 @@ Set ShwWs = A
 End Function
 
 
-Function WbzDs(A As Ds) As Workbook
+Function WbzDs(A As DS) As Workbook
 Dim O As Workbook
 Set O = NewWb
 With FstWs(O)
@@ -735,20 +766,21 @@ With FstWs(O)
 End With
 Dim J%, Ay() As Dt
 For J = 0 To A.N - 1
-    'WszWbDt O, Ay(J)
+    'WszDt O, Ay(J)
 Next
 Set WbzDs = O
 End Function
-Sub PutSeqDown(A As Range, FmNum&, ToNum&)
-'AyRgV LngSeq(FmNum, ToNum), A
+Sub PutSeqDown(At As Range, FmNum&, ToNum&)
+PutAyAtV LngSeq(FmNum, ToNum), At
 End Sub
-
-
 
 Sub DltSheet1(Wb As Workbook)
 DltWs Wb, "Sheet1"
 End Sub
-
+Sub ActWs(Ws As Worksheet)
+If IsEqObj(Ws, CWs) Then Exit Sub
+Ws.Activate
+End Sub
 Sub DltWs(Wb As Workbook, WsIx)
 Wb.Application.DisplayAlerts = False
 If Wb.Sheets.Count = 1 Then Exit Sub
@@ -786,5 +818,123 @@ End Sub
 
 Sub FillWsny(At As Range)
 RgzAyV Wsny(WbzRg(At)), At
+End Sub
+
+
+Sub FillAtV(At As Range, Ay)
+FillSq Sqv(Ay), At
+End Sub
+
+Sub FillLc(Lo As ListObject, ColNm$, Ay)
+If Lo.DataBodyRange.Rows.Count <> Si(Ay) Then Thw CSub, "Lo-NRow <> Si(Ay)", "Lo-NRow ,Si(Ay)", NRowzLo(Lo), Si(Ay)
+Dim At As Range, C As ListColumn, R As Range
+'DmpAy FnyzLo(Lo)
+'Stop
+Set C = Lo.ListColumns(ColNm)
+Set R = C.DataBodyRange
+Set At = R.Cells(1, 1)
+FillAtV At, Ay
+End Sub
+Sub FillSq(Sq(), At As Range)
+ResiRg(At, Sq).Value = Sq
+End Sub
+Sub FillAtH(Ay, At As Range)
+FillSq Sqh(Ay), At
+End Sub
+
+
+Sub RunFxqByCn(Fx, Q)
+CnzFx(Fx).Execute Q
+End Sub
+
+
+
+
+Function RgzDrs(A As Drs, At As Range) As Range
+Set RgzDrs = RgzSq(SqzDrs(A), At)
+End Function
+
+Function LozDrs(A As Drs, At As Range, Optional Lon$) As ListObject
+Set LozDrs = LozRg(RgzDrs(A, At), Lon)
+End Function
+
+Function WszAy(Ay, Optional Wsn$ = "Sheet1") As Worksheet
+Dim O As Worksheet, R As Range
+Set O = NewWs(Wsn)
+O.Range("A1").Value = "Array"
+Set R = RgzSq(Sqv(Ay), O.Range("A2"))
+LozRg RgzMoreTop(R)
+Set WszAy = O
+End Function
+
+Function WszDrs(A As Drs, Optional Wsn$ = "Sheet1") As Worksheet
+Dim O As Worksheet: Set O = NewWs(Wsn)
+LozDrs A, O.Range("A1")
+Set WszDrs = O
+End Function
+
+Function RgzAyV(Ay, At As Range) As Range
+Set RgzAyV = RgzSq(Sqv(Ay), At)
+End Function
+
+Function RgzAyH(Ay, At As Range) As Range
+Set RgzAyH = RgzSq(Sqh(Ay), At)
+End Function
+
+Function RgzDry(Dry(), At As Range) As Range
+Set RgzDry = RgzSq(SqzDry(Dry), At)
+End Function
+
+Function WszDry(Dry(), Optional Wsn$ = "Sheet1") As Worksheet
+Dim O As Worksheet: Set O = NewWs(Wsn)
+RgzDry Dry, A1zWs(O)
+Set WszDry = O
+End Function
+
+
+Function WszDs(A As DS) As Worksheet
+Dim O As Worksheet: Set O = NewWs
+A1zWs(O).Value = "*Ds " & A.DsNm
+Dim At As Range, J%
+Set At = WsRC(O, 2, 1)
+Dim BelowN&, Dt As Dt, Ay() As Dt
+Ay = A.Ay
+For J = 0 To A.N - 1
+    Dt = Ay(J)
+    LozDt Dt, At
+    BelowN = 2 + Si(Dt.Dry)
+    Set At = CellBelow(At, BelowN)
+Next
+Set WszDs = O
+End Function
+
+Function RgzDt(A As Dt, At As Range, Optional DtIx%)
+Dim Pfx$: If DtIx > 0 Then Pfx = QuoteBkt(CStr(DtIx))
+At.Value = Pfx & A.DtNm
+RgzSq SqzDrs(DrszDt(A)), CellBelow(At)
+End Function
+
+Function LozDt(A As Dt, At As Range) As ListObject
+Dim R As Range
+If At.Row = 1 Then
+    Set R = RgRC(At, 2, 1)
+Else
+    Set R = At
+End If
+Set LozDt = LozDrs(DrszDt(A), R)
+RgRC(R, 0, 1).Value = A.DtNm
+End Function
+
+
+Function RgzSq(Sq(), At As Range) As Range
+Dim O As Range
+Set O = ResiRg(At, Sq)
+O.MergeCells = False
+O.Value = Sq
+Set RgzSq = O
+End Function
+
+Private Sub ZZ_WszDs()
+ShwWs WszDs(SampDs)
 End Sub
 

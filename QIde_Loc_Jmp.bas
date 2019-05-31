@@ -8,11 +8,15 @@ Sub JmpzML(A As CodeModule, Lno)
 JmpzM A
 JmpLin Lno
 End Sub
-
-Function HasMdn(Mdn, Optional Inf As Boolean) As Boolean
-If HasItn(CPj.VBComponents, Mdn) Then HasMdn = True: Exit Function
+Function HasMdnzP(P As VBProject, Mdn, Optional Inf As Boolean) As Boolean
+If HasItn(CPj.VBComponents, Mdn) Then HasMdnzP = True: Exit Function
 If Inf Then InfLin CSub, FmtQQ("Md[?] not exist", Mdn)
 End Function
+
+Function HasMdn(Mdn, Optional Inf As Boolean) As Boolean
+HasMdn = HasMdnzP(CPj, Mdn, Inf)
+End Function
+
 Sub Jmp(MdnDotLno$)
 JmpMdn BefOrAll(MdnDotLno, ".")
 JmpLin Aft(MdnDotLno, ".")

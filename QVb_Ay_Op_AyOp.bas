@@ -3,7 +3,8 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Ay_Op."
-Enum EmBeg01
+Enum EmIxCol
+EiNoIx
 EiBeg0
 EiBeg1
 End Enum
@@ -100,6 +101,9 @@ CvAv = A
 End Function
 Function CvObj(A) As Object
 Set CvObj = A
+End Function
+Function CvEr(A) As VBA.ErrObject
+
 End Function
 Function CvSy(A) As String()
 Select Case True
@@ -218,15 +222,16 @@ Function RplT1zAy(Ay, NewT1) As String()
 RplT1zAy = AddPfxzAy(RmvT1zAy(Ay), NewT1 & " ")
 End Function
 
-Function OffsetzEmBeg(B As EmBeg01) As Byte
+Function OffsetzEmBeg(B As EmIxCol) As Byte
 Select Case True
 Case B = EiBeg0: OffsetzEmBeg = 0
 Case B = EiBeg1: OffsetzEmBeg = 1
-Case Else: Thw CSub, "EmBeg01 value error", "EmBeg01", B
+Case Else: Thw CSub, "EmIxCol value error", "EmIxCol", B
 End Select
 End Function
 
-Function AddIxPfx(Ay, Optional B As EmBeg01 = EiBeg0) As String()
+Function AddIxPfx(Ay, Optional B As EmIxCol = EiBeg0) As String()
+If B = EiNoIx Then AddIxPfx = CvSy(Ay): Exit Function
 Dim L, J&, N%
 J = OffsetzEmBeg(B)
 N = Len(CStr(UB(Ay) + J))
@@ -256,7 +261,28 @@ For Each L In Itr(Ay)
     PushI T3Ay, T3(CStr(L))
 Next
 End Function
+Function TabN$(N%)
+TabN = Space(4 * N)
+End Function
 
+Function TabNmV$(Nm$, V, Optional NTab% = 1)
+TabNmV = TabN(NTab) & Nm & V
+End Function
+Function TabNmLy(Nm$, Ly$(), Optional NTab% = 1, Optional Beg As EmIxCol = EiNoIx) As String()
+Stop
+If Si(Ly) = 0 Then
+    PushI TabNmLy, TabN(NTab) & Nm
+    Exit Function
+End If
+Dim Ly1$(), L0$, S$, J&
+Ly1 = AddIxPfx(Ly, Beg)
+PushI TabNmLy, TabN(NTab) & Nm & Ly1(0)
+'
+S = TabN(NTab) & Space(Len(Nm))
+For J = 1 To UB(Ly1)
+    PushI TabNmLy, S & Ly1(J)
+Next
+End Function
 Function TabAy(Ay, Optional NTab% = 1) As String()
-TabAy = AddPfxzAy(Ay, Space(4 * NTab))
+TabAy = AddPfxzAy(Ay, TabN(NTab))
 End Function

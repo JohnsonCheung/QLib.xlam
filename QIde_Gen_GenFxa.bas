@@ -1,4 +1,4 @@
-Attribute VB_Name = "QIde_Bld_BldFxa"
+Attribute VB_Name = "QIde_Gen_GenFxa"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "BCrtFxa."

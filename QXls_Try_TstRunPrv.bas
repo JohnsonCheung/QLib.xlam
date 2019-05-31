@@ -1,4 +1,4 @@
-Attribute VB_Name = "QXls_Run_TstRunPrv"
+Attribute VB_Name = "QXls_Try_TstRunPrv"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "AA."

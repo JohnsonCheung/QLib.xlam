@@ -62,11 +62,7 @@ CnstLinIx = -1
 End Function
 Function IsLinzCnstn(L, Cnstn) As Boolean
 End Function
-Sub AA()
-Dim A
-A = "ASD"
-Debug.Print StrPtr(A)
-End Sub
+
 Private Function EnsgCMod(Dcl$(), Mdn$, UseMod As Boolean) As Mdygs
 Dim OL As SomLnx, NL As SomLnx, NewLno&, OldCModLno&
 OldCModLno = CnstLinIx(Dcl, "CMod") + 1
@@ -95,7 +91,7 @@ End Function
 Private Function SomNewCSub(MthLy$(), MthIx&, Mthn$) As SomLnx
 If Not IsUsingCSub(MthLy) Then Exit Function
 Dim Lin$: Lin = FmtQQ("Const CSub$ = CMod & ""?""", Mthn)
-Dim Ix&: Ix = NxtSrcIx(MthLy) + MthIx
+Dim Ix&: Ix = SrcIxzNxt(MthLy) + MthIx
 SomNewCSub = SomLnx(Lnx(Lin, Ix))
 End Function
 

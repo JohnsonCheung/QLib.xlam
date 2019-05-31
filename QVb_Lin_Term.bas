@@ -94,7 +94,16 @@ End Sub
 
 Private Sub ZZ()
 End Sub
-
+Function SrcT1AsetP() As Aset
+Set SrcT1AsetP = T1Aset(SrczP(CPj))
+End Function
+Function T1Aset(Ly$()) As Aset
+Dim O As New Aset, L
+For Each L In Itr(Ly)
+    O.PushItm T1(L)
+Next
+Set T1Aset = O
+End Function
 Function T1zS$(S)
 T1zS = T1(S)
 End Function

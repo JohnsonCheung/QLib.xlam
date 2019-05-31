@@ -90,6 +90,15 @@ End If
 AyeEmpEle = O
 End Function
 
+Function AyeBlankStr(Ay) As String()
+Dim X
+For Each X In Itr(Ay)
+    If Trim(X) <> "" Then
+        PushI AyeBlankStr, X
+    End If
+Next
+End Function
+
 Function AyeEmpEleAtEnd(Ay)
 Dim LasU&, U&
 Dim O: O = Ay
@@ -126,6 +135,15 @@ Dim O
 AyeFmTo = O
 End Function
 
+Function AyeFstLas(Ay)
+Dim J&
+AyeFstLas = Ay
+Erase AyeFstLas
+For J = 1 To UB(Ay) - 1
+    PushI AyeFstLas, Ay(J)
+Next
+End Function
+
 Function AyeFstEle(Ay)
 AyeFstEle = AyeEleAt(Ay)
 End Function
@@ -147,7 +165,7 @@ End Function
 
 Function AyeIxy(Ay, Ixy)
 'Ixy holds index if Ay to be remove.  It has been sorted else will be stop
-Ass IsSrtedAy(Ay)
+Ass IsArray(Ay)
 Ass IsSrtedAy(Ixy)
 Dim J&
 Dim O: O = Ay
@@ -177,17 +195,21 @@ End Function
 Function SyeLik(Sy$(), Lik$) As String()
 SyeLik = SyePred(Sy, PredzLik(Lik))
 End Function
-Function PredzLikAy(LikAy$()) As IPred
 
+Function PredzLikAy(LikAy$()) As PredzIsLikAy
+Set PredzLikAy = New PredzIsLikAy
+PredzLikAy.Init LikAy
 End Function
+
 Function SyePred(Sy$(), P As IPred) As String()
 Dim I
 For Each I In Itr(Sy)
     If Not P.Pred(I) Then
-        PushI SyePred, CStr(I)
+        PushI SyePred, I
     End If
 Next
 End Function
+
 Function SyeLikAy(Sy$(), LikAy$()) As String()
 SyeLikAy = SyePred(Sy, PredzLikAy(LikAy))
 End Function
@@ -196,9 +218,35 @@ Function SyeLikssAy(Sy$(), LikssAy$()) As String()
 If Si(LikssAy) = 0 Then SyeLikssAy = Sy: Exit Function
 SyeLikssAy = SyePred(Sy, PredzLikssAy(LikssAy))
 End Function
-Function PredzLikssAy(LikssAy$()) As IPred
+
+Function PredzLikssAy(LikssAy$()) As PredzIsLikAy
 
 End Function
+
+Private Sub ZZ_SyeLikss()
+Dim Sy$(), Likss$
+GoSub ZZ
+GoSub T0
+Exit Sub
+T0:
+    Sy = SyzSS("A B C CD E E1 E3")
+    Likss = "C* E*"
+    Ept = SyzSS("A B")
+    GoTo Tst
+ZZ:
+    D SyeLikss(SyzSS("A B C CD E E1 E3"), "C* E*")
+    Return
+Tst:
+    Act = SyeLikss(Sy, Likss)
+    C
+    Return
+End Sub
+
+Function SyeLikss(Sy$(), Likss$) As String()
+If Likss = "" Then SyeLikss = Sy: Exit Function
+SyeLikss = SyePred(Sy, PredzLikAy(SyzSS(Likss)))
+End Function
+
 Function AyeNegative(Ay)
 Dim I
 AyeNegative = Resi(Ay)

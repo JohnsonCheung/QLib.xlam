@@ -63,16 +63,23 @@ Dim O: O = Resi(Ay)
 Dim D As Dictionary: Set D = CntDic(Ay, EiCntDup, C)
 AywDup = IntozItr(O, D.Keys)
 End Function
-
+Function AywNonEmp(Ay)
+AywNonEmp = Ay: Erase AywNonEmp
+Dim I
+For Each I In Ay
+    If Not IsEmpty(I) Then
+        PushI AywNonEmp, I
+    End If
+Next
+End Function
 Function AywFmIx(Ay, FmIx)
-Dim O: O = Ay: Erase O
+AywFmIx = Ay: Erase AywFmIx
 If 0 <= FmIx And FmIx <= UB(Ay) Then
     Dim J&
     For J = FmIx To UB(Ay)
-        Push O, Ay(J)
+        Push AywFmIx, Ay(J)
     Next
 End If
-AywFmIx = O
 End Function
 
 Function AywFE(Ay, FmIx, EIx)
@@ -117,6 +124,7 @@ For Each Ix In Itr(Ixy)
 Next
 AywIxyzMust = O
 End Function
+
 Function AywInAset(Ay, B As Aset)
 AywInAset = Resi(Ay)
 Dim I
@@ -130,12 +138,31 @@ Dim O: O = Resi(Ay)
 ReDim Preserve O(U)
 Dim Ix, J&
 For Each Ix In Itr(Ixy)
-    If Ix > -1 Then
+    If IsObject(Ay(Ix)) Then
+        Set O(J) = Ay(Ix)
+    Else
         O(J) = Ay(Ix)
     End If
     J = J + 1
 Next
 AywIxy = O
+End Function
+Function AywIxyAlwEmp(Ay, Ixy&())
+Dim U&: U = UB(Ixy)
+Dim O: O = Ay: Erase O
+ReDim Preserve O(U)
+Dim Ix, J&
+For Each Ix In Itr(Ixy)
+    If Ix > -1 Then
+        If IsObject(Ay(Ix)) Then
+            Set O(J) = Ay(Ix)
+        Else
+            O(J) = Ay(Ix)
+        End If
+    End If
+    J = J + 1
+Next
+AywIxyAlwEmp = O
 End Function
 
 Function AywLik(Ay, Lik) As String()
@@ -207,14 +234,27 @@ Function AywPatnExl(Ay, Patn$, ExlLikss$) As String()
 AywPatnExl = AyeLikss(AywPatn(Ay, Patn), ExlLikss)
 End Function
 Function AyeLikss(Ay, ExlLikss$) As String()
-AyeLikss = AyePred(Ay, PredzLikss(ExlLikss))
+AyeLikss = AyePred(Ay, PredzIsLikss(ExlLikss))
 End Function
-Function PredzLikss(Likss$) As IPred
-
-
+Function PredzIsLikss(Likss$) As IPred
+Set PredzIsLikss = New PredzIsLikAy
+PredzIsLikss.Pred Likss
 End Function
+Function IxyzSubAy(Ay, SubAy) As Long()
+Dim E
+For Each E In SubAy
+    PushI IxyzSubAy, IxzAy(Ay, E)
+Next
+End Function
+
 Function IxyzAyPatn(Ay, Patn$) As Long()
 IxyzAyPatn = IxyzAyRe(Ay, RegExp(Patn))
+End Function
+Function IxyzAyCC(Ay, CC$) As Long()
+Dim C
+For Each C In Itr(SyzSS(CC))
+    PushI IxyzAyCC, IxzAy(Ay, C)
+Next
 End Function
 Function IxyzAyRe(Ay, B As RegExp) As Long()
 If Si(Ay) = 0 Then Exit Function

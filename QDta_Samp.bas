@@ -61,7 +61,7 @@ PushI SampDry, Array("F", True, CByte(8), 1, 2&, 3#, 4!, 5@, Now, String(300, "F
 PushI SampDry, Array("G", True, CByte(8), 1, 2&, 3#, 4!, 5@, Now, String(300, "G"))
 End Property
 
-Property Get SampDs() As Ds
+Property Get SampDs() As DS
 AddDt SampDs, SampDt1
 AddDt SampDs, SampDt2
 SampDs.DsNm = "Ds"

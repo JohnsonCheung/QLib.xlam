@@ -8,7 +8,23 @@ Type KF
     Ffn As String
 End Type
 Type KFs: N As Integer: Ay() As KF: End Type
-
+Function KFwKd_orDie(A As KFs, Kd) As KF
+Dim O As KF: O = KFwKd(A, Kd)
+If IsEmpKF(O) Then Thw CSub, "Cannot find Kd in KFs", "Kd KFs", Kd, FmtKFs(A)
+End Function
+Function IsEmpKF(A As KF) As Boolean
+If A.Kd = "" And A.Ffn = "" Then IsEmpKF = True
+End Function
+Sub DmpKFs(A As KFs)
+D FmtKFs(A)
+End Sub
+Function KFwKd(A As KFs, Kd) As KF
+Dim J%, Ay() As KF
+Ay = A.Ay
+For J = 0 To A.N - 1
+    If Ay(J).Kd = Kd Then KFwKd = Ay(J): Exit Function
+Next
+End Function
 Sub PushKF(O As KFs, M As KF)
 ReDim Preserve O.Ay(O.N)
 O.Ay(O.N) = M
@@ -26,20 +42,20 @@ Function FmtKF$(A As KF)
 FmtKF = A.Kd & " " & A.Ffn
 End Function
 
-Private Sub ThwIf_DupKd(A As KFs, Fun$)
+Private Function ErOfDupKd(A As KFs, Fun$) As String()
 Dim Dup$(): Dup = AywDup(KdAy(A))
-If Si(Dup) Then Thw CSub, "There is dup Kd in KFs", "Dup-Kd KFs", Dup, FmtKFs(A)
-End Sub
+If Si(Dup) Then ErOfDupKd = LyzMsgNap("There is dup Kd in KFs", "Dup-Kd KFs", Dup, FmtKFs(A))
+End Function
 
 Private Function DupFfn(A As KFs) As String()
 Dim Dup$(): Dup = AywDup(FfnyzKFs(A))
 If Si(Dup) Then Thw CSub, "There is dup Ffn in KFs", "Dup-Ffn KFs", Dup, FmtKFs(A)
 End Function
 
-Private Sub ThwIf_DupFfn(A As KFs, Fun$)
+Private Function ErOfDupFfn(A As KFs, Fun$) As String()
 Dim Dup$(): Dup = DupFfn(A)
-If Si(Dup) Then Thw CSub, "There is dup Kd in KFs", "Dup-Kd KFs", Dup, FmtKFs(A)
-End Sub
+If Si(Dup) Then ErOfDupFfn = LyzFunMsgNap(CSub, "There is dup Kd in KFs", "Dup-Kd KFs", Dup, FmtKFs(A))
+End Function
 Sub BrwKFs(A As KFs)
 B FmtKFs(A)
 End Sub
@@ -91,14 +107,16 @@ With BrkSpc(Lin)
 KFzLin = KF(.S1, .S2)
 End With
 End Function
-Sub ThwIf_KFsEr(A As KFs, Fun$)
-ThwIf_DupKd A, Fun
-ThwIf_DupFfn A, Fun
-ThwIf_MisFfn A, Fun
-End Sub
-Private Sub ThwIf_MisFfn(A As KFs, Fun$)
-ThwIf_Er MsgzMisKFs(KFszWhMis(A)), Fun
-End Sub
+Function ErzKFs(A As KFs, Fun$) As String()
+Dim E1$(), E2$(), E3$()
+E1 = ErOfDupKd(A, Fun)
+E2 = ErOfDupFfn(A, Fun)
+E3 = ErOfMisFfn(A, Fun)
+ErzKFs = Sy(E1, E2, E3)
+End Function
+Private Function ErOfMisFfn(A As KFs, Fun$) As String()
+ErOfMisFfn = MsgzMisKFs(KFszWhMis(A), Fun)
+End Function
 
 Function KF(Kd, Ffn) As KF
 KF.Kd = Kd
@@ -109,13 +127,14 @@ PushKF SngKF, A
 End Function
 
 Function MsgzMisKF(Mis As KF) As String()
-MsgzMisKF = MsgzMisKFs(SngKF(Mis))
+Stop
+'MsgzMisKF = MsgzMisKFs(SngKF(Mis))
 End Function
 
-Function MsgzMisKFs(Mis As KFs) As String()
+Function MsgzMisKFs(Mis As KFs, Fun$) As String()
 If Mis.N = 0 Then Exit Function
 Dim O$(), T$
-PushI O, FmtQQ("? file not found", Mis.N)
+PushI O, FmtQQ("? file not found", Mis.N) & PpdIf(Fun, "  @")
 Dim J%, L$(), R$()
 T = Space(4)
 For J = 0 To Mis.N - 1

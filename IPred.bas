@@ -9,6 +9,5 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
 Option Compare Text
-Private Const CMod$ = "IPred."
 Function Pred(V) As Boolean
 End Function

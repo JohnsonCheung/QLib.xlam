@@ -20,7 +20,7 @@ Function MthDnzDiLinzP(P As VBProject) As Dictionary
 Dim O As New Dictionary, I, Pfx$, M As CodeModule
 For Each I In MdItr(P)
     Set M = I
-    PushDic O, DicAddKeyPfx(MthDnzDiLinzS(Src(M)), MdDNm(M) & ".")
+    PushDic O, AddPfxToKey(MdDNm(M) & ".", MthDnzDiLinzS(Src(M)))
 Next
 Set MthDnzDiLinzP = O
 End Function
