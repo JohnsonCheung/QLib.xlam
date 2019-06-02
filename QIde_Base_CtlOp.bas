@@ -3,9 +3,33 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Cmd_Action."
 Private Const Asm$ = "QIde"
+Function RmvRmkzVb$(Lin)
+Stop
+RmvRmkzVb = LeftIf(Lin, RmkPoszVb(Lin))
+End Function
+
+Private Sub ZZ_RmkPoszVb()
+Dim I, O$(), L$, P%
+For Each I In AywSubStr(AywSubStr(SrczP(CPj), "'"), """")
+    P = RmkPoszVb(I)
+    If P = 0 Then
+        PushI O, I
+    Else
+        PushI O, I & vbCrLf & Dup(" ", P - 1) & "^"
+    End If
+Next
+Vc O
+End Sub
+
+Function RmkPoszVb%(Lin)
+Dim P%: P = InStr(Lin, "'"): If P = 0 Then Exit Function
+Dim P1%: P1 = InStr(Left(Lin, P - 1), """"): If P1 > 0 Then Exit Function
+RmkPoszVb = P
+End Function
 Sub TileH()
 BtnOfTileH.Execute
 End Sub
+
 Sub TileV()
 BtnOfTileV.Execute
 End Sub

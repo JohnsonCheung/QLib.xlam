@@ -53,7 +53,7 @@ Function TmpNm$(Optional Pfx$ = "N")
 TmpNm = Pfx & Format(Now(), "YYYYMMDD_HHMMSS")
 End Function
 
-Function TmpFdr$(Fdr$)
+Function TmpFdr$(Fdr)
 TmpFdr = AddFdrEns(TmpHom, Fdr)
 End Function
 

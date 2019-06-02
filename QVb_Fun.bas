@@ -4,6 +4,7 @@ Option Explicit
 Private Const Asm$ = "QVb"
 Public CSub$
 Public Const CMod$ = ""
+Type Unt: X As Byte: End Type
 Sub Swap(OA, OB)
 Dim X
 X = OA
@@ -90,32 +91,43 @@ For J = 1 To UB(Av)
 Next
 Max = O
 End Function
+Function MaxVbTyzAy(A() As VbVarType) As VbVarType
+Dim I, O As VbVarType
+For Each I In A
+    O = MaxVbTy(O, CvVbTy(I))
+Next
+End Function
+
+Function CvVbTy(A) As VbVarType
+CvVbTy = A
+End Function
 
 Function MaxVbTy(A As VbVarType, B As VbVarType) As VbVarType
-If A = vbString Or B = vbString Then MaxVbTy = A: Exit Function
-If A = vbEmpty Then MaxVbTy = B: Exit Function
-If B = vbEmpty Then MaxVbTy = A: Exit Function
-If A = B Then MaxVbTy = A: Exit Function
+Dim O As VbVarType
+If A = vbString Or B = vbString Then O = A: Exit Function
+If A = vbEmpty Then O = B: Exit Function
+If B = vbEmpty Then O = A: Exit Function
+If A = B Then O = A: Exit Function
 Dim AIsNum As Boolean, BIsNum As Boolean
 AIsNum = IsVbTyNum(A)
 BIsNum = IsVbTyNum(B)
 Select Case True
-Case A = vbBoolean And BIsNum: MaxVbTy = B
-Case AIsNum And B = vbBoolean: MaxVbTy = A
-Case A = vbDate Or B = vbDate: MaxVbTy = vbString
+Case A = vbBoolean And BIsNum: O = B
+Case AIsNum And B = vbBoolean: O = A
+Case A = vbDate Or B = vbDate: O = vbString
 Case AIsNum And BIsNum:
     Select Case True
-    Case A = vbByte: MaxVbTy = B
-    Case B = vbByte: MaxVbTy = A
-    Case A = vbInteger: MaxVbTy = B
-    Case B = vbInteger: MaxVbTy = A
-    Case A = vbLong: MaxVbTy = B
-    Case B = vbLong: MaxVbTy = A
-    Case A = vbSingle: MaxVbTy = B
-    Case B = vbSingle: MaxVbTy = A
-    Case A = vbDouble: MaxVbTy = B
-    Case B = vbDouble: MaxVbTy = A
-    Case A = vbCurrency Or B = vbCurrency: MaxVbTy = A
+    Case A = vbByte: O = B
+    Case B = vbByte: O = A
+    Case A = vbInteger: O = B
+    Case B = vbInteger: O = A
+    Case A = vbLong: O = B
+    Case B = vbLong: O = A
+    Case A = vbSingle: O = B
+    Case B = vbSingle: O = A
+    Case A = vbDouble: O = B
+    Case B = vbDouble: O = A
+    Case A = vbCurrency Or B = vbCurrency: O = A
     Case Else: Stop
     End Select
 Case Else: Stop

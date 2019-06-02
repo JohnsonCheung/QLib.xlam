@@ -54,11 +54,11 @@ For Each X In Itr(Ay)
 Next
 End Function
 
-Function FstElePredXP(A, XP$, P)
+Function FstElePredXP(A, Xp$, P)
 If Si(A) = 0 Then Exit Function
 Dim X
 For Each X In Itr(A)
-    If Run(XP, X, P) Then Asg X, FstElePredXP: Exit Function
+    If Run(Xp, X, P) Then Asg X, FstElePredXP: Exit Function
 Next
 End Function
 

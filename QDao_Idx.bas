@@ -4,16 +4,16 @@ Option Explicit
 Private Const CMod$ = "MDao_Idx."
 Private Const Asm$ = "QDao"
 
-Function CvIdx(A) As DAO.Index
+Function CvIdx(A) As Dao.Index
 Set CvIdx = A
 End Function
 
-Function FnyzIdx(A As DAO.Index) As String()
+Function FnyzIdx(A As Dao.Index) As String()
 If IsNothing(A) Then Exit Function
 FnyzIdx = Itn(A.Fields)
 End Function
 
-Function IsEqIdx(A As DAO.Index, B As DAO.Index) As Boolean
+Function IsEqIdx(A As Dao.Index, B As Dao.Index) As Boolean
 With A
 Select Case True
 Case .Name <> B.Name
@@ -25,12 +25,12 @@ End Select
 End With
 End Function
 
-Function IdxIsSk(A As DAO.Index, T) As Boolean
+Function IdxIsSk(A As Dao.Index, T) As Boolean
 If A.Name <> T Then Exit Function
 IdxIsSk = A.Unique
 End Function
 
-Function IsEqIdxs(A As DAO.Indexes, B As DAO.Indexes) As Boolean
+Function IsEqIdxs(A As Dao.Indexes, B As Dao.Indexes) As Boolean
 If A.Count <> B.Count Then Exit Function
 If Not IsEqNmItr(A, B) Then Exit Function
 Dim I
@@ -39,7 +39,7 @@ For Each I In A
 Next
 End Function
 
-Function IdxIsUniq(A As DAO.Index) As Boolean
+Function IdxIsUniq(A As Dao.Index) As Boolean
 If IsNothing(A) Then Exit Function
 IdxIsUniq = A.Unique
 End Function

@@ -4,7 +4,7 @@ Option Explicit
 Private Const CMod$ = "MDao_Rs_Mdy."
 Private Const Asm$ = "QDao"
 
-Sub InsRszDry(A As DAO.Recordset, Dry())
+Sub InsRszDry(A As Dao.Recordset, Dry())
 Dim Dr
 With A
     For Each Dr In Itr(Dry)
@@ -14,7 +14,7 @@ End With
 End Sub
 
 
-Sub SetRs(Rs As DAO.Recordset, Dr)
+Sub SetRs(Rs As Dao.Recordset, Dr)
 If Si(Dr) <> Rs.Fields.Count Then
     Thw CSub, "Si of Rs & Dr are diff", _
         "Si-Rs and Si-Dr Rs-Fny Dr", Rs.Fields.Count, Si(Dr), Itn(Rs.Fields), Dr
@@ -31,24 +31,24 @@ Next
 End Sub
 
 
-Sub InsRszAp(Rs As DAO.Recordset, ParamArray Ap())
+Sub InsRszAp(Rs As Dao.Recordset, ParamArray Ap())
 Dim Dr(): Dr = Ap
 InsRs Rs, Dr
 End Sub
 
-Sub InsRs(Rs As DAO.Recordset, Dr)
+Sub InsRs(Rs As Dao.Recordset, Dr)
 Rs.AddNew
 SetRs Rs, Dr
 Rs.Update
 End Sub
 
-Sub UpdRszAp(Rs As DAO.Recordset, ParamArray Ap())
+Sub UpdRszAp(Rs As Dao.Recordset, ParamArray Ap())
 Dim Dr(): Dr = Ap
 UpdRs Rs, Dr
 End Sub
 
 
-Sub DltRs(A As DAO.Recordset)
+Sub DltRs(A As Dao.Recordset)
 With A
     While Not .EOF
         .Delete

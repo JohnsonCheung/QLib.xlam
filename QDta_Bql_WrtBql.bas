@@ -5,10 +5,10 @@ Private Const CMod$ = "BBqlWrite."
 Public Const DoczFbq$ = "Fbq is Full file name of back quote (`) separated lines. " & _
 "It has first line as ShtTyscfQBLin.  " & _
 "It rest of lines are records."
-Sub InsRszBql(R As DAO.Recordset, Bql$)
+Sub InsRszBql(R As Dao.Recordset, Bql$)
 R.AddNew
 Dim Ay$(): Ay = Split(Bql, "`")
-Dim F As DAO.Field, J%
+Dim F As Dao.Field, J%
 For Each F In R.Fields
     If Ay(J) <> "" Then
         F.Value = Ay(J)
@@ -17,8 +17,8 @@ For Each F In R.Fields
 Next
 R.Update
 End Sub
-Function BqlzRs$(A As DAO.Recordset)
-Dim O$(), F As DAO.Field
+Function BqlzRs$(A As Dao.Recordset)
+Dim O$(), F As Dao.Field
 For Each F In A.Fields
     If IsNull(F.Value) Then
         PushI O, ""
@@ -63,7 +63,7 @@ Dim T$
     T = T0
     If T = "" Then T = TblNmzFbql(Fbql)
 Dim F%: F = FnoO(Fbql)
-Dim R As DAO.Recordset
+Dim R As Dao.Recordset
 Set R = RszT(A, T)
 Dim L$: L = ShtTyBqlzT(A, T)
 Print #F, L

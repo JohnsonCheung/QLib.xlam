@@ -83,6 +83,7 @@ R2Lo = A.DataBodyRange.Row + IIf(InclTot, 1, 0)
 End Function
 
 Function SqzLo(A As ListObject) As Variant()
+If IsNothing(A.DataBodyRange) Then Exit Function
 SqzLo = A.DataBodyRange.Value
 End Function
 

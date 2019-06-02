@@ -83,7 +83,7 @@ For Each I In Fny(D, T)
 Next
 End Function
 
-Private Function InfDr_TblF(T, Seq%, F As DAO.Field2) As Variant()
+Private Function InfDr_TblF(T, Seq%, F As Dao.Field2) As Variant()
 InfDr_TblF = Array(T, Seq, F.Name, DtaTy(F.Type))
 End Function
 Private Sub ZZ()

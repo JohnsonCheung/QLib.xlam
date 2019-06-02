@@ -17,7 +17,7 @@ Dim SamTim As Boolean
 Dim DifSz As Boolean
 Dim SamSz As Boolean
 Dim DifFt As Boolean
-Dim Rs As DAO.Recordset
+Dim Rs As Dao.Recordset
     Q = FmtQQ("Select SpecNm,Ft,Lines,Tim,Si,LTimStr_Dte from Spec where SpecNm = '?'", Spnm)
     Set Rs = A.OpenRecordset(Q)
     NoCur = Not HasFfn(Ft)

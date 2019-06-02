@@ -82,8 +82,8 @@ Private Function LoDr(A As ListObject) As Variant()
 Dim WN$: WN = WsnzLo(A)
 Dim LN$:: LN = A.Name
 Dim NR&: NR = NRowzLo(A)
-Dim NC&: NC = A.ListColumns.Count
-LoDr = Array(WN, LN, NR, NC)
+Dim Nc&: Nc = A.ListColumns.Count
+LoDr = Array(WN, LN, NR, Nc)
 End Function
 
 Sub AddLoIx(At As Range)
@@ -178,6 +178,7 @@ End Function
 Sub LoAutoFit(A As ListObject)
 A.DataBodyRange.EntireColumn.AutoFit
 End Sub
+
 Function AddWszT(Wb As Workbook, Db As Database, T, Optional Wsn0$, Optional AddgWay As EmAddgWay) As Worksheet
 Dim O As Worksheet: Set O = AddWs(Wb, StrDft(Wsn0, T))
 Dim A1 As Range: Set A1 = A1zWs(O)
@@ -193,18 +194,25 @@ DltWsIf O, "Sheet1"
 Set NewWbzOupTbl = O
 End Function
 
-Function WbzT(A As Database, T, Optional Wsn$ = "Data", Optional Lon$) As Workbook
-Set WbzT = WszRg(AtAddDbt(NewA1(Wsn), A, T, Lon))
+Function WbzT(A As Database, T, Optional Wsn$ = "Data") As Workbook
+Set WbzT = WszRg(AddWszT(NewWb, A, T, Wsn))
 End Function
-Function AtAddDbt(At As Range, Db As Database, T, Optional Lon$) As Range
-'LozRg PutSq(At, Dbt(Db, T).Sq), Lon
-Set AtAddDbt = At
-End Function
+
 Sub PutDbtWs(A As Database, T, Ws As Worksheet)
 PutDbtAt A, T, A1zWs(Ws)
 End Sub
+Sub ClrLo(A As ListObject)
+If A.ListRows.Count = 0 Then Exit Sub
+A.DataBodyRange.Delete xlShiftUp
+End Sub
 Sub PutAyAtV(Ay, At As Range)
 PutSq SqzAyV(Ay), At
+End Sub
+Function CrtLo(Ws As Worksheet, FF$, Optional Lon$) As ListObject
+Set CrtLo = LozRg(RgzAyH(SyzSS(FF), A1zWs(Ws)), Lon)
+End Function
+Sub PutAyAtH(Ay, At As Range)
+PutSq SqzAyH(Ay), At
 End Sub
 Sub PutDbtAt(A As Database, T, At As Range, Optional AddgWay As EmAddgWay)
 LozRg PutSq(SqzT(A, T), At), Lon(T)

@@ -143,6 +143,7 @@ End Function
 Function WinOfCmpn(Cmpn$) As vbIde.Window
 Set WinOfCmpn = PnezCmpn(Cmpn).Window
 End Function
+
 Sub JmpCmp(Cmpn$)
 Dim C As vbIde.CodePane: Set C = PnezCmpn(Cmpn)
 If IsNothing(C) Then Debug.Print "No such WinOfCmpNm": Exit Sub
@@ -175,24 +176,29 @@ End Sub
 Sub ClsWinW(W As vbIde.Window)
 W.Visible = False
 End Sub
+
 Property Get VisWinCapAy() As String()
 VisWinCapAy = SyzOyPrp(VisWiny, PrpPth("Caption"))
 End Property
+
 Property Get VisWiny() As vbIde.Window()
 Dim W As vbIde.Window
 For Each W In CVbe.Windows
     If W.Visible Then PushObj VisWiny, W
 Next
 End Property
+
 Function LnozM&(M As CodeModule)
 LnozM = RRCCzPne(M.CodePane).R1
 End Function
+
 Function RRCCzPne(P As CodePane) As RRCC
 If IsNothing(P) Then Exit Function
 Dim R1&, R2&, C1&, C2&
 P.GetSelection R1, R2, C1, C2
 RRCCzPne = RRCC(R1, R2, C1, C2)
 End Function
+
 Function MthnzM$(M As CodeModule)
 Dim K As vbext_ProcKind
 MthnzM = M.ProcOfLine(LnozM(M), K)

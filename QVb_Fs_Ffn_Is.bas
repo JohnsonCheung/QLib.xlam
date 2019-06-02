@@ -27,8 +27,8 @@ Case FbExt, FbExt1: IsFb = True
 End Select
 End Function
 
-Function IsFx(Ffn) As Boolean
+Function ISfx(Ffn) As Boolean
 Select Case LCase(Ext(Ffn))
-Case ".xls", ".xlsm", ".xlsx": IsFx = True
+Case ".xls", ".xlsm", ".xlsx": ISfx = True
 End Select
 End Function

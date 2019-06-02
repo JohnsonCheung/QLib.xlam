@@ -122,12 +122,18 @@ For Each X In Itr(Ay)
 Next
 AyItmCnt = O
 End Function
-
-Function AywPfx(Ay, Pfx) As String()
+Function AywSubStr(Ay, SubStr) As String()
+AywSubStr = AywPred(Ay, PredzSubStr(SubStr))
+End Function
+Function AywPredzSy(Ay, P As IPred) As String()
 Dim I
 For Each I In Itr(Ay)
-    If HasPfx(I, Pfx) Then PushI AywPfx, I
+    If P.Pred(I) Then PushI AywPredzSy, I
 Next
+End Function
+
+Function AywPfx(Ay, Pfx) As String()
+AywPfx = AywPred(Ay, PredzPfx(Pfx))
 End Function
 
 Function AywLasN(Ay, N)
@@ -300,6 +306,11 @@ For R = 1 To UBound(Sq, 1)
     PushI StrColzSqc, Sq(R, C)
 Next
 End Function
+Function SqhzAp(ParamArray Ap()) As Variant()
+Dim Av(): Av = Ap
+SqhzAp = Sqh(Av)
+End Function
+
 Function Sqh(Ay) As Variant()
 Dim N&: N = Si(Ay)
 If N = 0 Then Exit Function

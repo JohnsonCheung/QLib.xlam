@@ -17,6 +17,13 @@ End Function
 Function SndAsc%(S)
 SndAsc = Asc(SndChr(S))
 End Function
+Function LeftIf$(S, P%)
+If P > 0 Then
+    LeftIf = Left(S, P)
+Else
+    LeftIf = S
+End If
+End Function
 Function FstChr$(S)
 FstChr = Left(S, 1)
 End Function

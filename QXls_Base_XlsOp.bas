@@ -3,6 +3,11 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MXls_Wb."
 Private Const Asm$ = "QXls"
+Enum EmWsPos
+    EiEnd
+    EiBeg
+    EiRfWs
+End Enum
 Sub BrwFx(Fx)
 If HasFfn(Fx) Then Debug.Print "No Fx:" & Fx
 ShwWb WbzFx(Fx)
@@ -224,12 +229,23 @@ Function RgzDbt(Db As Database, T, At As Range) As Range
 Set RgzDbt = RgzSq(SqzT(Db, T), At)
 End Function
 
-Sub AddWszT1(A As Workbook, Db As Database, T, Optional Wsn0$, Optional AddgWay As EmAddgWay)
-If AddgWay = EiSqWay Then AddWszT A, Db, T, Wsn0, AddgWay: Exit Sub
-Dim Wsn$: Wsn = DftStr(Wsn0, T)
-Dim Sq(): Sq = SqzT(Db, T)
+Function AddWszSq(A As Workbook, Sq(), Optional Wsn$) As Worksheet
 Dim A1 As Range: Set A1 = A1zWs(AddWs(A, Wsn))
-End Sub
+LozSq Sq, A1
+Set AddWszSq = WszRg(A1)
+End Function
+
+Function AddWszT1(A As Workbook, Db As Database, T, Optional Wsn$, Optional AddgWay As EmAddgWay) As Worksheet
+If AddgWay = EiSqWay Then
+    Set AddWszT1 = AddWszT(A, Db, T, Wsn, AddgWay)
+Else
+    Set AddWszT1 = AddWszSq(A, SqzT(Db, T), Wsn)
+End If
+End Function
+
+Function AddWszDrs(A As Workbook, B As Drs, Optional Wsn$) As Worksheet
+Set AddWszDrs = AddWszSq(A, SqzDrs(B), Wsn)
+End Function
 
 Sub PutTbl(A As Database, T, At As Range, Optional AddgWay As EmAddgWay)
 Select Case AddgWay
@@ -338,7 +354,10 @@ If IsNumeric(WsIx) Then
     HasWs = IsBet(WsIx, 1, A.Sheets.Count)
     Exit Function
 End If
-HasWs = HasItn(A.Sheets, WsIx)
+Dim Ws As Worksheet
+For Each Ws In A.Worksheets
+    If Ws.Name = WsIx Then HasWs = True: Exit Function
+Next
 End Function
 
 Private Sub ZZ_WbWcsy()
@@ -386,8 +405,6 @@ TxtWcCnt C
 TxtWcStr C
 Wsny C
 WszCdNm C, D
-WszCdNm C, D
-AddWs C, D, F, F, D, D
 ThwWbMisOupNy C, H
 ClsWbNoSav C
 DltWc C
@@ -396,16 +413,15 @@ ShwWb C
 XX = CWb()
 End Sub
 
-
-Function AddWs(A As Workbook, Optional Wsn$, Optional AtBeg As Boolean, Optional AtEnd As Boolean, Optional BefWsn$, Optional AftWsn$) As Worksheet
+Function AddWs(A As Workbook, Optional Wsn$, Optional Pos As EmWsPos, Optional Aft$, Optional Bef$) As Worksheet
 Dim O As Worksheet
 DltWsIf A, Wsn
 Select Case True
-Case AtBeg:        Set O = A.Sheets.Add(FstWs(A))
-Case AtEnd:        Set O = A.Sheets.Add(LasWs(A))
-Case BefWsn <> "": Set O = A.Sheets.Add(A.Sheets(BefWsn))
-Case AftWsn <> "": Set O = A.Sheets.Add(, A.Sheets(AftWsn))
-Case Else:         Set O = A.Sheets.Add
+Case Pos = EiBeg:  Set O = A.Sheets.Add(FstWs(A))
+Case Pos = EiEnd:  Set O = A.Sheets.Add(, LasWs(A))
+Case Pos = EiRfWs And Aft <> "": Set O = A.Sheets.Add(, A.Sheets(Aft))
+Case Pos = EiRfWs And Bef <> "": Set O = A.Sheets.Add(A.Sheets(Bef))
+Case Else: Stop
 End Select
 SetWsn O, Wsn
 Set AddWs = O
@@ -473,17 +489,17 @@ End Sub
 
 
 Function PtCpyToLo(A As PivotTable, At As Range) As ListObject
-Dim R1, R2, C1, C2, NC, NR
+Dim R1, R2, C1, C2, Nc, NR
     R1 = A.RowRange.Row
     C1 = A.RowRange.Column
-    R2 = LasRowRg(A.DataBodyRange)
-    C2 = LasColRg(A.DataBodyRange)
-    NC = C2 - C1 + 1
+    R2 = LasRnozRg(A.DataBodyRange)
+    C2 = LasCnozRg(A.DataBodyRange)
+    Nc = C2 - C1 + 1
     NR = R2 - C1 + 1
 WsRCRC(WszPt(A), R1, C1, R2, C2).Copy
 At.PasteSpecial xlPasteValues
 
-Set PtCpyToLo = LozRg(RgRCRC(At, 1, 1, NR, NC))
+Set PtCpyToLo = LozRg(RgRCRC(At, 1, 1, NR, Nc))
 End Function
 
 Sub SetPtffOri(A As PivotTable, FF$, Ori As XlPivotFieldOrientation)
@@ -682,7 +698,7 @@ If Not IsSamAy(Fny1, Fny2) Then
     Thw CSub, "LoFny and TblFny are not same", "LoFny TblNm TblFny Db", Fny2, T, Fny1, Dbn(A)
 End If
 Dim Sq()
-    Dim R As DAO.Recordset
+    Dim R As Dao.Recordset
     Set R = Rs(A, SqlSel_Fny_T(Fny2, T))
     Sq = AddSngQuotezSq(SqzRs(R))
 MinxLo A
@@ -725,11 +741,10 @@ Dim Fx$: Fx = TmpFx
 CrtFxzOupTbl Fx, SampFbzDutyDta
 OpnFx Fx
 End Sub
+
 Sub CrtFxzOupTbl(Fx, Fb, Optional AddgWay As EmAddgWay)
 SavAszAndCls NewWbzOupTbl(Fb, AddgWay), Fx
 End Sub
-
-
 
 Function ShwWb(A As Workbook) As Workbook
 ShwXls A.Application
@@ -927,6 +942,10 @@ End Function
 
 
 Function RgzSq(Sq(), At As Range) As Range
+If Si(Sq) = 0 Then
+    Set RgzSq = A1zRg(At)
+    Exit Function
+End If
 Dim O As Range
 Set O = ResiRg(At, Sq)
 O.MergeCells = False

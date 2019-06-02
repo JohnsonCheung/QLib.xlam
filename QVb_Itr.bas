@@ -61,10 +61,10 @@ For Each X In Itr
 Next
 End Sub
 
-Sub DoItrFunXP(Itr, XP$, P)
+Sub DoItrFunXP(Itr, Xp$, P)
 Dim X
 For Each X In Itr
-    Run XP, X, P
+    Run Xp, X, P
 Next
 End Sub
 
@@ -76,10 +76,10 @@ For Each X In Itr
 Next
 End Function
 
-Function FstItmPredXP(Ay, XP$, P$)
+Function FstItmPredXP(Ay, Xp$, P$)
 Dim X
 For Each X In Ay
-    If Run(XP, X, P) Then Asg X, FstItmPredXP: Exit Function
+    If Run(Xp, X, P) Then Asg X, FstItmPredXP: Exit Function
 Next
 End Function
 

@@ -140,8 +140,8 @@ End Sub
 Function HasTblzFfnT(Ffn, T) As Boolean
 Const CSub$ = CMod & "HasTblzFfnTblNm"
 Select Case True
-Case IsFx(Ffn): HasTblzFfnT = HasFxw(Ffn, T)
-Case IsFx(Ffn): HasTblzFfnT = HasFxw(Ffn, T)
+Case ISfx(Ffn): HasTblzFfnT = HasFxw(Ffn, T)
+Case ISfx(Ffn): HasTblzFfnT = HasFxw(Ffn, T)
 Case Else: Thw CSub, "Ffn must be Fx or Fb", "Ffn T", Ffn, T
 End Select
 End Function
@@ -267,7 +267,7 @@ End Function
 Function CnStrzFxzOrFb$(Fx_or_Fb)
 Dim A$: A = Fx_or_Fb
 Select Case True
-Case IsFx(A): CnStrzFxzOrFb = CnStrzFbzAsAdo(A)
+Case ISfx(A): CnStrzFxzOrFb = CnStrzFbzAsAdo(A)
 Case IsFb(A): CnStrzFxzOrFb = CnStrzFxAdo(A)
 Case IsFb(A):
 Case Else: Thw CSub, "Must be either Fx or Fb", "Fx_or_Fb", A
@@ -307,7 +307,7 @@ End Function
 Function FnyzFfnTblNm(Ffn, TblNm$) As String()
 Const CSub$ = CMod & "FnyzFfnTblNm"
 Select Case True
-Case IsFx(Ffn): FnyzFfnTblNm = FnyzFxw(Ffn, TblNm$)
+Case ISfx(Ffn): FnyzFfnTblNm = FnyzFxw(Ffn, TblNm$)
 Case IsFb(Ffn): FnyzFfnTblNm = FnyzFbt(Ffn, TblNm$)
 Case Else: Thw CSub, "Ffn must be Fx or Fb", "Ffn TblNm", Ffn, TblNm
 End Select

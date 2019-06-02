@@ -15,19 +15,62 @@ End Sub
 Function MthIxItr(Src$())
 Asg Itr(MthIxy(Src)), MthIxItr
 End Function
-Function MthELno&(M As CodeModule, EndLin$, FmIx)
-
+Function VbaItm$(Lin)
+Dim O$: O = T1(RmvMdy(Lin))
+If IsVbaItm(O) Then VbaItm = O
+End Function
+Function IsVbaItm(Itm$) As Boolean
+IsVbaItm = HasEle(VbaItmAy, Itm)
+End Function
+Function VbaItmAyV() As String()
+VbaItmAyV = VbaItmAyzSrc(SrcV)
 End Function
 
-Function MthEix&(Src$(), EndLinItm$, FmIx)
-If 0 > FmIx Then MthEix = -1: Exit Function
-Dim C$: C = "End " & EndLinItm
-If HasSubStr(Src(FmIx), C) Then MthEix = FmIx: Exit Function
-Dim O&
-For O = FmIx + 1 To UB(Src)
-   If HasPfx(Src(O), C) Then MthEix = O: Exit Function
+Function VbaItmAyzSrc(Src$()) As String()
+Dim S
+For Each S In Itr(Src)
+    PushNonBlank VbaItmAyzSrc, VbaItm(S)
 Next
-Thw CSub, "Cannot find EndLin", "EndLin FmIx Src", C, FmIx, Src
+End Function
+Function VbaItmAy() As String()
+Static X As Boolean, Y
+If Not X Then
+    X = True
+    Y = SyzSS("Function Sub Type Enum Property")
+End If
+VbaItmAy = Y
+End Function
+Function EndLinzVbaItm$(Itm$)
+If Not IsVbaItm(Itm) Then Thw CSub, "Given Itm is not a VbaItm", "Itm", Itm
+EndLinzVbaItm = "End " & Itm
+End Function
+
+Function EndLin$(Src$(), ItmIx)
+EndLin = EndLinzVbaItm(VbaItm(Src(ItmIx)))
+End Function
+
+Function EndLinzM$(M As CodeModule, ItmLno)
+EndLinzM = EndLinzVbaItm(VbaItm(M.Lines(ItmLno, 1)))
+End Function
+
+Function EndLnozM&(M As CodeModule, ItmLno)
+Dim EndL$, O&
+EndL = EndLinzM(M, ItmLno)
+If HasSubStr(M.Lines(ItmLno, 1), EndL) Then EndLnozM = ItmLno: Exit Function
+For O = ItmLno + 1 To M.CountOfLines
+   If HasPfx(M.Lines(O, 1), EndL) Then EndLnozM = O: Exit Function
+Next
+Thw CSub, "Cannot find EndLin", "EndLin ItmLno Md", EndL, ItmLno, Mdn(M)
+End Function
+
+Function EndLix&(Src$(), ItmIx)
+Dim EndL$, O&
+EndL = EndLin(Src, ItmIx)
+If HasSubStr(Src(ItmIx), EndL) Then EndLix = ItmIx: Exit Function
+For O = ItmIx + 1 To UB(Src)
+   If HasPfx(Src(O), EndL) Then EndLix = O: Exit Function
+Next
+Thw CSub, "Cannot find EndLin", "EndLin ItmIx Src", EndL, ItmIx, Src
 End Function
 
 Function MthIxy(Src$()) As Long()
@@ -105,9 +148,10 @@ FstMthIxzN = -1
 End Function
 
 Function MthEIxy(Src$(), FmIxy&()) As Long()
-Dim Ix
+Dim Ix, ELin$
+Stop
 For Each Ix In Itr(FmIxy)
-    PushI MthEIxy, MthEix(Src, Ix)
+    PushI MthEIxy, EndLix(Src, Ix)
 Next
 End Function
 Function MthIxzSIW&(Src$(), MthIx, WiTopRmk As Boolean)
@@ -119,7 +163,7 @@ End If
 End Function
 
 Function MthFeizSIW(Src$(), MthIx, Optional WiTopRmk As Boolean) As Fei
-MthFeizSIW = Fei(MthIxzSIW(Src, MthIx, WiTopRmk), MthEix(Src, MthIx))
+MthFeizSIW = Fei(MthIxzSIW(Src, MthIx, WiTopRmk), EndLix(Src, MthIx))
 End Function
 
 Function FstMthLnozM&(Md As CodeModule)
@@ -143,8 +187,8 @@ Next
 FstMthIxzS = -1
 End Function
 
-Function MthLnoMdMth&(A As CodeModule, Mthn)
-MthLnoMdMth = 1 + FstMthIxzN(Src(A), Mthn, 0)
+Function MthLnozMM&(A As CodeModule, Mthn)
+MthLnozMM = 1 + FstMthIxzN(Src(A), Mthn, 0)
 End Function
 
 Function MthLnoAyzMN(A As CodeModule, Mthn) As Long()

@@ -219,7 +219,7 @@ Dim Obj As Object, PP$
 GoSub T0
 Exit Sub
 T0:
-    Set Obj = New DAO.Field
+    Set Obj = New Dao.Field
     PP = "Name Type Size"
     GoTo Tst
 Tst:

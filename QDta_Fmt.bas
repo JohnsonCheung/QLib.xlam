@@ -7,14 +7,14 @@ Private Const Asm$ = "QDta"
 Sub VcDrs(A As Drs, _
 Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EiBeg1, _
 Optional Fmt As EmTblFmt = EiTblFmt, _
-Optional Fnn$, Optional UseVc As Boolean)
-BrwDrs A, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Fnn, UseVc
+Optional FnPfx$, Optional UseVc As Boolean)
+BrwDrs A, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, FnPfx, UseVc
 End Sub
 
 Sub BrwDrs2(A As Drs, B As Drs, _
 Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EiBeg1, _
 Optional Fmt As EmTblFmt = EiTblFmt, Optional NN$, Optional Tit$ = "Brw 2 Drs", _
-Optional Fnn$, Optional UseVc As Boolean)
+Optional FnPfx$, Optional UseVc As Boolean)
 Dim Ay$(), AyA$(), AyB$(), N1$, N2$, T$()
 N1 = DftStr(BefSpc(NN), "Drs-A")
 N2 = DftStr(AftSpc(NN), " Drs-B")
@@ -22,13 +22,13 @@ AyA = FmtDrs(A, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Nm:=N1)
 AyB = FmtDrs(B, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Nm:=N2)
 T = Sy(Tit, UnderLinDbl(Tit))
 Ay = Sy(T, AyA, AyB)
-Brw Ay, Fnn, UseVc
+Brw Ay, FnPfx, UseVc
 End Sub
 
 Sub BrwDrs3(A As Drs, B As Drs, C As Drs, _
 Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EmIxCol.EiBeg1, _
 Optional Fmt As EmTblFmt = EiTblFmt, Optional NN$, Optional Tit$ = "Brw 3 Drs", _
-Optional Fnn$, Optional UseVc As Boolean)
+Optional FnPfx$, Optional UseVc As Boolean)
 Dim Ay$(), AyA$(), AyB$(), AyC$(), N1$, N2$, N3$, T$()
 N1 = DftStr(T1(NN), "Drs-A")
 N2 = DftStr(T2(NN), " Drs-B")
@@ -38,29 +38,29 @@ AyB = FmtDrs(B, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Nm:=N2)
 AyC = FmtDrs(C, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Nm:=N3)
 T = Sy(Tit, UnderLinDbl(Tit))
 Ay = Sy(T, AyA, AyB, AyC)
-Brw Ay, Fnn, UseVc
+Brw Ay, FnPfx, UseVc
 End Sub
 
 Sub BrwDrs4(A As Drs, B As Drs, C As Drs, D As Drs, _
 Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EiBeg1, _
 Optional Fmt As EmTblFmt = EiTblFmt, _
-Optional Fnn$, Optional UseVc As Boolean)
+Optional FnPfx$, Optional UseVc As Boolean)
 Dim Ay$(), AyA$(), AyB$(), AyC$(), AyD$()
 AyA = FmtDrs(A, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt)
 AyB = FmtDrs(B, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt)
 AyC = FmtDrs(C, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt)
 AyD = FmtDrs(D, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt)
 Ay = Sy(AyA, AyB, AyC, AyD)
-Brw Ay, Fnn, UseVc
+Brw Ay, FnPfx, UseVc
 End Sub
 
 Sub BrwDrs(A As Drs, _
-Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EmIxCol.EiNoIx, _
+Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EmIxCol.EiBeg1, _
 Optional Fmt As EmTblFmt = EiTblFmt, _
-Optional Fnn$, Optional UseVc As Boolean)
+Optional FnPfx$, Optional UseVc As Boolean)
 Dim Ay$()
 Ay = FmtDrs(A, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt)
-BrwAy Ay, Fnn, UseVc
+BrwAy Ay, FnPfx, UseVc
 End Sub
 
 Function BoxFny(Fny$()) As String()
@@ -83,7 +83,7 @@ Dim Fny$(): Fny = AyeFstLas(TrimAy(Split(TitLin, "|")))
 Dim Dry()
     Dim J&
     For J = 3 To UB(DrsFmtg) - 1
-        PushI Dry, AyeFstLas(RmvFstChrzAy(RTrimAy(Split(DrsFmtg(J), "|"))))
+        PushI Dry, AvzAy(AyeFstLas(RmvFstChrzAy(RTrimAy(Split(DrsFmtg(J), "|")))))
     Next
 DrszFmtg = Drs(Fny, Dry)
 End Function

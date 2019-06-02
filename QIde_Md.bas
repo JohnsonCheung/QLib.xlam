@@ -135,7 +135,7 @@ Private Sub ZZ_MdDrs()
 'BrwDrs MdDrs(Md("IdeFeature_EnsZZ_AsPrivate"))
 End Sub
 
-Private Sub ZZ_MthLnoMdMth()
+Private Sub ZZ_MthLnozMM()
 Dim O$()
     Dim Lno, L&(), M, A As CodeModule, Ny$(), J%
     Set A = Md("Fct")
@@ -143,9 +143,9 @@ Dim O$()
     For Each M In Ny
         DoEvents
         J = J + 1
-        Push L, MthLnoMdMth(A, CStr(M))
+        Push L, MthLnozMM(A, CStr(M))
         If J Mod 150 = 0 Then
-            Debug.Print J, Si(Ny), "Z_MthLnoMdMth"
+            Debug.Print J, Si(Ny), "Z_MthLnozMM"
         End If
     Next
 

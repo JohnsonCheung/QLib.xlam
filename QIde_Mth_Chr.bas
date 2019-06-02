@@ -23,7 +23,7 @@ End Function
 Function TyNmzTyChr$(TyChr$)
 Dim O$
 Select Case TyChr
-Case "": Thw CSub, "TyChr cannot be blank"
+Case "": O = "Variant"
 Case "#": O = "Double"
 Case "%": O = "Integer"
 Case "!": O = "Signle"
@@ -50,4 +50,8 @@ End Function
 
 Function TakTyChr$(S)
 TakTyChr = TakChr(S, TyChrLis)
+End Function
+
+Function MthTyChr$(Lin)
+MthTyChr = TakTyChr(RmvNm(RmvMthTy(RmvMdy(Lin))))
 End Function

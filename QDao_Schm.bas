@@ -13,7 +13,7 @@ Type EF
 End Type
 Private Type FdRslt
     Som As Boolean
-    Fd As DAO.Field2
+    Fd As Dao.Field2
 End Type
 
 Sub CrtSchmzVbl(A As Database, SchmVbl$)
@@ -25,7 +25,7 @@ Const CSub$ = CMod & "CrtSchm"
 ThwIf_ErMsg ErzSchm(Schm), CSub, "there is error in the Schm", "Schm Db", AddIxPfx(Schm, 1), Dbn(A)
 Dim TdLy$():            TdLy = AywRmvT1(Schm, C_Tbl)
 Dim EF As EF:             EF = EFzSchm(Schm)
-Dim T() As DAO.TableDef:   T = TdAy(TdLy, EF)
+Dim T() As Dao.TableDef:   T = TdAy(TdLy, EF)
 Dim P$():                  P = SqyCrtPkzTny(PkTny(TdLy))
 Dim S$():                  S = SqyCrtSk(TdLy)
 Dim DicT As Dictionary: Set DicT = Dic(AywRmvTT(Schm, C_Des, C_Tbl))
@@ -72,7 +72,7 @@ Rst = Replace(Rst, T, "*")
 SkFny = SyzSS(Rst)
 End Function
 
-Private Function TdAy(TdLy$(), A As EF) As DAO.TableDef()
+Private Function TdAy(TdLy$(), A As EF) As Dao.TableDef()
 Dim TdLin, I
 For Each I In TdLy
     TdLin = I
@@ -80,11 +80,11 @@ For Each I In TdLy
 Next
 End Function
 
-Private Function TdzLin(TdLin, A As EF) As DAO.TableDef
+Private Function TdzLin(TdLin, A As EF) As Dao.TableDef
 Dim T: T = T1(TdLin)
-Dim O As DAO.TableDef: Set O = New DAO.TableDef
+Dim O As Dao.TableDef: Set O = New Dao.TableDef
 O.Name = T
-Dim F$, I, Fd As DAO.Field2
+Dim F$, I, Fd As Dao.Field2
 For Each I In FnyzTdLin(TdLin)
     F = I
     If F = T & "Id" Then
@@ -106,7 +106,7 @@ For Each I In T1LikssAy
 Next
 End Function
 
-Private Function FdzEF(F$, A As EF) As DAO.Field2
+Private Function FdzEF(F$, A As EF) As Dao.Field2
 If Left(F, 2) = "Id" Then Stop
 Dim Ele$: Ele = T1zLookupItm_FmT1LikssAy(F, A.FldLy)
 If Ele <> "" Then Set FdzEF = FdzEle(Ele, A.EleLy, F): Exit Function
@@ -115,7 +115,7 @@ Set FdzEF = FdzEle(CStr(F), A.EleLy, F):  If Not IsNothing(FdzEF) Then Exit Func
 Thw CSub, FmtQQ("Fld(?) not in EF and not StdFld", F)
 End Function
 
-Private Function FdzEle(Ele$, EleLy$(), F$) As DAO.Field2
+Private Function FdzEle(Ele$, EleLy$(), F$) As Dao.Field2
 Dim EStr$: EStr = EleStr(EleLy, Ele)
 If EStr <> "" Then Set FdzEle = FdzFdStr(F & " " & EStr): Exit Function
 Set FdzEle = FdzShtTys(Ele, F): If Not IsNothing(FdzEle) Then Exit Function
@@ -168,7 +168,7 @@ Private Sub ZZ()
 Z_CrtSchm
 End Sub
 
-Sub AppTdAy(A As Database, TdAy() As DAO.TableDef)
+Sub AppTdAy(A As Database, TdAy() As Dao.TableDef)
 Dim T
 For Each T In Itr(TdAy)
     A.TableDefs.Append T

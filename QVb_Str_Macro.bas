@@ -29,12 +29,12 @@ For Each N In NyzMacro(Macro)
 Next
 FmtMacrozAv = O
 End Function
-Function FmtMacrozRs$(Macro, Rs As DAO.Recordset)
+Function FmtMacrozRs$(Macro, Rs As Dao.Recordset)
 FmtMacrozRs = FmtMacrozDic(Macro, DiczRs(Rs))
 End Function
-Function DiczRs(A As DAO.Recordset) As Dictionary
+Function DiczRs(A As Dao.Recordset) As Dictionary
 Set DiczRs = New Dictionary
-Dim F As DAO.Field
+Dim F As Dao.Field
 For Each F In A.Fields
     DiczRs.Add F.Name, F.Value
 Next

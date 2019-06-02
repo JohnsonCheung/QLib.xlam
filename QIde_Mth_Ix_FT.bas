@@ -13,7 +13,7 @@ For Each I In Itr(MthIxyzSN(Src, Mthn))
     Else
         FmIx = TopRmkIx(Src, Ix)
     End If
-   PushFei MthFeiszSN, Fei(FmIx, MthEix(Src, FmIx))
+   PushFei MthFeiszSN, Fei(FmIx, EndLix(Src, FmIx))
 Next
 End Function
 

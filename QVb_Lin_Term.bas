@@ -119,7 +119,7 @@ If FstChr(O) = "[" Then
     T1 = Mid(S, 2, P - 2)
     Exit Function
 End If
-T1 = BefOrAll(S, " ")
+T1 = BefOrAll(O, " ")
 End Function
 Function T2zS$(S)
 T2zS = T2(S)

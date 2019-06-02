@@ -21,9 +21,9 @@ Function WsnzLo$(A As ListObject)
 WsnzLo = WszLo(A).Name
 End Function
 
-Property Get CWs() As Worksheet
+Function CWs() As Worksheet
 Set CWs = Xls.ActiveSheet
-End Property
+End Function
 
 Sub ClrDtaRg(A As Worksheet)
 DtaRgzWs(A).Clear
@@ -53,7 +53,6 @@ End Function
 Function LasCell(A As Worksheet) As Range
 Set LasCell = A.Cells.SpecialCells(xlCellTypeLastCell)
 End Function
-
 
 Function LasRno&(A As Worksheet)
 LasRno = LasCell(A).Row
@@ -133,9 +132,9 @@ Property Get CWb() As Workbook
 Set CWb = Xls.ActiveWorkbook
 End Property
 
-
-
-
+Function CvWbs(A) As Workbooks
+Set CvWbs = A
+End Function
 
 Function LasWs(A As Workbook) As Worksheet
 Set LasWs = A.Sheets(A.Sheets.Count)
@@ -319,10 +318,10 @@ End Function
 
 
 Function DrszLo(A As ListObject) As Drs
-DrszLo = Drs(FnyzLo(A), DryLo(A))
+DrszLo = Drs(FnyzLo(A), DryzLo(A))
 End Function
-Function DryLo(A As ListObject) As Variant()
-DryLo = DryzSq(SqzLo(A))
+Function DryzLo(A As ListObject) As Variant()
+DryzLo = DryzSq(SqzLo(A))
 End Function
 Function DryRgColAy(Rg As Range, ColIxy) As Variant()
 DryRgColAy = DryzSqCol(SqzRg(Rg), ColIxy)
@@ -533,9 +532,9 @@ End Property
 
 
 Property Get SampDr_AToJ() As Variant()
-Const NC% = 10
+Const Nc% = 10
 Dim J%
-For J = 0 To NC - 1
+For J = 0 To Nc - 1
     PushI SampDr_AToJ, Chr(Asc("A") + J)
 Next
 End Property
@@ -543,10 +542,10 @@ End Property
 Property Get SampSq1() As Variant()
 Dim O(), R&, C&
 Const NR& = 1000
-Const NC& = 100
-ReDim O(1 To NR, 1 To NC)
+Const Nc& = 100
+ReDim O(1 To NR, 1 To Nc)
 For R = 1 To NR
-For C = 1 To NC
+For C = 1 To Nc
     O(R, C) = R + C
 Next
 Next
@@ -727,17 +726,10 @@ Function IsVbarRg(A As Range) As Boolean
 IsVbarRg = A.Columns.Count = 1
 End Function
 
-Function LasColRg%(A As Range)
-LasColRg = A.Column + A.Columns.Count - 1
-End Function
-
 Function LasVCell(At As Range) As Range
 Set LasVCell = RgR(At, NRowzRg(At))
 End Function
 
-Function LasRowRg&(At As Range)
-LasRowRg = At.Row + At.Rows.Count - 1
-End Function
 
 Function LasHCell(Cell As Range) As Range
 Set LasHCell = RgC(Cell, NColRg(Cell))
@@ -750,23 +742,28 @@ End Function
 Function RgzMoreBelow(A As Range, Optional N% = 1)
 Set RgzMoreBelow = RgRR(A, 1, A.Rows.Count + N)
 End Function
+
 Function DicValToWbAdrzRg(Rg As Range) As Dictionary
 Dim R As Range, K
 Set DicValToWbAdrzRg = New Dictionary
 For Each R In Rg
     K = R.Value
     If IsStr(K) Then
-        DicValToWbAdrzRg.Add K, WbAdr(R)
+        DicValToWbAdrzRg.Add K, R.Address(External:=True)
     End If
 Next
 End Function
-Function QuoteWsn$(Wsn)
-If IsNm(Wsn) Then
-    QuoteWsn = Wsn
-Else
-    QuoteWsn = QuoteSng(Wsn)
-End If
+
+Function LasRow(Lo As ListObject) As Range
+If Lo.ListRows.Count = 0 Then Thw CSub, "There is no LasRow in Lo", "Lon Wsn", Lo.Name, WszLo(Lo).Name
+Set LasRow = Lo.ListRows(Lo.ListRows.Count).Range
 End Function
+
+Function LasRowCell(Lo As ListObject, C) As Range
+Dim Ix%: Ix = Lo.ListColumns(C).Index
+Set LasRowCell = RgRC(LasRow(Lo), 1, Lo.ListColumns(C).Index)
+End Function
+
 Function LoCC(Lo As ListObject, C1$, C2$) As Range
 Dim A%, B%
 With Lo
@@ -775,9 +772,7 @@ With Lo
     Set LoCC = RgCC(.DataBodyRange, A, B)
 End With
 End Function
-Function WbAdr$(Rg As Range) 'Return FstCell of Rg as WbAdr-string
-WbAdr = QuoteWsn(WszRg(Rg).Name) & "!" & Rg.Address
-End Function
+
 Function DicNmAdrzWsNmPfx(Ws As Worksheet, NmPfx$) As Dictionary
 Dim N As Name
 Set DicNmAdrzWsNmPfx = New Dictionary
@@ -834,6 +829,7 @@ Set RgRR = RgRCRC(A, R1, 1, R2, NColRg(A))
 End Function
 
 Function ResiRg(At As Range, Sq()) As Range
+If Si(Sq) = 0 Then Set ResiRg = A1zRg(At): Exit Function
 Set ResiRg = RgRCRC(At, 1, 1, NRowzSq(Sq), NColzSq(Sq))
 End Function
 
@@ -1107,4 +1103,12 @@ ZZ:
     'W.Close False
     Set W = Nothing
 End Sub
+
+Function LasCnozRg%(R As Range)
+LasCnozRg = R.Column + R.Columns.Count - 1
+End Function
+
+Function LasRnozRg&(R As Range)
+LasRnozRg = R.Row + R.Rows.Count - 1
+End Function
 

@@ -38,18 +38,17 @@ Next
 ReDim Preserve O(U - Cnt)
 AyeAtCnt = O
 End Function
-Function PredOfIsDotLin() As IPred
+
+Function PredzIsDotLin(Lin) As IPred
 
 End Function
-Function PredOfIsDDLin() As IPred
+Function PredzIsDDLin(Lin) As IPred
 
-End Function
-Function AyeDDLin(Ay) As String()
-AyeDDLin = AywPredFalse(Ay, PredOfIsDDLin)
 End Function
 
 Function AyeDotLin(Ay) As String()
-AyeDotLin = AywPredFalse(Ay, PredOfIsDotLin)
+Stop
+'AyeDotLin = AywPredFalse(Ay, PredzIsDotLin)
 End Function
 
 Function AyeEle(Ay, Ele) 'Rmv Fst-Ele eq to Ele from Ay
@@ -196,8 +195,8 @@ Function SyeLik(Sy$(), Lik$) As String()
 SyeLik = SyePred(Sy, PredzLik(Lik))
 End Function
 
-Function PredzLikAy(LikAy$()) As PredzIsLikAy
-Set PredzLikAy = New PredzIsLikAy
+Function PredzLikAy(LikAy$()) As PredLikAy
+Set PredzLikAy = New PredLikAy
 PredzLikAy.Init LikAy
 End Function
 
@@ -219,8 +218,10 @@ If Si(LikssAy) = 0 Then SyeLikssAy = Sy: Exit Function
 SyeLikssAy = SyePred(Sy, PredzLikssAy(LikssAy))
 End Function
 
-Function PredzLikssAy(LikssAy$()) As PredzIsLikAy
-
+Function PredzLikssAy(LikssAy$()) As PredLikAy
+Dim O As New PredLikAy
+O.Init LikssAy
+Set PredzLikssAy = O
 End Function
 
 Private Sub ZZ_SyeLikss()
@@ -281,8 +282,15 @@ End Function
 Function SyeOneTermLin(Sy$()) As String()
 SyeOneTermLin = SyePred(Sy, PredzIsOneTermLin)
 End Function
-Function PredzPfx(Pfx$) As IPred
-
+Function PredzPfx(Pfx) As IPred
+Dim O As New PredPfx
+O.Init Pfx
+Set PredzPfx = O
+End Function
+Function PredzSubStr(SubStr) As IPred
+Dim O As New PredSubStr
+O.Init SubStr
+Set PredzSubStr = O
 End Function
 Function SyePfx(Sy$(), ExlPfx$) As String()
 SyePfx = SyePred(Sy, PredzPfx(ExlPfx))
@@ -295,7 +303,7 @@ SyeT1Sy = SyePred(Sy, PredzInT1Sy(ExlT1Sy))
 End Function
 
 Function PredzInT1Sy(T1Ay$()) As IPred
-Dim O As PredzInT1Sy
+Dim O As PredInT1Sy
 O.Init T1Ay
 Set PredzInT1Sy = O
 End Function

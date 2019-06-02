@@ -20,13 +20,13 @@ End Sub
 
 Sub PushSq(OSq(), Sq())
 Dim NR&: NR = UBound(OSq, 1) + UBound(Sq, 1)
-Dim NC&: NC = UBound(OSq, 2)
+Dim Nc&: Nc = UBound(OSq, 2)
 Dim NC2&: NC2 = UBound(Sq, 2)
-If NC <> NC2 Then Thw CSub, "NC of { OSq, Sq } are dif", "OSq-NC Sq-NC", NC, NC2
-ReDim Preserve OSq(1 To NR, 1 To NC)
+If Nc <> NC2 Then Thw CSub, "NC of { OSq, Sq } are dif", "OSq-NC Sq-NC", Nc, NC2
+ReDim Preserve OSq(1 To NR, 1 To Nc)
 Dim R&, C&
 For R = 1 To NC2
-    For C = 1 To NC
+    For C = 1 To Nc
         OSq(R + NR, C) = Sq(R, C)
     Next
 Next
@@ -39,11 +39,11 @@ Sq = O
 End Function
 
 Function AddSngQuotezSq(Sq())
-Dim NC%, C%, R&, O
+Dim Nc%, C%, R&, O
 O = Sq
-NC = UBound(Sq, 2)
+Nc = UBound(Sq, 2)
 For R = 1 To UBound(Sq, 1)
-    For C = 1 To NC
+    For C = 1 To Nc
         If IsStr(O(R, C)) Then
             O(R, C) = "'" & O(R, C)
         End If
@@ -52,20 +52,20 @@ Next
 AddSngQuotezSq = O
 End Function
 Function JnSq(Sq$(), SepChr$) As String()
-Dim NC&: NC = UBound(Sq, 2)
+Dim Nc&: Nc = UBound(Sq, 2)
 Dim R&
 For R = 1 To UBound(Sq, 1)
-    PushI JnSq, JnSqr(Sq, NC, R, SepChr)
+    PushI JnSq, JnSqr(Sq, Nc, R, SepChr)
 Next
 End Function
 
-Private Function JnSqr$(Sq$(), NC&, R&, SepChr$)
-JnSqr = Join(SyzSqr(Sq, NC, R), SepChr)
+Private Function JnSqr$(Sq$(), Nc&, R&, SepChr$)
+JnSqr = Join(SyzSqr(Sq, Nc, R), SepChr)
 End Function
 
-Function SyzSqr(Sq$(), NC&, R&) As String()
+Function SyzSqr(Sq$(), Nc&, R&) As String()
 Dim J&
-For J = 1 To NC
+For J = 1 To Nc
     PushI SyzSqr, Sq(R, J)
 Next
 End Function
@@ -79,10 +79,10 @@ Brw FmtSq(Sq)
 End Sub
 Function AlignSq(Sq()) As String()
 If Si(Sq) = 0 Then Exit Function
-Dim C&, O$(), NR&, NC&
+Dim C&, O$(), NR&, Nc&
 NR = UBound(Sq, 1)
-NC = UBound(Sq, 2)
-ReDim O(1 To NR, 1 To NC)
+Nc = UBound(Sq, 2)
+ReDim O(1 To NR, 1 To Nc)
 For C = 1 To UBound(O, 2)
     AlignColzSCW O, Sq, C, ColWdtzSC(Sq, C)
 Next
@@ -130,11 +130,11 @@ VyczSqc = IntozSqc(EmpAv, Sq, C)
 End Function
 
 Function IntozSqr(Into, Sq(), R)
-Dim NC&, O
-    NC = UBound(Sq, 2)
-    O = ResiN(Into, NC)
+Dim Nc&, O
+    Nc = UBound(Sq, 2)
+    O = ResiN(Into, Nc)
 Dim C&
-For C = 1 To NC
+For C = 1 To Nc
     O(C - 1) = Sq(R, C)
 Next
 IntozSqr = O
@@ -149,20 +149,20 @@ DrzSqr = IntozSqr(EmpAv, Sq, R)
 End Function
 
 Function InsSqr(Sq(), Dr(), Optional Row& = 1)
-Dim O(), C&, R&, NC&, NR&
-NC = NColzSq(Sq)
+Dim O(), C&, R&, Nc&, NR&
+Nc = NColzSq(Sq)
 NR = NRowzSq(Sq)
-ReDim O(1 To NR + 1, 1 To NC)
+ReDim O(1 To NR + 1, 1 To Nc)
 For R = 1 To Row - 1
-    For C = 1 To NC
+    For C = 1 To Nc
         O(R, C) = Sq(R, C)
     Next
 Next
-For C = 1 To NC
+For C = 1 To Nc
     O(Row, C) = Dr(C - 1)
 Next
 For R = NR To Row Step -1
-    For C = 1 To NC
+    For C = 1 To Nc
         O(R + 1, C) = Sq(R, C)
     Next
 Next
@@ -170,14 +170,14 @@ InsSqr = O
 End Function
 
 Function IsEqSq(A, B) As Boolean
-Dim NR&, NC&
+Dim NR&, Nc&
 NR = UBound(A, 1)
-NC = UBound(A, 2)
+Nc = UBound(A, 2)
 If NR <> UBound(B, 1) Then Exit Function
-If NC <> UBound(B, 2) Then Exit Function
+If Nc <> UBound(B, 2) Then Exit Function
 Dim R&, C&
 For R = 1 To NR
-    For C = 1 To NC
+    For C = 1 To Nc
         If A(R, C) <> B(R, C) Then
             Exit Function
         End If
@@ -215,13 +215,13 @@ End Function
 
 
 Function Transpose(Sq()) As Variant()
-Dim NR&, NC&
+Dim NR&, Nc&
 NR = NRowzSq(Sq): If NR = 0 Then Exit Function
-NC = NColzSq(Sq): If NC = 0 Then Exit Function
+Nc = NColzSq(Sq): If Nc = 0 Then Exit Function
 Dim O(), J&, I&
-ReDim O(1 To NC, 1 To NR)
+ReDim O(1 To Nc, 1 To NR)
 For J = 1 To NR
-    For I = 1 To NC
+    For I = 1 To Nc
         O(I, J) = Sq(J, I)
     Next
 Next
@@ -241,12 +241,12 @@ End Sub
 
 Function SampSq() As Variant()
 Const NR% = 10
-Const NC% = 10
+Const Nc% = 10
 Dim O(), R%, C%
-ReDim O(1 To NR, 1 To NC)
+ReDim O(1 To NR, 1 To Nc)
 SampSq = O
 For R = 1 To NR
-    For C = 1 To NC
+    For C = 1 To Nc
         O(R, C) = R * 1000 + C
     Next
 Next

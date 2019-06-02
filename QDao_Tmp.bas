@@ -4,7 +4,7 @@ Option Explicit
 Private Const CMod$ = "MDao_Tmp."
 Private Const Asm$ = "QDao"
 
-Property Get TmpTd() As DAO.TableDef
+Property Get TmpTd() As Dao.TableDef
 Dim Fdy() As Field2
 PushObj Fdy, FdzTxt("F1")
 Set TmpTd = TdzTF("Tmp", Fdy)

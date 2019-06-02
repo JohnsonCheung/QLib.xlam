@@ -37,7 +37,7 @@ PushNonBlank ChkPkSkzT, ChkSk(A, T)
 End Function
 
 Function ChkSk$(A As Database, T)
-Dim SkIdx As DAO.Index, I As DAO.Index
+Dim SkIdx As Dao.Index, I As Dao.Index
 If Not HasIdx(A, T, C_SkNm) Then
     ChkSk = FmtQQ("Not SecondaryKey for Table[?] in Db[?]", T, Dbn(A))
     Exit Function

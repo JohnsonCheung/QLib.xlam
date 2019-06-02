@@ -39,9 +39,9 @@ For Each X In Itr(A)
 Next
 End Sub
 
-Sub DoAyXP(A, XP$, P)
+Sub DoAyXP(A, Xp$, P)
 Dim X
 For Each X In Itr(A)
-    Run XP, X, P
+    Run Xp, X, P
 Next
 End Sub

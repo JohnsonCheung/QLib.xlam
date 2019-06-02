@@ -6,7 +6,7 @@ Private Const CMod$ = "MDao_Ssk."
 Public Const C_SkNm$ = "SecondaryKey"
 Public Const C_PkNm$ = "PrimaryKey"
 
-Function SkFnyzTd(T As DAO.TableDef) As String()
+Function SkFnyzTd(T As Dao.TableDef) As String()
 SkFnyzTd = FnyzIdx(SkIdxzTd(T))
 End Function
 
@@ -23,11 +23,11 @@ Function Sskv(A As Database, T) As Aset
 'Set Sskv = ColSet(SskFld)
 End Function
 
-Function SkIdxzTd(T As DAO.TableDef) As DAO.Index
+Function SkIdxzTd(T As Dao.TableDef) As Dao.Index
 Set SkIdxzTd = IdxzTd(T, C_SkNm)
 End Function
 
-Function SkIdx(A As Database, T) As DAO.Index
+Function SkIdx(A As Database, T) As Dao.Index
 Set SkIdx = Idx(A, T, C_SkNm)
 End Function
 

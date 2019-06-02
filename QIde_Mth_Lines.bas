@@ -96,7 +96,7 @@ End Function
 
 Function MthLineszSI$(Src$(), MthIx, Optional WiTopRmk As Boolean)
 Dim TopLy$(): TopLy = TopRmkLyzSIW(Src, MthIx, WiTopRmk)
-Dim EIx&:       EIx = MthEix(Src, MthIx)
+Dim EIx&:       EIx = EndLix(Src, MthIx)
 Dim MthLy$(): MthLy = AywFT(Src, MthIx, EIx)
 MthLineszSI = JnCrLf(Sy(TopLy, MthLy))
 End Function

@@ -22,8 +22,8 @@ Sub LnkFb(A As Database, T, Fb, Optional Fbt$)
 LnkTbl A, T, DftStr(Fbt, T), CnStrzFbDao(Fb)
 End Sub
 
-Private Function TdzzTSC(T, Src$, Cn$) As DAO.TableDef
-Set TdzzTSC = New DAO.TableDef
+Private Function TdzzTSC(T, Src$, Cn$) As Dao.TableDef
+Set TdzzTSC = New Dao.TableDef
 With TdzzTSC
     .Connect = Cn
     .Name = T

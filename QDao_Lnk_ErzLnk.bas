@@ -212,7 +212,7 @@ Private Function WExWsMisFld(DixfMis As Drs, DActWsf As Drs) As String()
 'Fm : @DActWsf:: SSAy{Fxn Ws F Ty}
 If NoReczDrs(DixfMis) Then Exit Function
 Dim OFx$(), OFxn$(), OWs$(), O$(), Fxn, Fx$, Ws$, Mis As Drs, Act As Drs, J%, O1$()
-IntoColApzDistDrs DixfMis, "Fxn Fx Ws", OFxn, OFx, OWs
+AsgColDist DixfMis, "Fxn Fx Ws", OFxn, OFx, OWs
 '====
 PushI O, "Some columns in ws is missing"
 For Each Fxn In OFxn
@@ -523,7 +523,7 @@ For Each Dr In Itr(LTT.Dry)
     L = Dr(0)
     Inpn = Dr(1)
     Ffn = Dr(2)
-    PushI Dry, Array(L, Inpn, Ffn, IsFx(Ffn), HasFfn(Ffn))
+    PushI Dry, Array(L, Inpn, Ffn, ISfx(Ffn), HasFfn(Ffn))
 Next
 XDii = DrszFF("L Inpn Ffn IsFx HasFfn", Dry)
 'BrwDrs XDii: Stop

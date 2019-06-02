@@ -156,7 +156,15 @@ UB = Si(A) - 1
 End Function
 
 Function Pop(O)
-Pop = LasEle(O)
+Asg LasEle(O), Pop
+If Si(O) = 1 Then
+    Erase O
+Else
+    ReDim Preserve O(UB(O) - 1)
+End If
+End Function
+Function PopI(O)
+PopI = LasEle(O)
 If Si(O) = 1 Then
     Erase O
 Else

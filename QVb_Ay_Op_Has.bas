@@ -98,11 +98,11 @@ For Each X In Itr(A)
 Next
 End Function
 
-Function HasElePredXPTrue(A, XP$, P) As Boolean
+Function HasElePredXPTrue(A, Xp$, P) As Boolean
 If Si(A) = 0 Then Exit Function
 Dim X
 For Each X In Itr(A)
-    If Run(XP, X, P) Then
+    If Run(Xp, X, P) Then
         HasElePredXPTrue = True
         Exit Function
     End If

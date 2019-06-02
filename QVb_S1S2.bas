@@ -5,6 +5,7 @@ Private Const CMod$ = "MVb_S1S2."
 Private Const Asm$ = "QVb"
 Type S1S2: S1 As String: S2 As String: End Type
 Type S1S2s: N As Long: Ay() As S1S2: End Type
+Type S3: A As String: B As String: C As String: End Type
 Function SwapS1S2s(A As S1S2s) As S1S2s
 Dim J&, Ay() As S1S2: Ay = A.Ay
 Dim O As S1S2s: O = A

@@ -6,7 +6,7 @@ Private Const Asm$ = "QDao"
 
 Function CrtFb(Fb, Optional IsDltFst As Boolean) As Database
 If IsDltFst Then DltFfnIf Fb
-Set CrtFb = DAO.DBEngine.CreateDatabase(Fb, dbLangGeneral)
+Set CrtFb = Dao.DBEngine.CreateDatabase(Fb, dbLangGeneral)
 End Function
 
 Private Sub Z_BrwFb()
@@ -14,7 +14,7 @@ BrwFb SampFbzDutyDta
 End Sub
 
 Function DbzFb(Fb) As Database
-Set DbzFb = DAO.DBEngine.OpenDatabase(Fb)
+Set DbzFb = Dao.DBEngine.OpenDatabase(Fb)
 End Function
 
 Function CntrNyzFb(Fb) As String()
@@ -30,7 +30,7 @@ Next
 End Function
 
 Function Db(Fb) As Database
-Set Db = DAO.DBEngine.OpenDatabase(Fb)
+Set Db = Dao.DBEngine.OpenDatabase(Fb)
 End Function
 
 Sub EnsFb(Fb)

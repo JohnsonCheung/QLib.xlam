@@ -24,6 +24,10 @@ Next
 ThwImpossible CSub
 End Function
 
+Function SrcLinzNxt$(M As CodeModule, Lno&)
+SrcLinzNxt = M.Lines(SrcLnozNxt(M, Lno), 1)
+End Function
+
 Function SrcLnozNxt&(M As CodeModule, Lno&)
 Dim J&
 For J = Lno + 1 To M.CountOfLines

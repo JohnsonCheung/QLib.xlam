@@ -48,9 +48,15 @@ End Function
 Function DrszFF(FF$, Dry()) As Drs
 DrszFF = Drs(TermAy(FF), Dry)
 End Function
+
 Function HasReczDrs(A As Drs) As Boolean
 HasReczDrs = Si(A.Dry) > 0
 End Function
+
+Function HasReczDry(Dry()) As Boolean
+HasReczDry = Si(Dry) > 0
+End Function
+
 Function NoReczDry(Dry()) As Boolean
 NoReczDry = Si(Dry) = 0
 End Function
@@ -77,6 +83,10 @@ End Function
 Function IxdzDrs(A As Drs) As Dictionary
 Set IxdzDrs = DiczAyIx(A.Fny)
 End Function
+Function LasDr(A As Drs)
+LasDr = LasEle(A.Dry)
+End Function
+
 Function Drs(Fny$(), Dry()) As Drs
 With Drs
     .Fny = Fny
@@ -86,6 +96,20 @@ End Function
 
 Function DrsAddCol(A As Drs, ColNm$, CnstBrk) As Drs
 DrsAddCol = Drs(CvSy(AddAyItm(A.Fny, ColNm)), DryAddColzC(A.Dry, CnstBrk))
+End Function
+
+Function EnsColTyzInt(A As Drs, C) As Drs
+If NoReczDrs(A) Then EnsColTyzInt = A: Exit Function
+Dim O As Drs, J&, Ix%, Dr
+Ix = IxzAy(A.Fny, C)
+O = A
+If IsSy(O.Dry(0)) Then Stop
+For Each Dr In Itr(O.Dry)
+    Dr(Ix) = CInt(Dr(Ix))
+    O.Dry(J) = Dr
+    J = J + 1
+Next
+EnsColTyzInt = O
 End Function
 
 Function DrsAddIxCol(A As Drs, IxCol As EmIxCol) As Drs
@@ -109,7 +133,7 @@ End Function
 Function DrswDist(A As Drs, CC$) As Drs
 DrswDist = DrszFF(CC, DrywDist(SelDrs(A, CC).Dry))
 End Function
-Sub IntoColApzDrs(A As Drs, CC$, ParamArray OColAp())
+Sub AsgCol(A As Drs, CC$, ParamArray OColAp())
 Dim OColAv(), J%, Col, C$()
 OColAv = OColAp
 C = SyzSS(CC)
@@ -119,7 +143,7 @@ For J = 0 To UB(OColAv)
 Next
 End Sub
 
-Sub IntoColApzDistDrs(A As Drs, CC$, ParamArray OColAp())
+Sub AsgColDist(A As Drs, CC$, ParamArray OColAp())
 Dim OColAv(), J%, Col, B As Drs, C$()
 B = DrswDist(A, CC)
 OColAv = OColAp
@@ -253,7 +277,18 @@ Case Else
     Thw CSub, "Invalid SrtOpt", "SrtOpt", SrtOpt
 End Select
 End Function
-
+Function IsSamDrEleCntzDry(Dry()) As Boolean
+If Si(Dry) = 0 Then IsSamDrEleCntzDry = True: Exit Function
+Dim C%: C = Si(Dry(0))
+Dim Dr
+For Each Dr In Itr(Dry)
+    If Si(Dr) <> C Then Exit Function
+Next
+IsSamDrEleCntzDry = True
+End Function
+Function IsSamDrEleCnt(A As Drs) As Boolean
+IsSamDrEleCnt = IsSamDrEleCntzDry(A.Dry)
+End Function
 Function NColzDrs%(A As Drs)
 NColzDrs = Max(Si(A.Fny), NColzDry(A.Dry))
 End Function
@@ -289,20 +324,21 @@ NRowzColEv = NRowzInDryzColEv(A.Dry, IxzAy(A.Fny, ColNm), EqVal)
 End Function
 
 Function SqzDrs(A As Drs) As Variant()
-Dim NC&, NR&, Dry(), Fny$()
+If NoReczDrs(A) Then Exit Function
+Dim Nc&, NR&, Dry(), Fny$()
     Fny = A.Fny
     Dry = A.Dry
-    NC = Max(NColzDry(Dry), Si(Fny))
+    Nc = Max(NColzDry(Dry), Si(Fny))
     NR = Si(Dry)
 Dim O()
-ReDim O(1 To 1 + NR, 1 To NC)
+ReDim O(1 To 1 + NR, 1 To Nc)
 Dim C&, R&, Dr
     For C = 1 To Si(Fny)
         O(1, C) = Fny(C - 1)
     Next
     For R = 1 To NR
         Dr = Dry(R - 1)
-        For C = 1 To Min(Si(Dr), NC)
+        For C = 1 To Min(Si(Dr), Nc)
             O(R + 1, C) = Dr(C - 1)
         Next
     Next
@@ -328,7 +364,21 @@ End Function
 Function SyzDrsC(A As Drs, ColNm$) As String()
 SyzDrsC = IntozDrsC(EmpSy, A, ColNm)
 End Function
+
+Function IsEmpDrs(A As Drs) As Boolean
+If HasReczDrs(A) Then Exit Function
+If Si(A.Fny) > 0 Then Exit Function
+IsEmpDrs = True
+End Function
+
+Function AddDrs3(A As Drs, B As Drs, C As Drs) As Drs
+Dim O As Drs: O = AddDrs(A, B)
+          AddDrs3 = AddDrs(O, C)
+End Function
+
 Function AddDrs(A As Drs, B As Drs) As Drs
+If IsEmpDrs(A) Then AddDrs = B: Exit Function
+If IsEmpDrs(B) Then AddDrs = A: Exit Function
 If Not IsEqAy(A.Fny, B.Fny) Then Thw CSub, "Dif Fny: Cannot add", "A-Fny B-Fny", A.Fny, B.Fny
 AddDrs = Drs(A.Fny, CvAv(AddAy(A.Dry, B.Dry)))
 End Function

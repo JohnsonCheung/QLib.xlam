@@ -3,11 +3,11 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Fs_Pth."
-Function AddFdr$(Pth, Fdr$)
+Function AddFdr$(Pth, Fdr)
 AddFdr = EnsPthSfx(Pth) & ApdIf(Fdr, "\")
 End Function
 
-Function AddFdrEns$(Pth, Fdr$)
+Function AddFdrEns$(Pth, Fdr)
 Dim O$: O = AddFdr(Pth, Fdr)
 EnsPth O
 AddFdrEns = O

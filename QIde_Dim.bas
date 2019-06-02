@@ -46,21 +46,10 @@ If Not ShfPfx(L, "Dim ") Then Exit Function
 DimItmAy = SplitCommaSpc(L)
 End Function
 
-Function DimNy(Lin) As String()
-DimNy = DimNyzDimItmAy(DimItmAy(Lin))
-End Function
-
 Function DimNyzDimItmAy(DimItmAy$()) As String()
 Dim DimItm$, I
 For Each I In Itr(DimItmAy)
     DimItm = I
     PushI DimNyzDimItmAy, DimNm(DimItm)
-Next
-End Function
-
-Function DimNyzS(Src$()) As String()
-Dim L
-For Each L In Itr(Src)
-    PushIAy DimNyzS, DimNy(L)
 Next
 End Function

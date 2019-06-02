@@ -4,7 +4,7 @@ Option Explicit
 Private Const CMod$ = "MVb_Dic_Fmt."
 Private Const Asm$ = "QVb"
 Private Sub Z_BrwDic()
-Dim R As DAO.Recordset
+Dim R As Dao.Recordset
 Set R = Rs(SampDbzDutyDta, "Select Sku,BchNo from PermitD where BchNo<>''")
 BrwDic JnStrDicTwoFldRs(R), True
 End Sub

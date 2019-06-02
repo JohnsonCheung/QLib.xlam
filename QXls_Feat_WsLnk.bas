@@ -30,6 +30,10 @@ If Not IsStr(V) Then Exit Function
 IsWsnCell = HasEle(Wsny, V)
 End Function
 
+Sub AddHypLnk(Rg As Range, Wsn$)
+Dim A1 As Range: Set A1 = WszWb(WbzRg(Rg), Wsn).Range("A1")
+Rg.Hyperlinks.Add Rg, "", SubAddress:=A1.Address(External:=True)
+End Sub
 Private Sub CrtHypLnks(A As Lnkgs)
 
 End Sub
@@ -68,15 +72,16 @@ With Lnkg
     .LnkToCell = LnkToCell
 End With
 End Function
-Private Sub THwIf_NoSpace_ToFillWsn(At As Range)
+Private Sub ThwIf_NoSpace_ToFillWsn(At As Range)
 
 End Sub
+
 Function OthWsny(Ws As Worksheet) As String()
 
 End Function
 
 Sub FillWsn(At As Range)
-THwIf_NoSpace_ToFillWsn At
+ThwIf_NoSpace_ToFillWsn At
 Dim I As Range: Set I = At
 Dim Ny$():    '     Ny = OthWsny(WszAt(At))
 Dim Wsn

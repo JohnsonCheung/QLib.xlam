@@ -6,7 +6,7 @@ Private Const Asm$ = "QVb"
 Function FxAyFfny(Ffny$()) As String()
 Dim Ffn
 For Each Ffn In Itr(Ffny)
-    If IsFx(Ffn) Then PushI FxAyFfny, Ffn
+    If ISfx(Ffn) Then PushI FxAyFfny, Ffn
 Next
 End Function
 

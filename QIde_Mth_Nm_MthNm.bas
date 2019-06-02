@@ -72,6 +72,16 @@ If MthTy(L) = "" Then Exit Function
 IsPMth = True
 End Function
 
+Function Dimn$(Lin)
+Dim L$: L = Lin
+If ShfTerm(L, "Dim") Then Dimn = Nm(LTrim(L))
+End Function
+Function DimNy(Ly$()) As String()
+Dim L
+For Each L In Itr(Ly)
+    PushI DimNy, Dimn(L)
+Next
+End Function
 Function Mthn$(Lin)
 Dim L$: L = RmvMdy(Lin)
 If ShfMthTy(L) = "" Then Exit Function

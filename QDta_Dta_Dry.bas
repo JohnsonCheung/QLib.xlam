@@ -274,6 +274,7 @@ Next
 End Function
 
 Function DryzSq(Sq()) As Variant()
+If Si(Sq) = 0 Then Exit Function
 Dim R&
 For R = 1 To UBound(Sq(), 1)
     PushI DryzSq, DrzSqr(Sq, R)

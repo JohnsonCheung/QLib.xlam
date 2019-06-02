@@ -33,5 +33,8 @@ Private Sub Z_MthRetTy()
 End Sub
 
 Function MthRetTy$(Lin)
-If IsMthLin(Lin) Then MthRetTy = BefOrAll(AftBkt(Lin), "'")
+Dim A$: A = AftBkt(Lin)
+If ShfTerm(A, "As") Then MthRetTy = T1(A)
 End Function
+
+

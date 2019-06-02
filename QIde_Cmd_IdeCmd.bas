@@ -42,6 +42,7 @@ ZZ:
     Return
 End Sub
 Private Function IsAlignableMth(MthLy$()) As Boolean
+Dim L
 For Each L In MthCxtLy(MthLy)
     If Not IsAlignableSrcLin(L) Then Exit Function
 Next

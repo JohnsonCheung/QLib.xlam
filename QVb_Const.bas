@@ -14,6 +14,7 @@ Public Const vbTwoDblQuote$ = vbDblQuote & vbDblQuote
 Public Const vbDblQuoteAsc As Byte = 34
 Public Const vbSngQuote$ = "'"
 Public Const vbExcM$ = "!"
+Public Const vbPround$ = "#"
 Public Const vbOpnSqBkt$ = "["
 Public Const vbOpnBigBkt$ = "{"
 Public Fso As New Scripting.FileSystemObject
@@ -68,9 +69,9 @@ Property Get SampDbzShpCst() As Database
 Set SampDbzShpCst = Db(SampFbzShpCst)
 End Property
 Property Get DbEng() As DBEngine
-Set DbEng = DAO.DBEngine
+Set DbEng = Dao.DBEngine
 End Property
-Private Function Db(A) As DAO.Database
+Private Function Db(A) As Dao.Database
 Set Db = DbEng.OpenDatabase(A)
 End Function
 Property Get SampCnzDutyDta() As AdoDb.Connection
@@ -79,7 +80,7 @@ End Property
 Property Get SampFb$()
 SampFb = SampFbzDutyDta
 End Property
-Property Get SampDb() As DAO.Database
+Property Get SampDb() As Dao.Database
 Set SampDb = Db(SampFb)
 End Property
 Property Get SampDbzDutyDta() As Database

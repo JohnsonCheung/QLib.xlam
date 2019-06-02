@@ -10,9 +10,9 @@ End Type
 
 Private Function EnsgCModSub(M As CodeModule) As MdMdyg
 Dim S$():          S = Src(M)
-Dim MC As Mdygs:  MC = EnsgCSubs(S, MthRgs(S))                      'MC = Mdyg-CSub
-Dim MM As Mdygs:  MM = EnsgCMod(DclLy(S), Mdn(M), IsUsingCMod(MC))  'MM = Mdyg-CMod
-Dim Ms As Mdygs:  Ms = AddMdygs(MM, MC)
+Dim Mc As Mdygs:  Mc = EnsgCSubs(S, MthRgs(S))                      'MC = Mdyg-CSub
+Dim MM As Mdygs:  MM = EnsgCMod(DclLy(S), Mdn(M), IsUsingCMod(Mc))  'MM = Mdyg-CMod
+Dim Ms As Mdygs:  Ms = AddMdygs(MM, Mc)
 Dim NL$:          NL = JnCrLf(MdySrc(S, Ms))
          EnsgCModSub = MdMdyg(M, NL)
 End Function

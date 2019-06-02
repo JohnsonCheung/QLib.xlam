@@ -7,8 +7,11 @@ Public Const vbFldSep$ = ""
 Function ColzDrs(A As Drs, ColNm$) As Variant()
 ColzDrs = ColzDry(A.Dry, IxzAy(A.Fny, ColNm))
 End Function
-Function StrColzDrs(A As Drs, ColNm$) As String()
-StrColzDrs = StrColzDry(A.Dry, IxzAy(A.Fny, ColNm))
+Function StrColzDrs(A As Drs, C) As String()
+StrColzDrs = StrColzDry(A.Dry, IxzAy(A.Fny, C))
+End Function
+Function BoolColzDrs(A As Drs, C) As Boolean()
+BoolColzDrs = BoolColzDry(A.Dry, IxzAy(A.Fny, C))
 End Function
 
 Function FstCol(A As Drs) As Variant()
@@ -58,6 +61,9 @@ End Function
 
 Function StrColzDry(Dry(), C&) As String()
 StrColzDry = IntozDryC(EmpSy, Dry, C)
+End Function
+Function BoolColzDry(Dry(), C&) As Boolean()
+BoolColzDry = IntozDryC(EmpBoolAy, Dry, C)
 End Function
 
 Function SqzDrySkip(Dry(), Optional SkipNRow& = 1)

@@ -13,7 +13,7 @@ Function Fny(A As Database, T) As String()
 Fny = Itn(A.TableDefs(T).Fields)
 End Function
 
-Function ColzRs(A As Database, T, F$) As DAO.Recordset
+Function ColzRs(A As Database, T, F$) As Dao.Recordset
 Set ColzRs = Rs(A, SqlSel_F_T(F, T))
 End Function
 
@@ -25,11 +25,11 @@ Function CntDiczTF(A As Database, T, F$) As Dictionary
 Set CntDiczTF = CntDiczRs(ColzRs(A, T, F$))
 End Function
 
-Function IdxzTd(A As DAO.TableDef, IdxNm$) As DAO.Index
+Function IdxzTd(A As Dao.TableDef, IdxNm$) As Dao.Index
 Set IdxzTd = FstItmzNm(A.Indexes, IdxNm$)
 End Function
 
-Function Idx(A As Database, T, IdxNm$) As DAO.Index
+Function Idx(A As Database, T, IdxNm$) As Dao.Index
 Set Idx = IdxzTd(A.TableDefs(T), IdxNm)
 End Function
 
@@ -41,7 +41,7 @@ Function HasIdx(A As Database, T, IdxNm$) As Boolean
 HasIdx = HasItn(A.TableDefs(T).Indexes, IdxNm)
 End Function
 
-Function FstUniqIdx(A As Database, T) As DAO.Index
+Function FstUniqIdx(A As Database, T) As Dao.Index
 Set FstUniqIdx = FstItmTrueP(A.TableDefs(T).Indexes, PrpPth("Unique"))
 End Function
 
@@ -53,16 +53,16 @@ Function HasPk(A As Database, T) As Boolean
 HasPk = HasPkzTd(A.TableDefs(T))
 End Function
 
-Function HasPkzTd(A As DAO.TableDef) As Boolean
+Function HasPkzTd(A As Dao.TableDef) As Boolean
 HasPkzTd = HasItn(A.Indexes, C_PkNm)
 End Function
 
-Function HasStdSkzTd(A As DAO.TableDef) As Boolean
+Function HasStdSkzTd(A As Dao.TableDef) As Boolean
 If Not HasItn(A.Indexes, C_SkNm) Then Exit Function
 HasStdSkzTd = A.Indexes(C_SkNm).Unique = True
 End Function
 
-Function HasStdPkzTd(A As DAO.TableDef) As Boolean
+Function HasStdPkzTd(A As Dao.TableDef) As Boolean
 If Not HasPkzTd(A) Then Exit Function
 Dim Pk$(): Pk = PkFnyzTd(A): If Si(Pk) <> 1 Then Exit Function
 Dim P$: P = A.Name & "Id"
@@ -92,7 +92,7 @@ For Each F In TermAy(FF)
 Next
 End Sub
 
-Function RszId(A As Database, T, Id&) As DAO.Recordset
+Function RszId(A As Database, T, Id&) As Dao.Recordset
 Set RszId = Rs(A, SqlSel_T_WhId(T, Id))
 End Function
 
@@ -112,19 +112,19 @@ DtzT = Dt(T, Fny(A, T), DryzT(A, T))
 End Function
 
 Function FdStrAy(A As Database, T) As String()
-Dim F, Td As DAO.TableDef
+Dim F, Td As Dao.TableDef
 Set Td = A.TableDefs(T)
 For Each F In Fny(A, T)
     PushI FdStrAy, FdStr(Td.Fields(F))
 Next
 End Function
 
-Function Fds(A As Database, T) As DAO.Fields
+Function Fds(A As Database, T) As Dao.Fields
 Set Fds = A.TableDefs(T).OpenRecordset.Fields
 End Function
 
 Sub ReSeqFldzFny(A As Database, T, Fny$())
-Dim F, J%, Fds As DAO.Fields
+Dim F, J%, Fds As Dao.Fields
 Set Fds = A.TableDefs(T).Fields
 For Each F In AyReOrd(F, Fny)
     J = J + 1
@@ -144,7 +144,7 @@ Function NReczTBexpr&(A As Database, T, Bexpr$)
 NReczTBexpr = ValzQ(A, SqlSelCnt_T_OB(T, Bexpr))
 End Function
 
-Function PkFnyzTd(A As DAO.TableDef) As String()
+Function PkFnyzTd(A As Dao.TableDef) As String()
 PkFnyzTd = FnyzIdx(PkizTd(A))
 End Function
 
@@ -156,31 +156,31 @@ Function PkIdxNm$(A As Database, T)
 PkIdxNm = ObjNm(PkIdx(A, T))
 End Function
 
-Function PkizTd(A As DAO.TableDef) As DAO.Index
+Function PkizTd(A As Dao.TableDef) As Dao.Index
 Set PkizTd = FstItn(A.Indexes, C_PkNm)
 End Function
 
-Function PkIdx(A As Database, T) As DAO.Index
+Function PkIdx(A As Database, T) As Dao.Index
 Set PkIdx = PkizTd(A.TableDefs(T))
 End Function
 
-Function RszTFny(A As Database, T, Fny$()) As DAO.Recordset
+Function RszTFny(A As Database, T, Fny$()) As Dao.Recordset
 Set RszTFny = A.OpenRecordset(SqlSel_Fny_T(Fny, T))
 End Function
 
-Function RszTFF(A As Database, T, FF$) As DAO.Recordset
+Function RszTFF(A As Database, T, FF$) As Dao.Recordset
 Set RszTFF = RszTFny(A, T, Ny(FF))
 End Function
 
-Function RszTF(A As Database, T, F$) As DAO.Recordset
+Function RszTF(A As Database, T, F$) As Dao.Recordset
 Set RszTF = A.OpenRecordset(SqlSel_F_T(F, T))
 End Function
 
-Function RszT(A As Database, T) As DAO.Recordset
+Function RszT(A As Database, T) As Dao.Recordset
 Set RszT = Rs(A, SqlSel_T(T))
 End Function
 
-Function FdzTF(A As Database, T, F$) As DAO.Field2
+Function FdzTF(A As Database, T, F$) As Dao.Field2
 Set FdzTF = A.TableDefs(T).Fields(F)
 End Function
 
@@ -231,7 +231,7 @@ Sub InsTblzDrs(A As Database, T, B As Drs)
 InsRszDry RszTFny(A, T, B.Fny), B.Dry
 End Sub
 
-Sub AddFd(A As Database, T, Fd As DAO.Fields)
+Sub AddFd(A As Database, T, Fd As Dao.Fields)
 A.TableDefs(T).Fields.Append Fd
 End Sub
 
@@ -252,11 +252,11 @@ BrwDt DtzT(A, T)
 End Sub
 
 Function IsSysTbl(A As Database, T) As Boolean
-IsSysTbl = (A.TableDefs(T).Attributes And DAO.TableDefAttributeEnum.dbSystemObject) <> 0
+IsSysTbl = (A.TableDefs(T).Attributes And Dao.TableDefAttributeEnum.dbSystemObject) <> 0
 End Function
 
 Function IsHidTbl(A As Database, T) As Boolean
-IsHidTbl = (A.TableDefs(T).Attributes And DAO.TableDefAttributeEnum.dbHiddenObject) <> 0
+IsHidTbl = (A.TableDefs(T).Attributes And Dao.TableDefAttributeEnum.dbHiddenObject) <> 0
 End Function
 
 Function Lnkinf(A As Database) As String()
@@ -461,7 +461,7 @@ InsTblzDry A, T, DryzJnFldKK(DryzT(A, T), KKIdx, JnFldIx)
 End Sub
 
 Function IxzTF%(A As Database, T, Fld$)
-Dim F As DAO.Field, O%
+Dim F As Dao.Field, O%
 For Each F In A.TableDefs(T).Fields
     If F.Name = Fld Then
         IxzTF = O
@@ -516,7 +516,7 @@ Dim S$: S = FmtQQ("select Max(?Id) from [?]", T, T)
 NxtId = ValzQ(A, S) + 1
 End Function
 
-Function DaoTyzTF(A As Database, T, F) As DAO.DataTypeEnum
+Function DaoTyzTF(A As Database, T, F) As Dao.DataTypeEnum
 DaoTyzTF = A.TableDefs(T).Fields(F).Type
 End Function
 
@@ -528,7 +528,7 @@ Function CnStrzLnkTbl$(A As Database, T)
 CnStrzLnkTbl = A.TableDefs(T).Connect
 End Function
 
-Sub AddFldzExpr(A As Database, T, F$, Expr$, Ty As DAO.DataTypeEnum)
+Sub AddFldzExpr(A As Database, T, F$, Expr$, Ty As Dao.DataTypeEnum)
 A.TableDefs(T).Fields.Append Fd(F, Ty, Expr:=Expr)
 End Sub
 
@@ -575,7 +575,7 @@ End Sub
 Private Sub ZZ()
 Dim Db As Database
 Dim B
-Dim C As DAO.Fields
+Dim C As Dao.Fields
 Dim D As DataTypeEnum
 Dim E%
 Dim F$
@@ -584,8 +584,8 @@ Dim H()
 Dim I$()
 Dim J&
 Dim L As Dictionary
-Dim M As DAO.Index
-Dim O As DAO.Database
+Dim M As Dao.Index
+Dim O As Dao.Database
 Dim XX
 End Sub
 

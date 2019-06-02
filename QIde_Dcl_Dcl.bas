@@ -16,7 +16,7 @@ End Function
 
 Function EnmFei(Src$(), Enmn) As Fei
 Dim Fm&: Fm = EnmFmIx(Src, Enmn)
-EnmFei = Fei(Fm, EndEnmIx(Src, Fm))
+EnmFei = Fei(Fm, EndLix(Src, Fm))
 End Function
 
 Function EnmLy(Src$(), Enmn) As String()
@@ -72,7 +72,7 @@ End Function
 
 Function UsrTyFei(Dcl$(), TyNm$) As Fei
 Dim FmI&: FmI = UsrTyFmIx(Dcl, TyNm)
-Dim ToI&: ToI = EndTyIx(Dcl, FmI)
+Dim ToI&: ToI = EndLix(Dcl, FmI)
 UsrTyFei = Fei(FmI, ToI)
 End Function
 
@@ -82,21 +82,12 @@ If K = "" Then Thw CSub, "MthLin Error", "MthLin", MthLin
 MthELin = "End " & K
 End Function
 
-
-Function EndEnmIx&(Src$(), FmIx)
-EndEnmIx = MthEix(Src, "Enum", FmIx)
-End Function
-
-Function EndTyIx&(Dcl$(), FmIx)
-EndTyIx = MthEix(Dcl, "Type", FmIx)
-End Function
-
 Function UsrTyLines$(Dcl$(), Tyn$)
 UsrTyLines = JnCrLf(UsrTyLy(Dcl, Tyn))
 End Function
 
 Function UsrTyLy(Dcl$(), TyNm$) As String()
-UsrTyLy = AywFei(Dcl, UsrTyFei(Src, TyNm))
+UsrTyLy = AywFei(Dcl, UsrTyFei(Dcl, TyNm))
 End Function
 
 Function UsrTyFmIx&(Src$(), TyNm)

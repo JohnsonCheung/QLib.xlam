@@ -7,13 +7,13 @@ Private Const Asm$ = "QDao"
 Function ShtTyDic(FxOrFb$, TblNm$) As Dictionary
 Select Case True
 Case IsFb(FxOrFb): Set ShtTyDic = ShtTyDiczFbt(FxOrFb, TblNm$)
-Case IsFx(FxOrFb): Set ShtTyDic = ShtTyDiczFxw(FxOrFb, TblNm$)
+Case ISfx(FxOrFb): Set ShtTyDic = ShtTyDiczFxw(FxOrFb, TblNm$)
 Case Else: Thw CSub, "FxOrFb should be Fx or Fb", "FxOrFb TblNm", FxOrFb, TblNm
 End Select
 End Function
 
 Private Function ShtTyDiczFbt(Fb, T) As Dictionary
-Dim F As DAO.Field
+Dim F As Dao.Field
 Set ShtTyDiczFbt = New Dictionary
 For Each F In Db(Fb).TableDefs(T).Fields
     ShtTyDiczFbt.Add F.Name, ShtTyzDao(F.Type)

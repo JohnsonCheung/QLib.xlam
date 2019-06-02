@@ -86,12 +86,12 @@ For Each Obj In Itr(Oy)
 Next
 End Function
 
-Function OywPredXPTrue(Oy, XP$, P$)
+Function OywPredXPTrue(Oy, Xp$, P$)
 Dim O, Obj As Object
 O = Oy
 Erase O
 For Each Obj In Itr(Oy)
-    If Run(XP, Obj, P) Then
+    If Run(Xp, Obj, P) Then
         PushObj O, Obj
     End If
 Next

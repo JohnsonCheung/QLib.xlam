@@ -188,6 +188,10 @@ Function AywNmStr(Ay, WhNmStr$) As String()
 AywNmStr = AywNm(Ay, WhNmzS(WhNmStr))
 End Function
 
+Function AywIsNm(Ay) As String()
+AywIsNm = AywPred(Ay, PredIsNm)
+End Function
+
 Function AywNm(Ay, B As WhNm) As String()
 Dim I
 For Each I In Itr(Ay)
@@ -212,7 +216,7 @@ Next
 End Function
 
 Function PatnPred(Patn$) As IPred
-Dim O As New PredzPatn
+Dim O As New PredPatn
 O.Init Patn
 Set PatnPred = O
 End Function
@@ -234,11 +238,13 @@ Function AywPatnExl(Ay, Patn$, ExlLikss$) As String()
 AywPatnExl = AyeLikss(AywPatn(Ay, Patn), ExlLikss)
 End Function
 Function AyeLikss(Ay, ExlLikss$) As String()
-AyeLikss = AyePred(Ay, PredzIsLikss(ExlLikss))
+Stop
+'AyeLikss = AyePred(Ay, PredzIsLikss(ExlLikss))
 End Function
-Function PredzIsLikss(Likss$) As IPred
-Set PredzIsLikss = New PredzIsLikAy
-PredzIsLikss.Pred Likss
+Function PredzLikss(Likss$) As IPred
+Dim O As New PredLikAy
+O.Init SyzSS(Likss)
+Set PredzLikss = O
 End Function
 Function IxyzSubAy(Ay, SubAy) As Long()
 Dim E
@@ -276,17 +282,6 @@ For Each X In Itr(Ay)
 Next
 End Function
 
-Function AywPredXAB(Ay, P As IPredXAB, A, B)
-Dim X
-AywPredXAB = Resi(Ay)
-For Each X In Itr(Ay)
-    If P.PredXAB(X, A, B) Then
-        Push AywPredXAB, X
-    End If
-Next
-End Function
-
-
 Function AywPredXAP(Ay, PredXAP$, ParamArray Ap())
 AywPredXAP = Resi(Ay)
 Dim I
@@ -301,21 +296,21 @@ For Each I In Itr(Ay)
 Next
 End Function
 
-Function AywPredXP(Ay, XP$, P)
+Function AywPredXP(Ay, Xp$, P)
 Dim X
 AywPredXP = Resi(Ay)
 For Each X In Itr(Ay)
-    If Run(XP, X, P) Then
+    If Run(Xp, X, P) Then
         Push AywPredXP, X
     End If
 Next
 End Function
 
-Function AywPredXPNot(Ay, XP$, P)
+Function AywPredXPNot(Ay, Xp$, P)
 Dim X
 AywPredXPNot = Resi(Ay)
 For Each X In Itr(Ay)
-    If Not Run(XP, X, P) Then
+    If Not Run(Xp, X, P) Then
         Push AywPredXPNot, X
     End If
 Next
