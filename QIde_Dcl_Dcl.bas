@@ -39,8 +39,8 @@ Next
 EnmFmIx = -1
 End Function
 
-Function EnmNyMd(A As CodeModule) As String()
-EnmNyMd = EnmNy(DclLyzM(A))
+Function EnmNyMd(M As CodeModule) As String()
+EnmNyMd = EnmNy(DclLyzM(M))
 End Function
 Function EnmNyPj(Pj As VBProject) As String()
 Dim M
@@ -251,8 +251,8 @@ For Each C In P.VBComponents
 Next
 End Function
 
-Function DclItr(A As CodeModule)
-Asg Itr(DclLyzM(A)), DclItr
+Function DclItr(M As CodeModule)
+Asg Itr(DclLyzM(M)), DclItr
 End Function
 
 Function DclLy(Src$()) As String()
@@ -277,11 +277,11 @@ For Each C In CPj.VBComponents
 Next
 VcLinesAy O
 End Sub
-Function DclzM$(A As CodeModule)
-DclzM = TrimRSpcCrLf(LineszMLC(A, 1, DclLinCntzM(A)))
+Function DclzM$(M As CodeModule)
+DclzM = RTrimLines(LineszMLC(M, 1, DclLinCntzM(M)))
 End Function
-Function DclLyzM(A As CodeModule) As String()
-DclLyzM = SplitCrLf(DclzM(A))
+Function DclLyzM(M As CodeModule) As String()
+DclLyzM = SplitCrLf(DclzM(M))
 End Function
 Function CnstLnxszS(Src$()) As Lnxs
 Dim L, J&

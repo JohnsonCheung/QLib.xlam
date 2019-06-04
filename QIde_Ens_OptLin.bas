@@ -42,12 +42,12 @@ Clean:
     RmvMd Mdn
     Return
 End Sub
-Private Sub EnsOptLinzM(A As CodeModule)
-If IsEmpMd(A) Then Exit Sub
-DltOptLin A, OptLinOfCmpDb
-DltOptLin A, OptLinOfCmpBin
-EnsOptLin A, OptLinOfCmpTxt
-EnsOptLin A, OptLinOfExplicit
+Private Sub EnsOptLinzM(M As CodeModule)
+If IsEmpMd(M) Then Exit Sub
+DltOptLin M, OptLinOfCmpDb
+DltOptLin M, OptLinOfCmpBin
+EnsOptLin M, OptLinOfCmpTxt
+EnsOptLin M, OptLinOfExplicit
 End Sub
 
 Private Sub Z_LnoOf_AftOpt_AndImpl()
@@ -77,10 +77,10 @@ Next
 IxOfAftOptAndImplzS = J
 End Function
 
-Function LnoOf_AftOpt_AndImpl&(A As CodeModule)
+Function LnoOf_AftOpt_AndImpl&(M As CodeModule)
 Dim Fnd As Boolean, J%, IsOpt As Boolean, L$
-For J = 1 To A.CountOfDeclarationLines
-    L = A.Lines(J, 1)
+For J = 1 To M.CountOfDeclarationLines
+    L = M.Lines(J, 1)
     'IsOpt = IsLin_OfOpt_OrImpl_OrBlank(L)
     Select Case True
     Case Fnd And IsOpt:
@@ -91,25 +91,25 @@ Next
 LnoOf_AftOpt_AndImpl = J
 End Function
 
-Private Function OptLno%(A As CodeModule, OptLin)
+Private Function OptLno%(M As CodeModule, OptLin)
 Dim J&
-For J = 1 To A.CountOfDeclarationLines
-   If A.Lines(J, 1) = OptLin Then OptLno = J: Exit Function
+For J = 1 To M.CountOfDeclarationLines
+   If M.Lines(J, 1) = OptLin Then OptLno = J: Exit Function
 Next
 End Function
 
-Private Sub EnsOptLin(A As CodeModule, OptLin)
+Private Sub EnsOptLin(M As CodeModule, OptLin)
 Const CSub$ = CMod & "EnsOptLin"
-If A.CountOfLines = 0 Then Exit Sub
-If OptLno(A, OptLin) > 0 Then Exit Sub
-A.InsertLines 1, OptLin
-InfLin CSub, "[" & OptLin & "] is Inserted", "Md", Mdn(A)
+If M.CountOfLines = 0 Then Exit Sub
+If OptLno(M, OptLin) > 0 Then Exit Sub
+M.InsertLines 1, OptLin
+InfLin CSub, "[" & OptLin & "] is Inserted", "Md", Mdn(M)
 End Sub
 
-Private Sub DltOptLin(A As CodeModule, OptLin)
+Private Sub DltOptLin(M As CodeModule, OptLin)
 Const CSub$ = CMod & "DltOptLin"
-Dim I%: I = OptLno(A, OptLin)
+Dim I%: I = OptLno(M, OptLin)
 If I = 0 Then Exit Sub
-A.DeleteLines I
-Inf CSub, "[" & OptLin & "] line is deleted", "Md Lno", Mdn(A), I
+M.DeleteLines I
+Inf CSub, "[" & OptLin & "] line is deleted", "Md Lno", Mdn(M), I
 End Sub

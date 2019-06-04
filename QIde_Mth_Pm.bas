@@ -29,7 +29,7 @@ End Property
 Function ArgAsetzP(P As VBProject) As Aset
 Set ArgAsetzP = New Aset
 Dim L$, I
-'For Each I In MthLinyzP(A)
+'For Each I In MthLinAyzP(A)
     L = I
     'ArgAsetzPj.PushAy ArgSy(L)
 'Next
@@ -75,16 +75,16 @@ Set ShtRetTyAsetInVbe = ShtRetTyAsetzV(CVbe)
 End Function
 
 Function ShtRetTyAsetzV(A As Vbe) As Aset
-Set ShtRetTyAsetzV = ShtRetTyAset(MthLinyzV(A))
+Set ShtRetTyAsetzV = ShtRetTyAset(MthLinAyzV(A))
 End Function
 
-Function ShtRetTyAset(MthLiny$()) As Aset
-Set ShtRetTyAset = AsetzAy(ShtRetTyAy(MthLiny))
+Function ShtRetTyAset(MthLinAy$()) As Aset
+Set ShtRetTyAset = AsetzAy(ShtRetTyAy(MthLinAy))
 End Function
 
-Function ShtRetTyAy(MthLiny$()) As String()
+Function ShtRetTyAy(MthLinAy$()) As String()
 Dim MthLin, I
-For Each I In Itr(MthLiny)
+For Each I In Itr(MthLinAy)
     MthLin = I
     PushI ShtRetTyAy, ShtRetTyzLin(MthLin)
 Next
@@ -165,6 +165,24 @@ RetAs = " As " & Ret
 End Function
 Function RetAszRet$(Ret)
 RetAszRet = RetAs(Ret)
+End Function
+Function RetAszDclSfx$(DclSfx$)
+Dim B$
+Dim F$: F = FstChr(DclSfx)
+If IsTyChr(F) Then
+    If Len(DclSfx) = 1 Then Exit Function
+    B = RmvFstChr(DclSfx): If B <> "()" Then Stop
+    RetAszDclSfx = " As " & TyNmzTyChr(F) & "()"
+    Exit Function
+End If
+If TyChrzTyNm(DclSfx) <> "" Then Exit Function
+If Left(DclSfx, 4) <> " As " Then Stop
+RetAszDclSfx = DclSfx
+End Function
+Function TyChrzDclSfx$(DclSfx$)
+If Len(DclSfx) = 1 Then
+    If IsTyChr(DclSfx) Then TyChrzDclSfx = DclSfx
+End If
 End Function
 Function TyChrzRet$(Ret)
 If Len(Ret) = 1 And IsTyChr(Ret) Then TyChrzRet = Ret: Exit Function

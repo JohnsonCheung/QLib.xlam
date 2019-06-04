@@ -4,17 +4,17 @@ Option Explicit
 Private Const CMod$ = "MIde_Ens__Mdy."
 Private Const Asm$ = "QIde"
 
-Sub MdyLins(A As CodeModule, B As Mdygs)
+Sub MdyLins(M As CodeModule, B As Mdygs)
 Dim J&
 For J = 0 To B.N - 1
-    MdyLin A, B.Ay(J)
+    MdyLin M, B.Ay(J)
 Next
 End Sub
 
-Sub MdyLin(A As CodeModule, B As Mdyg)
+Sub MdyLin(M As CodeModule, B As Mdyg)
 Select Case B.Act
-Case EmMdyg.EiIns: InsLinzM A, B.Ins
-Case EmMdyg.EiDlt: DltLinzM A, B.Dlt
+Case EmMdyg.EiIns: InsLinzM M, B.Ins
+Case EmMdyg.EiDlt: DltLinzM M, B.Dlt
 Case EmMdyg.EiNop
 Stop
     Thw CSub, "Invalid Mdyg.Act" ', "Vdt-Mdyg.Act Mdyg", "Mdyg.Act", LB.ToStr

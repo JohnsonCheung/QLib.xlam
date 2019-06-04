@@ -6,7 +6,7 @@ Private Const Asm$ = "QIde"
 
 Sub RenTo(FmCmpn, ToNm)
 If HasCmpzPN(CPj, ToNm) Then Inf CSub, "CmpToNm exist", "ToNm", ToNm: Exit Sub
-Cmp(FmCmpn).Name = ToNm
+CMP(FmCmpn).Name = ToNm
 End Sub
 Sub Ren(NewCmpn)
 CCmp.Name = NewCmpn
@@ -27,12 +27,12 @@ For Each C In P.VBComponents
     End If
 Next
 End Sub
-Sub RenMd(A As CodeModule, NewNm$)
-If HasMd(PjzM(A), NewNm) Then
-    Debug.Print FmtQQ("NewMdn[?] exists, cannot rename Md[?]", NewNm, Mdn(A))
+Sub RenMd(M As CodeModule, NewNm$)
+If HasMd(PjzM(M), NewNm) Then
+    Debug.Print FmtQQ("NewMdn[?] exists, cannot rename Md[?]", NewNm, Mdn(M))
     Exit Sub
 End If
-A.Parent.Name = NewNm
+M.Parent.Name = NewNm
 End Sub
 
 Sub MthKeyDrFny()

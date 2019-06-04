@@ -4,7 +4,7 @@ Option Explicit
 Private Const CMod$ = "MIde_Mth_TopRmk."
 Private Const Asm$ = "QIde"
 Private Sub Z_MthFeiszSrcMth()
-Dim Src$(), Mthn, WiTopRmk As Boolean
+Dim Src$(), Mthn
 Dim Ept As Feis, Act As Feis
 
 Src = SrczMdn("IdeMthFei")
@@ -13,7 +13,7 @@ GoSub Tst
 
 Exit Sub
 Tst:
-    Act = MthFeiszSN(Src, Mthn, WiTopRmk)
+    Act = MthFeiszSN(Src, Mthn)
     If Not IsEqFeis(Act, Ept) Then Stop
     Return
 End Sub
@@ -28,8 +28,7 @@ End Function
 Function TopRmkLines$(Src$(), MthIx)
 TopRmkLines = JnCrLf(TopRmkLy(Src, MthIx))
 End Function
-Function TopRmkLyzSIW(Src$(), MthIx, WiTopRmk As Boolean) As String()
-If Not WiTopRmk Then Exit Function
+Function TopRmkLyzSIW(Src$(), MthIx) As String()
 TopRmkLyzSIW = TopRmkLy(Src, MthIx)
 End Function
 Function TopRmkLy(Src$(), MthIx) As String()

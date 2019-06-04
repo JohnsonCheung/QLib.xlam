@@ -62,13 +62,13 @@ Next
 End Function
 
 Function QBNm$(Nm)
-Dim Cml$, I, O$()
+Dim CmL$, I, O$()
 For Each I In Itr(Cml1Ay(Nm))
-    Cml = I
-    If IsBRKCml(Cml) Then
-        PushI O, QuoteBkt(Cml)
+    CmL = I
+    If IsBRKCml(CmL) Then
+        PushI O, QuoteBkt(CmL)
     Else
-        PushI O, Cml
+        PushI O, CmL
     End If
 Next
 QBNm = Jn(O)
@@ -167,11 +167,11 @@ Next
 RmvEndDig = Left(S, J)
 End Function
 Function Verb$(Nm)
-Dim Cml$, I, LetterCml$
+Dim CmL$, I, LetterCml$
 For Each I In Cml1Ay(Nm)
-    Cml = I
-    LetterCml = RmvDigSfx(Cml)
-    If VerbAset.Has(LetterCml) Then Verb = Cml: Exit Function
+    CmL = I
+    LetterCml = RmvDigSfx(CmL)
+    If VerbAset.Has(LetterCml) Then Verb = CmL: Exit Function
 Next
 End Function
 Property Get NormVerbss$()

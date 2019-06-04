@@ -20,15 +20,22 @@ Next
 SqzMthDNy = O
 End Function
 
-Sub RplMthzMNL(Md As CodeModule, Mthn, ByLines$)
-Dim Ix&: Ix = FstMthIxzN(Src(Md), Mthn)
-RmvMth Md, Mthn
-If Ix = -1 Then
-    Md.AddFromString ByLines
+Function RplMth(M As CodeModule, Mthn, NewL$) As Boolean
+'Ret True if Rplaced
+Dim OldL$, Lno&
+Lno = MthLnozMM(M, Mthn)
+If HasMthzM(M, Mthn) Then
+    OldL = MthLineszMN(M, Mthn)
+    If OldL <> NewL Then
+        RplMth = True
+        RmvMth M, Mthn
+        M.InsertLines Lno, NewL '<==
+    End If
 Else
-    Md.InsertLines Ix + 1, ByLines
+    RplMth = True
+    M.AddFromString NewL '<===
 End If
-End Sub
+End Function
 
 Private Sub ZZ()
 MIde__Mth:

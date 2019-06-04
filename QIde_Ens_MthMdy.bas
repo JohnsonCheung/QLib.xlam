@@ -34,13 +34,13 @@ Sub EnsPubMd()
 EnsPubzMd CMd
 End Sub
 
-Sub EnsPrvZzMd(A As CodeModule)
+Sub EnsPrvZzMd(M As CodeModule)
 'MdyMd A, MdygsOfEnsPrvZ(A)
 End Sub
 
-Function LnoAyOfPubZ(A As CodeModule) As Long()
+Function LnoAyOfPubZ(M As CodeModule) As Long()
 Dim L, J&
-For Each L In Itr(Src(A))
+For Each L In Itr(Src(M))
     J = J + 1
     'If IsMthLinzPub(L) Then
         PushI LnoAyOfPubZ, J
@@ -48,34 +48,34 @@ For Each L In Itr(Src(A))
 Next
 End Function
 
-Function LnoItrOfPubZ(A As CodeModule)
-Asg Itr(LnoAyOfPubZ(A)), LnoItrOfPubZ
+Function LnoItrOfPubZ(M As CodeModule)
+Asg Itr(LnoAyOfPubZ(M)), LnoItrOfPubZ
 End Function
 
-Sub EnsPubzMd(A As CodeModule)
+Sub EnsPubzMd(M As CodeModule)
 'MdyMd A, MdygsOfEnsPubZ(A)
 End Sub
 
 
-Function LnoItrPrvZ(A As CodeModule)
+Function LnoItrPrvZ(M As CodeModule)
 
 End Function
 
-Sub EnsMdy(A As CodeModule, Mthn, Optional Mdy$)
+Sub EnsMdy(M As CodeModule, Mthn, Optional Mdy$)
 End Sub
 
-Sub EnsPrv(A As CodeModule, Mthn)
-EnsMdy A, Mthn, "Private"
+Sub EnsPrv(M As CodeModule, Mthn)
+EnsMdy M, Mthn, "Private"
 End Sub
 
-Function EnsgPub(A As CodeModule, Mthn) As Mdyg
+Function EnsgPub(M As CodeModule, Mthn) As Mdyg
 End Function
 
-Sub EnsPub(A As CodeModule, Mthn)
+Sub EnsPub(M As CodeModule, Mthn)
 'MdyLin EnsgPub(A, Mthn)
 End Sub
 
-Function EnsgPrv(A As CodeModule, Mthn) As Mdyg
+Function EnsgPrv(M As CodeModule, Mthn) As Mdyg
 
 End Function
 

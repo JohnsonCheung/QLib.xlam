@@ -135,12 +135,12 @@ For Each C In P.VBComponents
     EnsCModSubzM C.CodeModule
 Next
 End Sub
-Sub EnsCModSubzM(A As CodeModule)
+Sub EnsCModSubzM(M As CodeModule)
 'MdyMd EnsgCModSub(A)
 End Sub
 
-Private Function CModCnstLin$(A As CodeModule)
-CModCnstLin = FmtQQ("Private Const CMod$ = ""?.""", Mdn(A))
+Private Function CModCnstLin$(M As CodeModule)
+CModCnstLin = FmtQQ("Private Const CMod$ = ""?.""", Mdn(M))
 End Function
 
 Private Sub ZZ_EnsgCModSub()
@@ -160,9 +160,7 @@ Tst:
 '    If Not IsEqRplgMd(Act, Ept) Then Stop
     Return
 End Sub
-Sub Z2()
-ZZ_EnsgCModSub
-End Sub
+
 
 Private Sub ZZZ()
 QIde_Ens_CModSub:

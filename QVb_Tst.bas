@@ -78,7 +78,7 @@ Dim IdStr$: IdStr = TstIdStr(TstId, Fun)
 Dim Exist As Boolean
 Exist = HasFfn(F)
 Select Case True
-Case (Exist And TrimRSpcCrLf(LineszFt(F)) <> IdStr) Or Not Exist
+Case (Exist And RTrimLines(LineszFt(F)) <> IdStr) Or Not Exist
     WrtStr TstIdStr(TstId, Fun), F
 End Select
 End Sub
@@ -88,7 +88,7 @@ Dim IdStr$: IdStr = TstIdStr(TstId, Fun)
 Dim Exist As Boolean
 Exist = HasFfn(F)
 Select Case True
-Case Exist And TrimRSpcCrLf(LineszFt(F)) <> IdStr
+Case Exist And RTrimLines(LineszFt(F)) <> IdStr
     Thw CSub, "TstIdStr in TstIdFt is not expected", "TstIdFt Expected-TstIdStr Actual-TstIdStr-in-TstIdFt", F, IdStr, LineszFt(F)
 Case Exist:
 Case Else

@@ -4,12 +4,12 @@ Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Ens_SubZZ."
 
-Function SubZZEpt$(A As CodeModule) ' SubZZ is Sub ZZ() bodyLines
+Function SubZZEpt$(M As CodeModule) ' SubZZ is Sub ZZ() bodyLines
 'Sub ZZ() has all calling of public method with dummy parameter so that it can Shf-F2
-Dim mPMthLiny$()        ' Mth mPMthLiny PUB
+Dim mPMthLinAy$()        ' Mth mPMthLinAy PUB
 Dim mPubPrpGetNm As Aset
-Dim mPMthPmAy$()         ' From mPMthLiny    mPMthLiny & mPm same sz     ' mPMthPmAy is the string in the bracket of the MthmPMthLinyLin
-Dim mMthnyPub$()      ' From mPMthLiny    mPMthLiny & mMthn same sz
+Dim mPMthPmAy$()         ' From mPMthLinAy    mPMthLinAy & mPm same sz     ' mPMthPmAy is the string in the bracket of the MthmPMthLinAyLin
+Dim mMthnyPub$()      ' From mPMthLinAy    mPMthLinAy & mMthn same sz
 Dim mArgAy$()         ' Each mArgAy in mArgAy become on mPMthPmAy   Eg, 1-mArgAy = A$, B$, C%, D As XYZ => 4-mPMthPmAy
                      ' ArgSfxDic is Key=ArgSfx and Val=A, B, C
                      ' ArgSfx is mArgAy-without-Nm
@@ -19,10 +19,10 @@ Dim ArgSfxToAbcDic As Dictionary
 Dim mCallingPmAy$()
 Dim mHasPrp As Boolean
 
-    mPMthLiny = MthLinyzPub(Src(A))
-    Set mPubPrpGetNm = WPrpGetAset(mPMthLiny)
-    mPMthPmAy = SyTakBetBkt(mPMthLiny) ' Each Mth return an-Ele to call
-    mMthnyPub = MthnyzMthLiny(mPMthLiny)
+    mPMthLinAy = MthLinAyzPub(Src(M))
+    Set mPubPrpGetNm = WPrpGetAset(mPMthLinAy)
+    mPMthPmAy = SyTakBetBkt(mPMthLinAy) ' Each Mth return an-Ele to call
+    mMthnyPub = MthnyzMthLinAy(mPMthLinAy)
     mArgAy = ArgAyzPmAy(mPMthPmAy)
     ArgSfx = ArgSfxy(mArgAy)
     Set ArgAset = AsetzAy(ArgSfx)
@@ -130,7 +130,7 @@ Dim C$()
 Dim XX
 ArgSfx A
 SubZZEpt B
-MthnyzMthLiny C
+MthnyzMthLinAy C
 End Sub
 
 Private Property Get Z_SubZZzMd__Ept2$()

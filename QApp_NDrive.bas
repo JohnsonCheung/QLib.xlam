@@ -11,3 +11,9 @@ End Sub
 Sub RmvNDrive()
 Shell "Subst /d N:"
 End Sub
+
+Sub AAA()
+Static F As New QApp_NDrive__AAA
+Dim B: B = F.B '
+Dim A: A = A   '
+End Sub

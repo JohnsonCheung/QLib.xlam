@@ -56,8 +56,8 @@ With A
 CntgCmpLin = Pfx & NCmp(A) & " " & .NMod & " " & .NCls & " " & .NDoc & " " & .NOth
 End With
 End Function
-Function Cmp(Cmpn) As VBComponent
-Set Cmp = CPj.VBComponents(Cmpn)
+Function CMP(Cmpn) As VBComponent
+Set CMP = CPj.VBComponents(Cmpn)
 End Function
 
 Function NCls%()

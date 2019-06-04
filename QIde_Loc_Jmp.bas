@@ -4,8 +4,8 @@ Option Explicit
 Private Const CMod$ = "MIde_Loc_Jmp."
 Private Const Asm$ = "QIde"
 
-Sub JmpzML(A As CodeModule, Lno)
-JmpzM A
+Sub JmpzML(M As CodeModule, Lno)
+JmpzM M
 JmpLin Lno
 End Sub
 Function HasMdnzP(P As VBProject, Mdn, Optional Inf As Boolean) As Boolean
@@ -48,18 +48,18 @@ End With
 'SendKeys "^{F4}"
 End Sub
 
-Sub JmpMthzMN(A As CodeModule, Mthn)
-JmpzM A
+Sub JmpMthzMN(M As CodeModule, Mthn)
+JmpzM M
 JmpMth Mthn
 End Sub
 
-Function MdPoseszMM(A As CodeModule, Mthn) As MdPoses
+Function MdPoseszMM(M As CodeModule, Mthn) As MdPoses
 Dim I, IMthLin$, ILno, IPos As Pos
-For Each I In MthIxyzMN(A, Mthn)
+For Each I In MthIxyzMN(M, Mthn)
     ILno = I + 1
-    IMthLin = ContLinzML(A, ILno)
+    IMthLin = ContLinzML(M, ILno)
     IPos = PoszSS(IMthLin, Mthn)
-    PushMdPos MdPoseszMM, MdPoszMLP(A, ILno, IPos)
+    PushMdPos MdPoseszMM, MdPoszMLP(M, ILno, IPos)
 Next
 End Function
 Sub PushMdPos(O As MdPoses, M As MdPos)
@@ -132,8 +132,8 @@ ClsWinExlAp WinyzMdAy(MdAy)
 TileV
 End Sub
 
-Sub JmpzM(A As CodeModule)
-A.CodePane.Show
+Sub JmpzM(M As CodeModule)
+M.CodePane.Show
 End Sub
 
 

@@ -180,10 +180,13 @@ End Function
 
 Function Box(S) As String()
 Dim H$: H = Dup("*", Len(S) + 6)
-PushI Box, ""
 PushI Box, H
 PushI Box, "** " & S & " **"
 PushI Box, H
+PushI Box, ""
+End Function
+Function BoxStr$(S)
+BoxStr = JnCrLf(Box(S))
 End Function
 
 Private Function LyzFunMsg(Fun$, Msg$) As String()

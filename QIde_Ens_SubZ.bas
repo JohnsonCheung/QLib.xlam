@@ -12,8 +12,8 @@ PushI O, "End Sub"
 SubZEptzNy = JnCrLf(O)
 End Function
 
-Function SubZEptzMd$(A As CodeModule)
+Function SubZEptzMd$(M As CodeModule)
 'SubZ is [Mth-`Sub Z()`-Lines], each line is calling a Z_XX, where Z_XX is a testing function
-SubZEptzMd = SubZEptzNy(MthnyzSubZDashMd(A))
+SubZEptzMd = SubZEptzNy(MthnyzSubZDashMd(M))
 End Function
 

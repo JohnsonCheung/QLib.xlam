@@ -4,13 +4,13 @@ Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Str_Cmp."
 
-Sub CmpLines(A, B, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$)
-Brw FmtCmpLines(A, B, N1, N2, Hdr)
+Sub CmprLines(A, B, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$)
+Brw FmtCmprLines(A, B, N1, N2, Hdr)
 End Sub
 
-Function FmtCmpLines(A, B, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$) As String()
+Function FmtCmprLines(A, B, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$) As String()
 ThwIf_NotStr A, CSub
-ThwIf_NotAy B, CSub
+ThwIf_NotStr B, CSub
 If A = B Then Exit Function
 Dim AA$(), BB$()
 AA = SplitCrLf(A)
@@ -26,22 +26,22 @@ Dim O$(), J&, MinU&
     
     MinU = Min(UB(AA), UB(BB))
     For J = 0 To MinU
-        PushIAy O, LyzCmpStr(AA(J), BB(J), J)
+        PushIAy O, LyzCmprStr(AA(J), BB(J), J)
     Next
     PushIAy O, LyRest(AA, BB, MinU, N1, N2)
     PushIAy O, LyAll(AA, N1)
     PushIAy O, LyAll(BB, N2)
-FmtCmpLines = O
+FmtCmprLines = O
 End Function
 Private Function LyAll(A$(), Nm$) As String()
 
 End Function
-Private Function LyzCmpStr(A$, B$, Ix) As String()
-If A = B Then PushI LyzCmpStr, Ix & ":" & A: Exit Function
-PushI LyzCmpStr, Ix & ":" & A & "<" & Len(A)
+Private Function LyzCmprStr(A$, B$, Ix) As String()
+If A = B Then PushI LyzCmprStr, Ix & ":" & A: Exit Function
+PushI LyzCmprStr, Ix & ":" & A & "<" & Len(A)
 Dim W%
 W = Len(CStr(Ix)) + 1
-PushI LyzCmpStr, Space(W) & B & "<" & Len(B)
+PushI LyzCmprStr, Space(W) & B & "<" & Len(B)
 End Function
 Private Function LyRest(A$(), B$(), MinU&, Nm1$, Nm2$) As String()
 Dim Ay$(), Nm$
@@ -58,27 +58,29 @@ For J = MinU + 1 To UB(Ay)
 Next
 End Function
 
-Sub CmpStr(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$)
+Sub CmprStr(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$, Optional WiHdr As EmHdr = EmHdr.EiWiHdr)
 If A = B Then Exit Sub
-Brw FmtCmpStr(A, B, N1, N2, Hdr)
+Brw FmtCmprStr(A, B, N1, N2, Hdr, WiHdr)
 End Sub
 
-Function FmtCmpStr(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$) As String()
+Function FmtCmprStr(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$, Optional WiHdr As EmHdr = EmHdr.EiWiHdr) As String()
 If Not IsStr(A) Then Stop
 If Not IsStr(B) Then Stop
-If IsLines(A) Or IsLines(B) Then FmtCmpStr = FmtCmpLines(A, B, N1, N2, Hdr): Exit Function
+If IsLines(A) Or IsLines(B) Then FmtCmprStr = FmtCmprLines(A, B, N1, N2, Hdr): Exit Function
 If A = B Then Exit Function
 Dim At&
     At = DifAt(A, B)
 Dim O$()
-    PushI O, FmtQQ("Str-(?)-Len: ?", N1, Len(A))
-    PushI O, FmtQQ("Str-(?)-Len: ?", N2, Len(B))
-    PushI O, "Dif At: " & At
-    PushIAy O, Len_LblAy(Max(Len(A), Len(B)))
+    If WiHdr = EiWiHdr Then
+        PushI O, FmtQQ("Str-(?)-Len: ?", N1, Len(A))
+        PushI O, FmtQQ("Str-(?)-Len: ?", N2, Len(B))
+        PushI O, "Dif At: " & At
+        PushIAy O, Len_LblAy(Max(Len(A), Len(B)))
+    End If
     PushI O, A
     PushI O, B
     PushI O, Space(At - 1) & "^"
-FmtCmpStr = O
+FmtCmprStr = O
 End Function
 
 Private Function DifAt&(A$, B$)
@@ -95,7 +97,7 @@ End Function
 
 Private Function DifAtIx&(A$(), B$())
 Dim O&
-For O = 0 To Min(Si(A), Si(B))
+For O = 0 To Min(UB(A), UB(B))
     If A(O) <> B(O) Then DifAtIx = O: Exit Function
 Next
 'Thw_Never CSub
@@ -128,14 +130,14 @@ R = (L - 1) Mod 10 + 1
 Len_LblLin2 = Dup(C, Q) & Left(C, R)
 End Function
 
-Private Sub Z_FmtCmpLines()
+Private Sub Z_FmtCmprLines()
 Dim A$, B$
 A = LineszVbl("AAAAAAA|bbbbbbbb|cc|dd")
 B = LineszVbl("AAAAAAA|bbbbbbbb |cc")
 GoSub Tst
 Exit Sub
 Tst:
-    Act = FmtCmpLines(A, B)
+    Act = FmtCmprLines(A, B)
     Brw Act
     Return
 

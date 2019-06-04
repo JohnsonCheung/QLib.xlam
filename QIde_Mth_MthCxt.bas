@@ -9,7 +9,7 @@ Type Fcs: N As Long: Ay() As Fc: End Type
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Mth_Rmk."
 
-Sub UnRmkMth(A As CodeModule, Mthn)
+Sub UnRmkMth(M As CodeModule, Mthn)
 'UnRmkMdzFes A, MthCxtFes(Src(A), Mthn)
 End Sub
 
@@ -111,52 +111,52 @@ Dim Md As CodeModule, Mthn
 'RmkMth M:   Ass LineszVbl(MthLines(M)) = "Property Get ZZA()|Stop '|End Property||Property Let YYA(V)|Stop '|'|End Property"
 'UnRmkMth M: Ass LineszVbl(MthLines(M)) = "Property Get ZZA()|End Property||Property Let YYA(V)||End Property"
 End Sub
-Function NxtMdLno(A As CodeModule, Lno)
+Function NxtMdLno(M As CodeModule, Lno)
 Const CSub$ = CMod & "NxtMdLno"
 Dim J&
-For J = Lno To A.CountOfLines
-    If LasChr(A.Lines(Lno, 1)) <> "_" Then
+For J = Lno To M.CountOfLines
+    If LasChr(M.Lines(Lno, 1)) <> "_" Then
         NxtMdLno = J
         Exit Function
     End If
 Next
-Thw CSub, "All line From Lno has _ as LasChr", "Lno Md Src", Lno, Mdn(A), AddIxPfx(Src(A), 1)
+Thw CSub, "All line From Lno has _ as LasChr", "Lno Md Src", Lno, Mdn(M), AddIxPfx(Src(M), 1)
 End Function
 
-Sub UnRmkMdzFes(A As CodeModule, B As Feis)
+Sub UnRmkMdzFes(M As CodeModule, B As Feis)
 Dim J&
 For J = 0 To B.N - 1
-    UnRmkMdzFei A, B.Ay(J)
+    UnRmkMdzFei M, B.Ay(J)
 Next
 End Sub
 
-Sub UnRmkMdzFei(A As CodeModule, B As Fei)
+Sub UnRmkMdzFei(M As CodeModule, B As Fei)
 'If Not IsRmkedzS(LyzMdFei(A, B)) Then Exit Sub
 Stop
 Dim J%, L$
 'For J = NxtMdLno(A, B.FmNo) To B.ToNo - 1
-    L = A.Lines(J, 1)
+    L = M.Lines(J, 1)
     If Left(L, 1) <> "'" Then Stop
-    A.ReplaceLine J, Mid(L, 2)
+    M.ReplaceLine J, Mid(L, 2)
 'Next
 End Sub
 
-Sub RmkMdzFes(A As CodeModule, B As Feis)
+Sub RmkMdzFes(M As CodeModule, B As Feis)
 Dim J%
 For J = 0 To B.N - 1
-    RmkMdzFe A, B.Ay(J)
+    RmkMdzFe M, B.Ay(J)
 Next
 End Sub
 
-Sub RmkMdzFe(A As CodeModule, B As Fei)
-If IsRmkedzMFe(A, B) Then Exit Sub
+Sub RmkMdzFe(M As CodeModule, B As Fei)
+If IsRmkedzMFe(M, B) Then Exit Sub
 Dim J%
 'For J = 0 To UB(B)
-    A.ReplaceLine J, "'" & A.Lines(J, 1)
+    M.ReplaceLine J, "'" & M.Lines(J, 1)
 'Next
 End Sub
 
-Function IsRmkedzMFe(A As CodeModule, B As Fei) As Boolean
+Function IsRmkedzMFe(M As CodeModule, B As Fei) As Boolean
 'IsRmkedzMFe = IsRmkedzS(LyzMdFei(A, B))
 End Function
 Function CDMthCxt() As Drs
@@ -177,7 +177,7 @@ For L = SrcLnozNxt(M, MthLno) To M.CountOfLines
 Next
 ThwImpossible CSub
 X:
-DMthCxt = DrszFF("L Lin", Dry)
+DMthCxt = DrszFF("L MthLin", Dry)
 End Function
 Function IsRmkedzMthLy(MthLy$()) As Boolean
 If Si(MthLy) = 0 Then Exit Function

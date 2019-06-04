@@ -142,10 +142,10 @@ End Function
 Private Sub Z_HasCnstn()
 Debug.Assert HasCnstn(CMd, "CMod")
 End Sub
-Function HasCnstn(A As CodeModule, Cnstn$) As Boolean
+Function HasCnstn(M As CodeModule, Cnstn$) As Boolean
 Dim J%
-For J = 1 To A.CountOfDeclarationLines
-    If HitCnstn(A.Lines(J, 1), Cnstn) Then HasCnstn = True: Exit Function
+For J = 1 To M.CountOfDeclarationLines
+    If HitCnstn(M.Lines(J, 1), Cnstn) Then HasCnstn = True: Exit Function
 Next
 End Function
 
@@ -157,7 +157,42 @@ End Function
 Function CnstBrk(CnstLin) As CnstBrk
 
 End Function
+Function DrzStrCnst(Lin) As Variant()
+Dim L$: L = RmvMdy(Lin)
+If Not ShfConst(L) Then Exit Function
+Dim N$: N = ShfNm(L): If N = "" Then Exit Function
+If Not ShfPfx(L, "$") Then Exit Function
+If Not ShfPfx(L, " = """) Then Exit Function
+Dim P%: P = InStr(L, """"): If P = 0 Then Stop
+DrzStrCnst = Array(N, Left(L, P - 1))
+End Function
+Function StrValzCnstn$(Lin, Cnstn$)
+Dim L$: L = RmvMdy(Lin)
+If Not ShfConst(L) Then Exit Function
+If ShfNm(L) <> Cnstn$ Then Exit Function
+If Not ShfPfx(L, "$") Then Exit Function
+If Not ShfPfx(L, " = """) Then Stop
+Dim P%: P = InStr(L, """"): If P = 0 Then Stop
+StrValzCnstn = Left(L, P - 1)
+End Function
+Function DStrCnstP() As Drs
+DStrCnstP = DStrCnst(SrczP(CPj))
+End Function
+Function DStrCnst(Src$()) As Drs
+Dim ODry(), L
+For Each L In Itr(Src)
+    PushISomSi ODry, DrzStrCnst(L)
+Next
+DStrCnst = DrszFF("Cnstn StrVal", ODry)
+End Function
 
+Function StrValzCnstLy$(Ly$(), Cnstn$)
+Dim L
+For Each L In Itr(Ly)
+    Dim O$: O = StrValzCnstn(L, Cnstn)
+    If O <> "" Then StrValzCnstLy = O: Exit Function
+Next
+End Function
 Function StrValzCnstLin(Lin)
 StrValzCnstLin = StrValzCnstBrk(CnstBrk(Lin))
 End Function

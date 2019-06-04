@@ -37,8 +37,8 @@ Dim Mthn: Mthn = Brk(A(0), ":").S1
 Dim Hdr$(): Hdr = FmtCmpgDic__1Hdr(OIx, Mthn, Si(A))
 Dim Sam$(): Sam = FmtCmpgDic__2Sam(InclSam, OSam, A, LinesAy)
 Dim Syn$(): Syn = FmtCmpgDic__3Syn(UniqLinesAy, LinesAy, A)
-Dim Cmp$(): Cmp = FmtCmpgDic__4Cmp(UniqLinesAy, LinesAy, A)
-FmtCmpgDic = AddAyAp(Hdr, Sam, Syn, Cmp)
+Dim CMP$(): CMP = FmtCmpgDic__4Cmp(UniqLinesAy, LinesAy, A)
+FmtCmpgDic = AddAyAp(Hdr, Sam, Syn, CMP)
 End Function
 
 Private Function FmtCmpgDic__1Hdr(OIx%, Mthn, Cnt%) As String()

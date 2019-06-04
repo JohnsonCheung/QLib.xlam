@@ -3,10 +3,10 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDao_Db_Run."
 Private Const Asm$ = "QDao"
-Sub RunSqy(A As Database, Sqy$())
+Function RunSqy(A As Database, Sqy$()) As Unt
 Dim Q$, I
 For Each I In Sqy
     Q = I
     RunQ A, Q
 Next
-End Sub
+End Function

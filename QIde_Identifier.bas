@@ -69,11 +69,11 @@ Set RelOfMthn_ToCml_zV = O
 End Function
 
 Function RelOfPMthn_ToMdny_zP(P As VBProject) As Rel
-Dim C As VBComponent, S$(), O As New Rel, Mthn, Modn, Cmp As VBComponent, B As WhMth
+Dim C As VBComponent, S$(), O As New Rel, Mthn, Modn, CMP As VBComponent, B As WhMth
 For Each C In P.VBComponents
-    Set Cmp = C
-    Modn = Cmp.Name
-    S = Src(Cmp.CodeModule)
+    Set CMP = C
+    Modn = CMP.Name
+    S = Src(CMP.CodeModule)
     For Each Mthn In Itr(MthnyzS(S))
         O.PushParChd Mthn, C.Name
     Next

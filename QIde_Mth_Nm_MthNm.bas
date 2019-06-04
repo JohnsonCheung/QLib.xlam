@@ -26,9 +26,9 @@ Exit Function
 X: Debug.Print CSub
 End Function
 
-Function QMthn$(A As CodeModule, Lin)
+Function QMthn$(M As CodeModule, Lin)
 Dim D$: D = MthDnzLin(Lin): If D = "" Then Exit Function
-QMthn = QMdnzM(A) & "." & D
+QMthn = QMdnzM(M) & "." & D
 End Function
 
 Function PMthny(Src$()) As String()
@@ -43,13 +43,13 @@ For Each Ix In MthIxItr(Src)
 Next
 End Function
 
-Function MthnyzMthLiny(MthLiny$()) As String()
-Const CSub$ = CMod & "MthnyzMthLiny"
+Function MthnyzMthLinAy(MthLinAy$()) As String()
+Const CSub$ = CMod & "MthnyzMthLinAy"
 Dim I, Nm$, J%, MthLin
-For Each I In Itr(MthLiny)
+For Each I In Itr(MthLinAy)
     Nm = MthnzLin(I)
-    If Nm = "" Then Thw CSub, "Given MthLiny does not have Mthn", "[MthLin with error] Ix MthLiny", I, J, AddIxPfx(MthLiny)
-    PushI MthnyzMthLiny, Nm
+    If Nm = "" Then Thw CSub, "Given MthLinAy does not have Mthn", "[MthLin with error] Ix MthLinAy", I, J, AddIxPfx(MthLinAy)
+    PushI MthnyzMthLinAy, Nm
     J = J + 1
 Next
 End Function
@@ -376,8 +376,8 @@ For Each P In A.VBProjects
 Next
 End Function
 
-Function QMthnyzM(A As CodeModule) As String()
-QMthnyzM = AddPfxzAy(MthDNyzS(Src(A)), QMdnzM(A) & ".")
+Function QMthnyzM(M As CodeModule) As String()
+QMthnyzM = AddPfxzAy(MthDNyzS(Src(M)), QMdnzM(M) & ".")
 End Function
 
 Function QDry_MthnzP(P As VBProject) As Variant()
@@ -433,8 +433,8 @@ For Each L In Itr(Src)
 Next
 End Function
 
-Function PMthnyzM(A As CodeModule) As String()
-PMthnyzM = PMthnyzS(Src(A))
+Function PMthnyzM(M As CodeModule) As String()
+PMthnyzM = PMthnyzS(Src(M))
 End Function
 
 Private Sub ZZ()
@@ -442,8 +442,8 @@ Z_MthnyzFb
 MIde_Mth_Nm:
 End Sub
 
-Function MthnyzM(A As CodeModule) As String()
-MthnyzM = MthnyzS(Src(A))
+Function MthnyzM(M As CodeModule) As String()
+MthnyzM = MthnyzS(Src(M))
 End Function
 
 Private Sub ZZ_MthnzS()
@@ -499,8 +499,8 @@ For Each P In A.VBProjects
 Next
 End Function
 
-Function MthDNyzM(A As CodeModule) As String()
-MthDNyzM = MthDNyzS(Src(A))
+Function MthDNyzM(M As CodeModule) As String()
+MthDNyzM = MthDNyzS(Src(M))
 End Function
 Function MthDNyzS(Src$()) As String()
 Dim L
@@ -513,12 +513,12 @@ Function HasMth(Src$(), Mthn) As Boolean
 HasMth = FstMthIxzN(Src, Mthn) >= 0
 End Function
 
-Function HasMthzM(A As CodeModule, Mthn) As Boolean
-HasMthzM = HasMth(Src(A), Mthn)
+Function HasMthzM(M As CodeModule, Mthn) As Boolean
+HasMthzM = HasMth(Src(M), Mthn)
 End Function
 
 
-Function Md_MthnDic(A As CodeModule) As Dictionary
+Function Md_MthnDic(M As CodeModule) As Dictionary
 'Set Md_MthnDic = Src_MthnDic(Src(A))
 End Function
 
@@ -539,6 +539,22 @@ End Function
 
 Function Drs_MthnM() As Drs
 Drs_MthnM = Drs_MthnzM(CMd)
+End Function
+
+Function Drs_MthLinzM(M As CodeModule) As Drs
+Dim A$(): A = MthLinAyzM(M)
+Dim I, N$, Dry()
+N = Mdn(M)
+Dim O$(), J&, L, S$()
+S = Src(M)
+For Each L In Itr(S)
+    If IsMthLin(L) Then
+        PushI Dry, Array(N, J + 1, Mthn(L), ContLin(S, J))
+    End If
+    J = J + 1
+Next
+Drs_MthLinzM = DrszFF("Mdn Lno Mthn MthLin", Dry)
+'BrwDrs Drs_MthLinzM: Stop
 End Function
 
 Private Function Drs_MthnzM(M As CodeModule) As Drs
@@ -573,7 +589,7 @@ End Function
 
 Private Function Dry_MthnzS(Src$()) As Variant()
 Dim MthLin
-For Each MthLin In Itr(MthLinyzS(Src))
+For Each MthLin In Itr(MthLinAyzS(Src))
     PushISomSi Dry_MthnzS, Dr_Mthn(MthLin)
 Next
 End Function

@@ -8,8 +8,8 @@ Function CvCn(A) As AdoDb.Connection
 Set CvCn = A
 End Function
 
-Sub RplOleWcFb(Wc As WorkbookConnection, Fb)
-CvCn(Wc.OLEDBConnection.ADOConnection).ConnectionString = CnStrzFbzAsAdo(Fb)
+Sub RplOleWcFb(WC As WorkbookConnection, Fb)
+CvCn(WC.OLEDBConnection.ADOConnection).ConnectionString = CnStrzFbzAsAdo(Fb)
 End Sub
 
 Sub RplLozFbzFbt(Lo As ListObject, Fb, T)

@@ -299,9 +299,9 @@ A.Close False
 End Sub
 
 Sub DltWc(A As Workbook)
-Dim Wc As Excel.WorkbookConnection
-For Each Wc In A.Connections
-    Wc.Delete
+Dim WC As Excel.WorkbookConnection
+For Each WC In A.Connections
+    WC.Delete
 Next
 End Sub
 
@@ -619,9 +619,9 @@ CvCn(A.ODBCConnection.Connection).Close
 End Sub
 
 Private Sub ClsWczWb(Wb As Workbook)
-Dim Wc As WorkbookConnection
-For Each Wc In Wb.Connections
-    ClsWc Wc
+Dim WC As WorkbookConnection
+For Each WC In Wb.Connections
+    ClsWc WC
 Next
 End Sub
 
@@ -706,12 +706,12 @@ RgzSq Sq, A.DataBodyRange
 End Sub
 
 
-Sub PutWc(Wc As WorkbookConnection, At As Range)
+Sub PutWc(WC As WorkbookConnection, At As Range)
 Dim Lo As ListObject
-Set Lo = WszRg(At).ListObjects.Add(SourceType:=0, Source:=Wc.OLEDBConnection.Connection, Destination:=At)
+Set Lo = WszRg(At).ListObjects.Add(SourceType:=0, Source:=WC.OLEDBConnection.Connection, Destination:=At)
 With Lo.QueryTable
     .CommandType = xlCmdTable
-    .CommandText = Wc.Name
+    .CommandText = WC.Name
     .RowNumbers = False
     .FillAdjacentFormulas = False
     .PreserveFormatting = True
@@ -723,7 +723,7 @@ With Lo.QueryTable
     .AdjustColumnWidth = True
     .RefreshPeriod = 0
     .PreserveColumnINF = True
-    .ListObject.DisplayName = Lon(Wc.Name)
+    .ListObject.DisplayName = Lon(WC.Name)
     .Refresh BackgroundQuery:=False
 End With
 End Sub

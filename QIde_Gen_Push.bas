@@ -10,14 +10,14 @@ Sub GenPushPj()
 GenPushzP CPj
 End Sub
 
-Private Sub GenPushzMd(A As CodeModule)
+Private Sub GenPushzMd(M As CodeModule)
 Dim Gen$(): 'Gen = TynyzGen(A) 'Tyny need to generate Push
-Dim Dlt$(): Dlt = TynyzDlt(A) ' Tyny need to delete
-EnsMth A, MthDic(Gen)
+Dim Dlt$(): Dlt = TynyzDlt(M) ' Tyny need to delete
+EnsMth M, MthDic(Gen)
 'RmvMth A, MthnyzDltTyny(Dlt)
 End Sub
 
-Sub EnsMth(A As CodeModule, MthDic As Dictionary)
+Sub EnsMth(M As CodeModule, MthDic As Dictionary)
 
 End Sub
 Function TynzLin$(Lin)
@@ -34,7 +34,7 @@ For Each L In Itr(M)
 Next
 End Function
 
-Private Function TynyzDlt(A As CodeModule) As String()
+Private Function TynyzDlt(M As CodeModule) As String()
 
 End Function
 Private Sub GenPushzP(P As VBProject)

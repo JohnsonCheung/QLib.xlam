@@ -37,7 +37,7 @@ For Each P In A.VBProjects
     Push MdDryzV, MdDr(C.CodeModule)
 Next
 End Function
-Function MdDr(A As CodeModule) As Variant()
+Function MdDr(M As CodeModule) As Variant()
 
 End Function
 

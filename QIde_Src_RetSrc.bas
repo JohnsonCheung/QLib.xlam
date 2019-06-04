@@ -4,22 +4,22 @@ Option Explicit
 Private Const CMod$ = "MIde_Src_Ret."
 Private Const Asm$ = "QIde"
 
-Function SrcLineszMFi$(A As CodeModule, B As Fei)
+Function SrcLineszMFi$(M As CodeModule, B As Fei)
 If IsFeizEmp(B) Then Exit Function
 'SrcLineszMFi = A.Lines(B.FmNo, B.Cnt)
 End Function
 
-Function SrczMFi(A As CodeModule, B As Fei) As String()
+Function SrczMFi(M As CodeModule, B As Fei) As String()
 'SrczMFi = SplitCrLf(SrcLineszMFei(A, B))
 End Function
 
-Function SrczMRe(A As CodeModule, B As RegExp) As String()
-Dim Ix&(): Ix = IxyzAyRe(Src(A), B)
+Function SrczMRe(M As CodeModule, B As RegExp) As String()
+Dim Ix&(): Ix = IxyzAyRe(Src(M), B)
 Dim O$(), I, Md As CodeModule
-Dim N$: N = Mdn(A)
+Dim N$: N = Mdn(M)
 If Si(Ix) = 0 Then Exit Function
 For Each I In Ix
-   Push O, FmtQQ("MdJmpLin ""?"",??' ?", N, I + 1, vbTab, A.Lines(I + 1, 1))
+   Push O, FmtQQ("MdJmpLin ""?"",??' ?", N, I + 1, vbTab, M.Lines(I + 1, 1))
 Next
 SrczMRe = O
 End Function

@@ -12,8 +12,8 @@ For Each C In P.VBComponents
     PushIAy SLocyzPP, SLocyzMR(C.CodeModule, R)
 Next
 End Function
-Function SLocyzMR(A As CodeModule, R As RegExp) As String()
-SLocyzMR = SLocyzSRN(Src(A), R, Mdn(A))
+Function SLocyzMR(M As CodeModule, R As RegExp) As String()
+SLocyzMR = SLocyzSRN(Src(M), R, Mdn(M))
 End Function
 
 Function SLocyzSRN(Src$(), R, Mdn$) As String()
@@ -33,12 +33,12 @@ Function JmpSLoc$(SLoc$)
 JmpRRCC RRCCzSLoc(SLoc)
 End Function
 
-Function LnxszMdRe(A As CodeModule, R As RegExp) As Lnxs
+Function LnxszMdRe(M As CodeModule, R As RegExp) As Lnxs
 Dim L$, J&
-For J = 1 To A.CountOfLines
-    L = A.Lines(J, 1)
+For J = 1 To M.CountOfLines
+    L = M.Lines(J, 1)
     If R.Test(L) Then
-        PushLnx LnxszMdRe, Lnx(J - 1, ContLinzML(A, J))
+        PushLnx LnxszMdRe, Lnx(J - 1, ContLinzML(M, J))
     End If
 Next
 End Function

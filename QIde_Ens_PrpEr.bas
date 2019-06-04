@@ -4,10 +4,6 @@ Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Ens_PrpEr."
 Private Const LinOfLblX$ = "X: Debug.Print CSub & "".PrpEr["" &  Err.Description & ""]"""
-Type TopRmkLyAndMthLy
-    TopRmkLy() As String
-    MthLy() As String
-End Type
 Private Function HasLinExitAndLblX(MthLy$(), LinOfExit) As Boolean
 Dim U&: U = UB(MthLy): If U < 2 Then Exit Function
 If MthLy(U - 1) <> LinOfLblX Then Exit Function
@@ -26,14 +22,6 @@ O = AyeEle(MthLy, LinOfLblX)
 EnsLinExitAndLblX = InsLinExitAndLblX(O, LinOfExit)
 End Function
 
-Function AyEnsEle(Ay, NeedDlt As Boolean, NeedIns As Boolean, NewEle, DltIx&, InsIx&)
-Dim O
-Select Case True
-Case NeedDlt And NeedIns: Asg NewEle, O(InsIx)
-Case NeedDlt:             O = AyeEleAt(Ay, DltIx)
-Case NeedIns:             O = AyInsEle(Ay, InsIx)
-End Select
-End Function
 Private Function RmvOnErGoNonX(MthLy$()) As String()
 Dim J&, I&
 For J = 0 To UB(MthLy)
@@ -113,7 +101,7 @@ End Sub
 
 Private Function SrcOptOfEnsprpOnEr(Src$()) As LyOpt ' Ret None is no change in Src
 If Si(Src) = 0 Then Exit Function
-Dim D As Dictionary: 'Set D = MthDic(Src, WiTopRmk:=True)
+Dim D As Dictionary: 'Set D = MthDic(Src)
 Dim Mthn, MthLin, MthLyWiTopRmk$()
 Dim O$(): Erase O
 If D.Exists("*Dcl") Then
@@ -124,15 +112,15 @@ End If
 For Each Mthn In D.Keys
     MthLyWiTopRmk = SplitCrLf(D(Mthn))
     PushI O, ""
-    With TopRmkLyAndMthLy(MthLyWiTopRmk)
-        PushIAy O, .TopRmkLy
-        Dim MthLy$(): MthLy = .MthLy
-    End With
+'    With TopRmkLyAndMthLy(MthLyWiTopRmk)
+'        PushIAy O, .TopRmkLy
+'        Dim MthLy$(): MthLy = .MthLy
+'    End With
 '    MthLin = ContLin(MthLy)
     If IsPurePrpLin(MthLin) Then
 '        PushIAy O, MthLyOfEnsonEr(MthLy)
     Else
-        PushIAy O, MthLy
+'        PushIAy O, MthLy
     End If
 Next
 If Si(O) = 0 Then Thw CSub, "O$() should have something"
@@ -141,8 +129,8 @@ End Function
 
 Private Function EnsPrpOnErzS(Src$()) As String()
 If Si(Src) = 0 Then Exit Function
-Dim D As Dictionary: 'Set D = MthDic(Src, WiTopRmk:=True)
-Dim Mthn, MthLin, MthLyWiTopRmk$()
+Dim D As Dictionary: 'Set D = MthDic(Src)
+Dim Mthn, MthLin, MthLy$()
 Dim O$(): Erase O
 If D.Exists("*Dcl") Then
     PushIAy O, SplitCrLf(D("*Dcl"))
@@ -150,12 +138,12 @@ If D.Exists("*Dcl") Then
 End If
 
 For Each Mthn In D.Keys
-    MthLyWiTopRmk = SplitCrLf(D(Mthn))
+    MthLy = SplitCrLf(D(Mthn))
     PushI O, ""
-    With TopRmkLyAndMthLy(MthLyWiTopRmk)
-        PushIAy O, .TopRmkLy
-        Dim MthLy$(): MthLy = .MthLy
-    End With
+'    With TopRmkLyAndMthLy(MthLyWiTopRmk)
+'        PushIAy O, .TopRmkLy
+        'Dim MthLy$() ': MthLy = .MthLy
+'    End With
 '    MthLin = ContLin(MthLy)
     If IsPurePrpLin(MthLin) Then
 '        PushIAy O, MthLyOfEnsonEr(MthLy)
@@ -165,22 +153,6 @@ For Each Mthn In D.Keys
 Next
 If Si(O) = 0 Then Thw CSub, "O$() should have something"
 EnsPrpOnErzS = O
-End Function
-
-Function TopRmkLyAndMthLy(MthLyWiTopRmk$()) As TopRmkLyAndMthLy
-Dim Lin, I, J&, TopRmkLy$(), MthLy$()
-For Each I In MthLyWiTopRmk
-    Lin = I
-    If FstChr(Lin) = "'" Then
-        PushI TopRmkLy, Lin
-    Else
-        MthLy = AywFmIx(MthLyWiTopRmk, J)
-        TopRmkLyAndMthLy.TopRmkLy = TopRmkLy
-        TopRmkLyAndMthLy.MthLy = MthLy
-        Exit Function
-    End If
-Next
-Thw CSub, "MthLyWiTopRmk is invalid, it does not have non remark line", "MthLyWiTopRmk", MthLyWiTopRmk
 End Function
 
 Private Sub Z_EnsprpOnErDiczP()
@@ -268,7 +240,7 @@ End Function
 Private Function RmvPrpOnzS(Src$()) As String()
 
 End Function
-Private Sub RmvPrpOnErzMd(A As CodeModule)
+Private Sub RmvPrpOnErzMd(M As CodeModule)
 'RplMd A, JnCrLf(RmvPrpOnzS(Src(A)))
 End Sub
 
@@ -276,7 +248,7 @@ Sub RmvPrpOnErM()
 RmvPrpOnErzMd CMd
 End Sub
 
-Sub EnsPrpOnErzMd(A As CodeModule)
+Sub EnsPrpOnErzMd(M As CodeModule)
 'RplMd A, JnCrLf(EnsPrpOnErzS(Src(A)))
 End Sub
 
@@ -284,6 +256,8 @@ Sub EnsPrpOnErM()
 EnsPrpOnErzMd CMd
 End Sub
 
-
+Sub ZZZ()
+QIde_Ens_PrpEr:
+End Sub
 
 

@@ -93,14 +93,14 @@ Private Sub Z_ErConstDic()
 Brw ErConstDic
 End Sub
 
-Function ConstFeizMd(A As CodeModule, Cnstn$) As Fei
+Function ConstFeizMd(M As CodeModule, Cnstn$) As Fei
 Dim L$, I, Lno
-For Each I In Itr(DclLyzM(A))
+For Each I In Itr(DclLyzM(M))
     L = I
     Lno = Lno + 1
     If HitCnstn(L, Cnstn) Then
-        If MthMdy(L) <> "Private" Then Thw CSub, "The given Cnstn should Prv", "Lin Cnstn Lno Md", L, Cnstn, Lno, Mdn(A)
-        'ConstFeizMd = ContFeizMd(A, Lno)
+        If MthMdy(L) <> "Private" Then Thw CSub, "The given Cnstn should Prv", "Lin Cnstn Lno Md", L, Cnstn, Lno, Mdn(M)
+        'ConstFeizMd = ContFeizMd(M, Lno)
         Exit Function
     End If
 Next
@@ -122,7 +122,7 @@ If Si(A.ErNy) = 0 Then Inf CSub, "No GenErMsg-Src-Beg. / GenErMsg-Src-End.", "Md
 Dim O$(), O1$(), O2$()
 O1 = SrcRplConstDic(Src, ErConstDic): 'Brw O1: Stop
 O2 = RmvMthInSrc(O1, ErMthnSet):       'Brw LyzNNAp("MthToRmv BefRmvMth AftRmvMth", ErMthnSet, O1, O2): Stop
-O = AddSy(O2, ErMthLiny):            'Brw O:Stop
+O = AddSy(O2, ErMthLinAy):            'Brw O:Stop
 SrcGenErMsg = O
 End Function
 
@@ -174,10 +174,10 @@ O = DltMthzSN(Src, Mthn)
 'O = InsMthzSIL(Src, Ix, MthLines)
 RplMthzSNL = O
 End Function
-Sub IupMthByDicM(A As CodeModule, MthDic As Dictionary)
-Dim NewSrc$(): NewSrc = IupMthByDic(Src(A), MthDic)
+Sub IupMthByDicM(M As CodeModule, MthDic As Dictionary)
+Dim NewSrc$(): NewSrc = IupMthByDic(Src(M), MthDic)
 Dim NewLines$: NewLines = JnCrLf(NewSrc)
-RplMd RplgMd(A, NewLines)
+RplMd RplgMd(M, NewLines)
 End Sub
 
 Sub RplCnstzMD(M As CodeModule, CnstDic As Dictionary)
@@ -229,13 +229,13 @@ Private Function ErCnstn$(ErNm)
 ErCnstn = "M_" & ErNm
 End Function
 
-Private Sub Z_ErMthLiny()
+Private Sub Z_ErMthLinAy()
 'GoSub ZZ
 GoSub T1
 Exit Sub
 ZZ:
     Init Y_Src
-    Brw ErMthLiny
+    Brw ErMthLinAy
     Return
 T1:
     A.ErNy = Sy("Val_NotNum")
@@ -243,7 +243,7 @@ T1:
     Ept = Sy("Private Function MsgzVal_NotNum(Lno, T1, Val$) As String(): MsgzVal_NotNum = FmtMacro(M_Val_NotNum, Lno, T1, Val): End Function")
     GoTo Tst
 Tst:
-    Act = ErMthLiny
+    Act = ErMthLinAy
     C
     Return
 End Sub
@@ -259,14 +259,14 @@ Private Function Y_Src() As String()
 Y_Src = Src(Md("MXls_Lof_ErzLof"))
 End Function
 
-Private Function ErMthLiny() As String() 'One ErMth is one-MulStmtLin
+Private Function ErMthLinAy() As String() 'One ErMth is one-MulStmtLin
 Dim ErNy$(), MsgAy$(), J%, O$()
 ErNy = A.ErNy
 MsgAy = A.ErMsgAy
 For J = 0 To UB(ErNy)
     PushI O, ErMthLinesByNm(ErNy(J), MsgAy(J))
 Next
-ErMthLiny = FmtMulStmtSrc(O)
+ErMthLinAy = FmtMulStmtSrc(O)
 End Function
 
 Private Function ErMthLinesByNm$(ErNm$, ErMsg$)

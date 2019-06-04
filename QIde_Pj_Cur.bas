@@ -16,8 +16,8 @@ For Each C In P.VBComponents
 Next
 End Function
 
-Sub ThwIf_NotMod(A As CodeModule, Fun$)
-If Not IsMod(A) Then Thw Fun, "Should be a Mod", "Mdn MdTy", Mdn(A), ShtCmpTy(CmpTyzM(A))
+Sub ThwIf_NotMod(M As CodeModule, Fun$)
+If Not IsMod(M) Then Thw Fun, "Should be a Mod", "Mdn MdTy", Mdn(M), ShtCmpTy(CmpTyzM(M))
 End Sub
 
 Function HasMod(P As VBProject, Modn) As Boolean

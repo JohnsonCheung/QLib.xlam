@@ -5,12 +5,12 @@ Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Md."
 Public Const DoczMdDic$ = "It is from Pj. Key is Mdn and Val is MdLines"
 Public Const DoczMdDNm$ = "Full: Md-Dot-Nm.  It is Either Mdn or Pjn-Dot-Mdn."
-Function IsCls(A As CodeModule) As Boolean
-IsCls = A.Parent.Type = vbext_ct_ClassModule
+Function IsCls(M As CodeModule) As Boolean
+IsCls = M.Parent.Type = vbext_ct_ClassModule
 End Function
 
-Function IsMod(A As CodeModule) As Boolean
-IsMod = A.Parent.Type = vbext_ct_StdModule
+Function IsMod(M As CodeModule) As Boolean
+IsMod = M.Parent.Type = vbext_ct_StdModule
 End Function
 
 Function MdzDNm(MdDNm) As CodeModule
@@ -37,8 +37,8 @@ For Each I In A
 Next
 End Function
 
-Function MdDNm$(A As CodeModule)
-MdDNm = PjnzM(A) & "." & Mdn(A)
+Function MdDNm$(M As CodeModule)
+MdDNm = PjnzM(M) & "." & Mdn(M)
 End Function
 
 Function SMdDiczP(P As VBProject) As Dictionary
@@ -56,48 +56,48 @@ Function MdDicP() As Dictionary
 Set MdDicP = MdDic(CPj)
 End Function
 
-Function MdFn$(A As CodeModule)
-MdFn = Mdn(A) & ExtzCmpTy(CmpTyzM(A))
+Function MdFn$(M As CodeModule)
+MdFn = Mdn(M) & ExtzCmpTy(CmpTyzM(M))
 End Function
 
-Function Mdn(A As CodeModule)
-Mdn = A.Parent.Name
+Function Mdn(M As CodeModule)
+Mdn = M.Parent.Name
 End Function
 
-Function QMdnzM$(A As CodeModule)
-QMdnzM = PjnzM(A) & "." & Mdn(A)
+Function QMdnzM$(M As CodeModule)
+QMdnzM = PjnzM(M) & "." & Mdn(M)
 End Function
 
-Function MdTy(A As CodeModule) As vbext_ComponentType
-MdTy = A.Parent.Type
+Function MdTy(M As CodeModule) As vbext_ComponentType
+MdTy = M.Parent.Type
 End Function
 
-Function ShtCmpTyzM$(A As CodeModule)
-ShtCmpTyzM = ShtCmpTy(CmpTyzM(A))
+Function ShtCmpTyzM$(M As CodeModule)
+ShtCmpTyzM = ShtCmpTy(CmpTyzM(M))
 End Function
 
-Function NUsrTyMd%(A As CodeModule)
-NUsrTyMd = NUsrTySrc(DclLyzM(A))
+Function NUsrTyMd%(M As CodeModule)
+NUsrTyMd = NUsrTySrc(DclLyzM(M))
 End Function
 
 Function PjnzC(A As VBComponent)
 PjnzC = A.Collection.Parent.Name
 End Function
 
-Function PjnzM(A As CodeModule)
-PjnzM = PjnzC(A.Parent)
+Function PjnzM(M As CodeModule)
+PjnzM = PjnzC(M.Parent)
 End Function
 
-Function PjzM(A As CodeModule) As VBProject
-Set PjzM = A.Parent.Collection.Parent
+Function PjzM(M As CodeModule) As VBProject
+Set PjzM = M.Parent.Collection.Parent
 End Function
 
-Function SizMd&(A As CodeModule)
-SizMd = Len(SrcLines(A))
+Function SizMd&(M As CodeModule)
+SizMd = Len(SrcLines(M))
 End Function
 
-Function SrcLines$(A As CodeModule)
-SrcLines = JnCrLf(Src(A))
+Function SrcLines$(M As CodeModule)
+SrcLines = JnCrLf(Src(M)) & vbCrLf
 End Function
 
 Function RmvMthInSrc(Src$(), MthnSet As Aset) As String()
@@ -115,16 +115,16 @@ Property Get CMdDNm$()
 CMdDNm = QMdnzM(CMd)
 End Property
 
-Sub ClsMd(A As CodeModule)
-A.CodePane.Window.Close
+Sub ClsMd(M As CodeModule)
+M.CodePane.Window.Close
 End Sub
 
-Sub CmprMd(A As CodeModule, B As CodeModule)
+Sub CmprMd(M As CodeModule, B As CodeModule)
 'BrwCmpgDicAB MthDiczM(A), MthDiczMd(B), QMdnzM(A), QMdnzM(B)
 End Sub
 
-Sub DltLin(A As CodeModule, Lno)
-A.DeleteLines Lno, 1
+Sub DltLin(M As CodeModule, Lno)
+M.DeleteLines Lno, 1
 End Sub
 
 Private Function Y_Md() As CodeModule

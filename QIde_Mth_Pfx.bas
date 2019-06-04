@@ -14,9 +14,9 @@ Private Sub ZZ_MthPfx()
 'ShwWs AyabWs(Ay, Ay1)
 End Sub
 
-Function MthPfxSyzMd(A As CodeModule) As String()
+Function MthPfxSyzMd(M As CodeModule) As String()
 Dim N
-For Each N In Itr(MthnyzM(A))
+For Each N In Itr(MthnyzM(M))
     PushI MthPfxSyzMd, MthPfx(N)
 Next
 End Function

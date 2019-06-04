@@ -13,9 +13,9 @@ ShfTyChr L
 IsPrpFunLin = Left(L, 2) = "()"
 End Function
 
-Function PrpFunLnoAy(A As CodeModule) As Long()
+Function PrpFunLnoAy(M As CodeModule) As Long()
 Dim J&, L
-For Each L In Src(A)
+For Each L In Src(M)
     J = J + 1
     If IsPrpFunLin(L) Then PushI PrpFunLnoAy, J
 Next
@@ -42,12 +42,12 @@ Sub EnsPrpFun()
 EnsPjFunzMd CMd
 End Sub
 
-Private Sub EnsPrpFunMdLno(A As CodeModule, Lno, Optional WhatIf As Boolean)
+Private Sub EnsPrpFunMdLno(M As CodeModule, Lno, Optional WhatIf As Boolean)
 Dim OldLin
 Dim NewLin
-    OldLin = A.Lines(Lno, 1)
-    NewLin = Replace(A.Lines(Lno, 1), "Function", "Property Get")
-If Not WhatIf Then A.ReplaceLine Lno, NewLin
+    OldLin = M.Lines(Lno, 1)
+    NewLin = Replace(M.Lines(Lno, 1), "Function", "Property Get")
+If Not WhatIf Then M.ReplaceLine Lno, NewLin
 PushI Inf, "EnsPrpFun:EnsPrpFunMdLno NewLin: " & OldLin
 PushI Inf, "                 OldLin: " & NewLin
 End Sub

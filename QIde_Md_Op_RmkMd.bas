@@ -26,10 +26,10 @@ Debug.Print "NRmk"; NRmk
 Debug.Print "SKip"; Skip
 End Sub
 
-Function IsRmkedMd(A As CodeModule) As Boolean
+Function IsRmkedMd(M As CodeModule) As Boolean
 Dim J%, L$
-For J = 1 To A.CountOfLines
-    If Left(A.Lines(J, 1), 1) <> "'" Then Exit Function
+For J = 1 To M.CountOfLines
+    If Left(M.Lines(J, 1), 1) <> "'" Then Exit Function
 Next
 IsRmkedMd = True
 End Function
@@ -49,32 +49,32 @@ Debug.Print "NUnRmk"; NUnRmk
 Debug.Print "SKip"; Skip
 End Sub
 
-Private Function RmkMd(A As CodeModule) As Boolean
-Debug.Print "Rmk " & A.Parent.Name,
-If IsRmkedMd(A) Then
+Private Function RmkMd(M As CodeModule) As Boolean
+Debug.Print "Rmk " & M.Parent.Name,
+If IsRmkedMd(M) Then
     Debug.Print " No need"
     Exit Function
 End If
 Debug.Print "<============= is remarked"
 Dim J%
-For J = 1 To A.CountOfLines
-    A.ReplaceLine J, "'" & A.Lines(J, 1)
+For J = 1 To M.CountOfLines
+    M.ReplaceLine J, "'" & M.Lines(J, 1)
 Next
 RmkMd = True
 End Function
 
-Private Function IfUnRmkMd(A As CodeModule) As Boolean
-Debug.Print "UnRmk " & A.Parent.Name,
-If Not IsRmkedMd(A) Then
+Private Function IfUnRmkMd(M As CodeModule) As Boolean
+Debug.Print "UnRmk " & M.Parent.Name,
+If Not IsRmkedMd(M) Then
     Debug.Print "No need"
     Exit Function
 End If
 Debug.Print "<===== is unmarked"
 Dim J%, L$
-For J = 1 To A.CountOfLines
-    L = A.Lines(J, 1)
+For J = 1 To M.CountOfLines
+    L = M.Lines(J, 1)
     If Left(L, 1) <> "'" Then Stop
-    A.ReplaceLine J, Mid(L, 2)
+    M.ReplaceLine J, Mid(L, 2)
 Next
 IfUnRmkMd = True
 End Function

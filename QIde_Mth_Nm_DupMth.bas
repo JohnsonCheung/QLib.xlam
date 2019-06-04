@@ -50,7 +50,7 @@ For Each Dr In Itr(Dry)
     Set M = Md(Dr(0))
     Mthn = Dr(1)
     ShtMthTy = Dr(2)
-    PushI MthLinesAyzDry_Md_Mthn_ShtMthTy, MthLineszMTN(M, ShtMthTy, Mthn, WiTopRmk:=True)
+    PushI MthLinesAyzDry_Md_Mthn_ShtMthTy, MthLineszMTN(M, ShtMthTy, Mthn)
 Next
 End Function
 

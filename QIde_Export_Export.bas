@@ -4,8 +4,8 @@ Option Explicit
 Private Const CMod$ = "MIde_Export."
 Private Const Asm$ = "QIde"
 
-Sub ExpMd(A As CodeModule)
-A.Parent.Export SrcFfnzMd(A)
+Sub ExpMd(M As CodeModule)
+M.Parent.Export SrcFfnzMd(M)
 End Sub
 
 Sub ExpRf(P As VBProject)
@@ -28,8 +28,8 @@ End Select
 ExtzCmpTy = O
 End Function
 
-Function SrcFfnzMd$(A As CodeModule)
-SrcFfnzMd = SrcpzP(PjzM(A)) & Mdn(A) & ExtzCmpTy(CmpTyzM(A))
+Function SrcFfnzMd$(M As CodeModule)
+SrcFfnzMd = SrcpzP(PjzM(M)) & Mdn(M) & ExtzCmpTy(CmpTyzM(M))
 End Function
 
 Function SrcpzP$(P As VBProject)

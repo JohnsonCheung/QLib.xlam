@@ -59,7 +59,9 @@ If T1(OLin) = X Then
     OLin = RmvT1(OLin)
 End If
 End Function
-
+Function ShfConst(OLin$) As Boolean
+ShfConst = ShfT1(OLin) = "Const"
+End Function
 Function ShfT1$(OLin$)
 ShfT1 = T1(OLin)
 OLin = RmvT1(OLin)

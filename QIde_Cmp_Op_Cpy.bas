@@ -3,15 +3,15 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Cmp_Op_Cpy."
-Sub ThwNotCls(A As CodeModule, Fun$)
-If A.Parent.Type = vbext_ct_ClassModule Then Thw Fun, "Should be a Cls", "ShtCmpTy", ShtCmpTy(A.Parent.Type)
+Sub ThwNotCls(M As CodeModule, Fun$)
+If M.Parent.Type = vbext_ct_ClassModule Then Thw Fun, "Should be a Cls", "ShtCmpTy", ShtCmpTy(M.Parent.Type)
 End Sub
-Private Sub CpyCls(A As CodeModule, ToPj As VBProject)
+Private Sub CpyCls(M As CodeModule, ToPj As VBProject)
 Const CSub$ = CMod & "CpyCls"
-ThwNotCls A, CSub
-ThwEqObj ToPj, PjzM(A), CSub, "From Md's Pj cannot eq to ToPj"
-Dim T$: T = TmpFt(Fnn:=A.Name)
-A.Parent.Export T
+ThwNotCls M, CSub
+ThwEqObj ToPj, PjzM(M), CSub, "From Md's Pj cannot eq to ToPj"
+Dim T$: T = TmpFt(Fnn:=M.Name)
+M.Parent.Export T
 ToPj.VBComponents.Import T
 Kill T
 End Sub
@@ -36,12 +36,12 @@ Else
     CpyMod A.CodeModule, ToPj
 End If
 End Sub
-Sub ThwNotMod(A As CodeModule, Fun$)
-If A.Parent.Type <> vbext_ct_StdModule Then Thw Fun, "Should be Mod", "Type", ShtCmpTy(A.Parent.Type)
+Sub ThwNotMod(M As CodeModule, Fun$)
+If M.Parent.Type <> vbext_ct_StdModule Then Thw Fun, "Should be Mod", "Type", ShtCmpTy(M.Parent.Type)
 End Sub
 
-Sub CpyMod(A As CodeModule, ToPj As VBProject)
-AddCmpzPNL ToPj, A.Name, SrcLineszM(A)
+Sub CpyMod(M As CodeModule, ToPj As VBProject)
+AddCmpzPNL ToPj, M.Name, SrcLineszM(M)
 End Sub
 
 Private Sub ZZ()

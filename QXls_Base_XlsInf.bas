@@ -9,11 +9,11 @@ Enum EmAddgWay ' Adding data to ws way
     EiWcWay
     EiSqWay
 End Enum
-Function WszWc(Wc As WorkbookConnection) As Worksheet
+Function WszWc(WC As WorkbookConnection) As Worksheet
 Dim Wb As Workbook, Ws As Worksheet
-Set Wb = Wc.Parent
-Set Ws = AddWs(Wb, Wc.Name)
-PutWc Wc, A1zWs(Ws)
+Set Wb = WC.Parent
+Set Ws = AddWs(Wb, WC.Name)
+PutWc WC, A1zWs(Ws)
 Set WszWc = Ws
 End Function
 
@@ -214,9 +214,9 @@ TxtWcStr = T.Connection
 End Function
 
 Function WcyzOle(A As Workbook) As OLEDBConnection()
-Dim O() As OLEDBConnection, Wc As WorkbookConnection
-For Each Wc In A.Connections
-    PushObjzExlNothing O, Wc.OLEDBConnection
+Dim O() As OLEDBConnection, WC As WorkbookConnection
+For Each WC In A.Connections
+    PushObjzExlNothing O, WC.OLEDBConnection
 Next
 WcyzOle = OyeNothing(IntozItrPrp(WcyzOle, A.Connections, "OLEDBConnection"))
 End Function
@@ -340,12 +340,12 @@ Set EntColzLo = RgzLc(A, C).EntireColumn
 End Function
 
 Function RgzLoCC(A As ListObject, C1, C2, Optional InclTot As Boolean, Optional InclHdr As Boolean) As Range
-Dim R1&, R2&, mC1%, mC2%
+Dim R1&, R2&, mC1%, Mc2%
 R1 = R1Lo(A, InclHdr)
 R2 = R2Lo(A, InclTot)
 mC1 = WsCnozLc(A, C1)
-mC2 = WsCnozLc(A, C2)
-Set RgzLoCC = WsRCRC(WszLo(A), R1, mC1, R2, mC2)
+Mc2 = WsCnozLc(A, C2)
+Set RgzLoCC = WsRCRC(WszLo(A), R1, mC1, R2, Mc2)
 End Function
 
 Function LozWsDta(A As Worksheet, Optional Lon$) As ListObject

@@ -39,7 +39,7 @@ Dim C As VBComponent, O As New Dictionary, Md As CodeModule
 Set SrtRptDiczP = O
 End Function
 
-Function SrtRptzM(A As CodeModule) As String()
-SrtRptzM = SrtRpt(Src(A), Mdn(A))
+Function SrtRptzM(M As CodeModule) As String()
+SrtRptzM = SrtRpt(Src(M), Mdn(M))
 End Function
 

@@ -142,20 +142,20 @@ BrwPth PjpP
 End Sub
 
 Function FstMd(P As VBProject) As CodeModule
-Dim Cmp As VBComponent
-For Each Cmp In P.VBComponents
-    If IsCmpzMd(CvCmp(Cmp)) Then
-        Set FstMd = Cmp.CodeModule
+Dim CMP As VBComponent
+For Each CMP In P.VBComponents
+    If IsCmpzMd(CvCmp(CMP)) Then
+        Set FstMd = CMP.CodeModule
         Exit Function
     End If
 Next
 End Function
 
 Function FstMod(P As VBProject) As CodeModule
-Dim Cmp As VBComponent
-For Each Cmp In P.VBComponents
-    If IsMod(Cmp) Then
-        Set FstMod = Cmp.CodeModule
+Dim CMP As VBComponent
+For Each CMP In P.VBComponents
+    If IsMod(CMP) Then
+        Set FstMod = CMP.CodeModule
         Exit Function
     End If
 Next

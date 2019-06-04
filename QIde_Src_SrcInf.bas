@@ -80,14 +80,14 @@ Function SrcLineszP$(P As VBProject)
 SrcLineszP = JnCrLf(SrczP(P))
 End Function
 
-Function SrczMd(A As CodeModule) As String()
-SrczMd = Src(A)
+Function SrczMd(M As CodeModule) As String()
+SrczMd = Src(M)
 End Function
 Function CSrc() As String()
 CSrc = Src(CMd)
 End Function
-Function Src(A As CodeModule) As String()
-Src = SplitCrLf(SrcLineszM(A))
+Function Src(M As CodeModule) As String()
+Src = SplitCrLf(SrcLineszM(M))
 End Function
 
 Function SrcV() As String()

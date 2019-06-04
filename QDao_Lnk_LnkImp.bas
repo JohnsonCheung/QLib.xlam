@@ -2,7 +2,7 @@ Attribute VB_Name = "QDao_Lnk_LnkImp"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "BLnkImp."
-Private Sub ZZ_LnkImp()
+Sub ZZ_LnkImp()
 Dim LnkImpSrc$(), Db As Database
 GoSub T0
 Exit Sub
@@ -17,34 +17,38 @@ End Sub
 
 Sub LnkImp(LnkImpSrc$(), Db As Database)
 'ThwIf_Er ErzLnk(InpFilSrc, LnkImpSrc), CSub
-Dim Dic_Fbt_Fbn As Dictionary, FbTny$(), DFx As Drs
-    Dim FbTblLy$(), FxTblLy$(), FxTny$()
-           FbTblLy = IndentedLy(LnkImpSrc, "FbTbl")
-   Set Dic_Fbt_Fbn = DiczVkkLy(FbTblLy)
-           FxTblLy = IndentedLy(LnkImpSrc, "FxTbl")
-               DFx = WDFx(FxTblLy)   'Dry{T Fxn Wsn Stru}
-             FxTny = StrColzDrs(DFx, "T")
-             FbTny = SyzDicKey(Dic_Fbt_Fbn)
+Dim Ip          As DLTDH:                   Ip = DLTDH(LnkImpSrc)
+Dim FbTblLy$():                        FbTblLy = IndentedLy(LnkImpSrc, "FbTbl")
+Dim Dic_Fbt_Fbn As Dictionary: Set Dic_Fbt_Fbn = DiczVkkLy(FbTblLy)
+Dim FbTny$():                            FbTny = SyzDicKey(Dic_Fbt_Fbn)
 
-Dim Dic_Fn_Ffn As Dictionary
-    Set Dic_Fn_Ffn = Dic(IndentedLy(LnkImpSrc, "Inp"))
-                     LnkTblzDrs Db, WLnkFx(DFx, Dic_Fn_Ffn) ' @LnkFx::Drs{T S Cn}
-                     LnkTblzDrs Db, WLnkFb(Dic_Fbt_Fbn, Dic_Fn_Ffn)
+Dim FxTblLy$(): FxTblLy = IndentedLy(LnkImpSrc, "FxTbl")
+Dim DFx As Drs:     DFx = WDFx(FxTblLy)                  ' T Fxn Wsn Stru
+Dim FxTny$():     FxTny = StrColzDrs(DFx, "T")
+
+Dim Dic_Fn_Ffn As Dictionary: Set Dic_Fn_Ffn = Dic(IndentedLy(LnkImpSrc, "Inp"))
+
+'== Lnk=================================================================================================================
+Dim D1   As Drs:   D1 = WLnkFx(DFx, Dic_Fn_Ffn)         ' T S Cn
+Dim D2   As Drs:   D2 = WLnkFb(Dic_Fbt_Fbn, Dic_Fn_Ffn)
+Dim D    As Drs:    D = AddDrs(D1, D2)
+Dim OLnk As Unt: OLnk = LnkTblzDrs(Db, D)               ' <======
             
-Dim ImpSqy$()
-    Dim LTDH As DLTDH, Wh As Dictionary, DStru As Drs, Dic_T_Stru As Dictionary
-        LTDH = DLTDH(LnkImpSrc)
-     DStru = WDStru(LTDH)
-Set Dic_T_Stru = WDic_T_Stru(FbTny, DFx)
-        Set Wh = Dic(IndentedLy(LnkImpSrc, "Tbl.Where"))
-        ImpSqy = WImpSqy(Dic_T_Stru, DStru, Wh)
-                 RunSqy Db, ImpSqy    '<==========
-                 DmpNRec Db
+'== Imp=================================================================================================================
+Dim Wh         As Dictionary:         Set Wh = Dic(IndentedLy(LnkImpSrc, "Tbl.Where"))
+Dim Dic_T_Stru As Dictionary: Set Dic_T_Stru = WDic_T_Stru(FbTny, DFx)
+
+Dim DStru    As Drs:    DStru = WDStru(Ip)                     ' Stru F Ty E
+Dim ImpSqy$():         ImpSqy = WImpSqy(Dic_T_Stru, DStru, Wh)
+Dim OImp     As Unt:     OImp = RunSqy(Db, ImpSqy)             ' <==========
+Dim ODmpNRec As Unt: ODmpNRec = DmpNRec(Db)
 End Sub
-Private Function WDStru(I As DLTDH) As Drs
-'Fm::@IL::Drs{T1 Dta IsHdr}
+
+Private Function WDStru(Ip As DLTDH) As Drs
+'Fm Ip : L T1 Dta IsHdr}
+'Ret WDStru: Stru F Ty E
 Dim A As Drs, Dr, Dry(), B As Drs, T1$, Dta$
-A = DrswColEqSel(I.D, "IsHdr", False, "T1 Dta")
+A = DrswColEqSel(Ip.D, "IsHdr", False, "T1 Dta")
 B = DrswColPfx(A, "T1", "Stru.") 'T1 Dta
 For Each Dr In Itr(B.Dry)
     T1 = Dr(0)
@@ -53,6 +57,7 @@ For Each Dr In Itr(B.Dry)
 Next
 WDStru = DrszFF("Stru F Ty E", Dry)
 End Function
+
 Private Function XDrOfStru(T1$, Dta$) As Variant()
 Dim F$, Ty$, E$, Stru$
 Stru = RmvPfx(T1, "Stru.")
@@ -63,14 +68,12 @@ XDrOfStru = Array(Stru, F, Ty, E)
 End Function
 
 Private Function WDic_T_Stru(FbTny$(), DFx As Drs) As Dictionary
-Dim T, Dr, Ix As Dictionary, IxT%, IxStru%
+Dim Dr, IxT%, IxStru%, T
 Set WDic_T_Stru = New Dictionary
 For Each T In Itr(FbTny)
     WDic_T_Stru.Add T, T
 Next
-Set Ix = DiczAyIx(DFx.Fny)
-IxT = Ix("T")
-IxStru = Ix("Stru")
+AsgIx DFx, "T Stru", IxT, IxStru
 For Each Dr In Itr(DFx.Dry)
     WDic_T_Stru.Add Dr(IxT), Dr(IxStru)
 Next
@@ -91,7 +94,7 @@ Next
 End Function
 
 Private Function WDFx(FxTblLy$()) As Drs
-'Ret: *DFx{T Fxn Ws Stru}
+'Ret DFx : T Fxn Ws Stru
 Dim Lin, L$, A$, T$, Fxn$, Ws$, Stru$, Dry()
 For Each Lin In Itr(FxTblLy)
     L = Lin
@@ -106,6 +109,7 @@ For Each Lin In Itr(FxTblLy)
 Next
 WDFx = DrszFF("T Fxn Ws Stru", Dry)
 End Function
+
 Private Function WLnkFb(Dic_Fbt_Fbn As Dictionary, Dic_Fbn_Fb As Dictionary) As Drs
 'Ret: *LnkFb::Drs{T S Cn)
 Dim Fbn$, A$, S$, Fbt, T$, Cn$, Fb$, Dry()
@@ -126,12 +130,12 @@ End Function
 Private Function WLnkFx(DFx As Drs, Dic_Fxn_Fx As Dictionary) As Drs
 'Fm : @DFx :: Drs{T Fxn Ws Stru}
 'Ret: *LnkFx::Drs{T S Cn}
-Dim Dry(), Dr, S$, Fx$, Ws$, Cn$, T$, Fxn$, Ix As Dictionary
-Set Ix = DiczAyIx(DFx.Fny)
+Dim Dry(), Dr, S$, Fx$, Ws$, Cn$, T$, Fxn$, IxT%, IxWs%, IxFxn%
+AsgIx DFx, "T Ws Fxn", IxT, IxWs, IxFxn
 For Each Dr In Itr(DFx.Dry)
-    T = Dr(Ix("T"))
-    Ws = Dr(Ix("Ws"))
-    Fxn = Dr(Ix("Fxn"))
+    T = Dr(IxT)
+    Ws = Dr(IxWs)
+    Fxn = Dr(IxFxn)
     If Not Dic_Fxn_Fx.Exists(Fxn) Then Thw CSub, "Dic_Fxn_Fx does not have Key", "Fxn-Key Dic_Fxn_Fx", T, Dic_Fxn_Fx
     Fx = Dic_Fxn_Fx(Fxn)
     If IsNeedQuote(Ws) Then
@@ -146,8 +150,7 @@ Next
 WLnkFx = DrszFF("T S Cn", Dry)
 End Function
 
-
-Private Property Get Y_InpFilSrc() As String()
+Private Property Get Y_LnkImpSrc() As String()
 Erase XX
 X "Inp"
 X " DutyPay C:\Users\User\Desktop\SAPAccessReports\DutyPrepay5\DutyPrepay5_Data.mdb"
@@ -155,14 +158,6 @@ X " ZHT0  C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\S
 X " MB52  C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\2018\MB52 2018-01-30.xls"
 X " Uom   C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\sales text.xlsx"
 X " GLBal C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\DutyPrepayGLTot.xlsx"
-Y_InpFilSrc = XX
-Erase XX
-End Property
-
-
-Private Property Get Y_LnkImpSrc() As String()
-Erase XX
-X Y_InpFilSrc
 X "FbTbl"
 X "--  Fbn TblNm.."
 X " DutyPay Permit PermitD"
@@ -240,6 +235,7 @@ X " SkuNoLongerTax"
 Y_LnkImpSrc = XX
 Erase XX
 End Property
+
 Private Sub ZZZ()
 QDao_Lnk_LnkImp:
 End Sub

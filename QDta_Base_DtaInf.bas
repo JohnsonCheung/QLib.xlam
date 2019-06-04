@@ -7,6 +7,13 @@ Public Const vbFldSep$ = ""
 Function ColzDrs(A As Drs, ColNm$) As Variant()
 ColzDrs = ColzDry(A.Dry, IxzAy(A.Fny, ColNm))
 End Function
+Function ValzColEq(A As Drs, SelC$, Col$, Eq)
+Dim Dr, I&
+I = IxzAy(A.Fny, Col)
+For Each Dr In Itr(A.Dry)
+    If Dr(I) = Eq Then ValzColEq = Dr(IxzAy(A.Fny, SelC))
+Next
+End Function
 Function StrColzDrs(A As Drs, C) As String()
 StrColzDrs = StrColzDry(A.Dry, IxzAy(A.Fny, C))
 End Function

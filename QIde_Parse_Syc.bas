@@ -142,10 +142,10 @@ Z_SycVal
 MIde_Gen_Const_CnstBrk:
 End Sub
 
-Function CnstBrkzMd1$(A As CodeModule, SycNm$)
+Function CnstBrkzMd1$(M As CodeModule, SycNm$)
 Dim J%, L$, O$
-For J = 1 To A.CountOfDeclarationLines
-    L = A.Lines(J, 1)
+For J = 1 To M.CountOfDeclarationLines
+    L = M.Lines(J, 1)
     O = CnstBrkzLinNm(L, SycNm)
     If O <> "" Then CnstBrkzMd1 = O: Exit Function
 Next

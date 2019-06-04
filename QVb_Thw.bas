@@ -44,8 +44,8 @@ ThwIf_DifTy A, B, ANm, BNm
 Dim IsBothLines As Boolean
     IsBothLines = IsLines(A) Or IsLines(B)
 Select Case True
-Case IsBothLines: If A <> B Then CmpLines A, B, Hdr:=FmtQQ("Lines ? ? not eq.", ANm, BNm): Stop: Exit Sub
-Case IsStr(A):    If A <> B Then CmpStr CStr(A), CStr(B), Hdr:=FmtQQ("String ? ? not eq.", ANm, BNm): Stop: Exit Sub
+Case IsBothLines: If A <> B Then CmprLines A, B, Hdr:=FmtQQ("Lines ? ? not eq.", ANm, BNm): Stop: Exit Sub
+Case IsStr(A):    If A <> B Then CmprStr CStr(A), CStr(B), Hdr:=FmtQQ("String ? ? not eq.", ANm, BNm): Stop: Exit Sub
 Case IsDic(A):    If Not IsEqDic(CvDic(A), CvDic(B)) Then BrwCmpgDicAB CvDic(A), CvDic(B): Stop: Exit Sub
 Case IsArray(A):  ThwIf_DifAy A, B, ANm, BNm
 Case IsObject(A): If ObjPtr(A) <> ObjPtr(B) Then Thw CSub, "Two object are diff", FmtQQ("Ty-? Ty-?", ANm, BNm), TypeName(A), TypeName(B)
@@ -88,13 +88,17 @@ Sub ThwIf_NoSrt(Ay, Fun$)
 If IsSrtedAy(Ay) Then Thw Fun, "Array should be sorted", "Ay-Ty Ay", TypeName(Ay), Ay
 End Sub
 
+Sub Insp(Fun$, Msg$, ParamArray Nap())
+Dim Nav(): Nav = Nap
+Dim F$: If Fun <> "" Then F = " (@" & Fun & ")"
+Dim A$: A = BoxStr("Insp: " & Msg & F)
+BrwAy Sy(A, LyzNav(Nav))
+End Sub
+
 Sub Thw(Fun$, Msg$, ParamArray Nap())
 Dim Nav(): Nav = Nap
-Const PgmErBox$ = _
-"*******************" & vbCrLf & _
-"** Program error **" & vbCrLf & _
-"*******************" & vbCrLf
-ThwNav Fun, PgmErBox & Msg, Nav
+Dim A$: A = BoxStr("Program error")
+ThwNav Fun, A & Msg, Nav
 End Sub
 
 Sub ThwNav(Fun$, Msg$, Nav())

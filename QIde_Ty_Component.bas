@@ -4,8 +4,8 @@ Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Ty_Component."
 
-Function ShtCmpTyzMd$(A As CodeModule)
-ShtCmpTyzMd = ShtCmpTy(CmpTyzM(A))
+Function ShtCmpTyzMd$(M As CodeModule)
+ShtCmpTyzMd = ShtCmpTy(CmpTyzM(M))
 End Function
 
 Function ShtCmpTy$(A As vbext_ComponentType)

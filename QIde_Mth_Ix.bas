@@ -94,12 +94,12 @@ Next
 FstMthIxzSN = -1
 End Function
 
-Function MthIxyzMN(A As CodeModule, Mthn) As Long()
-MthIxyzMN = MthIxyzSN(Src(A), Mthn)
+Function MthIxyzMN(M As CodeModule, Mthn) As Long()
+MthIxyzMN = MthIxyzSN(Src(M), Mthn)
 End Function
 
-Function MthIxzMTN&(A As CodeModule, ShtMthTy$, Mthn)
-MthIxzMTN = MthIxzSTN(Src(A), ShtMthTy, Mthn)
+Function MthIxzMTN&(M As CodeModule, ShtMthTy$, Mthn)
+MthIxzMTN = MthIxzSTN(Src(M), ShtMthTy, Mthn)
 End Function
 
 Function MthIxzSTN&(Src$(), ShtMthTy$, Mthn)
@@ -154,16 +154,9 @@ For Each Ix In Itr(FmIxy)
     PushI MthEIxy, EndLix(Src, Ix)
 Next
 End Function
-Function MthIxzSIW&(Src$(), MthIx, WiTopRmk As Boolean)
-If WiTopRmk Then
-    MthIxzSIW = TopRmkIx(Src, MthIx)
-Else
-    MthIxzSIW = MthIx
-End If
-End Function
 
-Function MthFeizSIW(Src$(), MthIx, Optional WiTopRmk As Boolean) As Fei
-MthFeizSIW = Fei(MthIxzSIW(Src, MthIx, WiTopRmk), EndLix(Src, MthIx))
+Function MthFeizSIW(Src$(), MthIx) As Fei
+MthFeizSIW = Fei(MthIx, EndLix(Src, MthIx))
 End Function
 
 Function FstMthLnozM&(Md As CodeModule)
@@ -187,12 +180,12 @@ Next
 FstMthIxzS = -1
 End Function
 
-Function MthLnozMM&(A As CodeModule, Mthn)
-MthLnozMM = 1 + FstMthIxzN(Src(A), Mthn, 0)
+Function MthLnozMM&(M As CodeModule, Mthn)
+MthLnozMM = 1 + FstMthIxzN(Src(M), Mthn, 0)
 End Function
 
-Function MthLnoAyzMN(A As CodeModule, Mthn) As Long()
-MthLnoAyzMN = AyIncEle1(MthIxyzSN(Src(A), Mthn))
+Function MthLnoAyzMN(M As CodeModule, Mthn) As Long()
+MthLnoAyzMN = AyIncEle1(MthIxyzSN(Src(M), Mthn))
 End Function
 
 Private Sub ZZZ()

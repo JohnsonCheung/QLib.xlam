@@ -127,6 +127,29 @@ End Function
 Function InsColzDrsBef(A As Drs, C$, V) As Drs
 InsColzDrsBef = Drs(AddSy(Sy(C), A.Fny), InsColzDryBef(A.Dry, V))
 End Function
+Function UpdDrs(A As Drs, B As Drs) As Drs
+'Fm  A      K X    ! to be updated
+'Fm  B      K NewX ! used to update A.  K is unique
+'Ret UpdDrs K X    ! new Drs from A with A.X may updated from B.NewX.
+
+Dim C As Dictionary: Set C = DiczDrsCC(B)
+Dim O As Drs
+    O.Fny = A.Fny
+    Dim Dr, K
+    For Each Dr In A.Dry
+        K = Dr(0)
+        If C.Exists(K) Then
+            Dr(0) = C(K)
+        End If
+        PushI O.Dry, Dr
+    Next
+UpdDrs = O
+'BrwDrs3 A, B, O, NN:="A B O", Tit:= _
+"Fm  A      K X    ! to be updated" & vbcrlf & _
+"Fm  B      K NewX ! used to update A.  K is unique"  & vbcrlf & _
+"Ret UpdDrs K X    ! new Drs from A with A.X may updated from B.NewX.
+Stop
+End Function
 Function SelDrs(A As Drs, FF$) As Drs
 Dim Fny$(): Fny = ExpandFF(FF, A.Fny)
 ThwNotSuperAy A.Fny, Fny

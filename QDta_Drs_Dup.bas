@@ -18,6 +18,17 @@ Dim RowIxy&(): RowIxy = RowIxyOfDupRow(A, FF)
 DrseDup = DrseRowIxy(A, RowIxy)
 End Function
 
+Function DrseCeqC(A As Drs, CC$) As Drs
+Dim Dr, C1&, C2&
+AsgIx A, CC, C1, C2
+For Each Dr In Itr(A.Dry)
+    If Dr(C1) <> Dr(C2) Then
+        PushI DrseCeqC.Dry, Dr
+    End If
+Next
+DrseCeqC.Fny = A.Fny
+End Function
+
 Private Function RowIxyOfDupRow(A As Drs, FF$) As Long()
 Dim Fny$(): Fny = TermAy(FF)
 If Si(Fny) = 1 Then

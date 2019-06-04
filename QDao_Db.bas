@@ -423,7 +423,7 @@ FmtNRec = XX
 Erase XX
 End Function
 
-Sub DmpNRec(D As Database)
+Function DmpNRec(D As Database) As Unt
 Dmp FmtNRec(D)
-End Sub
+End Function
 

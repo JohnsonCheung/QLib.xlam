@@ -67,12 +67,12 @@ Private Const Asm$ = "QIde"
 'Set WMchDic = X
 'End Property
 '
-'Private Function WMthnyzM(A As CodeModule) As String()
+'Private Function WMthnyzM(M As CodeModule) As String()
 ''WMthny_EnsCache A
 ''WMthnyzM = ColSyD(W, "#Mthny", "Mthn")
 'End Function
 '
-'Private Sub WMthny_EnsCache(A As CodeModule)
+'Private Sub WMthny_EnsCache(M As CodeModule)
 'Const T$ = "#Mthny"
 ''If HasDbt(W, T) Then Exit Sub
 'W.Execute "Create Table [#Mthny] (Mthn Text(255) Not Null)"

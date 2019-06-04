@@ -3,11 +3,11 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Md_Emp."
 Private Const Asm$ = "QIde"
-Function IsEmpMd(A As CodeModule) As Boolean
-If A.CountOfLines = 0 Then IsEmpMd = True: Exit Function
+Function IsEmpMd(M As CodeModule) As Boolean
+If M.CountOfLines = 0 Then IsEmpMd = True: Exit Function
 Dim J&, L$
-For J = 1 To A.CountOfLines
-    If Not IsEmpSrcLin(A.Lines(J, 1)) Then Exit Function
+For J = 1 To M.CountOfLines
+    If Not IsEmpSrcLin(M.Lines(J, 1)) Then Exit Function
 Next
 IsEmpMd = True
 End Function
@@ -88,10 +88,10 @@ Next
 End Function
 
 
-Function IsNoMthMd(A As CodeModule) As Boolean
+Function IsNoMthMd(M As CodeModule) As Boolean
 Dim J&
-For J = A.CountOfDeclarationLines + 1 To A.CountOfLines
-    If IsMthLin(A.Lines(J, 1)) Then Exit Function
+For J = M.CountOfDeclarationLines + 1 To M.CountOfLines
+    If IsMthLin(M.Lines(J, 1)) Then Exit Function
 Next
 IsNoMthMd = True
 End Function

@@ -4,18 +4,18 @@ Option Explicit
 Private Const CMod$ = "MIde_Mth_Dcl."
 Private Const Asm$ = "QIde"
 
-Property Get MthLinyM() As String()
-MthLinyM = MthLinyzMd(CMd)
+Property Get MthLinAyM() As String()
+MthLinAyM = MthLinAyzM(CMd)
 End Property
 
-Function MthLinyzNmSrc(Src$(), Mthn) As String()
+Function MthLinAyzNmSrc(Src$(), Mthn) As String()
 Dim Ix
 'For Each Ix In Itr(MthIxyzNm(Src, Mthn))
-    PushI MthLinyzNmSrc, ContLin(Src, Ix)
+    PushI MthLinAyzNmSrc, ContLin(Src, Ix)
 'Next
 End Function
 
-Private Sub Z_Src_PthMthLiny()
+Private Sub Z_Src_PthMthLinAy()
 Dim Mthny$(), Src$()
 Src = CSrc
 Mthny = Sy("Src_MthDclDry", "Mth_MthDclLin")
@@ -23,7 +23,7 @@ Ept = Sy("Function Mth_MthDclLin(A As Mth)", "Function Src_MthDclDry(A$()) As Va
 GoSub Tst
 Exit Sub
 Tst:
-    Act = MthLinyzS(Src)
+    Act = MthLinAyzS(Src)
     C
     Return
 End Sub

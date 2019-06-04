@@ -146,10 +146,10 @@ For Each Dr In Itr(Dry)
     PushI KeepFstNCol, Dr
 Next
 End Function
-Function DrywColPfx(Dry(), C&, Pfx, Optional Cmp As VbCompareMethod = vbTextCompare) As Variant()
+Function DrywColPfx(Dry(), C&, Pfx, Optional CMP As VbCompareMethod = vbTextCompare) As Variant()
 Dim Dr
 For Each Dr In Itr(Dry)
-   If HasPfx(Dr(C), Pfx, Cmp) Then PushI DrywColPfx, Dr
+   If HasPfx(Dr(C), Pfx, CMP) Then PushI DrywColPfx, Dr
 Next
 End Function
 

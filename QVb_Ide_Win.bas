@@ -47,8 +47,8 @@ Function WinOfMdn(Mdn) As vbIde.Window
 If HasCmpzN(Mdn) Then Set WinOfMdn = Md(Mdn).CodePane.Window
 End Function
 
-Function WinzM(A As CodeModule) As vbIde.Window
-Set WinzM = A.CodePane.Window
+Function WinzM(M As CodeModule) As vbIde.Window
+Set WinzM = M.CodePane.Window
 End Function
 
 Private Function MdzP(P As VBProject, Nm) As CodeModule

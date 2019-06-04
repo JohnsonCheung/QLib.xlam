@@ -156,9 +156,9 @@ While L <> ""
 Wend
 End Function
 
-Private Sub ZZ_TrimRSpcCrLf()
+Private Sub ZZ_RTrimLines()
 Dim Lines$: Lines = LineszVbl("lksdf|lsdfj|||")
-Dim Act$: Act = TrimRSpcCrLf(Lines)
+Dim Act$: Act = RTrimLines(Lines)
 Debug.Print Act & "<"
 Stop
 End Sub
@@ -201,9 +201,9 @@ For Each Lines In Itr(LinesAy)
 Next
 End Function
 
-Private Sub Z_TrimRSpcCrLf()
+Private Sub Z_RTrimLines()
 Dim Lines$: Lines = LineszVbl("lksdf|lsdfj|||")
-Dim Act$: Act = TrimRSpcCrLf(Lines)
+Dim Act$: Act = RTrimLines(Lines)
 Debug.Print Act & "<"
 Stop
 End Sub
@@ -225,12 +225,12 @@ SqvzLines = Sqv(SplitCrLf(Lines))
 End Function
 
 Function TrimR$(S)
-TrimR = TrimRSpcCrLf(RTrim(S))
+TrimR = RTrimLines(RTrim(S))
 End Function
-Function TrimRSpcCrLf$(Lines)
+Function RTrimLines$(Lines)
 Dim At&
 For At = Len(Lines) To 1 Step -1
-    If Not IsStrAtSpcCrLf(Lines, At) Then TrimRSpcCrLf = Left(Lines, At): Exit Function
+    If Not IsStrAtSpcCrLf(Lines, At) Then RTrimLines = Left(Lines, At): Exit Function
 Next
 End Function
 

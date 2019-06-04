@@ -11,7 +11,7 @@ ShfMthTy = O
 OLin = LTrim(RmvPfx(OLin, O))
 End Function
 
-Function ShfTermAftAs(OLin$)
+Function ShfTermAftAs$(OLin$)
 If Not ShfTerm(OLin, "As") Then Exit Function
 ShfTermAftAs = ShfT1(OLin)
 End Function

@@ -89,11 +89,11 @@ Function MthCmlAsetzP(P As VBProject) As Aset
 Set MthCmlAsetzP = CmlAset(MthnyzP(P))
 End Function
 
-Function CntgMthzM(A As CodeModule) As CntgMth
+Function CntgMthzM(M As CodeModule) As CntgMth
 Dim L
 Dim Pub As Boolean, Prv As Boolean, Frd As Boolean
 Dim Sbr As Boolean, Fun As Boolean, Prp As Boolean
-For Each L In Itr(MthLinyzS(Src(A)))
+For Each L In Itr(MthLinAyzS(Src(M)))
     With Mthn3zL(L)
         Select Case .ShtMdy
         Case "Prv": Prv = True
@@ -160,8 +160,8 @@ For Each C In P.VBComponents
 Next
 End Function
 
-Function NMthzM%(A As CodeModule)
-NMthzM = NMthzS(Src(A))
+Function NMthzM%(M As CodeModule)
+NMthzM = NMthzS(Src(M))
 End Function
 
 Function NSrcLinPj&(P As VBProject)
@@ -186,8 +186,8 @@ Function NPMthzS%(Src$())
 NPMthzS = NItr(PMthLinItr(Src))
 End Function
 
-Function NPMthzM%(A As CodeModule)
-NPMthzM = NPMthzS(Src(A))
+Function NPMthzM%(M As CodeModule)
+NPMthzM = NPMthzS(Src(M))
 End Function
 
 Function NPMthzV%(A As Vbe)

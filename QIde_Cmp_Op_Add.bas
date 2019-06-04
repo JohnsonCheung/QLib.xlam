@@ -27,20 +27,20 @@ AddCmpzPTNn CPj, vbext_ct_ClassModule, Clsnn
 JmpCmp T1(Clsnn)
 End Sub
 
-Sub ApdLines(A As CodeModule, Lines$)
-If Lines = "" Then Exit Sub
-A.InsertLines A.CountOfLines + 1, Lines '<=====
-End Sub
-Sub ApdLineszoInf(A As CodeModule, Lines$)
+Function ApdLines(M As CodeModule, Lines$) As Unt
+If Lines = "" Then Exit Function
+M.InsertLines M.CountOfLines + 1, Lines '<=====
+End Function
+Sub ApdLineszoInf(M As CodeModule, Lines$)
 Dim Bef&, Aft&, Exp&, Cnt&
-Bef = A.CountOfLines
-ApdLines A, Lines
-Aft = A.CountOfLines
+Bef = M.CountOfLines
+ApdLines M, Lines
+Aft = M.CountOfLines
 Cnt = LinCnt(Lines)
 Exp = Bef + Cnt
 If Exp <> Aft Then
     Thw CSub, "After copy line count are inconsistents, where [Md], [LinCnt-Bef-Cpy], [LinCnt-of-lines], [Exp-LinCnt-Aft-Cpy], [Act-LinCnt-Aft-Cpy], [Lines]", _
-        Mdn(A), Bef, Cnt, Exp, Aft, Lines
+        Mdn(M), Bef, Cnt, Exp, Aft, Lines
 End If
 End Sub
 
@@ -75,7 +75,7 @@ If Not HasCmpzPN(P, Nm) Then AddCmpzPTN P, Ty, Nm
 End Sub
 Sub EnsModLines(M As CodeModule, Lines$)
 If Lines = SrcLines(M) Then Inf CSub, "Same module lines, no need to replace", "Mdn", Mdn(M): Exit Sub
-RplzML M, Lines
+RplMdzML M, Lines
 End Sub
 Sub EnsModzPN(P As VBProject, Mdn)
 EnsCmpzPTN P, vbext_ct_StdModule, Mdn

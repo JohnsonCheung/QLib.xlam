@@ -3,14 +3,14 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Mth_SubZDash."
 Private Const Asm$ = "QIde"
-Function MthLinyzSubZDashMd(A As CodeModule) As String()
+Function MthLinAyzSubZDashMd(M As CodeModule) As String()
 Dim MthLin
-For Each MthLin In Itr(MthLinyzMd(A))
-    If IsSubZDashMthLin(MthLin) Then PushI MthLinyzSubZDashMd, MthLin
+For Each MthLin In Itr(MthLinAyzM(M))
+    If IsSubZDashMthLin(MthLin) Then PushI MthLinAyzSubZDashMd, MthLin
 Next
 End Function
-Function MthnyzSubZDashMd(A As CodeModule) As String()
-MthnyzSubZDashMd = MthnyzMthLiny(MthLinyzSubZDashMd(A))
+Function MthnyzSubZDashMd(M As CodeModule) As String()
+MthnyzSubZDashMd = MthnyzMthLinAy(MthLinAyzSubZDashMd(M))
 End Function
 
 

@@ -6,8 +6,8 @@ Private Const Asm$ = "QIde"
 Function CdLyP() As String()
 CdLyP = CdLyzS(SrczP(CPj))
 End Function
-Function CdLyzMd(A As CodeModule) As String()
-CdLyzMd = CdLyzS(Src(A))
+Function CdLyzMd(M As CodeModule) As String()
+CdLyzMd = CdLyzS(Src(M))
 End Function
 Function CdLyzP(P As VBProject) As String()
 CdLyzP = CdLyzS(SrczP(P))

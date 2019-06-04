@@ -87,6 +87,125 @@ Function LasDr(A As Drs)
 LasDr = LasEle(A.Dry)
 End Function
 
+Sub XXX()
+Dim A$: A = "123456789"
+Mid(A, 2, 3) = "abcdex"
+Debug.Print A
+End Sub
+
+Function FmtLNewO(L_NewL_OldL As Drs, Org_L_Lin As Drs) As String()
+'Fm  : L_NewL_OldL ! Assume all NewL and OldL are nonEmp and <>
+'Ret : LinesAy !
+Dim SDry(): SDry = SelDry(Org_L_Lin.Dry, LngAp(0, 1))
+Dim S As Drs: S = DrszFF("L Lin", SDry)
+Dim D As Drs: D = DrseCeqC(L_NewL_OldL, "NewL OldL")
+Dim NewL As Drs: NewL = LJnDrs(S, D, "L", "NewL")
+Dim Gpno As Drs: Gpno = FmtLNewOGpno(NewL)
+Dim NLin As Drs: NLin = FmtLNewONLin(Gpno)
+Dim Lines As Drs: Lines = FmtLNewOLines(NLin)
+Dim OneG As Drs: OneG = FmtNewOneG(NLin)
+FmtLNewO = StrColzDrs(OneG, "Lines")
+End Function
+Private Function FmtLNewOLines(NLin As Drs) As Drs
+'Fm NLin: L Gpno NLin SNewL
+'Ret Lines: L Gpno Lines
+Dim Dr, L&, Gpno&, Lines$, NLin_$, SNewL
+Dim Dry()
+'Insp SNewL should have some Emp
+'    Erase Dry
+'    For Each Dr In NLin.Dry
+'        PushI Dr, IsEmpty(Dr(2))
+'        PushI Dry, Dr
+'    Next
+'    BrwDrs DrszFF("L Gpno NLin SNewL Emp", Dry)
+'    Erase Dry
+For Each Dr In Itr(NLin.Dry)
+    AsgAp Dr, L, Gpno, NLin_, SNewL
+    If IsEmpty(SNewL) Then
+        Lines = NLin_
+    Else
+        Lines = NLin_ & vbCrLf & SNewL
+    End If
+    PushI Dry, Array(L, Gpno, Lines)
+Next
+FmtLNewOLines = DrszFF("L Gpno Lines", Dry)
+'BrwDrs FmtLNewOLines: Stop
+End Function
+Private Function FmtNewOneG(NLin As Drs) As Drs
+'Fm  D: L Gpno NLin SNewL !
+'Ret E: Gpno Lines ! Gpno now become uniq
+Dim O$(), L&, LasG&, Dr, Dry(), Gpno&, NLin_$, SNewL
+If NoReczDrs(NLin) Then Exit Function
+LasG = NLin.Dry(0)(1)
+For Each Dr In Itr(NLin.Dry)
+    AsgAp Dr, L, Gpno, NLin_, SNewL
+    If LasG <> Gpno Then
+        PushI Dry, Array(Gpno, JnCrLf(O))
+        Erase O
+        LasG = Gpno
+    End If
+    PushI O, NLin_
+    If Not IsEmpty(SNewL) Then PushI O, SNewL
+Next
+If Si(O) > 0 Then PushI Dry, Array(Gpno, JnCrLf(O))
+FmtNewOneG = DrszFF("Gpno Lines", Dry)
+End Function
+
+Private Function FmtLNewOGpno(NewL As Drs) As Drs
+'Fm  NewL: L Lin NewL ! NewL may empty, when non-Emp, NewL <> Lin
+'Ret D: L Lin NewL Gpno ! Gpno is running from 1:
+'                      !   all conseq Lin with Emp-NewL is one group
+'                      !   each non-Emp-NewL is one gp
+Dim IGpno&, Dr, Dry(), Lin, NewL_, LasEmp As Boolean, Emp As Boolean
+
+'For Each Dr In Itr(NewL.Dry)
+'    PushI Dr, IsEmpty(Dr(2))
+'    PushI Dry, Dr
+'Next
+'BrwDry Dry
+'Erase Dry
+'Stop
+LasEmp = True
+IGpno = 0
+For Each Dr In Itr(NewL.Dry)
+    Lin = Dr(1)
+    NewL_ = Dr(2)
+    Emp = IsEmpty(NewL_)
+    If Not Emp Then If Lin = NewL_ Then Stop
+    If IsEmpty(Lin) Then Stop
+    Select Case True
+    Case Not Emp: IGpno = IGpno + 1
+    Case Emp And Not LasEmp: IGpno = IGpno + 1
+    Case Else
+    End Select
+    PushI Dr, IGpno
+    PushI Dry, Dr
+    LasEmp = Emp
+Next
+FmtLNewOGpno = DrszFF("L Lin NewL Gpno", Dry)
+End Function
+Private Function FmtLNewONLin(Gpno As Drs) As Drs
+'Fm  Gpno: L Lin NewL Gpno
+'Ret E: L Gpno NLin SNewL ! NLin=L# is in front; SNewL = Spc is in front, only when nonEmp
+Dim MaxL&: MaxL = MaxzAy(LngAyzDrs(Gpno, "L"))
+Dim NDig%: NDig = Len(CStr(MaxL))
+Dim S$: S = Space(NDig + 1)
+Dim Dry(), Dr, L&, Lin$, NewL, IGpno&, NLin$, SNewL
+For Each Dr In Itr(Gpno.Dry)
+    AsgAp Dr, L, Lin, NewL, IGpno
+    NLin = AlignR(L, NDig) & " " & Lin
+    If IsEmpty(NewL) Then
+        SNewL = Empty
+    Else
+        SNewL = S & NewL
+    End If
+    PushI Dry, Array(L, IGpno, NLin, SNewL)
+Next
+FmtLNewONLin = DrszFF("L Gpno NLin SNewL", Dry)
+End Function
+Function LNewO(Dry()) As Drs
+LNewO = DrszFF("L NewL OldL", Dry)
+End Function
 Function Drs(Fny$(), Dry()) As Drs
 With Drs
     .Fny = Fny

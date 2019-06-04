@@ -34,23 +34,23 @@ If Nm = "" Then Exit Function
 #If PlaySav Then
 If Not IsNm(Nm) Then Thw CSub, "Given Nm is not a name", "Nm", Nm
 #End If
-Dim J&, Cml$, C$, A%, IsUCas As Boolean, IsLowZ As Boolean
-Cml = FstChr(Nm)
+Dim J&, CmL$, C$, A%, IsUCas As Boolean, IsLowZ As Boolean
+CmL = FstChr(Nm)
 For J = 2 To Len(Nm)
     C = Mid(Nm, J, 1)
     A = Asc(C)
     IsLowZ = C = "z"
     IsUCas = IsAscUCas(A)
     Select Case True
-    Case IsUCas:  PushNonBlank Cml0Sy, Cml
-                  Cml = C
-    Case IsLowZ:  PushNonBlank Cml0Sy, Cml
+    Case IsUCas:  PushNonBlank Cml0Sy, CmL
+                  CmL = C
+    Case IsLowZ:  PushNonBlank Cml0Sy, CmL
                   PushI Cml0Sy, "z"
-                  Cml = ""
-    Case Else:    Cml = Cml & C
+                  CmL = ""
+    Case Else:    CmL = CmL & C
     End Select
 Next
-PushNonBlank Cml0Sy, Cml
+PushNonBlank Cml0Sy, CmL
 End Function
 
 Function Cml1Ay(Nm) As String()
@@ -95,23 +95,23 @@ Next
 End Function
 
 Function CmlGp(Nm) As String()
-Dim M$(), I, Cml$, O$()
+Dim M$(), I, CmL$, O$()
 For Each I In CmlSy(Nm)
-    Cml = I
-    Debug.Print Cml; "<--CmlQBlk"
-    If IsBRKCml(Cml) Then
+    CmL = I
+    Debug.Print CmL; "<--CmlQBlk"
+    If IsBRKCml(CmL) Then
         PushNonBlank O, Jn(M)
-        PushI O, Cml
+        PushI O, CmL
         Erase M
     Else
-        PushI M, Cml
+        PushI M, CmL
     End If
 Next
 PushNonBlank O, Jn(M)
 CmlGp = O
 For Each I In Itr(O)
-    Cml = I
-    If FstChr(Cml) = "_" Then Stop
+    CmL = I
+    If FstChr(CmL) = "_" Then Stop
 Next
 End Function
 
@@ -216,16 +216,16 @@ If IsAscLDash(A) Then Exit Function
 IsAscFstCmlChr = IsAscCmlChr(A)
 End Function
 
-Function IsBRKCml(Cml$) As Boolean
+Function IsBRKCml(CmL$) As Boolean
 Select Case True
-Case BRKCmlASet.Has(Cml), Cml = "z", IsULCml(Cml): IsBRKCml = True
+Case BRKCmlASet.Has(CmL), CmL = "z", IsULCml(CmL): IsBRKCml = True
 End Select
 End Function
 
-Function IsULCml(Cml$) As Boolean
+Function IsULCml(CmL$) As Boolean
 Select Case True
-Case Len(Cml) <> 2, Not IsAscUCas(FstAsc(Cml)), Not IsAscLCas(SndAsc(Cml))
-Case Else: IsULCml = LCase(FstChr(Cml)) = SndChr(Cml)
+Case Len(CmL) <> 2, Not IsAscUCas(FstAsc(CmL)), Not IsAscLCas(SndAsc(CmL))
+Case Else: IsULCml = LCase(FstChr(CmL)) = SndChr(CmL)
 End Select
 End Function
 
@@ -326,7 +326,7 @@ Seg1ErNy = XX
 End Function
 
 Function ShfCml$(OStr)
-Dim J&, Fst As Boolean, Cml$, C$, A%, IsNmChr As Boolean, IsFstNmChr As Boolean
+Dim J&, Fst As Boolean, CmL$, C$, A%, IsNmChr As Boolean, IsFstNmChr As Boolean
 Fst = True
 For J = 1 To Len(OStr)
     C = Mid(OStr, J, 1)
@@ -335,22 +335,22 @@ For J = 1 To Len(OStr)
     IsFstNmChr = IsAscFstNmChr(A)
     Select Case True
     Case Fst
-        Cml = C
+        CmL = C
         Fst = False
     Case IsAscUCas(A)
-        If Cml <> "" Then GoTo R
-        Cml = C
+        If CmL <> "" Then GoTo R
+        CmL = C
     Case IsAscDig(A)
-        If Cml <> "" Then Cml = Cml & C
+        If CmL <> "" Then CmL = CmL & C
     Case IsAscLCas(A)
-        Cml = Cml & C
+        CmL = CmL & C
     Case Else
-        If Cml <> "" Then GoTo R
-        Cml = ""
+        If CmL <> "" Then GoTo R
+        CmL = ""
     End Select
 Next
 R:
-    ShfCml = Cml
+    ShfCml = CmL
     OStr = Mid(OStr, J)
 End Function
 

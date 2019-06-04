@@ -9,9 +9,9 @@ Sub EdtConst(CnstQNm$)
 'EdtStr CnstBrk(CnstQNm), FtzCnstQNm(CnstQNm)
 End Sub
 
-Sub RpldCnst(CnstQn, Optional IsPub As Boolean)
+Sub RplCnst(CnstQn, Optional IsPub As Boolean)
 'With MdMth(CnstQn)
-    'RplMthzMNL .Md, .Mthn, ConstPrpLines(CnstQNm, IsPub)
+    'RplMth .Md, .Mthn, ConstPrpLines(CnstQNm, IsPub)
 'End With
 End Sub
 

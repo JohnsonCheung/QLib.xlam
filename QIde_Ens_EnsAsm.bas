@@ -58,12 +58,12 @@ For Each C In P.VBComponents
 Next
 Inf CSub, "Done", "Pj Mdyd Skpd Tot", P.Name, Mdyd, Skpd, Mdyd + Skpd
 End Sub
-Function EnsAsmzMd(A As CodeModule) As Boolean 'Return True if the Module has been changed
-If A.Parent.Type = vbext_ct_Document Then Exit Function
-With MdygOfSetgAsm(A)
+Function EnsAsmzMd(M As CodeModule) As Boolean 'Return True if the Module has been changed
+If M.Parent.Type = vbext_ct_Document Then Exit Function
+With MdygOfSetgAsm(M)
     If .Act <> EiNop Then
         EnsAsmzMd = True
-        Debug.Print Mdn(A); "<============= Mdy"
+        Debug.Print Mdn(M); "<============= Mdy"
         'MdyMdzMM  A, .Itm
     End If
 End With
@@ -75,13 +75,13 @@ If Not IsAscUCas(Asc(SndChr(Mdn))) Then Exit Function
 HasAsmn = True
 End Function
 
-Function Asmn$(A As CodeModule)
-Dim N$: N = Mdn(A)
+Function Asmn$(M As CodeModule)
+Dim N$: N = Mdn(M)
 If HasAsmn(N) Then Asmn = RplFstChr(Bef(N, "_"), "Q")
 End Function
 
-Function CnstLinOfAsm$(A As CodeModule)
-Dim N$: N = Asmn(A)
+Function CnstLinOfAsm$(M As CodeModule)
+Dim N$: N = Asmn(M)
 If N = "" Then Exit Function
 CnstLinOfAsm = FmtQQ("Private Const Asm$ = ""?""", N)
 End Function
@@ -113,18 +113,18 @@ Dltg.Lno = Lno
 'Dltg.OldLines = OldLines
 End Function
 
-Function LnoOfAsmCnst(A As CodeModule)
-LnoOfAsmCnst = LnoOfCnstOfAftOpt(A, "Asm$")
+Function LnoOfAsmCnst(M As CodeModule)
+LnoOfAsmCnst = LnoOfCnstOfAftOpt(M, "Asm$")
 End Function
 
-Function MdygOfSetgAsm(A As CodeModule) As Mdyg
-Dim NewLines$: NewLines = CnstLinOfAsm(A): If NewLines = "" Then Exit Function
+Function MdygOfSetgAsm(M As CodeModule) As Mdyg
+Dim NewLines$: NewLines = CnstLinOfAsm(M): If NewLines = "" Then Exit Function
 Dim O As Mdyg
-Dim Lno: Lno = LnoOfAsmCnst(A)
-Dim OldLines$: OldLines = ContLinzML(A, Lno)
+Dim Lno: Lno = LnoOfAsmCnst(M)
+Dim OldLines$: OldLines = ContLinzML(M, Lno)
 Select Case True
 'Case Lno = 0: O = MdygOfIns(LnoOfAftOptAndImpl(A), NewLines)
-Case Lno > 0 And OldLines = "": Thw CSub, "Lno>0, OldLin must have value", "Md Lno", Mdn(A), Lno
+Case Lno > 0 And OldLines = "": Thw CSub, "Lno>0, OldLin must have value", "Md Lno", Mdn(M), Lno
 Case Lno > 0 And OldLines = NewLines:
 'Case Lno > 0 And OldLines <> NewLines: O = MdygOfRpl(Lno, OldLines, NewLines)
 Case Else: ThwImpossible CSub
@@ -132,12 +132,12 @@ End Select
 MdygOfSetgAsm = O
 End Function
 
-Function LnoOfCnstOrAftOpt&(A As CodeModule, Cnstn$)
-Dim O&: O = LnoOfCnstOfAftOpt(A, Cnstn)
+Function LnoOfCnstOrAftOpt&(M As CodeModule, Cnstn$)
+Dim O&: O = LnoOfCnstOfAftOpt(M, Cnstn)
 If O > 0 Then
     LnoOfCnstOrAftOpt = O
 Else
-'    LnoOfCnstOrAftOpt = LnoOfAftOptAndImpl(A)
+'    LnoOfCnstOrAftOpt = LnoOfAftOptAndImpl(M)
 End If
 End Function
 
@@ -155,11 +155,11 @@ Tst:
     C
     Return
 End Sub
-Function LnoOfCnstOfAftOpt&(A As CodeModule, Cnstn$)
+Function LnoOfCnstOfAftOpt&(M As CodeModule, Cnstn$)
 Dim O&, C$, L$
 C = "Const " & Cnstn
-For O = 1 To A.CountOfDeclarationLines
-    L = RmvMdy(A.Lines(O, 1))
+For O = 1 To M.CountOfDeclarationLines
+    L = RmvMdy(M.Lines(O, 1))
     If HasPfx(L, C) Then LnoOfCnstOfAftOpt = O: Exit Function
 Next
 End Function

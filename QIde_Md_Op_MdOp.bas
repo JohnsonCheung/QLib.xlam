@@ -3,13 +3,13 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Md_Op_Add_Lines."
 Private Const Asm$ = "QIde"
-Function InsDcl(A As CodeModule, Dcl$) As CodeModule
-A.InsertLines FstMthLnozM(A), Dcl
-Debug.Print FmtQQ("MdInsDcl: Module(?) a DclLin is inserted", Mdn(A))
+Function InsDcl(M As CodeModule, Dcl$) As CodeModule
+M.InsertLines FstMthLnozM(M), Dcl
+Debug.Print FmtQQ("MdInsDcl: Module(?) a DclLin is inserted", Mdn(M))
 End Function
 
-Sub ApdLy(A As CodeModule, Ly$())
-ApdLines A, JnCrLf(Ly)
+Sub ApdLy(M As CodeModule, Ly$())
+ApdLines M, JnCrLf(Ly)
 End Sub
 
 Function TmpMod() As CodeModule

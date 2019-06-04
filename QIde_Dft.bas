@@ -3,11 +3,11 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Dft."
 Private Const Asm$ = "QIde"
-Function DftMd(A As CodeModule) As CodeModule
-If IsNothing(A) Then
+Function DftMd(M As CodeModule) As CodeModule
+If IsNothing(M) Then
    Set DftMd = CMd
 Else
-   Set DftMd = A
+   Set DftMd = M
 End If
 End Function
 

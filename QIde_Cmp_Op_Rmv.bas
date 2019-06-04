@@ -21,16 +21,16 @@ End Sub
 Sub RmvMd(MdDNm)
 RmvMdzMd Md(MdDNm)
 End Sub
-Sub RmvMdzMd(A As CodeModule)
-Dim M$, P$
-    M = Mdn(A)
-    P = PjnzM(A)
+Sub RmvMdzMd(M As CodeModule)
+Dim N$, P$
+    N = Mdn(M)
+    P = PjnzM(M)
 'Debug.Print FmtQQ("RmvMd: Before Md(?) is deleted from Pj(?)", M, P)
-A.Parent.Collection.Remove A.Parent
-Debug.Print FmtQQ("RmvMd: Md(?) is deleted from Pj(?)", M, P)
+M.Parent.Collection.Remove M.Parent
+Debug.Print FmtQQ("RmvMd: Md(?) is deleted from Pj(?)", N, P)
 End Sub
 Sub RmvCmpzN(Cmpn)
-RmvCmp Cmp(Cmpn)
+RmvCmp CMP(Cmpn)
 End Sub
 Sub RmvCmp(A As VBComponent)
 A.Collection.Remove A

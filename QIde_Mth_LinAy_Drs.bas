@@ -28,32 +28,32 @@ End Function
 Function MthDnzDiLinzS(Src$()) As Dictionary
 Dim L$, I
 Set MthDnzDiLinzS = New Dictionary
-For Each I In Itr(MthLinyzS(Src))
+For Each I In Itr(MthLinAyzS(Src))
     L = I
     MthDnzDiLinzS.Add MthDn(L), L
 Next
 End Function
 
-Function MthLinyzP(P As VBProject) As String()
+Function MthLinAyzP(P As VBProject) As String()
 Dim I
 For Each I In MdItr(P)
-    PushIAy MthLinyzP, MthLinyzS(Src(CvMd(I)))
+    PushIAy MthLinAyzP, MthLinAyzS(Src(CvMd(I)))
 Next
 End Function
 
-Function MthLinyV() As String()
-MthLinyV = MthLinyzV(CVbe)
+Function MthLinAyV() As String()
+MthLinAyV = MthLinAyzV(CVbe)
 End Function
 
-Function MthLinyzV(V As Vbe) As String()
+Function MthLinAyzV(V As Vbe) As String()
 Dim P As VBProject
 For Each P In V.VBProjects
-    PushIAy MthLinyzV, MthLinyzP(P)
+    PushIAy MthLinAyzV, MthLinAyzP(P)
 Next
 End Function
 
-Function MthLnxszM(A As CodeModule) As Lnxs
-MthLnxszM = MthLnxszS(Src(A))
+Function MthLnxszM(M As CodeModule) As Lnxs
+MthLnxszM = MthLnxszS(Src(M))
 End Function
 
 Function MthLnxszS(Src$()) As Lnxs
@@ -65,15 +65,15 @@ For J = 0 To UB(Src)
 Next
 End Function
 
-Function MthLinyzMd(A As CodeModule) As String()
-MthLinyzMd = MthLinyzS(Src(A))
+Function MthLinAyzM(M As CodeModule) As String()
+MthLinAyzM = MthLinAyzS(Src(M))
 End Function
 
-Function MthLinyzS(Src$()) As String()
+Function MthLinAyzS(Src$()) As String()
 Dim O$(), J&
 For J = 0 To UB(Src)
     If IsMthLin(Src(J)) Then
-        PushI MthLinyzS, ContLin(Src, J)
+        PushI MthLinAyzS, ContLin(Src, J)
     End If
 Next
 End Function
@@ -105,10 +105,10 @@ For Each P In A.VBProjects
 Next
 End Function
 
-Function MthQLyzM(A As CodeModule) As String()
+Function MthQLyzM(M As CodeModule) As String()
 Dim P$
-P = PjnzM(A) & "." & ShtCmpTy(A.Parent.Type) & "." & A.Parent.Name & "."
-MthQLyzM = AddPfxzAy(MthLinyzS(Src(A)), P)
+P = PjnzM(M) & "." & ShtCmpTy(M.Parent.Type) & "." & M.Parent.Name & "."
+MthQLyzM = AddPfxzAy(MthLinAyzS(Src(M)), P)
 End Function
 
 Function MthQLyzP(P As VBProject) As String()

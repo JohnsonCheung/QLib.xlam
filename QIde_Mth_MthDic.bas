@@ -18,8 +18,8 @@ End Sub
 Function SMthDicM() As Dictionary
 Set SMthDicM = SMthDIczM(CMd)
 End Function
-Function SMthDIczM(A As CodeModule) As Dictionary
-Set SMthDIczM = SrtDic(MthDiczM(A))
+Function SMthDIczM(M As CodeModule) As Dictionary
+Set SMthDIczM = SrtDic(MthDiczM(M))
 End Function
 
 Private Sub ZZ_MthDiczP()
@@ -61,7 +61,7 @@ With MthDic
     If Not ExlDcl Then .Add P & "*Dcl", Dcl(Src)
     For Each Ix In MthIxItr(Src)
         Dn = MthDnzLin(Src(Ix))
-        Lines = MthLineszSI(Src, Ix, WiTopRmk:=True)
+        Lines = MthLineszSI(Src, Ix)
         .Add P & Dn, Lines
     Next
 End With
@@ -85,21 +85,21 @@ Function SSrcLineszS$(Src$())
 SSrcLineszS = JnStrDic(SrtDic(MthDic(Src)), vbDblCrLf)
 End Function
 
-Function SSrcLineszM$(A As CodeModule)
-SSrcLineszM = SSrcLineszS(Src(A))
+Function SSrcLineszM$(M As CodeModule)
+SSrcLineszM = SSrcLineszS(Src(M))
 End Function
 
-Function SrcLineszM$(A As CodeModule)
-If A.CountOfLines > 0 Then
-    SrcLineszM = A.Lines(1, A.CountOfLines)
+Function SrcLineszM$(M As CodeModule)
+If M.CountOfLines > 0 Then
+    SrcLineszM = M.Lines(1, M.CountOfLines)
 End If
 End Function
 
-Sub BrwSrtRptzM(A As CodeModule)
-Dim Old$: Old = SrcLineszM(A)
-Dim NewLines$: NewLines = SSrcLineszM(A)
+Sub BrwSrtRptzM(M As CodeModule)
+Dim Old$: Old = SrcLineszM(M)
+Dim NewLines$: NewLines = SSrcLineszM(M)
 Dim O$: O = IIf(Old = NewLines, "(Same)", "<====Diff")
-Debug.Print Mdn(A), O
+Debug.Print Mdn(M), O
 End Sub
 
 Sub BrwSMdDiczP()

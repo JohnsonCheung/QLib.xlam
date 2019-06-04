@@ -352,7 +352,7 @@ Private Function B_JSrcPm(ISrc As Drs) As Drs
 Const CC$ = "Key Pfx Id StpTy StpFor Ret Fss Ret Stmt Expr BrkNm BrkChr Fm1 Fm2 Fm3 Fm4 Fm5"
 Dim Dr, I1%, I2%, I3%, I4%, I5%, ODry()
 Dim O As Drs: O = SelDrs(ISrc, CC)
-AsgIxy ISrc.Fny, "Fm1 Fm2 Fm3 Fm4 Fm5", I1, I2, I3, I4, I5
+AsgIx ISrc, "Fm1 Fm2 Fm3 Fm4 Fm5", I1, I2, I3, I4, I5
 For Each Dr In Itr(ISrc.Dry)
     PushI Dr, JnSpc(SyNonBlank(Dr(I1), Dr(I2), Dr(I3), Dr(I4), Dr(I5)))
     PushI ODry, Dr
@@ -580,7 +580,7 @@ Private Function B_MPmLin$(MainPm As Drs)
 'Fm  : MainPm (MainDD) : Nm TyChr AsTy !
 'Ret : !
 Dim O$(), Arg$, Nm$, TyChr$, AsTy$, Dr, INm%, ITyChr%, IAsTy%
-AsgIxy MainPm.Fny, "Nm TyChr AsTy", INm, ITyChr, IAsTy
+AsgIx MainPm, "Nm TyChr AsTy", INm, ITyChr, IAsTy
 For Each Dr In Itr(MainPm.Dry)
     Nm = Dr(0)
     TyChr = Dr(1)

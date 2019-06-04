@@ -8,29 +8,29 @@ Type NumPos
     Pos As Long
 End Type
 
-Private Sub ZZ_AsgIxy()
-Dim Fny$(), FF$, A%, B%, C%, EA%, EB%, EC%
+Private Sub ZZ_AsgIx()
+Dim Drs As Drs, FF$, A%, B%, C%, EA%, EB%, Ec%
 GoSub T1
 Exit Sub
 T1:
-    Fny = SyzSS("A B C")
+    Drs.Fny = SyzSS("A B C")
     FF = "C B A"
     EA = 0
     EB = 1
-    EC = 2
+    Ec = 2
     GoTo Tst
 Tst:
-    AsgIxy Fny, FF, "C,B,A"
+    AsgIx Drs, FF, A, B, C
     Debug.Print A = EA
     Debug.Print B = EB
-    Debug.Print C = EC
+    Debug.Print C = Ec
     Return
 End Sub
-Sub AsgIxy(Fny$(), FF$, ParamArray OAp())
+Sub AsgIx(A As Drs, FF$, ParamArray OIxAp())
 Dim F, J%, I&
 For Each F In SyzSS(FF)
-    I = IxzAy(Fny, F): If I < 0 Then Thw CSub, "F in FF not found in Fny", "Fny FF, F", Fny, FF, F
-    OAp(J) = IxzAy(Fny, F)
+    I = IxzAy(A.Fny, F): If I < 0 Then Thw CSub, "F in FF not found in Fny", "Fny FF F", A.Fny, FF, F
+    OIxAp(J) = IxzAy(A.Fny, F)
     J = J + 1
 Next
 End Sub

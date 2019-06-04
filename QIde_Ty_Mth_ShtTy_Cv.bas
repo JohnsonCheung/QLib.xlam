@@ -72,7 +72,7 @@ GoSub ZZ
 Exit Sub
 ZZ:
     Dim O$(), I, Lin
-    For Each I In MthLinyV
+    For Each I In MthLinAyV
         Lin = I
         PushI O, ShtMthTyzLin(Lin)
     Next

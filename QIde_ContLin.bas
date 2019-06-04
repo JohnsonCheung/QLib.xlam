@@ -70,16 +70,16 @@ Tst:
     C
     Return
 End Sub
-Function ContLinCntzM%(A As CodeModule, Lno)
+Function ContLinCntzM%(M As CodeModule, Lno)
 Dim J&, O%
-For J = Lno To A.CountOfLines
+For J = Lno To M.CountOfLines
     O = O + 1
-    If LasChr(A.Lines(J, 1)) <> "_" Then
+    If LasChr(M.Lines(J, 1)) <> "_" Then
         ContLinCntzM = O
         Exit Function
     End If
 Next
-Thw CSub, "LasLin of Md cannot be end of [_]", "LasLin-Of-Md Md", A.Lines(A.CountOfLines, 1), Mdn(A)
+Thw CSub, "LasLin of Md cannot be end of [_]", "LasLin-Of-Md Md", M.Lines(M.CountOfLines, 1), Mdn(M)
 End Function
 
 Function ContLinCnt%(Src$(), Ix)
@@ -103,10 +103,10 @@ For J = 1 To UB(ContLy) - 1
 Next
 End Function
 
-Private Function ContToLno(A As CodeModule, Lno)
+Private Function ContToLno(M As CodeModule, Lno)
 Dim J&
-For J = Lno To A.CountOfLines
-   If Not HasSfx(A.Lines(J, 1), " _") Then
+For J = Lno To M.CountOfLines
+   If Not HasSfx(M.Lines(J, 1), " _") Then
         ContToLno = J
         Exit Function
    End If

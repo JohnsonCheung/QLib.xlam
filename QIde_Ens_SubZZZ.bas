@@ -13,21 +13,21 @@ EnsSubZZZzMd CMd 'Ensure Sub Z()
 EnsPrvZzMd CMd 'Ensure all Z_XX() as Private
 End Sub
 
-Private Function SubZZZEptzMd$(A As CodeModule)
-SubZZZEptzMd = SubZEptzMd(A) & vbCrLf & vbCrLf & SubZZEpt(A)
+Private Function SubZZZEptzMd$(M As CodeModule)
+SubZZZEptzMd = SubZEptzMd(M) & vbCrLf & vbCrLf & SubZZEpt(M)
 End Function
 
-Private Sub EnsSubZZZzMd(A As CodeModule)
-Ept = SubZZZEptzMd(A)
+Private Sub EnsSubZZZzMd(M As CodeModule)
+Ept = SubZZZEptzMd(M)
 'Act = SubZZZzMd(A)
 If Act = Ept Then Exit Sub
 'Brw Ept
 'Stop
-'CmpLines Act, Ept, "Act-SubZ & SubZZ", "Ept"
-RmvMth A, "Z"
-RmvMth A, "ZZ"
+'CmprLines Act, Ept, "Act-SubZ & SubZZ", "Ept"
+RmvMth M, "Z"
+RmvMth M, "ZZ"
 If Ept <> "" Then
-    ApdLines A, vbCrLf & Ept
+    ApdLines M, vbCrLf & Ept
 End If
 End Sub
 
