@@ -9,7 +9,7 @@ Dim O$, I&
 O = Src(Ix)
 For I = Ix + 1 To UB(Src)
     If LasChr(O) <> "_" Then ContLin = O: Exit Function
-    O = RmvLasChr(O) & LTrim(Src(Ix))
+    O = RmvLasChr(O) & LTrim(Src(I))
 Next
 ThwImpossible CSub
 End Function
@@ -25,14 +25,14 @@ ThwImpossible CSub
 End Function
 
 Function SrcLinzNxt$(M As CodeModule, Lno&)
-SrcLinzNxt = M.Lines(SrcLnozNxt(M, Lno), 1)
+SrcLinzNxt = M.Lines(NxtLnozML(M, Lno), 1)
 End Function
 
-Function SrcLnozNxt&(M As CodeModule, Lno&)
+Function NxtLnozML&(M As CodeModule, Lno&)
 Dim J&
 For J = Lno + 1 To M.CountOfLines
     If LasChr(M.Lines(J - 1, 1)) <> "_" Then
-        SrcLnozNxt = J
+        NxtLnozML = J
         Exit Function
     End If
 Next
@@ -40,17 +40,17 @@ Next
 'Thw CSub, "Cannot find Lno where to insert CSub of a given method", "Mthn MthLy", A.Mthn, AywFT(Src, A.FmIx, A.EIx)
 End Function
 
-Function SrcIxzNxt&(Src$(), Optional FmIx&)
+Function NxtIxzSrc&(Src$(), Optional FmIx&)
 Dim J&
 For J = FmIx + 1 To UB(Src)
     If LasChr(Src(J - 1)) <> "_" Then
-        SrcIxzNxt = J
+        NxtIxzSrc = J
         Exit Function
     End If
 Next
 'No need to throw error, just exit it returns -1
 'Thw CSub, "Cannot find Lno where to insert CSub of a given method", "Mthn MthLy", A.Mthn, AywFT(Src, A.FmIx, A.EIx)
-SrcIxzNxt = -1
+NxtIxzSrc = -1
 End Function
 
 Private Sub Z_ContLin()

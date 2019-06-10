@@ -53,19 +53,3 @@ If IsNothing(X) Then Set X = DocDiczP(CPj)
 Set DocDicP = X
 End Function
 
-Function DocDiczStrCnsts(A As StrCnsts) As Dictionary
-Dim DocNm$, O As New Dictionary
-Dim J&, M As StrCnst
-For J = 0 To A.N - 1
-    M = A.Ay(J)
-    If HasPfx(M.Nm, "Docz") Then
-        DocNm = Mid(M.Nm, 6)
-        O.Add DocNm, M.S
-    End If
-Next
-Set DocDiczStrCnsts = O
-End Function
-Function DocDiczDcl(Dcl$) As Dictionary
-Set DocDiczDcl = DocDiczStrCnsts(StrCnsts(SplitCrLf(Dcl)))
-End Function
-

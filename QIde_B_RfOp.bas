@@ -1,4 +1,4 @@
-Attribute VB_Name = "QIde_Rf_RfOp"
+Attribute VB_Name = "QIde_B_RfOp"
 Option Explicit
 Option Compare Text
 Private Const CMod$ = "QIde_Rf_RfOp."

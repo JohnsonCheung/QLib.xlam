@@ -56,6 +56,15 @@ Next
 S1S2szAyab = O
 End Function
 
+Function SomS2(S1, A As S1S2s) As StrOpt
+'Ret : Lookup S1 in A return S2 @@
+Dim Ay() As S1S2: Ay = A.Ay
+Dim J&: For J = 0 To A.N - 1
+    With Ay(J)
+        If .S1 = S1 Then SomS2 = SomStr(.S2): Exit Function
+    End With
+Next
+End Function
 Function S1S2(Optional S1, Optional S2, Optional NoTrim As Boolean) As S1S2
 If NoTrim Then
     S1S2.S1 = S1
@@ -86,6 +95,7 @@ For J = 0 To A.N - 1
     O = Max(O, Len(A.Ay(J).S2))
 Next
 End Function
+
 Function LyzS1S2s(A As S1S2s, Optional Sep$ = "") As String()
 Dim O$(), J&, W%, Ay() As S1S2
 Ay = A.Ay
@@ -102,7 +112,7 @@ End Sub
 Function S1S2szDic(A As Dictionary) As S1S2s
 Dim K
 For Each K In A.Keys
-    PushS1S2 S1S2szDic, S1S2(K, LineszV(A(K)))
+    PushS1S2 S1S2szDic, S1S2(K, A(K))
 Next
 End Function
 

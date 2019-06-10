@@ -29,7 +29,7 @@ Dim mHasPrp As Boolean
     Set ArgSfxToAbcDic = ArgAset.AbcDic
     mCallingPmAy = WCallingPmAy(mPMthPmAy, ArgSfxToAbcDic)
     mHasPrp = mPubPrpGetNm.Cnt > 0
-'-------------
+'-----------
 Dim mDimLy$()
 Dim mCallingLy$()
     mDimLy = WDimLy(ArgSfxToAbcDic, mHasPrp)   ' 1-mArgAy => 1-DimLin

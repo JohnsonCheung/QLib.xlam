@@ -3,21 +3,17 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Ens_MthMdy."
-Function MthLinzEnsprv$(MthLin)
-Const CSub$ = CMod & "MthLinzEnsprv"
+Function MthLinzEnsPrv$(MthLin)
+Const CSub$ = CMod & "MthLinzEnsPrv"
 If Not IsMthLin(MthLin) Then Thw CSub, "Given MthLin is not MthLin", "Lin", MthLin
-MthLinzEnsprv = "Private " & RmvMdy(MthLin)
+MthLinzEnsPrv = "Private " & RmvMdy(MthLin)
 End Function
 
-Function MthLinzEnspub$(MthLin)
-Const CSub$ = CMod & "MthLinzEnspub"
+Function MthLinzEnsPub$(MthLin)
+Const CSub$ = CMod & "MthLinzEnsPub"
 If Not IsMthLin(MthLin) Then Thw CSub, "Given MthLin is not MthLin", MthLin
-MthLinzEnspub = RmvMdy(MthLin)
+MthLinzEnsPub = RmvMdy(MthLin)
 End Function
-
-Sub EnsMdPrvZ()
-EnsPrvZzMd CMd
-End Sub
 
 Sub EnsPjPrvZ()
 EnsPrvZzP CPj
@@ -26,16 +22,19 @@ End Sub
 Sub EnsPrvZzP(P As VBProject)
 Dim C As VBComponent
 For Each C In P.VBComponents
-    EnsPrvZzMd C.CodeModule
+    EnsPrvZzM C.CodeModule
 Next
 End Sub
+Private Function Z_EnsPrv(A As Drs) As Drs
 
-Sub EnsPubMd()
-EnsPubzMd CMd
-End Sub
+End Function
+Sub EnsPrvZzM(M As CodeModule, Optional Rpt)
+Const CmPfx$ = "X_"
+Dim A As Drs: ' A = DPubZMth(M) ' L MthLin
+Dim B As Drs: ' B = X_EnsPrv(A)   ' L MthLin PrvZ
+Dim C As Drs: C = SelDrszAs(B, "L PrvZ:NewL MthLin:OldL")
 
-Sub EnsPrvZzMd(M As CodeModule)
-'MdyMd A, MdygsOfEnsPrvZ(A)
+RplLin M, C
 End Sub
 
 Function LnoAyOfPubZ(M As CodeModule) As Long()
@@ -52,32 +51,6 @@ Function LnoItrOfPubZ(M As CodeModule)
 Asg Itr(LnoAyOfPubZ(M)), LnoItrOfPubZ
 End Function
 
-Sub EnsPubzMd(M As CodeModule)
-'MdyMd A, MdygsOfEnsPubZ(A)
-End Sub
-
-
-Function LnoItrPrvZ(M As CodeModule)
-
-End Function
-
-Sub EnsMdy(M As CodeModule, Mthn, Optional Mdy$)
-End Sub
-
-Sub EnsPrv(M As CodeModule, Mthn)
-EnsMdy M, Mthn, "Private"
-End Sub
-
-Function EnsgPub(M As CodeModule, Mthn) As Mdyg
-End Function
-
-Sub EnsPub(M As CodeModule, Mthn)
-'MdyLin EnsgPub(A, Mthn)
-End Sub
-
-Function EnsgPrv(M As CodeModule, Mthn) As Mdyg
-
-End Function
 
 Private Function MthLinzEnsMdy$(OldMthLin, ShtMdy$)
 Const CSub$ = CMod & "MthLinzEnsMdy"
@@ -91,23 +64,4 @@ Dim L$: L = RmvMdy(OldMthLin)
     End Select
 End Function
 
-
-Private Sub Z_EnsMdy()
-Dim M As CodeModule
-Dim Mthn
-Dim Mdy$
-'--
-Set M = CMd
-Mthn = "Z_A"
-Mdy = "Prv"
-GoSub Tst
-Exit Sub
-Tst:
-    EnsMdy M, Mthn, Mdy
-    Return
-End Sub
-
-Private Sub ZZ()
-MIde_EnsMdy:
-End Sub
 

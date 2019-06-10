@@ -5,7 +5,7 @@ Private Const CMod$ = "MIde_Md_Res."
 Private Const Asm$ = "QIde"
 Function ResLyMd(M As CodeModule, ResNm$, Optional ResPfx$ = "ZZRes") As String()
 Dim Z$
-    Z = MthLineszMN(M, ResPfx & ResNm)
+    Z = MthLineszM(M, ResPfx & ResNm)
     If Si(Z) = 0 Then
         Thw CSub, "Mthn not found", "Mthn Md ResNm ResPfx", ResPfx & ResNm, Mdn(M), ResNm, ResPfx
     End If

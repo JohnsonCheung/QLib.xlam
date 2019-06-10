@@ -29,22 +29,22 @@ End Property
 Property Get CMthn$()
 Dim M As CodeModule: Set M = CMd
 If IsNothing(M) Then Exit Property
-CMthn = MthnzM(CMd)
+CMthn = CMthnzM(CMd)
 End Property
-Function WinyzV(V As Vbe) As vbIde.Window
+Function WinyzV(V As Vbe) As VBIDE.Window
 End Function
-Function WinyV() As vbIde.Window()
+Function WinyV() As VBIDE.Window()
 WinyV = WinyzV(CVbe)
 End Function
 
-Function CWin() As vbIde.Window
+Function CWin() As VBIDE.Window
 Dim A As CodePane
 Set A = CPne
 If IsNothing(A) Then Exit Function
 Set CWin = A.Window
 End Function
 
-Property Get CPne() As vbIde.CodePane
+Property Get CPne() As VBIDE.CodePane
 Set CPne = CVbe.ActiveCodePane
 End Property
 Property Get CMthLno&()

@@ -9,44 +9,31 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 Option Compare Text
-Private Function WIsChdFun(V$, Expr$) As Boolean
-WIsChdFun = HasPfx(Expr, "F." & V)
-End Function
-Friend Function Clc(McBrk As Drs) As Drs
-Dim A As Drs: A = DrswColEq(McBrk, "IsRmk", False)
-Dim ODry()
-    Dim CV$(), CExpr$()
-        AsgCol A, "V Expr", CV, CExpr
-    Dim J%, Expr$, V$
-    For J = 0 To UB(CV)
-        V = CV(J)
-        Expr = CExpr(J)
-        If WIsChdFun(V, Expr) Then
-            PushI ODry, Array(V, Expr)
-        End If
-    Next
-Clc = DrszFF("ChdLinNm Calling", ODry)
-End Function
-Friend Function CmlLNewO(CmlJn As Drs) As Drs
-'Fm CmlJn :  V EptL Lno ActL HasAct
-Dim A As Drs: A = DrswColEq(CmlJn, "HasAct", False)
-If HasReczDrs(A) Then Stop
-'BrwDrs CmlJn: Stop
-Dim B As Drs: B = DrseCeqC(CmlJn, "EptL ActL")
-CmlLNewO = SelDrs(B, "Lno EptL ActL")
-CmlLNewO.Fny = SyzSS("L NewL OldL")
-BrwDrs CmlLNewO: Stop
-End Function
 
 Friend Function CmlAct(CmlEpt As Drs, Md As CodeModule) As Drs
 Dim CV$(): CV = StrColzDrs(CmlEpt, "V")
 Dim Act$(): Act = MthLinAyzM(Md)
 Insp CSub, "CmlAct", "CV Act", CV, Act
 Stop
+End Function
 
+Friend Function CmlActV(CmlAct1 As Drs, CmPfx$) As Drs
+'Ret      : L ActL V ' RmvPfx CmlPfx from V @@
+'Fm CmlAct : L ActL V
+'Ret       : RmvPfx CmPfx from V
+Dim Dry(), Dr, IV%, V$
+AsgIx CmlAct1, "V", IV
+For Each Dr In Itr(CmlAct1.Dry)
+    Dr(IV) = RmvPfx(Dr(IV), CmPfx)
+    PushI Dry, Dr
+Next
+CmlActV = Drs(CmlAct1.Fny, Dry)
+'Insp "QIde_B_MthOp.CmlActV", "Inspect", "Oup(CmlActV) D1 CmPfx", FmtDrs(CmlActV), D1, CmPfx: Stop
 End Function
 Friend Function MlVSfx(Ml$) As Drs
-'Ret V Sfx
+'Ret      : Ret V Sfx ! the MthLin's pm V Sfx @@
+'Fm Ml # MthLin
+'Ret V Sfx ! the MthLin's pm V Sfx
 Dim Pm$: Pm = BetBkt(Ml)
 Dim P, V$, Sfx$, Dry(), L$
 For Each P In Itr(TrimAy(SplitComma(Pm)))
@@ -56,11 +43,12 @@ For Each P In Itr(TrimAy(SplitComma(Pm)))
     PushI Dry, Array(V, Sfx)
 Next
 MlVSfx = DrszFF("V Sfx", Dry)
+'Insp "QIde_B_MthOp.MlVSfx", "Inspect", "Oup(MlVSfx) Ml", FmtDrs(MlVSfx), Ml: Stop
 End Function
 
 Friend Function CmlMthRet(CmlDclPm As Drs) As Drs
-'Fm CmlDclPm : ..Sfx..
-'Ret CmlMthRet : TyChr RetAs
+'Fm  CmlDclPm : V Sfx Expr Mthn CallPm DclPm
+'Ret          : V Sfx Expr Mthn CallPm DclPm TyChr RetAs @@
 Dim Dr, Sfx$, TyChr$, RetAs$, I%, Dry()
 I = IxzAy(CmlDclPm.Fny, "Sfx")
 For Each Dr In Itr(CmlDclPm.Dry)
@@ -73,11 +61,14 @@ For Each Dr In Itr(CmlDclPm.Dry)
 Next
 CmlMthRet = AddColzFFDry(CmlDclPm, "TyChr RetAs", Dry)
 'BrwDrs CmlMthRet: Stop
+'Insp "QIde_B_MthOp.CmlMthRet", "Inspect", "Oup(CmlMthRet) CmlDclPm", FmtDrs(CmlMthRet), FmtDrs(CmlDclPm): Stop
 End Function
 Friend Function CmlDclPm(CmlCallg As Drs, CmlVSfx As Drs) As Drs
-'Fm CmlCallg :
-'Fm CmlVSfx : VSfx
-'Ret CmlDclPm :
+'Fm  CmlCallg : V Sfx Expr                   ! It is subset of McR123 where Expr is a calling1 or calling2.
+'               Mthn CallgPm                 ! calling1 is Expr = CmPfx & V              No Pm yet
+'                                            ! calling2 is HasSfx(Expr, CmPfx & V & "("  with Pm
+'Ret          : V Sfx Expr Mthn CallPm DclPm @@
+Const CmPfx$ = "XH_"
 Dim Dry(), Dr, DclPm$, CallgPm$, Expr$
 For Each Dr In Itr(CmlCallg.Dry)
     Expr = Dr(2)
@@ -86,8 +77,9 @@ For Each Dr In Itr(CmlCallg.Dry)
     PushI Dr, DclPm
     PushI Dry, Dr
 Next
-CmlDclPm = AddColzFFDry(CmlCallg, "CmlDclPm", Dry)
+CmlDclPm = AddColzFFDry(CmlCallg, "DclPm", Dry)
 'BrwDrs CmlDclPm: Stop
+'Insp "QIde_B_MthOp.CmlDclPm", "Inspect", "Oup(CmlDclPm) CmlCallg CmlVSfx", FmtDrs(CmlDclPm), FmtDrs(CmlCallg), FmtDrs(CmlVSfx): Stop
 End Function
 Private Function WDclPm$(CallgPm$, CmlVSfx As Drs)
 Dim O$(), Sfx$, P
@@ -98,151 +90,314 @@ Next
 WDclPm = JnCommaSpc(O)
 'Insp CSub, "Finding DclPm(CallgPm, CmlFmMc)", "CallgPm CmlFmMc WDclPm", CallgPm, FmtDrs(CmlFmMc), WDclPm: Stop
 End Function
-
-Friend Function CrEpt(McBrk As Drs) As Drs
-End Function
-
-Friend Function McBrk(McTRmk As Drs) As Drs
-'Fm  McTRmk: L Gpno MthLin IsRmk #Mc-TopRmk ! For each gp, the front rmk lines are TopRmk, rmv them
-'Ret McBrk : L Gpno MthLin IsRmk            ! Brk the MthLin into V Sfx Expr Rmk
-'            V Sfx Dcl LHS Expr             ! If there is no asg stmt LHS and Expr will be same as V
-'            R1 R2 R3                       ! in this case, a new ChdMth will be created
-Dim MaxGpno%: MaxGpno = MaxzAy(IntAyzDrsC(McTRmk, "Gpno"))
-Dim IGpno%, A As Drs, O As Drs, B As Drs
-If NoReczDrs(McTRmk) Then Stop
-For IGpno = 1 To MaxGpno
-    A = DrswColEq(McTRmk, "Gpno", IGpno)
-    If HasReczDrs(A) Then
-        B = McBrkI(A)
-        O = AddDrs(O, B)
-    End If
+Friend Function CrFill(CrVPR3 As Drs) As Drs
+'Fm  CrVPR3 : V P R1 R2 R3
+'Ret        : V P R1 R2 R3 FP FR1 FR2 @@
+'Fm CrVPR3 : V P R1 R2 R3
+'Ret       : V P R1 R2 R3 FP FR1 FR2 ' For each dist v return the Filler of P R1 R2 as FP FR1 FR2
+If NoReczDrs(CrVPR3) Then Exit Function
+Dim V: For Each V In DistCol(CrVPR3, "V")
+    Dim A As Drs: A = DrswColEq(CrVPR3, "V", V)   ' V P R1 R2 R3 ! Sam V
+    Dim B As Drs: B = WRmk_Fill(A)                   ' V P R1 R2 R3 FP FR1 FR2
+    Dim O As Drs: O = AddDrs(O, B)
 Next
-McBrk = O
+CrFill = O
+'Insp "QIde_B_MthOp.CrFill", "Inspect", "Oup(CrFill) CrVPR3", FmtDrs(CrFill), FmtDrs(CrVPR3): Stop
 End Function
-
-Friend Function McBrkI(A As Drs) As Drs
-'Fm  McTRmk L Gpno MthLin IsRmk    ! For each gp, the front rmk lines are TopRmk, rmv them
-'Ret McBrkI L Gpno MthLin IsRmk    ! Gpno is same
-'           V Sfx Dcl LHS Expr
-'           R1 R2 R3
-
-Dim MthLin$, IsRmk, Dr, WAs%, Dry(), IxMthLin%, IxIsRmk%
-AsgIx A, "MthLin IsRmk", IxMthLin, IxIsRmk
-WAs = WMcBrkIWAs(A) ' The wdt of all As-V
-For Each Dr In Itr(A.Dry)
-    MthLin = Dr(IxMthLin)
-    IsRmk = Dr(IxIsRmk)
-    If IsRmk Then
-        PushIAy Dr, McBrkIRmk(RmvFstChr(MthLin))
+Friend Function CrFst(CrFill As Drs) As Drs
+'Fm  CrFill : V P R1 R2 R3 FP FR1 FR2
+'Ret        : V P R1 R2 R3 FP FR1 FR2 Fst @@
+'Fm CrFill : V P R1 R2 R3 FR1 FR2
+'Ret       : V P R1 R2 R3 FR1 FR2 Fst
+If NoReczDrs(CrFill) Then Exit Function
+Dim Dr, LasV$, LasP$, Dry(): For Each Dr In CrFill.Dry
+    Dim V$: V = Dr(0)
+    Dim P$: P = Dr(1)
+    If V <> LasV Or P <> LasP Then
+        PushI Dr, True
+        LasV = V
+        LasP = P
     Else
-        PushIAy Dr, McBrkIDim(MthLin, WAs) ' The MthLin is a DimLin and it may have no assignment stmt.
+        PushI Dr, False
     End If
     PushI Dry, Dr
 Next
-McBrkI = Drs(AddFF(A.Fny, "V Sfx Dcl LHS Expr R1 R2 R3"), Dry)
-'Insp CSub, "Adding BrK (breaking mth lin into 6 columns", "Bef-break Aft-break", FmtDrs(A), FmtDrs(McBrkI):  Stop
+CrFst = AddColzFFDry(CrFill, "Fst", Dry)
+'Insp "QIde_B_MthOp.CrFst", "Inspect", "Oup(CrFst) CrFill", FmtDrs(CrFst), FmtDrs(CrFill): Stop
 End Function
-Private Function WMcBrkIWAs%(A As Drs)
-' Ret The wdt of all As-V
-Dim B$(): B = StrColzDrs(DrswColEqSel(A, "IsRmk", False, "MthLin"), "MthLin")
-Dim C$():
-    Dim I
-    For Each I In Itr(B)
-        PushNonBlank C, Bef(I, " As ")
-    Next
-Dim D$(): D = RmvPfxzAy(C, "Dim ")
-WMcBrkIWAs = WdtzAy(D)
-'Thw CSub, "Find WAs: The wdt of all As-V", "Src B C D WAs", FmtDrs(A), B, C, D, WMcBrkIWAs
-End Function
-
-Friend Function McBrkIDim(DimLin$, WAs%) As Variant()
-'Fm DimLin
-'Fm WAs ! It is the Wdt of As-V, it may be zero, than the DimLin should not be an As-line.
-'Ret Dcl V LHS Expr R1 R2 R3
-Dim A As S3, L$, V$, Sfx$, Dcl$, LHS$, Expr$, R1$, R2$, R3$
-A = BrkBet(DimLin, ":", "'")
-
-'V, L <= A.A
-    L = A.A
-    If ShfT1(L) <> "Dim" Then Stop
-    V = ShfNm(L): If V = "" Then Stop
-
-'Sfx, L <= L
-    If ShfTerm(L, "As") Then
-        Sfx = " As " & ShfNm(L)
-    Else
-        Sfx = ShfTyChr(L)
-    End If
-    If ShfPfx(L, "()") Then Sfx = Sfx & "()"
-
-'Dcl <= V, Sfx, WAs
-    If HasPfx(Sfx, " As ") Then
-        Dcl = V & Space(WAs - Len(V)) & Sfx
-    Else
-        Dcl = V & Sfx
-    End If
-
-'LHS, Expr <= A.B, V
-    If A.B = "" Then
-        LHS = V
-        Expr = V
-    Else
-        With Brk(A.B, "=") 'Asume must have =, otherwise break
-            LHS = .S1
-            Expr = .S2
-        End With
-    End If
-    
-'Rmk
-    AsgBrkBet A.C, vbPround, vbExcM, R1, R2, R3
-
-McBrkIDim = Array(V, Sfx, Dcl, LHS, Expr, R1, R2, R3)
-End Function
-
-Friend Function McBrkIRmk(RmkLin$)
-'Ret Dcl V LHS Expr R1 R2 R3"
-Dim R1$, R2$, R3$
-AsgBrkBet RmkLin, vbPround, vbExcM, R1, R2, R3
-McBrkIRmk = Array("", "", "", "", "", R1, R2, R3)
-End Function
-
-Friend Function McFill(McBrk As Drs) As Drs
-'A     : L Gpno MthLin IsRmk V Sfx Dcl LHS Expr R1 R2 R3
-'Ret   : Add 6 Columns: F0 FDcl FLHS FExpr FR1 FR2 for each gp
-If NoReczDrs(McBrk) Then Stop
-Dim Gpno%(), O As Drs, IGpno, A As Drs, B As Drs, C As Drs
-Gpno = AywDist(IntAyzDrsC(McBrk, "Gpno"))
-For Each IGpno In Itr(Gpno)
-    A = DrswColEq(McBrk, "Gpno", IGpno)
-    B = McF0(A)
-    C = AddColzFiller(B, "Dcl LHS Expr R1 R2")
-    O = AddDrs(O, C)
+Friend Function CrEpt(CmPfx$, CrRmk As Drs) As S1S2s
+'Fm  CrRmk : V P R1 R3 R3 FP FR1 FR2 Fst Rmk
+'Ret       : Mthn RmkLines                   ! RmkLines is find by each V in CrVPR3 & Mthn = V & CmPfx @@
+'Fm CrRmk : V P R1 R3 R3 FP FR1 FR2 Fst Rmk
+If NoReczDrs(CrRmk) Then Exit Function
+Dim A As Drs: A = SelDrs(CrRmk, "V Rmk")
+Dim Dr, Ly$(): For Each Dr In A.Dry
+    PushI Ly, CmPfx & Dr(0) & " " & Dr(1)
 Next
-'BrwDrs O, ShwZer:=True: Stop
+Dim D As Dictionary: Set D = Dic(Ly, vbCrLf)
+Dim O As Dictionary: Set O = AddSfxzDic(D, " @@")
+CrEpt = S1S2szDic(O)
+'Insp "QIde_B_MthOp.CrEpt", "Inspect", "Oup(CrEpt) CmPfx CrRmk", FmtS1S2s(CrEpt), CmPfx, FmtDrs(CrRmk): Stop
+End Function
+Friend Function CrRmk(CrFst As Drs) As Drs
+'Fm  CrFst : V P R1 R2 R3 FP FR1 FR2 Fst
+'Ret       : V P R1 R3 R3 FP FR1 FR2 Fst Rmk @@
+'Fm CrFst : V P R1 R2 R3 FP FR1 FR2 Fst
+'Ret      : V P R1 R2 R3 FP FR1 FR2 Fst Rmk
+If NoReczDrs(CrFst) Then Exit Function
+Dim Dr, Dry(): For Each Dr In CrFst.Dry
+    Dim Lin$: Lin = WRmk_Lin(Dr)
+    PushI Dr, Lin
+    PushI Dry, Dr
+Next
+CrRmk = AddColzFFDry(CrFst, "Rmk", Dry)
+'Insp "QIde_B_MthOp.CrRmk", "Inspect", "Oup(CrRmk) CrFst", FmtDrs(CrRmk), FmtDrs(CrFst): Stop
+End Function
+
+Private Function WRmk_Fill(A As Drs) As Drs
+'Fm A : V P R1 R2 R3 ! Sam V
+'Ret  : V FP FR1 FR2 FR3
+Dim FP%: FP = WdtzAy(StrCol(A, "P"))
+Dim FR1%: FR1 = WdtzAy(StrCol(A, "R1"))
+Dim FR2%: FR2 = WdtzAy(StrCol(A, "R2"))
+Dim Dr, Dry(): For Each Dr In Itr(A.Dry)
+    PushIAy Dr, Array(FP, FR1, FR2)
+    PushI Dry, Dr
+Next
+WRmk_Fill = AddColzFFDry(A, "FP FR1 FR2", Dry)
+End Function
+Friend Function CrVPR3(CrPm As Drs, CrVR3 As Drs, MlVSfx As Drs) As Drs
+'Fm  CrPm   : V CallgPm
+'Fm  CrVR3  : V R1 R2 R3
+'Fm  MlVSfx : Ret V Sfx    ! the MthLin's pm V Sfx
+'Ret        : V P R1 R2 R3 @@
+Dim VP, R, P, ODry(), V$, CallgPm$, PmR4(), ODr(), A As Drs
+For Each VP In Itr(CrPm.Dry)
+    V = VP(0)
+    CallgPm = VP(1)
+    For Each P In Itr(TrimAy(SplitComma(CallgPm)))
+        If HasColEq(MlVSfx, "V", P) Then
+            ODr = Array(V, P, "InpPm", "", "")
+        Else
+            A = ColEqExlEqCol(CrVR3, "V", P)
+            For Each R In Itr(A.Dry)
+                ODr = Array(V, P, R(0), R(1), R(2))
+                PushI ODry, ODr
+            Next
+        End If
+    Next
+    '-- Ret
+    A = ColEqExlEqCol(CrVR3, "V", V)
+    For Each R In Itr(A.Dry)
+        ODr = Array(V, "*Ret", R(0), R(1), R(2))
+        PushI ODry, ODr
+    Next
+Next
+CrVPR3 = DrszFF("V P R1 R2 R3", ODry)
+'BrwDrs3 CrPm, CrVR3, CrVPR3, NN:="CrPm CrVR3 Oup-CrVPR3": Stop
+'Insp "QIde_B_MthOp.CrVPR3", "Inspect", "Oup(CrVPR3) CrPm CrVR3 MlVSfx", FmtDrs(CrVPR3), FmtDrs(CrPm), FmtDrs(CrVR3), FmtDrs(MlVSfx): Stop
+End Function
+Friend Function CrVR3(McR123 As Drs) As Drs
+'Fm  McR123 : L Gpno MthLin IsRmk
+'             V Sfx Dcl LHS Expr R1 R2 R3 ! Add R1 R2 R3 from Rst
+'Ret        : V R1 R2 R3 @@
+Dim A As Drs: A = SelDrs(McR123, "V IsRmk R1 R2 R3")
+Dim V$, IsRmk As Boolean, R1$, R2$, R3$, Dry(), Dr, X$
+Dim LasV$: LasV = A.Dry(0)(0)
+For Each Dr In Itr(A.Dry)
+    AsgAp Dr, V, IsRmk, R1, R2, R3
+    If IsRmk Then
+        X = LasV
+    Else
+        X = V
+        LasV = V
+    End If
+    Select Case True
+    Case R1 <> "", R2 <> "", R3 <> ""
+        PushI Dry, Array(X, R1, R2, R3)
+    End Select
+Next
+CrVR3 = DrszFF("V R1 R2 R3", Dry)
+'BrwDrs2 McR123, CrVR3: Stop
+'Insp "QIde_B_MthOp.CrVR3", "Inspect", "Oup(CrVR3) McR123", FmtDrs(CrVR3), FmtDrs(McR123): Stop
+End Function
+
+
+Friend Function McVSfx(McTRmk As Drs) As Drs
+'Fm  McTRmk : L Gpno MthLin IsRmk ! For each gp, the front rmk lines are TopRmk,
+'                                 ! rmv them
+'Ret        : L Gpno IsRmk
+'             V Sfx Rst @@
+Const CmPfx$ = "XB_"
+Dim Dr, Dry()
+For Each Dr In Itr(McTRmk.Dry)
+    Dim Av(): Av = WDrVSfxRst(Dr(2))
+    PushIAy Dr, Av
+    PushI Dry, Dr
+Next
+McVSfx = AddColzFFDry(McTRmk, "V Sfx Rst", Dry)
+'BrwDrs McVSfx: Stop
+'Insp "QIde_B_MthOp.McVSfx", "Inspect", "Oup(McVSfx) McTRmk", FmtDrs(McVSfx), FmtDrs(McTRmk): Stop
+End Function
+
+Friend Function McDcl(McVSfx As Drs) As Drs
+'Fm  McVSfx : L Gpno IsRmk
+'             V Sfx Rst
+'Ret        : L Gpno MthLin IsRmk
+'             V Sfx Dcl Rst       ! Add Dcl from V & Sfx @@
+Const CmPfx$ = "XA_"
+Dim MthLin$, IxMthLin%, Dr, Dry(), IGpno
+AsgIx McVSfx, "MthLin", IxMthLin
+For Each IGpno In AywDist(IntAyzDrsC(McVSfx, "Gpno"))
+    Dim A As Drs: A = ColEq(McVSfx, "Gpno", IGpno) ' L Gpno MthLin IsRmk V Sfx Rst ! Sam Gpno
+    Dim B As Drs: B = WDcl(A) ' L Gpno MthLin IsRmk V Sfx Dcl Rst ! Adding Dcl using V Sfx
+    Dim O As Drs: O = AddDrs(O, B)
+Next
+McDcl = O
+'Insp "QIde_B_MthOp.McDcl", "Inspect", "Oup(McDcl) McVSfx", FmtDrs(McDcl), FmtDrs(McVSfx): Stop
+End Function
+
+Private Function WDcl(A As Drs) As Drs
+'Fm A :      L Gpno MthLin IsRmk V Sfx Rst
+'Ret McDclI: L Gpno MthLin IsRmk V Sfx Dcl Rst @@
+Dim IxV%, IxSfx%: AsgIx A, "V Sfx", IxV, IxSfx
+Dim B As Drs: B = DrswColPfx(A, "Sfx", " As ")
+Dim C$(): C = StrColzDrs(B, "V")
+Dim WAsV%: WAsV = WdtzAy(C)
+Dim Dr, Dry(): For Each Dr In Itr(A.Dry)
+    Dim V$: V = Dr(IxV)
+    Dim Sfx$: Sfx = Dr(IxSfx)
+    Dim Dcl$: Dcl = WDclzV(V, WAsV, Sfx)
+    Dim Rst$: Rst = Pop(Dr)
+    PushIAy Dr, Array(Dcl, Rst)
+    PushI Dry, Dr
+Next
+Dim Fny$(): Fny = AddAy(AyeLasEle(A.Fny), Array("Dcl", "Rst"))
+WDcl = Drs(Fny, Dry)
+End Function
+Private Function WAlign(A As Drs) As Drs
+Dim Dr
+Dim L&, Gpno%, MthLin$, Dcl$, LHS$, Expr$, R1$, R2$, R3$, F0%, FDcl%, FLHS%, FExpr%, FR1%, FR2%
+Dim T0$, TDcl$, TL$, TR$, TR1$, TR2$, TR3$, Align$, Dry()
+For Each Dr In Itr(A.Dry)
+    AsgAp Dr, L, Gpno, MthLin, Dcl, LHS, Expr, R1, R2, R3, F0, FDcl, FLHS, FExpr, FR1, FR2
+    T0 = Space(F0)
+    TDcl = Dcl & Space(FDcl)
+    TL = Space(FLHS) & LHS
+    TR = Expr & Space(FExpr)
+    TR1 = R1 & Space(FR1)
+    TR2 = R2 & Space(FR2)
+    TR3 = R3
+    Align = RTrim(T0 & TDcl & TL & TR & TR1 & TR2 & TR3)
+    PushI Dry, Array(L, Gpno, MthLin, Align)
+Next
+WAlign = DrszFF("L Gpno MthLin Align", Dry)
+'BrwDrs2 A, WAlign: Stop
+End Function
+Private Function WDclzV$(V$, WAsV%, Sfx$)
+If V = "" Then Exit Function
+Dim O$, S$
+If HasPfx(Sfx, " As ") Then S = Space(WAsV - Len(V))
+WDclzV = "Dim " & V & S & Sfx & ": "
+End Function
+Friend Function McLR(McDcl As Drs) As Drs
+'Fm  McDcl : L Gpno MthLin IsRmk
+'            V Sfx Dcl Rst          ! Add Dcl from V & Sfx
+'Ret       : L Gpno MthLin IsRmk
+'            V Sfx Dcl LHS Expr Rst ! Add LHS Expr from Rst @@
+Dim Dr: For Each Dr In Itr(McDcl.Dry)
+    Dim L$: L = Pop(Dr)
+    Dim Rst$:        Rst = L
+    Dim LHS$, Expr$:       AsgAp ShfLRHS(Rst), LHS, Expr
+    If Rst <> "" Then
+        If Not IsVbRmk(Rst) Then Stop
+    End If
+                      Dr = AddAy(Dr, Array(LHS, Expr, Rst))
+    Dim Dry():             PushI Dry(), Dr
+Next
+Dim Fny$(): Fny = AyeLasEle(McDcl.Fny)
+Fny = AddAy(Fny, SyzSS("LHS Expr Rst"))
+McLR = Drs(Fny, Dry)
+'Insp "QIde_B_MthOp.McLR", "Inspect", "Oup(McLR) McDcl", FmtDrs(McLR), FmtDrs(McDcl): Stop
+End Function
+
+Friend Function McR123(McLR As Drs) As Drs
+'Fm  McLR : L Gpno MthLin IsRmk
+'           V Sfx Dcl LHS Expr Rst      ! Add LHS Expr from Rst
+'Ret      : L Gpno MthLin IsRmk
+'           V Sfx Dcl LHS Expr R1 R2 R3 ! Add R1 R2 R3 from Rst @@
+Dim Dr: For Each Dr In Itr(McLR.Dry)
+    Dim Rst$:          Rst = LasEle(Dr)
+    If FstChr(Rst) <> "'" Then Stop
+    Dim R1$, R2$, R3$:       AsgBrkBet Rst, "#", "!", R1, R2, R3
+                        R1 = Trim(RmvFstChr(R1))
+                             If R2 <> "" Then R2 = " # " & R2
+                             If R3 <> "" Then R3 = " ! " & R3
+                             If R1 <> "" Or R2 <> "" Or R3 <> "" Then R1 = " ' " & R1
+    Dim Dry():               PushI Dry, AddAy(AyeLasEle(Dr), Array(R1, R2, R3))
+Next
+Dim Fny$(): Fny = AddAy(AyeLasEle(McLR.Fny), SyzSS("R1 R2 R3"))
+McR123 = Drs(Fny, Dry)
+'Insp "QIde_B_MthOp.McR123", "Inspect", "Oup(McR123) McLR", FmtDrs(McR123), FmtDrs(McLR): Stop
+End Function
+Private Function WDrVSfxRst(MthLin) As Variant()
+Dim V$, Sfx$, Rst$
+    Rst = Trim(MthLin)
+    Select Case True
+    Case ShfTermX(Rst, "Dim")
+        V = ShfNm(Rst)
+        Sfx = ShfDclSfx(Rst)
+        If HasPfx(Sfx, ",") Then Stop
+        Rst = Trim(RmvPfxAll(Rst, ":"))
+    End Select
+WDrVSfxRst = Array(V, Sfx, Rst)
+End Function
+
+Private Function WF0(A As Drs) As Drs
+Dim IxMthLin%: IxMthLin = IxzAy(A.Fny, "MthLin")
+Dim IxV%: IxV = IxzAy(A.Fny, "V")
+Dim Dr:              Dr = A.Dry(0)
+Dim V$:               V = Dr(IxV)
+Dim MthLin$:     MthLin = Dr(IxMthLin)
+Dim T$:               T = LTrim(MthLin)
+Dim F0%:             F0 = IIf(V = "", 0, Len(MthLin) - Len(T))
+               WF0 = AddColzCV(A, "F0", F0)
+End Function
+
+Friend Function McFill(McR123 As Drs) As Drs
+'Fm  McR123 : L Gpno MthLin IsRmk
+'             V Sfx Dcl LHS Expr R1 R2 R3 ! Add R1 R2 R3 from Rst
+'Ret        : L Gpno MthLin IsRmk
+'             V Sfx Dcl LHS Expr
+'             F0 FSfx FExpr FR1 FR2       ! Adding F* @@
+Const CmPfx$ = "XD_"
+Dim Gpno%(): Gpno = AywDist(IntAyzDrsC(McR123, "Gpno"))
+Dim IGpno: For Each IGpno In Itr(Gpno)
+    Dim A As Drs: A = ColEq(McR123, "Gpno", IGpno)
+    Dim B As Drs: B = WF0(A)
+    Dim C As Drs: C = AddColzFiller(B, "Dcl LHS Expr R1 R2")
+    Dim O As Drs: O = AddDrs(O, C)
+Next
 McFill = O
-End Function
-Friend Function DblEqDta() As Drs
-
-End Function
-Friend Function ODblEq() As Unt
-
+'Insp "QIde_B_MthOp.McFill", "Inspect", "Oup(McFill) McR123", FmtDrs(McFill), FmtDrs(McR123): Stop
 End Function
 
-Friend Function McDblEqRmk(Mc As Drs) As Drs
-'Fm Mc L Lin
+Friend Function De(Mc As Drs) As Drs
+'Fm  Mc   : L MthLin # Mc.
+'Ret      : L MthLin # Dbl-Eq @@
 Dim Dr, Dry()
 For Each Dr In Itr(Mc.Dry)
     If Left(LTrim(Dr(1)), 3) = "'==" Then PushI Dry, Dr
 Next
-McDblEqRmk.Fny = Mc.Fny
-McDblEqRmk.Dry = Dry
+De.Fny = Mc.Fny
+De.Dry = Dry
 
-'Insp CSub, "Finding DblEq LnoAy", "Mth-Cxt LnoAyDblEq", FmtDrs(Mc), FmtDrs(McDblEqRmk): Stop
+'Insp "QIde_B_MthOp.De", "Inspect", "Oup(De) Mc", FmtDrs(De), FmtDrs(Mc): Stop
 End Function
 
-Friend Function McDblEqLNewO(McDblEqRmk As Drs) As Drs
-'Fm Mc L Lin
-'Fm Mc L Lin
+Friend Function DeLNewO(McDblEqRmk As Drs) As Drs
+'Fm  De   : L MthLin    # Dbl-Eq
+'Ret      : L NewL OldL @@
 'BrwDrs McDblEqRmk: Stop
 Dim Dr, Dry(), OldL$, NewL$, L&, A$
 For Each Dr In Itr(McDblEqRmk.Dry)
@@ -254,14 +409,13 @@ For Each Dr In Itr(McDblEqRmk.Dry)
         Push Dry, Array(L, NewL, OldL)
     End If
 Next
-McDblEqLNewO = LNewO(Dry)
+DeLNewO = LNewO(Dry)
 
-'Insp CSub, "Finding DblEq LnoAy", "Mth-Cxt LnoAyDblEq", FmtDrs(Mc), FmtDrs(McDblEqRmk): Stop
+'Insp "QIde_B_MthOp.DeLNewO", "Inspect", "Oup(DeLNewO) De", FmtDrs(DeLNewO), FmtDrs(De): Stop
 End Function
 Friend Function McGp(McCln As Drs) As Drs
-'Fm  Xl
-'Fm  McCln L MthLin  #Mth-Cxt-Spc  ! no spc line & las lin
-'Ret L Gpno MthLin #Mth-Cxt-Gpno ! with L in seq will be one gp
+'Fm  McCln : L MthLin    # Mc-Cln. ! must Dim | Asg | Rmk(but not 'If 'Insp, '==). Cln to Align
+'Ret       : Gpno MthLin           ! with L in seq will be one gp @@
 Dim Dr, LasL&, Gpno%, L&, Dry(), J%
 For Each Dr In McCln.Dry
     L = Dr(0)
@@ -272,22 +426,27 @@ For Each Dr In McCln.Dry
     PushI Dry, Array(L, Gpno, Dr(1))
 Next
 McGp = DrszFF("L Gpno MthLin", Dry)
+'Insp "QIde_B_MthOp.McGp", "Inspect", "Oup(McGp) McCln", FmtDrs(McGp), FmtDrs(McCln): Stop
 End Function
 
 Friend Function McTRmk(McRmk As Drs) As Drs
+'Fm  McRmk : L Gpno MthLin IsRmk ! a column IsRmk is added
+'Ret       : L Gpno MthLin IsRmk ! For each gp, the front rmk lines are TopRmk,
+'                                ! rmv them @@
 ' L Gpno MthLin IsRmk    #Mth-Cxt-TopRmk ! For each gp, the front rmk lines are TopRmk, rmv them
 Dim IGpno%, MaxGpno, A As Drs, B As Drs, O As Drs
 MaxGpno = MaxzAy(IntAyzDrsC(McRmk, "Gpno"))
 For IGpno = 1 To MaxGpno
-    A = DrswColEq(McRmk, "Gpno", IGpno)
+    A = ColEq(McRmk, "Gpno", IGpno)
     B = McTRmkI(A)
     O = AddDrs(O, B)
 Next
 McTRmk = O
+'Insp "QIde_B_MthOp.McTRmk", "Inspect", "Oup(McTRmk) McRmk", FmtDrs(McTRmk), FmtDrs(McRmk): Stop
 End Function
 Friend Function McTRmkI(A As Drs) As Drs
-' Fm  A     L Gpno MthLin IsRmk    #Mth-Cxt-TopRmk ! All Gpno are eq
-' Ret McTRmkI L Gpno MthLin IsRmk ! Rmk TopRmk
+' Fm  A :    L Gpno MthLin IsRmk    #Mth-Cxt-TopRmk ! All Gpno are eq
+' Ret : L Gpno MthLin IsRmk ! Rmk TopRmk
 McTRmkI.Fny = A.Fny
 Dim J%
     Dim Dr
@@ -304,6 +463,8 @@ End Function
 
 
 Friend Function McRmk(McGp As Drs) As Drs
+'Fm  McGp : Gpno MthLin         ! with L in seq will be one gp
+'Ret      : L Gpno MthLin IsRmk ! a column IsRmk is added @@
 'Ret McRmk L Gpno MthLin IsRmk    #Mth-Cxt-isRmk
 Dim Dr
 For Each Dr In McGp.Dry
@@ -311,84 +472,36 @@ For Each Dr In McGp.Dry
     Push McRmk.Dry, Dr
 Next
 McRmk.Fny = AddFF(McGp.Fny, "IsRmk")
+'Insp "QIde_B_MthOp.McRmk", "Inspect", "Oup(McRmk) McGp", FmtDrs(McRmk), FmtDrs(McGp): Stop
 End Function
-Private Function WCmDta3(MthLin$) As Dictionary
-Dim MthPm$: MthPm = BetBkt(MthLin)
-Set WCmDta3 = New Dictionary
-Dim P
-For Each P In Itr(TrimAy(Split(MthPm, ",")))
-    WCmDta3.Add TakNm(P), P
-Next
-'BrwDic WCmDta3: Stop
-End Function
-Function AddColzFFDry(A As Drs, FF$, NewDry()) As Drs
-AddColzFFDry = Drs(AddFF(A.Fny, FF), NewDry)
-End Function
-Private Function WCmDta1(A As Drs) As Drs
-Dim Dr, ODry()
-For Each Dr In Itr(A.Dry)
-    PushI Dr, BetBkt(Dr(1))
-    PushI ODry, Dr
-Next
-WCmDta1 = AddColzFFDry(A, "Pm", ODry)
-End Function
-Private Function WCmDta4$(Pm$, Dic_V_Dcl1 As Dictionary)
-Dim P, O$()
-For Each P In Itr(TrimAy(Split(Pm, ",")))
-    PushI O, Dic_V_Dcl1(P)
-Next
-WCmDta4 = JnCommaSpc(O)
-End Function
-Private Function WCmDta21$(Dcl)
-Dim O$: O = Dcl
-While HasSubStr(O, "  As ")
-    O = Replace(O, "  As ", " As ")
-Wend
-WCmDta21 = O
-End Function
-Private Function WCmDta2(A As Drs) As Drs
-'Fm A      V Expr Dcl Pm
-'Ret WCmDta2 V Expr Dcl Pm Dcl1
-Dim ODry(), Dr
-For Each Dr In Itr(A.Dry)
-    PushI Dr, WCmDta21(Dr(2))
-    PushI ODry, Dr
-Next
-WCmDta2 = Drs(AddFF(A.Fny, "Dcl1"), ODry)
-End Function
-Private Sub WCmDta5(Dcl1$, OTyChr$, ORetAs$)
-Dim A$: A = RmvNm(Dcl1)
-Select Case True
-Case HasPfx(A, " As ")
-    OTyChr = ""
-    ORetAs = A
-Case HasSfx(A, "()")
-    OTyChr = ""
-    ORetAs = " As " & TyNmzTyChr(TakTyChr(A)) & "()"
-Case Else
-    OTyChr = A
-    ORetAs = ""
-End Select
-End Sub
 
-Friend Function CmStr$(CmNew$(), McBrk As Drs, CmMdy$, CmPfx$)
-Dim A As Drs: A = DrswColEqSel(McBrk, "IsRmk", False, "V Sfx")
-Dim CmNm, O$(), Sfx, V$
+
+Friend Function CmStr$(CmNew$(), McR123 As Drs, CmMdy$, CmPfx$)
+'Fm  CmNew  :                             ! The new ChdMthNy to be created.
+'Fm  McR123 : L Gpno MthLin IsRmk
+'             V Sfx Dcl LHS Expr R1 R2 R3 ! Add R1 R2 R3 from Rst
+'Ret        :                             ! Mth-Str to be append to CmMd @@
+Dim A As Drs: A = ColEqSel(McR123, "IsRmk", False, "V Sfx")
+Dim CmNm, O$(), Sfx, V$, TyChr$, RetAs$
+'BrwDrs McR123: Stop
 For Each CmNm In Itr(CmNew)
     V = RmvPfx(CmNm, CmPfx)
     Sfx = ValzColEq(A, "Sfx", "V", V): If Not IsStr(Sfx) Then Stop
+    TyChr = TyChrzDclSfx(Sfx)
+    RetAs = RetAszDclSfx(Sfx)
     PushI O, ""
-    PushI O, FmtQQ("? Function ??", CmMdy, CmNm, Sfx)
+    PushI O, FmtQQ("? Function ??()?", CmMdy, CmNm, TyChr, RetAs)
     PushI O, "End Function"
 Next
 CmStr = JnCrLf(O)
+'Insp "QIde_B_MthOp.CmStr", "Inspect", "Oup(CmStr) CmNew McR123 CmMdy CmPfx", CmStr, CmNew, FmtDrs(McR123), CmMdy, CmPfx: Stop
 End Function
 
 Friend Function CmlEpt(CmlMthRet As Drs, CmMdy$) As Drs
-'Fm CmlMthRet : V Sfx Expr CmNm CallgPm CmlDclPm TyChr RetAs
-'Ret CmlEpt   : V EptL
+'Fm  CmlMthRet : V Sfx Expr Mthn CallPm DclPm TyChr RetAs
+'Ret           : V Mthn EptL @@
 Dim Dr, Dry(), Nm$, Ty$, Pm$, Ret$, V$, EptL$, INm%, ITy%, IPm%, IRet%, IV%
-AsgIx CmlMthRet, "CmNm TyChr CmlDclPm RetAs V", INm, ITy, IPm, IRet, IV
+AsgIx CmlMthRet, "Mthn TyChr DclPm RetAs V", INm, ITy, IPm, IRet, IV
 'BrwDrs CmlMthRet: Stop
 For Each Dr In Itr(CmlMthRet.Dry)
     Nm = Dr(INm)
@@ -397,15 +510,17 @@ For Each Dr In Itr(CmlMthRet.Dry)
     Ret = Dr(IRet)
     V = Dr(IV)
     EptL = FmtQQ("? Function ??(?)?", CmMdy, Nm, Ty, Pm, Ret)
-    PushI Dry, Array(V, EptL)
+    PushI Dry, Array(V, Nm, EptL)
 Next
-CmlEpt = DrszFF("V EptL", Dry)
+CmlEpt = DrszFF("V Mthn EptL", Dry)
 'BrwDrs CmlEpt: Stop
+'Insp "QIde_B_MthOp.CmlEpt", "Inspect", "Oup(CmlEpt) CmlMthRet CmMdy", FmtDrs(CmlEpt), FmtDrs(CmlMthRet), CmMdy: Stop
 End Function
 
 Friend Function CmlCallg(CmlFmMc As Drs, CmlCallgPfx$) As Drs
-'Fm CmlFmMc : V Sfx Expr
-'Ret CmlCallg : V Sfx Expr CmNm CallgPm
+'Ret      : V Sfx Expr   ! It is subset of McR123 where Expr is a calling1 or calling2.
+'           Mthn CallgPm ! calling1 is Expr = CmPfx & V              No Pm yet
+'                        ! calling2 is HasSfx(Expr, CmPfx & V & "("  with Pm @@
 If CmlCallgPfx = "" Then Stop
 Dim ODry()
     Dim Dr
@@ -415,60 +530,24 @@ Dim ODry()
         Dim Expr$: Expr = Dr(2)
         Dim ExprPfx$: ExprPfx = CmlCallgPfx & V & "("
         If HasPfx(Expr, ExprPfx) Then
-            Dim CmNm$
+            Dim Mthn$
             If CmlCallgPfx = "F." Then
-                CmNm = V
+                Mthn = V
             Else
-                CmNm = CmlCallgPfx & V
+                Mthn = CmlCallgPfx & V
             End If
             Dim CallgPm$: CallgPm = BetBkt(Expr)
-            PushI Dr, CmNm
+            PushI Dr, Mthn
             PushI Dr, CallgPm
             PushI ODry, Dr
         End If
     Next
-CmlCallg = DrszFF("V Sfx Expr CmNm CallgPm", ODry)
+CmlCallg = DrszFF("V Sfx Expr Mthn CallgPm", ODry)
 'BrwDrs CmlCallg: Stop
+'Insp "QIde_B_MthOp.CmlCallg", "Inspect", "Oup(CmlCallg) CmlFmMc CmlCallgPfx", FmtDrs(CmlCallg), FmtDrs(CmlFmMc), CmlCallgPfx: Stop
 End Function
-
-Friend Function CmDta1(Xnc As Boolean, Cmo$(), McBrk As Drs, Ml$) As Drs
-'Ret CmDta Chdn Pm
-If Xnc Then Exit Function
-Dim A As Drs: A = DrswColEqSel(McBrk, "IsRmk", False, "V Expr Dcl") 'V Expr Dcl
-Dim B As Drs: B = WCmDta1(A) 'V Expr Dcl Pm
-Dim C As Drs: C = WCmDta2(B) 'V Expr Dcl Pm Dcl1
-Dim D As Drs: D = SelDrs(C, "V Dcl1")
-Dim E As Dictionary: Set E = DiczDrsCC(D) 'Dic_V_Dcl1
-Dim F As Dictionary: Set F = WCmDta3(Ml)    'Dic_MthPm_Dcl
-Dim G As Dictionary: Set G = AddDic(E, F)
-Dim CV$(), CPm$(), CDcl1$()
-    AsgCol C, "V Pm Dcl1", CV, CPm, CDcl1
-Dim ODry()
-    Dim J%
-    For J = 0 To UB(CV)
-        Dim Dcl1$: Dcl1 = CDcl1(J)
-        Dim TyChr$, RetAs$
-            WCmDta5 Dcl1, TyChr, RetAs
-        PushI ODry, Array(CV(J), TyChr, WCmDta4(CPm(J), G), RetAs)
-    Next
-CmDta1 = DrszFF("Chdn TyChr MthPm RetAs", ODry)
-'BrwDrs CmDta: Stop
-End Function
-
-Private Function WCclsNm$(Md As CodeModule, Mln$)
-WCclsNm = Mdn(Md) & "__" & Mln
-End Function
-Friend Function Ccls(NoSf As Boolean, Md As CodeModule, Mln$) As CodeModule
-If NoSf Then Exit Function
-Set Ccls = MdzPN(PjzM(Md), WCclsNm(Md, Mln))
-End Function
-
 
 Friend Function McNew(Mc As Drs, McDim As Drs) As String()
-'Fm Mc L MthLin #Mth-Cxt.
-'Fm McDim L MthLin DimLin #Mth-Cxt-newDimLin.
-'Ret McNew L MthLin #Mth-Cxt-New.  ! After after
-
 'BrwDrs2 Mc, Mc, NN:="Mc McDim", Tit:="Use McDim to Upd Mc to become NewL": Stop
 If JnSpc(McDim.Fny) <> "L OldL NewL" Then Stop
 Dim A As Drs: A = SelDrs(McDim, "L NewL")
@@ -486,90 +565,148 @@ Dim O$()
     Next
 McNew = O
 End Function
-
-Friend Function McDim(McFill As Drs) As Drs
-'Fm  Xl
-'Fm  McFill : L Gpno MthLin IsRmk V Sfx Dcl LHS Expr R1 R2 R3
-'Ret Mco    : L OldL NewL                              ! #Mth-Cxt-Oup.  Bld the new DimLin
-'BrwDrs McFill: Stop
-If NoReczDrs(McFill) Then Stop
-Dim Dr, L&, MthLin$, IsRmk As Boolean, DimLin$, ODry()
-For Each Dr In McFill.Dry
+Friend Function BsLNewO(Bs As Drs, BsVPfx As Dictionary, Mdn$, MlNm$) As Drs
+'Fm  Bs   : L BsLin            ! FstTwoChr = '@
+'Fm  MlNm :         # Ml-Name. @@
+Const CmPfx$ = "XF_"
+Dim Dr, Dry(), S$, Lin$, L&
+For Each Dr In Itr(Bs.Dry)
     L = Dr(0)
-    MthLin = Dr(2)
-    IsRmk = Dr(3)
-    If IsRmk Then
-        DimLin = McDimRmk(Dr)
-    Else
-        DimLin = McDimLin(Dr)
-    End If
-    PushI ODry, Array(L, DimLin, MthLin)
+    Lin = Dr(1)
+    S = WBsStmt(Lin, BsVPfx, Mdn, MlNm)
+    PushI Dry, Array(L, S, Lin)
 Next
-McDim = DrszFF("L NewL OldL", ODry) 'Som may be OldL=NewL
-'BrwDrs McDim: Stop
+BsLNewO = DrszFF("L NewL OldL", Dry)
+'Insp "QIde_B_MthOp.BsLNewO", "Inspect", "Oup(BsLNewO) Bs VSfx Mdn MlNm", FmtDrs(BsLNewO), FmtDrs(Bs), VSfx, Mdn, MlNm: Stop
 End Function
 
-Friend Function McDimLin$(McFillDr)
-'Fm  McFill : L Gpno MthLin IsRmk V Sfx Dcl LHS Expr R1 R2 R3 F0 FDcl FLHS FExpr FR1 FR2 ! Upd F0..FR1
-'Ret DimLin$
-'Brw LyzNNAv("L Gpno MthLin IsRmk Dcl V LHS Expr R1 R2 R3 F0 FDcl FLHS FExpr FR1 FR2", CvAv(McFillDr)): Stop
-Dim L&, Gpno%, MthLin$, IsRmk, V$, Sfx$, Dcl$, LHS$, Expr$, R1$, R2$, R3$, F0%, FDcl%, FLHS%, FExpr%, FR1%, FR2%
-AsgAp McFillDr, _
-    L&, Gpno%, MthLin$, IsRmk, V$, Sfx$, Dcl$, LHS$, Expr$, R1$, R2$, R3$, F0%, FDcl%, FLHS%, FExpr%, FR1%, FR2%
-
-Dim S0$:       S0 = Space(F0)
-Dim SDcl$:   SDcl = Space(FDcl)
-Dim SLHS$:   SLHS = Space(FLHS)
-Dim SExpr$: SExpr = Space(FExpr)
-Dim SR1$:     SR1 = Space(FR1)
-Dim SR2$:     SR2 = Space(FR2)
-'
-Dim OD$:  OD = Dcl
-Dim OL$:  OL = SDcl & SLHS & LHS
-Dim OE$:  OE = Expr & SExpr
-Dim OM$:  OM = XRmk(FR1, FR2, R1, R2, R3)
-If OM = "" Then
-    McDimLin = RTrim(FmtQQ("?Dim ?: ? = ?", S0, OD, OL, OE))
-Else
-    McDimLin = RTrim(FmtQQ("?Dim ?: ? = ? ' ?", S0, OD, OL, OE, OM))
-End If
-End Function
-Friend Function McDimRmk$(McFillDr)
-'Fm  McFill    : L Gpno MthLin IsRmk V Sfx Dcl LHS Expr R1 R2 R3 F0 FDcl FLHS FExpr FR1 FR2
-'Ret McDimRmk$
-Dim L&, Gpno%, MthLin$, IsRmk, V$, Sfx$, Dcl$, LHS$, Expr$, R1$, R2$, R3$, F0%, FDcl%, FLHS%, FExpr%, FR1%, FR2%
-AsgAp McFillDr, _
-    L&, Gpno%, MthLin$, IsRmk, V$, Sfx$, Dcl$, LHS$, Expr$, R1$, R2$, R3$, F0%, FDcl%, FLHS%, FExpr%, FR1%, FR2%
-
-'
-Dim OS$:  OS = Space(11 + FLHS + FDcl + FExpr)
-Dim OM$:  OM = XRmk(FR1, FR2, R1, R2, R3)
-McDimRmk = Trim(FmtQQ("'??", OS, OM))
+Private Function WBsStmt$(BsLin, VSfx As Dictionary, Mdn$, MlNm$)
+If Left(BsLin, 2) <> "'@" Then Thw CSub, "BsLin is always begin with '@", "BsLin", BsLin
+Dim NN$: NN = Trim(RmvPfx(BsLin, "'@"))
+Dim E$: E = InspExprLis(NN, VSfx)
+WBsStmt = InspStmt(NN, E, Mdn, MlNm)
 End Function
 
-Friend Function OEnsSf(NoSf As Boolean, Md As CodeModule, MthLno&, Mln$) As Unt
-If NoSf Then Exit Function
-Dim Lno&: Lno = SrcLnozNxt(Md, MthLno)
-Dim OldL$: OldL = Md.Lines(Lno, 1)
-Dim NewL$: NewL = "Static F As New " & WCclsNm(Md, Mln)
-If OldL <> NewL Then
-    Stop
-    Md.ReplaceLine Lno, NewL
-End If
+Friend Function OCrtMb(CmMd As CodeModule, MbNew As Drs)
+'Fm NewMb : Cm NewMbL @@
+Dim Dr: For Each Dr In Itr(MbNew.Dry)
+    Dim Lin$: Lin = Dr(1)
+    
+    Dim Mthn$:  Mthn = Dr(0)
+    Dim MLno&: MLno = MthLnozMM(CmMd, Mthn)
+    Dim ELno&: ELno = MthELno(CmMd, MLno)
+    Dim L&: L = ELno
+    
+    CmMd.InsertLines L, Lin
+Next
 End Function
 
-Friend Function OEnsCcls(NoSf As Boolean, Md As CodeModule, Mln$) As Unt
+Friend Function MbEpt(MbLis As Drs, Mdn$) As Drs
+'Fm  CmLis : Mthn MthLin
+'Ret       : Mthn MthLin MbStmt @@
+Dim Dr, Dry()
+For Each Dr In Itr(MbLis.Dry)
+    Dim MthLin$: MthLin = LasEle(Dr)
+    Dim MbStmt$: MbStmt = "'" & InspMthStmt(MthLin, Mdn) & ": Stop"
+    PushI Dr, MbStmt
+    PushI Dry, Dr
+Next
+MbEpt = AddColzFFDry(MbLis, "MbStmt", Dry)
+'Insp "QIde_B_MthOp.MbEpt", "Inspect", "Oup(MbEpt) CmLis Mdn", FmtDrs(MbEpt), FmtDrs(CmLis), Mdn: Stop
+End Function
+
+Friend Function MbAct(Cm$(), Md As CodeModule) As Drs
+'Ret      : L Mthn OldL ! OldL is MbStmt @@
+Dim A As Drs: A = DMthE(Md)             ' L E Mdy Ty Mthn MthLin
+Dim B As Drs: B = DrswColIn(A, "Mthn", Cm)
+Dim Dr, Dry(): For Each Dr In Itr(B.Dry)
+    Dim E&:           E = Dr(1)
+    Dim L&:           L = E - 1          ' ! The Lno of MbStmt
+    Dim Mthn$:     Mthn = Dr(4)
+    Dim MbStmt$: MbStmt = Md.Lines(L, 1)
+    Select Case True
+    Case HasPfx(MbStmt, "'Insp "), HasPfx(MbStmt, "Insp ")
+        PushI Dry, Array(L, Mthn, MbStmt)
+    End Select
+Next
+MbAct = DrszFF("L Mthn OldL", Dry)
+'BrwDrs MbAct: Stop
+'Insp "QIde_B_MthOp.MbAct", "Inspect", "Oup(MbAct) Cm CmMd", FmtDrs(MbAct), Cm, Mdn(CmMd): Stop
+End Function
+
+Friend Function Bs(Mc As Drs) As Drs
+'Fm  McCln : L MthLin # Mc-Cln. ! must Dim | Asg | Rmk(but not 'If 'Insp, '==). Cln to Align
+'Ret       : L BsLin            ! FstTwoChr = '@ @@
+Dim Dr, Dry()
+For Each Dr In Itr(Mc.Dry)
+    If HasPfx(Dr(1), "'@") Then PushI Dry, Dr
+Next
+Bs = DrszFF("L BsLin", Dry)
+'Insp "QIde_B_MthOp.Bs", "Inspect", "Oup(Bs) McCln", FmtDrs(Bs), FmtDrs(McCln): Stop
+End Function
+Friend Function McAlign(McFill As Drs) As Drs
+'Fm  McFill : L Gpno MthLin IsRmk
+'             V Sfx Dcl LHS Expr
+'             F0 FSfx FExpr FR1 FR2 ! Adding F*
+'Ret        : L Align               ! Bld the new Align @@
+Const CmPfx$ = "XE_"
+If NoReczDrs(McFill) Then Stop
+Dim A As Drs: A = SelDrs(McFill, "L Gpno MthLin Dcl LHS Expr R1 R2 R3 F0 FDcl FLHS FExpr FR1 FR2")
+Dim Gpno: Gpno = DistCol(McFill, "Gpno")
+Dim IGpno: For Each IGpno In Itr(Gpno)
+    Dim B As Drs: B = ColEq(A, "Gpno", IGpno)
+    Dim C As Drs: C = WAlign(B)
+    Dim O As Drs: O = AddDrs(O, C)
+Next
+McAlign = O
+'Insp "QIde_B_MthOp.McAlign", "Inspect", "Oup(McAlign) McFill", FmtDrs(McAlign), FmtDrs(McFill): Stop
+End Function
+
+Friend Function SfLNewO(NoSf As Boolean, SfLno&, SfLin$, CclsNm$) As Drs
+'Ret      : Only one or no line @@
+If NoSf Then SfLNewO = EmpLNewO: Exit Function
+Dim NewL$: NewL = "Static F As New " & CclsNm
+If SfLin = NewL Then SfLNewO = EmpLNewO: Exit Function
+SfLNewO = LNewO(Av(Array(SfLno, NewL, SfLin)))
+'Insp "QIde_B_MthOp.SfLNewO", "Inspect", "Oup(SfLNewO) NoSf SfLno SfLin CclsNm", FmtDrs(SfLNewO), NoSf, SfLno, SfLin, CclsNm: Stop
+End Function
+
+Friend Sub OEnsCcls(NoSf As Boolean, HasCcls As Boolean, Md As CodeModule, CclsNm$)
 'Ret #Ens-Chd-Cls.
-If NoSf Then Exit Function
-EnsCmpzPTN PjzM(Md), vbext_ct_ClassModule, WCclsNm(Md, Mln)
-End Function
+If NoSf Then Exit Sub
+If HasCcls Then Exit Sub
+EnsCmpzPTN PjzM(Md), vbext_ct_ClassModule, CclsNm
+End Sub
 
 Friend Function CmPfx$(NoSf As Boolean, McLy$())
 If Not NoSf Then Exit Function
 CmPfx = StrValzCnstLy(McLy, "CmPfx")
+'Insp "QIde_B_MthOp.CmPfx", "Inspect", "Oup(CmPfx) NoSf McLy", CmPfx, NoSf, McLy: Stop
+End Function
+Friend Function CmPfxEr(CmPfx$, Md As CodeModule) As Boolean
+If CmPfx = "" Then Exit Function
+Dim L, Cnt%, V$
+For Each L In Itr(Src(Md))
+    V = StrValzCnstn(L, "CmPfx")
+    If V = "" Then GoTo X
+    If V = CmPfx Then Cnt = Cnt + 1
+    If Cnt >= 2 Then
+        Debug.Print "CmPfx(?) is duplicated in Md(?)", CmPfx, Mdn(Md)
+        CmPfxEr = True
+    End If
+    If V <> CmPfx Then
+        If HasPfx(V, CmPfx) Then
+            Debug.Print FmtQQ("Given CmPfx(?), there is another CmPfx(?) contains the given.  This is not allowed", CmPfx, V)
+            CmPfxEr = True
+            Exit Function
+        End If
+    End If
+X:
+Next
+'Insp "QIde_B_MthOp.CmPfxEr", "Inspect", "Oup(CmPfxEr) CmPfx Md", CmPfxEr, CmPfx, Mdn(Md): Stop
 End Function
 
-Friend Function XRmk$(FR1%, FR2%, R1$, R2$, R3$)
+Friend Function WRmk$(FR1%, FR2%, R1$, R2$, R3$)
 If R1 = "" And R2 = "" And R3 = "" Then Exit Function
 Dim A$, B$, C$
 A = R1 & Space(FR1)
@@ -581,13 +718,13 @@ End If
 If R3 <> "" Then
     C = " ! " & R3
 End If
-XRmk = RTrim(A & B & C)
+WRmk = RTrim(A & B & C)
 End Function
 
 
 Friend Function CmLin(CmDta As Drs, CmMdy$) As String()
 'Fm  CmDta  V TyChr Pm RetAs
-'Ret CmLin MthLin                     ! MthLin is always a function
+'Ret CmLin MthLin                     ! MthLin is always a function @@
 Dim Dr, CmNm$, MthPfx$, Pm$, TyChr$, RetAs$
 For Each Dr In Itr(CmDta.Dry)
     CmNm = Dr(0)
@@ -598,6 +735,7 @@ For Each Dr In Itr(CmDta.Dry)
     PushI CmLin, MthLin
 Next
 End Function
+
 Friend Function XSelf(SkpChkSelf As Boolean, Md As CodeModule, Mln$) As Boolean
 If SkpChkSelf Then Exit Function
 Dim O As Boolean
@@ -614,72 +752,122 @@ XPm = False
 End Function
 
 Friend Function McCln(Mc As Drs) As Drs
-'Fm  Mth MthLin ! mth Mct
-'Ret Mth MthLin ! Rmv non-Dim & non-Rmk lin
+'Fm  Mc   : L MthLin # Mc.
+'Ret      : L MthLin # Mc-Cln. ! must Dim | Asg | Rmk(but not 'If 'Insp, '==). Cln to Align @@
 Dim Dr, Dry(), L$, Yes As Boolean
 For Each Dr In Itr(Mc.Dry)
     L = Trim(Dr(1))
     Yes = False
-    If HasPfx(L, "'") Then
+    Select Case True
+    Case HasPfx(L, "'")
         L = LTrim(RmvFstChr(L))
         Select Case True
-        Case HasPfx(L, "If"), HasPfx(L, "Stop"), HasPfx(L, "Insp"), HasPfx(L, "=="), HasPfx(L, "Brw")
+        Case HasPfxss(L, "If Stop Insp == Brw")
         Case Else: Yes = True
         End Select
-    Else
-        Yes = IsAlignableDim(L)
-    End If
+    Case IsAlignableDim(L), IsAsgStmt(L)
+        Yes = True
+    End Select
     If Yes Then PushI Dry, Dr
 Next
 McCln = Drs(Mc.Fny, Dry)
 'BrwDrs McCln: Stop
+'Insp "QIde_B_MthOp.McCln", "Inspect", "Oup(McCln) Mc", FmtDrs(McCln), FmtDrs(Mc): Stop
 End Function
 
-Friend Function McF0(A As Drs) As Drs
-'Fm   : L Gpno MthLin V Sfx Expr R1 R2 R3
-'Ret  : Add  column-filler-F0  ! Sfx-0-of-McF0 is add-column-filler-0-F0
-Dim Dr: Dr = A.Dry(0)
-Dim F0%: F0 = WF0zDimLin(Dr(2))
-Dim ODry()
-For Each Dr In Itr(A.Dry)
-    PushI Dr, F0
-    PushI ODry, Dr
+Friend Sub OUpdCr(CrChg As S1S2s, CmMd As CodeModule)
+Dim J&, Ay() As S1S2
+Ay = CrChg.Ay
+For J = 0 To CrChg.N - 1
+    With Ay(J)
+    RplMthRmk CmMd, .S1, .S2
+    End With
 Next
-McF0 = Drs(AddFF(A.Fny, "F0"), ODry)
+End Sub
+
+Private Sub OUpdCrOneV(V, NewRmk$, CmMd As CodeModule, CmPfx$)
+Dim Mthn$: Mthn = CmPfx & V
+RplMthRmk CmMd, Mthn, NewRmk
+End Sub
+
+Private Function WRmk_Lin$(Dr)
+Dim V$, P$, R1$, R2$, R3$, FP%, FR1%, FR2%, Fst As Boolean
+AsgAp Dr, V, P, R1, R2, R3, FP, FR1, FR2, Fst
+Const CmPfx$ = "WRmk_"
+Dim FmRet$:     FmRet = WRmk_FmRet(Fst, P)
+Dim NmColon$: NmColon = WRmk_NmColon(Fst, P, FP)
+Dim R$:             R = WRmk_RmkL(R1, R2, R3, FR1, FR2)
+            WRmk_Lin = Trim(FmRet & NmColon & R)
+End Function
+Private Function WRmk_FmRet$(Fst As Boolean, P$)
+Dim O$
+Select Case True
+Case Fst And P = "*Ret": O = "'Ret "
+Case Fst:                O = "'Fm  "
+Case Else:               O = "'    "
+End Select
+WRmk_FmRet = O
+End Function
+Private Function WRmk_NmColon$(Fst As Boolean, P$, FP%)
+Dim O$
+Select Case True
+Case Fst And P = "*Ret": O = Space(FP%) & " : "
+Case Fst:                O = AlignL(P, FP%) & " : "
+Case Else:               O = Space(FP + 3)
+End Select
+WRmk_NmColon = O
 End Function
 
-
-Friend Function CrLNewO(CrJn As Drs) As Drs
+Private Function WRmk_RmkL$(R1$, R2$, R3$, FR1%, FR2%)
+If R1 <> "" Then
+    If Left(R1, 3) <> " ' " Then Stop
+    R1 = Mid(R1, 4)
+End If
+WRmk_RmkL = RTrim(AlignL(R1, FR1 - 3) & AlignL(R2, FR2) & R3)
 End Function
 
-Friend Function CrAct(CmEpt$(), Md As CodeModule) As Drs
-
+Friend Function CrChg(CrEpt As S1S2s, CrAct As S1S2s) As S1S2s
+'Fm  CrEpt : Mthn RmkLines ! RmkLines is find by each V in CrVPR3 & Mthn = V & CmPfx
+'Ret       : Mthn RmkLines ! Only those need to change @@
+Dim J&, Ay() As S1S2, R As LnoLines, O As S1S2s
+Ay = CrEpt.Ay
+For J = 0 To CrEpt.N - 1
+    With Ay(J)
+    Dim A As StrOpt: A = SomS2(.S1, CrAct)
+    If A.Som Then
+        If .S2 <> A.Str Then
+            PushS1S2 O, Ay(J)
+        End If
+    Else
+        PushS1S2 O, Ay(J)
+    End If
+    End With
+Next
+CrChg = O
+'Insp "QIde_B_MthOp.CrChg", "Inspect", "Oup(CrChg) CrEpt CrAct", FmtS1S2s(CrChg), FmtS1S2s(CrEpt), FmtS1S2s(CrAct): Stop
 End Function
-Friend Function OUpdCr(CrDta As Drs) As Drs
 
-End Function
-
-Friend Function CmEpt(McBrk As Drs) As String()
+Friend Function CmEpt(McR123 As Drs, ExprPfx$) As String()
+'Fm  McR123  : L Gpno MthLin IsRmk
+'              V Sfx Dcl LHS Expr R1 R2 R3 ! Add R1 R2 R3 from Rst
+'Fm  ExprPfx :                             ! Either F. or CmPfx.  It used to detect the Expr is a calling cm expr
+'Ret         :                             ! It is from V and  {V} = {CmPfx}{Expr}.
+'                                          ! They will be used create new chd mth @@
 'Ret ! It is from V and Expr=V
-Dim A As Drs: A = DrswColEq(McBrk, "IsRmk", False)
+Dim A As Drs: A = ColEq(McR123, "IsRmk", False)
 Dim CV$(), CExpr$()
     AsgCol A, "V Expr", CV, CExpr
     If Si(CV) = 0 Then Exit Function
 
 Dim V, J%
 For Each V In CV
-    If CExpr(J) = CV(J) Then
+    If ExprPfx & V = CExpr(J) Then
         PushI CmEpt, CV(J)  '<=====
     End If
     J = J + 1
 Next
 'Brw CmEpt: Stop
-End Function
-
-Friend Function WF0zDimLin%(DimLin)
-If T1(DimLin) <> "Dim" Then Stop
-Dim L$: L = LTrim(DimLin)
-WF0zDimLin = Len(DimLin) - Len(L)
+'Insp "QIde_B_MthOp.CmEpt", "Inspect", "Oup(CmEpt) McR123 ExprPfx", CmEpt, FmtDrs(McR123), ExprPfx: Stop
 End Function
 
 

@@ -27,10 +27,10 @@ AddCmpzPTNn CPj, vbext_ct_ClassModule, Clsnn
 JmpCmp T1(Clsnn)
 End Sub
 
-Function ApdLines(M As CodeModule, Lines$) As Unt
-If Lines = "" Then Exit Function
+Sub ApdLines(M As CodeModule, Lines$)
+If Lines = "" Then Exit Sub
 M.InsertLines M.CountOfLines + 1, Lines '<=====
-End Function
+End Sub
 Sub ApdLineszoInf(M As CodeModule, Lines$)
 Dim Bef&, Aft&, Exp&, Cnt&
 Bef = M.CountOfLines
@@ -45,7 +45,7 @@ End If
 End Sub
 
 Function HasCmpzN(Cmpn) As Boolean
-HasCmpzN = HasCmpzPN(CPj, Cmpn)
+HasCmpzN = HasCmpzP(CPj, Cmpn)
 End Function
 
 Sub AddCmpzPNL(P As VBProject, Nm, SrcLines$)
@@ -62,21 +62,25 @@ If HasPfx(A.Name, FmPfx) Then
     A.Name = RplPfx(A.Name, FmPfx, ToPfx)
 End If
 End Sub
+
 Sub EnsClsLines(Clsn$, ClsLines$)
 EnsCls CPj, Clsn
 EnsModLines Md(Clsn), ClsLines
 End Sub
+
 Sub EnsCls(P As VBProject, Clsn)
 EnsCmpzPTN P, vbext_ct_ClassModule, Clsn
 End Sub
 
 Sub EnsCmpzPTN(P As VBProject, Ty As vbext_ComponentType, Nm)
-If Not HasCmpzPN(P, Nm) Then AddCmpzPTN P, Ty, Nm
+If Not HasCmpzP(P, Nm) Then AddCmpzPTN P, Ty, Nm
 End Sub
+
 Sub EnsModLines(M As CodeModule, Lines$)
 If Lines = SrcLines(M) Then Inf CSub, "Same module lines, no need to replace", "Mdn", Mdn(M): Exit Sub
-RplMdzML M, Lines
+RplMd M, Lines
 End Sub
+
 Sub EnsModzPN(P As VBProject, Mdn)
 EnsCmpzPTN P, vbext_ct_StdModule, Mdn
 End Sub

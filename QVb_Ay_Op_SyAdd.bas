@@ -44,7 +44,8 @@ Next
 End Function
 
 Function AddEle(Ay, Ele)
-AddEle = AddEle(Ay, Ele)
+AddEle = Ay
+Push AddEle, Ele
 End Function
 Function AddElezStr(Sy$(), Ele$) As String()
 Dim O$(): O = Sy: PushI O, Ele: AddElezStr = O

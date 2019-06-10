@@ -125,8 +125,8 @@ Const CSub$ = CMod & "DryGpDic"
 'Set DryGpDic = O
 End Function
 
-Function DrszFbt(Fb, T) As Drs
-DrszFbt = DrszT(Db(Fb), T)
+Function DrszFbt(FB, T) As Drs
+DrszFbt = DrszT(Db(FB), T)
 End Function
 
 Function KE24Drs() As Drs

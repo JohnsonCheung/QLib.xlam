@@ -49,26 +49,21 @@ Function MthDicM() As Dictionary
 Set MthDicM = MthDiczM(CMd)
 End Function
 
-Private Function MthDnzLin$(Lin)
-MthDnzLin = MthDnzMthn3(Mthn3zL(Lin))
-End Function
-
 Function MthDic(Src$(), Optional Mdn$, Optional ExlDcl As Boolean) As Dictionary 'Key is MthDn, Val is MthLinesWiTopRmk
-Dim Ix, Lines$, Dn$
 Set MthDic = New Dictionary
 Dim P$: If Mdn <> "" Then P = Mdn & "."
 With MthDic
     If Not ExlDcl Then .Add P & "*Dcl", Dcl(Src)
-    For Each Ix In MthIxItr(Src)
-        Dn = MthDnzLin(Src(Ix))
-        Lines = MthLineszSI(Src, Ix)
+    Dim Ix: For Each Ix In MthIxItr(Src)
+        Dim Dn$:       Dn = MthDnzLin(Src(Ix))
+        Dim Lines$: Lines = MthLineszSI(Src, Ix)
         .Add P & Dn, Lines
     Next
 End With
 End Function
 
-Function MthDiczM(M As CodeModule) As Dictionary
-Set MthDiczM = MthDic(Src(M), Mdn(M))
+Function MthDiczM(M As CodeModule, Optional ExlDcl As Boolean) As Dictionary
+Set MthDiczM = MthDic(Src(M), Mdn(M), ExlDcl)
 End Function
 
 Function LineszJnLinesItr$(LinesItr, Optional Sep$ = vbCrLf)
@@ -84,7 +79,9 @@ End Function
 Function SSrcLineszS$(Src$())
 SSrcLineszS = JnStrDic(SrtDic(MthDic(Src)), vbDblCrLf)
 End Function
-
+Function SSrcLinesM$()
+SSrcLinesM = SSrcLineszM(CMd)
+End Function
 Function SSrcLineszM$(M As CodeModule)
 SSrcLineszM = SSrcLineszS(Src(M))
 End Function
@@ -106,66 +103,17 @@ Sub BrwSMdDiczP()
 BrwDic SMdDiczP(CPj)
 End Sub
 
-Sub RplPj(A As RplgPj)
-Dim Mdn, J&
-For J = 0 To A.RplgMds.N - 1
-    If Mdn <> "MIde_Srt" Then
-        RplMd A.RplgMds.Ay(J)
-    End If
-Next
-End Sub
-
-Sub SrtP()
-SrtzP CPj
-End Sub
-Sub SrtM()
-SrtzM CMd
-End Sub
 Sub SrtMd()
 SrtzM CMd
 End Sub
 
-Sub SrtzM(M As CodeModule)
-With SomSrtgzM(M)
-    If .Som Then RplMd .RplgMd
-End With
-End Sub
-
 Private Sub SrtzP(P As VBProject)
 BackupFfn Pjf(P)
-RplPj SrtgzP(P)
-End Sub
-
-Function SrtgzP(P As VBProject) As RplgPj
-Dim O As RplgPj, M As CodeModule
-Set O.Pj = P
 Dim C As VBComponent
 For Each C In P.VBComponents
-    Set M = C.CodeModule
-    With SomSrtgzM(M)
-        If .Som Then
-            PushRplgMd O.RplgMds, .RplgMd
-        End If
-    End With
+    SrtzM C.CodeModule
 Next
-End Function
-
-Function SomSrtgzM(M As CodeModule) As SomRplgMd
-Dim Srted$
-    Dim S$(): S = Src(M)
-    Srted = SSrcLineszS(S)
-Dim NotSrted$
-    NotSrted = JnCrLf(S)
-If Srted = NotSrted Then Exit Function
-SomSrtgzM = SomRplgMd(RplgMd(M, Srted))
-End Function
-
-Function SomRplgMd(RplgMd As RplgMd) As SomRplgMd
-With SomRplgMd
-    .Som = True
-    .RplgMd = RplgMd
-End With
-End Function
+End Sub
 
 Private Sub ZZ_Dcl_BefAndAft_Srt()
 Const Mdn = "VbStrRe"

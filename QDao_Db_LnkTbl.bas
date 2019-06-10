@@ -30,9 +30,9 @@ End Sub
 Function LnkTblPm(T, S, Cn$) As LnkTblPm
 With LnkTblPm: .T = T: .S = S: .Cn = Cn: End With
 End Function
-Function LnkTblzDrs(A As Database, DrsTSCn As Drs) As Unt
+Sub LnkTblzDrs(A As Database, DrsTSCn As Drs)
 LnkTblzDryTSCn A, DrsTSCn.Dry
-End Function
+End Sub
 
 Sub LnkTblzDryTSCn(A As Database, DryTSCn())
 Dim Dr, T$, S$, Cn$

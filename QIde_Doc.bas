@@ -20,12 +20,9 @@ If Not IsNm(S) Then Exit Function
 IsDocNm = Left(S, 5) = "Docz"
 End Function
 
-Function DocDiczP(P As VBProject) As Dictionary
-Dim O As New Dictionary, Dcl
-For Each Dcl In DclDiczP(P).Items
-    PushDic O, DocDiczDcl(CStr(Dcl))
-Next
-Set DocDiczP = SrtDic(O)
+Function DDoczP(P As VBProject) As Drs
+Dim Dry()
+DDoczP = DrszFF("Itmn Des", Dry)
 End Function
 Sub Doc(Nm)
 If DocDicP.Exists(Nm) Then D DocDicP(Nm) Else D "Not exist"

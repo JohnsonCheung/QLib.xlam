@@ -12,16 +12,30 @@ With Mthn3
 End With
 End Function
 
-Function MthDnzN3(A As Mthn3)
-With A
-If .Nm = "" Then Exit Function
-MthDnzN3 = JnDotAp(.ShtMdy, .Nm, .ShtTy)
-End With
-End Function
-
 Function Mthn3zL(Lin) As Mthn3
 Mthn3zL = ShfMthn3(CStr(Lin))
 End Function
+Function ShfLHS$(OLin$)
+Dim L$: L = OLin
+Dim IsSet As Boolean: IsSet = ShfTermX(L, "Set")
+Dim S$: If IsSet Then S = "Set "
+Dim LHS$: LHS = ShfNm(L)
+If ShfPfx(L, " = ") Then
+    ShfLHS = S & LHS & " = "
+    OLin = L
+End If
+End Function
+Function ShfLRHS(OLin$) As Variant()
+'If HasSubStr(OLin, "Then RplLin Md, DeLNewO") Then Stop
+Dim L$: L = OLin
+Dim LHS$: LHS = ShfLHS(L)
+With Brk1(L, "'")
+    Dim RHS$: RHS = .S1
+    OLin = "'" & .S2
+End With
+ShfLRHS = Array(LHS, RHS)
+End Function
+
 Function ShfMthn3(OLin$) As Mthn3
 Dim M$: M = ShfShtMdy(OLin)
 Dim T$: T = ShfShtMthTy(OLin):: If T = "" Then Exit Function
@@ -43,13 +57,6 @@ Case Else
 End Select
 End Function
 
-
-
-Function MthDnzMthn3$(A As Mthn3)
-If A.Nm = "" Then Exit Function
-MthDnzMthn3 = A.Nm & "." & A.ShtTy & "." & A.ShtMdy
-End Function
-
 Function RmvMthn3$(Lin)
 Dim L$: L = Lin
 RmvMthMdy L
@@ -57,28 +64,13 @@ If ShfMthTy(L) = "" Then Exit Function
 If ShfNm(L) = "" Then Thw CSub, "Not as SrcLin", "Lin", Lin
 RmvMthn3 = L
 End Function
+Function FmtMthn3$(A As Mthn3)
+With A
+FmtMthn3 = JnDotAp(.Nm, .ShtMdy, .ShtTy)
+End With
+End Function
 Sub DmpMthn3(A As Mthn3)
 D FmtMthn3(A)
 End Sub
-Function FmtMthn3$(A As Mthn3)
-
-End Function
-
-Function Mthn3zDNm(MthDn$) As Mthn3
-Dim Nm$, Ty$, Mdy$
-If MthDn = "*Dcl" Then
-    Nm = "*Dcl"
-Else
-    Dim B$(): B = SplitDot(MthDn)
-    If Si(B) <> 3 Then
-        Thw CSub, "Given MthDn SplitDot should be 3 elements", "NEle-SplitDot MthDn", Si(B), MthDn
-    End If
-    Dim ShtMdy$, ShtTy$
-    AsgAp B, Nm, ShtTy, ShtMdy
-    Ty = MthTyBySht(ShtTy)
-    Mdy = ShtMthMdy(ShtMdy)
-End If
-Mthn3zDNm = Mthn3(Nm, Mdy, Ty)
-End Function
 
 

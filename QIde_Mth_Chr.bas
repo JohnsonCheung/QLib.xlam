@@ -40,6 +40,16 @@ Function RmvTyChr$(S)
 RmvTyChr = RmvChrzSfx(S, TyChrLis)
 End Function
 
+Function ShfDclSfx$(OLin$)
+Dim O$: O = ShfTyChr(OLin)
+Select Case True
+Case O <> ""
+    ShfDclSfx = O & IIf(ShfBkt(OLin), "()", "")
+Case ShfAs(OLin)
+    O = ShfNm(OLin): If O = "" Then Stop
+    ShfDclSfx = " As " & O & IIf(ShfBkt(OLin), "()", "")
+End Select
+End Function
 Function ShfTyChr$(OLin$)
 ShfTyChr = ShfChr(OLin, TyChrLis)
 End Function

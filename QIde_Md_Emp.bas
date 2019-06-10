@@ -48,11 +48,11 @@ T2:
     Ept = True
     GoTo Tst
 T1:
-    '-----
+    '
     Dim T$, P As VBProject
         Set P = CPj
         T = TmpNm
-    '---
+    '
 '    Set M = PjAdd_Md(P, T)
     Ept = True
     GoSub Tst

@@ -5,7 +5,7 @@ Private Const CMod$ = "MIde_Md_Op_Ren."
 Private Const Asm$ = "QIde"
 
 Sub RenTo(FmCmpn, ToNm)
-If HasCmpzPN(CPj, ToNm) Then Inf CSub, "CmpToNm exist", "ToNm", ToNm: Exit Sub
+If HasCmpzP(CPj, ToNm) Then Inf CSub, "CmpToNm exist", "ToNm", ToNm: Exit Sub
 CMP(FmCmpn).Name = ToNm
 End Sub
 Sub Ren(NewCmpn)

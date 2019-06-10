@@ -1,7 +1,7 @@
 Attribute VB_Name = "QIde_Mth_Drs_Cache"
 Option Compare Text
 Option Explicit
-Private Const CMod$ = "MIde_Mth_Drs_Cache."
+Private Const CMod$ = "MIde_Mth_DCache."
 Private Const Asm$ = "QIde"
 Public Const DoczTof$ = "DashNm: tbl-of.  IsCml. After Tof, it is a table-name."
 
@@ -9,9 +9,9 @@ Function CacheDtezPjf(Pjf) As Date
 CacheDtezPjf = ValzQ(MthDbP, FmtQQ("Select PjDte from Mth where Pjf='?'", Pjf))
 End Function
 
-Function Drs_MthzPjfzFmCache(Pjf) As Drs
+Function DMthzPjfzFmCache(Pjf) As Drs
 Dim Sql$: Sql = FmtQQ("Select * from MthCache where Pjf='?'", Pjf)
-Drs_MthzPjfzFmCache = DrszFbq(MthDbP, Sql)
+DMthzPjfzFmCache = DrszFbq(MthDbP, Sql)
 End Function
 
 Function SkFnyWiSqlQPfx(A As Database, T) As String()

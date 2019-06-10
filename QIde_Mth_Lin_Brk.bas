@@ -30,7 +30,13 @@ Dim L$: L = LTrim(AftRetTy)
 If FstChr(L) = "'" Then RmkzAftRetTy = LTrim(RmvFstChr(L)): Exit Function
 Thw CSub, "Something wrong in AftRetTy", "AftRetTy", AftRetTy
 End Function
-
+Function ArgNyzPm(Pm$) As String()
+Dim Ay$(): Ay = Split(Pm, ", ")
+Dim I
+For Each I In Itr(Ay)
+    PushI ArgNyzPm, TakNm(I)
+Next
+End Function
 Function MthLinRec(MthLin) As MthLinRec
 Dim L$: L = MthLin
 With MthLinRec

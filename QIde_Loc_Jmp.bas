@@ -119,7 +119,7 @@ Sub JmpzMR(M As CodeModule, R As RRCC)
 JmpzM M
 JmpzRRCC R
 End Sub
-Function WinyzMdAy(MdAy() As CodeModule) As vbIde.Window()
+Function WinyzMdAy(MdAy() As CodeModule) As VBIDE.Window()
 
 End Function
 Sub JmpMdnn(Mdnn$)

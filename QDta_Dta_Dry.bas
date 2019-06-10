@@ -154,7 +154,7 @@ Next
 End Function
 
 Function AlignRzDryC(Dry(), C) As Variant()
-Dim Ay$(): Ay = AlignRzAy(ColzDryC(Dry, C))
+Dim Ay$(): Ay = AlignRzAy(ColzDry(Dry, C))
 Dim O(): O = Dry
 Dim J&
 For J = 0 To UB(O)
@@ -210,6 +210,12 @@ For Each Dr In Itr(Dry)
     If Dr(C) = Eq Then PushI DrywColEq, Dr
 Next
 End Function
+Function HasColEqzDry(Dry(), C&, Eq) As Boolean
+Dim Dr
+For Each Dr In Itr(Dry)
+    If Dr(C) = Eq Then HasColEqzDry = True: Exit Function
+Next
+End Function
 Function FstRecEqzDry(Dry(), C, Eq, SelIxy&()) As Variant()
 Dim Dr
 For Each Dr In Itr(Dry)
@@ -247,23 +253,18 @@ For Each Drv In Itr(Dry)
     If IsEqAy(AywIxy(Drv, Ixy), EqVy) Then PushI DrywIxyzy, Drv
 Next
 End Function
-Function ColzDryC(Dry(), C) As Variant()
-Dim Drv
-For Each Drv In Itr(Dry)
-    If UB(Drv) < C Then
-        PushI ColzDryC, Empty
-    Else
-        PushI ColzDryC, Drv(C)
-    End If
-Next
-End Function
-
 Function DistColzDry(Dry(), C&) As Variant()
-DistColzDry = AywDist(ColzDryC(Dry, C))
+DistColzDry = AywDist(ColzDry(Dry, C))
 End Function
 
-Function DistColzDrs(A As Drs, C$) As Variant()
-DistColzDrs = AywDist(ColzDryC(A.Dry, IxzAy(A.Fny, C)))
+Function DistCol(A As Drs, C$)
+DistCol = AywDist(ColzDry(A.Dry, IxzAy(A.Fny, C)))
+End Function
+
+Function DistColvStr(A As Drs, C$) As String()
+Dim I%: I = IxzAy(A.Fny, C)
+Dim Col$(): Col = StrColzDry(A.Dry, I)
+DistColvStr = AywDist(Col)
 End Function
 
 Function DryzSqCol(Sq(), ColIxy) As Variant()

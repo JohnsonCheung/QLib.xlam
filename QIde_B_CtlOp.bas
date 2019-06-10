@@ -1,8 +1,9 @@
-Attribute VB_Name = "QIde_Base_CtlOp"
+Attribute VB_Name = "QIde_B_CtlOp"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Cmd_Action."
 Private Const Asm$ = "QIde"
+Private Class1 As New Class1
 Function RmvRmkzVb$(Lin)
 Stop
 RmvRmkzVb = LeftIf(Lin, RmkPoszVb(Lin))
@@ -88,17 +89,7 @@ If Not HasBar(BarNm) Then Debug.Print "Bar[" & BarNm & "] not found": Exit Sub
 Bars(BarNm).Delete
 End Sub
 Private Sub ZZ_EnsBtns()
-Dim Spec$(), BarBtnccAy$()
-Erase XX
-X "Bars"
-X " AA A1 A2 A3"
-X " BB B1 B2 B3"
-X "Btns"
-X " A1"
-Spec = XX  '*Spec
-Erase XX
-BarBtnccAy = IndentedLy(Spec, "Bars")
-EnsBtns BarBtnccAy
+Class1.Class_Initialize
 End Sub
 Sub EnsBtns(BarBtnccAy$())
 Dim I
@@ -165,7 +156,16 @@ Private Sub ABtn_Click(ByVal Ctrl As Office.CommandBarButton, CancelDefault As B
 Stop
 End Sub
 
-Sub ZZZ()
+Private Sub ZZZ()
 QIde_Base_CtlOp:
 End Sub
 
+Property Get Y_BtnSpec() As String()
+Erase XX
+X "Bars"
+X " AA A1 A2 A3"
+X " BB B1 B2 B3"
+X "Btns"
+X " A1"
+Y_BtnSpec = XX
+End Property

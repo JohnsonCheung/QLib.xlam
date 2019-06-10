@@ -35,11 +35,14 @@ For Each F In SyzSS(FF)
 Next
 End Sub
 
-Function IxzAy&(Ay, Itm, Optional FmIx& = 0)
+Function IxzAy&(Ay, Itm, Optional FmIx& = 0, Optional ThwEr As EmThw)
 Dim J&
 For J = FmIx To UB(Ay)
     If Ay(J) = Itm Then IxzAy = J: Exit Function
 Next
+If ThwEr = EiThwEr Then
+    Thw CSub, "Itm not found in Ay", "Itm Ay", Itm, Ay
+End If
 IxzAy = -1
 End Function
 Function IxyzU(U&) As Long()

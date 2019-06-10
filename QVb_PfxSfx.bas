@@ -94,6 +94,12 @@ End Function
 Function HasPfx(S, Pfx, Optional C As VbCompareMethod = vbTextCompare) As Boolean
 HasPfx = StrComp(Left(S, Len(Pfx)), Pfx, C) = 0
 End Function
+Function HasPfxss(S, Pfxss$, Optional C As VbCompareMethod = vbTextCompare) As Boolean
+Dim Pfx
+For Each Pfx In Itr(SyzSS(Pfxss))
+    If HasPfx(S, Pfx, C) Then HasPfxss = True: Exit Function
+Next
+End Function
 Function HasPfxzAy(Ay, Pfx, Optional C As VbCompareMethod = vbTextCompare) As Boolean
 Dim I
 For Each I In Itr(Ay)

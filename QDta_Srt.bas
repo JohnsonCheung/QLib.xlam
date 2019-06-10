@@ -35,6 +35,7 @@ Erase OIsDesAy
         End If
     Next
 End Sub
+
 Function SrtDrs(A As Drs, Optional SrtByFF$ = "") As Drs 'If SrtByFF is blank use fst col.
 Dim Fny$(): Fny = TermAy(SrtByFF)
 Dim ColIxy&(): ColIxy = Ixy(A.Fny, Fny)
@@ -44,6 +45,9 @@ Dim IsDesAy() As Boolean
 SrtDrs = Drs(A.Fny, SrtDry(A.Dry, ColIxy, IsDesAy))
 End Function
 
+Function IxyzSrtDry(Dry()) As Long()
+
+End Function
 Function SrtDry(Dry(), ColIxy&(), IsDesAy() As Boolean) As Variant()
 If Si(ColIxy) <> Si(IsDesAy) Then Thw CSub, "Si of ColIxy and IsDesAy are dif", "Si-ColIxy Si-IsDesAy", Si(ColIxy) <> Si(IsDesAy)
 If Si(ColIxy) = 1 Then

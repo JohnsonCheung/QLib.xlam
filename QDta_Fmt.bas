@@ -88,25 +88,58 @@ Dim Dry()
 DrszFmtg = Drs(Fny, Dry)
 End Function
 
+Function FmtDrsR(A As Drs, Optional Nm$) As String()
+If NoReczDrs(A) Then Exit Function
+Dim AFny$(): AFny = Sy("#", AlignLzAy(A.Fny))
+
+Dim Ly$(), Lixy&()
+    Dim N&: N = Si(A.Dry)
+    Dim Dr, J&: For Each Dr In Itr(A.Dry)
+        J = J + 1
+        PushI Ly, Empty
+        PushI Lixy, UB(Ly)
+        Dim I$: I = J & " of " & N
+        Dim Av(): Av = AddAy(Array(I), Dr)
+        PushIAy Ly, LyzNyAv(AFny, Av)
+    Next
+Dim Align$(): Align = AlignLzAy(Ly)
+Dim Q$()
+    Dim L: For Each L In Align
+        Push Q, "| " & L & " |"
+    Next
+'== Oup ===
+Dim O$(): O = Q
+Dim W%:   W = Len(Align(0))
+Dim Lin$:   Lin = "|-" & Dup("-", W) & "-|"
+Dim Ix: For Each Ix In Itr(Lixy)
+    O(Ix) = Lin
+Next
+PushI O, Lin
+FmtDrsR = O
+End Function
+
 Function FmtDrs(A As Drs, _
 Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EmIxCol.EiBeg1, _
 Optional Fmt As EmTblFmt = EiTblFmt, Optional Nm$) As String() ' _
 If BrkColNm changed, insert a break line if BrkColNm is given
-Dim Drs As Drs, BrkColIxy&(), Dry(), Ay$(), Hdr$, Lin$, B$()
-            If Nm <> "" Then B = Box(Nm)
-            If Not HasReczDrs(A) Then
-                FmtDrs = Sy(B, BoxFny(A.Fny))
-                Exit Function
-            End If
-      Drs = DrsAddIxCol(A, IxCol)
-BrkColIxy = Ixy(A.Fny, TermAy(BrkColnn))
-      Dry = Drs.Dry
-            PushI Dry, Drs.Fny
-       Ay = FmtDry(Dry, MaxColWdt, BrkColIxy, ShwZer, Fmt) '<== Will insert break line if BrkColIx>=0
-      Hdr = LasSndEle(Ay)
-      Lin = LasEle(Ay)
-       Ay = AyeLasNEle(Ay, 2)
-   FmtDrs = Sy(B, Lin, Hdr, Ay, Lin)
+Dim NmBox$(): If Nm <> "" Then NmBox = Box(Nm)
+
+If NoReczDrs(A) Then
+    Dim S$: S = JnSpc(A.Fny)
+    If S = "" Then S = " (No Fny)"
+    Dim Lin$: Lin = "(NoRec) " & S
+    FmtDrs = Sy(NmBox, Lin)
+    Exit Function
+End If
+      
+Dim IxD As Drs:      IxD = DrsAddIxCol(A, IxCol)
+Dim IxyB&():        IxyB = Ixy(IxD.Fny, TermAy(BrkColnn))
+Dim WiFnyDry(): WiFnyDry = AddEle(IxD.Dry, IxD.Fny)
+Dim Ly$():            Ly = FmtDry(WiFnyDry, MaxColWdt, IxyB, ShwZer, Fmt)
+Dim H$:                H = LasSndEle(Ly)
+Dim L$:                L = LasEle(Ly)
+Dim Ly1$():          Ly1 = AyeLasNEle(Ly, 2)
+                  FmtDrs = Sy(NmBox, L, H, Ly1, L)
 End Function
 
 Function FmtDt(A As Dt, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EiBeg1) As String()

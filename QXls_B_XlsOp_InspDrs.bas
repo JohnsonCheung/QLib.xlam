@@ -1,4 +1,4 @@
-Attribute VB_Name = "QXls_Base_XlsOp_InspDrs"
+Attribute VB_Name = "QXls_B_XlsOp_InspDrs"
 Option Explicit
 Option Compare Text
 Enum EmFixWdt
@@ -6,7 +6,7 @@ Enum EmFixWdt
     EiFixWdt = 1
 End Enum
 Private Type X
-Wb As Workbook
+WB As Workbook
 IxWs As Worksheet
 IxLo As ListObject
 End Type
@@ -17,8 +17,8 @@ EnsIxWs
 End Sub
 Sub ClrInsp()
 Init
-While X.Wb.Sheets.Count > 1
-    DltWs X.Wb, 2
+While X.WB.Sheets.Count > 1
+    DltWs X.WB, 2
 Wend
 ClrLo X.IxLo
 End Sub
@@ -48,7 +48,7 @@ With X.IxLo.ListRows
     .Item(Las).Range.Value = SqhzAp(Las, N, DrsNo, "Drs", "Go", NRowzDrs(A), NColzDrs(A), IsSamDrEleCnt(A))
 End With
 Wsn = N & DrsNo
-Set R = DtaRgzWs(AddWszDrs(X.Wb, A, Wsn))
+Set R = DtaRgzWs(AddWszDrs(X.WB, A, Wsn))
 If Wdt = EmFixWdt.EiFixWdt Then
     R.Font.Name = "Courier New"
     R.Font.Size = 9
@@ -60,14 +60,14 @@ End Sub
 Private Function XNxtDrsNo%(DrsNm$)
 Dim A As Drs, B As Drs, C As Drs
 A = DrszLo(X.IxLo)
-B = DrswColEqSel(A, "Nm", DrsNm, "Nm Drs# ValTy")
-C = DrswColEqExlEqCol(B, "ValTy", "Drs")
+B = ColEqSel(A, "Nm", DrsNm, "Nm Drs# ValTy")
+C = ColEqExlEqCol(B, "ValTy", "Drs")
 If NoReczDrs(C) Then XNxtDrsNo = 1: Exit Function
 XNxtDrsNo = MaxzAy(IntAyzDrsC(C, "Drs#")) + 1
 End Function
 
 Private Sub EnsIxWs()
-Set X.IxWs = FstWs(X.Wb)
+Set X.IxWs = FstWs(X.WB)
 If X.IxWs.Name <> "Index" Then
     X.IxWs.Name = "Index"
     Set X.IxLo = CrtLo(X.IxWs, "Seq# Nm Drs# ValTy Val NRow NCol IsSamDrEleCnt")
@@ -76,7 +76,7 @@ Set X.IxLo = X.IxWs.ListObjects(1)
 End Sub
 
 Private Sub EnsWb()
-Set X.Wb = EnsWbzXls(Xls, "Insp")
+Set X.WB = EnsWbzXls(Xls, "Insp")
 End Sub
 
 Function EnsWbzXls(Xls As Excel.Application, Wbn$) As Workbook

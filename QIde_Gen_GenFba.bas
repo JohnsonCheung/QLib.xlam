@@ -7,31 +7,21 @@ Sub GenFbaP()
 GenFbazP CPj
 End Sub
 Sub GenFbazP(Pj As VBProject)
-'Exp
-Dim P$
-Dim OFba$
-       ExpPj Pj
-   P = Srcp(Pj)
-OFba = DistFba(P)
-'CrtFba
-Dim Acs As New Access.Application:
-Dim DistPj As VBProject:
-    'DltFfnIf Fba
-    CrtFb OFba
-    OpnFb Acs, OFba
-Set DistPj = _
-    PjzAcs(Acs)
-    'AddRfzDistPj DistPj
-'LoadBas
-    'LoadBas DistPj
-'LoadFrm
-Dim FFfny$()
-    Dim FrmFfn, I, N$
-    For Each FrmFfn In Itr(FrmFfny(P))
-        N = RmvExt(RmvExt(FrmFfn))
-        Acs.LoadFromText acForm, RmvExt(RmvExt(FrmFfn)), FrmFfn
-    Next
-'QUit
-    QuitAcs Acs
+Dim Acs As New Access.Application, DistPj As VBProject
+Dim Fba$:   Fba = DistFba(P)
+                  DltFfnIf Fba
+                  CrtFb Fba             '<== Crt Fba
+                  ExpPj Pj              '<== Exp
+                  OpnFb Acs, Fba
+     Set DistPj = PjzAcs(Acs)
+                  AddRfzDistPj DistPj   '<== Add Rf
+                  LoadBas DistPj        '<== Load Bas
+Dim P$:       P = Srcp(Pj)
+Dim Frm$(): Frm = FrmFfny(P)
+Dim F: For Each FrmFfn In Itr(Frm)
+    Dim N$: N = RmvExt(RmvExt(F))
+    Acs.LoadFromText acForm, N, F       '<== Load Frm
+Next
+QuitAcs Acs
 End Sub
 

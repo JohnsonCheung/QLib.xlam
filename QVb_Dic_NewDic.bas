@@ -93,6 +93,14 @@ For Each I In Itr(Ly)
     DiczUniq.Add T1(I), RmvT1(I)
 Next
 End Function
+Function AddSfxzDic(A As Dictionary, Sfx$) As Dictionary
+Dim O As New Dictionary
+Dim K: For Each K In A.Keys
+    Dim V$: V = A(K) & Sfx
+    O.Add K, V
+Next
+Set AddSfxzDic = O
+End Function
 Function Dic(Ly$(), Optional JnSep$ = vbCrLf) As Dictionary
 Dim O As New Dictionary
 Dim L, T$, Rst$

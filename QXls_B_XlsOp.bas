@@ -1,4 +1,4 @@
-Attribute VB_Name = "QXls_Base_XlsOp"
+Attribute VB_Name = "QXls_B_XlsOp"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "MXls_Wb."
@@ -105,8 +105,8 @@ If HasFxw(Fx, Wsn) Then
 End If
 End Sub
 
-Function LozAyH(Ay, Wb As Workbook, Optional Wsn$, Optional Lon$) As ListObject
-Set LozAyH = LozRg(RgzSq(Sqh(Ay), A1zWb(Wb, Wsn)), Lon)
+Function LozAyH(Ay, WB As Workbook, Optional Wsn$, Optional Lon$) As ListObject
+Set LozAyH = LozRg(RgzSq(Sqh(Ay), A1zWb(WB, Wsn)), Lon)
 End Function
 
 Private Sub Z_SetWsCdNm()
@@ -263,9 +263,9 @@ For Each I In Tny
 Next
 End Sub
 
-Function WszDt(Wb As Workbook, Dt As Dt) As Worksheet
+Function WszDt(WB As Workbook, Dt As Dt) As Worksheet
 Dim O As Worksheet
-Set O = AddWs(Wb, Dt.DtNm)
+Set O = AddWs(WB, Dt.DtNm)
 LozDrs DrszDt(Dt), A1zWs(O)
 Set WszDt = O
 End Function
@@ -375,12 +375,12 @@ O.Close
 End Sub
 
 Private Sub Z_SetWcFcsv()
-Dim Wb As Workbook
+Dim WB As Workbook
 'Set Wb = WbzFx(Vbe_MthFx)
-Debug.Print TxtWcStr(Wb)
-SetWcFcsv Wb, "C:\ABC.CSV"
-Ass TxtWcStr(Wb) = "TEXT;C:\ABC.CSV"
-Wb.Close False
+Debug.Print TxtWcStr(WB)
+SetWcFcsv WB, "C:\ABC.CSV"
+Ass TxtWcStr(WB) = "TEXT;C:\ABC.CSV"
+WB.Close False
 Stop
 End Sub
 
@@ -463,9 +463,9 @@ End Sub
 
 
 
-Sub SavAszAndCls(Wb As Workbook, Fx)
-Wb.SaveAs Fx
-Wb.Close
+Sub SavAszAndCls(WB As Workbook, Fx)
+WB.SaveAs Fx
+WB.Close
 End Sub
 
 
@@ -523,9 +523,9 @@ Private Sub FmtPt(Pt As PivotTable)
 End Sub
 
 
-Sub ThwHasWbzWs(Wb As Workbook, Wsn$, Fun$)
-If HasWs(Wb, Wsn) Then
-    Thw Fun, "Wb should have not have Ws", "Wb Ws", Wb.FullName, Wsn
+Sub ThwHasWbzWs(WB As Workbook, Wsn$, Fun$)
+If HasWs(WB, Wsn) Then
+    Thw Fun, "Wb should have not have Ws", "Wb Ws", WB.FullName, Wsn
 End If
 End Sub
 
@@ -618,9 +618,9 @@ If IsNothing(A.OLEDBConnection) Then Exit Sub
 CvCn(A.ODBCConnection.Connection).Close
 End Sub
 
-Private Sub ClsWczWb(Wb As Workbook)
+Private Sub ClsWczWb(WB As Workbook)
 Dim WC As WorkbookConnection
-For Each WC In Wb.Connections
+For Each WC In WB.Connections
     ClsWc WC
 Next
 End Sub
@@ -652,8 +652,8 @@ A.MissingItemsLimit = xlMissingItemsNone
 A.Refresh
 End Sub
 
-Sub RfhFx(Fx, Fb)
-RfhWb(WbzFx(Fx), Fb).Close SaveChanges:=True
+Sub RfhFx(Fx, FB)
+RfhWb(WbzFx(Fx), FB).Close SaveChanges:=True
 End Sub
 
 Private Sub RfhWs(A As Worksheet)
@@ -662,23 +662,23 @@ Dim P As PivotTable: For Each P In A.PivotTables: P.Update: Next
 Dim L As ListObject: For Each L In A.ListObjects: L.Refresh: Next
 End Sub
 
-Function RfhWb(Wb As Workbook, Fb) As Workbook
-RplLozFb Wb, Fb
+Function RfhWb(WB As Workbook, FB) As Workbook
+RplLozFb WB, FB
 Dim C As WorkbookConnection
 Dim P As PivotCache, W As Worksheet
 'For Each C In Wb.Connections: RfhWc C, Fb:                                          Next
-For Each P In Wb.PivotCaches: P.MissingItemsLimit = xlMissingItemsNone: P.Refresh:  Next
-For Each W In Wb.Sheets:      RfhWs W:                                              Next
-StdFmtLozWb Wb
-ClsWczWb Wb
-DltWc Wb
-Set RfhWb = Wb
+For Each P In WB.PivotCaches: P.MissingItemsLimit = xlMissingItemsNone: P.Refresh:  Next
+For Each W In WB.Sheets:      RfhWs W:                                              Next
+StdFmtLozWb WB
+ClsWczWb WB
+DltWc WB
+Set RfhWb = WB
 End Function
 
-Private Sub RplLozFb(Wb As Workbook, Fb)
+Private Sub RplLozFb(WB As Workbook, FB)
 Dim Ws As Worksheet, D As Database
-Set D = Db(Fb)
-For Each Ws In Wb.Sheets
+Set D = Db(FB)
+For Each Ws In WB.Sheets
     RplLozWs Ws, D
 Next
 D.Close
@@ -742,8 +742,8 @@ CrtFxzOupTbl Fx, SampFbzDutyDta
 OpnFx Fx
 End Sub
 
-Sub CrtFxzOupTbl(Fx, Fb, Optional AddgWay As EmAddgWay)
-SavAszAndCls NewWbzOupTbl(Fb, AddgWay), Fx
+Sub CrtFxzOupTbl(Fx, FB, Optional AddgWay As EmAddgWay)
+SavAszAndCls NewWbzOupTbl(FB, AddgWay), Fx
 End Sub
 
 Function ShwWb(A As Workbook) As Workbook
@@ -789,17 +789,17 @@ Sub PutSeqDown(At As Range, FmNum&, ToNum&)
 PutAyAtV LngSeq(FmNum, ToNum), At
 End Sub
 
-Sub DltSheet1(Wb As Workbook)
-DltWs Wb, "Sheet1"
+Sub DltSheet1(WB As Workbook)
+DltWs WB, "Sheet1"
 End Sub
 Sub ActWs(Ws As Worksheet)
 If IsEqObj(Ws, CWs) Then Exit Sub
 Ws.Activate
 End Sub
-Sub DltWs(Wb As Workbook, WsIx)
-Wb.Application.DisplayAlerts = False
-If Wb.Sheets.Count = 1 Then Exit Sub
-If HasWs(Wb, WsIx) Then WszWb(Wb, WsIx).Delete
+Sub DltWs(WB As Workbook, WsIx)
+WB.Application.DisplayAlerts = False
+If WB.Sheets.Count = 1 Then Exit Sub
+If HasWs(WB, WsIx) Then WszWb(WB, WsIx).Delete
 End Sub
 
 Sub ClrDown(A As Range)

@@ -33,7 +33,7 @@ Function MthLineszSP$(Src$(), PMthn)
 End Function
 '
 Property Get CMthLines$() 'Cur
-CMthLines = MthLineszMN(CMd, CMthn)
+CMthLines = MthLineszM(CMd, CMthn)
 End Property
 
 Sub VcMthLinesAyP()
@@ -72,15 +72,19 @@ If IsNothing(O) Then Thw CSub, "Mthn not fnd in any codemodule of given pj", "Pj
 End Function
 
 Function MthLineszPN$(P As VBProject, Mthn)
-MthLineszPN = MthLineszMN(MdzMthn(P, Mthn), Mthn)
+MthLineszPN = MthLineszM(MdzMthn(P, Mthn), Mthn)
 End Function
 
 Function MthLineszN$(Mthn)
 MthLineszN = MthLineszPN(CPj, Mthn)
 End Function
 
-Function MthLineszMN$(Md As CodeModule, Mthn)
-MthLineszMN = MthLineszSN(Src(Md), Mthn)
+Function MthLineszM$(M As CodeModule, Mthn)
+MthLineszM = MthLineszSN(Src(M), Mthn)
+End Function
+
+Function MthLyzM(M As CodeModule, Mthn) As String()
+MthLyzM = SplitCrLf(MthLineszM(M, Mthn))
 End Function
 
 Function MthLineszMTN$(Md As CodeModule, ShtMthTy$, Mthn)

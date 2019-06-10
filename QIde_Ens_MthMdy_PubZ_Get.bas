@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Ens_MthMdy_PubZ_Get."
 Private Const Asm$ = "QIde"
-Private Const NS$ = ""
+Private Const Ns$ = ""
 Sub BrwMdNyzWiPubZ()
 Brw MdNyzWiPubZ, "MdNyzWiPubZ"
 End Sub

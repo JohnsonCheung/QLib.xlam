@@ -151,7 +151,7 @@ ReDim Preserve O(NewU)
 AywLasN = O
 End Function
 Function LasSndEle(Ay)
-Dim N%: N = Si(Ay)
+Dim N&: N = Si(Ay)
 If N <= 1 Then
     Thw CSub, "Only 1 or no ele in Ay"
 Else
@@ -159,7 +159,7 @@ Else
 End If
 End Function
 Function LasEle(Ay)
-Dim N%: N = Si(Ay)
+Dim N&: N = Si(Ay)
 If N = 0 Then
     Thw CSub, "No ele in Ay"
 Else

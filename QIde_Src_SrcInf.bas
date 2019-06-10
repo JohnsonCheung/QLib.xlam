@@ -61,13 +61,6 @@ For Each L In Itr(Src)
 Next
 End Function
 
-Function MthDNyzP(P As VBProject) As String()
-If P.Protection = vbext_pp_locked Then Exit Function
-For Each C In P.VBComponents
-    PushIAy MthDNyzP, MthDNyzM(C.CodeModule)
-Next
-End Function
-
 Function CSrcLines$()
 CSrcLines = SrcLineszM(CMd)
 End Function
@@ -88,6 +81,9 @@ CSrc = Src(CMd)
 End Function
 Function Src(M As CodeModule) As String()
 Src = SplitCrLf(SrcLineszM(M))
+End Function
+Function SrczM(M As CodeModule) As String()
+SrczM = SplitCrLf(SrcLineszM(M))
 End Function
 
 Function SrcV() As String()

@@ -4,41 +4,41 @@ Option Explicit
 Private Const CMod$ = "MDao_Fb."
 Private Const Asm$ = "QDao"
 
-Function CrtFb(Fb, Optional IsDltFst As Boolean) As Database
-If IsDltFst Then DltFfnIf Fb
-Set CrtFb = Dao.DBEngine.CreateDatabase(Fb, dbLangGeneral)
+Function CrtFb(FB, Optional IsDltFst As Boolean) As Database
+If IsDltFst Then DltFfnIf FB
+Set CrtFb = Dao.DBEngine.CreateDatabase(FB, dbLangGeneral)
 End Function
 
 Private Sub Z_BrwFb()
 BrwFb SampFbzDutyDta
 End Sub
 
-Function DbzFb(Fb) As Database
-Set DbzFb = Dao.DBEngine.OpenDatabase(Fb)
+Function DbzFb(FB) As Database
+Set DbzFb = Dao.DBEngine.OpenDatabase(FB)
 End Function
 
-Function CntrNyzFb(Fb) As String()
-CntrNyzFb = Itn(Db(Fb).Containers)
+Function CntrNyzFb(FB) As String()
+CntrNyzFb = Itn(Db(FB).Containers)
 End Function
 
-Function CntrItmNyzFb(Fb) As String()
-Dim D As Database: Set D = Db(Fb)
+Function CntrItmNyzFb(FB) As String()
+Dim D As Database: Set D = Db(FB)
 Dim CntrNm
 For Each CntrNm In Itn(D.Containers)
     PushIAy CntrItmNyzFb, AddPfxzAy(Itn(D.Containers(CntrNm).Documents), CntrNm & ".")
 Next
 End Function
 
-Function Db(Fb) As Database
-Set Db = Dao.DBEngine.OpenDatabase(Fb)
+Function Db(FB) As Database
+Set Db = Dao.DBEngine.OpenDatabase(FB)
 End Function
 
-Sub EnsFb(Fb)
-If Not HasFfn(Fb) Then CrtFb Fb
+Sub EnsFb(FB)
+If Not HasFfn(FB) Then CrtFb FB
 End Sub
 
-Function OupTnyzFb(Fb) As String()
-OupTnyzFb = OupTny(Db(Fb))
+Function OupTnyzFb(FB) As String()
+OupTnyzFb = OupTny(Db(FB))
 End Function
 
 Sub AsgFbtStr(FbtStr$, OFb$, OT$)
@@ -54,8 +54,8 @@ OFb = RmvFstChr(OFb)
 OT = RmvLasChr(OT)
 End Sub
 
-Sub DrpFbt(Fb, T)
-CatzFb(Fb).Tables.Delete T
+Sub DrpFbt(FB, T)
+CatzFb(FB).Tables.Delete T
 End Sub
 
 Private Sub ZZ_HasFbt()
@@ -64,8 +64,8 @@ End Sub
 
 
 Private Sub ZZ_OupTnyzFb()
-Dim Fb$
-D OupTnyzFb(Fb)
+Dim FB$
+D OupTnyzFb(FB)
 End Sub
 
 Private Sub ZZ_TnyzFb()

@@ -163,10 +163,18 @@ End If
 If TyChrzTyNm(Ret) <> "" Then Exit Function
 RetAs = " As " & Ret
 End Function
+Function RetAszL$(MthLin$)
+Dim L$: L = AftBkt(MthLin)
+If Not ShfAs(L) Then Exit Function
+Dim O$: O = ShfNm(L)
+If ShfBkt(L) Then O = O & "()"
+RetAszL = O
+End Function
 Function RetAszRet$(Ret)
 RetAszRet = RetAs(Ret)
 End Function
-Function RetAszDclSfx$(DclSfx$)
+Function RetAszDclSfx$(DclSfx)
+If DclSfx = "" Then Exit Function
 Dim B$
 Dim F$: F = FstChr(DclSfx)
 If IsTyChr(F) Then
@@ -179,7 +187,7 @@ If TyChrzTyNm(DclSfx) <> "" Then Exit Function
 If Left(DclSfx, 4) <> " As " Then Stop
 RetAszDclSfx = DclSfx
 End Function
-Function TyChrzDclSfx$(DclSfx$)
+Function TyChrzDclSfx$(DclSfx)
 If Len(DclSfx) = 1 Then
     If IsTyChr(DclSfx) Then TyChrzDclSfx = DclSfx
 End If
@@ -209,13 +217,6 @@ With Arg
     .TyChr = ShfChr(L, "!@#$%^&")
     .IsAy = ShfPfx(L, "()") = "()"
 End With
-End Function
-
-Function ArgNyzArgs(A As Args) As String()
-Dim J%
-For J = 0 To A.N - 1
-    PushI ArgNyzArgs, A.Ay(J).Nm
-Next
 End Function
 
 Function ArgSfxy(ArgAy$()) As String()

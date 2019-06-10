@@ -75,7 +75,13 @@ Dim FmI&: FmI = UsrTyFmIx(Dcl, TyNm)
 Dim ToI&: ToI = EndLix(Dcl, FmI)
 UsrTyFei = Fei(FmI, ToI)
 End Function
-
+Function MthELno&(M As CodeModule, MthLno&)
+Dim MLin$: MLin = M.Lines(MthLno, 1)
+Dim ELin$: ELin = MthELin(MLin)
+Dim O&: For O = MthLno + 1 To M.CountOfLines
+    If HasPfx(M.Lines(O, 1), ELin) Then MthELno = O: Exit Function
+Next
+End Function
 Function MthELin$(MthLin)
 Dim K$: K = MthKd(MthLin)
 If K = "" Then Thw CSub, "MthLin Error", "MthLin", MthLin

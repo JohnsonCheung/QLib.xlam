@@ -21,13 +21,6 @@ End Property
 Private Sub Z_MthVNsetInVbe()
 MthVNsetInVbe.Srt.Vc
 End Sub
-Property Get MthDnToMdDNmRelInVbe() As Rel
-Set MthDnToMdDNmRelInVbe = MthDnToMdDNmRelzV(CVbe)
-End Property
-
-Private Function MthDnToMdDNmRelzV(A As Vbe) As Rel
-Set MthDnToMdDNmRelzV = RelzDotLy(QMthnyzV(A))
-End Function
 Property Get MthVNsetInVbe() As Aset
 Set MthVNsetInVbe = AsetzAy(MthVNyInVbe)
 End Property

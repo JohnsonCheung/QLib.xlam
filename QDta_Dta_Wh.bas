@@ -39,21 +39,28 @@ Function LngAyzDryC(Dry(), C) As Long()
 LngAyzDryC = IntozDryC(EmpLngAy, Dry, C)
 End Function
 
-Function LngAyzDrswColEqSel(A As Drs, C$, V, Sel$) As Long()
-LngAyzDrswColEqSel = LngAyzDrs(DrswColEqSel(A, C, V, Sel), Sel)
+Function LngAyzColEqSel(A As Drs, C$, V, Sel$) As Long()
+LngAyzColEqSel = LngAyzDrs(ColEqSel(A, C, V, Sel), Sel)
 End Function
-Function DrswColEqSel(A As Drs, C$, V, Sel$) As Drs
-DrswColEqSel = SelDrs(DrswColEq(A, C, V), Sel)
+Function ColEqSel(A As Drs, C$, V, Sel$) As Drs
+ColEqSel = SelDrs(ColEq(A, C, V), Sel)
 End Function
-Function DrswColEqSelFny(A As Drs, C$, V, SelFny$()) As Drs
-DrswColEqSelFny = SelDrszFny(DrswColEq(A, C, V), SelFny)
+Function ColNeSel(A As Drs, C$, V, Sel$) As Drs
+ColNeSel = SelDrs(ColNe(A, C, V), Sel)
+End Function
+Function ColNe(A As Drs, C$, V) As Drs
+ColNe = DrswColNe(A, C, V)
+End Function
+
+Function ColEqSelFny(A As Drs, C$, V, SelFny$()) As Drs
+ColEqSelFny = SelDrszFny(ColEq(A, C, V), SelFny)
 End Function
 
 Function DrswCCEqExlEqCol(A As Drs, CC$, V1, V2) As Drs
 Dim C1$, C2$
 C1 = BefSpc(CC)
 C2 = AftSpc(CC)
-DrswCCEqExlEqCol = DrswColEqExlEqCol(DrswColEqExlEqCol(A, C1, V1), C2, V2)
+DrswCCEqExlEqCol = ColEqExlEqCol(ColEqExlEqCol(A, C1, V1), C2, V2)
 End Function
 Function DrswCCCEqExlEqCol(A As Drs, CCC$, V1, V2, V3) As Drs
 Dim C1$, C2$, C3$, L$
@@ -61,15 +68,15 @@ L = CCC
 C1 = ShfT1(L)
 C2 = ShfT1(L)
 C3 = L
-DrswCCCEqExlEqCol = DrswColEqExlEqCol(DrswColEqExlEqCol(DrswColEqExlEqCol(A, C1, V1), C2, V2), C3, V3)
+DrswCCCEqExlEqCol = ColEqExlEqCol(ColEqExlEqCol(ColEqExlEqCol(A, C1, V1), C2, V2), C3, V3)
 End Function
-Function DrpColzDrs(A As Drs, CC$) As Drs
+Function DrpCol(A As Drs, CC$) As Drs
 Dim C$(), Dr, Ixy&(), OFny$(), ODry()
 C = SyzSS(CC)
 Ixy = IxyzSubAy(A.Fny, C)
 OFny = MinusAy(A.Fny, C)
 ODry = DrpColzDry(A.Dry, Ixy)
-DrpColzDrs = Drs(OFny, ODry)
+DrpCol = Drs(OFny, ODry)
 End Function
 Function DrpColzDry(Dry(), Ixy&()) As Variant()
 Dim Dr
@@ -77,14 +84,14 @@ For Each Dr In Itr(Dry)
     PushI DrpColzDry, AyeIxy(Dr, Ixy)
 Next
 End Function
-Function DrswColEqExlEqCol(A As Drs, C$, V) As Drs
+Function ColEqExlEqCol(A As Drs, C$, V) As Drs
 Dim SelFny$()
 SelFny = AyeEle(A.Fny, C)
-DrswColEqExlEqCol = DrswColEqSelFny(A, C, V, SelFny)
+ColEqExlEqCol = ColEqSelFny(A, C, V, SelFny)
 End Function
 Function FstDrwColEqSel(A As Drs, C$, V, Sel$) As Variant()
 Stop
-'FstDrwColEqSel = SelDrs(DrswColEq(A, C, V), Sel)
+'FstDrwColEqSel = SelDrs(ColEq(A, C, V), Sel)
 End Function
 
 Function DrswColNeSel(A As Drs, C$, V, Sel$) As Drs
@@ -98,12 +105,31 @@ End Function
 Function DrswColInSel(A As Drs, C, InVy, Sel$) As Drs
 DrswColInSel = SelDrs(DrswColIn(A, C, InVy), Sel)
 End Function
-
+Function ColEq(A As Drs, C$, V) As Drs
+ColEq = DrswColEq(A, C, V)
+End Function
+Function ColEqE(A As Drs, C$, V) As Drs
+ColEqE = DrpCol(DrswColEq(A, C, V), C)
+End Function
+Function TopN(A As Drs, Optional N = 50) As Drs
+TopN = Drs(A.Fny, CvAv(AywFstNEle(A.Dry, N)))
+End Function
+Function ColPatn(A As Drs, C$, Patn$) As Drs
+Dim I%: I = IxzAy(A.Fny, C)
+Dim Re As RegExp: Set Re = RegExp(Patn)
+Dim Dry(), Dr: For Each Dr In Itr(A.Dry)
+    If Re.Test(Dr(I)) Then PushI Dry, Dr
+Next
+ColPatn = Drs(A.Fny, Dry)
+End Function
 Function DrswColEq(A As Drs, C$, V) As Drs
 Dim Dry(), Ix&, Fny$()
 Fny = A.Fny
-Ix = IxzAy(Fny, C)
+Ix = IxzAy(Fny, C, ThwEr:=EiThwEr)
 DrswColEq = Drs(Fny, DrywColEq(A.Dry, Ix, V))
+End Function
+Function HasColEq(A As Drs, C$, V) As Boolean
+HasColEq = HasColEqzDry(A.Dry, IxzAy(A.Fny, C), V)
 End Function
 
 Function FstRecEqzDrs(A As Drs, C$, V, Sel$) As Drs
@@ -122,7 +148,6 @@ Ix = IxzAy(A.Fny, C)
 Ixy = IxyzSubAy(A.Fny, OFny)
 FstDrEqzDrs = FstDrEqzDry(A.Dry, Ix, V, Ixy)
 End Function
-
 
 Function DrswColNe(A As Drs, C$, V) As Drs
 Dim Dry(), Ix&, Fny$()
@@ -166,13 +191,13 @@ Function DrswRowIxy(A As Drs, RowIxy&()) As Drs
 DrswRowIxy = Drs(A.Fny, CvAv(AywIxy(A.Dry, RowIxy)))
 End Function
 
-Function ValzDrswColEqSel(A As Drs, C$, V, ColNm$)
+Function ValzColEqSel(A As Drs, C$, V, ColNm$)
 Dim Dr, Ix%, IxRet%
 Ix = IxzAy(A.Fny, C)
 IxRet = IxzAy(A.Fny, ColNm)
 For Each Dr In Itr(A.Dry)
     If Dr(Ix) = V Then
-        ValzDrswColEqSel = Dr(IxRet)
+        ValzColEqSel = Dr(IxRet)
         Exit Function
     End If
 Next

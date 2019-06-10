@@ -34,7 +34,17 @@ If C = "" Then Exit Function
 ShfChr = C
 OLin = Mid(OLin, 2)
 End Function
-
+Function ShfTermX(OLin$, TermX$) As Boolean
+If T1(OLin) <> TermX Then Exit Function
+ShfTermX = True
+OLin = RmvT1(OLin)
+End Function
+Function ShfAs(OLin$) As Boolean
+ShfAs = ShfTermX(OLin, "As")
+End Function
+Function ShfBkt(OLin$) As Boolean
+ShfBkt = ShfPfx(OLin, "()")
+End Function
 Function ShfPfx(OLin$, Pfx$) As Boolean
 If HasPfx(OLin, Pfx) Then
     OLin = RmvPfx(OLin, Pfx)

@@ -29,11 +29,11 @@ Brw O
 End Sub
 
 Function HitCnstn(SrcLin, Cnstn$) As Boolean
-HitCnstn = CnstnzSrcLin(SrcLin) = Cnstn
+HitCnstn = CnstnzL(SrcLin) = Cnstn
 End Function
 
 Function HitCnstnDic(SrcLin, Cnstn As Aset) As Boolean
-HitCnstnDic = Cnstn.Has(CnstnzSrcLin(SrcLin))
+HitCnstnDic = Cnstn.Has(CnstnzL(SrcLin))
 End Function
 
 Function HitMthLin(Lin, B As WhMth) As Boolean

@@ -50,6 +50,10 @@ Dim PfxSy$(): PfxSy = SyzAy(PfxSy)
 PfxzPfxAp = PfxzPfxSy(S, PfxSy)
 End Function
 
+Function IsVbRmk(L) As Boolean
+IsVbRmk = FstChr(LTrim(L)) = "'"
+End Function
+
 Function IsLinOfRmk(Lin) As Boolean
 Select Case FstChr(Lin)
 Case "#", "@": IsLinOfRmk = True

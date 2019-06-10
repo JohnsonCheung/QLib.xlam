@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Str_Apd."
 Private Const Asm$ = "QVb"
-Private Const NS$ = "MVb_Str"
+Private Const Ns$ = "MVb_Str"
 Function ApdCrLf$(S)
 ApdCrLf = ApdIf(S, vbCrLf)
 End Function

@@ -4,7 +4,7 @@ Option Explicit
 Private Const CMod$ = "MIde_Cmp_Op_Rmv."
 Private Const Asm$ = "QIde"
 Sub DltCmpzPjn(P As VBProject, Mdn)
-If Not HasCmpzPN(P, Mdn) Then Exit Sub
+If Not HasCmpzP(P, Mdn) Then Exit Sub
 P.VBComponents.Remove P.VBComponents(Mdn)
 End Sub
 Sub RmvMdzPfx(Pfx$)

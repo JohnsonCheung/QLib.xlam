@@ -159,15 +159,117 @@ End Sub
 Function IsRmkedzMFe(M As CodeModule, B As Fei) As Boolean
 'IsRmkedzMFe = IsRmkedzS(LyzMdFei(A, B))
 End Function
-Function CDMthCxt() As Drs
-CDMthCxt = DMthCxt(CMd, CMthLno)
+
+Function DMthCxt() As Drs
+DMthCxt = DMthCxtzML(CMd, CMthLno)
 End Function
-Function DMthCxt(M As CodeModule, MthLno&) As Drs
-'*DMthCxt::Drs{L Lin}
+
+Function DMthnM() As Drs
+DMthnM = DMthn(CMd)
+End Function
+
+Function DMthn(M As CodeModule) As Drs
+DMthn = DrpCol(DMth(M), "MthLin")
+End Function
+
+Function AddColzRetAs(A As Drs) As Drs
+'Fm A : ..MthLin..
+'Ret  : ..MthLin.. RetAs
+Dim I%: I = IxzAy(A.Fny, "MthLin")
+Dim Dr, Dry(): For Each Dr In Itr(A.Dry)
+    Dim MthLin$: MthLin = Dr(I)
+    Dim R$: R = RetAszL(MthLin)
+    PushI Dr, R
+    PushI Dry, Dr
+Next
+AddColzRetAs = AddColzFFDry(A, "RetAs", Dry)
+End Function
+Function DMthP() As Drs
+DMthP = DMthzP(CPj)
+End Function
+
+Function DMthzP(P As VBProject) As Drs
+Dim C As VBComponent, ODry(), Dry(), Pjn$
+Pjn = P.Name
+For Each C In P.VBComponents
+    Dry = DMth(C.CodeModule).Dry
+    Dry = DryInsColzAv(Dry, Av(Pjn, C.Name))
+    PushIAy ODry, Dry
+Next
+DMthzP = DrszFF("Pj Md L Mdy Ty Mthn MthLin", ODry)
+End Function
+
+Function DMth(M As CodeModule) As Drs
+'Ret : L Mdy Ty Mthn MthLin ! Mdy & Ty are Sht @@
+DMth = DMthzS(Src(M))
+End Function
+Function DMthzM(M As CodeModule) As Drs
+'Ret : L Mdy Ty Mthn MthLin ! Mdy & Ty are Sht @@
+DMthzM = DMthzS(Src(M))
+End Function
+
+Function DMthE(M As CodeModule) As Drs
+'Ret : L E Mdy Ty Mthn MthLin ! Mdy & Ty are Sht. L is Lno E is ELno @@d
+DMthE = DMthEzS(Src(M))
+End Function
+Function DMthEL(M As CodeModule) As Drs
+'Ret : L E Mdy Ty Mthn MthLin MthLy! Mdy & Ty are Sht. L is Lno E is ELno @@
+DMthEL = DMthELzS(Src(M))
+End Function
+
+Function DMthEM() As Drs
+DMthEM = DMthE(CMd)
+End Function
+Function DMthELM() As Drs
+DMthELM = DMthEL(CMd)
+End Function
+
+Function DMthELzS(Src$()) As Drs
+Dim A As Drs: A = DMthEzS(Src) ' L E Mdy Ty Mthn MthLin
+Dim Dr, MthLy$(), Dry()
+For Each Dr In Itr(A.Dry)
+    Dim Fi&: Fi = Dr(0) - 1
+    Dim Ti&: Ti = Dr(1) - 1
+    MthLy = AywFT(Src, Fi, Ti)
+    PushI Dr, MthLy
+    PushI Dry, Dr
+Next
+DMthELzS = DrszFF("L E Mdy Ty Mthn MthLin MthLy", Dry)
+End Function
+
+Function DMthEzS(Src$()) As Drs
+Dim A As Drs: A = DMthzS(Src)
+Dim Dry(), Dr
+For Each Dr In Itr(A.Dry)
+    Dim Ix&: Ix = Dr(0) - 1
+    Dim E&: E = EndLix(Src, Ix) + 1
+    Dr = AyInsEle(Dr, E, 1)
+    PushI Dry, Dr
+Next
+DMthEzS = DrszFF("L E Mdy Ty Mthn MthLin", Dry)
+End Function
+
+Function DMthzS(Src$()) As Drs
+'Ret DMth : L Mdy Ty Mthn MthLin ! Mdy & Ty are Sht
+Dim Dry(), Dr, Ix
+For Each Ix In MthIxItr(Src)
+    Dim L&:              L = Ix + 1
+    Dim MthLin$:    MthLin = ContLin(Src, Ix)
+    Dim A As Mthn3:      A = Mthn3zL(MthLin)
+    Dim Ty$:            Ty = A.ShtTy
+    Dim Mdy$:          Mdy = A.ShtMdy
+    Dim Mthn$:        Mthn = A.Nm
+    PushI Dry, Array(L, Mdy, Ty, Mthn, MthLin)
+Next
+DMthzS = DrszFF("L Mdy Ty Mthn MthLin", Dry)
+End Function
+
+Function DMthCxtzML(M As CodeModule, MthLno&) As Drs
+'Ret DMthCxt : L Lin
 Dim Dry(), L&, ELin$, MthLin$, Lin$
 MthLin = M.Lines(MthLno, 1)
 ELin = MthELin(MthLin)
-For L = SrcLnozNxt(M, MthLno) To M.CountOfLines
+For L = NxtLnozML(M, MthLno) To M.CountOfLines
     Lin = M.Lines(L, 1)
     If Lin = ELin Then
         GoTo X
@@ -177,7 +279,7 @@ For L = SrcLnozNxt(M, MthLno) To M.CountOfLines
 Next
 ThwImpossible CSub
 X:
-DMthCxt = DrszFF("L MthLin", Dry)
+DMthCxtzML = DrszFF("L MthLin", Dry)
 End Function
 Function IsRmkedzMthLy(MthLy$()) As Boolean
 If Si(MthLy) = 0 Then Exit Function
@@ -189,7 +291,7 @@ Next
 IsRmkedzMthLy = True
 End Function
 Function MthCxtFe(MthLy$(), Fe As Fei) As Fei
-MthCxtFe = Fei(SrcIxzNxt(MthLy, Fe.FmIx), Fe.EIx - 1)
+MthCxtFe = Fei(NxtIxzSrc(MthLy, Fe.FmIx), Fe.EIx - 1)
 End Function
 
 Function MthCxt$(MthLy$())
@@ -200,7 +302,7 @@ Function MthCxtLy(MthLy$()) As String()
 If Si(MthLy) = 0 Then Exit Function
 Dim L&: L = FstMthIx(MthLy): If L = -1 Then Thw CSub, "Given MthLy is not MthLy", "MthLy", MthLy
 Dim J%
-For J = SrcIxzNxt(MthLy, L) To UB(MthLy) - 1
+For J = NxtIxzSrc(MthLy, L) To UB(MthLy) - 1
     PushI MthCxtLy, MthLy(J)
 Next
 End Function
@@ -225,5 +327,90 @@ Dim I
 'Next
 End Sub
 
+Function InspExprLiszPm$(Pm$)
+If Pm = "" Then Exit Function
+Dim Ay$(): Ay = Split(Pm, ", ")
+Dim O$(), P
+For Each P In Ay
+    Dim L$: L = P
+    Dim V$: V = ShfNm(L)
+    Dim S$: S = L
+    PushI O, InspExprzDclSfx(V, S)
+Next
+InspExprLiszPm = JnCommaSpc(O)
+End Function
 
+Sub ZZ_InspMthStmt()
+Dim A As Drs: A = DMthzM(CMd)
+Dim B$(): B = StrCol(A, "MthLin")
+Dim L, ODry()
+For Each L In B
+    PushI ODry, Array(L, InspMthStmt(L, "Md"))
+Next
+Dim C As Drs: C = DrszFF("MthLin InspStmt", ODry)
+Brw FmtDrsR(C)
+End Sub
+
+Function InspMthStmt$(MthLin, Mdn$)
+With MthLinRec(MthLin)
+    If .Pm = "" And Not .IsRetVal Then Exit Function
+    Dim NN$: NN = JnSpc(ArgNyzPm(.Pm))
+    Dim EE$: EE = InspExprLiszPm(.Pm)
+    Dim IsN0$: IsN0 = XIsN0(.IsRetVal, .Nm)  '#Insp-Nm-0.
+    Dim IsE0$: IsE0 = XIsE0(.IsRetVal, .Nm, .TyChr, .RetTy) '#Insp-Expr-0
+    NN = IsN0 & NN
+    EE = IsE0 & EE
+    InspMthStmt = InspStmt(NN, EE, Mdn, .Nm)
+End With
+End Function
+
+Private Function XIsN0$(IsRetVal As Boolean, Mthn$)
+If Not IsRetVal Then Exit Function
+XIsN0 = "Oup(" & Mthn & ") "
+End Function
+
+Private Function XIsE0$(IsRetVal As Boolean, V, TyChr$, RetTy$)
+If Not IsRetVal Then Exit Function
+XIsE0 = InspExprzDclSfx(V, TyChr & RetTy) & ", "
+End Function
+
+Function InspStmt$(NN$, ExprLis$, Mdn$, Mthn$)
+Const C$ = "Insp ""?.?"", ""Inspect"", ""?"", ?"
+InspStmt = FmtQQ(C, Mdn, Mthn, NN, ExprLis)
+End Function
+
+Private Function InspExpr$(V, VSfx As Dictionary)
+If Not VSfx.Exists(V) Then
+    InspExpr = FmtQQ("""V(?)-NFnd""", V)
+    Exit Function
+End If
+InspExpr = InspExprzDclSfx(V, VSfx(V))
+End Function
+Private Function InspExprzDclSfx$(V, DclSfx$)
+Dim O$, S$
+S = RmvPfx(DclSfx, " As ")
+Select Case S
+Case "DLTDH": O = FmtQQ("FmtDrs(?.D)", V)
+Case "Drs": O = FmtQQ("FmtDrs(?)", V)
+Case "S1S2s": O = FmtQQ("FmtS1S2s(?)", V)
+Case "CodeModule": O = FmtQQ("Mdn(?)", V)
+Case "", "$", "$()", "#", "@", "%", "&", "%()", "&()", "#()", "@()", "$()": O = V
+Case "Dictionary", "Byte", "Boolean", "String", "Integer": O = V
+Case "", "String()", "Integer()", "Long()", "Byte()": O = V
+Case Else: O = """NoFmtr(" & S & ")"""
+End Select
+InspExprzDclSfx = O
+Exit Function
+X: InspExprzDclSfx = FmtQQ(Q, V)
+End Function
+Function InspExprLis$(PP$, VSfx As Dictionary)
+InspExprLis = Join(InspExprs(PP, VSfx), ", ")
+End Function
+
+Private Function InspExprs(PP$, VSfx As Dictionary) As String()
+Dim V
+For Each V In Itr(SyzSS(PP))
+    PushI InspExprs, InspExpr(V, VSfx)
+Next
+End Function
 

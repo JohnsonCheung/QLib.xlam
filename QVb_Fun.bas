@@ -4,7 +4,6 @@ Option Explicit
 Private Const Asm$ = "QVb"
 Public CSub$
 Public Const CMod$ = ""
-Type Unt: X As Byte: End Type
 Sub Swap(OA, OB)
 Dim X
 X = OA

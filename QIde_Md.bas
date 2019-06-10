@@ -64,6 +64,10 @@ Function Mdn(M As CodeModule)
 Mdn = M.Parent.Name
 End Function
 
+Function MdnzM(M As CodeModule)
+MdnzM = M.Parent.Name
+End Function
+
 Function QMdnzM$(M As CodeModule)
 QMdnzM = PjnzM(M) & "." & Mdn(M)
 End Function

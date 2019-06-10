@@ -12,15 +12,15 @@ Dim Dry()
     Next
 DrszItrPP = Drs(P, Dry)
 End Function
-Function DrzObjPny(Obj, Pny$(), Optional Thw As EmThw = EmThw.EiQuietEmp) As Variant()
+Function DrzObjPny(Obj, Pny$(), Optional ThwEr As EmThw) As Variant()
 Dim P
 For Each P In Pny
-    Push DrzObjPny, PrpzP(Obj, P, Thw)
+    Push DrzObjPny, PrpzP(Obj, P, ThwEr)
 Next
 End Function
-Function PrpzP(Obj, P, Optional Thw As EmThw = EmThw.EiQuietEmp)
+Function PrpzP(Obj, P, Optional ThwEr As EmThw)
 Select Case True
-Case Thw = EiQuietEmp: Asg P_QuietEmp(Obj, P), PrpzP
+Case ThwEr = EiNoThw: Asg P_QuietEmp(Obj, P), PrpzP
 Case Else: Stop
 End Select
 End Function

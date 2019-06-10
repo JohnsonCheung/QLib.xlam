@@ -20,9 +20,9 @@ Type MthInf
 End Type
 Type MthInfs: N As Long: Ay() As MthInf: End Type
 
-Function MthDrszFb(Fb) As Drs
-MthDrszFb = MthDrszV(VbezPjf(Fb))
-ClsPjf Fb
+Function MthDrszFb(FB) As Drs
+MthDrszFb = MthDrszV(VbezPjf(FB))
+ClsPjf FB
 End Function
 
 Function MthDrsInVbe() As Drs
@@ -167,7 +167,6 @@ Dr_MthLin = Array(.ShtMdy, .ShtTy, .Nm, .ShtRetTy, FmtPm(.Pm, IsNoBkt:=True), .R
 End With
 End Function
 Function MthDr(Src$(), MthLin, MthIx) As Variant()
-'If Not HitMthLin(MthLin, B) Then Exit Function
 Dim X As MthLinRec
 X = MthLinRec(MthLin)
 With X
@@ -321,7 +320,7 @@ End Property
 
 Private Property Get ZzVAy() As Vbe()
 PushObj ZzVAy, CVbe
-Const Fb$ = "C:\Users\user\Desktop\MHD\SAPAccessReports\StockShipRate\StockShipRate\StockShipRate (ver 1.0).accdb"
+Const FB$ = "C:\Users\user\Desktop\MHD\SAPAccessReports\StockShipRate\StockShipRate\StockShipRate (ver 1.0).accdb"
 'PushObj ZzVAy, AcsOpnFb(Fb).Vbe
 End Property
 
@@ -364,7 +363,7 @@ ShwWb MthWb
 End Sub
 
 Private Sub Z_MthWbFmt()
-Dim Wb As Workbook
+Dim WB As Workbook
 Const Fx$ = "C:\Users\user\Desktop\Vba-Lib-1\Mth.xlsx"
 MthWbFmt ShwWb(WbzFx(Fx))
 Stop

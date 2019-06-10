@@ -39,6 +39,9 @@ Y_LinesAy = XX
 Erase XX
 End Function
 
+Function BoxLines$(Lines$)
+BoxLines = JnCrLf(BoxLy(SplitCrLf(Lines)))
+End Function
 Function BoxLy(Ly$()) As String()
 If Si(Ly) = 0 Then Exit Function
 Dim W%, L$, I

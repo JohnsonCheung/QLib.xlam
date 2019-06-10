@@ -1,7 +1,7 @@
 Attribute VB_Name = "QDta_Drs_Dup"
 Option Compare Text
 Option Explicit
-Private Const CMod$ = "MDta_Drs_Dup."
+Private Const CMod$ = "MDta_DDup."
 Private Const Asm$ = "QDta"
 Function DrswDup(A As Drs, FF$) As Drs
 DrswDup = DrswRowIxy(A, RowIxyOfDupRow(A, FF))

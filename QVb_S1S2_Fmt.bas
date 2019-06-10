@@ -22,6 +22,10 @@ For J = 0 To A.N - 1
 Next
 End Sub
 Function FmtS1S2s(A As S1S2s, Optional Nm1$ = "S1", Optional Nm2$ = "S2") As String()
+If A.N = 0 Then
+    PushI FmtS1S2s, "(NoRec-S1S2s) (" & Nm1 & ") (" & Nm2 & ")"
+    Exit Function
+End If
 Dim mHasLines As Boolean, mSepChr$, mS1$(), mS2$(), mW1%, mW2%, mSepLin$, mHdrLy$(), mMidLy$()
 mHasLines = HasLines(A)
       mS1 = Sy1zS1S2s(A)

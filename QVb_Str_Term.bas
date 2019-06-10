@@ -2,7 +2,7 @@ Attribute VB_Name = "QVb_Str_Term"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "MTerm."
-Const NS$ = "Vb.Str.Term"
+Const Ns$ = "Vb.Str.Term"
 Private Const Asm$ = "Q"
 
 Function RmvTerm$(Lin, Term$())

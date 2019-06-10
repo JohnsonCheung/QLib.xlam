@@ -36,28 +36,39 @@ End Function
 Function LJnDrs(A As Drs, B As Drs, Jn$, Add$, Optional AnyFld$) As Drs
 LJnDrs = JnDrs(A, B, Jn, Add, IsLeftJn:=True, AnyFld:=AnyFld)
 End Function
+Function FnyAzJn(Jn$) As String()
+Dim J
+For Each J In SyzSS(Jn)
+    PushI FnyAzJn, BefOrAll(J, ":")
+Next
+End Function
+Function FnyBzJn(Jn$) As String()
+Dim J
+For Each J In SyzSS(Jn)
+    PushI FnyBzJn, AftOrAll(J, ":")
+Next
+End Function
+
+Sub AsgFnyAB(FFWiColon$, OFnyA$(), OFnyB$())
+Dim F
+Erase OFnyA, OFnyB
+For Each F In SyzSS(FFWiColon)
+    With BrkBoth(F, ":")
+        PushI OFnyA, .S1
+        PushI OFnyB, .S2
+    End With
+Next
+End Sub
 Function JnDrs(A As Drs, B As Drs, Jn$, Add$, Optional IsLeftJn As Boolean, Optional AnyFld$) As Drs
-Dim Dr, IDr, Dr1(), IDry(), ODry(), AddFny$(), AddFnyFm$(), AddFnyAs$(), F, JnFny$(), JnFnyA$(), JnFnyB$(), AJnIxy&(), BJnIxy&(), AddIxy&(), Vy()
+Dim Dr, IDr, Dr1(), IDry(), ODry(), AddFny$(), AddFnyFm$(), AddFnyAs$(), F, JnFnyA$(), JnFnyB$(), AJnIxy&(), BJnIxy&(), AddIxy&(), Vy()
 Dim Emp(), EmpWithAny(), NoRec As Boolean, O As Drs
-JnFny = SyzSS(Jn)
-For Each F In JnFny
-    With BrkBoth(F, ":")
-        PushI JnFnyA, .S1
-        PushI JnFnyB, .S2
-    End With
-Next
-AddFny = SyzSS(Add)
-For Each F In AddFny
-    With BrkBoth(F, ":")
-        PushI AddFnyFm, .S1
-        PushI AddFnyAs, .S2
-    End With
-Next
-AddIxy = IxyzSubAy(B.Fny, AddFnyFm)
-BJnIxy = IxyzSubAy(B.Fny, JnFnyB)
-AJnIxy = IxyzSubAy(A.Fny, JnFnyA)
-If IsLeftJn Then ReDim Emp(UB(AddFny))
-If IsLeftJn And AnyFld <> "" Then ReDim EmpWithAny(UB(AddFny)): PushI EmpWithAny, False
+AsgFnyAB Jn, JnFnyA, JnFnyB
+AsgFnyAB Add, AddFnyFm, AddFnyAs
+AddIxy = IxyzSubAy(B.Fny, AddFnyFm, ThwNFnd:=True)
+BJnIxy = IxyzSubAy(B.Fny, JnFnyB, ThwNFnd:=True)
+AJnIxy = IxyzSubAy(A.Fny, JnFnyA, ThwNFnd:=True)
+If IsLeftJn Then ReDim Emp(UB(AddFnyFm))
+If IsLeftJn And AnyFld <> "" Then ReDim EmpWithAny(UB(AddFnyFm)): PushI EmpWithAny, False
 For Each Dr In Itr(A.Dry)
     Vy = AywIxy(Dr, AJnIxy)
     IDry = DrywIxyVySel(B.Dry, BJnIxy, Vy, AddIxy)
@@ -124,8 +135,11 @@ End Function
 Function InsColzDrsCCBef(A As Drs, CC$, V1, V2) As Drs
 InsColzDrsCCBef = Drs(AddSy(SyzSS(CC), A.Fny), InsColzDryVyBef(A.Dry, Av(V1, V2)))
 End Function
-Function InsColzDrsBef(A As Drs, C$, V) As Drs
-InsColzDrsBef = Drs(AddSy(Sy(C), A.Fny), InsColzDryBef(A.Dry, V))
+Function InsColzFront(A As Drs, C$, V) As Drs
+InsColzFront = Drs(AddSy(Sy(C), A.Fny), InsColzDryBef(A.Dry, V))
+End Function
+Function InsCol(A As Drs, C$, V) As Drs
+InsCol = InsColzFront(A, C, V)
 End Function
 Function UpdDrs(A As Drs, B As Drs) As Drs
 'Fm  A      K X    ! to be updated
@@ -151,13 +165,18 @@ UpdDrs = O
 Stop
 End Function
 Function SelDrs(A As Drs, FF$) As Drs
-Dim Fny$(): Fny = ExpandFF(FF, A.Fny)
-ThwNotSuperAy A.Fny, Fny
-SelDrs = SelDrsAlwEmpzFny(A, Fny)
+'Dim Fny$(): Fny = ExpandFF(FF, A.Fny)
+SelDrs = SelDrsAlwEmpzFny(A, SyzSS(FF))
 End Function
 
 Function SelDrszFny(A As Drs, Fny$()) As Drs
+ThwNotSuperAy A.Fny, Fny
 SelDrszFny = Drs(Fny, SelDry(A.Dry, Ixy(A.Fny, Fny)))
+End Function
+
+Function SelDrszAs(A As Drs, FFAs$) As Drs
+Dim FA$(), FB$(): AsgFnyAB FFAs, FA, FB
+SelDrszAs = Drs(FB, SelDrszFny(A, FA).Dry)
 End Function
 
 Function SelDrsAlwEmpzFny(A As Drs, Fny$()) As Drs

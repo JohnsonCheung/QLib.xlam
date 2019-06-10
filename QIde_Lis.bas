@@ -21,8 +21,34 @@ End Sub
 Sub LisStopLin()
 
 End Sub
+Sub LisPFunRetAs(RetAsPatn$)
+Dim S As Drs: S = DMthP
+Dim RetAs As Drs: RetAs = AddColzRetAs(S)
+Dim Pub As Drs: Pub = ColEqE(RetAs, "Mdy", "Pub")
+Dim Fun As Drs: Fun = ColEqE(Pub, "Ty", "Fun")
+Dim Patn As Drs: Patn = ColPatn(Fun, "RetAs", RetAsPatn)
+Dim T50 As Drs: T50 = TopN(Patn)
+BrwDrs T50
+End Sub
+Sub LisRetAs(RetAsPatn$, Optional N = 50)
+Dim S As Drs: S = DMthP
+Dim RetAs As Drs: RetAs = AddColzRetAs(S)
+Dim Patn As Drs: Patn = ColPatn(RetAs, "RetAs", RetAsPatn)
+Dim T50 As Drs: T50 = TopN(Patn, N:=N)
+BrwDrs T50
+End Sub
+
+Sub LisPPrpRetAs(RetAsPatn$)
+Dim S As Drs: S = DMthP
+Dim RetAs As Drs: RetAs = AddColzRetAs(S)
+Dim Pub As Drs: Pub = ColEqE(RetAs, "Mdy", "Pub")
+Dim Fun As Drs: Fun = ColEqE(Pub, "Ty", "Get")
+Dim Patn As Drs: Patn = ColPatn(Fun, "RetAs", RetAsPatn)
+Dim T50 As Drs: T50 = TopN(Patn)
+BrwDrs T50
+End Sub
 Sub LisMth()
-Dim Ay$(): Ay = QMthnyzV(CVbe)
+Dim Ay$(): Stop: ' Ay = QMthnyzV(CVbe)
 Debug.Print "Fst 30 of " & Si(Ay) & " methods"
 D AywFstNEle(Ay, 30)
 End Sub

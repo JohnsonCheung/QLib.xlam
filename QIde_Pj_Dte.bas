@@ -3,9 +3,9 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Pj_Dte."
 Private Const Asm$ = "QIde"
-Function PjDtezFb(Fb) As Date
+Function PjDtezFb(FB) As Date
 Static Y As New Access.Application
-Y.OpenCurrentDatabase Fb
+Y.OpenCurrentDatabase FB
 Y.Visible = False
 PjDtezFb = PjDtezAcs(Y)
 Y.CloseCurrentDatabase

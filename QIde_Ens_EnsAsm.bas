@@ -2,55 +2,68 @@ Attribute VB_Name = "QIde_Ens_EnsAsm"
 Option Compare Text
 Option Explicit
 Private Const Asm$ = "QIde"
-Private Const NS$ = "QIde.Qualify"
+Private Const Ns$ = "QIde.Qualify"
 Private Const CMod$ = "BEnsAsm."
 
-Function MdygszON(SOld As SomLnx, SNew As SomLnx) As Mdygs
-'If ShouldDltLin(SOld, SNew) Then PUshMdyLin MdygszON, MdygOfDltzSomLnx(SOld)
-'If ShouldInsLin(SOld, SNew) Then PUshMdyLin MdygszON, MdygOfIns zSomLnx(NOld)
+Function AsmnzMdn$(Mdn$)
+If FstChr(Mdn) = "Q" Then
+    If HasSubStr(Mdn, "_") Then
+        AsmnzMdn = Bef(Mdn, "_")
+    End If
+End If
 End Function
 
-Private Function ShouldDltLin(SOld As SomLnx, SNew As SomLnx) As Boolean
-
-End Function
-
-Private Function ShouldInsLin(SOld As SomLnx, SNew As SomLnx) As Boolean
-
-End Function
-
-Function RmvNop(A As Mdygs) As Mdygs
-Dim J&
-For J = 0 To A.N - 1
-    If A.Ay(J).Act <> EiNop Then PushMdyg RmvNop, A.Ay(J)
+Function DrszMapAy(Ay, MapFunNN$, Optional FF$) As Drs
+Dim Dry(), V: For Each V In Ay
+    Dim Dr(): Dr = Array(V)
+    Dim F: For Each F In Itr(SyzSS(MapFunNN))
+        PushI Dr, Run(F, V)
+    Next
+    PushI Dry, Dr
 Next
+Dim A$: A = DftStr(FF, "V " & MapFunNN)
+DrszMapAy = DrszFF(A, Dry)
 End Function
-Function Insg(Lno, Lines$) As Insg
-With Insg
-End With
-End Function
-Private Sub Z_EnsAsmzMd()
-Dim Md As CodeModule
-GoSub T0
-Exit Sub
-T0:
-    Set Md = CMd
-    GoTo Tst
-Tst:
-    EnsAsmzMd Md
-    Return
-End Sub
-
-Sub EnsAsmM()
-EnsAsmzMd CMd
-End Sub
 
 Sub EnsAsmP()
 EnsAsmzP CPj
 End Sub
+
+Function EnsAsmzM(M As CodeModule) As Boolean
+If IsEmpMd(M) Then Exit Function
+If CmpTyzM(M) = vbext_ct_Document Then Exit Function
+
+Const T$ = "Private Const CMod$ = ""?"""
+Dim N$, L&, C$, Mdn$
+Mdn = MdnzM(M)
+   C = "CMod"
+  N = MdnzM(M)
+  L = LnozDclCnst(M, C)
+If L = 0 Then L = LnozFstCd(M)
+If EnsLin(M, L, FmtQQ(T, C, N & ".")) Then EnsAsmzM = True
+
+     C = "Asm"
+     N = AsmnzMdn(Mdn)
+         If EnsAsmzM__1(M, C, N, T) Then EnsAsmzM = True
+
+     C = "Ns"
+     N = NsnzMdn(Mdn)
+         If EnsAsmzM__1(M, C, N, T) Then EnsAsmzM = True
+End Function
+Private Function EnsAsmzM__1(M As CodeModule, C$, N$, T$) As Boolean
+Dim L&, Lin$, NoNm As Boolean, HasLin As Boolean
+     L = LnozDclCnst(M, C)
+   Lin = FmtQQ(T, C, N)
+  NoNm = N = ""
+HasLin = L <> 0
+If Not (NoNm And HasLin) Then _
+    EnsAsmzM__1 = EnsLin(M, L, Lin)
+
+End Function
 Sub EnsAsmzP(P As VBProject)
 Dim C As VBComponent, Mdyd%, Skpd%
 For Each C In P.VBComponents
-    If EnsAsmzMd(C.CodeModule) Then
+    If EnsAsmzM(C.CodeModule) Then
         Mdyd = Mdyd + 1
     Else
         Skpd = Skpd + 1
@@ -58,15 +71,20 @@ For Each C In P.VBComponents
 Next
 Inf CSub, "Done", "Pj Mdyd Skpd Tot", P.Name, Mdyd, Skpd, Mdyd + Skpd
 End Sub
-Function EnsAsmzMd(M As CodeModule) As Boolean 'Return True if the Module has been changed
-If M.Parent.Type = vbext_ct_Document Then Exit Function
-With MdygOfSetgAsm(M)
-    If .Act <> EiNop Then
-        EnsAsmzMd = True
-        Debug.Print Mdn(M); "<============= Mdy"
-        'MdyMdzMM  A, .Itm
-    End If
-End With
+
+Sub EnsCnstzMth(M As CodeModule, Mthn$, Cnstn$, NewL$)
+
+End Sub
+
+Function EnsLin(M As CodeModule, L&, NewL$) As Boolean
+If L = 0 Then Exit Function
+If M.Lines(L, 1) = NewL Then Exit Function
+If NewL = "" Then
+    M.DeleteLines L, 1
+Else
+    M.ReplaceLine L, NewL
+End If
+EnsLin = True
 End Function
 
 Function HasAsmn(Mdn) As Boolean
@@ -75,73 +93,45 @@ If Not IsAscUCas(Asc(SndChr(Mdn))) Then Exit Function
 HasAsmn = True
 End Function
 
-Function Asmn$(M As CodeModule)
-Dim N$: N = Mdn(M)
-If HasAsmn(N) Then Asmn = RplFstChr(Bef(N, "_"), "Q")
+Function IxzCnst&(Src$(), Cnstn$)
+Dim O&, S
+For Each S In Itr(Src)
+    If CnstnzL(S) = Cnstn Then
+        IxzCnst = O
+    End If
+    O = O + 1
+Next
+IxzCnst = -1
 End Function
 
-Function CnstLinOfAsm$(M As CodeModule)
-Dim N$: N = Asmn(M)
-If N = "" Then Exit Function
-CnstLinOfAsm = FmtQQ("Private Const Asm$ = ""?""", N)
+Function LnozDclCnst%(M As CodeModule, Cnstn$)
+Dim O%, L$
+Dim C$: C = "Const " & Cnstn
+For O = 1 To M.CountOfDeclarationLines
+    L = RmvMdy(M.Lines(O, 1))
+    If ShfPfx(L, "Const ") Then
+        If TakNm(L) = Cnstn Then LnozDclCnst = O: Exit Function
+    End If
+Next
 End Function
 
-Function IsEqMdyg(A As Mdyg, B As Mdyg) As Boolean
-If A.Act <> B.Act Then Exit Function
-Stop '
-End Function
-Function MdygOfInszLnx(A As Lnx) As Mdyg
-With A
-    MdygOfInszLnx = MdygOfIns(.Ix + 1, .Lin)
-End With
-End Function
-Function MdygOfDltzLnx(A As Lnx) As Mdyg
-With A
-    'MdygOfInszLnx = MdygOfDlt(.Ix + 1, .Lin)
-End With
-End Function
-Function MdygOfIns(Lno, Lines$) As Mdyg
-MdygOfIns.Act = EiIns
-MdygOfIns.Ins = Insg(Lno, Lines)
-End Function
-Function MdygOfDlt(Lno, OldLines$) As Mdyg
-MdygOfDlt.Act = EiDlt
-MdygOfDlt.Dlt = Dltg(Lno, OldLines)
-End Function
-Function Dltg(Lno, OldLines$) As Dltg
-Dltg.Lno = Lno
-'Dltg.OldLines = OldLines
+Function LnozFstCd&(M As CodeModule)
+Stop
+
 End Function
 
-Function LnoOfAsmCnst(M As CodeModule)
-LnoOfAsmCnst = LnoOfCnstOfAftOpt(M, "Asm$")
-End Function
-
-Function MdygOfSetgAsm(M As CodeModule) As Mdyg
-Dim NewLines$: NewLines = CnstLinOfAsm(M): If NewLines = "" Then Exit Function
-Dim O As Mdyg
-Dim Lno: Lno = LnoOfAsmCnst(M)
-Dim OldLines$: OldLines = ContLinzML(M, Lno)
-Select Case True
-'Case Lno = 0: O = MdygOfIns(LnoOfAftOptAndImpl(A), NewLines)
-Case Lno > 0 And OldLines = "": Thw CSub, "Lno>0, OldLin must have value", "Md Lno", Mdn(M), Lno
-Case Lno > 0 And OldLines = NewLines:
-'Case Lno > 0 And OldLines <> NewLines: O = MdygOfRpl(Lno, OldLines, NewLines)
-Case Else: ThwImpossible CSub
-End Select
-MdygOfSetgAsm = O
-End Function
-
-Function LnoOfCnstOrAftOpt&(M As CodeModule, Cnstn$)
-Dim O&: O = LnoOfCnstOfAftOpt(M, Cnstn)
-If O > 0 Then
-    LnoOfCnstOrAftOpt = O
-Else
-'    LnoOfCnstOrAftOpt = LnoOfAftOptAndImpl(M)
+Function NsnzMdn$(Mdn$)
+If FstChr(Mdn) = "Q" Then
+    Dim A$: A = BefOrAll(Mdn, "__")
+    Dim P1%: P1 = InStr(A, "_")
+    If P1 = 0 Then Exit Function
+    Dim P2%: P2 = InStrRev(A, "_")
+    If P1 = P2 Then Exit Function
+    NsnzMdn = Mid(A, P1 + 1, P2 - P1 - 1)
 End If
 End Function
 
-Private Sub Z_LnoOfConst()
+Private Sub Z_LnozDclConst()
 Dim Md As CodeModule, Cnstn$
 GoSub T0
 Exit Sub
@@ -151,15 +141,11 @@ T0:
     Ept = 14&
     GoTo Tst
 Tst:
-    Act = LnoOfCnstOfAftOpt(Md, Cnstn)
+    Act = LnozDclCnst(Md, Cnstn)
     C
     Return
 End Sub
-Function LnoOfCnstOfAftOpt&(M As CodeModule, Cnstn$)
-Dim O&, C$, L$
-C = "Const " & Cnstn
-For O = 1 To M.CountOfDeclarationLines
-    L = RmvMdy(M.Lines(O, 1))
-    If HasPfx(L, C) Then LnoOfCnstOfAftOpt = O: Exit Function
-Next
-End Function
+
+Sub ZZ_AsmnzMdn()
+BrwDrs DrszMapAy(Itn(CPj.VBComponents), "AsmnzMdn NsnzMdn")
+End Sub

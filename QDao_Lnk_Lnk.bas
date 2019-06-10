@@ -18,8 +18,8 @@ Sub LnkFx(A As Database, T, Fx, Optional Wsn = "Sheet1")
 LnkTbl A, T, Wsn & "$", CnStrzFxDao(Fx)
 End Sub
 
-Sub LnkFb(A As Database, T, Fb, Optional Fbt$)
-LnkTbl A, T, DftStr(Fbt, T), CnStrzFbDao(Fb)
+Sub LnkFb(A As Database, T, FB, Optional Fbt$)
+LnkTbl A, T, DftStr(Fbt, T), CnStrzFbDao(FB)
 End Sub
 
 Private Function TdzzTSC(T, Src$, Cn$) As Dao.TableDef

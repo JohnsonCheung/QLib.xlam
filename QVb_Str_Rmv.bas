@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MRmv."
 Private Const Asm$ = "QVb"
-Private Const NS = "Str"
+Private Const Ns = "Str"
 Function RmvDotComma$(S)
 RmvDotComma = Replace(Replace(S, ",", ""), ".", "")
 End Function
@@ -87,6 +87,16 @@ End Function
 Function RmvSqBkt$(S)
 If Not HasSqBkt(S) Then RmvSqBkt = S: Exit Function
 RmvSqBkt = RmvFstLasChr(S)
+End Function
+
+Function RmvPfxAll$(S, Pfx$)
+Dim O$: O = S
+Dim J&
+While HasPfx(O, Pfx)
+    J = J + 1: If J > 1000 Then ThwLoopingTooMuch CSub
+    O = RmvPfx(O, Pfx)
+Wend
+RmvPfxAll = O
 End Function
 
 Function RmvPfx$(S, Pfx$, Optional C As VbCompareMethod = vbTextCompare)

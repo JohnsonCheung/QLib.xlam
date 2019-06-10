@@ -19,7 +19,7 @@ Dim JCnst As Drs:   JCnst = SelDrs(ISrc, "Key Fss")
 Dim CdCnst$():     CdCnst = B_CdCnst(JCnst)
 
 '== CdMain OK ==============================================================================================
-Dim InpPm As Drs:    InpPm = DrswColEqSel(ISrc, "StpTy", "Inp", "Key Ret StpTy")
+Dim InpPm As Drs:    InpPm = ColEqSel(ISrc, "StpTy", "Inp", "Key Ret StpTy")
 Dim MMPm$:            MMPm = B_MPm(InpPm)
 Dim Las():             Las = SelDrs(LasRec(ISrc), "Key Ret StpTy").Dry(0)
 Dim MMthn$:          MMthn = Las(0)

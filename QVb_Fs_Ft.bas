@@ -7,7 +7,12 @@ Private Const Asm$ = "QVb"
 Sub DmpFt(Ft)
 D LineszFt(Ft)
 End Sub
-
+Function EnsFt(Ft$)
+If Not HasFfn(Ft) Then
+    WrtStr "", Ft
+End If
+EnsFt = Ft
+End Function
 Sub BrwFt(Ft, Optional UseVc As Boolean)
 Shell IIf(UseVc, "code.cmd", "notepad.exe") & " """ & Ft & """", vbMaximizedFocus
 End Sub

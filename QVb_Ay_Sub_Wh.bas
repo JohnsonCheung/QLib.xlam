@@ -94,6 +94,7 @@ For J = FmIx To ToIx
 Next
 End Function
 Function AywFstUEle(Ay, U)
+If U > UB(Ay) Then AywFstUEle = Ay: Exit Function
 Dim O: O = Ay
 ReDim Preserve O(U)
 AywFstUEle = O
@@ -132,6 +133,7 @@ For Each I In Itr(Ay)
     If Ay.Has(I) Then Push AywInAset, I
 Next
 End Function
+
 Function AywIxy(Ay, Ixy&())
 Dim U&: U = UB(Ixy)
 Dim O: O = Resi(Ay)
@@ -246,10 +248,16 @@ Dim O As New PredLikAy
 O.Init SyzSS(Likss)
 Set PredzLikss = O
 End Function
-Function IxyzSubAy(Ay, SubAy) As Long()
-Dim E
+Function IxyzSubAy(Ay, SubAy, Optional ThwNFnd As Boolean) As Long()
+Dim E, Ix&
 For Each E In SubAy
-    PushI IxyzSubAy, IxzAy(Ay, E)
+    Ix = IxzAy(Ay, E)
+    If ThwNFnd Then
+        If Ix = -1 Then
+            Thw CSub, "Ele in SubAy not found in Ay", "Ele SubAy Ay", E, SubAy, Ay
+        End If
+    End If
+    PushI IxyzSubAy, Ix
 Next
 End Function
 

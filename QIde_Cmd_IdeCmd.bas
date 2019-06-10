@@ -13,7 +13,8 @@ Dim IsAlignable As Boolean, Lno&, NLin%, OldL$, NewL$, Md As CodeModule, MthLy$(
 IsAlignable = IsAlignableMth(OldMthLy)
               If Not IsAlignable Then MsgBox "Mth: " & N & vbCrLf & "is not Alignable", vbCritical: Exit Sub
        NewL = AlignMth(OldMthLy)
-              RplLines Md, Lno, NLin, OldL, NewL
+       Stop
+              'RplLines Md, Lno, NLin, OldL, NewL
 End Sub
 
 Private Sub ZZ_AlignMthLines()
@@ -53,7 +54,7 @@ Dim ONoAlign$(), OLHS$(), ORHS$(), O$(), U%, J%, Fm%, L$
 U = UB(MthLy)
 ReDim ONoAlign(U), OLHS(U), ORHS(U), O(U)
 O(U) = MthLy(U)
-Fm = SrcIxzNxt(MthLy)
+Fm = NxtIxzSrc(MthLy)
 For J = 0 To Fm - 1
     O(J) = MthLy(J)
 Next

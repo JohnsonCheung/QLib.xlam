@@ -3,7 +3,9 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Pj_Cur."
 Private Const Asm$ = "QIde"
-
+Property Get CPjf$()
+CPjf = CPj.Filename
+End Property
 Property Get CPj() As VBProject
 Set CPj = CVbe.ActiveVBProject
 End Property

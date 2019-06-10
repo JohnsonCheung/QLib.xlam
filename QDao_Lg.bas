@@ -172,9 +172,9 @@ A.TableDefs.Append T
 End Sub
 
 Sub LgCrt_v1()
-Dim Fb$
-Fb = LgFb
-If HasFfn(Fb) Then Exit Sub
+Dim FB$
+FB = LgFb
+If HasFfn(FB) Then Exit Sub
 'DbCrtSchm CrtFb(Fb), LgSchmLines
 End Sub
 

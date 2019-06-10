@@ -8,13 +8,13 @@ Function CvCn(A) As AdoDb.Connection
 Set CvCn = A
 End Function
 
-Sub RplOleWcFb(WC As WorkbookConnection, Fb)
-CvCn(WC.OLEDBConnection.ADOConnection).ConnectionString = CnStrzFbzAsAdo(Fb)
+Sub RplOleWcFb(WC As WorkbookConnection, FB)
+CvCn(WC.OLEDBConnection.ADOConnection).ConnectionString = CnStrzFbzAsAdo(FB)
 End Sub
 
-Sub RplLozFbzFbt(Lo As ListObject, Fb, T)
+Sub RplLozFbzFbt(Lo As ListObject, FB, T)
 With Lo.QueryTable
-    RplOleWcFb .Connection, Fb '<==
+    RplOleWcFb .Connection, FB '<==
     .CommandType = xlCmdTable
     .CommandText = T '<==
     .RowNumbers = False
@@ -37,19 +37,19 @@ TmpInpTny = AywPfx(Tny(A), "#I")
 End Function
 
 Private Sub ZZ_LoIxSq()
-Dim Wb As Workbook: Set Wb = NewWb
-AddWszzWbSq Wb, SampSq
-AddWszzWbSq Wb, SampSq1
-BrwSq LoIxSq(Wb)
+Dim WB As Workbook: Set WB = NewWb
+AddWszzWbSq WB, SampSq
+AddWszzWbSq WB, SampSq1
+BrwSq LoIxSq(WB)
 End Sub
 
-Sub AddWszzWbSq(Wb As Workbook, Sq())
-LozSq Sq, A1zWs(AddWs(Wb))
+Sub AddWszzWbSq(WB As Workbook, Sq())
+LozSq Sq, A1zWs(AddWs(WB))
 End Sub
 
-Function LoIxSq(Wb As Workbook) As Variant()
+Function LoIxSq(WB As Workbook) As Variant()
 Dim Ws As Worksheet, M(), O(), Fnd As Boolean
-For Each Ws In Wb.Sheets
+For Each Ws In WB.Sheets
     M = LoIxSqzWs(Ws)
     If Si(M) > 0 Then
         If Fnd Then
@@ -103,8 +103,8 @@ Next
 DltSheet1 O
 Set WbzTny = O
 End Function
-Function WbzFb(Fb) As Workbook
-Dim D As Database: Set D = Db(Fb)
+Function WbzFb(FB) As Workbook
+Dim D As Database: Set D = Db(FB)
 Set WbzFb = ShwWb(WbzTny(D, Tny(D)))
 End Function
 
@@ -112,8 +112,8 @@ Function SetWsn(Ws As Worksheet, Nm$) As Worksheet
 Set SetWsn = Ws
 If Nm = "" Then Exit Function
 If HasWs(WbzWs(Ws), Nm) Then
-    Dim Wb As Workbook: Set Wb = WbzWs(Ws)
-    Thw CSub, FmtQQ("Wsn exists in Wb", "Wsn Wbn Wny-in-Wb", Nm, Wbn(Wb), WnyzWb(Wb))
+    Dim WB As Workbook: Set WB = WbzWs(Ws)
+    Thw CSub, FmtQQ("Wsn exists in Wb", "Wsn Wbn Wny-in-Wb", Nm, Wbn(WB), WnyzWb(WB))
 End If
 Ws.Name = Nm
 End Function
@@ -152,9 +152,9 @@ Sub AddLozSamp()
 '    End With
 
 End Sub
-Function AddLo(At As Range, Fb, T) As ListObject
+Function AddLo(At As Range, FB, T) As ListObject
 Dim Ws As Worksheet: Set Ws = WszRg(At)
-Dim Lo As ListObject: Set Lo = Ws.ListObjects.Add(xlSrcExternal, CnStrzFbzAsAdoOle(Fb), Destination:=At)
+Dim Lo As ListObject: Set Lo = Ws.ListObjects.Add(xlSrcExternal, CnStrzFbzAsAdoOle(FB), Destination:=At)
 Dim Qt As QueryTable: Set Qt = Lo.QueryTable
 With Qt
     .CommandType = xlCmdTable
@@ -179,16 +179,16 @@ Sub LoAutoFit(A As ListObject)
 A.DataBodyRange.EntireColumn.AutoFit
 End Sub
 
-Function AddWszT(Wb As Workbook, Db As Database, T, Optional Wsn0$, Optional AddgWay As EmAddgWay) As Worksheet
-Dim O As Worksheet: Set O = AddWs(Wb, StrDft(Wsn0, T))
+Function AddWszT(WB As Workbook, Db As Database, T, Optional Wsn0$, Optional AddgWay As EmAddgWay) As Worksheet
+Dim O As Worksheet: Set O = AddWs(WB, StrDft(Wsn0, T))
 Dim A1 As Range: Set A1 = A1zWs(O)
 PutTbl Db, T, A1, AddgWay
 End Function
 
-Function NewWbzOupTbl(Fb, Optional AddgWay As EmAddgWay) As Workbook '
+Function NewWbzOupTbl(FB, Optional AddgWay As EmAddgWay) As Workbook '
 Dim O As Workbook, D As Database
 Set O = NewWb
-Set D = Db(Fb)
+Set D = Db(FB)
 AddWszTny O, D, OupTny(D), AddgWay
 DltWsIf O, "Sheet1"
 Set NewWbzOupTbl = O
@@ -217,10 +217,10 @@ End Sub
 Sub PutDbtAt(A As Database, T, At As Range, Optional AddgWay As EmAddgWay)
 LozRg PutSq(SqzT(A, T), At), Lon(T)
 End Sub
-Sub SetQtFbt(Qt As QueryTable, Fb, T)
+Sub SetQtFbt(Qt As QueryTable, FB, T)
 With Qt
     .CommandType = xlCmdTable
-    .Connection = CnStrzFbzAsAdoOle(Fb) '<--- Fb
+    .Connection = CnStrzFbzAsAdoOle(FB) '<--- Fb
     .CommandText = T '<-----  T
     .RowNumbers = False
     .FillAdjacentFormulas = False
@@ -236,11 +236,11 @@ With Qt
     .Refresh BackgroundQuery:=False
 End With
 End Sub
-Sub PutFbtAt(Fb, T$, At As Range, Optional LoNm0$)
+Sub PutFbtAt(FB, T$, At As Range, Optional LoNm0$)
 Dim O As ListObject
 Set O = WszRg(At).ListObjects.Add(SourceType:=XlSourceType.xlSourceWorkbook, Destination:=At)
 SetLoNm O, Dft(LoNm0, Lon(T))
-SetQtFbt O.QueryTable, Fb, T
+SetQtFbt O.QueryTable, FB, T
 End Sub
 Sub FxzTny(Fx, Db As Database, Tny$())
 WbzTny(Db, Tny).SaveAs Fx

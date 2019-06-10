@@ -32,23 +32,23 @@ Dim Dic_Fn_Ffn As Dictionary: Set Dic_Fn_Ffn = Dic(IndentedLy(LnkImpSrc, "Inp"))
 Dim D1   As Drs:   D1 = WLnkFx(DFx, Dic_Fn_Ffn)         ' T S Cn
 Dim D2   As Drs:   D2 = WLnkFb(Dic_Fbt_Fbn, Dic_Fn_Ffn)
 Dim D    As Drs:    D = AddDrs(D1, D2)
-Dim OLnk As Unt: OLnk = LnkTblzDrs(Db, D)               ' <======
+Dim OLnk:  LnkTblzDrs Db, D               ' <======
             
 '== Imp=================================================================================================================
 Dim Wh         As Dictionary:         Set Wh = Dic(IndentedLy(LnkImpSrc, "Tbl.Where"))
 Dim Dic_T_Stru As Dictionary: Set Dic_T_Stru = WDic_T_Stru(FbTny, DFx)
 
-Dim DStru    As Drs:    DStru = WDStru(Ip)                     ' Stru F Ty E
-Dim ImpSqy$():         ImpSqy = WImpSqy(Dic_T_Stru, DStru, Wh)
-Dim OImp     As Unt:     OImp = RunSqy(Db, ImpSqy)             ' <==========
-Dim ODmpNRec As Unt: ODmpNRec = DmpNRec(Db)
+Dim DStru As Drs:  DStru = WDStru(Ip)                     ' Stru F Ty E
+Dim ImpSqy$():    ImpSqy = WImpSqy(Dic_T_Stru, DStru, Wh)
+Dim OImp:                  RunSqy Db, ImpSqy
+Dim ODmpNRec:              DmpNRec Db
 End Sub
 
 Private Function WDStru(Ip As DLTDH) As Drs
 'Fm Ip : L T1 Dta IsHdr}
 'Ret WDStru: Stru F Ty E
 Dim A As Drs, Dr, Dry(), B As Drs, T1$, Dta$
-A = DrswColEqSel(Ip.D, "IsHdr", False, "T1 Dta")
+A = ColEqSel(Ip.D, "IsHdr", False, "T1 Dta")
 B = DrswColPfx(A, "T1", "Stru.") 'T1 Dta
 For Each Dr In Itr(B.Dry)
     T1 = Dr(0)
@@ -85,7 +85,7 @@ For Each I In Dic_T_Stru.Keys
     Stru = Dic_T_Stru(I)
        T = ">" & I
     Into = "#I" & I
-       A = DrswColEqSel(DStru, "Stru", Stru, "F Ty E")
+       A = ColEqSel(DStru, "Stru", Stru, "F Ty E")
      Fny = StrColzDrs(A, "F")
       Ey = RmvSqBktzSy(StrColzDrs(A, "E"))
    Bexpr = ValzDicIf(Dic_T_Bexpr, I)
@@ -112,14 +112,14 @@ End Function
 
 Private Function WLnkFb(Dic_Fbt_Fbn As Dictionary, Dic_Fbn_Fb As Dictionary) As Drs
 'Ret: *LnkFb::Drs{T S Cn)
-Dim Fbn$, A$, S$, Fbt, T$, Cn$, Fb$, Dry()
+Dim Fbn$, A$, S$, Fbt, T$, Cn$, FB$, Dry()
 For Each Fbt In Dic_Fbt_Fbn.Keys
     Fbn = Dic_Fbt_Fbn(Fbt)
     If Not Dic_Fbn_Fb.Exists(Fbn) Then
         Thw CSub, "Dic_Fbn_Fb does not contains Fbn", "Fbn Dic_Fbn_Fb", Fbn, Dic_Fbn_Fb
     End If
-    Fb = Dic_Fbn_Fb(Fbn)
-    Cn = CnStrzFbDao(Fb)
+    FB = Dic_Fbn_Fb(Fbn)
+    Cn = CnStrzFbDao(FB)
     T = ">" & Fbt
     S = Fbt
     PushI Dry, Array(T, S, Cn)

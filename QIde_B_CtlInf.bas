@@ -1,4 +1,4 @@
-Attribute VB_Name = "QIde_Base_CtlInf"
+Attribute VB_Name = "QIde_B_CtlInf"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Cmd_MovMth."
@@ -122,7 +122,7 @@ Function CapNy(A As Controls) As String()
 CapNy = SyzItrP(A, PrpPth("Caption"))
 End Function
 
-Property Get WinOfBrwObj() As vbIde.Window
+Property Get WinOfBrwObj() As VBIDE.Window
 Set WinOfBrwObj = FstWinTy(vbext_wt_Browser)
 End Property
 

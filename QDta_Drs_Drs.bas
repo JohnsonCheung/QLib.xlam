@@ -2,7 +2,7 @@ Attribute VB_Name = "QDta_Drs_Drs"
 Option Compare Text
 Option Explicit
 Const Asm$ = "QDta"
-Const NS$ = "Dta.Ds"
+Const Ns$ = "Dta.Ds"
 Private Const CMod$ = "BDrs."
 Type DrSepr
     DtaSep As String
@@ -24,6 +24,18 @@ Enum EmCntSrtOpt
     eSrtByItm
 End Enum
 
+Function Drsz4TRstLy(T4RstLy$(), FF$) As Drs
+Dim I, Dry(): For Each I In Itr(T4RstLy)
+    PushI Dry, Syz4TRst(T4RstLy)
+Next
+Drsz4TRstLy = DrszFF(FF, Dry)
+End Function
+Function DrszTRstLy(TRstLy$(), FF$) As Drs
+Dim I, Dry(): For Each I In Itr(TRstLy)
+    PushI Dry, SyzTRst(TRstLy)
+Next
+DrszTRstLy = DrszFF(FF, Dry)
+End Function
 Function DrSepr(DtaSep$, DtaQuote$, LinSep$, LinQuote$) As DrSepr
 With DrSepr
     .DtaQuote = DtaQuote
@@ -202,6 +214,9 @@ For Each Dr In Itr(Gpno.Dry)
     PushI Dry, Array(L, IGpno, NLin, SNewL)
 Next
 FmtLNewONLin = DrszFF("L Gpno NLin SNewL", Dry)
+End Function
+Function EmpLNewO() As Drs
+EmpLNewO = LNewO(EmpAv())
 End Function
 Function LNewO(Dry()) As Drs
 LNewO = DrszFF("L NewL OldL", Dry)
@@ -591,11 +606,11 @@ DrsInsCV C, D, A
 End Sub
 
 
-Function DrsAddCC(A As Drs, FF$, C1, C2) As Drs
+Function AddColz2(A As Drs, FF$, C1, C2) As Drs
 Dim Fny$(), Dry()
 Fny = AddAy(A.Fny, TermAy(FF))
 Dry = DryAddColzCC(A.Dry, C1, C2)
-DrsAddCC = Drs(Fny, Dry)
+AddColz2 = Drs(Fny, Dry)
 End Function
 
 Function IxyzJnA(Fny$(), Jn$) As Long()

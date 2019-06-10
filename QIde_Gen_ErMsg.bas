@@ -10,16 +10,6 @@ Private Type A
 End Type
 Private A As A
 Public Const DoczDimItm$ = "DimStmt :: `Dim` DimItm, ..."
-Function X1X$(A As Range)
-X1X = TypeName(A.Value)
-End Function
-Sub GenErMsgzNm(Mdn)
-MdGenErMsg Md(Mdn)
-End Sub
-
-Sub GenErMsgMd()
-MdGenErMsg CMd
-End Sub
 
 Private Sub Init(Src$())
 Dim Dcl$(): Dcl = DclLy(Src)
@@ -49,7 +39,7 @@ ZZ1:
     Brw Act
     Return
 Tst:
-    Act = SrcGenErMsg(Src, Mdn)
+    Act = ErMsgzSrc(Src, Mdn)
     Return
 Set_Src:
     Const X$ = "'GenErMsg-Src-Beg." & _
@@ -73,19 +63,6 @@ Set_Src:
     "|Const M_Bet_FldSeq$ = 1"
     Src = SplitVBar(X)
     Return
-End Sub
-
-Private Sub A_Prim()
-SrcGenErMsg:
-End Sub
-
-Private Sub MdGenErMsg(M As CodeModule)  'eMthnTy.eeNve
-'Brw O: Stop 'Rmk: There is an error when Md is [MXls_Lof_ErzLof].  Er:CannotRmvMth:.
-RplMd RplgMd(M, JnCrLf(SrcGenErMsg(Src(M))))
-End Sub
-
-Private Sub Z_MdGenErMsg()
-MdGenErMsg Md("MXls_Lof_ErzLof")
 End Sub
 
 Private Sub Z_ErConstDic()
@@ -116,14 +93,14 @@ For J = 0 To UB(DclLy)
 Next
 End Function
 
-Function SrcGenErMsg(Src$(), Optional Mdn = "?") As String()
+Function ErMsgzSrc(Src$(), Optional Mdn = "?") As String()
 Init Src
 If Si(A.ErNy) = 0 Then Inf CSub, "No GenErMsg-Src-Beg. / GenErMsg-Src-End.", "Md", Mdn: Exit Function
 Dim O$(), O1$(), O2$()
 O1 = SrcRplConstDic(Src, ErConstDic): 'Brw O1: Stop
 O2 = RmvMthInSrc(O1, ErMthnSet):       'Brw LyzNNAp("MthToRmv BefRmvMth AftRmvMth", ErMthnSet, O1, O2): Stop
 O = AddSy(O2, ErMthLinAy):            'Brw O:Stop
-SrcGenErMsg = O
+ErMsgzSrc = O
 End Function
 
 Function SrcRplConstDic(Src$(), ConstDic As Dictionary) As String()
@@ -158,49 +135,6 @@ Next
 For J = F To U
     PushI OBdy, Src(J)
 Next
-End Sub
-
-Function IupMthByDic(Src$(), ByMthDic As Dictionary) As String() 'Return new Src after replacing Mth in Src by MthDic
-IupMthByDic = SplitCrLf(LineszLinesDic(IupDic(MthDic(Src), ByMthDic)))
-End Function
-Function DltMthzSN(Src$(), Mthn) As String()
-
-End Function
-
-Function RplMthzSNL(Src$(), Mthn, MthLines$) As String()
-Dim O$()
-Dim Ix&: 'Ix = MthIxzSrcNmTy SN(Src,Mthn)
-O = DltMthzSN(Src, Mthn)
-'O = InsMthzSIL(Src, Ix, MthLines)
-RplMthzSNL = O
-End Function
-Sub IupMthByDicM(M As CodeModule, MthDic As Dictionary)
-Dim NewSrc$(): NewSrc = IupMthByDic(Src(M), MthDic)
-Dim NewLines$: NewLines = JnCrLf(NewSrc)
-RplMd RplgMd(M, NewLines)
-End Sub
-
-Sub RplCnstzMD(M As CodeModule, CnstDic As Dictionary)
-Dim K
-For Each K In CnstDic.Keys
-    RplCnstzMNL M, K, CnstDic(K)
-Next
-End Sub
-Function SomIxOfCnstLin(M As CodeModule, Cnstn) As LngOpt
-End Function
-Sub RplCnstzMNL(M As CodeModule, Cnstn, NewLines)
-Dim I As LngOpt: I = SomIxOfCnstLin(M, Cnstn)
-Dim Lno&
-Select Case True
-Case I.Som:
-    Lno = I.Lng
-    If ContLinzML(M, Lno) = NewLines Then Exit Sub
-    DltContLin M, Lno
-End Select
-M.InsertLines Lno, NewLines
-End Sub
-Sub DltContLin(M As CodeModule, Lno&)
-
 End Sub
 
 Private Property Get ErMthnSet() As Aset

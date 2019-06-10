@@ -178,15 +178,15 @@ Function DLDtazT1Pfx(A As DLTDH, T1Pfx$) As DLDta
 Dim B As Drs, C As Drs
 B = DrswColPfx(A.D, "T1", T1Pfx)
 C = RmvPfxzDrs(B, "T1", T1Pfx)
-DLDtazT1Pfx.D = DrswColEqExlEqCol(C, "IsHdr", False)
+DLDtazT1Pfx.D = ColEqExlEqCol(C, "IsHdr", False)
 'BrwDrs2 A.D, DLDta.D, NN:="LTDH LDta": Stop
 
 End Function
 
 Function DLDta(A As DLTDH, T1$) As DLDta
 Dim B As Drs
-B = DrswColEqExlEqCol(A.D, "T1", T1)
-DLDta.D = DrswColEqExlEqCol(B, "IsHdr", False)
+B = ColEqExlEqCol(A.D, "T1", T1)
+DLDta.D = ColEqExlEqCol(B, "IsHdr", False)
 'BrwDrs2 A.D, DLDta.D, NN:="LTDH LDta": Stop
 End Function
 

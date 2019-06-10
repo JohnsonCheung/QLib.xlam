@@ -7,15 +7,8 @@ Const DoczP$ = "PrpPth."
 Const DoczPn$ = "PrpNm."
 Type PrpPth: P As String: End Type
 Enum EmThw
-    EiThw
-    EiQuietInfEmp
-    EiQuietInfErStr
-    EiQuietInfErNo
-    EiQuietInfErObj
-    EiQuietEmp
-    EiQuietErStr
-    EiQuietErNo
-    EiQuietErObj
+    EiNoThw
+    EiThwEr
 End Enum
 
 Function PrpPth(P) As PrpPth
@@ -93,7 +86,7 @@ ObjToStr = Obj.ToStr: Exit Function
 X: ObjToStr = QuoteSq(TypeName(Obj))
 End Function
 
-Function Prp(Obj As Object, P As PrpPth, Optional Thw0 As EmThw = EmThw.EiQuietEmp)
+Function Prp(Obj As Object, P As PrpPth, Optional ThwEr As EmThw)
 Const CSub$ = CMod & "Prp"
 'ThwIf_Nothing Obj, CSub
 On Error GoTo X
@@ -111,6 +104,8 @@ Asg CallByName(O, SegSy(U), VbGet), Prp ' Last Prp may be non-object, so must us
 Exit Function
 X:
 Dim E$: E = Err.Description
-Thw CSub, "Err", "Er ObjTy PrpPth", E, TypeName(Obj), P.P
+If ThwEr = EiThwEr Then
+    Thw CSub, "Err", "Er ObjTy PrpPth", E, TypeName(Obj), P.P
+End If
 End Function
 

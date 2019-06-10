@@ -1,4 +1,4 @@
-Attribute VB_Name = "QDta_Base_DtaInf"
+Attribute VB_Name = "QDta_B_DtaInf"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDta_Col_Get."
@@ -14,6 +14,14 @@ For Each Dr In Itr(A.Dry)
     If Dr(I) = Eq Then ValzColEq = Dr(IxzAy(A.Fny, SelC))
 Next
 End Function
+
+Function WdtzCol%(A As Drs, C$)
+WdtzCol = WdtzAy(StrColzDrs(A, C))
+End Function
+Function StrCol(A As Drs, C) As String()
+StrCol = StrColzDry(A.Dry, IxzAy(A.Fny, C))
+End Function
+
 Function StrColzDrs(A As Drs, C) As String()
 StrColzDrs = StrColzDry(A.Dry, IxzAy(A.Fny, C))
 End Function
@@ -29,10 +37,10 @@ Function StrColzDrsFstCol(A As Drs) As String()
 StrColzDrsFstCol = StrColzDry(A.Dry, 0)
 End Function
 
-Function StrColzDrswColEqSel(A As Drs, Col$, V, ColNm$) As String()
+Function StrColzColEqSel(A As Drs, Col$, V, ColNm$) As String()
 Dim B As Drs
-B = DrswColEqSel(A, Col, V, ColNm)
-StrColzDrswColEqSel = StrColzDrs(B, ColNm)
+B = ColEqSel(A, Col, V, ColNm)
+StrColzColEqSel = StrColzDrs(B, ColNm)
 End Function
 Function LyzDryCC(Dry(), CCIxy&(), Optional FldSep$ = vbFldSep) As String()
 Dim Dr
@@ -66,7 +74,7 @@ Function SqzDry(Dry()) As Variant()
 SqzDry = SqzDrySkip(Dry, 0)
 End Function
 
-Function StrColzDry(Dry(), C&) As String()
+Function StrColzDry(Dry(), C) As String()
 StrColzDry = IntozDryC(EmpSy, Dry, C)
 End Function
 Function BoolColzDry(Dry(), C&) As Boolean()
@@ -81,11 +89,11 @@ Function IntAyzDrsC(A As Drs, C) As Integer()
 IntAyzDrsC = IntAyzDryC(A.Dry, IxzAy(A.Fny, C))
 End Function
 
-Function IntAyzDryC(Dry(), C&) As Integer()
+Function IntAyzDryC(Dry(), C) As Integer()
 IntAyzDryC = IntozDryC(EmpIntAy, Dry, C)
 End Function
 
-Function ColzDry(Dry(), C&) As Variant()
+Function ColzDry(Dry(), C) As Variant()
 ColzDry = IntozDryC(EmpAv(), Dry, C)
 End Function
 

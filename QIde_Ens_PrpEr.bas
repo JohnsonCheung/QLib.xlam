@@ -36,7 +36,7 @@ Next
 End Function
 
 Private Function InsOnErGoX(MthLy$()) As String()
-InsOnErGoX = AyInsEle(MthLy, "On Error Goto X", SrcIxzNxt(MthLy))
+InsOnErGoX = AyInsEle(MthLy, "On Error Goto X", NxtIxzSrc(MthLy))
 End Function
 
 Private Function EnsLinzOnEr(MthLy$()) As String()
@@ -256,7 +256,7 @@ Sub EnsPrpOnErM()
 EnsPrpOnErzMd CMd
 End Sub
 
-Sub ZZZ()
+Private Sub ZZZ()
 QIde_Ens_PrpEr:
 End Sub
 

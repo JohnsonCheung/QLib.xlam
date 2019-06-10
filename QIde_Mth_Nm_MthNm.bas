@@ -88,36 +88,16 @@ If ShfMthTy(L) = "" Then Exit Function
 Mthn = Nm(L)
 End Function
 
-Function MthnzMthDn$(MthDn$)
-If MthDn = "*Dcl" Then MthnzMthDn = MthDn: Exit Function
-Dim A$()
-A = SplitDot(MthDn)
-If Si(A) <> 3 Then Thw CSub, "MthDn should have 2 dot", "MthDn", MthDn
-MthnzMthDn = A(0)
-End Function
 Private Sub ZZ_MthDnzLin()
 Debug.Print MthDnzLin("Function MthnzMthDn$(MthDn$)")
 Dim Lin$
 End Sub
-Function MthDnzLin$(Lin)
-Stop
-MthDnzLin = MthDnzMthn3(Mthn3zL(Lin))
-End Function
-Function MthSQNyInVbe() As String()
-MthSQNyInVbe = MthSQNyzV(CVbe)
-End Function
-Function MthSQNyzV(A As Vbe) As String()
-Dim QMthn
-For Each QMthn In Itr(QMthnyzV(A))
-    PushI MthSQNyzV, MthSQNm(CStr(QMthn))
-Next
-End Function
 
-Function MthSQNm$(QMthn$)
-Dim A$(): A = SplitDot(QMthn): If Si(A) <> 5 Then Thw CSub, "QMthn should have 4 dots", "QMthn", QMthn
-Dim P$, Md$, M$, T$, N$
-AsgAp A, P, Md, M, T, N
-MthSQNm = JnDotAp(N, MthMdyc(M) & MthTyc(T), P, Md)
+Function MthDnzMthn3$(A As Mthn3)
+
+End Function
+Function MthDnzLin$(Lin)
+MthDnzLin = MthDnzMthn3(Mthn3zL(Lin))
 End Function
 
 Function MthTyc$(ShtMthTy$)
@@ -138,8 +118,9 @@ Case "Frd": MthMdyc = "F"
 Case Else: Thw CSub, "Invalid ShtMthMdy.", "ShtMthMdy VdtShtMthMdy", ShtMthMdy, ShtMthMdyAy
 End Select
 End Function
-Function MthDn$(Lin)
-MthDn = MthDnzN3(Mthn3zL(Lin))
+
+Function MthDn$(L)
+MthDn = MthDnzMthn3(Mthn3zL(L))
 End Function
 
 Function MthnzLin(Lin)
@@ -342,11 +323,8 @@ End Function
 Function MthnyP() As String()
 MthnyP = MthnyzP(CPj)
 End Function
-Function PMthnyzV(A As Vbe) As String()
+Function DPubMthzV(A As Vbe) As String()
 
-End Function
-Function PMthnyV() As String()
-PMthnyV = PMthnyzV(CVbe)
 End Function
 
 Function MthnyzP(P As VBProject) As String()
@@ -356,57 +334,9 @@ For Each C In P.VBComponents
 Next
 End Function
 
-Function QMthnyV() As String()
-QMthnyV = QMthnyzV(CVbe)
-End Function
-
-Function QMthnWsInVbe() As Worksheet
-Set QMthnWsInVbe = QMthnWszV(CVbe)
-End Function
-
-Function QMthnWszV(A As Vbe) As Worksheet
-Dim Dry(): Dry = DryzDotLy(QMthnyzV(A))
-Set QMthnWszV = WszDrs(DrszFF("Pj Md Mth Ty Mdy", Dry))
-End Function
-
-Function QMthnyzV(A As Vbe) As String()
-Dim P As VBProject
-For Each P In A.VBProjects
-    PushAy QMthnyzV, QMthnyzP(P)
-Next
-End Function
-
-Function QMthnyzM(M As CodeModule) As String()
-QMthnyzM = AddPfxzAy(MthDNyzS(Src(M)), QMdnzM(M) & ".")
-End Function
-
-Function QDry_MthnzP(P As VBProject) As Variant()
-Dim QNm
-For Each QNm In Itr(QMthnyzP(P))
-    PushI QDry_MthnzP, QDr_Mthn(CStr(QNm))
-Next
-End Function
-
-Function QDr_Mthn(QMthn$) As String()
-Dim O$(): O = SplitDot(QMthn)
-If Si(O) <> 5 Then Thw CSub, "QMthn should have 4 dot", "QMthn", QMthn
-QDr_Mthn = O
-End Function
-
-Function QMthnyzP(P As VBProject) As String()
-Dim I
-For Each I In MdItr(P)
-    PushAy QMthnyzP, QMthnyzM(CvMd(I))
-Next
-End Function
-
-Function PMthDNyzV(A As Vbe) As String()
-PMthDNyzV = PMthDNyzV(A)
-End Function
-
-Function MthnyzFb(Fb) As String()
-MthnyzFb = MthnyzV(VbezPjf(Fb))
-ClsPjf Fb
+Function MthnyzFb(FB) As String()
+MthnyzFb = MthnyzV(VbezPjf(FB))
+ClsPjf FB
 End Function
 
 
@@ -414,9 +344,9 @@ Private Sub Z_MthnyzFb()
 GoSub X_BrwAll
 Exit Sub
 X_BrwAll:
-    Dim O$(), Fb
-    For Each Fb In AppFbAy
-        PushAy O, MthnyzFb(CStr(Fb))
+    Dim O$(), FB
+    For Each FB In AppFbAy
+        PushAy O, MthnyzFb(CStr(FB))
     Next
     Brw O
     Return
@@ -454,14 +384,6 @@ ZZ:
    Return
 End Sub
 
-Function SqzMthDNyzP(P As VBProject) As Variant()
-SqzMthDNyzP = SqzMthDNy(MthnyzP(P))
-End Function
-
-Function MthDnWszP(P As VBProject) As Worksheet
-Set MthDnWszP = ShwWs(WszSq(SqzMthDNyzP(P)))
-End Function
-
 Function MthnyzV(A As Vbe) As String()
 Dim P As VBProject
 For Each P In A.VBProjects
@@ -477,38 +399,6 @@ Property Get MthnyzCMd() As String()
 MthnyzCMd = MthnyzM(CMd)
 End Property
 
-Private Sub Z_MthDNy()
-Dim Md1 As CodeModule
-Set Md1 = Md("AAAMod")
-BrwAy MthnyzM(Md1)
-BrwAy MthDNyzM(Md1)
-End Sub
-
-Private Sub Z_MthDNyzS()
-BrwAy MthDNyzS(CSrc)
-End Sub
-
-Function MthDNyV() As String()
-MthDNyV = MthDNyzV(CVbe)
-End Function
-
-Function MthDNyzV(A As Vbe) As String()
-Dim P As VBProject
-For Each P In A.VBProjects
-    PushIAy MthDNyzV, MthDNyzP(P)
-Next
-End Function
-
-Function MthDNyzM(M As CodeModule) As String()
-MthDNyzM = MthDNyzS(Src(M))
-End Function
-Function MthDNyzS(Src$()) As String()
-Dim L
-For Each L In Itr(Src)
-    PushNonBlank MthDNyzS, MthDn(L)
-Next
-End Function
-
 Function HasMth(Src$(), Mthn) As Boolean
 HasMth = FstMthIxzN(Src, Mthn) >= 0
 End Function
@@ -517,83 +407,36 @@ Function HasMthzM(M As CodeModule, Mthn) As Boolean
 HasMthzM = HasMth(Src(M), Mthn)
 End Function
 
-
-Function Md_MthnDic(M As CodeModule) As Dictionary
-'Set Md_MthnDic = Src_MthnDic(Src(A))
-End Function
-
-Private Sub Z_Src_MthnDic()
-'BrwDic Src_MthnDic(CSrc)
-End Sub
-
 Function MthnCmlSetVbe() As Aset
 Set MthnCmlSetVbe = CmlSetzNy(MthnyV)
 End Function
-Function Drs_MthnV() As Drs
-Drs_MthnV = Drs_MthnzV(CVbe)
-End Function
+Function DMthnzV(V As Vbe) As Drs
 
-Function Drs_MthnP() As Drs
-Drs_MthnP = Drs_MthnzP(CPj)
 End Function
-
-Function Drs_MthnM() As Drs
-Drs_MthnM = Drs_MthnzM(CMd)
+Function DMthnzM(M As CodeModule) As Drs
+DMthnzM = DMthn(M)
 End Function
-
-Function Drs_MthLinzM(M As CodeModule) As Drs
-Dim A$(): A = MthLinAyzM(M)
-Dim I, N$, Dry()
-N = Mdn(M)
-Dim O$(), J&, L, S$()
-S = Src(M)
-For Each L In Itr(S)
-    If IsMthLin(L) Then
-        PushI Dry, Array(N, J + 1, Mthn(L), ContLin(S, J))
-    End If
-    J = J + 1
+Function DMthnzP(P As VBProject) As Drs
+Dim C As VBComponent
+Dim Pn$: Pn = P.Name
+For Each C In P.VBComponents
+    Dim Mn$: Mn = C.Name
+    Dim A As Drs: A = DMthn(C.CodeModule)
+    Dim B As Drs: B = InsColzDrsCCBef(A, "Pj Md", Pn, Mn)
+    Dim O As Drs: O = AddDrs(O, A)
 Next
-Drs_MthLinzM = DrszFF("Mdn Lno Mthn MthLin", Dry)
-'BrwDrs Drs_MthLinzM: Stop
+DMthnzP = O
 End Function
 
-Private Function Drs_MthnzM(M As CodeModule) As Drs
-Drs_MthnzM = Drs(Fny_Mthn, Dry_MthnzM(M))
+Function DMthnV() As Drs
+DMthnV = DMthnzV(CVbe)
 End Function
 
-Private Function Drs_MthnzV(A As Vbe) As Drs
-Drs_MthnzV = Drs(Fny_Mthn, Dry_MthnzV(A))
+Function DMthnP() As Drs
+DMthnP = DMthnzP(CPj)
 End Function
 
-Function Drs_MthnzP(P As VBProject) As Drs
-Drs_MthnzP = Drs(Fny_Mthn, Dry_MthnzP(P))
+Function DMthnM() As Drs
+DMthnM = DMthnzM(CMd)
 End Function
 
-Private Function Dry_MthnzM(M As CodeModule) As Variant()
-Dry_MthnzM = DryAddColzC3(Dry_MthnzS(Src(M)), Mdn(M), ShtCmpTy(M.Parent.Type), PjnzM(M))
-End Function
-
-Private Function Dry_MthnzV(A As Vbe) As Variant()
-Dim P As VBProject
-For Each P In A.VBProjects
-    PushIAy Dry_MthnzV, Dry_MthnzP(P)
-Next
-End Function
-
-Private Function Dry_MthnzP(P As VBProject) As Variant()
-Dim M
-For Each M In MdItr(P)
-    PushIAy Dry_MthnzP, Dry_MthnzM(CvMd(M))
-Next
-End Function
-
-Private Function Dry_MthnzS(Src$()) As Variant()
-Dim MthLin
-For Each MthLin In Itr(MthLinAyzS(Src))
-    PushISomSi Dry_MthnzS, Dr_Mthn(MthLin)
-Next
-End Function
-
-Function Dr_Mthn(MthLin) As String()
-
-End Function

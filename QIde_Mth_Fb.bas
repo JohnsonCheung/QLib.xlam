@@ -26,9 +26,9 @@ EnsSchm D, MthSchm
 End Function
 
 Function MthDbzP(P As VBProject) As Database
-Dim Fb$: Fb = MthFbzP(P)
-EnsMthFb Fb
-Set MthDbzP = Db(Fb)
+Dim FB$: FB = MthFbzP(P)
+EnsMthFb FB
+Set MthDbzP = Db(FB)
 End Function
 
 Property Get MthDbP() As Database

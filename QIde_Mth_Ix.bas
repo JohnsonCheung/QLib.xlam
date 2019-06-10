@@ -184,6 +184,7 @@ Function MthLnozMM&(M As CodeModule, Mthn)
 MthLnozMM = 1 + FstMthIxzN(Src(M), Mthn, 0)
 End Function
 
+
 Function MthLnoAyzMN(M As CodeModule, Mthn) As Long()
 MthLnoAyzMN = AyIncEle1(MthIxyzSN(Src(M), Mthn))
 End Function

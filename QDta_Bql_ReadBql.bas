@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "BBqlRead."
 Const Asm$ = "Dao"
-Const NS$ = "Dao.Bql"
+Const Ns$ = "Dao.Bql"
 Const ShtTyBql$ = "Short-Type-Si-Colon-FldNm-Bql:Sht.Ty.s.c.f.Bql: It is a [Bql] with each field is a [ShtTyscf]"
 Public Const DoczBql$ = "Full:Back-Quote-Line.  BasLin:Lin.  Brk:B.q.l.  Back-Quote is (`) and it is a String.  Each field is separated by (`)"
 Public Const DoczFbql$ = "Fullfilename-Bql:F.bql:it is a [Ft]|Each line is a [Bql]|Fst line is [ShtTyBql]"
@@ -61,13 +61,13 @@ Stop
 End Sub
 
 Sub CrtFbzBqlPth(FbqlPth$, Optional Fb0$)
-Dim Fb$
-    Fb = Fb0
-    If Fb = "" Then Fb = FbqlPth & Fdr(FbqlPth) & ".accdb"
-DltFfnIf Fb
-CrtFb Fb
+Dim FB$
+    FB = Fb0
+    If FB = "" Then FB = FbqlPth & Fdr(FbqlPth) & ".accdb"
+DltFfnIf FB
+CrtFb FB
 Dim D As Database, IFfn, T$
-Set D = Db(Fb)
+Set D = Db(FB)
 For Each IFfn In Ffny(FbqlPth, "*.bql.txt")
     CrtTblzFbql D, CStr(IFfn)
 Next

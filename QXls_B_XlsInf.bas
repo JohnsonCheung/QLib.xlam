@@ -1,4 +1,4 @@
-Attribute VB_Name = "QXls_Base_XlsInf"
+Attribute VB_Name = "QXls_B_XlsInf"
 Option Compare Text
 Option Explicit
 Public Const XlsPgmFfn$ = "C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE"
@@ -10,9 +10,9 @@ Enum EmAddgWay ' Adding data to ws way
     EiSqWay
 End Enum
 Function WszWc(WC As WorkbookConnection) As Worksheet
-Dim Wb As Workbook, Ws As Worksheet
-Set Wb = WC.Parent
-Set Ws = AddWs(Wb, WC.Name)
+Dim WB As Workbook, Ws As Worksheet
+Set WB = WC.Parent
+Set Ws = AddWs(WB, WC.Name)
 PutWc WC, A1zWs(Ws)
 Set WszWc = Ws
 End Function
@@ -403,8 +403,8 @@ Set LasWbz = A.Workbooks(A.Workbooks.Count)
 End Function
 
 Function PtzRg(A As Range, Optional Wsn$, Optional PtNm$) As PivotTable
-Dim Wb As Workbook: Set Wb = WbzRg(A)
-Dim Ws As Worksheet: Set Ws = AddWs(Wb)
+Dim WB As Workbook: Set WB = WbzRg(A)
+Dim Ws As Worksheet: Set Ws = AddWs(WB)
 Dim A1 As Range: Set A1 = A1zWs(Ws)
 Dim Pc As PivotCache: Set Pc = WbzRg(A).PivotCaches.Create(xlDatabase, A.Address, Version:=6)
 Dim Pt As PivotTable: Set Pt = Pc.CreatePivotTable(A1, DefaultVersion:=6)
@@ -626,9 +626,9 @@ OleCnStrzFx = "OLEDb;" & CnStrzFxAdo(Fx)
 End Function
 
 Function HasFx(Fx) As Boolean
-Dim Wb As Workbook
-For Each Wb In Xls.Workbooks
-    If Wb.FullName = Fx Then HasFx = True: Exit Function
+Dim WB As Workbook
+For Each WB In Xls.Workbooks
+    If WB.FullName = Fx Then HasFx = True: Exit Function
 Next
 End Function
 
@@ -901,11 +901,11 @@ Next
 Set TmpDbzFxWny = O
 End Function
 
-Function Wb(Fx) As Workbook
-Set Wb = Xls.Workbooks(Fx)
+Function WB(Fx) As Workbook
+Set WB = Xls.Workbooks(Fx)
 End Function
 Function WbzFx(Fx) As Workbook
-Set WbzFx = Wb(Fx)
+Set WbzFx = WB(Fx)
 End Function
 
 Function WszFxw(Fx, Optional Wsn$ = "Data") As Worksheet
@@ -917,10 +917,10 @@ Set ArszFxwf = ArsCnq(CnzFx(Fx), SqlSel_F_T(F, W & "$"))
 End Function
 
 Function WsCdNyzFx(Fx) As String()
-Dim Wb As Workbook
-Set Wb = WbzFx(Fx)
-WsCdNyzFx = WsCdNy(Wb)
-Wb.Close False
+Dim WB As Workbook
+Set WB = WbzFx(Fx)
+WsCdNyzFx = WsCdNy(WB)
+WB.Close False
 End Function
 
 Function DtzFxw(Fx, Optional Wsn0$) As Dt
