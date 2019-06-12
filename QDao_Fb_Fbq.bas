@@ -8,7 +8,7 @@ Private Sub Z_WszFbq()
 ShwWs WszFbq(SampFbzDutyDta, "Select * from KE24")
 End Sub
 
-Function WszFbq(FB, Q, Optional Wsn) As Worksheet
+Function WszFbq(Fb, Q, Optional Wsn) As Worksheet
 'Set WszFbq = WszDrs(DrszFbq(Fb, Q), Wsn:=Wsn)
 End Function
 
@@ -16,15 +16,15 @@ Function DrszQ(A As Database, Q) As Drs
 DrszQ = DrszRs(Rs(A, Q))
 End Function
 
-Function DrszFbq(FB, Q) As Drs
-DrszFbq = DrszRs(Rs(Db(FB), Q))
+Function DrszFbq(Fb, Q) As Drs
+DrszFbq = DrszRs(Rs(Db(Fb), Q))
 End Function
 
-Function ArszFbq(FB, Q) As AdoDb.Recordset
-Set ArszFbq = CnzFb(FB).Execute(Q)
+Function ArszFbq(Fb, Q) As AdoDb.Recordset
+Set ArszFbq = CnzFb(Fb).Execute(Q)
 End Function
 
-Sub ArunFbq(FB, Q)
-CnzFb(FB).Execute Q
+Sub ArunFbq(Fb, Q)
+CnzFb(Fb).Execute Q
 End Sub
 

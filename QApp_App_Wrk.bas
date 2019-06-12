@@ -16,9 +16,9 @@ WIni Apn
 WOpn Apn
 End Sub
 Sub WIni(Apn$)
-Dim FB$: FB = WFb(Apn)
-DltFfnIf FB
-CrtFb FB
+Dim Fb$: Fb = WFb(Apn)
+DltFfnIf Fb
+CrtFb Fb
 End Sub
 Sub WOpn(Apn$)
 Set A = Db(WFb(Apn))

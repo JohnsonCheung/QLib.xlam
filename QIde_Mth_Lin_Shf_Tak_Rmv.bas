@@ -64,6 +64,12 @@ End If
 ShfBefOrAll = Bef(OLin, Sep, NoTrim)
 OLin = Aft(OLin, Sep, NoTrim)
 End Function
+Function ShfDotNm$(OLin$)
+OLin = LTrim(OLin)
+Dim O$: O = TakDotNm(OLin): If O = "" Then Exit Function
+ShfDotNm = O
+OLin = RmvPfx(OLin, O)
+End Function
 Function ShfNm$(OLin$)
 Dim O$: O = Nm(OLin): If O = "" Then Exit Function
 ShfNm = O

@@ -15,16 +15,16 @@ For Each I In Itr(Ay)
 Next
 End Function
 
-Function AyEndTrim(A$()) As String()
+Function AyeBlankEleAtEnd(A$()) As String()
 If Si(A) = 0 Then Exit Function
-If LasEle(A) <> "" Then AyEndTrim = A: Exit Function
+If LasEle(A) <> "" Then AyeBlankEleAtEnd = A: Exit Function
 Dim J%
 For J = UB(A) To 0 Step -1
     If Trim(A(J)) <> "" Then
         Dim O$()
         O = A
         ReDim Preserve O(J)
-        AyEndTrim = O
+        AyeBlankEleAtEnd = O
         Exit Function
     End If
 Next

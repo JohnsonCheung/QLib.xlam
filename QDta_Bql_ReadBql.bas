@@ -61,13 +61,13 @@ Stop
 End Sub
 
 Sub CrtFbzBqlPth(FbqlPth$, Optional Fb0$)
-Dim FB$
-    FB = Fb0
-    If FB = "" Then FB = FbqlPth & Fdr(FbqlPth) & ".accdb"
-DltFfnIf FB
-CrtFb FB
+Dim Fb$
+    Fb = Fb0
+    If Fb = "" Then Fb = FbqlPth & Fdr(FbqlPth) & ".accdb"
+DltFfnIf Fb
+CrtFb Fb
 Dim D As Database, IFfn, T$
-Set D = Db(FB)
+Set D = Db(Fb)
 For Each IFfn In Ffny(FbqlPth, "*.bql.txt")
     CrtTblzFbql D, CStr(IFfn)
 Next

@@ -542,9 +542,9 @@ End Sub
 
 Sub KillIfTmpDb(A As Database)
 If IsTmpDb(A) Then
-    Dim FB$: FB = A.Name
+    Dim Fb$: Fb = A.Name
     ClsDb A
-    Kill FB
+    Kill Fb
 End If
 End Sub
 

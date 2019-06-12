@@ -93,8 +93,5 @@ Dim O$()
 
 LyzGpPth = O
 End Function
-Sub EnsFfn(Ffn)
-If Not HasFfn(Ffn) Then WrtStr "", Ffn
-End Sub
 
 

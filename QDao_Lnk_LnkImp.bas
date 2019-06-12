@@ -112,14 +112,14 @@ End Function
 
 Private Function WLnkFb(Dic_Fbt_Fbn As Dictionary, Dic_Fbn_Fb As Dictionary) As Drs
 'Ret: *LnkFb::Drs{T S Cn)
-Dim Fbn$, A$, S$, Fbt, T$, Cn$, FB$, Dry()
+Dim Fbn$, A$, S$, Fbt, T$, Cn$, Fb$, Dry()
 For Each Fbt In Dic_Fbt_Fbn.Keys
     Fbn = Dic_Fbt_Fbn(Fbt)
     If Not Dic_Fbn_Fb.Exists(Fbn) Then
         Thw CSub, "Dic_Fbn_Fb does not contains Fbn", "Fbn Dic_Fbn_Fb", Fbn, Dic_Fbn_Fb
     End If
-    FB = Dic_Fbn_Fb(Fbn)
-    Cn = CnStrzFbDao(FB)
+    Fb = Dic_Fbn_Fb(Fbn)
+    Cn = CnStrzFbDao(Fb)
     T = ">" & Fbt
     S = Fbt
     PushI Dry, Array(T, S, Cn)

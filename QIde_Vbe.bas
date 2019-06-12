@@ -48,17 +48,6 @@ For Each P In A.VBProjects
 Next
 End Sub
 
-Function VisWinCntzV%(A As Vbe)
-VisWinCntzV = NItrPrpTrue(A.Windows, "Visible")
-End Function
-
-Function Dry_MthLinzV(A As Vbe) As Variant()
-Dim P As VBProject
-For Each P In A.VBProjects
-    PushIAy Dry_MthLinzV, Dry_MthLinzP(P)
-Next
-End Function
-
 Property Get PjfyV() As String()
 PjfyV = PjfyzV(CVbe)
 End Property
@@ -79,20 +68,6 @@ Dim P As VBProject
 For Each P In A.VBProjects
     PushI PjnyzV, P.Name
 Next
-End Function
-
-Function FstQPj(A As Vbe) As VBProject
-Dim I
-For Each I In A.VBProjects
-    If FstChr(CvPj(I).Name) = "Q" Then
-        Set FstQPj = I
-        Exit Function
-    End If
-Next
-End Function
-
-Function MthWbzV(A As Vbe) As Workbook
-Set MthWbzV = ShwWb(WbzWs(MthWszV(A)))
 End Function
 
 Function SrtRptV() As String()
@@ -135,8 +110,6 @@ Dim A
 Dim B As Vbe
 Dim C$
 Dim D As Boolean
-Dim E As WhPjMth
-Dim F As WhNm
 Dim XX
 CvVbe A
 End Sub

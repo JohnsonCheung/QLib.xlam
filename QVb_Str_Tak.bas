@@ -128,6 +128,7 @@ End Function
 Function BetLng(L&, A&, B&) As Boolean
 BetLng = A <= L And L <= B
 End Function
+
 Function Bet$(S, S1$, S2$, Optional NoTrim As Boolean, Optional InclMarker As Boolean)
 With Brk1(S, S1, NoTrim)
    If .S2 = "" Then Exit Function
@@ -146,6 +147,17 @@ Dim Act$
 End Sub
 Function Nm$(S)
 Nm = TakNm(S)
+End Function
+Function TakDotNm$(S)
+Dim J%
+If Not IsLetter(FstChr(S)) Then Exit Function
+For J = 2 To Len(S)
+    If Not IsDotNmChr(Mid(S, J, 1)) Then
+        TakDotNm = Left(S, J - 1)
+        Exit Function
+    End If
+Next
+TakDotNm = S
 End Function
 Function TakNmzSy(Sy$()) As String()
 Dim S

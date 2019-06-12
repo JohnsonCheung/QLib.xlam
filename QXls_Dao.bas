@@ -8,13 +8,13 @@ Function CvCn(A) As AdoDb.Connection
 Set CvCn = A
 End Function
 
-Sub RplOleWcFb(WC As WorkbookConnection, FB)
-CvCn(WC.OLEDBConnection.ADOConnection).ConnectionString = CnStrzFbzAsAdo(FB)
+Sub RplOleWcFb(WC As WorkbookConnection, Fb)
+CvCn(WC.OLEDBConnection.ADOConnection).ConnectionString = CnStrzFbzAsAdo(Fb)
 End Sub
 
-Sub RplLozFbzFbt(Lo As ListObject, FB, T)
+Sub RplLozFbzFbt(Lo As ListObject, Fb, T)
 With Lo.QueryTable
-    RplOleWcFb .Connection, FB '<==
+    RplOleWcFb .Connection, Fb '<==
     .CommandType = xlCmdTable
     .CommandText = T '<==
     .RowNumbers = False
@@ -103,8 +103,8 @@ Next
 DltSheet1 O
 Set WbzTny = O
 End Function
-Function WbzFb(FB) As Workbook
-Dim D As Database: Set D = Db(FB)
+Function WbzFb(Fb) As Workbook
+Dim D As Database: Set D = Db(Fb)
 Set WbzFb = ShwWb(WbzTny(D, Tny(D)))
 End Function
 
@@ -152,9 +152,9 @@ Sub AddLozSamp()
 '    End With
 
 End Sub
-Function AddLo(At As Range, FB, T) As ListObject
+Function AddLo(At As Range, Fb, T) As ListObject
 Dim Ws As Worksheet: Set Ws = WszRg(At)
-Dim Lo As ListObject: Set Lo = Ws.ListObjects.Add(xlSrcExternal, CnStrzFbzAsAdoOle(FB), Destination:=At)
+Dim Lo As ListObject: Set Lo = Ws.ListObjects.Add(xlSrcExternal, CnStrzFbzAsAdoOle(Fb), Destination:=At)
 Dim Qt As QueryTable: Set Qt = Lo.QueryTable
 With Qt
     .CommandType = xlCmdTable
@@ -185,10 +185,10 @@ Dim A1 As Range: Set A1 = A1zWs(O)
 PutTbl Db, T, A1, AddgWay
 End Function
 
-Function NewWbzOupTbl(FB, Optional AddgWay As EmAddgWay) As Workbook '
+Function NewWbzOupTbl(Fb, Optional AddgWay As EmAddgWay) As Workbook '
 Dim O As Workbook, D As Database
 Set O = NewWb
-Set D = Db(FB)
+Set D = Db(Fb)
 AddWszTny O, D, OupTny(D), AddgWay
 DltWsIf O, "Sheet1"
 Set NewWbzOupTbl = O
@@ -217,10 +217,10 @@ End Sub
 Sub PutDbtAt(A As Database, T, At As Range, Optional AddgWay As EmAddgWay)
 LozRg PutSq(SqzT(A, T), At), Lon(T)
 End Sub
-Sub SetQtFbt(Qt As QueryTable, FB, T)
+Sub SetQtFbt(Qt As QueryTable, Fb, T)
 With Qt
     .CommandType = xlCmdTable
-    .Connection = CnStrzFbzAsAdoOle(FB) '<--- Fb
+    .Connection = CnStrzFbzAsAdoOle(Fb) '<--- Fb
     .CommandText = T '<-----  T
     .RowNumbers = False
     .FillAdjacentFormulas = False
@@ -236,11 +236,11 @@ With Qt
     .Refresh BackgroundQuery:=False
 End With
 End Sub
-Sub PutFbtAt(FB, T$, At As Range, Optional LoNm0$)
+Sub PutFbtAt(Fb, T$, At As Range, Optional LoNm0$)
 Dim O As ListObject
 Set O = WszRg(At).ListObjects.Add(SourceType:=XlSourceType.xlSourceWorkbook, Destination:=At)
 SetLoNm O, Dft(LoNm0, Lon(T))
-SetQtFbt O.QueryTable, FB, T
+SetQtFbt O.QueryTable, Fb, T
 End Sub
 Sub FxzTny(Fx, Db As Database, Tny$())
 WbzTny(Db, Tny).SaveAs Fx

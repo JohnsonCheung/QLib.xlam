@@ -1112,3 +1112,7 @@ Function LasRnozRg&(R As Range)
 LasRnozRg = R.Row + R.Rows.Count - 1
 End Function
 
+Function FnyzWs(A As Worksheet) As String()
+FnyzWs = FnyzLo(FstLo(A))
+End Function
+

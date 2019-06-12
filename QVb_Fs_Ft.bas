@@ -7,7 +7,7 @@ Private Const Asm$ = "QVb"
 Sub DmpFt(Ft)
 D LineszFt(Ft)
 End Sub
-Function EnsFt(Ft$)
+Function EnsFt$(Ft$)
 If Not HasFfn(Ft) Then
     WrtStr "", Ft
 End If

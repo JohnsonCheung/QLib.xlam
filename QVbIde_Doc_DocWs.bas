@@ -18,7 +18,7 @@ End Sub
 Private Function DocSqzP(P As VBProject) As Variant()
 Dim Dry(), K$, I, D As Dictionary, TermAset As Aset
 PushI Dry, SyzSS("Term Lnk DfnStmt")
-Set D = DocDiczP(P)
+'Set D = DocDiczP(P)
 Set TermAset = AsetzItr(D.Keys)
 For Each I In D.Keys
     K = I
@@ -49,7 +49,7 @@ End Function
 
 Function DocDicP() As Dictionary
 Static X As Dictionary
-If IsNothing(X) Then Set X = DocDiczP(CPj)
+'If IsNothing(X) Then Set X = DocDiczP(CPj)
 Set DocDicP = X
 End Function
 

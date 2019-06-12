@@ -16,15 +16,6 @@ Case Else: Stop
 End Select
 End Sub
 
-Property Get CQMdn$()
-CQMdn = QMdnzM(CMd)
-End Property
-Function CQMthn$()
-On Error GoTo X
-CQMthn = QMthn(CMd, CMthLin)
-Exit Function
-X: Debug.Print CSub
-End Function
 
 Function QMthn$(M As CodeModule, Lin)
 Dim D$: D = MthDnzLin(Lin): If D = "" Then Exit Function
@@ -334,9 +325,9 @@ For Each C In P.VBComponents
 Next
 End Function
 
-Function MthnyzFb(FB) As String()
-MthnyzFb = MthnyzV(VbezPjf(FB))
-ClsPjf FB
+Function MthnyzFb(Fb) As String()
+MthnyzFb = MthnyzV(VbezPjf(Fb))
+ClsPjf Fb
 End Function
 
 
@@ -344,9 +335,9 @@ Private Sub Z_MthnyzFb()
 GoSub X_BrwAll
 Exit Sub
 X_BrwAll:
-    Dim O$(), FB
-    For Each FB In AppFbAy
-        PushAy O, MthnyzFb(CStr(FB))
+    Dim O$(), Fb
+    For Each Fb In AppFbAy
+        PushAy O, MthnyzFb(CStr(Fb))
     Next
     Brw O
     Return

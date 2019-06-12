@@ -36,13 +36,6 @@ Function HitCnstnDic(SrcLin, Cnstn As Aset) As Boolean
 HitCnstnDic = Cnstn.Has(CnstnzL(SrcLin))
 End Function
 
-Function HitMthLin(Lin, B As WhMth) As Boolean
-If Not IsMthLin(Lin) Then Exit Function
-'If IsEmpWhMth(B) Then HitMthLin = True: Exit Function
-If Not HitMthn3(Mthn3zL(Lin), B) Then Exit Function
-HitMthLin = True
-End Function
-
 Function HitShtMdy(ShtMdy$, ShtMthMdyAy$()) As Boolean
 HitShtMdy = HitAy(IIf(ShtMdy = "", "Pub", ShtMdy), ShtMthMdyAy)
 End Function

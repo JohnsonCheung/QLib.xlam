@@ -52,34 +52,3 @@ With MthLinRec
 End With
 End Function
 
-Function MthFLin(MthQLin)
-Dim P$, T$, M$, L$
-L = MthQLin
-P = ShfTermDot(L)
-T = ShfTermDot(L)
-M = ShfTermDot(L)
-MthFLin = JnDotAp(P, T, M, MthFLinzMthLin(L))
-End Function
-
-Function MthFLyInVbe() As String()
-MthFLyInVbe = MthFLyzV(CVbe)
-End Function
-
-Function MthFLyzV(A As Vbe) As String()
-MthFLyzV = MthFLy(MthQLyzV(A))
-End Function
-
-Function MthFLy(MthQLy$()) As String()
-Dim MthQLin
-For Each MthQLin In Itr(MthQLy)
-    PushI MthFLy, MthFLin(MthQLin)
-Next
-End Function
-
-Function MthFLinzMthLin(MthLin)
-Dim X As MthLinRec: X = MthLinRec(MthLin)
-With X
-Dim RetTy$: RetTy = ShtRetTy(.TyChr, .RetTy, .IsRetVal)
-MthFLinzMthLin = JnDotAp(.ShtMdy, .ShtTy, .Nm & RetTy & FmtPm(.Pm)) & IIf(.Rmk = "", "", ".") & .Rmk
-End With
-End Function

@@ -31,7 +31,7 @@ Next
 Set NewSkIdx = O
 End Function
 
-Function TdzTF(T, Fdy() As Dao.Field2, Optional Skff$) As Dao.TableDef
+Function TdzTF(T, Fdy() As Field2, Optional Skff$) As Dao.TableDef
 Dim O As New TableDef, F
 O.Name = T
 AddSk O, Skff

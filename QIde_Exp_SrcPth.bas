@@ -24,13 +24,6 @@ Dim P$: P = Pjp(DistPj)
 SrcpzDistPj = AddFdrAp(UpPth(P, 1), ".Src", Fdr(P))
 End Function
 
-Function PthRmvFdr$(Pth)
-PthRmvFdr = BefRev(RmvPthSfx(Pth), PthSep) & PthSep
-End Function
-
-Function FfnUp$(Ffn)
-FfnUp = PthRmvFdr(Pth(Ffn))
-End Function
 Function SrcpP$()
 SrcpP = Srcp(CPj)
 End Function

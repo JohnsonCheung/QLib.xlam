@@ -171,7 +171,18 @@ End Function
 Function DMthn(M As CodeModule) As Drs
 DMthn = DrpCol(DMth(M), "MthLin")
 End Function
-
+Function AddColzHasPm(A As Drs) As Drs
+'Fm A : ..MthLin..
+'Ret  : ..MthLin.. HasPm
+Dim I%: I = IxzAy(A.Fny, "MthLin")
+Dim Dr, Dry(): For Each Dr In Itr(A.Dry)
+    Dim MthLin$: MthLin = Dr(I)
+    Dim HasPm As Boolean: HasPm = BetBkt(MthLin) <> ""
+    PushI Dr, HasPm
+    PushI Dry, Dr
+Next
+AddColzHasPm = AddColzFFDry(A, "HasPm", Dry)
+End Function
 Function AddColzRetAs(A As Drs) As Drs
 'Fm A : ..MthLin..
 'Ret  : ..MthLin.. RetAs
@@ -185,7 +196,9 @@ Next
 AddColzRetAs = AddColzFFDry(A, "RetAs", Dry)
 End Function
 Function DMthP() As Drs
-DMthP = DMthzP(CPj)
+Static A As Drs
+If NoReczDrs(A) Then A = DMthzP(CPj)
+DMthP = A
 End Function
 
 Function DMthzP(P As VBProject) As Drs
@@ -196,7 +209,7 @@ For Each C In P.VBComponents
     Dry = DryInsColzAv(Dry, Av(Pjn, C.Name))
     PushIAy ODry, Dry
 Next
-DMthzP = DrszFF("Pj Md L Mdy Ty Mthn MthLin", ODry)
+DMthzP = DrszFF("Pjn Mdn L Mdy Ty Mthn MthLin", ODry)
 End Function
 
 Function DMth(M As CodeModule) As Drs
@@ -304,14 +317,6 @@ Dim L&: L = FstMthIx(MthLy): If L = -1 Then Thw CSub, "Given MthLy is not MthLy"
 Dim J%
 For J = NxtIxzSrc(MthLy, L) To UB(MthLy) - 1
     PushI MthCxtLy, MthLy(J)
-Next
-End Function
-
-Function MthCxtRgs(Src$(), Mthn) As MthRgs
-Dim A As Feis, J&
-'A = MthFeszSN(Src, Mthn)
-For J = 0 To A.N - 1
-    'PushFei MthCxtFeis, MthCxtFei(Src, A.Ay(J))
 Next
 End Function
 

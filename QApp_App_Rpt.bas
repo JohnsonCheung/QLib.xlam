@@ -84,7 +84,7 @@ With A
     SetWsn LasWs(OupWb), .AsWsn
     Dim Ws As Worksheet: Set Ws = WszWb(OupWb, .AsWsn)
     R6111_PasteAsVal Ws
-    R6111_RmvCol Ws, .InpColNy
+    R6111_DrpCol Ws, .InpColNy
     R6111_InsFnyRow Ws, .AsFny
     R6111_SetLo Ws
 End With
@@ -96,10 +96,7 @@ Private Sub R6111_InsFnyRow(Ws As Worksheet, AsFny$())
 CvRg(Ws.Rows(2)).EntireRow.Insert
 RgzAyH AsFny, WsRC(Ws, 2, 1)
 End Sub
-Function FnyzWs(A As Worksheet) As String()
-
-End Function
-Private Sub R6111_RmvCol(Ws As Worksheet, InpColNy$())
+Private Sub R6111_DrpCol(Ws As Worksheet, InpColNy$())
 Dim Fny$(): Fny = Reverse(FnyzWs(Ws))
 Dim Col%: Col = Si(Fny)
 Dim F

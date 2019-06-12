@@ -15,9 +15,9 @@ TmpPthzDb = EnsPth(TmpHom & "TmpDb\")
 End Property
 
 Function TmpDb(Optional Fdr$, Optional Fnn$) As Database
-Dim FB$: FB = TmpFb
-CrtFb FB
-Set TmpDb = Db(FB)
+Dim Fb$: Fb = TmpFb
+CrtFb Fb
+Set TmpDb = Db(Fb)
 End Function
 Function LasTmpDb() As Database
 Set LasTmpDb = Db(LasTmpFb)

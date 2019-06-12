@@ -95,7 +95,6 @@ Dim B As CodeModule
 Dim C As VBProject
 Dim D As Variant
 Dim E As vbext_ComponentType
-Dim F As WhMd
 AddCls A
 AddFun A
 EnsMod C, A

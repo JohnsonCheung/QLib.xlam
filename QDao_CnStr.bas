@@ -20,12 +20,12 @@ End Select
 CnStrzFxDao = O
 End Function
 
-Function CnStrzFbzAsAdoOle$(FB) 'Return a connection used as WbConnection
-CnStrzFbzAsAdoOle = "OLEDb;" & CnStrzFbzAsAdo(FB)
+Function CnStrzFbzAsAdoOle$(Fb) 'Return a connection used as WbConnection
+CnStrzFbzAsAdoOle = "OLEDb;" & CnStrzFbzAsAdo(Fb)
 End Function
 
-Function CnStrzFbzForWc$(FB)
-CnStrzFbzForWc = CnStrzFbzAsAdoOle(FB)
+Function CnStrzFbzForWc$(Fb)
+CnStrzFbzForWc = CnStrzFbzAsAdoOle(Fb)
 'CnStrzFbzAsForWbCn = FmtQQ("Provider=Microsoft.ACE.OLEDB.16.0;User ID=Admin;Data Source=?;Mode=Share Deny None;Extended Properties="""";Jet OLEDB:System database="""";Jet OLEDB:Registry Path="""";Jet OLEDB:Engine Type=6;Jet OLEDB:Database Locking Mode=0;Jet OLEDB:Global Partial Bulk Ops=2;Jet OLEDB:Global Bulk Transactions=1;Jet OLEDB:New Database Password="""";Jet OLEDB:Create System Database=False;Jet OLEDB:Encrypt Database=False;Jet OLEDB:Don't Copy Locale on Compact=False;Jet OLEDB:Compact Without Replica Repair=False;Jet OLEDB:SFP=False;Jet OLEDB:Support Complex Data=False;Jet OLEDB:Bypass UserINF Validation=False;Jet OLEDB:Limited DB Caching=False;Jet OLEDB:Bypass ChoiceField Validation=False", A)
 'CnStrzFbzAsForWbCn = FmtQQ("OLEDB;Provider=Microsoft.ACE.OLEDB.16.0;User ID=Admin;Data Source=?;Mode=Share Deny None;Extended Properties="""";Jet OLEDB:System database="""";Jet OLEDB:Registry Path="""";Jet OLEDB:Engine Type=6;Jet OLEDB:Database Locking Mode=0;Jet OLEDB:Global Partial Bulk Ops=2;Jet OLEDB:Global Bulk Transactions=1;Jet OLEDB:New Database Password="""";Jet OLEDB:Create System Database=False;Jet OLEDB:Encrypt Database=False;Jet OLEDB:Don't Copy Locale on Compact=False;Jet OLEDB:Compact Without Replica Repair=False;Jet OLEDB:SFP=False;Jet OLEDB:Support Complex Data=False;Jet OLEDB:Bypass UserINF Validation=False;Jet OLEDB:Limited DB Caching=False;Jet OLEDB:Bypass ChoiceField Validation=False", A)
 End Function

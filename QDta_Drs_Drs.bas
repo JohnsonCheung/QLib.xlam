@@ -32,7 +32,7 @@ Drsz4TRstLy = DrszFF(FF, Dry)
 End Function
 Function DrszTRstLy(TRstLy$(), FF$) As Drs
 Dim I, Dry(): For Each I In Itr(TRstLy)
-    PushI Dry, SyzTRst(TRstLy)
+    PushI Dry, SyzTRst(I)
 Next
 DrszTRstLy = DrszFF(FF, Dry)
 End Function
@@ -300,35 +300,13 @@ For Each Dr In Dry
 Next
 IntozDrsC = O
 End Function
-Function DmpRec(A As Drs)
-D FmtRec(A)
-End Function
-Function FmtRec(A As Drs) As String()
-Dim Fny$(), Dr, N&, Ix&
-Fny = AlignLzAy(A.Fny)
-For Each Dr In Itr(A.Dry)
-    PushIAy FmtRec, FmtRec_FmAlignedFny_AndDr(Fny, Dr, Ix, N)
-    Ix = Ix + 1
-Next
-End Function
-Function IxOfUStr$(Ix&, U&)
-
-End Function
-
-Function FmtReczFnyDr(Fny$(), Dr, Optional Ix& = -1, Optional N& = -1)
-FmtReczFnyDr = FmtRec_FmAlignedFny_AndDr(AlignLzAy(Fny), Dr, Ix, N)
-End Function
-
-Function FmtRec_FmAlignedFny_AndDr(AlignedFny$(), Dr, Optional Ix& = -1, Optional U& = -1) As String()
-PushNonBlank FmtRec_FmAlignedFny_AndDr, IxOfUStr(Ix, U)
-End Function
 
 Sub DmpDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColnn$, Optional Fmt As EmTblFmt = EiTblFmt)
 DmpAy FmtDrs(A, MaxColWdt, BrkColnn$)
 End Sub
 
-Function DrpCny(A As Drs, CC$) As Drs
-DrpCny = SelDrsCC(A, MinusAy(A.Fny, Ny(CC)))
+Function DrpColzFny(A As Drs, Fny$()) As Drs
+DrpColzFny = SelDrsCC(A, MinusAy(A.Fny, Fny))
 End Function
 
 Function SelDrsCC(A As Drs, CC$) As Drs
@@ -634,5 +612,18 @@ For Each Dr In Itr(A.Dry)
     PushI ODry, Dr
 Next
 AddColzExiB = Drs(AddFF(A.Fny, ExiB_FldNm), ODry)
+End Function
+
+
+Function DrszMapAy(Ay, MapFunNN$, Optional FF$) As Drs
+Dim Dry(), V: For Each V In Ay
+    Dim Dr(): Dr = Array(V)
+    Dim F: For Each F In Itr(SyzSS(MapFunNN))
+        PushI Dr, Run(F, V)
+    Next
+    PushI Dry, Dr
+Next
+Dim A$: A = DftStr(FF, "V " & MapFunNN)
+DrszMapAy = DrszFF(A, Dry)
 End Function
 

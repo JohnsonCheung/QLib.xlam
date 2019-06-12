@@ -652,8 +652,8 @@ A.MissingItemsLimit = xlMissingItemsNone
 A.Refresh
 End Sub
 
-Sub RfhFx(Fx, FB)
-RfhWb(WbzFx(Fx), FB).Close SaveChanges:=True
+Sub RfhFx(Fx, Fb)
+RfhWb(WbzFx(Fx), Fb).Close SaveChanges:=True
 End Sub
 
 Private Sub RfhWs(A As Worksheet)
@@ -662,8 +662,8 @@ Dim P As PivotTable: For Each P In A.PivotTables: P.Update: Next
 Dim L As ListObject: For Each L In A.ListObjects: L.Refresh: Next
 End Sub
 
-Function RfhWb(WB As Workbook, FB) As Workbook
-RplLozFb WB, FB
+Function RfhWb(WB As Workbook, Fb) As Workbook
+RplLozFb WB, Fb
 Dim C As WorkbookConnection
 Dim P As PivotCache, W As Worksheet
 'For Each C In Wb.Connections: RfhWc C, Fb:                                          Next
@@ -675,9 +675,9 @@ DltWc WB
 Set RfhWb = WB
 End Function
 
-Private Sub RplLozFb(WB As Workbook, FB)
+Private Sub RplLozFb(WB As Workbook, Fb)
 Dim Ws As Worksheet, D As Database
-Set D = Db(FB)
+Set D = Db(Fb)
 For Each Ws In WB.Sheets
     RplLozWs Ws, D
 Next
@@ -742,8 +742,8 @@ CrtFxzOupTbl Fx, SampFbzDutyDta
 OpnFx Fx
 End Sub
 
-Sub CrtFxzOupTbl(Fx, FB, Optional AddgWay As EmAddgWay)
-SavAszAndCls NewWbzOupTbl(FB, AddgWay), Fx
+Sub CrtFxzOupTbl(Fx, Fb, Optional AddgWay As EmAddgWay)
+SavAszAndCls NewWbzOupTbl(Fb, AddgWay), Fx
 End Sub
 
 Function ShwWb(A As Workbook) As Workbook

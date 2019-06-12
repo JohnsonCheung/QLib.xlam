@@ -10,14 +10,15 @@ Attribute VB_Exposed = False
 Option Explicit
 Option Compare Text
 
-Friend Function CmlAct(CmlEpt As Drs, Md As CodeModule) As Drs
+Friend Function CmlAct(CmlEpt As Drs, M As CodeModule) As Drs
 Dim CV$(): CV = StrColzDrs(CmlEpt, "V")
-Dim Act$(): Act = MthLinAyzM(Md)
+Dim Act$(): Act = StrCol(DMth(M), "MthLin")
 Insp CSub, "CmlAct", "CV Act", CV, Act
 Stop
 End Function
 
 Friend Function CmlActV(CmlAct1 As Drs, CmPfx$) As Drs
+'Ret      : L ActL V ' RmvPfx CmlPfx from V @@
 'Ret      : L ActL V ' RmvPfx CmlPfx from V @@
 'Fm CmlAct : L ActL V
 'Ret       : RmvPfx CmPfx from V
@@ -31,6 +32,7 @@ CmlActV = Drs(CmlAct1.Fny, Dry)
 'Insp "QIde_B_MthOp.CmlActV", "Inspect", "Oup(CmlActV) D1 CmPfx", FmtDrs(CmlActV), D1, CmPfx: Stop
 End Function
 Friend Function MlVSfx(Ml$) As Drs
+'Ret      : Ret V Sfx ! the MthLin's pm V Sfx @@
 'Ret      : Ret V Sfx ! the MthLin's pm V Sfx @@
 'Fm Ml # MthLin
 'Ret V Sfx ! the MthLin's pm V Sfx
@@ -93,6 +95,8 @@ End Function
 Friend Function CrFill(CrVPR3 As Drs) As Drs
 'Fm  CrVPR3 : V P R1 R2 R3
 'Ret        : V P R1 R2 R3 FP FR1 FR2 @@
+'Fm  CrVPR3 : V P R1 R2 R3
+'Ret        : V P R1 R2 R3 FP FR1 FR2 @@
 'Fm CrVPR3 : V P R1 R2 R3
 'Ret       : V P R1 R2 R3 FP FR1 FR2 ' For each dist v return the Filler of P R1 R2 as FP FR1 FR2
 If NoReczDrs(CrVPR3) Then Exit Function
@@ -105,6 +109,8 @@ CrFill = O
 'Insp "QIde_B_MthOp.CrFill", "Inspect", "Oup(CrFill) CrVPR3", FmtDrs(CrFill), FmtDrs(CrVPR3): Stop
 End Function
 Friend Function CrFst(CrFill As Drs) As Drs
+'Fm  CrFill : V P R1 R2 R3 FP FR1 FR2
+'Ret        : V P R1 R2 R3 FP FR1 FR2 Fst @@
 'Fm  CrFill : V P R1 R2 R3 FP FR1 FR2
 'Ret        : V P R1 R2 R3 FP FR1 FR2 Fst @@
 'Fm CrFill : V P R1 R2 R3 FR1 FR2
@@ -128,6 +134,8 @@ End Function
 Friend Function CrEpt(CmPfx$, CrRmk As Drs) As S1S2s
 'Fm  CrRmk : V P R1 R3 R3 FP FR1 FR2 Fst Rmk
 'Ret       : Mthn RmkLines                   ! RmkLines is find by each V in CrVPR3 & Mthn = V & CmPfx @@
+'Fm  CrRmk : V P R1 R3 R3 FP FR1 FR2 Fst Rmk
+'Ret       : Mthn RmkLines                   ! RmkLines is find by each V in CrVPR3 & Mthn = V & CmPfx @@
 'Fm CrRmk : V P R1 R3 R3 FP FR1 FR2 Fst Rmk
 If NoReczDrs(CrRmk) Then Exit Function
 Dim A As Drs: A = SelDrs(CrRmk, "V Rmk")
@@ -140,6 +148,8 @@ CrEpt = S1S2szDic(O)
 'Insp "QIde_B_MthOp.CrEpt", "Inspect", "Oup(CrEpt) CmPfx CrRmk", FmtS1S2s(CrEpt), CmPfx, FmtDrs(CrRmk): Stop
 End Function
 Friend Function CrRmk(CrFst As Drs) As Drs
+'Fm  CrFst : V P R1 R2 R3 FP FR1 FR2 Fst
+'Ret       : V P R1 R3 R3 FP FR1 FR2 Fst Rmk @@
 'Fm  CrFst : V P R1 R2 R3 FP FR1 FR2 Fst
 'Ret       : V P R1 R3 R3 FP FR1 FR2 Fst Rmk @@
 'Fm CrFst : V P R1 R2 R3 FP FR1 FR2 Fst
@@ -398,6 +408,8 @@ End Function
 Friend Function DeLNewO(McDblEqRmk As Drs) As Drs
 'Fm  De   : L MthLin    # Dbl-Eq
 'Ret      : L NewL OldL @@
+'Fm  De   : L MthLin    # Dbl-Eq
+'Ret      : L NewL OldL @@
 'BrwDrs McDblEqRmk: Stop
 Dim Dr, Dry(), OldL$, NewL$, L&, A$
 For Each Dr In Itr(McDblEqRmk.Dry)
@@ -414,7 +426,7 @@ DeLNewO = LNewO(Dry)
 'Insp "QIde_B_MthOp.DeLNewO", "Inspect", "Oup(DeLNewO) De", FmtDrs(DeLNewO), FmtDrs(De): Stop
 End Function
 Friend Function McGp(McCln As Drs) As Drs
-'Fm  McCln : L MthLin    # Mc-Cln. ! must Dim | Asg | Rmk(but not 'If 'Insp, '==). Cln to Align
+'Fm  McCln : L MthLin    # Mc-Cln. ! must SngDimColon | Rmk(but not If Stop Insp == Brw). Cln to Align @@
 'Ret       : Gpno MthLin           ! with L in seq will be one gp @@
 Dim Dr, LasL&, Gpno%, L&, Dry(), J%
 For Each Dr In McCln.Dry
@@ -430,6 +442,9 @@ McGp = DrszFF("L Gpno MthLin", Dry)
 End Function
 
 Friend Function McTRmk(McRmk As Drs) As Drs
+'Fm  McRmk : L Gpno MthLin IsRmk ! a column IsRmk is added
+'Ret       : L Gpno MthLin IsRmk ! For each gp, the front rmk lines are TopRmk,
+'                                ! rmv them @@
 'Fm  McRmk : L Gpno MthLin IsRmk ! a column IsRmk is added
 'Ret       : L Gpno MthLin IsRmk ! For each gp, the front rmk lines are TopRmk,
 '                                ! rmv them @@
@@ -463,6 +478,8 @@ End Function
 
 
 Friend Function McRmk(McGp As Drs) As Drs
+'Fm  McGp : Gpno MthLin         ! with L in seq will be one gp
+'Ret      : L Gpno MthLin IsRmk ! a column IsRmk is added @@
 'Fm  McGp : Gpno MthLin         ! with L in seq will be one gp
 'Ret      : L Gpno MthLin IsRmk ! a column IsRmk is added @@
 'Ret McRmk L Gpno MthLin IsRmk    #Mth-Cxt-isRmk
@@ -635,7 +652,7 @@ MbAct = DrszFF("L Mthn OldL", Dry)
 End Function
 
 Friend Function Bs(Mc As Drs) As Drs
-'Fm  McCln : L MthLin # Mc-Cln. ! must Dim | Asg | Rmk(but not 'If 'Insp, '==). Cln to Align
+'Fm  McCln : L MthLin # Mc-Cln. ! must SngDimColon | Rmk(but not If Stop Insp == Brw). Cln to Align @@
 'Ret       : L BsLin            ! FstTwoChr = '@ @@
 Dim Dr, Dry()
 For Each Dr In Itr(Mc.Dry)
@@ -753,7 +770,7 @@ End Function
 
 Friend Function McCln(Mc As Drs) As Drs
 'Fm  Mc   : L MthLin # Mc.
-'Ret      : L MthLin # Mc-Cln. ! must Dim | Asg | Rmk(but not 'If 'Insp, '==). Cln to Align @@
+'Ret      : L MthLin # Mc-Cln. ! must SngDimColon | Rmk(but not If Stop Insp == Brw). Cln to Align @@ @@
 Dim Dr, Dry(), L$, Yes As Boolean
 For Each Dr In Itr(Mc.Dry)
     L = Trim(Dr(1))
@@ -765,7 +782,7 @@ For Each Dr In Itr(Mc.Dry)
         Case HasPfxss(L, "If Stop Insp == Brw")
         Case Else: Yes = True
         End Select
-    Case IsAlignableDim(L), IsAsgStmt(L)
+    Case IsSngDimColon(L)
         Yes = True
     End Select
     If Yes Then PushI Dry, Dr
@@ -848,6 +865,11 @@ CrChg = O
 End Function
 
 Friend Function CmEpt(McR123 As Drs, ExprPfx$) As String()
+'Fm  McR123  : L Gpno MthLin IsRmk
+'              V Sfx Dcl LHS Expr R1 R2 R3 ! Add R1 R2 R3 from Rst
+'Fm  ExprPfx :                             ! Either F. or CmPfx.  It used to detect the Expr is a calling cm expr
+'Ret         :                             ! It is from V and  {V} = {CmPfx}{Expr}.
+'                                          ! They will be used create new chd mth @@
 'Fm  McR123  : L Gpno MthLin IsRmk
 '              V Sfx Dcl LHS Expr R1 R2 R3 ! Add R1 R2 R3 from Rst
 'Fm  ExprPfx :                             ! Either F. or CmPfx.  It used to detect the Expr is a calling cm expr

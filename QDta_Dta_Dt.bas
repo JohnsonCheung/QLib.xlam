@@ -45,7 +45,7 @@ DtSelCol = DtzDrs(SelDrsCC(DrszDt(A), CC), Dft(DtNm, A.DtNm))
 End Function
 
 Function DtDrpCol(A As Dt, CC$, Optional DtNm$) As Dt
-DtDrpCol = DtzDrs(DrpCny(DrszDt(A), CC), Dft(DtNm, A.DtNm))
+DtDrpCol = DtzDrs(DrpCol(DrszDt(A), CC), Dft(DtNm, A.DtNm))
 End Function
 
 Function DrszDt(A As Dt) As Drs

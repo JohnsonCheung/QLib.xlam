@@ -13,64 +13,94 @@ If FstChr(Mdn) = "Q" Then
 End If
 End Function
 
-Function DrszMapAy(Ay, MapFunNN$, Optional FF$) As Drs
-Dim Dry(), V: For Each V In Ay
-    Dim Dr(): Dr = Array(V)
-    Dim F: For Each F In Itr(SyzSS(MapFunNN))
-        PushI Dr, Run(F, V)
-    Next
-    PushI Dry, Dr
-Next
-Dim A$: A = DftStr(FF, "V " & MapFunNN)
-DrszMapAy = DrszFF(A, Dry)
-End Function
-
 Sub EnsAsmP()
 EnsAsmzP CPj
 End Sub
 
-Function EnsAsmzM(M As CodeModule) As Boolean
+Function EnsAsmzM(M As CodeModule, Optional Rpt As EmRpt) As Boolean
 If IsEmpMd(M) Then Exit Function
 If CmpTyzM(M) = vbext_ct_Document Then Exit Function
+Const T$ = "Private Const ?$ = ""?"""
+'-- Fnd-CMod-Dta
+Dim Mdn$:                Mdn = MdnzM(M)
+Dim CModLno&:        CModLno = LnozDclCnst(M, "CMod")
+Dim CModLAct$:                 If CModLno > 0 Then CModLAct = M.Lines(CModLno, 1)
+Dim CModLEpt$:      CModLEpt = FmtQQ(T, "CMod", Mdn & ".")
+Dim CModRpl As Drs:  CModRpl = XRpl(CModLno, CModLAct, CModLEpt)
+Dim CModIns$:                  If CModLno = 0 Then CModIns = CModLEpt
 
-Const T$ = "Private Const CMod$ = ""?"""
-Dim N$, L&, C$, Mdn$
-Mdn = MdnzM(M)
-   C = "CMod"
-  N = MdnzM(M)
-  L = LnozDclCnst(M, C)
-If L = 0 Then L = LnozFstCd(M)
-If EnsLin(M, L, FmtQQ(T, C, N & ".")) Then EnsAsmzM = True
+'-- Fnd-Asm-Dta
+Dim Asmn$:                   Asmn = AsmnzMdn(Mdn)
+Dim AsmLno&:               AsmLno = LnozDclCnst(M, "Asm")
+Dim AsmLAct$:                       If AsmLno > 0 Then AsmLAct = M.Lines(AsmLno, 1)
+Dim AsmNoUpd As Boolean: AsmNoUpd = Asmn <> ""
+If Not AsmNoUpd Then
+    Dim AsmLEpt$:      AsmLEpt = FmtQQ(T, "Asm", Asmn)
+    Dim AsmRpl As Drs:  AsmRpl = XRpl(AsmLno, AsmLAct, AsmLEpt)
+    Dim AsmIns$:        AsmIns = AsmLEpt
+End If
 
-     C = "Asm"
-     N = AsmnzMdn(Mdn)
-         If EnsAsmzM__1(M, C, N, T) Then EnsAsmzM = True
+'-- Fnd-Ns-Dta
+Dim Nsn$:                   Nsn = NsnzMdn(Mdn)
+Dim NsLno&:               NsLno = LnozDclCnst(M, "Ns")
+Dim NsLAct$:                      If NsLno > 0 Then NsLAct = M.Lines(NsLno, 1)
+Dim NsNoUpd As Boolean: NsNoUpd = Nsn <> ""
+If Not NsNoUpd Then
+    Dim NsLEpt$:      NsLEpt = FmtQQ(T, "Ns", Nsn)
+    Dim NsRpl As Drs:  NsRpl = XRpl(NsLno, NsLAct, NsLEpt)
+    Dim NsIns$:        NsIns = NsLEpt
+End If
 
-     C = "Ns"
-     N = NsnzMdn(Mdn)
-         If EnsAsmzM__1(M, C, N, T) Then EnsAsmzM = True
+'-- Fnd-All-Dta
+Dim AllIns$():     AllIns = SyNonBlank(CModIns, AsmIns, NsIns)
+Dim AllRpl As Drs: AllRpl = AddDrs3(CModRpl, AsmRpl, NsRpl)
+'== RplLin =============================================================================================================
+'== InsLin =============================================================================================================
+If IsUpdzRpt(Rpt) Then
+    If HasReczDrs(AllRpl) Then EnsAsmzM = True Else If Si(AllIns) > 0 Then EnsAsmzM = True
+    RplLin M, AllRpl
+    InsLinzDcl M, AllIns
+End If
+Rpt:
+    Dim IsRpt As Boolean, IsPush As Boolean
+    IsRpt = IsRptzRpt(Rpt)
+    IsPush = IsPushzRpt(Rpt)
+    If IsRpt Or IsPush Then
+        X "======================================"
+        X Mdn
+        X "Insert Const lines: Count=" & Si(AllIns)
+        X TabAy(AllIns)
+        X "Update Const lines: COunt=" & NReczDrs(AllRpl)
+        XDrs AllRpl
+        XEnd
+        Dim Msg$(): Msg = XX
+    End If
+    If IsRpt Then Brw Msg
+    If IsPush Then X Msg
 End Function
-Private Function EnsAsmzM__1(M As CodeModule, C$, N$, T$) As Boolean
-Dim L&, Lin$, NoNm As Boolean, HasLin As Boolean
-     L = LnozDclCnst(M, C)
-   Lin = FmtQQ(T, C, N)
-  NoNm = N = ""
-HasLin = L <> 0
-If Not (NoNm And HasLin) Then _
-    EnsAsmzM__1 = EnsLin(M, L, Lin)
 
-End Function
-Sub EnsAsmzP(P As VBProject)
+Sub EnsAsmzP(P As VBProject, Optional Rpt As EmRpt)
 Dim C As VBComponent, Mdyd%, Skpd%
+Dim Rpt1 As EmRpt
+Rpt1 = EiPushOnly
+Erase XX
 For Each C In P.VBComponents
-    If EnsAsmzM(C.CodeModule) Then
+    If EnsAsmzM(C.CodeModule, Rpt1) Then
+    Stop
         Mdyd = Mdyd + 1
     Else
         Skpd = Skpd + 1
     End If
+'    Brw XX: Stop
 Next
+Brw XX
 Inf CSub, "Done", "Pj Mdyd Skpd Tot", P.Name, Mdyd, Skpd, Mdyd + Skpd
 End Sub
+Private Function XRpl(Lno&, LAct$, LEpt$) As Drs
+If Lno = 0 Then Exit Function
+If LAct = LEpt Then Exit Function
+XRpl = LNewO(Av(Array(Lno, LEpt, LAct)))
+End Function
 
 Sub EnsCnstzMth(M As CodeModule, Mthn$, Cnstn$, NewL$)
 
@@ -119,6 +149,19 @@ Function LnozFstCd&(M As CodeModule)
 Stop
 
 End Function
+Function LnozFstDcl&(M As CodeModule)
+Dim J&
+For J = 1 To M.CountOfDeclarationLines
+    Dim L$: L = Trim(M.Lines(J, 1))
+    If Not HasPfxss(L, "Option Implements '") Then
+        If L <> "" Then
+            LnozFstDcl = True
+            Exit Function
+        End If
+    End If
+Next
+
+End Function
 
 Function NsnzMdn$(Mdn$)
 If FstChr(Mdn) = "Q" Then
@@ -148,4 +191,7 @@ End Sub
 
 Sub ZZ_AsmnzMdn()
 BrwDrs DrszMapAy(Itn(CPj.VBComponents), "AsmnzMdn NsnzMdn")
+End Sub
+Private Sub ZZZ()
+QIde_Ens_EnsAsm:
 End Sub

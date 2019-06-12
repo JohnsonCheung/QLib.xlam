@@ -46,7 +46,7 @@ Select Case True
 Case O <> ""
     ShfDclSfx = O & IIf(ShfBkt(OLin), "()", "")
 Case ShfAs(OLin)
-    O = ShfNm(OLin): If O = "" Then Stop
+    O = ShfDotNm(OLin): If O = "" Then Stop
     ShfDclSfx = " As " & O & IIf(ShfBkt(OLin), "()", "")
 End Select
 End Function

@@ -38,10 +38,6 @@ Function FrfzDistPj$(DistPj As VBProject)
 FrfzDistPj = SrcpzDistPj(DistPj) & "Rf.txt"
 End Function
 
-Function RfSrcC() As String()
-RfSrcC = RfSrc(CPj)
-End Function
-
 Function RfSrczSrcp(Srcp$) As String()
 RfSrczSrcp = LyzFt(FrfzSrcp(Srcp))
 End Function
@@ -51,27 +47,6 @@ For Each R In P.References
     PushI RfSrc, RfLinzRf(R).Lin
 Next
 End Function
-
-Property Get RffSy() As String()
-RffSy = RffyzP(CPj)
-End Property
-
-Property Get FmtRfPj() As String()
-FmtRfPj = FmtSy3Term(RfLyPj)
-End Property
-
-Property Get RfLyPj() As String()
-Stop
-'RfLyPj = RfSrczP(CPj)
-End Property
-
-Function RfNyzP(P As VBProject) As String()
-RfNyzP = Itn(P.References)
-End Function
-
-Property Get RfNyP() As String()
-RfNyP = RfNyzP(CPj)
-End Property
 
 Function CvRf(A) As VBIDE.Reference
 Set CvRf = A
@@ -86,10 +61,6 @@ End Function
 Function HasRfGuid(P As VBProject, RfGuid)
 HasRfGuid = HasItrPEv(P.References, "GUID", RfGuid)
 End Function
-
-Sub BrwRf()
-BrwAy FmtRfPj
-End Sub
 
 Function RffyzP(P As VBProject) As String()
 RffyzP = SyzItrPrp(P.References, "FullPath")
@@ -112,8 +83,7 @@ Private Sub ZZ()
 End Sub
 
 Sub AddRfzDistPj1(DistPj As VBProject)
-Stop
-'AddRfzRff DistPj, RffzDistPj(DistPj)
+AddRfzRff DistPj, RffzDistPj(DistPj)
 End Sub
 
 Sub DmpPjRfP()
@@ -147,7 +117,7 @@ DPjRfUsr = DrszTRstLy(XX, "Pj Rfnn")
 Erase XX
 End Function
 
-Function DPjRfStd() As String()
+Function DPjRfzStd() As Drs
 Erase XX
 X "MVb   Scripting VBScript_RegExp_55 DAO VBIDE Office"
 X "MIde  Scripting VBIDE Excel"
@@ -181,58 +151,9 @@ DStdLib = Drsz4TRstLy(XX, "Libn Guid Maj Mnr Ffn")
 Erase XX
 End Function
 
-Private Sub Z_FAny_DPD_ORD()
-'GoSub ZZ
-GoSub T1
-Exit Sub
-T1:
-    Ept = SyzSS("MVb MXls MAdo MAdoX MApp MDta MTp MSql MDao MAcs MIde AStkShpCst")
-    GoTo Tst
-Tst:
-'    Act = FAny_DPD_ORD
-    C
-    Return
-ZZ:
-    ClrImm
-    D "Rel --------------------"
-    D UsrPjRfLy
-    D "Itms-DPD-ORD --------------------"
-'   D FAny_DPD_ORD
-    Return
+Sub BrwDPjRfzStd()
+BrwDrs DPjRfzStd
 End Sub
-
-Sub BrwPjRfvStd()
-Brw FmtSyT4(RfSrczSrcp(SrcpP))
-End Sub
-Sub DmpRf()
-DmpRfzP CPj
-End Sub
-Sub DmpRfzP(P As VBProject)
-D FmtSyT4(RfSrc(P))
-End Sub
-
-Private Function GuidLinRfNm$(RfNm)
-Dim D As Dictionary
-'Set D = RfDfn_STD
-If D.Exists(RfNm) Then GuidLinRfNm = D(RfNm): Exit Function
-Thw CSub, "Given RfNm cannot find the STD GUID Dic", "RfNm RfDfn_STD", RfNm, FmtDic(D)
-End Function
-
-Private Function GuidLinyPjn(Pjn$) As String()
-Dim RfNm
-For Each RfNm In Itr(StdRfNyPj(Pjn))
-    PushI GuidLinyPjn, RfNm & " " & GuidLinRfNm(RfNm)
-Next
-End Function
-
-Private Function StdRfNyPj(Pjn$) As String()
-Dim D As Dictionary
-Set D = PjnToStdRfNNDic
-If Not D.Exists(Pjn) Then
-    Thw CSub, "Given Pj not found in RfDfn_STD", "Pj RfDfn_STD", Pjn, FmtDic(PjnToStdRfNNDic)
-End If
-StdRfNyPj = SyzSS(D(Pjn))
-End Function
 
 
 

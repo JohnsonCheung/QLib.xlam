@@ -9,29 +9,36 @@ Type ReducedDrs
 End Type
 
 Function ReducedDrs(A As Drs) As ReducedDrs
-Dim Dry(): Dry = A.Dry
-'If Si(Dry) = 0 Then Set ReducedDrs.Drs = A:        Exit Function
+If NoReczDrs(A) Then GoTo X
 Dim C$(): C = ReducibleCny(A)
-Dim Vy: Vy = DrvzDrs(A, C, 0)
+If Si(C) = 0 Then GoTo X
+Dim Ixy&(): Ixy = IxyzSubAy(A.Fny, C)
+Dim Dr: Dr = A.Dry(0)
+Dim Vy: Vy = AywIxy(Dr, Ixy)
 Set ReducedDrs.ReducedColDic = DiczKyVy(C, Vy)
-'ReducedDrs.Drs = DrpCny(A, C)
+ReducedDrs.Drs = DrpColzFny(A, C)
+Exit Function
+X:
+    ReducedDrs.Drs = A
+    Set ReducedDrs.ReducedColDic = New Dictionary
 End Function
-Private Function ReducibleCny(A As Drs) As String()
+Private Function ReducibleCny(A As Drs) As String() '
+'Ret : ColNy ! if any col in Drs-A has all sam val, this col is reduciable.  Return them
 Dim NCol%: NCol = NColzDrs(A)
 Dim J%, Dry(), Fny$()
 Fny = A.Fny
 Dry = A.Dry
 For J = 0 To NCol - 1
-'    If IsEqzAllEle(ColzDry(Dry, J)) Then
+    If IsEqzAllEle(ColzDry(Dry, J)) Then
         PushI ReducibleCny, Fny(J)
-'    End If
+    End If
 Next
 End Function
-Sub BrwReducedDrs(A As ReducedDrs)
-BrwAy FmtReducedDrs(A)
+Sub BrwDrszReduce(A As ReducedDrs)
+BrwAy FmtDrszReduce(A)
 End Sub
 
-Private Function FmtReducedDrs(A As ReducedDrs) As String()
-PushIAy FmtReducedDrs, FmtDic(A.ReducedColDic)
-PushIAy FmtReducedDrs, FmtDrs(A.Drs)
+Private Function FmtDrszReduce(A As ReducedDrs) As String()
+PushIAy FmtDrszReduce, FmtDic(A.ReducedColDic)
+PushIAy FmtDrszReduce, FmtDrs(A.Drs)
 End Function

@@ -1,4 +1,4 @@
-Attribute VB_Name = "QIde_Lis"
+Attribute VB_Name = "QIde_F_Lis"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Lis."
@@ -21,18 +21,35 @@ End Sub
 Sub LisStopLin()
 
 End Sub
+Sub LisPFunPfx(Pfx$)
+Dim A As Drs: A = DMthPFun
+BrwDrs ColPfx(A, "Mthn", Pfx)
+End Sub
+Sub LisPFunPatn(Patn$)
+Dim A As Drs: A = DMthPFun
+BrwDrs ColPatn(A, "Mthn", Patn)
+End Sub
+Sub LisPubPatn(Patn$)
+Dim A As Drs: A = DMthPub
+BrwDrs ColPatn(A, "Mthn", Patn)
+End Sub
+Function DMthPub() As Drs
+DMthPub = ColEqE(DMthP, "Mdy", "Pub")
+End Function
+Function DMthPFun() As Drs
+DMthPFun = ColEqE(DMthPub, "Ty", "Fun")
+End Function
+Function DMthPrp() As Drs
+DMthPrp = DrswColIn(DMthPub, "Ty", SyzSS("Get Let Set"))
+End Function
 Sub LisPFunRetAs(RetAsPatn$)
-Dim S As Drs: S = DMthP
-Dim RetAs As Drs: RetAs = AddColzRetAs(S)
-Dim Pub As Drs: Pub = ColEqE(RetAs, "Mdy", "Pub")
-Dim Fun As Drs: Fun = ColEqE(Pub, "Ty", "Fun")
-Dim Patn As Drs: Patn = ColPatn(Fun, "RetAs", RetAsPatn)
+Dim RetAs As Drs: RetAs = AddColzRetAs(DMthPFun)
+Dim Patn As Drs: Patn = ColPatn(RetAs, "RetAs", RetAsPatn)
 Dim T50 As Drs: T50 = TopN(Patn)
 BrwDrs T50
 End Sub
 Sub LisRetAs(RetAsPatn$, Optional N = 50)
-Dim S As Drs: S = DMthP
-Dim RetAs As Drs: RetAs = AddColzRetAs(S)
+Dim RetAs As Drs: RetAs = AddColzRetAs(DMthP)
 Dim Patn As Drs: Patn = ColPatn(RetAs, "RetAs", RetAsPatn)
 Dim T50 As Drs: T50 = TopN(Patn, N:=N)
 BrwDrs T50

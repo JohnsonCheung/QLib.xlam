@@ -69,9 +69,11 @@ End Function
 Function LineszJnLinesItr$(LinesItr, Optional Sep$ = vbCrLf)
 LineszJnLinesItr = Jn(IntozItr(EmpSy, LinesItr), Sep)
 End Function
+
 Function SMthDiczP(P As VBProject) As Dictionary
 Set SMthDiczP = SrtDic(MthDiczP(P))
 End Function
+
 Function SMthDicP() As Dictionary
 Set SMthDicP = SMthDiczP(CPj)
 End Function

@@ -19,11 +19,8 @@ For J = 1 To Len(ShtTyLis)
     PushI VbTyAyzShtTyLis, VbTyzShtTy(Mid(ShtTyLis, J, 1))
 Next
 End Function
+
 Function DrzTLinShtTyLis(TLin, ShtTyLis$) As Variant()
 DrzTLinShtTyLis = DrzTLinVbTyAy(TLin, VbTyAyzShtTyLis(ShtTyLis))
-End Function
-
-Function DrvzDrs(A As Drs, Cny$(), Optional Row&)
-DrvzDrs = AywIxy(A.Dry()(Row), Ixy(A.Fny, Cny))
 End Function
 

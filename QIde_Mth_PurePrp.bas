@@ -4,89 +4,18 @@ Option Explicit
 Private Const CMod$ = "MIde_Mth_PurePrp."
 Private Const Asm$ = "QIde"
 
-Sub ImPurePrpPjBrw()
-Brw ImpPurePrpLyP
-End Sub
-
-Function ImpPurePrpLyP() As String()
-ImpPurePrpLyP = ImPurePrpLyzP(CPj)
+Function DMthPrpWiPm() As Drs
+Dim A As Drs: A = AddColzHasPm(DMthPrp)
+DMthPrpWiPm = ColEqE(A, "HasPm", True)
 End Function
 
-Function ImPurePrpLyzP(P As VBProject) As String()
-If IsProtect(P) Then Exit Function
-Dim C As VBComponent
-For Each C In P.VBComponents
-    PushIAy ImPurePrpLyzP, ImPurePrpLyzMd(C.CodeModule)
-Next
-End Function
-
-Function ImPurePrpLyzMd(M As CodeModule) As String()
-ImPurePrpLyzMd = ImPurePrpLyzS(Src(M))
-End Function
-
-Private Sub Z_ImPurePrpLyzS()
-Brw ImPurePrpLyzS(SrczMdn("MXls_Lo_LofVbl"))
-End Sub
-
-Function ImPurePrpLyzS(Src$()) As String()
-Dim L$, I, M$(), S As New Aset
-M = MthLinAyzS(Src)
-Set S = LetSetPrpNset(M)
-For Each I In Itr(M)
-    L = I
-    If IsImPurePrpLin(L, S) Then
-        PushI ImPurePrpLyzS, L
-    End If
-Next
-End Function
-
-Property Get PurePrpLyP() As String()
-PurePrpLyP = PurePrpLyzP(CPj)
+Property Get DMthPrpWoPm() As Drs
+Dim A As Drs: A = AddColzHasPm(DMthPrp)
+DMthPrpWoPm = ColEqE(A, "HasPm", False)
 End Property
-
-Function PurePrpLyzP(P As VBProject) As String()
-Dim L$, I
-For Each I In Itr(MthLinAyzP(P))
-    L = I
-    If IsPurePrpLin(L) Then PushI PurePrpLyzP, L
-Next
-End Function
-
-Function PurePrpLyAyzP(P As VBProject) As Variant()
-Dim Ly, C As VBComponent
-For Each C In P.VBComponents
-    For Each Ly In Itr(PurePrpLyAyzMd(C.Codmodule))
-        PushI PurePrpLyAyzP, Ly
-    Next
-Next
-End Function
-
-Function IxyzPurePrp(Src$()) As Long()
-Dim Ix&
-For Ix = 0 To UB(Src)
-    If IsPurePrpLin(Src(Ix)) Then
-        Push IxyzPurePrp, Ix
-    End If
-Next
-End Function
 
 Function PurePrpLyAyzMd(M As CodeModule) As Variant()
 PurePrpLyAyzMd = PurePrpLyAyzS(Src(M))
-End Function
-
-Function PurePrpLyAyzS(Src$()) As Variant()
-Dim Ix&, I
-For Each I In Itr(IxyzPurePrp(Src))
-    Ix = I
-'    PushI PurePrpLyAyzS, MthLyBySrcFm(Src, Ix)
-Next
-End Function
-Function PurePrpNy(M As CodeModule) As String()
-Dim O$(), Lno
-For Each Lno In Itr(IxyzPurePrp(Src(M)))
-    PushNoDup O, PrpNm(M.Lines(Lno, 1))
-Next
-PurePrpNy = O
 End Function
 
 Function LetSetPrpNset(MthLinAy$()) As Aset
@@ -106,23 +35,5 @@ With Mthn3zL(Lin)
     Case "Set", "Let": LetSetPrpNm = .Nm: Exit Function
     End Select
 End With
-End Function
-Function IsImPurePrpLin(Lin, LetSetPrpNset As Aset) As Boolean
-If Not MthTy(Lin) = "Property Get" Then Exit Function
-Stop
-If Not HasMthPm(Lin) Then Exit Function
-IsImPurePrpLin = Not LetSetPrpNset.Has(Mthn(Lin))
-End Function
-
-Function IsPurePrpLin(Lin) As Boolean
-Dim O As Boolean
-Select Case MthTy(Lin)
-Case "Property Get":  O = Not HasMthPm(Lin)
-End Select
-IsPurePrpLin = O
-End Function
-
-Function HasMthPm(MthLin) As Boolean
-HasMthPm = MthPm(MthLin) <> ""
 End Function
 

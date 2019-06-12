@@ -227,9 +227,6 @@ Function SqvzLines(Lines$) As Variant()
 SqvzLines = Sqv(SplitCrLf(Lines))
 End Function
 
-Function TrimR$(S)
-TrimR = RTrimLines(RTrim(S))
-End Function
 Function RTrimLines$(Lines)
 Dim At&
 For At = Len(Lines) To 1 Step -1

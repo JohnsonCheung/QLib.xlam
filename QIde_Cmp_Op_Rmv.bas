@@ -30,7 +30,7 @@ M.Parent.Collection.Remove M.Parent
 Debug.Print FmtQQ("RmvMd: Md(?) is deleted from Pj(?)", N, P)
 End Sub
 Sub RmvCmpzN(Cmpn)
-RmvCmp CMP(Cmpn)
+RmvCmp Cmp(Cmpn)
 End Sub
 Sub RmvCmp(A As VBComponent)
 A.Collection.Remove A

@@ -42,21 +42,6 @@ Dim T$: T = ShfShtMthTy(OLin):: If T = "" Then Exit Function
 ShfMthn3 = Mthn3(ShfNm(OLin), M, T)
 End Function
 
-
-Function HitMthn3(A As Mthn3, B As WhMth) As Boolean
-Select Case True
-Case A.Nm = "":
-Case True 'IsEmpWhMth(B)
-    HitMthn3 = True
-Case True ' _
-    Not HitNm(A.Nm, B.WhNm), _
-    Not HitShtMdy(A.ShtMdy, B.ShtMthMdyAy), _
-    Not HitAy(A.ShtTy, B.ShtTyAy)
-Case Else
-    HitMthn3 = True
-End Select
-End Function
-
 Function RmvMthn3$(Lin)
 Dim L$: L = Lin
 RmvMthMdy L

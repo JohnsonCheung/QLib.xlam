@@ -175,8 +175,8 @@ SelDrszFny = Drs(Fny, SelDry(A.Dry, Ixy(A.Fny, Fny)))
 End Function
 
 Function SelDrszAs(A As Drs, FFAs$) As Drs
-Dim FA$(), FB$(): AsgFnyAB FFAs, FA, FB
-SelDrszAs = Drs(FB, SelDrszFny(A, FA).Dry)
+Dim FA$(), Fb$(): AsgFnyAB FFAs, FA, Fb
+SelDrszAs = Drs(Fb, SelDrszFny(A, FA).Dry)
 End Function
 
 Function SelDrsAlwEmpzFny(A As Drs, Fny$()) As Drs

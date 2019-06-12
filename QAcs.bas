@@ -36,9 +36,9 @@ On Error Resume Next
 A.CloseCurrentDatabase
 End Sub
 
-Sub BrwFb(FB)
+Sub BrwFb(Fb)
 Static Acs As New Access.Application
-OpnFb Acs, FB
+OpnFb Acs, Fb
 Acs.Visible = True
 End Sub
 
@@ -74,10 +74,10 @@ Static X As Access.Application: If IsNothing(X) Then Set X = New Access.Applicat
 Set Acs = X
 End Function
 
-Sub CpyAcsFrm(A As Access.Application, FB)
+Sub CpyAcsFrm(A As Access.Application, Fb)
 Dim I As AccessObject
 For Each I In A.CodeProject.AllForms
-    A.DoCmd.CopyObject FB, , acForm, I.Name
+    A.DoCmd.CopyObject Fb, , acForm, I.Name
 Next
 End Sub
 
@@ -91,19 +91,19 @@ Sub CpyAcsTbl(A As Access.Application, ToFb)
 
 End Sub
 Sub CpyAcsObj(A As Access.Application, ToFb)
-Dim FB$
+Dim Fb$
 If HasFfn(ToFb) Then
-    FB = NxtFfnzAva(A.CurrentDb.Name)
+    Fb = NxtFfnzAva(A.CurrentDb.Name)
 Else
     'Fb = Fb0
 End If
-Ass HasPth(Pth(FB))
-Ass Not HasFfn(FB)
-CrtFb FB
-CpyAcsTbl A, FB
-CpyAcsFrm A, FB
-CpyAcsMd A, FB
-CpyAcsRf A, FB
+Ass HasPth(Pth(Fb))
+Ass Not HasFfn(Fb)
+CrtFb Fb
+CpyAcsTbl A, Fb
+CpyAcsFrm A, Fb
+CpyAcsMd A, Fb
+CpyAcsRf A, Fb
 End Sub
 Sub CpyAcsRf(A As Access.Application, ToFb)
 
@@ -212,10 +212,10 @@ On Error Resume Next
 DbNmzAcs = A.CurrentDb.Name
 End Function
 
-Sub OpnFb(A As Access.Application, FB)
-If DbNmzAcs(A) = FB Then Exit Sub
+Sub OpnFb(A As Access.Application, Fb)
+If DbNmzAcs(A) = Fb Then Exit Sub
 ClsDbzAcs A
-A.OpenCurrentDatabase FB
+A.OpenCurrentDatabase Fb
 End Sub
 
 Function DftAcs(A As Access.Application) As Access.Application
@@ -249,7 +249,7 @@ Sub EnsTblzUSysRegInf(A As Database)
 If HasTbl(A, "USysRegInf") Then CrtTblzUSysRegInf A
 End Sub
 
-Sub InstallAddin(A As Database, FB, Optional AutoFunNm$ = "AutoExec")
+Sub InstallAddin(A As Database, Fb, Optional AutoFunNm$ = "AutoExec")
 Dim Sk$: Sk = "HKEY_CURRENT_ACCESS_PROFILE\Menu Add-Ins\&NameOfYourAdd-inHere"
 Dim Fba$: Fba = ""
 Dim FunNm$

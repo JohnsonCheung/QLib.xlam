@@ -3,8 +3,9 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_ConstMth."
 Private Const Asm$ = "QIde"
-Public Const DoczSycv$ = "It is Sy.  It comes from the MthLy"
-Public Const DoczSyc$ = "Sy-Const.  Each Module/Class may have som fun [C_{SycNm}] of type String()"
+Public Const DoczSycv$ = "It is Sy.  It comes from the MthLy or from SycFt"
+Public Const DoczSycm$ = "Sy-Const-MthLines.  It is MthLines in a any mod or cls."
+Public Const DoczSyc$ = "Sy-Const.  Each Module/Class may have som fun of type String() have cxt as Erase XX|X ..|nn=XX|Erase XX"
 Public Const DoczSycn$ = "Sy-Const-Nm.  It is same as mthn"
 Public Const DoczSycFt$ = "Sy-Const-Ft.  It comes from Sycn & Mdn"
 Private CnstnInEdt$, MdnInEdt$
@@ -17,7 +18,7 @@ X ""
 AA = XX
 End Function
 
-Function IsSycMth(MthLy$()) As Boolean
+Function IsSycm(MthLy$()) As Boolean
 Dim L$
 L = MthLy(0): If MthTy(L) <> "Function" Then Exit Function
 If Not HasSfx(L, " As String()") Then Exit Function
@@ -27,11 +28,17 @@ Dim U&: U = UB(MthLy)
 L = MthLy(U): If L <> "End Function" Then Exit Function
 L = MthLy(U - 1): If L <> "Erase XX" Then Exit Function
 End Function
+Private Function Sycm(M As CodeModule, Mthn$) As String()
+Dim O$(): O = MthLyzM(M, Mthn)
+If Si(O) = 0 Then Exit Function
+If Not IsSycm(O) Then Thw CSub, "Given mthn is not a Sycm", "Mdn Mthn MthLines", Mdn(M), Mthn, O
+Sycm = O
+End Function
 
-Private Function MthLineszSyc$(Mthn$, Ly$(), Optional IsPrv As Boolean)
+Private Function SycmzLy$(Ly$(), Mthn$, Optional IsPub As Boolean)
 Erase XX
 Const C$ = "?Function ?() As String()"
-Dim Mdy$: If IsPrv Then Mdy = "Private "
+Dim Mdy$: If Not IsPub Then Mdy = "Private "
 X FmtQQ(C, Mdy, Mthn)
 X "Erase XX"
 Dim I: For Each I In Itr(Ly)
@@ -40,12 +47,16 @@ Dim I: For Each I In Itr(Ly)
 Next
 X Mthn & " = XX"
 X "End Function"
-MthLineszSyc = JnCrLf(XX)
+SycmzLy = JnCrLf(XX)
 End Function
-Private Function SycvzMthLy(SycMthLy$()) As String()
+Function Sycv(M As CodeModule, Mthn) As String()
+Sycv = SycvzMthLy(MthLyzM(M, Mthn))
+End Function
+
+Function SycvzMthLy(MthLy$()) As String()
 'Fm SycMthLy :
-If IsSycMth(SycMthLy) Then Thw CSub, "Given MthLy is not Syc.  SycMth must 1. Return String() 2. Ctx is [Erase|X..|Mthn=XX|Erase]", "SycMthLy", SycMthLy
-Dim L$(): L = AyeLasNEle(AyeFstNEle(SycMthLy, 2), 2)
+If IsSycm(MthLy) Then Thw CSub, "Given MthLy is not Syc.  SycMth must 1. Return String() 2. Ctx is [Erase|X..|Mthn=XX|Erase]", "SycMthLy", MthLy
+Dim L$(): L = AyeLasNEle(AyeFstNEle(MthLy, 2), 2)
 Stop
 Erase XX
 Dim I: For Each I In Itr(L)
@@ -54,6 +65,7 @@ Dim I: For Each I In Itr(L)
 Next
 SycvzMthLy = XX
 End Function
+
 Function TakVbStr$(VbStr$)
 If FstChr(VbStr) <> """" Then Thw CSub, "FstChr of VbStr must be DblQuote", "VbStr", VbStr
 Dim P%: P = InStr(2, VbStr, """")
@@ -66,29 +78,8 @@ For Each I In Itr(Sy)
     PushI TakVbStrzSy, TakVbStr(CStr(I))
 Next
 End Function
-Private Function CnstBrkzConst$(C)
-Dim I, O$(), A$, B$
-For Each I In SplitCrLf(C)
-    A = BetFstLas(I, """", """")
-    B = Replace(A, """""", """")
-    PushI O, B
-Next
-CnstBrkzConst = JnCrLf(O)
-End Function
 
-Private Function ConstLinesAy(ConstPrpLines$) As String()
-Dim Ay$(), O$
-O = JnCrLf(O)
-Lp:
-    Ay = P123(O, "Const", vbCrLf & vbCrLf)
-    If Si(Ay) = 3 Then
-        PushI ConstLinesAy, Ay(1)
-        O = Ay(2)
-        GoTo Lp
-    End If
-End Function
-
-Private Sub Z_SycVal()
+Private Sub Z_Sycv()
 Const TstId& = 3
 Const CSub$ = CMod & "Z_CnstBrkMthLines"
 Dim MthLines$, Cas$, IsEdt As Boolean
@@ -111,11 +102,6 @@ Tst:
     Stop
     C
     Return
-End Sub
-
-Private Sub ZZ()
-Z_SycVal
-MIde_Gen_Const_CnstBrk:
 End Sub
 
 Function CnstBrkzMd1$(M As CodeModule, SycNm$)
@@ -176,7 +162,7 @@ End Function
 
 Function DrzStrCnst(Lin) As Variant()
 Dim L$: L = RmvMdy(Lin)
-If Not ShfConst(L) Then Exit Function
+If Not ShfCnst(L) Then Exit Function
 Dim N$: N = ShfNm(L): If N = "" Then Exit Function
 If Not ShfPfx(L, "$") Then Exit Function
 If Not ShfPfx(L, " = """) Then Exit Function
@@ -185,7 +171,7 @@ DrzStrCnst = Array(N, Left(L, P - 1))
 End Function
 Function StrValzCnstn$(Lin, Cnstn$)
 Dim L$: L = RmvMdy(Lin)
-If Not ShfConst(L) Then Exit Function
+If Not ShfCnst(L) Then Exit Function
 If ShfNm(L) <> Cnstn$ Then Exit Function
 If Not ShfPfx(L, "$") Then Exit Function
 If Not ShfPfx(L, " = """) Then Stop
@@ -271,7 +257,7 @@ If Not HasMthzM(M, Cnstn) Then
     Exit Sub
 End If
 Dim MLy$(): MLy = MthLyzM(M, Cnstn)
-If IsSycMth(MLy) Then
+If IsSycm(MLy) Then
     Debug.Print "Not a cnst mth:"
     D MLy
     Exit Sub
@@ -291,10 +277,10 @@ End Function
 Private Function CnstFtInEdt$()
 CnstFtInEdt = CnstFt(MdnInEdt, CnstnInEdt)
 End Function
-Sub ImpCnst()
+Sub ImpCnst(Optional IsPub As Boolean)
 ImpCnstzN MdnInEdt, CnstnInEdt
 End Sub
-Sub ImpCnstzN(Mdn$, Mthn$, Optional IsPrv As Boolean)
+Sub ImpCnstzN(Mdn$, Mthn$, Optional IsPub As Boolean)
 Dim Ft$: Ft = CnstFt(Mdn, Mthn)
 If Not HasFfn(Ft) Then
     Debug.Print "CnstFt  not found"
@@ -305,7 +291,7 @@ If Not HasFfn(Ft) Then
 End If
 Dim M As CodeModule: Set M = Md(Mdn)
 Dim FmFt$(): FmFt = LyzFt(Ft)
-Dim NewL$: NewL = MthLineszSyc(Mthn, FmFt, IsPrv)
+Dim NewL$: ' NewL = Sycm(Mthn, FmFt, IsPub)
 RplMth M, Mthn, NewL
 End Sub
 

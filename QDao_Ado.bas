@@ -19,8 +19,8 @@ Function TnyzCat(A As Catalog) As String()
 TnyzCat = Itn(A.Tables)
 End Function
 
-Function CatzFb(FB) As Catalog
-Set CatzFb = CatCn(CnzFb(FB))
+Function CatzFb(Fb) As Catalog
+Set CatzFb = CatCn(CnzFb(Fb))
 End Function
 
 Function CatCn(A As AdoDb.Connection) As Catalog
@@ -84,18 +84,18 @@ End Function
 Function DrsCnq(Cn As AdoDb.Connection, Q) As Drs
 DrsCnq = DrszArs(ArsCnq(Cn, Q))
 End Function
-Function DrsFbqAdo(FB, Q) As Drs
-DrsFbqAdo = DrszArs(ArszFbq(FB, Q))
+Function DrsFbqAdo(Fb, Q) As Drs
+DrsFbqAdo = DrszArs(ArszFbq(Fb, Q))
 End Function
 
 Private Sub Z_DrsFbqAdo()
-Const FB$ = SampFbzDutyDta
+Const Fb$ = SampFbzDutyDta
 Const Q$ = "Select * from Permit"
-BrwDrs DrsFbqAdo(FB, Q)
+BrwDrs DrsFbqAdo(Fb, Q)
 End Sub
 
-Function ArszFbq(FB, Q) As AdoDb.Recordset
-Set ArszFbq = CnzFb(FB).Execute(Q)
+Function ArszFbq(Fb, Q) As AdoDb.Recordset
+Set ArszFbq = CnzFb(Fb).Execute(Q)
 End Function
 
 Function DrszArs(A As AdoDb.Recordset) As Drs
@@ -146,21 +146,21 @@ Case Else: Thw CSub, "Ffn must be Fx or Fb", "Ffn T", Ffn, T
 End Select
 End Function
 
-Function HasFbt(FB, T) As Boolean
-HasFbt = HasEle(TnyzFb(FB), T)
+Function HasFbt(Fb, T) As Boolean
+HasFbt = HasEle(TnyzFb(Fb), T)
 End Function
 
 Function HasFxw(Fx, Wsn) As Boolean
 HasFxw = HasEle(Wny(Fx), W)
 End Function
 
-Function TnyzFb(FB) As String()
-TnyzFb = Tny(Db(FB))
+Function TnyzFb(Fb) As String()
+TnyzFb = Tny(Db(Fb))
 End Function
 
-Function TnyzFbByAdo(FB) As String()
+Function TnyzFbByAdo(Fb) As String()
 'TnyzAdoFb = TnyzCat(CatzFb(Fb))
-TnyzFbByAdo = AyeLikss(TnyzCat(CatzFb(FB)), "MSys* f_*_Data")
+TnyzFbByAdo = AyeLikss(TnyzCat(CatzFb(Fb)), "MSys* f_*_Data")
 End Function
 
 Function WnyzWb(A As Workbook) As String()
@@ -182,13 +182,13 @@ For Each T In Itr(Tny)
 Next
 End Function
 
-Function FnyzFbt(FB, T) As String()
-FnyzFbt = Fny(Db(FB), T)
+Function FnyzFbt(Fb, T) As String()
+FnyzFbt = Fny(Db(Fb), T)
 End Function
 
-Function FnyzFbtAdo(FB, T) As String()
+Function FnyzFbtAdo(Fb, T) As String()
 Dim C As ADOX.Catalog
-Set C = CatzFb(FB)
+Set C = CatzFb(Fb)
 FnyzFbtAdo = FnyzCatT(C, T)
 End Function
 
@@ -226,9 +226,9 @@ Else
     DftWsny = O
 End If
 End Function
-Function DftTny(Tny0, FB) As String()
+Function DftTny(Tny0, Fb) As String()
 If IsMissing(Tny0) Then
-    DftTny = TnyzFb(FB)
+    DftTny = TnyzFb(Fb)
 Else
     DftTny = CvSy(Tny0)
 End If
@@ -357,15 +357,15 @@ Function SyzArs(A As AdoDb.Recordset, Optional Col = 0) As String()
 SyzArs = IntoColzArs(EmpSy, A, Col)
 End Function
 
-Sub ArunzFbQ(FB, Q)
-CnzFb(FB).Execute Q
+Sub ArunzFbQ(Fb, Q)
+CnzFb(Fb).Execute Q
 End Sub
 
 Private Sub Z_ArunzFbQ()
-Const FB$ = SampFbzDutyPgm
+Const Fb$ = SampFbzDutyPgm
 Const Q$ = "Select * into [#a] from Permit"
-DrpFbt FB, "#a"
-ArunzFbQ FB, Q
+DrpFbt Fb, "#a"
+ArunzFbQ Fb, Q
 End Sub
 
 Function DrzAfds(A As AdoDb.Fields, Optional N%) As Variant()

@@ -20,17 +20,17 @@ Function LofVblzLo$(A As ListObject)
 LofVblzLo = LofVblzQt(LoQt(A))
 End Function
 
-Property Get LofVblzFbt$(FB, T)
-LofVblzFbt = LofVblzT(Db(FB), T)
+Property Get LofVblzFbt$(Fb, T)
+LofVblzFbt = LofVblzT(Db(Fb), T)
 End Property
 
-Property Let LofVblzFbt(FB, T, LofVblzVbl$)
-LofVblzT(Db(FB), T) = LofVblzVbl
+Property Let LofVblzFbt(Fb, T, LofVblzVbl$)
+LofVblzT(Db(Fb), T) = LofVblzVbl
 End Property
 
 Function LofVblzFbtStr$(FbtStr$)
-Dim FB$, T$
-AsgFbtStr FbtStr, FB, T
-LofVblzFbtStr = LofVblzFbt(FB, T)
+Dim Fb$, T$
+AsgFbtStr FbtStr, Fb, T
+LofVblzFbtStr = LofVblzFbt(Fb, T)
 End Function
 

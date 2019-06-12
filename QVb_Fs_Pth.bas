@@ -72,3 +72,12 @@ Const CSub$ = CMod & "ThwNotFdr"
 Const C$ = "\/:<>"
 If HasChrList(Fdr, C) Then Thw CSub, "Fdr cannot has these char " & C, "Fdr Char", Fdr, C
 End Sub
+
+Function PthRmvFdr$(Pth)
+PthRmvFdr = BefRev(RmvPthSfx(Pth), PthSep) & PthSep
+End Function
+
+Function FfnUp$(Ffn)
+FfnUp = PthRmvFdr(Pth(Ffn))
+End Function
+

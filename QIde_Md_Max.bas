@@ -4,7 +4,6 @@ Option Explicit
 Private Const CMod$ = "MIde_Md_Max."
 Private Const Asm$ = "QIde"
 
-
 Function MaxLinCntMdn()
 MaxLinCntMdn = MaxLinCntMdnzP(CPj)
 End Function

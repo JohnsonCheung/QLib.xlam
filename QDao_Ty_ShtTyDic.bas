@@ -12,10 +12,10 @@ Case Else: Thw CSub, "FxOrFb should be Fx or Fb", "FxOrFb TblNm", FxOrFb, TblNm
 End Select
 End Function
 
-Private Function ShtTyDiczFbt(FB, T) As Dictionary
+Private Function ShtTyDiczFbt(Fb, T) As Dictionary
 Dim F As Dao.Field
 Set ShtTyDiczFbt = New Dictionary
-For Each F In Db(FB).TableDefs(T).Fields
+For Each F In Db(Fb).TableDefs(T).Fields
     ShtTyDiczFbt.Add F.Name, ShtTyzDao(F.Type)
 Next
 End Function

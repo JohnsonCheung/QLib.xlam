@@ -103,7 +103,12 @@ For Each Dr In Itr(B.Dry)
     M.ReplaceLine L, NewL
 Next
 End Sub
-
+Sub InsLinzDcl(M As CodeModule, Ly$())
+Dim Lno&: Lno = LnozFstDcl(M)
+Dim L: For Each L In Itr(Ly)
+    M.InsertLines Lno, L
+Next
+End Sub
 Sub RplLin(M As CodeModule, L_NewL_OldL As Drs)
 Dim B As Drs: B = L_NewL_OldL
 If JnSpc(B.Fny) <> "L NewL OldL" Then Stop: Exit Sub

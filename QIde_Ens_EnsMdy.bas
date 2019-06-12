@@ -1,4 +1,4 @@
-Attribute VB_Name = "QIde_Ens_MthMdy"
+Attribute VB_Name = "QIde_Ens_EnsMdy"
 Option Compare Text
 Option Explicit
 Private Const Asm$ = "QIde"

@@ -41,50 +41,41 @@ Dim M As CodeModule: Set M = Md("QDao_Lnk_ErzLnk")
 Dim L&: L = MthLnozMM(M, "ErzLnk")
 AlignMthDimzML M, L
 End Sub
-Sub ZZ_IsAsgStmt()
-Dim Dry(), L
+
+Function IsSngDimColon(L) As Boolean
+'Ret true if L is Single-Dim-Colon: one V aft Dim and Colon aft DclSfx
+Dim Lin$: Lin = L
+If Not ShfDim(Lin) Then Exit Function
+If ShfNm(Lin) = "" Then Exit Function
+ShfBkt Lin
+ShfDclSfx Lin
+IsSngDimColon = FstChr(Lin) = ":"
+End Function
+
+Sub ZZ_IsSngDimColon()
+Dim L
+'GoSub T0
+GoSub ZZ
+Exit Sub
+T0:
+    L = "Dim A As Access.Application: Set A = DftAcs(Acs)"
+    Ept = True
+    GoTo Tst
+Tst:
+    Act = IsSngDimColon(L)
+    If Act <> Ept Then Stop
+    Return
+ZZ:
+    Dim A As New Aset
     For Each L In SrczP(CPj)
-        PushI Dry, Array(IIf(IsAsgStmt(L), "*", ""), L)
-    Next
-BrwDrs DrszFF("IsAsgStmt Lin", Dry)
-End Sub
-Function IsAsgStmt(Lin) As Boolean
-Dim L$: L = Lin
-Dim Nm$: Nm = ShfNm(L)
-If Nm = "" Then Exit Function
-IsAsgStmt = HasPfx(L, " = ")
-End Function
-Function IsAlignableDim(Lin) As Boolean
-If T1(Lin) <> "Dim" Then Exit Function
-Dim CommaP%, ColonP%, EqP%, A$, B$, C$
-CommaP = InStr(Lin, ",")
-ColonP = InStr(Lin, ":")
-EqP = InStr(Lin, "=")
-Select Case True
-Case ColonP > 0 And CommaP > 0 And ColonP > CommaP
-Case ColonP = 0 And CommaP > 0
-Case ColonP > 0 And EqP > 0 And EqP > ColonP
-    A = Bet(Lin, ":", "=")
-    B = LTrim(RmvPfx(RmvPfx(A, "'"), "Set"))
-    C = Dimn(Lin)
-    If C = B Then
-        IsAlignableDim = True
-    End If
-Case Else: IsAlignableDim = True
-End Select
-End Function
-Sub AlignMthDimXX()
-Dim A As New Aset, L
-For Each L In SrczP(CPj)
-    If T1(L) = "Dim" Then
-        If IsAlignableDim(L) Then
-            A.PushItm "1 " & LTrim(L)
-        Else
-            A.PushItm "0 " & LTrim(L)
+        L = Trim(L)
+        If T1(L) = "Dim" Then
+            Dim S$: S = IIf(IsSngDimColon(L), "1", "0")
+            A.PushItm S & " " & L
         End If
-    End If
-Next
-A.Srt.Vc
+    Next
+    A.Srt.Vc
+    Return
 End Sub
 
 Sub AlignMthDimzML(Md As CodeModule, MthLno&, Optional SkpChkSelf As Boolean, Optional Rpt As EmRpt)
@@ -106,7 +97,7 @@ Dim DeLNewO As Drs: DeLNewO = F.DeLNewO(De)                    ' L NewL OldL
 Dim OUpdDe:                   If IsUpd Then RplLin Md, DeLNewO
 
 '== Align Mth Cxt ======================================================================================================
-Dim McCln As Drs: McCln = F.McCln(Mc) ' L MthLin # Mc-Cln. ! must Dim | Asg | Rmk(but not 'If 'Insp, '==). Cln to Align
+Dim McCln As Drs: McCln = F.McCln(Mc) ' L MthLin # Mc-Cln. ! must SngDimColon | Rmk(but not If Stop Insp == Brw). Cln to Align @@
 If NoReczDrs(McCln) Then Exit Sub
 
 Dim McGp   As Drs:   McGp = F.McGp(McCln)    ' Gpno MthLin            ! with L in seq will be one gp
@@ -132,7 +123,7 @@ Dim McAlign As Drs: McAlign = F.McAlign(McFill) ' L Align               ! Bld th
                          D1 = DrseCeqC(McAlign, "MthLin Align")
                          D2 = SelDrs(D1, "L Align MthLin")
 Dim McLNewO As Drs: McLNewO = LNewO(D2.Dry)
-Dim OAlignCm:                 If IsUpd Then RplLin Md, McLNewO
+Dim OAlignCm: If IsUpd Then RplLin Md, McLNewO
 
 '== Gen Bs (Brw-Stmt) ==================================================================================================
 Dim Bs      As Drs:              Bs = F.Bs(McCln)                               ' L BsLin ! FstTwoChr = '@
@@ -143,20 +134,22 @@ Dim Mdn$:                       Mdn = MdnzM(Md)
 Dim BsLNewO As Drs:         BsLNewO = F.BsLNewO(Bs, VSfx, Mdn, MlNm)
 Dim OUpdBs:                           If IsUpd Then RplLin Md, BsLNewO
 
-'== Ens Static-F-Dcl (Sf) ==============================================================================================
                        D1 = DrswColPfx(Mc, "MthLin", "Static F")
 Dim NoSf As Boolean: NoSf = NoReczDrs(D1)
-                      Dr1 = D1.Dry(0)
-Dim SfLno&:                         If Not NoSf Then SfLno = Dr1(0)
-Dim SfLin$:                         If Not NoSf Then SfLin = Dr1(1)
-Dim CclsNm$:         CclsNm = IIf(NoSf, "", Mdn & "__" & MlNm)
-Dim SfLNewO As Drs: SfLNewO = F.SfLNewO(NoSf, SfLno, SfLin, CclsNm) ' Only one or no line
-Dim OEnsSf:                   If IsUpd Then RplLin Md, SfLNewO
-
+If Not NoSf Then
+'== Ens Static-F-Dcl (Sf) ==============================================================================================
+                            Dr1 = D1.Dry(0)
+    Dim SfLno&:           SfLno = Dr1(0)
+    Dim SfLin$:           SfLin = Dr1(1)
+    Dim CclsNm$:         CclsNm = IIf(NoSf, "", Mdn & "__" & MlNm)
+    Dim SfLNewO As Drs: SfLNewO = F.SfLNewO(NoSf, SfLno, SfLin, CclsNm) ' Only one or no line
+    Dim OEnsSf:                   If IsUpd Then RplLin Md, SfLNewO
+    
 '== Ens Chd-Cls (Ccls)==================================================================================================
-Dim HasCcls As Boolean: HasCcls = HasCmpzP(PjzM(Md), CclsNm)
-Dim OEnsCcls:                     If IsUpd Then F.OEnsCcls NoSf, HasCcls, Md, CclsNm
-Dim Ccls As CodeModule:           If Not NoSf Then Set Ccls = PjzM(Md).VBComponents(CclsNm).CodeModule
+    Dim HasCcls As Boolean:     HasCcls = HasCmpzP(PjzM(Md), CclsNm)
+    Dim OEnsCcls:                         If IsUpd Then F.OEnsCcls NoSf, HasCcls, Md, CclsNm
+    Dim Ccls    As CodeModule: Set Ccls = PjzM(Md).VBComponents(CclsNm).CodeModule
+End If
 
 '== Crt Chd-Mth (Cm)====================================================================================================
 Dim McLy$():          McLy = StrColzDrs(Mc, "MthLin")
@@ -183,7 +176,7 @@ Dim OCrtCm:             If IsUpd Then ApdLines CmMd, CmStr
 Dim CmlCallgPfx$:   CmlCallgPfx = IIf(NoSf, CmPfx, "F.")
 Dim CmlFmMc As Drs:     CmlFmMc = ColEqSel(McR123, "IsRmk", False, "V Sfx Expr")
 
-Dim MlVSfx  As Drs:  MlVSfx = F.MlVSfx(Ml)             ' Ret V Sfx ! the MthLin's pm V Sfx
+Dim MlVSfx As Drs: MlVSfx = F.MlVSfx(Ml) ' Ret V Sfx ! the MthLin's pm V Sfx
                          D1 = SelDrs(CmlFmMc, "V Sfx")
 Dim CmlVSfx As Drs: CmlVSfx = AddDrs(MlVSfx, D1)
 
@@ -191,17 +184,17 @@ Dim CmlCallg As Drs: CmlCallg = F.CmlCallg(CmlFmMc, CmlCallgPfx) ' V Sfx Expr   
                                                                  ' Mthn CallgPm ! calling1 is Expr = CmPfx & V              No Pm yet
                                                                  '              ! calling2 is HasSfx(Expr, CmPfx & V & "("  with Pm
 
-Dim CmlDclPm  As Drs:  CmlDclPm = F.CmlDclPm(CmlCallg, CmlVSfx)                    ' V Sfx Expr Mthn CallPm DclPm
-Dim CmlMthRet As Drs: CmlMthRet = F.CmlMthRet(CmlDclPm)                            ' V Sfx Expr Mthn CallPm DclPm TyChr RetAs
-Dim CmlEpt    As Drs:    CmlEpt = F.CmlEpt(CmlMthRet, CmMdy)                       ' V Mthn EptL
-Dim CmlAct    As Drs:    CmlAct = DMth(CmMd)                                       ' L Mdy Ty Mthn MthLin
+Dim CmlDclPm  As Drs:  CmlDclPm = F.CmlDclPm(CmlCallg, CmlVSfx) ' V Sfx Expr Mthn CallPm DclPm
+Dim CmlMthRet As Drs: CmlMthRet = F.CmlMthRet(CmlDclPm)         ' V Sfx Expr Mthn CallPm DclPm TyChr RetAs
+Dim CmlEpt    As Drs:    CmlEpt = F.CmlEpt(CmlMthRet, CmMdy)    ' V Mthn EptL
+Dim CmlAct    As Drs:    CmlAct = DMth(CmMd)                    ' L Mdy Ty Mthn MthLin
                              D1 = SelDrszAs(CmlAct, "L MthLin:ActL MthLin:V")      ' L ActL V
-Dim CmlActV   As Drs:   CmlActV = F.CmlActV(D1, CmPfx)                             ' L ActL V ' RmvPfx CmlPfx from V
-Dim CmlJn     As Drs:     CmlJn = LJnDrs(CmlEpt, CmlActV, "V", "L ActL", "HasAct") ' V EptL L ActL HasAct
+Dim CmlActV As Drs: CmlActV = F.CmlActV(D1, CmPfx)                             ' L ActL V ' RmvPfx CmlPfx from V
+Dim CmlJn   As Drs:   CmlJn = LJnDrs(CmlEpt, CmlActV, "V", "L ActL", "HasAct") ' V EptL L ActL HasAct
                              D1 = ColEq(CmlJn, "HasAct", True)                     ' V EptL L ActL HasAct
                              D2 = DrseCeqC(D1, "EptL ActL")
-Dim CmlLNewO  As Drs:  CmlLNewO = SelDrszAs(D2, "L EptL:NewL ActL:OldL")
-Dim OUpdCml:                      If IsUpd Then RplLin CmMd, CmlLNewO
+Dim CmlLNewO As Drs: CmlLNewO = SelDrszAs(D2, "L EptL:NewL ActL:OldL")
+Dim OUpdCml:                    If IsUpd Then RplLin CmMd, CmlLNewO
 
 '== Rpl Mth-Brw (Mb)====================================================================================================
 '   Des: Mth-Brw is a remarked Insp-stmt in each las lin of cm.  It insp all the inp oup

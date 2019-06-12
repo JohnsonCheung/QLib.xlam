@@ -37,8 +37,11 @@ End If
 End Sub
 
 Function TstPth$(TstId&)
+If IsNBet(TstId, 0, 9999) Then Thw CSub, "TstId should be 0 to 9999", "TstId", TstId
+
 TstPth = AddFdrEns(TstHom, Pad0(TstId, 4))
 End Function
+
 Private Function TstIdFt$(TstId&)
 TstIdFt = TstPth(TstId) & "TstId.Txt"
 End Function
@@ -95,13 +98,14 @@ Case Else
     WrtStr TstIdStr(TstId, Fun), F
 End Select
 End Sub
+
 Function TstTxt$(TstId&, Fun$, Cas$, Itm$, Optional IsEdt As Boolean)
-EnsTstPth TstId, Fun
-Dim F$: F = TstFt(TstId, Cas, Itm)
+Dim F$:                   F = TstFt(TstId, Cas, Itm)
 Dim Exist As Boolean: Exist = HasFfn(F)
+                              EnsTstPth TstId, Fun
 Select Case True
-Case Not Exist: EnsFfn F: BrwFt F: Stop
-Case IsEdt:     BrwFt F:         Stop
+Case Not Exist: EnsFt F: BrwFt F: Stop
+Case IsEdt:     BrwFt F:           Stop
 End Select
 TstTxt = LineszFt(F)
 End Function

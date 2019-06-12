@@ -3,61 +3,44 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Cnt_Cmp."
 Private Const Asm$ = "QIde"
-Type CntgCmp
-    NMod As Integer
-    NCls As Integer
-    NDoc As Integer
-    NOth As Integer
-    Locked As Boolean
-End Type
+
 Enum EmHdr
     EiNoHdr
     EiWiHdr
 End Enum
 
-Function CntgCmp(NMod%, NCls%, NDoc%, NOth%) As CntgCmp
-With CntgCmp
-    .NMod = NMod
-    .NCls = NCls
-    .NDoc = NDoc
-    .NOth = NOth
-End With
-End Function
-
 Sub CntCmpP()
-CntCmpzP CPj
+BrwDrs DCmpCntP
 End Sub
-Function Fny_CntgCmp() As String()
-
+Function DCmpCntP() As Drs
+DCmpCntP = DCmpCntzP(CPj)
+End Function
+Function DCmpCntzP(P As VBProject) As Drs
+DCmpCntzP = DrszFF("Pj Tot Mod Cls Doc Frm Oth", Av(DrCmpCntzP(P)))
+End Function
+Function DrCmpCntzP(P As VBProject) As Variant()
+Dim NCls%, NDoc%, NFrm%, NMod%, NOth%, NTot%
+Dim C As VBComponent
+For Each C In P.VBComponents
+    Select Case C.Type
+    Case vbext_ct_ClassModule:  NCls = NCls + 1
+    Case vbext_ct_Document:     NDoc = NDoc + 1
+    Case vbext_ct_MSForm:       NFrm = NFrm + 1
+    Case vbext_ct_StdModule:    NMod = NMod + 1
+    Case Else:                  NOth = NOth + 1
+    End Select
+    NTot = NTot + 1
+Next
+DrCmpCntzP = Array(P.Name, NTot, NMod, NCls, NDoc, NFrm, NOth)
 End Function
 
-Function Dry_CntgCmp(P As VBProject) As Variant()
 
-End Function
-
-Function DCntgCmpzP(P As VBProject) As Drs
-DCntgCmpzP = Drs(Fny_CntgCmp, Dry_CntgCmp(P))
-End Function
-
-Sub CntCmpzP(A As VBProject)
-DmpRec DCntgCmpzP(A)
+Sub CntCmpzP(P As VBProject)
+Brw FmtDrsR(DCmpCntzP(P))
 End Sub
 
-Function NCmp%(A As CntgCmp)
-With A
-NCmp = .NMod + .NCls + .NDoc + .NOth
-End With
-End Function
-
-Function CntgCmpLin$(A As CntgCmp, Optional Hdr As EmHdr = EiWiHdr)
-Dim Pfx$
-If Hdr = EiWiHdr Then Pfx = "Cmp Mod Cls Doc Oth" & vbCrLf
-With A
-CntgCmpLin = Pfx & NCmp(A) & " " & .NMod & " " & .NCls & " " & .NDoc & " " & .NOth
-End With
-End Function
-Function CMP(Cmpn) As VBComponent
-Set CMP = CPj.VBComponents(Cmpn)
+Function Cmp(Cmpn) As VBComponent
+Set Cmp = CPj.VBComponents(Cmpn)
 End Function
 
 Function NCls%()
@@ -73,15 +56,6 @@ NModPj = NModzP(CPj)
 End Function
 '===============================================
 
-Function CntgCmpzP(P As VBProject) As CntgCmp
-If P.Protection = vbext_pp_locked Then CntgCmpzP.Locked = True: Exit Function
-CntgCmpzP = CntgCmp(NModzP(P), NClszP(P), NDoczP(P), NOthCmpzP(P))
-End Function
-'----------------------------------------------
-Function CntgCmpP() As CntgCmp
-CntgCmpP = CntgCmpzP(CPj)
-End Function
-'==============================================
 Function NCmpzP%(P As VBProject)
 If P.Protection = vbext_pp_locked Then Exit Function
 NCmpzP = P.VBComponents.Count

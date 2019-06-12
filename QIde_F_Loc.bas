@@ -1,8 +1,12 @@
-Attribute VB_Name = "QIde_Loc_Jmp"
+Attribute VB_Name = "QIde_F_Loc"
 Option Compare Text
 Option Explicit
-Private Const CMod$ = "MIde_Loc_Jmp."
+Private Const CMod$ = "MIde_Loc."
 Private Const Asm$ = "QIde"
+
+Function DMthPos(Mthn) As Drs
+Dim A As Drs: A = ColEq(DMthP, "Mthn", Mthn)
+End Function
 
 Sub JmpzML(M As CodeModule, Lno)
 JmpzM M
@@ -135,5 +139,6 @@ End Sub
 Sub JmpzM(M As CodeModule)
 M.CodePane.Show
 End Sub
+
 
 

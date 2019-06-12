@@ -6,7 +6,7 @@ Private Const Asm$ = "QIde"
 
 Sub RenTo(FmCmpn, ToNm)
 If HasCmpzP(CPj, ToNm) Then Inf CSub, "CmpToNm exist", "ToNm", ToNm: Exit Sub
-CMP(FmCmpn).Name = ToNm
+Cmp(FmCmpn).Name = ToNm
 End Sub
 Sub Ren(NewCmpn)
 CCmp.Name = NewCmpn

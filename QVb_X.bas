@@ -17,6 +17,9 @@ End Sub
 Sub XBox(S$)
 PushI A, Box(S)
 End Sub
+Sub XEnd()
+PushI A, "End"
+End Sub
 Sub XDrs(Drs As Drs)
 PushIAy A, FmtDrs(Drs)
 End Sub

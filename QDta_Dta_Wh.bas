@@ -114,6 +114,9 @@ End Function
 Function TopN(A As Drs, Optional N = 50) As Drs
 TopN = Drs(A.Fny, CvAv(AywFstNEle(A.Dry, N)))
 End Function
+Function ColPfx(A As Drs, C$, Pfx$) As Drs
+ColPfx = DrswColPfx(A, C, Pfx)
+End Function
 Function ColPatn(A As Drs, C$, Patn$) As Drs
 Dim I%: I = IxzAy(A.Fny, C)
 Dim Re As RegExp: Set Re = RegExp(Patn)
