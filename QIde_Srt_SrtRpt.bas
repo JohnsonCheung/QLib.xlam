@@ -20,7 +20,7 @@ SrtRptM = SrtRptzM(CMd)
 End Property
 
 Function SrtSrc(Src$()) As String()
-SrtSrc = SplitCrLf(JnStrDic(SrtDic(MthDic(Src)), vbCrLf & vbCrLf))
+SrtSrc = SplitCrLf(JnStrDic(SrtDic(MthDic(Src)), vb2CrLf))
 End Function
 Function SrtRptzP(P As VBProject) As String()
 Dim O$(), C As VBComponent

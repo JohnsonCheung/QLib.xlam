@@ -76,7 +76,7 @@ End Function
 Function MthIxy(Src$()) As Long()
 Dim Ix
 For Ix = 0 To UB(Src)
-    If IsMthLin(Src(Ix)) Then
+    If IsLinzMth(Src(Ix)) Then
         PushI MthIxy, Ix
     End If
 Next
@@ -131,7 +131,7 @@ Function FstMthIx&(Src$())
 Dim O&
 Dim L
 For Each L In Itr(Src)
-    If IsMthLin(L) Then FstMthIx = O: Exit Function
+    If IsLinzMth(L) Then FstMthIx = O: Exit Function
 Next
 FstMthIx = -1
 End Function
@@ -162,7 +162,7 @@ End Function
 Function FstMthLnozM&(Md As CodeModule)
 Dim J&
 For J = 1 To Md.CountOfLines
-   If IsMthLin(Md.Lines(J, 1)) Then
+   If IsLinzMth(Md.Lines(J, 1)) Then
        FstMthLnozM = J
        Exit Function
    End If
@@ -172,7 +172,7 @@ End Function
 Function FstMthIxzS&(Src$())
 Dim J&
 For J = 0 To UB(Src)
-   If IsMthLin(Src(J)) Then
+   If IsLinzMth(Src(J)) Then
        FstMthIxzS = J
        Exit Function
    End If

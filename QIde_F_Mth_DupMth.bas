@@ -12,15 +12,13 @@ Function DDupMthP() As Drs
 DDupMthP = DDupMthzP(CPj)
 End Function
 
-
 Private Function DDupMthzP(P As VBProject) As Drs
-Stop
-Dim B As Drs: B = DMthnzP(P)
-Dim C As Drs: C = DrswDup(B, "Mthn")
-Dim D As Drs: D = DrseDup(C, "Mthn Md") '<==
-Dim E As Drs: E = AddColzMthLines(D)
-Dim F As Drs: F = AddColzValIdzCntzDrs(E, "MthLines")
-DDupMthzP = SrtDrs(F)
+Dim A As Drs: A = DMthzP(P)
+Dim B As Drs: B = DrswDup(A, "Mthn")
+Dim C As Drs: C = DrseDup(B, "Mthn Mdn") '<==
+Dim D As Drs: D = AddColzMthLines(C)
+Dim E As Drs: E = AddColzValIdzCntzDrs(D, "MthLines")
+DDupMthzP = SrtDrs(E)
 End Function
 
 

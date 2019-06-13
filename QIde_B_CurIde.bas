@@ -32,7 +32,7 @@ End Property
 Function MthLno(Md As CodeModule, Lno&)
 Dim O&
 For O = Lno To 1 Step -1
-    If IsMthLin(Md.Lines(O, 1)) Then MthLno = O: Exit Function
+    If IsLinzMth(Md.Lines(O, 1)) Then MthLno = O: Exit Function
 Next
 End Function
 Function NMthLin%(M As CodeModule, MthLno&)

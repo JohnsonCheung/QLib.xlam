@@ -3,7 +3,14 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Lin_Vbl."
 Private Const Asm$ = "QVb"
-
+Function DrszTRst(FF$, TRstLy$()) As Drs
+DrszTRst = DrszFF(FF, DryzTRst(TRstLy))
+End Function
+Function DryzTRst(TRstLy$()) As Variant()
+Dim L: For Each L In Itr(TRstLy)
+    PushI DryzTRst, SyzTRst(L)
+Next
+End Function
 Function DryzTLiny(TLiny$()) As Variant()
 Dim I
 For Each I In Itr(TLiny)
@@ -17,29 +24,40 @@ For Each I In Itr(A)
     PushI DryzVblLy, AyTrim(SplitVBar(I))
 Next
 End Function
+Function DryzSSVbl(SSVbl$) As Variant()
+Dim SS: For Each SS In Itr(SplitVBar(SSVbl))
+    PushI DryzSSVbl, SyzSS(SS)
+Next
+End Function
 
 Private Sub Z_DryzVblLy()
 Dim VblLy$()
-Push VblLy, "1 | 2 | 3"
-Push VblLy, "4 | 5 6 |"
-Push VblLy, "| 7 | 8 | 9 | 10 | 11 |"
-Push VblLy, "12"
-Ept = Array(SyzSS("1 2 3"), Sy("4", "5 6", ""), Sy("", "7", "8", "9", "10", "11", ""), Sy("12"))
-GoSub Tst
+GoSub T1
 Exit Sub
+T0:
+    Erase XX
+    X "1 | 2 | 3"
+    X "4 | 5 6 |"
+    X "| 7 | 8 | 9 | 10 | 11 |"
+    X "12"
+    VblLy = XX
+    Ept = Array(SyzSS("1 2 3"), Sy("4", "5 6", ""), Sy("", "7", "8", "9", "10", "11", ""), Sy("12"))
+    GoTo Tst
+Exit Sub
+T1:
+    Erase XX
+    X "|lskdf|sdlf|lsdkf"
+    X "|lsdf|"
+    X "|lskdfj|sdlfk|sdlkfj|sdklf|skldf|"
+    X "|sdf"
+    VblLy = XX
+    Ept = ""
+    GoTo Tst
 Tst:
     Act = DryzVblLy(VblLy)
-'    Ass IsEqDry(CvAy(Act), CvAy(Ept))
+    DmpDry CvAv(Act)
+'    C
     Return
-End Sub
-
-Private Sub ZZ_DryzVblLy()
-Dim VblLy$()
-Push VblLy, "|lskdf|sdlf|lsdkf"
-Push VblLy, "|lsdf|"
-Push VblLy, "|lskdfj|sdlfk|sdlkfj|sdklf|skldf|"
-Push VblLy, "|sdf"
-DmpDry DryzVblLy(VblLy)
 End Sub
 
 Private Sub ZZ()

@@ -35,14 +35,16 @@ End Sub
 Function TmpFbAy() As String()
 TmpFbAy = Ffny(TmpPthzDb, "*.accdb")
 End Function
+
 Sub BrwDbzLasTmp()
 BrwDb LasTmpDb
 End Sub
+
 Sub BrwDb(A As Database)
 BrwFb A.Name
 End Sub
 
-Function StruzTny(A As Database, Tny$())
+Function StruzTny(A As Database, Tny$()) As String()
 Dim I
 For Each I In Itr(QSrt(Tny))
     PushI StruzTny, StruzT(A, CStr(I))
@@ -54,7 +56,7 @@ StruzTT = StruzTny(A, Ny(TT))
 End Function
 
 Function Stru(A As Database) As String()
-Stru = StruzTny(A, Tny(A))
+Stru = AlignzTRst(StruzTny(A, Tny(A)))
 End Function
 
 Function OupTny(A As Database) As String()
@@ -230,7 +232,7 @@ Function TnyzMSysObj(A As Database) As String()
 TnyzMSysObj = SyzQ(A, "Select Name from MSysObjects where Type in (1,6) and Name not Like 'MSys*' and Name not Like 'f_*_Data'")
 End Function
 
-Private Sub ZZ_Qny()
+Private Sub Z_Qny()
 'DmpAy Qny(Db(SampFbzDutyDta))
 End Sub
 
@@ -381,7 +383,7 @@ Function JnStrDiczTwoColSql(TwoColSql) As Dictionary _
 'Set JnStrDiczTwoColSql = JnStrDicTwoFldRs(RszSql(TwoColSql))
 End Function
 
-Private Sub ZZ_BrwTbl()
+Private Sub Z_BrwT()
 Dim D As Database
 Stop
 DrpTT D, "#A #B"

@@ -234,34 +234,34 @@ ReDim Preserve O(U)
 Resi = O
 End Function
 
-Function Reverse(Ay) 'Return reversed Ay
+Function RevAy(Ay) 'Return reversed Ay
 Dim O: O = Ay
 Dim J&, U&
 U = UB(O)
 For J = 0 To U
     Asg Ay(U - J), O(J)
 Next
-Reverse = O
+RevAy = O
 End Function
 
-Function ReverseAyI(Ay)
+Function RevAyAyI(Ay)
 Dim O: O = Ay
 Dim J&, U&
 U = UB(O)
 For J = 0 To U
     O(J) = Ay(U - J)
 Next
-ReverseAyI = O
+RevAyAyI = O
 End Function
 
-Function ReverseOy(Oy() As Object)
+Function RevAyOy(Oy() As Object)
 Dim O: O = Oy
 Dim J&, U&
 U = UB(O)
 For J = 0 To U
     Set O(J) = Oy(U - J)
 Next
-ReverseOy = O
+RevAyOy = O
 End Function
 
 Function RplAyzMid(Ay, B As Fei, ByAy)
@@ -299,11 +299,11 @@ For Each X In Itr(Ay)
 Next
 Set SeqCntDic = O
 End Function
-Function StrColzSqc(Sq(), Optional C = 1) As String()
+Function StrColzSq(Sq(), Optional C = 1) As String()
 If Si(Sq) = 0 Then Exit Function
 Dim R&
 For R = 1 To UBound(Sq, 1)
-    PushI StrColzSqc, Sq(R, C)
+    PushI StrColzSq, Sq(R, C)
 Next
 End Function
 Function SqhzAp(ParamArray Ap()) As Variant()
@@ -467,7 +467,7 @@ Function ItmAddAy(Itm, Ay)
 ItmAddAy = AyInsEle(Ay, Itm)
 End Function
 
-Private Sub ZZ_AyabczAyFE()
+Private Sub Z_AyabczAyFE()
 Dim Ay(): Ay = Array(1, 2, 3, 4)
 Dim Act As Ayabc: Act = AyabczAyFE(Ay, 1, 2)
 Ass IsEqAy(Act.A, Array(1))
@@ -475,25 +475,25 @@ Ass IsEqAy(Act.B, Array(2, 3))
 Ass IsEqAy(Act.C, Array(4))
 End Sub
 
-Private Sub ZZ_AyAsgAp()
+Private Sub Z_AyAsgAp()
 Dim O%, Ay$
 'AyAsgAp Array(234, "abc"), O, Ay
 Ass O = 234
 Ass Ay = "abc"
 End Sub
 
-Private Sub ZZ_ChkEqAy()
+Private Sub Z_ChkEqAy()
 DmpAy ChkEqAy(Array(1, 2, 3, 3, 4), Array(1, 2, 3, 4, 4))
 End Sub
 
-Private Sub ZZ_MaxEle()
+Private Sub Z_MaxEle()
 Dim Ay()
 Dim Act
 Act = MaxEle(Ay)
 Stop
 End Sub
 
-Private Sub ZZ_MinusAy()
+Private Sub Z_MinusAy()
 Dim Act(), Exp()
 Dim Ay1(), Ay2()
 Ay1 = Array(1, 2, 2, 2, 4, 5)
@@ -507,14 +507,14 @@ Exp = Array(1, 2, 4)
 ThwIf_NE Exp, Act
 End Sub
 
-Private Sub ZZ_AyeEmpEleAtEnd()
+Private Sub Z_AyeEmpEleAtEnd()
 Dim Ay: Ay = Array(Empty, Empty, Empty, 1, Empty, Empty)
 Dim Act: Act = AyeEmpEleAtEnd(Ay)
 Ass Si(Act) = 4
 Ass Act(3) = 1
 End Sub
 
-Private Sub ZZ_SyzAy()
+Private Sub Z_SyzAy()
 Dim Act$(): Act = SyzAy(Array(1, 2, 3))
 Ass Si(Act) = 3
 Ass Act(0) = 1
@@ -522,7 +522,7 @@ Ass Act(1) = 2
 Ass Act(2) = 3
 End Sub
 
-Private Sub ZZ_AyTrim()
+Private Sub Z_AyTrim()
 DmpAy AyTrim(Sy(1, 2, 3, "  a"))
 End Sub
 
@@ -539,7 +539,7 @@ Tst:
     Return
 End Sub
 
-Private Sub Z_ChkEqAy()
+Private Sub Z_ChkEqAy5()
 DmpAy ChkEqAy(Array(1, 2, 3, 3, 4), Array(1, 2, 3, 4, 4))
 End Sub
 
@@ -583,7 +583,7 @@ Act = AyInsAyAt(Ay, B, At)
 Ass IsEqAy(Act, Exp)
 End Sub
 
-Private Sub Z_MinusAy()
+Private Sub Z_MinusAy6()
 Dim Act(), Exp()
 Dim Ay1(), Ay2()
 Ay1 = Array(1, 2, 2, 2, 4, 5)
@@ -597,7 +597,7 @@ Exp = Array(1, 2, 4)
 ThwIf_AyabNE Exp, Act
 End Sub
 
-Private Sub Z_SyzAy()
+Private Sub Z_SyzAy2()
 Dim Act$(): Act = SyzAy(Array(1, 2, 3))
 Ass Si(Act) = 3
 Ass Act(0) = 1
@@ -605,7 +605,7 @@ Ass Act(1) = 2
 Ass Act(2) = 3
 End Sub
 
-Private Sub Z_AyTrim()
+Private Sub Z_AyTrim2()
 DmpAy AyTrim(Sy(1, 2, 3, "  a"))
 End Sub
 

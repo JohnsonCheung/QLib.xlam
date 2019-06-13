@@ -105,8 +105,8 @@ If HasFxw(Fx, Wsn) Then
 End If
 End Sub
 
-Function LozAyH(Ay, WB As Workbook, Optional Wsn$, Optional Lon$) As ListObject
-Set LozAyH = LozRg(RgzSq(Sqh(Ay), A1zWb(WB, Wsn)), Lon)
+Function LozAyH(Ay, Wb As Workbook, Optional Wsn$, Optional Lon$) As ListObject
+Set LozAyH = LozRg(RgzSq(Sqh(Ay), A1zWb(Wb, Wsn)), Lon)
 End Function
 
 Private Sub Z_SetWsCdNm()
@@ -263,9 +263,9 @@ For Each I In Tny
 Next
 End Sub
 
-Function WszDt(WB As Workbook, Dt As Dt) As Worksheet
+Function WszDt(Wb As Workbook, Dt As Dt) As Worksheet
 Dim O As Worksheet
-Set O = AddWs(WB, Dt.DtNm)
+Set O = AddWs(Wb, Dt.DtNm)
 LozDrs DrszDt(Dt), A1zWs(O)
 Set WszDt = O
 End Function
@@ -360,11 +360,11 @@ For Each Ws In A.Worksheets
 Next
 End Function
 
-Private Sub ZZ_WbWcsy()
+Private Sub Z_WbWcsy()
 'D WcStrAyWbOLE(WbzFx(TpFx))
 End Sub
 
-Private Sub ZZ_LozAyH()
+Private Sub Z_LozAyH()
 'D NyOy(LozAyH(TpWb))
 End Sub
 
@@ -375,12 +375,12 @@ O.Close
 End Sub
 
 Private Sub Z_SetWcFcsv()
-Dim WB As Workbook
+Dim Wb As Workbook
 'Set Wb = WbzFx(Vbe_MthFx)
-Debug.Print TxtWcStr(WB)
-SetWcFcsv WB, "C:\ABC.CSV"
-Ass TxtWcStr(WB) = "TEXT;C:\ABC.CSV"
-WB.Close False
+Debug.Print TxtWcStr(Wb)
+SetWcFcsv Wb, "C:\ABC.CSV"
+Ass TxtWcStr(Wb) = "TEXT;C:\ABC.CSV"
+Wb.Close False
 Stop
 End Sub
 
@@ -426,7 +426,7 @@ End Select
 SetWsn O, Wsn
 Set AddWs = O
 End Function
-Private Sub ZZ_ClrLoRow()
+Private Sub Z_ClrLoRow()
 DltLoRow CWs.ListObjects("T_SrcCd")
 End Sub
 Sub DltLoRow(A As ListObject)
@@ -463,9 +463,9 @@ End Sub
 
 
 
-Sub SavAszAndCls(WB As Workbook, Fx)
-WB.SaveAs Fx
-WB.Close
+Sub SavAszAndCls(Wb As Workbook, Fx)
+Wb.SaveAs Fx
+Wb.Close
 End Sub
 
 
@@ -523,9 +523,9 @@ Private Sub FmtPt(Pt As PivotTable)
 End Sub
 
 
-Sub ThwHasWbzWs(WB As Workbook, Wsn$, Fun$)
-If HasWs(WB, Wsn) Then
-    Thw Fun, "Wb should have not have Ws", "Wb Ws", WB.FullName, Wsn
+Sub ThwHasWbzWs(Wb As Workbook, Wsn$, Fun$)
+If HasWs(Wb, Wsn) Then
+    Thw Fun, "Wb should have not have Ws", "Wb Ws", Wb.FullName, Wsn
 End If
 End Sub
 
@@ -618,9 +618,9 @@ If IsNothing(A.OLEDBConnection) Then Exit Sub
 CvCn(A.ODBCConnection.Connection).Close
 End Sub
 
-Private Sub ClsWczWb(WB As Workbook)
+Private Sub ClsWczWb(Wb As Workbook)
 Dim WC As WorkbookConnection
-For Each WC In WB.Connections
+For Each WC In Wb.Connections
     ClsWc WC
 Next
 End Sub
@@ -662,23 +662,23 @@ Dim P As PivotTable: For Each P In A.PivotTables: P.Update: Next
 Dim L As ListObject: For Each L In A.ListObjects: L.Refresh: Next
 End Sub
 
-Function RfhWb(WB As Workbook, Fb) As Workbook
-RplLozFb WB, Fb
+Function RfhWb(Wb As Workbook, Fb) As Workbook
+RplLozFb Wb, Fb
 Dim C As WorkbookConnection
 Dim P As PivotCache, W As Worksheet
 'For Each C In Wb.Connections: RfhWc C, Fb:                                          Next
-For Each P In WB.PivotCaches: P.MissingItemsLimit = xlMissingItemsNone: P.Refresh:  Next
-For Each W In WB.Sheets:      RfhWs W:                                              Next
-StdFmtLozWb WB
-ClsWczWb WB
-DltWc WB
-Set RfhWb = WB
+For Each P In Wb.PivotCaches: P.MissingItemsLimit = xlMissingItemsNone: P.Refresh:  Next
+For Each W In Wb.Sheets:      RfhWs W:                                              Next
+StdFmtLozWb Wb
+ClsWczWb Wb
+DltWc Wb
+Set RfhWb = Wb
 End Function
 
-Private Sub RplLozFb(WB As Workbook, Fb)
+Private Sub RplLozFb(Wb As Workbook, Fb)
 Dim Ws As Worksheet, D As Database
 Set D = Db(Fb)
-For Each Ws In WB.Sheets
+For Each Ws In Wb.Sheets
     RplLozWs Ws, D
 Next
 D.Close
@@ -789,17 +789,17 @@ Sub PutSeqDown(At As Range, FmNum&, ToNum&)
 PutAyAtV LngSeq(FmNum, ToNum), At
 End Sub
 
-Sub DltSheet1(WB As Workbook)
-DltWs WB, "Sheet1"
+Sub DltSheet1(Wb As Workbook)
+DltWs Wb, "Sheet1"
 End Sub
 Sub ActWs(Ws As Worksheet)
 If IsEqObj(Ws, CWs) Then Exit Sub
 Ws.Activate
 End Sub
-Sub DltWs(WB As Workbook, WsIx)
-WB.Application.DisplayAlerts = False
-If WB.Sheets.Count = 1 Then Exit Sub
-If HasWs(WB, WsIx) Then WszWb(WB, WsIx).Delete
+Sub DltWs(Wb As Workbook, WsIx)
+Wb.Application.DisplayAlerts = False
+If Wb.Sheets.Count = 1 Then Exit Sub
+If HasWs(Wb, WsIx) Then WszWb(Wb, WsIx).Delete
 End Sub
 
 Sub ClrDown(A As Range)
@@ -857,13 +857,57 @@ Sub FillAtH(Ay, At As Range)
 FillSq Sqh(Ay), At
 End Sub
 
-
+Sub X123()
+Dim Lo As ListObject: Set Lo = FstLo(CWs)
+Dim F As Filters: Set F = Lo.AutoFilter.Filters
+Stop
+End Sub
 Sub RunFxqByCn(Fx, Q)
 CnzFx(Fx).Execute Q
 End Sub
+Function DKValzKSet(KSet As Dictionary) As Drs
+Dim K, Dry(): For Each K In KSet.Keys
+    Dim S As Aset: Set S = KSet(K)
+    Dim V: For Each V In S.Itms
+        PushI Dry, Array(K, V)
+    Next
+Next
+DKValzKSet = DrszFF("K V", Dry)
+End Function
+Sub Z_DKValzLoFilter()
+Dim Lo As ListObject: Set Lo = FstLo(CWs)
+BrwDrs DKValzLoFilter(Lo)
+End Sub
+Function DKValzLoFilter(L As ListObject) As Drs
+DKValzLoFilter = DKValzKSet(KSetzLoFilter(L))
+End Function
+Function KSetzLoFilter(L As ListObject) As Dictionary
+'Ret : KSet
+Dim O As Dictionary: Set O = New Dictionary
+Dim F As Filters: Set F = L.AutoFilter.Filters
+Dim Fny$(): Fny = FnyzLo(L)
+Dim I As Filter, J%: For Each I In F
+    Dim K$: K = Fny(J)
+    KSetzLoFilter__Add O, K, I
+    J = J + 1
+Next
+End Function
+Private Function KSetzLoFilter__Aset(F As Filter) As Aset
+If Not F.On Then Exit Function
+Dim Op As XlAutoFilterOperator: Op = F.Operator
+Dim O As Aset
+Select Case True
+Case Op = 0: Set O = AsetzItm(RmvPfx(F.Criteria1, "="))
+Case Op = xlFilterValues: Set O = AsetzAy(RmvPfxzAy(F.Criteria1, "="))
+Case Else: Exit Function
+End Select
+Set KSetzLoFilter__Aset = O
+End Function
 
-
-
+Private Sub KSetzLoFilter__Add(OKSet As Dictionary, K$, F As Filter)
+Dim S As Aset: Set S = KSetzLoFilter__Aset(F)
+If Not IsNothing(S) Then OKSet.Add K, S
+End Sub
 
 Function RgzDrs(A As Drs, At As Range) As Range
 Set RgzDrs = RgzSq(SqzDrs(A), At)
@@ -953,7 +997,19 @@ O.Value = Sq
 Set RgzSq = O
 End Function
 
-Private Sub ZZ_WszDs()
+Private Sub Z_WszDs()
 ShwWs WszDs(SampDs)
 End Sub
+
+Function EnsWbzXls(Xls As Excel.Application, Wbn$) As Workbook
+Dim O As Workbook
+Const FxFn$ = "Insp.xlsx"
+If HasWbn(Xls, FxFn) Then
+    Set O = Xls.Workbooks(FxFn)
+Else
+    Set O = Xls.Workbooks.Add
+    O.SaveAs InstFdr("Insp") & "Insp.xlsx"
+End If
+Set EnsWbzXls = ShwWb(O)
+End Function
 

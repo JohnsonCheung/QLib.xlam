@@ -103,7 +103,7 @@ Function LoNmzT$(T)
 LoNmzT = "T_" & RmvFstNonLetter(T)
 End Function
 
-Private Sub ZZ_KeepFstCol()
+Private Sub Z_KeepFstCol()
 Dim Lo As ListObject
 KeepFstCol ShwLo(SampLo)
 End Sub

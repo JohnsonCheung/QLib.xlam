@@ -97,7 +97,7 @@ Function FmtDrWrp(WrpDr, W%()) As String() _
 'Each Itm of WrpDr may be an array.  So a AlignLzDrW return Ly not string.
 Dim Dr(): Dr = WrpDrPad(WrpDr, W)
 Dim Sq(): Sq = SqzWrpDr(Dr)
-Dim Sq1(): Sq1 = AlignSq(Sq(), W)
+Dim Sq1(): Sq1 = SqzAlignW(Sq(), W)
 Dim Ly$(): Ly = LyzSq(Sq1)
 PushIAy FmtDrWrp, Ly
 End Function
@@ -113,7 +113,7 @@ Next
 End Function
 
 
-Function AlignSq(Sq(), WdtAy%()) As Variant()
+Function SqzAlignW(Sq(), WdtAy%()) As Variant()
 If UBound(Sq(), 2) <> Si(WdtAy) Then Stop
 Dim C%, R%, W%, O
 O = Sq
@@ -123,5 +123,5 @@ For C = 1 To UBound(Sq(), 2) - 1 ' The last column no need to align
         O(R, C) = AlignL(CStr(Sq(R, C)), W)
     Next
 Next
-AlignSq = O
+SqzAlignW = O
 End Function

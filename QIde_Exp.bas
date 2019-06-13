@@ -3,23 +3,6 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Exp."
 Private Const Asm$ = "QIde"
-Function ExpgPth$()
-ExpgPth = PjpP & "Exporting\"
-End Function
-
-Sub ExpExpg()
-Stamp "ExpExpg: Begin"
-Dim Xls As Excel.Application: Set Xls = NewXls
-Dim Acs As Access.Application: Set Acs = NewAcs
-Dim Ffn$, I
-For Each I In Itr(Ffny(ExpgPth))
-    Ffn = I
-    ExpPjf Ffn, Xls, Acs
-Next
-QuitXls Xls
-QuitAcs Acs
-Stamp "ExpExpg: End"
-End Sub
 
 Sub ExpPjf(Pjf, Optional Xls As Excel.Application, Optional Acs As Access.Application)
 Stamp "ExpPj: Begin"

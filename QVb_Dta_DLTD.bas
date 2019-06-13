@@ -17,7 +17,7 @@ End Property
 Private Sub ZZZ()
 QVb_Dta_IndentSrc:
 End Sub
-Private Sub ZZ_IndentSrcDry()
+Private Sub Z_IndentSrcDry()
 Dim IndentSrc$()
 GoSub ZZ
 GoSub T0
@@ -53,7 +53,7 @@ ZZ:
     DmpDry IndentSrcDry(IndentSrc)
     Return
 End Sub
-Private Sub ZZ_IndentedLy()
+Private Sub Z_IndentedLy()
 Dim IndentSrc$(), K$
 GoSub ZZ
 GoSub T0
@@ -176,7 +176,7 @@ DLTTTzLDta.D = DrszFF("L " & TTT, Dry)
 End Function
 Function DLDtazT1Pfx(A As DLTDH, T1Pfx$) As DLDta
 Dim B As Drs, C As Drs
-B = DrswColPfx(A.D, "T1", T1Pfx)
+B = ColPfx(A.D, "T1", T1Pfx)
 C = RmvPfxzDrs(B, "T1", T1Pfx)
 DLDtazT1Pfx.D = ColEqExlEqCol(C, "IsHdr", False)
 'BrwDrs2 A.D, DLDta.D, NN:="LTDH LDta": Stop

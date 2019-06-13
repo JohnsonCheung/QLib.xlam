@@ -2,7 +2,7 @@ Attribute VB_Name = "QDao_Lnk_LnkImp"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "BLnkImp."
-Sub ZZ_LnkImp()
+Sub Z_LnkImp()
 Dim LnkImpSrc$(), Db As Database
 GoSub T0
 Exit Sub
@@ -49,7 +49,7 @@ Private Function WDStru(Ip As DLTDH) As Drs
 'Ret WDStru: Stru F Ty E
 Dim A As Drs, Dr, Dry(), B As Drs, T1$, Dta$
 A = ColEqSel(Ip.D, "IsHdr", False, "T1 Dta")
-B = DrswColPfx(A, "T1", "Stru.") 'T1 Dta
+B = ColPfx(A, "T1", "Stru.") 'T1 Dta
 For Each Dr In Itr(B.Dry)
     T1 = Dr(0)
     Dta = Dr(1)

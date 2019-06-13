@@ -132,11 +132,14 @@ End Function
 Function InsColzDryBef(Dry(), V) As Variant()
 InsColzDryBef = InsColzDryVyBef(Dry, Av(V))
 End Function
-Function InsColzDrsCCBef(A As Drs, CC$, V1, V2) As Drs
-InsColzDrsCCBef = Drs(AddSy(SyzSS(CC), A.Fny), InsColzDryVyBef(A.Dry, Av(V1, V2)))
+Function InsColzDrsCC(A As Drs, CC$, V1, V2) As Drs
+InsColzDrsCC = InsColzFFDry(A, CC, InsColzDryV2(A.Dry, V1, V2))
+End Function
+Function InsColzDrsC3(A As Drs, CCC$, V1, V2, V3) As Drs
+InsColzDrsC3 = InsColzFFDry(A, CCC, InsColzDryV3(A.Dry, V1, V2, V3))
 End Function
 Function InsColzFront(A As Drs, C$, V) As Drs
-InsColzFront = Drs(AddSy(Sy(C), A.Fny), InsColzDryBef(A.Dry, V))
+InsColzFront = InsColzFFDry(A, C, InsColzDryBef(A.Dry, V))
 End Function
 Function InsCol(A As Drs, C$, V) As Drs
 InsCol = InsColzFront(A, C, V)

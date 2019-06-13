@@ -12,6 +12,7 @@ Sub JmpzML(M As CodeModule, Lno)
 JmpzM M
 JmpLin Lno
 End Sub
+
 Function HasMdnzP(P As VBProject, Mdn, Optional Inf As Boolean) As Boolean
 If HasItn(CPj.VBComponents, Mdn) Then HasMdnzP = True: Exit Function
 If Inf Then InfLin CSub, FmtQQ("Md[?] not exist", Mdn)
@@ -26,8 +27,12 @@ JmpMdn BefOrAll(MdnDotLno, ".")
 JmpLin Aft(MdnDotLno, ".")
 End Sub
 
+Sub JmpRCC(R&, C1%, C2%)
+CPne.SetSelection R, C1, R, C2
+End Sub
+
 Sub JmpMdn(Mdn)
-If Not HasMdn(Mdn) Then Exit Sub
+If Not HasMdn(Mdn) Then Debug.Print "Mdn not exist": Exit Sub
 JmpzM Md(Mdn)
 End Sub
 
@@ -84,21 +89,10 @@ For Each M In Itr(MdNyzPPm(P, Mthn))
 Next
 End Function
 
-Sub JmpzPM(Pj As VBProject, Mthn)
-Dim A As MdPoses: A = MdPoseszPM(Pj, Mthn)
-Select Case A.N
-Case 0: Debug.Print FmtQQ("Mth[?] not found", Mthn)
-Case 1: 'JmpMdPos A.Ay(0)
-Case 2:
-    Dim J%
-    For J = 0 To A.N - 1
-        Debug.Print "JmpMdPos " & MdPosStr(A.Ay(J))
-    Next
-End Select
-
-End Sub
 Sub JmpMth(Mthn)
-JmpzPM CPj, Mthn
+Dim M As CodeModule
+Dim L&: L = MthLnozMM(M, Mthn)
+JmpzML M, L
 End Sub
 
 Sub JmpM()
@@ -107,12 +101,10 @@ End Sub
 
 Sub JmpzP(P As VBProject)
 ClsWin
-Dim Md As CodeModule
-Set Md = FstMd(P)
-If IsNothing(Md) Then
-    Exit Sub
-End If
-Md.CodePane.Show
+Dim M As CodeModule
+Set M = FstMd(P)
+If IsNothing(M) Then Exit Sub
+JmpzM M
 TileV
 DoEvents
 End Sub

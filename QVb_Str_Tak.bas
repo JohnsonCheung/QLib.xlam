@@ -233,7 +233,7 @@ Tst:
     Return
 End Sub
 
-Private Sub ZZ_Tak_BetBkt()
+Private Sub Z_Tak_BetBkt()
 Dim A$
 Ept = "1234()567": A = "sdklfjdsf(1234()567)aaa(": GoSub Tst
 Ept = "AA":        A = "XXX(AA)XX":   GoSub Tst

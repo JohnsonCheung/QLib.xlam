@@ -85,8 +85,8 @@ Function SqzDrySkip(Dry(), Optional SkipNRow& = 1)
 SqzDrySkip = SqzDry(CvAv(AySkip(Dry, SkipNRow)))
 End Function
 
-Function IntAyzDrsC(A As Drs, C) As Integer()
-IntAyzDrsC = IntAyzDryC(A.Dry, IxzAy(A.Fny, C))
+Function IntCol(A As Drs, C) As Integer()
+IntCol = IntAyzDryC(A.Dry, IxzAy(A.Fny, C))
 End Function
 
 Function IntAyzDryC(Dry(), C) As Integer()

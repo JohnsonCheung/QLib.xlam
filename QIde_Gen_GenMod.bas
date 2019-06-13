@@ -32,6 +32,7 @@ Set MdnCell = Ws.Range("A2")
               MsgBox "SrcCd saved:" & vbCrLf & WrdCntg(NewL), vbInformation
 
 End Sub
+
 Sub Cmd_LoadSrcCd()
 Const C$ = "WsSrcCd"
 Const LoNm$ = "T_SrcCd"
@@ -68,39 +69,27 @@ Sub Cmd_Srt()
 'EnsWbNmzLcPfx WsSrc, "T_Src", "Key", "Stp"
 End Sub
 
-Sub Cmd_Vdt()
+Sub VdtSrc(ISrc As Drs, IDes As Drs)
 Const C$ = "WsGenMod"
 Const LoNm$ = "T_SrcCd"
-Dim ISrc As Drs
-Dim IDes As Drs
-Dim SrcCd$()
-'
-Dim Ws As Worksheet
-Dim Lo As ListObject
-Dim FxaCell As Range
-Dim Fxa$
-Dim Mdn$
-Dim Pj As VBProject
-Dim MdnCell As Range
-Dim Md As CodeModule
-              If ChkNoWsCd(C) Then Exit Sub
-     Set Ws = WszCd(C)
-              If ChkNoLo(Ws, LoNm) Then Exit Sub
-     Set Lo = Ws.ListObjects(LoNm)
-              If ChkLoCCExact(Lo, "SrcCd") Then Exit Sub
-Set FxaCell = Ws.Range("A1")
-        Fxa = FxaCell.Value
-              If ChkNotHasFfn(Fxa) Then FxaCell.Activate: Exit Sub
-              OpnFxa Fxa
-     Set Pj = PjzFxa(Fxa)
-Set MdnCell = Ws.Range("A2")
-        Mdn = MdnCell.Value
-              If ChkMdn(Pj, Mdn) Then MdnCell.Activate: Exit Sub
-              ActWs Ws
-      SrcCd = CdB(ISrc, IDes, SrcCd)
-              DltLoRow Lo                   '<== Delete
-              PutAyAtV SrcCd, A1zLo(Lo)     '<== Load
-              MsgBox "SrcCd generated:" & vbCrLf & WrdCntg(JnCrLf(SrcCd)), vbInformation
+                                    If ChkNoWsCd(C) Then Exit Sub
+Dim Ws As Worksheet:       Set Ws = WszCd(C)
+                                    If ChkNoLo(Ws, LoNm) Then Exit Sub
+Dim Lo As ListObject:      Set Lo = Ws.ListObjects(LoNm)
+                                    If ChkLoCCExact(Lo, "SrcCd") Then Exit Sub
+Dim FxaCell As Range: Set FxaCell = Ws.Range("A1")
+Dim Fxa$:                     Fxa = FxaCell.Value
+                                    If ChkNotHasFfn(Fxa) Then FxaCell.Activate: Exit Sub
+                                    OpnFxa Fxa
+Dim Pj As VBProject:       Set Pj = PjzFxa(Fxa)
+Dim MdnCell As Range: Set MdnCell = Ws.Range("A2")
+Dim Mdn$:                     Mdn = MdnCell.Value
+                                    If ChkMdn(Pj, Mdn) Then MdnCell.Activate: Exit Sub
+                                    ActWs Ws
+Dim SrcCd$():                       SrcCd = CdB(ISrc, IDes, SrcCd)
+                                    DltLoRow Lo                   '<== Delete
+                                    PutAyAtV SrcCd, A1zLo(Lo)     '<== Load
+                                    MsgBox "SrcCd generated:" & vbCrLf & WrdCntg(JnCrLf(SrcCd)), vbInformation
 End Sub
 
 Sub Cmd_GenMod(ISrc As Drs, IDes As Drs, InpSrc$(), OupLo As ListObject)
@@ -109,14 +98,9 @@ If HasWs(CWb, "Err") Then MsgBox "There is error", vbCritical: WszWb(CWb, "Err")
 PutCd Src, OupLo
 End Sub
 
-Sub Cmd_EnsFmLnk()
-Dim Rg As Range
-'Set Rg = LoCC(WsSrc.ListObjects("T_Src"), "Fm1", "Fm5")
-'EnsHypLnkzFollowNm Rg, "Stp"
-End Sub
-
-
 Function CdB(ISrc As Drs, IDes As Drs, InpSrc$()) As String()
+'Fm ISrc : V DclSfx Pm Expr
+'Fm IDes : V R1 R2 R3
 Dim JSrcPm As Drs:   JSrcPm = B_JSrcPm(ISrc)  '! With Col-Pm added
 
 '== CdRmk OK ==============================================================================================
@@ -142,7 +126,8 @@ Dim LasStpTy$:    LasStpTy = Las(2)
 Dim MMthSorF$:    MMthSorF = B_MMthSorF(LasStpTy)
 Dim MMthLin$:      MMthLin = B_MMthLin(MMthSorF, MMthn, MMPm, MMRetAs)
 
-Dim MBdy As Drs:          MBdy = DrswColNeSel(JSrcPm, "StpTy", "Inp", "Key StpTy Stmt Expr Ret Pm BrkNm BrkChr")
+Dim MBdy As Drs:    MBdy = ColNeSel(JSrcPm, "StpTy", "Inp", "Key StpTy Stmt Expr Ret Pm BrkNm BrkChr")
+
 Dim MBdy3Col As Drs:
     If True Then
         MBdy3Col = B_MBdy3Col1(MBdy)
@@ -153,8 +138,8 @@ Dim MMLy$():             MMLy = FmtDry(MBdy3Col.Dry, Fmt:=EiSSFmt)
 Dim CdMain$():         CdMain = Sy(MMthLin, CdRmk, CdDes, MMLy, "End " & MMthSorF)
 
 '== CdY ==============================================================================================
-Dim CdYLisa As Drs:    CdYLisa = DrswColInSel(JSrcPm, "StpTy", SyzSS("Stmt Sub"), "Key StpTy Expr Stmt Ret Pm")
-Dim CdYLisb As Drs:    CdYLisb = DrswColInSel(JSrcPm, "StpTy", SyzSS("Expr Fun Inp"), "Key StpTy Expr Stmt Ret Pm")
+Dim CdYLisa As Drs:    CdYLisa = ColInSel(JSrcPm, "StpTy", SyzSS("Stmt Sub"), "Key StpTy Expr Stmt Ret Pm")
+Dim CdYLisb As Drs:    CdYLisb = ColInSel(JSrcPm, "StpTy", SyzSS("Expr Fun Inp"), "Key StpTy Expr Stmt Ret Pm")
 Dim CdY4Cola As Drs:  CdY4Cola = B_CdY4Cola(CdYLisa)
 Dim CdY4Colb As Drs:  CdY4Colb = B_CdY4Colb(CdYLisb)
 Dim CdY$():                CdY = Sy(FmtDry(CdY4Cola.Dry, Fmt:=EiSSFmt), Sy(FmtDry(CdY4Colb.Dry, Fmt:=EiSSFmt)))
@@ -166,7 +151,7 @@ Dim CdZZ$():             CdZZ = FmtDry(CdZZ4Col.Dry, Fmt:=EiSSFmt)
 
 '== CdB ==============================================================================================
 '-- BBMLin OK -----------------------------------------------------------------------------------------------
-Dim BLis As Drs:                BLis = DrswColInSel(JSrcPm, "StpTy", SyzSS("Sub Fun"), "Key StpTy Ret Pm Fss StpFor")
+Dim BLis As Drs:                BLis = ColInSel(JSrcPm, "StpTy", SyzSS("Sub Fun"), "Key StpTy Ret Pm Fss StpFor")
 
 Dim BCKey$():                  BCKey = SyzDrsC(BLis, "Key")
 Dim BCStpTy$():              BCStpTy = SyzDrsC(BLis, "StpTy")
@@ -435,11 +420,11 @@ For Each Dr In Itr(CdZZLis.Dry)
     Stmt = Dr(2)
     Expr = Dr(3)
     Ret = Dr(4)
-    Fun = FmtQQ("Private Sub ZZ_?():", Key)
+    Fun = FmtQQ("Private Sub Z_?():", Key)
     Select Case StpTy
     Case "Inp", "Fun", "Expr"
         Y = "Y_" & Key
-        Brwg = BrwrzRet(Ret)
+        'Brwg = BrwrzRet(Ret)
     Case "Stmt", "Sub"
         Brwg = ""
         Y = "Y_" & Key
@@ -667,7 +652,7 @@ Next
 B_MPm = JnCommaSpc(O)
 End Function
 
-Private Sub ZZ_CdB()
+Private Sub Z_CdB()
 Dim Cd$(), ISrc As Drs, IDes As Drs, SrcCd$()
 GoSub ZZ
 Exit Sub

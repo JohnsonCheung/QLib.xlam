@@ -8,12 +8,6 @@ Private Sub Z_MthPfx()
 Ass MthPfx("Add_Cls") = "Add"
 End Sub
 
-Private Sub ZZ_MthPfx()
-'Dim Ay$(): Ay = MthnyzV(CVbe)
-'Dim Ay1$(): Ay1 = SyzMapAy(Ay, "MthPfx")
-'ShwWs AyabWs(Ay, Ay1)
-End Sub
-
 Function MthPfxSyzMd(M As CodeModule) As String()
 Dim N
 For Each N In Itr(MthnyzM(M))
@@ -23,7 +17,7 @@ End Function
 
 Function MthPfx$(Mthn)
 Dim A0$
-    A0 = Brk1(RmvPfxSy(Mthn, SplitVBar("ZZ_|Z_")), "__").S1
+    A0 = Brk1(RmvPfxSy(Mthn, SplitVBar("Z_|Z_")), "__").S1
 With Brk2(A0, "_")
     If .S1 <> "" Then
         MthPfx = .S1

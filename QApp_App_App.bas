@@ -2,60 +2,67 @@ Attribute VB_Name = "QApp_App_App"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "App."
-Type App
-    Nm As String
-    Ver As String
-    Db As Database
+Private Type A
+    Appn As String
+    Appv As String
+    AppDb As Database
 End Type
-
-Function WPth$(A As App)
-Stop '
-End Function
-Function TpFx$(A As App)
-TpFx = WPth(A) & A.Nm & "(Template).xlsx"
-End Function
-
-Function TpFxm$(A As App)
-TpFxm = WPth(A) & A.Nm & "(Template).xlsm"
-End Function
-Function WFb$(A As App)
-
-End Function
-Sub OpnTp(A As App)
-OpnFx Tp(A)
+Private A As A
+Sub SetApp(Appn$, Appv$)
+A.Appn = Appn
+A.Appv = Appv
+Dim Fb$: Fb = WFb
+DltFfnIf Fb
+CrtFb Fb
+Set A.AppDb = Db(Fb)
 End Sub
 
-Function Tp$(A As App)
+Function AppPth$()
+Stop '
+End Function
+Function AppTpFx$()
+AppTpFx = AppPth & A.Appn & "(Template).xlsx"
+End Function
+
+Function AppTpFxm$()
+AppTpFxm = AppPth & A.Appn & "(Template).xlsm"
+End Function
+
+Sub AppOpnTp()
+OpnFx AppTp
+End Sub
+
+Function AppTp$()
 Dim F$
-F = TpFxm(A): If HasFfn(F) Then Tp = F: Exit Function
-F = TpFx(A):  If HasFfn(F) Then Tp = F: Exit Function
+F = AppTpFxm: If HasFfn(F) Then AppTp = F: Exit Function
+F = AppTpFx:  If HasFfn(F) Then AppTp = F: Exit Function
 End Function
 
-Function OupFxzNxt$(A As App)
-OupFxzNxt = NxtFfnzAva(OupFx(A))
+Function AppOupFxzNxt$()
+AppOupFxzNxt = NxtFfnzAva(AppOupFx)
 End Function
 
-Function OupPth$(A As App)
-OupPth = ValzPm(A.Db, "OupPth")
+Function AppOupPth$()
+AppOupPth = ValzPm(A.AppDb, "OupPth")
 End Function
 
-Function FfnzPm$(A As App, PmNm$)
-FfnzPm = ValzPm(A.Db, PmNm & "Ffn")
+Function AppFfnzPm$(PmNm$)
+AppFfnzPm = ValzPm(A.AppDb, PmNm & "Ffn")
 End Function
 
-Function OupFx$(A As App)
-OupFx = OupPth(A) & A.Nm & ".xlsx"
+Function AppOupFx$()
+AppOupFx = AppOupPth & A.Appn & ".xlsx"
 End Function
 
-Function FbzApp$(A As App)
+Function AppFb$()
 'C:\Users\user\Desktop\MHD\SAPAccessReports\TaxExpCmp\TaxExpCmp\TaxExpCmp.1_3.app.accdb
-FbzApp = HomzApp(A) & JnDotAp(A.Nm, A.Ver, "app", "accdb")
+AppFb = AppHom & JnDotAp(A.Appn, A.Appv, "app", "accdb")
 End Function
 
-Function HomzApp$(A As App)
+Function AppHom$()
 Static Y$
 If Y = "" Then Y = AddFdrEns(AddFdrEns(ParPth(TmpRoot), "Apps"), "Apps")
-HomzApp = Y
+AppHom = Y
 End Function
 
 Function AutoExec()
@@ -74,46 +81,141 @@ LnkCcm CurrentDb, CUsr = "User"
 'D Srcy
 End Function
 
-Sub ImportTp(A As App)
-Dim T$: T = Tp(A)
+Sub ImpAppTp()
+Dim T$: T = AppTp
 Const CSub$ = CMod & "ImpTp"
 If T = "" Then
-    Inf CSub, "Tp not exist WPth, no Import", "AppNm Tp WPth", A.Db, A.Nm, T, WPth(A)
+    Inf CSub, "Tp not exist WPth, no Import", "AppNm Tp WPth", A.AppDb, A.Appn, T, AppPth
     Exit Sub
 End If
-Dim D As Database: Set D = A.Db
+Dim D As Database: Set D = A.AppDb
 If IsOldAtt(D, "Tp", T) Then ImpAtt D, "Tp", T '<== Import
 End Sub
 
-Function TpWsCdNy(A As App) As String()
+Function AppTpWsCdNy() As String()
 'TpWsCdNy = WszFxwCdNy(TpFx)
 End Function
 
 '==============================================
-Function TpPth$()
-TpPth = EnsPth(TmpHom & "Template\")
+Function AppTpPth$()
+AppTpPth = EnsPth(TmpHom & "Template\")
 End Function
 
-Sub RfhTpWc(A As App)
-RfhFx Tp(A), WFb(A)
+Sub RfhAppTpWc()
+RfhFx AppTp, AppFb
 End Sub
 
-Function TpWb(A As App) As Workbook
-Set TpWb = WbzFx(Tp(A))
+Function AppTpWb() As Workbook
+Set AppTpWb = WbzFx(AppTp)
 End Function
 
-Function TpWcsy(A As App) As String()
+Function WcsyzAppTp() As String()
 Dim W As Workbook, X As Excel.Application
 Set X = New Excel.Application
-Set W = X.Workbooks.Open(Tp(A))
+Set W = X.Workbooks.Open(AppTp)
 'TpWcsy = WcStrAyWbOLE(W)
 W.Close False
 Set W = Nothing
 X.Quit
 Set X = Nothing
 End Function
-Sub ExpTp(A As App)
-ExpAtt A.Db, "Tp", Tp(A)
+Sub ExpAppTp()
+ExpAtt A.AppDb, "Tp", AppTp
 End Sub
 
+Function PthzPm$(A As Database, PmNm$)
+PthzPm = EnsPthSfx(ValzPm(A, PmNm & "Pth"))
+End Function
+
+Function Pjfnm$(A As Database, PmNm$)
+Pjfnm = ValzPm(A, PmNm & "Fn")
+End Function
+
+Function FfnzPm(A As Database, PmNm$)
+FfnzPm = PthzPm(A, PmNm) & Pjfnm(A, PmNm)
+End Function
+
+Property Get ValzPm$(A As Database, PmNm$)
+Dim Q$: Q = FmtQQ("Select ? From Pm where CUsr='?'", PmNm, CUsr)
+ValzPm = ValzQ(A, Q)
+End Property
+
+Property Let ValzPm(A As Database, PmNm$, V$)
+With A.TableDefs("Pm").OpenRecordset
+    .Edit
+    .Fields(PmNm).Value = V
+    .Update
+End With
+End Property
+
+Sub BrwPm(A As Database)
+BrwT A, "Pm"
+End Sub
+
+Property Get W() As Database
+Set W = A.AppDb
+End Property
+Sub WCls()
+On Error Resume Next
+W.Close
+End Sub
+
+Sub WRun(QQ$, ParamArray Ap())
+Dim Av(): Av = Ap
+RunQQAv W, QQ, Av
+End Sub
+Function WTny() As String()
+WTny = Tny(W)
+End Function
+
+Function WStru(Optional TT$) As String()
+WStru = StruzTT(W, TT)
+End Function
+
+Sub WDrp(TT$)
+DrpTT W, TT
+End Sub
+
+Sub WBrw()
+OpnFb WAcs, WFb
+WAcs.Visible = True
+End Sub
+Sub WKill()
+WCls
+Kill WFb
+End Sub
+
+Function WAcs() As Access.Application
+Static A As New Access.Application
+Set WAcs = A
+End Function
+
+Function WPth$()
+WPth = EnsPth(TmpHom & A.Appn)
+End Function
+
+Function WFb$()
+WFb = WPth & A.Appn & "(Wrk).accdb"
+End Function
+
+Sub WRenTbl(Fm$, ToTbl$)
+RenTbl W, Fm, ToTbl
+End Sub
+
+Sub WClr()
+Dim T$, I, Tny$()
+Tny = WTny: If Si(Tny) = 0 Then Exit Sub
+For Each I In Tny
+    T = I
+    WDrp T
+Next
+End Sub
+
+Sub WImpTbl(TT$)
+'ImpTbl  W, TT
+End Sub
+
+Sub WDmpStru(TT$)
+Dmp StruzTT(W, TT)
+End Sub
 

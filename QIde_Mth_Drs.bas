@@ -11,20 +11,21 @@ If IsNothing(Xls) Then QuitXls Xls
 End Function
 
 Function DMthCzM(M As CodeModule) As Drs
-'DMthCzMd = Drs(MthFny, MthDryzMd(M))
-Dim P$, T$, N$
-P = PjnzM(M)
-T = ShtCmpTyzMd(M)
-N = Mdn(M)
-'DMthCzM = DryInsColzV3(MthDryzS(Src(M)), P, T, N)
+DMthCzM = DMthCzS(Src(M))
+End Function
+
+Function DMthCP() As Drs
+DMthCP = DMthCzP(CPj)
 End Function
 
 Function DMthCzP(P As VBProject) As Drs
-Dim O As Drs
-'O = Drs(MthFny, MthDryzP(P))
-'O = AddColzValIdzCntzDrs(O, "Lines", "Pj")
-'O = AddColzValIdzCntzDrs(O, "Nm", "PjMth")
-'MthDrszP = O
+Dim Pjn$: Pjn = P.Name
+Dim C As VBComponent: For Each C In P.VBComponents
+    Dim A As Drs: A = DMthCzM(C.CodeModule)
+    Dim B As Drs: B = InsColzDrsC3(A, "Pjn MdTy Mdn", Pjn, ShtCmpTy(C.Type), C.Name)
+    Dim O As Drs: O = AddDrs(O, B)
+Next
+DMthCzP = O
 End Function
 
 Function DMthCzPjf(Pjf) As Drs

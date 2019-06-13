@@ -44,7 +44,7 @@ JnCrLfAp = Jn(Av, vbCrLf)
 End Function
 
 Function JnDblCrLf$(Ay)
-JnDblCrLf = Jn(Ay, vbCrLf & vbCrLf)
+JnDblCrLf = Jn(Ay, vb2CrLf)
 End Function
 
 Function JnDotAp$(ParamArray Ap())

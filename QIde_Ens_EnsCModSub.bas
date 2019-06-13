@@ -117,7 +117,7 @@ Function EnsCModSubzM(M As CodeModule, Optional Rpt As EmRpt) As Boolean
 Const CmPfx$ = "XA_"
 Dim IsUpd As Boolean: IsUpd = IsUpdzRpt(Rpt)
 
-Dim Mth As Drs: Mth = DMthEL(M)   ' L E Mdy Ty Mthn MthLin MthLy
+Dim Mth As Drs: Mth = DMthC(M)   ' L E Mdy Ty Mthn MthLin MthLy
 Dim Act As Drs: Act = XA_Act(Mth) ' L Mthn MthLy ActL Lno        ! ActL & Lno: If Ty=*Dcl, they are the CModL & CModLnom Otherwise, CSubL and CSubLno
 Dim Ept As Drs: Ept = XA_Ept(Act) ' L Mthn MthLy ActL Lno EptL
 Dim Dif As Drs: Dif = DrseCeqC(Ept, "ActL EptL") ' L Mthn MthLy ActL Lno EptL ! Only those Act<>Ept

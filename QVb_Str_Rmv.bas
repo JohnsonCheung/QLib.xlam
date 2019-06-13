@@ -180,9 +180,9 @@ End Sub
 
 Private Sub Z_RmvPfxSy()
 Dim S, PfxSy$()
-PfxSy = SyzSS("ZZ_ Z_"): Ept = "ABC"
+PfxSy = SyzSS("Z_ Z_"): Ept = "ABC"
 S = "Z_ABC": GoSub Tst
-S = "ZZ_ABC": GoSub Tst
+S = "Z_ABC": GoSub Tst
 Exit Sub
 Tst:
     Act = RmvPfxSy(S, PfxSy)

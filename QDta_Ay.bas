@@ -36,12 +36,12 @@ Function FmtDryGpCntzAy(Ay) As String()
 FmtDryGpCntzAy = FmtDry(DryGpCntzAy(Ay), Fmt:=EiSSFmt)
 End Function
 
-Private Sub ZZ_FmtDryGpCntzAy()
+Private Sub Z_FmtDryGpCntzAy()
 Dim Ay()
 Brw FmtDryGpCntzAy(Ay)
 End Sub
 
-Private Sub ZZ_CntDryzAy()
+Private Sub Z_CntDryzAy()
 Dim A$(): A = SplitSpc("a a a b c b")
 Dim Act(): Act = CntDryzAy(A)
 Dim Exp(): Exp = Array(Array("a", 3), Array("b", 2), Array("c", 1))

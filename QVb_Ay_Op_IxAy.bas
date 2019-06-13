@@ -8,7 +8,7 @@ Type NumPos
     Pos As Long
 End Type
 
-Private Sub ZZ_AsgIx()
+Private Sub Z_AsgIx()
 Dim Drs As Drs, FF$, A%, B%, C%, EA%, EB%, Ec%
 GoSub T1
 Exit Sub

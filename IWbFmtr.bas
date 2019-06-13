@@ -10,5 +10,5 @@ Attribute VB_Exposed = True
 Option Explicit
 Option Compare Text
 Private Const CMod$ = "IWbFmtr."
-Sub FmtWb(WB As Workbook)
+Sub FmtWb(Wb As Workbook)
 End Sub

@@ -345,7 +345,7 @@ MsgT_FldEr = Msg(A, FmtQQ("Fld[?] cannot be found in any Ele-Lines"))
 End Function
 
 Private Function Msg_LinTyEr$(A As Lnx, Ty$)
-Msg_LinTyEr = Msg(A, FmtQQ(CM_LinTyEr, Ty, FmtDrs(DrsOfShtTy)))
+Msg_LinTyEr = Msg(A, FmtQQ(CM_LinTyEr, Ty, FmtDrs(DShtTy)))
 End Function
 
 Private Function ErD(Tny$(), T As Lnxs, D As Lnxs) As String()

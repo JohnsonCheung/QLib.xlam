@@ -1,9 +1,10 @@
-Attribute VB_Name = "QVb_Fs_Pth_Mbr_R_FfnAy"
+Attribute VB_Name = "QVb_Fs_PthR"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Fs_Pth_Mbr_R_Ffny."
 Private Const Asm$ = "QVb"
 Private O$(), A_Spec$ ' Used in PthPthSyR/FFnAyR
+Private XX$()
 
 Function EmpPthSyR(Pth) As String()
 Dim I
@@ -60,13 +61,12 @@ PushIAy O, Ffny(Pth, A_Spec)
 If Si(O) Mod 1000 = 0 Then InfLin CSub, "...Reading", "#Ffn-read", Si(O)
 Dim P$(): P = SubPthy(Pth)
 If Si(P) = 0 Then Exit Sub
-Dim I
-For Each I In P
+Dim I: For Each I In P
     FfnyR1 I
 Next
 End Sub
 
-Private Sub ZZ_EntAyR()
+Private Sub Z_EntAyR()
 Dim A$(): A = EntAyR("C:\users\user\documents\")
 Debug.Print Si(A)
 Stop
@@ -90,5 +90,21 @@ Private Sub ZZ()
 'EntAyR
 'FFnAyR
 'PthPthSyR
+End Sub
+
+Function SubPthSyR(Pth) As String()
+Erase XX
+X Pth
+SubPthSyR = XX
+Erase XX
+End Function
+Private Sub X(Pth)
+Dim O$(), P$, I
+O = SubPthy(Pth)
+PushIAy XX, O
+For Each I In Itr(O)
+    P = I
+    X P
+Next
 End Sub
 

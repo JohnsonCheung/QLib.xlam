@@ -59,20 +59,9 @@ Function DistFxa$(Srcp)
 DistFxa = DistPjf(Srcp, ".xlam")
 End Function
 
-Private Sub Z_DistPjf()
-Dim Pth, I
-For Each I In SrcpSyOfExpgInst
-    Pth = I
-    Debug.Print Pth
-    Debug.Print DistFba(Pth)
-    Debug.Print DistFxa(Pth)
-    Debug.Print
-Next
-End Sub
-
 Sub LoadBas(P As VBProject, Srcp$)
 Dim F$(): F = BasFfny(Srcp)
-Dim I: For Each BasItm In Itr(F)
+Dim I: For Each I In Itr(F)
     P.VBComponents.Import I
 Next
 End Sub
@@ -86,10 +75,10 @@ Dim I: For Each I In Itr(F)
     End If
 Next
 End Function
+
 Private Function IsBasFfn(Ffn) As Boolean
 IsBasFfn = HasSfx(Ffn, ".bas")
 End Function
-
 
 Sub GenFbaP()
 GenFbazP CPj

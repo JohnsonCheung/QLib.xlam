@@ -91,7 +91,7 @@ End Function
 Function IsNoMthMd(M As CodeModule) As Boolean
 Dim J&
 For J = M.CountOfDeclarationLines + 1 To M.CountOfLines
-    If IsMthLin(M.Lines(J, 1)) Then Exit Function
+    If IsLinzMth(M.Lines(J, 1)) Then Exit Function
 Next
 IsNoMthMd = True
 End Function

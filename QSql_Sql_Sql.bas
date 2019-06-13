@@ -226,7 +226,7 @@ Private Function PSel_Fny$(Fny$(), Optional Dis As Boolean)
 Stop
 End Function
 
-Private Sub ZZ_PSel_Fny_Extny()
+Private Sub Z_PSel_Fny_Extny()
 Dim Fny$()
 Dim Extny$()
 GoSub ZZ
@@ -480,7 +480,7 @@ Next
 FmtExprVblAy = O
 End Function
 
-Private Sub ZZ_SqlSel_Fny_Ey_Into_T_OB()
+Private Sub Z_SqlSel_Fny_Ey_Into_T_OB()
 Dim Fny$(), Ey$(), Into$, T$, Bexpr$
 GoSub ZZ
 Exit Sub

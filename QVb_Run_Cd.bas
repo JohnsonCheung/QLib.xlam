@@ -10,7 +10,7 @@ RunCd JnCrLf(CdLy)
 End Sub
 
 Sub RunCd(CdLines$)
-Dim N$: N = "ZZ_" & TmpNm
+Dim N$: N = "Z_" & TmpNm
 AddMthzCd N, CdLines
 Run N
 End Sub
@@ -23,7 +23,7 @@ RunCdMd.AddFromString MthLines(Mthn, CdLines)
 End Sub
 Private Function MthLines$(Mthn, CdLines$)
 Dim Lines$, L1$, L2$
-L1 = "Sub ZZ_" & Mthn & "()"
+L1 = "Sub Z_" & Mthn & "()"
 L2 = "End Sub"
 MthLines = L1 & vbCrLf & CdLines & vbCrLf & L2
 End Function
@@ -43,7 +43,7 @@ For Each F In TermAy(FunNN)
 Next
 End Sub
 
-Private Sub ZZ_TimFun()
+Private Sub Z_TimFun()
 TimFun "ZZA ZZB"
 End Sub
 

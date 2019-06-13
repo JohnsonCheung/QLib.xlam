@@ -9,8 +9,8 @@ Public Const DoczOfLimPmSpec$ = "It is lin with 3 Pm: [-Sw xx -Sng xx -Mul xx]. 
 "Where xx are PmNm."
 Public Const vbOpnBkt$ = "("
 Public Const vbDblQuote$ = """"
+Public Const vb2CrLf$ = vbCrLf & vbCrLf
 Public Const vb2DblQuote$ = vbDblQuote & vbDblQuote
-Public Const vbDblCrLf$ = vbCrLf & vbCrLf
 Public Const vbTwoDblQuote$ = vbDblQuote & vbDblQuote
 Public Const vbDblQuoteAsc As Byte = 34
 Public Const vbSngQuote$ = "'"

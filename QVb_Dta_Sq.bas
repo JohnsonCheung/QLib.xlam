@@ -1,19 +1,19 @@
 Attribute VB_Name = "QVb_Dta_Sq"
 Option Explicit
 Option Compare Text
-Sub SetSqr(OSq(), Drv, Optional R = 1, Optional NoTxtSngQ As Boolean)
+Sub SetSqr(OSq(), Dr, Optional R = 1, Optional NoTxtSngQ As Boolean)
 Dim J&
 If NoTxtSngQ Then
-    For J = 0 To UB(Drv)
-        If IsStr(Drv(J)) Then
-            OSq(R, J + 1) = QuoteSng(CStr(Drv(J)))
+    For J = 0 To UB(Dr)
+        If IsStr(Dr(J)) Then
+            OSq(R, J + 1) = QuoteSng(CStr(Dr(J)))
         Else
-            OSq(R, J + 1) = Drv(J)
+            OSq(R, J + 1) = Dr(J)
         End If
     Next
 Else
-    For J = 0 To UB(Drv)
-        OSq(R, J + 1) = Drv(J)
+    For J = 0 To UB(Dr)
+        OSq(R, J + 1) = Dr(J)
     Next
 End If
 End Sub
@@ -71,70 +71,60 @@ Next
 End Function
 
 Function FmtSq(Sq(), Optional SepChr$ = " ") As String()
-FmtSq = JnSq(AlignSq(Sq), SepChr)
+FmtSq = JnSq(SqzAlign(Sq), SepChr)
 End Function
 
 Sub BrwSq(Sq())
 Brw FmtSq(Sq)
 End Sub
-Function AlignSq(Sq()) As String()
+
+Function SqzAlign(Sq()) As String()
 If Si(Sq) = 0 Then Exit Function
 Dim C&, O$(), NR&, Nc&
 NR = UBound(Sq, 1)
 Nc = UBound(Sq, 2)
 ReDim O(1 To NR, 1 To Nc)
 For C = 1 To UBound(O, 2)
-    AlignColzSCW O, Sq, C, ColWdtzSC(Sq, C)
+    AlignColzSq O, Sq, C, WdtzSqc(Sq, C)
 Next
-AlignSq = O
+SqzAlign = O
 End Function
-Private Function ColWdtzSC%(Sq(), C&)
+Private Function WdtzSqc%(Sq(), C&)
 Dim R&, O%
 For R = 1 To UBound(Sq, 1)
     O = Max(O, Len(Sq(R, C)))
 Next
-ColWdtzSC = O
+WdtzSqc = O
 End Function
-Private Sub AlignColzSCW(OSq$(), Sq(), C&, W%)
+Private Sub AlignColzSq(OSq$(), Sq(), C&, W%)
 Dim R&
 For R = 1 To UBound(Sq, 1)
     OSq(R, C) = Align(Sq(R, C), W)
 Next
 End Sub
-Function ColzSq(Sq(), C&) As Variant()
-Dim O()
-Dim NR&, J&
-NR = UBound(Sq, 1)
-ReDim O(NR - 1)
-For J = 1 To NR
-    O(J - 1) = Sq(J, C)
-Next
-ColzSq = O
+
+
+Function ColzSq(Sq(), Optional C = 1) As Variant()
+ColzSq = IntozSqc(EmpAv, Sq, C)
 End Function
 
-Function IntozSqc(Into, Sq(), C&)
-Dim NR&, O
-    NR = UBound(Sq, 1)
-    O = ResiN(Into, NR)
-Dim R&
-For R = 1 To NR
+Function DrzSq(Sq(), Optional C = 1) As Variant()
+DrzSq = IntozSqc(EmpAv, Sq, C)
+End Function
+
+Function IntozSqc(Into, Sq(), C)
+Dim NR&: NR = UBound(Sq, 1)
+Dim O:    O = ResiN(Into, NR)
+Dim R&: For R = 1 To NR
     O(R - 1) = Sq(R, C)
 Next
 IntozSqc = O
 End Function
-Function VyrzSqr(Sq(), Optional R& = 1) As Variant()
-VyrzSqr = IntozSqr(EmpAv, Sq, R)
-End Function
-Function VyczSqc(Sq(), Optional C& = 1) As Variant()
-VyczSqc = IntozSqc(EmpAv, Sq, C)
-End Function
 
 Function IntozSqr(Into, Sq(), R)
-Dim Nc&, O
-    Nc = UBound(Sq, 2)
-    O = ResiN(Into, Nc)
-Dim C&
-For C = 1 To Nc
+Dim Nc&:    Nc = UBound(Sq, 2)
+Dim O:    O = ResiN(Into, Nc)
+Dim C&: For C = 1 To Nc
     O(C - 1) = Sq(R, C)
 Next
 IntozSqr = O

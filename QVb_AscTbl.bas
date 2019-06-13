@@ -4,6 +4,7 @@ Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_AscTbl."
 Const Asc99% = &H99
+
 Function Chr99$()
 Chr99 = Chr(Asc99)
 End Function

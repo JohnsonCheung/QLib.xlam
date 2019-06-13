@@ -56,7 +56,7 @@ Else
 End If
 End Function
 
-Private Sub ZZ_MthRmkzM()
+Private Sub Z_MthRmkzM()
 Dim M As CodeModule: Set M = Md("QIde_B_MthOp__AlignMthDimzML")
 BrwS1S2s MthRmkzM(M)
 End Sub

@@ -10,7 +10,7 @@ Dim W As Database
 Q = "Select Distinct Nm,Count(*) as LinesIdCnt Into DistMth from DistLines group by Nm": W.Execute Q
 Q = "Alter Table DistMth Add Column LinesIdLis Text(255), LinesLis Memo, ToMd Text(50)": W.Execute Q
 'WtCrt_FldLisTbl "DistLines", "#A", "Nm", "LinesId", " ", True
-'WtCrt_FldLisTbl "DistLines", "#B", "Nm", "Lines", vbCrLf & vbCrLf, True
+'WtCrt_FldLisTbl "DistLines", "#B", "Nm", "Lines", vb2CrLf, True
 Q = "Update DistMth x inner join [#A] a on x.Nm = a.Nm set x.LinesIdLis = a.LinesIdLis":                W.Execute Q
 Q = "Update DistMth x inner join [#B] a on x.Nm = a.Nm set x.LinesLis = a.LinesLis":                    W.Execute Q
 Q = "Update DistMth x inner join MthLoc a on x.Nm = a.Nm set x.ToMd = IIf(a.ToMd='','AAMod',a.ToMd)":   W.Execute Q
@@ -19,7 +19,7 @@ End Sub
 Sub CrtMdDic()
 'WSetDb MthDb
 'WDrp "MdDic"
-'WtCrt_FldLisTbl "DistMth", "MdDic", "ToMd", "LinesLis", vbCrLf & vbCrLf, True, "Lines"
+'WtCrt_FldLisTbl "DistMth", "MdDic", "ToMd", "LinesLis", vb2CrLf, True, "Lines"
 End Sub
 
 Sub UpdMthLoc()

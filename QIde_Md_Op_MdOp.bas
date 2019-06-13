@@ -28,22 +28,6 @@ For Each N In TmpModNyzP(CPj)
 Next
 End Sub
 
-
-Function RplMth(M As CodeModule, Mthn, NewL$) As Boolean
-'Ret True if Rplaced
-Dim Lno&: Lno = MthLnozMM(M, Mthn)
-If Not HasMthzM(M, Mthn) Then
-    RplMth = True
-    M.AddFromString NewL '<===
-    Exit Function
-End If
-Dim OldL$: OldL = MthLineszM(M, Mthn)
-If OldL = NewL Then Exit Function
-RplMth = True
-RmvMth M, Mthn '<==
-M.InsertLines Lno, NewL '<==
-End Function
-
 Private Sub ZZ()
 MIde__Mth:
 End Sub

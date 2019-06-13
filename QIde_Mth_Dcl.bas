@@ -4,15 +4,23 @@ Option Explicit
 Private Const CMod$ = "MIde_Mth_Dcl."
 Private Const Asm$ = "QIde"
 
-Property Get MthLinAyM() As String()
+Function MthLinAyM() As String()
 MthLinAyM = MthLinAyzM(CMd)
-End Property
+End Function
+Function MthLinAyzM(M As CodeModule) As String()
+MthLinAyzM = MthLinAyzS(Src(M))
+End Function
+Function MthLinAyzS(Src$()) As String()
+Dim Ix: For Each Ix In Itr(MthIxy(Src))
+    PushI MthLinAyzS, ContLin(Src, Ix)
+Next
+End Function
 
-Function MthLinAyzNmSrc(Src$(), Mthn) As String()
+Function MthLinAyzSN(Src$(), Mthn) As String()
 Dim Ix
-'For Each Ix In Itr(MthIxyzNm(Src, Mthn))
-    PushI MthLinAyzNmSrc, ContLin(Src, Ix)
-'Next
+For Each Ix In Itr(MthIxyzSN(Src, Mthn))
+    PushI MthLinAyzSN, ContLin(Src, Ix)
+Next
 End Function
 
 Private Sub Z_Src_PthMthLinAy()

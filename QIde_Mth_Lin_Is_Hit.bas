@@ -7,21 +7,21 @@ Function IsPrpLin(Lin) As Boolean
 IsPrpLin = MthKd(Lin) = "Property"
 End Function
 
-Private Sub Z_IsMthLin()
+Private Sub Z_IsLinzMth()
 GoTo ZZ
 Dim A$
-A = "Function IsMthLin(A) As Boolean"
+A = "Function IsLinzMth(A) As Boolean"
 Ept = True
 GoSub Tst
 Exit Sub
 Tst:
-    Act = IsMthLin(A)
+    Act = IsLinzMth(A)
     C
     Return
 ZZ:
 Dim L, O$()
 For Each L In CSrc
-    If IsMthLin(CStr(L)) Then
+    If IsLinzMth(CStr(L)) Then
         PushI O, L
     End If
 Next

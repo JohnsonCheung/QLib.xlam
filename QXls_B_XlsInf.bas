@@ -10,9 +10,9 @@ Enum EmAddgWay ' Adding data to ws way
     EiSqWay
 End Enum
 Function WszWc(WC As WorkbookConnection) As Worksheet
-Dim WB As Workbook, Ws As Worksheet
-Set WB = WC.Parent
-Set Ws = AddWs(WB, WC.Name)
+Dim Wb As Workbook, Ws As Worksheet
+Set Wb = WC.Parent
+Set Ws = AddWs(Wb, WC.Name)
 PutWc WC, A1zWs(Ws)
 Set WszWc = Ws
 End Function
@@ -384,8 +384,20 @@ Function FstLo(A As Worksheet) As ListObject 'Return LoOpt
 Set FstLo = FstItm(A.ListObjects)
 End Function
 
+Function LczLoCno(L As ListObject, C) As ListColumn
+Dim C1&: C1 = FstLc(L).DataBodyRange.Column
+Dim C2&: C2 = LasLc(L).DataBodyRange.Column
+If Not IsBet(C, C1, C2) Then Thw CSub, "Given-Cno is not between the FstCno & LasCno of given Lo", "Given-Cno Fst-Lo-Cno Las-Lo-Cno", C, C1, C2
+Set LczLoCno = L.ListColumns(C - C1 + 1)
+End Function
 
+Function FstLc(L As ListObject) As ListColumn
+Set FstLc = L.ListColumns(1)
+End Function
 
+Function LasLc(L As ListObject) As ListColumn
+Set LasLc = L.ListColumns(L.ListColumns.Count)
+End Function
 
 
 
@@ -403,8 +415,8 @@ Set LasWbz = A.Workbooks(A.Workbooks.Count)
 End Function
 
 Function PtzRg(A As Range, Optional Wsn$, Optional PtNm$) As PivotTable
-Dim WB As Workbook: Set WB = WbzRg(A)
-Dim Ws As Worksheet: Set Ws = AddWs(WB)
+Dim Wb As Workbook: Set Wb = WbzRg(A)
+Dim Ws As Worksheet: Set Ws = AddWs(Wb)
 Dim A1 As Range: Set A1 = A1zWs(Ws)
 Dim Pc As PivotCache: Set Pc = WbzRg(A).PivotCaches.Create(xlDatabase, A.Address, Version:=6)
 Dim Pt As PivotTable: Set Pt = Pc.CreatePivotTable(A1, DefaultVersion:=6)
@@ -551,11 +563,11 @@ Next
 Next
 SampSq1 = O
 End Property
-Function VyrzAt(At As Range) As Variant()
-VyrzAt = VyrzSqr(SqzRg(HRgWiVal(A1(At))))
+Function DrzAt(At As Range) As Variant()
+DrzAt = DrzSq(SqzRg(BarHzAt(At)))
 End Function
-Function VyczAt(At As Range) As Variant()
-VyczAt = VyczSqc(SqzRg(VRgWiVal(A1(At))))
+Function ColzAt(At As Range) As Variant()
+ColzAt = ColzSq(SqzRg(BarVzAt(At)))
 End Function
 
 
@@ -626,9 +638,9 @@ OleCnStrzFx = "OLEDb;" & CnStrzFxAdo(Fx)
 End Function
 
 Function HasFx(Fx) As Boolean
-Dim WB As Workbook
-For Each WB In Xls.Workbooks
-    If WB.FullName = Fx Then HasFx = True: Exit Function
+Dim Wb As Workbook
+For Each Wb In Xls.Workbooks
+    If Wb.FullName = Fx Then HasFx = True: Exit Function
 Next
 End Function
 
@@ -646,17 +658,17 @@ End Sub
 Function CvRg(A) As Range
 Set CvRg = A
 End Function
-Function HRgWiVal(At As Range) As Range
+Function BarHzAt(At As Range) As Range
 Dim A1 As Range: Set A1 = A1zRg(At)
-If IsEmpty(A1.Value) Then Set HRgWiVal = A1: Exit Function
+If IsEmpty(A1.Value) Then Set BarHzAt = A1: Exit Function
 Dim C2&: C2 = A1.End(xlRight).Column - A1.Column + 1
-Set HRgWiVal = RgCRR(A1, 1, 1, C2)
+Set BarHzAt = RgCRR(A1, 1, 1, C2)
 End Function
-Function VRgWiVal(At As Range) As Range
+Function BarVzAt(At As Range) As Range
 Dim A1 As Range: Set A1 = A1zRg(At)
-If IsEmpty(A1.Value) Then Set VRgWiVal = A1: Exit Function
+If IsEmpty(A1.Value) Then Set BarVzAt = A1: Exit Function
 Dim R2&: R2 = A1.End(xlDown).Row - A1.Row + 1
-Set VRgWiVal = RgCRR(A1, 1, 1, R2)
+Set BarVzAt = RgCRR(A1, 1, 1, R2)
 End Function
 Function A1(Ws As Worksheet) As Range
 Set A1 = WsRC(Ws, 1, 1)
@@ -681,7 +693,13 @@ With RRRCCzRg
 .C2 = .C1 + A.Columns.Count - 1
 End With
 End Function
-
+Function DrzRg(Rg, R) As Variant()
+DrzRg = DrzSq(SqzRg(R.Value))
+End Function
+Function ColzRg(Rg, C) As Variant()
+Dim R As Range
+ColzRg = ColzSq(SqzRg(R))
+End Function
 Function RgCEnt(A As Range, C) As Range
 Set RgCEnt = RgC(A, C).EntireColumn
 End Function
@@ -860,11 +878,25 @@ End Sub
 Function DrszWL(Ws As Worksheet, LoNm$) As Drs
 DrszWL = DrszLo(Ws.ListObjects(LoNm))
 End Function
-Function StrColzLC(Lo As ListObject, C$) As String()
-StrColzLC = StrColzSqc(SqzRg(Lo.DataBodyRange))
+
+Function ColzLc(Lc As ListColumn) As Variant()
+ColzLc = ColzSq(SqzRg(Lc.DataBodyRange))
 End Function
+
+Function ColzLo(Lo As ListObject, C) As Variant()
+ColzLo = ColzLc(Lo.ListColumns(C))
+End Function
+
+Function StrColzLo(Lo As ListObject, C) As String()
+StrColzLo = StrColzLc(Lo.ListColumns(C))
+End Function
+
+Function StrColzLc(Lc As ListColumn) As String()
+StrColzLc = StrColzSq(SqzRg(Lc.DataBodyRange))
+End Function
+
 Function StrColzWsLC(Ws As Worksheet, LoNm$, C$) As String()
-StrColzWsLC = StrColzLC(Ws.ListObjects(LoNm), C)
+StrColzWsLC = StrColzLo(Ws.ListObjects(LoNm), C)
 End Function
 Function VbarAy(A As Range) As Variant()
 Ass IsVbarRg(A)
@@ -901,11 +933,11 @@ Next
 Set TmpDbzFxWny = O
 End Function
 
-Function WB(Fx) As Workbook
-Set WB = Xls.Workbooks(Fx)
+Function Wb(Fx) As Workbook
+Set Wb = Xls.Workbooks(Fx)
 End Function
 Function WbzFx(Fx) As Workbook
-Set WbzFx = WB(Fx)
+Set WbzFx = Wb(Fx)
 End Function
 
 Function WszFxw(Fx, Optional Wsn$ = "Data") As Worksheet
@@ -917,10 +949,10 @@ Set ArszFxwf = ArsCnq(CnzFx(Fx), SqlSel_F_T(F, W & "$"))
 End Function
 
 Function WsCdNyzFx(Fx) As String()
-Dim WB As Workbook
-Set WB = WbzFx(Fx)
-WsCdNyzFx = WsCdNy(WB)
-WB.Close False
+Dim Wb As Workbook
+Set Wb = WbzFx(Fx)
+WsCdNyzFx = WsCdNy(Wb)
+Wb.Close False
 End Function
 
 Function DtzFxw(Fx, Optional Wsn0$) As Dt
@@ -937,7 +969,7 @@ Function SyzFxwf(Fx, W$, F$) As String()
 SyzFxwf = SyzArs(ArszFxwf(Fx, W, F))
 End Function
 
-Private Sub ZZ_Wny()
+Private Sub Z_Wny()
 Const Fx$ = "Users\user\Desktop\Invoices 2018-02.xlsx"
 D Wny(Fx)
 End Sub
@@ -954,16 +986,13 @@ T1:
     Return
 End Sub
 
-
-
-
 Private Sub Z_TmpDbzFx()
 Dim Db As Database: Set Db = TmpDbzFx("N:\SapAccessReports\DutyPrepay5\SAPDownloadExcel\KE24 2010-01c.xls")
 DmpAy Tny(Db)
 Db.Close
 End Sub
 
-Private Sub Z_Wny()
+Private Sub Z_Wny1()
 Dim Fx$
 'GoTo ZZ
 GoSub T1
@@ -980,40 +1009,35 @@ Tst:
 ZZ:
     DmpAy Wny(SampFxzKE24)
 End Sub
-
-Function ChkFxww(Fx, Wsnn$, Optional FxKd$ = "Excel file") As String()
-Dim W$, I
-'If Not HasFfn(Fx) Then ChkFxww = MsgzMisFfn(Fx, FxKd): Exit Function
-For Each I In Ny(Wsnn)
-    W = I
-    PushIAy ChkFxww, ChkWs(Fx, W, FxKd)
+Function ErzFfnMis(Ffn$, Optional Inpn$ = "File") As String()
+If HasFfn(Ffn) Then Exit Function
+Erase XX
+XLin "[?] not found"
+XTab "Path : " & Pth(Ffn)
+XTab "File : " & Fn(Ffn)
+ErzFfnMis = XX
+End Function
+Function ErzFxwwMis(Fx$, Wsnn$, Optional Inpn$ = "Excel file") As String()
+ErzFxwwMis = ErzFfnMis(Fx, Inpn)
+Dim W: For Each W In Ny(Wsnn)
+    PushIAy ErzFxwwMis, ErzWsMis(Fx, W, Inpn)
 Next
 End Function
 
-Function ChkWs(Fx, Wsn, FxKd$) As String()
+Function ErzWsMis(Fx, Wsn, Optional Inpn$ = "Excel file") As String()
 If HasFxw(Fx, Wsn) Then Exit Function
-Dim M$
-M = FmtQQ("? does not have expected worksheet", FxKd)
-ChkWs = LyzFunMsgNap(CSub, M, "Folder File Expected-Worksheet Worksheets-in-file", Pth(Fx), Fn(Fx), Wsn, Wny(Fx))
+Erase XX
+XLin FmtQQ("[?] miss ws [?]", Inpn, Wsn)
+XTab "Path  : " & Pth(Fx)
+XTab "File  : " & Fn(Fx)
+XTab "Has Ws: " & TermLin(Wny(Fx))
+ErzWsMis = XX
 End Function
 
-Function ChkFxw(Fx, Wsn, Optional FxKd$ = "Excel file") As String()
-ChkFxw = ChkHasFfn(Fx, FxKd): If Si(ChkFxw) > 0 Then Exit Function
-ChkFxw = ChkWs(Fx, Wsn, FxKd)
-End Function
-Function ChkLnkWs(A As Database, T, Fx, Wsn, Optional FxKd$ = "Excel file") As String()
-Const CSub$ = CMod & "ChkLnkWs"
-Dim O$()
-    O = ChkFxw(Fx, Wsn, FxKd)
-    If Si(O) > 0 Then
-        ChkLnkWs = O
-        Exit Function
-    End If
-On Error GoTo X
-LnkFx A, T, Fx, Wsn
-Exit Function
-X: ChkLnkWs = _
-    LyzMsgNap("Error in linking Xls file", "Er LnkFx LnkWs ToDb AsTbl", Err.Description, Fx, Wsn, Dbn(A), T)
+Function ErzFxwMis(Fx$, Wsn, Optional Inpn$ = "Excel file") As String()
+ErzFxwMis = ErzFfnMis(Fx, Inpn)
+If Si(ErzFxwMis) > 0 Then Exit Function
+ErzFxwMis = ErzWsMis(Fx, Wsn, Inpn)
 End Function
 
 
@@ -1114,5 +1138,9 @@ End Function
 
 Function FnyzWs(A As Worksheet) As String()
 FnyzWs = FnyzLo(FstLo(A))
+End Function
+
+Function HasWbn(Xls As Excel.Application, Wbn$) As Boolean
+HasWbn = HasItn(Xls.Workbooks, Wbn)
 End Function
 

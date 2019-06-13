@@ -274,8 +274,14 @@ XExWsMis = O
 'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XExWsMis) ExWsMis IpxMis ActWs",ExWsMis, ExWsMis, FmtDrs(IpxMis), FmtDrs(ActWs): Stop
 End Function
 
-Sub A(Optional Rpt As EmRpt)
-AlignMthDim Rpt
+Sub A()
+AlignMthDim
+End Sub
+Sub AU()
+AlignMthDim Rpt:=EiUpdAndRpt
+End Sub
+Sub AUO()
+AlignMthDim Rpt:=EiUpdOnly
 End Sub
 
 Sub E(Optional Rpt As EmRpt)
@@ -294,7 +300,7 @@ Dim L&:                  L = MthLnozMM(M, Mthn)
 QIde_B_MthOp.AlignMthDimzML M, L, Rpt:=Rpt
 End Sub
 
-Private Sub ZZ_ErzLnk()
+Private Sub Z_ErzLnk()
 Brw ErzLnk(Y_LnkImpSrc)
 End Sub
 
@@ -303,7 +309,7 @@ Private Function XEiFfnDup(Ipf As Drs) As String()
 Dim Ffn$(): Ffn = StrColzDrs(Ipf, "Ffn")
 Dim Dup$(): Dup = AywDup(Ffn)
 If Si(Dup) = 0 Then Exit Function
-Dim DupD As Drs: DupD = DrswColIn(Ipf, "Ffn", Dup)
+Dim DupD As Drs: DupD = ColIn(Ipf, "Ffn", Dup)
 XBox "Ffn Duplicated"
 XDrs DupD
 XLin
@@ -336,7 +342,7 @@ Private Function XEiInpnDup(Ipf As Drs) As String()
 Dim Inpn$(): Inpn = StrColzDrs(Ipf, "Inpn")
 Dim Dup$(): Dup = AywDup(Inpn)
 If Si(Dup) = 0 Then Exit Function
-Dim DupD As Drs: DupD = DrswColIn(Ipf, "Inpn", Dup)
+Dim DupD As Drs: DupD = ColIn(Ipf, "Inpn", Dup)
 XBox "Inpn Duplicated"
 XDrs DupD
 XLin
@@ -564,7 +570,7 @@ For Each Dr In Itr(LTT.Dry)
     L = Dr(0)
     Inpn = Dr(1)
     Ffn = Dr(2)
-    PushI Dry, Array(L, Inpn, Ffn, ISfx(Ffn), HasFfn(Ffn))
+    PushI Dry, Array(L, Inpn, Ffn, IsFx(Ffn), HasFfn(Ffn))
 Next
 XIpf = DrszFF("L Inpn Ffn IsFx HasFfn", Dry)
 'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpf) Ipf Ip",FmtDrs(Ipf), FmtDrs(Ipf), FmtDrs(Ip.D): Stop

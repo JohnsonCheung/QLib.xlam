@@ -14,10 +14,6 @@ Dim A As Drs: A = AddColzHasPm(DMthPrp)
 DMthPrpWoPm = ColEqE(A, "HasPm", False)
 End Property
 
-Function PurePrpLyAyzMd(M As CodeModule) As Variant()
-PurePrpLyAyzMd = PurePrpLyAyzS(Src(M))
-End Function
-
 Function LetSetPrpNset(MthLinAy$()) As Aset
 Dim O As New Aset, N$, L$, I
 For Each I In Itr(MthLinAy)

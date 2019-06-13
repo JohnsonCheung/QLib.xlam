@@ -189,7 +189,7 @@ Tst:
     Return
 End Sub
 
-Sub ZZ_AsmnzMdn()
+Sub Z_AsmnzMdn()
 BrwDrs DrszMapAy(Itn(CPj.VBComponents), "AsmnzMdn NsnzMdn")
 End Sub
 Private Sub ZZZ()

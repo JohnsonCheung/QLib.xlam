@@ -36,20 +36,20 @@ Function TmpInpTny(A As Database) As String()
 TmpInpTny = AywPfx(Tny(A), "#I")
 End Function
 
-Private Sub ZZ_LoIxSq()
-Dim WB As Workbook: Set WB = NewWb
-AddWszzWbSq WB, SampSq
-AddWszzWbSq WB, SampSq1
-BrwSq LoIxSq(WB)
+Private Sub Z_LoIxSq()
+Dim Wb As Workbook: Set Wb = NewWb
+AddWszzWbSq Wb, SampSq
+AddWszzWbSq Wb, SampSq1
+BrwSq LoIxSq(Wb)
 End Sub
 
-Sub AddWszzWbSq(WB As Workbook, Sq())
-LozSq Sq, A1zWs(AddWs(WB))
+Sub AddWszzWbSq(Wb As Workbook, Sq())
+LozSq Sq, A1zWs(AddWs(Wb))
 End Sub
 
-Function LoIxSq(WB As Workbook) As Variant()
+Function LoIxSq(Wb As Workbook) As Variant()
 Dim Ws As Worksheet, M(), O(), Fnd As Boolean
-For Each Ws In WB.Sheets
+For Each Ws In Wb.Sheets
     M = LoIxSqzWs(Ws)
     If Si(M) > 0 Then
         If Fnd Then
@@ -72,7 +72,7 @@ For Each Lo In Ws.ListObjects
 Next
 End Function
 
-Private Sub ZZ_LoDr()
+Private Sub Z_LoDr()
 Dim Lo As ListObject: Set Lo = SampLo
 D LoDr(Lo)
 ClsWbNoSav WbzLo(Lo)
@@ -111,9 +111,10 @@ End Function
 Function SetWsn(Ws As Worksheet, Nm$) As Worksheet
 Set SetWsn = Ws
 If Nm = "" Then Exit Function
+If Ws.Name = Nm Then Exit Function
 If HasWs(WbzWs(Ws), Nm) Then
-    Dim WB As Workbook: Set WB = WbzWs(Ws)
-    Thw CSub, FmtQQ("Wsn exists in Wb", "Wsn Wbn Wny-in-Wb", Nm, Wbn(WB), WnyzWb(WB))
+    Dim Wb As Workbook: Set Wb = WbzWs(Ws)
+    Thw CSub, "Wsn exists in Wb", "Wsn Wbn Wny-in-Wb", Nm, Wbn(Wb), WnyzWb(Wb)
 End If
 Ws.Name = Nm
 End Function
@@ -179,8 +180,8 @@ Sub LoAutoFit(A As ListObject)
 A.DataBodyRange.EntireColumn.AutoFit
 End Sub
 
-Function AddWszT(WB As Workbook, Db As Database, T, Optional Wsn0$, Optional AddgWay As EmAddgWay) As Worksheet
-Dim O As Worksheet: Set O = AddWs(WB, StrDft(Wsn0, T))
+Function AddWszT(Wb As Workbook, Db As Database, T, Optional Wsn0$, Optional AddgWay As EmAddgWay) As Worksheet
+Dim O As Worksheet: Set O = AddWs(Wb, StrDft(Wsn0, T))
 Dim A1 As Range: Set A1 = A1zWs(O)
 PutTbl Db, T, A1, AddgWay
 End Function

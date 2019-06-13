@@ -101,6 +101,20 @@ Dim K: For Each K In A.Keys
 Next
 Set AddSfxzDic = O
 End Function
+Function DiczEleToABC(Ay) As Dictionary
+Set DiczEleToABC = New Dictionary
+Dim V, J&: For Each V In Itr(Ay)
+    DiczEleToABC.Add CStr(V), Chr(65 + J)
+    J = J + 1
+Next
+End Function
+Function DiczEleToIx(Ay) As Dictionary
+Set DiczEleToIx = New Dictionary
+Dim V, J&: For Each V In Itr(Ay)
+    DiczEleToIx.Add CStr(V), J
+    J = J + 1
+Next
+End Function
 Function Dic(Ly$(), Optional JnSep$ = vbCrLf) As Dictionary
 Dim O As New Dictionary
 Dim L, T$, Rst$

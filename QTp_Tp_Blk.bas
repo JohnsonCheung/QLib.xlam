@@ -19,7 +19,7 @@ For Each L In RmvRmkzLy(SplitCrLf(Tp))
 Next
 PushBlk Blks, M
 End Function
-Private Sub ZZ_Blks()
+Private Sub Z_Blks()
 Dim Tp$, SepLinPfx$
 GoSub ZZ
 Exit Sub

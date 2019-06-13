@@ -26,7 +26,7 @@ Dim ODry()
         Lin = I
         IsMth = ""
         RmkLx = ""
-        If IsMthLin(Lin) Then
+        If IsLinzMth(Lin) Then
             IsMth = "*Mth"
             RmkLx = TopRmkIx(Src, Lx)
 
@@ -43,7 +43,7 @@ Y_Src = Src(Md("IdeSrc"))
 End Property
 
 Private Property Get Y_SrcLin()
-Y_SrcLin = "Private Sub IsMthLin()"
+Y_SrcLin = "Private Sub IsLinzMth()"
 End Property
 
 Sub AsgMthDr(MthDr, OMdy$, OTy$, ONm$, OPrm$, ORet$, OLinRmk$, OLines$, OTopRmk$)

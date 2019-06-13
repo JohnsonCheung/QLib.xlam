@@ -180,10 +180,10 @@ O.N = O.N + 1
 End Sub
 
 Private Sub ZZ()
-ZZ_SwLins
-ZZ_Sw
+Z_SwLins
+Z_Sw
 End Sub
-Private Sub ZZ_SwLins()
+Private Sub Z_SwLins()
 Dim SwLy$()
 GoSub ZZ
 Exit Sub
@@ -256,7 +256,7 @@ For J = 0 To A.N - 1
 Next
 End Function
 
-Private Sub ZZ_Sw()
+Private Sub Z_Sw()
 Dim SwLy$(), Pm As Dictionary
 GoSub ZZ
 Exit Sub
@@ -306,7 +306,7 @@ Private Sub ZZZ()
 QTp_SqTp_Sqy:
 End Sub
 
-Private Sub ZZ_SqyzTp()
+Private Sub Z_SqyzTp()
 Dim SqTp$
 GoSub ZZ
 Exit Sub
@@ -323,7 +323,7 @@ Dim S As Sw:               S = Sw(LyzBlksTy(B, "SW"), Pm)
 SqyzTp = Sqy(LyAyzBlksTy(B, "SQ"), Pm, S)
 End Function
 
-Private Sub ZZ_Pm()
+Private Sub Z_Pm()
 BrwDic Y_Pm
 End Sub
 
@@ -358,7 +358,7 @@ End Function
 Private Function IsRm(Ly$()) As Boolean
 IsRm = Si(Ly) = 0
 End Function
-Private Sub ZZ_IsSq()
+Private Sub Z_IsSq()
 Dim Ly$()
 GoSub ZZ
 Exit Sub
@@ -865,7 +865,7 @@ Tst:
     
     Return
 End Sub
-Private Sub ZZ_StmtSwKey()
+Private Sub Z_StmtSwKey()
 Dim Ly$(), Ty As EmStmtTy
 GoSub T0
 GoSub T1

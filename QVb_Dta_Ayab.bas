@@ -47,7 +47,7 @@ AyabzAyPfx = O
 End Function
 
 Function AyabzAyN(Ay, N&) As Ayab
-AyabzAyN = Ayab(AywFstNEle(Ay, N), AyeFstNEle(Ay, N))
+AyabzAyN = Ayab(FstNEle(Ay, N), AyeFstNEle(Ay, N))
 End Function
 
 Function AyabczAyFE(Ay, FmIx&, EIx&) As Ayabc

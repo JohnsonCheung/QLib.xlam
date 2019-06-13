@@ -52,13 +52,13 @@ Property Get BtnOfXls() As Office.CommandBarControl
 Set BtnOfXls = StdBar.Controls(1)
 End Property
 
-Private Sub ZZ_DbgPop()
+Private Sub Z_DbgPop()
 Dim A
 Set A = PopupOfDbg
 Stop
 End Sub
 
-Private Sub ZZ_BarOfMnu()
+Private Sub Z_BarOfMnu()
 Dim A As CommandBar
 Set A = BarOfMnu
 Stop

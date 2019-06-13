@@ -84,29 +84,29 @@ Next
 DryAddColzAv = O
 End Function
 
-Function DryInsColzAv(Dry(), Av()) As Variant()
+Function InsColzDryAv(Dry(), Av()) As Variant()
 Dim Dr
 For Each Dr In Itr(Dry)
-    PushI DryInsColzAv, AddAy(Av, Dr)
+    PushI InsColzDryAv, AddAy(Av, Dr)
 Next
 End Function
-Function DryInsColzV3(Dry(), V1, V2, V3) As Variant()
-DryInsColzV3 = DryInsColzAv(Dry, Av(V1, V2, V3))
+Function InsColzDryV3(Dry(), V1, V2, V3) As Variant()
+InsColzDryV3 = InsColzDryAv(Dry, Av(V1, V2, V3))
 End Function
 
-Function DryInsColzV(A(), V, Optional At& = 0) As Variant()
+Function InsColzDryzV(A(), V, Optional At& = 0) As Variant()
 Dim Dr
 For Each Dr In Itr(A)
-    PushI DryInsColzV, AyInsEle(Dr, V, At)
+    PushI InsColzDryzV, AyInsEle(Dr, V, At)
 Next
 End Function
 
-Function DryInsColzV4(A(), V1, V2, V3, V4) As Variant()
-DryInsColzV4 = DryInsColzAv(A, Av(V1, V2, V3, V4))
+Function InsColzDryV4(A(), V1, V2, V3, V4) As Variant()
+InsColzDryV4 = InsColzDryAv(A, Av(V1, V2, V3, V4))
 End Function
 
-Function DryInsColzV2(A(), V1, V2) As Variant()
-DryInsColzV2 = DryInsColzAv(A, Av(V1, V2))
+Function InsColzDryV2(A(), V1, V2) As Variant()
+InsColzDryV2 = InsColzDryAv(A, Av(V1, V2))
 End Function
 
 

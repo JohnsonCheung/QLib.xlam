@@ -164,7 +164,7 @@ If Not NoTrim Then
 End If
 End Sub
 
-Private Sub ZZ_Brk1Rev()
+Private Sub Z_Brk1Rev()
 Dim S1$, S2$, ExpS1$, ExpS2$, S
 S = "aa --- bb --- cc"
 ExpS1 = "aa --- bb"
@@ -177,7 +177,7 @@ Ass S1 = ExpS1
 Ass S2 = ExpS2
 End Sub
 
-Private Sub Z_Brk1Rev()
+Private Sub Z_Brk1Rev1()
 Dim S1$, S2$, ExpS1$, ExpS2$, S
 S = "aa --- bb --- cc"
 ExpS1 = "aa --- bb"

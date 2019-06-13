@@ -105,7 +105,7 @@ Sub RmkMth()
 RmkMthzN CMd, CMthn
 End Sub
 
-Private Sub ZZ_RmkMth()
+Private Sub Z_RmkMth()
 Dim Md As CodeModule, Mthn
 '            Ass LineszVbl(MthLines(M)) = "Property Get ZZA()|End Property||Property Let YYA(V)||End Property"
 'RmkMth M:   Ass LineszVbl(MthLines(M)) = "Property Get ZZA()|Stop '|End Property||Property Let YYA(V)|Stop '|'|End Property"
@@ -206,7 +206,7 @@ Dim C As VBComponent, ODry(), Dry(), Pjn$
 Pjn = P.Name
 For Each C In P.VBComponents
     Dry = DMth(C.CodeModule).Dry
-    Dry = DryInsColzAv(Dry, Av(Pjn, C.Name))
+    Dry = InsColzDryAv(Dry, Av(Pjn, C.Name))
     PushIAy ODry, Dry
 Next
 DMthzP = DrszFF("Pjn Mdn L Mdy Ty Mthn MthLin", ODry)
@@ -225,29 +225,32 @@ Function DMthE(M As CodeModule) As Drs
 'Ret : L E Mdy Ty Mthn MthLin ! Mdy & Ty are Sht. L is Lno E is ELno @@d
 DMthE = DMthEzS(Src(M))
 End Function
-Function DMthEL(M As CodeModule) As Drs
+
+Function DMthC(M As CodeModule) As Drs
 'Ret : L E Mdy Ty Mthn MthLin MthLy! Mdy & Ty are Sht. L is Lno E is ELno @@
-DMthEL = DMthELzS(Src(M))
+DMthC = DMthCzS(Src(M))
 End Function
 
 Function DMthEM() As Drs
 DMthEM = DMthE(CMd)
 End Function
-Function DMthELM() As Drs
-DMthELM = DMthEL(CMd)
+Function DMthCM() As Drs
+DMthCM = DMthCzM(CMd)
 End Function
 
-Function DMthELzS(Src$()) As Drs
-Dim A As Drs: A = DMthEzS(Src) ' L E Mdy Ty Mthn MthLin
-Dim Dr, MthLy$(), Dry()
+Function DMthCzS(Src$()) As Drs
+Dim A As Drs: A = DMthzS(Src)
+Dim Dry(), Dr
 For Each Dr In Itr(A.Dry)
-    Dim Fi&: Fi = Dr(0) - 1
-    Dim Ti&: Ti = Dr(1) - 1
-    MthLy = AywFT(Src, Fi, Ti)
+    Dim F&: F = Dr(0) - 1
+    Dim E&: E = EndLix(Src, F) + 1
+    Dim T&: T = E - 1
+    Dim MthLy$(): MthLy = AywFT(Src, F, T)
+    Dr = AyInsEle(Dr, E, 1)
     PushI Dr, MthLy
     PushI Dry, Dr
 Next
-DMthELzS = DrszFF("L E Mdy Ty Mthn MthLin MthLy", Dry)
+DMthCzS = DrszFF("L E Mdy Ty Mthn MthLin MthLy", Dry)
 End Function
 
 Function DMthEzS(Src$()) As Drs
@@ -320,7 +323,7 @@ For J = NxtIxzSrc(MthLy, L) To UB(MthLy) - 1
 Next
 End Function
 
-Private Sub ZZ_MthCxtFeis _
+Private Sub Z_MthCxtFeis _
  _
 ()
 Stop
@@ -345,7 +348,7 @@ Next
 InspExprLiszPm = JnCommaSpc(O)
 End Function
 
-Sub ZZ_InspMthStmt()
+Sub Z_InspMthStmt()
 Dim A As Drs: A = DMthzM(CMd)
 Dim B$(): B = StrCol(A, "MthLin")
 Dim L, ODry()

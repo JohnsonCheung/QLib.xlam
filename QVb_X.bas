@@ -4,24 +4,29 @@ Option Explicit
 Private Const CMod$ = "MVb_X."
 Private Const Asm$ = "QVb"
 Private A$()
-Property Get XX() As String()
+Function XX() As String()
 XX = A
 Erase A
-End Property
-Sub XLy(Ly$())
-PushIAy A, Ly
-End Sub
-Sub XLin(Optional Lin$)
-PushI A, Lin
-End Sub
+End Function
+
 Sub XBox(S$)
 PushI A, Box(S)
 End Sub
 Sub XEnd()
 PushI A, "End"
 End Sub
+Sub XLin(Optional L$)
+PushI A, L
+End Sub
 Sub XDrs(Drs As Drs)
 PushIAy A, FmtDrs(Drs)
+End Sub
+Sub XTab(V)
+If IsArray(V) Then
+    X TabAy(V)
+Else
+    X vbTab & V
+End If
 End Sub
 Sub X(V)
 If IsArray(V) Then
@@ -30,7 +35,3 @@ Else
     PushI A, V
 End If
 End Sub
-
-Function Y(A)
-Stop
-End Function

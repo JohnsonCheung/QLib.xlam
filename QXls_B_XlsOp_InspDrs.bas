@@ -6,7 +6,7 @@ Enum EmFixWdt
     EiFixWdt = 1
 End Enum
 Private Type X
-WB As Workbook
+Wb As Workbook
 IxWs As Worksheet
 IxLo As ListObject
 End Type
@@ -17,8 +17,8 @@ EnsIxWs
 End Sub
 Sub ClrInsp()
 Init
-While X.WB.Sheets.Count > 1
-    DltWs X.WB, 2
+While X.Wb.Sheets.Count > 1
+    DltWs X.Wb, 2
 Wend
 ClrLo X.IxLo
 End Sub
@@ -48,7 +48,7 @@ With X.IxLo.ListRows
     .Item(Las).Range.Value = SqhzAp(Las, N, DrsNo, "Drs", "Go", NRowzDrs(A), NColzDrs(A), IsSamDrEleCnt(A))
 End With
 Wsn = N & DrsNo
-Set R = DtaRgzWs(AddWszDrs(X.WB, A, Wsn))
+Set R = DtaRgzWs(AddWszDrs(X.Wb, A, Wsn))
 If Wdt = EmFixWdt.EiFixWdt Then
     R.Font.Name = "Courier New"
     R.Font.Size = 9
@@ -63,11 +63,11 @@ A = DrszLo(X.IxLo)
 B = ColEqSel(A, "Nm", DrsNm, "Nm Drs# ValTy")
 C = ColEqExlEqCol(B, "ValTy", "Drs")
 If NoReczDrs(C) Then XNxtDrsNo = 1: Exit Function
-XNxtDrsNo = MaxzAy(IntAyzDrsC(C, "Drs#")) + 1
+XNxtDrsNo = MaxzAy(IntCol(C, "Drs#")) + 1
 End Function
 
 Private Sub EnsIxWs()
-Set X.IxWs = FstWs(X.WB)
+Set X.IxWs = FstWs(X.Wb)
 If X.IxWs.Name <> "Index" Then
     X.IxWs.Name = "Index"
     Set X.IxLo = CrtLo(X.IxWs, "Seq# Nm Drs# ValTy Val NRow NCol IsSamDrEleCnt")
@@ -76,20 +76,9 @@ Set X.IxLo = X.IxWs.ListObjects(1)
 End Sub
 
 Private Sub EnsWb()
-Set X.WB = EnsWbzXls(Xls, "Insp")
+Set X.Wb = EnsWbzXls(Xls, "Insp")
 End Sub
 
-Function EnsWbzXls(Xls As Excel.Application, Wbn$) As Workbook
-Dim O As Workbook
-Const FxFn$ = "Insp.xlsx"
-If HasWbn(Xls, FxFn) Then
-    Set O = Xls.Workbooks(FxFn)
-Else
-    Set O = Xls.Workbooks.Add
-    O.SaveAs InstFdr("Insp") & "Insp.xlsx"
-End If
-Set EnsWbzXls = ShwWb(O)
-End Function
-Function HasWbn(Xls As Excel.Application, Wbn$) As Boolean
-HasWbn = HasItn(Xls.Workbooks, Wbn)
-End Function
+Private Sub Z()
+QXls_B_XlsOp_InspDrs:
+End Sub

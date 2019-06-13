@@ -4,21 +4,21 @@ Option Explicit
 Private Const CMod$ = "MAcs."
 Private Const Asm$ = "Q"
 
-Sub BrwTbl(D As Database, T)
-CAcs(D).DoCmd.OpenTable T
+Sub BrwT(D As Database, T)
+AcszDb(D).DoCmd.OpenTable T
 End Sub
 
 Sub BrwTT(D As Database, TT$)
 Dim T
 For Each T In ItrzTT(TT)
-    BrwTbl D, T
+    BrwT D, T
 Next
 End Sub
 
-Function CAcs(D As Database) As Access.Application
+Function AcszDb(D As Database) As Access.Application
 Static A As New Access.Application
 OpnFb A, D.Name
-Set CAcs = A
+Set AcszDb = A
 A.Visible = True
 End Function
 
@@ -42,21 +42,22 @@ OpnFb Acs, Fb
 Acs.Visible = True
 End Sub
 
-Sub ClsTT(A As Access.Application, TT$)
-Dim T$, I
-For Each I In TermAy(TT)
-    T = I
-    ClsTbl A, T
+Sub ClsTT(D As Database, TT$)
+Dim A As Access.Application: Set A = AcszDb(D)
+Dim T: For Each T In TermAy(TT)
+    ClsTzA A, T
 Next
 End Sub
-Sub ClsTbl(A As Access.Application, T)
-DoCmd.Close acTable, T
+Sub ClsT(D As Database, T)
+AcszDb(D).DoCmd.Close acTable, T
 End Sub
-
-Sub ClsAllTbl(A As Access.Application)
-Dim T As AccessObject
-For Each T In A.CodeData.AllTables
-    A.DoCmd.Close acTable, T.Name
+Sub ClsTzA(A As Access.Application, T)
+A.DoCmd.Close acTable, T
+End Sub
+Sub ClsAllTbl(D As Database)
+Dim A As Access.Application: Set A = AcszDb(D)
+Dim T: For Each T In A.CodeData.AllTables
+    ClsTzA A, T
 Next
 End Sub
 
@@ -74,22 +75,23 @@ Static X As Access.Application: If IsNothing(X) Then Set X = New Access.Applicat
 Set Acs = X
 End Function
 
-Sub CpyAcsFrm(A As Access.Application, Fb)
+Sub CpyFrm(A As Access.Application, Fb)
 Dim I As AccessObject
 For Each I In A.CodeProject.AllForms
     A.DoCmd.CopyObject Fb, , acForm, I.Name
 Next
 End Sub
 
-Sub CpyAcsMd(A As Access.Application, ToFb)
+Sub CpyMdzA(A As Access.Application, ToFb)
 Dim I As AccessObject
 For Each I In A.CodeProject.AllModules
     A.DoCmd.CopyObject ToFb, , acModule, I.Name
 Next
 End Sub
-Sub CpyAcsTbl(A As Access.Application, ToFb)
 
+Sub CpyTzA(A As Access.Application, ToFb)
 End Sub
+
 Sub CpyAcsObj(A As Access.Application, ToFb)
 Dim Fb$
 If HasFfn(ToFb) Then
@@ -100,30 +102,27 @@ End If
 Ass HasPth(Pth(Fb))
 Ass Not HasFfn(Fb)
 CrtFb Fb
-CpyAcsTbl A, Fb
-CpyAcsFrm A, Fb
-CpyAcsMd A, Fb
-CpyAcsRf A, Fb
+CpyTzA A, Fb
+CpyFrm A, Fb
+CpyMdzA A, Fb
+CpyRfzA A, Fb
 End Sub
-Sub CpyAcsRf(A As Access.Application, ToFb)
+Sub CpyRfzA(A As Access.Application, ToFb)
 
 End Sub
-Sub SelPthzTxtb(A As Access.TextBox)
+Sub PthzSelzTxtb(A As Access.TextBox)
 Dim R$
-R = SelPth(A.Value)
+R = PthzSel(A.Value)
 If R = "" Then Exit Sub
 A.Value = R
 End Sub
-Sub TurnOffTabStop(AcsCtl As Access.Control)
-Dim A As Access.Control
-Set A = AcsCtl
+Sub TurnOffTabStop(A As Access.Control)
 If Not HasPfx(A.Name, "Cmd") Then Exit Sub
 Select Case True
 Case IsBtn(A): CvBtn(A).TabStop = False
 Case IsTglBtn(A): CvAcsTgl(A).TabStop = False
 End Select
 End Sub
-
 
 'Assume there is Application.Forms("Main").Msg (TextBox)
 'MMsg means Main.Msg (TextBox)
@@ -207,13 +206,13 @@ If Shw Then O.Visible = True
 Set NewAcs = O
 End Function
 
-Function DbNmzAcs$(A As Access.Application)
+Function DbnzAcs$(A As Access.Application)
 On Error Resume Next
-DbNmzAcs = A.CurrentDb.Name
+DbnzAcs = A.CurrentDb.Name
 End Function
 
 Sub OpnFb(A As Access.Application, Fb)
-If DbNmzAcs(A) = Fb Then Exit Sub
+If DbnzAcs(A) = Fb Then Exit Sub
 ClsDbzAcs A
 A.OpenCurrentDatabase Fb
 End Sub

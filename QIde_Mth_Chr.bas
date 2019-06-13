@@ -42,20 +42,25 @@ End Function
 
 Function ShfDclSfx$(OLin$)
 Dim O$: O = ShfTyChr(OLin)
-Select Case True
-Case O <> ""
+If O <> "" Then
     ShfDclSfx = O & IIf(ShfBkt(OLin), "()", "")
-Case ShfAs(OLin)
-    O = ShfDotNm(OLin): If O = "" Then Stop
-    ShfDclSfx = " As " & O & IIf(ShfBkt(OLin), "()", "")
-End Select
+    Exit Function
+End If
+If ShfBkt(OLin) Then
+    ShfDclSfx = "()"
+End If
+If ShfAs(OLin) Then
+    Dim A$: A = ShfDotNm(OLin):
+    ShfDclSfx = O & " As " & A
+    If A = "" Then Stop
+End If
 End Function
 Function ShfTyChr$(OLin$)
 ShfTyChr = ShfChr(OLin, TyChrLis)
 End Function
 
 Function TyChr$(Lin)
-If IsMthLin(Lin) Then TyChr = TakTyChr(RmvMthn3(Lin))
+If IsLinzMth(Lin) Then TyChr = TakTyChr(RmvMthn3(Lin))
 End Function
 
 Function TakTyChr$(S)

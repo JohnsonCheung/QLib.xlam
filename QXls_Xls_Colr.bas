@@ -217,7 +217,7 @@ Dim Ws As Worksheet, Sq(), J%
 Sq = ColrSq
 'Set Ws = WszRg(RgzSq(ColrSq, NewA1))
 For J = 1 To UBound(Sq(), 1)
-    WsRC(Ws, J, 3).Interior.Color = Sq(J, 2)
+    WsRC(Ws, J, 3).Interia.Color = Sq(J, 2)
 Next
 WsCC(Ws, 1, 2).EntireColumn.AutoFit
 Set ColrWb = WbzWs(ShwWs(Ws))

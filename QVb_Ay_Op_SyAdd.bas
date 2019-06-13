@@ -69,7 +69,7 @@ For Each X In Itr(Ay)
 Next
 End Function
 
-Private Sub ZZ_AddAy()
+Private Sub Z_AddAy()
 Dim Ay1(), Ay2()
 GoSub T1
 Exit Sub
@@ -84,7 +84,7 @@ Tst:
     Return
 End Sub
 
-Private Sub ZZ_AddPfxzAy()
+Private Sub Z_AddPfxzAy()
 Dim Sy$(), Pfx$
 GoSub T1
 Exit Sub
@@ -117,7 +117,7 @@ Function TabSy(Sy$()) As String()
 TabSy = AddPfxzAy(Sy, vbTab)
 End Function
 
-Private Sub ZZ_AddSfxzAy()
+Private Sub Z_AddSfxzAy()
 Dim Sy$(), Sfx$
 Sy = SyzSS("1 2 3 4")
 Sfx = "#"

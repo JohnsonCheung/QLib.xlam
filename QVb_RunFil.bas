@@ -73,7 +73,7 @@ Dim S$: S = CmdLines & vbCrLf & EchoLin
 Fcmdw = WrtStr(S, T)
 End Function
 
-Private Sub ZZ_RunFcmd()
+Private Sub Z_RunFcmd()
 RunFcmd "Cmd"
 MsgBox "AA"
 End Sub

@@ -236,7 +236,7 @@ Ass IsSy(C) = False
 Ass IsSy(D) = False
 End Sub
 
-Private Sub ZZ_IsStrAy()
+Private Sub Z_IsStrAy()
 Dim V$()
 Dim B: B = V
 Dim C()

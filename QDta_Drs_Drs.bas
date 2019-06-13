@@ -10,7 +10,10 @@ Type DrSepr
     LinSep As String
     LinQuote As String
 End Type
-Enum EmTblFmt: EiTblFmt: EiSSFmt: End Enum
+Enum EmTblFmt
+    EiTblFmt = 0
+    EiSSFmt = 1
+End Enum
 Type Drs: Fny() As String: Dry() As Variant: End Type
 Type Drss: N As Long: Ay() As Drs: End Type
 Enum EmCnt
@@ -227,6 +230,12 @@ With Drs
     .Dry = Dry
 End With
 End Function
+Function DrszNewDry(A As Drs, NewDry()) As Drs
+With DrszNewDry
+    .Fny = A.Fny
+    .Dry = NewDry
+End With
+End Function
 
 Function DrsAddCol(A As Drs, ColNm$, CnstBrk) As Drs
 DrsAddCol = Drs(CvSy(AddAyItm(A.Fny, ColNm)), DryAddColzC(A.Dry, CnstBrk))
@@ -327,7 +336,7 @@ Next
 End Function
 
 Function DrsInsCV(A As Drs, C$, V) As Drs
-DrsInsCV = Drs(CvSy(AyInsEle(A.Fny, C)), DryInsColzV(A.Dry, V, IxzAy(A.Fny, C)))
+DrsInsCV = Drs(CvSy(AyInsEle(A.Fny, C)), InsColzDryzV(A.Dry, V, IxzAy(A.Fny, C)))
 End Function
 
 Function DrsInsCVAft(A As Drs, C$, V, AftFldNm$) As Drs
@@ -346,13 +355,13 @@ If IsAft Then
     Ix = Ix + 1
 End If
 Fny1 = AyInsEle(Fny, FldNm, CLng(Ix))
-Dry = DryInsColzV(A.Dry, V, Ix)
+Dry = InsColzDryzV(A.Dry, V, Ix)
 DrsInsCVIsAftFld = Drs(Fny1, Dry)
 End Function
 
 Function IsEqDrs(A As Drs, B As Drs) As Boolean
 Select Case True
-Case IsEqAy(A.Fny, B.Fny), IsEqDry(A.Dry, B.Dry)
+Case Not IsEqAy(A.Fny, B.Fny), Not IsEqDry(A.Dry, B.Dry)
 Case Else: IsEqDrs = True
 End Select
 End Function
@@ -539,7 +548,7 @@ For J = UO + 1 To U
 Next
 End Sub
 
-Private Sub ZZ_GpDicDKG()
+Private Sub Z_GpDicDKG()
 Dim Act As Dictionary, Dry(), Dr1, Dr2, Dr3
 Dr1 = Array("A", , 1)
 Dr2 = Array("A", , 2)
@@ -552,14 +561,14 @@ Ass IsEqAy(Act("B"), Array(3))
 Stop
 End Sub
 
-Private Sub ZZ_CntDiczDrs()
+Private Sub Z_CntDiczDrs()
 Dim Drs As Drs, Dic As Dictionary
 'Drs = Vbe_Mth12Drs(CVbe)
 Set Dic = CntDiczDrs(Drs, "Nm")
 BrwDic Dic
 End Sub
 
-Private Sub ZZ_SelDrs()
+Private Sub Z_SelDrs()
 BrwDrs SelDrs(SampDrs1, "A B D")
 End Sub
 

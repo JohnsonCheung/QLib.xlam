@@ -9,9 +9,9 @@ PushObjAy O, Oy2
 OyAdd = O
 End Function
 
-Sub DoItoMth(Ito, ObjMth)
+Sub DoItoMth(ITo, ObjMth)
 Dim Obj As Object
-For Each Obj In Ito
+For Each Obj In ITo
     CallByName Obj, ObjMth, VbMethod
 Next
 End Sub
@@ -131,11 +131,11 @@ For Each I In SyzSS(PP)
 Next
 End Function
 
-Private Sub ZZ_OyDrs()
-'ShwWs DrsNewWs(OyDrs(CurrentDb.TableDefs("ZZ_UpdSeqFld").Fields, "Name Type OrdinalPosition"))
+Private Sub Z_OyDrs()
+'ShwWs DrsNewWs(OyDrs(CurrentDb.TableDefs("Z_UpdSeqFld").Fields, "Name Type OrdinalPosition"))
 End Sub
 
-Private Sub ZZ_OyP_Ay()
+Private Sub Z_OyP_Ay()
 Dim CdPanAy() As CodePane
 Stop
 'CdPanAy = Oy(CPj.MdAy).PrpVy("CodePane", CdPanAy)

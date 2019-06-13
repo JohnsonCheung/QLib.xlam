@@ -224,7 +224,7 @@ O.Init LikssAy
 Set PredzLikssAy = O
 End Function
 
-Private Sub ZZ_SyeLikss()
+Private Sub Z_SyeLikss()
 Dim Sy$(), Likss$
 GoSub ZZ
 GoSub T0

@@ -4,8 +4,7 @@ Option Explicit
 Private Const CMod$ = "MIde_Pj_Dte."
 Private Const Asm$ = "QIde"
 Function PjDtezFb(Fb) As Date
-Static Y As New Access.Application
-Y.OpenCurrentDatabase Fb
+Dim Y As New Access.Application: Y.OpenCurrentDatabase Fb
 Y.Visible = False
 PjDtezFb = PjDtezAcs(Y)
 Y.CloseCurrentDatabase

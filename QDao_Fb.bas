@@ -58,17 +58,17 @@ Sub DrpFbt(Fb, T)
 CatzFb(Fb).Tables.Delete T
 End Sub
 
-Private Sub ZZ_HasFbt()
+Private Sub Z_HasFbt()
 Ass HasFbt(SampFbzDutyDta, "SkuB")
 End Sub
 
 
-Private Sub ZZ_OupTnyzFb()
+Private Sub Z_OupTnyzFb()
 Dim Fb$
 D OupTnyzFb(Fb)
 End Sub
 
-Private Sub ZZ_TnyzFb()
+Private Sub Z_TnyzFb()
 DmpAy TnyzFb(SampFbzDutyDta)
 End Sub
 

@@ -15,7 +15,7 @@ End Function
 Function Expandss$(QVblTp$, Seedss$)
 Expandss = Expand(QVblTp, SyzSS(Seedss))
 End Function
-Private Sub ZZ_Expandss()
+Private Sub Z_Expandss()
 Dim QVblTp$, Seed$()
 ZZ:
     Erase XX
@@ -51,6 +51,6 @@ Tst:
 End Sub
 
 Private Sub ZZ()
-ZZ_Expandss
+Z_Expandss
 End Sub
 

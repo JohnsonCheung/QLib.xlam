@@ -119,7 +119,7 @@ Next
 IsAySub = True
 End Function
 
-Private Sub ZZ_HasEleAyInSeq()
+Private Sub Z_HasEleAyInSeq()
 Dim A, B
 A = Array(1, 2, 3, 4, 5, 6, 7, 8)
 B = Array(2, 4, 6)
@@ -127,7 +127,7 @@ Debug.Assert HasEleAyInSeq(A, B) = True
 
 End Sub
 
-Private Sub ZZ_HasEleDupEle()
+Private Sub Z_HasEleDupEle()
 Ass HasEleDupEle(Array(1, 2, 3, 4)) = False
 Ass HasEleDupEle(Array(1, 2, 3, 4, 4)) = True
 End Sub

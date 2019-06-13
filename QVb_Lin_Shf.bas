@@ -42,6 +42,12 @@ End Function
 Function ShfAs(OLin$) As Boolean
 ShfAs = ShfTermX(OLin, "As")
 End Function
+Function ShfEq(OLin$) As Boolean
+ShfEq = ShfTermX(OLin, "=")
+End Function
+Function ShfTy(OLin$) As Boolean
+ShfTy = ShfTermX(OLin, "Ty")
+End Function
 Function ShfBkt(OLin$) As Boolean
 ShfBkt = ShfPfx(OLin, "()")
 End Function

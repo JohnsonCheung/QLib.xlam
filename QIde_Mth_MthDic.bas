@@ -12,7 +12,7 @@ For Each C In P.VBComponents
 Next
 End Function
 
-Private Sub ZZ_SMthDicM()
+Private Sub Z_SMthDicM()
 B SMthDicM
 End Sub
 Function SMthDicM() As Dictionary
@@ -22,13 +22,13 @@ Function SMthDIczM(M As CodeModule) As Dictionary
 Set SMthDIczM = SrtDic(MthDiczM(M))
 End Function
 
-Private Sub ZZ_MthDiczP()
+Private Sub Z_MthDiczP()
 Dim A As Dictionary: Set A = MthDiczP(CPj)
 Ass IsDicOfLines(A) '
 Vc A
 End Sub
 
-Private Sub ZZ_MthDicM()
+Private Sub Z_MthDicM()
 B MthDicM
 End Sub
 
@@ -79,7 +79,7 @@ Set SMthDicP = SMthDiczP(CPj)
 End Function
 
 Function SSrcLineszS$(Src$())
-SSrcLineszS = JnStrDic(SrtDic(MthDic(Src)), vbDblCrLf)
+SSrcLineszS = JnStrDic(SrtDic(MthDic(Src)), vb2CrLf)
 End Function
 Function SSrcLinesM$()
 SSrcLinesM = SSrcLineszM(CMd)
@@ -101,10 +101,6 @@ Dim O$: O = IIf(Old = NewLines, "(Same)", "<====Diff")
 Debug.Print Mdn(M), O
 End Sub
 
-Sub BrwSMdDiczP()
-BrwDic SMdDiczP(CPj)
-End Sub
-
 Sub SrtMd()
 SrtzM CMd
 End Sub
@@ -117,7 +113,7 @@ For Each C In P.VBComponents
 Next
 End Sub
 
-Private Sub ZZ_Dcl_BefAndAft_Srt()
+Private Sub Z_Dcl_BefAndAft_Srt()
 Const Mdn = "VbStrRe"
 Dim A$() ' Src
 Dim B$() ' Src->Srt
@@ -130,7 +126,7 @@ B1 = DclLy(B)
 Stop
 End Sub
 
-Private Sub ZZ_SrtMd()
+Private Sub Z_SrtMd()
 Dim Md As CodeModule
 GoSub X0
 Exit Sub

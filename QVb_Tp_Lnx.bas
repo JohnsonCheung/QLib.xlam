@@ -42,7 +42,7 @@ For J = 0 To A.N - 1
     PushI IxyzLnxs, A.Ay(J).Ix
 Next
 End Function
-Private Sub ZZ_FmtLnxs()
+Private Sub Z_FmtLnxs()
 Dim A As Lnxs
 GoSub ZZ
 Exit Sub
@@ -416,7 +416,7 @@ For Each T1 In Itr(T1Ay)
     PushI LnossAy_FmLnxs_WhT1Ay, Lnoss_FmLnxs_WhT1(A, T1)
 Next
 End Function
-Private Sub ZZ_DupT1_FmLnxs_ToDupT1Ay_AndLnossAy()
+Private Sub Z_DupT1_FmLnxs_ToDupT1Ay_AndLnossAy()
 Dim EptDupT1Ay$(), EptLnossAy$()
 Dim ActDupT1Ay$(), ActLnossAy$()
 Dim A As Lnxs

@@ -33,7 +33,7 @@ For Each Dr In Itr(Dry)
 Next
 End Function
 
-Private Sub ZZ_FmtA()
+Private Sub Z_FmtA()
 DmpAy FmtDry(SampDry1)
 End Sub
 
@@ -67,7 +67,7 @@ Function RowIxOptzDryDr&(Dry(), Dr)
 Dim N%: N = Si(Dr)
 Dim Ix&, D
 For Each D In Itr(Dry)
-    If IsEqAy(AywFstNEle(D, N), Dr) Then
+    If IsEqAy(FstNEle(D, N), Dr) Then
         RowIxOptzDryDr = Ix
         Exit Function
     End If
@@ -83,7 +83,7 @@ For Each Dr In Itr(Dry)
     If U <> UB(Dr) Then
         ReDim Preserve Dr(U)
     End If
-    Dim Ix: Ix = RowIxOptzDryDr(O, AywFstNEle(Dr, UK))
+    Dim Ix: Ix = RowIxOptzDryDr(O, FstNEle(Dr, UK))
     If Ix = -1 Then
         PushI O, Dr
     Else
@@ -135,7 +135,7 @@ Next
 NRowzInDryzColEv = O
 End Function
 Function KeepFstNColzDrs(A As Drs, N%) As Drs
-KeepFstNColzDrs = Drs(CvSy(AywFstNEle(A.Fny, N)), KeepFstNCol(A.Dry, N))
+KeepFstNColzDrs = Drs(CvSy(FstNEle(A.Fny, N)), KeepFstNCol(A.Dry, N))
 End Function
 
 Function KeepFstNCol(Dry(), N%) As Variant()
@@ -147,12 +147,22 @@ For Each Dr In Itr(Dry)
 Next
 End Function
 Function DrywColPfx(Dry(), C&, Pfx, Optional Cmp As VbCompareMethod = vbTextCompare) As Variant()
-Dim Dr
-For Each Dr In Itr(Dry)
+Dim Dr: For Each Dr In Itr(Dry)
    If HasPfx(Dr(C), Pfx, Cmp) Then PushI DrywColPfx, Dr
 Next
 End Function
-
+Function AlignzTRst(Ly$()) As String()
+Dim TAy$(), RstAy$()
+Dim L, T$, Rst$: For Each L In Itr(Ly)
+    AsgTRst L, T, Rst
+    PushI TAy, T
+    PushI RstAy, Rst
+Next
+TAy = AlignLzAy(TAy)
+Dim J&: For J = 0 To UB(TAy)
+    PushI AlignzTRst, TAy(J) & " " & RstAy(J)
+Next
+End Function
 Function AlignRzDryC(Dry(), C) As Variant()
 Dim Ay$(): Ay = AlignRzAy(ColzDry(Dry, C))
 Dim O(): O = Dry

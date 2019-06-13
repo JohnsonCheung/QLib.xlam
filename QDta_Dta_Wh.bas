@@ -26,12 +26,6 @@ Next
 RmvPfxzDrs = Drs(A.Fny, ODry)
 End Function
 
-Function DrswColPfx(A As Drs, C$, Pfx) As Drs
-Dim Dry(), Ix&, Fny$()
-Fny = A.Fny
-Ix = IxzAy(Fny, C)
-DrswColPfx = Drs(Fny, DrywColPfx(A.Dry, Ix, Pfx))
-End Function
 Function LngAyzDrs(A As Drs, C$) As Long()
 LngAyzDrs = IntozDrsC(EmpLngAy, A, C)
 End Function
@@ -44,9 +38,6 @@ LngAyzColEqSel = LngAyzDrs(ColEqSel(A, C, V, Sel), Sel)
 End Function
 Function ColEqSel(A As Drs, C$, V, Sel$) As Drs
 ColEqSel = SelDrs(ColEq(A, C, V), Sel)
-End Function
-Function ColNeSel(A As Drs, C$, V, Sel$) As Drs
-ColNeSel = SelDrs(ColNe(A, C, V), Sel)
 End Function
 Function ColNe(A As Drs, C$, V) As Drs
 ColNe = DrswColNe(A, C, V)
@@ -89,33 +80,60 @@ Dim SelFny$()
 SelFny = AyeEle(A.Fny, C)
 ColEqExlEqCol = ColEqSelFny(A, C, V, SelFny)
 End Function
-Function FstDrwColEqSel(A As Drs, C$, V, Sel$) As Variant()
-Stop
-'FstDrwColEqSel = SelDrs(ColEq(A, C, V), Sel)
+Function ColNeSel(A As Drs, C$, V, Sel$) As Drs
+ColNeSel = SelDrs(ColNe(A, C, V), Sel)
 End Function
 
-Function DrswColNeSel(A As Drs, C$, V, Sel$) As Drs
-DrswColNeSel = SelDrs(DrswColNe(A, C, V), Sel)
-End Function
-
-Function DrswColIn(A As Drs, C, InVy) As Drs
+Function ColNotIn(A As Drs, C, InVy) As Drs
 Dim Ix&: Ix = IxzAy(A.Fny, C)
-DrswColIn = Drs(A.Fny, DrywColIn(A.Dry, Ix, InVy))
+If Not IsArray(InVy) Then Thw CSub, "Given InVy is not an array", "Ty-InVy", TypeName(InVy)
+Dim Dr, Dry(): For Each Dr In Itr(A.Dry)
+    If Not HasEle(InVy, Dr(Ix)) Then
+        PushI Dry, Dr
+    End If
+Next
+ColNotIn = Drs(A.Fny, Dry)
 End Function
-Function DrswColInSel(A As Drs, C, InVy, Sel$) As Drs
-DrswColInSel = SelDrs(DrswColIn(A, C, InVy), Sel)
+
+Function ColIn(A As Drs, C, InVy) As Drs
+Dim Ix&: Ix = IxzAy(A.Fny, C)
+ColIn = Drs(A.Fny, DrywColIn(A.Dry, Ix, InVy))
 End Function
+Function ColInSel(A As Drs, C, InVy, Sel$) As Drs
+ColInSel = SelDrs(ColIn(A, C, InVy), Sel)
+End Function
+
 Function ColEq(A As Drs, C$, V) As Drs
 ColEq = DrswColEq(A, C, V)
 End Function
+
+Function ColDup(A As Drs, C$) As Drs
+Dim Dup(): Dup = AywDup(ColzDrs(A, C))
+ColDup = ColIn(A, C, Dup)
+End Function
+
 Function ColEqE(A As Drs, C$, V) As Drs
 ColEqE = DrpCol(DrswColEq(A, C, V), C)
 End Function
 Function TopN(A As Drs, Optional N = 50) As Drs
-TopN = Drs(A.Fny, CvAv(AywFstNEle(A.Dry, N)))
+TopN = Drs(A.Fny, CvAv(FstNEle(A.Dry, N)))
 End Function
+Function ColNoSng(A As Drs, C$) As Drs
+'Fm  A : has a column-C
+'Ret   : sam stru as A and som row removed.  rmv row are its col C value is Single. @@
+Dim Col(): Col = ColzDrs(A, C)
+Dim Sng(): Sng = AywSng(Col)
+ColNoSng = ColNotIn(A, C, Sng)
+End Function
+
 Function ColPfx(A As Drs, C$, Pfx$) As Drs
-ColPfx = DrswColPfx(A, C, Pfx)
+Dim Dry(), Ix&, Fny$()
+Fny = A.Fny
+Ix = IxzAy(Fny, C)
+ColPfx = Drs(Fny, DrywColPfx(A.Dry, Ix, Pfx))
+End Function
+Function Col2Patn(A As Drs, C$, Patn1$, Patn2$) As Drs
+Col2Patn = ColPatn(ColPatn(A, C, Patn1), C, Patn2)
 End Function
 Function ColPatn(A As Drs, C$, Patn$) As Drs
 Dim I%: I = IxzAy(A.Fny, C)
@@ -124,6 +142,10 @@ Dim Dry(), Dr: For Each Dr In Itr(A.Dry)
     If Re.Test(Dr(I)) Then PushI Dry, Dr
 Next
 ColPatn = Drs(A.Fny, Dry)
+End Function
+Function DTopN(A As Drs, Optional NTop& = 50) As Drs
+Dim Dry(): Dry = FstNEle(A.Dry, NTop)
+DTopN = Drs(A.Fny, Dry)
 End Function
 Function DrswColEq(A As Drs, C$, V) As Drs
 Dim Dry(), Ix&, Fny$()
@@ -191,7 +213,8 @@ DrswNotRowIxy = Drs(A.Fny, O)
 End Function
 
 Function DrswRowIxy(A As Drs, RowIxy&()) As Drs
-DrswRowIxy = Drs(A.Fny, CvAv(AywIxy(A.Dry, RowIxy)))
+Dim Dry(): Dry = AywIxy(A.Dry, RowIxy)
+DrswRowIxy = Drs(A.Fny, Dry)
 End Function
 
 Function ValzColEqSel(A As Drs, C$, V, ColNm$)
@@ -206,5 +229,4 @@ For Each Dr In Itr(A.Dry)
 Next
 Thw CSub, "In Drs, there is no record with Col-A eq Value-B, so no Col-C is returened", "Col-A Value-B Col-C Drs-Fny Drs-NRec", C, V, ColNm, A.Fny, NReczDrs(A)
 End Function
-
 

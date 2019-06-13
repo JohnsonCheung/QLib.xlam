@@ -6,6 +6,13 @@ Private Const CMod$ = "MIde_Mth_Liny_Drs."
 Function MthLinAyP() As String()
 MthLinAyP = StrCol(DMthP, "MthLin")
 End Function
+
+Function MthLinAyzPub(Src$()) As String()
+Dim L: For Each L In Itr(Src)
+    If IsLinzPubMth(L) Then PushI MthLinAyzPub, L
+Next
+End Function
+
 Function MthLinAyzP(P As VBProject) As String()
 MthLinAyzP = StrCol(DMthzP(P), "MthLin")
 End Function

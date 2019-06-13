@@ -82,10 +82,6 @@ End Function
 Private Sub ZZ()
 End Sub
 
-Sub AddRfzDistPj1(DistPj As VBProject)
-AddRfzRff DistPj, RffzDistPj(DistPj)
-End Sub
-
 Sub DmpPjRfP()
 DmpDrs DPjRfP
 End Sub

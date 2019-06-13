@@ -79,7 +79,7 @@ If ShfMthTy(L) = "" Then Exit Function
 Mthn = Nm(L)
 End Function
 
-Private Sub ZZ_MthDnzLin()
+Private Sub Z_MthDnzLin()
 Debug.Print MthDnzLin("Function MthnzMthDn$(MthDn$)")
 Dim Lin$
 End Sub
@@ -183,7 +183,7 @@ For Each L In Itr(Src)
 Next
 End Function
 
-Private Sub ZZ_ModNyzPPm()
+Private Sub Z_ModNyzPPm()
 Dim P As VBProject, PMthn
 GoSub ZZ
 Exit Sub
@@ -367,7 +367,7 @@ Function MthnyzM(M As CodeModule) As String()
 MthnyzM = MthnyzS(Src(M))
 End Function
 
-Private Sub ZZ_MthnzS()
+Private Sub Z_MthnzS()
 GoSub ZZ
 Exit Sub
 ZZ:
@@ -413,7 +413,7 @@ Dim Pn$: Pn = P.Name
 For Each C In P.VBComponents
     Dim Mn$: Mn = C.Name
     Dim A As Drs: A = DMthn(C.CodeModule)
-    Dim B As Drs: B = InsColzDrsCCBef(A, "Pj Md", Pn, Mn)
+    Dim B As Drs: B = InsColzDrsCC(A, "Pj Md", Pn, Mn)
     Dim O As Drs: O = AddDrs(O, A)
 Next
 DMthnzP = O

@@ -33,7 +33,7 @@ For Each L In Itr(Src)
             Exit Function
         End If
     End If
-    If IsMthLin(Lin) Then Exit For
+    If IsLinzMth(Lin) Then Exit For
     J = J + 1
 Next
 EnmFmIx = -1
@@ -100,16 +100,21 @@ Function UsrTyFmIx&(Src$(), TyNm)
 Dim J%
 For J = 0 To UB(Src)
    If IsUsrTyLin(Src(J)) = TyNm Then UsrTyFmIx = J: Exit Function
-   If IsMthLin(Src(J)) Then Exit For
+   If IsLinzMth(Src(J)) Then Exit For
 Next
 UsrTyFmIx = -1
 End Function
 
-Function TynyzS(Src$()) As String()
+Function TynzLin$(L)
+Dim Lin$: Lin = RmvMdy(L)
+If Not ShfTy(Lin) Then Exit Function
+TynzLin = Nm(Lin)
+End Function
+Function TyNyzS(Src$()) As String()
 Dim L
 For Each L In Itr(Src)
-    PushNonBlank TynyzS, TynzLin(L)
-    If IsMthLin(L) Then Exit Function
+    PushNonBlank TyNyzS, TynzLin(L)
+    If IsLinzMth(L) Then Exit Function
 Next
 End Function
 
@@ -145,7 +150,7 @@ If L = "" Then Exit Function
 If FstChr(L) = "'" Then Exit Function
 CdLyzL = TrimAy(Split(Lin, ":"))
 End Function
-Private Sub ZZ_CdLyzS()
+Private Sub Z_CdLyzS()
 Brw CdLyzS(SrczP(CPj))
 End Sub
 Function CdLyzS(Src$()) As String()
@@ -164,7 +169,7 @@ NEnmzM = NEnm(DclLyzM(M))
 End Function
 
 Function TynyzM(M As CodeModule) As String()
-TynyzM = TynyzS(DclLyzM(M))
+TynyzM = TyNyzS(DclLyzM(M))
 End Function
 
 Function TynyzP(P As VBProject) As String()
@@ -266,7 +271,7 @@ If Si(Src) = 0 Then Exit Function
 Dim N&, O$()
    N = DclLinCnt(Src)
 If N <= 0 Then Exit Function
-O = AywFstNEle(Src, N)
+O = FstNEle(Src, N)
 DclLy = O
 'Brw LyzNNAp("N Src DclLy", N, AddIxPfx(Src), O): Stop
 End Function
@@ -276,7 +281,7 @@ If Cnt <= 0 Then Exit Function
 If Lno > M.CountOfLines Then Exit Function
 LineszMLC = M.Lines(Lno, Cnt)
 End Function
-Private Sub ZZ_DclzM()
+Private Sub Z_DclzM()
 Dim O$(), C As VBComponent
 For Each C In CPj.VBComponents
     PushNonBlank O, DclzM(C.CodeModule)
@@ -292,7 +297,7 @@ End Function
 Function CnstLnxszS(Src$()) As Lnxs
 Dim L, J&
 For Each L In Itr(Src)
-    If IsLin_OfCnst(L) Then PushLnx CnstLnxszS, Lnx(L, J)
+    If IsLinzCnst(L) Then PushLnx CnstLnxszS, Lnx(L, J)
     J = J + 1
 Next
 End Function
@@ -300,17 +305,18 @@ End Function
 Function CnstLnxzSN(Src$(), CnstnPfx$) As Lnx
 Dim L, J%
 For Each L In Itr(Src)
-    If IsLin_OfCnst_WhNmPfx(L, CnstnPfx) Then CnstLnxzSN = Lnx(L, J): Exit Function
+    If IsLinzCnstPfx(L, CnstnPfx) Then CnstLnxzSN = Lnx(L, J): Exit Function
     J = J + 1
 Next
 End Function
-Function IsLin_OfCnst_WhNmPfx(L, CnstnPfx$) As Boolean
+
+Function IsLinzCnstPfx(L, CnstnPfx$) As Boolean
 Dim Lin$: Lin = RmvMdy(L)
 If Not ShfTermCnst(Lin) Then Exit Function
-IsLin_OfCnst_WhNmPfx = HasPfx(L, CnstnPfx)
+IsLinzCnstPfx = HasPfx(L, CnstnPfx)
 End Function
-Function IsLin_OfCnst(L) As Boolean
-IsLin_OfCnst = T1(RmvMdy(L)) = "Const"
+Function IsLinzCnst(L) As Boolean
+IsLinzCnst = T1(RmvMdy(L)) = "Const"
 End Function
 Function CnstLnxszM(M As CodeModule) As Lnxs
 Dim J&, L$, P$, L1$, L2$

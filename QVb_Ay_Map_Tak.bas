@@ -47,10 +47,10 @@ For Each I In Itr(Sy)
 Next
 End Function
 
-Function SyTakBetBkt(Sy$()) As String()
+Function BetBktzAy(Sy$()) As String()
 Dim I
 For Each I In Itr(Sy)
-    PushI SyTakBetBkt, BetBkt(CStr(I))
+    PushI BetBktzAy, BetBkt(CStr(I))
 Next
 End Function
 

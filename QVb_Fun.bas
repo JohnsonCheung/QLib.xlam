@@ -180,6 +180,9 @@ End Function
 Function Mch(Re As RegExp, S) As MatchCollection
 Set Mch = Re.Execute(S)
 End Function
+Function CvRe(A) As RegExp
+Set CvRe = A
+End Function
 Function RegExp(Patn$, Optional MultiLine As Boolean, Optional IgnoreCase As Boolean, Optional IsGlobal As Boolean) As RegExp
 If Patn = "" Or Patn = "." Then Exit Function
 Dim O As New RegExp

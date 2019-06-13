@@ -71,9 +71,16 @@ For Each V In A
 Next
 End Function
 
+Function MinEle(Ay)
+Dim O, I: For Each I In Itr(Ay)
+    If I < O Then O = I
+Next
+MinEle = O
+End Function
+
+
 Function MaxEle(Ay)
-Dim O, I
-For Each I In Itr(Ay)
+Dim O, I: For Each I In Itr(Ay)
     If I > O Then O = I
 Next
 MaxEle = O

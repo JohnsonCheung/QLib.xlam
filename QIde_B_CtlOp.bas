@@ -9,7 +9,7 @@ Stop
 RmvRmkzVb = LeftIf(Lin, RmkPoszVb(Lin))
 End Function
 
-Private Sub ZZ_RmkPoszVb()
+Private Sub Z_RmkPoszVb()
 Dim I, O$(), L$, P%
 For Each I In AywSubStr(AywSubStr(SrczP(CPj), "'"), """")
     P = RmkPoszVb(I)
@@ -88,7 +88,7 @@ Sub DltBar(BarNm$)
 If Not HasBar(BarNm) Then Debug.Print "Bar[" & BarNm & "] not found": Exit Sub
 Bars(BarNm).Delete
 End Sub
-Private Sub ZZ_EnsBtns()
+Private Sub Z_EnsBtns()
 Class1.Class_Initialize
 End Sub
 Sub EnsBtns(BarBtnccAy$())

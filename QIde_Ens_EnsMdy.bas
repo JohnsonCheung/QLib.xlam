@@ -5,13 +5,13 @@ Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Ens_MthMdy."
 Function MthLinzEnsPrv$(MthLin)
 Const CSub$ = CMod & "MthLinzEnsPrv"
-If Not IsMthLin(MthLin) Then Thw CSub, "Given MthLin is not MthLin", "Lin", MthLin
+If Not IsLinzMth(MthLin) Then Thw CSub, "Given MthLin is not MthLin", "Lin", MthLin
 MthLinzEnsPrv = "Private " & RmvMdy(MthLin)
 End Function
 
 Function MthLinzEnsPub$(MthLin)
 Const CSub$ = CMod & "MthLinzEnsPub"
-If Not IsMthLin(MthLin) Then Thw CSub, "Given MthLin is not MthLin", MthLin
+If Not IsLinzMth(MthLin) Then Thw CSub, "Given MthLin is not MthLin", MthLin
 MthLinzEnsPub = RmvMdy(MthLin)
 End Function
 
@@ -22,13 +22,13 @@ End Sub
 Sub EnsPrvZzP(P As VBProject)
 Dim C As VBComponent
 For Each C In P.VBComponents
-    EnsPrvZzM C.CodeModule
+    EnsPrvZ C.CodeModule
 Next
 End Sub
 Private Function Z_EnsPrv(A As Drs) As Drs
 
 End Function
-Sub EnsPrvZzM(M As CodeModule, Optional Rpt)
+Sub EnsPrvZ(M As CodeModule, Optional Rpt)
 Const CmPfx$ = "X_"
 Dim A As Drs: ' A = DPubZMth(M) ' L MthLin
 Dim B As Drs: ' B = X_EnsPrv(A)   ' L MthLin PrvZ

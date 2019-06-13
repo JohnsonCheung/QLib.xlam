@@ -12,13 +12,13 @@ Private Function ConstPrpPth$(Mdn)
 End Function
 
 Function IsMthLinzConstStr(Lin) As Boolean
-If Not IsMthLin(Lin) Then Exit Function
+If Not IsLinzMth(Lin) Then Exit Function
 If BetBkt(Lin) <> "" Then Exit Function
 If TakTyChr(Lin) = "$" Then Exit Function
 IsMthLinzConstStr = True
 End Function
 Function IsMthLinzConstLy(Lin) As Boolean
-If Not IsMthLin(Lin) Then Exit Function
+If Not IsLinzMth(Lin) Then Exit Function
 If BetBkt(Lin) <> "" Then Exit Function
 If MthRetTy(Lin) <> "String()" Then Exit Function
 IsMthLinzConstLy = True

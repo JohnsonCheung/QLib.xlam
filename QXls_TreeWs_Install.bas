@@ -18,15 +18,15 @@ Erase XX
 End Function
 
 Sub InstallTreeWs()
-Dim Ws, WB
+Dim Ws, Wb
 For Each Ws In Itr(TreeWsAy)
     InstallTreeWsz CvWs(Ws)
 Next
-For Each WB In Itr(TreeWbAy)
-    InstallTreeWbz CvWb(WB)
+For Each Wb In Itr(TreeWbAy)
+    InstallTreeWbz CvWb(Wb)
 Next
 End Sub
-Sub InstallTreeWbz(WB As Workbook)
+Sub InstallTreeWbz(Wb As Workbook)
 Exit Sub
 'Wb.VBProject.References.AddFromFile ShpCstFxa
 End Sub
@@ -37,16 +37,16 @@ For Each Ws In A.Sheets
 Next
 End Function
 Function TreeWbAy() As Workbook()
-Dim WB As Workbook, Ws As Worksheet
-For Each WB In Xls.Workbooks
-    If IsTreeWb(WB) Then PushObj TreeWbAy, WB
+Dim Wb As Workbook, Ws As Worksheet
+For Each Wb In Xls.Workbooks
+    If IsTreeWb(Wb) Then PushObj TreeWbAy, Wb
 Next
 
 End Function
 Function TreeWsAy() As Worksheet()
-Dim WB As Workbook, Ws As Worksheet
-For Each WB In Xls.Workbooks
-    For Each Ws In WB.Sheets
+Dim Wb As Workbook, Ws As Worksheet
+For Each Wb In Xls.Workbooks
+    For Each Ws In Wb.Sheets
         If Ws.Name = "TreeWs" Then PushObj TreeWsAy, Ws
     Next
 Next

@@ -6,7 +6,7 @@ Private Const Asm$ = "QDta"
 
 Sub VcDrs(A As Drs, _
 Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EiBeg1, _
-Optional Fmt As EmTblFmt = EiTblFmt, _
+Optional Fmt As EmTblFmt, _
 Optional FnPfx$, Optional UseVc As Boolean)
 BrwDrs A, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, FnPfx, UseVc
 End Sub

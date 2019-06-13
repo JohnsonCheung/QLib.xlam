@@ -138,7 +138,7 @@ Dim O$, MaxWdt%
 MaxWdt = EnsBet(MaxWdt0, 1, 1000)
 Select Case True
 Case IsStr(V):     O = CellgStr(V, MaxWdt)
-Case IsBool(V):    O = V
+Case IsBool(V):    O = IIf(V, "True", "")
 Case IsNumeric(V): O = CellgNum(V, MaxWdt, ShwZer)
 Case IsEmp(V):     O = "#Emp#"
 Case IsNull(V):    O = "#Null#"

@@ -26,24 +26,11 @@ Case Else: Thw CSub, "[MdDNm] should be XXX.XXX or XXX", MdDNm
 End Select
 End Function
 
-Function CmpAyzM(A() As CodeModule) As VBComponent()
-CmpAyzM = IntozOP(CmpAyzM, A, PrpPth("Parent"))
-End Function
-
-Function MdAywInTy(A() As CodeModule, InTyAy() As vbext_ComponentType) As CodeModule()
-Dim I
-For Each I In A
-    If HasEle(InTyAy, CvMd(I).Parent.Type) Then PushObj MdAywInTy, I
-Next
-End Function
-
 Function MdDNm$(M As CodeModule)
 MdDNm = PjnzM(M) & "." & Mdn(M)
 End Function
 
-Function SMdDiczP(P As VBProject) As Dictionary
-Set SMdDiczP = SrtDic(MdDic(P))
-End Function
+
 Function MdDic(P As VBProject) As Dictionary
 Dim C As VBComponent
 Set MdDic = New Dictionary
@@ -135,11 +122,11 @@ Private Function Y_Md() As CodeModule
 Set Y_Md = CVbe.VBProjects("StockShipRate").VBComponents("Schm").CodeModule
 End Function
 
-Private Sub ZZ_MdDrs()
-'BrwDrs MdDrs(Md("IdeFeature_EnsZZ_AsPrivate"))
+Private Sub Z_MdDrs()
+'BrwDrs MdDrs(Md("IdeFeature_EnsZ_AsPrivate"))
 End Sub
 
-Private Sub ZZ_MthLnozMM()
+Private Sub Z_MthLnozMM()
 Dim O$()
     Dim Lno, L&(), M, A As CodeModule, Ny$(), J%
     Set A = Md("Fct")

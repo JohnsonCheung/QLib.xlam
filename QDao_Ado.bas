@@ -42,7 +42,7 @@ End Function
 Function DFxwFTy(Fx, W) As Drs
 Dim A As Drs
 A = DFTyzFxw(Fx, W)
-DFxwFTy = InsColzDrsCCBef(A, "Fx W", Fx, W)
+DFxwFTy = InsColzDrsCC(A, "Fx W", Fx, W)
 End Function
 Function DFTyzFxw(Fx, W) As Drs
 DFTyzFxw = DFTy(CatzFx(Fx), CatTnzWsn(W))
@@ -140,8 +140,8 @@ End Sub
 Function HasTblzFfnT(Ffn, T) As Boolean
 Const CSub$ = CMod & "HasTblzFfnTblNm"
 Select Case True
-Case ISfx(Ffn): HasTblzFfnT = HasFxw(Ffn, T)
-Case ISfx(Ffn): HasTblzFfnT = HasFxw(Ffn, T)
+Case IsFx(Ffn): HasTblzFfnT = HasFxw(Ffn, T)
+Case IsFx(Ffn): HasTblzFfnT = HasFxw(Ffn, T)
 Case Else: Thw CSub, "Ffn must be Fx or Fb", "Ffn T", Ffn, T
 End Select
 End Function
@@ -166,7 +166,7 @@ End Function
 Function WnyzWb(A As Workbook) As String()
 WnyzWb = Wny(A.FullName)
 End Function
-Private Sub ZZ_Wny()
+Private Sub Z_Wny2()
 Const Fx$ = "C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\2018\MB52 2018-01-30.xls"
 D Wny(Fx)
 End Sub
@@ -267,7 +267,7 @@ End Function
 Function CnStrzFxzOrFb$(Fx_or_Fb)
 Dim A$: A = Fx_or_Fb
 Select Case True
-Case ISfx(A): CnStrzFxzOrFb = CnStrzFbzAsAdo(A)
+Case IsFx(A): CnStrzFxzOrFb = CnStrzFbzAsAdo(A)
 Case IsFb(A): CnStrzFxzOrFb = CnStrzFxAdo(A)
 Case IsFb(A):
 Case Else: Thw CSub, "Must be either Fx or Fb", "Fx_or_Fb", A
@@ -307,7 +307,7 @@ End Function
 Function FnyzFfnTblNm(Ffn, TblNm$) As String()
 Const CSub$ = CMod & "FnyzFfnTblNm"
 Select Case True
-Case ISfx(Ffn): FnyzFfnTblNm = FnyzFxw(Ffn, TblNm$)
+Case IsFx(Ffn): FnyzFfnTblNm = FnyzFxw(Ffn, TblNm$)
 Case IsFb(Ffn): FnyzFfnTblNm = FnyzFbt(Ffn, TblNm$)
 Case Else: Thw CSub, "Ffn must be Fx or Fb", "Ffn TblNm", Ffn, TblNm
 End Select

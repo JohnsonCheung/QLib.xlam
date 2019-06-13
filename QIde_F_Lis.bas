@@ -36,11 +36,20 @@ End Sub
 Function DMthPub() As Drs
 DMthPub = ColEqE(DMthP, "Mdy", "Pub")
 End Function
+
 Function DMthPFun() As Drs
 DMthPFun = ColEqE(DMthPub, "Ty", "Fun")
 End Function
+
+Function DMthPatn(Patn$) As Drs
+DMthPatn = ColPatn(DMthP, "Mthn", Patn)
+End Function
+Function DMth2Patn(Patn1$, Patn2$) As Drs
+DMth2Patn = Col2Patn(DMthP, "Mthn", Patn1, Patn2)
+End Function
+
 Function DMthPrp() As Drs
-DMthPrp = DrswColIn(DMthPub, "Ty", SyzSS("Get Let Set"))
+DMthPrp = ColIn(DMthPub, "Ty", SyzSS("Get Let Set"))
 End Function
 Sub LisPFunRetAs(RetAsPatn$)
 Dim RetAs As Drs: RetAs = AddColzRetAs(DMthPFun)
@@ -67,7 +76,7 @@ End Sub
 Sub LisMth()
 Dim Ay$(): Stop: ' Ay = QMthnyzV(CVbe)
 Debug.Print "Fst 30 of " & Si(Ay) & " methods"
-D AywFstNEle(Ay, 30)
+D FstNEle(Ay, 30)
 End Sub
 
 Private Function WhStrzMthPatn$(MthPatn$, Optional PubOnly As Boolean)
@@ -94,6 +103,11 @@ Sub LisMthSfx(Sfx$, Optional PubOnly As Boolean)
 'D QMthnyV(WhMthzSfx(Sfx, PubOnly))
 End Sub
 
-Sub LisMthPatn(Patn$, Optional InclPrv As Boolean)
-'D MthQLyV(WhStrzMthPatn(Patn, InclPrv))
+Sub LisMthPatn(Patn$)
+DmpDrs DTopN(DMthPatn(Patn))
 End Sub
+
+Sub LisMth2Patn(Patn1$, Patn2$)
+DmpDrs DTopN(DMth2Patn(Patn1, Patn2))
+End Sub
+

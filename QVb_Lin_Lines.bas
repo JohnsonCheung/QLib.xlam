@@ -21,7 +21,7 @@ End Sub
 Sub BrwLinesAy(LinesAy)
 B FmtLinesAy(LinesAy)
 End Sub
-Private Sub ZZ_FmtLinesAy()
+Private Sub Z_FmtLinesAy()
 Dim LinesAy
 GoSub ZZ
 Exit Sub
@@ -159,14 +159,14 @@ While L <> ""
 Wend
 End Function
 
-Private Sub ZZ_RTrimLines()
+Private Sub Z_RTrimLines()
 Dim Lines$: Lines = LineszVbl("lksdf|lsdfj|||")
 Dim Act$: Act = RTrimLines(Lines)
 Debug.Print Act & "<"
 Stop
 End Sub
 
-Private Sub ZZ_LasNLines()
+Private Sub Z_LasNLines()
 Dim Ay$(), A$, J%
 For J = 0 To 9
 Push Ay, "Line " & J
@@ -204,7 +204,7 @@ For Each Lines In Itr(LinesAy)
 Next
 End Function
 
-Private Sub Z_RTrimLines()
+Private Sub Z_RTrimLines1()
 Dim Lines$: Lines = LineszVbl("lksdf|lsdfj|||")
 Dim Act$: Act = RTrimLines(Lines)
 Debug.Print Act & "<"

@@ -4,29 +4,35 @@ Option Explicit
 Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Ty."
 Public Const ShtTyss$ = " A Att B Bool Byt C Chr D Dbl Dte Dec I Int L Lng M Mem S T Tim Txt "
-
-Property Get DrsOfShtTy() As Drs
+Enum EmSimTy
+    EmEmp
+    EiYes
+    EiNbr
+    EiDte
+    EiStr
+End Enum
+Property Get DShtTy() As Drs
 Dim Dry(), I
 For Each I In SyzSS(ShtTyss)
     PushI Dry, Sy(I, DtaTyzShtTy(I))
 Next
-DrsOfShtTy = DrszFF("ShtTy DtaTy", Dry)
+DShtTy = DrszFF("ShtTy DtaTy", Dry)
 End Property
 
-Property Get ShtTySy() As String()
-ShtTySy = SyzSS(ShtTyss)
+Property Get ShtTyAy() As String()
+ShtTyAy = SyzSS(ShtTyss)
 End Property
 
 Property Get ShtTyDtaTyLy() As String()
 Dim O$(), I
-For Each I In ShtTySy
+For Each I In ShtTyAy
     PushI O, I & " " & DtaTyzShtTy(CStr(I))
 Next
 ShtTyDtaTyLy = FmtSyz2Term(O)
 End Property
 
-Property Get DtaTySy() As String()
-DtaTySy = DtaTySyzShtTySy(ShtTySy)
+Property Get DtaTyAy() As String()
+DtaTyAy = DtaTyAyzS(ShtTyAy)
 End Property
 
 Function IsShtTy(S) As Boolean
@@ -110,22 +116,45 @@ Case Else: Stop
 End Select
 DtaTy = O
 End Function
+
+Function SimTy(V) As EmSimTy
+SimTy = SimTyzV(VarType(V))
+End Function
+
+Function SimTyzV(V As VbVarType) As EmSimTy
+Dim O As EmSimTy
+Select Case True
+Case V = vbBoolean: O = EiYes
+Case V = vbByte, V = vbCurrency, V = vbDecimal, V = vbDouble, V = vbInteger, V = vbLong, V = vbSingle: O = EiNbr
+Case V = vbDate: O = EiDte
+Case V = vbString: O = EiStr
+Case Else: Thw CSub, "Unsupported VarType", "VarType", V
+End Select
+End Function
+Function MaxSim(A As EmSimTy, B As EmSimTy) As EmSimTy
+MaxSim = Max(A, B)
+End Function
+Function SimTyzCol(Col()) As EmSimTy
+Dim V: For Each V In Itr(Col)
+    Dim O As EmSimTy: O = MaxSim(O, SimTy(V))
+    If O = EiStr Then SimTyzCol = O: Exit Function
+Next
+End Function
+Function VbTyzCol(Col()) As EmSimTy
+Stop
+
+End Function
 Function VbTyAy(Ay) As VbVarType()
 Dim V
 For Each V In Ay
     PushI VbTyAy, VarType(V)
 Next
 End Function
-Function DaoTyzAy(Ay) As Dao.DataTypeEnum
-Dim A As VBA.VbVarType
-If Not IsArray(Ay) Then Stop
-A = VarType(Ay) - vbArray
-'If A = 0 Then DaoTyzAy = DaoTyzVbTy(MaxVbTy zAy(VbTyAy(Ay))): Exit Function
-Stop
-DaoTyzAy = DaoTyzVbTy(A)
+Function DaoTyzCol(Col()) As Dao.DataTypeEnum
+DaoTyzCol = DaoTyzVbTy(VbTyzCol(Col))
 End Function
 
-Function DaoTyzDtaTy(DtaTy) As Dao.DataTypeEnum
+Function DaoTyzDtaTy(DtaTy$) As Dao.DataTypeEnum
 Const CSub$ = CMod & "DaoTy"
 Dim O
 Select Case DtaTy
@@ -206,10 +235,10 @@ Case 1, 3: If Not IsAscUCas(Asc(FstChr(S))) Then Exit Function
 End Select
 End Function
 
-Function DtaTySyzShtTySy(ShtTySy$()) As String()
+Function DtaTyAyzS(ShtTyAy$()) As String()
 Dim ShtTy
-For Each ShtTy In Itr(ShtTySy)
-    PushI DtaTySyzShtTySy, DtaTyzShtTy(CStr(ShtTy))
+For Each ShtTy In Itr(ShtTyAy)
+    PushI DtaTyAyzS, DtaTyzShtTy(CStr(ShtTy))
 Next
 End Function
 

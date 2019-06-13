@@ -4,22 +4,22 @@ Option Explicit
 Private Const CMod$ = "MIde_Ty_Mth_ShtTy_Cv."
 Private Const Asm$ = "QIde"
 
-Function MthKdByMthTy$(MthTy)
+Function MthKdzTy$(MthTy)
 Select Case MthTy
-Case "Function", "Sub": MthKdByMthTy = MthTy
-Case "Property Get", "Property Let", "Property Set": MthKdByMthTy = "Property"
+Case "Function", "Sub": MthKdzTy = MthTy
+Case "Property Get", "Property Let", "Property Set": MthKdzTy = "Property"
 End Select
 End Function
 
-Function IsMthTy(Str$) As Boolean
-IsMthTy = HasEle(MthTyAy, Str)
+Function IsMthTy(S) As Boolean
+IsMthTy = HasEle(MthTyAy, S)
 End Function
 
-Function IsMthMdy(A$) As Boolean
-IsMthMdy = HasEle(MthMdyAy, A)
+Function IsMthMdy(S) As Boolean
+IsMthMdy = HasEle(MthMdyAy, S)
 End Function
 
-Function MthMdyBySht$(ShtMthMdy)
+Function MthMdyzSht$(ShtMthMdy)
 Dim O$
 Select Case ShtMthMdy
 Case "Pub": O = "Public"
@@ -28,7 +28,7 @@ Case "Frd": O = "Friend"
 Case ""
 Case Else: Stop
 End Select
-MthMdyBySht = O
+MthMdyzSht = O
 End Function
 
 Function ShtMthMdy$(MthMdy)
@@ -42,7 +42,7 @@ End Select
 ShtMthMdy = O
 End Function
 
-Function MthTyBySht$(ShtMthTy)
+Function MthTyzSht$(ShtMthTy)
 Dim O$
 Select Case ShtMthTy
 Case "Get": O = "Property Get"
@@ -52,7 +52,7 @@ Case "Fun": O = "Function"
 Case "Sub": O = "Sub"
 Case Else: O = "???"
 End Select
-MthTyBySht = O
+MthTyzSht = O
 End Function
 
 Function ShtMthTy$(MthTy)

@@ -59,7 +59,7 @@ Dim IsEdt As Boolean, Cas$
 T0:
     Cas = "Complex1"
     IsEdt = False
-    Nm = "ZZ_B"
+    Nm = "Z_B"
     CnstBrk = TstTxt(TstId, CSub, Cas, "CnstBrk", IsEdt:=False)
     Ept = TstTxt(TstId, CSub, "Complex1", "Ept", IsEdt)
     IsPub = True
@@ -70,20 +70,20 @@ T1:
     'CnstBrk = MthLineszNmzMd(CMd, "Chunk")
     BrwStr CnstBrk
     Stop
-    Nm = "ZZ_A"
+    Nm = "Z_A"
     IsPub = True
     Ept = TstTxt(TstId, CSub, "Complex", "Ept", IsEdt)
     GoTo Tst
 
 T2:
     IsEdt = False
-    Nm = "ZZ_A"
+    Nm = "Z_A"
     CnstBrk = "AAA"
     Ept = JnCrLf(Array("", _
-        "Private Function ZZ_A$()", _
+        "Private Function Z_A$()", _
         "Const A_1$ = ""AAA""", _
         "", _
-        "ZZ_A = A_1", _
+        "Z_A = A_1", _
         "End Function"))
     GoTo Tst
 Tst:
@@ -95,7 +95,7 @@ Tst:
     ShwTstOk CSub, Cas
     Return
 ZZ:
-    Dim V$: V = JnCrLf(AywFstNEle(SrczP(CPj), 5000))
+    Dim V$: V = JnCrLf(FstNEle(SrczP(CPj), 5000))
     Stop
 '    Brw ConstPrpLines("AA", V, IsPub:=True)
     Return

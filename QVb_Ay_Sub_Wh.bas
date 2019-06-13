@@ -100,8 +100,8 @@ ReDim Preserve O(U)
 AywFstUEle = O
 End Function
 
-Function AywFstNEle(Ay, N)
-AywFstNEle = AywFstUEle(Ay, N - 1)
+Function FstNEle(Ay, N)
+FstNEle = AywFstUEle(Ay, N - 1)
 End Function
 
 Function AywFei(Ay, B As Fei)
@@ -222,10 +222,26 @@ Dim O As New PredPatn
 O.Init Patn
 Set PatnPred = O
 End Function
+
+Function AywPatn1(Ay, Patn$) As Variant()
+If Si(Ay) = 0 Then Exit Function
+If Patn = "" Or Patn = "." Then AywPatn1 = Ay: Exit Function
+Dim Re As RegExp: Set Re = RegExp(Patn)
+Dim I: For Each I In Itr(Ay)
+    If IsStr(I) Then
+        If Re.Test(I) Then PushI AywPatn1, I
+    End If
+Next
+End Function
+
 Function AywPatn(Ay, Patn$) As String()
 If Si(Ay) = 0 Then Exit Function
 If Patn = "" Or Patn = "." Then AywPatn = Ay: Exit Function
 AywPatn = AywPred(Ay, PatnPred(Patn))
+End Function
+Function AywPatnAy(Ay, PatnAy$()) As Variant()
+If Si(Ay) = 0 Then Exit Function
+Stop
 End Function
 Function AyePred(Ay, P As IPred) As String()
 Dim I

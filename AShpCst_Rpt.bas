@@ -6,15 +6,10 @@ Function RptAppDb() As Database
 'Set RptAppDb = AppDb(RptApn)
 End Function
 
-Sub GenOupTbl(Apn$)
-WOpn Apn
-GenORate
-GenOMain
-WCls
-End Sub
-
-
-Sub VcRptPm()
+Sub GenOupTbl()
+Dim IZHT187$, IZHT186$, IUom$, IMB52$
+GenORate IZHT187, IZHT186, IUom
+GenOMain IMB52, IUom
 End Sub
 
 Sub DocUOM _
@@ -40,43 +35,41 @@ B)
 ' "[COL per case]  as AC_B," & _ no need
 End Sub
 
-Private Sub GenOMain()
-'Inp: #IMB52
-'     #IUom
-'     @Rate
+Private Function GenOMain$(IMB52$, IUom$)
+'Fm IMB52 : Whs Sku QUnRes QBlk QInsp
+'Fm IUom  : Sku Sc_U Des StkUom
+'Ret      :
 
 WDrp "@Main"
+
+'== Crt @Main fm #IMB52
+'   Whs Sku OH Des StkUom Sc_U OH
 WRun "Select Distinct Whs,Sku,Sum(QUnRes+QBlk+QInsp) As OH into [@Main] from [#IMB52] Group by Whs,Sku"
-'Des StkUom Sc_U OH_Sc
 WRun "Alter Table [@Main] Add Column Des Text(255), StkUom Text(10),Sc_U Int, OH_Sc Double"
 WRun "Update [@Main] x inner join [#IUom] a on x.Sku=a.Sku set x.Sc_U = a.Sc_U,x.Des=a.Des,x.StkUom=a.StkUom"
 WRun "Update [@Main] set OH_Sc=OH/Sc_U where Sc_U>0"
 
-'Stream ProdH F2 M32 M35 M37 Topaz ZHT1 RateSc Z2 Z5 Z7
+'== Add Col Stream ProdH F2 M32 M35 M37 Topaz ZHT1 RateSc Z2 Z5 Z7
+'   Upd Col ProdH Topaz
+'   Upd Col F2 M32 M35 M37
 WRun "Alter Table [@Main] add column Stream Text(10), Topaz Text(20), ProdH text(7), F2 Text(2), M32 text(2), M35 text(5), M37 text(7), ZHT1 Text(7), Z2 text(2), Z5 text(5), Z7 text(7), RateSc Currency, Amt Currency"
-
-'ProdH Topaz
 WRun "Update [@Main] x inner join [#IUom] a on x.Sku=a.Sku set x.ProdH=a.ProdH,x.Topaz=a.Topaz"
-
-'F2 M32 M35 M37
 WRun "Update [@Main] set F2=Left(ProdH,2),M32=Mid(ProdH,3,2),M35=Mid(ProdH,3,5),M37=Mid(ProdH,3,7)"
 
-'ZHT1 RateSc
+'== Upd Col ZHT1 RateSc
 WRun "Update [@Main] x inner join [@Rate] a on x.Whs=a.Whs and x.M37=a.ZHT1 set x.RateSc=a.RateSc,x.ZHT1=a.ZHT1 where x.RateSc Is Null"
 WRun "Update [@Main] x inner join [@Rate] a on x.Whs=a.Whs and x.M35=a.ZHT1 set x.RateSc=a.RateSc,x.ZHT1=a.ZHT1 where x.RateSc Is Null"
 WRun "Update [@Main] x inner join [@Rate] a on x.Whs=a.Whs and x.M32=a.ZHT1 set x.RateSc=a.RateSc,x.ZHT1=a.ZHT1 where x.RateSc Is Null"
 
 'Stream
-WRun "Update [@Main] set Stream=IIf(Left(Topaz,3)='UDV','Diageo','MH')"
-
 'Z2 Z5 Z7
-WRun "Update [@Main] Set Z2=Left(ZHT1,2), Z5=Left(ZHT1,5), Z7=Left(ZHT1,7) where not ZHT1 is null"
-
 'Amt
+WRun "Update [@Main] set Stream=IIf(Left(Topaz,3)='UDV','Diageo','MH')"
+WRun "Update [@Main] Set Z2=Left(ZHT1,2), Z5=Left(ZHT1,5), Z7=Left(ZHT1,7) where not ZHT1 is null"
 WRun "Update [@Main] Set Amt = RateSc * OH_Sc where RateSc is not null"
-End Sub
+End Function
 
-Private Sub GenORate()
+Private Function GenORate$(IZHT187$, IZHT186$, IUom$)
 'VdtFm & VdtTo format DD.MM.YYYY
 '1: #IZHT1 VdtFm VdtTo L3 RateSc
 '2: #IUom     SKu Sc_U
@@ -97,7 +90,7 @@ WRun "Update [#Cpy] set IsCur = true where Now between VdtFmDte and VdtToDte"
 
 WRun "Select Whs,ZHT1,RateSc into [@Rate] from [#Cpy]"
 WDrp "#Cpy #Cpy1 #Cpy2"
-End Sub
+End Function
 
 Private Function ErzMB52MissingWhs8601Or8701(FxMB52$, Wsn$) As String()
 Const CSub$ = CMod & "ErzMB52MissingWhs8601Or8701"

@@ -4,40 +4,11 @@ Option Explicit
 Private Const CMod$ = "MIde_Mth_Pm_Arg."
 Private Const Asm$ = "QIde"
 Public Const DoczShtArg$ = "It is string from Arg"
-Public Const DoczArg$ = "It is Sy.  It is splitting of MthPm"
-Public Const DoczArgSy$ = "It Array of Arg"
+Public Const DoczArg$ = "It is Str.  It is splitting of MthPm"
+Public Const DoczArgAy$ = "It Array of Arg"
 Public Const DoczSset$ = "String-Aset"
+Public Const DoczDArg$ = "Dt of Arg: Nm IsByVal IsOpt IsPmAy IsAy TyChr AsTy DftVal"
 Public Const DoczArgTy$ = "It is a string defining the type of an arg.  Eg, Dim A() as integer => ArgTy[Integer()].  Dim A%() => ArgTy[%()]"
-Type Arg
-    Nm As String
-    IsOpt As Boolean
-    IsPmAy As Boolean
-    IsAy As Boolean
-    TyChr As String
-    AsTy As String
-    DftVal As String
-End Type
-Type Args: N As Byte: Ay() As Arg: End Type
-Function MthPm$(MthLin)
-MthPm = BetBktMust(MthLin, CSub)
-End Function
-
-Property Get ArgAsetP() As Aset
-Set ArgAsetP = ArgAsetzP(CPj)
-End Property
-
-Function ArgAsetzP(P As VBProject) As Aset
-Set ArgAsetzP = New Aset
-Dim L$, I
-'For Each I In MthLinAyzP(A)
-    L = I
-    'ArgAsetzPj.PushAy ArgSy(L)
-'Next
-End Function
-
-Private Sub Z_ArgAsetP()
-ArgAsetP.Srt.Vc
-End Sub
 
 Function DimItmzArg$(Arg$)
 DimItmzArg = BefOrAll(RmvPfxSpc(RmvPfxSpc(Arg, "Optional"), "ParamArray"), " =")
@@ -109,7 +80,6 @@ End Select
 ShtRetTy = O
 End Function
 
-
 Function ArgAyzPmAy(PmAy$()) As String()
 Dim Pm, Arg
 For Each Pm In Itr(PmAy)
@@ -120,41 +90,9 @@ Next
 End Function
 
 Function NArg(MthLin) As Byte
-NArg = Si(SplitComma(MthPm(MthLin)))
+NArg = Si(SplitComma(BetBkt(MthLin)))
 End Function
 
-Function ArgNy(MthLin) As String()
-ArgNy = NyzOy(ArgSy(MthLin))
-End Function
-Function ArgSy(Lin) As String()
-ArgSy = SplitCommaSpc(MthPm(Lin))
-End Function
-Function ArgSfx$(ArgStr)
-
-End Function
-
-Function BrwrzRet$(Ret$)
-Select Case True
-Case IsTyChr(FstChr(Ret)): BrwrzRet = "Brw"
-Case Ret = "Drs": BrwrzRet = "BrwDrs"
-Case Else: BrwrzRet = "Brw"
-End Select
-End Function
-Function DclAsAndChrAyzRet(Ret) As S1S2
-Dim DclAs$, DclChrAy$
-Select Case True
-Case IsTyChr(FstChr(Ret)): DclChrAy = Ret
-Case HasSfx(Ret, "()")
-    Dim TyChr$: TyChr = TyChrzTyNm(RmvSfx(Ret, "()"))
-    If TyChr = "" Then
-        DclAs = " As " & Ret
-    Else
-        DclChrAy = TyChr & "()"
-    End If
-Case Else: DclAs = " As " & Ret
-End Select
-DclAsAndChrAyzRet = S1S2(DclAs, DclChrAy)
-End Function
 Function RetAs$(Ret)
 If IsTyChr(FstChr(Ret)) Then
     RetAs = TyNmzTyChr(FstChr(Ret)) & RmvFstChr(Ret)
@@ -205,26 +143,85 @@ Case HasSfx(Ret, "()") And TyChrzTyNm(RmvSfx(Ret, "()")) <> "": ArgSfxzRet = TyC
 Case Else: ArgSfxzRet = " As " & Ret
 End Select
 End Function
-Function Arg(ArgStr) As Arg
-Dim L$: L = ArgStr
-Const Opt$ = "Optional"
-Const PA$ = "ParamArray"
-Dim TyChr$
-With Arg
-    .IsOpt = ShfPfxSpc(L, Opt)
-    .IsPmAy = ShfPfxSpc(L, PA)
-    .Nm = ShfNm(L)
-    .TyChr = ShfChr(L, "!@#$%^&")
-    .IsAy = ShfPfx(L, "()") = "()"
-End With
-End Function
 
-Function ArgSfxy(ArgAy$()) As String()
-Dim ArgStr
-For Each ArgStr In Itr(ArgAy)
-    PushI ArgSfxy, ArgSfx(ArgStr)
+Sub Z_DArg()
+Dim Mth$(): Mth = StrCol(DMthP, "MthLin")
+Dim L, Dry(): For Each L In Itr(Mth)
+    PushIAy Dry, DryArg(L)
+Next
+BrwDrs Drs(FnyArg, Dry)
+End Sub
+Private Function DryArgzMthLinAy(MthLinAy$()) As Variant()
+Dim L: For Each L In Itr(MthLinAy)
+    PushIAy DryArgzMthLinAy, DryArg(L)
 Next
 End Function
 
+Private Function DryArg(MthLin) As Variant()
+Dim Pm$: Pm = BetBkt(MthLin)
+Dim A$(): A = SplitCommaSpc(Pm)
+Dim Mthn$: Mthn = MthnzLin(MthLin)
+Dim Arg, Dry(): For Each Arg In Itr(A)
+    PushI DryArg, DrArg(Arg, Mthn)
+Next
+End Function
+Private Function FnyArg() As String()
+FnyArg = SyzSS("Mthn Nm IsOpt IsByVal IsPmAy IsAy TyChr AsTy DftVal")
+End Function
 
+Function DArgzMthLinAy(MthLinAy$()) As Drs
+DArgzMthLinAy = Drs(FnyArg, DryArgzMthLinAy(MthLinAy))
+End Function
+
+Function DArgzM(M As CodeModule) As Drs
+Dim L$(): L = StrCol(DMthzM(M), "MthLin")
+     DArgzM = Drs(FnyArg, DryArgzMthLinAy(L))
+End Function
+
+Function DArgzP(P As VBProject) As Drs
+Dim M$(): M = StrCol(DMthzP(P), "MthLin")
+     DArgzP = Drs(FnyArg, DryArgzMthLinAy(M))
+End Function
+
+Function DArgP() As Drs
+DArgP = DArgzP(CPj)
+End Function
+
+Function DArg(MthLin) As Drs
+DArg = DrszFF("Mthn Nm IsOpt IsByVal IsPmAy IsAy TyChr RetAs DftVal", DryArg(MthLin))
+End Function
+Function ArgSfx$(Arg)
+Dim L$: L = Arg
+ShfPfxSpc L, "Optional"
+ShfPfxSpc L, "ByVal"
+ShfPfxSpc L, "ParamArray"
+If ShfNm(L) = "" Then Thw CSub, "Arg is invalid", "Arg", Arg
+ArgSfx = ShfDclSfx(L)
+End Function
+Function ArgSfxy(Argy$()) As String()
+Dim Arg: For Each Arg In Itr(Argy)
+    PushI ArgSfxy, ArgSfx(Arg)
+Next
+End Function
+
+Function DrArg(Arg, Mthn$) As Variant()
+Dim L$: L = Arg
+Dim IsOpt   As Boolean:   IsOpt = ShfPfxSpc(L, "Optional")
+Dim IsByVal As Boolean: IsByVal = ShfPfxSpc(L, "ByVal")
+Dim IsPmAy  As Boolean:  IsPmAy = ShfPfxSpc(L, "ParamArray")
+Dim Nm$:                     Nm = ShfNm(L)
+Dim TyChr$:               TyChr = ShfChr(L, "!@#$%^&")
+Dim IsAy    As Boolean:    IsAy = ShfBkt(L)
+    If TyChr = "" Then
+        If ShfAs(L) Then
+            Dim AsTy$: AsTy = " As " & ShfDotNm(L)
+            IsAy = ShfBkt(L)
+        End If
+    End If
+    If L <> "" Then
+        If Not ShfPfx(L, " = ") Then Stop
+        Dim DftVal$: DftVal = L
+    End If
+DrArg = Array(Mthn, Nm, IsOpt, IsPmAy, IsAy, TyChr, AsTy, DftVal)
+End Function
 

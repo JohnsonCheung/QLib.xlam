@@ -139,7 +139,7 @@ Function KeySyzDic(A As Dictionary) As String()
 KeySyzDic = SyzAy(A.Keys)
 End Function
 
-Function ValzDicIfKyJn$(A As Dictionary, Ky, Optional Sep$ = vbCrLf & vbCrLf)
+Function ValzDicIfKyJn$(A As Dictionary, Ky, Optional Sep$ = vb2CrLf)
 Dim O$(), K
 For Each K In Itr(Ky)
     If A.Exists(K) Then
@@ -205,9 +205,38 @@ Dim D As Dictionary
    Next
 Set MgeDic = AddDicAy(A, Dy)
 End Function
+Function DKSet(KSet As Dictionary) As Drs
+Dim K, Dry(), S As Aset, V
+For Each K In KSet.Keys
+    Set S = KSet(K)
+    For Each V In S.Itms
+        PushI Dry, Array(K, V)
+    Next
+Next
+DKSet = DrszFF("K V", Dry)
+End Function
+Function HasKSet(KSet As Dictionary, K, S As Aset) As Boolean
+'Fm KSet : KSet if a dictionary with value is Aset.
+'Ret     : True if KSet has such Key-K and Val-Set-S  @@
+If KSet.Exists(K) Then
+    Dim ISet As Aset: Set ISet = KSet(K)
+    HasKSet = ISet.IsEq(S)
+End If
+End Function
+Function DifKSet(KSet1 As Dictionary, KSet2 As Dictionary)
+'Ret : KSet from KSet1 where not found in KSet2 (Not found means K is not found or K is found but V is dif @@
+Set DifKSet = New Dictionary
+Dim K: For Each K In KSet1.Keys
+    Dim V As Aset: Set V = KSet1(K)
+    Dim Has As Boolean: Has = HasKSet(KSet2, K, V)
+    If Not Has Then
+        DifKSet.Add K, V
+    End If
+Next
 
+End Function
 Function MinusDic(A As Dictionary, B As Dictionary) As Dictionary
-If A.Count = 0 Then Set MinusDic = New Dictionary: Exit Function
+'Ret those Ele in A and not in B
 If B.Count = 0 Then Set MinusDic = CloneDic(A): Exit Function
 Dim O As New Dictionary, K
 For Each K In A.Keys

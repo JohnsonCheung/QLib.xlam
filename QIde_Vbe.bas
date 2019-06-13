@@ -96,11 +96,11 @@ For Each P In A.VBProjects
 Next
 End Function
 
-Private Sub ZZ_VbeFunPfx()
+Private Sub Z_VbeFunPfx()
 'D Vbe_MthPfx(CVbe)
 End Sub
 
-Private Sub ZZ_MthnyzV()
+Private Sub Z_MthnyzV()
 Brw MthnyzV(CVbe)
 End Sub
 

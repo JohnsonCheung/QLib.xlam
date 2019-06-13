@@ -38,3 +38,9 @@ Set AsetzAy = EmpAset
 AsetzAy.PushAy Ay
 End Function
 
+Function AsetzItm(Itm) As Aset
+Set AsetzItm = EmpAset
+AsetzItm.PushItm Itm
+End Function
+
+

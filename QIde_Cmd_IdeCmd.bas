@@ -17,7 +17,7 @@ IsAlignable = IsAlignableMth(OldMthLy)
               'RplLines Md, Lno, NLin, OldL, NewL
 End Sub
 
-Private Sub ZZ_AlignMthLines()
+Private Sub Z_AlignMthLines()
 Dim M$()
 GoSub ZZ
 Exit Sub

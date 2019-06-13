@@ -48,7 +48,7 @@ Dim L1, V1, H1
     H1 = QSrt(H)
 Dim O
     O = AddAyAp(L1, V1, H1)
-If Ord = EiDes Then O = Reverse(O)
+If Ord = EiDes Then O = RevAy(O)
 QSrt = O
 End Function
 
@@ -94,7 +94,7 @@ If Si(Ay) = 0 Then Exit Function
 Dim O: O = Ay
 QSrt1LH O, 0, UB(Ay)
 If IsDes Then
-    QSrt1 = ReverseAyI(O)
+    QSrt1 = RevAyAyI(O)
 Else
     QSrt1 = O
 End If
@@ -191,21 +191,17 @@ Dim Ix&, V, J&
 Dim O: O = Ay: Erase O
 Push O, Ay(0)
 For J = 1 To UB(Ay)
-    O = AyInsEle(O, Ay(J), SrtAy__Ix(O, Ay(J), Des))
+    O = AyInsEle(O, Ay(J), SrtAy__Ix(O, Ay(J)))
 Next
-SrtAy = O
+If Des Then
+    SrtAy = RevAy(O)
+Else
+    SrtAy = O
+End If
 End Function
 
-Private Function SrtAy__Ix&(A, V, Des As Boolean)
+Private Function SrtAy__Ix&(A, V)
 Dim I, O&
-If Des Then
-    For Each I In A
-        If V > I Then SrtAy__Ix = O: Exit Function
-        O = O + 1
-    Next
-    SrtAy__Ix = O
-    Exit Function
-End If
 For Each I In A
     If V < I Then SrtAy__Ix = O: Exit Function
     O = O + 1
@@ -311,7 +307,7 @@ For Each K In QSrt1(A.Keys, IsDesc)
 Next
 End Function
 
-Private Sub ZZ_SrtAy()
+Private Sub Z_SrtAy4()
 Dim Exp, Act
 Dim A
 A = Array(1, 2, 3, 4, 5): Exp = A:                    Act = SrtAy(A):        ThwIf_NE Exp, Act
@@ -340,7 +336,7 @@ Act = SrtAy(A)
 ThwIf_NE Exp, Act
 End Sub
 
-Private Sub ZZ_IxyzSrtAy()
+Private Sub Z_IxyzSrtAy5()
 Dim A: A = Array("A", "B", "C", "D", "E")
 ThwIf_NE Array(0, 1, 2, 3, 4), IxyzSrtAy(A)
 ThwIf_NE Array(4, 3, 2, 1, 0), IxyzSrtAy(A, True)

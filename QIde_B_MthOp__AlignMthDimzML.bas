@@ -258,7 +258,7 @@ Friend Function McDcl(McVSfx As Drs) As Drs
 Const CmPfx$ = "XA_"
 Dim MthLin$, IxMthLin%, Dr, Dry(), IGpno
 AsgIx McVSfx, "MthLin", IxMthLin
-For Each IGpno In AywDist(IntAyzDrsC(McVSfx, "Gpno"))
+For Each IGpno In AywDist(IntCol(McVSfx, "Gpno"))
     Dim A As Drs: A = ColEq(McVSfx, "Gpno", IGpno) ' L Gpno MthLin IsRmk V Sfx Rst ! Sam Gpno
     Dim B As Drs: B = WDcl(A) ' L Gpno MthLin IsRmk V Sfx Dcl Rst ! Adding Dcl using V Sfx
     Dim O As Drs: O = AddDrs(O, B)
@@ -271,7 +271,7 @@ Private Function WDcl(A As Drs) As Drs
 'Fm A :      L Gpno MthLin IsRmk V Sfx Rst
 'Ret McDclI: L Gpno MthLin IsRmk V Sfx Dcl Rst @@
 Dim IxV%, IxSfx%: AsgIx A, "V Sfx", IxV, IxSfx
-Dim B As Drs: B = DrswColPfx(A, "Sfx", " As ")
+Dim B As Drs: B = ColPfx(A, "Sfx", " As ")
 Dim C$(): C = StrColzDrs(B, "V")
 Dim WAsV%: WAsV = WdtzAy(C)
 Dim Dr, Dry(): For Each Dr In Itr(A.Dry)
@@ -381,7 +381,7 @@ Friend Function McFill(McR123 As Drs) As Drs
 '             V Sfx Dcl LHS Expr
 '             F0 FSfx FExpr FR1 FR2       ! Adding F* @@
 Const CmPfx$ = "XD_"
-Dim Gpno%(): Gpno = AywDist(IntAyzDrsC(McR123, "Gpno"))
+Dim Gpno%(): Gpno = AywDist(IntCol(McR123, "Gpno"))
 Dim IGpno: For Each IGpno In Itr(Gpno)
     Dim A As Drs: A = ColEq(McR123, "Gpno", IGpno)
     Dim B As Drs: B = WF0(A)
@@ -450,7 +450,7 @@ Friend Function McTRmk(McRmk As Drs) As Drs
 '                                ! rmv them @@
 ' L Gpno MthLin IsRmk    #Mth-Cxt-TopRmk ! For each gp, the front rmk lines are TopRmk, rmv them
 Dim IGpno%, MaxGpno, A As Drs, B As Drs, O As Drs
-MaxGpno = MaxzAy(IntAyzDrsC(McRmk, "Gpno"))
+MaxGpno = MaxzAy(IntCol(McRmk, "Gpno"))
 For IGpno = 1 To MaxGpno
     A = ColEq(McRmk, "Gpno", IGpno)
     B = McTRmkI(A)
@@ -476,22 +476,19 @@ Fnd:
     Next
 End Function
 
-
-Friend Function McRmk(McGp As Drs) As Drs
+Friend Function McRmk(McNoSng As Drs) As Drs
 'Fm  McGp : Gpno MthLin         ! with L in seq will be one gp
 'Ret      : L Gpno MthLin IsRmk ! a column IsRmk is added @@
 'Fm  McGp : Gpno MthLin         ! with L in seq will be one gp
 'Ret      : L Gpno MthLin IsRmk ! a column IsRmk is added @@
 'Ret McRmk L Gpno MthLin IsRmk    #Mth-Cxt-isRmk
-Dim Dr
-For Each Dr In McGp.Dry
+Dim Dr: For Each Dr In Itr(McNoSng.Dry)
     PushI Dr, FstChr(LTrim(Dr(2))) = "'"
     Push McRmk.Dry, Dr
 Next
-McRmk.Fny = AddFF(McGp.Fny, "IsRmk")
+McRmk.Fny = AddFF(McNoSng.Fny, "IsRmk")
 'Insp "QIde_B_MthOp.McRmk", "Inspect", "Oup(McRmk) McGp", FmtDrs(McRmk), FmtDrs(McGp): Stop
 End Function
-
 
 Friend Function CmStr$(CmNew$(), McR123 As Drs, CmMdy$, CmPfx$)
 'Fm  CmNew  :                             ! The new ChdMthNy to be created.
@@ -635,7 +632,7 @@ End Function
 Friend Function MbAct(Cm$(), Md As CodeModule) As Drs
 'Ret      : L Mthn OldL ! OldL is MbStmt @@
 Dim A As Drs: A = DMthE(Md)             ' L E Mdy Ty Mthn MthLin
-Dim B As Drs: B = DrswColIn(A, "Mthn", Cm)
+Dim B As Drs: B = ColIn(A, "Mthn", Cm)
 Dim Dr, Dry(): For Each Dr In Itr(B.Dry)
     Dim E&:           E = Dr(1)
     Dim L&:           L = E - 1          ' ! The Lno of MbStmt
@@ -770,7 +767,7 @@ End Function
 
 Friend Function McCln(Mc As Drs) As Drs
 'Fm  Mc   : L MthLin # Mc.
-'Ret      : L MthLin # Mc-Cln. ! must SngDimColon | Rmk(but not If Stop Insp == Brw). Cln to Align @@ @@
+'Ret      : L MthLin # Mc-Cln. ! must AsgStmt | SngDimColon | Rmk(but not If Stop Insp == Brw). Cln to Align @@ @@
 Dim Dr, Dry(), L$, Yes As Boolean
 For Each Dr In Itr(Mc.Dry)
     L = Trim(Dr(1))
@@ -782,7 +779,7 @@ For Each Dr In Itr(Mc.Dry)
         Case HasPfxss(L, "If Stop Insp == Brw")
         Case Else: Yes = True
         End Select
-    Case IsSngDimColon(L)
+    Case IsLinzSngDimColon(L), IsLinzAsg(L)
         Yes = True
     End Select
     If Yes Then PushI Dry, Dr

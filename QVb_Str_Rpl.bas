@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Str_Rpl."
 Private Const Asm$ = "QVb"
-Private Sub ZZ_RplBet()
+Private Sub Z_RplBet()
 Dim S$, Exp$, By$, S1$, S2$
 S1 = "Data Source="
 S2 = ";"
@@ -19,7 +19,7 @@ Debug.Assert Exp = Act
 Return
 End Sub
 
-Private Sub ZZ_RplPfx()
+Private Sub Z_RplPfx()
 Ass RplPfx("aaBB", "aa", "xx") = "xxBB"
 End Sub
 Function RmvCr$(S)
@@ -71,7 +71,7 @@ Else
 End If
 End Function
 
-Private Sub Z_RplPfx()
+Private Sub Z_RplPfx2()
 Ass RplPfx("aaBB", "aa", "xx") = "xxBB"
 End Sub
 
@@ -95,7 +95,7 @@ Function RplQ$(S, By)
 RplQ = Replace(S, "?", By)
 End Function
 
-Private Sub Z_RplBet()
+Private Sub Z_RplBet3()
 Dim S$, Exp$, By$, S1$, S2$
 S1 = "Data Source="
 S2 = ";"

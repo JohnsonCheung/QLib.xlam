@@ -24,6 +24,7 @@ Dim W As VBIDE.Window: For Each W In CVbe.Windows
         If W.Visible Then W.Close
     End If
 Next
+BtnOfTileV.Execute
 End Sub
 Sub ClsWin()
 Dim W As VBIDE.Window: For Each W In CVbe.Windows
