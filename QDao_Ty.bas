@@ -117,6 +117,12 @@ End Select
 DtaTy = O
 End Function
 
+Function SimTyzLo(L As ListObject) As EmSimTy()
+Dim Sq(): Sq = SqzLo(L)
+Dim C%: For C = 1 To UBound(Sq, 2)
+    PushI SimTyzLo, SimTyzCol(ColzSq(Sq, C))
+Next
+End Function
 Function SimTy(V) As EmSimTy
 SimTy = SimTyzV(VarType(V))
 End Function
@@ -130,6 +136,7 @@ Case V = vbDate: O = EiDte
 Case V = vbString: O = EiStr
 Case Else: Thw CSub, "Unsupported VarType", "VarType", V
 End Select
+SimTyzV = O
 End Function
 Function MaxSim(A As EmSimTy, B As EmSimTy) As EmSimTy
 MaxSim = Max(A, B)
