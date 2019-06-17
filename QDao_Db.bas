@@ -270,10 +270,10 @@ Dim G As Dictionary
 'HasDbt A, D
 End Sub
 
-Sub RenTTzAddPfx(A As Database, TT$, Pfx$)
+Sub RenTTzSzAddP(A As Database, TT$, Pfx$)
 Dim T
 For Each T In Ny(TT)
-    RenTblzAddPfx A, CStr(T), Pfx
+    RenTblzSzAddP A, CStr(T), Pfx
 Next
 End Sub
 

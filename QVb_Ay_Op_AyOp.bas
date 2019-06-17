@@ -227,7 +227,7 @@ Next
 End Function
 
 Function RplT1zAy(Ay, NewT1) As String()
-RplT1zAy = AddPfxzAy(RmvT1zAy(Ay), NewT1 & " ")
+RplT1zAy = SyzAyP(RmvT1zAy(Ay), NewT1 & " ")
 End Function
 
 Function OffsetzEmBeg(B As EmIxCol) As Byte
@@ -292,5 +292,5 @@ For J = 1 To UB(Ly1)
 Next
 End Function
 Function TabAy(Ay, Optional NTab% = 1) As String()
-TabAy = AddPfxzAy(Ay, TabN(NTab))
+TabAy = SyzAyP(Ay, TabN(NTab))
 End Function

@@ -194,7 +194,7 @@ Function MgeDic(A As Dictionary, PfxSsl$, ParamArray DicAp()) As Dictionary
 Dim Av(): Av = DicAp
 Dim Ny$()
    Ny = SyzSS(PfxSsl)
-   Ny = AddSfxzAy(Ny, "@")
+   Ny = SyzAyS(Ny, "@")
 If Si(Av) <> Si(Ny) Then Stop
 Dim Dy() As Dictionary
 Dim D As Dictionary
@@ -205,7 +205,12 @@ Dim D As Dictionary
    Next
 Set MgeDic = AddDicAy(A, Dy)
 End Function
-Function DKSet(KSet As Dictionary) As Drs
+
+Sub BrwKSet(KSet As Dictionary)
+BrwDrs DrszKSet(KSet)
+End Sub
+
+Function DrszKSet(KSet As Dictionary) As Drs
 Dim K, Dry(), S As Aset, V
 For Each K In KSet.Keys
     Set S = KSet(K)
@@ -213,7 +218,7 @@ For Each K In KSet.Keys
         PushI Dry, Array(K, V)
     Next
 Next
-DKSet = DrszFF("K V", Dry)
+DrszKSet = DrszFF("K V", Dry)
 End Function
 Function HasKSet(KSet As Dictionary, K, S As Aset) As Boolean
 'Fm KSet : KSet if a dictionary with value is Aset.

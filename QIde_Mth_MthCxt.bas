@@ -183,18 +183,19 @@ Dim Dr, Dry(): For Each Dr In Itr(A.Dry)
 Next
 AddColzHasPm = AddColzFFDry(A, "HasPm", Dry)
 End Function
-Function AddColzRetAs(A As Drs) As Drs
-'Fm A : ..MthLin..
-'Ret  : ..MthLin.. RetAs
-Dim I%: I = IxzAy(A.Fny, "MthLin")
-Dim Dr, Dry(): For Each Dr In Itr(A.Dry)
-    Dim MthLin$: MthLin = Dr(I)
-    Dim R$: R = RetAszL(MthLin)
-    PushI Dr, R
-    PushI Dry, Dr
-Next
-AddColzRetAs = AddColzFFDry(A, "RetAs", Dry)
+
+Sub Z_TblMthP()
+Dim D As Database: Set D = TmpDb
+Dim T$: T = TblMthP(D)
+BrwDb D
+End Sub
+
+Function TblMthP$(D As Database)
+Dim T$: T = "Mth"
+CrtTblzDrs D, T, DMthP
+TblMthP = T
 End Function
+
 Function DMthP() As Drs
 Static A As Drs
 If NoReczDrs(A) Then A = DMthzP(CPj)
@@ -221,24 +222,24 @@ Function DMthzM(M As CodeModule) As Drs
 DMthzM = DMthzS(Src(M))
 End Function
 
-Function DMthE(M As CodeModule) As Drs
+Function DMthe(M As CodeModule) As Drs
 'Ret : L E Mdy Ty Mthn MthLin ! Mdy & Ty are Sht. L is Lno E is ELno @@d
-DMthE = DMthEzS(Src(M))
+DMthe = DMthezS(Src(M))
 End Function
 
-Function DMthC(M As CodeModule) As Drs
+Function DMthc(M As CodeModule) As Drs
 'Ret : L E Mdy Ty Mthn MthLin MthLy! Mdy & Ty are Sht. L is Lno E is ELno @@
-DMthC = DMthCzS(Src(M))
+DMthc = DMthczS(Src(M))
 End Function
 
-Function DMthEM() As Drs
-DMthEM = DMthE(CMd)
+Function DMtheM() As Drs
+DMtheM = DMthe(CMd)
 End Function
-Function DMthCM() As Drs
-DMthCM = DMthCzM(CMd)
+Function DMthcM() As Drs
+DMthcM = DMthczM(CMd)
 End Function
 
-Function DMthCzS(Src$()) As Drs
+Function DMthczS(Src$()) As Drs
 Dim A As Drs: A = DMthzS(Src)
 Dim Dry(), Dr
 For Each Dr In Itr(A.Dry)
@@ -250,10 +251,22 @@ For Each Dr In Itr(A.Dry)
     PushI Dr, MthLy
     PushI Dry, Dr
 Next
-DMthCzS = DrszFF("L E Mdy Ty Mthn MthLin MthLy", Dry)
+DMthczS = DrszFF("L E Mdy Ty Mthn MthLin MthLy", Dry)
 End Function
 
-Function DMthEzS(Src$()) As Drs
+Function AddColzRetAs(DMthLin As Drs) As Drs
+'Fm DMthLin : ..MthLin..
+'Ret        : ..RetAs
+Dim IxMthLin%: IxMthLin = IxzAy(DMthLin.Fny, "MthLin")
+Dim Dr, Dry(): For Each Dr In Itr(DMthLin.Dry)
+    Dim MthLin$: MthLin = Dr(IxMthLin)
+    Dim R$: R = RetAszL(MthLin)
+    PushI Dr, R
+    PushI Dry, Dr
+Next
+AddColzRetAs = AddColzFFDry(DMthLin, "RetAs", Dry)
+End Function
+Function DMthezS(Src$()) As Drs
 Dim A As Drs: A = DMthzS(Src)
 Dim Dry(), Dr
 For Each Dr In Itr(A.Dry)
@@ -262,7 +275,7 @@ For Each Dr In Itr(A.Dry)
     Dr = AyInsEle(Dr, E, 1)
     PushI Dry, Dr
 Next
-DMthEzS = DrszFF("L E Mdy Ty Mthn MthLin", Dry)
+DMthezS = DrszFF("L E Mdy Ty Mthn MthLin", Dry)
 End Function
 
 Function DMthzS(Src$()) As Drs

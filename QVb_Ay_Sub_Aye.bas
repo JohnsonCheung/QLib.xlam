@@ -51,9 +51,9 @@ Stop
 'AyeDotLin = AywPredFalse(Ay, PredzIsDotLin)
 End Function
 
-Function AyeEle(Ay, Ele) 'Rmv Fst-Ele eq to Ele from Ay
-Dim Ix&: Ix = IxzAy(Ay, Ele): If Ix = -1 Then AyeEle = Ay: Exit Function
-AyeEle = AyeEleAt(Ay, IxzAy(Ay, Ele))
+Function AyeEle(Ay, ele) 'Rmv Fst-Ele eq to Ele from Ay
+Dim Ix&: Ix = IxzAy(Ay, ele): If Ix = -1 Then AyeEle = Ay: Exit Function
+AyeEle = AyeEleAt(Ay, IxzAy(Ay, ele))
 End Function
 
 Function AyeFstNEle(Ay, Optional N& = 1)
@@ -258,7 +258,7 @@ For Each I In Itr(Ay)
 Next
 End Function
 
-Function AyeNEle(Ay, Ele, Cnt%)
+Function AyeNEle(Ay, ele, Cnt%)
 If Cnt <= 0 Then Stop
 AyeNEle = Resi(Ay)
 Dim X, C%
@@ -267,7 +267,7 @@ For Each X In Itr(Ay)
     If C = 0 Then
         PushI AyeNEle, X
     Else
-        If X <> Ele Then
+        If X <> ele Then
             Push AyeNEle, X
         Else
             C = C - 1

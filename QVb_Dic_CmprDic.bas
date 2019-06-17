@@ -19,13 +19,13 @@ End Function
 Function FmtCmpgDiczCmpg(A As CmpgDic, Optional ExlSam As Boolean) As String()
 Dim O$()
 With A
-    O = AddAyAp( _
+    O = AyzAddAp( _
         FmtExcess(.AExcess, .Nm1), _
         FmtExcess(.BExcess, .Nm2), _
         FmtDif(.ADif, .BDif))
 End With
 If Not ExlSam Then
-    O = AddAy(O, FmtSam(A.Sam))
+    O = AyzAdd(O, FmtSam(A.Sam))
 End If
 FmtCmpgDiczCmpg = O
 End Function

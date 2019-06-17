@@ -5,7 +5,8 @@ Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Ty."
 Public Const ShtTyss$ = " A Att B Bool Byt C Chr D Dbl Dte Dec I Int L Lng M Mem S T Tim Txt "
 Enum EmSimTy
-    EmEmp
+    EiUnk
+    EiEmp
     EiYes
     EiNbr
     EiDte
@@ -130,11 +131,11 @@ End Function
 Function SimTyzV(V As VbVarType) As EmSimTy
 Dim O As EmSimTy
 Select Case True
+Case V = Empty: O = EiEmp
 Case V = vbBoolean: O = EiYes
 Case V = vbByte, V = vbCurrency, V = vbDecimal, V = vbDouble, V = vbInteger, V = vbLong, V = vbSingle: O = EiNbr
 Case V = vbDate: O = EiDte
 Case V = vbString: O = EiStr
-Case Else: Thw CSub, "Unsupported VarType", "VarType", V
 End Select
 SimTyzV = O
 End Function

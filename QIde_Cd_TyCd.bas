@@ -7,11 +7,11 @@ Dim C2$: C2 = Tp_Push(IsPrv)
 Dim C3$: C3 = Tp_Pushs(IsPrv)
 Dim C4$: C4 = Tp_Add(IsPrv)
 Dim C5$: C5 = Tp_Sng(IsPrv)
-TyCd = RplQ(JnCrLf(Sy(C1, C2, C3, C4, C5)), Tyn)
+TyCd = SzQBy(JnCrLf(Sy(C1, C2, C3, C4, C5)), Tyn)
 End Function
 
 Function TyCd_Tys$(Tyn, Optional IsPrv As Boolean)
-TyCd_Tys = RplQ(Tp_Tys(IsPrv), Tyn)
+TyCd_Tys = SzQBy(Tp_Tys(IsPrv), Tyn)
 End Function
 
 Private Function Tp_Push$(Optional IsPrv As Boolean)

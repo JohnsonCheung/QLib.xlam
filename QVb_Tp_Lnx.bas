@@ -58,7 +58,7 @@ End Function
 
 Function FmtLnxs(A As Lnxs) As String()
 Dim B$(): B = AlignRzAy(IxyzLnxs(A))
-FmtLnxs = JnAyab(B, LinAyzLnxs(A), " ")
+FmtLnxs = SyzAyab(B, LinAyzLnxs(A), " ")
 End Function
 Function SngLnx(A As Lnx) As Lnxs
 PushLnx SngLnx, A

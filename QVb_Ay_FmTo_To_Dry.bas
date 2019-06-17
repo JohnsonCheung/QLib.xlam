@@ -4,19 +4,19 @@ Option Explicit
 Private Const CMod$ = "MVb_Ay_FmTo_To_Dry."
 Private Const Asm$ = "QVb"
 
-Function DryzAddAyC(Ay, C) As Variant()
+Function DryzAyzAddC(Ay, C) As Variant()
 'XCDry is AyItmX-Const-Dry
 Dim I
 For Each I In Itr(Ay)
-    PushI DryzAddAyC, Array(I, C)
+    PushI DryzAyzAddC, Array(I, C)
 Next
 End Function
 
-Function DryzCAddAy(A, C) As Variant()
+Function DryzCAyzAdd(A, C) As Variant()
 'CXDry is Const-AyItmX-Dry
 Dim I
 For Each I In Itr(A)
-    PushI DryzCAddAy, Array(C, I)
+    PushI DryzCAyzAdd, Array(C, I)
 Next
 End Function
 

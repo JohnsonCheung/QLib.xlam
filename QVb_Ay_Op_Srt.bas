@@ -47,7 +47,7 @@ Dim L1, V1, H1
     V1 = AywEQ(Ay, V)
     H1 = QSrt(H)
 Dim O
-    O = AddAyAp(L1, V1, H1)
+    O = AyzAddAp(L1, V1, H1)
 If Ord = EiDes Then O = RevAy(O)
 QSrt = O
 End Function

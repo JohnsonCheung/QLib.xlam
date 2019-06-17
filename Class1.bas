@@ -7,10 +7,12 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
-Dim WithEvents BtnOfRunZ As CommandBarButton
-Attribute BtnOfRunZ.VB_VarHelpID = -1
-Dim WithEvents BtnOfAlignMth As CommandBarButton
-Attribute BtnOfAlignMth.VB_VarHelpID = -1
+Option Explicit
+Option Compare Text
+Dim WithEvents BoRunZ As CommandBarButton
+Attribute BoRunZ.VB_VarHelpID = -1
+Dim WithEvents BoAlignMth As CommandBarButton
+Attribute BoAlignMth.VB_VarHelpID = -1
 
 Private Property Get Y_BtnSpec() As String()
 Erase XX
@@ -20,20 +22,20 @@ Y_BtnSpec = XX
 Erase XX
 End Property
 
-Private Sub BtnOfAlignMth_Click(ByVal Ctrl As Office.CommandBarButton, CancelDefault As Boolean)
+Private Sub BoAlignMth_Click(ByVal Ctrl As Office.CommandBarButton, CancelDefault As Boolean)
 AlignMthDim
 End Sub
 
-Private Sub BtnOfRunZ_Click(ByVal Ctrl As Office.CommandBarButton, CancelDefault As Boolean)
+Private Sub BoRunZ_Click(ByVal Ctrl As Office.CommandBarButton, CancelDefault As Boolean)
 Z
 End Sub
 
 Friend Sub Class_Initialize()
 Dim Spec$():              Spec = Y_BtnSpec  ' Spec
 EnsBtns IndentedLy(Spec, "Bars")
-Set BtnOfRunZ = Bars("XX").Controls("RunZ")
-Set BtnOfAlignMth = Bars("XX").Controls("AlignMth")
-'BtnOfRunZ.ShortcutText = "Alt+Z"
+Set BoRunZ = Bars("XX").Controls("RunZ")
+Set BoAlignMth = Bars("XX").Controls("AlignMth")
+'BoRunZ.ShortcutText = "Alt+Z"
 End Sub
 Private Sub Class_Terminate()
 MsgBox "Class1 terminated"

@@ -21,14 +21,14 @@ D Stru(A)
 End Sub
 
 Function StruFld(ParamArray Ap()) As Drs
-Dim Dry(), S$, I, Av(), Ele$, LikFF$, LikFld$, J
+Dim Dry(), S$, I, Av(), ele$, LikFF$, LikFld$, J
 Av = Ap
 For Each I In Av
     S = I
-    AsgTRst S, Ele, LikFF
+    AsgTRst S, ele, LikFF
     For Each J In SyzSS(LikFF)
         LikFld = J
-        PushI Dry, Array(Ele, LikFld)
+        PushI Dry, Array(ele, LikFld)
     Next
 Next
 StruFld = DrszFF("Ele FldLik", Dry)

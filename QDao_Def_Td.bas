@@ -8,7 +8,7 @@ Function CvTd(A) As Dao.TableDef
 Set CvTd = A
 End Function
 
-Sub AddFdy(A As TableDef, Fdy() As Field2)
+Sub AddFdy(A As TableDef, Fdy() As Dao.Field2)
 Dim I
 For Each I In Fdy
     A.Fields.Append I

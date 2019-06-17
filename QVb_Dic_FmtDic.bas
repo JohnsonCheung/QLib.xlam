@@ -32,7 +32,7 @@ End Function
 Function FmtDicTit(A As Dictionary, Tit$) As String()
 PushI FmtDicTit, Tit
 PushI FmtDicTit, vbTab & "Count=" & A.Count
-PushIAy FmtDicTit, AddPfxzAy(FmtDic(A, InclValTy:=True), vbTab)
+PushIAy FmtDicTit, SyzAyP(FmtDic(A, InclValTy:=True), vbTab)
 End Function
 
 Function FmtDic(A As Dictionary, Optional InclValTy As Boolean, Optional Nm1$ = "Key", Optional Nm2$ = "Val", Optional AddIx As Boolean) As String()

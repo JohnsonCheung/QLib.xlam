@@ -25,10 +25,10 @@ For Each I In Itr(Ay)
     If IsEqStr(I, StrEle, C) Then HasEleS = True: Exit Function
 Next
 End Function
-Function HasEle(Ay, Ele) As Boolean
+Function HasEle(Ay, ele) As Boolean
 Dim I
 For Each I In Itr(Ay)
-    If I = Ele Then HasEle = True: Exit Function
+    If I = ele Then HasEle = True: Exit Function
 Next
 End Function
 

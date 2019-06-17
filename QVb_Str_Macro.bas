@@ -7,12 +7,15 @@ Type NNAv
     NN As String
     Av() As Variant
 End Type
-Function NyzMacro(Macro, Optional OpnBkt$ = vbOpnBigBkt) As String()
-'Macro is a str with ..[xx].., this sub is to return all xx
+
+Function NyzMacro(Macro, Optional OpnBkt$ = vbOpnBigBkt, Optional InclBkt As Boolean) As String()
+'Macro is a str with ..[xx].., it is to return all xx or [xx]
 Dim Q1$:   Q1 = OpnBkt
 Dim Q2$:   Q2 = ClsBkt(OpnBkt)
 Dim Sy$(): Sy = Split(Macro, Q1)
-NyzMacro = AywDist(RmvBlankLin(BefSy(Sy, Q2)))
+Dim O$():   O = AywDist(RmvBlankLin(BefSy(Sy, Q2)))
+If InclBkt Then O = SyzAyPS(O, Q1, Q2)
+NyzMacro = O
 End Function
 
 Function FmtMacro(Macro, ParamArray Ap())

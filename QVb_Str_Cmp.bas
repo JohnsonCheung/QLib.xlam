@@ -34,7 +34,7 @@ Dim O$(), J&, MinU&
 FmtCmprLines = O
 End Function
 Private Function LyAll(A$(), Nm$) As String()
-
+Stop
 End Function
 Private Function LyzCmprStr(A$, B$, Ix) As String()
 If A = B Then PushI LyzCmprStr, Ix & ":" & A: Exit Function

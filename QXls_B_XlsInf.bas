@@ -655,6 +655,10 @@ Debug.Print RgRR(R, 1, 2).Address
 Stop
 End Sub
 
+Function CvAutoFilter(A) As AutoFilter
+Set CvAutoFilter = A
+End Function
+
 Function CvRg(A) As Range
 Set CvRg = A
 End Function
@@ -810,6 +814,16 @@ Function NRowzRg&(A As Range)
 NRowzRg = A.Rows.Count
 End Function
 
+Function RgAy(Rg As Range, RC As Drs) As Range()
+'Fm RC : .. R C .. @@
+Dim IxR%, IxC%: AsgIx RC, "R C", IxR, IxC
+Dim Dr: For Each Dr In Itr(RC.Dry)
+    Dim R&: R = Dr(IxR)
+    Dim C%: C = Dr(IxC)
+    PushObj RgAy, RgRC(Rg, R, C)
+Next
+End Function
+
 Function RgR(A As Range, R)
 Set RgR = RgRR(A, R, R)
 End Function
@@ -832,6 +846,14 @@ Set CellRight = RgRC(A, 1, 1 + Right)
 End Function
 Function RgRC(A As Range, R, C) As Range
 Set RgRC = A.Cells(R, C)
+End Function
+
+Function R2zRg&(A As Range)
+R2zRg = A.Row + A.Rows.Count
+End Function
+
+Function C2zRg%(A As Range)
+C2zRg = A.Columns.Count
 End Function
 
 Function RgRCC(A As Range, R, C1, C2) As Range

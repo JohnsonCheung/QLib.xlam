@@ -10,8 +10,8 @@ Dim Sq(), R As Range
     Set R = TitAt(A, UBound(Sq(), 1))
 Set R = RgzSq(Sq(), R)
 MgeRg R
-BdrRgInner R
-BdrRgAround R
+BdrInside R
+BdrAround R
 End Sub
 
 Private Sub MgeRg(TitRg As Range)

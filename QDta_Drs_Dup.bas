@@ -18,6 +18,17 @@ Dim RowIxy&(): RowIxy = RowIxyOfDupRow(A, FF)
 DrseDup = DrseRowIxy(A, RowIxy)
 End Function
 
+Function DrswCeqC(A As Drs, CC$) As Drs
+Dim Dr, C1&, C2&
+AsgIx A, CC, C1, C2
+For Each Dr In Itr(A.Dry)
+    If Dr(C1) = Dr(C2) Then
+        PushI DrswCeqC.Dry, Dr
+    End If
+Next
+DrswCeqC.Fny = A.Fny
+End Function
+
 Function DrseCeqC(A As Drs, CC$) As Drs
 Dim Dr, C1&, C2&
 AsgIx A, CC, C1, C2
@@ -90,7 +101,7 @@ Dim OKeyDry(), OCnt&(), Dr
     Next
     If Si(OKeyDry) <> Si(OCnt) Then Thw CSub, "Si Diff", "OKeyDry-Si OCnt-Si", Si(OKeyDry), Si(OCnt)
 For J = 0 To UB(OCnt)
-    PushI DryGpCntzSlow, AddAy(Array(OCnt(J)), OKeyDry(J)) '<===========
+    PushI DryGpCntzSlow, AyzAdd(Array(OCnt(J)), OKeyDry(J)) '<===========
 Next
 End Function
 

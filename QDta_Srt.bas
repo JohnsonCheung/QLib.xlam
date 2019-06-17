@@ -11,9 +11,7 @@ Dim F():      F = FstCol(A)
 Dim Ixy&(): Ixy = IxyzSrtAy(F)
   SrtDrszFstCol = DrswRowIxy(A, Ixy)
 End Function
-Sub Z123()
-Z_SrtDrs
-End Sub
+
 Sub Z_SrtDrs()
 Dim Drs As Drs, Act As Drs, Ept As Drs, SrtByFF$
 GoSub T0

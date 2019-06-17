@@ -53,8 +53,8 @@ AddCmpzPTN P, vbext_ct_StdModule, Nm
 ApdLines MdzPN(P, Nm), SrcLines
 End Sub
 
-Sub RenCmpOfAddPfx(A As VBComponent, AddPfx$)
-A.Name = AddPfx & A.Name
+Sub RenCmpOfSzAddP(A As VBComponent, SzAddP$)
+A.Name = SzAddP & A.Name
 End Sub
 
 Sub RenCmpOfRplPfx(A As VBComponent, FmPfx$, ToPfx$)

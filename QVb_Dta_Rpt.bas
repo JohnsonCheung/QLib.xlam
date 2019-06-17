@@ -1,4 +1,6 @@
 Attribute VB_Name = "QVb_Dta_Rpt"
+Option Explicit
+Option Compare Text
 Function StrzRpt$(Rpt As EmRpt)
 Dim O$
 Select Case True

@@ -205,13 +205,13 @@ Function Itr(Ay)
 If Si(Ay) = 0 Then Set Itr = New Collection Else Itr = Ay
 End Function
 
-Function RTrimAy(Ay) As String()
+Function RSyzTrim(Ay) As String()
 If Si(Ay) = 0 Then Exit Function
 Dim O$(), I
 For Each I In Ay
     Push O, RTrim(I)
 Next
-RTrimAy = O
+RSyzTrim = O
 End Function
 
 Function ResiN(Ay, N&)
@@ -266,7 +266,7 @@ End Function
 
 Function RplAyzMid(Ay, B As Fei, ByAy)
 With AyabczAyFei(Ay, B)
-RplAyzMid = AddAyAp(.A, ByAy, .C)
+RplAyzMid = AyzAddAp(.A, ByAy, .C)
 End With
 End Function
 
@@ -463,8 +463,8 @@ Dim ODry()
 AyZip_Ap = ODry
 End Function
 
-Function ItmAddAy(Itm, Ay)
-ItmAddAy = AyInsEle(Ay, Itm)
+Function ItmAyzAdd(Itm, Ay)
+ItmAyzAdd = AyInsEle(Ay, Itm)
 End Function
 
 Private Sub Z_AyabczAyFE()
@@ -635,7 +635,7 @@ Z_AyTrim
 MVb_Ay:
 End Sub
 
-Private Sub Z_AddPfxzSslIn()
+Private Sub Z_SzAddPzSslIn()
 Dim Ssl$, Exp$(), Pfx$
 Ssl = "B C D"
 Pfx = "A"
@@ -644,13 +644,13 @@ GoSub Tst
 Exit Sub
 Tst:
     Dim Act$()
-    Act = AddPfxzSslIn(Pfx, Ssl)
+    Act = SzAddPzSslIn(Pfx, Ssl)
     Debug.Assert IsEqAy(Act, Exp)
 Return
 End Sub
 
-Function AddPfxzSslIn(Pfx$, SsLin) As String()
-AddPfxzSslIn = AddPfxzAy(SyzSS(SsLin), Pfx)
+Function SzAddPzSslIn(Pfx$, SsLin) As String()
+SzAddPzSslIn = SyzAyP(SyzSS(SsLin), Pfx)
 End Function
 
 Function SpcSepStr$(S)
@@ -673,10 +673,51 @@ For J = 0 To U
 Next
 SslzDrv = JnSpc(O)
 End Function
+
 Function SyzSsl(Ssl$) As String()
 Dim I
 For Each I In SyzSS(Ssl)
     PushI SyzSsl, RevSpcSepStr(CStr(I))
+Next
+End Function
+
+Function IsDteStr(S) As Boolean
+On Error GoTo X
+Dim A As Date: A = S
+IsDteStr = True
+Exit Function
+X:
+End Function
+
+Function IsDblStr(S) As Boolean
+On Error GoTo X
+Dim A#: A = S
+IsDblStr = True
+Exit Function
+X:
+End Function
+
+Function IsDteSy(Sy$()) As Boolean
+Dim S: For Each S In Sy
+    If Not IsDteStr(S) Then Exit Function
+Next
+End Function
+
+Function IsDblSy(Sy$()) As Boolean
+Dim S: For Each S In Sy
+    If Not IsDblStr(S) Then Exit Function
+Next
+End Function
+
+Function DteAyzSy(Sy$()) As Date()
+Dim I: For Each I In Sy
+    PushI DteAyzSy, I
+Next
+End Function
+
+Function DblAyzSy(Sy$()) As Double()
+Dim I: For Each I In Sy
+    PushI DblAyzSy, I
 Next
 End Function
 Function SyzSS(SS) As String()

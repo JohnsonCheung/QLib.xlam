@@ -6,6 +6,16 @@ Private Const Asm$ = "QVb"
 Type S1S2: S1 As String: S2 As String: End Type
 Type S1S2s: N As Long: Ay() As S1S2: End Type
 Type S3: A As String: B As String: C As String: End Type
+Function MapS1(A As S1S2s, Dic As Dictionary) As S1S2s
+Dim J&: For J = 0 To A.N - 1
+    Dim M As S1S2: M = A.Ay(J)
+    If Not Dic.Exists(M.S1) Then
+        Thw CSub, "Som S1 in [S1S2s] not found in [Dic]", "S1-not-found S1S2s Dic", M.S1, FmtS1S2s(A), FmtDic(Dic)
+    End If
+    M.S1 = Dic(M.S1)
+    PushS1S2 MapS1, M
+Next
+End Function
 Function SwapS1S2s(A As S1S2s) As S1S2s
 Dim J&, Ay() As S1S2: Ay = A.Ay
 Dim O As S1S2s: O = A

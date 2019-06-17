@@ -99,7 +99,7 @@ If Si(A.ErNy) = 0 Then Inf CSub, "No GenErMsg-Src-Beg. / GenErMsg-Src-End.", "Md
 Dim O$(), O1$(), O2$()
 O1 = SrcRplConstDic(Src, ErConstDic): 'Brw O1: Stop
 O2 = RmvMthInSrc(O1, ErMthnSet):       'Brw LyzNNAp("MthToRmv BefRmvMth AftRmvMth", ErMthnSet, O1, O2): Stop
-O = AddSy(O2, ErMthLinAy):            'Brw O:Stop
+O = SyzAdd(O2, ErMthLinAy):            'Brw O:Stop
 ErMsgzSrc = O
 End Function
 
@@ -138,14 +138,14 @@ Next
 End Sub
 
 Private Property Get ErMthnSet() As Aset
-Set ErMthnSet = AsetzAy(ErMthny)
+Set ErMthnSet = AsetzAy(ErMthNy)
 End Property
 
-Private Property Get ErMthny() As String()
+Private Property Get ErMthNy() As String()
 Dim ErNy$(): ErNy = A.ErNy
 Dim I
 For Each I In Itr(ErNy)
-    PushI ErMthny, ErMthn(I)
+    PushI ErMthNy, ErMthn(I)
 Next
 End Property
 
@@ -207,7 +207,7 @@ Private Function ErMthLinesByNm$(ErNm$, ErMsg$)
 Dim CNm$:         CNm = ErCnstn(ErNm)
 Dim ErNy$():     ErNy = NyzMacro(ErMsg)
 Dim Pm$:           Pm = JnCommaSpc(AywDist(ErNy))
-Dim Calling$: Calling = Jn(AddPfxzAy(DimNyzDimItmAy(ErNy), ", "))
+Dim Calling$: Calling = Jn(SyzAyP(DimNyzDimItmAy(ErNy), ", "))
 Dim Mthn:     Mthn = ErMthn(ErNm)
 ErMthLinesByNm = FmtQQ("Private Function ?(?) As String():? = FmtMacro(??):End Function", _
     Mthn, Pm, Mthn, CNm, Calling)

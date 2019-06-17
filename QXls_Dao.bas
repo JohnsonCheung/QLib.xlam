@@ -156,8 +156,8 @@ End Sub
 Function AddLo(At As Range, Fb, T) As ListObject
 Dim Ws As Worksheet: Set Ws = WszRg(At)
 Dim Lo As ListObject: Set Lo = Ws.ListObjects.Add(xlSrcExternal, CnStrzFbzAsAdoOle(Fb), Destination:=At)
-Dim Qt As QueryTable: Set Qt = Lo.QueryTable
-With Qt
+Dim QT As QueryTable: Set QT = Lo.QueryTable
+With QT
     .CommandType = xlCmdTable
     .CommandText = T
     .RowNumbers = False
@@ -218,8 +218,8 @@ End Sub
 Sub PutDbtAt(A As Database, T, At As Range, Optional AddgWay As EmAddgWay)
 LozRg PutSq(SqzT(A, T), At), Lon(T)
 End Sub
-Sub SetQtFbt(Qt As QueryTable, Fb, T)
-With Qt
+Sub SetQtFbt(QT As QueryTable, Fb, T)
+With QT
     .CommandType = xlCmdTable
     .Connection = CnStrzFbzAsAdoOle(Fb) '<--- Fb
     .CommandText = T '<-----  T

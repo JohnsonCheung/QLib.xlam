@@ -101,13 +101,21 @@ End If
 If TyChrzTyNm(Ret) <> "" Then Exit Function
 RetAs = " As " & Ret
 End Function
-Function RetAszL$(MthLin$)
-Dim L$: L = AftBkt(MthLin)
-If Not ShfAs(L) Then Exit Function
-Dim O$: O = ShfNm(L)
-If ShfBkt(L) Then O = O & "()"
-RetAszL = O
+
+Private Sub Z_RetAszL()
+Dim L, A As S1S2s: For Each L In MthLinAyP
+    PushS1S2 A, S1S2(RetAszL(L), L)
+Next
+BrwS1S2s A
+End Sub
+
+Function RetAszL$(MthLin)
+Dim A$: A = AftBkt(MthLin)
+Dim B$: B = BefOrAll(A, ":")
+Dim C$: C = BefOrAll(B, "'")
+RetAszL = RmvPfx(C, "As ")
 End Function
+
 Function RetAszRet$(Ret)
 RetAszRet = RetAs(Ret)
 End Function
@@ -117,13 +125,16 @@ Dim B$
 Dim F$: F = FstChr(DclSfx)
 If IsTyChr(F) Then
     If Len(DclSfx) = 1 Then Exit Function
-    B = RmvFstChr(DclSfx): If B <> "()" Then Stop
-    RetAszDclSfx = " As " & TyNmzTyChr(F) & "()"
+           B = RmvFstChr(DclSfx): If B <> "()" Then Stop
+RetAszDclSfx = " As " & TyNmzTyChr(F) & "()"
     Exit Function
 End If
 If TyChrzTyNm(DclSfx) <> "" Then Exit Function
-If Left(DclSfx, 4) <> " As " Then Stop
-RetAszDclSfx = DclSfx
+Select Case True
+Case Left(DclSfx, 4) = " As ":      RetAszDclSfx = DclSfx
+Case Left(DclSfx, 6) = "() As ":    RetAszDclSfx = Mid(DclSfx, 3) & "()"
+Case Else: Stop
+End Select
 End Function
 Function TyChrzDclSfx$(DclSfx)
 If Len(DclSfx) = 1 Then

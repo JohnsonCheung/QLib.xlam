@@ -102,22 +102,22 @@ Function EnsPrpOnErzS(Src$()) As String()
 
 End Function
 Private Sub Z_IsSngLinMth()
-Dim MthLy$()
+Dim L
 GoSub T1
 Exit Sub
 T1:
-    MthLy = Sy("Function AA():End Function")
+    L = Sy("Function AA():End Function")
     Ept = True
     GoTo Tst
 Tst:
-    Act = IsSngLinMth(MthLy)
+    Act = IsSngLinMth(L)
     C
     Return
 End Sub
 
-Function IsSngLinMth(MthLy$()) As Boolean
-If Si(MthLy) <> 1 Then Exit Function
-IsSngLinMth = HasSubStr(MthLy(0), "End " & MthKd(MthLy(0)))
+Function IsSngLinMth(L) As Boolean
+Dim K$: K = MthKd(L): If K = "" Then Exit Function
+IsSngLinMth = HasSubStr(L, "End " & K)
 End Function
 
 Private Sub RmvPrpOnErzM(M As CodeModule, Optional Rpt As EmRpt)

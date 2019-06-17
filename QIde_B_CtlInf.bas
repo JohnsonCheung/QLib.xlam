@@ -16,40 +16,40 @@ Property Get StdBar() As Office.CommandBar
 Set StdBar = Bars("Standard")
 End Property
 
-Property Get BtnOfEdtClr() As Office.CommandBarButton
-Set BtnOfEdtClr = FstCaption(EditPopup.Controls, "C&lear")
+Property Get BoEdtClr() As Office.CommandBarButton
+Set BoEdtClr = FstCaption(EditPopup.Controls, "C&lear")
 End Property
 
 Property Get BarOfMnu() As CommandBar
 Set BarOfMnu = BarOfMnuzV(CVbe)
 End Property
 
-Property Get BtnOfSelAll() As Office.CommandBarButton
-Set BtnOfSelAll = FstCaption(EditPopup.Controls, "Select &All")
+Property Get BoSelAll() As Office.CommandBarButton
+Set BoSelAll = FstCaption(EditPopup.Controls, "Select &All")
 End Property
 
 Function IsBtn(A) As Boolean
 IsBtn = TypeName(A) = "CommandButton"
 End Function
 
-Property Get BtnOfNxtStmt() As CommandBarButton
-Set BtnOfNxtStmt = PopupOfDbg.Controls("Show Next Statement")
+Property Get BoNxtStmt() As CommandBarButton
+Set BoNxtStmt = PopupOfDbg.Controls("Show Next Statement")
 End Property
 
 
 Property Get PopupOfWin() As CommandBarPopup
 Set PopupOfWin = BarOfMnu.Controls("Window")
 End Property
-Property Get BtnOfTileH() As CommandBarButton
-Set BtnOfTileH = PopupOfWin.Controls("Tile &Horizontally")
+Property Get BoTileH() As CommandBarButton
+Set BoTileH = PopupOfWin.Controls("Tile &Horizontally")
 End Property
 
-Property Get BtnOfTileV() As Office.CommandBarButton
-Set BtnOfTileV = PopupOfWin.Controls("Tile &Vertically")
+Property Get BoTileV() As Office.CommandBarButton
+Set BoTileV = PopupOfWin.Controls("Tile &Vertically")
 End Property
 
-Property Get BtnOfXls() As Office.CommandBarControl
-Set BtnOfXls = StdBar.Controls(1)
+Property Get BoXls() As Office.CommandBarControl
+Set BoXls = StdBar.Controls(1)
 End Property
 
 Private Sub Z_DbgPop()
@@ -69,12 +69,12 @@ Private Property Get EditPopup() As Office.CommandBarPopup
 Set EditPopup = FstCaption(BarOfMnu.Controls, "&Edit")
 End Property
 
-Property Get BtnOfSav() As CommandBarButton
-Set BtnOfSav = BtnOfSavzV(CVbe)
+Property Get BoSav() As CommandBarButton
+Set BoSav = BoSavzV(CVbe)
 End Property
 
-Property Get BtnOfJmpNxtStmt() As CommandBarButton
-Set BtnOfJmpNxtStmt = PopupOfDbg.Controls("Show Next Statement")
+Property Get BoJmpNxtStmt() As CommandBarButton
+Set BoJmpNxtStmt = PopupOfDbg.Controls("Show Next Statement")
 End Property
 
 
@@ -82,11 +82,11 @@ Function BarOfMnuzV(A As Vbe) As CommandBar
 Set BarOfMnuzV = A.CommandBars("Menu Bar")
 End Function
 
-Function BtnOfSavzV(A As Vbe) As CommandBarButton
+Function BoSavzV(A As Vbe) As CommandBarButton
 Dim I As CommandBarControl, S As Office.CommandBarControls
 Set S = StdBarzV(A).Controls
 For Each I In S
-    If HasPfx(I.Caption, "&Sav") Then Set BtnOfSav = I: Exit Function
+    If HasPfx(I.Caption, "&Sav") Then Set BoSav = I: Exit Function
 Next
 Stop
 End Function
@@ -126,11 +126,11 @@ Property Get WinOfBrwObj() As VBIDE.Window
 Set WinOfBrwObj = FstWinTy(vbext_wt_Browser)
 End Property
 
-Property Get BtnOfCompile() As CommandBarButton
+Property Get BoCompile() As CommandBarButton
 Dim O As CommandBarButton
 Set O = PopupOfDbg.CommandBar.Controls(1)
 If Not HasPfx(O.Caption, "Compi&le") Then Stop
-Set BtnOfCompile = O
+Set BoCompile = O
 End Property
 Property Get Bars() As Office.CommandBars
 Set Bars = BarszV(CVbe)

@@ -140,6 +140,10 @@ CanCvLng = True
 X:
 End Function
 
+Function MinUB(Ay1, Ay2)
+MinUB = Min(UB(Ay1), UB(Ay2))
+End Function
+
 Function Min(ParamArray A())
 Dim O, J&, Av()
 Av = A

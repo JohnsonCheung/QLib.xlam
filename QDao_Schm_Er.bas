@@ -51,7 +51,7 @@ Dim AllFny$()
 Dim AllEny$()
     AllFny = FnyzTdLy(LyzLnxs(T))
     AllEny = T1Ay(LyzLnxs(E))
-ErzSchm = AddAyAp( _
+ErzSchm = AyzAddAp( _
     ErzLnxsT1ss(X, "Des Ele Fld Tbl"), _
     ErT(Tny, T, E), _
     ErF(AllFny, F), _
@@ -114,9 +114,9 @@ Dim J%
 End Function
 
 Private Function ErE_DupE(E As Lnxs, Eny$()) As String()
-Dim Ele
-For Each Ele In Itr(AywDup(Eny))
-    Push ErE_DupE, MsgE_DupE(LnoAyzEle(E, Ele), Ele)
+Dim ele
+For Each ele In Itr(AywDup(Eny))
+    Push ErE_DupE, MsgE_DupE(LnoAyzEle(E, ele), ele)
 Next
 End Function
 
@@ -244,7 +244,7 @@ Dim I
 'Next
 End Function
 
-Private Function LnoAyzEle(E As Lnxs, Ele) As Long()
+Private Function LnoAyzEle(E As Lnxs, ele) As Long()
 Dim J%
 'For J = 0 To UBound(E)
 '    If T1(E(J).Lin) = Ele Then
@@ -349,7 +349,7 @@ Msg_LinTyEr = Msg(A, FmtQQ(CM_LinTyEr, Ty, FmtDrs(DShtTy)))
 End Function
 
 Private Function ErD(Tny$(), T As Lnxs, D As Lnxs) As String()
-ErD = AddAyAp( _
+ErD = AyzAddAp( _
     ErD_LinEr(D))
     'ErD_FldEr(D, T))
     '    ErDT_InvalidFld(D, Tny), _
@@ -358,15 +358,15 @@ End Function
 
 Private Function ErE(E As Lnxs) As String()
 Dim Eny$()
-ErE = AddAy(ErE_ELnxs(E), ErE_DupE(E, Eny))
+ErE = AyzAdd(ErE_ELnxs(E), ErE_DupE(E, Eny))
 End Function
 
 Private Function ErF(AllEny$(), F As Lnxs) As String()
-ErF = AddAy(ErF_1_LinEr(F), ErF_EleHasNoDef(F, AllEny))
+ErF = AyzAdd(ErF_1_LinEr(F), ErF_EleHasNoDef(F, AllEny))
 End Function
 
 Private Function ErT(Tny$(), T As Lnxs, E As Lnxs) As String()
-ErT = AddAyAp( _
+ErT = AyzAddAp( _
 ErT_LinEr(T), _
 ErT_NoTLin(T), _
 ErT_FldHasNoEle(T, E), _

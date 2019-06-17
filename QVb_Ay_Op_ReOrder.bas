@@ -7,5 +7,5 @@ Private Const Asm$ = "QVb"
 Function AyReOrd(Ay, SubAy)
 Dim HasSubAy: HasSubAy = IntersectAy(Ay, SubAy)
 Dim Rest: Rest = MinusAy(Ay, SubAy)
-AyReOrd = AddAy(HasSubAy, Rest)
+AyReOrd = AyzAdd(HasSubAy, Rest)
 End Function

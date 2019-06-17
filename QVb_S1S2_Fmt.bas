@@ -14,7 +14,13 @@ Dim O As S1S2s
 PushS1S2 O, S1S2(S1, S2)
 S1S2szS1S2 = O
 End Function
-
+Function AddS1Pfx(A As S1S2s, S1Pfx$) As S1S2s
+Dim J&: For J = 0 To A.N - 1
+    Dim M As S1S2: M = A.Ay(J)
+    M.S1 = S1Pfx & M.S1
+    PushS1S2 AddS1Pfx, M
+Next
+End Function
 Sub PushS1S2s(O As S1S2s, A As S1S2s)
 Dim J&
 For J = 0 To A.N - 1
@@ -35,7 +41,7 @@ mHasLines = HasLines(A)
   mSepLin = SepLin(IntAy(mW1, mW2))
    mHdrLy = HdrLy(mSepLin, Nm1, Nm2, mW1, mW2)
    mMidLy = LyzS1S2s(A, mW1, mW2, mHasLines, mSepLin)
-FmtS1S2s = AddSy(mHdrLy, mMidLy)
+FmtS1S2s = SyzAdd(mHdrLy, mMidLy)
 End Function
 Private Function HdrLy(mSep$, Nm1$, Nm2$, W1%, W2%) As String()
 If Nm1 = "" And Nm2 = "" Then Exit Function

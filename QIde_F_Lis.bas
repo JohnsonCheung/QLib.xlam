@@ -8,13 +8,13 @@ Sub LIsCmpzMd(Optional Patn$, Optional Exl$)
 Dim A$()
 '    A = CmpNyPj(CPj, WhMd("Std", WhNm(Patn, Exl)))
     A = SrtAy(A)
-    A = AddPfxzAy(A, "ShwMbr """)
+    A = SyzAyP(A, "ShwMbr """)
 D A
 End Sub
 Sub LisPj()
 Dim A$()
     A = PjnyzV(CVbe)
-    D AddPfxzAy(A, "ShwPj """)
+    D SyzAyP(A, "ShwPj """)
 D A
 End Sub
 
@@ -73,8 +73,12 @@ Dim Patn As Drs: Patn = ColPatn(Fun, "RetAs", RetAsPatn)
 Dim T50 As Drs: T50 = TopN(Patn)
 BrwDrs T50
 End Sub
+
+Sub ListMthRetAs(Patn$)
+End Sub
+
 Sub LisMth()
-Dim Ay$(): Stop: ' Ay = QMthnyzV(CVbe)
+Dim Ay$(): Stop: ' Ay = QMthNyzV(CVbe)
 Debug.Print "Fst 30 of " & Si(Ay) & " methods"
 D FstNEle(Ay, 30)
 End Sub
@@ -96,11 +100,11 @@ WhStrzSfx = WhStrzMthPatn(MthSfx & "$", PubOnly)
 End Function
 
 Sub LisMthPfx(Pfx$, Optional PubOnly As Boolean)
-'D QMthnyV(WhStrzPfx(Pfx, PubOnly))
+'D QMthNyV(WhStrzPfx(Pfx, PubOnly))
 End Sub
 
 Sub LisMthSfx(Sfx$, Optional PubOnly As Boolean)
-'D QMthnyV(WhMthzSfx(Sfx, PubOnly))
+'D QMthNyV(WhMthzSfx(Sfx, PubOnly))
 End Sub
 
 Sub LisMthPatn(Patn$)

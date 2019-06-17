@@ -10,7 +10,7 @@ End Sub
 
 Function MthPfxSyzMd(M As CodeModule) As String()
 Dim N
-For Each N In Itr(MthnyzM(M))
+For Each N In Itr(MthNyzM(M))
     PushI MthPfxSyzMd, MthPfx(N)
 Next
 End Function

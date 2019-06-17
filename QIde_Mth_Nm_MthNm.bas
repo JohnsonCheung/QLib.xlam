@@ -19,28 +19,28 @@ End Sub
 
 Function QMthn$(M As CodeModule, Lin)
 Dim D$: D = MthDnzLin(Lin): If D = "" Then Exit Function
-QMthn = QMdnzM(M) & "." & D
+QMthn = MdDNm(M) & "." & D
 End Function
 
-Function PMthny(Src$()) As String()
+Function PMthNy(Src$()) As String()
 Dim Ix, N$, B As Mthn3
 For Each Ix In MthIxItr(Src)
     B = Mthn3zL(Src(Ix))
     If B.Nm <> "" Then
         If B.ShtMdy = "" Or B.ShtMdy = "Pub" Then
-            PushI PMthny, B.Nm
+            PushI PMthNy, B.Nm
         End If
     End If
 Next
 End Function
 
-Function MthnyzMthLinAy(MthLinAy$()) As String()
-Const CSub$ = CMod & "MthnyzMthLinAy"
+Function MthNyzMthLinAy(MthLinAy$()) As String()
+Const CSub$ = CMod & "MthNyzMthLinAy"
 Dim I, Nm$, J%, MthLin
 For Each I In Itr(MthLinAy)
     Nm = MthnzLin(I)
     If Nm = "" Then Thw CSub, "Given MthLinAy does not have Mthn", "[MthLin with error] Ix MthLinAy", I, J, AddIxPfx(MthLinAy)
-    PushI MthnyzMthLinAy, Nm
+    PushI MthNyzMthLinAy, Nm
     J = J + 1
 Next
 End Function
@@ -176,10 +176,10 @@ End Property
 Function ModNyzPum(PMthn) As String()
 ModNyzPum = ModNyzPPm(CPj, PMthn)
 End Function
-Function PMthnyzS(Src$()) As String()
+Function PMthNyzS(Src$()) As String()
 Dim L
 For Each L In Itr(Src)
-    If IsPMth(L) Then PushI PMthnyzS, Mthn(L)
+    If IsPMth(L) Then PushI PMthNyzS, Mthn(L)
 Next
 End Function
 
@@ -252,7 +252,7 @@ BrwDry Dry__Mthn_Verb_InVbe
 End Sub
 Function Dry__Mthn_Verb_InVbe() As Variant()
 Dim Mthn, I, ODry()
-For Each I In Itr(MthnyV)
+For Each I In Itr(MthNyV)
     Mthn = I
     PushI ODry, Sy(Mthn, Verb(Mthn))
 Next
@@ -262,21 +262,21 @@ Private Sub Z_MthnsetVWoVerb()
 MthnsetVWoVerb.Srt.Vc
 End Sub
 
-Property Get MthnyVWiVerb() As String()
+Property Get MthNyVWiVerb() As String()
 Dim Mthn, I, J&
-For Each I In Itr(MthnyV)
+For Each I In Itr(MthNyV)
     Mthn = I
 '    If HasSubStr(Mthn, "Z_ExprDic") Then Stop
     If J Mod 100 = 0 Then Debug.Print J
-    If HasVerb(Mthn) Then PushI MthnyVWiVerb, Mthn
+    If HasVerb(Mthn) Then PushI MthNyVWiVerb, Mthn
     J = J + 1
 Next
 End Property
-Property Get MthnyVWoVerb() As String()
+Property Get MthNyVWoVerb() As String()
 Dim Mthn, I
-For Each I In Itr(MthnyV)
+For Each I In Itr(MthNyV)
     Mthn = I
-    If Not HasVerb(Mthn) Then PushI MthnyVWiVerb, Mthn
+    If Not HasVerb(Mthn) Then PushI MthNyVWiVerb, Mthn
 Next
 End Property
 
@@ -285,109 +285,109 @@ HasVerb = Verb(Nm) <> ""
 End Function
 
 Property Get MthnsetVWiVerb() As Aset
-Set MthnsetVWiVerb = AsetzAy(MthnyVWiVerb)
+Set MthnsetVWiVerb = AsetzAy(MthNyVWiVerb)
 End Property
 
 Property Get MthnsetVWoVerb() As Aset
-Set MthnsetVWoVerb = AsetzAy(MthnyVWoVerb)
+Set MthnsetVWoVerb = AsetzAy(MthNyVWoVerb)
 End Property
 
 Function MthnsetV() As Aset
-Set MthnsetV = AsetzAy(MthnyV)
+Set MthnsetV = AsetzAy(MthNyV)
 End Function
 
-Function MthnyzSI(Src$(), MthIxy&()) As String()
+Function MthNyzSI(Src$(), MthIxy&()) As String()
 Dim Ix
 For Each Ix In Itr(MthIxy)
-    PushI MthnyzSI, Mthn3zL(Src(Ix)).Nm
+    PushI MthNyzSI, Mthn3zL(Src(Ix)).Nm
 Next
 End Function
 
-Function MthnyV() As String()
-MthnyV = MthnyzV(CVbe)
+Function MthNyV() As String()
+MthNyV = MthNyzV(CVbe)
 End Function
 
 Function MthnsetP() As Aset
-Set MthnsetP = AsetzAy(MthnyP)
+Set MthnsetP = AsetzAy(MthNyP)
 End Function
 
-Function MthnyP() As String()
-MthnyP = MthnyzP(CPj)
+Function MthNyP() As String()
+MthNyP = MthNyzP(CPj)
 End Function
 Function DPubMthzV(A As Vbe) As String()
 
 End Function
 
-Function MthnyzP(P As VBProject) As String()
+Function MthNyzP(P As VBProject) As String()
 Dim C As VBComponent
 For Each C In P.VBComponents
-    PushIAy MthnyzP, MthnyzM(C.CodeModule)
+    PushIAy MthNyzP, MthNyzM(C.CodeModule)
 Next
 End Function
 
-Function MthnyzFb(Fb) As String()
-MthnyzFb = MthnyzV(VbezPjf(Fb))
+Function MthNyzFb(Fb) As String()
+MthNyzFb = MthNyzV(VbezPjf(Fb))
 ClsPjf Fb
 End Function
 
 
-Private Sub Z_MthnyzFb()
+Private Sub Z_MthNyzFb()
 GoSub X_BrwAll
 Exit Sub
 X_BrwAll:
     Dim O$(), Fb
     For Each Fb In AppFbAy
-        PushAy O, MthnyzFb(CStr(Fb))
+        PushAy O, MthNyzFb(CStr(Fb))
     Next
     Brw O
     Return
 X_BrwOne:
     Dim A$(): A = AppFbAy
-    Brw MthnyzFb(A(0))
+    Brw MthNyzFb(A(0))
     Return
 End Sub
 
-Function MthnyzS(Src$()) As String()
+Function MthNyzS(Src$()) As String()
 Dim L
 For Each L In Itr(Src)
-    PushNonBlank MthnyzS, Mthn(L)
+    PushNonBlank MthNyzS, Mthn(L)
 Next
 End Function
 
-Function PMthnyzM(M As CodeModule) As String()
-PMthnyzM = PMthnyzS(Src(M))
+Function PMthNyzM(M As CodeModule) As String()
+PMthNyzM = PMthNyzS(Src(M))
 End Function
 
 Private Sub ZZ()
-Z_MthnyzFb
+Z_MthNyzFb
 MIde_Mth_Nm:
 End Sub
 
-Function MthnyzM(M As CodeModule) As String()
-MthnyzM = MthnyzS(Src(M))
+Function MthNyzM(M As CodeModule) As String()
+MthNyzM = MthNyzS(Src(M))
 End Function
 
 Private Sub Z_MthnzS()
 GoSub ZZ
 Exit Sub
 ZZ:
-   B MthnyzS(SrczP(CPj))
+   B MthNyzS(SrczP(CPj))
    Return
 End Sub
 
-Function MthnyzV(A As Vbe) As String()
+Function MthNyzV(A As Vbe) As String()
 Dim P As VBProject
 For Each P In A.VBProjects
-    PushIAy MthnyzV, MthnyzP(P)
+    PushIAy MthNyzV, MthNyzP(P)
 Next
 End Function
 
 Function MthAsetVbe() As Aset
-Set MthAsetVbe = AsetzAy(MthnyV)
+Set MthAsetVbe = AsetzAy(MthNyV)
 End Function
 
-Property Get MthnyzCMd() As String()
-MthnyzCMd = MthnyzM(CMd)
+Property Get MthNyzCMd() As String()
+MthNyzCMd = MthNyzM(CMd)
 End Property
 
 Function HasMth(Src$(), Mthn) As Boolean
@@ -399,7 +399,7 @@ HasMthzM = HasMth(Src(M), Mthn)
 End Function
 
 Function MthnCmlSetVbe() As Aset
-Set MthnCmlSetVbe = CmlSetzNy(MthnyV)
+Set MthnCmlSetVbe = CmlSetzNy(MthNyV)
 End Function
 Function DMthnzV(V As Vbe) As Drs
 

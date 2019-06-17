@@ -180,6 +180,19 @@ Select Case True
 Case IsAscDig(Asc(FstChr(S))), HasSpc(S), HasDot(S), HasHyphen(S), HasPound(S): IsNeedQuote = True
 End Select
 End Function
+Function IsDtezS(S$) As Boolean
+On Error GoTo X
+Dim D As Date: D = S
+IsDtezS = True
+X:
+End Function
+Function IsNbrzS(S$) As Boolean
+On Error GoTo X
+Dim D#: D = S
+IsNbrzS = CStr(D) = S
+Exit Function
+X:
+End Function
 Function IsStr(V) As Boolean
 IsStr = VarType(V) = vbString
 End Function

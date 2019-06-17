@@ -28,20 +28,20 @@ Dim P1%: P1 = InStr(Left(Lin, P - 1), """"): If P1 > 0 Then Exit Function
 RmkPoszVb = P
 End Function
 Sub TileH()
-BtnOfTileH.Execute
+BoTileH.Execute
 End Sub
 
 Sub TileV()
-BtnOfTileV.Execute
+BoTileV.Execute
 End Sub
 Sub Compile(Pjn$)
 JmpzP Pj(Pjn)
-BtnOfCompile.Execute
+BoCompile.Execute
 End Sub
 Sub CompilezP(P As VBProject)
 JmpzP P
-ThwIf_BtnOfCompile P.Name
-With BtnOfCompile
+ThwIf_BoCompile P.Name
+With BoCompile
     If .Enabled Then
         .Execute
         Debug.Print P.Name, "<--- Compiled"
@@ -49,19 +49,19 @@ With BtnOfCompile
         Debug.Print P.Name, "already Compiled"
     End If
 End With
-BtnOfTileV.Execute
-BtnOfSav.Execute
+BoTileV.Execute
+BoSav.Execute
 End Sub
 
 Sub CompilezV(A As Vbe)
 DoItrFun A.VBProjects, "CompilezP"
 End Sub
 
-Sub ThwIf_BtnOfCompile(NEPjn$)
+Sub ThwIf_BoCompile(NEPjn$)
 Dim Act$, Ept$
-Act = BtnOfCompile.Caption
+Act = BoCompile.Caption
 Ept = "Compi&le " & NEPjn
-If Act <> Ept Then Thw CSub, "Cur BtnOfCompile.Caption <> Compi&le {Pjn}", "Compile-Btn-Caption Pjn Ept-Btn-Caption", Act, NEPjn, Ept
+If Act <> Ept Then Thw CSub, "Cur BoCompile.Caption <> Compi&le {Pjn}", "Compile-Btn-Caption Pjn Ept-Btn-Caption", Act, NEPjn, Ept
 End Sub
 
 Private Sub Z_PjCompile()

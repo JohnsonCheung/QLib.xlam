@@ -140,8 +140,8 @@ Function NColzT&(A As Database, T)
 NColzT = A.TableDefs(T).Fields.Count
 End Function
 
-Function NReczTBexpr&(A As Database, T, Bexpr$)
-NReczTBexpr = ValzQ(A, SqlSelCnt_T_OB(T, Bexpr))
+Function NReczTBexp&(A As Database, T, Bexp$)
+NReczTBexp = ValzQ(A, SqlSelCnt_T_OB(T, Bexp))
 End Function
 
 Function PkFnyzTd(A As Dao.TableDef) As String()
@@ -243,7 +243,7 @@ S = FmtQQ("Alter Table [?] Add Column [?] ?", T, F, Ty)
 A.Execute S
 End Sub
 
-Sub RenTblzAddPfx(A As Database, T, Pfx$)
+Sub RenTblzSzAddP(A As Database, T, Pfx$)
 RenTbl A, T, Pfx & T
 End Sub
 
@@ -300,6 +300,7 @@ ZZ:
     BrwDb D
     Return
 End Sub
+
 Sub CrtTblzDrs(A As Database, T, Drs As Drs)
 CrtTblOfEmpzDrs A, T, Drs
 InsTblzDry A, T, Drs.Dry
@@ -533,7 +534,7 @@ A.TableDefs(T).Fields.Append Fd(F, Ty, Expr:=Expr)
 End Sub
 
 Function ValzTFRecId(A As Database, T, F$, RecId&) ' K is Pk value
-'ValzTFRecId = ValzQ(A, SqlSel_FF_T(F, T, BexprRecId(T, RecId)))
+'ValzTFRecId = ValzQ(A, SqlSel_FF_T(F, T, BexpRecId(T, RecId)))
 End Function
 
 Sub CrtTblzCloneEmp(A As Database, T, FmTbl$)
@@ -600,11 +601,11 @@ Function ValzCnq(A As AdoDb.Connection, Q)
 ValzCnq = ValzArs(A.Execute(Q))
 End Function
 
-Function NReczFxw&(Fx, Wsn, Optional Bexpr$)
-NReczFxw = ValzCnq(CnzFx(Fx), SqlSelCnt_T_OB(CatTnzWsn(Wsn), Bexpr))
+Function NReczFxw&(Fx, Wsn, Optional Bexp$)
+NReczFxw = ValzCnq(CnzFx(Fx), SqlSelCnt_T_OB(CatTnzWsn(Wsn), Bexp))
 End Function
-Function NReczT&(A As Database, T, Optional Bexpr$)
-NReczT = ValzQ(A, SqlSelCnt_T_OB(T, Bexpr))
+Function NReczT&(A As Database, T, Optional Bexp$)
+NReczT = ValzQ(A, SqlSelCnt_T_OB(T, Bexp))
 End Function
 
 Property Get LofVblzDbt$(A As Database, T)

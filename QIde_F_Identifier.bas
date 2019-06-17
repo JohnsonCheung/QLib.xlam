@@ -62,7 +62,7 @@ End Function
 
 Function RelOfMthn_ToCml_zV(A As Vbe) As Rel
 Dim O As New Rel, I
-For Each I In MthnyzV(A)
+For Each I In MthNyzV(A)
     O.PushRelLin CmlLin(I)
 Next
 Set RelOfMthn_ToCml_zV = O
@@ -74,7 +74,7 @@ For Each C In P.VBComponents
     Set Cmp = C
     Modn = Cmp.Name
     S = Src(Cmp.CodeModule)
-    For Each Mthn In Itr(MthnyzS(S))
+    For Each Mthn In Itr(MthNyzS(S))
         O.PushParChd Mthn, C.Name
     Next
 Next
@@ -84,7 +84,7 @@ Function RelOfMthn_ToMdny_zP(P As VBProject) As Rel
 Dim C As VBComponent, O As New Rel, Mthn, Mdn
 For Each C In P.VBComponents
     Mdn = C.Name
-    For Each Mthn In Itr(MthnyzS(Src(C.CodeModule)))
+    For Each Mthn In Itr(MthNyzS(Src(C.CodeModule)))
         O.PushParChd Mthn, Mdn
     Next
 Next

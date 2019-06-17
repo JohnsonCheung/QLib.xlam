@@ -80,6 +80,10 @@ Sub ThwIf_DifSi(A, B, Fun$)
 If Si(A) <> Si(B) Then Thw Fun, "Si-A <> Si-B", "Si-A Si-B", Si(A), Si(B)
 End Sub
 
+Sub ThwIf_DifFF(A As Drs, FF$, Fun$)
+If JnSpc(A.Fny) <> FF Then Thw Fun, "Drs-FF <> FF", "Drs-FF FF", JnSpc(A.Fny), FF
+End Sub
+
 Sub ThwIf_ObjNE(A, B, Fun$, Msg$, Nav())
 If IsEqObj(A, B) Then ThwNav Fun, Msg, Nav
 End Sub
@@ -155,7 +159,7 @@ ThwNav Fun, Msg, AddNmV(Nav, "Er", Er)
 End Sub
 Sub ThwIf_Er(Er$(), Fun$)
 If Si(Er) = 0 Then Exit Sub
-BrwAy AddSy(LyzFunMsgNap(Fun, ""), Er)
+BrwAy SyzAdd(LyzFunMsgNap(Fun, ""), Er)
 Halt
 End Sub
 Sub ThwLoopingTooMuch(Fun$)

@@ -100,8 +100,8 @@ Dim Fnn$
         Thw CSub, "Pj file name is blank.  The pj needs to saved first in order to have a pj file name", "Pj", P.Name
     End If
 ActPj P
-'Chk BtnOfSav
-    Dim B As CommandBarButton: Set B = BtnOfSav(Vbe)
+'Chk BoSav
+    Dim B As CommandBarButton: Set B = BoSav(Vbe)
     If B.Caption <> "&Save " & Fnn Then Thw CSub, "Caption is not expected", "Save-Bottun-Caption Expected", B.Caption, "&Save " & Fnn
 B.Execute '<===== Save
 If P.Saved Then
@@ -122,7 +122,7 @@ Dim B As Variant
 Dim C As VBProject
 Dim D As Dictionary
 Dim E As vbext_ComponentType
-ThwIf_BtnOfCompile A
+ThwIf_BoCompile A
 CvPj B
 IsPjn B
 Pj B

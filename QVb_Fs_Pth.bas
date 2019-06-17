@@ -50,9 +50,9 @@ If HasSubFdr(Pth) Then Exit Function
 IsPthOfEmp = True
 End Function
 
-Function AddPfxzPth$(Pth, Pfx)
+Function SzAddPzPth$(Pth, Pfx)
 With Brk2Rev(RmvSfx(Pth, PthSep), PthSep, NoTrim:=True)
-    AddPfxzPth = .S1 & PthSep & Pfx & .S2 & PthSep
+    SzAddPzPth = .S1 & PthSep & Pfx & .S2 & PthSep
 End With
 End Function
 
@@ -212,7 +212,7 @@ Asg Itr(Ffny(Pth)), FfnItr
 End Function
 
 Function SubPthy(Pth) As String()
-SubPthy = AddPfxSfxzAy(FdrAy(Pth), EnsPthSfx(Pth), PthSep)
+SubPthy = SyzAyPS(FdrAy(Pth), EnsPthSfx(Pth), PthSep)
 End Function
 
 Sub AsgEnt(OFdrAy$(), OFnAy$(), Pth)
@@ -265,7 +265,7 @@ Fxy = Ffny(Pth, "*.xls*")
 End Function
 
 Function Ffny(Pth, Optional Spec$ = "*.*") As String()
-Ffny = AddPfxzAy(FnAy(Pth, Spec), EnsPthSfx(Pth))
+Ffny = SyzAyP(FnAy(Pth, Spec), EnsPthSfx(Pth))
 End Function
 
 Private Sub Z_SubPthy()

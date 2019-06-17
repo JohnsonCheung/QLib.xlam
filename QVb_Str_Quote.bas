@@ -45,7 +45,7 @@ With BrkQuote(QuoteStr)
     P = .S1
     S = .S2
 End With
-QuoteAy = AddPfxSfxzAy(Ay, P, S)
+QuoteAy = SyzAyPS(Ay, P, S)
 End Function
 
 Function Quote$(S, QuoteStr$)
@@ -65,6 +65,7 @@ End Function
 Function QuoteSng$(S)
 QuoteSng = "'" & S & "'"
 End Function
+
 Function QuoteSq$(S)
 QuoteSq = "[" & S & "]"
 End Function

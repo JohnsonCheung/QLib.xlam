@@ -77,7 +77,7 @@ Sub EnsWbNmzLcPfx(Ws As Worksheet, LoNm$, Col$, NmPfx$)
 Dim P$:                               P = NmPfx & "_"
 Dim Rg As Range:                 Set Rg = Ws.ListObjects(LoNm).ListColumns(Col).DataBodyRange
 Dim OldNm As New Dictionary:  Set OldNm = DicNmAdrzWsNmPfx(Ws, P)
-Dim NewNm As New Dictionary:  Set NewNm = AddPfxToKey(P, DicValToWbAdrzRg(Rg))
+Dim NewNm As New Dictionary:  Set NewNm = SzAddPToKey(P, DicValToWbAdrzRg(Rg))
 Dim Add As Dictionary:          Set Add = MinusDic(NewNm, OldNm)
 Dim Rmv$():                         Rmv = SyzDicKey(MinusDic(OldNm, NewNm))
 Dim Upd As Dictionary:          Set Upd = DicAzDifVal(NewNm, OldNm)
@@ -146,61 +146,114 @@ End Function
 Sub BdrRgAy(A() As Range, Ix As XlBordersIndex, Optional Wgt As XlBorderWeight = xlMedium)
 Dim I
 For Each I In Itr(A)
-    BdrRg CvRg(I), Ix, Wgt
+    Bdr CvRg(I), Ix, Wgt
 Next
 End Sub
 
-Sub BdrRg(A As Range, Ix As XlBordersIndex, Optional Wgt As XlBorderWeight = xlMedium)
+Sub Bdr(A As Range, Ix As XlBordersIndex, Optional Wgt As XlBorderWeight = xlMedium)
 With A.Borders(Ix)
   .LineStyle = xlContinuous
   .Weight = Wgt
 End With
 End Sub
-
-Sub BdrRgAround(A As Range)
-BdrRgLeft A
-BdrRgRight A
-BdrRgTop A
-BdrRgBottom A
+Sub BdrNone(A As Range, Ix As XlBordersIndex)
+A.Borders(Ix).LineStyle = xlLineStyleNone
 End Sub
 
-Sub BdrRgBottom(A As Range)
-BdrRg A, xlEdgeBottom
-BdrRg A, xlEdgeTop
+Sub BdrAround(A As Range)
+BdrLeft A
+BdrRight A
+BdrTop A
+BdrBottom A
+End Sub
+Function CvCmt(A) As Comment
+Set CvCmt = A
+End Function
+Function R2zRg&(A As Range)
+R2zRg = A.Row + A.Rows.Count - 1
+End Function
+Function C2zRg&(A As Range)
+C2zRg = A.Column + A.Columns.Count - 1
+End Function
+
+Function IsCell(A As Range) As Boolean
+If A.Rows.Count > 1 Then Exit Function
+If A.Columns.Count > 1 Then Exit Function
+IsCell = True
+End Function
+
+Function HasCell(A As Range, Cell As Range) As Boolean
+If Not IsCell(Cell) Then Exit Function
+If Not IsBet(Cell.Row, A.Row, R2zRg(A)) Then Exit Function
+If Not IsBet(Cell.Column, A.Column, C2zRg(A)) Then Exit Function
+HasCell = True
+End Function
+Function CmtAyzRg(A As Range) As Comment()
+Dim C As Comment: For Each C In WszRg(A).Comments
+    Dim CmtRg As Range: Set CmtRg = C.Parent
+    If HasCell(A, CmtRg) Then PushI CmtAyzRg, C
+Next
+End Function
+Sub DltCmtzRg(A As Range)
+Dim Cmt() As Comment: Cmt = CmtAyzRg(A)
+Dim I: For Each I In Itr(Cmt)
+    CvCmt(I).Delete
+Next
+End Sub
+Sub BdrAroundNone(A As Range)
+BdrNone A, xlInsideHorizontal
+BdrNone A, xlInsideVertical
+BdrNone A, xlEdgeLeft
+BdrNone A, xlEdgeRight
+BdrNone A, xlEdgeBottom
+BdrNone A, xlEdgeTop
 End Sub
 
-Sub BdrRgInner(A As Range)
-BdrRg A, xlInsideHorizontal
-BdrRg A, xlInsideVertical
+Function RowzBelow(Rg As Range) As Range
+Dim R&: R = R2zRg(Rg) + 1
+Dim C1%: C1 = Rg.Column
+Dim C2%: C2 = C2zRg(Rg)
+Set RowzBelow = RgR(Rg, R)
+End Function
+
+Function RowzAbove(R As Range) As Range
+Set RowzAbove = RgR(R, R.Rows.Count + 1)
+End Function
+
+Function ColzLeft(R As Range) As Range
+Set ColzLeft = RgC(R, R.Column - 1)
+End Function
+
+Function ColzRight(R As Range) As Range
+Set ColzRight = RgC(R, R.Columns.Count + 1)
+End Function
+
+Sub BdrBottom(A As Range)
+Bdr A, xlEdgeBottom
+Bdr RowzBelow(A), xlEdgeTop
 End Sub
 
-Sub BdrRgInside(A As Range)
-BdrRgInner A
-End Sub
-Sub BdrRgAlign(A As Range, H As XlHAlign)
-Select Case H
-Case XlHAlign.xlHAlignLeft: BdrRgLeft A
-Case XlHAlign.xlHAlignRight: BdrRgRight A
-End Select
-End Sub
-Sub BdrRgLeft(A As Range)
-BdrRg A, xlEdgeLeft
-If A.Column > 1 Then
-    BdrRg RgC(A, 0), xlEdgeRight
-End If
+Sub BdrInside(A As Range)
+Bdr A, xlInsideHorizontal
+Bdr A, xlInsideVertical
 End Sub
 
-Sub BdrRgRight(A As Range)
-BdrRg A, xlEdgeRight
+Sub BdrLeft(A As Range)
+Bdr A, xlEdgeLeft
+Bdr ColzRight(A), xlEdgeRight
+End Sub
+
+Sub BdrRight(A As Range)
+Bdr A, xlEdgeRight
 If A.Column < MaxWsCol Then
-    BdrRg RgC(A, A.Columns.Count + 1), xlEdgeLeft
+    Bdr RgC(A, A.Columns.Count + 1), xlEdgeLeft
 End If
 End Sub
 
-Sub BdrRgTop(A As Range)
-BdrRg A, xlEdgeTop
+Sub BdrTop(A As Range)
+Bdr A, xlEdgeTop
 If A.Row > 1 Then
-    BdrRg RgR(A, 0), xlEdgeBottom
+    Bdr RgR(A, 0), xlEdgeBottom
 End If
 End Sub
 
@@ -219,7 +272,7 @@ End Function
 
 Function LozRg(Rg As Range, Optional Lon$) As ListObject
 Dim O As ListObject: Set O = WszRg(Rg).ListObjects.Add(xlSrcRange, Rg, , xlYes)
-BdrRgAround Rg
+BdrAround Rg
 Rg.EntireColumn.AutoFit
 SetLoNm O, Lon
 Set LozRg = O
@@ -277,7 +330,7 @@ End Function
 Sub ThwWbMisOupNy(A As Workbook, OupNy$())
 Dim O$(), N$, B$(), Wny$()
 Wny = WsCdNy(A)
-O = MinusAy(AddPfxzAy(OupNy, "WsO"), Wny)
+O = MinusAy(SyzAyP(OupNy, "WsO"), Wny)
 If Si(O) > 0 Then
     N = "OupNy":  B = OupNy:  GoSub Dmp
     N = "WbCdNy": B = Wny: GoSub Dmp
@@ -881,6 +934,14 @@ End Sub
 Function DKValzLoFilter(L As ListObject) As Drs
 DKValzLoFilter = DKValzKSet(KSetzLoFilter(L))
 End Function
+
+Function KSetzKyAsetAy(Ky$(), AsetAy() As Aset) As Dictionary
+Set KSetzKyAsetAy = New Dictionary
+Dim K, J&: For Each K In Itr(Ky)
+    KSetzKyAsetAy.Add K, AsetAy(J)
+    J = J + 1
+Next
+End Function
 Function KSetzLoFilter(L As ListObject) As Dictionary
 'Ret : KSet
 Dim O As Dictionary: Set O = New Dictionary
@@ -891,6 +952,7 @@ Dim I As Filter, J%: For Each I In F
     KSetzLoFilter__Add O, K, I
     J = J + 1
 Next
+Set KSetzLoFilter = O
 End Function
 Private Function KSetzLoFilter__Aset(F As Filter) As Aset
 If Not F.On Then Exit Function

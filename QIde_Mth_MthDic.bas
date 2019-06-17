@@ -154,7 +154,7 @@ Ass:
         If LasEle(AftSrt) = "" Then
             Dim Pfx
             Pfx = Array("There is non-blank-line at end after sorting", "Md=[" & Mdn(Md) & "=====")
-            BrwAy AddAyAp(Pfx, AftSrt)
+            BrwAy AyzAddAp(Pfx, AftSrt)
             Stop
         End If
     End If

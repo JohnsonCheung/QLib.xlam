@@ -304,15 +304,15 @@ FmtSudoku At
 End Sub
 
 Sub FmtSudoku(At As Range)
-BdrRgAround RgRCRC(At, 1, 1, 3, 3)
-BdrRgAround RgRCRC(At, 1, 4, 3, 6)
-BdrRgAround RgRCRC(At, 1, 7, 3, 9)
-BdrRgAround RgRCRC(At, 4, 1, 6, 3)
-BdrRgAround RgRCRC(At, 4, 4, 6, 6)
-BdrRgAround RgRCRC(At, 4, 7, 6, 9)
-BdrRgAround RgRCRC(At, 7, 1, 9, 3)
-BdrRgAround RgRCRC(At, 7, 4, 9, 6)
-BdrRgAround RgRCRC(At, 7, 7, 9, 9)
+BdrAround RgRCRC(At, 1, 1, 3, 3)
+BdrAround RgRCRC(At, 1, 4, 3, 6)
+BdrAround RgRCRC(At, 1, 7, 3, 9)
+BdrAround RgRCRC(At, 4, 1, 6, 3)
+BdrAround RgRCRC(At, 4, 4, 6, 6)
+BdrAround RgRCRC(At, 4, 7, 6, 9)
+BdrAround RgRCRC(At, 7, 1, 9, 3)
+BdrAround RgRCRC(At, 7, 4, 9, 6)
+BdrAround RgRCRC(At, 7, 7, 9, 9)
 RgCC(At, 1, 9).EntireColumn.ColumnWidth = 2
 End Sub
 

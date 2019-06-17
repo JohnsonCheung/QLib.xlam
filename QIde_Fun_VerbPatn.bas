@@ -13,7 +13,7 @@ Set BRKCmlASet = X
 End Property
 Property Get MthVNyInVbe() As String()
 Dim Mthn, I
-For Each I In Itr(MthnyV)
+For Each I In Itr(MthNyV)
     Mthn = I
     PushI MthVNyInVbe, MthVNm(Mthn)
 Next
@@ -43,7 +43,7 @@ MthQVNyInVbe = MthQVNyzV(CVbe)
 End Function
 
 Function MthQVNyzV(A As Vbe) As String()
-MthQVNyzV = QVNy(MthnyzV(A))
+MthQVNyzV = QVNy(MthNyzV(A))
 End Function
 
 Function QVNy(Ny$()) As String()
@@ -55,13 +55,13 @@ Next
 End Function
 
 Function QBNm$(Nm)
-Dim CmL$, I, O$()
+Dim Cml$, I, O$()
 For Each I In Itr(Cml1Ay(Nm))
-    CmL = I
-    If IsBRKCml(CmL) Then
-        PushI O, QuoteBkt(CmL)
+    Cml = I
+    If IsBRKCml(Cml) Then
+        PushI O, QuoteBkt(Cml)
     Else
-        PushI O, CmL
+        PushI O, Cml
     End If
 Next
 QBNm = Jn(O)
@@ -106,7 +106,7 @@ Property Get NVTDNyInVbe() As String()
 NVTDNyInVbe = NVTDNyzV(CVbe)
 End Property
 Private Function NVTDNyzV(A As Vbe) As String()
-NVTDNyzV = NVTDNy(MthnyzV(A))
+NVTDNyzV = NVTDNy(MthNyzV(A))
 End Function
 Private Function NVTDNy(Ny$()) As String()
 Dim Nm$, I
@@ -160,11 +160,11 @@ Next
 RmvEndDig = Left(S, J)
 End Function
 Function Verb$(Nm)
-Dim CmL$, I, LetterCml$
+Dim Cml$, I, LetterCml$
 For Each I In Cml1Ay(Nm)
-    CmL = I
-    LetterCml = RmvDigSfx(CmL)
-    If VerbAset.Has(LetterCml) Then Verb = CmL: Exit Function
+    Cml = I
+    LetterCml = RmvDigSfx(Cml)
+    If VerbAset.Has(LetterCml) Then Verb = Cml: Exit Function
 Next
 End Function
 Property Get NormVerbss$()

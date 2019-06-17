@@ -23,10 +23,15 @@ If LinFmMd <> OldLin Then Thw CSub, "Lines from Md <> OldLines", "Md Lno Lines-f
 M.DeleteLines Lno, 1
 End Sub
 
-Sub DltLines(M As CodeModule, Lno, NLin, OldLines$)
-Dim OldLinesFmMd$: OldLinesFmMd = M.Lines(Lno, NLin)
-If OldLinesFmMd <> OldLines Then Thw CSub, "Lines from Md <> OldLines", "Md Lno Lines-from-Md OldLines", Mdn(M), Lno, OldLinesFmMd, OldLines
-M.DeleteLines Lno, NLin: Debug.Print FmtQQ("DltLines: Lno(?) NLin(?)")
+Sub DltLines(M As CodeModule, Lno&, OldLines$)
+If OldLines = "" Then Exit Sub
+If Lno = 0 Then Exit Sub
+Dim Cnt&: Cnt = LinCnt(OldLines)
+If M.Lines(Lno, Cnt) <> OldLines Then Thw CSub, "OldL <> ActL", "OldL ActL", OldLines, M.Lines(Lno, Cnt)
+Debug.Print FmtQQ("DltLines: Lno(?) Cnt(?)", Lno, Cnt)
+D BoxLy(SplitCrLf(OldLines))
+D ""
+M.DeleteLines Lno, Cnt
 End Sub
 
 Sub DltLinzF(M As CodeModule, B As Feis)
@@ -122,8 +127,8 @@ For Each Dr In Itr(B.Dry)
 Next
 End Sub
 
-Sub RplLines(M As CodeModule, Lno, NLin, OldLines$, NewLines$)
-DltLines M, Lno, NLin, OldLines
+Sub RplLines(M As CodeModule, Lno&, OldLines$, NewLines$)
+DltLines M, Lno, OldLines
 M.InsertLines Lno, NewLines
 End Sub
 

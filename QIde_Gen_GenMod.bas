@@ -107,10 +107,10 @@ Dim JSrcPm As Drs:   JSrcPm = B_JSrcPm(ISrc)  '! With Col-Pm added
 Dim RmkVer%:       RmkVer = 2
 Dim Rmk1 As Drs:     Rmk1 = SelDrs(JSrcPm, "Key Ret Fss Pm Id StpFor")
 Dim Rmk2 As Drs:     Rmk2 = B_Rmk2(RmkVer, Rmk1)
-Dim CdRmk$():       CdRmk = AddPfxzAy(FmtDry(Rmk2.Dry, Fmt:=EiSSFmt), "'")
+Dim CdRmk$():       CdRmk = SyzAyP(FmtDry(Rmk2.Dry, Fmt:=EiSSFmt), "'")
 
 '== CdDes OK ==============================================================================================
-Dim CdDes$():       CdDes = AddPfxzAy(FmtDry(IDes.Dry, Fmt:=EiSSFmt), "'")
+Dim CdDes$():       CdDes = SyzAyP(FmtDry(IDes.Dry, Fmt:=EiSSFmt), "'")
 
 '== CdCnst OK ==============================================================================================
 Dim JCnst As Drs:   JCnst = SelDrs(ISrc, "Key Fss")
@@ -180,7 +180,7 @@ Dim BBRmkDes$()
 
 '-- BBCxt OK -----------------------------------------------------------------------------------------------
 Dim BKey$()
-Dim UsedMthn$():            UsedMthn = AddPfxzAy(BKey, "B_")
+Dim UsedMthn$():            UsedMthn = SyzAyP(BKey, "B_")
 
 Dim MDic As Dictionary:     Set MDic = MthDic(InpSrc, ExlDcl:=True)
 Dim MDic1 As Dictionary:   Set MDic1 = B_MDic1(MDic)
@@ -194,7 +194,7 @@ Dim MExtra As Dictionary:    Set MExtra = MPair.B
 Dim BBExtra$:                   BBExtra = JnDblCrLf(SyzItr(SrtDic(MExtra).Items))
 
 '-- BBELin  -----------------------------------------------------------------------------------------------
-Dim BBELin$(): BBELin = AddPfxzAy(BCSorF, "End ")
+Dim BBELin$(): BBELin = SyzAyP(BCSorF, "End ")
 
 '-- CdB  -----------------------------------------------------------------------------------------------
 CdB = B_CdB(BBMLin, BBRmkFm, BBRmkRet, BBRmkDes, BBCxt, BBELin, BBExtra)
@@ -372,7 +372,7 @@ For Each Dr In Itr(CdYLisb.Dry)
     Stmt = Dr(3)
     Ret = Dr(4)
     Pm = Dr(5)
-    Pm = JnCommaSpc(AddPfxzAy(SyzSS(Pm), "Y_"))
+    Pm = JnCommaSpc(SyzAyP(SyzSS(Pm), "Y_"))
     RetAs = RetAszRet(Ret)
     TyChrzRet (Ret)
     Select Case StpTy

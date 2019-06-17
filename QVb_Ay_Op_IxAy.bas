@@ -65,10 +65,10 @@ Next
 PushI GrpEndIxyOfEmp, U
 End Function
 
-Function IxyzEle(Ay, Ele) As Long()
+Function IxyzEle(Ay, ele) As Long()
 Dim J&, V
 For Each V In Itr(Ay)
-    If V = Ele Then PushI IxyzEle, J
+    If V = ele Then PushI IxyzEle, J
     J = J + 1
 Next
 End Function

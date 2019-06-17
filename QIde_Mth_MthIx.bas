@@ -117,6 +117,14 @@ Next
 MthIxzSTN = -1
 End Function
 
+Function MthIxyzSNy(Src$(), MthNy$()) As Long()
+Dim Ix: For Each Ix In MthIxItr(Src)
+    Dim L$: L = Src(Ix)
+    Dim N$: N = Mthn(L)
+    If HasEle(MthNy, N) Then PushI MthIxyzSNy, Ix
+Next
+End Function
+
 Function MthIxyzSN(Src$(), Mthn) As Long()
 Dim Ix&
 Ix = FstMthIxzN(Src, Mthn)

@@ -79,11 +79,11 @@ End Function
 
 Function DrszFmtg(DrsFmtg$()) As Drs
 Dim TitLin$: TitLin = DrsFmtg(1)
-Dim Fny$(): Fny = AyeFstLas(TrimAy(Split(TitLin, "|")))
+Dim Fny$(): Fny = AyeFstLas(SyzTrim(Split(TitLin, "|")))
 Dim Dry()
     Dim J&
     For J = 3 To UB(DrsFmtg) - 1
-        PushI Dry, AvzAy(AyeFstLas(RmvFstChrzAy(RTrimAy(Split(DrsFmtg(J), "|")))))
+        PushI Dry, AvzAy(AyeFstLas(RmvFstChrzAy(RSyzTrim(Split(DrsFmtg(J), "|")))))
     Next
 DrszFmtg = Drs(Fny, Dry)
 End Function
@@ -99,7 +99,7 @@ Dim Ly$(), Lixy&()
         PushI Ly, Empty
         PushI Lixy, UB(Ly)
         Dim I$: I = J & " of " & N
-        Dim Av(): Av = AddAy(Array(I), Dr)
+        Dim Av(): Av = AyzAdd(Array(I), Dr)
         PushIAy Ly, LyzNyAv(AFny, Av)
     Next
 Dim Align$(): Align = AlignLzAy(Ly)

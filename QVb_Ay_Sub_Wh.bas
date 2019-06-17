@@ -346,11 +346,11 @@ For Each S In Itr(Ay)
     If Re.Test(S) Then PushI AywRe, S
 Next
 End Function
-Function AywRmvEle(Ay, Ele)
+Function AywRmvEle(Ay, ele)
 AywRmvEle = Resi(Ay)
 Dim I
 For Each I In Itr(Ay)
-    If I <> Ele Then PushI AywRmvEle, I
+    If I <> ele Then PushI AywRmvEle, I
 Next
 End Function
 Function ItrzAywRmvT1(Ay, T1)

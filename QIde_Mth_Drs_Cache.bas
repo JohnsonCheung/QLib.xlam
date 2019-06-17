@@ -25,7 +25,7 @@ Dim Dry(): Dry = Drs.Dry
 If Si(Dry) = 0 Then Exit Sub
 'ThwIf_DrsGoodToIupDbt CSub, Drs, A, T
 Dim R As Dao.Recordset, Q$, Sql$, Dr
-'Sql = SqlSel_T_Wh(T, BexprzFnyzSqlQPfxSy(SkFny(A, T), SkSqlQPfxSy(A, T)))
+'Sql = SqlSel_T_Wh(T, BexpzFnyzSqlQPfxSy(SkFny(A, T), SkSqlQPfxSy(A, T)))
 For Each Dr In Dry
     Q = FmtQQAv(Sql, CvAv(Dr))
     Set R = Rs(A, Q)

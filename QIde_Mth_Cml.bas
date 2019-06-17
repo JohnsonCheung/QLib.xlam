@@ -11,7 +11,7 @@ Set AsetzMthCmlP = CmlAset(MthnsetP.Sy)
 End Function
 
 Function FnyzMthCml(NDryCol%) As String()
-FnyzMthCml = AddAyAp(SyzSS("Mdy Kd Mth"), FnyzPfxN("Seg", NDryCol - 3))
+FnyzMthCml = AyzAddAp(SyzSS("Mdy Kd Mth"), FnyzPfxN("Seg", NDryCol - 3))
 End Function
 Function WszMthCm() As Worksheet
 Dim Ws As Worksheet
@@ -37,6 +37,6 @@ MthCmlLyV = MthCmlLyzV(CVbe)
 End Function
 
 Function MthCmlLyzV(A As Vbe) As String()
-MthCmlLyzV = CmlLy(MthnyzV(A))
+MthCmlLyzV = CmlLy(MthNyzV(A))
 End Function
 

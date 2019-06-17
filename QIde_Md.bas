@@ -30,7 +30,6 @@ Function MdDNm$(M As CodeModule)
 MdDNm = PjnzM(M) & "." & Mdn(M)
 End Function
 
-
 Function MdDic(P As VBProject) As Dictionary
 Dim C As VBComponent
 Set MdDic = New Dictionary
@@ -53,10 +52,6 @@ End Function
 
 Function MdnzM(M As CodeModule)
 MdnzM = M.Parent.Name
-End Function
-
-Function QMdnzM$(M As CodeModule)
-QMdnzM = PjnzM(M) & "." & Mdn(M)
 End Function
 
 Function MdTy(M As CodeModule) As vbext_ComponentType
@@ -103,7 +98,7 @@ Set CMd = P.CodeModule
 End Property
 
 Property Get CMdDNm$()
-CMdDNm = QMdnzM(CMd)
+CMdDNm = MdDNm(CMd)
 End Property
 
 Sub ClsMd(M As CodeModule)
@@ -111,7 +106,7 @@ M.CodePane.Window.Close
 End Sub
 
 Sub CmprMd(M As CodeModule, B As CodeModule)
-'BrwCmpgDicAB MthDiczM(A), MthDiczMd(B), QMdnzM(A), QMdnzM(B)
+'BrwCmpgDicAB MthDiczM(A), MthDiczMd(B), MdDNm(A), MdDNm(B)
 End Sub
 
 Sub DltLin(M As CodeModule, Lno)
@@ -130,7 +125,7 @@ Private Sub Z_MthLnozMM()
 Dim O$()
     Dim Lno, L&(), M, A As CodeModule, Ny$(), J%
     Set A = Md("Fct")
-    Ny = MthnyzM(A)
+    Ny = MthNyzM(A)
     For Each M In Ny
         DoEvents
         J = J + 1

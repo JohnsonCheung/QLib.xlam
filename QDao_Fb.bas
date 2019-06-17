@@ -25,7 +25,7 @@ Function CntrItmNyzFb(Fb) As String()
 Dim D As Database: Set D = Db(Fb)
 Dim CntrNm
 For Each CntrNm In Itn(D.Containers)
-    PushIAy CntrItmNyzFb, AddPfxzAy(Itn(D.Containers(CntrNm).Documents), CntrNm & ".")
+    PushIAy CntrItmNyzFb, SyzAyP(Itn(D.Containers(CntrNm).Documents), CntrNm & ".")
 Next
 End Function
 

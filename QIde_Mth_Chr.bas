@@ -46,13 +46,14 @@ If O <> "" Then
     ShfDclSfx = O & IIf(ShfBkt(OLin), "()", "")
     Exit Function
 End If
-If ShfBkt(OLin) Then
-    ShfDclSfx = "()"
-End If
+Dim Bkt$:
+    If ShfBkt(OLin) Then
+        Bkt = "()"
+    End If
 If ShfAs(OLin) Then
-    Dim A$: A = ShfDotNm(OLin):
-    ShfDclSfx = O & " As " & A
-    If A = "" Then Stop
+    Dim DNm$: DNm = ShfDotNm(OLin):
+    ShfDclSfx = Bkt & " As " & DNm
+    If DNm = "" Then Stop
 End If
 End Function
 Function ShfTyChr$(OLin$)

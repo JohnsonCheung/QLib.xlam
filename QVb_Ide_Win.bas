@@ -6,7 +6,7 @@ Private Const CMod$ = "MVb_Ide_Win."
 
 Sub ClrImm()
 DoEvents
-With WImm
+With WoImm
     .SetFocus
     .Visible = True
 End With
@@ -19,13 +19,17 @@ End Sub
 Sub ClsWinE()
 ' ! Cls win ept cur md @@
 Dim W1 As VBIDE.Window: Set W1 = CWin
+Debug.Print W1.Caption
 Dim W As VBIDE.Window: For Each W In CVbe.Windows
     If Not IsEqObj(W1, W) Then
         If W.Visible Then W.Close
     End If
 Next
-BtnOfTileV.Execute
+W1.WindowState = vbext_ws_Maximize
+WoImm.Close
+BoTileV.Execute
 End Sub
+
 Sub ClsWin()
 Dim W As VBIDE.Window: For Each W In CVbe.Windows
     If W.Visible Then W.Close
@@ -40,12 +44,12 @@ Function CvWiny(A) As VBIDE.Window()
 CvWiny = A
 End Function
 
-Property Get WImm() As VBIDE.Window
-Set WImm = FstWinTy(vbext_wt_Immediate)
+Property Get WoImm() As VBIDE.Window
+Set WoImm = FstWinTy(vbext_wt_Immediate)
 End Property
 
-Property Get WLcl() As VBIDE.Window
-Set WLcl = FstWinTy(vbext_wt_Locals)
+Property Get WoLcl() As VBIDE.Window
+Set WoLcl = FstWinTy(vbext_wt_Locals)
 End Property
 
 Function WinzMdn(Mdn) As VBIDE.Window
@@ -61,16 +65,16 @@ Set MdzP = P.VBComponents(Nm).CodeModule
 End Function
 
 Sub ShwDbg()
-ClsWinExlAp WImm, WLcl, CWin
+ClsWinExlAp WoImm, WoLcl, CWin
 DoEvents
 TileV
 End Sub
 
 Sub JmpNxtStmt()
 Const CSub$ = CMod & "JmpNxtStmt"
-With BtnOfJmpNxtStmt
+With BoJmpNxtStmt
     If Not .Enabled Then
-        'Msg CSub, "BtnOfJmpNxtStmt is disabled"
+        'Msg CSub, "BoJmpNxtStmt is disabled"
         Exit Sub
     End If
     .Execute
@@ -86,10 +90,10 @@ End Function
 
 Sub ClrWin(A As VBIDE.Window)
 DoEvents
-BtnOfSelAll.Execute
+BoSelAll.Execute
 DoEvents
 SendKeys " "
-BtnOfEdtClr.Execute
+BoEdtClr.Execute
 End Sub
 
 Property Get WinCnt&()
@@ -156,7 +160,7 @@ C.Show
 End Sub
 
 Sub ClsWinExlMdn(ExlMdn$)
-ClsWinExlAp WImm, WinzMdn(ExlMdn)
+ClsWinExlAp WoImm, WinzMdn(ExlMdn)
 End Sub
 
 Function WinyAv(Av()) As VBIDE.Window()

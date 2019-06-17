@@ -79,8 +79,8 @@ For Each Dr In Itr(DFx.Dry)
 Next
 End Function
 
-Private Function WImpSqy(Dic_T_Stru As Dictionary, DStru As Drs, Dic_T_Bexpr As Dictionary) As String()
-Dim I, Fny$(), Ix As Dictionary, Ey$(), T$, Into$, LnkColLy$(), Bexpr$, A As Drs, Stru$
+Private Function WImpSqy(Dic_T_Stru As Dictionary, DStru As Drs, Dic_T_Bexp As Dictionary) As String()
+Dim I, Fny$(), Ix As Dictionary, Ey$(), T$, Into$, LnkColLy$(), Bexp$, A As Drs, Stru$
 For Each I In Dic_T_Stru.Keys
     Stru = Dic_T_Stru(I)
        T = ">" & I
@@ -88,8 +88,8 @@ For Each I In Dic_T_Stru.Keys
        A = ColEqSel(DStru, "Stru", Stru, "F Ty E")
      Fny = StrColzDrs(A, "F")
       Ey = RmvSqBktzSy(StrColzDrs(A, "E"))
-   Bexpr = ValzDicIf(Dic_T_Bexpr, I)
-    PushI WImpSqy, SqlSel_Fny_Extny_Into_T_OB(Fny, Ey, Into, T, Bexpr)
+   Bexp = ValzDicIf(Dic_T_Bexp, I)
+    PushI WImpSqy, SqlSel_Fny_Extny_Into_T_OB(Fny, Ey, Into, T, Bexp)
 Next
 End Function
 

@@ -9,7 +9,7 @@ Private Function CdCallPMth$(Src$())
 Dim PubMthL$():        PubMthL = MthLinAyzS(Src)         '                                                                                           # Pub-Mth-Lin
 Dim PubGet As Aset: Set PubGet = XPubGet(PubMthL)
 Dim PubMthPm$():      PubMthPm = BetBktzAy(PubMthL)
-Dim PubMthN$():        PubMthN = MthnyzMthLinAy(PubMthL)
+Dim PubMthN$():        PubMthN = MthNyzMthLinAy(PubMthL)
 Dim ArgAy$():            ArgAy = ArgAyzPmAy(PubMthPm)    ' Each ArgAy in ArgAy become on PubMthPm   Eg, 1-ArgAy = A$, B$, C%, D As XYZ => 4-PubMthPm
                                                          ' ArgSfxDic is Key=ArgSfx and Val=A, B, C
                                                          ' ArgSfx is ArgAy-without-Nm
@@ -31,16 +31,16 @@ Private Function XCallgLin(Mthn, CallingPm$, PrpGetAset As Aset)
 If PrpGetAset.Has(Mthn) Then
     XCallgLin = "XX = " & Mthn & "(" & CallingPm & ")"  ' The Mthn is object, no need to add [Set] XX =, the compiler will not check for this
 Else
-    XCallgLin = Mthn & AddPfxSpczIfNonBlank(CallingPm)
+    XCallgLin = Mthn & SzAddPSpczIfNonBlank(CallingPm)
 End If
 End Function
 
-Private Function XCallgLy(Mthny$(), PmAy$(), ArgDic As Dictionary, PrpGetAset As Aset) As String()
+Private Function XCallgLy(MthNy$(), PmAy$(), ArgDic As Dictionary, PrpGetAset As Aset) As String()
 'A$() & PmAy$() are same sz
 'ArgDic: Key is ArgSfx(Arg-without-Name), Val is A,B,..
 'CallingLin is {Mthn} A,B,C,...
 'PrpGetAset    is PrpNm set
-Dim Mthn, J%, O$(): For Each Mthn In Itr(Mthny)
+Dim Mthn, J%, O$(): For Each Mthn In Itr(MthNy)
     Dim Pm$:               Pm = PmAy(J)
     Dim CallingPm$: CallingPm = XCallgPmzPm(Pm, ArgDic)
     PushI O, XCallgLin(Mthn, CallingPm, PrpGetAset)
@@ -136,7 +136,7 @@ End Function
 
 Private Function CdCallZDash$(Src$())
 'SubZ is [Mth-`Sub Z()`-Lines], each line is calling a Z_XX, where Z_XX is a testing function
-Dim M$(): M = MthnyzS(Src)
+Dim M$(): M = MthNyzS(Src)
 Dim ZDash$(): ZDash = AywPfx(M, "Z_")
 Dim S$(): S = SrtAy(ZDash)
 PushI S, "Exit Sub"

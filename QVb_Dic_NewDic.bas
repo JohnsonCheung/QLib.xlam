@@ -13,7 +13,7 @@ For Each I In Itr(TermLiny)
     L = I
     AsgTRst L, T, Ssl
     If O.Exists(T) Then
-        O(T) = AddAy(O(T), SyzSS(Ssl))
+        O(T) = AyzAdd(O(T), SyzSS(Ssl))
     Else
         O.Add T, SyzSS(Ssl)
     End If

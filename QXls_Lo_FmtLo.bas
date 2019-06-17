@@ -277,7 +277,7 @@ Function BdrLoAround(A As ListObject)
 Dim R As Range
 Set R = RgzMoreTop(A.DataBodyRange)
 If A.ShowTotals Then Set R = RgzMoreBelow(R)
-BdrRgAround R
+BdrAround R
 End Function
 
 Sub SetLoNmUgTbl(A As ListObject)

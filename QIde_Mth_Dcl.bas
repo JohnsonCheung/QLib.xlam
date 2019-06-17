@@ -24,9 +24,9 @@ Next
 End Function
 
 Private Sub Z_Src_PthMthLinAy()
-Dim Mthny$(), Src$()
+Dim MthNy$(), Src$()
 Src = CSrc
-Mthny = Sy("Src_MthDclDry", "Mth_MthDclLin")
+MthNy = Sy("Src_MthDclDry", "Mth_MthDclLin")
 Ept = Sy("Function Mth_MthDclLin(A As Mth)", "Function Src_MthDclDry(A$()) As Variant()")
 GoSub Tst
 Exit Sub

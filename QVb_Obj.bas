@@ -43,12 +43,12 @@ Next
 IntozOPrp = O
 End Function
 
-Function ObjAddAy(Obj As Object, Oy)
+Function ObjAyzAdd(Obj As Object, Oy)
 Dim O: O = Oy
 Erase O
 PushObj O, Obj
 PushObjAy O, Oy
-ObjAddAy = O
+ObjAyzAdd = O
 End Function
 
 Function ObjNm$(A)

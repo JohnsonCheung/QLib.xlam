@@ -148,7 +148,7 @@ Function CdLyzL(Lin) As String()
 Dim L$: L = Trim(Lin)
 If L = "" Then Exit Function
 If FstChr(L) = "'" Then Exit Function
-CdLyzL = TrimAy(Split(Lin, ":"))
+CdLyzL = SyzTrim(Split(Lin, ":"))
 End Function
 Private Sub Z_CdLyzS()
 Brw CdLyzS(SrczP(CPj))

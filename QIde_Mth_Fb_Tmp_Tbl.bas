@@ -14,12 +14,12 @@ Private Const Asm$ = "QIde"
 '' Use #MthMd : Mthn Mdn
 'Dim O As Dictionary
 ''    Set O = JnStrDic_DbTwoColSql(W, "Select Mdn,Mthn from [#MthMd]")
-'    Dim K, Mthny$(), MthnDic As Dictionary
+'    Dim K, MthNy$(), MthnDic As Dictionary
 '    'Set MthnDic = Md_MthnDic(MdzP(Pj("QFinal"), "AAAMod"))
 '    For Each K In O.Keys
 '        If IsNull(K) Then Stop
-'        Mthny = CvSy(O(K)) ' The value of the dic is Mthny
-'        O(K) = ValzDicIfKyJn(MthnDic, Mthny) ' return a LineszMd from MthnDic using Mthny to look MthnDic
+'        MthNy = CvSy(O(K)) ' The value of the dic is MthNy
+'        O(K) = ValzDicIfKyJn(MthnDic, MthNy) ' return a LineszMd from MthnDic using MthNy to look MthnDic
 '    Next
 'Set AAAModDic = O
 'End Property
@@ -28,37 +28,37 @@ Private Const Asm$ = "QIde"
 'BrwQ SqlSel_FF_Fm("Mdn Mthn", "#MthMd")
 'End Sub
 '
-'Sub BrwTmpMthny()
-'BrwTT "#Mthny"
+'Sub BrwTmpMthNy()
+'BrwTT "#MthNy"
 'End Sub
 '
-'Private Property Get Mthny() As String()
+'Private Property Get MthNy() As String()
 'Stop
-''Mthny = SyzTblCol("#Mthny", "Mthny")
+''MthNy = SyzTblCol("#MthNy", "MthNy")
 'End Property
 '
 'Sub RfhTmpMthMd()
-'RfhTmpMthny
+'RfhTmpMthNy
 'Const T$ = "#MthMd"
 ''DrpTblD W, T
 ''W.Execute "Create Table [#MthMd] (Mthn Text Not Null, Mdn Text(31),MthMchStr Text)"
 ''W.Execute SqlCrtSk(T, "Mthn")
-''AyIns_Dbt Mthny, W, T ' Mthny is from #Mthny
+''AyIns_Dbt MthNy, W, T ' MthNy is from #MthNy
 'Stop '
 'XUpd
 'End Sub
 '
-'Sub RfhTmpMthny()
-'Const T$ = "#Mthny"
+'Sub RfhTmpMthNy()
+'Const T$ = "#MthNy"
 ''DrpTblD W, T
-''W.Execute "Create Table [#Mthny] (Mthn Text)"
+''W.Execute "Create Table [#MthNy] (Mthn Text)"
 ''W.Execute SqlCrtSk(T, "Mthn")
-''AyIns_Dbt MthnyzM(Md("AAAMod")), W, T
+''AyIns_Dbt MthNyzM(Md("AAAMod")), W, T
 'Stop '
 'End Sub
 '
-'Private Sub WDrp_TmpMthny()
-''DrpTblD W, "#Mthny"
+'Private Sub WDrp_TmpMthNy()
+''DrpTblD W, "#MthNy"
 'End Sub
 '
 'Private Property Get WMchDic() As Dictionary
@@ -67,17 +67,17 @@ Private Const Asm$ = "QIde"
 'Set WMchDic = X
 'End Property
 '
-'Private Function WMthnyzM(M As CodeModule) As String()
-''WMthny_EnsCache A
-''WMthnyzM = ColSyD(W, "#Mthny", "Mthn")
+'Private Function WMthNyzM(M As CodeModule) As String()
+''WMthNy_EnsCache A
+''WMthNyzM = ColSyD(W, "#MthNy", "Mthn")
 'End Function
 '
-'Private Sub WMthny_EnsCache(M As CodeModule)
-'Const T$ = "#Mthny"
+'Private Sub WMthNy_EnsCache(M As CodeModule)
+'Const T$ = "#MthNy"
 ''If HasDbt(W, T) Then Exit Sub
-'W.Execute "Create Table [#Mthny] (Mthn Text(255) Not Null)"
+'W.Execute "Create Table [#MthNy] (Mthn Text(255) Not Null)"
 ''W.Execute SqlCrtSk(T, "Mthn")
-''AyIns_Dbt MthnyzM(A), W, T
+''AyIns_Dbt MthNyzM(A), W, T
 'End Sub
 '
 'Private Function XDr(Mthn, XDic As Dictionary) As Variant()
@@ -100,11 +100,11 @@ Private Const Asm$ = "QIde"
 '    Rs.MoveNext
 'Wend
 'Dim A%, B%, C%
-''A = NRecDT(W, "#Mthny")
+''A = NRecDT(W, "#MthNy")
 ''B = NRecDT(W, "#MthMd")
 ''C = NRecDT(W, "#MthMd", "Mdn='AAAMod'")
 ''C = ValzQ(W, "Select count(*) from [#MthMd] where Mdn='AAAMod'")
-'Debug.Print CSub, "A: #Mthny-Cnt "; A
+'Debug.Print CSub, "A: #MthNy-Cnt "; A
 'Debug.Print CSub, "B: #MthMd-Cnt "; B
 'Debug.Print CSub, "C: #MthMd-Wh-Mdn=AAAMod-Cnt "; C
 ''BrwDbq MthDb, "select * from [#MthMd] where MthMchStr='' order by Mthn"
@@ -114,17 +114,17 @@ Private Const Asm$ = "QIde"
 'Set ZZMd = Md("AAAMod")
 'End Property
 '
-'Private Function Y_Mthny() As String()
-'ZZMthny = WMthnyzM(ZZMd)
+'Private Function Y_MthNy() As String()
+'ZZMthNy = WMthNyzM(ZZMd)
 'End Property
 '
-'Private Sub Z_ZZMthny()
-'Brw ZZMthny
+'Private Sub Z_ZZMthNy()
+'Brw ZZMthNy
 'End Sub
 '
 'Private Sub ZZ()
 'RfhTmpMthMd
-'RfhTmpMthny
+'RfhTmpMthNy
 'XUpd
 'End Sub
 '

@@ -15,8 +15,8 @@ Function AyIns(Ay)
 AyIns = AyInsEle(Ay, Empty)
 End Function
 
-Function AyInsEle(Ay, Ele, Optional At& = 0)
-AyInsEle = AyInsAyAt(Ay, Array(Ele), At)
+Function AyInsEle(Ay, ele, Optional At& = 0)
+AyInsEle = AyInsAyAt(Ay, Array(ele), At)
 End Function
 Private Sub Z_AyInsEleAt()
 Dim A(), M, At&

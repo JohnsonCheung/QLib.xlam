@@ -1,4 +1,6 @@
 Attribute VB_Name = "QXls_Formula_Filter"
+Option Explicit
+Option Compare Text
 
 Function FilterzLo(Lo As ListObject, Coln)
 'Ret : Set filter of all Lo of CWs @

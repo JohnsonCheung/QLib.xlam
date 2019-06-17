@@ -5,7 +5,7 @@ Private Const CMod$ = "MDta_Col_Add."
 Private Const Asm$ = "QDta"
 
 Function DrsAddColzNmVy(A As Drs, ColNm$, ColVy) As Drs
-Dim Fny$(): Fny = AddAyItm(A.Fny, ColNm)
+Dim Fny$(): Fny = AyzAddItm(A.Fny, ColNm)
 Dim AtIx&: AtIx = UB(Fny)
 Dim Dry(): Dry = DryAddColzColVy(A.Dry, ColVy, AtIx)
 DrsAddColzNmVy = Drs(Fny, Dry)
@@ -87,7 +87,7 @@ End Function
 Function InsColzDryAv(Dry(), Av()) As Variant()
 Dim Dr
 For Each Dr In Itr(Dry)
-    PushI InsColzDryAv, AddAy(Av, Dr)
+    PushI InsColzDryAv, AyzAdd(Av, Dr)
 Next
 End Function
 Function InsColzDryV3(Dry(), V1, V2, V3) As Variant()

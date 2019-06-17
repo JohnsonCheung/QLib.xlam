@@ -13,7 +13,7 @@ End Property
 Private Property Let XX1(V)
 
 End Property
-Function PMthnyzP(P As VBProject) As String()
+Function PMthNyzP(P As VBProject) As String()
 
 End Function
 Function MthLineszPum(PMthn)
@@ -63,7 +63,7 @@ End Function
 Function MdzMthn(P As VBProject, Mthn) As CodeModule
 Dim C As VBComponent, O As CodeModule
 For Each C In P.VBComponents
-    If HasEle(PMthnyzM(C.CodeModule), Mthn) Then
+    If HasEle(PMthNyzM(C.CodeModule), Mthn) Then
         If Not IsNothing(O) Then Thw CSub, FmtQQ("Mthn fnd in 2 or more md: [?] & [?]", Mdn(O), C.Name)
         Set O = C.CodeModule
     End If

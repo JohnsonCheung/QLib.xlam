@@ -100,8 +100,8 @@ Private Sub Z_VbeFunPfx()
 'D Vbe_MthPfx(CVbe)
 End Sub
 
-Private Sub Z_MthnyzV()
-Brw MthnyzV(CVbe)
+Private Sub Z_MthNyzV()
+Brw MthNyzV(CVbe)
 End Sub
 
 

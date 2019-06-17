@@ -108,29 +108,29 @@ End Function
 
 Private Function FdzEF(F$, A As EF) As Dao.Field2
 If Left(F, 2) = "Id" Then Stop
-Dim Ele$: Ele = T1zLookupItm_FmT1LikssAy(F, A.FldLy)
-If Ele <> "" Then Set FdzEF = FdzEle(Ele, A.EleLy, F): Exit Function
+Dim ele$: ele = T1zLookupItm_FmT1LikssAy(F, A.FldLy)
+If ele <> "" Then Set FdzEF = FdzEle(ele, A.EleLy, F): Exit Function
 Set FdzEF = FdzStdFldNm(F):                    If Not IsNothing(FdzEF) Then Exit Function
 Set FdzEF = FdzEle(CStr(F), A.EleLy, F):  If Not IsNothing(FdzEF) Then Exit Function
 Thw CSub, FmtQQ("Fld(?) not in EF and not StdFld", F)
 End Function
 
-Private Function FdzEle(Ele$, EleLy$(), F$) As Dao.Field2
-Dim EStr$: EStr = EleStr(EleLy, Ele)
+Private Function FdzEle(ele$, EleLy$(), F$) As Dao.Field2
+Dim EStr$: EStr = EleStr(EleLy, ele)
 If EStr <> "" Then Set FdzEle = FdzFdStr(F & " " & EStr): Exit Function
-Set FdzEle = FdzShtTys(Ele, F): If Not IsNothing(FdzEle) Then Exit Function
+Set FdzEle = FdzShtTys(ele, F): If Not IsNothing(FdzEle) Then Exit Function
 EStr = EleStr(EleLy, F)
 If EStr <> "" Then Set FdzEle = FdzFdStr(F & " " & EStr): Exit Function
 Set FdzEle = FdzShtTys(F, F)
 Dim EleNy$(): EleNy = T1Ay(EleLy)
-Thw CSub, FmtQQ("Fld(?) of Ele(?) not found in EleLy-of-EleAy(?) and not StdEle", F, Ele, TLin(EleNy))
+Thw CSub, FmtQQ("Fld(?) of Ele(?) not found in EleLy-of-EleAy(?) and not StdEle", F, ele, TLin(EleNy))
 End Function
 
-Private Function EleStr$(EleLy$(), Ele$)
-EleStr = RmvT1(FstElezT1(EleLy, Ele))
+Private Function EleStr$(EleLy$(), ele$)
+EleStr = RmvT1(FstElezT1(EleLy, ele))
 End Function
 
-Private Function EleStrzStd$(Ele)
+Private Function EleStrzStd$(ele)
 End Function
 
 Private Property Get Schm1() As String()

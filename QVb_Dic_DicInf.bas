@@ -16,11 +16,11 @@ Next
 LineszLinesDic = Jn(O, LinesSep)
 End Function
 
-Function AddPfxToKey(Pfx$, A As Dictionary) As Dictionary
+Function SzAddPToKey(Pfx$, A As Dictionary) As Dictionary
 Dim K
-Set AddPfxToKey = New Dictionary
+Set SzAddPToKey = New Dictionary
 For Each K In A.Keys
-    AddPfxToKey.Add Pfx & K, A(K)
+    SzAddPToKey.Add Pfx & K, A(K)
 Next
 End Function
 
@@ -187,7 +187,7 @@ Function DicAyzAp(ParamArray DicAp()) As Dictionary()
 Dim Av(): Av = DicAp: If Si(Av) = 0 Then Exit Function
 Dim I
 For Each I In Av
-    If Not IsDic(I) Then Thw CSub, "Some itm is not Dic", "TypeName-Ay", TynyzAy(Av)
+    If Not IsDic(I) Then Thw CSub, "Some itm is not Dic", "TypeName-Ay", VbTyNyzAy(Av)
     PushObj DicAyzAp, CvDic(I)
 Next
 End Function

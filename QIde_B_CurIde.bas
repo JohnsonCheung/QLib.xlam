@@ -61,8 +61,7 @@ WinyV = WinyzV(CVbe)
 End Function
 
 Function CWin() As VBIDE.Window
-Dim A As CodePane
-Set A = CPne
+Dim A As CodePane: Set A = CPne
 If IsNothing(A) Then Exit Function
 Set CWin = A.Window
 End Function
@@ -70,6 +69,7 @@ End Function
 Property Get CPne() As VBIDE.CodePane
 Set CPne = CVbe.ActiveCodePane
 End Property
+
 Property Get CMthLno&()
 CMthLno = MthLnozM(CMd, CLno)
 End Property
@@ -117,7 +117,7 @@ Sub BrwPjp()
 BrwPth PjpP
 End Sub
 Property Get CQMdn$()
-CQMdn = QMdnzM(CMd)
+CQMdn = MdDNm(CMd)
 End Property
 
 Property Get CQMthn$()

@@ -19,7 +19,7 @@ Function ErzLnk(LnkImpSrc$()) As String()
 '                  TblFx: {Fxt} [{Fxn}[.{Wsn}]] [{Stru}]
 '                  TblFb: {Fbn} {Fbtt}
 '                  Stru.{Stru}: {F} [{Ty}] [{Extn}]
-'                  Tbl.Where: {T} {Bexpr}
+'                  Tbl.Where: {T} {Bexp}
 '                } @@
 '-----------------------------------------------------------------------------------------------------------------------
 Dim A$, C$
@@ -96,8 +96,8 @@ Dim S$():                S = Sy(EsSDup, EsSMis, EsSExa, EsSNoFld, EsFldDup, EsTy
 '== Er TblWhere (Ew)====================================================================================================
 Dim EwTblDup$():     EwTblDup = XEwTblDup(Ipw)
 Dim EwTblExa$():     EwTblExa = XEwTblExa(Ipw, Tny)                ' tbl.wh is more
-Dim EwBexprEmp$(): EwBexprEmp = XEwBexprEmp(Ipw)                   ' with tbl nm but no bexpr
-Dim W$():                   W = Sy(EwTblDup, EwTblExa, EwBexprEmp)
+Dim EwBexpEmp$(): EwBexpEmp = XEwBexpEmp(Ipw)                   ' with tbl nm but no Bexp
+Dim W$():                   W = Sy(EwTblDup, EwTblExa, EwBexpEmp)
 
 '== Er Other (Eo)=======================================================================================================
 Dim EoNoFxAndNoFb$: EoNoFxAndNoFb = XEoNoFxAndNoFb(Ipx, Ipb)
@@ -465,7 +465,7 @@ Private Function XEsTyEr() As String()
 
 Dim O$()
 'PushI O, FldEr2 & "Valid Ty are: ...."
-'PushIAy O, AddPfxzAy(FmtDrs(DTyEr), vbTab)
+'PushIAy O, SyzAyP(FmtDrs(DTyEr), vbTab)
 XEsTyEr = O
 'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEsTyEr) EsTyEr ",EsTyEr, EsTyEr: Stop
 End Function
@@ -522,7 +522,7 @@ For Each Dr In Itr(IpxExi.Dry)
     Fx = Dr(IFx)
     Ws = Dr(IWs)
     For Each IDr In Itr(DFTyzFxw(Fx, Ws).Dry)
-        PushI ODry, AddAy(Dr, IDr)
+        PushI ODry, AyzAdd(Dr, IDr)
     Next
 Next
 OFny = Sy(IpxExi.Fny, "F", "Ty")
@@ -578,15 +578,15 @@ End Function
 
 Private Function XIpw(Ip As DLTDH) As Drs
 'Fm  Ip : L T1 Dta IsHdr @@
-Dim Dr, L&, Dta$, T$, Bexpr$, Dry()
+Dim Dr, L&, Dta$, T$, Bexp$, Dry()
 For Each Dr In Itr(DLDta(Ip, "Tbl.Where").D.Dry)
     L = Dr(0)
     Dta = Dr(1)
     T = T1(Dta)
-    Bexpr = RmvT1(Dta)
-    PushI Dry, Array(L, T, Bexpr)
+    Bexp = RmvT1(Dta)
+    PushI Dry, Array(L, T, Bexp)
 Next
-XIpw = DrszFF("L T Bexpr", Dry)
+XIpw = DrszFF("L T Bexp", Dry)
 'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpw) Ipw Ip",FmtDrs(Ipw), FmtDrs(Ipw), FmtDrs(Ip.D): Stop
 End Function
 
@@ -645,7 +645,7 @@ Private Function XEsSNoFld(IpsHdStru$(), IpsStru$()) As String()
 'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEsSNoFld) EsSNoFld IpsHdStru IpsStru",EsSNoFld, EsSNoFld, IpsHdStru, IpsStru: Stop
 End Function
 Private Function XLsszWhT$(Wh As Drs, T)
-'Fm:Wh@Ipw::Drs{L T Bexpr}
+'Fm:Wh@Ipw::Drs{L T Bexp}
 Dim O&(), Dr
 For Each Dr In Itr(Wh.Dry)
     If Dr(1) = T Then
@@ -659,7 +659,7 @@ Private Function XEwTblExa(Ipw As Drs, Tny$()) As String()
 'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEwTblExa) EwTblExa Ipw Tny",EwTblExa, EwTblExa, FmtDrs(Ipw), Tny: Stop
 End Function
 Private Function XEwTblDup(Ipw As Drs) As String()
-'Fm:Wh@Ipw::Drs{L T Bexpr}
+'Fm:Wh@Ipw::Drs{L T Bexp}
 Dim OLss$(), OT$(), J%, T, Dr, DupTny$(), Dup, O$()
 DupTny = AywDup(StrColzDrs(Ipw, "T"))
 For Each Dup In Itr(DupTny)
@@ -675,7 +675,7 @@ XEwTblDup = O
 'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEwTblDup) EwTblDup Ipw",EwTblDup, EwTblDup, FmtDrs(Ipw): Stop
 End Function
 Private Function XEwTblMis(Ipw As Drs, Tny$()) As String()
-'Fm:Wh@Ipw::Drs{L T Bexpr}
+'Fm:Wh@Ipw::Drs{L T Bexp}
 Dim OL&(), OT$(), J%, T, Dr, O$()
 For Each Dr In Itr(Ipw.Dry)
     T = Dr(1)
@@ -696,14 +696,14 @@ For Each T In Itr(Tny)
 Next
 XEwTblMis = O
 End Function
-Private Function XEwBexprEmp(Ipw As Drs) As String()
-'Ret            : with tbl nm but no bexpr @@
+Private Function XEwBexpEmp(Ipw As Drs) As String()
+'Ret            : with tbl nm but no Bexp @@
 Dim J%, OL&(), OT$(), O$()
-'Fm : Wh@Ipw::Drs{L T Bexpr}
-Dim Dr, L&, T$, Bexpr$
+'Fm : Wh@Ipw::Drs{L T Bexp}
+Dim Dr, L&, T$, Bexp$
 For Each Dr In Itr(Ipw.Dry)
-    Bexpr = Dr(2)
-    If Bexpr = "" Then
+    Bexp = Dr(2)
+    If Bexp = "" Then
         L = Dr(0)
         T = Dr(1)
         PushI OL, L
@@ -712,10 +712,10 @@ For Each Dr In Itr(Ipw.Dry)
 Next
 '===
 For J = 0 To UB(OL)
-    PushI O, FmtQQ("L#(?) Tbl(?) has no Bexpr", OL(J), OT(J))
+    PushI O, FmtQQ("L#(?) Tbl(?) has no Bexp", OL(J), OT(J))
 Next
-XEwBexprEmp = O
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEwBexprEmp) EwBexprEmp Ipw",EwBexprEmp, EwBexprEmp, FmtDrs(Ipw): Stop
+XEwBexpEmp = O
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEwBexpEmp) EwBexpEmp Ipw",EwBexpEmp, EwBexpEmp, FmtDrs(Ipw): Stop
 End Function
 
 Private Function DoAddInpIfEr(E$(), InpFilSrc$(), LnkImpSrc$()) As String()

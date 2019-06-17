@@ -29,6 +29,6 @@ End Property
 Private Sub Ren(PthSy)
 Dim I
 For Each I In Itr(PthSy)
-    'RenPthAddPfx I, "@"
+    'RenPthSzAddP I, "@"
 Next
 End Sub

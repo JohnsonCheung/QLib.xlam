@@ -4,16 +4,16 @@ Option Explicit
 Private Const CMod$ = "MVb_Ay_AB."
 Private Const Asm$ = "QVb"
 
-Function JnAyab(A, B, Optional Sep$) As String()
-ThwIf_DifSi A, B, CSub
-Dim J&
-For J = 0 To UB(A)
-    PushI JnAyab, A(J) & Sep & B(J)
+Function SyzAyab(AyA, AyB, Optional Sep$) As String()
+ThwIf_DifSi AyA, AyB, CSub
+Dim A, J&: For Each A In Itr(AyA)
+    PushI SyzAyab, A & Sep & AyB(J)
+    J = J + 1
 Next
 End Function
 
-Function JnAyabSpc(A, B) As String()
-JnAyabSpc = JnAyab(A, B, " ")
+Function SyzAyabSpc(AyA, AyB) As String()
+SyzAyabSpc = SyzAyab(AyA, AyB, " ")
 End Function
 
 Function FmtAyab(A, B, Optional N1$ = "Ay1", Optional N2$ = "Ay2") As String()

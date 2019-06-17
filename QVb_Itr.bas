@@ -21,10 +21,10 @@ For Each X In Itr
 Next
 End Function
 
-Function ItrAddPfx(Itr, Pfx$) As String()
+Function ItrSzAddP(Itr, Pfx$) As String()
 Dim X
 For Each X In Itr
-    Push ItrAddPfx, Pfx & X
+    Push ItrSzAddP, Pfx & X
 Next
 End Function
 

@@ -39,6 +39,20 @@ End Function
 Function ColEqSel(A As Drs, C$, V, Sel$) As Drs
 ColEqSel = SelDrs(ColEq(A, C, V), Sel)
 End Function
+Function CntColNe&(A As Drs, C$, V)
+Dim I%: I = IxzAy(A.Fny, C)
+Dim O&, Dr: For Each Dr In Itr(A.Dry)
+    If Dr(I) <> V Then O = O + 1
+Next
+CntColNe = O
+End Function
+Function CntColEq&(A As Drs, C$, V)
+Dim I%: I = IxzAy(A.Fny, C)
+Dim O&, Dr: For Each Dr In Itr(A.Dry)
+    If Dr(I) = V Then O = O + 1
+Next
+CntColEq = O
+End Function
 Function ColNe(A As Drs, C$, V) As Drs
 ColNe = DrswColNe(A, C, V)
 End Function
@@ -53,6 +67,14 @@ C1 = BefSpc(CC)
 C2 = AftSpc(CC)
 DrswCCEqExlEqCol = ColEqExlEqCol(ColEqExlEqCol(A, C1, V1), C2, V2)
 End Function
+
+Function DrswCCEq(A As Drs, CC$, V1, V2) As Drs
+Dim C1$, C2$
+C1 = BefSpc(CC)
+C2 = AftSpc(CC)
+DrswCCEq = ColEq(ColEq(A, C1, V1), C2, V2)
+End Function
+
 Function DrswCCCEqExlEqCol(A As Drs, CCC$, V1, V2, V3) As Drs
 Dim C1$, C2$, C3$, L$
 L = CCC

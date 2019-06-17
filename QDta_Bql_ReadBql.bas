@@ -116,7 +116,8 @@ With Brk2(ShtTyscf, ":")
     Case FstChr(ShtTyscf) = "T":   T = dbText: S = RmvFstChr(.S1)
     Case Else:                     T = DaoTyzShtTy(.S1)
     End Select
-    Set FdzShtTyscf = Fd(.S2, T, TxtSz:=S)
+    Dim ZLen As Boolean: ZLen = T = dbText
+    Set FdzShtTyscf = Fd(.S2, T, TxtSz:=S, ZLen:=ZLen)
 End With
 End Function
 

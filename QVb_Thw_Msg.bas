@@ -40,7 +40,7 @@ End Function
 Function LyzFunMsgNav(Fun$, Msg$, Nav()) As String()
 Dim A$(): A = LyzFunMsg(Fun, Msg)
 Dim B$(): B = IndentSy(LyzNav(Nav))
-LyzFunMsgNav = AddAy(A, B)
+LyzFunMsgNav = AyzAdd(A, B)
 End Function
 
 Function LyzFunMsgNap(Fun$, Msg$, ParamArray Nap()) As String()
@@ -50,11 +50,11 @@ LyzFunMsgNap = LyzFunMsgNav(Fun, Msg, Nav)
 End Function
 
 Function LyzFunMsgObjPP(Fun$, Msg$, Obj As Object, PP$) As String()
-LyzFunMsgObjPP = AddAy(LyzFunMsg(Fun, Msg), LyzObjPP(Obj, PP))
+LyzFunMsgObjPP = AyzAdd(LyzFunMsg(Fun, Msg), LyzObjPP(Obj, PP))
 End Function
 
 Function LyzFunMsgNyAv(Fun$, Msg$, Ny$(), Av()) As String()
-LyzFunMsgNyAv = AddAy(LyzFunMsg(Fun, Msg), IndentSy(LyzNyAv(Ny, Av)))
+LyzFunMsgNyAv = AyzAdd(LyzFunMsg(Fun, Msg), IndentSy(LyzNyAv(Ny, Av)))
 End Function
 
 Function LyzNv(Nm$, V, Optional Sep$ = ": ") As String()
@@ -101,7 +101,7 @@ Function LyzMsg(Msg$) As String()
 LyzMsg = LyzFunMsg("", Msg)
 End Function
 Function LyzMsgNav(Msg$, Nav()) As String()
-LyzMsgNav = AddAy(LyzMsg(Msg), IndentSy(LyzNav(Nav)))
+LyzMsgNav = AyzAdd(LyzMsg(Msg), IndentSy(LyzNav(Nav)))
 End Function
 
 Function LyzNNAp(NN$, ParamArray Ap()) As String()

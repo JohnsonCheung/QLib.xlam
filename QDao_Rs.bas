@@ -111,6 +111,7 @@ End Sub
 Function DrzRs(A As Dao.Recordset, Optional FF$) As Variant()
 DrzRs = DrzFds(A.Fields, FF)
 End Function
+
 Function DrszRs(A As Dao.Recordset) As Drs
 DrszRs = Drs(FnyzRs(A), DryzRs(A))
 End Function

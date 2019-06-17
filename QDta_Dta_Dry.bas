@@ -271,10 +271,10 @@ Function DistCol(A As Drs, C$)
 DistCol = AywDist(ColzDry(A.Dry, IxzAy(A.Fny, C)))
 End Function
 
-Function DistColvStr(A As Drs, C$) As String()
+Function DistColzStr(A As Drs, C$) As String()
 Dim I%: I = IxzAy(A.Fny, C)
 Dim Col$(): Col = StrColzDry(A.Dry, I)
-DistColvStr = AywDist(Col)
+DistColzStr = AywDist(Col)
 End Function
 
 Function DryzSqCol(Sq(), ColIxy) As Variant()

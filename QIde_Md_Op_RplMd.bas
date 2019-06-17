@@ -1,4 +1,6 @@
 Attribute VB_Name = "QIde_Md_Op_RplMd"
+Option Explicit
+Option Compare Text
 Function RplMd(M As CodeModule, NewLines$) As Boolean
 Dim OldL$: OldL = SrcLines(M)
 If RTrimLines(OldL) = RTrimLines(NewLines) Then Exit Function

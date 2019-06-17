@@ -4,9 +4,10 @@ Option Explicit
 Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Def_Fd_New."
 Public Const EleLblss$ = "*Fld *Ty ?Req ?AlwZLen Dft VTxt VRul TxtSz Expr"
-Function FdzStr(FdStr$) As Dao.Field2
 
+Function FdzStr(FdStr$) As Dao.Field2
 End Function
+
 Function Fd(F$, Optional Ty As Dao.DataTypeEnum = dbText, Optional Req As Boolean, Optional TxtSz As Byte = 255, Optional ZLen As Boolean, Optional Expr$, Optional Dft$, Optional VRul$, Optional VTxt$) As Dao.Field2
 Dim O As New Dao.Field
 With O
@@ -57,10 +58,10 @@ Function FdzDec(F$) As Dao.Field2
 Set FdzDec = Fd(F, dbDecimal, True, Dft:="0")
 End Function
 
-Function FdzEle(Ele$, F$) As Dao.Field2
+Function FdzEle(ele$, F$) As Dao.Field2
 Dim O As Dao.Field2
-Set O = FdzTnnn(F, Ele): If Not IsNothing(O) Then Set FdzEle = O: Exit Function
-Select Case Ele
+Set O = FdzTnnn(F, ele): If Not IsNothing(O) Then Set FdzEle = O: Exit Function
+Select Case ele
 Case "Nm":  Set FdzEle = FdzNm(F)
 Case "Amt": Set FdzEle = FdzCur(F): FdzEle.DefaultValue = 0
 Case "Txt": Set FdzEle = FdzTxt(F, dbText, True): FdzEle.DefaultValue = """""": FdzEle.AllowZeroLength = True

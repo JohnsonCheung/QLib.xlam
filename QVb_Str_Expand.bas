@@ -7,7 +7,7 @@ Function Expand$(QVblTp$, Seed$())
 Dim O$(), Tp$, ISeed
 Tp = RplVBar(QVblTp)
 For Each ISeed In Itr(Seed)
-    PushI O, RplQ(Tp, ISeed)
+    PushI O, SzQBy(Tp, ISeed)
 Next
 Expand = Join(O, "")
 End Function

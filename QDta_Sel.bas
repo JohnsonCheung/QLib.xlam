@@ -74,17 +74,17 @@ For Each Dr In Itr(A.Dry)
     IDry = DrywIxyVySel(B.Dry, BJnIxy, Vy, AddIxy)
     NoRec = Si(IDry) = 0
     Select Case True
-    Case NoRec And IsLeftJn And AnyFld = "": PushI ODry, AddAy(Dr, Emp)
-    Case NoRec And IsLeftJn:                 PushI ODry, AddAy(Dr, EmpWithAny)
+    Case NoRec And IsLeftJn And AnyFld = "": PushI ODry, AyzAdd(Dr, Emp)
+    Case NoRec And IsLeftJn:                 PushI ODry, AyzAdd(Dr, EmpWithAny)
     Case NoRec
     Case AnyFld = ""
         For Each IDr In IDry
-            PushI ODry, AddAy(Dr, IDr)
+            PushI ODry, AyzAdd(Dr, IDr)
         Next
     Case Else
         For Each IDr In IDry
             PushI IDr, True
-            PushI ODry, AddAy(Dr, IDr)
+            PushI ODry, AyzAdd(Dr, IDr)
         Next
     End Select
 Next
@@ -126,7 +126,7 @@ End Function
 Function InsColzDryVyBef(Dry(), Vy()) As Variant()
 Dim Dr
 For Each Dr In Itr(Dry)
-    PushI InsColzDryVyBef, AddAy(Vy, Dr)
+    PushI InsColzDryVyBef, AyzAdd(Vy, Dr)
 Next
 End Function
 Function InsColzDryBef(Dry(), V) As Variant()
@@ -167,6 +167,35 @@ UpdDrs = O
 "Ret UpdDrs K X    ! new Drs from A with A.X may updated from B.NewX.
 Stop
 End Function
+
+Private Sub Z_SelDist()
+BrwDrs SelDist(DMthP, "Mdn Ty")
+End Sub
+
+Function SelDist(D As Drs, FF$) As Drs
+'Fm  D : ..{Gpcc} {C}.. ! it has columns-Gpcc and column-C
+'Ret   : {Gpcc} {C}     ! where C is group of column-C @@
+Dim OKey(), OCnt&()
+    Dim A As Drs: A = SelDrs(D, FF)
+    Dim I%: I = Si(A.Fny)
+    Dim Dr: For Each Dr In Itr(A.Dry)
+        Dim Ix&: Ix = IxzDryDr(OKey, Dr)
+        If Ix = -1 Then
+            PushI OCnt, 1
+            PushI OKey, Dr
+        Else
+            OCnt(Ix) = OCnt(Ix) + 1
+        End If
+    Next
+Dim ODry()
+    Dim J&: For Each Dr In Itr(OKey)
+        Push Dr, OCnt(J)
+        PushI ODry, Dr
+        J = J + 1
+    Next
+SelDist = DrszFF(FF & " Cnt", ODry)
+End Function
+
 Function SelDrs(A As Drs, FF$) As Drs
 'Dim Fny$(): Fny = ExpandFF(FF, A.Fny)
 SelDrs = SelDrsAlwEmpzFny(A, SyzSS(FF))

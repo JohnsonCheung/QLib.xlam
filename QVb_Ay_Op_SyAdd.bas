@@ -4,34 +4,34 @@ Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Ay_Op_Add."
 
-Function AddSy(A$(), B$()) As String()
-AddSy = A
-PushAy AddSy, B
+Function SyzAdd(A$(), B$()) As String()
+SyzAdd = A
+PushIAy SyzAdd, B
 End Function
 
-Function AddAy(A, B)
-AddAy = A
-PushAy AddAy, B
+Function AyzAdd(AyA, AyB)
+AyzAdd = AyA
+PushAy AyzAdd, AyB
 End Function
 
-Function TynyzAy(Ay) As String()
+Function VbTyNyzAy(Ay) As String()
 Dim I
 For Each I In Itr(Ay)
-    PushI TynyzAy, TypeName(I)
+    PushI VbTyNyzAy, TypeName(I)
 Next
 End Function
 
-Function AddAyAp(Ay, ParamArray Itm_or_AyAp())
-Const CSub$ = CMod & "AddAyAp"
+Function AyzAddAp(Ay, ParamArray Itm_or_AyAp())
+Const CSub$ = CMod & "AyzAddAp"
 Dim Av(): Av = Itm_or_AyAp
 If Not IsArray(Ay) Then Thw CSub, "Fst parameter must be array", "Fst-Pm-TyeName", TypeName(Ay)
 Dim I
-AddAyAp = Ay
+AyzAddAp = Ay
 For Each I In Av
     If IsArray(I) Then
-        PushAy AddAyAp, I
+        PushAy AyzAddAp, I
     Else
-        Push AddAyAp, I
+        Push AyzAddAp, I
     End If
 Next
 End Function
@@ -43,22 +43,22 @@ For Each X In Itr(Ay)
 Next
 End Function
 
-Function AddEle(Ay, Ele)
+Function AddEle(Ay, ele)
 AddEle = Ay
-Push AddEle, Ele
+Push AddEle, ele
 End Function
-Function AddElezStr(Sy$(), Ele$) As String()
-Dim O$(): O = Sy: PushI O, Ele: AddElezStr = O
+Function AddElezStr(Sy$(), ele$) As String()
+Dim O$(): O = Sy: PushI O, ele: AddElezStr = O
 End Function
-Function AddSyItm(Sy$(), Itm$) As String()
-AddSyItm = AddAyItm(Sy, Itm)
+Function SyzAddItm(Sy$(), Itm$) As String()
+SyzAddItm = AyzAddItm(Sy, Itm)
 End Function
 
-Function AddAyItm(Ay, Itm)
+Function AyzAddItm(Ay, Itm)
 Dim O
 O = Ay
 Push O, Itm
-AddAyItm = O
+AyzAddItm = O
 End Function
 
 Function IncAy(Ay, Optional N& = 1)
@@ -69,7 +69,7 @@ For Each X In Itr(Ay)
 Next
 End Function
 
-Private Sub Z_AddAy()
+Private Sub Z_AyzAdd()
 Dim Ay1(), Ay2()
 GoSub T1
 Exit Sub
@@ -79,12 +79,12 @@ T1:
     Ept = Array(1, 2, 2, 2, 4, 5, 2, 2)
     GoTo Tst
 Tst:
-    Act = AddAy(Ay1, Ay2)
+    Act = AyzAdd(Ay1, Ay2)
     C
     Return
 End Sub
 
-Private Sub Z_AddPfxzAy()
+Private Sub Z_SyzAyP()
 Dim Sy$(), Pfx$
 GoSub T1
 Exit Sub
@@ -94,12 +94,12 @@ T1:
     Ept = SyzAp("* 1", "* 2", "* 3", "* 4")
     GoTo Tst
 Tst:
-    Act = AddPfxzAy(Sy, Pfx)
+    Act = SyzAyP(Sy, Pfx)
     C
     Return
 End Sub
 
-Private Sub Z_AddPfxSfxzAy()
+Private Sub Z_SyzAyPS()
 Dim Sy$(), Act$(), Sfx$, Pfx$, Exp$()
 Sy = SyzAp(1, 2, 3, 4)
 Pfx = "* "
@@ -108,16 +108,16 @@ Exp = SyzAp("* 1#", "* 2#", "* 3#", "* 4#")
 GoSub Tst
 Exit Sub
 Tst:
-Act = AddPfxSfxzAy(Sy, Pfx, Sfx)
+Act = SyzAyPS(Sy, Pfx, Sfx)
 Debug.Assert IsEqAy(Act, Exp)
 Return
 End Sub
 
 Function TabSy(Sy$()) As String()
-TabSy = AddPfxzAy(Sy, vbTab)
+TabSy = SyzAyP(Sy, vbTab)
 End Function
 
-Private Sub Z_AddSfxzAy()
+Private Sub Z_SyzAyS()
 Dim Sy$(), Sfx$
 Sy = SyzSS("1 2 3 4")
 Sfx = "#"
@@ -125,12 +125,12 @@ Ept = SyzSS("1# 2# 3# 4#")
 GoSub Tst
 Exit Sub
 Tst:
-    Act = AddSfxzAy(Sy, Sfx)
+    Act = SyzAyS(Sy, Sfx)
     C
     Return
 End Sub
 
 
 Private Sub ZZ()
-MVb_AddAy:
+MVb_AyzAdd:
 End Sub
