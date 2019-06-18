@@ -13,7 +13,9 @@ Const KwFm$ = "from"
 Const KwGp$ = "group by"
 Const KwWh$ = "where"
 Const KwAnd$ = "and"
-Const KwJn$ = "join"
+Const KwOn$ = "on"
+Const KwLJn$ = "left join"
+Const KwIJn$ = "inner join"
 Const KwOr$ = "or"
 Const KwOrd$ = "order by"
 Const KwLeftJn$ = "left join"
@@ -62,6 +64,9 @@ Else
     C_T = " "
 End If
 End Property
+Private Property Get C_TT$()
+C_TT = C_T & C_T
+End Property
 Private Property Get C_NLT$() ' New Line Tabe
 If Fmt Then
     C_NLT = C_NL & C_T
@@ -87,7 +92,7 @@ End If
 End Property
 
 Private Property Get C_Wh$()
-C_Wh = C_NLT & KwWh & C_NLT
+C_Wh = C_NLT & KwWh & C_T
 End Property
 
 Private Property Get C_CommaSpc$()
@@ -119,6 +124,10 @@ Dim I
 'For Each I In LyJnQSqlCommaAsetW(S, Wdt - Len(A))
     PushI PFldInX_F_InAset_Wdt, I
 'Next
+End Function
+
+Private Function PFmzX$(FmX$)
+PFmzX = PFm(FmX) & " x"
 End Function
 
 Private Function PFm$(Fm)
@@ -169,7 +178,7 @@ PSel_FF = PSel_Fny(SyzSS(FF), Dis)
 End Function
 
 Private Function PSel_FF_Extny$(FF$, Extny$())
-PSel_FF_Extny = PSel_X(PSel_Fny_Extny(Ny(FF), Extny))
+PSel_FF_Extny = PSelzX(PSel_Fny_Extny(Ny(FF), Extny))
 End Function
 
 Private Function PSel_Fny_Extny$(Fny$(), Extny$(), Optional IsDis As Boolean)
@@ -204,7 +213,7 @@ For J = 0 To UB(OE)
 Next
 End Sub
 Private Sub FEs_AlignExtNm(OE$())
-OE = AlignLzAy(OE)
+OE = SyzAlign(OE)
 End Sub
 Private Sub FEs_AddAs_Or4Spc_ToExtNm(OE$())
 Dim J%, C$
@@ -219,10 +228,10 @@ For J = 0 To UB(OE)
 Next
 End Sub
 Private Sub FEs_AlignFld(OF$())
-OF = AlignLzAy(OF)
+OF = SyzAlign(OF)
 End Sub
 Private Function PDis$(Dis As Boolean)
-If Dis Then PDis = " " & KwDis
+If Dis Then PDis = " " & KwDis & C_NLTT Else PDis = C_NLTT
 End Function
 Private Function PSel_Fny$(Fny$(), Optional Dis As Boolean)
 PSel_Fny = KwSel & PDis(Dis) & C_NLTT & JnCommaSpc(Fny)
@@ -245,8 +254,8 @@ PSel_T = KwSel & C_T & "*" & PFm(T)
 End Function
 
 
-Private Function PSel_X$(X$, Optional Dis As Boolean)
-PSel_X = KwSel & PDis(Dis) & X
+Private Function PSelzX$(X$, Optional Dis As Boolean)
+PSelzX = KwSel & PDis(Dis) & X
 End Function
 
 Private Function PSet_FF_EqDr$(FF$, EqDr)
@@ -258,9 +267,10 @@ PSet_FF_Ey = PSet_Fny_Ey(SyzSS(FF), Ey)
 End Function
 
 Private Function PSet_Fny_Ey$(Fny$(), Ey$())
-Dim J$(): J = SyzAyab(Fny, Ey, " = ")
-Dim S$: S = Jn(J, "," & C_NLT)
-PSet_Fny_Ey = C_NLT & KwSet & C_NLT & S
+Dim J$(): J = SyzAyab(SyzQteSq(Fny), Ey, " = ")
+Dim J1$(): J1 = SyzAyP(J, C_TT)
+Dim S$: S = Jn(J, "," & C_NL)
+PSet_Fny_Ey = C_NLT & KwSet & C_NL & S
 End Function
 
 Private Property Get Fmt() As Boolean
@@ -274,7 +284,7 @@ PExpr_T_RecId = FmtQQ("?Id=?", T, RecId)
 End Function
 
 Private Function PSet_Fny_Vy$(Fny$(), Vy())
-Dim F$(): F = QuoteSqzAy(Fny)
+Dim F$(): F = SyzQteSq(Fny)
 Dim V$(): V = SqlQuoteVy(Vy)
 PSet_Fny_Vy = JnComma(SyzAyab(F, V, "="))
 End Function
@@ -333,7 +343,7 @@ Dim Fny$(): Fny = SyzSS(FF)
 Ass IsVblAy(Ey)
 If Si(Fny) <> Si(Ey) Then Thw CSub, "[FF-Sz} <> [Si-Ey], where [FF],[Ey]", Si(Fny), Si(Ey), FF, Ey
 Dim AFny$()
-    AFny = AlignLzAy(Fny)
+    AFny = SyzAlign(Fny)
     AFny = SyzAyS(AFny, " = ")
 Dim W%
     'W = VblWdtAy(Ey)
@@ -571,9 +581,12 @@ End Function
 Function SqlUpd_T_FF_EqDr_Whff_Eqvy$(T, FF$, Dr, WhFF$, EqVy)
 SqlUpd_T_FF_EqDr_Whff_Eqvy = PUpd(T) & PSet_FF_EqDr(FF, Dr) & PWh_FF_Eqvy(WhFF, EqVy)
 End Function
-Function SqlDrpFld$(T, Fny$())
 
+Function SqlDrpFld$(T, Fny$())
+Dim S$: S = JnCommaSpc(SyzQteSq(Fny))
+SqlDrpFld = "Alter Table [" & T & "] drop column " & S
 End Function
+
 Function SqlUpdzEy$(T, Fny$(), Ey$(), Optional OBexp$)
 SqlUpdzEy = PUpd(T) & PSet_Fny_Ey(Fny, Ey) & PWh(OBexp)
 End Function
@@ -586,36 +599,58 @@ End Function
 Function SqlSel_FF_T_Bexp$(FF$, T, Bexp$)
 
 End Function
-
-Function PTblXzXAJn$(TblX$, TblA$, JnFny$())
-
+Private Function JnAnd$(Sy$())
+JnAnd = Jn(Sy, " " & KwAnd & " ")
 End Function
-Function PUpdXzXAJn$(TblX$, TblA$, JnFny$())
-
+Private Function POnzJnXA(JnFny$())
+Dim X$(): X = SyzQAy("x.[?]", JnFny)
+Dim A$(): A = SyzQAy("a.[?]", JnFny)
+Dim J$(): J = SyzAyab(X, A, " = ")
+Dim S$: S = JnAnd(J)
+POnzJnXA = KwOn & " " & S
 End Function
+Private Function PTblzXAJn$(TblX$, TblA$, JnFny$())
+PTblzXAJn = C_TT & "[" & TblX & "] x" & C_NLTT & KwIJn & " [" & TblA & "] a " & POnzJnXA(JnFny)
+End Function
+
+Function PUpdzXAJn$(TblX$, TblA$, JnFny$())
+Dim X$: X = PTblzXAJn(TblX, TblA, JnFny)
+PUpdzXAJn = PUpdzX(X)
+End Function
+Private Function PSetzXAFny(Fny$())
+PSetzXAFny = PSetzXA(Fny, Fny)
+End Function
+
 Private Function PSetzXA(FnyX$(), FnyA$())
 Dim X$(): X = SyzAyPS(FnyX, "x.[", "]")
 Dim A$(): A = SyzAyPS(FnyA, "a.[", "]")
 Dim J$(): J = SyzAyab(X, A, " = ")
-PSetzXA = C_T & KwSet & C_NLTT & S
-
+          J = SyzAyP(J, C_TT)
+Dim S$:   S = Jn(J, "," & C_NL)
+PSetzXA = PSetzX(S)
 End Function
-Function SqlUpdzJn$(T$, FmA$, JnFny$(), SetX$(), EqA$())
+
+Function SqlUpdzJn$(T$, FmA$, JnFny$(), SetFny$())
 'Fm T     : Table nm to be update.  It will have alias x.
 'Fm FmA   : Table nm used to update @T.  It will has alias a.
 'Fm JnFny : Fld nm common in @T & @FmA.  It will use to bld the jn clause with alias x and a.
 'Fm SetX  : Fny in @T to be updated.  No alias, by the ret sql will put the alias x.  Sam ele as @EqA.
-'Fm EqQ   : Fny in @FmA used to update @SetX.  No alias, by the ret sql will put the alias a.  Sam ele as @SetX
 'Ret      : upd sql stmt updating @T from @FmA using @JnFny as jn clause setting @T fld as stated in @SetX eq to @FmA fld as stated in @EqA
-SqlUpdzJn = PUpdXzXAJn(T, FmA, JnFny) & PSetXA(SetX, EqA)
+Dim U$: U = PUpdzXAJn(T, FmA, JnFny)
+Dim S$: S = PSetzXAFny(SetFny)
+SqlUpdzJn = U & C_NL & S
 End Function
 
-Private Function PUpdzTx$(Tx$)
-
+Private Function PUpdzX$(TblX$)
+PUpdzX = KwUpd & C_NL & TblX
 End Function
 
-Function SqlUpdzTSet$(Tx$, SetX$)
-SqlUpdzTSet = PUpdzTx(Tx) & PSetX(SetX)
+Function PSetzX$(SetX$)
+PSetzX = C_T & KwSet & C_NL & SetX
+End Function
+
+Function SqlUpdzXSet$(TblX$, SetX$)
+SqlUpdzXSet = PUpdzX(TblX) & PSetzX(SetX)
 End Function
 
 Function SqlAddColzLis$(T, ColLis$)
@@ -643,7 +678,7 @@ SqlCrtSk_T_SkFF = SqlCrtSk_T_SkFny(T, Ny(Skff))
 End Function
 
 Function SqlCrtSk_T_SkFny$(T, SkFny$())
-SqlCrtSk_T_SkFny = FmtQQ("Create unique Index SecondaryKey on [?] (?)", T, JnComma(QuoteSqzAy(SkFny)))
+SqlCrtSk_T_SkFny = FmtQQ("Create unique Index SecondaryKey on [?] (?)", T, JnComma(SyzQteSq(SkFny)))
 End Function
 
 Function SqlCrtTbl_T_X$(T, X$)
@@ -662,7 +697,7 @@ Function SqlIns_T_FF_Dr$(T, FF$, Dr)
 Dim Fny$(): Fny = SyzSS(FF)
 ThwIf_DifSi Fny, Dr, CSub
 Dim A$, B$
-A = JnComma(QuoteSqzAyIf(Fny))
+A = JnComma(SyzQteSqIf(Fny))
 B = JnComma(SqlQuoteVy(Dr))
 SqlIns_T_FF_Dr = FmtQQ("Insert Into [?] (?) Values(?)", T, A, B)
 End Function
@@ -731,7 +766,7 @@ Dim A$: GoSub X_A
 PSet_Fny_Vy1 = "  Set " & A
 Exit Function
 X_A:
-    Dim L$(): L = QuoteSqzAy(Fny)
+    Dim L$(): L = SyzQteSq(Fny)
     Dim R$(): R = SqlQuoteVy(Vy)
     Dim J%, O$()
     For J = 0 To UB(L)
@@ -823,8 +858,8 @@ Dim J$(): J = SyzAyab(A, B, " = ")
 SqpAEqB_Fny_AliasAB = JnCommaSpc(J)
 End Function
 
-Function SqlSelzFFInto$(FF$, Into$, T, Optional Bexp$, Optional Dis As Boolean)
-SqlSelzFFInto = PSel_FF(FF) & PInto_T(Into) & PFm(T) & PWh(Bexp)
+Function SqlSelzIntoFF$(Into$, FF$, Fm$, Optional OBexp$, Optional ODis As Boolean)
+SqlSelzIntoFF = PSel_FF(FF, ODis) & PInto_T(Into) & PFm(Fm) & PWh(OBexp)
 End Function
 
 Function SqlSel_Fny_T_WhFny_EqVy$(Fny$(), T, WhFny$(), EqVy)
@@ -832,15 +867,16 @@ SqlSel_Fny_T_WhFny_EqVy = SqlSel_Fny_T(Fny, T, PWh_Fny_EqVy(WhFny, EqVy))
 End Function
 
 Function SqlSel_X_Into_T_OB_OGp_OOrd_ODis$(X$, Into$, T$, Optional OBexp$, Optional OGp$, Optional OOrd$, Optional ODis As Boolean)
-SqlSel_X_Into_T_OB_OGp_OOrd_ODis$ = PSel_X(X, ODis) & PInto_T(Into) & PFm(T) & PWh(OBexp) & PGp(OGp) & POrd(OOrd$)
+SqlSel_X_Into_T_OB_OGp_OOrd_ODis$ = PSelzX(X, ODis) & PInto_T(Into) & PFm(T) & PWh(OBexp) & PGp(OGp) & POrd(OOrd$)
 End Function
 
 Function SqlSel_X_Into_T_OB$(X$, Into$, T$, Optional OBexp$)
-SqlSel_X_Into_T_OB$ = PSel_X(X) & PInto_T(Into) & PFm(T) & PWh(OBexp)
+SqlSel_X_Into_T_OB$ = PSelzX(X) & PInto_T(Into) & PFm(T) & PWh(OBexp)
 End Function
 
 Private Function PGp$(Gp$)
-
+If Gp = "" Then Exit Function
+PGp = C_T & KwGp & C_T & Gp
 End Function
 Private Function POrd$(Ord$)
 
@@ -852,13 +888,23 @@ Function SqlSel_X_Into_T_T_Jn$(X$, Into$, T1$, T2$, Jn$)
 
 End Function
 
-Function SqlSelzXInto$(X$, Into$, Fm, Optional Gp$, Optional Bexp$)
+Function SqlSelzInto$(Into$, SelX$, Fm$, Optional Gp$, Optional Bexp$)
 Dim Dis As Boolean: If Gp <> "" Then Dis = True
-SqlSelzXInto = PSel_X(X, Dis) & PFm(Fm) & PWh(Bexp) & PGp(Gp)
+SqlSelzInto = PSelzX(SelX, Dis) & PFm(Fm) & PWh(Bexp) & PGp(Gp)
+End Function
+
+Function SqlSelzIntoCpy$(Into$, Fm$)
+SqlSelzIntoCpy = PSelzX("*") & PInto_T(Into) & PFm(Fm)
+End Function
+
+
+Function SqlSelzIntoFmX$(Into$, SelX$, FmX$, Optional Gp$, Optional Bexp$)
+Dim Dis As Boolean: If Gp <> "" Then Dis = True
+SqlSelzIntoFmX = PSelzX(SelX, Dis) & PInto_T(Into) & PFmzX(FmX) & PWh(Bexp) & PGp(Gp)
 End Function
 
 Function SqlSel_X_T$(X$, T, Optional Bexp$)
-SqlSel_X_T = PSel_X(X) & PFm(T) & PWh(Bexp)
+SqlSel_X_T = PSelzX(X) & PFm(T) & PWh(Bexp)
 End Function
 
 Function SqlSel_FF_T_Ordff$(FF$, T, OrdMinusSfxFF$)

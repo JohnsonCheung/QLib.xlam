@@ -4,18 +4,18 @@ Option Explicit
 Private Const CMod$ = "MDta_DDup."
 Private Const Asm$ = "QDta"
 Function DrswDup(A As Drs, FF$) As Drs
-DrswDup = DrswRowIxy(A, RowIxyOfDupRow(A, FF))
+DrswDup = DrswRxy(A, RxyzDup(A, FF))
 End Function
 
-Function SelDrsExlCC(A As Drs, ExlCCLik$) As Drs
+Function DrszSelExlCC(A As Drs, ExlCCLik$) As Drs
 Dim LikC
 For Each LikC In SyzSS(ExlCCLik)
 '    MinusAy(
 Next
 End Function
 Function DrseDup(A As Drs, FF$) As Drs
-Dim RowIxy&(): RowIxy = RowIxyOfDupRow(A, FF)
-DrseDup = DrseRowIxy(A, RowIxy)
+Dim Rxy&(): Rxy = RxyzDup(A, FF)
+DrseDup = DrseRxy(A, Rxy)
 End Function
 
 Function DrswCeqC(A As Drs, CC$) As Drs
@@ -40,18 +40,18 @@ Next
 DrseCeqC.Fny = A.Fny
 End Function
 
-Private Function RowIxyOfDupRow(A As Drs, FF$) As Long()
+Private Function RxyzDup(A As Drs, FF$) As Long()
 Dim Fny$(): Fny = TermAy(FF)
 If Si(Fny) = 1 Then
-    RowIxyOfDupRow = IxyzDup(ColzDrs(A, Fny(0)))
+    RxyzDup = IxyzDup(ColzDrs(A, Fny(0)))
     Exit Function
 End If
-Dim ColIxy&(): ColIxy = Ixy(A.Fny, Fny, ThwNotFnd:=True)
-Dim Dry(): Dry = SelDry(A.Dry, ColIxy)
-RowIxyOfDupRow = RowIxyzOfDupzDry(Dry)
+Dim ColIxy&(): ColIxy = Ixy(A.Fny, Fny)
+Dim Dry(): Dry = DryzSel(A.Dry, ColIxy)
+RxyzDup = RxyzDupDry(Dry)
 End Function
 
-Private Function RowIxyzOfDupzDry(Dry()) As Long()
+Private Function RxyzDupDry(Dry()) As Long()
 Dim DupD(): DupD = DrywDup(Dry)
 Dim Dr, Ix&, O&()
 For Each Dr In Dry
@@ -59,7 +59,7 @@ For Each Dr In Dry
     Ix = Ix + 1
 Next
 If Si(O) < Si(DupD) * 2 Then Stop
-RowIxyzOfDupzDry = O
+RxyzDupDry = O
 End Function
 
 Function DrywDup(Dry()) As Variant()
@@ -126,7 +126,7 @@ Tst:
     Return
 End Sub
 '======================================================================
-Private Function RowIxyzOfDupzDryColIx(Dry(), ColIx&) As Long()
+Private Function RxyzDupDryColIx(Dry(), ColIx&) As Long()
 Dim D As New Dictionary, FstIx&, V, O As New Rel, Ix&, I
 For Ix = 0 To UB(Dry)
     V = Dry(Ix)(ColIx)
@@ -138,11 +138,11 @@ For Ix = 0 To UB(Dry)
     End If
 Next
 For Each I In O.SetOfPar.Itms
-    PushIAy RowIxyzOfDupzDryColIx, O.ParChd(I).Av
+    PushIAy RxyzDupDryColIx, O.ParChd(I).Av
 Next
 End Function
 
-Private Sub Z_RowIxyzOfDupzDryColIx()
+Private Sub Z_RxyzDupDryColIx()
 Dim Dry(), ColIx&, Act&(), Ept&()
 GoSub T0
 Exit Sub
@@ -152,7 +152,7 @@ T0:
     Ept = LngAp(0, 1)
     GoTo Tst
 Tst:
-    Act = RowIxyzOfDupzDryColIx(Dry, ColIx)
+    Act = RxyzDupDryColIx(Dry, ColIx)
     If Not IsEqAy(Act, Ept) Then Stop
     C
     Return

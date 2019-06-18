@@ -49,7 +49,7 @@ DMth2Patn = Col2Patn(DMthP, "Mthn", Patn1, Patn2)
 End Function
 
 Function DMthPrp() As Drs
-DMthPrp = ColIn(DMthPub, "Ty", SyzSS("Get Let Set"))
+DMthPrp = DrszIn(DMthPub, "Ty", SyzSS("Get Let Set"))
 End Function
 Sub LisPFunRetAs(RetAsPatn$)
 Dim RetAs As Drs: RetAs = AddColzRetAs(DMthPFun)

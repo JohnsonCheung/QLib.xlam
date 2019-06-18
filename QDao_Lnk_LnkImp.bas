@@ -31,7 +31,7 @@ Dim Dic_Fn_Ffn As Dictionary: Set Dic_Fn_Ffn = Dic(IndentedLy(LnkImpSrc, "Inp"))
 '== Lnk=================================================================================================================
 Dim D1   As Drs:   D1 = WLnkFx(DFx, Dic_Fn_Ffn)         ' T S Cn
 Dim D2   As Drs:   D2 = WLnkFb(Dic_Fbt_Fbn, Dic_Fn_Ffn)
-Dim D    As Drs:    D = AddDrs(D1, D2)
+Dim D    As Drs:    D = DrszAdd(D1, D2)
 Dim OLnk:  LnkTblzDrs Db, D               ' <======
             
 '== Imp=================================================================================================================

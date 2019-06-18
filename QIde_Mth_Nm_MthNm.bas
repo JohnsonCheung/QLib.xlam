@@ -414,7 +414,7 @@ For Each C In P.VBComponents
     Dim Mn$: Mn = C.Name
     Dim A As Drs: A = DMthn(C.CodeModule)
     Dim B As Drs: B = InsColzDrsCC(A, "Pj Md", Pn, Mn)
-    Dim O As Drs: O = AddDrs(O, A)
+    Dim O As Drs: O = DrszAdd(O, A)
 Next
 DMthnzP = O
 End Function

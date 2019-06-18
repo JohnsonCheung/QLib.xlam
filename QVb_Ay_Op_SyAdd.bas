@@ -62,7 +62,7 @@ AyzAddItm = O
 End Function
 
 Function IncAy(Ay, Optional N& = 1)
-IncAy = Resi(Ay)
+IncAy = AyzReSi(Ay)
 Dim X
 For Each X In Itr(Ay)
     PushI IncAy, X + N

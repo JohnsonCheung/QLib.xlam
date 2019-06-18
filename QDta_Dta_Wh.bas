@@ -37,7 +37,7 @@ Function LngAyzColEqSel(A As Drs, C$, V, Sel$) As Long()
 LngAyzColEqSel = LngAyzDrs(ColEqSel(A, C, V, Sel), Sel)
 End Function
 Function ColEqSel(A As Drs, C$, V, Sel$) As Drs
-ColEqSel = SelDrs(ColEq(A, C, V), Sel)
+ColEqSel = DrszSel(ColEq(A, C, V), Sel)
 End Function
 Function CntColNe&(A As Drs, C$, V)
 Dim I%: I = IxzAy(A.Fny, C)
@@ -58,7 +58,36 @@ ColNe = DrswColNe(A, C, V)
 End Function
 
 Function ColEqSelFny(A As Drs, C$, V, SelFny$()) As Drs
-ColEqSelFny = SelDrszFny(ColEq(A, C, V), SelFny)
+ColEqSelFny = DrszSelzFny(ColEq(A, C, V), SelFny)
+End Function
+
+Function DrswVap(D As Drs, CC$, ParamArray Vap()) As Drs
+'Fm D : ..@CC..            ! to be selected.  It has col-@CC
+'Fm Vap : #Val-Ay-of-Param ! to select what rec in @D to be returned
+'Ret    : ..@D..           ! sam stru as @D.  Subset of @D.  @@
+Dim Vy(): Vy = Vap
+Dim KeyDry(): KeyDry = DrszSel(D, CC).Dry
+Dim Rxy&(): Rxy = RxywDryVy(KeyDry, Vy)
+Dim ODry(): ODry = AywIxy(D.Dry, Rxy)
+DrswVap = Drs(D.Fny, ODry)
+End Function
+
+Function DrseVap(D As Drs, CC$, ParamArray Vap()) As Drs
+'Fm D : ..@CC..            ! to be selected.  It has col-@CC
+'Fm Vap : #Val-Ay-of-Param ! to select what rec in @D to be selected
+'Ret    : ..@D..           ! sam stru as @D.  Subset of @D.  @@
+Dim Vy(): Vy = Vap
+DrseVap = DrseVy(D, CC, Vy)
+End Function
+
+Function DrseVy(D As Drs, CC$, Vy) As Drs
+'Fm D : ..@CC..            ! to be selected.  It has col-@CC
+'Fm Vap : #Val-Ay-of-Param ! to select what rec in @D to be selected
+'Ret    : ..@D..           ! sam stru as @D.  Subset of @D.  @@
+Dim KeyDry(): KeyDry = DrszSel(D, CC).Dry
+Dim Rxy&(): Rxy = RxyeDryVy(KeyDry, Vy)
+Dim ODry(): ODry = AywIxy(D.Dry, Rxy)
+DrseVy = Drs(D.Fny, ODry)
 End Function
 
 Function DrswCCEqExlEqCol(A As Drs, CC$, V1, V2) As Drs
@@ -103,7 +132,7 @@ SelFny = AyeEle(A.Fny, C)
 ColEqExlEqCol = ColEqSelFny(A, C, V, SelFny)
 End Function
 Function ColNeSel(A As Drs, C$, V, Sel$) As Drs
-ColNeSel = SelDrs(ColNe(A, C, V), Sel)
+ColNeSel = DrszSel(ColNe(A, C, V), Sel)
 End Function
 
 Function ColNotIn(A As Drs, C, InVy) As Drs
@@ -117,12 +146,12 @@ Next
 ColNotIn = Drs(A.Fny, Dry)
 End Function
 
-Function ColIn(A As Drs, C, InVy) As Drs
+Function DrszIn(A As Drs, C, InVy) As Drs
 Dim Ix&: Ix = IxzAy(A.Fny, C)
-ColIn = Drs(A.Fny, DrywColIn(A.Dry, Ix, InVy))
+DrszIn = Drs(A.Fny, DrywColIn(A.Dry, Ix, InVy))
 End Function
 Function ColInSel(A As Drs, C, InVy, Sel$) As Drs
-ColInSel = SelDrs(ColIn(A, C, InVy), Sel)
+ColInSel = DrszSel(DrszIn(A, C, InVy), Sel)
 End Function
 
 Function ColEq(A As Drs, C$, V) As Drs
@@ -131,7 +160,7 @@ End Function
 
 Function ColDup(A As Drs, C$) As Drs
 Dim Dup(): Dup = AywDup(ColzDrs(A, C))
-ColDup = ColIn(A, C, Dup)
+ColDup = DrszIn(A, C, Dup)
 End Function
 
 Function ColEqE(A As Drs, C$, V) As Drs
@@ -210,33 +239,33 @@ Fny = A.Fny
 DrswColGt = Drs(Fny, DrywColGt(A.Dry, Ix, V))
 End Function
 
-Function DrseRowIxy(A As Drs, RowIxy&()) As Drs
+Function DrseRxy(A As Drs, Rxy&()) As Drs
 Dim ODry(), Dry()
     Dry = A.Dry
     Dim J&, I&
     For J = 0 To UB(Dry)
-        If Not HasEle(RowIxy, J) Then
+        If Not HasEle(Rxy, J) Then
             PushI ODry, Dry(J)
         End If
     Next
-DrseRowIxy = Drs(A.Fny, ODry)
+DrseRxy = Drs(A.Fny, ODry)
 End Function
 
-Function DrswNotRowIxy(A As Drs, RowIxy&()) As Drs
+Function DrswNotRxy(A As Drs, Rxy&()) As Drs
 Dim O(), Dry()
     Dry = A.Dry
     Dim J&
     For J = 0 To UB(Dry)
-        If Not HasEle(RowIxy, J) Then
+        If Not HasEle(Rxy, J) Then
             Push O, Dry(J)
         End If
     Next
-DrswNotRowIxy = Drs(A.Fny, O)
+DrswNotRxy = Drs(A.Fny, O)
 End Function
 
-Function DrswRowIxy(A As Drs, RowIxy&()) As Drs
-Dim Dry(): Dry = AywIxy(A.Dry, RowIxy)
-DrswRowIxy = Drs(A.Fny, Dry)
+Function DrswRxy(A As Drs, Rxy&()) As Drs
+Dim Dry(): Dry = AywIxy(A.Dry, Rxy)
+DrswRxy = Drs(A.Fny, Dry)
 End Function
 
 Function ValzColEqSel(A As Drs, C$, V, ColNm$)
@@ -250,5 +279,24 @@ For Each Dr In Itr(A.Dry)
     End If
 Next
 Thw CSub, "In Drs, there is no record with Col-A eq Value-B, so no Col-C is returened", "Col-A Value-B Col-C Drs-Fny Drs-NRec", C, V, ColNm, A.Fny, NReczDrs(A)
+End Function
+
+Function RxywDryVy(Dry(), Vy) As Long()
+'Fm Dry: ! to be selected if it eq to @Vy.  It has sam NCol as Si-Vy
+'Fm Vy : ! to select @Dry
+'Ret   : Rxy of @Dry if the rec eq @Vy
+Dim Rix&, Dr: For Each Dr In Itr(Dry)
+    If IsEqAy(Dr, Vy) Then PushI RxywDryVy, Rix
+    Rix = Rix + 1
+Next
+End Function
+Function RxyeDryVy(Dry(), Vy) As Long()
+'Fm Dry: ! to be selected if it ne to @Vy.  It has sam NCol as Si-Vy
+'Fm Vy : ! to select @Dry
+'Ret   : Rxy of @Dry if the rec ne @Vy
+Dim Rix&, Dr: For Each Dr In Itr(Dry)
+    If Not IsEqAy(Dr, Vy) Then PushI RxyeDryVy, Rix
+    Rix = Rix + 1
+Next
 End Function
 

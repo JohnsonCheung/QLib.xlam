@@ -90,7 +90,7 @@ End Function
 Function AyOfAyAy(AyOfAy)
 If Si(AyOfAy) = 0 Then Exit Function
 Dim O
-O = Resi(AyOfAy(0))
+O = AyzReSi(AyOfAy(0))
 Dim X
 For Each X In AyOfAy
     PushAy O, X
@@ -168,7 +168,7 @@ End If
 End Function
 
 Function AyMid(Ay, Fm, Optional L = 0)
-AyMid = Resi(Ay)
+AyMid = AyzReSi(Ay)
 Dim J&
 Dim E&
     Select Case True
@@ -215,23 +215,23 @@ RSyzTrim = O
 End Function
 
 Function ResiN(Ay, N&)
-ResiN = Resi(Ay, N - 1)
+ResiN = AyzReSi(Ay, N - 1)
 End Function
 
 Function ResiMax(OAy1, OAy2) 'Resi the smaller Ay to same si as the larger Ay and return fst Ay
 Dim U1&, U2&: U1 = UB(OAy1): U2 = UB(OAy2)
 Select Case True
-Case U1 > U2: OAy2 = Resi(OAy2, U1)
-Case U2 > U1: OAy1 = Resi(OAy1, U2)
+Case U1 > U2: OAy2 = AyzReSi(OAy2, U1)
+Case U2 > U1: OAy1 = AyzReSi(OAy1, U2)
 End Select
 ResiMax = OAy1
 End Function
 
-Function Resi(Ay, Optional U& = -1) 'Return the resized Ay
+Function AyzReSi(Ay, Optional U& = -1) 'Return the resized Ay
 Dim O: O = Ay
-If U < 0 Then Erase O: Resi = O: Exit Function
+If U < 0 Then Erase O: AyzReSi = O: Exit Function
 ReDim Preserve O(U)
-Resi = O
+AyzReSi = O
 End Function
 
 Function RevAy(Ay) 'Return reversed Ay
@@ -403,7 +403,7 @@ Dim U2&: U2 = UB(A2)
 Dim U&: U = Max(U1, U2)
 Dim O()
     Dim J&
-    O = Resi(O, U)
+    O = AyzReSi(O, U)
     For J = 0 To U
         If U1 >= J Then
             If U2 >= J Then
@@ -442,7 +442,7 @@ Dim URowAy&()
 
 Dim ODry()
     Dim Dr()
-    ODry = Resi(ODry, URow)
+    ODry = AyzReSi(ODry, URow)
     Dim I%
     For J = 0 To URow
         Erase Dr

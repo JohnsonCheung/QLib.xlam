@@ -40,14 +40,14 @@ Function SyQuoteSng(Sy$()) As String()
 SyQuoteSng = SyQuote(Sy, "'")
 End Function
 
-Function QuoteSqzAy(Sy$()) As String()
-QuoteSqzAy = SyQuote(Sy, "[]")
+Function SyzQteSq(Sy$()) As String()
+SyzQteSq = SyQuote(Sy, "[]")
 End Function
 
-Function QuoteSqzAyIf(Sy$()) As String()
+Function SyzQteSqIf(Sy$()) As String()
 Dim I
 For Each I In Itr(Sy)
-    PushI QuoteSqzAyIf, QuoteSqIf(CStr(I))
+    PushI SyzQteSqIf, QuoteSqIf(CStr(I))
 Next
 End Function
 

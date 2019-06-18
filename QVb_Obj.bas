@@ -36,7 +36,7 @@ End Function
 
 Function IntozOPrp(OInto, Oy, Prp)
 Dim O, I
-O = Resi(OInto)
+O = AyzReSi(OInto)
 For Each I In Itr(Oy)
     Push O, Prp(I, Prp)
 Next

@@ -30,7 +30,7 @@ End Function
 
 
 Private Function AddColzMthLines(Mthn As Drs) As Drs
-Dim A():  A = SelDrs(Mthn, "Md Mthn Ty").Dry
+Dim A():  A = DrszSel(Mthn, "Md Mthn Ty").Dry
 Dim B$(): B = MthLinesAyzDry_Md_Mthn_ShtMthTy(A)
 Dim C As Drs: C = DrsAddColzNmVy(Mthn, "MthLines", B)
 AddColzMthLines = C

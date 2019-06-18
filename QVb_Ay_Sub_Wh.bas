@@ -21,7 +21,7 @@ AywIxCnt = O
 End Function
 
 Function AywBetEle(Ay, FmEle, ToEle)
-Dim O: O = Resi(Ay)
+Dim O: O = AyzReSi(Ay)
 Dim Inside As Boolean, I
 For Each I In Itr(Ay)
     If Inside Then
@@ -41,7 +41,7 @@ If Inside Then
 End If
 End Function
 Function AywDist(Ay, Optional IgnCas As Boolean)
-AywDist = IntozItr(Resi(Ay), CntDic(Ay).Keys)
+AywDist = IntozItr(AyzReSi(Ay), CntDic(Ay).Keys)
 End Function
 Private Sub Z_FmtCntDic()
 Dim Ay
@@ -59,7 +59,7 @@ AywDistT1 = AywDist(T1Ay(Ay))
 End Function
 
 Function AywDup(Ay, Optional C As VbCompareMethod = vbTextCompare)
-Dim O: O = Resi(Ay)
+Dim O: O = AyzReSi(Ay)
 Dim D As Dictionary: Set D = CntDic(Ay, EiCntDup, C)
 AywDup = IntozItr(O, D.Keys)
 End Function
@@ -88,7 +88,7 @@ End Function
 
 Function AywFT(Ay, FmIx, ToIx)
 Dim J&
-AywFT = Resi(Ay)
+AywFT = AyzReSi(Ay)
 For J = FmIx To ToIx
     Push AywFT, Ay(J)
 Next
@@ -118,7 +118,7 @@ End Function
 Function AywIxyzMust(Ay, Ixy&())
 If IsOutRange(Ixy, UB(Ay)) Then Thw CSub, "Some element in Ixy is outsize Ay", "UB(Ay) Ixy", UB(Ay), Ixy
 Dim U&: U = UB(Ay)
-Dim O: O = Resi(Ay)
+Dim O: O = AyzReSi(Ay)
 Dim Ix
 For Each Ix In Itr(Ixy)
     Push O, Ay(Ix)
@@ -127,7 +127,7 @@ AywIxyzMust = O
 End Function
 
 Function AywInAset(Ay, B As Aset)
-AywInAset = Resi(Ay)
+AywInAset = AyzReSi(Ay)
 Dim I
 For Each I In Itr(Ay)
     If Ay.Has(I) Then Push AywInAset, I
@@ -136,7 +136,7 @@ End Function
 
 Function AywIxy(Ay, Ixy&())
 Dim U&: U = UB(Ixy)
-Dim O: O = Resi(Ay)
+Dim O: O = AyzReSi(Ay)
 ReDim Preserve O(U)
 Dim Ix, J&
 For Each Ix In Itr(Ixy)
@@ -149,13 +149,14 @@ For Each Ix In Itr(Ixy)
 Next
 AywIxy = O
 End Function
-Function AywIxyAlwEmp(Ay, Ixy&())
+
+Function AywIxyAlwE(Ay, Ixy&())
 Dim U&: U = UB(Ixy)
-Dim O: O = Ay: Erase O
+Dim O: O = AyzReSi(Ay)
 ReDim Preserve O(U)
 Dim Ix, J&
 For Each Ix In Itr(Ixy)
-    If Ix > -1 Then
+    If Ix >= 0 Then
         If IsObject(Ay(Ix)) Then
             Set O(J) = Ay(Ix)
         Else
@@ -164,7 +165,7 @@ For Each Ix In Itr(Ixy)
     End If
     J = J + 1
 Next
-AywIxyAlwEmp = O
+AywIxyAlwE = O
 End Function
 
 Function AywLik(Ay, Lik) As String()
@@ -280,6 +281,10 @@ End Function
 Function IxyzAyPatn(Ay, Patn$) As Long()
 IxyzAyPatn = IxyzAyRe(Ay, RegExp(Patn))
 End Function
+Function IxyzCC(D As Drs, CC$) As Long()
+IxyzCC = IxyzAyCC(D.Fny, CC)
+End Function
+
 Function IxyzAyCC(Ay, CC$) As Long()
 Dim C
 For Each C In Itr(SyzSS(CC))
@@ -298,7 +303,7 @@ End Function
 
 Function AywPredFalse(Ay, P As IPred)
 Dim X
-AywPredFalse = Resi(Ay)
+AywPredFalse = AyzReSi(Ay)
 For Each X In Itr(Ay)
     If Not P.Pred(X) Then
         Push AywPredFalse, X
@@ -307,7 +312,7 @@ Next
 End Function
 
 Function AywPredXAP(Ay, PredXAP$, ParamArray Ap())
-AywPredXAP = Resi(Ay)
+AywPredXAP = AyzReSi(Ay)
 Dim I
 Dim Av()
     Av = Ap
@@ -322,7 +327,7 @@ End Function
 
 Function AywPredXP(Ay, Xp$, P)
 Dim X
-AywPredXP = Resi(Ay)
+AywPredXP = AyzReSi(Ay)
 For Each X In Itr(Ay)
     If Run(Xp, X, P) Then
         Push AywPredXP, X
@@ -332,7 +337,7 @@ End Function
 
 Function AywPredXPNot(Ay, Xp$, P)
 Dim X
-AywPredXPNot = Resi(Ay)
+AywPredXPNot = AyzReSi(Ay)
 For Each X In Itr(Ay)
     If Not Run(Xp, X, P) Then
         Push AywPredXPNot, X
@@ -347,7 +352,7 @@ For Each S In Itr(Ay)
 Next
 End Function
 Function AywRmvEle(Ay, ele)
-AywRmvEle = Resi(Ay)
+AywRmvEle = AyzReSi(Ay)
 Dim I
 For Each I In Itr(Ay)
     If I <> ele Then PushI AywRmvEle, I
@@ -370,7 +375,7 @@ AywRmvTT = RmvTTzAy(AywTT(Ay, T1, T2))
 End Function
 
 Function AySkip(Ay, Optional SkipN& = 1)
-Dim O: O = Resi(Ay)
+Dim O: O = AyzReSi(Ay)
 Dim J&
 For J = SkipN To UB(Ay)
     Push O, Ay(J)
@@ -406,7 +411,7 @@ End Function
 
 Function AywSngEle(Ay)
 'Return Set of Element as array in {Ay} having 2 or more element
-Dim O: O = Resi(Ay)
+Dim O: O = AyzReSi(Ay)
 Dim K, D As Dictionary
 Set D = CntDic(Ay)
 For Each K In D.Keys

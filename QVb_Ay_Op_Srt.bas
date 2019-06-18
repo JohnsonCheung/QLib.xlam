@@ -176,7 +176,7 @@ Tst:
 End Sub
 
 Function SrtAyByAy(Ay, ByAy)
-Dim O: O = Resi(Ay)
+Dim O: O = AyzReSi(Ay)
 Dim I
 For Each I In ByAy
     If HasEle(Ay, I) Then PushI O, I

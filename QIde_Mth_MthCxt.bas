@@ -181,7 +181,7 @@ Dim Dr, Dry(): For Each Dr In Itr(A.Dry)
     PushI Dr, HasPm
     PushI Dry, Dr
 Next
-AddColzHasPm = AddColzFFDry(A, "HasPm", Dry)
+AddColzHasPm = DrszAddFF(A, "HasPm", Dry)
 End Function
 
 Sub Z_TblMthP()
@@ -192,7 +192,7 @@ End Sub
 
 Function TblMthP$(D As Database)
 Dim T$: T = "Mth"
-CrtTblzDrs D, T, DMthP
+CrtTzDrs D, T, DMthP
 TblMthP = T
 End Function
 
@@ -264,7 +264,7 @@ Dim Dr, Dry(): For Each Dr In Itr(DMthLin.Dry)
     PushI Dr, R
     PushI Dry, Dr
 Next
-AddColzRetAs = AddColzFFDry(DMthLin, "RetAs", Dry)
+AddColzRetAs = DrszAddFF(DMthLin, "RetAs", Dry)
 End Function
 Function DMthezS(Src$()) As Drs
 Dim A As Drs: A = DMthzS(Src)

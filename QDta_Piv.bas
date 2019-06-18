@@ -13,12 +13,12 @@ Enum EmAgg
     EiCnt
     EiAvg
 End Enum
-Function DryBlk(A, KIx%, GIx%) As Variant()
+Function DryBlk(A, KIx%, Gix%) As Variant()
 If Si(A) = 0 Then Exit Function
 Dim J%, O, K, Blk(), O_Ix&, Gp, Dr, K_Ay()
 For Each Dr In A
     K = Dr(KIx)
-    Gp = Dr(GIx)
+    Gp = Dr(Gix)
     O_Ix = IxzAy(K_Ay, K)
     If O_Ix = -1 Then
         Push K_Ay, K
@@ -64,12 +64,12 @@ Private Function KKCntMulItmColDryD(KKDrToItmAyDualColDry()) As Variant()
 End Function
 Function GpDic(A As Drs, KK$, G$) As Dictionary
 Dim Fny$()
-Dim KeyIxy&(), GIx%
+Dim KeyIxy&(), Gix%
     Fny = TermAy(KK)
     KeyIxy = Ixy(A.Fny, Fny)
     PushI Fny, G & "_Gp"
-    GIx = IxzAy(Fny, G)
-Set GpDic = DryGpDic(A.Dry, KeyIxy, GIx)
+    Gix = IxzAy(Fny, G)
+Set GpDic = DryGpDic(A.Dry, KeyIxy, Gix)
 End Function
 Function DryzDotLyz2Col(DotLy$()) As Variant()
 Dim O(), I, S$

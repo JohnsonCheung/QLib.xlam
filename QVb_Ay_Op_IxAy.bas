@@ -72,18 +72,22 @@ For Each V In Itr(Ay)
     J = J + 1
 Next
 End Function
-Function Ixy(Ay, SubAy, Optional ThwNotFnd As Boolean) As Long()
+Function IxyzAlwE(Ay, SubAy) As Long()
 Dim I, HasNegIx As Boolean, Ix&
 For Each I In Itr(SubAy)
     Ix = IxzAy(Ay, I)
-    If Ix = -1 Then HasNegIx = True
-    PushI Ixy, Ix
+    PushI IxyzAlwE, Ix
 Next
-If ThwNotFnd Then
-    If HasNegIx Then
-        Thw CSub, "There is negative index", "Ay SubAy Ixy", Ay, SubAy, Ixy
+End Function
+
+Function Ixy(Ay, SubAy) As Long()
+Dim O&(): O = IxyzAlwE(Ay, SubAy)
+Dim Ix: For Each Ix In Itr(O)
+    If Ix = -1 Then
+        Thw CSub, "Negative index", "Ay SubAy Ixy", Ay, SubAy, Ixy
     End If
-End If
+Next
+Ixy = O
 End Function
 
 Sub AsgItmAyIxay(Ay, Ixy&(), ParamArray OItmAp())

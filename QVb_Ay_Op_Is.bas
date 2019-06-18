@@ -28,6 +28,7 @@ End Function
 Function IsNeAy(A, B) As Boolean
 IsNeAy = Not IsEqAy(A, B)
 End Function
+
 Function IsEqAy(A, B) As Boolean
 If Not IsArray(A) Then Exit Function
 If Not IsArray(B) Then Exit Function

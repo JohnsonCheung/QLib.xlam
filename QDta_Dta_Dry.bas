@@ -158,7 +158,7 @@ Dim L, T$, Rst$: For Each L In Itr(Ly)
     PushI TAy, T
     PushI RstAy, Rst
 Next
-TAy = AlignLzAy(TAy)
+TAy = SyzAlign(TAy)
 Dim J&: For J = 0 To UB(TAy)
     PushI AlignzTRst, TAy(J) & " " & RstAy(J)
 Next

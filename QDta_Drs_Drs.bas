@@ -115,10 +115,10 @@ End Sub
 Function FmtLNewO(L_NewL_OldL As Drs, Org_L_Lin As Drs) As String()
 'Fm  : L_NewL_OldL ! Assume all NewL and OldL are nonEmp and <>
 'Ret : LinesAy !
-Dim SDry(): SDry = SelDry(Org_L_Lin.Dry, LngAp(0, 1))
+Dim SDry(): SDry = DryzSel(Org_L_Lin.Dry, LngAp(0, 1))
 Dim S As Drs: S = DrszFF("L Lin", SDry)
 Dim D As Drs: D = DrseCeqC(L_NewL_OldL, "NewL OldL")
-Dim NewL As Drs: NewL = LJnDrs(S, D, "L", "NewL")
+Dim NewL As Drs: NewL = LDrszJn(S, D, "L", "NewL")
 Dim Gpno As Drs: Gpno = FmtLNewOGpno(NewL)
 Dim NLin As Drs: NLin = FmtLNewONLin(Gpno)
 Dim Lines As Drs: Lines = FmtLNewOLines(NLin)
@@ -250,7 +250,7 @@ End If
 Dim FF$: FF = Gpcc & " " & C
 
 Dim OCol(), OKey()
-    Dim A As Drs: A = SelDrs(D, FF)
+    Dim A As Drs: A = DrszSel(D, FF)
     Dim Dr: For Each Dr In Itr(A.Dry)
         Dim V: V = Pop(Dr)
         Dim Ix&: Ix = IxzDryDr(OKey, Dr)
@@ -305,10 +305,36 @@ Dim Dry()
 AgrMax = Drs(D.Fny, Dry)
 End Function
 
-Function SplitSSCol(D As Drs, SSCol$) As Drs
-'Fm D       : It has a SS col
-'Fm SSAsCol :
-'Ret  : Split this col to muli record
+Function DiczRenFF(RenFF$) As Dictionary
+Set DiczRenFF = New Dictionary
+Dim Ay$(): Ay = SyzSS(RenFF)
+Dim V: For Each V In SyzSS(RenFF)
+    If HasSubStr(V, ":") Then
+        DiczRenFF.Add Bef(V, ":"), Aft(V, ":")
+    Else
+        Thw CSub, "Invalid RenFF.  all Sterm has have [:]", "RenFF", RenFF
+    End If
+Next
+End Function
+
+Function FnyzRen(Fny$(), RenFF$) As String()
+Dim D As Dictionary: Set D = DiczRenFF(RenFF)
+Dim F: For Each F In Fny
+    If D.Exists(F) Then
+        PushI FnyzRen, D(F)
+    Else
+        PushI FnyzRen, F
+    End If
+Next
+End Function
+Function DrszRen(D As Drs, RenFF$) As Drs
+DrszRen = Drs(FnyzRen(D.Fny, RenFF), D.Dry)
+End Function
+
+Function DrszSplitSS(D As Drs, SSCol$) As Drs
+'Fm D     : It has a col @SSCol
+'Fm SSCol : It is a col nm in @D whose value is SS.
+'Ret  : a drs of sam ret but more rec by split@SSCol col to multi record
 Dim I%: I = IxzAy(D.Fny, SSCol)
 Dim Dr, Dry(): For Each Dr In Itr(D.Dry)
     Dim S: For Each S In Itr(SyzSS(Dr(I)))
@@ -316,7 +342,7 @@ Dim Dr, Dry(): For Each Dr In Itr(D.Dry)
         PushI Dry, Dr
     Next
 Next
-SplitSSCol = Drs(D.Fny, Dry)
+DrszSplitSS = Drs(D.Fny, Dry)
 End Function
 
 Function RLvlGpIx(Dry()) As Long()
@@ -362,90 +388,122 @@ Next
 Dim Fny$(): Fny(UB(Fny)) = "W" & C
 AgrWdt = Drs(Fny, Dry)
 End Function
-Private Function AlignColzC__Dry(WiWdtDry(), Cix%) As Variant()
+Private Function DrszAliC__Dry(WiWdtDry(), Cix%) As Variant()
 
 End Function
-Private Function AlignColzC(D As Drs, Gpcc$, C) As Drs
-Dim Wdt As Drs:     Wdt = AgrWdt(D, Gpcc, C)
-Dim WiWdt As Drs: WiWdt = JnDrs(D, Wdt, Gpcc, "Wdt")
-Dim Cix%:           Cix = IxzAy(D.Fny, C)
-Dim Dry():          Dry = AlignColzC__Dry(WiWdt.Dry, Cix)
-AlignColzC = Drs(D.Fny, Dry)
-End Function
-
-Function AlignCol(D As Drs, Gpcc$, CC$) As Drs
-'Fm D : It has a str col C
-'Ret  : Add col Fst at end
-Dim O As Drs: O = D
-Dim C: For Each C In SyzSS(CC)
-    O = AlignColzC(O, Gpcc, C)
+Function DryGp(Dry(), Cxy&()) As Variant()
+'Fm Dry : Dry to be gp.  It has all col as stated in @Cxy.
+'Fm Cxy : Gpg which col of @Dry
+'Ret    : Ay-of-Dry.  Each ele is a subset of @Dry in same gp.  @@
+Dim Key(): Key = DryzSel(Dry, Cxy) ' sel the key only
+Dim RGp(): RGp = RxyGp(Key)        ' gp the key into :RxyGp
+Dim Rxy: For Each Rxy In Itr(RGp)          ' each @Rxy is a gp
+    Dim DGp()                      ' putting each gp of @Dry in @DGp
+    Dim R: For Each R In Rxy
+        PushI DGp, Dry(R)          ' pushing @Dry-rec-R to @DGp
+    Next
+    PushI DryGp, DGp               ' pushing whole gp of @Dry rec (in @DGp) as one ele to @DryGp (the ret) '<===
+    Erase DGp
 Next
-AlignCol = O
 End Function
 
-Sub AlignColzDb(D As Database, T$, Into$, Gpcc$, CC$)
-Dim GFny$():   GFny = SyzSS(Gpcc)
-Dim CFny$():   CFny = SyzSS(CC)
-Dim N&:           N = Si(CFny)
-Dim SeqN%():   SeqN = IntSeq(N, 1)               ' Seq
-Dim WFny$():   WFny = SyzQAy(SeqN, "[#W?]")     ' Wdt of each CC
-Dim MFny$():   MFny = SyzQAy(SeqN, "[#M?]")     ' Max of Wdt
-Dim FF$:         FF = Gpcc & " " & CC
-Dim TG$:         TG = TmpNm("TGp_")              ' Grouped
+Function RxyGp(Dry()) As Variant()
+'Fm Dry : to be gp.
+'Ret    : Gp of Rxy.  Each gp will have sam val of rec.
+Dim I&, Key(), O(), Dr, R&: For Each Dr In Itr(Dry)
+    I = IxzDryDr(Key, Dr)
+    If I = -1 Then
+        PushI Key, Dr
+        PushI O, LngAp(R)
+    Else
+        PushI O(I), R
+    End If
+    R = R + 1
+Next
+RxyGp = O
+End Function
 
-'-- TO_W ---
-Dim TO_W$(): TO_W() = SyzQAy("[#W?] Integer", SeqN)
+Private Sub DryzAli__AliCol(ODry(), C)
+'Fm ODry : the col @C will be aligned
+'Fm C    : the column ix
+'Ret     : column-@C of @ODry will be aligned
+Dim Col(): Col = ColzDry(ODry, C)
+Dim ACol$(): ACol = SyzAlign(Col)
+Dim J&: For J = 0 To UB(ODry)
+    ODry(J)(C) = ACol(J)
+Next
+End Sub
 
-'-- TOEyLen ---
-Dim TO_EyLen$(): TO_EyLen = SyzQAy("Len(?)", CFny)
+Private Function DryzAli(Dry(), Cix&()) As Variant()
+Dim O(): O = Dry
+Dim C: For Each C In Cix
+    DryzAli__AliCol O, C
+Next
+DryzAli = O
+End Function
+Function DrszAli(D As Drs, Gpcc$, CC$) As Drs
+'Fm D : ..@Gpcc..@CC.. ! It has a str col @CC to be alignL and @Gpcc to be gp
+'Ret  : @D             ! all col @CC are aligned within the gp and rec will gp together.
+If NoReczDrs(D) Then DrszAli = D: Exit Function
+Dim Cix&(): Cix = IxyzCC(D, CC)       ' The grouping col ix ay
+Dim DGp(): DGp = DryGp(D.Dry, Cix)          ' Grouping the-data (@D.Dry) into DryGp (@DGp) according to @Cix
+Dim Dry, ADry(), ODry(): For Each Dry In DGp  'For each data-gp (@Dry)
+    ADry = DryzAli(CvAv(Dry), Cix)  ' aligning it (@Dry) into (@ADry)
+    PushIAy ODry, ADry              ' pushing the rslt (@ADry-aligned-dry) to oup (@ODry)
+Next
+DrszAli = Drs(D.Fny, ODry)
+End Function
 
-'-- TO_NoW0 --
-Dim Eq0$():       Eq0 = SyzAyS(WFny, " = 0")
-Dim TO_NoW0$: TO_NoW0 = JnAnd(Eq0)                                  ' Bexp to rmv no rmk rec
-
-'-- TG_* ---
-Dim Q$:         Q = "Max(x.[#W?]) as [#M?]"
-Dim Max$():   Max = SyzQAy(Q, SeqN)         'Max
-Dim TG_X$:   TG_X = JnCommaSpc(SyzAdd(CFny, Max))
-Dim TG_Gp$: TG_Gp = JnCommaSpc(GFny)
-
-'-- TO_MLis ---
-Dim TO_M$(): TO_M = SyzQAy("[#M?] Integer", SeqN)
-
-
-'-- OX --
-Dim OX$
+Sub CrtTzAlignCC(D As Database, T$, Fm$, Gpcc$, CC$)
+Dim GFny$():       GFny = SyzSS(Gpcc)
+Dim CFny$():       CFny = SyzSS(CC)
+Dim N&:               N = Si(CFny)
+Dim SeqN%():       SeqN = IntSeq(N, 1)               ' Seq
+Dim WFny$():       WFny = SyzQAy("#W?", SeqN)    ' Wdt of each CC
+Dim WFnySq$():   WFnySq = SyzQteSq(WFny)
+Dim MFny$():       MFny = SyzQAy("#M?", SeqN)     ' Max of Wdt
+Dim FF$:             FF = Gpcc & " " & CC
+Dim WMFny$():     WMFny = SyzAdd(WFny, MFny)
+Dim WMFnySq$(): WMFnySq = SyzAdd(WFnySq, SyzQteSq(MFny))
 
 '-- Bld Q* all Sql Stmt --
-Dim QO$:           QO = SqlSelzFFInto(Into:=Into, FF:=FF, T:=T)              ' O T   : Gpcc CC          !
-Dim QOAddW$:   QOAddW = SqlAddColzAy(T:=Into, ColAy:=TO_W)                   ' O     : Gpcc CC Wcc      ! Add col Wcc
-Dim QOUpdW$:   QOUpdW = SqlUpdzEy(T:=Into, Fny:=CFny, Ey:=TO_EyLen)          ' O     :                  ! Update Wcc as Len(CC)
-Dim QONoW0$:   QONoW0 = SqlDlt(T:=Into, Bexp:=TO_NoW0)                       ' O     :                  ! Rmv rec with all rmv = 0
-Dim QG$:           QG = SqlSelzXInto(Into:=TG, Fm:=Into, X:=TG_X, Gp:=TG_Gp) ' G W   : Gpcc Mcc         ! Mcc is Max-Wcc gp by Gpcc
-Dim QOAddM$:   QOAddM = SqlAddColzAy(T:=Into, ColAy:=TO_M)                   ' M W G : Gpcc CC Wcc Mcc  ! Jn T1 & T2 Same rec as T1
+Dim QO$:           QO = SqlSelzIntoCpy(T, Fm)  ' O :
 
+Dim ColAy$():   ColAy = SyzAyS(WMFnySq, " Integer")
+Dim QOAddWM$: QOAddWM = SqlAddColzAy(T, ColAy)     ' O : Gpcc CC [#W?] [#M?]  ! Add col [#W?] [#M?] all are integer
 
-Dim MFnyX$():
-Dim MFnyA$():
-Dim QOUpdM$:   QOUpdM = SqlUpdzJn(T:=Into, FmA:=TG, JnFny:=GFny, SetX:=MFnyX, EqA:=MFnyA)
+Dim Ey$():         Ey = SyzQAy("Len(?)", CFny)
+Dim QOUpdW$:   QOUpdW = SqlUpdzEy(T, WFny, Ey)   ' O     :                  ! Update Wcc as Len(CC)
 
-Dim Ali$():       Ali = SyzQAy("Len(?)", CFny)
-Dim QOAli$:     QOAli = SqlUpdzEy(T:=Into, Fny:=WFny, Ey:=Ali)      ' M T G :                  ! align CC
+Dim Eq0$():       Eq0 = SyzAyS(WFnySq, " = 0")
+Dim Bexp$:       Bexp = JnAnd(Eq0)
+Dim QONoW0$:   QONoW0 = SqlDlt(T, Bexp)                                       ' O     :                  ! Rmv rec with all rmv = 0
 
-Dim QODrpWM$: QODrpWM = SqlDrpFld(Into, SyzAdd(WFny, MFny))         ' O M : Sam as T         ! Use T.Gpcc and T3.CC
+Dim TG$:           TG = TmpNm("TGp_")
+Dim StrQ$:       StrQ = "Max(x.[#W?]) as [#M?]"
+Dim Max$():       Max = SyzQAy(StrQ, SeqN)
+Dim SelMax$:   SelMax = JnCommaSpc(SyzAdd(GFny, Max))
+Dim Gp$:           Gp = JnCommaSpc(GFny)
+Dim QG$:           QG = SqlSelzIntoFmX(TG, SelMax, T, Gp)       ' G : Gpcc Mcc         ! Mcc is Max-Wcc gp by Gpcc
+Dim QOUpdM$:   QOUpdM = SqlUpdzJn(T, TG, GFny, MFny)            ' O :
+
+Dim AliEy$():   AliEy = SyzMacro("[{F}] & Space([#M{N}]-[#W{N}]) & '.'", CFny, SeqN)
+Dim QOAli$:     QOAli = SqlUpdzEy(T, CFny, AliEy)                            ' O :                  ! align CC
+
+Dim QODrpWM$: QODrpWM = SqlDrpFld(T, WMFny)                                            ' O M : Sam as T         ! Use T.Gpcc and T3.CC
+
 D.Execute QO
-D.Execute QOAddW
+D.Execute QOAddWM
 D.Execute QOUpdW
 D.Execute QONoW0
 D.Execute QG
-D.Execute QOAddM
 D.Execute QOUpdM
 D.Execute QOAli
 D.Execute QODrpWM
 DrpT D, TG
 End Sub
 
-Sub FillLasVzDb(D As Database, T, F$)
+Sub UpdTczFillLas(D As Database, T, F$)
 With RszTF(D, T, F)
     Dim Fst As Boolean: Fst = True
     Dim L
@@ -458,6 +516,8 @@ With RszTF(D, T, F)
                 .Edit
                 .Fields(0).Value = L
                 .Update
+            Else
+                L = .Fields(0).Value
             End If
         End If
         .MoveNext
@@ -465,9 +525,9 @@ With RszTF(D, T, F)
     .Close
 End With
 End Sub
-Function FillLasV(D As Drs, C$) As Drs
+Function DrszFillLasIfB(D As Drs, C$) As Drs
 'Fm D : It has a str col C
-'Ret        : Fill in the Blank-V as LasV
+'Ret  : Fill in the blank col-C val by las val
 Dim LasV$
 Dim Fst As Boolean: Fst = True
 Dim Ix%: Ix = IxzAy(D.Fny, C)
@@ -484,7 +544,7 @@ Dim Dr, Dry(): For Each Dr In Itr(D.Dry)
     End If
     PushI Dry, Dr
 Next
-FillLasV = Drs(D.Fny, Dry)
+DrszFillLasIfB = Drs(D.Fny, Dry)
 End Function
 
 Function Drs(Fny$(), Dry()) As Drs
@@ -537,7 +597,7 @@ Function AvDrsC(A As Drs, C) As Variant()
 AvDrsC = IntozDrsC(Array(), A, C)
 End Function
 Function DrswDist(A As Drs, CC$) As Drs
-DrswDist = DrszFF(CC, DrywDist(SelDrs(A, CC).Dry))
+DrswDist = DrszFF(CC, DrywDist(DrszSel(A, CC).Dry))
 End Function
 Sub AsgCol(A As Drs, CC$, ParamArray OColAp())
 Dim OColAv(), J%, Col, C$()
@@ -578,23 +638,23 @@ DmpAy FmtDrs(A, MaxColWdt, BrkColnn$)
 End Sub
 
 Function DrpColzFny(A As Drs, Fny$()) As Drs
-DrpColzFny = SelDrsCC(A, MinusAy(A.Fny, Fny))
+DrpColzFny = DrszSelCC(A, MinusAy(A.Fny, Fny))
 End Function
 
-Function SelDrsCC(A As Drs, CC$) As Drs
-Const CSub$ = CMod & "SelDrsCC"
+Function DrszSelCC(A As Drs, CC$) As Drs
+Const CSub$ = CMod & "DrszSelCC"
 Dim OFny$(): OFny = TermAy(CC)
 If Not IsAySub(A.Fny, OFny) Then Thw CSub, "Given FF has some field not in Drs.Fny", "CC Drs.Fny", CC, A.Fny
 Dim ODry()
     Dim IAy&()
     IAy = Ixy(A.Fny, OFny)
-    ODry = SelDryColIxy(A.Dry, IAy)
-SelDrsCC = Drs(OFny, ODry)
+    ODry = DryzSelColIxy(A.Dry, IAy)
+DrszSelCC = Drs(OFny, ODry)
 End Function
-Function SelDryColIxy(Dry(), Ixy&()) As Variant()
+Function DryzSelColIxy(Dry(), Ixy&()) As Variant()
 Dim Dr
 For Each Dr In Itr(Dry)
-    PushI SelDryColIxy, AywIxy(Dr, Ixy)
+    PushI DryzSelColIxy, AywIxy(Dr, Ixy)
 Next
 End Function
 
@@ -621,7 +681,9 @@ Fny1 = AyInsEle(Fny, FldNm, CLng(Ix))
 Dry = InsColzDryzV(A.Dry, V, Ix)
 DrsInsCVIsAftFld = Drs(Fny1, Dry)
 End Function
-
+Function IsNeFF(A As Drs, FF$) As Boolean
+IsNeFF = JnSpc(A.Fny) <> FF
+End Function
 Function IsEqDrs(A As Drs, B As Drs) As Boolean
 Select Case True
 Case Not IsEqAy(A.Fny, B.Fny), Not IsEqDry(A.Dry, B.Dry)
@@ -755,16 +817,16 @@ If Si(A.Fny) > 0 Then Exit Function
 IsEmpDrs = True
 End Function
 
-Function AddDrs3(A As Drs, B As Drs, C As Drs) As Drs
-Dim O As Drs: O = AddDrs(A, B)
-          AddDrs3 = AddDrs(O, C)
+Function DrszAdd3(A As Drs, B As Drs, C As Drs) As Drs
+Dim O As Drs: O = DrszAdd(A, B)
+          DrszAdd3 = DrszAdd(O, C)
 End Function
 
-Function AddDrs(A As Drs, B As Drs) As Drs
-If IsEmpDrs(A) Then AddDrs = B: Exit Function
-If IsEmpDrs(B) Then AddDrs = A: Exit Function
+Function DrszAdd(A As Drs, B As Drs) As Drs
+If IsEmpDrs(A) Then DrszAdd = B: Exit Function
+If IsEmpDrs(B) Then DrszAdd = A: Exit Function
 If Not IsEqAy(A.Fny, B.Fny) Then Thw CSub, "Dif Fny: Cannot add", "A-Fny B-Fny", A.Fny, B.Fny
-AddDrs = Drs(A.Fny, CvAv(AyzAdd(A.Dry, B.Dry)))
+DrszAdd = Drs(A.Fny, CvAv(AyzAdd(A.Dry, B.Dry)))
 End Function
 Sub PushDrs(O As Drss, M As Drs)
 With O
@@ -831,8 +893,8 @@ Set Dic = CntDiczDrs(Drs, "Nm")
 BrwDic Dic
 End Sub
 
-Private Sub Z_SelDrs()
-BrwDrs SelDrs(SampDrs1, "A B D")
+Private Sub Z_DrszSel()
+BrwDrs DrszSel(SampDrs1, "A B D")
 End Sub
 
 Private Property Get Z_FmtDrs()
@@ -873,7 +935,7 @@ Function AddColzExiB(A As Drs, B As Drs, Jn$, ExiB_FldNm$) As Drs
 Dim IA&(), IB&(), Dr, KA(), BKeyDry(), ODry()
 IA = IxyzJnA(A.Fny, Jn)
 IB = IxyzJnB(B.Fny, Jn)
-BKeyDry = SelDry(B.Dry, IB)
+BKeyDry = DryzSel(B.Dry, IB)
 For Each Dr In Itr(A.Dry)
     KA = AywIxy(Dr, IA)
     If HasDr(BKeyDry, KA) Then
@@ -883,7 +945,7 @@ For Each Dr In Itr(A.Dry)
     End If
     PushI ODry, Dr
 Next
-AddColzExiB = Drs(AddFF(A.Fny, ExiB_FldNm), ODry)
+AddColzExiB = Drs(FnyzAddFF(A.Fny, ExiB_FldNm), ODry)
 End Function
 
 
@@ -911,6 +973,49 @@ Dim Dry(), Dr: For Each Dr In Itr(D.Dry)
     PushI Dr, L
     PushI Dry, Dr
 Next
-AddColzLen = AddColzFFDry(D, LenC, Dry)
+AddColzLen = DrszAddFF(D, LenC, Dry)
+End Function
+
+Function DrszAddCV(A As Drs, C$, V) As Drs
+Dim Dr, Dry()
+For Each Dr In Itr(A.Dry)
+    PushI Dr, V
+    PushI Dry, Dr
+Next
+DrszAddCV = DrszAddFF(A, C, Dry)
+End Function
+
+Function DrszAddFF(A As Drs, FF$, NewDry()) As Drs
+DrszAddFF = Drs(FnyzAddFF(A.Fny, FF), NewDry)
+End Function
+
+Function DrszInsFF(A As Drs, FF$, NewDry()) As Drs
+DrszInsFF = Drs(SyzAdd(SyzSS(FF), A.Fny), NewDry)
+End Function
+
+Function DrszAddFiller(A As Drs, CC$) As Drs
+Dim O As Drs: O = A
+Dim C
+For Each C In SyzSS(CC)
+    O = DrszAddFillerC(O, C)
+Next
+DrszAddFiller = O
+End Function
+
+Private Function DrszAddFillerC(A As Drs, C) As Drs
+'Fm   A : ..{C}.. ! @A should have col @C
+'Fm   C : #Coln.
+'Ret    : a new drs with addition col @F where F = "F" & C and value eq Len-of-Col-@C
+If NoReczDrs(A) Then Stop
+Dim W%: W = WdtzAy(StrColzDrs(A, C))
+Dim I%: I = IxzAy(A.Fny, C)
+Dim ODry(): ODry = A.Dry
+Dim Dr, J&
+For Each Dr In Itr(ODry)
+    PushI Dr, W - Len(Dr(I))
+    ODry(J) = Dr
+    J = J + 1
+Next
+DrszAddFillerC = Drs(FnyzAddFF(A.Fny, "F" & C), ODry)
 End Function
 

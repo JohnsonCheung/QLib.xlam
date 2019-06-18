@@ -23,7 +23,7 @@ Dim Pjn$: Pjn = P.Name
 Dim C As VBComponent: For Each C In P.VBComponents
     Dim A As Drs: A = DMthczM(C.CodeModule)
     Dim B As Drs: B = InsColzDrsC3(A, "Pjn MdTy Mdn", Pjn, ShtCmpTy(C.Type), C.Name)
-    Dim O As Drs: O = AddDrs(O, B)
+    Dim O As Drs: O = DrszAdd(O, B)
 Next
 DMthczP = O
 End Function
@@ -54,7 +54,7 @@ End Function
 Function DMthczV(V As Vbe) As Drs
 Dim P As VBProject: For Each P In V.VBProjects
     Dim A As Drs: A = DMthczP(P)
-    Dim O As Drs: O = AddDrs(O, A)
+    Dim O As Drs: O = DrszAdd(O, A)
 Next
 DMthczV = O
 End Function

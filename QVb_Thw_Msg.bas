@@ -125,7 +125,7 @@ End Sub
 Function LyzNyAv(Ny$(), Av(), Optional Sep$ = ": ") As String()
 Dim J%, O$(), N$()
 ResiMax Ny, Av
-N = AlignLzAy(Ny)
+N = SyzAlign(Ny)
 For J = 0 To UB(Ny)
     PushIAy LyzNyAv, LyzNv(N(J), Av(J), Sep)
 Next

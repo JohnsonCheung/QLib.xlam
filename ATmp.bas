@@ -43,7 +43,7 @@ Dim McFill  As Drs:  McFill = F.McFill(McR123)  ' L Gpno MthLin IsRmk
 Dim McAlign As Drs: McAlign = F.McAlign(McFill) ' L Align                     ! Bld the new Align
 
                          D1 = DrseCeqC(McAlign, "MthLin Align")
-                         D2 = SelDrs(D1, "L Align MthLin")
+                         D2 = DrszSel(D1, "L Align MthLin")
 Dim McLNewO As Drs: McLNewO = LNewO(D2.Dry)
 Dim OAlignCm:                 If IsUpd Then RplLin M, McLNewO
 
@@ -84,15 +84,15 @@ Dim CmEpt As Drs:           CmEpt = ColNe(CmNm, "CmNm", "")                     
 Dim CmEptNm$():           CmEptNm = StrCol(CmEpt, "CmNm")                             '                    ! It is ept mth ny.  They will be used create new chd mth
 Dim CmActNm$():           CmActNm = MthNyzM(CmMd)                                     '                    ! It is from chd cls of given md
 Dim CmNewNm$():           CmNewNm = MinusAy(CmEptNm, CmActNm)                         '                    ! The new ChdMthNy to be created.
-Dim CmNew As Drs:           CmNew = ColIn(CmEpt, "CmNm", CmNewNm)
+Dim CmNew As Drs:           CmNew = DrszIn(CmEpt, "CmNm", CmNewNm)
 Dim CdNewCm$:             CdNewCm = F.CdNewCm(CmNew, CmMdy)                           '                    ! Cd to be append to CmMd
 Dim OCrtCm:                         If IsUpd Then ApdLines CmMd, CdNewCm
 
 '== Upd Chd-Mth-Lin (Cml) ==============================================================================================
 '   If the calling pm has been changed, the chd-mth-lin will be updated.
 Dim MlVSfx    As Drs:    MlVSfx = F.MlVSfx(Ml)               ' Ret V Sfx                           ! the MthLin's pm V Sfx
-                             D1 = SelDrs(CmV, "V Sfx")
-Dim CmlVSfx   As Drs:   CmlVSfx = AddDrs(MlVSfx, D1)
+                             D1 = DrszSel(CmV, "V Sfx")
+Dim CmlVSfx   As Drs:   CmlVSfx = DrszAdd(MlVSfx, D1)
 Dim CmlPm     As Drs:     CmlPm = F.CmlPm(CmEpt)             ' V Sfx RHS CmNm Pm
 Dim CmlDclPm  As Drs:  CmlDclPm = F.CmlDclPm(CmlPm, CmlVSfx) ' V Sfx RHS CmNm Pm DclPm             ! use [CmlVSfx] & [Pm] to bld [DclPm]
 Dim CmlMthRet As Drs: CmlMthRet = F.CmlMthRet(CmlDclPm)      ' V Sfx RHS CmNm Pm DclPm TyChr RetAs
@@ -100,10 +100,10 @@ Dim CmlEpt    As Drs:    CmlEpt = F.CmlEpt(CmlMthRet, CmMdy) ' V CmNm EptL
                              D1 = DMth(CmMd)                 ' L Mdy Ty Mthn MthLin
                                 If NoSf Then D1 = ColEq(D1, "Mdy", "Prv")
                                 If WiSf Then D1 = ColEq(D1, "Mdy", "Frd")
-Dim CmlAct   As Drs:   CmlAct = SelDrszAs(D1, "L Mthn:CmNm MthLin:ActL") ' L CmNm ActL
-Dim CmlJn    As Drs:    CmlJn = JnDrs(CmlEpt, CmlAct, "CmNm", "L ActL")  ' V CmNm EptL L ActL ! som EptL & ActL may eq
+Dim CmlAct   As Drs:   CmlAct = DrszSelAs(D1, "L Mthn:CmNm MthLin:ActL") ' L CmNm ActL
+Dim CmlJn    As Drs:    CmlJn = DrszJn(CmlEpt, CmlAct, "CmNm", "L ActL")  ' V CmNm EptL L ActL ! som EptL & ActL may eq
                            D2 = DrseCeqC(CmlJn, "EptL ActL")             ' V CmNm EptL L ActL ! All EptL & ActL are diff
-Dim CmlLNewO As Drs: CmlLNewO = SelDrszAs(D2, "L EptL:NewL ActL:OldL")   ' L NewL OldL
+Dim CmlLNewO As Drs: CmlLNewO = DrszSelAs(D2, "L EptL:NewL ActL:OldL")   ' L NewL OldL
 Dim OUpdCml:                    If IsUpd Then RplLin CmMd, CmlLNewO
 
 '== Rpl Mth-Brw (Mb)====================================================================================================
@@ -111,30 +111,30 @@ Dim OUpdCml:                    If IsUpd Then RplLin CmMd, CmlLNewO
 '   Lgc: Fnd-and-do MbLNewO
 '        Fnd-and-do NewMb
 'BrwDrs CmlEpt: Stop
-Dim CmLis   As Drs:   CmLis = SelDrszAs(CmlEpt, "CmNm:Mthn EptL:MthLin") ' Mthn MthLin
+Dim CmLis   As Drs:   CmLis = DrszSelAs(CmlEpt, "CmNm:Mthn EptL:MthLin") ' Mthn MthLin
 Dim MbEpt   As Drs:   MbEpt = F.MbEpt(CmLis, Mdn)                        ' Mthn MthLin MbStmt
 Dim Cm$():               Cm = StrCol(CmLis, "Mthn")
 Dim MbAct   As Drs:   MbAct = F.MbAct(Cm, CmMd)                          ' L Mthn OldL               ! OldL is MbStmt
-Dim MbJn    As Drs:    MbJn = JnDrs(MbEpt, MbAct, "Mthn", "OldL L")      ' Mthn MthLin MbStmt OldL L
-Dim MbSel   As Drs:   MbSel = SelDrszAs(MbJn, "L MbStmt:NewL OldL")      ' L NewL OldL
+Dim MbJn    As Drs:    MbJn = DrszJn(MbEpt, MbAct, "Mthn", "OldL L")      ' Mthn MthLin MbStmt OldL L
+Dim MbSel   As Drs:   MbSel = DrszSelAs(MbJn, "L MbStmt:NewL OldL")      ' L NewL OldL
 Dim MbLNewO As Drs: MbLNewO = DrseCeqC(MbSel, "NewL OldL")
 Dim OUpdMb:                   If IsUpd Then RplLin CmMd, MbLNewO
 
 '== Crt Mth-Brw (Mb)====================================================================================================
-                     D1 = LJnDrs(MbEpt, MbAct, "Mthn", "L", "HasAct") ' Mthn MthLin MbStmt L HasAct
+                     D1 = LDrszJn(MbEpt, MbAct, "Mthn", "L", "HasAct") ' Mthn MthLin MbStmt L HasAct
                      D2 = ColEq(D1, "HasAct", False)                  ' Mthn MthLin MbStmt L HasAct
-Dim MbNew As Drs: MbNew = SelDrszAs(D2, "Mthn MbStmt:NewL")
+Dim MbNew As Drs: MbNew = DrszSelAs(D2, "Mthn MbStmt:NewL")
 Dim OCrtMb:               If IsUpd Then F.OCrtMb CmMd, MbNew
 
 '== Upd Chd-Rmk (Cr) ===================================================================================================
 '   If any of the calling pm's rmk is changed, the chd-mth-rmk will be updated
-Dim CrSel     As Drs:              CrSel = SelDrs(McR123, "V R1 R2 R3") ' V R1 R2 R3
+Dim CrSel     As Drs:              CrSel = DrszSel(McR123, "V R1 R2 R3") ' V R1 R2 R3
 Dim CrWiRmk   As Drs:            CrWiRmk = F.CrWiRmk(CrSel)             ' V R1 R2 R3      ! rmv those R1 2 3 are blank
 Dim CrVrAy()  As Vr:              CrVrAy = F.CrVrAy(CrWiRmk)
-Dim CrPm      As Drs:               CrPm = SelDrs(CmlDclPm, "V Pm")     ' V Pm
+Dim CrPm      As Drs:               CrPm = DrszSel(CmlDclPm, "V Pm")     ' V Pm
 Dim CrVprAy() As Vpr:            CrVprAy = F.CrVprAy(CrPm, CrVrAy)      ' Sam itm as CrPm
 Dim CrRmkV    As S1S2s:           CrRmkV = F.CrRmkV(CrVprAy)            ' V RmkLines
-Dim CrCmNm    As Drs:             CrCmNm = SelDrs(CmlEpt, "V CmNm")     ' V CmNm
+Dim CrCmNm    As Drs:             CrCmNm = DrszSel(CmlEpt, "V CmNm")     ' V CmNm
 Dim CrVCmNm   As Dictionary: Set CrVCmNm = DiczDrsCC(CrCmNm)
 Dim CrEpt     As S1S2s:            CrEpt = MapS1(CrRmkV, CrVCmNm)       ' CmNm RmkLines
 If SiVpr(CrVprAy) <> CrEpt.N Then Stop

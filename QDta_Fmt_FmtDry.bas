@@ -8,16 +8,16 @@ Type Syay
 End Type
 
 Function AlignQuoteSq(Fny$()) As String()
-AlignQuoteSq = AlignLzAy(QuoteSqzAy(Fny))
+AlignQuoteSq = SyzAlign(SyzQteSq(Fny))
 End Function
 
-Function AlignLzAy(Sy$(), Optional W0%) As String()
+Function SyzAlign(Ay, Optional W0%) As String()
 Dim W%
-If W0 <= 0 Then W = WdtzAy(Sy) Else W = W0
+If W0 <= 0 Then W = WdtzAy(Ay) Else W = W0
 Dim I, S$
-For Each I In Itr(Sy)
+For Each I In Itr(Ay)
     S = I
-    PushI AlignLzAy, AlignL(S, W)
+    PushI SyzAlign, AlignL(S, W)
 Next
 End Function
 

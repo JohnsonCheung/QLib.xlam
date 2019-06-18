@@ -104,7 +104,7 @@ Function IntozDryC(Into, Dry(), C)
 Dim O, J&, Dr, U&
 O = Into
 U = UB(Dry)
-O = Resi(O, U)
+O = AyzReSi(O, U)
 For Each Dr In Itr(Dry)
     If UB(Dr) >= C Then
         O(J) = Dr(C)

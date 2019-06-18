@@ -90,7 +90,7 @@ End Function
 
 Function FmtDrsR(A As Drs, Optional Nm$) As String()
 If NoReczDrs(A) Then Exit Function
-Dim AFny$(): AFny = Sy("#", AlignLzAy(A.Fny))
+Dim AFny$(): AFny = Sy("#", SyzAlign(A.Fny))
 
 Dim Ly$(), Lixy&()
     Dim N&: N = Si(A.Dry)
@@ -102,7 +102,7 @@ Dim Ly$(), Lixy&()
         Dim Av(): Av = AyzAdd(Array(I), Dr)
         PushIAy Ly, LyzNyAv(AFny, Av)
     Next
-Dim Align$(): Align = AlignLzAy(Ly)
+Dim Align$(): Align = SyzAlign(Ly)
 Dim Q$()
     Dim L: For Each L In Align
         Push Q, "| " & L & " |"

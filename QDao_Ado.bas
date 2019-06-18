@@ -331,9 +331,9 @@ Else
 End If
 End Function
 
-Function WsnzCatTn$(CatTnzWsn)
-If HasSfx(CatTnzWsn, "FilterDatabase") Then Exit Function
-WsnzCatTn = RmvSfx(RmvSngQuote(CatTnzWsn), "$")
+Function WsnzCatTn$(CatTn)
+If HasSfx(CatTn, "FilterDatabase") Then Exit Function
+WsnzCatTn = RmvSfx(RmvSngQuote(CatTn), "$")
 End Function
 
 Private Sub ZZ()
@@ -343,7 +343,7 @@ MAdoX_Cat:
 End Sub
 
 Function IntoColzArs(IntoCol, A As AdoDb.Recordset, Optional Col = 0)
-IntoColzArs = Resi(IntoCol)
+IntoColzArs = AyzReSi(IntoCol)
 With A
     While Not .EOF
         PushI IntoColzArs, Nz(.Fields(Col).Value, Empty)

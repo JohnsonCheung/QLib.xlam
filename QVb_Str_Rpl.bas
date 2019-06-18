@@ -115,7 +115,7 @@ End Function
 
 Function SyzMacroDry(RplMacro$, ByDry()) As String()
 If Si(ByDry) = 0 Then Exit Function
-Dim M$():     M = NyzMacro(RplMacro)
+Dim M$():     M = NyzMacro(RplMacro, InclBkt:=True)
 Dim URec&: URec = UB(ByDry)
 Dim UFld%: UFld = UB(ByDry(0))
 

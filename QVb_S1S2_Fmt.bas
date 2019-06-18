@@ -58,8 +58,8 @@ Dim Ly1$(), Ly2$()
     Ly1 = SplitCrLf(Lines1)
     Ly2 = SplitCrLf(Lines2)
     ResiMax Ly1, Ly2
-    Ly1 = AlignLzAy(Ly1, W1)
-    Ly2 = AlignLzAy(Ly2, W2)
+    Ly1 = SyzAlign(Ly1, W1)
+    Ly2 = SyzAlign(Ly2, W2)
 Dim J%, O$()
 For J = 0 To UB(Ly1)
     PushI O, "| " & Ly1(J) & " | " & Ly2(J) & " |"

@@ -87,11 +87,11 @@ JnQSngSpc = JnSpc(SyQuoteSng(Sy))
 End Function
 
 Function JnQSqCommaSpc$(Sy$())
-JnQSqCommaSpc = JnCommaSpc(QuoteSqzAyIf(Sy))
+JnQSqCommaSpc = JnCommaSpc(SyzQteSqIf(Sy))
 End Function
 
 Function JnQSqBktSpc$(Ay)
-JnQSqBktSpc = JnSpc(QuoteSqzAy(SyzAy(Ay)))
+JnQSqBktSpc = JnSpc(SyzQteSq(SyzAy(Ay)))
 End Function
 
 Function JnSemi$(Ay)

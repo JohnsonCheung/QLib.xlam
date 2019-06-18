@@ -116,11 +116,11 @@ Function DrszRs(A As Dao.Recordset) As Drs
 DrszRs = Drs(FnyzRs(A), DryzRs(A))
 End Function
 
-Function DryzRs(A As Dao.Recordset, Optional IsExlFldNm As Boolean) As Variant()
-If Not HasRec(A) Then Exit Function
-If Not IsExlFldNm Then
+Function DryzRs(A As Dao.Recordset, Optional IsIncFldn As Boolean) As Variant()
+If IsIncFldn Then
     PushI DryzRs, FnyzRs(A)
 End If
+If Not HasRec(A) Then Exit Function
 With A
     .MoveFirst
     While Not .EOF
@@ -221,7 +221,7 @@ Next
 End Function
 
 Function IntozRs(Into, Rs As Recordset, Optional Fld = 0)
-IntozRs = Resi(Into)
+IntozRs = AyzReSi(Into)
 While Not Rs.EOF
     PushI IntozRs, Nz(Rs(Fld).Value, Empty)
     Rs.MoveNext

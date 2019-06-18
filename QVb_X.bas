@@ -10,7 +10,7 @@ Erase A
 End Function
 
 Sub XBox(S$)
-PushI A, Box(S)
+X Box(S)
 End Sub
 Sub XEnd()
 PushI A, "End"

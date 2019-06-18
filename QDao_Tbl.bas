@@ -10,7 +10,7 @@ FnyzT = Fny(A, T)
 End Function
 
 Function Fny(A As Database, T) As String()
-Fny = Itn(A.TableDefs(T).Fields)
+Fny = Itn(DbzReOpn(A).TableDefs(T).Fields)
 End Function
 
 Function ColzRs(A As Database, T, F$) As Dao.Recordset
@@ -198,7 +198,7 @@ Function StruzT$(A As Database, T)
 Dim F$()
     F = Fny(A, T)
     If IsLnkzFx(A, T) Then
-        StruzT = T & " " & JnSpc(QuoteSqzAyIf(F))
+        StruzT = T & " " & JnSpc(SyzQteSqIf(F))
         Exit Function
     End If
 
@@ -214,10 +214,10 @@ Dim R$
     Dim I
     Dim Rst$()
     Rst = RplStarzAy(MinusAy(F, Sk), T)
-    R = " " & JnSpc(QuoteSqzAyIf(Rst))
+    R = " " & JnSpc(SyzQteSqIf(Rst))
 
 Dim S$
-    S = JnSpc(QuoteSqzAyIf(RplStarzAy(Sk, T)))
+    S = JnSpc(SyzQteSqIf(RplStarzAy(Sk, T)))
     If S <> "" Then S = " " & S & " |"
 
 StruzT = T & P & S & R
@@ -289,29 +289,29 @@ A.Execute FmtQQ("Select x.* into [?] from [?] x inner join [?] a on ?", Into$, F
 DrpT A, Tmp
 End Function
 
-Private Sub Z_CrtTblzDrs()
+Private Sub Z_CrtTzDrs()
 Dim D As Database
 GoSub ZZ
 Exit Sub
 ZZ:
     Set D = TmpDb
     DrpTmp D
-    CrtTblzDrs D, "#A", SampDrs
+    CrtTzDrs D, "#A", SampDrs
     BrwDb D
     Return
 End Sub
 
-Sub CrtTblzDrs(A As Database, T, Drs As Drs)
+Sub CrtTzDrs(A As Database, T, Drs As Drs)
 CrtTblOfEmpzDrs A, T, Drs
 InsTblzDry A, T, Drs.Dry
 End Sub
 
-Sub CrtTblzDrszAllStr(A As Database, T, Drs As Drs)
-CrtTblzDrszEmpzAllStr A, T, Drs
+Sub CrtTzDrszAllStr(A As Database, T, Drs As Drs)
+CrtTzDrszEmpzAllStr A, T, Drs
 InsTblzDry A, T, Drs.Dry
 End Sub
 
-Sub CrtTblzDrszEmpzAllStr(A As Database, T, Drs As Drs)
+Sub CrtTzDrszEmpzAllStr(A As Database, T, Drs As Drs)
 Dim C&, F, O$(), Dry()
 Dry = Drs.Dry
 For Each F In Drs.Fny

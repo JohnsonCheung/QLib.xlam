@@ -62,7 +62,7 @@ OyeFstNEle = O
 End Function
 
 Function OyeNothing(Oy)
-OyeNothing = Resi(Oy)
+OyeNothing = AyzReSi(Oy)
 Dim Obj As Object
 For Each Obj In Oy
     If Not IsNothing(Obj) Then PushObj OyeNothing, Obj

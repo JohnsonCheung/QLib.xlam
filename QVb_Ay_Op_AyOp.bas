@@ -31,7 +31,7 @@ Next
 End Function
 
 Function IntersectAy(A, B)
-IntersectAy = Resi(A)
+IntersectAy = AyzReSi(A)
 If Si(A) = 0 Then Exit Function
 If Si(A) = 0 Then Exit Function
 Dim V
@@ -61,7 +61,7 @@ End Function
 
 Function MinusAy(A, B)
 If Si(B) = 0 Then MinusAy = A: Exit Function
-MinusAy = Resi(A)
+MinusAy = AyzReSi(A)
 If Si(A) = 0 Then Exit Function
 Dim V
 For Each V In A

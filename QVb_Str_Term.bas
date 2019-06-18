@@ -23,7 +23,7 @@ TLinzAp = JnTerm(Av)
 End Function
 
 Function JnTerm$(TermAy)
-JnTerm = JnSpc(QuoteSqzAyIf(RmvBlankzAy(TermAy)))
+JnTerm = JnSpc(SyzQteSqIf(RmvBlankzAy(TermAy)))
 End Function
 
 Function CommaTerm$(Lin, Ix)

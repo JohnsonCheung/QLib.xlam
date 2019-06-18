@@ -32,6 +32,7 @@ If IsTmpDb(A) Then
     DltFfn N
 End If
 End Sub
+
 Function TmpFbAy() As String()
 TmpFbAy = Ffny(TmpPthzDb, "*.accdb")
 End Function
@@ -75,7 +76,7 @@ Sub DrpTmp(A As Database)
 DrpTny A, TmpTny(A)
 End Sub
 Sub DrpT(A As Database, T)
-If HasTbl(A, T) Then A.TableDefs.Delete T
+If HasTbl(A, T) Then A.Execute "Drop Table [" & T & "]"
 End Sub
 
 Sub CrtTbl(A As Database, T, FldDclAy)
@@ -150,7 +151,7 @@ HasQryz = HasReczQ(A, FmtQQ("Select * from MSysObjects where Name='?' and Type=5
 End Function
 
 Function HasTbl(A As Database, T) As Boolean
-HasTbl = HasItn(A.TableDefs, T)
+HasTbl = HasItn(DbzReOpn(A).TableDefs, T)
 End Function
 
 Function HasTblByMSys(A As Database, T) As Boolean
@@ -399,8 +400,8 @@ Function TnyzInp(A As Database) As String()
 TnyzInp = AywLik(Tny(A), ">*")
 End Function
 
-Function ReOpnDb(A As Database) As Database
-Set ReOpnDb = Db(A.Name)
+Function DbzReOpn(A As Database) As Database
+Set DbzReOpn = Db(A.Name)
 End Function
 
 Function Dbn$(A As Database)

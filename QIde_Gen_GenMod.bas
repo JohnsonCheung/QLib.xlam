@@ -105,7 +105,7 @@ Dim JSrcPm As Drs:   JSrcPm = B_JSrcPm(ISrc)  '! With Col-Pm added
 
 '== CdRmk OK ==============================================================================================
 Dim RmkVer%:       RmkVer = 2
-Dim Rmk1 As Drs:     Rmk1 = SelDrs(JSrcPm, "Key Ret Fss Pm Id StpFor")
+Dim Rmk1 As Drs:     Rmk1 = DrszSel(JSrcPm, "Key Ret Fss Pm Id StpFor")
 Dim Rmk2 As Drs:     Rmk2 = B_Rmk2(RmkVer, Rmk1)
 Dim CdRmk$():       CdRmk = SyzAyP(FmtDry(Rmk2.Dry, Fmt:=EiSSFmt), "'")
 
@@ -113,13 +113,13 @@ Dim CdRmk$():       CdRmk = SyzAyP(FmtDry(Rmk2.Dry, Fmt:=EiSSFmt), "'")
 Dim CdDes$():       CdDes = SyzAyP(FmtDry(IDes.Dry, Fmt:=EiSSFmt), "'")
 
 '== CdCnst OK ==============================================================================================
-Dim JCnst As Drs:   JCnst = SelDrs(ISrc, "Key Fss")
+Dim JCnst As Drs:   JCnst = DrszSel(ISrc, "Key Fss")
 Dim CdCnst$():     CdCnst = B_CdCnst(JCnst)
 
 '== CdMain OK ==============================================================================================
 Dim InpPm As Drs:    InpPm = ColEqSel(ISrc, "StpTy", "Inp", "Key Ret StpTy")
 Dim MMPm$:            MMPm = B_MPm(InpPm)
-Dim Las():             Las = SelDrs(LasRec(ISrc), "Key Ret StpTy").Dry(0)
+Dim Las():             Las = DrszSel(LasRec(ISrc), "Key Ret StpTy").Dry(0)
 Dim MMthn$:          MMthn = Las(0)
 Dim MMRetAs$:      MMRetAs = Las(1)
 Dim LasStpTy$:    LasStpTy = Las(2)
@@ -145,7 +145,7 @@ Dim CdY4Colb As Drs:  CdY4Colb = B_CdY4Colb(CdYLisb)
 Dim CdY$():                CdY = Sy(FmtDry(CdY4Cola.Dry, Fmt:=EiSSFmt), Sy(FmtDry(CdY4Colb.Dry, Fmt:=EiSSFmt)))
 
 '== CdZZ OK ==============================================================================================
-Dim CdZZLis As Drs:   CdZZLis = SelDrs(JSrcPm, "Key StpTy Stmt Expr Ret")
+Dim CdZZLis As Drs:   CdZZLis = DrszSel(JSrcPm, "Key StpTy Stmt Expr Ret")
 Dim CdZZ4Col As Drs: CdZZ4Col = B_CdZZ4Col(CdZZLis)
 Dim CdZZ$():             CdZZ = FmtDry(CdZZ4Col.Dry, Fmt:=EiSSFmt)
 
@@ -450,7 +450,7 @@ Private Function B_JSrcPm(ISrc As Drs) As Drs
 'Ret: Key Pfx Id StpTy StpFor Ret Fss Ret Stmt Expr BrkNm BrkChr Pm
 Const CC$ = "Key Pfx Id StpTy StpFor Ret Fss Ret Stmt Expr BrkNm BrkChr Fm1 Fm2 Fm3 Fm4 Fm5"
 Dim Dr, I1%, I2%, I3%, I4%, I5%, ODry()
-Dim O As Drs: O = SelDrs(ISrc, CC)
+Dim O As Drs: O = DrszSel(ISrc, CC)
 AsgIx ISrc, "Fm1 Fm2 Fm3 Fm4 Fm5", I1, I2, I3, I4, I5
 For Each Dr In Itr(ISrc.Dry)
     PushI Dr, JnSpc(SyNonBlank(Dr(I1), Dr(I2), Dr(I3), Dr(I4), Dr(I5)))

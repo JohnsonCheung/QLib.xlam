@@ -120,7 +120,7 @@ Private Function XIpxf(IpxExi As Drs, Ips As Drs) As Drs
 'Fm  IpxExi : IpxExi
 'Fm  Ips    : L Stru F Ty E @@
 Dim O As Drs, Dr, E$, IxF%, IE%, J&
-O = JnDrs(IpxExi, Ips, "Stru", "F Ty E")
+O = DrszJn(IpxExi, Ips, "Stru", "F Ty E")
 IxF = IxzAy(O.Fny, "F")
 IE = IxzAy(O.Fny, "E")
 For Each Dr In Itr(O.Dry)
@@ -198,8 +198,8 @@ XActWs = DrszFF("Fxn Ws", Dry)
 'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XActWs) ActWs IpxExiFx",FmtDrs(ActWs), FmtDrs(ActWs), FmtDrs(IpxExiFx): Stop
 End Function
 
-Function AddFF(Fny$(), FF$) As String()
-AddFF = Sy(Fny, SyzSS(FF))
+Function FnyzAddFF(Fny$(), FF$) As String()
+FnyzAddFF = Sy(Fny, SyzSS(FF))
 End Function
 
 Private Function XExWsMisFld(IpxfMis As Drs, ActWsf As Drs) As String()
@@ -309,7 +309,7 @@ Private Function XEiFfnDup(Ipf As Drs) As String()
 Dim Ffn$(): Ffn = StrColzDrs(Ipf, "Ffn")
 Dim Dup$(): Dup = AywDup(Ffn)
 If Si(Dup) = 0 Then Exit Function
-Dim DupD As Drs: DupD = ColIn(Ipf, "Ffn", Dup)
+Dim DupD As Drs: DupD = DrszIn(Ipf, "Ffn", Dup)
 XBox "Ffn Duplicated"
 XDrs DupD
 XLin
@@ -324,14 +324,14 @@ Dim Dr: For Each Dr In Itr(A.Dry)
     PushIAy Dr, Array(Pth(Ffn), Fn(Ffn))
     PushI ODry, Dr
 Next
-XEi_AddCol_Pth_Fn = AddColzFFDry(A, "Pth Fn", ODry)
+XEi_AddCol_Pth_Fn = DrszAddFF(A, "Pth Fn", ODry)
 End Function
 Private Function XEiFfnMis(Ipf As Drs) As String()
 'Fm  Ipf : L Inpn Ffn IsFx HasFfn @@
 If NoReczDrs(Ipf) Then Exit Function
 Dim A As Drs: A = ColEq(Ipf, "HasFfn", True) '! L Inp Ffn IsFx HasFfn
 Dim B As Drs: B = XEi_AddCol_Pth_Fn(A)
-Dim C As Drs: C = SelDrs(B, "L Inpn Pth Fn")
+Dim C As Drs: C = DrszSel(B, "L Inpn Pth Fn")
       XEiFfnMis = LyzNmDrs("File missing: ", C, MaxColWdt:=200)
 
 'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEiFfnMis) EiFfnMis Ipf",EiFfnMis, EiFfnMis, FmtDrs(Ipf): Stop
@@ -342,7 +342,7 @@ Private Function XEiInpnDup(Ipf As Drs) As String()
 Dim Inpn$(): Inpn = StrColzDrs(Ipf, "Inpn")
 Dim Dup$(): Dup = AywDup(Inpn)
 If Si(Dup) = 0 Then Exit Function
-Dim DupD As Drs: DupD = ColIn(Ipf, "Inpn", Dup)
+Dim DupD As Drs: DupD = DrszIn(Ipf, "Inpn", Dup)
 XBox "Inpn Duplicated"
 XDrs DupD
 XLin
@@ -505,7 +505,7 @@ Private Function XIpxfMis(Ipxf As Drs, ActWsf As Drs) As Drs
 'Fm: @Ipxf::Drs{}
 'Ret:*IpxfMis::Drs{}
 Dim A As Drs, B As Drs, O As Drs
-A = LJnDrs(Ipxf, ActWsf, "Fxn Ws E:F", "Ty:ActTy", "HasF")
+A = LDrszJn(Ipxf, ActWsf, "Fxn Ws E:F", "Ty:ActTy", "HasF")
 B = ColEqExlEqCol(A, "HasF", False)
 O = DrpCol(B, "ActTy")
 XIpxfMis = O
@@ -594,7 +594,7 @@ Private Function XIpxHasFx(Ipx As Drs, Ipf As Drs) As Drs
 'Fm  Ipx      : T Fxn Ws Stru                      ! Inp-Fx which is FxTbl
 'Fm  Ipf      : L Inpn Ffn IsFx HasFfn
 'Ret IpxHasFx : T Fxn Ws Stru Fx IsFx HasFx HasInp ! Add @@
-XIpxHasFx = LJnDrs(Ipx, Ipf, "Fxn:Inpn", "Ffn:Fx IsFx HasFfn:HasFx", "HasInp")
+XIpxHasFx = LDrszJn(Ipx, Ipf, "Fxn:Inpn", "Ffn:Fx IsFx HasFfn:HasFx", "HasInp")
 'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpxHasFx) IpxHasFx Ipx Ipf",FmtDrs(IpxHasFx), FmtDrs(IpxHasFx), FmtDrs(Ipx), FmtDrs(Ipf): Stop
 End Function
 
@@ -742,7 +742,7 @@ For Each Dr In Itr(Ips.Dry)
     PushI Dr, HasEle(IpsFx, Stru)
     PushI ODry, Dr
 Next
-XIps1 = Drs(AddFF(Ips.Fny, "IsIpsFx"), ODry)
+XIps1 = Drs(FnyzAddFF(Ips.Fny, "IsIpsFx"), ODry)
 'BrwDrs XIps1: Stop
 'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIps1) Ips1 Ips IpsFx",FmtDrs(Ips1), FmtDrs(Ips1), FmtDrs(Ips), IpsFx: Stop
 End Function

@@ -229,7 +229,7 @@ AvzItrPrp = IntozItrPrp(EmpAv, Itr, P)
 End Function
 
 Function IntozItrwPredTrue(Into, Itr, P As IPred)
-IntozItrwPredTrue = Resi(Into)
+IntozItrwPredTrue = AyzReSi(Into)
 Dim Obj As Object
 For Each Obj In Itr
     If P.Pred(Obj) Then
@@ -239,21 +239,21 @@ Next
 End Function
 
 Function IntozItrwPEv(Into, Itr, P$, Ev)
-IntozItrwPEv = Resi(Into)
+IntozItrwPEv = AyzReSi(Into)
 Dim Obj As Object
 For Each Obj In Itr
     If Prp(Obj, PrpPth(P)) = Ev Then PushObj IntozItrwPEv, Obj
 Next
 End Function
 Function Into(OInto, Itr)
-Into = Resi(OInto)
+Into = AyzReSi(OInto)
 Dim I
 For Each I In Itr
     Push Into, I
 Next
 End Function
 Function IntozItrPrp(Into, Itr, P$)
-IntozItrPrp = Resi(Into)
+IntozItrPrp = AyzReSi(Into)
 Dim Obj As Object
 For Each Obj In Itr
     Push IntozItrPrp, Prp(Obj, PrpPth(P))

@@ -116,9 +116,9 @@ Dim OApply:                      XApplyzDif Dif, Lo        ' <==
 '== Bdr the cri selecting no record (Ns) (no-sel) ======================================================================
 Dim NsFny$(): NsFny = XNsFny(CSel, CFny) '  ! What CFny selecting no rec
 If Si(NsFny) > 0 Then
-    Dim NsCri    As Drs:     NsCri = ColIn(CriBrk, "F", NsFny)   ' Cri causing the no sel
+    Dim NsCri    As Drs:     NsCri = DrszIn(CriBrk, "F", NsFny)   ' Cri causing the no sel
     Dim NsExlEr  As Drs:   NsExlEr = ColEq(NsCri, "IsEr", False) ' Exl those already @IsEr
-    Dim NsRpt    As Drs:     NsRpt = SelDrs(NsExlEr, "R C")      ' Need to report ns cri
+    Dim NsRpt    As Drs:     NsRpt = DrszSel(NsExlEr, "R C")      ' Need to report ns cri
     Dim NsCell() As Range:  NsCell = RgAy(CriRg, NsRpt)
     BdrErzAy NsCell, "Red"
 End If

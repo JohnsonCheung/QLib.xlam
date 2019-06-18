@@ -9,7 +9,7 @@ Dim A_IsDesAy() As Boolean
 Private Function SrtDrszFstCol(A As Drs) As Drs
 Dim F():      F = FstCol(A)
 Dim Ixy&(): Ixy = IxyzSrtAy(F)
-  SrtDrszFstCol = DrswRowIxy(A, Ixy)
+  SrtDrszFstCol = DrswRxy(A, Ixy)
 End Function
 
 Sub Z_SrtDrs()
@@ -44,8 +44,8 @@ End Function
 
 Function SrtDry(Dry(), SrtColIxy&(), IsDesAy() As Boolean) As Variant()
          A_IsDesAy = IsDesAy
-          A_KeyDry = SelDry(Dry, SrtColIxy)
-Dim R&():        R = SrtDry__RowIxy
+          A_KeyDry = DryzSel(Dry, SrtColIxy)
+Dim R&():        R = SrtDry__Rxy
             SrtDry = AywIxy(Dry, R)
 End Function
 
@@ -55,10 +55,10 @@ Dim I: For Each I In Ay
 Next
 End Function
 
-Private Function SrtDry__RowIxy() As Long()
+Private Function SrtDry__Rxy() As Long()
 Dim U&: U = UB(A_KeyDry) ' Always >=1
 Dim L&():     L = LngSeqzU(U)          ' Use the LasEle as pivot, so don't include it in L&()
-SrtDry__RowIxy = SrtDry__SIxyR(L)
+SrtDry__Rxy = SrtDry__SIxyR(L)
 End Function
 
 Private Function SrtDry__TakH(I&, Ixy&()) As Long()

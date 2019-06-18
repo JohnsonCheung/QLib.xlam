@@ -23,7 +23,7 @@ If Cnt <= 0 Then Thw CSub, "Cnt cannot <=0", "At Cnt Ay", At, Cnt, Ay
 If Si(Ay) = 0 Then AyeAtCnt = Ay: Exit Function
 If At = 0 Then
     If Si(Ay) = Cnt Then
-        AyeAtCnt = Resi(Ay)
+        AyeAtCnt = AyzReSi(Ay)
         Exit Function
     End If
 End If
@@ -57,7 +57,7 @@ AyeEle = AyeEleAt(Ay, IxzAy(Ay, ele))
 End Function
 
 Function AyeFstNEle(Ay, Optional N& = 1)
-Dim O: O = Resi(Ay)
+Dim O: O = AyzReSi(Ay)
 Dim J&
 For J = N To UB(Ay)
     Push O, Ay(J)
@@ -79,7 +79,7 @@ Next
 End Function
 
 Function AyeEmpEle(Ay)
-Dim O: O = Resi(Ay)
+Dim O: O = AyzReSi(Ay)
 If Si(Ay) > 0 Then
     Dim X
     For Each X In Itr(Ay)
@@ -250,7 +250,7 @@ End Function
 
 Function AyeNegative(Ay)
 Dim I
-AyeNegative = Resi(Ay)
+AyeNegative = AyzReSi(Ay)
 For Each I In Itr(Ay)
     If I >= 0 Then
         PushI AyeNegative, I
@@ -260,7 +260,7 @@ End Function
 
 Function AyeNEle(Ay, ele, Cnt%)
 If Cnt <= 0 Then Stop
-AyeNEle = Resi(Ay)
+AyeNEle = AyzReSi(Ay)
 Dim X, C%
 C = Cnt
 For Each X In Itr(Ay)

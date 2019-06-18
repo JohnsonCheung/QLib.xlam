@@ -183,7 +183,7 @@ Dim McFill  As Drs:  McFill = F.McFill(McR123)  ' L Gpno MthLin IsRmk
 Dim McAlign As Drs: McAlign = F.McAlign(McFill) ' L Align                     ! Bld the new Align
 
                          D1 = DrseCeqC(McAlign, "MthLin Align")
-                         D2 = SelDrs(D1, "L Align MthLin")
+                         D2 = DrszSel(D1, "L Align MthLin")
 Dim McLNewO As Drs: McLNewO = LNewO(D2.Dry)
 Dim OAlignCm:                 If IsUpd Then RplLin M, McLNewO
 
@@ -216,23 +216,24 @@ End If
 '== Crt Chd-Mth (Cm)====================================================================================================
 Dim CmMd  As CodeModule: Set CmMd = IIf(NoSf, M, Ccls)
 Dim CmMdy$:                 CmMdy = IIf(NoSf, "Private", "Friend")
-Dim CmV   As Drs:             CmV = ColEqSel(McR123, "IsRmk", False, "V Sfx LHS RHS") ' V Sfx LHR RHS
+Dim CmV1   As Drs:             CmV1 = ColEq(McR123, "IsRmk", False) ' V Sfx LHR RHS
+Dim CmV As Drs:             CmV = DrszSel(CmV1, "V Sfx LHS RHS")
 Dim WiSf  As Boolean:        WiSf = Not NoSf
 Dim MlNmDD$:               MlNmDD = BefOrAll(MlNm, "__") & "__"
 Dim CmNm  As Drs:            CmNm = F.CmNm(CmV, WiSf, MlNmDD)                         ' V Sfx LHS RHS CmNm ! som CmNm may be blank
-Dim CmEpt As Drs:           CmEpt = ColNe(CmNm, "CmNm", "")                           ' V Sfx LHS RHS CmNm ! All CmNm has val
+Dim CmEpt As Drs:           CmEpt = ColNe(CmNm, "CmNm", "")                           ' V Sfx LHS RHS CmNm ! All CmNm has val. Having CmNm mean they are callg chd mth
 Dim CmEptNm$():           CmEptNm = StrCol(CmEpt, "CmNm")                             '                    ! It is ept mth ny.  They will be used create new chd mth
 Dim CmActNm$():           CmActNm = MthNyzM(CmMd)                                     '                    ! It is from chd cls of given md
 Dim CmNewNm$():           CmNewNm = MinusAy(CmEptNm, CmActNm)                         '                    ! The new ChdMthNy to be created.
-Dim CmNew As Drs:           CmNew = ColIn(CmEpt, "CmNm", CmNewNm)
+Dim CmNew As Drs:           CmNew = DrszIn(CmEpt, "CmNm", CmNewNm)
 Dim CdNewCm$:             CdNewCm = F.CdNewCm(CmNew, CmMdy)                           '                    ! Cd to be append to CmMd
 Dim OCrtCm:                         If IsUpd Then ApdLines CmMd, CdNewCm
 
 '== Upd Chd-Mth-Lin (Cml) ==============================================================================================
 '   If the calling pm has been changed, the chd-mth-lin will be updated.
 Dim MlVSfx    As Drs:    MlVSfx = F.MlVSfx(Ml)               ' Ret V Sfx                           ! the MthLin's pm V Sfx
-                             D1 = SelDrs(CmV, "V Sfx")
-Dim CmlVSfx   As Drs:   CmlVSfx = AddDrs(MlVSfx, D1)
+                             D1 = DrszSel(CmV, "V Sfx")
+Dim CmlVSfx   As Drs:   CmlVSfx = DrszAdd(MlVSfx, D1)
 Dim CmlPm     As Drs:     CmlPm = F.CmlPm(CmEpt)             ' V Sfx RHS CmNm Pm
 Dim CmlDclPm  As Drs:  CmlDclPm = F.CmlDclPm(CmlPm, CmlVSfx) ' V Sfx RHS CmNm Pm DclPm             ! use [CmlVSfx] & [Pm] to bld [DclPm]
 Dim CmlMthRet As Drs: CmlMthRet = F.CmlMthRet(CmlDclPm)      ' V Sfx RHS CmNm Pm DclPm TyChr RetAs
@@ -240,10 +241,10 @@ Dim CmlEpt    As Drs:    CmlEpt = F.CmlEpt(CmlMthRet, CmMdy) ' V CmNm EptL
                              D1 = DMth(CmMd)                 ' L Mdy Ty Mthn MthLin
                                 If NoSf Then D1 = ColEq(D1, "Mdy", "Prv")
                                 If WiSf Then D1 = ColEq(D1, "Mdy", "Frd")
-Dim CmlAct   As Drs:   CmlAct = SelDrszAs(D1, "L Mthn:CmNm MthLin:ActL") ' L CmNm ActL
-Dim CmlJn    As Drs:    CmlJn = JnDrs(CmlEpt, CmlAct, "CmNm", "L ActL")  ' V CmNm EptL L ActL ! som EptL & ActL may eq
+Dim CmlAct   As Drs:   CmlAct = DrszSelAs(D1, "L Mthn:CmNm MthLin:ActL") ' L CmNm ActL
+Dim CmlJn    As Drs:    CmlJn = DrszJn(CmlEpt, CmlAct, "CmNm", "L ActL")  ' V CmNm EptL L ActL ! som EptL & ActL may eq
                            D2 = DrseCeqC(CmlJn, "EptL ActL")             ' V CmNm EptL L ActL ! All EptL & ActL are diff
-Dim CmlLNewO As Drs: CmlLNewO = SelDrszAs(D2, "L EptL:NewL ActL:OldL")   ' L NewL OldL
+Dim CmlLNewO As Drs: CmlLNewO = DrszSelAs(D2, "L EptL:NewL ActL:OldL")   ' L NewL OldL
 Dim OUpdCml:                    If IsUpd Then RplLin CmMd, CmlLNewO
 
 '== Rpl Mth-Brw (Mb)====================================================================================================
@@ -251,71 +252,132 @@ Dim OUpdCml:                    If IsUpd Then RplLin CmMd, CmlLNewO
 '   Lgc: Fnd-and-do MbLNewO
 '        Fnd-and-do NewMb
 'BrwDrs CmlEpt: Stop
-Dim CmLis   As Drs:   CmLis = SelDrszAs(CmlEpt, "CmNm:Mthn EptL:MthLin") ' Mthn MthLin
+Dim CmLis   As Drs:   CmLis = DrszSelAs(CmlEpt, "CmNm:Mthn EptL:MthLin") ' Mthn MthLin
 Dim MbEpt   As Drs:   MbEpt = F.MbEpt(CmLis, Mdn)                        ' Mthn MthLin MbStmt
 Dim Cm$():               Cm = StrCol(CmLis, "Mthn")
 Dim MbAct   As Drs:   MbAct = F.MbAct(Cm, CmMd)                          ' L Mthn OldL               ! OldL is MbStmt
-Dim MbJn    As Drs:    MbJn = JnDrs(MbEpt, MbAct, "Mthn", "OldL L")      ' Mthn MthLin MbStmt OldL L
-Dim MbSel   As Drs:   MbSel = SelDrszAs(MbJn, "L MbStmt:NewL OldL")      ' L NewL OldL
+Dim MbJn    As Drs:    MbJn = DrszJn(MbEpt, MbAct, "Mthn", "OldL L")      ' Mthn MthLin MbStmt OldL L
+Dim MbSel   As Drs:   MbSel = DrszSelAs(MbJn, "L MbStmt:NewL OldL")      ' L NewL OldL
 Dim MbLNewO As Drs: MbLNewO = DrseCeqC(MbSel, "NewL OldL")
 Dim OUpdMb:                   If IsUpd Then RplLin CmMd, MbLNewO
 
 '== Crt Mth-Brw (Mb)====================================================================================================
-                     D1 = LJnDrs(MbEpt, MbAct, "Mthn", "L", "HasAct") ' Mthn MthLin MbStmt L HasAct
+                     D1 = LDrszJn(MbEpt, MbAct, "Mthn", "L", "HasAct") ' Mthn MthLin MbStmt L HasAct
                      D2 = ColEq(D1, "HasAct", False)                  ' Mthn MthLin MbStmt L HasAct
-Dim MbNew As Drs: MbNew = SelDrszAs(D2, "Mthn MbStmt:NewL")
+Dim MbNew As Drs: MbNew = DrszSelAs(D2, "Mthn MbStmt:NewL")
 Dim OCrtMb:               If IsUpd Then F.OCrtMb CmMd, MbNew
 
 '== Upd Chd-Rmk (Cr) ===================================================================================================
-'   If any of the calling pm's rmk is changed, the chd-mth-rmk will be updated
-Const XRmv$ = "Delete * from [#Sel] where Len(Trim(R1))=0 and Len(Trim(R2))=0 and Len(TRim(R3))=3"
 
-Dim Cr1Sel   As Drs:       Cr1Sel = SelDrs(McR123, "V R1 R2 R3")         ' V R1 R2 R3
-Dim Db As Database: Set Db = TmpDb
-Dim CrTSel:                  CrtTblzDrs Db, "#Sel", Cr1Sel
-Dim CrRmv:                   Db.Execute XRmv                             ' V R1 R2 R3 ! rmv those R1 2 3 are blank
-Dim CrFillV:                 FillLasVzDb Db, "#Sel", "V"                ' V R1 R2 R3   ! Fill Blank-V with LasV
-Dim CrAli:                   AlignColzDb Db, "#Sel", "#Ali", "V", "R1 R2 R3"    ' V R1 R2 R3   ! R1 2 3 are aligned
-Stop
-Dim Cr1Vpm   As Drs:       Cr1Vpm = SelDrs(CmlDclPm, "V Pm")             ' V Pm         ! each V is calling what Pm.  It is less than CrVr
-Dim CrVp     As Drs:         CrVp = SplitSSCol(Cr1Vpm, "Pm")             ' V Pm
-Dim Cr1Vpr As Drs:    '     Cr1Vpr = JnDrs(CrVp, CrRetA, "V", "R1 R2 R3") ' V Pm R1 R2 R3
-Dim Cr1Fst As Drs:    '     Cr1Fst = AddColzFst(Cr1Vpr, "V")              ' V Pm R1 R2 R3 Fst
-Dim Cr1Rmk As Drs:    '     Cr1Rmk = F.Cr1Rmk(Cr1Fst)              ' V Pm R1 R2 R3 Fst Rmk
-Dim Cr1RmkPm As Drs:  '   Cr1RmkPm = SelDrs(Cr1Rmk, "V Rmk")
+'-- Fnd CrEpt as Drs --
+Dim CrVer%: CrVer = 2
+Dim CrEpt As S1S2s
+Select Case CrVer
+Case 0
+    Dim CrSel   As Drs:              CrSel = DrszSel(McR123, "V R1 R2 R3") ' V R1 R2 R3
+    Dim Sy$():                          Sy = SyzAp("", "", "")
+    Dim FF$:                            FF = "R1 R2 R3"
+    Dim CrWiRmk As Drs:            CrWiRmk = DrseVy(CrSel, FF, Sy)       ' V R1 R2 R3      ! rmv those R1 2 3 are blank
+    Dim CrVr()  As Vr:                CrVr = F.CrVr(CrWiRmk)              ' V [R1 R2 R3]    ! each V has what rmk
+    Dim CrVpm   As Drs:              CrVpm = DrszSel(CmlDclPm, "V Pm")     ' V Pm            ! each V is calling what Pm.  It is less than CrVr
+    Dim CrVpr() As Vpr:              CrVpr = F.CrVpr(CrVpm, CrVr)         ' V [R1 R2 R3] [V [R1 R2 R3]] ! = [V Ret Pm] Sam Cnt as CrVpm.
+    '                                                                                                   ! Putting Vpr.Pm to Vr accroding to Vpm
+    Dim CrVRmk  As S1S2s:           CrVRmk = F.CrVRmk(CrVpr)              ' V RmkLines
+    Dim CrCmNm  As Drs:             CrCmNm = DrszSel(CmlEpt, "V CmNm")     ' V CmNm
+    Dim CrVCmNm As Dictionary: Set CrVCmNm = DiczDrsCC(CrCmNm)
+    Dim Cr0Ept   As S1S2s:            Cr0Ept = MapS1(CrVRmk, CrVCmNm)       ' CmNm RmkLines
+    '== Stop if dif si
+    Dim Si1%:                            Si1 = SiVpr(CrVpr)
+    Dim Si2%:                            Si2 = Cr0Ept.N
+    Dim DifSi As Boolean:             DifSi = Si1 <> Si2
+    Dim Stop1:                                 If DifSi Then Stop
+                                        CrEpt = Cr0Ept
+Case 1
+    '   If any of the calling pm's rmk is changed, the chd-mth-rmk will be updated
+    Dim Cr1Sel   As Drs:   Cr1Sel = DrszSel(McR123, "V R1 R2 R3")         ' V R1 R2 R3
+    Dim Cr1SelV  As Drs:  Cr1SelV = DrszFillLasIfB(Cr1Sel, "V")           ' V R1 R2 R3 ! Fill those blank col-V by las val
+                               Sy = SyzAp("", "", "")
+                               FF = "R1 R2 R3"
+    Dim Cr1WiRmk As Drs: Cr1WiRmk = DrseVy(Cr1SelV, FF, Sy)             ' V R1 R2 R3 ! Rmv those rec with all R1..3 are blank
+    Dim Cr1Vpm As Drs:     Cr1Vpm = DrszSelAs(CmlDclPm, "V Pm:P")         ' V P         ! each V is calling what Pm. Pm is SS.
+    Dim Cr1Vp As Drs:       Cr1Vp = DrszSplitSS(Cr1Vpm, "P")                   ' V P ! Brk P-SS into muli P
+    Dim Cr1Vpr As Drs:     Cr1Vpr = DrszJn(Cr1Vp, Cr1WiRmk, "P:V", "R1 R2 R3") ' V P R1 R2 R3
+    Dim Cr1Vpr1 As Drs:   Cr1Vpr1 = DrszAddCV(Cr1Vpr, "IsRet", False)          ' V P R1 R2 R3 IsRet ! All IsRet is FALSE
+    
+    Dim Cr1EmpP As Drs:   Cr1EmpP = DrszSelAlwE(Cr1WiRmk, "V P R1 R2 R3 IsRet") ' V P R1 R2 R3 IsRet ! All P & IsRet is empty
+    Dim Cr1Ret As Drs:     Cr1Ret = DrszUpdCC(Cr1EmpP, "P IsRet", "", True)     ' V P R1 R2 R3 IsRet ! All P is '' & IsRet is TRUE
+    Dim Cr1Mge As Drs:     Cr1Mge = DrszAdd(Cr1Vpr1, Cr1Ret)                     ' V P R1 R2 R3 IsRet ! adding Cr1Vpr & Cr1Ret
+    Dim Db As Database:    Set Db = TmpDb
+    Dim Cr1TMge:                    CrtTzDrs Db, "#Mge", Cr1Mge
+    Dim Cr1TAli:                    CrtTzAlignCC Db, "#Ali", "#Mge", "V", "P R1 R2 R3" ' V P R1 R2 R3 IsRet ! P R1..3 are aligned (always hav sam len & las chr is [.]
+    Dim Cr1Ali As Drs:     Cr1Ali = DrszT(Db, "#Ali")
+    Dim Cr1Fst As Drs:     Cr1Fst = DrszAddFst(Cr1Ali, "V P")                          ' V P R1 R2 R3 Fst ! P R1..3 are aligned (always hav sam len & las chr is [.]
+    Dim Cr1Rmk As Drs:     Cr1Rmk = F.Cr1Rmk(Cr1Fst)                                   ' V P R1 R2 R3 Fst Rmk ! Bld Rmk from P R1 R2 R3 & Fst
+    Dim Cr1RmkL As Drs:    Cr1RmkL = DrszSel(Cr1Rmk, "V Rmk")
+    
+    Dim Cr1CmNm  As Drs:  Cr1CmNm = DrszSel(CmlEpt, "V CmNm")     ' V CmNm
+    Dim Cr1V$():             Cr1V = StrCol(Cr1CmNm, "V")          ' V      ! all V have chd mth
+    Dim Cr1VRmkCm:      Cr1VRmkCm = DrszIn(Cr1RmkL, V)            ' V Rmk  ! all V has chd mth
+    Dim Cr1VRmk As S1S2: Cr1VRmk = S1S2szDrs(Cr1VRmkCm)           ' V Rmk
+    
+    Dim Cr1VCmNm As Dictionary: Set Cr1VCmNm = DiczDrsCC(Cr1CmNm)
+    Dim Cr1Ept   As S1S2s:            Cr1Ept = MapS1(CrVRmk, Cr1VCmNm)  ' CmNm RmkLines
+    CrEpt = Cr1Ept
+Case 2 'Should use this.  This is good
+    '== Fnd #Ept      : CmNm RmkLines  ! The expected chd mth rmk lines
+    '   #Fm1-McR123   : V R1 R2 R3     ! The rmk lines of each variable
+    '   #Fm2-CmlDclPm : V Pm           ! The v is calling chd mth is using what pm
+    '   #Fm3-CmlEpt   : V CmNm         ! The v is calling what chd mth
+    
+    '-- Fnd #WiRmk    : V R1 R2 R3     ! all rec will have at least 1 rmk (R1..3 som not blank).
+    '   Fm  McR123
+    Dim Cr2Sel   As Drs:   Cr2Sel = DrszSel(McR123, "V R1 R2 R3")         ' V R1 R2 R3
+    Dim Cr2SelV  As Drs:  Cr2SelV = DrszFillLasIfB(Cr2Sel, "V")           ' V R1 R2 R3 ! Fill those blank col-V by las val
+                               FF = "R1 R2 R3"
+                               Sy = SyzAp("", "", "")
+    Dim Cr2WiRmk As Drs: Cr2WiRmk = DrseVy(Cr2SelV, FF, Sy)                 ' V R1 R2 R3 ! Rmv those rec with all R1..3 are blank
+    
+    '-- Fnd #Vpr1    : V P R1 R2 R3 IsRet   ! Each V | P having what rmk.  IsRet is True
+    '   Fm  CmlDclPm : V Pm                 ! The var calling chd mth is using what Pm
+    '   Fm  #WiRmk   : V R1 R2 R3           ! Each var having what Rmk
+    Dim Cr2Vpm As Drs:     Cr2Vpm = DrszSelAs(CmlDclPm, "V Pm:P")      ' V P         ! each V is calling what Pm. Pm is SS.
+    Dim Cr2Vp As Drs:       Cr2Vp = DrszSplitSS(Cr2Vpm, "P")           ' V P ! Brk P-SS into muli P
+    Dim Cr2Vpr As Drs:     Cr2Vpr = DrszJn(Cr2Vp, Cr2WiRmk, "P:V", FF) ' V P R1 R2 R3
+    Dim Cr2Vpr1 As Drs:   Cr2Vpr1 = DrszAddCV(Cr2Vpr, "IsRet", False)  ' V P R1 R2 R3 IsRet ! All IsRet is FALSE
+    
+    '-- Fnd #Ret     : V P R1 R2 R3 IsRet (P="" | IsRet=True)
+    '   Fm  #WiRmk   : V R1 R2 R3
+                               FF = "V P R1 R2 R3 IsRet"
+    Dim Cr2EmpP As Drs:   Cr2EmpP = DrszSelAlwE(Cr2WiRmk, FF) ' V P R1 R2 R3 IsRet ! All P & IsRet is empty
+    Dim Cr2Ret As Drs:     Cr2Ret = DrszUpdCC(Cr2EmpP, "P IsRet", "", True)     ' V P R1 R2 R3 IsRet ! All P is '' & IsRet is TRUE
+    
+    '-- Fnd #RmkL : V Rmk           ! each V can map to CmNm
+    '   Fm  #Vrp1 : V P R1 R2 R3    ! P is pm | IsRet = false
+    '   Fm  #Ret :  V P R1 R2 R3    ! P is '' | IsRet = true
+    Dim Cr2Mge As Drs:     Cr2Mge = DrszAdd(Cr2Vpr1, Cr2Ret)                     ' V P R1 R2 R3 IsRet ! adding Cr2Vpr & Cr2Ret
+    Dim Cr2Ali As Drs:     Cr2Ali = DrszAli(Cr2Mge, "V P", "P R1 R2 R3") ' V P R1 R2 R3 IsRet ! P R1..3 are aligned (always hav sam len & las chr is [.]
+    Dim Cr2Fst As Drs:     Cr2Fst = DrszAddFst(Cr2Ali, "V P")                          ' V P R1 R2 R3 Fst ! P R1..3 are aligned (always hav sam len & las chr is [.]
+    Dim Cr2Rmk As Drs:     Cr2Rmk = F.Cr2Rmk(Cr2Fst)                                   ' V P R1 R2 R3 Fst Rmk ! Bld Rmk from P R1 R2 R3 & Fst
+    Dim Cr2RmkL As Drs:    Cr2RmkL = DrszSel(Cr2Rmk, "V Rmk")
+    
+    '-- Fnd #Ept : CmNm RmkLines :S1S2s ! each @CmNm should have waht @RmkLines
+    '   Fm  CmlEpt:V CmNm
+    '   Fm  RmkL  :
+    Dim Cr2VCm  As Drs:  Cr2VCm = DrszSel(CmlEpt, "V CmNm")     ' V CmNm
+    Dim Cr2V$():             Cr2V = StrCol(Cr2VCm, "V")          ' V      ! all V have chd mth
+    Dim Cr2VRmkCm:      Cr2VRmkCm = DrszIn(Cr2RmkL, V)            ' V Rmk  ! all V has chd mth
+    Dim Cr2VRmk As S1S2: Cr2VRmk = S1S2szDrs(Cr2VRmkCm)           ' V Rmk
+    Dim Cr2VCmD As Dictionary: Set Cr2VCmD = DiczDrsCC(Cr2CmNm)
+    Dim Cr2Ept   As S1S2s:            Cr2Ept = MapS1(CrVRmk, Cr2VCmD)  ' CmNm RmkLines
+    CrEpt = Cr2Ept
+Case Else: Thw CSub, "CrVer error", "CrVer", CrVer
+End Select
 
-Dim CrRetF As Drs:    '     CrRetF = AddColzFst(CrRetA, "V")                    ' V R1 R2 R3 Fst
-Dim CrRetR As Drs:    '     CrRetR = F.CrRetR(CrRetF)                           ' V R1 R2 R3 Fst Rmk
-Dim CrRmkRet As Drs:  '   CrRmkRet = SelDrs(CrRetR, "V Rmk")
-
-'Dim Cr1Rmk As Drs: Cr1Rmk = AddDrs(CrRmkRet, CrRmkPm)
-                                                                                                   
-'Dim Cr1VRmk  As S1S2s:           Cr1VRmk = F.CrVRmk(CrVpr)              ' V RmkLines
-'Dim Cr1CmNm  As Drs:             Cr1CmNm = SelDrs(CmlEpt, "V CmNm")     ' V CmNm
-'Dim Cr1VCmNm As Dictionary: Set Cr1VCmNm = DiczDrsCC(CrCmNm)
-'Dim Cr1Ept   As S1S2s:            Cr1Ept = MapS1(CrVRmk, CrVCmNm)       ' CmNm RmkLines
-'BrwS1S2s CrEpt: Stop
-Stop
-'== Upd Chd-Rmk (Cr) ===================================================================================================
-'   If any of the calling pm's rmk is changed, the chd-mth-rmk will be updated
-Dim CrSel   As Drs:              CrSel = SelDrs(McR123, "V R1 R2 R3") ' V R1 R2 R3
-Dim CrWiRmk As Drs:            CrWiRmk = F.CrWiRmk(CrSel)             ' V R1 R2 R3      ! rmv those R1 2 3 are blank
-Dim CrVr()  As Vr:                CrVr = F.CrVr(CrWiRmk)              ' V [R1 R2 R3]    ! each V has what rmk
-Dim CrVpm   As Drs:              CrVpm = SelDrs(CmlDclPm, "V Pm")     ' V Pm            ! each V is calling what Pm.  It is less than CrVr
-Dim CrVpr() As Vpr:              CrVpr = F.CrVpr(CrVpm, CrVr)         ' V [R1 R2 R3] [V [R1 R2 R3]] ! = [V Ret Pm] Sam Cnt as CrVpm.
-'                                                                                                   ! Putting Vpr.Pm to Vr accroding to Vpm
-Dim CrVRmk  As S1S2s:           CrVRmk = F.CrVRmk(CrVpr)              ' V RmkLines
-Dim CrCmNm  As Drs:             CrCmNm = SelDrs(CmlEpt, "V CmNm")     ' V CmNm
-Dim CrVCmNm As Dictionary: Set CrVCmNm = DiczDrsCC(CrCmNm)
-Dim CrEpt   As S1S2s:            CrEpt = MapS1(CrVRmk, CrVCmNm)       ' CmNm RmkLines
 BrwS1S2s CrEpt: Stop
 
-'== Stop if dif si
-Dim Si1%:                            Si1 = SiVpr(CrVpr)
-Dim Si2%:                            Si2 = CrEpt.N
-Dim DifSi As Boolean:             DifSi = Si1 <> Si2
-Dim Stop1:                                 If DifSi Then Stop
-
+'== Upd Chd-Rmk (Cr) ===================================================================================================
+'   If any of the calling pm's rmk is changed, the chd-mth-rmk will be updated
+BrwS1S2s CrEpt: Stop
 Dim CrAct As S1S2s: CrAct = MthRmkzNy(CmMd, Cm)
 Dim CrChg As S1S2s: CrChg = F.CrChg(CrEpt, CrAct)              ' CmNm RmkLines ! Only those need to change
 Dim OUpdCr:                 If IsUpd Then F.OUpdCr CrChg, CmMd
@@ -360,48 +422,6 @@ If IsNothing(M) Then Exit Sub
 AlignMthDimzML M, CMthLno, Rpt:=Rpt
 End Sub
 
-Function AddColzCV(A As Drs, C$, V) As Drs
-Dim Dr, Dry()
-For Each Dr In Itr(A.Dry)
-    PushI Dr, V
-    PushI Dry, Dr
-Next
-AddColzCV = AddColzFFDry(A, C, Dry)
-End Function
-
-Function AddColzFFDry(A As Drs, FF$, NewDry()) As Drs
-AddColzFFDry = Drs(AddFF(A.Fny, FF), NewDry)
-End Function
-Function InsColzFFDry(A As Drs, FF$, NewDry()) As Drs
-InsColzFFDry = Drs(SyzAdd(SyzSS(FF), A.Fny), NewDry)
-End Function
-
-Function AddColzFiller(A As Drs, CC$) As Drs
-Dim O As Drs: O = A
-Dim C
-For Each C In SyzSS(CC)
-    O = AddColzFillerC(O, C)
-Next
-AddColzFiller = O
-End Function
-
-Private Function AddColzFillerC(A As Drs, C) As Drs
-'Fm   A
-'Fm   C #ColumnNm.
-'Ret  Drs{ <A> {F<C>} } ! Add a new column {F<C>} add end which is Filler-column
-'                       ! Filler column of a given-column-A is an integer-columns with value = MaxWdt(col-A) - Len(cur-value-of-col-A)
-If NoReczDrs(A) Then Stop
-Dim W%: W = WdtzAy(StrColzDrs(A, C))
-Dim I%: I = IxzAy(A.Fny, C)
-Dim ODry(): ODry = A.Dry
-Dim Dr, J&
-For Each Dr In Itr(ODry)
-    PushI Dr, W - Len(Dr(I))
-    ODry(J) = Dr
-    J = J + 1
-Next
-AddColzFillerC = Drs(AddFF(A.Fny, "F" & C), ODry)
-End Function
 
 Sub RmvMthzMNn(M As CodeModule, Mthnn)
 Dim I
@@ -563,6 +583,3 @@ VerMthn = Mthn & "_Ver" & Ver
 
 End Function
 
-Private Function AlignMthDimzML__X()
-
-End Function

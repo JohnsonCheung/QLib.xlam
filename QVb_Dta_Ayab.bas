@@ -32,7 +32,7 @@ End Function
 
 Function AyabzAyPfx(Ay, Pfx$) As Ayab
 Dim O As Ayab
-O.A = Resi(Ay)
+O.A = AyzReSi(Ay)
 O.B = O.A
 Dim S$, I
 For Each I In Itr(Ay)

@@ -75,6 +75,28 @@ Dim J&: For J = 0 To A.N - 1
     End With
 Next
 End Function
+
+Function S1S2szDrs(D As Drs, Optional CC$) As S1S2s
+'Fm D  : ..@CC.. ! A drs with col-@CC.  At least has 2 col
+'Fm CC :         ! if isBlnk, use fst 2 col
+'Ret   :         ! fst col will be S1 and snd col will be S2 join with vbCrLf
+Dim S1$(), S2() ' S2 is ay of sy
+Dim I1%, I2%
+    If CC = "" Then I1 = 0: I2 = 1 Else AsgIx D, CC, I1, I2
+Dim Dr: For Each Dr In Itr(D.Dry)
+    Dim A$, B$: A = Dr(I1): B = Dr(I2)
+    Dim R&: R = IxzAy(S1, A)
+    If R = -1 Then
+        PushI S1, A
+        PushI S2, Sy(B)
+    Else
+        PushI S2(R), B
+    End If
+Next
+Dim J&: For J = 0 To UB(S1)
+    PushS1S2 S1S2szDrs, S1S2(S1(J), JnCrLf(S2(J)))
+Next
+End Function
 Function S1S2(Optional S1, Optional S2, Optional NoTrim As Boolean) As S1S2
 If NoTrim Then
     S1S2.S1 = S1

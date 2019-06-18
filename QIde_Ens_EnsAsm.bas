@@ -53,7 +53,7 @@ End If
 
 '-- Fnd-All-Dta
 Dim AllIns$():     AllIns = SyNonBlank(CModIns, AsmIns, NsIns)
-Dim AllRpl As Drs: AllRpl = AddDrs3(CModRpl, AsmRpl, NsRpl)
+Dim AllRpl As Drs: AllRpl = DrszAdd3(CModRpl, AsmRpl, NsRpl)
 '== RplLin =============================================================================================================
 '== InsLin =============================================================================================================
 If IsUpdzRpt(Rpt) Then

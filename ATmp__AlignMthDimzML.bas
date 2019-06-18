@@ -45,7 +45,7 @@ For Each Dr In Itr(CmlDclPm.Dry)
     PushI Dr, RetAs
     PushI Dry, Dr
 Next
-CmlMthRet = AddColzFFDry(CmlDclPm, "TyChr RetAs", Dry)
+CmlMthRet = DrszAddFF(CmlDclPm, "TyChr RetAs", Dry)
 'BrwDrs CmlMthRet: Stop
 'Insp "QIde_B_MthOp.CmlMthRet", "Inspect", "Oup(CmlMthRet) CmlDclPm", FmtDrs(CmlMthRet), FmtDrs(CmlDclPm): Stop
 End Function
@@ -59,7 +59,7 @@ Dim Dr, Dry(): For Each Dr In Itr(CmlPm.Dry)
     PushI Dr, DclPm
     PushI Dry, Dr
 Next
-CmlDclPm = AddColzFFDry(CmlPm, "DclPm", Dry)
+CmlDclPm = DrszAddFF(CmlPm, "DclPm", Dry)
 'Insp "QIde_B_MthOp.CmlDclPm", "Inspect", "Oup(CmlDclPm) CmlPm CmlVSfx", FmtDrs(CmlDclPm), FmtDrs(CmlPm), FmtDrs(CmlVSfx): Stop
 End Function
 Private Function XDclPm$(Pm$, CmlVSfx As Drs)
@@ -75,7 +75,7 @@ End Function
 Friend Function CrEpt(CrJn As Drs) As S1S2s
 'Fm  CrJn : V Rmk CmNm
 'Ret      : CmNm RmkLines ! RmkLines is find by each V in CrVpr & Mthn = V & CmPfx @@
-Dim A As Drs: A = SelDrs(CrJn, "CmNm Rmk")
+Dim A As Drs: A = DrszSel(CrJn, "CmNm Rmk")
 Dim Dr, Ly$(): For Each Dr In Itr(A.Dry)
     PushI Ly, Dr(0) & " " & Dr(1)
 Next
@@ -260,7 +260,7 @@ For Each Dr In Itr(McInsp.Dry)
     PushIAy Dr, Av
     PushI Dry, Dr
 Next
-McVSfx = AddColzFFDry(McInsp, "V Sfx Rst", Dry)
+McVSfx = DrszAddFF(McInsp, "V Sfx Rst", Dry)
 'Insp "QIde_B_MthOp.McVSfx", "Inspect", "Oup(McVSfx) McInsp", FmtDrs(McVSfx), FmtDrs(McInsp): Stop
 End Function
 
@@ -274,7 +274,7 @@ AsgIx McVSfx, "MthLin", IxMthLin
 For Each IGpno In AywDist(IntCol(McVSfx, "Gpno"))
     Dim A As Drs: A = ColEq(McVSfx, "Gpno", IGpno) ' L Gpno MthLin IsRmk V Sfx Rst ! Sam Gpno
     Dim B As Drs: B = XDcl(A) ' L Gpno MthLin IsRmk V Sfx Dcl Rst ! Adding Dcl using V Sfx
-    Dim O As Drs: O = AddDrs(O, B)
+    Dim O As Drs: O = DrszAdd(O, B)
 Next
 McDcl = O
 'Insp "QIde_B_MthOp.McDcl", "Inspect", "Oup(McDcl) McVSfx", FmtDrs(McDcl), FmtDrs(McVSfx): Stop
@@ -395,7 +395,7 @@ Dim V$:               V = Dr(IxV)
 Dim MthLin$:     MthLin = Dr(IxMthLin)
 Dim T$:               T = LTrim(MthLin)
 Dim F0%:             F0 = IIf(V = "", 0, Len(MthLin) - Len(T))
-               WF0 = AddColzCV(A, "F0", F0)
+               WF0 = DrszAddCV(A, "F0", F0)
 End Function
 
 Friend Function McFill(McR123 As Drs) As Drs
@@ -408,8 +408,8 @@ Dim Gpno%(): Gpno = AywDist(IntCol(McR123, "Gpno"))
 Dim IGpno: For Each IGpno In Itr(Gpno)
     Dim A As Drs: A = ColEq(McR123, "Gpno", IGpno)
     Dim B As Drs: B = WF0(A)
-    Dim C As Drs: C = AddColzFiller(B, "Dcl LHS RHS R1 R2")
-    Dim O As Drs: O = AddDrs(O, C)
+    Dim C As Drs: C = DrszAddFiller(B, "Dcl LHS RHS R1 R2")
+    Dim O As Drs: O = DrszAdd(O, C)
 Next
 McFill = O
 'Insp "QIde_B_MthOp.McFill", "Inspect", "Oup(McFill) McR123", FmtDrs(McFill), FmtDrs(McR123): Stop
@@ -469,7 +469,7 @@ MaxGpno = MaxzAy(IntCol(McRmk, "Gpno"))
 For IGpno = 1 To MaxGpno
     A = ColEq(McRmk, "Gpno", IGpno)
     B = McTRmkI(A)
-    O = AddDrs(O, B)
+    O = DrszAdd(O, B)
 Next
 McTRmk = O
 'Insp "QIde_B_MthOp.McTRmk", "Inspect", "Oup(McTRmk) McRmk", FmtDrs(McTRmk), FmtDrs(McRmk): Stop
@@ -516,7 +516,7 @@ Dim Dr: For Each Dr In Itr(McGp.Dry)
     PushI Dr, FstChr(LTrim(Dr(2))) = "'"
     Push McRmk.Dry, Dr
 Next
-McRmk.Fny = AddFF(McGp.Fny, "IsRmk")
+McRmk.Fny = FnyzAddFF(McGp.Fny, "IsRmk")
 'Insp "QIde_B_MthOp.McRmk", "Inspect", "Oup(McRmk) McGp", FmtDrs(McRmk), FmtDrs(McGp): Stop
 End Function
 
@@ -577,14 +577,14 @@ Dim Dr, ODry(): For Each Dr In Itr(CmEpt.Dry)
     PushI Dr, XPm(RHS, CmNm)
     PushI ODry, Dr
 Next
-CmlPm = AddColzFFDry(CmEpt, "Pm", ODry)
+CmlPm = DrszAddFF(CmEpt, "Pm", ODry)
 'Insp "QIde_B_MthOp.CmlPm", "Inspect", "Oup(CmlPm) CmEpt", FmtDrs(CmlPm), FmtDrs(CmEpt): Stop
 End Function
 
 Friend Function McNew(Mc As Drs, McDim As Drs) As String()
 'BrwDrs2 Mc, Mc, NN:="Mc McDim", Tit:="Use McDim to Upd Mc to become NewL": Stop
 If JnSpc(McDim.Fny) <> "L OldL NewL" Then Stop
-Dim A As Drs: A = SelDrs(McDim, "L NewL")
+Dim A As Drs: A = DrszSel(McDim, "L NewL")
 Dim B As Dictionary: Set B = DiczDrsCC(A)
 Dim O$()
     Dim Dr, L&, MthLin$
@@ -644,14 +644,14 @@ For Each Dr In Itr(CmLis.Dry)
     PushI Dr, MbStmt
     PushI Dry, Dr
 Next
-MbEpt = AddColzFFDry(CmLis, "MbStmt", Dry)
+MbEpt = DrszAddFF(CmLis, "MbStmt", Dry)
 'Insp "QIde_B_MthOp.MbEpt", "Inspect", "Oup(MbEpt) CmLis Mdn", FmtDrs(MbEpt), FmtDrs(CmLis), Mdn: Stop
 End Function
 
 Friend Function MbAct(Cm$(), CmMd As CodeModule) As Drs
 'Ret : L Mthn OldL ! OldL is MbStmt @@
 Dim A As Drs: A = DMthe(CmMd)             ' L E CmMdy Ty Mthn MthLin
-Dim B As Drs: B = ColIn(A, "Mthn", Cm)
+Dim B As Drs: B = DrszIn(A, "Mthn", Cm)
 Dim Dr, Dry(): For Each Dr In Itr(B.Dry)
     Dim E&:           E = Dr(1)
     Dim L&:           L = E - 1          ' ! The Lno of MbStmt
@@ -683,12 +683,12 @@ Friend Function McAlign(McFill As Drs) As Drs
 '          : F0 FSfx FExpr FR1 FR2 ! Adding F*
 'Ret       : L Align               ! Bld the new Align @@
 If NoReczDrs(McFill) Then Stop
-Dim A As Drs: A = SelDrs(McFill, "L Gpno MthLin Dcl LHS RHS R1 R2 R3 F0 FDcl FLHS FRHS FR1 FR2")
+Dim A As Drs: A = DrszSel(McFill, "L Gpno MthLin Dcl LHS RHS R1 R2 R3 F0 FDcl FLHS FRHS FR1 FR2")
 Dim Gpno: Gpno = DistCol(McFill, "Gpno")
 Dim IGpno: For Each IGpno In Itr(Gpno)
     Dim B As Drs: B = ColEq(A, "Gpno", IGpno)
     Dim C As Drs: C = WAlign(B)
-    Dim O As Drs: O = AddDrs(O, C)
+    Dim O As Drs: O = DrszAdd(O, C)
 Next
 McAlign = O
 'Insp "QIde_B_MthOp.McAlign", "Inspect", "Oup(McAlign) McFill", FmtDrs(McAlign), FmtDrs(McFill): Stop
@@ -866,7 +866,7 @@ Dim Dr, Dry(): For Each Dr In Itr(CmV.Dry)
     PushI Dr, XCmNm(RHS, V, WiSf, MlNmDD)
     PushI Dry, Dr
 Next
-CmNm = AddColzFFDry(CmV, "CmNm", Dry)
+CmNm = DrszAddFF(CmV, "CmNm", Dry)
 'Insp "QIde_B_MthOp.CmNm", "Inspect", "Oup(CmNm) CmV WiSf MlNmDD", FmtDrs(CmNm), FmtDrs(CmV), WiSf, MlNmDD: Stop
 End Function
 
