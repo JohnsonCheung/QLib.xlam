@@ -18,7 +18,7 @@ EnsAsmzP CPj
 End Sub
 
 Function EnsAsmzM(M As CodeModule, Optional Rpt As EmRpt) As Boolean
-If IsEmpMd(M) Then Exit Function
+If IsMdEmp(M) Then Exit Function
 If CmpTyzM(M) = vbext_ct_Document Then Exit Function
 Const T$ = "Private Const ?$ = ""?"""
 '-- Fnd-CMod-Dta
@@ -52,7 +52,7 @@ If Not NsNoUpd Then
 End If
 
 '-- Fnd-All-Dta
-Dim AllIns$():     AllIns = SyNonBlank(CModIns, AsmIns, NsIns)
+Dim AllIns$():     AllIns = SyNB(CModIns, AsmIns, NsIns)
 Dim AllRpl As Drs: AllRpl = DrszAdd3(CModRpl, AsmRpl, NsRpl)
 '== RplLin =============================================================================================================
 '== InsLin =============================================================================================================

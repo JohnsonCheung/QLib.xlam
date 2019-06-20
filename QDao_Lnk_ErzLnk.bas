@@ -5,13 +5,13 @@ Private Function XIpfExi(Ipf As Drs) As Drs
 'Fm  Ipf    : L Inpn Ffn IsFx HasFfn
 'Ret        : L Inpn Ffn IsFx @@
 XIpfExi = ColEqExlEqCol(Ipf, "HasFfn", True)
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpfExi) IpfExi Ipf",FmtDrs(IpfExi), FmtDrs(IpfExi), FmtDrs(Ipf): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpfExi) IpfExi Ipf",LinzDrs(IpfExi), LinzDrs(IpfExi), LinzDrs(Ipf): Stop
 End Function
 
 Private Function XIpbFb(Ipf As Drs) As String()
 'Fm  Ipf : L Inpn Ffn IsFx HasFfn @@
 XIpbFb = StrColzColEqSel(Ipf, "IsFx", False, "Inpn")
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpbFb) IpbFb Ipf",IpbFb, IpbFb, FmtDrs(Ipf): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpbFb) IpbFb Ipf",IpbFb, IpbFb, LinzDrs(Ipf): Stop
 End Function
 Function ErzLnk(LnkImpSrc$()) As String()
 'Fm: *InpFilSrc::SSAy{Inpn Ffn}
@@ -109,7 +109,7 @@ End Function
 
 Private Function XIpx(Ip As DLTDH) As Drs
 
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpx) Ipx Ip",FmtDrs(Ipx), FmtDrs(Ipx), FmtDrs(Ip.D): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpx) Ipx Ip",LinzDrs(Ipx), LinzDrs(Ipx), LinzDrs(Ip.D): Stop
 End Function
 
 Private Function XIpfFx(Ip As DLTDH) As Drs
@@ -132,7 +132,7 @@ For Each Dr In Itr(O.Dry)
     J = J + 1
 Next
 XIpxf = O
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpxf) Ipxf IpxExi Ips",FmtDrs(Ipxf), FmtDrs(Ipxf), FmtDrs(IpxExi), FmtDrs(Ips): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpxf) Ipxf IpxExi Ips",LinzDrs(Ipxf), LinzDrs(Ipxf), LinzDrs(IpxExi), LinzDrs(Ips): Stop
 End Function
 Private Function XIpxfMisFld() As Drs
 
@@ -190,12 +190,12 @@ Dim A As Drs, Dr, Fxn$, Fx$, Wsn, Dry()
 For Each Dr In Itr(A.Dry)
     Fxn = Dr(0)
     Fx = Dr(1)
-    For Each Wsn In Wny(Fx)
+    For Each Wsn In WNy(Fx)
         PushI Dry, Array(Fxn, Wsn)
     Next
 Next
 XActWs = DrszFF("Fxn Ws", Dry)
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XActWs) ActWs IpxExiFx",FmtDrs(ActWs), FmtDrs(ActWs), FmtDrs(IpxExiFx): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XActWs) ActWs IpxExiFx",LinzDrs(ActWs), LinzDrs(ActWs), LinzDrs(IpxExiFx): Stop
 End Function
 
 Function FnyzAddFF(Fny$(), FF$) As String()
@@ -227,7 +227,7 @@ For Each Fxn In OFxn
     J = J + 1
 Next
 XExWsMisFld = O
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XExWsMisFld) ExWsMisFld IpxfMis ActWsf",ExWsMisFld, ExWsMisFld, FmtDrs(IpxfMis), FmtDrs(ActWsf): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XExWsMisFld) ExWsMisFld IpxfMis ActWsf",ExWsMisFld, ExWsMisFld, LinzDrs(IpxfMis), LinzDrs(ActWsf): Stop
 End Function
 Private Function XExWsMisFldTy(Ipxf As Drs, ActWsf As Drs) As String()
 'Fm IpxFld : Fxn Ws Stru Ipxf Ty Fx ! Where HasFx and HasWs and Not HasFld
@@ -247,7 +247,7 @@ Private Function XExWsMisFldTy(Ipxf As Drs, ActWsf As Drs) As String()
 '    Act = RmvT1zAy(AywT1(WsAct, Fxn)) '*WsActPerFxn::Sy{WsAct}
 '    PushIAy XExWsMis, XMisWs_OneFx(Fxn, Fx, Lno, Ws, Act)
 'Next
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XExWsMisFldTy) ExWsMisFldTy Ipxf ActWsf",ExWsMisFldTy, ExWsMisFldTy, FmtDrs(Ipxf), FmtDrs(ActWsf): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XExWsMisFldTy) ExWsMisFldTy Ipxf ActWsf",ExWsMisFldTy, ExWsMisFldTy, LinzDrs(Ipxf), LinzDrs(ActWsf): Stop
 End Function
 
 Private Function XExWsMis(IpxMis As Drs, ActWs As Drs) As String()
@@ -271,17 +271,16 @@ For J = 0 To UB(OFxn)
     PushIAy O, TabAy(XX)
 Next
 XExWsMis = O
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XExWsMis) ExWsMis IpxMis ActWs",ExWsMis, ExWsMis, FmtDrs(IpxMis), FmtDrs(ActWs): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XExWsMis) ExWsMis IpxMis ActWs",ExWsMis, ExWsMis, LinzDrs(IpxMis), LinzDrs(ActWs): Stop
 End Function
-
 Sub A()
-AlignMthDim
+QIde_B_AlignMth.AlignMthDim
 End Sub
 Sub AU()
-AlignMthDim Rpt:=EiUpdAndRpt
+QIde_B_AlignMth.AlignMthDim Rpt:=EiUpdAndRpt
 End Sub
 Sub AUO()
-AlignMthDim Rpt:=EiUpdOnly
+QIde_B_AlignMth.AlignMthDim Rpt:=EiUpdOnly
 End Sub
 
 Sub E(Optional Rpt As EmRpt)
@@ -289,7 +288,7 @@ Dim Mdn$:              Mdn = "QIde_Ens_CModSub"
 Dim Mthn$:            Mthn = "EnsCModSubzM"
 Dim M As CodeModule: Set M = Md(Mdn)
 Dim L&:                  L = MthLnozMM(M, Mthn)
-QIde_B_MthOp.AlignMthDimzML M, L, Rpt:=Rpt
+QIde_B_AlignMth.AlignMthDimzML M, L, Rpt:=Rpt
 End Sub
 
 Sub FF(Optional Rpt As EmRpt)
@@ -297,7 +296,7 @@ Dim Mdn$: Mdn = "QIde_Ens_CModSub"
 Dim Mthn$: Mthn = "EnsCModSubzM"
 Dim M As CodeModule: Set M = Md(Mdn)
 Dim L&:                  L = MthLnozMM(M, Mthn)
-QIde_B_MthOp.AlignMthDimzML M, L, Rpt:=Rpt
+QIde_B_AlignMth.AlignMthDimzML M, L, Rpt:=Rpt
 End Sub
 
 Private Sub Z_ErzLnk()
@@ -309,12 +308,12 @@ Private Function XEiFfnDup(Ipf As Drs) As String()
 Dim Ffn$(): Ffn = StrColzDrs(Ipf, "Ffn")
 Dim Dup$(): Dup = AywDup(Ffn)
 If Si(Dup) = 0 Then Exit Function
-Dim DupD As Drs: DupD = DrszIn(Ipf, "Ffn", Dup)
+Dim DupD As Drs: DupD = DrswIn(Ipf, "Ffn", Dup)
 XBox "Ffn Duplicated"
 XDrs DupD
 XLin
 XEiFfnDup = XX
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEiFfnDup) EiFfnDup Ipf",EiFfnDup, EiFfnDup, FmtDrs(Ipf): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEiFfnDup) EiFfnDup Ipf",EiFfnDup, EiFfnDup, LinzDrs(Ipf): Stop
 End Function
 
 Private Function XEi_AddCol_Pth_Fn(A As Drs) As Drs
@@ -334,7 +333,7 @@ Dim B As Drs: B = XEi_AddCol_Pth_Fn(A)
 Dim C As Drs: C = DrszSel(B, "L Inpn Pth Fn")
       XEiFfnMis = LyzNmDrs("File missing: ", C, MaxColWdt:=200)
 
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEiFfnMis) EiFfnMis Ipf",EiFfnMis, EiFfnMis, FmtDrs(Ipf): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEiFfnMis) EiFfnMis Ipf",EiFfnMis, EiFfnMis, LinzDrs(Ipf): Stop
 End Function
 
 Private Function XEiInpnDup(Ipf As Drs) As String()
@@ -342,29 +341,29 @@ Private Function XEiInpnDup(Ipf As Drs) As String()
 Dim Inpn$(): Inpn = StrColzDrs(Ipf, "Inpn")
 Dim Dup$(): Dup = AywDup(Inpn)
 If Si(Dup) = 0 Then Exit Function
-Dim DupD As Drs: DupD = DrszIn(Ipf, "Inpn", Dup)
+Dim DupD As Drs: DupD = DrswIn(Ipf, "Inpn", Dup)
 XBox "Inpn Duplicated"
 XDrs DupD
 XLin
 XEiInpnDup = XX
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEiInpnDup) EiInpnDup Ipf",EiInpnDup, EiInpnDup, FmtDrs(Ipf): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEiInpnDup) EiInpnDup Ipf",EiInpnDup, EiInpnDup, LinzDrs(Ipf): Stop
 End Function
 Private Function XExTblDup(Ipx As Drs) As String()
 'Fm  Ipx : T Fxn Ws Stru ! Inp-Fx which is FxTbl @@
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XExTblDup) ExTblDup Ipx",ExTblDup, ExTblDup, FmtDrs(Ipx): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XExTblDup) ExTblDup Ipx",ExTblDup, ExTblDup, LinzDrs(Ipx): Stop
 End Function
 Private Function XExFxnDup(Ipx As Drs) As String()
 'Fm  Ipx : T Fxn Ws Stru ! Inp-Fx which is FxTbl @@
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XExFxnDup) ExFxnDup Ipx",ExFxnDup, ExFxnDup, FmtDrs(Ipx): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XExFxnDup) ExFxnDup Ipx",ExFxnDup, ExFxnDup, LinzDrs(Ipx): Stop
 End Function
 Private Function XExFxnMis(Ipx As Drs, IpfExi As Drs) As String()
 'Fm  Ipx    : T Fxn Ws Stru   ! Inp-Fx which is FxTbl
 'Fm  IpfExi : L Inpn Ffn IsFx @@
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XExFxnMis) ExFxnMis Ipx IpfExi",ExFxnMis, ExFxnMis, FmtDrs(Ipx), FmtDrs(IpfExi): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XExFxnMis) ExFxnMis Ipx IpfExi",ExFxnMis, ExFxnMis, LinzDrs(Ipx), LinzDrs(IpfExi): Stop
 End Function
 Private Function XExStruMis(Ipx As Drs, IpsStru$()) As String()
 'Fm  Ipx : T Fxn Ws Stru ! Inp-Fx which is FxTbl @@
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XExStruMis) ExStruMis Ipx IpsStru",ExStruMis, ExStruMis, FmtDrs(Ipx), IpsStru: Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XExStruMis) ExStruMis Ipx IpsStru",ExStruMis, ExStruMis, LinzDrs(Ipx), IpsStru: Stop
 End Function
 Private Function XEbFbnDup(Ipb As Drs) As String()
 'Fm  Ipb : L Fbn Fbtt @@
@@ -385,7 +384,7 @@ For J = 0 To UB(OLss)
     PushI O, FmtQQ("L#(?) Fbn(?) Fbn Duplicated.", OLss(J), OFbn(J))
 Next
 XEbFbnDup = O
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEbFbnDup) EbFbnDup Ipb",EbFbnDup, EbFbnDup, FmtDrs(Ipb): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEbFbnDup) EbFbnDup Ipb",EbFbnDup, EbFbnDup, LinzDrs(Ipb): Stop
 End Function
 
 Private Function XEbFbnMis(Ipb As Drs, IpbFb$()) As String()
@@ -412,7 +411,7 @@ For Each Inpn In Itr(IpbFb)
     PushI O, vbTab & vbTab & Inpn
 Next
 XEbFbnMis = O
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEbFbnMis) EbFbnMis Ipb IpbFb",EbFbnMis, EbFbnMis, FmtDrs(Ipb), IpbFb: Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEbFbnMis) EbFbnMis Ipb IpbFb",EbFbnMis, EbFbnMis, LinzDrs(Ipb), IpbFb: Stop
 End Function
 
 Private Function XEbTblDup(Ipb As Drs) As String()
@@ -435,7 +434,7 @@ For J = 0 To UB(OL)
     PushI O, FmtQQ("L#(?) Fbtt(?) Fbt Duplicated.", OL(J), OFbtt(J))
 Next
 XEbTblDup = O
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEbTblDup) EbTblDup Ipb",EbTblDup, EbTblDup, FmtDrs(Ipb): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEbTblDup) EbTblDup Ipb",EbTblDup, EbTblDup, LinzDrs(Ipb): Stop
 End Function
 
 Private Function XEbStruMis(IpbTny$(), IpsStru$()) As String()
@@ -444,12 +443,12 @@ Private Function XEbStruMis(IpbTny$(), IpsStru$()) As String()
 End Function
 Private Function XEbTblMis(Ipb As Drs) As String()
 'Fm  Ipb : L Fbn Fbtt @@
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEbTblMis) EbTblMis Ipb",EbTblMis, EbTblMis, FmtDrs(Ipb): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEbTblMis) EbTblMis Ipb",EbTblMis, EbTblMis, LinzDrs(Ipb): Stop
 End Function
 
 Private Function XEsFldDup(Ips As Drs) As String()
 'Fm  Ips : L Stru F Ty E @@
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEsFldDup) EsFldDup Ips",EsFldDup, EsFldDup, FmtDrs(Ips): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEsFldDup) EsFldDup Ips",EsFldDup, EsFldDup, LinzDrs(Ips): Stop
 End Function
 
 Private Function XEoNoFxAndNoFb$(Ipx As Drs, Ipb As Drs)
@@ -457,7 +456,7 @@ Private Function XEoNoFxAndNoFb$(Ipx As Drs, Ipb As Drs)
 If Si(Ipx.Dry) > 0 Then Exit Function
 If Si(Ipb.Dry) > 0 Then Exit Function
 XEoNoFxAndNoFb = "Both [FxTbl] and [FbTbl] sections are missing (EoNoFxAndNoFb)"
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEoNoFxAndNoFb) EoNoFxAndNoFb Ipx Ipb",EoNoFxAndNoFb, EoNoFxAndNoFb, FmtDrs(Ipx), FmtDrs(Ipb): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEoNoFxAndNoFb) EoNoFxAndNoFb Ipx Ipb",EoNoFxAndNoFb, EoNoFxAndNoFb, LinzDrs(Ipx), LinzDrs(Ipb): Stop
 End Function
 
 Private Function XEsTyEr() As String()
@@ -465,7 +464,7 @@ Private Function XEsTyEr() As String()
 
 Dim O$()
 'PushI O, FldEr2 & "Valid Ty are: ...."
-'PushIAy O, SyzAyP(FmtDrs(DTyEr), vbTab)
+'PushIAy O, AddPfxzAy(LinzDrs(DTyEr), vbTab)
 XEsTyEr = O
 'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEsTyEr) EsTyEr ",EsTyEr, EsTyEr: Stop
 End Function
@@ -497,7 +496,7 @@ For J = 0 To UB(OL)
 Next
 Push O, vbTab & "Valid T1 are: Inp FxTbl FbTbl Tbl.Where Stru.{Nm}"
 XEoHdrEr = O
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEoHdrEr) EoHdrEr Ip",EoHdrEr, EoHdrEr, FmtDrs(Ip.D): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEoHdrEr) EoHdrEr Ip",EoHdrEr, EoHdrEr, LinzDrs(Ip.D): Stop
 End Function
 
 Private Function XIpxfMis(Ipxf As Drs, ActWsf As Drs) As Drs
@@ -509,7 +508,7 @@ A = LDrszJn(Ipxf, ActWsf, "Fxn Ws E:F", "Ty:ActTy", "HasF")
 B = ColEqExlEqCol(A, "HasF", False)
 O = DrpCol(B, "ActTy")
 XIpxfMis = O
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpxfMis) IpxfMis Ipxf ActWsf",FmtDrs(IpxfMis), FmtDrs(IpxfMis), FmtDrs(Ipxf), FmtDrs(ActWsf): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpxfMis) IpxfMis Ipxf ActWsf",LinzDrs(IpxfMis), LinzDrs(IpxfMis), LinzDrs(Ipxf), LinzDrs(ActWsf): Stop
 End Function
 
 Private Function XActWsf(IpxExi As Drs) As Drs
@@ -528,7 +527,7 @@ Next
 OFny = Sy(IpxExi.Fny, "F", "Ty")
 O = Drs(OFny, ODry)
 XActWsf = O
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XActWsf) ActWsf IpxExi",FmtDrs(ActWsf), FmtDrs(ActWsf), FmtDrs(IpxExi): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XActWsf) ActWsf IpxExi",LinzDrs(ActWsf), LinzDrs(ActWsf), LinzDrs(IpxExi): Stop
 End Function
 Private Function XIpbTny(Ipb As Drs) As String()
 'Fm  Ipb : L Fbn Fbtt @@
@@ -537,7 +536,7 @@ For Each Dr In Itr(Ipb.Dry)
     Fbtt = Dr(2)
     PushNoDupAy XIpbTny, SyzSS(Fbtt)
 Next
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpbTny) IpbTny Ipb",IpbTny, IpbTny, FmtDrs(Ipb): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpbTny) IpbTny Ipb",IpbTny, IpbTny, LinzDrs(Ipb): Stop
 End Function
 
 Private Function XIpxTny(Ipx As Drs) As String()
@@ -546,7 +545,7 @@ Dim Dr
 For Each Dr In Itr(Ipx.Dry)
     PushNoDup XIpxTny, Dr(1)
 Next
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpxTny) IpxTny Ipx",IpxTny, IpxTny, FmtDrs(Ipx): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpxTny) IpxTny Ipx",IpxTny, IpxTny, LinzDrs(Ipx): Stop
 End Function
 
 Private Function XIpb(Ip As DLTDH) As Drs
@@ -573,7 +572,7 @@ For Each Dr In Itr(LTT.Dry)
     PushI Dry, Array(L, Inpn, Ffn, IsFx(Ffn), HasFfn(Ffn))
 Next
 XIpf = DrszFF("L Inpn Ffn IsFx HasFfn", Dry)
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpf) Ipf Ip",FmtDrs(Ipf), FmtDrs(Ipf), FmtDrs(Ip.D): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpf) Ipf Ip",LinzDrs(Ipf), LinzDrs(Ipf), LinzDrs(Ip.D): Stop
 End Function
 
 Private Function XIpw(Ip As DLTDH) As Drs
@@ -587,7 +586,7 @@ For Each Dr In Itr(DLDta(Ip, "Tbl.Where").D.Dry)
     PushI Dry, Array(L, T, Bexp)
 Next
 XIpw = DrszFF("L T Bexp", Dry)
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpw) Ipw Ip",FmtDrs(Ipw), FmtDrs(Ipw), FmtDrs(Ip.D): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpw) Ipw Ip",LinzDrs(Ipw), LinzDrs(Ipw), LinzDrs(Ip.D): Stop
 End Function
 
 Private Function XIpxHasFx(Ipx As Drs, Ipf As Drs) As Drs
@@ -595,7 +594,7 @@ Private Function XIpxHasFx(Ipx As Drs, Ipf As Drs) As Drs
 'Fm  Ipf      : L Inpn Ffn IsFx HasFfn
 'Ret IpxHasFx : T Fxn Ws Stru Fx IsFx HasFx HasInp ! Add @@
 XIpxHasFx = LDrszJn(Ipx, Ipf, "Fxn:Inpn", "Ffn:Fx IsFx HasFfn:HasFx", "HasInp")
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpxHasFx) IpxHasFx Ipx Ipf",FmtDrs(IpxHasFx), FmtDrs(IpxHasFx), FmtDrs(Ipx), FmtDrs(Ipf): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpxHasFx) IpxHasFx Ipx Ipf",LinzDrs(IpxHasFx), LinzDrs(IpxHasFx), LinzDrs(Ipx), LinzDrs(Ipf): Stop
 End Function
 
 Private Function XIpx1(A As DLTDH) As Drs
@@ -656,7 +655,7 @@ XLsszWhT = JnSpc(O)
 End Function
 Private Function XEwTblExa(Ipw As Drs, Tny$()) As String()
 'Ret EwTblExa : tbl.wh is more @@
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEwTblExa) EwTblExa Ipw Tny",EwTblExa, EwTblExa, FmtDrs(Ipw), Tny: Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEwTblExa) EwTblExa Ipw Tny",EwTblExa, EwTblExa, LinzDrs(Ipw), Tny: Stop
 End Function
 Private Function XEwTblDup(Ipw As Drs) As String()
 'Fm:Wh@Ipw::Drs{L T Bexp}
@@ -672,7 +671,7 @@ For J = 0 To UB(OLss)
     PushI O, FmtQQ("L#(?) Tbl(?) Tbl are dup", OLss(J), OT(J))
 Next
 XEwTblDup = O
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEwTblDup) EwTblDup Ipw",EwTblDup, EwTblDup, FmtDrs(Ipw): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEwTblDup) EwTblDup Ipw",EwTblDup, EwTblDup, LinzDrs(Ipw): Stop
 End Function
 Private Function XEwTblMis(Ipw As Drs, Tny$()) As String()
 'Fm:Wh@Ipw::Drs{L T Bexp}
@@ -715,7 +714,7 @@ For J = 0 To UB(OL)
     PushI O, FmtQQ("L#(?) Tbl(?) has no Bexp", OL(J), OT(J))
 Next
 XEwBexpEmp = O
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEwBexpEmp) EwBexpEmp Ipw",EwBexpEmp, EwBexpEmp, FmtDrs(Ipw): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XEwBexpEmp) EwBexpEmp Ipw",EwBexpEmp, EwBexpEmp, LinzDrs(Ipw): Stop
 End Function
 
 Private Function DoAddInpIfEr(E$(), InpFilSrc$(), LnkImpSrc$()) As String()
@@ -729,7 +728,7 @@ Private Function XIpsFx(Ipx As Drs) As String()
 'Fm  Ipx   : T Fxn Ws Stru   ! Inp-Fx which is FxTbl
 'Ret IpsFx : IpsFx::Sy{Stru} ! the stru used by Fx @@
 XIpsFx = AywDist(StrColzDrs(Ipx, "Stru"))
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpsFx) IpsFx Ipx",IpsFx, IpsFx, FmtDrs(Ipx): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpsFx) IpsFx Ipx",IpsFx, IpsFx, LinzDrs(Ipx): Stop
 End Function
 Private Function XIps1(Ips As Drs, IpsFx$()) As Drs
 'Fm  Ips   : L Stru F Ty E
@@ -744,7 +743,7 @@ For Each Dr In Itr(Ips.Dry)
 Next
 XIps1 = Drs(FnyzAddFF(Ips.Fny, "IsIpsFx"), ODry)
 'BrwDrs XIps1: Stop
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIps1) Ips1 Ips IpsFx",FmtDrs(Ips1), FmtDrs(Ips1), FmtDrs(Ips), IpsFx: Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIps1) Ips1 Ips IpsFx",LinzDrs(Ips1), LinzDrs(Ips1), LinzDrs(Ips), IpsFx: Stop
 End Function
 
 Private Function XIps(Ip As DLTDH) As Drs
@@ -764,7 +763,7 @@ For Each Dr In Itr(B.Dry)
 Next
 XIps = DrszFF("L Stru F Ty E", ODry)
 'BrwDrs XIps: Stop
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIps) Ips Ip",FmtDrs(Ips), FmtDrs(Ips), FmtDrs(Ip.D): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIps) Ips Ip",LinzDrs(Ips), LinzDrs(Ips), LinzDrs(Ip.D): Stop
 End Function
 Private Property Get Y_InpFilSrc() As String()
 X "Inp"
@@ -862,13 +861,13 @@ End Property
 Private Function XIpxStru(Ipx As Drs) As String()
 'Fm  Ipx     : T Fxn Ws Stru ! Inp-Fx which is FxTbl
 'Ret IpxStru :               ! the stru coming Ipx @@
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpxStru) IpxStru Ipx",IpxStru, IpxStru, FmtDrs(Ipx): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpxStru) IpxStru Ipx",IpxStru, IpxStru, LinzDrs(Ipx): Stop
 End Function
 
 Private Function XIpsHdStru(Ips As Drs) As String()
 'Fm  Ips       : L Stru F Ty E
 'Ret IpsHdStru :               ! the stru coming from the Ips hd @@
-'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpsHdStru) IpsHdStru Ips",IpsHdStru, IpsHdStru, FmtDrs(Ips): Stop
+'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpsHdStru) IpsHdStru Ips",IpsHdStru, IpsHdStru, LinzDrs(Ips): Stop
 End Function
 
 Private Function XIpbxStru$()

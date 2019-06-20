@@ -55,7 +55,7 @@ End Property
 Function PjfyzV(A As Vbe) As String()
 Dim P As VBProject
 For Each P In A.VBProjects
-    PushNonBlank PjfyzV, Pjf(P)
+    PushNB PjfyzV, Pjf(P)
 Next
 End Function
 
@@ -105,7 +105,7 @@ Brw MthNyzV(CVbe)
 End Sub
 
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A
 Dim B As Vbe
 Dim C$

@@ -23,7 +23,7 @@ Erase XX
 End Property
 
 Private Sub BoAlignMth_Click(ByVal Ctrl As Office.CommandBarButton, CancelDefault As Boolean)
-AlignMthDim
+QIde_B_AlignMth.AlignMthDim
 End Sub
 
 Private Sub BoRunZ_Click(ByVal Ctrl As Office.CommandBarButton, CancelDefault As Boolean)

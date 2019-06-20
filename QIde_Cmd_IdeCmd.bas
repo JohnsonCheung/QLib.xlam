@@ -17,11 +17,11 @@ IsAlignable = IsAlignableMth(OldMthLy)
               'RplLines Md, Lno, NLin, OldL, NewL
 End Sub
 
-Private Sub Z_AlignMthLines()
+Private Sub Z_AlignMthL()
 Dim M$()
-GoSub ZZ
+GoSub Z
 Exit Sub
-ZZ:
+Z:
     Erase XX
     X "Sub Cmd_AlignMth()"
     X "Dim IsAlignable As Boolean, Lno&, NLin%, OldL$, NewL$, Md As CodeModule, MthLy$()"
@@ -33,7 +33,7 @@ ZZ:
     X "Nm = Mthn(Md.Lines(Lno, 1))"
     X "IsAlignable = IsAlignableMth(OldL)"
     X "If Not IsAlignable Then MsgBox ""Mth: "" & Mthn & vbCrLf & ""Alignable"", vbCritical: Exit Sub"
-    X "NewL = JnCrLf(AlignMthLines(MthLines))"
+    X "NewL = JnCrLf(AlignMthL(MthL))"
     X "RplLines Md, Lno, NLin, OldL, NewL"
     X "End Sub"
     M = XX
@@ -45,7 +45,7 @@ End Sub
 Private Function IsAlignableMth(MthLy$()) As Boolean
 Dim L
 For Each L In MthCxtLy(MthLy)
-    If Not IsAlignableSrcLin(L) Then Exit Function
+    If Not IsLinAlignableSrc(L) Then Exit Function
 Next
 IsAlignableMth = True
 End Function
@@ -83,16 +83,16 @@ If T1(L) = "Dim" Then Exit Function
 If FstChr(LTrim(L)) = "'" Then Exit Function
 ShouldAlign = True
 End Function
-Private Function IsAlignableSrcLin(L) As Boolean
+Private Function IsLinAlignableSrc(L) As Boolean
 Dim T1$
 T1 = T1zS(L)
      Select Case T1
      Case "Dim", "Set", "If", "On"
-        IsAlignableSrcLin = True
+        IsLinAlignableSrc = True
         Exit Function
      Case "Select", "Case", "End", "Else", "For", "While", "Do"
         Exit Function
      End Select
      If LasChr(T1) = ":" Then Exit Function
-     IsAlignableSrcLin = True
+     IsLinAlignableSrc = True
 End Function

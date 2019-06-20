@@ -16,24 +16,24 @@ Private Function DDupMthzP(P As VBProject) As Drs
 Dim A As Drs: A = DMthzP(P)
 Dim B As Drs: B = DrswDup(A, "Mthn")
 Dim C As Drs: C = DrseDup(B, "Mthn Mdn") '<==
-Dim D As Drs: D = AddColzMthLines(C)
-Dim E As Drs: E = AddColzValIdzCntzDrs(D, "MthLines")
+Dim D As Drs: D = AddColzMthL(C)
+Dim E As Drs: E = AddColzValIdzCntzDrs(D, "MthL")
 DDupMthzP = SrtDrs(E)
 End Function
 
 
 Function FmtDupMthWs(DupMthWs As Worksheet) As Worksheet
 Dim Lo As ListObject: Set Lo = FstLo(DupMthWs)
-SetLcWdt Lo, "MthLines", 10
-SetLcWrp Lo, "MthLines", False
+SetLcWdt Lo, "MthL", 10
+SetLcWrp Lo, "MthL", False
 End Function
 
 
-Private Function AddColzMthLines(Mthn As Drs) As Drs
+Private Function AddColzMthL(Mthn As Drs) As Drs
 Dim A():  A = DrszSel(Mthn, "Md Mthn Ty").Dry
-Dim B$(): B = MthLinesAyzDry_Md_Mthn_ShtMthTy(A)
-Dim C As Drs: C = DrsAddColzNmVy(Mthn, "MthLines", B)
-AddColzMthLines = C
+Dim B$(): B = MthLAyzDry_Md_Mthn_ShtMthTy(A)
+Dim C As Drs: C = DrsAddColzNmVy(Mthn, "MthL", B)
+AddColzMthL = C
 End Function
 
 
@@ -42,13 +42,13 @@ Set DupMthWszP = FmtDupMthWs(WszDrs(DDupMthzP(P), "DupMth"))
 End Function
 
 
-Private Function MthLinesAyzDry_Md_Mthn_ShtMthTy(Dry()) As String()
+Private Function MthLAyzDry_Md_Mthn_ShtMthTy(Dry()) As String()
 Dim Dr, M As CodeModule, Mthn, ShtMthTy$
 For Each Dr In Itr(Dry)
     Set M = Md(Dr(0))
     Mthn = Dr(1)
     ShtMthTy = Dr(2)
-    PushI MthLinesAyzDry_Md_Mthn_ShtMthTy, MthLineszMTN(M, ShtMthTy, Mthn)
+    PushI MthLAyzDry_Md_Mthn_ShtMthTy, MthLzMTN(M, ShtMthTy, Mthn)
 Next
 End Function
 
@@ -57,7 +57,7 @@ BrwDrs DDupMthP
 End Sub
 
 
-Private Sub ZZ()
+Private Sub Z()
 'Z_PjDupMthNyWithLinesId
 MIde_Mth_Dup:
 End Sub

@@ -15,23 +15,23 @@ For Each I In Itr(Ay)
 Next
 End Function
 
-Function AyeBlankEleAtEnd(A$()) As String()
+Function AyeBlnkEleAtEnd(A$()) As String()
 If Si(A) = 0 Then Exit Function
-If LasEle(A) <> "" Then AyeBlankEleAtEnd = A: Exit Function
+If LasEle(A) <> "" Then AyeBlnkEleAtEnd = A: Exit Function
 Dim J%
 For J = UB(A) To 0 Step -1
     If Trim(A(J)) <> "" Then
         Dim O$()
         O = A
         ReDim Preserve O(J)
-        AyeBlankEleAtEnd = O
+        AyeBlnkEleAtEnd = O
         Exit Function
     End If
 Next
 End Function
 
 Function IntersectAy(A, B)
-IntersectAy = AyzReSi(A)
+IntersectAy = ResiU(A)
 If Si(A) = 0 Then Exit Function
 If Si(A) = 0 Then Exit Function
 Dim V
@@ -61,7 +61,7 @@ End Function
 
 Function MinusAy(A, B)
 If Si(B) = 0 Then MinusAy = A: Exit Function
-MinusAy = AyzReSi(A)
+MinusAy = ResiU(A)
 If Si(A) = 0 Then Exit Function
 Dim V
 For Each V In A
@@ -137,7 +137,7 @@ End Select
 SyShow = O
 End Function
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A
 Dim B()
 Dim C$
@@ -185,10 +185,10 @@ For Each I In Itr(Ay)
 Next
 End Function
 
-Function RmvSngQuotezAy(Ay) As String()
+Function RmvSngQtezAy(Ay) As String()
 Dim I
 For Each I In Itr(Ay)
-    PushI RmvSngQuotezAy, RmvSngQuote(CStr(I))
+    PushI RmvSngQtezAy, RmvSngQte(CStr(I))
 Next
 End Function
 
@@ -227,7 +227,7 @@ Next
 End Function
 
 Function RplT1zAy(Ay, NewT1) As String()
-RplT1zAy = SyzAyP(RmvT1zAy(Ay), NewT1 & " ")
+RplT1zAy = AddPfxzAy(RmvT1zAy(Ay), NewT1 & " ")
 End Function
 
 Function OffsetzEmBeg(B As EmIxCol) As Byte
@@ -292,5 +292,5 @@ For J = 1 To UB(Ly1)
 Next
 End Function
 Function TabAy(Ay, Optional NTab% = 1) As String()
-TabAy = SyzAyP(Ay, TabN(NTab))
+TabAy = AddPfxzAy(Ay, TabN(NTab))
 End Function

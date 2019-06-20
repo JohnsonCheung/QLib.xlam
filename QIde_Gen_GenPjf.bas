@@ -115,7 +115,7 @@ Dim OPj As VBProject: Set OPj = PjzFxa(OFxa)
                                 AddRfzS OPj, RfSrczSrcp(SPth)
                                 LoadBas OPj, SPth
 End Sub
-Private Sub ZZ()
+Private Sub Z()
 QIde_Bld_GenFxa:
 End Sub
 

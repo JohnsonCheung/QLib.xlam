@@ -120,9 +120,9 @@ Function IsNoLinMd(V As CodeModule) As Boolean
 IsNoLinMd = V.CountOfLines = 0
 End Function
 
-Function IsNonBlankStr(V) As Boolean
+Function IsNBStr(V) As Boolean
 If Not IsStr(V) Then Exit Function
-IsNonBlankStr = V <> ""
+IsNBStr = V <> ""
 End Function
 
 Function IsNothing(V) As Boolean
@@ -157,27 +157,27 @@ If V = "_" Then Exit Function
 IsPun = True
 End Function
 
-Function IsQuoted(S, Q1$, Optional ByVal Q2$) As Boolean
+Function IsQted(S, Q1$, Optional ByVal Q2$) As Boolean
 If Q2 = "" Then Q2 = Q1
 If FstChr(S) <> Q1 Then Exit Function
-IsQuoted = LasChr(S) = Q2
+IsQted = LasChr(S) = Q2
 End Function
 
 Function IsSngQRmk(S) As Boolean
 IsSngQRmk = FstChr(LTrim(S)) = "'"
 End Function
 
-Function IsSngQuoted(S) As Boolean
-IsSngQuoted = IsQuoted(S, "'")
+Function IsSngQted(S) As Boolean
+IsSngQted = IsQted(S, "'")
 End Function
 
 Function IsSomething(V) As Boolean
 IsSomething = Not IsNothing(V)
 End Function
-Function IsNeedQuote(S) As Boolean
-If IsSqBktQuoted(S) Then Exit Function
+Function IsNeedQte(S) As Boolean
+If IsSqBktQted(S) Then Exit Function
 Select Case True
-Case IsAscDig(Asc(FstChr(S))), HasSpc(S), HasDot(S), HasHyphen(S), HasPound(S): IsNeedQuote = True
+Case IsAscDig(Asc(FstChr(S))), HasSpc(S), HasDot(S), HasHyphen(S), HasPound(S): IsNeedQte = True
 End Select
 End Function
 Function IsDtezS(S$) As Boolean
@@ -268,21 +268,21 @@ Ass IsVdtLyDicStr(LineszVbl("***")) = True
 Ass IsVdtLyDicStr("**") = False
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Z_IsVdtLyDicStr
 MVb_IsVar:
 End Sub
 
-Function IsAllBlankSy(V$()) As Boolean
+Function IsAllBlnkSy(V$()) As Boolean
 Dim I
 For Each I In V
     If Trim(I) <> "" Then Exit Function
 Next
-IsAllBlankSy = True
+IsAllBlnkSy = True
 End Function
-Function IsBlankStr(V) As Boolean
+Function IsBlnkStr(V) As Boolean
 If IsStr(V) Then
-    If Trim(V) = "" Then IsBlankStr = True
+    If Trim(V) = "" Then IsBlnkStr = True
 End If
 End Function
 

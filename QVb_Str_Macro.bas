@@ -13,8 +13,8 @@ Function NyzMacro(Macro, Optional OpnBkt$ = vbOpnBigBkt, Optional InclBkt As Boo
 Dim Q1$:   Q1 = OpnBkt
 Dim Q2$:   Q2 = ClsBkt(OpnBkt)
 Dim Sy$(): Sy = Split(Macro, Q1)
-Dim O$():   O = AywDist(RmvBlankLin(BefSy(Sy, Q2)))
-If InclBkt Then O = SyzAyPS(O, Q1, Q2)
+Dim O$():   O = AywDist(RmvBlnkLin(BefSy(Sy, Q2)))
+If InclBkt Then O = AddPfxSzAy(O, Q1, Q2)
 NyzMacro = O
 End Function
 
@@ -32,12 +32,12 @@ For Each N In NyzMacro(Macro)
 Next
 FmtMacrozAv = O
 End Function
-Function FmtMacrozRs$(Macro, Rs As Dao.Recordset)
+Function FmtMacrozRs$(Macro, Rs As DAO.Recordset)
 FmtMacrozRs = FmtMacrozDic(Macro, DiczRs(Rs))
 End Function
-Function DiczRs(A As Dao.Recordset) As Dictionary
+Function DiczRs(A As DAO.Recordset) As Dictionary
 Set DiczRs = New Dictionary
-Dim F As Dao.Field
+Dim F As DAO.Field
 For Each F In A.Fields
     DiczRs.Add F.Name, F.Value
 Next

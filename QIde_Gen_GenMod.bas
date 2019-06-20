@@ -25,7 +25,7 @@ Set MdnCell = Ws.Range("A2")
      Set Md = MdzPN(Pj, Mdn)
      NewSrc = StrColzWsLC(Lo, "T_GenMod", "SrcCd")
               If Si(NewSrc) = 0 Then MsgBox "No source code is generated", vbCritical: Exit Sub
-       OldL = SrcLines(Md)
+       OldL = SrcL(Md)
        NewL = JnCrLf(NewSrc)
               If OldL <> NewL Then MsgBox "The source in WsSrc <> the soruce from Mod", vbCritical: Exit Sub
               PutAyAtV NewSrc, A1zLo(Lo)     '<== Save
@@ -65,8 +65,9 @@ Set MdnCell = Ws.Range("A2")
               PutAyAtV SrcCd, A1zLo(Lo)     '<== Load
               MsgBox "SrcCd loaded:" & vbCrLf & WrdCntg(JnCrLf(SrcCd)), vbInformation
 End Sub
+
 Sub Cmd_Srt()
-'EnsWbNmzLcPfx WsSrc, "T_Src", "Key", "Stp"
+'EnsBnmzLcPfx WsSrc, "T_Src", "Key", "Stp"
 End Sub
 
 Sub VdtSrc(ISrc As Drs, IDes As Drs)
@@ -107,10 +108,10 @@ Dim JSrcPm As Drs:   JSrcPm = B_JSrcPm(ISrc)  '! With Col-Pm added
 Dim RmkVer%:       RmkVer = 2
 Dim Rmk1 As Drs:     Rmk1 = DrszSel(JSrcPm, "Key Ret Fss Pm Id StpFor")
 Dim Rmk2 As Drs:     Rmk2 = B_Rmk2(RmkVer, Rmk1)
-Dim CdRmk$():       CdRmk = SyzAyP(FmtDry(Rmk2.Dry, Fmt:=EiSSFmt), "'")
+Dim CdRmk$():       CdRmk = AddPfxzAy(LyzDry(Rmk2.Dry, Fmt:=EiSSFmt), "'")
 
 '== CdDes OK ==============================================================================================
-Dim CdDes$():       CdDes = SyzAyP(FmtDry(IDes.Dry, Fmt:=EiSSFmt), "'")
+Dim CdDes$():       CdDes = AddPfxzAy(LyzDry(IDes.Dry, Fmt:=EiSSFmt), "'")
 
 '== CdCnst OK ==============================================================================================
 Dim JCnst As Drs:   JCnst = DrszSel(ISrc, "Key Fss")
@@ -134,7 +135,7 @@ Dim MBdy3Col As Drs:
     Else
         MBdy3Col = B_MBdy3Col(MBdy)
     End If
-Dim MMLy$():             MMLy = FmtDry(MBdy3Col.Dry, Fmt:=EiSSFmt)
+Dim MMLy$():             MMLy = LyzDry(MBdy3Col.Dry, Fmt:=EiSSFmt)
 Dim CdMain$():         CdMain = Sy(MMthLin, CdRmk, CdDes, MMLy, "End " & MMthSorF)
 
 '== CdY ==============================================================================================
@@ -142,12 +143,12 @@ Dim CdYLisa As Drs:    CdYLisa = ColInSel(JSrcPm, "StpTy", SyzSS("Stmt Sub"), "K
 Dim CdYLisb As Drs:    CdYLisb = ColInSel(JSrcPm, "StpTy", SyzSS("Expr Fun Inp"), "Key StpTy Expr Stmt Ret Pm")
 Dim CdY4Cola As Drs:  CdY4Cola = B_CdY4Cola(CdYLisa)
 Dim CdY4Colb As Drs:  CdY4Colb = B_CdY4Colb(CdYLisb)
-Dim CdY$():                CdY = Sy(FmtDry(CdY4Cola.Dry, Fmt:=EiSSFmt), Sy(FmtDry(CdY4Colb.Dry, Fmt:=EiSSFmt)))
+Dim CdY$():                CdY = Sy(LyzDry(CdY4Cola.Dry, Fmt:=EiSSFmt), Sy(LyzDry(CdY4Colb.Dry, Fmt:=EiSSFmt)))
 
 '== CdZZ OK ==============================================================================================
 Dim CdZZLis As Drs:   CdZZLis = DrszSel(JSrcPm, "Key StpTy Stmt Expr Ret")
 Dim CdZZ4Col As Drs: CdZZ4Col = B_CdZZ4Col(CdZZLis)
-Dim CdZZ$():             CdZZ = FmtDry(CdZZ4Col.Dry, Fmt:=EiSSFmt)
+Dim CdZZ$():             CdZZ = LyzDry(CdZZ4Col.Dry, Fmt:=EiSSFmt)
 
 '== CdB ==============================================================================================
 '-- BBMLin OK -----------------------------------------------------------------------------------------------
@@ -180,7 +181,7 @@ Dim BBRmkDes$()
 
 '-- BBCxt OK -----------------------------------------------------------------------------------------------
 Dim BKey$()
-Dim UsedMthn$():            UsedMthn = SyzAyP(BKey, "B_")
+Dim UsedMthn$():            UsedMthn = AddPfxzAy(BKey, "B_")
 
 Dim MDic As Dictionary:     Set MDic = MthDic(InpSrc, ExlDcl:=True)
 Dim MDic1 As Dictionary:   Set MDic1 = B_MDic1(MDic)
@@ -194,7 +195,7 @@ Dim MExtra As Dictionary:    Set MExtra = MPair.B
 Dim BBExtra$:                   BBExtra = JnDblCrLf(SyzItr(SrtDic(MExtra).Items))
 
 '-- BBELin  -----------------------------------------------------------------------------------------------
-Dim BBELin$(): BBELin = SyzAyP(BCSorF, "End ")
+Dim BBELin$(): BBELin = AddPfxzAy(BCSorF, "End ")
 
 '-- CdB  -----------------------------------------------------------------------------------------------
 CdB = B_CdB(BBMLin, BBRmkFm, BBRmkRet, BBRmkDes, BBCxt, BBELin, BBExtra)
@@ -230,7 +231,7 @@ For J = 0 To UB(Pm)
     For Each IPm In Itr(SyzSS(Pm(J)))
         PushI ODry, Array("'Fm :", IPm, D1(IPm), PpdIf(D2(IPm), "! "))
     Next
-    RmkFm = JnCrLf(FmtDry(ODry, Fmt:=EiSSFmt))
+    RmkFm = JnCrLf(LyzDry(ODry, Fmt:=EiSSFmt))
     PushI B_BBRmkFm, RmkFm
 Next
 End Function
@@ -372,7 +373,7 @@ For Each Dr In Itr(CdYLisb.Dry)
     Stmt = Dr(3)
     Ret = Dr(4)
     Pm = Dr(5)
-    Pm = JnCommaSpc(SyzAyP(SyzSS(Pm), "Y_"))
+    Pm = JnCommaSpc(AddPfxzAy(SyzSS(Pm), "Y_"))
     RetAs = RetAszRet(Ret)
     TyChrzRet (Ret)
     Select Case StpTy
@@ -453,7 +454,7 @@ Dim Dr, I1%, I2%, I3%, I4%, I5%, ODry()
 Dim O As Drs: O = DrszSel(ISrc, CC)
 AsgIx ISrc, "Fm1 Fm2 Fm3 Fm4 Fm5", I1, I2, I3, I4, I5
 For Each Dr In Itr(ISrc.Dry)
-    PushI Dr, JnSpc(SyNonBlank(Dr(I1), Dr(I2), Dr(I3), Dr(I4), Dr(I5)))
+    PushI Dr, JnSpc(SyNB(Dr(I1), Dr(I2), Dr(I3), Dr(I4), Dr(I5)))
     PushI ODry, Dr
 Next
 Stop '
@@ -489,7 +490,7 @@ For J = 0 To UB(StpTy(J))
     Case "Stmt":               O = Stmt(J)
     Case "Sub":                O = Key(J) & " " & Pm(J)
     Case "Fun" And Pm(J) = "": O = Key(J)
-    Case "Fun":                O = Key(J) & QuoteBkt(Pm(J))
+    Case "Fun":                O = Key(J) & QteBkt(Pm(J))
     Case "Expr":               O = Expr(J)
     Case Else: Thw CSub, "Invalid StpTy.  Should be Sub|Fun|Stmt|Expr", "[StpTy with err] RowIx MBdy", StpTy(J), J, FmtAyab(Key, StpTy)
     End Select
@@ -512,7 +513,7 @@ Dim Dcl$()
         Case "Fun", "Expr"
             ArgSfx = ArgSfxzRet(Ret(J))
             Dcl(J) = FmtQQ("Dim B_??:", Key(J), ArgSfx)
-        Case Else: Thw CSub, "Invalid StpTy.  Should be Sub|Fun|Stmt|Expr", "[StpTy with err] RowIx MBdy", StpTy, J, FmtDrs(MBdy)
+        Case Else: Thw CSub, "Invalid StpTy.  Should be Sub|Fun|Stmt|Expr", "[StpTy with err] RowIx MBdy", StpTy, J, LinzDrs(MBdy)
         End Select
     Next
 Dim LHS$()
@@ -534,7 +535,7 @@ Dim Callg$()
         Case T = "Stmt":               Callg(J) = Stmt(J)
         Case T = "Sub":                Callg(J) = Key(J) & " " & P
         Case T = "Fun" And Pm(J) = "": Callg(J) = Key(J)
-        Case T = "Fun":                Callg(J) = Key(J) & QuoteBkt(P)
+        Case T = "Fun":                Callg(J) = Key(J) & QteBkt(P)
         Case T = "Expr":               Callg(J) = Expr(J)
         Case Else: Stop
         End Select
@@ -579,12 +580,12 @@ For Each Dr In MBdy.Dry
             If Pm = "" Then
                 Callg = Key
             Else
-                Callg = Key & QuoteBkt(Pm)
+                Callg = Key & QteBkt(Pm)
             End If
         Else
             Callg = Expr
         End If
-    Case Else: Thw CSub, "Invalid StpTy.  Should be Sub|Fun|Stmt|Expr", "[StpTy with err] RowIx MBdy", StpTy, Ix, FmtDrs(MBdy)
+    Case Else: Thw CSub, "Invalid StpTy.  Should be Sub|Fun|Stmt|Expr", "[StpTy with err] RowIx MBdy", StpTy, Ix, LinzDrs(MBdy)
     End Select
     PushI ODry, Array(Dcl, LHS, Callg)
     Ix = Ix + 1
@@ -654,9 +655,9 @@ End Function
 
 Private Sub Z_CdB()
 Dim Cd$(), ISrc As Drs, IDes As Drs, SrcCd$()
-GoSub ZZ
+GoSub Z
 Exit Sub
-ZZ:
+Z:
     Brw CdB(ISrc, IDes, SrcCd)
     Return
 End Sub

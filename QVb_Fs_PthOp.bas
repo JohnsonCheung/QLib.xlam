@@ -62,8 +62,8 @@ If IsPthOfEmp(Pth) Then Exit Sub
 RmDir Pth
 End Sub
 
-Sub RenPthSzAddP(Pth, Pfx)
-RenPth Pth, SzAddPzPth(Pth, Pfx)
+Sub RenPthAddPfx(Pth, Pfx)
+RenPth Pth, AddPfxzPth(Pth, Pfx)
 End Sub
 
 Sub RenPth(Pth, NewPth)

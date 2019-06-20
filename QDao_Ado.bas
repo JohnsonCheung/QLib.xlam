@@ -134,7 +134,7 @@ DmpAy TnyzFbByAdo(SampFbzDutyDta)
 End Sub
 
 Private Sub Z_Wny()
-D Wny(SampFxzKE24)
+D WNy(SampFxzKE24)
 End Sub
 
 Function HasTblzFfnT(Ffn, T) As Boolean
@@ -151,7 +151,7 @@ HasFbt = HasEle(TnyzFb(Fb), T)
 End Function
 
 Function HasFxw(Fx, Wsn) As Boolean
-HasFxw = HasEle(Wny(Fx), W)
+HasFxw = HasEle(WNy(Fx), W)
 End Function
 
 Function TnyzFb(Fb) As String()
@@ -164,21 +164,21 @@ TnyzFbByAdo = AyeLikss(TnyzCat(CatzFb(Fb)), "MSys* f_*_Data")
 End Function
 
 Function WnyzWb(A As Workbook) As String()
-WnyzWb = Wny(A.FullName)
+WnyzWb = WNy(A.FullName)
 End Function
 Private Sub Z_Wny2()
 Const Fx$ = "C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\2018\MB52 2018-01-30.xls"
-D Wny(Fx)
+D WNy(Fx)
 End Sub
-Function Wny(Fx, Optional InclAllOtherTbl As Boolean) As String()
+Function WNy(Fx, Optional InclAllOtherTbl As Boolean) As String()
 Dim Tny$(), T
 Tny = TnyzCat(CatzFx(Fx))
 If InclAllOtherTbl Then
-    Wny = Tny
+    WNy = Tny
     Exit Function
 End If
 For Each T In Itr(Tny)
-    PushNonBlank Wny, WsnzCatTn(T)
+    PushNB WNy, WsnzCatTn(T)
 Next
 End Function
 
@@ -221,7 +221,7 @@ Function DftWsny(Wsny0, Fx) As String()
 Dim O$()
     O = CvSy(Wsny0)
 If Si(O) = 0 Then
-    DftWsny = Wny(Fx)
+    DftWsny = WNy(Fx)
 Else
     DftWsny = O
 End If
@@ -236,7 +236,7 @@ End Function
 
 Function DftWny(Wny0, Fx) As String()
 If IsMissing(Wny0) Then
-    DftWny = Wny(Fx)
+    DftWny = WNy(Fx)
 Else
     DftWny = CvSy(Wny0)
 End If
@@ -324,8 +324,8 @@ CvAdoTy = A
 End Function
 
 Function CatTnzWsn$(Wsn)
-If IsNeedQuote(Wsn) Then
-    CatTnzWsn = QuoteSng(Wsn & "$")
+If IsNeedQte(Wsn) Then
+    CatTnzWsn = QteSng(Wsn & "$")
 Else
     CatTnzWsn = Wsn & "$"
 End If
@@ -333,17 +333,17 @@ End Function
 
 Function WsnzCatTn$(CatTn)
 If HasSfx(CatTn, "FilterDatabase") Then Exit Function
-WsnzCatTn = RmvSfx(RmvSngQuote(CatTn), "$")
+WsnzCatTn = RmvSfx(RmvSngQte(CatTn), "$")
 End Function
 
-Private Sub ZZ()
+Private Sub Z()
 Z_TnyzFb
 
 MAdoX_Cat:
 End Sub
 
 Function IntoColzArs(IntoCol, A As AdoDb.Recordset, Optional Col = 0)
-IntoColzArs = AyzReSi(IntoCol)
+IntoColzArs = ResiU(IntoCol)
 With A
     While Not .EOF
         PushI IntoColzArs, Nz(.Fields(Col).Value, Empty)

@@ -3,7 +3,10 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Mth_Lin_Shf_Tak_Rmv."
 Private Const Asm$ = "QIde"
-
+Type SLin
+    S As String
+    Lin As String
+End Type
 Function ShfMthTy$(OLin$)
 Dim O$: O = TakMthTy(OLin$)
 If O = "" Then Exit Function
@@ -42,12 +45,28 @@ End Function
 Function ShfMthSfx$(OLin$)
 ShfMthSfx = ShfChr(OLin, "#!@#$%^&")
 End Function
+Sub Z_ShfBef()
+Dim L$, Sep$, EptL$
+GoSub T0
+Exit Sub
+T0:
+    L = "aaa.bbb"
+    Sep = "."
+    Ept = "aaa"
+    EptL = ".bbb"
+    GoTo Tst
+Tst:
+    Act = ShfBef(L, Sep)
+    C
+    If L <> EptL Then Stop
+    Return
+End Sub
 
-Function ShfBef$(OLin$, Sep$, Optional NoTrim As Boolean)
+Function ShfBef$(OLin$, Sep)
 Dim P%: P = InStr(OLin, Sep)
 If P = 0 Then Exit Function
-ShfBef = Bef(OLin, Sep, NoTrim)
-OLin = Aft(OLin, Sep, NoTrim)
+ShfBef = Left(OLin, P - 1)
+OLin = Mid(OLin, P + Len(Sep) - 1)
 End Function
 
 Function ShfBefOrAll$(OLin$, Sep$, Optional NoTrim As Boolean)

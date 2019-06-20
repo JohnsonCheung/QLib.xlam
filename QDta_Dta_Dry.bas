@@ -34,7 +34,7 @@ Next
 End Function
 
 Private Sub Z_FmtA()
-DmpAy FmtDry(SampDry1)
+DmpAy LyzDry(SampDry1)
 End Sub
 
 Function DrywDup(Dry(), C&) As Variant()
@@ -158,7 +158,7 @@ Dim L, T$, Rst$: For Each L In Itr(Ly)
     PushI TAy, T
     PushI RstAy, Rst
 Next
-TAy = SyzAlign(TAy)
+TAy = AlignzAy(TAy)
 Dim J&: For J = 0 To UB(TAy)
     PushI AlignzTRst, TAy(J) & " " & RstAy(J)
 Next
@@ -231,14 +231,14 @@ Dim Dr
 For Each Dr In Itr(Dry)
     If Dr(C) = Eq Then FstRecEqzDry = Array(AywIxy(Dr, SelIxy)): Exit Function
 Next
-Thw CSub, "No first rec in Dry of Col-A eq to Val-B", "Col-A Val-B Dry", C, Eq, FmtDry(Dry)
+Thw CSub, "No first rec in Dry of Col-A eq to Val-B", "Col-A Val-B Dry", C, Eq, LyzDry(Dry)
 End Function
 Function FstDrEqzDry(Dry(), C, Eq, SelIxy&()) As Variant()
 Dim Dr
 For Each Dr In Itr(Dry)
     If Dr(C) = Eq Then FstDrEqzDry = AywIxy(Dr, SelIxy): Exit Function
 Next
-Thw CSub, "No first Dr in Dry of Col-A eq to Val-B", "Col-A Val-B Dry", C, Eq, FmtDry(Dry)
+Thw CSub, "No first Dr in Dry of Col-A eq to Val-B", "Col-A Val-B Dry", C, Eq, LyzDry(Dry)
 End Function
 
 Function DrywDupCC(Dry(), CCIxy&()) As Variant()
@@ -258,9 +258,9 @@ Next
 End Function
 
 Function DrywIxyzy(Dry(), Ixy&(), EqVy()) As Variant()
-Dim Drv
-For Each Drv In Itr(Dry)
-    If IsEqAy(AywIxy(Drv, Ixy), EqVy) Then PushI DrywIxyzy, Drv
+Dim Dr
+For Each Dr In Itr(Dry)
+    If IsEqAy(AywIxy(Dr, Ixy), EqVy) Then PushI DrywIxyzy, Dr
 Next
 End Function
 Function DistColzDry(Dry(), C&) As Variant()

@@ -49,7 +49,7 @@ If Fdr(ParPth(Srcp)) <> ".Src" Then Thw CSub, "Not source path", "CmitgPth", Src
 PjnzSrcp = Fdr(Srcp)
 End Function
 
-Private Sub ZZ()
+Private Sub Z()
 MApp_Commit:
 End Sub
 

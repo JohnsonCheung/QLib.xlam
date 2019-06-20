@@ -140,8 +140,6 @@ Function LasWs(A As Workbook) As Worksheet
 Set LasWs = A.Sheets(A.Sheets.Count)
 End Function
 
-
-
 Function CvWb(A) As Workbook
 Set CvWb = A
 End Function
@@ -235,11 +233,11 @@ Set WszWb = A.Sheets(WsIx)
 End Function
 
 Function WsnyzRg(A As Range) As String()
-WsnyzRg = Wsny(WbzRg(A))
+WsnyzRg = WsNy(WbzRg(A))
 End Function
 
-Function Wsny(A As Workbook) As String()
-Wsny = Itn(A.Sheets)
+Function WsNy(A As Workbook) As String()
+WsNy = Itn(A.Sheets)
 End Function
 
 
@@ -570,7 +568,6 @@ Function ColzAt(At As Range) As Variant()
 ColzAt = ColzSq(SqzRg(BarVzAt(At)))
 End Function
 
-
 Function IsCellInRg(A As Range, Rg As Range) As Boolean
 Dim R&, C%, R1&, R2&, C1%, C2%
 R = A.Row
@@ -630,7 +627,7 @@ ShwWs O
 End Property
 
 Function FstWsn$(Fx)
-FstWsn = FstItm(Wny(Fx))
+FstWsn = FstItm(WNy(Fx))
 End Function
 
 Function OleCnStrzFx$(Fx)
@@ -655,6 +652,11 @@ Debug.Print RgRR(R, 1, 2).Address
 Stop
 End Sub
 
+Function AutoFilterzLo(L As ListObject) As AutoFilter
+Dim A: A = L.AutoFilter
+If IsNothing(A) Then Stop
+Set AutoFilterzLo = A
+End Function
 Function CvAutoFilter(A) As AutoFilter
 Set CvAutoFilter = A
 End Function
@@ -740,21 +742,12 @@ Function FstRowRg(A As Range) As Range
 Set FstRowRg = RgR(A, 1)
 End Function
 
-Function IsHBarRg(A As Range) As Boolean
-IsHBarRg = A.Rows.Count = 1
+Function IsRgHBar(A As Range) As Boolean
+IsRgHBar = A.Rows.Count = 1
 End Function
 
-Function IsVbarRg(A As Range) As Boolean
-IsVbarRg = A.Columns.Count = 1
-End Function
-
-Function LasVCell(At As Range) As Range
-Set LasVCell = RgR(At, NRowzRg(At))
-End Function
-
-
-Function LasHCell(Cell As Range) As Range
-Set LasHCell = RgC(Cell, NColRg(Cell))
+Function IsRgVBar(A As Range) As Boolean
+IsRgVBar = A.Columns.Count = 1
 End Function
 
 Function NColRg%(A As Range)
@@ -763,17 +756,6 @@ End Function
 
 Function RgzMoreBelow(A As Range, Optional N% = 1)
 Set RgzMoreBelow = RgRR(A, 1, A.Rows.Count + N)
-End Function
-
-Function DicValToWbAdrzRg(Rg As Range) As Dictionary
-Dim R As Range, K
-Set DicValToWbAdrzRg = New Dictionary
-For Each R In Rg
-    K = R.Value
-    If IsStr(K) Then
-        DicValToWbAdrzRg.Add K, R.Address(External:=True)
-    End If
-Next
 End Function
 
 Function LasRow(Lo As ListObject) As Range
@@ -795,15 +777,6 @@ With Lo
 End With
 End Function
 
-Function DicNmAdrzWsNmPfx(Ws As Worksheet, NmPfx$) As Dictionary
-Dim N As Name
-Set DicNmAdrzWsNmPfx = New Dictionary
-For Each N In Ws.Names
-    If HasPfx(N.Name, NmPfx) Then
-        DicNmAdrzWsNmPfx.Add N.Name, N.RefersTo
-    End If
-Next
-End Function
 Function RgzMoreTop(A As Range, Optional N = 1)
 Dim O As Range
 Set O = RgRR(A, 1 - N, A.Rows.Count)
@@ -893,7 +866,7 @@ Function WszRg(A As Range) As Worksheet
 Set WszRg = A.Parent
 End Function
 
-Private Sub ZZ()
+Private Sub Z()
 Z_RgzMoreBelow
 MXls_Z_Rg:
 End Sub
@@ -921,7 +894,7 @@ Function StrColzWsLC(Ws As Worksheet, LoNm$, C$) As String()
 StrColzWsLC = StrColzLo(Ws.ListObjects(LoNm), C)
 End Function
 Function VbarAy(A As Range) As Variant()
-Ass IsVbarRg(A)
+Ass IsRgVBar(A)
 'VbarAy = ColzSq(RgzSq(A), 1)
 End Function
 
@@ -942,14 +915,14 @@ Function DrszFxq(Fx, Q) As Drs
 DrszFxq = DrszArs(CnzFx(Fx).Execute(Q))
 End Function
 Function TmpDbzFx(Fx) As Database
-Set TmpDbzFx = TmpDbzFxWny(Fx, Wny(Fx))
+Set TmpDbzFx = TmpDbzFxWny(Fx, WNy(Fx))
 End Function
 
-Function TmpDbzFxWny(Fx, Wny$()) As Database
+Function TmpDbzFxWny(Fx, WNy$()) As Database
 Dim O As Database
    Set O = TmpDb
 Dim W
-For Each W In Itr(Wny)
+For Each W In Itr(WNy)
     LnkFx O, ">" & W, Fx, W
 Next
 Set TmpDbzFxWny = O
@@ -993,7 +966,7 @@ End Function
 
 Private Sub Z_Wny()
 Const Fx$ = "Users\user\Desktop\Invoices 2018-02.xlsx"
-D Wny(Fx)
+D WNy(Fx)
 End Sub
 
 Private Sub Z_FstWsn()
@@ -1016,7 +989,7 @@ End Sub
 
 Private Sub Z_Wny1()
 Dim Fx$
-'GoTo ZZ
+'GoTo Z
 GoSub T1
 Exit Sub
 T1:
@@ -1025,11 +998,11 @@ T1:
     GoSub Tst
     Return
 Tst:
-    Act = Wny(Fx)
+    Act = WNy(Fx)
     C
     Return
-ZZ:
-    DmpAy Wny(SampFxzKE24)
+Z:
+    DmpAy WNy(SampFxzKE24)
 End Sub
 Function ErzFfnMis(Ffn$, Optional Inpn$ = "File") As String()
 If HasFfn(Ffn) Then Exit Function
@@ -1052,7 +1025,7 @@ Erase XX
 XLin FmtQQ("[?] miss ws [?]", Inpn, Wsn)
 XTab "Path  : " & Pth(Fx)
 XTab "File  : " & Fn(Fx)
-XTab "Has Ws: " & TermLin(Wny(Fx))
+XTab "Has Ws: " & TermLin(WNy(Fx))
 ErzWsMis = XX
 End Function
 
@@ -1131,17 +1104,17 @@ Set WszS1S2s = WszSq(SqzS1S2s(A, Nm1, Nm2))
 End Function
 
 Private Sub Z_AyabWs()
-GoTo ZZ
+GoTo Z
 Dim A, B
-ZZ:
+Z:
     A = SyzSS("A B C D E")
     B = SyzSS("1 2 3 4 5")
     ShwWs WszAyab(A, B)
 End Sub
 
 Private Sub Z_WbFbOupTbl()
-GoTo ZZ
-ZZ:
+GoTo Z
+Z:
     Dim W As Workbook
     'Set W = WbFbOupTbl(WFb)
     'ShwWb W

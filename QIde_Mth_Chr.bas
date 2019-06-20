@@ -61,7 +61,7 @@ ShfTyChr = ShfChr(OLin, TyChrLis)
 End Function
 
 Function TyChr$(Lin)
-If IsLinzMth(Lin) Then TyChr = TakTyChr(RmvMthn3(Lin))
+If IsLinMth(Lin) Then TyChr = TakTyChr(RmvMthn3(Lin))
 End Function
 
 Function TakTyChr$(S)

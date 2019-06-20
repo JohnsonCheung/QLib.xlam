@@ -49,7 +49,7 @@ MthPfx = Mthn
 End Function
 
 
-Private Sub ZZ()
+Private Sub Z()
 Z_MthPfx
 MIde_Mth_Pfx:
 End Sub

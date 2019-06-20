@@ -18,10 +18,10 @@ Tst:
     Return
 End Sub
 
-Function RmvBlankLin(Ay) As String()
+Function RmvBlnkLin(Ay) As String()
 Dim I
 For Each I In Itr(Ay)
-    PushNonBlank RmvBlankLin, I
+    PushNB RmvBlnkLin, I
 Next
 End Function
 
@@ -33,7 +33,7 @@ TopRmkLyzSIW = TopRmkLy(Src, MthIx)
 End Function
 Function TopRmkLy(Src$(), MthIx) As String()
 Dim Fm&: Fm = TopRmkIx(Src, MthIx): If Fm = -1 Then Exit Function
-TopRmkLy = RmvBlankLin(AywFT(Src, Fm, MthIx - 1))
+TopRmkLy = RmvBlnkLin(AywFT(Src, Fm, MthIx - 1))
 End Function
 
 Function TopRmkIx&(Src$(), MthIx)

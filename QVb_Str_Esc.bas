@@ -32,7 +32,7 @@ End Function
 Function Slash$(S, C$, SlashC$) 'Escaping C$ in S by \SlashC$.  Eg C$ is vbCr and SlashC is r.
 If InStr(S, "\" & SlashC) > 0 Then
     Debug.Print FmtQQ("SlashChr: Given S has \?, when UnSlash, it will not match", SlashC)
-    Debug.Print vbTab; QuoteSq(S)
+    Debug.Print vbTab; QteSq(S)
 End If
 Slash = Replace(S, C, "\" & SlashC)
 End Function

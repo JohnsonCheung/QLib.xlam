@@ -31,12 +31,12 @@ End With
 End Function
 
 Private Sub Z_PthzSel()
-GoTo ZZ
-ZZ:
+GoTo Z
+Z:
 MsgBox FfnzSel("C:\")
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Z_PthzSel
 MVb_Fs_Sel:
 End Sub

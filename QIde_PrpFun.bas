@@ -4,20 +4,20 @@ Option Explicit
 Private Const CMod$ = "MIde_PrpFun."
 Private Const Asm$ = "QIde"
 Dim Inf$()
-Function IsPrpFunLin(Lin) As Boolean
+Function IsLinPrpFun(Lin) As Boolean
 Dim L$, B$
 L = RmvMdy(Lin)
 If ShfMthTy(L) <> "Function" Then Exit Function
 If ShfNm(L) = "" Then Exit Function
 ShfTyChr L
-IsPrpFunLin = Left(L, 2) = "()"
+IsLinPrpFun = Left(L, 2) = "()"
 End Function
 
 Function PrpFunLnoAy(M As CodeModule) As Long()
 Dim J&, L
 For Each L In Src(M)
     J = J + 1
-    If IsPrpFunLin(L) Then PushI PrpFunLnoAy, J
+    If IsLinPrpFun(L) Then PushI PrpFunLnoAy, J
 Next
 End Function
 

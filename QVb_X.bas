@@ -19,7 +19,7 @@ Sub XLin(Optional L$)
 PushI A, L
 End Sub
 Sub XDrs(Drs As Drs)
-PushIAy A, FmtDrs(Drs)
+PushIAy A, LinzDrs(Drs)
 End Sub
 Sub XTab(V)
 If IsArray(V) Then

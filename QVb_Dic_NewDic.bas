@@ -21,7 +21,7 @@ Next
 Set SyDic = O
 End Function
 
-Sub AddDiczNonBlankStr(ODic As Dictionary, K, S$)
+Sub AddDiczNBStr(ODic As Dictionary, K, S$)
 If S = "" Then Exit Sub
 ODic.Add K, S
 End Sub

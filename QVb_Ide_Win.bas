@@ -130,7 +130,7 @@ Private Sub Z_Md()
 Debug.Print Md("MVb_Ide_Z_Win").Parent.Name
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A()
 Dim B$
 Dim C As vbext_WindowType

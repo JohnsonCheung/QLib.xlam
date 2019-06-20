@@ -5,14 +5,12 @@ Private Const CMod$ = "MDta_Sel."
 Private Const Asm$ = "QDta"
 
 Function DryzSel(Dry(), Ixy&()) As Variant()
-Dim Drv
-For Each Drv In Itr(Dry)
-    PushI DryzSel, AywIxy(Drv, Ixy)
+Dim Dr: For Each Dr In Itr(Dry)
+    PushI DryzSel, AywIxy(Dr, Ixy)
 Next
 End Function
 Function DryzSelAlwE(Dry(), Ixy&()) As Variant()
-Dim Dr
-For Each Dr In Itr(Dry)
+Dim Dr: For Each Dr In Itr(Dry)
     PushI DryzSelAlwE, AywIxyAlwE(Dr, Ixy)
 Next
 End Function
@@ -136,7 +134,7 @@ For Each Dr In Itr(A.Dry)
         Next
     End Select
 Next
-O = Drs(SyNonBlank(A.Fny, AddFnyAs, AnyFld), ODry)
+O = Drs(SyNB(A.Fny, AddFnyAs, AnyFld), ODry)
 
 If False Then
     Erase XX
@@ -170,8 +168,7 @@ For Each Dr In Itr(Dry)
 Next
 End Function
 Function InsColzDryVyBef(Dry(), Vy()) As Variant()
-Dim Dr
-For Each Dr In Itr(Dry)
+Dim Dr: For Each Dr In Itr(Dry)
     PushI InsColzDryVyBef, AyzAdd(Vy, Dr)
 Next
 End Function
@@ -179,13 +176,13 @@ Function InsColzDryBef(Dry(), V) As Variant()
 InsColzDryBef = InsColzDryVyBef(Dry, Av(V))
 End Function
 Function InsColzDrsCC(A As Drs, CC$, V1, V2) As Drs
-InsColzDrsCC = DrszInsFF(A, CC, InsColzDryV2(A.Dry, V1, V2))
+InsColzDrsCC = DrswInsFF(A, CC, InsColzDryV2(A.Dry, V1, V2))
 End Function
 Function InsColzDrsC3(A As Drs, CCC$, V1, V2, V3) As Drs
-InsColzDrsC3 = DrszInsFF(A, CCC, InsColzDryV3(A.Dry, V1, V2, V3))
+InsColzDrsC3 = DrswInsFF(A, CCC, InsColzDryV3(A.Dry, V1, V2, V3))
 End Function
 Function InsColzFront(A As Drs, C$, V) As Drs
-InsColzFront = DrszInsFF(A, C, InsColzDryBef(A.Dry, V))
+InsColzFront = DrswInsFF(A, C, InsColzDryBef(A.Dry, V))
 End Function
 Function InsCol(A As Drs, C$, V) As Drs
 InsCol = InsColzFront(A, C, V)
@@ -290,6 +287,6 @@ SelDt = DtzDrs(DrszSel(DrszDt(A), FF), A.DtNm)
 End Function
 
 
-Private Sub ZZ()
+Private Sub Z()
 MDta_Sel:
 End Sub

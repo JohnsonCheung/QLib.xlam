@@ -105,7 +105,7 @@ Tst:
     Return
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 QXls_Lo_FmtLoTit:
 Z_TitSq
 End Sub

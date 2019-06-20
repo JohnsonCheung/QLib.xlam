@@ -93,13 +93,13 @@ For Each X In Itr(Dr)
 Next
 End Function
 
-Function FmtDrWrp(WrpDr, W%()) As String() _
+Function LinzDrWrp(WrpDr, W%()) As String() _
 'Each Itm of WrpDr may be an array.  So a AlignLzDrW return Ly not string.
 Dim Dr(): Dr = WrpDrPad(WrpDr, W)
 Dim Sq(): Sq = SqzWrpDr(Dr)
 Dim Sq1(): Sq1 = SqzAlignW(Sq(), W)
 Dim Ly$(): Ly = LyzSq(Sq1)
-PushIAy FmtDrWrp, Ly
+PushIAy LinzDrWrp, Ly
 End Function
 
 Function DryWrpCell(A(), Optional WrpWdt% = 40) As String() _
@@ -107,7 +107,7 @@ Function DryWrpCell(A(), Optional WrpWdt% = 40) As String() _
 Dim W%(), Dr, A1(), M$()
 W = WdtzWrpgDry(A, WrpWdt)
 For Each Dr In Itr(A)
-    M = FmtDrWrp(Dr, W)
+    M = LinzDrWrp(Dr, W)
     PushIAy DryWrpCell, M
 Next
 End Function

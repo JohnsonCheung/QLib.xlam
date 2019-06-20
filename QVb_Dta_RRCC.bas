@@ -26,7 +26,13 @@ End With
 End Function
 
 Function IsEqRRCC(A As RRCC, B As RRCC) As Boolean
-
+Dim A1 As RRCC: A1 = NormRRCC(A)
+Dim B1 As RRCC: B1 = NormRRCC(B)
+If A1.R1 <> B1.R1 Then Exit Function
+If A1.R2 <> B1.R2 Then Exit Function
+If A1.C1 <> B1.C1 Then Exit Function
+If A1.C2 <> B1.C2 Then Exit Function
+IsEqRRCC = True
 End Function
 
 Function NormRRCC(A As RRCC) As RRCC
@@ -40,8 +46,8 @@ With O
 End With
 End Function
 
-Function IsEmpRRCC(A As RRCC) As Boolean
-IsEmpRRCC = IsEqRRCC(A, EmpRRCC)
+Function RRCCIsEmp(A As RRCC) As Boolean
+RRCCIsEmp = IsEqRRCC(A, EmpRRCC)
 End Function
 Function EmpRRCC() As RRCC
 End Function

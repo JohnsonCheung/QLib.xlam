@@ -108,7 +108,7 @@ For Each I In X
 Next
 Stop
 End Sub
-Private Sub ZZ()
+Private Sub Z()
 Dim A As Variant
 ToBase64String A
 ToAscString A

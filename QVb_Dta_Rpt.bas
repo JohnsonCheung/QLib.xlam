@@ -1,6 +1,14 @@
 Attribute VB_Name = "QVb_Dta_Rpt"
 Option Explicit
 Option Compare Text
+Enum EmRpt
+    EiRptOnly
+    EiUpdAndRpt
+    EiUpdOnly
+    EiPushOnly
+    EiUpdAndPush
+End Enum
+
 Function StrzRpt$(Rpt As EmRpt)
 Dim O$
 Select Case True

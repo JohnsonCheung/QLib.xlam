@@ -16,7 +16,7 @@ End Function
 
 Sub AyPredSplitAsg(A, Pred$, OTrueAy, OFalseAy)
 Dim O1, O2
-O1 = AyzReSi(A)
+O1 = ResiU(A)
 O2 = O1
 Dim X
 For Each X In Itr(A)

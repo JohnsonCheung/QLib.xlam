@@ -179,15 +179,15 @@ O.Ay(O.N) = M
 O.N = O.N + 1
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Z_SwLins
 Z_Sw
 End Sub
 Private Sub Z_SwLins()
 Dim SwLy$()
-GoSub ZZ
+GoSub Z
 Exit Sub
-ZZ:
+Z:
     BrwSwLins SwLins(Y_SwLy)
     Return
 End Sub
@@ -258,9 +258,9 @@ End Function
 
 Private Sub Z_Sw()
 Dim SwLy$(), Pm As Dictionary
-GoSub ZZ
+GoSub Z
 Exit Sub
-ZZ:
+Z:
     BrwSw Sw(Y_SwLy, Y_Pm)
     Return
 End Sub
@@ -308,9 +308,9 @@ End Sub
 
 Private Sub Z_SqyzTp()
 Dim SqTp$
-GoSub ZZ
+GoSub Z
 Exit Sub
-ZZ:
+Z:
     B SqyzTp(Y_SqTp)
     Return
 End Sub
@@ -360,9 +360,9 @@ IsRm = Si(Ly) = 0
 End Function
 Private Sub Z_IsSq()
 Dim Ly$()
-GoSub ZZ
+GoSub Z
 Exit Sub
-ZZ:
+Z:
     Debug.Assert IsSq(Sy("Drp sdf"))
     Return
 End Sub

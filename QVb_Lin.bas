@@ -8,16 +8,12 @@ Function HasDDRmk(Lin) As Boolean
 HasDDRmk = HasSubStr(Lin, "--")
 End Function
 
-Function IsSngTermLin(Lin) As Boolean
-IsSngTermLin = InStr(Trim(Lin), " ") = 0
+Function IsLinSngTerm(Lin) As Boolean
+IsLinSngTerm = InStr(Trim(Lin), " ") = 0
 End Function
 
-Function IsDDLin(Lin) As Boolean
-IsDDLin = FstTwoChr(LTrim(Lin)) = "--"
-End Function
-
-Function IsDotLin(Lin) As Boolean
-IsDotLin = FstChr(Lin) = "."
+Function IsLinDD(Lin) As Boolean
+IsLinDD = Fst2Chr(LTrim(Lin)) = "--"
 End Function
 
 Function HitT1Ay(Lin, T1Ay$()) As Boolean
@@ -50,15 +46,10 @@ Dim PfxSy$(): PfxSy = SyzAy(PfxSy)
 PfxzPfxAp = PfxzPfxSy(S, PfxSy)
 End Function
 
-Function IsVbRmk(L) As Boolean
-IsVbRmk = FstChr(LTrim(L)) = "'"
+Function IsLinVbRmk(L) As Boolean
+IsLinVbRmk = FstChr(LTrim(L)) = "'"
 End Function
 
-Function IsLinOfRmk(Lin) As Boolean
-Select Case FstChr(Lin)
-Case "#", "@": IsLinOfRmk = True
-End Select
-End Function
 Function RmvRmk$(Lin)
 RmvRmk = BefOrAll(Lin, "--", True)
 End Function

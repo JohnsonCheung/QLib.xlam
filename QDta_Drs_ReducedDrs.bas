@@ -35,10 +35,10 @@ For J = 0 To NCol - 1
 Next
 End Function
 Sub BrwDrszReduce(A As ReducedDrs)
-BrwAy FmtDrszReduce(A)
+BrwAy LinzDrszReduce(A)
 End Sub
 
-Private Function FmtDrszReduce(A As ReducedDrs) As String()
-PushIAy FmtDrszReduce, FmtDic(A.ReducedColDic)
-PushIAy FmtDrszReduce, FmtDrs(A.Drs)
+Private Function LinzDrszReduce(A As ReducedDrs) As String()
+PushIAy LinzDrszReduce, FmtDic(A.ReducedColDic)
+PushIAy LinzDrszReduce, LinzDrs(A.Drs)
 End Function

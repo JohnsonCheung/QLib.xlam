@@ -27,7 +27,7 @@ For J = 0 To UB(Fny)
     E = Trim(Extny(J))
     Select Case True
     Case E = "", E = F: PushI O, F
-    Case Else: PushI O, QuoteSq(E) & " As " & F
+    Case Else: PushI O, QteSq(E) & " As " & F
     End Select
 Next
 PSel_Fny_Extny_NOFMT = KwSel & PDis(IsDis) & " " & JnCommaSpc(O)
@@ -105,15 +105,15 @@ End Property
 
 
 Private Function PBkt_FF$(FF$)
-PBkt_FF = QuoteBkt(SyzSS(FF))
+PBkt_FF = QteBkt(SyzSS(FF))
 End Function
 
 Private Function PBkt_Av$(Av())
 Dim O$(), I
 For Each I In Av
-    PushI O, SqlQuote(I)
+    PushI O, SqlQte(I)
 Next
-PBkt_Av = QuoteBktJnComma(Av)
+PBkt_Av = QteBktJnComma(Av)
 End Function
 
 
@@ -131,7 +131,7 @@ PFmzX = PFm(FmX) & " x"
 End Function
 
 Private Function PFm$(Fm)
-PFm = C_Fm & QuoteSq(Fm)
+PFm = C_Fm & QteSq(Fm)
 End Function
 
 Private Function PFm_X$(X)
@@ -186,8 +186,8 @@ If Not Fmt Then PSel_Fny_Extny = PSel_Fny_Extny_NOFMT(Fny, Extny): Exit Function
 Dim E$(), F$()
 F = Fny
 E = Extny
-FEs_SetExtNm_ToBlank_IfEqToFld F, E
-FEs_SqQuoteExtNm_IfNonBlank E
+FEs_SetExtNm_ToBlnk_IfEqToFld F, E
+FEs_SqQteExtNm_IfNB E
 FEs_AlignExtNm E
 FEs_AddAs_Or4Spc_ToExtNm E
 FEs_AddTab2Spc_ToExtNm E
@@ -196,24 +196,24 @@ PSel_Fny_Extny = KwSel & PDis(IsDis) & C_NL & Join(SyzAyab(E, F), C_CNL)
 End Function
 
 Private Sub FEs_AddTab2Spc_ToExtNm(OE$())
-OE = SyzAyP(OE, C_T & "  ")
+OE = AddPfxzAy(OE, C_T & "  ")
 End Sub
-Private Sub FEs_SetExtNm_ToBlank_IfEqToFld(F$(), OE$())
+Private Sub FEs_SetExtNm_ToBlnk_IfEqToFld(F$(), OE$())
 Dim J%
 For J = 0 To UB(OE)
     If OE(J) = F(J) Then OE(J) = ""
 Next
 End Sub
-Private Sub FEs_SqQuoteExtNm_IfNonBlank(OE$())
+Private Sub FEs_SqQteExtNm_IfNB(OE$())
 Dim J%
 For J = 0 To UB(OE)
     If OE(J) <> "" Then
-        OE(J) = QuoteSq(OE(J))
+        OE(J) = QteSq(OE(J))
     End If
 Next
 End Sub
 Private Sub FEs_AlignExtNm(OE$())
-OE = SyzAlign(OE)
+OE = AlignzAy(OE)
 End Sub
 Private Sub FEs_AddAs_Or4Spc_ToExtNm(OE$())
 Dim J%, C$
@@ -228,7 +228,7 @@ For J = 0 To UB(OE)
 Next
 End Sub
 Private Sub FEs_AlignFld(OF$())
-OF = SyzAlign(OF)
+OF = AlignzAy(OF)
 End Sub
 Private Function PDis$(Dis As Boolean)
 If Dis Then PDis = " " & KwDis & C_NLTT Else PDis = C_NLTT
@@ -240,9 +240,9 @@ End Function
 Private Sub Z_PSel_Fny_Extny()
 Dim Fny$()
 Dim Extny$()
-GoSub ZZ
+GoSub Z
 Exit Sub
-ZZ:
+Z:
     Fny = SyzSS("Sku CurRateAc VdtFm VdtTo HKD Per CA_Uom")
     Extny = TermAy("Sku [     Amount] [Valid From] [Valid to] Unit per Uom")
     Debug.Print PSel_Fny_Extny(Fny, Extny)
@@ -268,7 +268,7 @@ End Function
 
 Private Function PSet_Fny_Ey$(Fny$(), Ey$())
 Dim J$(): J = SyzAyab(SyzQteSq(Fny), Ey, " = ")
-Dim J1$(): J1 = SyzAyP(J, C_TT)
+Dim J1$(): J1 = AddPfxzAy(J, C_TT)
 Dim S$: S = Jn(J, "," & C_NL)
 PSet_Fny_Ey = C_NLT & KwSet & C_NL & S
 End Function
@@ -285,7 +285,7 @@ End Function
 
 Private Function PSet_Fny_Vy$(Fny$(), Vy())
 Dim F$(): F = SyzQteSq(Fny)
-Dim V$(): V = SqlQuoteVy(Vy)
+Dim V$(): V = SqlQteVy(Vy)
 PSet_Fny_Vy = JnComma(SyzAyab(F, V, "="))
 End Function
 
@@ -302,8 +302,8 @@ If Bexp = "" Then Exit Function
 'PAnd_Bexp = NxtLin & "and " & NxtLin_Tab & Bexp
 End Function
 
-Private Function SzAddPNLTT$(Sy$())
-SzAddPNLTT = Jn(SyzAyP(Sy, C_NLTT), "")
+Private Function AddPfxNLTT$(Sy$())
+AddPfxNLTT = Jn(AddPfxzAy(Sy, C_NLTT), "")
 End Function
 
 Private Function Bexp_E_InLis$(Expr$, InLisStr$)
@@ -343,8 +343,8 @@ Dim Fny$(): Fny = SyzSS(FF)
 Ass IsVblAy(Ey)
 If Si(Fny) <> Si(Ey) Then Thw CSub, "[FF-Sz} <> [Si-Ey], where [FF],[Ey]", Si(Fny), Si(Ey), FF, Ey
 Dim AFny$()
-    AFny = SyzAlign(Fny)
-    AFny = SyzAyS(AFny, " = ")
+    AFny = AlignzAy(Fny)
+    AFny = AddSfxzAy(AFny, " = ")
 Dim W%
     'W = VblWdtAy(Ey)
 Dim Ident%
@@ -388,7 +388,7 @@ Private Function PSet_Fny_Evy$(Fny$(), EqVy)
 End Function
 
 Private Function QNm$(T)
-QNm = QuoteSq(T)
+QNm = QteSq(T)
 End Function
 
 Private Function PUpd$(T)
@@ -408,7 +408,7 @@ PWhBet_F_Fm_To = C_Wh & QNm(F) & " " & KwBet & QV(FmV) & " " & KwAnd & " " & QV(
 End Function
 
 Private Function QV$(V)
-QV = SqlQuote(V)
+QV = SqlQte(V)
 End Function
 
 Private Function PExpr_F_InAy$(F, InVy)
@@ -490,9 +490,9 @@ End Function
 
 Private Sub Z_SqlSel_Fny_Ey_Into_T_OB()
 Dim Fny$(), Ey$(), Into$, T$, Bexp$
-GoSub ZZ
+GoSub Z
 Exit Sub
-ZZ:
+Z:
     Fny = SyzSS("Sku CurRateAc VdtFm VdtTo HKD Per CA_Uom")
     Ey = TermAy("Sku [     Amount] [Valid From] [Valid to] Unit per Uom")
     Into = "#IZHT086"
@@ -527,54 +527,54 @@ Function NsetzNN(NN$) As Aset
 Set NsetzNN = AsetzAy(SyzSS(NN))
 End Function
 
-Function SqlQuote$(V)
+Function SqlQte$(V)
 Dim O$, C$
-C = SqlQuoteChr(V)
-If C <> "" Then SqlQuote = Quote(CStr(V), C): Exit Function
+C = SqlQteChr(V)
+If C <> "" Then SqlQte = Qte(CStr(V), C): Exit Function
 Select Case True
 Case IsBool(V): O = IIf(V, "true", "false")
 Case IsEmpty(V), IsNull(V), IsNothing(V): O = "null"
 Case Else: O = V
 End Select
-SqlQuote = O
+SqlQte = O
 End Function
 
-Function SqlQuoteChrzT$(A As Dao.DataTypeEnum)
+Function SqlQteChrzT$(A As DAO.DataTypeEnum)
 Select Case A
 Case _
-    Dao.DataTypeEnum.dbBigInt, _
-    Dao.DataTypeEnum.dbByte, _
-    Dao.DataTypeEnum.dbCurrency, _
-    Dao.DataTypeEnum.dbDecimal, _
-    Dao.DataTypeEnum.dbDouble, _
-    Dao.DataTypeEnum.dbFloat, _
-    Dao.DataTypeEnum.dbInteger, _
-    Dao.DataTypeEnum.dbLong, _
-    Dao.DataTypeEnum.dbNumeric, _
-    Dao.DataTypeEnum.dbSingle: Exit Function
+    DAO.DataTypeEnum.dbBigInt, _
+    DAO.DataTypeEnum.dbByte, _
+    DAO.DataTypeEnum.dbCurrency, _
+    DAO.DataTypeEnum.dbDecimal, _
+    DAO.DataTypeEnum.dbDouble, _
+    DAO.DataTypeEnum.dbFloat, _
+    DAO.DataTypeEnum.dbInteger, _
+    DAO.DataTypeEnum.dbLong, _
+    DAO.DataTypeEnum.dbNumeric, _
+    DAO.DataTypeEnum.dbSingle: Exit Function
 Case _
-    Dao.DataTypeEnum.dbChar, _
-    Dao.DataTypeEnum.dbMemo, _
-    Dao.DataTypeEnum.dbText: SqlQuoteChrzT = "'"
+    DAO.DataTypeEnum.dbChar, _
+    DAO.DataTypeEnum.dbMemo, _
+    DAO.DataTypeEnum.dbText: SqlQteChrzT = "'"
 Case _
-    Dao.DataTypeEnum.dbDate: SqlQuoteChrzT = "#"
+    DAO.DataTypeEnum.dbDate: SqlQteChrzT = "#"
 Case Else
     Thw CSub, "Invalid DaoTy", "DaoTy", A
 End Select
 End Function
 
-Function SqlQuoteChr$(V)
+Function SqlQteChr$(V)
 Dim O$
 Select Case True
 Case IsStr(V): O = "'"
 Case IsDate(V): O = "#"
 End Select
-SqlQuoteChr = O
+SqlQteChr = O
 End Function
-Function SqlQuoteVy(Vy) As String()
+Function SqlQteVy(Vy) As String()
 Dim V
 For Each V In Vy
-    PushI SqlQuoteVy, SqlQuote(V)
+    PushI SqlQteVy, SqlQte(V)
 Next
 End Function
 
@@ -622,10 +622,10 @@ PSetzXAFny = PSetzXA(Fny, Fny)
 End Function
 
 Private Function PSetzXA(FnyX$(), FnyA$())
-Dim X$(): X = SyzAyPS(FnyX, "x.[", "]")
-Dim A$(): A = SyzAyPS(FnyA, "a.[", "]")
+Dim X$(): X = AddPfxSzAy(FnyX, "x.[", "]")
+Dim A$(): A = AddPfxSzAy(FnyA, "a.[", "]")
 Dim J$(): J = SyzAyab(X, A, " = ")
-          J = SyzAyP(J, C_TT)
+          J = AddPfxzAy(J, C_TT)
 Dim S$:   S = Jn(J, "," & C_NL)
 PSetzXA = PSetzX(S)
 End Function
@@ -698,7 +698,7 @@ Dim Fny$(): Fny = SyzSS(FF)
 ThwIf_DifSi Fny, Dr, CSub
 Dim A$, B$
 A = JnComma(SyzQteSqIf(Fny))
-B = JnComma(SqlQuoteVy(Dr))
+B = JnComma(SqlQteVy(Dr))
 SqlIns_T_FF_Dr = FmtQQ("Insert Into [?] (?) Values(?)", T, A, B)
 End Function
 Function SqlSel_T$(T, Optional Bexp$)
@@ -739,8 +739,8 @@ X_PUpd_Set_Wh:
     Return
 X_Ay:
     Dim L$(), R$()
-    L = AlignQuoteSq(Fny)
-    R = SqlQuoteVy(Dr)
+    L = AlignQteSq(Fny)
+    R = SqlQteVy(Dr)
     Return
 X_Fny1_Dr1_SkVy:
     Dim Ski, J%, Ixy%(), I%
@@ -767,7 +767,7 @@ PSet_Fny_Vy1 = "  Set " & A
 Exit Function
 X_A:
     Dim L$(): L = SyzQteSq(Fny)
-    Dim R$(): R = SqlQuoteVy(Vy)
+    Dim R$(): R = SqlQteVy(Vy)
     Dim J%, O$()
     For J = 0 To UB(L)
         Push O, L(J) & " = " & R(J)
@@ -852,8 +852,8 @@ End Function
 Function SqpAEqB_Fny_AliasAB$(Fny$(), Optional AliasAB$ = "x a")
 Dim A1$: A1 = BefSpc(AliasAB) ' Alias1
 Dim A2$: A2 = BefSpc(AliasAB) ' Alias2
-Dim A$(): A = SyzAyP(Fny, A1 & ".")
-Dim B$(): B = SyzAyP(Fny, A2 & ".")
+Dim A$(): A = AddPfxzAy(Fny, A1 & ".")
+Dim B$(): B = AddPfxzAy(Fny, A2 & ".")
 Dim J$(): J = SyzAyab(A, B, " = ")
 SqpAEqB_Fny_AliasAB = JnCommaSpc(J)
 End Function
@@ -930,7 +930,7 @@ Private Function Bexp_Fny_Vy$(Fny$(), Vy())
 End Function
 
 Private Function Bexp_F_Ev$(F$, Ev)
-Bexp_F_Ev = QuoteSq(F) & "=" & SqlQuote(Ev)
+Bexp_F_Ev = QteSq(F) & "=" & SqlQte(Ev)
 End Function
 
 Private Sub ZZZ()

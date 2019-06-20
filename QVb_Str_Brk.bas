@@ -140,8 +140,8 @@ End If
 BrkBoth = Brk1At(S, P, Sep, NoTrim)
 End Function
 
-Sub AsgBrkQuote(QuoteStr$, O1$, O2$)
-AsgS1S2 BrkQuote(QuoteStr), O1, O2
+Sub AsgBrkQte(QteStr$, O1$, O2$)
+AsgS1S2 BrkQte(QteStr), O1, O2
 End Sub
 
 Function BrkRev(S, Sep, Optional NoTrim As Boolean) As S1S2
@@ -190,7 +190,7 @@ Ass S1 = ExpS1
 Ass S2 = ExpS2
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Z_Brk1Rev
 MVb_Str_Brk:
 End Sub

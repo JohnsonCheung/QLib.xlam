@@ -27,120 +27,167 @@ For J = 0 To A.N - 1
     PushS1S2 O, A.Ay(J)
 Next
 End Sub
-Function FmtS1S2s(A As S1S2s, Optional Nm1$ = "S1", Optional Nm2$ = "S2") As String()
+Function DryzInsIx(Dry()) As Variant()
+' Ret Dry with each row has ix run from 0..{N-1} in front
+Dim Ix&, Dr: For Each Dr In Itr(Dry)
+    InsEle Dr, Ix
+Next
+End Function
+
+Private Function XDry(A As S1S2s, N1$, N2$) As Variant()
+'Ret : a 2 col of dry with fst row is @N1..2 and snd row is ULin and rst from @A @@
+PushI XDry, Array(N1, N2)
+PushI XDry, Array(ULin(N1), ULin(N2))
+Dim J&: For J& = 0 To A.N - 1
+    With A.Ay(J)
+    PushI XDry, Array(.S1, .S2)
+    End With
+Next
+End Function
+
+Function FmtS1S2s(A As S1S2s, Optional N1$ = "S1", Optional N2$ = "S2", Optional SkipIx As Boolean) As String()
 If A.N = 0 Then
-    PushI FmtS1S2s, "(NoRec-S1S2s) (" & Nm1 & ") (" & Nm2 & ")"
+    PushI FmtS1S2s, "(NoRec-S1S2s) (" & N1 & ") (" & N2 & ")"
     Exit Function
 End If
-Dim mHasLines As Boolean, mSepChr$, mS1$(), mS2$(), mW1%, mW2%, mSepLin$, mHdrLy$(), mMidLy$()
-mHasLines = HasLines(A)
-      mS1 = Sy1zS1S2s(A)
-      mS2 = Sy2zS1S2s(A)
-      mW1 = WdtzLinesAy(AddElezStr(mS1, Nm1))
-      mW2 = WdtzLinesAy(AddElezStr(mS2, Nm2))
-  mSepLin = SepLin(IntAy(mW1, mW2))
-   mHdrLy = HdrLy(mSepLin, Nm1, Nm2, mW1, mW2)
-   mMidLy = LyzS1S2s(A, mW1, mW2, mHasLines, mSepLin)
-FmtS1S2s = SyzAdd(mHdrLy, mMidLy)
-End Function
-Private Function HdrLy(mSep$, Nm1$, Nm2$, W1%, W2%) As String()
-If Nm1 = "" And Nm2 = "" Then Exit Function
-Dim mTit$:  mTit = LinzS1S2(S1S2(Nm1, Nm2), W1, W2)
-HdrLy = Sy(mSep, mTit, mSep)
-End Function
-Private Function LyzS1S2(A As S1S2, W1%, W2%) As String()
-Dim Lines1$, Lines2$
-    Lines1 = A.S1
-    Lines2 = A.S2
-Dim NLin%
-    NLin = Max(LinCnt(Lines1), LinCnt(Lines2))
-Dim Ly1$(), Ly2$()
-    Ly1 = SplitCrLf(Lines1)
-    Ly2 = SplitCrLf(Lines2)
-    ResiMax Ly1, Ly2
-    Ly1 = SyzAlign(Ly1, W1)
-    Ly2 = SyzAlign(Ly2, W2)
-Dim J%, O$()
-For J = 0 To UB(Ly1)
-    PushI O, "| " & Ly1(J) & " | " & Ly2(J) & " |"
-Next
-LyzS1S2 = O
+If Not XHasLines(A) Then
+    Dim Dry(): Dry = XDry(A, N1, N2)
+                     If Not SkipIx Then Dry = DryzInsIx(Dry)
+    FmtS1S2s = AlignzDryAsLy(Dry)
+    Exit Function
+End If
+
+Dim S1$():    S1 = S1Ay(A)
+Dim S2$():    S2 = S2Ay(A)
+Dim W1%:      W1 = WdtzLinesAy(AddElezStr(S1, N1))
+Dim W2%:      W2 = WdtzLinesAy(AddElezStr(S2, N2))
+Dim W2Ay%(): W2Ay = IntAy(W1, W2)
+Dim SepL$:   SepL = LinzSep(W2Ay)
+Dim Tit$:     Tit = AlignzDrWyAsLin(Array(N1, N2), W2Ay)
+Dim M$():       M = XM(A, W2Ay, SepL) ' #Middle ! Middle part
+Dim O$():       O = Sy(SepL, Tit, SepL, M)
+                    If Not SkipIx Then O = XAddIx(O, A.N) ' ! Add Ix col in front
+         FmtS1S2s = O
 End Function
 
-Private Function LyzS1S2s(A As S1S2s, W1%, W2%, S1S2sHasLines As Boolean, SepLin) As String()
-If S1S2sHasLines Then
-    Dim J&
-    For J = 0 To A.N - 1
-        PushIAy LyzS1S2s, LyzS1S2(A.Ay(J), W1, W2)
-        PushI LyzS1S2s, SepLin
-    Next
-Else
-    For J = 0 To A.N - 1
-        PushI LyzS1S2s, LinzS1S2(A.Ay(J), W1, W2)
-    Next
-    PushI LyzS1S2s, SepLin
-End If
+Private Function XIxFront$(Fst2Chr$, IsIxAdd As Boolean, Sep$, Ix&, W%)
+Dim O$
+Select Case True
+Case Fst2Chr = "|-":             O = Sep
+Case Fst2Chr = "| " And IsIxAdd: O = "| " & Space(W + 1)
+Case Fst2Chr = "| ":             O = "| " & Align(Ix, W) & " "
+Case Else: Thw CSub, "Fst2Chr should [| ] or [|-]", "Fst2Chr", Fst2Chr
+End Select
+XIxFront = O
 End Function
-Private Function LinzS1S2$(A As S1S2, W1%, W2%)
-LinzS1S2 = "| " & AlignL(A.S1, W1) & " | " & AlignL(A.S2, W2) & " |"
-End Function
-Function LinzDrvW$(Drv, WdtAy%())
-Dim O$(), J%
-For J = 0 To UB(Drv)
-    PushI O, AlignL(Drv(J), WdtAy(J))
+
+Private Function XAddIx(Fmt$(), N&) As String()
+'Fm Fmt : ! a formatted
+'Ret : Add Ix column in front of @Fmt
+Dim W%: W = Len(CStr(N))      ' AlignL width
+Dim S$: S = "|" & Dup("-", W + 2) ' Sep lin
+Dim IsIxAdd As Boolean            ' Is-Ix-Added.
+Dim F$                            ' Front str to be added in front of each line
+Dim F2$ ' Fst 2 chr of each lin of @Fmt
+Dim Ix&: Ix = -1 ' The ix to be add
+PushI XAddIx, S & Fmt(0)
+PushI XAddIx, "| " & Align("#", W) + " " & Fmt(1)
+
+Dim J&: For J = 2 To UB(Fmt)
+        F2 = Fst2Chr(Fmt(J))
+        If F2 = "|-" Then IsIxAdd = False: Ix = Ix + 1
+    F = XIxFront(F2, IsIxAdd, S, Ix, W) 'What to add infront the a lin of @Fmt as an Ix col.
+        If F2 = "| " And Not IsIxAdd Then IsIxAdd = True
+        PushI XAddIx, F & Fmt(J)
 Next
-For J = UB(Drv) + 1 To UB(WdtAy)
-    PushI O, Space(WdtAy(J))
-Next
-LinzDrvW = "| " & Jn(O, " | ") & " |"
 End Function
-Function Sy2zS1S2s(A As S1S2s) As String()
+
+Private Function XLyzS1S2(A As S1S2, W2Ay%()) As String()
+Dim Ly1$(), Ly2$()
+    Ly1 = SplitCrLf(A.S1)
+    Ly2 = SplitCrLf(A.S2)
+          ResiMax Ly1, Ly2
+    Ly1 = AlignzAy(Ly1, W2Ay(0))
+    Ly2 = AlignzAy(Ly2, W2Ay(1))
+Dim J%, O$(): For J = 0 To UB(Ly1)
+    Dim Dr(): Dr = Array(Ly1(J), Ly2(J))
+                   PushI O, AlignzDrWyAsLin(Dr, W2Ay)
+Next
+XLyzS1S2 = O
+End Function
+
+Private Function XM(A As S1S2s, W2Ay%(), SepL$) As String()
+Dim J&: For J = 0 To A.N - 1
+    PushIAy XM, XLyzS1S2(A.Ay(J), W2Ay)
+    PushI XM, SepL
+Next
+End Function
+Function AlignzDrWy(Dr, WdtAy%()) As String()
+Dim O$()
+Dim UDr&: UDr = UB(Dr)
+Dim W, J%, S$: For Each W In WdtAy
+    If J > UDr Then
+        S = Space(W)
+    Else
+        S = AlignL(Dr(J), W)
+    End If
+    PushI O, S
+    J = J + 1
+Next
+AlignzDrWy = O
+End Function
+
+Function AlignzDrWyAsLin$(Dr, WdtAy%())
+'Ret : a lin by joing [ | ] and quoting [| * |] after aligng @Dr with @WdtAy. @@
+AlignzDrWyAsLin = QteJnzAsTLin(AlignzDrWy(Dr, WdtAy))
+End Function
+
+Function S2Ay(A As S1S2s) As String()
 Dim J&
 For J = 0 To A.N - 1
-    PushI Sy2zS1S2s, A.Ay(J).S2
+    PushI S2Ay, A.Ay(J).S2
 Next
 End Function
 
-Private Function HasLines(A As S1S2s) As Boolean
+Private Function XHasLines(A As S1S2s) As Boolean
 Dim J&
-HasLines = True
+XHasLines = True
 For J = 0 To A.N - 1
     With A.Ay(J)
         If IsLines(.S1) Then Exit Function
         If IsLines(.S2) Then Exit Function
     End With
 Next
-HasLines = False
+XHasLines = False
 End Function
 
-
-Private Sub Z_FmtS1S2s()
-Dim A As S1S2s, Nm1$, Nm2$
-GoSub T0
+Sub Z_FmtS1S2s()
+Dim A As S1S2s, N1$, N2$
+'GoSub T0
 GoSub T1
 GoSub T2
 Exit Sub
 T0:
-    Nm1 = "AA"
-    Nm2 = "BB"
+    N1 = "AA"
+    N2 = "BB"
     A = AddS1S2(S1S2("A", "B"), S1S2("AA", "B"))
     GoTo Tst
 T1:
-    Nm1 = "AA"
-    Nm2 = "BB"
+    N1 = "AA"
+    N2 = "BB"
     A = SampS1S2szwLin
     GoTo Tst
 T2:
-    Nm1 = "AA"
-    Nm2 = "BB"
+    N1 = "AA"
+    N2 = "BB"
     A = SampS1S2zwLines
     GoTo Tst
 Tst:
-    Act = FmtS1S2s(A, Nm1, Nm2)
+    Act = FmtS1S2s(A, N1, N2, SkipIx:=False)
     BrwAy Act
     Return
 End Sub
 
-Private Sub ZZ()
+Sub Z()
 Z_FmtS1S2s
 End Sub

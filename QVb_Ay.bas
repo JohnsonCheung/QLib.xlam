@@ -81,16 +81,16 @@ PushAy O, O2
 PushAy O, O1
 X:
 Push O, FmtQQ("Ay-[?]:", N1)
-PushIAy O, SyQuote(SyzAy(Ay1), "[]")
+PushIAy O, SyQte(SyzAy(Ay1), "[]")
 Push O, FmtQQ("Ay-[?]:", N2)
-PushIAy O, SyQuote(SyzAy(Ay2), "[]")
+PushIAy O, SyQte(SyzAy(Ay2), "[]")
 ChkEqAy = O
 End Function
 
 Function AyOfAyAy(AyOfAy)
 If Si(AyOfAy) = 0 Then Exit Function
 Dim O
-O = AyzReSi(AyOfAy(0))
+O = ResiU(AyOfAy(0))
 Dim X
 For Each X In AyOfAy
     PushAy O, X
@@ -168,7 +168,7 @@ End If
 End Function
 
 Function AyMid(Ay, Fm, Optional L = 0)
-AyMid = AyzReSi(Ay)
+AyMid = ResiU(Ay)
 Dim J&
 Dim E&
     Select Case True
@@ -215,23 +215,26 @@ RSyzTrim = O
 End Function
 
 Function ResiN(Ay, N&)
-ResiN = AyzReSi(Ay, N - 1)
+'Ret : empty ay of si @N of sam base ele as @Ay @@
+ResiN = ResiU(Ay, N - 1)
 End Function
 
-Function ResiMax(OAy1, OAy2) 'Resi the smaller Ay to same si as the larger Ay and return fst Ay
+Function ResiMax(OAy1, OAy2)
+'Ret : resi the min si of ay to sam si as the other @@
 Dim U1&, U2&: U1 = UB(OAy1): U2 = UB(OAy2)
 Select Case True
-Case U1 > U2: OAy2 = AyzReSi(OAy2, U1)
-Case U2 > U1: OAy1 = AyzReSi(OAy1, U2)
+Case U1 > U2: OAy2 = ResiU(OAy2, U1)
+Case U2 > U1: OAy1 = ResiU(OAy1, U2)
 End Select
 ResiMax = OAy1
 End Function
 
-Function AyzReSi(Ay, Optional U& = -1) 'Return the resized Ay
+Function ResiU(Ay, Optional U& = -1)
+'Ret : new ay redim preserve @Ay to @U
 Dim O: O = Ay
-If U < 0 Then Erase O: AyzReSi = O: Exit Function
+If U < 0 Then Erase O: ResiU = O: Exit Function
 ReDim Preserve O(U)
-AyzReSi = O
+ResiU = O
 End Function
 
 Function RevAy(Ay) 'Return reversed Ay
@@ -403,7 +406,7 @@ Dim U2&: U2 = UB(A2)
 Dim U&: U = Max(U1, U2)
 Dim O()
     Dim J&
-    O = AyzReSi(O, U)
+    O = ResiU(O, U)
     For J = 0 To U
         If U1 >= J Then
             If U2 >= J Then
@@ -442,7 +445,7 @@ Dim URowAy&()
 
 Dim ODry()
     Dim Dr()
-    ODry = AyzReSi(ODry, URow)
+    ODry = ResiU(ODry, URow)
     Dim I%
     For J = 0 To URow
         Erase Dr
@@ -464,7 +467,7 @@ AyZip_Ap = ODry
 End Function
 
 Function ItmAyzAdd(Itm, Ay)
-ItmAyzAdd = AyInsEle(Ay, Itm)
+ItmAyzAdd = InsEle(Ay, Itm)
 End Function
 
 Private Sub Z_AyabczAyFE()
@@ -557,7 +560,7 @@ Ass HasEleDupEle(Array(1, 2, 3, 4)) = False
 Ass HasEleDupEle(Array(1, 2, 3, 4, 4)) = True
 End Sub
 
-Private Sub Z_AyInsEle()
+Private Sub Z_InsEle()
 Dim Ay, M, At&
 '
 Ay = Array(1, 2, 3)
@@ -567,7 +570,7 @@ GoSub Tst
 '
 Exit Sub
 Tst:
-    Act = AyInsEle(Ay, M, At)
+    Act = InsEle(Ay, M, At)
     C
 Return
 End Sub
@@ -579,7 +582,7 @@ B = Array("X", "Z")
 At = 1
 Exp = Array(1, "X", "Z", 2, 3, 4)
 
-Act = AyInsAyAt(Ay, B, At)
+Act = InsAy(Ay, B, At)
 Ass IsEqAy(Act, Exp)
 End Sub
 
@@ -625,7 +628,7 @@ PushI Dry, Array()
 End Sub
 
 
-Private Sub ZZ()
+Private Sub Z()
 Z_AyFlat
 Z_HasEleDupEle
 Z_ChkEqAy
@@ -635,7 +638,7 @@ Z_AyTrim
 MVb_Ay:
 End Sub
 
-Private Sub Z_SzAddPzSslIn()
+Private Sub Z_AddPfxzSslIn()
 Dim Ssl$, Exp$(), Pfx$
 Ssl = "B C D"
 Pfx = "A"
@@ -644,18 +647,18 @@ GoSub Tst
 Exit Sub
 Tst:
     Dim Act$()
-    Act = SzAddPzSslIn(Pfx, Ssl)
+    Act = AddPfxzSslIn(Pfx, Ssl)
     Debug.Assert IsEqAy(Act, Exp)
 Return
 End Sub
 
-Function SzAddPzSslIn(Pfx$, SsLin) As String()
-SzAddPzSslIn = SyzAyP(SyzSS(SsLin), Pfx)
+Function AddPfxzSslIn(Pfx$, SsLin) As String()
+AddPfxzSslIn = AddPfxzAy(SyzSS(SsLin), Pfx)
 End Function
 
 Function SpcSepStr$(S)
 If S = "" Then SpcSepStr = ".": Exit Function
-SpcSepStr = QuoteSqIf(EscSqBkt(SlashCrLf(EscBackSlash(S))))
+SpcSepStr = QteSqIf(EscSqBkt(SlashCrLf(EscBackSlash(S))))
 End Function
 
 Function RevSpcSepStr$(SpcSepStr$)
@@ -663,15 +666,15 @@ If SpcSepStr = "." Then Exit Function
 RevSpcSepStr = UnTidleSpc(UnSlashTab(UnSlashCrLf(SpcSepStr)))
 End Function
 
-Function SslzDrv$(Drv)
+Function SslzDr$(Dr)
 Dim J&, U&, O$()
-U = UB(Drv)
+U = UB(Dr)
 If U < 0 Then Exit Function
 ReDim O(U)
 For J = 0 To U
-    O(J) = SpcSepStr(CStr(Drv(J)))
+    O(J) = SpcSepStr(CStr(Dr(J)))
 Next
-SslzDrv = JnSpc(O)
+SslzDr = JnSpc(O)
 End Function
 
 Function SyzSsl(Ssl$) As String()

@@ -89,7 +89,7 @@ If T = "" Then
     Exit Sub
 End If
 Dim D As Database: Set D = A.AppDb
-If IsOldAtt(D, "Tp", T) Then ImpAtt D, "Tp", T '<== Import
+If IsAttOld(D, "Tp", T) Then ImpAtt D, "Tp", T '<== Import
 End Sub
 
 Function AppTpWsCdNy() As String()

@@ -3,13 +3,13 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Md_Emp."
 Private Const Asm$ = "QIde"
-Function IsEmpMd(M As CodeModule) As Boolean
-If M.CountOfLines = 0 Then IsEmpMd = True: Exit Function
+Function IsMdEmp(M As CodeModule) As Boolean
+If M.CountOfLines = 0 Then IsMdEmp = True: Exit Function
 Dim J&, L$
 For J = 1 To M.CountOfLines
-    If Not IsEmpSrcLin(M.Lines(J, 1)) Then Exit Function
+    If Not IsLinEmpSrc(M.Lines(J, 1)) Then Exit Function
 Next
-IsEmpMd = True
+IsMdEmp = True
 End Function
 
 Sub RmvEmpMd()
@@ -27,21 +27,21 @@ Function EmpMdNyzP(P As VBProject) As String()
 Dim C As VBComponent
 For Each C In P.VBComponents
     If IsCmpzMd(C) Then
-        If IsEmpMd(C.CodeModule) Then
+        If IsMdEmp(C.CodeModule) Then
             PushI EmpMdNyzP, C.Name
         End If
     End If
 Next
 End Function
 
-Private Sub Z_IsEmpMd()
+Private Sub Z_IsMdEmp()
 Dim M As CodeModule
 'GoSub T1
 'GoSub T2
 GoSub T3
 Exit Sub
 T3:
-    Debug.Assert IsEmpMd(Md("Dic"))
+    Debug.Assert IsMdEmp(Md("Dic"))
     Return
 T2:
     Set M = Md("Module2")
@@ -59,7 +59,7 @@ T1:
     DltCmpzPjn P, T
     Return
 Tst:
-    Act = IsEmpMd(M)
+    Act = IsMdEmp(M)
     C
     Return
 End Sub
@@ -67,17 +67,17 @@ End Sub
 Function IsEmpSrc(A$()) As Boolean
 Dim L
 For Each L In Itr(A)
-    If Not IsEmpSrcLin(L) Then Exit Function
+    If Not IsLinEmpSrc(L) Then Exit Function
 Next
 IsEmpSrc = True
 End Function
 
-Function IsEmpSrcLin(A) As Boolean
-IsEmpSrcLin = True
+Function IsLinEmpSrc(A) As Boolean
+IsLinEmpSrc = True
 If HasPfx(A, "Option ") Then Exit Function
 Dim L$: L = Trim(A)
 If L = "" Then Exit Function
-IsEmpSrcLin = False
+IsLinEmpSrc = False
 End Function
 
 Function EmpMdNyzV(A As Vbe) As String()
@@ -91,7 +91,7 @@ End Function
 Function IsNoMthMd(M As CodeModule) As Boolean
 Dim J&
 For J = M.CountOfDeclarationLines + 1 To M.CountOfLines
-    If IsLinzMth(M.Lines(J, 1)) Then Exit Function
+    If IsLinMth(M.Lines(J, 1)) Then Exit Function
 Next
 IsNoMthMd = True
 End Function

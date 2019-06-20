@@ -113,7 +113,7 @@ HitPatn = Re.Test(A)
 End Function
 
 
-Private Sub ZZ()
+Private Sub Z()
 Z_HitPatn
 MVb_Str_Mch:
 End Sub

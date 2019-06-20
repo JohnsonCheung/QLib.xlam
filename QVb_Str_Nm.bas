@@ -35,20 +35,20 @@ Dim P As Dictionary: Set P = Lpm(WhStr, "-Sw Prv Pub Frd Sub Fun Prp Get Set Let
 'WhNmzS = WhNmzP(P,WhNm(NmPfx)
 End Function
 
-Function ChrQuote$(S, Chr$)
-ChrQuote = Chr & S & Chr
+Function ChrQte$(S, Chr$)
+ChrQte = Chr & S & Chr
 End Function
 
-Function SpcQuote$(S)
-SpcQuote = ChrQuote(S, " ")
+Function SpcQte$(S)
+SpcQte = ChrQte(S, " ")
 End Function
 
-Function DblQuote$(S)
-DblQuote = ChrQuote(S, vbDblQuote)
+Function DblQte$(S)
+DblQte = ChrQte(S, vbDblQte)
 End Function
 
-Function SngQuote$(S)
-SngQuote = ChrQuote(S, vbSngQuote)
+Function SngQte$(S)
+SngQte = ChrQte(S, vbSngQte)
 End Function
 
 Function HitRe(S, Re As RegExp) As Boolean

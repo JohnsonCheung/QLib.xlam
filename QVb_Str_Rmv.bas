@@ -139,9 +139,9 @@ Function RmvSfx$(S, Sfx$, Optional B As VbCompareMethod = vbBinaryCompare)
 If HasSfx(S, Sfx, B) Then RmvSfx = Left(S, Len(S) - Len(Sfx)) Else RmvSfx = S
 End Function
 
-Function RmvSngQuote$(S)
-If Not IsSngQuoted(S) Then RmvSngQuote = S: Exit Function
-RmvSngQuote = RmvFstLasChr(S)
+Function RmvSngQte$(S)
+If Not IsSngQted(S) Then RmvSngQte = S: Exit Function
+RmvSngQte = RmvFstLasChr(S)
 End Function
 
 Function RmvT1$(S)
@@ -190,6 +190,6 @@ Tst:
     Return
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 MVb_Str_Rmv:
 End Sub

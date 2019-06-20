@@ -21,10 +21,10 @@ For Each X In Itr
 Next
 End Function
 
-Function ItrSzAddP(Itr, Pfx$) As String()
+Function ItrAddPfx(Itr, Pfx$) As String()
 Dim X
 For Each X In Itr
-    Push ItrSzAddP, Pfx & X
+    Push ItrAddPfx, Pfx & X
 Next
 End Function
 
@@ -229,7 +229,7 @@ AvzItrPrp = IntozItrPrp(EmpAv, Itr, P)
 End Function
 
 Function IntozItrwPredTrue(Into, Itr, P As IPred)
-IntozItrwPredTrue = AyzReSi(Into)
+IntozItrwPredTrue = ResiU(Into)
 Dim Obj As Object
 For Each Obj In Itr
     If P.Pred(Obj) Then
@@ -239,21 +239,21 @@ Next
 End Function
 
 Function IntozItrwPEv(Into, Itr, P$, Ev)
-IntozItrwPEv = AyzReSi(Into)
+IntozItrwPEv = ResiU(Into)
 Dim Obj As Object
 For Each Obj In Itr
     If Prp(Obj, PrpPth(P)) = Ev Then PushObj IntozItrwPEv, Obj
 Next
 End Function
 Function Into(OInto, Itr)
-Into = AyzReSi(OInto)
+Into = ResiU(OInto)
 Dim I
 For Each I In Itr
     Push Into, I
 Next
 End Function
 Function IntozItrPrp(Into, Itr, P$)
-IntozItrPrp = AyzReSi(Into)
+IntozItrPrp = ResiU(Into)
 Dim Obj As Object
 For Each Obj In Itr
     Push IntozItrPrp, Prp(Obj, PrpPth(P))
@@ -293,7 +293,7 @@ For Each O In Itr
 Next
 End Function
 
-Private Sub ZZ()
+Private Sub Z()
 Dim Itr As Variant
 Dim B$
 Dim C As RegExp

@@ -55,7 +55,7 @@ Next
 End Function
 
 
-Private Sub ZZ()
+Private Sub Z()
 Z_T1zT1LikTLiny
 MVb_Str_Likss:
 End Sub

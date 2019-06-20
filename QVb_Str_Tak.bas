@@ -112,8 +112,8 @@ End Sub
 Private Sub Z_Tak_BefFstLas()
 Dim S, Fst$, Las$
 S = " A_1$ = ""Private Function ZChunk$(ConstLy$(), IChunk%)"" & _"
-Fst = vbDblQuote
-Las = vbDblQuote
+Fst = vbDblQte
+Las = vbDblQte
 Ept = "Private Function ZChunk$(ConstLy$(), IChunk%)"
 GoSub Tst
 Exit Sub
@@ -246,7 +246,7 @@ Tst:
     Return
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Z_AftBkt
 Z_Tak_BefFstLas
 Z_Bet

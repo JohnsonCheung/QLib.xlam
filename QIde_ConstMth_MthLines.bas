@@ -2,7 +2,7 @@ Attribute VB_Name = "QIde_ConstMth_MthLines"
 Option Compare Text
 Option Explicit
 Private Const Asm$ = "QIde"
-Private Const CMod$ = "MIde_ConstMth_MthLines."
+Private Const CMod$ = "MIde_ConstMth_MthL."
 
 Function ConstPrpLines$(CnstQNm$, IsPub As Boolean)
 ConstPrpLines = JnCrLf(ConstPrpLy(CnstQNm, IsPub))
@@ -47,7 +47,7 @@ End Function
 Private Sub Z_ConstPrpLines()
 Const TstId& = 2
 Const CSub$ = CMod & "Z_ConstPrpLines"
-GoSub ZZ
+GoSub Z
 Exit Sub
 GoSub T0
 GoSub T1
@@ -67,7 +67,7 @@ T0:
 
 T1:
     IsEdt = True
-    'CnstBrk = MthLineszNmzMd(CMd, "Chunk")
+    'CnstBrk = MthLzNmzMd(CMd, "Chunk")
     BrwStr CnstBrk
     Stop
     Nm = "Z_A"
@@ -94,14 +94,14 @@ Tst:
     C
     ShwTstOk CSub, Cas
     Return
-ZZ:
+Z:
     Dim V$: V = JnCrLf(FstNEle(SrczP(CPj), 5000))
     Stop
 '    Brw ConstPrpLines("AA", V, IsPub:=True)
     Return
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A$
 Dim B As Boolean
 End Sub

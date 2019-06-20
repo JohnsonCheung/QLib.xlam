@@ -31,14 +31,14 @@ End Function
 Function Srcp$(P As VBProject)
 Srcp = SrcpzPjf(Pjf(P))
 End Function
-Function IsExtInSslin(Ffn, ExtSsLin) As Boolean
+Function HasExtss(Ffn, ExtSsLin) As Boolean
 Dim E$: E = Ext(Ffn)
 Dim Sy$(): Sy = SyzSS(ExtSsLin)
-IsExtInSslin = HasEleS(Sy, E)
+HasExtss = HasEleS(Sy, E)
 End Function
 Function IsSrcp(Pth) As Boolean
 Dim F$: F = Fdr(Pth)
-If Not IsExtInSslin(F, ".xlam .accdb") Then Exit Function
+If Not HasExtss(F, ".xlam .accdb") Then Exit Function
 IsSrcp = Fdr(ParPth(Pth)) = ".Src"
 End Function
 

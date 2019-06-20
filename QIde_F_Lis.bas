@@ -4,17 +4,17 @@ Option Explicit
 Private Const CMod$ = "MIde_Lis."
 Private Const Asm$ = "QIde"
 
-Sub LIsCmpzMd(Optional Patn$, Optional Exl$)
+Sub LisCmpzMd(Optional Patn$, Optional Exl$)
 Dim A$()
 '    A = CmpNyPj(CPj, WhMd("Std", WhNm(Patn, Exl)))
     A = SrtAy(A)
-    A = SyzAyP(A, "ShwMbr """)
+    A = AddPfxzAy(A, "ShwMbr """)
 D A
 End Sub
 Sub LisPj()
 Dim A$()
     A = PjnyzV(CVbe)
-    D SyzAyP(A, "ShwPj """)
+    D AddPfxzAy(A, "ShwPj """)
 D A
 End Sub
 
@@ -44,12 +44,30 @@ End Function
 Function DMthPatn(Patn$) As Drs
 DMthPatn = ColPatn(DMthP, "Mthn", Patn)
 End Function
+
 Function DMth2Patn(Patn1$, Patn2$) As Drs
 DMth2Patn = Col2Patn(DMthP, "Mthn", Patn1, Patn2)
 End Function
 
+Function DMthzAddRetAs() As Drs
+Dim D As Drs: D = DMthP
+Dim I%: I = IxzAy(D.Fny, "MthLin")
+Dim Dr, Dry(): For Each Dr In D.Dry
+    Dim MthLin$: MthLin = Dr(I)
+    Dim RetAs$: RetAs = RetAszL(MthLin)
+    PushI Dr, RetAs
+    PushI Dry, Dr
+Next
+DMthzAddRetAs = DrszAddFF(D, "RetAs", Dry)
+End Function
+
+Function DMthRetAsPatn(RetAsPatn$) As Drs
+Dim D As Drs: D = DMthzAddRetAs
+DMthRetAsPatn = ColPatn(D, "RetAs", RetAsPatn)
+End Function
+
 Function DMthPrp() As Drs
-DMthPrp = DrszIn(DMthPub, "Ty", SyzSS("Get Let Set"))
+DMthPrp = DrswIn(DMthPub, "Ty", SyzSS("Get Let Set"))
 End Function
 Sub LisPFunRetAs(RetAsPatn$)
 Dim RetAs As Drs: RetAs = AddColzRetAs(DMthPFun)
@@ -109,6 +127,14 @@ End Sub
 
 Sub LisMthPatn(Patn$)
 DmpDrs DTopN(DMthPatn(Patn))
+End Sub
+
+Sub LisMthRetAs(RetAsPatn$)
+DmpDrs DTopN(ColPatn(DMthzAddRetAs, "RetAs", RetAsPatn))
+End Sub
+
+Sub BrwMthRetAs(RetAsPatn$)
+BrwDrs ColPatn(DMthzAddRetAs, "RetAs", RetAsPatn)
 End Sub
 
 Sub LisMth2Patn(Patn1$, Patn2$)

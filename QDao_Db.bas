@@ -5,9 +5,9 @@ Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Db."
 Public Q$
 
-Function IsOkDb(A As Database) As Boolean
+Function IsDbOk(A As Database) As Boolean
 On Error GoTo X
-IsOkDb = A.Name = A.Name
+IsDbOk = A.Name = A.Name
 Exit Function
 X:
 End Function
@@ -19,13 +19,13 @@ End Sub
 Function PthzDb$(A As Database)
 PthzDb = Pth(Dbn(A))
 End Function
-Function IsTmpDb(A As Database) As Boolean
-IsTmpDb = PthzDb(A) = TmpPthzDb
+Function IsDbTmp(A As Database) As Boolean
+IsDbTmp = PthzDb(A) = TmpPthzDb
 End Function
 
 
 Sub DrpDbIfTmp(A As Database)
-If IsTmpDb(A) Then
+If IsDbTmp(A) Then
     Dim N$
     N = Dbn(A)
     A.Close
@@ -119,18 +119,18 @@ Dim Av(): Av = Ap
 RunQQAv A, QQ, Av
 End Sub
 
-Function RszQQ(A As Database, QQ$, ParamArray Ap()) As Dao.Recordset
+Function RszQQ(A As Database, QQ$, ParamArray Ap()) As DAO.Recordset
 Dim Av(): Av = Ap
 Set RszQQ = Rs(A, FmtQQAv(QQ, Av))
 End Function
-Function RszQ(A As Database, Q) As Dao.Recordset
+Function RszQ(A As Database, Q) As DAO.Recordset
 Set RszQ = Rs(A, Q)
 End Function
-Function MovFst(A As Dao.Recordset) As Dao.Recordset
+Function MovFst(A As DAO.Recordset) As DAO.Recordset
 A.MoveFirst
 Set MovFst = A
 End Function
-Function Rs(A As Database, Q) As Dao.Recordset
+Function Rs(A As Database, Q) As DAO.Recordset
 Const CSub$ = CMod & "Rs"
 On Error GoTo X
 Set Rs = A.OpenRecordset(Q)
@@ -158,12 +158,6 @@ Function HasTblByMSys(A As Database, T) As Boolean
 HasTblByMSys = HasRec(Rs(A, FmtQQ("Select Name from MSysObjects where Type in (1,6) and Name='?'", T)))
 End Function
 
-Function IsDbOk(A As Database) As Boolean
-On Error GoTo X
-IsDbOk = IsStr(A.Name)
-Exit Function
-X:
-End Function
 Function DbPth$(A As Database)
 DbPth = Pth(Dbn(A))
 End Function
@@ -172,14 +166,14 @@ Function Qny(A As Database) As String()
 Qny = SyzQ(A, "Select Name from MSysObjects where Type=5 and Left(Name,4)<>'MSYS' and Left(Name,4)<>'~sq_'")
 End Function
 
-Function RszQry(A As Database, QryNm$) As Dao.Recordset
+Function RszQry(A As Database, QryNm$) As DAO.Recordset
 Set RszQry = A.QueryDefs(QryNm).OpenRecordset
 End Function
 
 Function SrcTny(A As Database) As String()
 Dim T
 For Each T In Tni(A)
-    PushNonBlank SrcTny, A.TableDefs(T).SourceTableName
+    PushNB SrcTny, A.TableDefs(T).SourceTableName
 Next
 End Function
 
@@ -200,11 +194,11 @@ Asg Itr(Tny(A)), Tbli
 End Function
 
 Function Tny(A As Database) As String()
-Set A = Dao.DBEngine.OpenDatabase(A.Name)
+Set A = DAO.DBEngine.OpenDatabase(A.Name)
 Dim T As TableDef
 For Each T In A.TableDefs
-    If Not IsSysTd(T) Then
-        If Not IsHidTd(T) Then
+    If Not IsTdSys(T) Then
+        If Not IsTdHid(T) Then
             PushI Tny, T.Name
         End If
     End If
@@ -218,8 +212,8 @@ End Function
 
 Function Tny1(A As Database) As String()
 Dim T As TableDef, O$()
-Dim X As Dao.TableDefAttributeEnum
-X = Dao.TableDefAttributeEnum.dbHiddenObject Or Dao.TableDefAttributeEnum.dbSystemObject
+Dim X As DAO.TableDefAttributeEnum
+X = DAO.TableDefAttributeEnum.dbHiddenObject Or DAO.TableDefAttributeEnum.dbSystemObject
 For Each T In A.TableDefs
     Select Case True
     Case T.Attributes And X
@@ -251,9 +245,9 @@ ZZ2:
     Stop
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Dim Db As Database
-Dim B As Dao.TableDef
+Dim B As DAO.TableDef
 Dim C$()
 Dim D As Variant
 Dim E$
@@ -271,10 +265,10 @@ Dim G As Dictionary
 'HasDbt A, D
 End Sub
 
-Sub RenTTzSzAddP(A As Database, TT$, Pfx$)
+Sub RenTTzAddPfx(A As Database, TT$, Pfx$)
 Dim T
 For Each T In Ny(TT)
-    RenTblzSzAddP A, CStr(T), Pfx
+    RenTblzAddPfx A, CStr(T), Pfx
 Next
 End Sub
 
@@ -319,11 +313,11 @@ Property Let TblDes(A As Database, T, Des$)
 PrpVal(A.TableDefs(T).Properties, C_Des) = Des
 End Property
 
-Property Get TblAttDes$(A As Dao.Database)
+Property Get TblAttDes$(A As Database)
 TblAttDes = TblDes(A, "Att")
 End Property
 
-Property Let TblAttDes(A As Dao.Database, Des$)
+Property Let TblAttDes(A As Database, Des$)
 TblDes(A, "Att") = Des
 End Property
 
@@ -374,7 +368,7 @@ End Sub
 Property Get TblDesDic(A As Database) As Dictionary
 Dim T, O As New Dictionary
 For Each T In Tni(A)
-    AddDiczNonBlankStr O, T, TblDes(A, T)
+    AddDiczNBStr O, T, TblDes(A, T)
 Next
 Set TblDesDic = O
 End Property

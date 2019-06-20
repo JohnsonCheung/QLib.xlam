@@ -7,7 +7,7 @@ Private Const Asm$ = "QVb"
 Function WrdLblLinPos$(WrdPos%(), OFmNo&)
 Dim O$(), A$, B$, W%, J%
 If Si(WrdPos) = 0 Then Exit Function
-PushNonBlank O, Space(WrdPos(0) - 1)
+PushNB O, Space(WrdPos(0) - 1)
 For J = 0 To UB(WrdPos) - 1
     A = OFmNo
     W = WrdPos(J + 1) - WrdPos(J)

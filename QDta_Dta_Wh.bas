@@ -121,8 +121,7 @@ ODry = DrpColzDry(A.Dry, Ixy)
 DrpCol = Drs(OFny, ODry)
 End Function
 Function DrpColzDry(Dry(), Ixy&()) As Variant()
-Dim Dr
-For Each Dr In Itr(Dry)
+Dim Dr: For Each Dr In Itr(Dry)
     PushI DrpColzDry, AyeIxy(Dr, Ixy)
 Next
 End Function
@@ -146,12 +145,12 @@ Next
 ColNotIn = Drs(A.Fny, Dry)
 End Function
 
-Function DrszIn(A As Drs, C, InVy) As Drs
+Function DrswIn(A As Drs, C, InVy) As Drs
 Dim Ix&: Ix = IxzAy(A.Fny, C)
-DrszIn = Drs(A.Fny, DrywColIn(A.Dry, Ix, InVy))
+DrswIn = Drs(A.Fny, DrywColIn(A.Dry, Ix, InVy))
 End Function
 Function ColInSel(A As Drs, C, InVy, Sel$) As Drs
-ColInSel = DrszSel(DrszIn(A, C, InVy), Sel)
+ColInSel = DrszSel(DrswIn(A, C, InVy), Sel)
 End Function
 
 Function ColEq(A As Drs, C$, V) As Drs
@@ -160,7 +159,7 @@ End Function
 
 Function ColDup(A As Drs, C$) As Drs
 Dim Dup(): Dup = AywDup(ColzDrs(A, C))
-ColDup = DrszIn(A, C, Dup)
+ColDup = DrswIn(A, C, Dup)
 End Function
 
 Function ColEqE(A As Drs, C$, V) As Drs

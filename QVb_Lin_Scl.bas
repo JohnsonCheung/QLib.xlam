@@ -58,7 +58,7 @@ Function ShfScl$(OStr$)
 AsgBrk1 OStr, ";", ShfScl, OStr
 End Function
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A$
 Dim B As Variant
 Dim C()

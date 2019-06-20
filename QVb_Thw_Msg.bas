@@ -79,7 +79,7 @@ Dim Nav(): Nav = Nap
 LyzMsgNap = LyzMsgNav(Msg, Nav)
 End Function
 Function LyzNmDrs(Nm$, A As Drs, Optional MaxColWdt% = 100) As String()
-LyzNmDrs = LyzNmLy(Nm, FmtDrs(A, MaxColWdt), EiNoIx)
+LyzNmDrs = LyzNmLy(Nm, LinzDrs(A, MaxColWdt), EiNoIx)
 End Function
 
 Function LyzNmLy(Nm$, Ly$(), Optional B As EmIxCol = EiBeg1) As String()
@@ -125,7 +125,7 @@ End Sub
 Function LyzNyAv(Ny$(), Av(), Optional Sep$ = ": ") As String()
 Dim J%, O$(), N$()
 ResiMax Ny, Av
-N = SyzAlign(Ny)
+N = AlignzAy(Ny)
 For J = 0 To UB(Ny)
     PushIAy LyzNyAv, LyzNv(N(J), Av(J), Sep)
 Next
@@ -146,7 +146,7 @@ Dim J%, U1%, U2%, N$, V$, O$()
 U1 = UB(Ny)
 U2 = UB(Av)
 For J = 0 To Max(U1, U2)
-    If J <= U1 Then N = QuoteSq(Ny(J)) Else N = "[?]"
+    If J <= U1 Then N = QteSq(Ny(J)) Else N = "[?]"
     If J <= U2 Then V = StrCellzV(Av(J)) Else V = "?"
     PushI O, N & " " & V
 Next
@@ -176,17 +176,6 @@ End Function
 
 Function SclzNyAv$(Ny$(), Av())
 SclzNyAv = JnSemi(LyzNyAv(Ny, Av))
-End Function
-
-Function Box(S) As String()
-Dim H$: H = Dup("*", Len(S) + 6)
-PushI Box, H
-PushI Box, "** " & S & " **"
-PushI Box, H
-PushI Box, ""
-End Function
-Function BoxStr$(S)
-BoxStr = JnCrLf(Box(S))
 End Function
 
 Private Function LyzFunMsg(Fun$, Msg$) As String()

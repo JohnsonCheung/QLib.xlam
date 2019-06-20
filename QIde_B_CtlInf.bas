@@ -140,6 +140,6 @@ Function Bar(BarNm) As Office.CommandBar
 Set Bar = Bars(BarNm)
 End Function
 
-Private Sub ZZ()
+Private Sub Z()
 MIde_CMdMov_Mth:
 End Sub

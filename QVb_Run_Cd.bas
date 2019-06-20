@@ -19,13 +19,13 @@ Private Function RunCdMd() As CodeModule
 'EnsMd "ZTmpModForRun"
 End Function
 Private Sub AddMthzCd(Mthn, CdLines$)
-RunCdMd.AddFromString MthLines(Mthn, CdLines)
+RunCdMd.AddFromString MthL(Mthn, CdLines)
 End Sub
-Private Function MthLines$(Mthn, CdLines$)
+Private Function MthL$(Mthn, CdLines$)
 Dim Lines$, L1$, L2$
 L1 = "Sub Z_" & Mthn & "()"
 L2 = "End Sub"
-MthLines = L1 & vbCrLf & CdLines & vbCrLf & L2
+MthL = L1 & vbCrLf & CdLines & vbCrLf & L2
 End Function
 
 Private Function Y_CdLines$()

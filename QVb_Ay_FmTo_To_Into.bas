@@ -9,7 +9,7 @@ If IsEqTy(Ay, Into) Then
     IntozAy = Ay
     Exit Function
 End If
-IntozAy = AyzReSi(Into)
+IntozAy = ResiU(Into)
 Dim I
 For Each I In Itr(Ay)
     Push IntozAy, I

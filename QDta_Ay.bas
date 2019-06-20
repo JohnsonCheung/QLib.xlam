@@ -29,16 +29,16 @@ Function DryGpCntzAyWhDup(A) As Variant()
 DryGpCntzAyWhDup = DrywColGt(DryGpCntzAy(A), 1, 1)
 End Function
 Sub BrwDryGpCntzAy(Ay)
-Brw FmtDryGpCntzAy(Ay)
+Brw LyzDryGpCntzAy(Ay)
 End Sub
 
-Function FmtDryGpCntzAy(Ay) As String()
-FmtDryGpCntzAy = FmtDry(DryGpCntzAy(Ay), Fmt:=EiSSFmt)
+Function LyzDryGpCntzAy(Ay) As String()
+LyzDryGpCntzAy = LyzDry(DryGpCntzAy(Ay), Fmt:=EiSSFmt)
 End Function
 
-Private Sub Z_FmtDryGpCntzAy()
+Private Sub Z_LyzDryGpCntzAy()
 Dim Ay()
-Brw FmtDryGpCntzAy(Ay)
+Brw LyzDryGpCntzAy(Ay)
 End Sub
 
 Private Sub Z_CntDryzAy()

@@ -66,14 +66,21 @@ Next
 S1S2szAyab = O
 End Function
 
-Function SomS2(S1, A As S1S2s) As StrOpt
+Function FstS2(S1, A As S1S2s) As StrOpt
 'Ret : Lookup S1 in A return S2 @@
 Dim Ay() As S1S2: Ay = A.Ay
 Dim J&: For J = 0 To A.N - 1
     With Ay(J)
-        If .S1 = S1 Then SomS2 = SomStr(.S2): Exit Function
+        If .S1 = S1 Then FstS2 = SomStr(.S2): Exit Function
     End With
 Next
+End Function
+Function AddS2Sfx(A As S1S2s, S2Sfx$) As S1S2s
+Dim O As S1S2s: O = A
+Dim J&: For J = 0 To O.N - 1
+    O.Ay(J).S2 = O.Ay(J).S2 & S2Sfx
+Next
+AddS2Sfx = O
 End Function
 
 Function S1S2szDrs(D As Drs, Optional CC$) As S1S2s
@@ -97,6 +104,30 @@ Dim J&: For J = 0 To UB(S1)
     PushS1S2 S1S2szDrs, S1S2(S1(J), JnCrLf(S2(J)))
 Next
 End Function
+
+Function IsEqS1S2(A As S1S2, B As S1S2) As Boolean
+With A
+    If .S1 <> B.S1 Then Exit Function
+    If .S2 <> B.S2 Then Exit Function
+End With
+IsEqS1S2 = True
+End Function
+
+Function HasS1S2(A As S1S2s, B As S1S2) As Boolean
+Dim Ay() As S1S2: Ay = A.Ay
+Dim J&: For J = 0 To A.N - 1
+    If IsEqS1S2(Ay(J), B) Then HasS1S2 = True: Exit Function
+Next
+End Function
+Function S1S2szDif(A As S1S2s, B As S1S2s) As S1S2s
+'Ret : Subset of @A.  Those itm in @A also in @B will be exl.
+Dim Ay() As S1S2: Ay = A.Ay
+Dim J&: For J = 0 To A.N - 1
+    If Not HasS1S2(B, Ay(J)) Then
+        PushS1S2 S1S2szDif, Ay(J)
+    End If
+Next
+End Function
 Function S1S2(Optional S1, Optional S2, Optional NoTrim As Boolean) As S1S2
 If NoTrim Then
     S1S2.S1 = S1
@@ -111,31 +142,6 @@ Sub AsgS1S2(A As S1S2, O1, O2)
 O1 = A.S1
 O2 = A.S2
 End Sub
-
-Function LinzS1S2$(A As S1S2, Optional Sep$ = " ", Optional W%)
-LinzS1S2 = AlignL(A.S1, W) & Sep & A.S2
-End Function
-Function W1zS1S2s%(A As S1S2s)
-Dim O%, J&
-For J = 0 To A.N - 1
-    O = Max(O, Len(A.Ay(J).S1))
-Next
-End Function
-Function W2zS1S2s%(A As S1S2s)
-Dim O%, J&
-For J = 0 To A.N - 1
-    O = Max(O, Len(A.Ay(J).S2))
-Next
-End Function
-
-Function LyzS1S2s(A As S1S2s, Optional Sep$ = "") As String()
-Dim O$(), J&, W%, Ay() As S1S2
-Ay = A.Ay
-W = W1zS1S2s(A)
-For J = 0 To A.N - 1
-   PushI LyzS1S2s, LinzS1S2(Ay(J), Sep, W)
-Next
-End Function
 
 Sub BrwS1S2s(A As S1S2s)
 BrwAy FmtS1S2s(A)
@@ -162,19 +168,19 @@ Next
 Set DiczS1S2s = O
 End Function
 
-Function Sy1zS1S2s(A As S1S2s) As String()
+Function S1Ay(A As S1S2s) As String()
 Dim J&
 For J = 0 To A.N - 1
-   PushI Sy1zS1S2s, A.Ay(J).S1
+   PushI S1Ay, A.Ay(J).S1
 Next
 End Function
 
-Function Sy2zS1S2s(A As S1S2s) As String()
+Function S2Ay(A As S1S2s) As String()
 Dim O$(), J&
 For J = 0 To A.N - 1
-   Push Sy2zS1S2s, A.Ay(J).S2
+   Push S2Ay, A.Ay(J).S2
 Next
-Sy2zS1S2s = O
+S2Ay = O
 End Function
 
 Function SqzS1S2s(A As S1S2s, Optional Nm1$ = "S1", Optional Nm2$ = "S2") As Variant()
@@ -219,7 +225,7 @@ Stop
 End Sub
 
 
-Private Sub ZZ()
+Private Sub Z()
 Z_S1S2szDic
 MVb__S1S2:
 End Sub

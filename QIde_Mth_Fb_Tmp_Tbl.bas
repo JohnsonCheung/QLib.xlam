@@ -122,7 +122,7 @@ Private Const Asm$ = "QIde"
 'Brw ZZMthNy
 'End Sub
 '
-'Private Sub ZZ()
+'Private Sub Z()
 'RfhTmpMthMd
 'RfhTmpMthNy
 'XUpd

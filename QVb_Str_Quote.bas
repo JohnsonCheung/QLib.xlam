@@ -1,81 +1,81 @@
 Attribute VB_Name = "QVb_Str_Quote"
 Option Compare Text
 Option Explicit
-Private Const CMod$ = "MVb_Str_Quote."
+Private Const CMod$ = "MVb_Str_Qte."
 Private Const Asm$ = "QVb"
-Function BrkQuote(QuoteStr$) As S1S2
-Dim L%: L = Len(QuoteStr)
+Function BrkQte(QteStr$) As S1S2
+Dim L%: L = Len(QteStr)
 Dim S1$, S2$
 Select Case L
 Case 0:
 Case 1
-    S1 = QuoteStr
-    S2 = QuoteStr
+    S1 = QteStr
+    S2 = QteStr
 Case 2
-    S1 = Left(QuoteStr, 1)
-    S2 = Right(QuoteStr, 1)
+    S1 = Left(QteStr, 1)
+    S2 = Right(QteStr, 1)
 Case Else
-    If InStr(QuoteStr, "*") > 0 Then
-        BrkQuote = Brk(QuoteStr, "*", NoTrim:=True)
+    If InStr(QteStr, "*") > 0 Then
+        BrkQte = Brk(QteStr, "*", NoTrim:=True)
         Exit Function
     End If
     Stop
 End Select
-BrkQuote = S1S2(S1, S2)
+BrkQte = S1S2(S1, S2)
 End Function
-Sub AsgQuote(OQ1$, OQ2$, QuoteStr$)
-With BrkQuote(QuoteStr)
+Sub AsgQte(OQ1$, OQ2$, QteStr$)
+With BrkQte(QteStr)
     OQ1 = .S1
     OQ2 = .S2
 End With
 End Sub
-Function QuoteBigBkt$(S)
-QuoteBigBkt = "{" & S & "}"
+Function QteBigBkt$(S)
+QteBigBkt = "{" & S & "}"
 End Function
 
-Function QuoteBkt$(S)
-QuoteBkt = "(" & S & ")"
+Function QteBkt$(S)
+QteBkt = "(" & S & ")"
 End Function
-Function QuoteDot$(S)
-QuoteDot = "." & S & "."
+Function QteDot$(S)
+QteDot = "." & S & "."
 End Function
-Function QuoteAy(Ay, QuoteStr$) As String()
+Function QteAy(Ay, QteStr$) As String()
 Dim P$, S$
-With BrkQuote(QuoteStr)
+With BrkQte(QteStr)
     P = .S1
     S = .S2
 End With
-QuoteAy = SyzAyPS(Ay, P, S)
+QteAy = AddPfxSzAy(Ay, P, S)
 End Function
 
-Function Quote$(S, QuoteStr$)
-With BrkQuote(QuoteStr)
-    Quote = .S1 & S & .S2
+Function Qte$(S, QteStr$)
+With BrkQte(QteStr)
+    Qte = .S1 & S & .S2
 End With
 End Function
 
-Function QuoteDblVb$(S)
-QuoteDblVb = QuoteDbl(Replace(S, vbDblQuote, vbTwoDblQuote))
+Function QteDblVb$(S)
+QteDblVb = QteDbl(Replace(S, vbDblQte, vbTwoDblQte))
 End Function
 
-Function QuoteDbl$(S)
-QuoteDbl = vbDblQuote & S & vbDblQuote
+Function QteDbl$(S)
+QteDbl = vbDblQte & S & vbDblQte
 End Function
 
-Function QuoteSng$(S)
-QuoteSng = "'" & S & "'"
+Function QteSng$(S)
+QteSng = "'" & S & "'"
 End Function
 
-Function QuoteSq$(S)
-QuoteSq = "[" & S & "]"
+Function QteSq$(S)
+QteSq = "[" & S & "]"
 End Function
-Function QuoteSqIf$(S)
-If IsNeedQuote(S) Then QuoteSqIf = QuoteSq(S) Else QuoteSqIf = S
+Function QteSqIf$(S)
+If IsNeedQte(S) Then QteSqIf = QteSq(S) Else QteSqIf = S
 End Function
-Function QuoteSqAv(Av()) As String()
+Function QteSqAv(Av()) As String()
 Dim I
 For Each I In Av
-    PushI QuoteSqAv, QuoteSq(I)
+    PushI QteSqAv, QteSq(I)
 Next
 End Function
 

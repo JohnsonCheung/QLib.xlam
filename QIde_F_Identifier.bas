@@ -5,11 +5,11 @@ Private Const CMod$ = "MIde_Identifier."
 Private Const Asm$ = "QIde"
 Private Sub Z_NyzStr()
 Dim S$
-GoSub ZZ
+GoSub Z
 'GoSub T0
 Exit Sub
-ZZ:
-    Dim Lines$: Lines = SrcLinesP
+Z:
+    Dim Lines$: Lines = SrcLP
     Dim Ny1$(): Ny1 = NyzStr(Lines)
     Dim Ny2$(): Ny2 = WrdSy(Lines)
     If Not IsEqAy(Ny1, Ny2) Then Stop
@@ -24,7 +24,7 @@ Tst:
     Return
 End Sub
 Private Sub Z_NsetzStr()
-NsetzStr(SrcLinesP).Srt.Vc
+NsetzStr(SrcLP).Srt.Vc
 End Sub
 Function NsetzStr(S) As Aset
 Set NsetzStr = AsetzAy(NyzStr(S))

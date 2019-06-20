@@ -6,8 +6,8 @@ Private Const Asm$ = "QVb"
 Function Jn$(Ay, Optional Sep$ = "")
 Jn = Join(SyzAy(Ay), Sep)
 End Function
-Function QuoteBktJnComma$(Ay)
-QuoteBktJnComma = QuoteBkt(JnComma(Ay))
+Function QteBktJnComma$(Ay)
+QteBktJnComma = QteBkt(JnComma(Ay))
 End Function
 
 Function JnComma$(Ay)
@@ -50,8 +50,17 @@ End Function
 Function JnDotAp$(ParamArray Ap())
 Dim Av(): Av = Ap: JnDotAp = JnDot(Av)
 End Function
-Function JnQDot$(Ay) 'JnQDot = QuoteDot . JnDot
-JnQDot = QuoteDot(JnDot(Ay))
+
+Function QteJnzAsTLin$(Ay)
+QteJnzAsTLin = QteJn(Ay, " | ", "| * |")
+End Function
+
+Function QteJn$(Ay, Sep$, QteStr$)
+QteJn = Qte(Jn(Ay, Sep), QteStr)
+End Function
+Function QteJnDot$(Ay)
+'Ret : a str joining @Ay and qte with . in front and at end
+QteJnDot = QteDot(JnDot(Ay))
 End Function
 
 Function JnDot$(Ay)
@@ -71,19 +80,19 @@ JnPthSep = Jn(Ay, PthSep)
 End Function
 
 Function JnQDblComma$(Sy$())
-JnQDblComma = JnComma(SyQuoteDbl(Sy))
+JnQDblComma = JnComma(SyQteDbl(Sy))
 End Function
 
 Function JnQDblSpc$(Sy$())
-JnQDblSpc = JnSpc(SyQuoteDbl(Sy))
+JnQDblSpc = JnSpc(SyQteDbl(Sy))
 End Function
 
 Function JnQSngComma$(Sy$())
-JnQSngComma = JnComma(SyQuoteSng(Sy))
+JnQSngComma = JnComma(SyQteSng(Sy))
 End Function
 
 Function JnQSngSpc$(Sy$())
-JnQSngSpc = JnSpc(SyQuoteSng(Sy))
+JnQSngSpc = JnSpc(SyQteSng(Sy))
 End Function
 
 Function JnQSqCommaSpc$(Sy$())
@@ -113,7 +122,7 @@ End Function
 Function JnTerm$(Ay)
 Dim O$(), X
 For Each X In Itr(Ay)
-    PushI O, QuoteSq(X)
+    PushI O, QteSq(X)
 Next
 JnTerm = Join(O, " ")
 End Function

@@ -14,26 +14,26 @@ End Property
 
 Private Sub Z_PrpNy()
 Dim Db As Database: Set Db = SampDbzDutyDta
-Dim Fd As Dao.Field
+Dim Fd As DAO.Field
 Set Fd = FdzTF(Db, "Permit", "Permit")
 D PrpNyzFd(Fd)
 End Sub
 
-Function PrpNyzFd(A As Dao.Field) As String()
+Function PrpNyzFd(A As DAO.Field) As String()
 PrpNyzFd = Itn(A.Properties)
 End Function
 
 Private Sub Z_PrpDryzFd()
 Dim Db As Database: Set Db = SampDbzDutyDta
-Dim Fd As Dao.Field
-Dim Rs As Dao.Recordset
+Dim Fd As DAO.Field
+Dim Rs As DAO.Recordset
 Set Rs = RszT(Db, "Permit")
 Set Fd = Rs.Fields("Permit")
 Debug.Print Fd.Value
 DmpDry PrpDryzFd(Fd)
 End Sub
 
-Function PrpDryzFd(A As Dao.Field) As Variant()
+Function PrpDryzFd(A As DAO.Field) As Variant()
 Dim PrpV, I, P$, V
 For Each I In Itn(A.Properties)
     P = I
@@ -43,7 +43,7 @@ Next
 End Function
 
 Property Let PrpVal(WiDaoPrps As Object, P$, V)
-Dim Prps As Dao.Properties
+Dim Prps As DAO.Properties
 Set Prps = WiDaoPrps.Properties
 If HasItn(Prps, P) Then
     Prps(P).Value = V
@@ -53,7 +53,7 @@ End If
 End Property
 
 Property Get PrpVal(WiDaoPrps As Object, P$)
-Dim Prps As Dao.Properties
+Dim Prps As DAO.Properties
 Set Prps = WiDaoPrps.Properties
 On Error GoTo X
 PrpVal = Prps(P).Value
@@ -75,17 +75,17 @@ T0:
 Tst:
     FldPrp(Db, T, F, P) = V
     Ass FldPrp(Db, T, F, P) = V
-    Dim Fd As Dao.Field: Set Fd = FdzTF(Db, T, F)
+    Dim Fd As DAO.Field: Set Fd = FdzTF(Db, T, F)
     Stop
     DmpDry PrpDryzFd(Fd)
     Return
 End Sub
 
-Property Get FldDeszTd$(A As Dao.Field)
+Property Get FldDeszTd$(A As DAO.Field)
 FldDeszTd = PrpVal(A.Properties, C_Des)
 End Property
 
-Property Let FldDeszTd(A As Dao.Field, Des$)
+Property Let FldDeszTd(A As DAO.Field, Des$)
 
 End Property
 
@@ -111,11 +111,11 @@ TblPrp = A.TableDefs(T).Properties(P).Value
 End Property
 
 Property Let TblPrp(A As Database, T, P, V)
-Dim Td As Dao.TableDef: Set Td = A.TableDefs(T)
+Dim Td As DAO.TableDef: Set Td = A.TableDefs(T)
 SetDaoPrp Td, Td.Properties, P, V
 End Property
 
-Sub SetDaoPrp(WiDaoPrps As Object, Prps As Dao.Properties, P, V)
+Sub SetDaoPrp(WiDaoPrps As Object, Prps As DAO.Properties, P, V)
 If HasItn(Prps, P) Then
     If IsEmp(V) Then
         Prps.Delete P
@@ -128,7 +128,7 @@ End If
 End Sub
 
 Property Let FldPrp(A As Database, T, F$, P$, V)
-Dim Fd As Dao.Field: Set Fd = A.TableDefs(T).Fields(F)
+Dim Fd As DAO.Field: Set Fd = A.TableDefs(T).Fields(F)
 SetDaoPrp Fd, Fd.Properties, P, V
 End Property
 

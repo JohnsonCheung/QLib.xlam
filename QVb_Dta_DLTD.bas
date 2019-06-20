@@ -19,7 +19,7 @@ QVb_Dta_IndentSrc:
 End Sub
 Private Sub Z_IndentSrcDry()
 Dim IndentSrc$()
-GoSub ZZ
+GoSub Z
 GoSub T0
 Exit Sub
 T0:
@@ -41,7 +41,7 @@ Tst:
     Act = IndentSrcDry(IndentSrc)
     C
     Return
-ZZ:
+Z:
     Erase XX
     X "A Bc"
     X " 1"
@@ -55,7 +55,7 @@ ZZ:
 End Sub
 Private Sub Z_IndentedLy()
 Dim IndentSrc$(), K$
-GoSub ZZ
+GoSub Z
 GoSub T0
 Exit Sub
 T0:
@@ -73,7 +73,7 @@ Tst:
     Act = IndentedLy(IndentSrc, K)
     C
     Return
-ZZ:
+Z:
     K = "A"
     Erase XX
     X "A Bc"
@@ -106,7 +106,7 @@ Dim Lin, L&, IsHdr As Boolean, T1$, Dta$
 Const SpcAsc% = 32
 For Each Lin In Itr(IndentSrc)
     L = L + 1
-    If FstTwoChr(LTrim(L)) = "--" Then GoTo Nxt
+    If Fst2Chr(LTrim(L)) = "--" Then GoTo Nxt
     IsHdr = FstChr(Lin) <> " "
     If IsHdr Then
         T1 = T1zS(Lin)
@@ -123,7 +123,7 @@ Dim O$()
 Dim L, Fnd As Boolean, IsNewSection As Boolean, IsFstChrSpc As Boolean, FstA%, Hit As Boolean
 Const SpcAsc% = 32
 For Each L In Itr(IndentSrc)
-    If FstTwoChr(LTrim(L)) = "--" Then GoTo Nxt
+    If Fst2Chr(LTrim(L)) = "--" Then GoTo Nxt
     FstA = FstAsc(L)
     IsNewSection = IsAscUCas(FstA)
     If IsNewSection Then
@@ -141,7 +141,7 @@ Next
 If Fnd Then IndentedLy = O: Exit Function
 End Function
 
-Private Sub ZZ()
+Private Sub Z()
 End Sub
 Function DLTT(A As DLTDH, T1$, TT$) As DLTT
 DLTT = DLTTzLDta(DLDta(A, T1), TT)
@@ -195,7 +195,7 @@ Private Function DryOfLTD(Src$()) As Variant()
 Dim L&, Dta$, T1$, Lin
 For Each Lin In Itr(Src)
     L = L + 1
-    If FstTwoChr(LTrim(L)) = "--" Then GoTo X
+    If Fst2Chr(LTrim(L)) = "--" Then GoTo X
     T1 = T1zS(Lin)
     Dta = RmvT1(Lin)
     PushI DryOfLTD, Array(L, T1, Dta)
@@ -206,7 +206,7 @@ Private Function DryOfLTDH(IndentedSrc$()) As Variant()
 Dim L&, Dta$, T1$, IsHdr As Boolean, Lin
 For Each Lin In Itr(IndentedSrc)
     L = L + 1
-    If FstTwoChr(LTrim(Lin)) = "--" Then GoTo X
+    If Fst2Chr(LTrim(Lin)) = "--" Then GoTo X
     IsHdr = FstChr(Lin) <> " "
     If IsHdr Then
         Dta = RmvT1(Lin)

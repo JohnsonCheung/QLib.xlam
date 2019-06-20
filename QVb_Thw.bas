@@ -89,20 +89,20 @@ If IsEqObj(A, B) Then ThwNav Fun, Msg, Nav
 End Sub
 
 Sub ThwIf_NoSrt(Ay, Fun$)
-If IsSrtedAy(Ay) Then Thw Fun, "Array should be sorted", "Ay-Ty Ay", TypeName(Ay), Ay
+If IsSrtedzAy(Ay) Then Thw Fun, "Array should be sorted", "Ay-Ty Ay", TypeName(Ay), Ay
 End Sub
 
 Sub Insp(Fun$, Msg$, ParamArray Nap())
 Dim Nav(): Nav = Nap
 Dim F$: If Fun <> "" Then F = " (@" & Fun & ")"
-Dim A$: A = BoxStr("Insp: " & Msg & F)
+Dim A$(): A = BoxzS("Insp: " & Msg & F)
 BrwAy Sy(A, LyzNav(Nav))
 End Sub
 
 Sub Thw(Fun$, Msg$, ParamArray Nap())
 Dim Nav(): Nav = Nap
-Dim A$: A = BoxStr("Program error")
-ThwNav Fun, A & Msg, Nav
+Dim A$(): A = BoxzS("Program error")
+ThwNav Fun, JnCrLf(Sy(A, Msg)), Nav
 End Sub
 
 Sub ThwNav(Fun$, Msg$, Nav())
@@ -227,7 +227,7 @@ Dim Obj As Object, PP$
 GoSub T0
 Exit Sub
 T0:
-    Set Obj = New Dao.Field
+    Set Obj = New DAO.Field
     PP = "Name Type Size"
     GoTo Tst
 Tst:
@@ -236,7 +236,7 @@ Tst:
     Return
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A$
 Dim B()
 Dim C

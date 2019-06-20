@@ -53,9 +53,9 @@ End Sub
 
 Private Sub Z_Rpt()
 Dim WDb As Database, B As IOupGenr
-GoSub ZZ
+GoSub Z
 Exit Sub
-ZZ:
+Z:
     Set WDb = Nothing
     Set B = New OupGenrzTaxCmp
     GoTo Tst

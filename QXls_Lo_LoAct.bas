@@ -9,7 +9,7 @@ BrwDrs DrszLo(A)
 End Sub
 
 Sub MinxLo(A As ListObject)
-If FstTwoChr(A.Name) <> "T_" Then Exit Sub
+If Fst2Chr(A.Name) <> "T_" Then Exit Sub
 Dim R1 As Range
 Set R1 = A.DataBodyRange
 If R1.Rows.Count >= 2 Then
@@ -19,7 +19,7 @@ End Sub
 
 Private Sub MinxLozWs(A As Worksheet)
 If A.CodeName = "WsIdx" Then Exit Sub
-If FstTwoChr(A.CodeName) <> "Ws" Then Exit Sub
+If Fst2Chr(A.CodeName) <> "Ws" Then Exit Sub
 Dim L As ListObject
 For Each L In A.ListObjects
     MinxLo L
@@ -132,7 +132,7 @@ ShwPt PtzLo(Lo, At, "A B", "C D", "F", "E")
 Stop
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A As Variant
 Dim B As ListObject
 Dim C As Boolean

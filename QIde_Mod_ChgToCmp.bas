@@ -9,6 +9,6 @@ If Not IsMod(Md(FmModn)) Then InfLin CSub, "It not Mod", "Mod", FmModn: Exit Sub
 Dim T$: T = Left(FmModn & "_" & Format(Now, "HHMMDD"), 31)
 Md(FmModn).Name = T
 AddCls FmModn
-Md(FmModn).AddFromString SrcLines(Md(T))
+Md(FmModn).AddFromString SrcL(Md(T))
 RmvCmpzN T
 End Sub

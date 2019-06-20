@@ -8,12 +8,12 @@ Public Const DoczOfLimPmSpec$ = "It is lin with 3 Pm: [-Sw xx -Sng xx -Mul xx]. 
 "Where -Mul xx are allowed multiple-value Pm.  " & _
 "Where xx are PmNm."
 Public Const vbOpnBkt$ = "("
-Public Const vbDblQuote$ = """"
+Public Const vbDblQte$ = """"
 Public Const vb2CrLf$ = vbCrLf & vbCrLf
-Public Const vb2DblQuote$ = vbDblQuote & vbDblQuote
-Public Const vbTwoDblQuote$ = vbDblQuote & vbDblQuote
-Public Const vbDblQuoteAsc As Byte = 34
-Public Const vbSngQuote$ = "'"
+Public Const vb2DblQte$ = vbDblQte & vbDblQte
+Public Const vbTwoDblQte$ = vbDblQte & vbDblQte
+Public Const vbDblQteAsc As Byte = 34
+Public Const vbSngQte$ = "'"
 Public Const vbExcM$ = "!"
 Public Const vbPround$ = "#"
 Public Const vbOpnSqBkt$ = "["
@@ -70,9 +70,9 @@ Property Get SampDbzShpCst() As Database
 Set SampDbzShpCst = Db(SampFbzShpCst)
 End Property
 Property Get DbEng() As DBEngine
-Set DbEng = Dao.DBEngine
+Set DbEng = DAO.DBEngine
 End Property
-Private Function Db(A) As Dao.Database
+Private Function Db(A) As Database
 Set Db = DbEng.OpenDatabase(A)
 End Function
 Property Get SampCnzDutyDta() As AdoDb.Connection
@@ -81,7 +81,7 @@ End Property
 Property Get SampFb$()
 SampFb = SampFbzDutyDta
 End Property
-Property Get SampDb() As Dao.Database
+Property Get SampDb() As Database
 Set SampDb = Db(SampFb)
 End Property
 Property Get SampDbzDutyDta() As Database

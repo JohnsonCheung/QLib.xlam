@@ -138,7 +138,7 @@ For Each Dr In Itr(DFx.Dry)
     Fxn = Dr(IxFxn)
     If Not Dic_Fxn_Fx.Exists(Fxn) Then Thw CSub, "Dic_Fxn_Fx does not have Key", "Fxn-Key Dic_Fxn_Fx", T, Dic_Fxn_Fx
     Fx = Dic_Fxn_Fx(Fxn)
-    If IsNeedQuote(Ws) Then
+    If IsNeedQte(Ws) Then
         S = "'" & Ws & "$'"
     Else
         S = Ws & "$"

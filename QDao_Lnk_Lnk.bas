@@ -30,8 +30,8 @@ Sub LnkFb(A As Database, T, Fb, Optional Fbt$)
 LnkTbl A, T, DftStr(Fbt, T), CnStrzFbDao(Fb)
 End Sub
 
-Private Function TdzCnStr(T, Src$, Cn$) As Dao.TableDef
-Set TdzCnStr = New Dao.TableDef
+Private Function TdzCnStr(T, Src$, Cn$) As DAO.TableDef
+Set TdzCnStr = New DAO.TableDef
 With TdzCnStr
     .Connect = Cn
     .Name = T
@@ -41,7 +41,7 @@ End Function
 Function CnStrAy(D As Database) As String()
 Dim T
 For Each T In Tbli(D)
-    PushNonBlank CnStrAy, CnStrzT(D, T)
+    PushNB CnStrAy, CnStrzT(D, T)
 Next
 End Function
 Function LnkgTny(A As Database) As String()

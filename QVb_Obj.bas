@@ -36,7 +36,7 @@ End Function
 
 Function IntozOPrp(OInto, Oy, Prp)
 Dim O, I
-O = AyzReSi(OInto)
+O = ResiU(OInto)
 For Each I In Itr(Oy)
     Push O, Prp(I, Prp)
 Next
@@ -83,7 +83,7 @@ End Function
 Function ObjToStr$(Obj As Excel.Application)
 On Error GoTo X
 ObjToStr = Obj.ToStr: Exit Function
-X: ObjToStr = QuoteSq(TypeName(Obj))
+X: ObjToStr = QteSq(TypeName(Obj))
 End Function
 
 Function Prp(Obj As Object, P As PrpPth, Optional ThwEr As EmThw)

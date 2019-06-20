@@ -6,7 +6,7 @@ Dim J&
 If NoTxtSngQ Then
     For J = 0 To UB(Dr)
         If IsStr(Dr(J)) Then
-            OSq(R, J + 1) = QuoteSng(CStr(Dr(J)))
+            OSq(R, J + 1) = QteSng(CStr(Dr(J)))
         Else
             OSq(R, J + 1) = Dr(J)
         End If
@@ -38,7 +38,7 @@ ReDim O(1 To R, 1 To C)
 Sq = O
 End Function
 
-Function AddSngQuotezSq(Sq())
+Function AddSngQtezSq(Sq())
 Dim Nc%, C%, R&, O
 O = Sq
 Nc = UBound(Sq, 2)
@@ -49,7 +49,7 @@ For R = 1 To UBound(Sq, 1)
         End If
     Next
 Next
-AddSngQuotezSq = O
+AddSngQtezSq = O
 End Function
 Function JnSq(Sq$(), SepChr$) As String()
 Dim Nc&: Nc = UBound(Sq, 2)
@@ -218,7 +218,7 @@ Next
 Transpose = O
 End Function
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A&
 Dim B As Variant
 Dim C$

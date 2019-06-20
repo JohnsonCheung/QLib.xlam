@@ -44,9 +44,9 @@ If Si(O) > 0 Then PushI O, FmtQQ("Valid-Pm[?]", JnSpc(PrpVy))
 WFmlEr = O
 End Function
 
-Private Sub WAsg3PP(PP_with_NewFldEqQuoteFmFld$, OPPzPrp$(), OPPzFml$(), OPPzAll$())
+Private Sub WAsg3PP(PP_with_NewFldEqQteFmFld$, OPPzPrp$(), OPPzFml$(), OPPzAll$())
 Dim I, S$
-For Each I In SyzSS(PP_with_NewFldEqQuoteFmFld)
+For Each I In SyzSS(PP_with_NewFldEqQteFmFld)
     S = I
     If HasSubStr(S, "=") Then
         PushI OPPzAll, Bef(S, "=")
@@ -98,7 +98,7 @@ Private Sub Z_DrszItrPrpPthSy()
 BrwDrs DrszItrPrpPthSy(CPj.VBComponents, SyzSS("Name Type CmpTy=ShpCmpTy(Type)"))
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 MDta_Prp:
 End Sub
 

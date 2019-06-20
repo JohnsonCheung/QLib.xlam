@@ -357,7 +357,7 @@ Tst:
     Return
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A As Variant
 Dim B$()
 Dim C$
@@ -365,11 +365,6 @@ Dim D As Rel
 
 CvRel A
 IsRel A
-End Sub
-
-Friend Sub Z()
-Me.Z_InDpdOrdItms
-Me.Z_Itms
 End Sub
 
 Property Get SetOfSngChdPar() As Aset

@@ -37,7 +37,7 @@ Dim C$: C = Replace(B, "ParamArray ", "...")
 If IsNoBkt Then
     FmtPm = C
 Else
-    FmtPm = QuoteSq(C)
+    FmtPm = QteSq(C)
 End If
 End Function
 

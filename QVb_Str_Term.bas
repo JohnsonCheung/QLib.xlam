@@ -23,7 +23,7 @@ TLinzAp = JnTerm(Av)
 End Function
 
 Function JnTerm$(TermAy)
-JnTerm = JnSpc(SyzQteSqIf(RmvBlankzAy(TermAy)))
+JnTerm = JnSpc(SyzQteSqIf(RmvBlnkzAy(TermAy)))
 End Function
 
 Function CommaTerm$(Lin, Ix)
@@ -50,7 +50,7 @@ Dim L$, J%
 L = Lin
 While L <> ""
     J = J + 1: If J > 5000 Then Stop
-    PushNonBlank TermAy, ShfT1(L)
+    PushNB TermAy, ShfT1(L)
 Wend
 End Function
 Function ShfTerm(OLin$, X$) As Boolean
@@ -59,9 +59,19 @@ If T1(OLin) = X Then
     OLin = RmvT1(OLin)
 End If
 End Function
+
 Function ShfCnst(OLin$) As Boolean
 ShfCnst = ShfT1(OLin) = "Const"
 End Function
+
+Function ShfCnstLin$(Src$())
+If Si(Src) = 0 Then Exit Function
+Dim L$: L = RmvMdy(Src(0))
+'IsLinCnst
+Stop
+'ShfCnstLin = ShfT1(OLin) = "Const"
+End Function
+
 Function ShfDim(OLin$) As Boolean
 ShfDim = ShfT1(OLin) = "Dim"
 End Function
@@ -98,7 +108,7 @@ Tst:
 End Sub
 
 
-Private Sub ZZ()
+Private Sub Z()
 Z_ShfT1
 MVb_Lin_Term:
 End Sub

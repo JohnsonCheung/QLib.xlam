@@ -23,9 +23,9 @@ B FmtLinesAy(LinesAy)
 End Sub
 Private Sub Z_FmtLinesAy()
 Dim LinesAy
-GoSub ZZ
+GoSub Z
 Exit Sub
-ZZ:
+Z:
     BrwLinesAy Y_LinesAy
     Return
 End Sub
@@ -39,30 +39,15 @@ Y_LinesAy = XX
 Erase XX
 End Function
 
-Function BoxLines$(Lines$)
-BoxLines = JnCrLf(BoxLy(SplitCrLf(Lines)))
-End Function
-Function BoxLy(Ly$()) As String()
-If Si(Ly) = 0 Then Exit Function
-Dim W%, L$, I
-W = WdtzAy(Ly)
-L = Quote(Dup("-", W), "|-*-|")
-PushI BoxLy, L
-For Each I In Ly
-    PushI BoxLy, "| " & AlignL(I, W) & " |"
-Next
-PushI BoxLy, L
-End Function
-
 Function FmtLinesAy(LinesAy, Optional B As EmIxCol = EiBeg0) As String()
 If Si(LinesAy) = 0 Then Exit Function
 Dim W%: W = WdtzLinesAy(LinesAy)
-Dim SepLin: SepLin = Quote(Dup("-", W + 2), "|")
+Dim LinzSep: LinzSep = Qte(Dup("-", W + 2), "|")
 Dim Lines
-PushI FmtLinesAy, SepLin
+PushI FmtLinesAy, LinzSep
 For Each Lines In Itr(LinesAy)
     PushIAy FmtLinesAy, AddIxPfxzLineszW(Lines, W, B)
-    PushI FmtLinesAy, SepLin
+    PushI FmtLinesAy, LinzSep
 Next
 End Function
 Private Function AddIxPfxzLineszW(Lines, W%, Optional B As EmIxCol = EiBeg0) As String()
@@ -123,7 +108,7 @@ Dim W%, Lin, I
 W = EnsBet(Wdt, 10, 200)
 For Each I In Itr(Ly)
     Lin = I
-    PushIAy WrpLy, WrpLin(Lin, W)
+    PushIAy WrpLy, LyzWrpLin(Lin, W)
 Next
 End Function
 
@@ -147,51 +132,38 @@ ShfWrpgLin = Trim(O)
 OLin = OL
 End Function
 
-Private Function WrpLin(Lin, W%) As String()
-If Len(Lin) > W Then WrpLin = Sy(Lin): Exit Function
+Private Function LyzWrpLin(Lin, W%) As String()
+If Len(Lin) > W Then LyzWrpLin = Sy(Lin): Exit Function
 Dim L$: L = RTrim(Lin)
 Dim J%
 Dim LasLinLasChr$
 While L <> ""
     J = J + 1: If J > 1000 Then ThwLoopingTooMuch CSub
-    PushI WrpLin, ShfWrpgLin(L, W, LasLinLasChr)
+    PushI LyzWrpLin, ShfWrpgLin(L, W, LasLinLasChr)
     LasLinLasChr = LasChr(L)
 Wend
 End Function
 
-Private Sub Z_RTrimLines()
+Private Sub Z_LineszRTrim()
 Dim Lines$: Lines = LineszVbl("lksdf|lsdfj|||")
-Dim Act$: Act = RTrimLines(Lines)
+Dim Act$: Act = LineszRTrim(Lines)
 Debug.Print Act & "<"
 Stop
 End Sub
 
-Private Sub Z_LasNLines()
+Private Sub Z_LineszLasN()
 Dim Ay$(), A$, J%
 For J = 0 To 9
 Push Ay, "Line " & J
 Next
 A = Join(Ay, vbCrLf)
-Debug.Print LasNLines(A, 3)
+Debug.Print LineszLasN(A, 3)
 End Sub
 
 Function FstLin(Lines$)
 FstLin = BefOrAll(Lines, vbCrLf)
 End Function
 
-Function LinesRmvBlankLinAtEnd$(Lines)
-Dim J%, O$
-O = Lines
-Do
-    J = J + 1: If J = 1000 Then ThwLoopingTooMuch CSub
-    If HasSfx(O, vbCrLf) Then
-        O = RmvSfx(O, vbCrLf)
-    Else
-        LinesRmvBlankLinAtEnd = O
-        Exit Function
-    End If
-Loop
-End Function
 Function LinesApp$(A, L)
 If A = "" Then LinesApp = L: Exit Function
 LinesApp = A & vbCrLf & L
@@ -204,15 +176,15 @@ For Each Lines In Itr(LinesAy)
 Next
 End Function
 
-Private Sub Z_RTrimLines1()
+Private Sub Z_LineszRTrim1()
 Dim Lines$: Lines = LineszVbl("lksdf|lsdfj|||")
-Dim Act$: Act = RTrimLines(Lines)
+Dim Act$: Act = LineszRTrim(Lines)
 Debug.Print Act & "<"
 Stop
 End Sub
 
-Function LasNLines$(Lines$, N%)
-LasNLines = JnCrLf(AywLasN(SplitCrLf(Lines), N))
+Function LineszLasN$(Lines$, N%)
+LineszLasN = JnCrLf(AywLasN(SplitCrLf(Lines), N))
 End Function
 
 Function LinCnt&(Lines$)
@@ -227,10 +199,10 @@ Function SqvzLines(Lines$) As Variant()
 SqvzLines = Sqv(SplitCrLf(Lines))
 End Function
 
-Function RTrimLines$(Lines)
+Function LineszRTrim$(Lines)
 Dim At&
 For At = Len(Lines) To 1 Step -1
-    If Not IsStrAtSpcCrLf(Lines, At) Then RTrimLines = Left(Lines, At): Exit Function
+    If Not IsStrAtSpcCrLf(Lines, At) Then LineszRTrim = Left(Lines, At): Exit Function
 Next
 End Function
 
@@ -238,14 +210,14 @@ Function LasLin(Lines$)
 LasLin = LasEle(SplitCrLf(Lines))
 End Function
 
-Function AlignLines$(Lines$, W%)
+Function LineszAlign$(Lines$, W%)
 Dim Las$: Las = LasLin(Lines)
 Dim N%: N = W - Len(Las)
 If N > 0 Then
-    AlignLines = Lines & Space(N)
+    LineszAlign = Lines & Space(N)
 Else
     Warn CSub, "W is too small", "Lines.LasLin W", Las, W
-    AlignLines = Lines
+    LineszAlign = Lines
 End If
 End Function
 

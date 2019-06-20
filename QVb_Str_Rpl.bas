@@ -162,7 +162,7 @@ Return
 End Sub
 
 
-Private Sub ZZ()
+Private Sub Z()
 Z_RplBet
 Z_RplPfx
 MVb_Str_Rpl:

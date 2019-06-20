@@ -107,9 +107,9 @@ End Sub
 
 Private Sub Z_RmkMth()
 Dim Md As CodeModule, Mthn
-'            Ass LineszVbl(MthLines(M)) = "Property Get ZZA()|End Property||Property Let YYA(V)||End Property"
-'RmkMth M:   Ass LineszVbl(MthLines(M)) = "Property Get ZZA()|Stop '|End Property||Property Let YYA(V)|Stop '|'|End Property"
-'UnRmkMth M: Ass LineszVbl(MthLines(M)) = "Property Get ZZA()|End Property||Property Let YYA(V)||End Property"
+'            Ass LineszVbl(MthL(M)) = "Property Get ZZA()|End Property||Property Let YYA(V)||End Property"
+'RmkMth M:   Ass LineszVbl(MthL(M)) = "Property Get ZZA()|Stop '|End Property||Property Let YYA(V)|Stop '|'|End Property"
+'UnRmkMth M: Ass LineszVbl(MthL(M)) = "Property Get ZZA()|End Property||Property Let YYA(V)||End Property"
 End Sub
 Function NxtMdLno(M As CodeModule, Lno)
 Const CSub$ = CMod & "NxtMdLno"
@@ -207,10 +207,10 @@ Dim C As VBComponent, ODry(), Dry(), Pjn$
 Pjn = P.Name
 For Each C In P.VBComponents
     Dry = DMth(C.CodeModule).Dry
-    Dry = InsColzDryAv(Dry, Av(Pjn, C.Name))
+    Dry = InsColzDryAv(Dry, Av(Pjn, ShtCmpTy(C.Type), C.Name))
     PushIAy ODry, Dry
 Next
-DMthzP = DrszFF("Pjn Mdn L Mdy Ty Mthn MthLin", ODry)
+DMthzP = DrszFF("Pjn MdTy Mdn L Mdy Ty Mthn MthLin", ODry)
 End Function
 
 Function DMth(M As CodeModule) As Drs
@@ -247,7 +247,7 @@ For Each Dr In Itr(A.Dry)
     Dim E&: E = EndLix(Src, F) + 1
     Dim T&: T = E - 1
     Dim MthLy$(): MthLy = AywFT(Src, F, T)
-    Dr = AyInsEle(Dr, E, 1)
+    Dr = InsEle(Dr, E, 1)
     PushI Dr, MthLy
     PushI Dry, Dr
 Next
@@ -272,7 +272,7 @@ Dim Dry(), Dr
 For Each Dr In Itr(A.Dry)
     Dim Ix&: Ix = Dr(0) - 1
     Dim E&: E = EndLix(Src, Ix) + 1
-    Dr = AyInsEle(Dr, E, 1)
+    Dr = InsEle(Dr, E, 1)
     PushI Dry, Dr
 Next
 DMthezS = DrszFF("L E Mdy Ty Mthn MthLin", Dry)
@@ -369,7 +369,7 @@ For Each L In B
     PushI ODry, Array(L, InspMthStmt(L, "Md"))
 Next
 Dim C As Drs: C = DrszFF("MthLin InspStmt", ODry)
-Brw FmtDrsR(C)
+Brw LinzDrsR(C)
 End Sub
 
 Function InspMthStmt$(MthLin, Mdn$)
@@ -411,8 +411,8 @@ Private Function InspExprzDclSfx$(V, DclSfx$)
 Dim O$, S$
 S = RmvPfx(DclSfx, " As ")
 Select Case S
-Case "DLTDH": O = FmtQQ("FmtDrs(?.D)", V)
-Case "Drs": O = FmtQQ("FmtDrs(?)", V)
+Case "DLTDH": O = FmtQQ("LinzDrs(?.D)", V)
+Case "Drs": O = FmtQQ("LinzDrs(?)", V)
 Case "S1S2s": O = FmtQQ("FmtS1S2s(?)", V)
 Case "CodeModule": O = FmtQQ("Mdn(?)", V)
 Case "", "$", "$()", "#", "@", "%", "&", "%()", "&()", "#()", "@()", "$()": O = V

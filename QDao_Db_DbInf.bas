@@ -83,10 +83,10 @@ For Each I In Fny(D, T)
 Next
 End Function
 
-Private Function InfDr_TblF(T, Seq%, F As Dao.Field2) As Variant()
+Private Function InfDr_TblF(T, Seq%, F As DAO.Field2) As Variant()
 InfDr_TblF = Array(T, Seq, F.Name, DtaTy(F.Type))
 End Function
-Private Sub ZZ()
+Private Sub Z()
 MDao_Z_Db_DbInf:
 End Sub
 
@@ -94,7 +94,7 @@ Private Function InfDtOfLnkLy(A As Database) As String()
 Dim T$, I
 For Each I In Tny(A)
     T = I
-    PushNonBlank InfDtOfLnkLy, CnStrzT(A, T)
+    PushNB InfDtOfLnkLy, CnStrzT(A, T)
 Next
 End Function
 

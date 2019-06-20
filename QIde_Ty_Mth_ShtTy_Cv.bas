@@ -68,9 +68,9 @@ End Select
 ShtMthTy = O
 End Function
 Private Sub Z_ShtMthTyzLin()
-GoSub ZZ
+GoSub Z
 Exit Sub
-ZZ:
+Z:
     Dim O$(), I, Lin
     For Each I In MthLinAyV
         Lin = I

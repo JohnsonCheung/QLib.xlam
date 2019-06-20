@@ -16,20 +16,20 @@ Function CdLyzS(Src$()) As String()
 Dim L$, I
 For Each I In Itr(Src)
     I = L
-    If IsCdLin(L) Then
+    If IsLinCd(L) Then
         PushI CdLyzS, L
     End If
 Next
 End Function
 
-Function IsCdLin(Lin) As Boolean
+Function IsLinCd(Lin) As Boolean
 Dim L$: L = Trim(Lin)
 If Lin = "" Then Exit Function
 If FstChr(LTrim(Lin)) = "'" Then Exit Function
-IsCdLin = True
+IsLinCd = True
 End Function
-Function IsNonOptCdLin(Lin) As Boolean
-If Not IsCdLin(Lin) Then Exit Function
+Function IsLinNonOpt(Lin) As Boolean
+If Not IsLinCd(Lin) Then Exit Function
 If HasPfx(Lin, "Option") Then Exit Function
-IsNonOptCdLin = True
+IsLinNonOpt = True
 End Function

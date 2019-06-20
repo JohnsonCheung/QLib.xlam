@@ -5,7 +5,7 @@ Private Const CMod$ = "BBqlRead."
 Const Asm$ = "Dao"
 Const Ns$ = "Dao.Bql"
 Const ShtTyBql$ = "Short-Type-Si-Colon-FldNm-Bql:Sht.Ty.s.c.f.Bql: It is a [Bql] with each field is a [ShtTyscf]"
-Public Const DoczBql$ = "Full:Back-Quote-Line.  BasLin:Lin.  Brk:B.q.l.  Back-Quote is (`) and it is a String.  Each field is separated by (`)"
+Public Const DoczBql$ = "Full:Back-Qte-Line.  BasLin:Lin.  Brk:B.q.l.  Back-Qte is (`) and it is a String.  Each field is separated by (`)"
 Public Const DoczFbql$ = "Fullfilename-Bql:F.bql:it is a [Ft]|Each line is a [Bql]|Fst line is [ShtTyBql]"
 Public Const DoczShtTys$ = "ShtTy-Si:It is a [ShtTy] or (Tnnn) where nnn can 1 to 3 digits of value 1-255"
 Public Const DoczShtTyLis$ = "ShtTyLis Short-Type-List Sht.Ty.Lis (String)|is a Cml-String of each 1 to 3 char of ShtTy"
@@ -26,7 +26,7 @@ End Function
 
 Function ShtTyscfzCol$(Col(), F$)
 Dim O$: O = ApdIf(ShtTyszCol(Col), ":") & F
-If IsNeedQuote(F) Then O = QuoteSqBkt(O)
+If IsNeedQte(F) Then O = QteSqBkt(O)
 ShtTyscfzCol = O
 End Function
 
@@ -83,7 +83,7 @@ Dim T$
     T = T0
     If T = "" Then T = TblNmzFbql(Fbql)
 
-Dim F%, L$, R As Dao.Recordset
+Dim F%, L$, R As DAO.Recordset
 F = FnoI(Fbql)
 Line Input #F, L
 CrtTblzShtTyscfBql A, T, L
@@ -98,7 +98,7 @@ Close #F
 End Sub
 
 Sub CrtTblzShtTyscfBql(A As Database, T, ShtTyscfBql$)
-Dim Td As New Dao.TableDef
+Dim Td As New DAO.TableDef
 Td.Name = T
 Dim I
 For Each I In Split(ShtTyscfBql, "`")
@@ -107,8 +107,8 @@ Next
 A.TableDefs.Append Td
 End Sub
 
-Private Function FdzShtTyscf(ShtTyscf$) As Dao.Field
-Dim T As Dao.DataTypeEnum
+Private Function FdzShtTyscf(ShtTyscf$) As DAO.Field
+Dim T As DAO.DataTypeEnum
 Dim S As Byte
 With Brk2(ShtTyscf, ":")
     Select Case True
@@ -122,14 +122,14 @@ End With
 End Function
 
 Function ShtTyBqlzT$(A As Database, T)
-Dim Ay$(), F As Dao.Field
+Dim Ay$(), F As DAO.Field
 For Each F In A.TableDefs(T).Fields
     PushI Ay, ShtTyszFd(F) & ":" & F.Name
 Next
 ShtTyBqlzT = Jn(Ay, "`")
 End Function
 
-Private Function ShtTyszFd$(A As Dao.Field)
+Private Function ShtTyszFd$(A As DAO.Field)
 Dim B$: B = ShtTyzDao(A.Type)
 If A.Type = dbText Then
     B = B & A.Size

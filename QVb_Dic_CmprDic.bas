@@ -83,7 +83,7 @@ For Each K In A
     S2 = "!" & "Er Dif" & vbCrLf & K & vbCrLf & UnderLinzLines(KK) & vbCrLf & B(K)
     PushS1S2 S, S1S2(S1, S2)
 Next
-FmtDif = FmtS1S2s(S, Nm1:="", Nm2:="")
+FmtDif = FmtS1S2s(S, N1:="", N2:="")
 End Function
 
 Private Function FmtExcess(A As Dictionary, Nm$) As String()
@@ -95,7 +95,7 @@ For Each K In A.Keys
     S2 = A(K)
     PushS1S2 S, S1S2(S1, S2)
 Next
-PushAy FmtExcess, FmtS1S2s(S, Nm1:="Exccess", Nm2:=Nm)
+PushAy FmtExcess, FmtS1S2s(S, N1:="Exccess", N2:=Nm)
 End Function
 
 Private Function FmtSam(A As Dictionary) As String()
@@ -115,6 +115,6 @@ Set B = DiczVbl("X AA|C Line|D Line1|D line2|B Line1|B line2|B line3|B Line4")
 BrwCmpgDicAB A, B
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Z_BrwCmpgDicAB
 End Sub

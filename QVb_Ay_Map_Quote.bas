@@ -1,24 +1,24 @@
 Attribute VB_Name = "QVb_Ay_Map_Quote"
 Option Compare Text
 Option Explicit
-Private Const CMod$ = "MVb_Ay_Map_Quote."
+Private Const CMod$ = "MVb_Ay_Map_Qte."
 Private Const Asm$ = "QVb"
-Function QuoteSqBkt$(S)
-QuoteSqBkt = "[" & S & "]"
+Function QteSqBkt$(S)
+QteSqBkt = "[" & S & "]"
 End Function
 
-Function QuoteSqBktIfzAy(Ay) As String()
+Function QteSqBktIfzAy(Ay) As String()
 Dim I
 For Each I In Itr(Ay)
-    PushI QuoteSqBktIfzAy, QuoteSqIf(I)
+    PushI QteSqBktIfzAy, QteSqIf(I)
 Next
 End Function
 
-Function SyQuote(Sy$(), QuoteStr$) As String()
+Function SyQte(Sy$(), QteStr$) As String()
 If Si(Sy) = 0 Then Exit Function
 Dim U&: U = UB(Sy)
 Dim Q1$, Q2$
-    With BrkQuote(QuoteStr)
+    With BrkQte(QteStr)
         Q1 = .S1
         Q2 = .S2
     End With
@@ -29,25 +29,25 @@ Dim O$()
     For J = 0 To U
         O(J) = Q1 & Sy(J) & Q2
     Next
-SyQuote = O
+SyQte = O
 End Function
 
-Function SyQuoteDbl(Sy$()) As String()
-SyQuoteDbl = SyQuote(Sy, """")
+Function SyQteDbl(Sy$()) As String()
+SyQteDbl = SyQte(Sy, """")
 End Function
 
-Function SyQuoteSng(Sy$()) As String()
-SyQuoteSng = SyQuote(Sy, "'")
+Function SyQteSng(Sy$()) As String()
+SyQteSng = SyQte(Sy, "'")
 End Function
 
 Function SyzQteSq(Sy$()) As String()
-SyzQteSq = SyQuote(Sy, "[]")
+SyzQteSq = SyQte(Sy, "[]")
 End Function
 
 Function SyzQteSqIf(Sy$()) As String()
 Dim I
 For Each I In Itr(Sy)
-    PushI SyzQteSqIf, QuoteSqIf(CStr(I))
+    PushI SyzQteSqIf, QteSqIf(CStr(I))
 Next
 End Function
 

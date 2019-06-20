@@ -12,7 +12,7 @@ Set MthDotCmlGpAsetzV = AsetzAy(MthDotCmlGpzV(A))
 End Function
 
 Private Sub Z_CmlAset()
-CmlAset(NyzStr(SrcLineszP(CPj))).Srt.Brw
+CmlAset(NyzStr(SrcLzP(CPj))).Srt.Brw
 End Sub
 
 Private Sub Z_ShfCml()
@@ -42,15 +42,15 @@ For J = 2 To Len(Nm)
     IsLowZ = C = "z"
     IsUCas = IsAscUCas(A)
     Select Case True
-    Case IsUCas:  PushNonBlank Cml0Sy, Cml
+    Case IsUCas:  PushNB Cml0Sy, Cml
                   Cml = C
-    Case IsLowZ:  PushNonBlank Cml0Sy, Cml
+    Case IsLowZ:  PushNB Cml0Sy, Cml
                   PushI Cml0Sy, "z"
                   Cml = ""
     Case Else:    Cml = Cml & C
     End Select
 Next
-PushNonBlank Cml0Sy, Cml
+PushNB Cml0Sy, Cml
 End Function
 
 Function Cml1Ay(Nm) As String()
@@ -61,7 +61,7 @@ For Each I In Itr(A)
     IsOneChr = Len(I) = 1
     IsLowZ = I = "z"
     Select Case True
-    Case IsLowZ:                    PushNonBlank Cml1Ay, Jn(M): Erase M: PushI Cml1Ay, "z"
+    Case IsLowZ:                    PushNB Cml1Ay, Jn(M): Erase M: PushI Cml1Ay, "z"
     Case IsOneChr And InCombine:    PushI M, I
     Case IsOneChr:                  PushI M, I: InCombine = True
     Case InCombine:                 PushI M, I: PushI Cml1Ay, Jn(M): Erase M
@@ -100,14 +100,14 @@ For Each I In CmlSy(Nm)
     Cml = I
     Debug.Print Cml; "<--CmlQBlk"
     If IsBRKCml(Cml) Then
-        PushNonBlank O, Jn(M)
+        PushNB O, Jn(M)
         PushI O, Cml
         Erase M
     Else
         PushI M, Cml
     End If
 Next
-PushNonBlank O, Jn(M)
+PushNB O, Jn(M)
 CmlGp = O
 For Each I In Itr(O)
     Cml = I
@@ -127,13 +127,13 @@ Next
 End Function
 
 Function CmlQBlk(Nm) As String()
-Dim IsVerbQuoted As Boolean, CmlQGp$, I, O$()
+Dim IsVerbQted As Boolean, CmlQGp$, I, O$()
 For Each I In CmlGp(Nm)
     CmlQGp = I
     Debug.Print CmlQGp; "<-- CmlGp"
     Select Case True
-    Case Not IsVerbQuoted And IsVerb(CmlQGp): PushI O, QuoteSq(CmlQGp): IsVerbQuoted = True
-    Case IsBRKCml(CmlQGp):                    PushI O, QuoteBkt(CmlQGp)
+    Case Not IsVerbQted And IsVerb(CmlQGp): PushI O, QteSq(CmlQGp): IsVerbQted = True
+    Case IsBRKCml(CmlQGp):                    PushI O, QteBkt(CmlQGp)
     Case Else:                                PushI O, CmlQGp
     End Select
 Next
@@ -149,15 +149,15 @@ Set CmlSetzNy = O
 End Function
 
 Function DotCml$(Nm)
-DotCml = JnQDot(CmlSy(Nm))
+DotCml = QteJnDot(CmlSy(Nm))
 End Function
 
-Function DotCmlGp$(Nm) ' = JnQDot . CmpBlk
-DotCmlGp = JnQDot(CmlGp(Nm))
+Function DotCmlGp$(Nm) ' = QteJnDot . CmpBlk
+DotCmlGp = QteJnDot(CmlGp(Nm))
 End Function
 
-Function DotCmlQGp$(Nm) ' = JnQDot . CmpGp1Ay
-Dim O$: O = JnQDot(CmlQBlk(Nm))
+Function DotCmlQGp$(Nm) ' = QteJnDot . CmpGp1Ay
+Dim O$: O = QteJnDot(CmlQBlk(Nm))
 DotCmlQGp = O
 'If HasEle(Array(".z.EFSchm.", _
 ".z.FFFxw.", _
@@ -359,7 +359,7 @@ Dim L$: L = S
 Dim J&
 While True
     J = J + 1: If J > 1000 Then ThwLoopingTooMuch CSub
-    PushNonBlank ShfCmlSy, ShfCml(L)
+    PushNB ShfCmlSy, ShfCml(L)
     If L = "" Then Exit Function
 Wend
 End Function

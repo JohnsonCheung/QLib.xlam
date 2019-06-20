@@ -30,7 +30,7 @@ BoolColzDrs = BoolColzDry(A.Dry, IxzAy(A.Fny, C))
 End Function
 
 Function FstCol(A As Drs) As Variant()
-FstCol = AvzDryC(A.Dry, 0)
+FstCol = ColzDry(A.Dry, 0)
 End Function
 
 Function StrColzDrsFstCol(A As Drs) As String()
@@ -86,25 +86,22 @@ SqzDrySkip = SqzDry(CvAv(AySkip(Dry, SkipNRow)))
 End Function
 
 Function IntCol(A As Drs, C) As Integer()
-IntCol = IntAyzDryC(A.Dry, IxzAy(A.Fny, C))
+IntCol = IntColzDry(A.Dry, IxzAy(A.Fny, C))
 End Function
 
-Function IntAyzDryC(Dry(), C) As Integer()
-IntAyzDryC = IntozDryC(EmpIntAy, Dry, C)
+Function IntColzDry(Dry(), C) As Integer()
+IntColzDry = IntozDryC(EmpIntAy, Dry, C)
 End Function
 
 Function ColzDry(Dry(), C) As Variant()
 ColzDry = IntozDryC(EmpAv(), Dry, C)
 End Function
 
-Function AvzDryC(Dry(), C) As Variant()
-AvzDryC = IntozDryC(EmpAv, Dry, C)
-End Function
 Function IntozDryC(Into, Dry(), C)
 Dim O, J&, Dr, U&
 O = Into
 U = UB(Dry)
-O = AyzReSi(O, U)
+O = ResiU(O, U)
 For Each Dr In Itr(Dry)
     If UB(Dr) >= C Then
         O(J) = Dr(C)
@@ -114,17 +111,18 @@ Next
 IntozDryC = O
 End Function
 
-Function HasDryCCEqVV(Dry(), C1, C2, V1, V2) As Boolean
+Function HasReczDry2V(Dry(), C1, C2, V1, V2) As Boolean
 Dim Dr
 For Each Dr In Itr(Dry)
     If Dr(C1) = V1 Then
         If Dr(C2) = V2 Then
-            HasDryCCEqVV = True
+            HasReczDry2V = True
             Exit Function
         End If
     End If
 Next
 End Function
+
 Function IsSamNCol(A As Drs, NCol%) As Boolean
 Dim Dr
 For Each Dr In Itr(A.Dry)
@@ -132,6 +130,7 @@ For Each Dr In Itr(A.Dry)
 Next
 IsSamNCol = True
 End Function
+
 Function ResiDrs(A As Drs, NCol%) As Drs
 If IsSamNCol(A, NCol) Then ResiDrs = A: Exit Function
 Dim O As Drs, U%, Dr, J%

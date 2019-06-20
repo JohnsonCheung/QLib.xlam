@@ -26,7 +26,7 @@ Dim ODry()
         Lin = I
         IsMth = ""
         RmkLx = ""
-        If IsLinzMth(Lin) Then
+        If IsLinMth(Lin) Then
             IsMth = "*Mth"
             RmkLx = TopRmkIx(Src, Lx)
 
@@ -43,7 +43,7 @@ Y_Src = Src(Md("IdeSrc"))
 End Property
 
 Private Property Get Y_SrcLin()
-Y_SrcLin = "Private Sub IsLinzMth()"
+Y_SrcLin = "Private Sub IsLinMth()"
 End Property
 
 Sub AsgMthDr(MthDr, OMdy$, OTy$, ONm$, OPrm$, ORet$, OLinRmk$, OLines$, OTopRmk$)
@@ -61,16 +61,16 @@ For Each L In Itr(Src)
 Next
 End Function
 
-Function CSrcLines$()
-CSrcLines = SrcLineszM(CMd)
+Function CSrcL$()
+CSrcL = SrcLzM(CMd)
 End Function
 
-Function SrcLinesP$()
-SrcLinesP = SrcLineszP(CPj)
+Function SrcLP$()
+SrcLP = SrcLzP(CPj)
 End Function
 
-Function SrcLineszP$(P As VBProject)
-SrcLineszP = JnCrLf(SrczP(P))
+Function SrcLzP$(P As VBProject)
+SrcLzP = JnCrLf(SrczP(P))
 End Function
 
 Function SrczMd(M As CodeModule) As String()
@@ -80,10 +80,10 @@ Function CSrc() As String()
 CSrc = Src(CMd)
 End Function
 Function Src(M As CodeModule) As String()
-Src = SplitCrLf(SrcLineszM(M))
+Src = SplitCrLf(SrcLzM(M))
 End Function
 Function SrczM(M As CodeModule) As String()
-SrczM = SplitCrLf(SrcLineszM(M))
+SrczM = SplitCrLf(SrcLzM(M))
 End Function
 
 Function SrcV() As String()

@@ -53,12 +53,12 @@ Else
 End If
 End Sub
 
-Function DicAllKeyIsNm(A As Dictionary) As Boolean
+Function IsDicKeyNm(A As Dictionary) As Boolean
 Dim K
 For Each K In A.Keys
     If Not IsNm(CStr(K)) Then Exit Function
 Next
-DicAllKeyIsNm = True
+IsDicKeyNm = True
 End Function
 
 Function DicAyKy(A() As Dictionary) As Variant()
@@ -181,7 +181,7 @@ For J = 0 To UB(Ly)
 Next
 End Function
 
-Function MaxSizAyDic%(AyDic As Dictionary) ' MthDic is DicOf_Mthn_zz_MthLinesAy
+Function MaxSizAyDic%(AyDic As Dictionary) ' MthDic is DicOf_Mthn_zz_MthLAy
 'MaxCntgMth is max-of-#-of-method per Mthn
 Dim O%, K
 For Each K In AyDic.Items
@@ -194,7 +194,7 @@ Function MgeDic(A As Dictionary, PfxSsl$, ParamArray DicAp()) As Dictionary
 Dim Av(): Av = DicAp
 Dim Ny$()
    Ny = SyzSS(PfxSsl)
-   Ny = SyzAyS(Ny, "@")
+   Ny = AddSfxzAy(Ny, "@")
 If Si(Av) <> Si(Ny) Then Stop
 Dim Dy() As Dictionary
 Dim D As Dictionary
@@ -214,9 +214,13 @@ Function DrszKSet(KSet As Dictionary) As Drs
 Dim K, Dry(), S As Aset, V
 For Each K In KSet.Keys
     Set S = KSet(K)
-    For Each V In S.Itms
-        PushI Dry, Array(K, V)
-    Next
+    If S.Cnt = 0 Then
+        PushI Dry, Array(K, "#EmpSet#")
+    Else
+        For Each V In S.Itms
+            PushI Dry, Array(K, V)
+        Next
+    End If
 Next
 DrszKSet = DrszFF("K V", Dry)
 End Function
@@ -228,14 +232,14 @@ If KSet.Exists(K) Then
     HasKSet = ISet.IsEq(S)
 End If
 End Function
-Function DifKSet(KSet1 As Dictionary, KSet2 As Dictionary)
+Function KSetzDif(KSet1 As Dictionary, KSet2 As Dictionary)
 'Ret : KSet from KSet1 where not found in KSet2 (Not found means K is not found or K is found but V is dif @@
-Set DifKSet = New Dictionary
+Set KSetzDif = New Dictionary
 Dim K: For Each K In KSet1.Keys
     Dim V As Aset: Set V = KSet1(K)
     Dim Has As Boolean: Has = HasKSet(KSet2, K, V)
     If Not Has Then
-        DifKSet.Add K, V
+        KSetzDif.Add K, V
     End If
 Next
 
@@ -309,7 +313,7 @@ M = MaxSizAyDic(D)
 Stop
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A As Variant
 Dim B As Dictionary
 Dim C() As Dictionary
@@ -322,12 +326,12 @@ CvDicAy A
 AddDicAy B, C
 AddDicKeyPfx B, A
 DicAddOrUpd B, D, A, D
-DicAllKeyIsNm B
+IsDicKeyNm B
 DicAyKy C
-IsEmpDic B
+IsDicEmp B
 ThwIf_DifDic B, B, D, D, D
-IsDicOfLines B
-IsDicOfStr B
+IsDicLines B
+IsDicStr B
 ValzDicIfKyJn B, A, D
 SyzDicKy B, E
 FmtDicTit B, D
@@ -430,7 +434,7 @@ End If
 End Sub
 
 Sub ThwNotSyDic(A As Dictionary, Fun$)
-If Not IsDicOfSy(A) Then Thw Fun, "Given dictionary is not SyDic, all key is string and val is Sy", "Give-Dictionary", FmtDic(A)
+If Not IsDicSy(A) Then Thw Fun, "Given dictionary is not SyDic, all key is string and val is Sy", "Give-Dictionary", FmtDic(A)
 End Sub
 
 

@@ -86,7 +86,7 @@ Dim Dr, Dry(): For Each Dr In Itr(A.Dry)
     PushI Dry, AyzAdd(Dr, Av)
 Next
 XAct = DrszFF("L Mthn MthLy ActL Lno", Dry)
-'Insp "QIde_Ens_EnsCModSub.XAct", "Inspect", "Oup(XAct) Mth", FmtDrs(XAct), FmtDrs(Mth): Stop
+'Insp "QIde_Ens_EnsCModSub.XAct", "Inspect", "Oup(XAct) Mth", LinzDrs(XAct), LinzDrs(Mth): Stop
 End Function
 
 Private Function XEpt(Act As Drs) As Drs
@@ -101,7 +101,7 @@ Dim Dr, Dry(): For Each Dr In Itr(Act.Dry)
     PushI Dry, Dr
 Next
 XEpt = DrszAddFF(Act, "EptL", Dry)
-'Insp "QIde_Ens_EnsCModSub.XEpt", "Inspect", "Oup(XEpt) Act", FmtDrs(XEpt), FmtDrs(Act): Stop
+'Insp "QIde_Ens_EnsCModSub.XEpt", "Inspect", "Oup(XEpt) Act", LinzDrs(XEpt), LinzDrs(Act): Stop
 End Function
 
 Function EnsCModSubzM(M As CodeModule, Optional Rpt As EmRpt) As Boolean
@@ -141,13 +141,13 @@ If IsRpt Or IsPush Then
     If IsRpt Then Brw Msg
     If IsPush Then X Msg
 End If
-'Insp CSub, Msg, "Rpl Dlt Ins", FmtDrs(Rpl), FmtDrs(Dlt), FmtDrs(Ins)
+'Insp CSub, Msg, "Rpl Dlt Ins", LinzDrs(Rpl), LinzDrs(Dlt), LinzDrs(Ins)
 End Function
 
 Private Sub XPush(Nm$, Drs As Drs, ONy$(), OAv())
 If HasReczDrs(Drs) Then
     PushI ONy, Nm
-    PushI OAv, FmtDrs(Drs)
+    PushI OAv, LinzDrs(Drs)
 End If
 End Sub
 Private Function XMsgI$(A As Drs, Nm$)
@@ -174,6 +174,3 @@ Private Sub ZZZ()
 QIde_Ens_CModSub:
 End Sub
 
-Sub Z()
-EnsCModSubzM Md("QIde_Ens_MthMdy"), EiRptOnly
-End Sub

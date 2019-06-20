@@ -181,12 +181,27 @@ Case IsNothing(A): Fmt = Sy("#Nothing")
 Case Else: Fmt = Sy("#TypeName:" & TypeName(A))
 End Select
 End Function
+Function ValzPatn(Patn$, S)
+'Ret : either str or empty
+Dim M As Match: Set M = MchzPatnF(Patn, S)
+If IsNothing(M) Then Exit Function
+ValzPatn = M.Value
+End Function
+Function MchzPatn(Patn$, S) As MatchCollection
+Set MchzPatn = Mch(RegExp(Patn), S)
+End Function
+Function MchzPatnF(Patn$, S) As Match
+Dim M As MatchCollection: Set M = MchzPatn(Patn, S)
+If M.Count = 0 Then Exit Function
+Set MchzPatnF = CvMch(M(0))
+End Function
 Function Mch(Re As RegExp, S) As MatchCollection
 Set Mch = Re.Execute(S)
 End Function
 Function CvRe(A) As RegExp
 Set CvRe = A
 End Function
+
 Function RegExp(Patn$, Optional MultiLine As Boolean, Optional IgnoreCase As Boolean, Optional IsGlobal As Boolean) As RegExp
 If Patn = "" Or Patn = "." Then Exit Function
 Dim O As New RegExp
@@ -199,7 +214,7 @@ End With
 Set RegExp = O
 End Function
 
-Private Sub ZZ()
+Private Sub Z()
 Z_InStrN
 MVb___Fun:
 End Sub

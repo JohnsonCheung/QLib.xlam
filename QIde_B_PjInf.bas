@@ -114,7 +114,7 @@ Function IsCmpzMdnWiPrp(Mdn) As Boolean
 Dim M As CodeModule: Set M = Md(Mdn)
 Dim J&
 For J = 1 To M.CountOfLines
-    If IsPrpLin(M.Lines(J, 1)) Then IsCmpzMdnWiPrp = True: Exit Function
+    If IsLinPrp(M.Lines(J, 1)) Then IsCmpzMdnWiPrp = True: Exit Function
 Next
 End Function
 

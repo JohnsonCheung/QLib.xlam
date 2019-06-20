@@ -149,7 +149,7 @@ On Error Resume Next
 Set MFrm = Access.Forms("Main")
 End Property
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A As Variant
 Dim B$
 ClrMainMsg
@@ -176,7 +176,7 @@ End Function
 Sub SetTBox(A As Access.TextBox, Msg$)
 Dim CrLf$, B$
 If A.Value <> "" Then CrLf = vbCrLf
-B = LasNLines(A.Value & CrLf & Now & " " & Msg, 5)
+B = LineszLasN(A.Value & CrLf & Now & " " & Msg, 5)
 A.Value = B
 DoEvents
 End Sub

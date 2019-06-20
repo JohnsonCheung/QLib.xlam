@@ -75,7 +75,7 @@ For Each I In Itr(OyzItr(A.Controls))
 Next
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A As CommandBar
 Dim B As Variant
 Dim C As Vbe

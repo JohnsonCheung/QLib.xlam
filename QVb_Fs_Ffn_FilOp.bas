@@ -16,18 +16,23 @@ Function BkHom$(Ffn)
 BkHom = AddFdrEns(BkRoot(Pth(Ffn)), Fn(Ffn))
 End Function
 
-Function LasBkPjfP$()
-LasBkPjfP = LasBkFfn(PjfP)
+Function BkPjfzLasP$()
+BkPjfzLasP = BkFfnzLas(PjfP)
 End Function
-Function LasBkFfn$(Ffn)
+Function BkFfnzLas$(Ffn)
 Dim H$: H = BkHom(Ffn)
 Dim F$(): F = FdrAyzIsInst(H)
 Dim Fdr$: Fdr = MaxEle(F)
-LasBkFfn = H & Fdr & "\" & Fn(Ffn)
+BkFfnzLas = H & Fdr & "\" & Fn(Ffn)
 End Function
+
 Function BkPth$(Ffn)
 BkPth = AddFdr(BkHom(Ffn), TmpNm)
 End Function
+
+Sub BackupPj()
+BackupFfn Pjf(CPj)
+End Sub
 
 Function BkFfn$(Ffn)
 BkFfn = BkPth(Ffn) & Fn(Ffn)

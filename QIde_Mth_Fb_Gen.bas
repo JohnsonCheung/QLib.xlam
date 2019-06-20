@@ -30,6 +30,6 @@ Q = "Select x.Nm into [#A] from DistMth x left join MthLoc a on x.Nm=a.Nm where 
 Q = "Insert into MthLoc (Nm) Select Nm from [#A]": W.Execute Q
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 UpdMthLoc
 End Sub

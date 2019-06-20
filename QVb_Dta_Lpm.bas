@@ -62,7 +62,7 @@ Dim PmNm, O$()
 For Each PmNm In Lpm.Keys
     PushI O, FmtzNmSy(PmNm, CvSy(Lpm(PmNm)))
 Next
-FmtLpm = AlignzBySepss(O, "ValCnt Val(")
+FmtLpm = AlignzSepss(O, "ValCnt Val(")
 End Function
 
 Private Function FmtzNmSy$(PmNm, Sy$())

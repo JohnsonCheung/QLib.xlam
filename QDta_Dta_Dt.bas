@@ -32,7 +32,7 @@ Dr = Dry(R)
 End Function
 Function CsvLyzDt(A As Dt) As String()
 Dim Dry(): Dry = A.Dry
-Push CsvLyzDt, JnComma(SyQuoteDbl(A.Fny))
+Push CsvLyzDt, JnComma(SyQteDbl(A.Fny))
 Dim QQStr$: QQStr = CsvQQStrzDr(Dr(Dry, 0))
 Dim IDr
 For Each IDr In A.Dry

@@ -164,10 +164,10 @@ ErCnstn = "M_" & ErNm
 End Function
 
 Private Sub Z_ErMthLinAy()
-'GoSub ZZ
+'GoSub Z
 GoSub T1
 Exit Sub
-ZZ:
+Z:
     Init Y_Src
     Brw ErMthLinAy
     Return
@@ -198,18 +198,18 @@ Dim ErNy$(), MsgAy$(), J%, O$()
 ErNy = A.ErNy
 MsgAy = A.ErMsgAy
 For J = 0 To UB(ErNy)
-    PushI O, ErMthLinesByNm(ErNy(J), MsgAy(J))
+    PushI O, ErMthLByNm(ErNy(J), MsgAy(J))
 Next
 ErMthLinAy = FmtMulStmtSrc(O)
 End Function
 
-Private Function ErMthLinesByNm$(ErNm$, ErMsg$)
+Private Function ErMthLByNm$(ErNm$, ErMsg$)
 Dim CNm$:         CNm = ErCnstn(ErNm)
 Dim ErNy$():     ErNy = NyzMacro(ErMsg)
 Dim Pm$:           Pm = JnCommaSpc(AywDist(ErNy))
-Dim Calling$: Calling = Jn(SyzAyP(DimNyzDimItmAy(ErNy), ", "))
+Dim Calling$: Calling = Jn(AddPfxzAy(DimNyzDimItmAy(ErNy), ", "))
 Dim Mthn:     Mthn = ErMthn(ErNm)
-ErMthLinesByNm = FmtQQ("Private Function ?(?) As String():? = FmtMacro(??):End Function", _
+ErMthLByNm = FmtQQ("Private Function ?(?) As String():? = FmtMacro(??):End Function", _
     Mthn, Pm, Mthn, CNm, Calling)
 End Function
 

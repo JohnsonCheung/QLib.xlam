@@ -31,7 +31,7 @@ Private Function XCallgLin(Mthn, CallingPm$, PrpGetAset As Aset)
 If PrpGetAset.Has(Mthn) Then
     XCallgLin = "XX = " & Mthn & "(" & CallingPm & ")"  ' The Mthn is object, no need to add [Set] XX =, the compiler will not check for this
 Else
-    XCallgLin = Mthn & SzAddPSpczIfNonBlank(CallingPm)
+    XCallgLin = Mthn & AddPfxSpczIfNB(CallingPm)
 End If
 End Function
 
@@ -81,17 +81,17 @@ Private Function XPubGet(MthDclAy$()) As Aset
 Dim Lin, O As Aset
 Set O = EmpAset
 For Each Lin In Itr(MthDclAy)
-'    If IsPrpLin(Lin) Then AsetPush O, Mthn(Lin)
+'    If IsLinPrp(Lin) Then AsetPush O, Mthn(Lin)
 Next
 Set XPubGet = O
 End Function
 
 Private Sub Z_MthSubZ()
 Dim S$()
-GoSub ZZ
+GoSub Z
 'GoSub T1
 Exit Sub
-ZZ:
+Z:
     Brw MthSubZ(CSrc)
     Return
 T1:

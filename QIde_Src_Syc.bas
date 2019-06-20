@@ -4,7 +4,7 @@ Option Explicit
 Private Const CMod$ = "MIde_ConstMth."
 Private Const Asm$ = "QIde"
 Public Const DoczSycv$ = "It is Sy.  It comes from the MthLy or from SycFt"
-Public Const DoczSycm$ = "Sy-Const-MthLines.  It is MthLines in a any mod or cls."
+Public Const DoczSycm$ = "Sy-Const-MthL.  It is MthL in a any mod or cls."
 Public Const DoczSyc$ = "Sy-Const.  Each Module/Class may have som fun of type String() have cxt as Erase XX|X ..|nn=XX|Erase XX"
 Public Const DoczSycn$ = "Sy-Const-Nm.  It is same as mthn"
 Public Const DoczSycFt$ = "Sy-Const-Ft.  It comes from Sycn & Mdn"
@@ -31,7 +31,7 @@ End Function
 Private Function Sycm(M As CodeModule, Mthn$) As String()
 Dim O$(): O = MthLyzM(M, Mthn)
 If Si(O) = 0 Then Exit Function
-If Not IsSycm(O) Then Thw CSub, "Given mthn is not a Sycm", "Mdn Mthn MthLines", Mdn(M), Mthn, O
+If Not IsSycm(O) Then Thw CSub, "Given mthn is not a Sycm", "Mdn Mthn MthL", Mdn(M), Mthn, O
 Sycm = O
 End Function
 
@@ -42,7 +42,7 @@ Dim Mdy$: If Not IsPub Then Mdy = "Private "
 X FmtQQ(C, Mdy, Mthn)
 X "Erase XX"
 Dim I: For Each I In Itr(Ly)
-    Dim L$: L = "X """ & Replace(I, vbDblQuote, vb2DblQuote) & """"
+    Dim L$: L = "X """ & Replace(I, vbDblQte, vb2DblQte) & """"
     X L
 Next
 X Mthn & " = XX"
@@ -60,16 +60,16 @@ Dim L$(): L = AyeLasNEle(AyeFstNEle(MthLy, 2), 2)
 Stop
 Erase XX
 Dim I: For Each I In Itr(L)
-    Dim A$: A = Replace(RmvLasChr(Mid(I, 4)), vb2DblQuote, vbDblQuote)
+    Dim A$: A = Replace(RmvLasChr(Mid(I, 4)), vb2DblQte, vbDblQte)
     X A
 Next
 SycvzMthLy = XX
 End Function
 
 Function TakVbStr$(VbStr$)
-If FstChr(VbStr) <> """" Then Thw CSub, "FstChr of VbStr must be DblQuote", "VbStr", VbStr
+If FstChr(VbStr) <> """" Then Thw CSub, "FstChr of VbStr must be DblQte", "VbStr", VbStr
 Dim P%: P = InStr(2, VbStr, """")
-If P = 0 Then Thw CSub, "There is no ending DblQuote", "VbStr", VbStr
+If P = 0 Then Thw CSub, "There is no ending DblQte", "VbStr", VbStr
 TakVbStr = Mid(VbStr, 2, P - 2)
 End Function
 Function TakVbStrzSy(Sy$()) As String()
@@ -81,15 +81,15 @@ End Function
 
 Private Sub Z_Sycv()
 Const TstId& = 3
-Const CSub$ = CMod & "Z_CnstBrkMthLines"
-Dim MthLines$, Cas$, IsEdt As Boolean
+Const CSub$ = CMod & "Z_CnstBrkMthL"
+Dim MthL$, Cas$, IsEdt As Boolean
 GoSub T0
 GoSub T1
 Exit Sub
 T0:
     IsEdt = False
     Cas = "Complex"
-    MthLines = TstTxt(TstId, CSub, Cas, "MthLines", IsEdt:=True)
+    MthL = TstTxt(TstId, CSub, Cas, "MthL", IsEdt:=True)
     Ept = TstTxt(TstId, CSub, Cas, "Ept", IsEdt)
     If IsEdt Then Return
     GoTo Tst
@@ -97,7 +97,7 @@ T1:
    
     Return
 Tst:
-'    Act = SycVal(MthLines)
+'    Act = SycVal(MthL)
     Brw Act
     Stop
     C
@@ -119,11 +119,26 @@ If Not ShfPfx(L, "Const ") Then Exit Function
 If ShfNm(L) <> SycNm Then Exit Function
 If ShfTyChr(L) = "$" Then Thw CSub, "Given constant name is found, but is not a Str", "ConstLin SycNm", Lin, SycNm
 Dim O$: O = Bet(L, """", """")
-If O = "" Then Thw CSub, "Between DblQuote is nothing", "ConstLin SycNm", Lin, SycNm
+If O = "" Then Thw CSub, "Between DblQte is nothing", "ConstLin SycNm", Lin, SycNm
 CnstBrkzLinNm = O
 End Function
 
+Function CnstLy(Src$()) As String()
+Dim S$(): S = Src
+Dim J%
+While Si(S) > 0
+    J = J + 1: If J > 10000 Then ThwLoopingTooMuch CSub
+    PushNB CnstLy, ShfCnstLin(S)
+Wend
+End Function
 
+Function DCnst(Src$()) As Drs
+Dim Dry()
+Dim Ly$(): Ly = CnstLy(Src)
+Dim L: For Each L In Itr(Ly)
+Next
+DCnst = DrszFF("Mdy Cnstn TyChr Lin", Dry)
+End Function
 Function Cnstn$(Lin)
 Dim L$: L = Lin
 ShfMdy L
@@ -214,7 +229,7 @@ L = CMSrcLin
 T1 = ShfT1(L)
 O = "Private Const C_" & T1 & "$ = """ & L
 For Each N In NyzMacro(CMSrcLin)
-    O = Replace(O, QuoteBigBkt(N), "?")
+    O = Replace(O, QteBigBkt(N), "?")
 Next
 CMCnstLin = O & """"
 End Function
@@ -312,3 +327,18 @@ X "Des Tbl.Fld A.ANm TF_Des-AA-BB"
 Z_CrtSchm1 = XX
 Erase XX
 End Property
+Function FtzCnstQNm$(CnstQNm$)
+Dim Mdn, Nm$
+FtzCnstQNm = ConstPrpPth(Mdn) & Nm & ".txt"
+End Function
+Private Function ConstPrpPth$(Mdn)
+ConstPrpPth = AddFdrEns(TmpHom, "ConstPrp", Mdn)
+End Function
+
+Function IsLinCnstStr(Lin) As Boolean
+If Not IsLinMth(Lin) Then Exit Function
+If BetBkt(Lin) <> "" Then Exit Function
+If TakTyChr(Lin) = "$" Then Exit Function
+IsLinCnstStr = True
+End Function
+

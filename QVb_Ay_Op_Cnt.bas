@@ -37,7 +37,7 @@ End Sub
 Function CntSiLin(Ay)
 CntSiLin = "AyCntSi(" & Si(Ay) & "." & SumSi(Ay) & ")"
 End Function
-Private Sub ZZ()
+Private Sub Z()
 Z_CntDryzAy
 MVb_AyCnt:
 End Sub

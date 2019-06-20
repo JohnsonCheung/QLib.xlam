@@ -108,12 +108,12 @@ End With
 End Function
 
 
-Private Function ExprzQuote$(BytAy() As Byte)
+Private Function ExprzQte$(BytAy() As Byte)
 Dim O$(), I
 For Each I In BytAy
-    If I = vbDblQuoteAsc Then PushI O, vbTwoDblQuote Else PushI O, Chr(I)
+    If I = vbDblQteAsc Then PushI O, vbTwoDblQte Else PushI O, Chr(I)
 Next
-ExprzQuote = QuoteDbl(Jn(O))
+ExprzQte = QteDbl(Jn(O))
 End Function
 
 Private Function ExprzAndChr$(BytAy() As Byte)

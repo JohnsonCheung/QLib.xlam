@@ -16,36 +16,28 @@ Next
 LineszLinesDic = Jn(O, LinesSep)
 End Function
 
-Function SzAddPToKey(Pfx$, A As Dictionary) As Dictionary
+Function AddPfxToKey(Pfx$, A As Dictionary) As Dictionary
 Dim K
-Set SzAddPToKey = New Dictionary
+Set AddPfxToKey = New Dictionary
 For Each K In A.Keys
-    SzAddPToKey.Add Pfx & K, A(K)
+    AddPfxToKey.Add Pfx & K, A(K)
 Next
 End Function
 
 
-Function DicHasAllKeyIsNm(A As Dictionary) As Boolean
+Function IsDicKeyNm(A As Dictionary) As Boolean
 Dim K
 For Each K In A.Keys
     If Not IsNm(K) Then Exit Function
 Next
-DicHasAllKeyIsNm = True
+IsDicKeyNm = True
 End Function
 
-Function IsDicOfAllStrVal(A As Dictionary) As Boolean
-Dim K
-For Each K In A.Keys
-    If Not IsStr(A(K)) Then Exit Function
-Next
-IsDicOfAllStrVal = True
-End Function
-
-Function DicHasBlankKey(A As Dictionary) As Boolean
+Function DicHasBlnkKey(A As Dictionary) As Boolean
 If A.Count = 0 Then Exit Function
 Dim K
 For Each K In A.Keys
-   If Trim(K) = "" Then DicHasBlankKey = True: Exit Function
+   If Trim(K) = "" Then DicHasBlnkKey = True: Exit Function
 Next
 End Function
 
@@ -85,11 +77,11 @@ For Each K In Ky
 Next
 End Sub
 
-Function DicKeysIsAllStr(A As Dictionary) As Boolean
-DicKeysIsAllStr = IsItrOfSy(A.Keys)
+Function IsDicKeyStr(A As Dictionary) As Boolean
+IsDicKeyStr = IsItrOfSy(A.Keys)
 End Function
 
-Private Sub Z_DicKeysIsAllStr()
+Private Sub Z_IsDicKeyStr()
 Dim A As Dictionary
 GoSub T1
 Exit Sub
@@ -106,15 +98,15 @@ T1:
     Ept = False
     GoTo Tst
 Tst:
-    Act = DicKeysIsAllStr(A)
+    Act = IsDicKeyStr(A)
     C
     Return
 End Sub
 
-
-Function IsEmpDic(A As Dictionary) As Boolean
-IsEmpDic = A.Count = 0
+Function IsDicEmp(A As Dictionary) As Boolean
+IsDicEmp = A.Count = 0
 End Function
+
 Function TyNmAy(Ay) As String()
 Dim V
 For Each V In Itr(Ay)
@@ -145,34 +137,34 @@ Function TyNmAyzDic(A As Dictionary) As String()
 TyNmAyzDic = TyNmAy(Vy(A))
 End Function
 
-Function IsDicOfSy(A As Dictionary) As Boolean
+Function IsDicSy(A As Dictionary) As Boolean
 Dim D As Dictionary, I, V
 If Not IsDic(A) Then Exit Function
-IsDicOfSy = IsItrOfSy(CvDic(A).Items)
+IsDicSy = IsItrOfSy(CvDic(A).Items)
 End Function
 
-Function IsDicOfLines(A As Dictionary) As Boolean
-IsDicOfLines = True
+Function IsDicLines(A As Dictionary) As Boolean
+IsDicLines = True
 If IsItrOfLines(A.Items) Then Exit Function
 If IsItrOfStr(A.Keys) Then Exit Function
-IsDicOfLines = False
+IsDicLines = False
 End Function
-Function IsDicOfPrim(A As Dictionary) As Boolean
+Function IsDicPrim(A As Dictionary) As Boolean
 If Not IsItrOfPrim(A.Keys) Then Exit Function
-IsDicOfPrim = IsItrOfPrim(A.Items)
+IsDicPrim = IsItrOfPrim(A.Items)
 End Function
-Function IsDicOfStr(A As Dictionary) As Boolean
+Function IsDicStr(A As Dictionary) As Boolean
 If Not IsItrOfStr(A.Keys) Then Exit Function
-IsDicOfStr = IsItrOfStr(A.Items)
+IsDicStr = IsItrOfStr(A.Items)
 End Function
 
 Function DicTy$(A As Dictionary)
 Dim O$
 Select Case True
-Case IsEmpDic(A):   O = "EmpDic"
-Case IsDicOfStr(A):   O = "StrDic"
-Case IsDicOfLines(A): O = "LineszDic"
-Case IsDicOfSy(A):    O = "SyDic"
+Case IsDicEmp(A):   O = "EmpDic"
+Case IsDicStr(A):   O = "StrDic"
+Case IsDicLines(A): O = "LineszDic"
+Case IsDicSy(A):    O = "SyDic"
 Case Else:           O = "Dic"
 End Select
 End Function

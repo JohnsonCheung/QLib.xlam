@@ -92,7 +92,7 @@ Tst:
     Return
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 End Sub
 Function SrcT1AsetP() As Aset
 Set SrcT1AsetP = T1Aset(SrczP(CPj))

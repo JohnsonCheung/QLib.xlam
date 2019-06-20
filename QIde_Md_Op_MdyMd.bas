@@ -14,7 +14,7 @@ End With
 End Sub
 
 Function CntSiStrzMd$(M As CodeModule)
-CntSiStrzMd = CntSiStrzLines(SrcLines(M))
+CntSiStrzMd = CntSiStrzLines(SrcL(M))
 End Function
 
 Sub DltLin(M As CodeModule, Lno, OldLin)
@@ -29,7 +29,7 @@ If Lno = 0 Then Exit Sub
 Dim Cnt&: Cnt = LinCnt(OldLines)
 If M.Lines(Lno, Cnt) <> OldLines Then Thw CSub, "OldL <> ActL", "OldL ActL", OldLines, M.Lines(Lno, Cnt)
 Debug.Print FmtQQ("DltLines: Lno(?) Cnt(?)", Lno, Cnt)
-D BoxLy(SplitCrLf(OldLines))
+D Box(SplitCrLf(OldLines))
 D ""
 M.DeleteLines Lno, Cnt
 End Sub

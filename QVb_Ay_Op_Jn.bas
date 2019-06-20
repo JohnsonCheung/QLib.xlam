@@ -5,10 +5,10 @@ Private Const CMod$ = "MVb_Ay_Op_Jn."
 Private Const Asm$ = "QVb"
 
 
-Function JnSpcApNoBlank$(ParamArray Ap())
+Function JnSpcApNoBlnk$(ParamArray Ap())
 Dim Av(): Av = Ap
 Stop
-'JnSpcApNoBlank = JnCrLf(SyzAyNonBlank(Av))
+'JnSpcApNoBlnk = JnCrLf(SyzAyNB(Av))
 End Function
 
 Function JnDollarAp$(ParamArray Ap())
@@ -42,7 +42,7 @@ Dim Av(): Av = Ap
 JnSemiColonAp = JnSemi(AyeEmpEle(Av))
 End Function
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A()
 Dim B As Variant
 

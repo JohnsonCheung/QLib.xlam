@@ -23,7 +23,7 @@ If Cnt <= 0 Then Thw CSub, "Cnt cannot <=0", "At Cnt Ay", At, Cnt, Ay
 If Si(Ay) = 0 Then AyeAtCnt = Ay: Exit Function
 If At = 0 Then
     If Si(Ay) = Cnt Then
-        AyeAtCnt = AyzReSi(Ay)
+        AyeAtCnt = ResiU(Ay)
         Exit Function
     End If
 End If
@@ -39,25 +39,13 @@ ReDim Preserve O(U - Cnt)
 AyeAtCnt = O
 End Function
 
-Function PredzIsDotLin(Lin) As IPred
-
-End Function
-Function PredzIsDDLin(Lin) As IPred
-
-End Function
-
-Function AyeDotLin(Ay) As String()
-Stop
-'AyeDotLin = AywPredFalse(Ay, PredzIsDotLin)
-End Function
-
-Function AyeEle(Ay, ele) 'Rmv Fst-Ele eq to Ele from Ay
-Dim Ix&: Ix = IxzAy(Ay, ele): If Ix = -1 Then AyeEle = Ay: Exit Function
-AyeEle = AyeEleAt(Ay, IxzAy(Ay, ele))
+Function AyeEle(Ay, Ele) 'Rmv Fst-Ele eq to Ele from Ay
+Dim Ix&: Ix = IxzAy(Ay, Ele): If Ix = -1 Then AyeEle = Ay: Exit Function
+AyeEle = AyeEleAt(Ay, IxzAy(Ay, Ele))
 End Function
 
 Function AyeFstNEle(Ay, Optional N& = 1)
-Dim O: O = AyzReSi(Ay)
+Dim O: O = ResiU(Ay)
 Dim J&
 For J = N To UB(Ay)
     Push O, Ay(J)
@@ -79,7 +67,7 @@ Next
 End Function
 
 Function AyeEmpEle(Ay)
-Dim O: O = AyzReSi(Ay)
+Dim O: O = ResiU(Ay)
 If Si(Ay) > 0 Then
     Dim X
     For Each X In Itr(Ay)
@@ -89,11 +77,11 @@ End If
 AyeEmpEle = O
 End Function
 
-Function AyeBlankStr(Ay) As String()
+Function AyeBlnkStr(Ay) As String()
 Dim X
 For Each X In Itr(Ay)
     If Trim(X) <> "" Then
-        PushI AyeBlankStr, X
+        PushI AyeBlnkStr, X
     End If
 Next
 End Function
@@ -165,7 +153,7 @@ End Function
 Function AyeIxy(Ay, Ixy)
 'Ixy holds index if Ay to be remove.  It has been sorted else will be stop
 Ass IsArray(Ay)
-Ass IsSrtedAy(Ixy)
+Ass IsSrtedzAy(Ixy)
 Dim J&
 Dim O: O = Ay
 For J = UB(Ixy) To 0 Step -1
@@ -226,7 +214,7 @@ End Function
 
 Private Sub Z_SyeLikss()
 Dim Sy$(), Likss$
-GoSub ZZ
+GoSub Z
 GoSub T0
 Exit Sub
 T0:
@@ -234,7 +222,7 @@ T0:
     Likss = "C* E*"
     Ept = SyzSS("A B")
     GoTo Tst
-ZZ:
+Z:
     D SyeLikss(SyzSS("A B C CD E E1 E3"), "C* E*")
     Return
 Tst:
@@ -250,7 +238,7 @@ End Function
 
 Function AyeNegative(Ay)
 Dim I
-AyeNegative = AyzReSi(Ay)
+AyeNegative = ResiU(Ay)
 For Each I In Itr(Ay)
     If I >= 0 Then
         PushI AyeNegative, I
@@ -258,16 +246,16 @@ For Each I In Itr(Ay)
 Next
 End Function
 
-Function AyeNEle(Ay, ele, Cnt%)
+Function AyeNEle(Ay, Ele, Cnt%)
 If Cnt <= 0 Then Stop
-AyeNEle = AyzReSi(Ay)
+AyeNEle = ResiU(Ay)
 Dim X, C%
 C = Cnt
 For Each X In Itr(Ay)
     If C = 0 Then
         PushI AyeNEle, X
     Else
-        If X <> ele Then
+        If X <> Ele Then
             Push AyeNEle, X
         Else
             C = C - 1
@@ -362,7 +350,7 @@ Tst:
     Return
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Z_AyeAtCnt
 Z_AyeEmpEleAtEnd
 Z_AyeFei
@@ -371,11 +359,11 @@ Z_AyeIxy
 MVb_AySub_Exl:
 End Sub
 
-Function RmvBlankzAy(Ay) As String()
+Function RmvBlnkzAy(Ay) As String()
 Dim I
 For Each I In Itr(Ay)
     If Trim(I) <> "" Then
-        PushI RmvBlankzAy, I
+        PushI RmvBlnkzAy, I
     End If
 Next
 End Function

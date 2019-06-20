@@ -3,6 +3,6 @@ Option Explicit
 Option Compare Text
 Public Const DoczMthn_ZDash$ = "Mthn rule.  When beg with Z_, it is trying to test.  Try use own resource, like Y_.  Don't use other md resource."
 Public Const DoczMthn_ZZDash$ = "Mthn rule.  When beg with Z_, it is tested ok.  It should always pass.  Using Z_ due to it sinks to bottom."
-Public Const DoczMthn_ZZ$ = "Mthn rule.  A private mth with all Z_ fun and a Lbl eq the mdn."
+Public Const DoczMthn_Z$ = "Mthn rule.  A private mth with all Z_ fun and a Lbl eq the mdn."
 Public Const DoczMthn_YDash$ = "Mthn rule.  PurePrp for testing.  Used to Z_ mth."
 

@@ -29,7 +29,7 @@ End Function
 Function VbaItmAyzSrc(Src$()) As String()
 Dim S
 For Each S In Itr(Src)
-    PushNonBlank VbaItmAyzSrc, VbaItm(S)
+    PushNB VbaItmAyzSrc, VbaItm(S)
 Next
 End Function
 Function VbaItmAy() As String()
@@ -76,7 +76,7 @@ End Function
 Function MthIxy(Src$()) As Long()
 Dim Ix
 For Ix = 0 To UB(Src)
-    If IsLinzMth(Src(Ix)) Then
+    If IsLinMth(Src(Ix)) Then
         PushI MthIxy, Ix
     End If
 Next
@@ -130,7 +130,7 @@ Dim Ix&
 Ix = FstMthIxzN(Src, Mthn)
 If Ix = -1 Then Exit Function
 PushI MthIxyzSN, Ix
-If IsPrpLin(Src(Ix)) Then
+If IsLinPrp(Src(Ix)) Then
     Ix = FstMthIxzN(Src, Mthn, Ix + 1)
     If Ix > 0 Then PushI MthIxyzSN, Ix
 End If
@@ -139,7 +139,7 @@ Function FstMthIx&(Src$())
 Dim O&
 Dim L
 For Each L In Itr(Src)
-    If IsLinzMth(L) Then FstMthIx = O: Exit Function
+    If IsLinMth(L) Then FstMthIx = O: Exit Function
 Next
 FstMthIx = -1
 End Function
@@ -170,7 +170,7 @@ End Function
 Function FstMthLnozM&(Md As CodeModule)
 Dim J&
 For J = 1 To Md.CountOfLines
-   If IsLinzMth(Md.Lines(J, 1)) Then
+   If IsLinMth(Md.Lines(J, 1)) Then
        FstMthLnozM = J
        Exit Function
    End If
@@ -180,7 +180,7 @@ End Function
 Function FstMthIxzS&(Src$())
 Dim J&
 For J = 0 To UB(Src)
-   If IsLinzMth(Src(J)) Then
+   If IsLinMth(Src(J)) Then
        FstMthIxzS = J
        Exit Function
    End If

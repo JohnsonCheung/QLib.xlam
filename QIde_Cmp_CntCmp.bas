@@ -36,7 +36,7 @@ End Function
 
 
 Sub CntCmpzP(P As VBProject)
-Brw FmtDrsR(DCmpCntzP(P))
+Brw LinzDrsR(DCmpCntzP(P))
 End Sub
 
 Function Cmp(Cmpn) As VBComponent

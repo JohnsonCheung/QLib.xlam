@@ -4,12 +4,6 @@ Option Explicit
 Const Asm$ = "QDta"
 Const Ns$ = "Dta.Ds"
 Private Const CMod$ = "BDrs."
-Type DrSepr
-    DtaSep As String
-    DtaQuote As String
-    LinSep As String
-    LinQuote As String
-End Type
 Enum EmTblFmt
     EiTblFmt = 0
     EiSSFmt = 1
@@ -30,7 +24,7 @@ Private Type GpDrs
     GpDrs As Drs
     RLvlGpIx() As Long
 End Type
-    
+
 Function Drsz4TRstLy(T4RstLy$(), FF$) As Drs
 Dim I, Dry(): For Each I In Itr(T4RstLy)
     PushI Dry, Syz4TRst(T4RstLy)
@@ -42,23 +36,6 @@ Dim I, Dry(): For Each I In Itr(TRstLy)
     PushI Dry, SyzTRst(I)
 Next
 DrszTRstLy = DrszFF(FF, Dry)
-End Function
-Function DrSepr(DtaSep$, DtaQuote$, LinSep$, LinQuote$) As DrSepr
-With DrSepr
-    .DtaQuote = DtaQuote
-    .DtaSep = DtaSep
-    .LinQuote = LinQuote
-    .LinSep = LinSep
-End With
-End Function
-
-Function DrSeprzEmTblFmt(A As EmTblFmt) As DrSepr
-Dim DS$, DQ$, LS$, LQ$
-Select Case True
-   Case A = EiTblFmt: DQ = "| * |": DS = " | ": LQ = "|-*-|": LS = "-|-"
-   Case A = EiSSFmt: DS = " ": LS = " "
-End Select
-DrSeprzEmTblFmt = DrSepr(DS, DQ, LS, LQ)
 End Function
 
 Function DrszF(FF$) As Drs
@@ -428,7 +405,7 @@ Private Sub DryzAli__AliCol(ODry(), C)
 'Fm C    : the column ix
 'Ret     : column-@C of @ODry will be aligned
 Dim Col(): Col = ColzDry(ODry, C)
-Dim ACol$(): ACol = SyzAlign(Col)
+Dim ACol$(): ACol = AlignzAy(Col)
 Dim J&: For J = 0 To UB(ODry)
     ODry(J)(C) = ACol(J)
 Next
@@ -445,10 +422,11 @@ Function DrszAli(D As Drs, Gpcc$, CC$) As Drs
 'Fm D : ..@Gpcc..@CC.. ! It has a str col @CC to be alignL and @Gpcc to be gp
 'Ret  : @D             ! all col @CC are aligned within the gp and rec will gp together.
 If NoReczDrs(D) Then DrszAli = D: Exit Function
-Dim Cix&(): Cix = IxyzCC(D, CC)       ' The grouping col ix ay
-Dim DGp(): DGp = DryGp(D.Dry, Cix)          ' Grouping the-data (@D.Dry) into DryGp (@DGp) according to @Cix
+Dim Gix&(): Gix = IxyzCC(D, Gpcc)       ' The grouping col ix ay
+Dim Aix&(): Aix = IxyzCC(D, CC)         ' The aligning col ix ay
+Dim DGp(): DGp = DryGp(D.Dry, Gix)          ' Grouping the-data (@D.Dry) into DryGp (@DGp) according to @Cix
 Dim Dry, ADry(), ODry(): For Each Dry In DGp  'For each data-gp (@Dry)
-    ADry = DryzAli(CvAv(Dry), Cix)  ' aligning it (@Dry) into (@ADry)
+    ADry = DryzAli(CvAv(Dry), Aix)  ' aligning it (@Dry) into (@ADry)
     PushIAy ODry, ADry              ' pushing the rslt (@ADry-aligned-dry) to oup (@ODry)
 Next
 DrszAli = Drs(D.Fny, ODry)
@@ -469,13 +447,13 @@ Dim WMFnySq$(): WMFnySq = SyzAdd(WFnySq, SyzQteSq(MFny))
 '-- Bld Q* all Sql Stmt --
 Dim QO$:           QO = SqlSelzIntoCpy(T, Fm)  ' O :
 
-Dim ColAy$():   ColAy = SyzAyS(WMFnySq, " Integer")
+Dim ColAy$():   ColAy = AddSfxzAy(WMFnySq, " Integer")
 Dim QOAddWM$: QOAddWM = SqlAddColzAy(T, ColAy)     ' O : Gpcc CC [#W?] [#M?]  ! Add col [#W?] [#M?] all are integer
 
 Dim Ey$():         Ey = SyzQAy("Len(?)", CFny)
 Dim QOUpdW$:   QOUpdW = SqlUpdzEy(T, WFny, Ey)   ' O     :                  ! Update Wcc as Len(CC)
 
-Dim Eq0$():       Eq0 = SyzAyS(WFnySq, " = 0")
+Dim Eq0$():       Eq0 = AddSfxzAy(WFnySq, " = 0")
 Dim Bexp$:       Bexp = JnAnd(Eq0)
 Dim QONoW0$:   QONoW0 = SqlDlt(T, Bexp)                                       ' O     :                  ! Rmv rec with all rmv = 0
 
@@ -585,9 +563,9 @@ Case IxCol = EiNoIx: DrsAddIxCol = A: Exit Function
 Case IxCol = EiBeg0
 Case IxCol = EiBeg1: J = 1
 End Select
-Fny = AyInsEle(A.Fny, "Ix")
+Fny = InsEle(A.Fny, "Ix")
 For Each Dr In Itr(A.Dry)
-    Push Dry, AyInsEle(Dr, J)
+    Push Dry, InsEle(Dr, J)
     J = J + 1
 Next
 DrsAddIxCol = Drs(Fny, Dry)
@@ -634,7 +612,7 @@ IntozDrsC = O
 End Function
 
 Sub DmpDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColnn$, Optional Fmt As EmTblFmt = EiTblFmt)
-DmpAy FmtDrs(A, MaxColWdt, BrkColnn$)
+DmpAy LinzDrs(A, MaxColWdt, BrkColnn$)
 End Sub
 
 Function DrpColzFny(A As Drs, Fny$()) As Drs
@@ -659,7 +637,7 @@ Next
 End Function
 
 Function DrsInsCV(A As Drs, C$, V) As Drs
-DrsInsCV = Drs(CvSy(AyInsEle(A.Fny, C)), InsColzDryzV(A.Dry, V, IxzAy(A.Fny, C)))
+DrsInsCV = Drs(CvSy(InsEle(A.Fny, C)), InsColzDryzV(A.Dry, V, IxzAy(A.Fny, C)))
 End Function
 
 Function DrsInsCVAft(A As Drs, C$, V, AftFldNm$) As Drs
@@ -677,7 +655,7 @@ Ix = IxzAy(Fny, C): If Ix = -1 Then Stop
 If IsAft Then
     Ix = Ix + 1
 End If
-Fny1 = AyInsEle(Fny, FldNm, CLng(Ix))
+Fny1 = InsEle(Fny, FldNm, CLng(Ix))
 Dry = InsColzDryzV(A.Dry, V, Ix)
 DrsInsCVIsAftFld = Drs(Fny1, Dry)
 End Function
@@ -897,13 +875,13 @@ Private Sub Z_DrszSel()
 BrwDrs DrszSel(SampDrs1, "A B D")
 End Sub
 
-Private Property Get Z_FmtDrs()
-GoTo ZZ
-ZZ:
-DmpAy FmtDrs(SampDrs1)
+Private Property Get Z_LinzDrs()
+GoTo Z
+Z:
+DmpAy LinzDrs(SampDrs1)
 End Property
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A As Variant
 Dim B()
 Dim C As Drs
@@ -989,8 +967,8 @@ Function DrszAddFF(A As Drs, FF$, NewDry()) As Drs
 DrszAddFF = Drs(FnyzAddFF(A.Fny, FF), NewDry)
 End Function
 
-Function DrszInsFF(A As Drs, FF$, NewDry()) As Drs
-DrszInsFF = Drs(SyzAdd(SyzSS(FF), A.Fny), NewDry)
+Function DrswInsFF(A As Drs, FF$, NewDry()) As Drs
+DrswInsFF = Drs(SyzAdd(SyzSS(FF), A.Fny), NewDry)
 End Function
 
 Function DrszAddFiller(A As Drs, CC$) As Drs

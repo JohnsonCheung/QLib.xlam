@@ -16,48 +16,48 @@ End Property
 Function PMthNyzP(P As VBProject) As String()
 
 End Function
-Function MthLineszPum(PMthn)
+Function MthLzPum(PMthn)
 
 End Function
 
-Function MthLineszPP$(P As VBProject, PMthn)
+Function MthLzPP$(P As VBProject, PMthn)
 Dim B$(): B = ModNyzPum(PMthn)
 If Si(B) <> 1 Then
     Thw CSub, "Should be 1 module found", "PMthn [#Mod having PMthn] ModNy-Found", PMthn, Si(B), B
 End If
-MthLineszPP = MthLineszSP(SrczMdn(B(0)), PMthn)
+MthLzPP = MthLzSP(SrczMdn(B(0)), PMthn)
 End Function
 '
-Function MthLineszSP$(Src$(), PMthn)
+Function MthLzSP$(Src$(), PMthn)
 
 End Function
 '
-Property Get CMthLines$() 'Cur
-CMthLines = MthLineszM(CMd, CMthn)
+Property Get CMthL$() 'Cur
+CMthL = MthLzM(CMd, CMthn)
 End Property
 
-Sub VcMthLinesAyP()
-Vc FmtLinesAy(MthLinesAyP)
+Sub VcMthLAyP()
+Vc FmtLinesAy(MthLAyP)
 End Sub
-Function MthLinesAyP() As String()
-MthLinesAyP = MthLinesAyzP(CPj)
+Function MthLAyP() As String()
+MthLAyP = MthLAyzP(CPj)
 End Function
 
-Function MthLinesAyzP(P As VBProject) As String()
+Function MthLAyzP(P As VBProject) As String()
 Dim I
 For Each I In MdItr(P)
-    PushIAy MthLinesAyP, MthLinesAyzM(CvMd(I))
+    PushIAy MthLAyP, MthLAyzM(CvMd(I))
 Next
 End Function
 
-Function MthLinesAyzM(M As CodeModule) As String()
-MthLinesAyzM = MthLinesAyzS(Src(M))
+Function MthLAyzM(M As CodeModule) As String()
+MthLAyzM = MthLAyzS(Src(M))
 End Function
 
-Function MthLinesAyzS(Src$()) As String()
+Function MthLAyzS(Src$()) As String()
 Dim Ix
 For Each Ix In Itr(MthIxy(Src))
-    PushI MthLinesAyzS, MthLineszSI(Src, Ix)
+    PushI MthLAyzS, MthLzSI(Src, Ix)
 Next
 End Function
 Function MdzMthn(P As VBProject, Mthn) As CodeModule
@@ -71,48 +71,48 @@ Next
 If IsNothing(O) Then Thw CSub, "Mthn not fnd in any codemodule of given pj", "Pj Mthn", "P.Name,Mthn"
 End Function
 
-Function MthLineszPN$(P As VBProject, Mthn)
-MthLineszPN = MthLineszM(MdzMthn(P, Mthn), Mthn)
+Function MthLzPN$(P As VBProject, Mthn)
+MthLzPN = MthLzM(MdzMthn(P, Mthn), Mthn)
 End Function
 
-Function MthLineszN$(Mthn)
-MthLineszN = MthLineszPN(CPj, Mthn)
+Function MthLzN$(Mthn)
+MthLzN = MthLzPN(CPj, Mthn)
 End Function
 
-Function MthLineszM$(M As CodeModule, Mthn)
-MthLineszM = MthLineszSN(Src(M), Mthn)
+Function MthLzM$(M As CodeModule, Mthn)
+MthLzM = MthLzSN(Src(M), Mthn)
 End Function
 
 Function MthLyzM(M As CodeModule, Mthn) As String()
-MthLyzM = SplitCrLf(MthLineszM(M, Mthn))
+MthLyzM = SplitCrLf(MthLzM(M, Mthn))
 End Function
 
-Function MthLineszMTN$(Md As CodeModule, ShtMthTy$, Mthn)
+Function MthLzMTN$(Md As CodeModule, ShtMthTy$, Mthn)
 Dim S$(): S = Src(Md)
 Dim Ix&: Ix = MthIxzSTN(S, ShtMthTy, Mthn)
-MthLineszMTN = MthLineszSI(S, Ix)
+MthLzMTN = MthLzSI(S, Ix)
 End Function
 
-Function MthLineszSI$(Src$(), MthIx)
+Function MthLzSI$(Src$(), MthIx)
 Dim EIx&:       EIx = EndLix(Src, MthIx)
 Dim MthLy$(): MthLy = AywFT(Src, MthIx, EIx)
-MthLineszSI = JnCrLf(MthLy)
+MthLzSI = JnCrLf(MthLy)
 End Function
 
 Function MthLinzSTN$(Src$(), ShtMthTy$, Mthn)
 MthLinzSTN = Src(MthIxzSTN(Src, ShtMthTy, Mthn))
 End Function
 
-Function MthLineszSN$(Src$(), Mthn)
+Function MthLzSN$(Src$(), Mthn)
 Dim Ix, O$()
 For Each Ix In Itr(MthIxyzSN(Src, Mthn))
-    PushI O, MthLineszSI(Src, Ix)
+    PushI O, MthLzSI(Src, Ix)
 Next
-MthLineszSN = JnDblCrLf(O)
+MthLzSN = JnDblCrLf(O)
 End Function
 
-Function MthLineszSTN$(Src$(), ShtMthTy$, Mthn)
+Function MthLzSTN$(Src$(), ShtMthTy$, Mthn)
 Dim Ix&: Ix = MthIxzSTN(Src, ShtMthTy, Mthn)
-MthLineszSTN = MthLineszSI(Src, Ix)
+MthLzSTN = MthLzSI(Src, Ix)
 End Function
 

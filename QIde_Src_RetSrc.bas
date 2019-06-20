@@ -4,13 +4,13 @@ Option Explicit
 Private Const CMod$ = "MIde_Src_Ret."
 Private Const Asm$ = "QIde"
 
-Function SrcLineszMFi$(M As CodeModule, B As Fei)
+Function SrcLzMFi$(M As CodeModule, B As Fei)
 If IsFeizEmp(B) Then Exit Function
-'SrcLineszMFi = A.Lines(B.FmNo, B.Cnt)
+'SrcLzMFi = A.Lines(B.FmNo, B.Cnt)
 End Function
 
 Function SrczMFi(M As CodeModule, B As Fei) As String()
-'SrczMFi = SplitCrLf(SrcLineszMFei(A, B))
+'SrczMFi = SplitCrLf(SrcLzMFei(A, B))
 End Function
 
 Function SrczMRe(M As CodeModule, B As RegExp) As String()

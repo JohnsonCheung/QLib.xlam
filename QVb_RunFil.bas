@@ -30,7 +30,7 @@ End Sub
 
 Function RunFcmd&(Fcmd$, Optional PmStr$, Optional Sty As VbAppWinStyle = vbMaximizedFocus)
 Dim Lin
-    Lin = QuoteDbl(Fcmd) & PpdSpcIf(PmStr)
+    Lin = QteDbl(Fcmd) & PpdSpcIf(PmStr)
 RunFcmd = Shell(Lin, Sty)
 End Function
 

@@ -5,13 +5,13 @@ Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Ens_MthMdy."
 Function MthLinzEnsPrv$(MthLin)
 Const CSub$ = CMod & "MthLinzEnsPrv"
-If Not IsLinzMth(MthLin) Then Thw CSub, "Given MthLin is not MthLin", "Lin", MthLin
+If Not IsLinMth(MthLin) Then Thw CSub, "Given MthLin is not MthLin", "Lin", MthLin
 MthLinzEnsPrv = "Private " & RmvMdy(MthLin)
 End Function
 
 Function MthLinzEnsPub$(MthLin)
 Const CSub$ = CMod & "MthLinzEnsPub"
-If Not IsLinzMth(MthLin) Then Thw CSub, "Given MthLin is not MthLin", MthLin
+If Not IsLinMth(MthLin) Then Thw CSub, "Given MthLin is not MthLin", MthLin
 MthLinzEnsPub = RmvMdy(MthLin)
 End Function
 

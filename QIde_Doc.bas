@@ -28,21 +28,21 @@ Sub Doc(Nm)
 If DocDicP.Exists(Nm) Then D DocDicP(Nm) Else D "Not exist"
 '#BNmMIS is Method-B-Nm-of-Missing.
 '           Missing means the method is found in FmPj, but not ToPj
-'#FmDicB is MthDic-of-MthBNm-zz-MthLines.   It comes from FmPj
-'#ToDicA is MthDic-of-MthANm-zz-MthLinesAy. It comes from ToPj
+'#FmDicB is MthDic-of-MthBNm-zz-MthL.   It comes from FmPj
+'#ToDicA is MthDic-of-MthANm-zz-MthLAy. It comes from ToPj
 '#ToDicAB is ToDicA and FmDicB
 '#ANm is method-a-name, NNN or NNN:YYY
 '        If the method is Sub|Fun, just Mthn
 '        If the method is Prp    ,      Mthn:MthTy
 '        It is from ToPj (#ToA)
-'        One MthANm will have one or more MthLines
+'        One MthANm will have one or more MthL
 '#BNm is method-b-name, MMM.NNN or MMM.NNN:YYY
 '        Mdn.Mthn[:MthTy]
 '        It is from FmPj (#BFm)
-'        One MthBNm will have only one MthLines
+'        One MthBNm will have only one MthL
 '#Missing is for each MthBNm found in FmDicB, but its Mthn is not found in any-method-name-in-ToDicA
 '#Dif is for each MthBNm found in FmDicB and also its MthANm is found in ToDicA
-'        and the MthB's MthLines is dif and any of the MthA's MthLines
-'       (Note.MthANm will have one or more MthLines (due to in differmodule))
+'        and the MthB's MthL is dif and any of the MthA's MthL
+'       (Note.MthANm will have one or more MthL (due to in differmodule))
 End Sub
 

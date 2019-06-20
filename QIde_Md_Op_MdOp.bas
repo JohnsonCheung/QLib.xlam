@@ -28,18 +28,47 @@ For Each N In TmpModNyzP(CPj)
 Next
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 MIde__Mth:
 End Sub
 
-Sub EnsLines(Md As CodeModule, Mthn, MthLines$)
-Dim OldMthLines$: OldMthLines = MthLineszM(Md, Mthn)
-If OldMthLines = MthLines Then
+Sub EnsLines(Md As CodeModule, Mthn, MthL$)
+Dim OldMthL$: OldMthL = MthLzM(Md, Mthn)
+If OldMthL = MthL Then
     Debug.Print FmtQQ("EnsMd: Mth(?) in Md(?) is same", Mthn, Mdn(Md))
 End If
 RmvMthzMN Md, Mthn
-ApdLines Md, MthLines
+ApdLines Md, MthL
 Debug.Print FmtQQ("EnsMd: Mth(?) in Md(?) is replaced <=========", Mthn, Mdn(Md))
 End Sub
 
+Function RplMd(M As CodeModule, NewLines$) As Boolean
+Dim OldL$: OldL = SrcL(M)
+If LineszRTrim(OldL) = LineszRTrim(NewLines) Then Exit Function
+ClrMd M
+M.InsertLines 1, NewLines
+RplMd = True
+End Function
+
+Function SrtzM(M As CodeModule) As Boolean
+Const C$ = "QIde_Md_Op_RplMd"
+If Mdn(M) = C Then Debug.Print "SrtzM: Skipping..."; C
+SrtzM = RplMd(M, SSrcLzM(M))
+End Function
+
+Sub SrtP()
+SrtzP CPj
+End Sub
+
+Sub SrtM()
+SrtzM CMd
+End Sub
+
+Sub SrtzP(P As VBProject)
+BackupPj
+Dim C As VBComponent
+For Each C In P.VBComponents
+    SrtzM C.CodeModule
+Next
+End Sub
 

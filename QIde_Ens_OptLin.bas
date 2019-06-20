@@ -43,7 +43,7 @@ Clean:
     Return
 End Sub
 Private Sub EnsOptLinzM(M As CodeModule)
-If IsEmpMd(M) Then Exit Sub
+If IsMdEmp(M) Then Exit Sub
 DltOptLin M, OptLinOfCmpDb
 DltOptLin M, OptLinOfCmpBin
 EnsOptLin M, OptLinOfCmpTxt
@@ -67,7 +67,7 @@ Function IxOfAftOptAndImplzS&(Src$())
 Dim Fnd As Boolean, J%, IsOpt As Boolean, L$
 For J = 0 To UB(Src)
     L = Src(J)
-    'IsOpt = IsLin_OfOpt_OrImpl_OrBlank(L)
+    'IsOpt = IsLin_OfOpt_OrImpl_OrBlnk(L)
     Select Case True
     Case Fnd And IsOpt:
     Case Fnd: IxOfAftOptAndImplzS = J: Exit Function
@@ -81,7 +81,7 @@ Function LnoOf_AftOpt_AndImpl&(M As CodeModule)
 Dim Fnd As Boolean, J%, IsOpt As Boolean, L$
 For J = 1 To M.CountOfDeclarationLines
     L = M.Lines(J, 1)
-    'IsOpt = IsLin_OfOpt_OrImpl_OrBlank(L)
+    'IsOpt = IsLin_OfOpt_OrImpl_OrBlnk(L)
     Select Case True
     Case Fnd And IsOpt:
     Case Fnd: LnoOf_AftOpt_AndImpl = J: Exit Function

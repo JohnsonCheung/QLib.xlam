@@ -17,14 +17,14 @@ End Function
 Function SkFnyWiSqlQPfx(A As Database, T) As String()
 Dim F
 For Each F In Itr(SkFny(A, T))
-    PushI SkFnyWiSqlQPfx, SqlQuoteChrzT(DaoTyzTF(A, T, F)) & F
+    PushI SkFnyWiSqlQPfx, SqlQteChrzT(DaoTyzTF(A, T, F)) & F
 Next
 End Function
 Sub IupDbt(A As Database, T, Drs As Drs)
 Dim Dry(): Dry = Drs.Dry
 If Si(Dry) = 0 Then Exit Sub
 'ThwIf_DrsGoodToIupDbt CSub, Drs, A, T
-Dim R As Dao.Recordset, Q$, Sql$, Dr
+Dim R As DAO.Recordset, Q$, Sql$, Dr
 'Sql = SqlSel_T_Wh(T, BexpzFnyzSqlQPfxSy(SkFny(A, T), SkSqlQPfxSy(A, T)))
 For Each Dr In Dry
     Q = FmtQQAv(Sql, CvAv(Dr))

@@ -34,7 +34,7 @@ Function MdDic(P As VBProject) As Dictionary
 Dim C As VBComponent
 Set MdDic = New Dictionary
 For Each C In P.VBComponents
-    MdDic.Add C.Name, SrcLines(C.CodeModule)
+    MdDic.Add C.Name, SrcL(C.CodeModule)
 Next
 End Function
 
@@ -79,11 +79,11 @@ Set PjzM = M.Parent.Collection.Parent
 End Function
 
 Function SizMd&(M As CodeModule)
-SizMd = Len(SrcLines(M))
+SizMd = Len(SrcL(M))
 End Function
 
-Function SrcLines$(M As CodeModule)
-SrcLines = JnCrLf(Src(M)) & vbCrLf
+Function SrcL$(M As CodeModule)
+SrcL = JnCrLf(Src(M)) & vbCrLf
 End Function
 
 Function RmvMthInSrc(Src$(), MthnSet As Aset) As String()

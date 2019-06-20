@@ -26,77 +26,65 @@ Function OpnFx(Fx) As Workbook
 ThwIf_FfnNotExist Fx, CSub
 Set OpnFx = Xls.Workbooks.Open(Fx)
 End Function
+
 Sub ClrWsNm(Ws As Worksheet)
 Dim N
 For Each N In Itn(Ws.Names)
     Ws.Names(N).Delete
 Next
 End Sub
-Sub EnsHypLnkzFollowNm(Rg As Range, NmPfx$) 'Do 3 things: _
-1. RmvExcess HypLnk _
-2. Chg Val to Fml _
-3. Crt HypLnk.
-Dim P$: P = NmPfx & "_"
-'1. RmvExcess HypLnk
-    Dim HL() As Excel.Hyperlink
-    Dim H As Hyperlink
-    For Each H In Rg.Hyperlinks
-        If Not HasPfx(H.Address, NmPfx) Then PushObj HL, H
-    Next
-    DoOyMth HL, "Delete"    '<== Rmv
-'2. Chg Val to Fml
-    Dim R As Range, Ny$(), V, F$
-    Ny = RmvPfxzAy(AywPfx(Itn(WbzRg(Rg).Names), P), P)
-    For Each R In Rg
-        V = R.Value
-        If IsStr(V) Then
-            If HasEle(Ny, V) Then
-                F = "=" & P & V
-                If R.Formula <> F Then
-                    R.Formula = F '<== Changed
-                End If
-            End If
-        End If
-    Next
-'3. Crt HL
-    For Each R In Rg
-        With R.Hyperlinks
-        V = R.Value
-        Select Case True
-        Case Not IsStr(V)
-        Case Not HasEle(Ny, V)
-        Case .Count > 0
-        Case Else
-            .Add Anchor:=R, Address:="", SubAddress:=P & R.Value
-        End Select
-        End With
-    Next
-   
+
+Private Sub XEnsHyp(Cell As Range, W$())
+'Fm W : Ws ny
+'Ret : Ens the @Cell is pointing of one of @W if the @cell val is in @W else rmv the hyp lnk @@
+Dim V:  V = Cell.Value
+Dim Wsn$: If IsStr(V) Then If HasEle(W, V) Then Wsn = V  ' The wsn pointed by the @Cell.Value, if the @Cell.Value is str and in @W
+Dim A$                                                   ' The adr of A1 of %Wsn
+    If Wsn <> "" Then A = WszWb(WbzRg(Cell), Wsn).Range("A1").Address(External:=True)
+Dim L As Hyperlink: For Each L In Cell.Hyperlinks
+    If L.SubAddress <> A Then L.Delete
+Next
+'Need to add if #A<>"" and @Cell hyp lnk cnt = 0
+With Cell.Hyperlinks
+    If A <> "" And .Count = 0 Then
+        .Add Anchor:=Cell, Address:="", SubAddress:=A
+    End If
+End With
 End Sub
-Sub EnsWbNmzLcPfx(Ws As Worksheet, LoNm$, Col$, NmPfx$)
-Dim P$:                               P = NmPfx & "_"
-Dim Rg As Range:                 Set Rg = Ws.ListObjects(LoNm).ListColumns(Col).DataBodyRange
-Dim OldNm As New Dictionary:  Set OldNm = DicNmAdrzWsNmPfx(Ws, P)
-Dim NewNm As New Dictionary:  Set NewNm = SzAddPToKey(P, DicValToWbAdrzRg(Rg))
-Dim Add As Dictionary:          Set Add = MinusDic(NewNm, OldNm)
-Dim Rmv$():                         Rmv = SyzDicKey(MinusDic(OldNm, NewNm))
-Dim Upd As Dictionary:          Set Upd = DicAzDifVal(NewNm, OldNm)
-'Add
-    Dim Nm
-    For Each Nm In Add.Keys
-        WbzWs(Ws).Names.Add Nm, "=" & Add(Nm)
-    Next
-'Upd
-    For Each Nm In Upd.Keys
-        Ws.Names(Nm).RefersTo = Upd(Nm)
-    Next
-'Rmv
-    Dim I
-    For Each I In Itr(Rmv)
-        Ws.Names(I).Delete
-    Next
+Sub Z_EnsHyp()
+Dim Rg As Range
+GoSub Crt
+GoSub T0
+GoSub Rmv
+Exit Sub
+T0:
+    Set Rg = CWs.Range("A1:A2")
+    EnsHyp Rg
+    'Stop
+    Return
+Crt:
+    Dim Wb As Workbook: Set Wb = NewWb("A")
+    AddWs Wb, "A 1"
+    AddWs Wb, "A 2"
+    WszWb(Wb, "A").Activate
+    CWs.Range("A1").Value = "A 1"
+    CWs.Range("A2").Value = "A 2"
+    ShwWb Wb
+    Return
+Rmv:
+    Wb.Close False
+    Return
 End Sub
+Sub EnsHyp(Rg As Range)
+'Ret: Ens the hyp lnk in @Rg is pointing ws A1 if the @Rg val is a ws name. @@
+Dim W$(): W = WsNy(WbzRg(Rg))   ' Ws ny
+Dim Cell As Range: For Each Cell In Rg
+    XEnsHyp Cell, W 'Ens the @Cell is pointing of one of @W if the @cell val is in @W else rmv the hyp lnk
+Next
+End Sub
+
 Sub RmvWsIf(Fx, Wsn$)
+'Ret : Ret @Wsn in @Fx if exists @@
 If HasFxw(Fx, Wsn) Then
    Dim B As Workbook: Set B = WbzFx(Fx)
    WszWb(B, Wsn).Delete
@@ -116,7 +104,7 @@ ShwWs A
 Stop
 End Sub
 Sub MgeBottomCell(VBar As Range)
-Ass IsVbarRg(VBar)
+Ass IsRgVBar(VBar)
 Dim R2: R2 = VBar.Rows.Count
 Dim R1
     Dim Fnd As Boolean
@@ -169,12 +157,6 @@ End Sub
 Function CvCmt(A) As Comment
 Set CvCmt = A
 End Function
-Function R2zRg&(A As Range)
-R2zRg = A.Row + A.Rows.Count - 1
-End Function
-Function C2zRg&(A As Range)
-C2zRg = A.Column + A.Columns.Count - 1
-End Function
 
 Function IsCell(A As Range) As Boolean
 If A.Rows.Count > 1 Then Exit Function
@@ -191,7 +173,7 @@ End Function
 Function CmtAyzRg(A As Range) As Comment()
 Dim C As Comment: For Each C In WszRg(A).Comments
     Dim CmtRg As Range: Set CmtRg = C.Parent
-    If HasCell(A, CmtRg) Then PushI CmtAyzRg, C
+    If HasCell(A, CmtRg) Then PushObj CmtAyzRg, C
 Next
 End Function
 Sub DltCmtzRg(A As Range)
@@ -328,12 +310,12 @@ Set AddWc = ToWb.Connections.Add2(T, T, CnStrzFbzForWc(FmFb), T, XlCmdType.xlCmd
 End Function
 
 Sub ThwWbMisOupNy(A As Workbook, OupNy$())
-Dim O$(), N$, B$(), Wny$()
-Wny = WsCdNy(A)
-O = MinusAy(SyzAyP(OupNy, "WsO"), Wny)
+Dim O$(), N$, B$(), WNy$()
+WNy = WsCdNy(A)
+O = MinusAy(AddPfxzAy(OupNy, "WsO"), WNy)
 If Si(O) > 0 Then
     N = "OupNy":  B = OupNy:  GoSub Dmp
-    N = "WbCdNy": B = Wny: GoSub Dmp
+    N = "WbCdNy": B = WNy: GoSub Dmp
     N = "Mssing": B = O:      GoSub Dmp
     Stop
     Exit Sub
@@ -437,7 +419,7 @@ Wb.Close False
 Stop
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A
 Dim B As WorkbookConnection
 Dim C As Workbook
@@ -456,7 +438,7 @@ LasWs C
 MainWs C
 TxtWcCnt C
 TxtWcStr C
-Wsny C
+WsNy C
 WszCdNm C, D
 ThwWbMisOupNy C, H
 ClsWbNoSav C
@@ -751,9 +733,9 @@ If Not IsSamAy(Fny1, Fny2) Then
     Thw CSub, "LoFny and TblFny are not same", "LoFny TblNm TblFny Db", Fny2, T, Fny1, Dbn(A)
 End If
 Dim Sq()
-    Dim R As Dao.Recordset
+    Dim R As DAO.Recordset
     Set R = Rs(A, SqlSel_Fny_T(Fny2, T))
-    Sq = AddSngQuotezSq(SqzRs(R))
+    Sq = AddSngQtezSq(SqzRs(R))
 MinxLo A
 RgzSq Sq, A.DataBodyRange
 End Sub
@@ -885,7 +867,7 @@ ResiRg(VBar, Sq).Value = Sq
 End Sub
 
 Sub FillWsny(At As Range)
-RgzAyV Wsny(WbzRg(At)), At
+RgzAyV WsNy(WbzRg(At)), At
 End Sub
 
 
@@ -942,33 +924,31 @@ Dim K, J&: For Each K In Itr(Ky)
     J = J + 1
 Next
 End Function
+Sub SetOnFilter(L As ListObject)
+On Error GoTo X
+Dim M As Boolean: M = L.AutoFilter.FilterMode ' If filter is on, it will have no err, otherwise, there is err
+Exit Sub
+X:
+L.Range.AutoFilter 'Turn on
+End Sub
 Function KSetzLoFilter(L As ListObject) As Dictionary
 'Ret : KSet
 Dim O As Dictionary: Set O = New Dictionary
-Dim F As Filters: Set F = L.AutoFilter.Filters
+SetOnFilter L
 Dim Fny$(): Fny = FnyzLo(L)
-Dim I As Filter, J%: For Each I In F
+Dim F As Filter, J%: For Each F In L.AutoFilter.Filters
     Dim K$: K = Fny(J)
-    KSetzLoFilter__Add O, K, I
+    KSetzLoFilter__Add O, K, F
     J = J + 1
 Next
 Set KSetzLoFilter = O
 End Function
-Private Function KSetzLoFilter__Aset(F As Filter) As Aset
-If Not F.On Then Exit Function
-Dim Op As XlAutoFilterOperator: Op = F.Operator
-Dim O As Aset
-Select Case True
-Case Op = 0: Set O = AsetzItm(RmvPfx(F.Criteria1, "="))
-Case Op = xlFilterValues: Set O = AsetzAy(RmvPfxzAy(F.Criteria1, "="))
-Case Else: Exit Function
-End Select
-Set KSetzLoFilter__Aset = O
-End Function
 
 Private Sub KSetzLoFilter__Add(OKSet As Dictionary, K$, F As Filter)
-Dim S As Aset: Set S = KSetzLoFilter__Aset(F)
-If Not IsNothing(S) Then OKSet.Add K, S
+If Not F.On Then Exit Sub
+If F.Operator <> xlFilterValues Then Exit Sub
+Dim S As Aset: Set S = AsetzAy(RmvPfxzAy(F.Criteria1, "="))
+OKSet.Add K, S
 End Sub
 
 Function RgzDrs(A As Drs, At As Range) As Range
@@ -1030,7 +1010,7 @@ Set WszDs = O
 End Function
 
 Function RgzDt(A As Dt, At As Range, Optional DtIx%)
-Dim Pfx$: If DtIx > 0 Then Pfx = QuoteBkt(CStr(DtIx))
+Dim Pfx$: If DtIx > 0 Then Pfx = QteBkt(CStr(DtIx))
 At.Value = Pfx & A.DtNm
 RgzSq SqzDrs(DrszDt(A)), CellBelow(At)
 End Function

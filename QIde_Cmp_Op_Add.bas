@@ -48,13 +48,13 @@ Function HasCmpzN(Cmpn) As Boolean
 HasCmpzN = HasCmpzP(CPj, Cmpn)
 End Function
 
-Sub AddCmpzPNL(P As VBProject, Nm, SrcLines$)
+Sub AddCmpzPNL(P As VBProject, Nm, SrcL$)
 AddCmpzPTN P, vbext_ct_StdModule, Nm
-ApdLines MdzPN(P, Nm), SrcLines
+ApdLines MdzPN(P, Nm), SrcL
 End Sub
 
-Sub RenCmpOfSzAddP(A As VBComponent, SzAddP$)
-A.Name = SzAddP & A.Name
+Sub RenCmpOfAddPfx(A As VBComponent, AddPfx$)
+A.Name = AddPfx & A.Name
 End Sub
 
 Sub RenCmpOfRplPfx(A As VBComponent, FmPfx$, ToPfx$)
@@ -77,7 +77,7 @@ If Not HasCmpzP(P, Nm) Then AddCmpzPTN P, Ty, Nm
 End Sub
 
 Sub EnsModLines(M As CodeModule, Lines$)
-If Lines = SrcLines(M) Then Inf CSub, "Same module lines, no need to replace", "Mdn", Mdn(M): Exit Sub
+If Lines = SrcL(M) Then Inf CSub, "Same module lines, no need to replace", "Mdn", Mdn(M): Exit Sub
 RplMd M, Lines
 End Sub
 
@@ -89,7 +89,7 @@ Sub EnsMod(P As VBProject, Modn)
 EnsCmpzPTN P, vbext_ct_StdModule, Modn
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A$
 Dim B As CodeModule
 Dim C As VBProject

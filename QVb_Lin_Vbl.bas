@@ -60,7 +60,7 @@ Tst:
     Return
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Z_DryzVblLy
 MVb_Lin_Vbl:
 End Sub

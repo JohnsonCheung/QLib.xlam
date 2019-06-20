@@ -124,7 +124,7 @@ End Function
 Function PMthLinAy(Src$()) As String()
 Dim L
 For Each L In Itr(Src)
-    If IsPMthLin(L) Then PushI PMthLinAy, L
+    If IsLinPubMth(L) Then PushI PMthLinAy, L
 Next
 End Function
 

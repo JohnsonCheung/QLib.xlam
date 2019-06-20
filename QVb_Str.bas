@@ -29,6 +29,16 @@ Function StrDft$(S, Dft)
 StrDft = IIf(S = "", Dft, S)
 End Function
 
+Function ULin$(S$, Optional ULChr$ = "-")
+ULin = Dup(ULChr, Len(S))
+End Function
+Function DupzWy(W%(), Optional C$ = "-") As String()
+Dim I: For Each I In W
+    Push DupzWy, Dup(C, I)
+Next
+End Function
+
+
 Function Dup$(S, N)
 Dim O$, J&
 For J = 0 To N - 1
@@ -66,7 +76,7 @@ WrtStr = Ft
 End Function
 
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A As Variant
 Dim B$
 Dim C%

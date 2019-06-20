@@ -4,10 +4,11 @@ Option Explicit
 Private Const CMod$ = "MVb_Dic_CntDic."
 Private Const Asm$ = "QVb"
 Function FmtCntDic(Ay, Optional Opt As EmCnt) As String()
-FmtCntDic = FmtS1S2s(SwapS1S2s(S1S2szDic(CntDic(Ay, Opt))), Nm1:="Cnt", Nm2:="Mth")
+FmtCntDic = FmtS1S2s(SwapS1S2s(S1S2szDic(CntDic(Ay, Opt))), N1:="Cnt", N2:="Mth")
 End Function
 
-Function CntDiczAy(Ay, Optional C As VbCompareMethod = vbTextCompare) As Dictionary
+Function CntzAyD(Ay, Optional C As VbCompareMethod = vbTextCompare) As Dictionary
+'Ret : :CntDic #Cnt-Ay-Dic ! Cnt-Ay-ret-as-cntDic.  :CntDic is val is a cnt (num).  %Cnt always :CntDic
 Dim O As New Dictionary, I
 O.CompareMode = C
 For Each I In Itr(Ay)
@@ -17,7 +18,7 @@ For Each I In Itr(Ay)
         O.Add I, 1
     End If
 Next
-Set CntDiczAy = O
+Set CntzAyD = O
 End Function
 Function CntDicwDup(CntDic As Dictionary) As Dictionary
 Set CntDicwDup = New Dictionary
@@ -45,7 +46,7 @@ End Select
 End Function
 
 Function CntDic(Ay, Optional Opt As EmCnt, Optional C As VbCompareMethod = vbTextCompare) As Dictionary
-Dim D As Dictionary: Set D = CntDiczAy(Ay, C)
+Dim D As Dictionary: Set D = CntzAyD(Ay, C)
 Set CntDic = CntDicwEmCnt(D, Opt)
 End Function
 

@@ -14,7 +14,7 @@ Private Aset As New Dictionary
 Property Get TermLin()
 Dim I, O$()
 For Each I In Itms
-    PushI O, QuoteSqIf(CStr(I))
+    PushI O, QteSqIf(CStr(I))
 Next
 TermLin = JnSpc(O)
 End Property
@@ -56,9 +56,9 @@ For Each I In Itr(A)
     PushItm I
 Next
 End Sub
-Sub PushItr(Itr, Optional NoBlankStr As Boolean)
+Sub PushItr(Itr, Optional NoBlnkStr As Boolean)
 Dim I
-If NoBlankStr Then
+If NoBlnkStr Then
     For Each I In Itr
         If I <> "" Then
             PushItm I
@@ -132,7 +132,7 @@ Function Sy() As String()
 Sy = SyzAy(Aset.Keys)
 End Function
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A As Variant
 Dim B As Aset
 Dim C$

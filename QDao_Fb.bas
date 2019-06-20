@@ -6,7 +6,7 @@ Private Const Asm$ = "QDao"
 
 Function CrtFb(Fb, Optional IsDltFst As Boolean) As Database
 If IsDltFst Then DltFfnIf Fb
-Set CrtFb = Dao.DBEngine.CreateDatabase(Fb, dbLangGeneral)
+Set CrtFb = DAO.DBEngine.CreateDatabase(Fb, dbLangGeneral)
 End Function
 
 Private Sub Z_BrwFb()
@@ -14,7 +14,7 @@ BrwFb SampFbzDutyDta
 End Sub
 
 Function DbzFb(Fb) As Database
-Set DbzFb = Dao.DBEngine.OpenDatabase(Fb)
+Set DbzFb = DAO.DBEngine.OpenDatabase(Fb)
 End Function
 
 Function CntrNyzFb(Fb) As String()
@@ -25,12 +25,12 @@ Function CntrItmNyzFb(Fb) As String()
 Dim D As Database: Set D = Db(Fb)
 Dim CntrNm
 For Each CntrNm In Itn(D.Containers)
-    PushIAy CntrItmNyzFb, SyzAyP(Itn(D.Containers(CntrNm).Documents), CntrNm & ".")
+    PushIAy CntrItmNyzFb, AddPfxzAy(Itn(D.Containers(CntrNm).Documents), CntrNm & ".")
 Next
 End Function
 
 Function Db(Fb) As Database
-Set Db = Dao.DBEngine.OpenDatabase(Fb)
+Set Db = DAO.DBEngine.OpenDatabase(Fb)
 End Function
 
 Sub EnsFb(Fb)
@@ -73,7 +73,7 @@ DmpAy TnyzFb(SampFbzDutyDta)
 End Sub
 
 
-Private Sub ZZ()
+Private Sub Z()
 Z_BrwFb
 MDao_Fb:
 End Sub

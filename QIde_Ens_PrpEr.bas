@@ -11,7 +11,7 @@ If MthLy(U - 2) <> MthExitLin(MthLy(0)) Then Exit Function
 End Function
 
 Private Function InsLinExitAndLblX(MthLy$(), LinOfExit$) As String()
-InsLinExitAndLblX = AyInsAyAt(MthLy, Sy(LinOfExit, LinOfLblX), UB(MthLy))
+InsLinExitAndLblX = InsAy(MthLy, Sy(LinOfExit, LinOfLblX), UB(MthLy))
 End Function
 
 Private Function EnsLinExitAndLblX(MthLy$(), LinOfExit$) As String()
@@ -36,7 +36,7 @@ Next
 End Function
 
 Private Function InsOnErGoX(MthLy$()) As String()
-InsOnErGoX = AyInsEle(MthLy, "On Error Goto X", NxtIxzSrc(MthLy))
+InsOnErGoX = InsEle(MthLy, "On Error Goto X", NxtIxzSrc(MthLy))
 End Function
 
 Private Function EnsLinzOnEr(MthLy$()) As String()
@@ -81,7 +81,7 @@ End Function
 Private Sub Z_EnsPrpOnerzS()
 Dim Src$()
 Const TstId& = 2
-GoSub ZZ
+GoSub Z
 'GoSub T1
 Exit Sub
 T1:
@@ -93,7 +93,7 @@ Tst:
     Act = EnsPrpOnErzS(Src)
     C
     Return
-ZZ:
+Z:
     Src = CSrc
     Vc EnsPrpOnErzS(Src)
     Return
@@ -101,7 +101,7 @@ End Sub
 Function EnsPrpOnErzS(Src$()) As String()
 
 End Function
-Private Sub Z_IsSngLinMth()
+Private Sub Z_IsLinSngLMth()
 Dim L
 GoSub T1
 Exit Sub
@@ -110,14 +110,14 @@ T1:
     Ept = True
     GoTo Tst
 Tst:
-    Act = IsSngLinMth(L)
+    Act = IsLinSngLMth(L)
     C
     Return
 End Sub
 
-Function IsSngLinMth(L) As Boolean
+Function IsLinSngLMth(L) As Boolean
 Dim K$: K = MthKd(L): If K = "" Then Exit Function
-IsSngLinMth = HasSubStr(L, "End " & K)
+IsLinSngLMth = HasSubStr(L, "End " & K)
 End Function
 
 Private Sub RmvPrpOnErzM(M As CodeModule, Optional Rpt As EmRpt)

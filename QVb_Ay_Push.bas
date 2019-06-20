@@ -73,7 +73,7 @@ End Sub
 Sub PushNoDup(O, M)
 If Not HasEle(O, M) Then PushI O, M
 End Sub
-Sub PushNoDupNonBlankStr(O, M)
+Sub PushNoDupNBStr(O, M)
 If M = "" Then Exit Sub
 If Not HasEle(O, M) Then PushI O, M
 End Sub
@@ -91,14 +91,14 @@ For Each I In Itr(Ay)
 Next
 End Sub
 
-Sub PushNonBlank(O$(), M)
+Sub PushNB(O$(), M)
 If Trim(M) <> "" Then PushI O, M
 End Sub
 
-Sub PushNonBlankAy(O$(), MAy)
+Sub PushNBAy(O$(), Ay)
 Dim I
-For Each I In Itr(MAy)
-    PushNonBlank O, I
+For Each I In Itr(Ay)
+    PushNB O, I
 Next
 End Sub
 

@@ -19,7 +19,7 @@ If IsEqAy(AA, BB) Then Exit Function
 Dim DifAt&
     DifAt = DifAtIx(AA, BB)
 Dim O$(), J&, MinU&
-    PushNonBlank O, Hdr
+    PushNB O, Hdr
     PushI O, FmtQQ("LinesCnt=? (?)", Si(AA), N1)
     PushI O, FmtQQ("LinesCnt=? (?)", Si(BB), N2)
     PushI O, FmtQQ("Dif At Ix=?", DifAt)
@@ -108,7 +108,7 @@ Const CSub$ = CMod & "Len_LblAy"
 If L <= 0 Then Thw CSub, "Length should be >0", "Length", L
 Dim N%
     N = NDig(L)
-PushNonBlank Len_LblAy, Len_LblLin1(L)
+PushNB Len_LblAy, Len_LblLin1(L)
 PushI Len_LblAy, Len_LblLin2(L)
 End Function
 
@@ -143,6 +143,6 @@ Tst:
 
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 End Sub
 

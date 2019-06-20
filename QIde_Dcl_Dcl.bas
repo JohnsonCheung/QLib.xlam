@@ -33,7 +33,7 @@ For Each L In Itr(Src)
             Exit Function
         End If
     End If
-    If IsLinzMth(Lin) Then Exit For
+    If IsLinMth(Lin) Then Exit For
     J = J + 1
 Next
 EnmFmIx = -1
@@ -51,7 +51,7 @@ End Function
 Function EnmNy(Src$()) As String()
 Dim L
 For Each L In Itr(Src)
-   PushNonBlank EnmNy, Enmn(L)
+   PushNB EnmNy, Enmn(L)
 Next
 End Function
 
@@ -65,7 +65,7 @@ End Function
 Function NEnm%(Src$())
 Dim L, O%
 For Each L In Itr(Src)
-   If IsEmnLin(L) Then O = O + 1
+   If IsLinEmn(L) Then O = O + 1
 Next
 NEnm = O
 End Function
@@ -99,8 +99,8 @@ End Function
 Function UsrTyFmIx&(Src$(), TyNm)
 Dim J%
 For J = 0 To UB(Src)
-   If IsUsrTyLin(Src(J)) = TyNm Then UsrTyFmIx = J: Exit Function
-   If IsLinzMth(Src(J)) Then Exit For
+   If IsLinTy(Src(J)) = TyNm Then UsrTyFmIx = J: Exit Function
+   If IsLinMth(Src(J)) Then Exit For
 Next
 UsrTyFmIx = -1
 End Function
@@ -113,17 +113,17 @@ End Function
 Function TyNyzS(Src$()) As String()
 Dim L
 For Each L In Itr(Src)
-    PushNonBlank TyNyzS, TynzLin(L)
-    If IsLinzMth(L) Then Exit Function
+    PushNB TyNyzS, TynzLin(L)
+    If IsLinMth(L) Then Exit Function
 Next
 End Function
 
-Function IsEmnLin(A) As Boolean
-IsEmnLin = HasPfx(RmvMdy(A), "Enum ")
+Function IsLinEmn(A) As Boolean
+IsLinEmn = HasPfx(RmvMdy(A), "Enum ")
 End Function
 
-Function IsUsrTyLin(A) As Boolean
-IsUsrTyLin = HasPfx(RmvMdy(A), "Type ")
+Function IsLinTy(A) As Boolean
+IsLinTy = HasPfx(RmvMdy(A), "Type ")
 End Function
 
 Function Enmn(Lin)
@@ -187,7 +187,7 @@ Function ShfTermTy(OLin$) As Boolean
 ShfTermTy = ShfPfx(OLin, "Type")
 End Function
 
-Private Sub ZZ()
+Private Sub Z()
 MIde_Dcl_EnmAndTy:
 End Sub
 
@@ -237,7 +237,7 @@ End Function
 Function IxOfPrvCdLin&(Src$(), Fm)
 Dim O&
 For O = Fm - 1 To 0 Step -1
-    If IsCdLin(Src(O)) Then IxOfPrvCdLin = O: Exit Function
+    If IsLinCd(Src(O)) Then IxOfPrvCdLin = O: Exit Function
 Next
 IxOfPrvCdLin = -1
 End Function
@@ -284,12 +284,12 @@ End Function
 Private Sub Z_DclzM()
 Dim O$(), C As VBComponent
 For Each C In CPj.VBComponents
-    PushNonBlank O, DclzM(C.CodeModule)
+    PushNB O, DclzM(C.CodeModule)
 Next
 VcLinesAy O
 End Sub
 Function DclzM$(M As CodeModule)
-DclzM = RTrimLines(LineszMLC(M, 1, DclLinCntzM(M)))
+DclzM = LineszRTrim(LineszMLC(M, 1, DclLinCntzM(M)))
 End Function
 Function DclLyzM(M As CodeModule) As String()
 DclLyzM = SplitCrLf(DclzM(M))
@@ -297,7 +297,7 @@ End Function
 Function CnstLnxszS(Src$()) As Lnxs
 Dim L, J&
 For Each L In Itr(Src)
-    If IsLinzCnst(L) Then PushLnx CnstLnxszS, Lnx(L, J)
+    If IsLinCnst(L) Then PushLnx CnstLnxszS, Lnx(L, J)
     J = J + 1
 Next
 End Function
@@ -305,18 +305,18 @@ End Function
 Function CnstLnxzSN(Src$(), CnstnPfx$) As Lnx
 Dim L, J%
 For Each L In Itr(Src)
-    If IsLinzCnstPfx(L, CnstnPfx) Then CnstLnxzSN = Lnx(L, J): Exit Function
+    If IsLinCnstPfx(L, CnstnPfx) Then CnstLnxzSN = Lnx(L, J): Exit Function
     J = J + 1
 Next
 End Function
 
-Function IsLinzCnstPfx(L, CnstnPfx$) As Boolean
+Function IsLinCnstPfx(L, CnstnPfx$) As Boolean
 Dim Lin$: Lin = RmvMdy(L)
 If Not ShfTermCnst(Lin) Then Exit Function
-IsLinzCnstPfx = HasPfx(L, CnstnPfx)
+IsLinCnstPfx = HasPfx(L, CnstnPfx)
 End Function
-Function IsLinzCnst(L) As Boolean
-IsLinzCnst = T1(RmvMdy(L)) = "Const"
+Function IsLinCnst(L) As Boolean
+IsLinCnst = T1(RmvMdy(L)) = "Const"
 End Function
 Function CnstLnxszM(M As CodeModule) As Lnxs
 Dim J&, L$, P$, L1$, L2$

@@ -12,11 +12,11 @@ Const MDT_$ = ""
 Const CDT_Tbl_NotIn_Tny$ = "T[?] is invalid.  Valid T[?]"
 Const MDupE$ = "This E[?] is dup"
 Const CM_LinTyEr$ = "Invalid DaoTy[?].  Valid Ty[?]"
-Function ClnLin(Lin)
+Function ClnLin$(Lin)
 If IsEmp(Lin) Then Exit Function
-If IsDotLin(Lin) Then Exit Function
-If IsSngTermLin(Lin) Then Exit Function
-If IsDDLin(Lin) Then Exit Function
+If FstChr(Lin) = "." Then Exit Function
+If IsLinSngTerm(Lin) Then Exit Function
+If IsLinDD(Lin) Then Exit Function
 ClnLin = BefDD(Lin)
 End Function
 
@@ -71,7 +71,7 @@ Private Function ErDT_InvalidFld(D As Lnxs, T$, Fny$()) As String()
 'D-Lnx.Lin is Des $T $F $D.  For the T$=$T line, the $F not in Fny$(), it is error
 Dim I
 'For Each I In Itr(D)
-'    PushNonBlank ErDT_InvalidFld, ErDT_InvalidFld1(CvLnx(I), T, Fny)
+'    PushNB ErDT_InvalidFld, ErDT_InvalidFld1(CvLnx(I), T, Fny)
 'Next
 End Function
 
@@ -109,14 +109,14 @@ Private Function ErDT_Tbl_NotIn_Tny(D As Lnxs, Tny$()) As String()
 'D-Lnx.Lin is Des $T $F $D. If $T<>"." and not in Tny, it is error
 Dim J%
 'For J = 0 To UB(D)
-'    PushNonBlank ErDT_Tbl_NotIn_Tny, ErDT_Tbl_NotIn_Tny1(D(J), Tny)
+'    PushNB ErDT_Tbl_NotIn_Tny, ErDT_Tbl_NotIn_Tny1(D(J), Tny)
 'Next
 End Function
 
 Private Function ErE_DupE(E As Lnxs, Eny$()) As String()
-Dim ele
-For Each ele In Itr(AywDup(Eny))
-    Push ErE_DupE, MsgE_DupE(LnoAyzEle(E, ele), ele)
+Dim Ele
+For Each Ele In Itr(AywDup(Eny))
+    Push ErE_DupE, MsgE_DupE(LnoAyzEle(E, Ele), Ele)
 Next
 End Function
 
@@ -232,7 +232,7 @@ Dim F$, I
 For Each I In Itr(Fny)
     F = I
     If Not IsNm(F) Then
-        PushI ErT_LinEr_zLnx, MsgT_FldIsNotANmEr(T, F)
+        PushI ErT_LinEr_zLnx, MsgT_FldIsNotANm(T, F)
     End If
 Next
 End Function
@@ -244,7 +244,7 @@ Dim I
 'Next
 End Function
 
-Private Function LnoAyzEle(E As Lnxs, ele) As Long()
+Private Function LnoAyzEle(E As Lnxs, Ele) As Long()
 Dim J%
 'For J = 0 To UBound(E)
 '    If T1(E(J).Lin) = Ele Then
@@ -314,8 +314,8 @@ Private Function MsgT_DupF$(A As Lnx, T$, Fny$())
 MsgT_DupF = Msg(A, FmtQQ("F[?] is dup in T[?]", JnSpc(Fny), T))
 End Function
 
-Private Function MsgT_FldIsNotANmEr$(A As Lnx, F)
-MsgT_FldIsNotANmEr = Msg(A, FmtQQ("FldNm[?] is not a name", F))
+Private Function MsgT_FldIsNotANm$(A As Lnx, F)
+MsgT_FldIsNotANm = Msg(A, FmtQQ("FldNm[?] is not a name", F))
 End Function
 
 Private Function MsgT_IdFld$(A As Lnx)
@@ -345,7 +345,7 @@ MsgT_FldEr = Msg(A, FmtQQ("Fld[?] cannot be found in any Ele-Lines"))
 End Function
 
 Private Function Msg_LinTyEr$(A As Lnx, Ty$)
-Msg_LinTyEr = Msg(A, FmtQQ(CM_LinTyEr, Ty, FmtDrs(DShtTy)))
+Msg_LinTyEr = Msg(A, FmtQQ(CM_LinTyEr, Ty, LinzDrs(DShtTy)))
 End Function
 
 Private Function ErD(Tny$(), T As Lnxs, D As Lnxs) As String()
@@ -432,7 +432,7 @@ Tst:
     Return
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Z_ErT_LinEr_zLnx
 Exit Sub
 'AAAA

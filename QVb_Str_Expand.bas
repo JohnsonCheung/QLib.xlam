@@ -17,7 +17,7 @@ Expandss = Expand(QVblTp, SyzSS(Seedss))
 End Function
 Private Sub Z_Expandss()
 Dim QVblTp$, Seed$()
-ZZ:
+Z:
     Erase XX
     X "Sub Push?(O() As ?, M As ?)"
     X "Dim N&"
@@ -50,7 +50,7 @@ Tst:
     Return
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Z_Expandss
 End Sub
 

@@ -82,11 +82,11 @@ Brw FmtDotLy(DotLy)
 End Sub
 
 Function FmtDotLy(DotLy$()) As String()
-FmtDotLy = FmtDry(DryzDotLy(DotLy), Fmt:=EiSSFmt)
+FmtDotLy = LyzDry(DryzDotLy(DotLy), Fmt:=EiSSFmt)
 End Function
 
 Function FmtDotLyzTwoCol(DotLy$()) As String()
-FmtDotLyzTwoCol = FmtDry(DryzDotLyzTwoCol(DotLy), Fmt:=EiSSFmt)
+FmtDotLyzTwoCol = LyzDry(DryzDotLyzTwoCol(DotLy), Fmt:=EiSSFmt)
 End Function
 
 Function FmtSyz1Term(Sy$()) As String()
@@ -131,7 +131,7 @@ Tst:
     Return
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Z_FmtSyz2Term
 Z_FmtSy3Term
 MVb_Align_Ay:

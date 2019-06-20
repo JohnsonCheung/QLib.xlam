@@ -56,11 +56,11 @@ Function RmvMthMdy$(Lin)
 RmvMthMdy = RmvTerm(Lin, MthMdyAy)
 End Function
 
-Function IsPMth(Lin) As Boolean 'Pum = PubMthn
+Function IsLinPubMth(Lin) As Boolean 'Pum = PubMthn
 Dim L$: L = Lin
 If ShfShtMdy(L) <> "Pub" Then Exit Function
 If MthTy(L) = "" Then Exit Function
-IsPMth = True
+IsLinPubMth = True
 End Function
 
 Function Dimn$(Lin)
@@ -137,7 +137,7 @@ End Select
 MthnzDNm = Nm
 End Function
 Private Sub Z_Mthn()
-GoTo ZZ
+GoTo Z
 Dim A$
 A = "Function Mthn(A)": Ept = "Mthn.Fun.": GoSub Tst
 Exit Sub
@@ -145,10 +145,10 @@ Tst:
     Act = Mthn(A)
     C
     Return
-ZZ:
+Z:
     Dim O$(), L
     For Each L In SrczV(CVbe)
-        PushNonBlank O, Mthn(CStr(L))
+        PushNB O, Mthn(CStr(L))
     Next
     Brw O
 End Sub
@@ -179,15 +179,15 @@ End Function
 Function PMthNyzS(Src$()) As String()
 Dim L
 For Each L In Itr(Src)
-    If IsPMth(L) Then PushI PMthNyzS, Mthn(L)
+    If IsLinPubMth(L) Then PushI PMthNyzS, Mthn(L)
 Next
 End Function
 
 Private Sub Z_ModNyzPPm()
 Dim P As VBProject, PMthn
-GoSub ZZ
+GoSub Z
 Exit Sub
-ZZ:
+Z:
     D ModNyzPPm(CPj, "AA")
     Stop
     Return
@@ -314,9 +314,6 @@ End Function
 Function MthNyP() As String()
 MthNyP = MthNyzP(CPj)
 End Function
-Function DPubMthzV(A As Vbe) As String()
-
-End Function
 
 Function MthNyzP(P As VBProject) As String()
 Dim C As VBComponent
@@ -350,7 +347,7 @@ End Sub
 Function MthNyzS(Src$()) As String()
 Dim L
 For Each L In Itr(Src)
-    PushNonBlank MthNyzS, Mthn(L)
+    PushNB MthNyzS, Mthn(L)
 Next
 End Function
 
@@ -358,7 +355,7 @@ Function PMthNyzM(M As CodeModule) As String()
 PMthNyzM = PMthNyzS(Src(M))
 End Function
 
-Private Sub ZZ()
+Private Sub Z()
 Z_MthNyzFb
 MIde_Mth_Nm:
 End Sub
@@ -368,9 +365,9 @@ MthNyzM = MthNyzS(Src(M))
 End Function
 
 Private Sub Z_MthnzS()
-GoSub ZZ
+GoSub Z
 Exit Sub
-ZZ:
+Z:
    B MthNyzS(SrczP(CPj))
    Return
 End Sub

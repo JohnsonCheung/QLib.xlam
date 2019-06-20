@@ -366,9 +366,9 @@ Tst:
 End Sub
 Private Sub Z_ErzLof()
 Dim Lof$(), LoFny$()
-GoSub ZZ
+GoSub Z
 Exit Sub
-ZZ:
+Z:
     Brw ErzLof(Y_Lof, Y_LoFny)
     Return
 Tst:

@@ -9,7 +9,7 @@ End Function
 
 Function MthLinAyzPub(Src$()) As String()
 Dim L: For Each L In Itr(Src)
-    If IsLinzPubMth(L) Then PushI MthLinAyzPub, L
+    If IsLinPubMth(L) Then PushI MthLinAyzPub, L
 Next
 End Function
 

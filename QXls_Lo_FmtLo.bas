@@ -203,7 +203,7 @@ Tst:
     Return
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A As ListObject
 Dim B$()
 Dim C As Workbook

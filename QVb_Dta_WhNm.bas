@@ -27,9 +27,9 @@ End Function
 Function WhNmStr$(A As WhNm)
 'If IsEmpWhNm(A) Then ToStr = "#Emp": Exit Function
 Dim O$()
-'Push O, Quote(X_Re.Pattern, "Patn(*)")
-'Push O, Quote(TLin(X_LikAy), "LikAy(*)")
-'Push O, Quote(TLin(X_ExlLikAy), "ExlLikAy(*)")
+'Push O, Qte(X_Re.Pattern, "Patn(*)")
+'Push O, Qte(TLin(X_LikAy), "LikAy(*)")
+'Push O, Qte(TLin(X_ExlLikAy), "ExlLikAy(*)")
 'ToStr = JnCrLf(O)
 End Function
 

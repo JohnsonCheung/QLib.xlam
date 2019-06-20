@@ -12,7 +12,7 @@ Else
 End If
 End Function
 
-Function AlignL$(S, W%)
+Function AlignL$(S, W)
 Dim L%: L = Len(S)
 If L >= W Then
     AlignL = S

@@ -41,10 +41,10 @@ If M.Parent.Type <> vbext_ct_StdModule Then Thw Fun, "Should be Mod", "Type", Sh
 End Sub
 
 Sub CpyMod(M As CodeModule, ToPj As VBProject)
-AddCmpzPNL ToPj, M.Name, SrcLineszM(M)
+AddCmpzPNL ToPj, M.Name, SrcLzM(M)
 End Sub
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A As VBComponent
 Dim B As VBProject
 Dim D As CodeModule

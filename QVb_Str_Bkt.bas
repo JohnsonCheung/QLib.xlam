@@ -117,7 +117,7 @@ If P1 = 0 Then Exit Function
 BefBkt = Left(Lin, P1 - 1)
 End Function
 
-Private Sub ZZ()
+Private Sub Z()
 Z_Brk_Bkt
 Z_AsgBktPos
 MVb_Str_Bkt:

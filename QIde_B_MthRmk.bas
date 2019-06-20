@@ -44,11 +44,11 @@ Next
 End Sub
 
 Private Function MthRmkIx&(Src$(), MthIx)
-If IsSngLinMth(Src(MthIx)) Then Exit Function
+If IsLinSngLMth(Src(MthIx)) Then Exit Function
 Dim ELin$: ELin = EndLin(Src, MthIx)
 Dim Ix&: For Ix = MthIx + 1 To UB(Src)
     Dim L$: L = Src(Ix)
-    If IsVbRmk(L) Then MthRmkIx = Ix: Exit Function
+    If IsLinVbRmk(L) Then MthRmkIx = Ix: Exit Function
     If L = ELin Then Exit Function
 Next
 ThwImpossible CSub
@@ -79,7 +79,7 @@ Private Function MthRmkLno&(M As CodeModule, MthLno&)
 Dim ELin$: ELin = EndLinzM(M, MthLno)
 Dim Lno&: For Lno = MthLno + 1 To M.CountOfLines
     Dim L$: L = M.Lines(Lno, 1)
-    If IsVbRmk(L) Then MthRmkLno = Lno: Exit Function
+    If IsLinVbRmk(L) Then MthRmkLno = Lno: Exit Function
     If L = ELin Then Exit Function
 Next
 ThwImpossible CSub
@@ -168,7 +168,7 @@ If RLno = 0 Then Exit Function
 Dim J&, L$, O$()
 For J = RLno To M.CountOfLines
     L = M.Lines(J, 1)
-    If Not IsVbRmk(L) Then Exit For
+    If Not IsLinVbRmk(L) Then Exit For
     PushI O, L
 Next
 RmkBlkzM = O
@@ -179,7 +179,7 @@ If RmkIx = 0 Then Exit Function
 Dim J&, L$, O$()
 For J = RmkIx To UB(Src)
     L = Src(J)
-    If Not IsVbRmk(L) Then Exit For
+    If Not IsLinVbRmk(L) Then Exit For
     PushI O, L
 Next
 RmkBlkzS = O

@@ -97,7 +97,7 @@ End Function
 Function InsColzDryzV(A(), V, Optional At& = 0) As Variant()
 Dim Dr
 For Each Dr In Itr(A)
-    PushI InsColzDryzV, AyInsEle(Dr, V, At)
+    PushI InsColzDryzV, InsEle(Dr, V, At)
 Next
 End Function
 
@@ -128,10 +128,10 @@ Next
 DryAddColzColVy = O
 End Function
 
-Function DrsAddColzMap(A As Drs, NewFldEqFunQuoteFmFldSsl$) As Drs
+Function DrsAddColzMap(A As Drs, NewFldEqFunQteFmFldSsl$) As Drs
 Dim NewColVy(), FmVy()
 Dim I, S$, NewFld$, Fun$, FmFld$
-For Each I In SyzSS(NewFldEqFunQuoteFmFldSsl)
+For Each I In SyzSS(NewFldEqFunQteFmFldSsl)
     S = I
     NewFld = Bef(S, "=")
     Fun = Bet(S, "=", "(")

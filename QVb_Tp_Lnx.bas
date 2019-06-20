@@ -44,9 +44,9 @@ Next
 End Function
 Private Sub Z_FmtLnxs()
 Dim A As Lnxs
-GoSub ZZ
+GoSub Z
 Exit Sub
-ZZ:
+Z:
     A = Lnxs(SrczP(CPj))
     Brw FmtLnxs(A)
     Return
@@ -143,9 +143,9 @@ End Sub
 Private Sub Z_DupT1zLnxs()
 Dim A As Lnxs, Act As SIxys, Ept As SIxys
 GoSub T0
-'GoSub ZZ
+'GoSub Z
 Exit Sub
-ZZ:
+Z:
     A = Lnxs(SrcV)
     BrwSIxys DupT1zLnxs(A)
     Return
@@ -350,7 +350,7 @@ For J = 0 To A.N - 1
     PushI O, FmtQQ("Lno#?:[?]", .Ix, .Lin)
     End With
 Next
-FmtLnxsWiLno = O ' AlignzBySepss(O, ":")
+FmtLnxsWiLno = O ' AlignzSepss(O, ":")
 End Function
 
 Function ErzLnxsT1ss(A As Lnxs, T1ss$) As String()
@@ -420,9 +420,9 @@ Private Sub Z_DupT1_FmLnxs_ToDupT1Ay_AndLnossAy()
 Dim EptDupT1Ay$(), EptLnossAy$()
 Dim ActDupT1Ay$(), ActLnossAy$()
 Dim A As Lnxs
-GoSub ZZ
+GoSub Z
 Exit Sub
-ZZ:
+Z:
     A = LnxszVbl("a b c|a b|b 1|a 1")
     DupT1_FmLnxs_ToDupT1Ay_AndLnossAy A, ActDupT1Ay, ActLnossAy
     D "---"

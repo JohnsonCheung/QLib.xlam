@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Const CMod$ = "MIde_Mth_Dic."
 Const Asm$ = "QIde"
-Public Const DoczSMdDic$ = "SMdDic is Sorted-Mdn-To-SrcLines."
+Public Const DoczSMdDic$ = "SMdDic is Sorted-Mdn-To-SrcL."
 
 Function MthDiczP(P As VBProject) As Dictionary
 Dim C As VBComponent
@@ -24,7 +24,7 @@ End Function
 
 Private Sub Z_MthDiczP()
 Dim A As Dictionary: Set A = MthDiczP(CPj)
-Ass IsDicOfLines(A) '
+Ass IsDicLines(A) '
 Vc A
 End Sub
 
@@ -49,14 +49,14 @@ Function MthDicM() As Dictionary
 Set MthDicM = MthDiczM(CMd)
 End Function
 
-Function MthDic(Src$(), Optional Mdn$, Optional ExlDcl As Boolean) As Dictionary 'Key is MthDn, Val is MthLinesWiTopRmk
+Function MthDic(Src$(), Optional Mdn$, Optional ExlDcl As Boolean) As Dictionary 'Key is MthDn, Val is MthLWiTopRmk
 Set MthDic = New Dictionary
 Dim P$: If Mdn <> "" Then P = Mdn & "."
 With MthDic
     If Not ExlDcl Then .Add P & "*Dcl", Dcl(Src)
     Dim Ix: For Each Ix In MthIxItr(Src)
         Dim Dn$:       Dn = MthDnzLin(Src(Ix))
-        Dim Lines$: Lines = MthLineszSI(Src, Ix)
+        Dim Lines$: Lines = MthLzSI(Src, Ix)
         .Add P & Dn, Lines
     Next
 End With
@@ -78,25 +78,26 @@ Function SMthDicP() As Dictionary
 Set SMthDicP = SMthDiczP(CPj)
 End Function
 
-Function SSrcLineszS$(Src$())
-SSrcLineszS = JnStrDic(SrtDic(MthDic(Src)), vb2CrLf)
+Function SSrcLzS$(Src$())
+SSrcLzS = JnStrDic(SrtDic(MthDic(Src)), vb2CrLf)
 End Function
-Function SSrcLinesM$()
-SSrcLinesM = SSrcLineszM(CMd)
-End Function
-Function SSrcLineszM$(M As CodeModule)
-SSrcLineszM = SSrcLineszS(Src(M))
+Function SSrcLM$()
+SSrcLM = SSrcLzM(CMd)
 End Function
 
-Function SrcLineszM$(M As CodeModule)
+Function SSrcLzM$(M As CodeModule)
+SSrcLzM = SSrcLzS(Src(M))
+End Function
+
+Function SrcLzM$(M As CodeModule)
 If M.CountOfLines > 0 Then
-    SrcLineszM = M.Lines(1, M.CountOfLines)
+    SrcLzM = M.Lines(1, M.CountOfLines)
 End If
 End Function
 
 Sub BrwSrtRptzM(M As CodeModule)
-Dim Old$: Old = SrcLineszM(M)
-Dim NewLines$: NewLines = SSrcLineszM(M)
+Dim Old$: Old = SrcLzM(M)
+Dim NewLines$: NewLines = SSrcLzM(M)
 Dim O$: O = IIf(Old = NewLines, "(Same)", "<====Diff")
 Debug.Print Mdn(M), O
 End Sub
@@ -145,7 +146,7 @@ Ass:
     Debug.Print Mdn(Md); vbTab;
     Dim BefSrt$(), AftSrt$()
     BefSrt = Src(Md)
-    AftSrt = SplitCrLf(SSrcLineszM(Md))
+    AftSrt = SplitCrLf(SSrcLzM(Md))
     If JnCrLf(BefSrt) = JnCrLf(AftSrt) Then
         Debug.Print "Is Same of before and after sorting ......"
         Return

@@ -8,7 +8,7 @@ Function IsEqDry(A(), B()) As Boolean
 IsEqDry = IsEqAy(A, B)
 End Function
 
-Private Sub ZZ()
+Private Sub Z()
 Dim A()
 IsEqDry A, A
 End Sub

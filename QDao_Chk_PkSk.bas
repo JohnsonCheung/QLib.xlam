@@ -32,12 +32,12 @@ For Each I In Tny(A)
 Next
 End Function
 Function ChkPkSkzT(A As Database, T) As String()
-PushNonBlank ChkPkSkzT, ChkPk(A, T)
-PushNonBlank ChkPkSkzT, ChkSk(A, T)
+PushNB ChkPkSkzT, ChkPk(A, T)
+PushNB ChkPkSkzT, ChkSk(A, T)
 End Function
 
 Function ChkSk$(A As Database, T)
-Dim SkIdx As Dao.Index, I As Dao.Index
+Dim SkIdx As DAO.Index, I As DAO.Index
 If Not HasIdx(A, T, C_SkNm) Then
     ChkSk = FmtQQ("Not SecondaryKey for Table[?] in Db[?]", T, Dbn(A))
     Exit Function

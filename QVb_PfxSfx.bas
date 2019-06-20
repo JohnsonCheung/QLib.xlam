@@ -4,26 +4,30 @@ Option Explicit
 Private Const CMod$ = "MVb_PfxSfx."
 Private Const Asm$ = "QVb"
 
-Function SzAddP(S, Pfx)
-SzAddP = Pfx & S
+Function AddPfx(S, Pfx)
+AddPfx = Pfx & S
 End Function
 
-Function SzAddPS(S, Pfx, Sfx)
-SzAddPS = Pfx & S & Sfx
+Function AddPfxS(S, Pfx, Sfx)
+AddPfxS = Pfx & S & Sfx
 End Function
 Function IsNB(S) As Boolean
 IsNB = Trim(S) <> ""
 End Function
-Function SzAddSIfNB$(SIfNB, Sfx)
-If IsNB(SIfNB) Then SzAddSIfNB = SIfNB & Sfx
+
+Function AddNBSfx$(S, Sfx)
+If IsNB(S) Then AddNBSfx = S & Sfx
+End Function
+Function AddNBPfx$(S, Pfx)
+If IsNB(S) Then AddNBPfx = Pfx & S
 End Function
 Function AddSfx(S, Sfx)
 AddSfx = S & Sfx
 End Function
 
-Function SzAddPSpczIfNonBlank$(S)
+Function AddPfxSpczIfNB$(S)
 If S = "" Then Exit Function
-SzAddPSpczIfNonBlank = " " & S
+AddPfxSpczIfNB = " " & S
 End Function
 
 Function SyzTrim(Ay) As String()
@@ -33,31 +37,31 @@ For Each V In Itr(Ay)
 Next
 End Function
 
-Function SyzAyP(Ay, Pfx) As String()
+Function AddPfxzAy(Ay, Pfx) As String()
 Dim I
 For Each I In Itr(Ay)
-    PushI SyzAyP, Pfx & I
+    PushI AddPfxzAy, Pfx & I
 Next
 End Function
 
-Function SyzAyPS(Ay, Pfx, Sfx) As String()
+Function AddPfxSzAy(Ay, Pfx, Sfx) As String()
 Dim I
 For Each I In Itr(Ay)
-    PushI SyzAyPS, Pfx & I & Sfx
+    PushI AddPfxSzAy, Pfx & I & Sfx
 Next
 End Function
 
-Function SzAddSIfNBzAy(Ay, Sfx) As String()
+Function AddNBSfxzAy(Ay, Sfx) As String()
 Dim I, S$
 For Each I In Itr(Ay)
-    PushI SzAddSIfNBzAy, SzAddSIfNB(I, Sfx)
+    PushI AddNBSfxzAy, AddNBSfx(I, Sfx)
 Next
 End Function
 
-Function SyzAyS(Ay, Sfx) As String()
+Function AddSfxzAy(Ay, Sfx) As String()
 Dim I
 For Each I In Itr(Ay)
-    PushI SyzAyS, I & Sfx
+    PushI AddSfxzAy, I & Sfx
 Next
 End Function
 
@@ -98,6 +102,8 @@ Function HasPfx(S, Pfx, Optional C As VbCompareMethod = vbTextCompare) As Boolea
 HasPfx = StrComp(Left(S, Len(Pfx)), Pfx, C) = 0
 End Function
 Function HasPfxss(S, Pfxss$, Optional C As VbCompareMethod = vbTextCompare) As Boolean
+Dim PfxAy$(): PfxAy = SyzSS(Pfxss)
+HasPfxss = HasPfxAy(S, PfxAy, C)
 End Function
 Function HasPfxAy(S, PfxAy$(), Optional C As VbCompareMethod = vbTextCompare) As Boolean
 Dim Pfx: For Each Pfx In Itr(PfxAy)

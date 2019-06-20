@@ -24,10 +24,10 @@ While I.Som
 Wend
 End Function
 
-Private Function IsWsnCell(Cell As Range, Wsny$()) As Boolean
+Private Function IsWsnCell(Cell As Range, WsNy$()) As Boolean
 Dim V: V = Cell.Value
 If Not IsStr(V) Then Exit Function
-IsWsnCell = HasEle(Wsny, V)
+IsWsnCell = HasEle(WsNy, V)
 End Function
 
 Sub AddHypLnk(Rg As Range, Wsn$)
@@ -57,7 +57,7 @@ End With
 End Function
 Private Function LnkgszWsnA1_Ver1(A1 As Range) As Lnkgs
 Dim R As Range
-Dim Wsny$():     Wsny = WsnyzRg(R)
+Dim WsNy$():     WsNy = WsnyzRg(R)
 Dim J%, Wsn$
 While R.Value = "Go"
     J = J + 1: If J = 1000 Then ThwLoopingTooMuch CSub

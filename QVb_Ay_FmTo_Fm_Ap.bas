@@ -16,9 +16,7 @@ End Function
 Function AvzAp(ParamArray Ap()) As Variant()
 AvzAp = Ap
 End Function
-Function SyNonBlank(ParamArray Ap()) As String()
-Dim Av(): Av = Ap: SyNonBlank = RmvBlankzAy(SyzAv(Av))
-End Function
+
 Private Function SyzAv(AvOf_Itm_or_Ay()) As String()
 Dim I, Av()
 Av = AvOf_Itm_or_Ay
@@ -69,37 +67,37 @@ Dim Av(): Av = Ap
 SngAy = IntozAy(SngAy, Av)
 End Function
 
-Function SyNoBlank(ParamArray S_or_Sy()) As String()
+Function SyNB(ParamArray S_or_Sy()) As String()
 Dim Av(): Av = S_or_Sy
 Dim I
 For Each I In Av
     Select Case True
-    Case IsSy(I): PushNonBlankAy SyNoBlank, CvSy(I)
-    Case IsStr(I): PushNonBlank SyNoBlank, CStr(I)
-    Case Else: Thw CSub, "Itm must be S or Sy", "TypeName(Itm)", TypeName(I)
+    Case IsArray(I): PushNBAy SyNB, I
+    Case Else: PushNB SyNB, I
     End Select
 Next
 End Function
 
 '=========================================================
-
-Function IntAyzFmTo(FmInt%, ToInt%) As Integer()
-Dim O%(), I&, V%
-ReDim O(ToInt - FmInt)
-For V = FmInt To ToInt
-    O(I) = V
-    I = I + 1
-Next
-IntAyzFmTo = O
+Function IntAyzFT(F%, T%) As Integer()
+Stop
+Dim O%(): ReDim O(Abs(T - F))
+IntAyzFT = IntozFT(O, F, T)
 End Function
-Function LngAyzFmTo(FmLng&, ToLng&) As Long()
-Dim O&(), I&, V&
-ReDim O(ToLng - FmLng)
-For V = FmLng To ToLng
+
+Private Function IntozFT(Into, F, T)
+Dim O: O = Into
+Dim S: S = IIf(T > F, 1, -1) ' Step
+Dim V, I&: For V = F To T Step S
     O(I) = V
     I = I + 1
 Next
-LngAyzFmTo = O
+IntozFT = O
+End Function
+
+Function LngAyzFT(F&, T&) As Long()
+Dim O&(): ReDim O(T - F)
+LngAyzFT = IntozFT(O, F, T)
 End Function
 
 '=========================================================

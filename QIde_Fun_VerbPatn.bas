@@ -3,9 +3,9 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Fun_VerbPatn."
 Private Const Asm$ = "QIde"
-Public Const Verbss$ = "Zip Wrt Wrp Wait Vis Vc UnderLin UnRmk UnEsc Trim Tile Thw Tak Ayw Sye Swap Sum Stop Srt Split Solve Shw Shf Set Sel Sav Run Rpl Rmv Rmk Rfh RevAy Resz Ren ReSz ReSeq ReOrd RTrim Quote Quit Push Prompt Pop Opn Nxt Norm New Mov Mk Minus Min Mid Mge Max Map Lnk Lis Lik Las Kill Jn Jmp Is Into IntersectAy Ins Initialize Init Inf Indent Inc Imp Hit Has Halt Gen Fst Fmt Flat Fill Extend Expand Exp Exl Evl Esc Ens EndTrim Edt Dryw Drye Drsw Drse Drp Down Do Dmp Dlt Cv Cut Crt Cpy Compress Cls Clr Clone Cln Clear Chk3 Chk2 Chk1 Chk Chg Change Cfm Brw Brk Box Bld Bet Below Bef Bdr Backup Ayw Aye AutoFit AutoExec Ass Asg And Align Aft Add Above"
+Public Const Verbss$ = "Zip Wrt Wrp Wait Vis Vc UnderLin UnRmk UnEsc Trim Tile Thw Tak Ayw Sye Swap Sum Stop Srt Split Solve Shw Shf Set Sel Sav Run Rpl Rmv Rmk Rfh RevAy Resi Ren ReSz ReSeq ReOrd RTrim Qte Quit Push Prompt Pop Opn Nxt Norm New Mov Mk Minus Min Mid Mge Max Map Lnk Lis Lik Las Kill Jn Jmp Is Into IntersectAy Ins Initialize Init Inf Indent Inc Imp Hit Has Halt Gen Fst Fmt Flat Fill Extend Expand Exp Exl Evl Esc Ens EndTrim Edt Dryw Drye Drsw Drse Drp Down Do Dmp Dlt Cv Cut Crt Cpy Compress Cls Clr Clone Cln Clear Chk3 Chk2 Chk1 Chk Chg Change Cfm Brw Brk Box Bld Bet Below Bef Bdr Backup Ayw Aye AutoFit AutoExec Ass Asg And Align Aft Add Above"
 Public Const C_BRKCmlss$ = "Wi Wo By Of To"
-Public Const DoczQBNm$ = "Quote-Brk-Nm.  If the Cml is BRKCml, quote-bkt."
+Public Const DoczQBNm$ = "Qte-Brk-Nm.  If the Cml is BRKCml, quote-bkt."
 Property Get BRKCmlASet() As Aset
 Static X As Aset
 If IsNothing(X) Then Set X = AsetzSsl(C_BRKCmlss)
@@ -59,7 +59,7 @@ Dim Cml$, I, O$()
 For Each I In Itr(Cml1Ay(Nm))
     Cml = I
     If IsBRKCml(Cml) Then
-        PushI O, QuoteBkt(Cml)
+        PushI O, QteBkt(Cml)
     Else
         PushI O, Cml
     End If
@@ -67,13 +67,13 @@ Next
 QBNm = Jn(O)
 End Function
 
-Function QVBNm$(Nm) 'Quote-Verb-and-cmlBrk-Nm.
+Function QVBNm$(Nm) 'Qte-Verb-and-cmlBrk-Nm.
 Dim V$: V = Verb(Nm)
 If V = "" Then
     QVBNm = "#" & QBNm(Nm)
 Else
     With Brk(Nm, V)
-    QVBNm = QBNm(.S1) & QuoteSq(V) & QBNm(.S2)
+    QVBNm = QBNm(.S1) & QteSq(V) & QBNm(.S2)
     End With
 End If
 End Function
@@ -82,7 +82,7 @@ Dim V$: V = Verb(Nm)
 If V = "" Then
     QVNm = "#" & Nm
 Else
-    QVNm = Replace(Nm, V, QuoteBkt(V), Count:=1)
+    QVNm = Replace(Nm, V, QteBkt(V), Count:=1)
 End If
 End Function
 Function MthVNm$(Mthn)
@@ -180,7 +180,7 @@ For Each I In AsetzAy(SyzSS(Verbss)).Itms
     Verb = I
     PushI O, PatnzVerb(Verb)
 Next
-PatnzVerbss = QuoteBkt(JnVBar(O))
+PatnzVerbss = QteBkt(JnVBar(O))
 End Function
 
 Private Function PatnzVerb$(Verb$)
@@ -192,6 +192,6 @@ If Not IsNm(S) Then Thw Fun, "Verb must be a name", "Str", S
 If Not IsAscUCas(Asc(FstChr(S))) Then Thw Fun, "Verb must started with UCase", "Str", S
 End Sub
 
-Function QuoteVerb$(Nm)
+Function QteVerb$(Nm)
 
 End Function

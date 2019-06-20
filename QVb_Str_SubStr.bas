@@ -28,8 +28,8 @@ Function FstChr$(S)
 FstChr = Left(S, 1)
 End Function
 
-Function FstTwoChr$(S)
-FstTwoChr = Left(S, 2)
+Function Fst2Chr$(S)
+Fst2Chr = Left(S, 2)
 End Function
 
 Function SubStrCnt&(S, SubStr$)

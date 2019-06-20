@@ -11,12 +11,12 @@ Function SrtLines$(A$)
 SrtLines = JnCrLf(SrtAy(SplitCrLf(A)))
 End Function
 
-Function IsSrtedAy(Ay) As Boolean
+Function IsSrtedzAy(Ay) As Boolean
 Dim J&
 For J = 0 To UB(Ay) - 1
    If Ay(J) > Ay(J + 1) Then Exit Function
 Next
-IsSrtedAy = True
+IsSrtedzAy = True
 End Function
 
 Private Sub Z_QSrt()
@@ -176,7 +176,7 @@ Tst:
 End Sub
 
 Function SrtAyByAy(Ay, ByAy)
-Dim O: O = AyzReSi(Ay)
+Dim O: O = ResiU(Ay)
 Dim I
 For Each I In ByAy
     If HasEle(Ay, I) Then PushI O, I
@@ -191,7 +191,7 @@ Dim Ix&, V, J&
 Dim O: O = Ay: Erase O
 Push O, Ay(0)
 For J = 1 To UB(Ay)
-    O = AyInsEle(O, Ay(J), SrtAy__Ix(O, Ay(J)))
+    O = InsEle(O, Ay(J), SrtAy__Ix(O, Ay(J)))
 Next
 If Des Then
     SrtAy = RevAy(O)
@@ -215,7 +215,7 @@ Dim Ix&, V, J&
 Dim O&():
 Push O, 0
 For J = 1 To UB(Ay)
-    O = AyInsEle(O, J, IxyzSrtAy_Ix(O, Ay, Ay(J), Des))
+    O = InsEle(O, J, IxyzSrtAy_Ix(O, Ay, Ay(J), Des))
 Next
 IxyzSrtAy = O
 End Function
@@ -289,13 +289,13 @@ Next
 SrtAyInEIxIxy& = O
 End Function
 
-Function DicAddIxToKey(A As Dictionary) As Dictionary
+Function DiczAddIxToKey(A As Dictionary) As Dictionary
 Dim O As New Dictionary, K, J&
 For Each K In A.Keys
     O.Add J & " " & K, A(K)
     J = J + 1
 Next
-Set DicAddIxToKey = O
+Set DiczAddIxToKey = O
 End Function
 
 Function SrtDic(A As Dictionary, Optional IsDesc As Boolean) As Dictionary
@@ -343,7 +343,7 @@ ThwIf_NE Array(4, 3, 2, 1, 0), IxyzSrtAy(A, True)
 End Sub
 
 
-Private Sub ZZ()
+Private Sub Z()
 Z_SrtAy
 Z_IxyzSrtAy
 MVb__Srt:
