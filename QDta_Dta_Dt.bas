@@ -2,7 +2,7 @@ Attribute VB_Name = "QDta_Dta_Dt"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "BDt."
-Type Dt: DtNm As String: Fny() As String: Dry() As Variant: End Type
+Type Dt: DtNm As String: Fny() As String: Dy() As Variant: End Type
 Type Dts: N As Long: Ay() As Dt: End Type
 Function PushDt(O As Dts, M As Dt)
 With O
@@ -27,21 +27,21 @@ For Each I In Dr
 Next
 CsvQQStrzDr = JnComma(O)
 End Function
-Function Dr(Dry(), R&) As Variant()
-Dr = Dry(R)
+Function Dr(Dy(), R&) As Variant()
+Dr = Dy(R)
 End Function
 Function CsvLyzDt(A As Dt) As String()
-Dim Dry(): Dry = A.Dry
+Dim Dy(): Dy = A.Dy
 Push CsvLyzDt, JnComma(SyQteDbl(A.Fny))
-Dim QQStr$: QQStr = CsvQQStrzDr(Dr(Dry, 0))
+Dim QQStr$: QQStr = CsvQQStrzDr(Dr(Dy, 0))
 Dim IDr
-For Each IDr In A.Dry
+For Each IDr In A.Dy
    PushI CsvLyzDt, FmtQQAv(QQStr, CvAv(IDr))
 Next
 End Function
 
 Function DtSelCol(A As Dt, CC$, Optional DtNm$) As Dt
-DtSelCol = DtzDrs(DrszSelCC(DrszDt(A), CC), Dft(DtNm, A.DtNm))
+DtSelCol = DtzDrs(DrszSel(DrszDt(A), CC), Dft(DtNm, A.DtNm))
 End Function
 
 Function DtDrpCol(A As Dt, CC$, Optional DtNm$) As Dt
@@ -49,21 +49,21 @@ DtDrpCol = DtzDrs(DrpCol(DrszDt(A), CC), Dft(DtNm, A.DtNm))
 End Function
 
 Function DrszDt(A As Dt) As Drs
-DrszDt = Drs(A.Fny, A.Dry)
+DrszDt = Drs(A.Fny, A.Dy)
 End Function
 
 Function DtzDrs(A As Drs, Optional DtNm$ = "Dt") As Dt
-DtzDrs = Dt(DtNm, A.Fny, A.Dry)
+DtzDrs = Dt(DtNm, A.Fny, A.Dy)
 End Function
 Function DtzNmDrs(DtNm$, A As Drs) As Dt
 DtzNmDrs = DtzDrs(A, DtNm)
 End Function
 
 Function NRowzDt&(A As Dt)
-NRowzDt = Si(A.Dry)
+NRowzDt = Si(A.Dy)
 End Function
 Function NRowzDrs&(A As Drs)
-NRowzDrs = Si(A.Dry)
+NRowzDrs = Si(A.Dy)
 End Function
 Sub DmpDt(A As Dt)
 DmpAy FmtDt(A)
@@ -72,22 +72,22 @@ Property Get EmpDtAy() As Dt()
 End Property
 
 Function IsEmpDt(A As Dt) As Boolean
-IsEmpDt = Si(A.Dry) = 0
+IsEmpDt = Si(A.Dy) = 0
 End Function
 
 Function DtReOrd(A As Dt, BySubFF$) As Dt
 DtReOrd = DtzDrs(ReOrdCol(DrszDt(A), BySubFF), A.DtNm)
 End Function
 
-Function DtzFF(DtNm$, FF$, Dry()) As Dt
-DtzFF = Dt(DtNm, Ny(FF), Dry)
+Function DtzFF(DtNm$, FF$, Dy()) As Dt
+DtzFF = Dt(DtNm, Ny(FF), Dy)
 End Function
 
-Function Dt(DtNm, Fny() As String, Dry() As Variant) As Dt
+Function Dt(DtNm, Fny() As String, Dy() As Variant) As Dt
 With Dt
     .DtNm = DtNm
     .Fny = Fny
-    .Dry = Dry
+    .Dy = Dy
 End With
 End Function
 

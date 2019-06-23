@@ -104,8 +104,8 @@ For J = 0 To UB(TermAy)
     End With
 Next
 Select Case True
-Case Op = EiOpAnd: EvlSwLinAndOr = SomBool(IsAllTruezB(O))
-Case Op = EiOpOr: EvlSwLinAndOr = SomBool(IsSomTruezB(O))
+Case Op = EiOpAnd: EvlSwLinAndOr = SomBool(IsAllT(O))
+Case Op = EiOpOr: EvlSwLinAndOr = SomBool(IsSomT(O))
 Case Else: ThwImpossible CSub
 End Select
 End Function
@@ -169,7 +169,7 @@ Case Op = EiOpNe, Op = EiOpEq:
     T1 = Ay(2): T2 = Ay(3):
 Case Op = EiOpAnd, Op = EiOpOr
     If Si(Ay) < 3 Then Thw CSub, "Lin should have at 3 terms And | Or", "Lin", Lin
-    Ay = AyeFstNEle(Ay, 2)
+    Ay = AeFstNEle(Ay, 2)
 End Select
 SwLinzLin = SwLin(Nm, Op, T1, T2, Ay)
 End Function
@@ -198,8 +198,8 @@ For Each L In Itr(SwLy)
 Next
 End Function
 Private Function Sw(SwLy$(), Pm As Dictionary) As Sw
-Dim FldSwLy$():              FldSwLy = AyePfx(SwLy, "?:")
-Dim StmtSwLy$():            StmtSwLy = AywPfx(SwLy, "?:")
+Dim FldSwLy$():              FldSwLy = AePfx(SwLy, "?:")
+Dim StmtSwLy$():            StmtSwLy = AwPfx(SwLy, "?:")
 Dim StmtSw As Dictionary: Set StmtSw = EvlSwLy(StmtSwLy, Pm)
 Dim FldSw As Dictionary:  Set FldSw = EvlSwLy(FldSwLy, Pm)
 Set Sw.StmtSw = StmtSw
@@ -302,9 +302,6 @@ X "?#SEL#Crd NE >LisCrd *blank"
 Y_SwLy = XX
 Erase XX
 End Function
-Private Sub ZZZ()
-QTp_SqTp_Sqy:
-End Sub
 
 Private Sub Z_SqyzTp()
 Dim SqTp$
@@ -407,7 +404,7 @@ X "-- Only one gp of >XX:"
 X "-- Only one gp of ?XX:"
 X "-- All other gp is sql-statement or sql-statements"
 X "-- sql-statments: Drp xxx xxx"
-X "-- sql-statment: [sel|selDis|upd|into|fm|whBetStr|whBetNbr|whInStrLis|whInNbrLis|andInNbrLis|andInStrLis|gp|jn|left|expr]"
+X "-- sql-statment: [sel|selDis|upd|into|fm|whBetStr|whBetNum|whInStrLis|whInNumLis|andInNumLis|andInStrLis|gp|jn|left|expr]"
 X "-- optional: Whxxx and Andxxx can have ?-pfx becomes: ?Whxxx and ?Andxxx.  The line will become empty"
 X "=============================================="
 X "Drp Tx TxMbr MbrDta Div Sto Crd Cnt Oup MbrWs"
@@ -641,12 +638,12 @@ Sql = O
 End Function
 
 Private Function SQ_RmvExprLin(SqLy$()) As String()
-SQ_RmvExprLin = AyePfx(SqLy, "$")
+SQ_RmvExprLin = AePfx(SqLy, "$")
 End Function
 
 
 Private Function SQ_ExprDic(SqLy$()) As Dictionary
-Set SQ_ExprDic = Dic(CvSy(AywPfx(SqLy, "$")))
+Set SQ_ExprDic = Dic(CvSy(AwPfx(SqLy, "$")))
 End Function
 
 Private Function StmtTy(FstSqLin$) As EmStmtTy
@@ -786,7 +783,7 @@ End If
 'XWh = SqpWhFldInVy_Str(F, Vy)
 End Function
 
-Private Function SQ_WhBetNbr$(A As Lnx, E As Dictionary, OEr$())
+Private Function SQ_WhBetNum$(A As Lnx, E As Dictionary, OEr$())
 
 End Function
 
@@ -794,7 +791,7 @@ Private Function SQ_WhExpr(A As Lnx, E As Dictionary, OEr$())
 
 End Function
 
-Private Function SQ_WhInNbrLis$(A As Lnx, E As Dictionary, OEr$())
+Private Function SQ_WhInNumLis$(A As Lnx, E As Dictionary, OEr$())
 
 End Function
 

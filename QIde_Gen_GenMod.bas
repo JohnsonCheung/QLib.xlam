@@ -15,7 +15,8 @@ Dim NewSrc$(), OldL$, NewL$
               If ChkLoCCExact(Lo, "SrcCd") Then Exit Sub
 Set FxaCell = Ws.Range("A1")
         Fxa = FxaCell.Value
-              If ChkNotHasFfn(Fxa) Then FxaCell.Activate: Exit Sub
+    Stop
+        '      If ChkNotHasFfn(Fxa) Then FxaCell.Activate: Exit Sub
               OpnFxa Fxa
      Set Pj = PjzFxa(Fxa)
 Set MdnCell = Ws.Range("A2")
@@ -28,7 +29,7 @@ Set MdnCell = Ws.Range("A2")
        OldL = SrcL(Md)
        NewL = JnCrLf(NewSrc)
               If OldL <> NewL Then MsgBox "The source in WsSrc <> the soruce from Mod", vbCritical: Exit Sub
-              PutAyAtV NewSrc, A1zLo(Lo)     '<== Save
+              PutAyV NewSrc, A1zLo(Lo)     '<== Save
               MsgBox "SrcCd saved:" & vbCrLf & WrdCntg(NewL), vbInformation
 
 End Sub
@@ -52,7 +53,8 @@ Dim SrcCd$()
               If ChkLoCCExact(Lo, "SrcCd") Then Exit Sub
 Set FxaCell = Ws.Range("A1")
         Fxa = FxaCell.Value
-              If ChkNotHasFfn(Fxa) Then FxaCell.Activate: Exit Sub
+Stop
+    '          If ChkNotHasFfn(Fxa) Then FxaCell.Activate: Exit Sub
               OpnFxa Fxa
      Set Pj = PjzFxa(Fxa)
 Set MdnCell = Ws.Range("A2")
@@ -62,7 +64,7 @@ Set MdnCell = Ws.Range("A2")
      Set Md = MdzPN(Pj, Mdn)
       SrcCd = Src(Md)
               DltLoRow Lo                   '<== Delete
-              PutAyAtV SrcCd, A1zLo(Lo)     '<== Load
+              PutAyV SrcCd, A1zLo(Lo)     '<== Load
               MsgBox "SrcCd loaded:" & vbCrLf & WrdCntg(JnCrLf(SrcCd)), vbInformation
 End Sub
 
@@ -80,7 +82,8 @@ Dim Lo As ListObject:      Set Lo = Ws.ListObjects(LoNm)
                                     If ChkLoCCExact(Lo, "SrcCd") Then Exit Sub
 Dim FxaCell As Range: Set FxaCell = Ws.Range("A1")
 Dim Fxa$:                     Fxa = FxaCell.Value
-                                    If ChkNotHasFfn(Fxa) Then FxaCell.Activate: Exit Sub
+Stop
+    '                                If ChkNotHasFfn(Fxa) Then FxaCell.Activate: Exit Sub
                                     OpnFxa Fxa
 Dim Pj As VBProject:       Set Pj = PjzFxa(Fxa)
 Dim MdnCell As Range: Set MdnCell = Ws.Range("A2")
@@ -89,7 +92,7 @@ Dim Mdn$:                     Mdn = MdnCell.Value
                                     ActWs Ws
 Dim SrcCd$():                       SrcCd = CdB(ISrc, IDes, SrcCd)
                                     DltLoRow Lo                   '<== Delete
-                                    PutAyAtV SrcCd, A1zLo(Lo)     '<== Load
+                                    PutAyV SrcCd, A1zLo(Lo)     '<== Load
                                     MsgBox "SrcCd generated:" & vbCrLf & WrdCntg(JnCrLf(SrcCd)), vbInformation
 End Sub
 
@@ -99,35 +102,35 @@ If HasWs(CWb, "Err") Then MsgBox "There is error", vbCritical: WszWb(CWb, "Err")
 PutCd Src, OupLo
 End Sub
 
-Function CdB(ISrc As Drs, IDes As Drs, InpSrc$()) As String()
-'Fm ISrc : V DclSfx Pm Expr
-'Fm IDes : V R1 R2 R3
-Dim JSrcPm As Drs:   JSrcPm = B_JSrcPm(ISrc)  '! With Col-Pm added
+Function CdB(Src As Drs, Des As Drs, InpSrc$()) As String()
+'Fm Src : V DclSfx Pm Expr
+'Fm Des : V R1 R2 R3
+Dim JSrcPm As Drs:   JSrcPm = B_JSrcPm(Src)  '! With Col-Pm added
 
 '== CdRmk OK ==============================================================================================
 Dim RmkVer%:       RmkVer = 2
 Dim Rmk1 As Drs:     Rmk1 = DrszSel(JSrcPm, "Key Ret Fss Pm Id StpFor")
 Dim Rmk2 As Drs:     Rmk2 = B_Rmk2(RmkVer, Rmk1)
-Dim CdRmk$():       CdRmk = AddPfxzAy(LyzDry(Rmk2.Dry, Fmt:=EiSSFmt), "'")
+Dim CdRmk$():       CdRmk = AddPfxzAy(JnDy(Rmk2.Dy), "'")
 
 '== CdDes OK ==============================================================================================
-Dim CdDes$():       CdDes = AddPfxzAy(LyzDry(IDes.Dry, Fmt:=EiSSFmt), "'")
+Dim CdDes$():       CdDes = AddPfxzAy(JnDy(Des.Dy), "'")
 
 '== CdCnst OK ==============================================================================================
-Dim JCnst As Drs:   JCnst = DrszSel(ISrc, "Key Fss")
+Dim JCnst As Drs:   JCnst = DrszSel(Src, "Key Fss")
 Dim CdCnst$():     CdCnst = B_CdCnst(JCnst)
 
 '== CdMain OK ==============================================================================================
-Dim InpPm As Drs:    InpPm = ColEqSel(ISrc, "StpTy", "Inp", "Key Ret StpTy")
+Dim InpPm As Drs:    InpPm = DwEqSel(Src, "StpTy", "Inp", "Key Ret StpTy")
 Dim MMPm$:            MMPm = B_MPm(InpPm)
-Dim Las():             Las = DrszSel(LasRec(ISrc), "Key Ret StpTy").Dry(0)
+Dim Las():             Las = DrszSel(LasRec(Src), "Key Ret StpTy").Dy(0)
 Dim MMthn$:          MMthn = Las(0)
 Dim MMRetAs$:      MMRetAs = Las(1)
 Dim LasStpTy$:    LasStpTy = Las(2)
 Dim MMthSorF$:    MMthSorF = B_MMthSorF(LasStpTy)
 Dim MMthLin$:      MMthLin = B_MMthLin(MMthSorF, MMthn, MMPm, MMRetAs)
 
-Dim MBdy As Drs:    MBdy = ColNeSel(JSrcPm, "StpTy", "Inp", "Key StpTy Stmt Expr Ret Pm BrkNm BrkChr")
+Dim MBdy As Drs:    MBdy = DwNeSel(JSrcPm, "StpTy", "Inp", "Key StpTy Stmt Expr Ret Pm BrkNm BrkChr")
 
 Dim MBdy3Col As Drs:
     If True Then
@@ -135,7 +138,7 @@ Dim MBdy3Col As Drs:
     Else
         MBdy3Col = B_MBdy3Col(MBdy)
     End If
-Dim MMLy$():             MMLy = LyzDry(MBdy3Col.Dry, Fmt:=EiSSFmt)
+Dim MMLy$():             MMLy = JnDy(MBdy3Col.Dy)
 Dim CdMain$():         CdMain = Sy(MMthLin, CdRmk, CdDes, MMLy, "End " & MMthSorF)
 
 '== CdY ==============================================================================================
@@ -143,12 +146,12 @@ Dim CdYLisa As Drs:    CdYLisa = ColInSel(JSrcPm, "StpTy", SyzSS("Stmt Sub"), "K
 Dim CdYLisb As Drs:    CdYLisb = ColInSel(JSrcPm, "StpTy", SyzSS("Expr Fun Inp"), "Key StpTy Expr Stmt Ret Pm")
 Dim CdY4Cola As Drs:  CdY4Cola = B_CdY4Cola(CdYLisa)
 Dim CdY4Colb As Drs:  CdY4Colb = B_CdY4Colb(CdYLisb)
-Dim CdY$():                CdY = Sy(LyzDry(CdY4Cola.Dry, Fmt:=EiSSFmt), Sy(LyzDry(CdY4Colb.Dry, Fmt:=EiSSFmt)))
+Dim CdY$():                CdY = Sy(JnDy(CdY4Cola.Dy), Sy(JnDy(CdY4Colb.Dy)))
 
 '== CdZZ OK ==============================================================================================
 Dim CdZZLis As Drs:   CdZZLis = DrszSel(JSrcPm, "Key StpTy Stmt Expr Ret")
 Dim CdZZ4Col As Drs: CdZZ4Col = B_CdZZ4Col(CdZZLis)
-Dim CdZZ$():             CdZZ = LyzDry(CdZZ4Col.Dry, Fmt:=EiSSFmt)
+Dim CdZZ$():             CdZZ = JnDy(CdZZ4Col.Dy)
 
 '== CdB ==============================================================================================
 '-- BBMLin OK -----------------------------------------------------------------------------------------------
@@ -216,22 +219,22 @@ For J = 0 To UB(MLin)
 '    X RmkDes(J)
     X Cxt(J)
     X ELin(J)
-    Lines = JnCrLf(AyeEmpEle(XX)) & vbCrLf
+    Lines = JnCrLf(AeEmpEle(XX)) & vbCrLf
     PushI B_CdB, Lines
 Next
 Erase XX
 End Function
 
 Private Function B_BBRmkFm(Pm$(), Key$(), Fss$(), StpFor$()) As String()
-Dim J%, ODry(), IPm, D1 As Dictionary, RmkFm$, D2 As Dictionary
+Dim J%, ODy(), IPm, D1 As Dictionary, RmkFm$, D2 As Dictionary
 Set D1 = DiczAyab(Key, Fss)
 Set D2 = DiczAyab(Key, StpFor)
 For J = 0 To UB(Pm)
-    Erase ODry
+    Erase ODy
     For Each IPm In Itr(SyzSS(Pm(J)))
-        PushI ODry, Array("'Fm :", IPm, D1(IPm), PpdIf(D2(IPm), "! "))
+        PushI ODy, Array("'Fm :", IPm, D1(IPm), PpdIf(D2(IPm), "! "))
     Next
-    RmkFm = JnCrLf(LyzDry(ODry, Fmt:=EiSSFmt))
+    RmkFm = JnCrLf(JnDy(ODy))
     PushI B_BBRmkFm, RmkFm
 Next
 End Function
@@ -365,8 +368,8 @@ End Function
 Private Function B_CdY4Colb(CdYLisb As Drs) As Drs
 'CdYLis  Key StpTy Expr Stmt Ret Pm
 'CdY4Col Fun YEq Callg End
-Dim ODry(), YEq$, Dr, Key$, TyChr$, RetAs$, Ret$, Fun$, Callg$, StpTy$, Expr$, Pm$, Stmt$, EndLin$
-For Each Dr In Itr(CdYLisb.Dry)
+Dim ODy(), YEq$, Dr, Key$, TyChr$, RetAs$, Ret$, Fun$, Callg$, StpTy$, Expr$, Pm$, Stmt$, EndLin$
+For Each Dr In Itr(CdYLisb.Dy)
     Key = Dr(0)
     StpTy = Dr(1)
     Expr = Dr(2)
@@ -405,23 +408,23 @@ For Each Dr In Itr(CdYLisb.Dry)
     Case Else
         Thw CSub, "StpTy er should Be Inp|Expr|Fun", "StpTy", StpTy
     End Select
-    PushI ODry, Array(Fun, YEq, Callg, EndLin)
+    PushI ODy, Array(Fun, YEq, Callg, EndLin)
 Next
-ODry = AlignRzDryC(ODry, 1)
-B_CdY4Colb = DrszFF("Fun YEq Callg End", ODry)
+ODy = AlignRzDyC(ODy, 1)
+B_CdY4Colb = DrszFF("Fun YEq Callg End", ODy)
 End Function
 
 Private Function B_CdZZ4Col(CdZZLis As Drs) As Drs
 'CdZZLis  Key StpTy Stmt Expr Ret
 'CdZZ4Col Fun Brwg Y End
-Dim ODry(), Dr, Key$, TyChr$, RetAs$, Ret$, Fun$, StpTy$, Expr$, Pm$, Stmt$, Y$, Brwg$
-For Each Dr In Itr(CdZZLis.Dry)
+Dim ODy(), Dr, Key$, TyChr$, RetAs$, Ret$, Fun$, StpTy$, Expr$, Pm$, Stmt$, Y$, Brwg$
+For Each Dr In Itr(CdZZLis.Dy)
     Key = Dr(0)
     StpTy = Dr(1)
     Stmt = Dr(2)
     Expr = Dr(3)
     Ret = Dr(4)
-    Fun = FmtQQ("Private Sub Z_?():", Key)
+    Fun = FmtQQ("Private Private Sub Z_?():", Key)
     Select Case StpTy
     Case "Inp", "Fun", "Expr"
         Y = "Y_" & Key
@@ -432,10 +435,10 @@ For Each Dr In Itr(CdZZLis.Dry)
     Case Else
         Thw CSub, "StpTy er should Be Inp|Expr|Fun", "StpTy", StpTy
     End Select
-    PushI ODry, Array(Fun, Brwg, Y & ":", "End Sub")
+    PushI ODy, Array(Fun, Brwg, Y & ":", "End Sub")
 Next
-ODry = AlignRzDryC(ODry, 1)
-B_CdZZ4Col = DrszFF("Fun Brwg Y End", ODry)
+ODy = AlignRzDyC(ODy, 1)
+B_CdZZ4Col = DrszFF("Fun Brwg Y End", ODy)
 End Function
 
 Private Function Y_ISrc() As Drs
@@ -450,15 +453,15 @@ Private Function B_JSrcPm(ISrc As Drs) As Drs
 'Fm : CC   ! = Key Pfx Id StpTy StpFor Ret Fss Ret Stmt Expr BrkNm BrkChr Fm1..5
 'Ret: Key Pfx Id StpTy StpFor Ret Fss Ret Stmt Expr BrkNm BrkChr Pm
 Const CC$ = "Key Pfx Id StpTy StpFor Ret Fss Ret Stmt Expr BrkNm BrkChr Fm1 Fm2 Fm3 Fm4 Fm5"
-Dim Dr, I1%, I2%, I3%, I4%, I5%, ODry()
+Dim Dr, I1%, I2%, I3%, I4%, I5%, ODy()
 Dim O As Drs: O = DrszSel(ISrc, CC)
 AsgIx ISrc, "Fm1 Fm2 Fm3 Fm4 Fm5", I1, I2, I3, I4, I5
-For Each Dr In Itr(ISrc.Dry)
+For Each Dr In Itr(ISrc.Dy)
     PushI Dr, JnSpc(SyNB(Dr(I1), Dr(I2), Dr(I3), Dr(I4), Dr(I5)))
-    PushI ODry, Dr
+    PushI ODy, Dr
 Next
 Stop '
-'B_JSrcPm = DrseCC(Drs(Sy(ISrc.Fny, "Pm"), ODry), "Fm*")
+'B_JSrcPm = DeCC(Drs(Sy(ISrc.Fny, "Pm"), ODy), "Fm*")
 End Function
 Private Function B_MMCDcl(Key$(), StpTy$(), Ret$()) As String()
 Dim J%, O$, ArgSfx$
@@ -503,7 +506,7 @@ Private Function B_MBdy3Col1(MBdy As Drs) As Drs
 Dim Key$(), StpTy$(), Ret$(), Pm$(), Stmt$(), Expr$()
 ColApzDrs MBdy, "Key StpTy Ret Pm Stmt Expr", Key, StpTy, Ret, Pm, Stmt, Expr
 Dim J%, U%
-U = UB(MBdy.Dry)
+U = UB(MBdy.Dy)
 Dim Dcl$()
     ReDim Dcl(U)
     Dim ArgSfx$
@@ -513,7 +516,7 @@ Dim Dcl$()
         Case "Fun", "Expr"
             ArgSfx = ArgSfxzRet(Ret(J))
             Dcl(J) = FmtQQ("Dim B_??:", Key(J), ArgSfx)
-        Case Else: Thw CSub, "Invalid StpTy.  Should be Sub|Fun|Stmt|Expr", "[StpTy with err] RowIx MBdy", StpTy, J, LinzDrs(MBdy)
+        Case Else: Thw CSub, "Invalid StpTy.  Should be Sub|Fun|Stmt|Expr", "[StpTy with err] RowIx MBdy", StpTy, J, FmtDrs(MBdy)
         End Select
     Next
 Dim LHS$()
@@ -541,22 +544,22 @@ Dim Callg$()
         End Select
     Next
 
-Dim ODry()
+Dim ODy()
     LHS = AlignRzAy(LHS)
     For J = 0 To U
-        PushI ODry, Array(Dcl(J), LHS(J), Callg(J))
+        PushI ODy, Array(Dcl(J), LHS(J), Callg(J))
     Next
-B_MBdy3Col1 = DrszFF("Dcl LHS Callg", ODry)
+B_MBdy3Col1 = DrszFF("Dcl LHS Callg", ODy)
 End Function
 
 Private Function B_MBdy3Col(MBdy As Drs) As Drs
 '         0   1     2    3    4   5
 'MBldPm   Key StpTy Stmt Expr Ret Pm
 'MBdy3Col Dcl LHS Calling
-Dim ODry()
+Dim ODy()
 Dim Dr, DclSfx$, Dcl$, Key$, Ix%, Pm$, Expr$, Stmt$, StpTy$, LHS$, Callg$, Ret$
-Dim KeyAy$(): KeyAy = StrColzDry(MBdy.Dry, 0)
-For Each Dr In MBdy.Dry
+Dim KeyAy$(): KeyAy = StrColzDy(MBdy.Dy, 0)
+For Each Dr In MBdy.Dy
     Key = Dr(0)
     Pm = Dr(5)
     Expr = Dr(3)
@@ -585,13 +588,13 @@ For Each Dr In MBdy.Dry
         Else
             Callg = Expr
         End If
-    Case Else: Thw CSub, "Invalid StpTy.  Should be Sub|Fun|Stmt|Expr", "[StpTy with err] RowIx MBdy", StpTy, Ix, LinzDrs(MBdy)
+    Case Else: Thw CSub, "Invalid StpTy.  Should be Sub|Fun|Stmt|Expr", "[StpTy with err] RowIx MBdy", StpTy, Ix, FmtDrs(MBdy)
     End Select
-    PushI ODry, Array(Dcl, LHS, Callg)
+    PushI ODy, Array(Dcl, LHS, Callg)
     Ix = Ix + 1
 Next
-ODry = AlignRzDryC(ODry, 1)
-B_MBdy3Col = DrszFF("Dcl LHS Callg", ODry)
+ODy = AlignRzDyC(ODy, 1)
+B_MBdy3Col = DrszFF("Dcl LHS Callg", ODy)
 End Function
 
 Private Function B_MMthSorF$(LasStpTy$)
@@ -605,13 +608,13 @@ End Function
 Private Function B_Rmk2(TRmkVer%, JRmk As Drs) As Drs
 'JRmk Key Ret Fss Pm Id
 '     0   1   2   3  4
-Dim ODry(), JRmkDry()
-JRmkDry = JRmk.Dry
+Dim ODy(), JRmkDy()
+JRmkDy = JRmk.Dy
 Dim Ret$, Fss$, C$, Id$
 Dim Dr
 Select Case TRmkVer
 Case 1
-    For Each Dr In Itr(JRmkDry)
+    For Each Dr In Itr(JRmkDy)
         Ret = Dr(1)
         Fss = Dr(2)
         If Ret = "Drs" Then
@@ -619,14 +622,14 @@ Case 1
         Else
             C = Ret
         End If
-        PushI ODry, Array(Dr(0), C, "| " & Dr(3))
+        PushI ODy, Array(Dr(0), C, "| " & Dr(3))
     Next
-    B_Rmk2 = DrszFF("Rmk1 2 3", ODry)
+    B_Rmk2 = DrszFF("Rmk1 2 3", ODy)
 Case 2
     Dim Using$, Pm$
     Dim Dic As Dictionary 'Key-To-Id
-    Set Dic = DiczDryCC(JRmkDry, 0, 4)
-    For Each Dr In Itr(JRmkDry)
+    Set Dic = DiczDyCC(JRmkDy, 0, 4)
+    For Each Dr In Itr(JRmkDy)
         Ret = Dr(1)
         Fss = Dr(2)
         Pm = Dr(3)
@@ -637,9 +640,9 @@ Case 2
             C = Ret
         End If
         Using = JnSpc(VyzDicKK(Dic, Pm))
-        PushI ODry, Array(Dr(0), Id, C, "| " & Using)
+        PushI ODy, Array(Dr(0), Id, C, "| " & Using)
     Next
-    B_Rmk2 = DrszFF("Rmk1 2 3 4", ODry)
+    B_Rmk2 = DrszFF("Rmk1 2 3 4", ODy)
 Case Else: Thw CSub, "TRmkVer should 1 or 2", "TRmkVer", TRmkVer
 End Select
 End Function
@@ -647,7 +650,7 @@ End Function
 Private Function B_MPm$(InpPm As Drs)
 'InpPm Key Ret
 Dim O$(), Dr, Sfx$, Ret$
-For Each Dr In Itr(InpPm.Dry)
+For Each Dr In Itr(InpPm.Dy)
     PushI O, Dr(0) & ArgSfxzRet(Dr(1))
 Next
 B_MPm = JnCommaSpc(O)
@@ -671,7 +674,7 @@ Private Function B_CdCnst(JCnst As Drs) As String()
 'Fm : JCnst Key Fss
 'Ret: ! SrcCd for module constant
 Dim Dr
-For Each Dr In Itr(JCnst.Dry)
+For Each Dr In Itr(JCnst.Dy)
     PushI B_CdCnst, FmtQQ("Const ?_$ = ""?""", Dr(0), Dr(1))
 Next
 End Function
@@ -681,7 +684,7 @@ Private Function B_MPmLin$(MainPm As Drs)
 'Ret : !
 Dim O$(), Arg$, Nm$, TyChr$, AsTy$, Dr, INm%, ITyChr%, IAsTy%
 AsgIx MainPm, "Nm TyChr AsTy", INm, ITyChr, IAsTy
-For Each Dr In Itr(MainPm.Dry)
+For Each Dr In Itr(MainPm.Dy)
     Nm = Dr(0)
     TyChr = Dr(1)
     AsTy = Dr(2)

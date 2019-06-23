@@ -6,11 +6,12 @@ Private Const CMod$ = "MVb_Fs_Pth."
 Function AddFdr$(Pth, Fdr)
 AddFdr = EnsPthSfx(Pth) & ApdIf(Fdr, "\")
 End Function
+Function AddPsegEns$(Pth, Pseg)
+AddPsegEns = EnsPthzAllSeg(AddFdr(Pth, Pseg))
+End Function
 
 Function AddFdrEns$(Pth, Fdr)
-Dim O$: O = AddFdr(Pth, Fdr)
-EnsPth O
-AddFdrEns = O
+AddFdrEns = EnsPth(AddFdr(Pth, Fdr))
 End Function
 
 Function AddFdrApEns$(Pth, ParamArray FdrAp())
@@ -91,15 +92,14 @@ Function ParFdr$(Pth)
 ParFdr = Fdr(ParPth(Pth))
 End Function
 
-Function ParPthN$(Pth, UpN%)
+Function PthzUpN$(Pth, UpN%)
 Dim O$, J%
 O = Pth
 For J = 1 To UpN
     O = ParPth(O)
 Next
-ParPthN = O
+PthzUpN = O
 End Function
-
 
 Function EnsPth$(Pth)
 Dim P$: P = EnsPthSfx(Pth)
@@ -107,7 +107,8 @@ If Not Fso.FolderExists(Pth) Then MkDir RmvLasChr(P)
 EnsPth = Pth
 End Function
 
-Sub EnsPthzAllSeg(Pth)
+Function EnsPthzAllSeg$(Pth)
+'Ret : @Pth and ens each seg.
 Dim J%, O$, Ay$()
 Ay = Split(RmvSfx(Pth, PthSep), PthSep)
 O = Ay(0)
@@ -115,7 +116,7 @@ For J = 1 To UBound(Ay)
     O = O & PthSep & Ay(J)
     EnsPth O
 Next
-End Sub
+End Function
 
 Function HasPth(Pth) As Boolean
 HasPth = IsPthExist(Pth)

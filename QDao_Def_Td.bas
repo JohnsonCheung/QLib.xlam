@@ -9,8 +9,7 @@ Set CvTd = A
 End Function
 
 Sub AddFdy(A As TableDef, Fdy() As DAO.Field2)
-Dim I
-For Each I In Fdy
+Dim I: For Each I In Fdy
     A.Fields.Append I
 Next
 End Sub

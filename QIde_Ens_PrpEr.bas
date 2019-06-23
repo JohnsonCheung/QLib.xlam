@@ -17,8 +17,8 @@ End Function
 Private Function EnsLinExitAndLblX(MthLy$(), LinOfExit$) As String()
 If HasLinExitAndLblX(MthLy, LinOfExit) Then EnsLinExitAndLblX = MthLy: Exit Function
 Dim O$():
-O = AyeEle(MthLy, LinOfExit)
-O = AyeEle(MthLy, LinOfLblX)
+O = AeEle(MthLy, LinOfExit)
+O = AeEle(MthLy, LinOfLblX)
 EnsLinExitAndLblX = InsLinExitAndLblX(O, LinOfExit)
 End Function
 
@@ -125,7 +125,7 @@ Private Sub RmvPrpOnErzM(M As CodeModule, Optional Rpt As EmRpt)
 IxOfExit(PurePrpLy), _
 IxOfOnEr(PurePrpLy), _
 IxOfLblX(PurePrpLy))
-'RmvPrpOnErzPurePrpLy = CvSy(AyeIxy(PurePrpLy, L))
+'RmvPrpOnErzPurePrpLy = CvSy(AeIxy(PurePrpLy, L))
 End Sub
 
 Sub RmvPrpOnErM()
@@ -140,6 +140,6 @@ Sub EnsPrpOnErM()
 EnsPrpOnErzM CMd
 End Sub
 
-Private Sub ZZZ()
+Private Sub Z()
 QIde_Ens_PrpEr:
 End Sub

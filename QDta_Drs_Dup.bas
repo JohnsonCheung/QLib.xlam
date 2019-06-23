@@ -3,116 +3,112 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDta_DDup."
 Private Const Asm$ = "QDta"
-Function DrswDup(A As Drs, FF$) As Drs
-DrswDup = DrswRxy(A, RxyzDup(A, FF))
-End Function
-
 Function DrszSelExlCC(A As Drs, ExlCCLik$) As Drs
 Dim LikC
 For Each LikC In SyzSS(ExlCCLik)
 '    MinusAy(
 Next
 End Function
-Function DrseDup(A As Drs, FF$) As Drs
+Function DeDup(A As Drs, FF$) As Drs
 Dim Rxy&(): Rxy = RxyzDup(A, FF)
-DrseDup = DrseRxy(A, Rxy)
+DeDup = DeRxy(A, Rxy)
 End Function
 
-Function DrswCeqC(A As Drs, CC$) As Drs
+Function DwCeqC(A As Drs, CC$) As Drs
 Dim Dr, C1&, C2&
 AsgIx A, CC, C1, C2
-For Each Dr In Itr(A.Dry)
+For Each Dr In Itr(A.Dy)
     If Dr(C1) = Dr(C2) Then
-        PushI DrswCeqC.Dry, Dr
+        PushI DwCeqC.Dy, Dr
     End If
 Next
-DrswCeqC.Fny = A.Fny
+DwCeqC.Fny = A.Fny
 End Function
 
-Function DrseCeqC(A As Drs, CC$) As Drs
+Function DeCeqC(A As Drs, CC$) As Drs
 Dim Dr, C1&, C2&
 AsgIx A, CC, C1, C2
-For Each Dr In Itr(A.Dry)
+For Each Dr In Itr(A.Dy)
     If Dr(C1) <> Dr(C2) Then
-        PushI DrseCeqC.Dry, Dr
+        PushI DeCeqC.Dy, Dr
     End If
 Next
-DrseCeqC.Fny = A.Fny
+DeCeqC.Fny = A.Fny
 End Function
 
-Private Function RxyzDup(A As Drs, FF$) As Long()
+Function RxyzDup(A As Drs, FF$) As Long()
 Dim Fny$(): Fny = TermAy(FF)
 If Si(Fny) = 1 Then
     RxyzDup = IxyzDup(ColzDrs(A, Fny(0)))
     Exit Function
 End If
 Dim ColIxy&(): ColIxy = Ixy(A.Fny, Fny)
-Dim Dry(): Dry = DryzSel(A.Dry, ColIxy)
-RxyzDup = RxyzDupDry(Dry)
+Dim Dy(): Dy = DyoSel(A.Dy, ColIxy)
+RxyzDup = RxyzDupDy(Dy)
 End Function
 
-Private Function RxyzDupDry(Dry()) As Long()
-Dim DupD(): DupD = DrywDup(Dry)
+Private Function RxyzDupDy(Dy()) As Long()
+Dim DupD(): DupD = DywDup(Dy)
 Dim Dr, Ix&, O&()
-For Each Dr In Dry
+For Each Dr In Dy
     If HasDr(DupD, Dr) Then PushI O, Ix
     Ix = Ix + 1
 Next
 If Si(O) < Si(DupD) * 2 Then Stop
-RxyzDupDry = O
+RxyzDupDy = O
 End Function
 
-Function DrywDup(Dry()) As Variant()
-If Si(Dry) = 0 Then Exit Function
+Function DywDup(Dy()) As Variant()
+If Si(Dy) = 0 Then Exit Function
 Dim Dr
-For Each Dr In DryGpCnt(Dry)
+For Each Dr In GRxyzCyCnt(Dy)
     If Dr(0) > 1 Then
-        PushI DrywDup, AyeFstEle(Dr)
+        PushI DywDup, AeFstEle(Dr)
     End If
 Next
 End Function
 
-Function DryGpCnt(Dry()) As Variant()
+Function GRxyzCyCnt(Dy()) As Variant()
 #If True Then
-    DryGpCnt = DryGpCntzSlow(Dry)
+    GRxyzCyCnt = GRxyzCyCntzSlow(Dy)
 #Else
-    DryGpCnt = DryGpCntzQuick(Dry)
+    GRxyzCyCnt = GRxyzCyCntzQuick(Dy)
 #End If
 End Function
 
-Private Function DryGpCntzQuick(Dry()) As Variant()
+Private Function GRxyzCyCntzQuick(Dy()) As Variant()
 End Function
 
-Private Function DryGpCntzSlow(Dry()) As Variant()
-If Si(Dry) = 0 Then Exit Function
-Dim OKeyDry(), OCnt&(), Dr
-    Dim LasIx&: LasIx = Si(Dry(0))
+Private Function GRxyzCyCntzSlow(Dy()) As Variant()
+If Si(Dy) = 0 Then Exit Function
+Dim OKeyDy(), OCnt&(), Dr
+    Dim LasIx&: LasIx = Si(Dy(0))
     Dim J&
-    For Each Dr In Dry
-        If J Mod 500 = 0 Then Debug.Print "DryGpCntzSlow"
+    For Each Dr In Dy
+        If J Mod 500 = 0 Then Debug.Print "GRxyzCyCntzSlow"
         If J Mod 50 = 0 Then Debug.Print J;
         J = J + 1
-        With IxOptzDryDr(OKeyDry, Dr)
+        With IxOptzDyDr(OKeyDy, Dr)
             Select Case .Som
             Case True: OCnt(.Lng) = OCnt(.Lng) + 1
-            Case Else: PushI OKeyDry, Dr: PushI OCnt, 1
+            Case Else: PushI OKeyDy, Dr: PushI OCnt, 1
             End Select
         End With
     Next
-    If Si(OKeyDry) <> Si(OCnt) Then Thw CSub, "Si Diff", "OKeyDry-Si OCnt-Si", Si(OKeyDry), Si(OCnt)
+    If Si(OKeyDy) <> Si(OCnt) Then Thw CSub, "Si Diff", "OKeyDy-Si OCnt-Si", Si(OKeyDy), Si(OCnt)
 For J = 0 To UB(OCnt)
-    PushI DryGpCntzSlow, AyzAdd(Array(OCnt(J)), OKeyDry(J)) '<===========
+    PushI GRxyzCyCntzSlow, AyzAdd(Array(OCnt(J)), OKeyDy(J)) '<===========
 Next
 End Function
 
-Private Function IxOptzDryDr(Dry(), Dr) As LngOpt
+Private Function IxOptzDyDr(Dy(), Dr) As LngOpt
 Dim IDr, Ix&
-For Each IDr In Itr(Dry)
-    If IsEqAy(IDr, Dr) Then IxOptzDryDr = SomLng(Ix): Exit Function
+For Each IDr In Itr(Dy)
+    If IsEqAy(IDr, Dr) Then IxOptzDyDr = SomLng(Ix): Exit Function
     Ix = Ix + 1
 Next
 End Function
-Private Sub Z_DrswDup()
+Private Sub Z_DwDup()
 Dim A As Drs, FF$, Act As Drs
 GoSub T0
 Exit Sub
@@ -121,15 +117,15 @@ T0:
     FF = "A B"
     GoTo Tst
 Tst:
-    Act = DrswDup(A, FF)
+    Act = DwDup(A, FF)
     DmpDrs Act
     Return
 End Sub
 '======================================================================
-Private Function RxyzDupDryColIx(Dry(), ColIx&) As Long()
+Private Function RxyzDupDyColIx(Dy(), ColIx&) As Long()
 Dim D As New Dictionary, FstIx&, V, O As New Rel, Ix&, I
-For Ix = 0 To UB(Dry)
-    V = Dry(Ix)(ColIx)
+For Ix = 0 To UB(Dy)
+    V = Dy(Ix)(ColIx)
     If D.Exists(V) Then
         O.PushParChd V, D(V)
         O.PushParChd V, Ix
@@ -138,21 +134,21 @@ For Ix = 0 To UB(Dry)
     End If
 Next
 For Each I In O.SetOfPar.Itms
-    PushIAy RxyzDupDryColIx, O.ParChd(I).Av
+    PushIAy RxyzDupDyColIx, O.ParChd(I).Av
 Next
 End Function
 
-Private Sub Z_RxyzDupDryColIx()
-Dim Dry(), ColIx&, Act&(), Ept&()
+Private Sub Z_RxyzDupDyColIx()
+Dim Dy(), ColIx&, Act&(), Ept&()
 GoSub T0
 Exit Sub
 T0:
     ColIx = 0
-    Dry = Array(Array(1, 2, 3, 4), Array(1, 2, 3), Array(2, 4, 3))
+    Dy = Array(Array(1, 2, 3, 4), Array(1, 2, 3), Array(2, 4, 3))
     Ept = LngAp(0, 1)
     GoTo Tst
 Tst:
-    Act = RxyzDupDryColIx(Dry, ColIx)
+    Act = RxyzDupDyColIx(Dy, ColIx)
     If Not IsEqAy(Act, Ept) Then Stop
     C
     Return

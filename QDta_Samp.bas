@@ -27,50 +27,50 @@ Property Get SampDr6() As Variant()
 SampDr6 = Array(63, 64, 65)
 End Property
 
-Property Get SampDrs1() As Drs
-SampDrs1 = DrszFF("A B C", SampDry1)
+Property Get DoSamp1() As Drs
+DoSamp1 = DrszFF("A B C", DyoSamp1)
 End Property
 
-Property Get SampDrs2() As Drs
-SampDrs2 = DrszFF("A B C", SampDry2)
+Property Get DoSamp2() As Drs
+DoSamp2 = DrszFF("A B C", DyoSamp2)
 End Property
 
-Property Get SampDrs() As Drs
-SampDrs = DrszFF("A B C D E G H I J K", SampDry)
+Property Get DoSamp() As Drs
+DoSamp = DrszFF("A B C D E G H I J K", DyoSamp)
 End Property
 
 Property Get SampDFnyRs() As String()
 SampDFnyRs = SyzSS("A B C D E F G")
 End Property
 
-Property Get SampDry1() As Variant()
-SampDry1 = Array(SampDr1, SampDr2, SampDr3)
+Property Get DyoSamp1() As Variant()
+DyoSamp1 = Array(SampDr1, SampDr2, SampDr3)
 End Property
 
-Property Get SampDry2() As Variant()
-SampDry2 = Array(SampDr3, SampDr4, SampDr5)
+Property Get DyoSamp2() As Variant()
+DyoSamp2 = Array(SampDr3, SampDr4, SampDr5)
 End Property
 
-Property Get SampDry() As Variant()
-PushI SampDry, Array("A", True, CByte(8), 1, 2&, 3#, 4!, 5@, Now, String(300, "A"))
-PushI SampDry, Array("B", True, CByte(8), 1, 2&, 3#, 4!, 5@, Now, String(300, "B"))
-PushI SampDry, Array("C", True, CByte(8), 1, 2&, 3#, 4!, 5@, Now, String(300, "C"))
-PushI SampDry, Array("D", True, CByte(8), 1, 2&, 3#, 4!, 5@, Now, String(300, "D"))
-PushI SampDry, Array("E", True, CByte(8), 1, 2&, 3#, 4!, 5@, Now, String(300, "E"))
-PushI SampDry, Array("F", True, CByte(8), 1, 2&, 3#, 4!, 5@, Now, String(300, "F"))
-PushI SampDry, Array("G", True, CByte(8), 1, 2&, 3#, 4!, 5@, Now, String(300, "G"))
+Property Get DyoSamp() As Variant()
+PushI DyoSamp, Array("A", True, CByte(8), 1, 2&, 3#, 4!, 5@, Now, String(300, "A"))
+PushI DyoSamp, Array("B", True, CByte(8), 1, 2&, 3#, 4!, 5@, Now, String(300, "B"))
+PushI DyoSamp, Array("C", True, CByte(8), 1, 2&, 3#, 4!, 5@, Now, String(300, "C"))
+PushI DyoSamp, Array("D", True, CByte(8), 1, 2&, 3#, 4!, 5@, Now, String(300, "D"))
+PushI DyoSamp, Array("E", True, CByte(8), 1, 2&, 3#, 4!, 5@, Now, String(300, "E"))
+PushI DyoSamp, Array("F", True, CByte(8), 1, 2&, 3#, 4!, 5@, Now, String(300, "F"))
+PushI DyoSamp, Array("G", True, CByte(8), 1, 2&, 3#, 4!, 5@, Now, String(300, "G"))
 End Property
 
-Property Get SampDs() As DS
+Property Get SampDs() As Ds
 AddDt SampDs, SampDt1
 AddDt SampDs, SampDt2
 SampDs.DsNm = "Ds"
 End Property
 
 Property Get SampDt1() As Dt
-SampDt1 = DtzFF("SampDt1", "A B C", SampDry1)
+SampDt1 = DtzFF("SampDt1", "A B C", DyoSamp1)
 End Property
 
 Property Get SampDt2() As Dt
-SampDt2 = DtzFF("SampDt2", "A B C", SampDry2)
+SampDt2 = DtzFF("SampDt2", "A B C", DyoSamp2)
 End Property

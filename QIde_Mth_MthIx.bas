@@ -188,8 +188,15 @@ Next
 FstMthIxzS = -1
 End Function
 
-Function MthLnozMM&(M As CodeModule, Mthn)
-MthLnozMM = 1 + FstMthIxzN(Src(M), Mthn, 0)
+Function MthLnozMM&(M As CodeModule, Mthn, Optional IsInf As Boolean)
+Dim L&: L = FstMthIxzN(Src(M), Mthn, 0)
+If L = -1 Then
+    If IsInf Then
+        Debug.Print "Mth[" & Mthn & "] in Md[" & Mdn(M) & "] not found"
+    End If
+    Exit Function
+End If
+MthLnozMM = 1 + L
 End Function
 
 
@@ -197,7 +204,7 @@ Function MthLnoAyzMN(M As CodeModule, Mthn) As Long()
 MthLnoAyzMN = AyIncEle1(MthIxyzSN(Src(M), Mthn))
 End Function
 
-Private Sub ZZZ()
+Private Sub Z()
 MIde_Mth_Ix:
 End Sub
 

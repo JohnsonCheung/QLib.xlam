@@ -5,7 +5,7 @@ Private Const CMod$ = "MIde_Loc."
 Private Const Asm$ = "QIde"
 
 Function DMthPos(Mthn) As Drs
-Dim A As Drs: A = ColEq(DMthP, "Mthn", Mthn)
+Dim A As Drs: A = DwEq(DMthP, "Mthn", Mthn)
 End Function
 
 Sub JmpzML(M As CodeModule, Lno)

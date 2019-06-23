@@ -5,16 +5,16 @@ Private Const CMod$ = "MIde_Md_Res."
 Private Const Asm$ = "QIde"
 Function ResLyzM(M As CodeModule, Mthn$) As String()
 Dim Z$
-    Z = MthLzM(M, ResPfx & ResNm)
+    Z = MthLzM(M, Mthn)
     If Si(Z) = 0 Then
-        Thw CSub, "Mthn not found", "Mthn Md ResNm ResPfx", ResPfx & ResNm, Mdn(M), ResNm, ResPfx
+        Thw CSub, "Mthn not found", "Mthn Md", Mthn, Mdn(M)
     End If
-    Z = AyeFstEle(Z)
-    Z = AyeLasEle(Z)
+    Z = AeFstEle(Z)
+    Z = AeLasEle(Z)
 ResLyzM = RmvFstChrzAy(Z)
 End Function
 
 Function ReszM$(M As CodeModule, Mthn$)
-ReszM = JnCrLf(ResLyzM(M, ResNm))
+ReszM = JnCrLf(ResLyzM(M, Mthn))
 End Function
 

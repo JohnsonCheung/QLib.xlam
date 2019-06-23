@@ -23,42 +23,28 @@ For Each Obj In Itr(Oy)
 Next
 End Sub
 
-Function FstItmzOyPEv(Oy, P As PrpPth, Ev)
-Dim Obj As Object
-For Each Obj In Itr(Oy)
-    If Prp(Obj, P) = Ev Then Asg Obj, FstItmzOyPEv: Exit Function
-Next
+Function FstzOyEq(Oy, PrpPth, V)
+Set FstzOyEq = FstzItrEq(Itr(Oy), PrpPth, V)
 End Function
 
-Function AvzOP(Oy, P As PrpPth) As Variant()
-AvzOP = IntozOP(EmpAv, Oy, P)
+Function AvzOyP(Oy, PrpPth) As Variant()
+AvzOyP = IntozOyP(EmpAv, Oy, PrpPth)
 End Function
 
-Function IntozOP(Into, Oy, P As PrpPth)
+Function IntozOyP(Into, Oy, PrpPth)
 Dim O: O = Into: Erase O
-Dim I
-For Each I In Itr(Oy)
-    Push O, Prp(CvObj(I), P)
+Dim Obj: For Each Obj In Itr(Oy)
+    Push O, Prp(Obj, PrpPth)
 Next
-IntozOP = O
+IntozOyP = O
 End Function
 
-Function IntAyzOyP(Oy, P As PrpPth) As Integer()
-IntAyzOyP = IntozOP(EmpIntAy, Oy, P)
+Function IntAyzOyP(Oy, PrpPth) As Integer()
+IntAyzOyP = IntozOyP(EmpIntAy, Oy, PrpPth)
 End Function
 
-Function SyzOyPrp(Oy, P As PrpPth) As String()
-SyzOyPrp = IntozOP(EmpSy, Oy, P)
-End Function
-
-Function OyeFstNEle(Oy, N&)
-Dim O: O = Oy
-ReDim O(N - 1)
-Dim J&
-For J = 0 To UB(Oy) - N
-    Set O(J) = Oy(N + J)
-Next
-OyeFstNEle = O
+Function SyzOyP(Oy, PrpPth) As String()
+SyzOyP = IntozOyP(EmpSy, Oy, PrpPth)
 End Function
 
 Function OyeNothing(Oy)
@@ -98,15 +84,11 @@ Next
 OywPredXPTrue = O
 End Function
 
-Function OywPEv(Oy, P As PrpPth, Ev)
-Dim O
-   O = Oy
-   Erase O
-   Dim Obj As Object
-   For Each Obj In Itr(Oy)
-       If Prp(Obj, P) = Ev Then PushObj O, Obj
-   Next
-OywPEv = O
+Function FstzObj(Oy, PrpPth$, V)
+'Ret : Fst Obj in @Oy having @PrpPth = @V
+Dim Obj: For Each Obj In Itr(Oy)
+    If Prp(Obj, PrpPth) = V Then Asg Obj, FstzObj: Exit Function
+Next
 End Function
 Function OyzItr(Itr) As Variant()
 Dim O
@@ -114,20 +96,20 @@ For Each O In Itr
     PushObj OyzItr, O
 Next
 End Function
-Function OywPInAy(Oy, P As PrpPth, InAy)
+Function OywIn(Oy, PrpPth, InAy)
 Dim Obj As Object, O
-If Si(Oy) = 0 Or Si(InAy) Then OywPInAy = Oy: Exit Function
+If Si(Oy) = 0 Or Si(InAy) Then OywIn = Oy: Exit Function
 O = Oy
 Erase O
 For Each Obj In Itr(Oy)
-    If HasEle(InAy, Prp(Obj, P)) Then PushObj O, Obj
+    If HasEle(InAy, Prp(Obj, PrpPth)) Then PushObj O, Obj
 Next
-OywPInAy = O
+OywIn = O
 End Function
+
 Function LyzObjPP(Obj As Object, PP$) As String()
-Dim I
-For Each I In SyzSS(PP)
-    PushI LyzObjPP, I & " " & Prp(Obj, PrpPth(I))
+Dim PrpPth: For Each PrpPth In SyzSS(PP)
+    PushI LyzObjPP, PrpPth & " " & Prp(Obj, PrpPth)
 Next
 End Function
 

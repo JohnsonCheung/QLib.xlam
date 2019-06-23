@@ -79,7 +79,7 @@ Dim Nav(): Nav = Nap
 LyzMsgNap = LyzMsgNav(Msg, Nav)
 End Function
 Function LyzNmDrs(Nm$, A As Drs, Optional MaxColWdt% = 100) As String()
-LyzNmDrs = LyzNmLy(Nm, LinzDrs(A, MaxColWdt), EiNoIx)
+LyzNmDrs = LyzNmLy(Nm, FmtDrs(A, MaxColWdt), EiNoIx)
 End Function
 
 Function LyzNmLy(Nm$, Ly$(), Optional B As EmIxCol = EiBeg1) As String()
@@ -161,7 +161,7 @@ If Si(Nav) = 0 Then
 End If
 Dim TT$: TT = Nav(0)
 ONy = TermAy(TT)
-OAv = AyeFstEle(Nav)
+OAv = AeFstEle(Nav)
 End Sub
 Private Sub Z_LyzNav()
 Dim Nav(): Nav = Array("aa bb", 1, 2)

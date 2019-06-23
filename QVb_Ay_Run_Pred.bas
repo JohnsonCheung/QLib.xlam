@@ -9,9 +9,9 @@ If Si(A) = 0 Then Exit Function
 IsAllTruezItrPred_AyPred = IsAllTruezItrPred(A, Pred)
 End Function
 
-Function IsSomeTruezAyPred(A, Pred$) As Boolean
+Function IsSomFeTruezAyPred(A, Pred$) As Boolean
 If Si(A) = 0 Then Exit Function
-IsSomeTruezAyPred = IsSomFalsezItrPred(A, Pred)
+IsSomFeTruezAyPred = IsSomFFalsezItrPred(A, Pred)
 End Function
 
 Sub AyPredSplitAsg(A, Pred$, OTrueAy, OFalseAy)

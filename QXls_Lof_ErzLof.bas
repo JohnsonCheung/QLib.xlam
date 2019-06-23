@@ -129,14 +129,14 @@ Private Function WAli_LeftRightCenter() As String()
 'ErzAli_LinErz = WMsgzAliLin(SyeT1Sy(Ali, "Left Right Center"))
 End Function
 Private Function WAny_Tot() As Boolean
-Dim Lc As ListColumn
+Dim LC As ListColumn
 'For Each Lc In A_Lo.ListColumns
     'If LcFmtSpecLy_WAny_Tot(Lc, FmtSpecLy) Then WAny_Tot = True: Exit Function
 'Next
 End Function
 Private Function ErzBdr1(X$) As String()
 'Return FldAy from Bdr & X
-'Dim FldssAy$(): FldssAy = SSSyzAy(AywRmvT1(Bdr, X))
+'Dim FldssAy$(): FldssAy = SSSyzAy(AwRmvT1(Bdr, X))
 End Function
 Private Function B_EBdr_Dup() As String()
 'ErzBdrDup = WMsgzDup(DupT1(Bdr), Bdr)
@@ -197,7 +197,7 @@ For Each I In IO
     L = I
     PushI Msg, ErzCorVal1(L)
 Next
-'IO = AywNoErz(IO, Msg, Erz)
+'IO = AwNoErz(IO, Msg, Erz)
 End Function
 Private Function ErzCorVal1$(L$)
 Dim Cor$
@@ -240,7 +240,7 @@ Dim J&, Fld$, Fml$, O$(), S$, T1
 Dim Lnxs As Lnxs: Lnxs = WLnxszT1("Fml")
 For J = 0 To Lnxs.N - 1
     With Lnxs.Ay(J)
-        AsgN2tRst .Lin, S, Fld, Fml
+        AsgTTRst .Lin, S, Fld, Fml
         If FstChr(Fml) <> "=" Then
             'PushI O, WMsg_Fml_FstChr(.Lno)
         Else

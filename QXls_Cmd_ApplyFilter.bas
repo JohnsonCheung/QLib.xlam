@@ -1,7 +1,12 @@
 Attribute VB_Name = "QXls_Cmd_ApplyFilter"
 Option Explicit
 Option Compare Text
-Public Enum EmOp
+Enum EmCntCol: EiNoCntCol: EiWiCntCol: End Enum
+Type RnyPair
+    A() As Long
+    B() As Long
+End Type
+Enum EmOp
    EiNop   ' No operation
    EiPatn
    EiEQ    '=
@@ -15,40 +20,302 @@ Public Enum EmOp
    EiLE    '<=
    EiLT    '<
 End Enum
-Private Sub Z()
-Stop
-Z_XApply
+Private Const CriCmd$ = "Filter Apply Clear InsRow RmvRow Load"
+
+Private Function XCriCmdAy() As String()
+XCriCmdAy = SyzSS(CriCmd)
+End Function
+
+Sub Z()
+Z_Apply
 End Sub
 
-Private Sub Z_XApply()
+Sub InsCri(L As ListObject)
+'Ret : Insert :CriRg: of 3 rows (1 tit and 2 enties) above @L.
+'      #1 Ins 3 rows
+'      #2 Put lbl
+'      #3 Set cmt
+'      #4 Add cd [ws on sel chg]
+'      #5 Add rf
+'      :CriRg: is the rectangle rg just above a list object.  It has 2 or more rows
+'      Fst row is tit and the rst are user input area.
+'      Fst row cells have value [Select Apply Clear Load]
+'              [Select] move the current cell to it, the pgm will tgl to hid/shw the user input area.
+'              [Apply]  ..                         , the pgm will apply the cri to the list object.
+'                                                    each apply the cri will saved and ok to be retrieve by [Load].
+'              [Clear]  ..                         , the pgm will clear the cri value in the range.
+'              [Load]   ..                           a new ws show all the applied cri to allow user to select.  After sel
+'                                                    the ws will be deleted.
+Dim Cell As Range:  Set Cell = RgA1(L.Range)   ' the A1 cell of @L
+Dim W As Worksheet:    Set W = WszLo(L)
+Dim M As CodeModule:   Set M = CmpzWs(W).CodeModule ' The md for the ws of @L
+Dim Cd$:                  Cd = RplVBar("Private Sub Worksheet_SelectionChange(ByVal Target As Range)|ApplyFilter Target|End Sub")               ' the code for ws on select
+Dim Cmt$:                Cmt = "Explanation of how to use filter"
+Dim Pjf$:                Pjf = Pj("QLib").Filename
+Dim P As VBProject:    Set P = PjzWs(W)
+InsRow Cell, 3
+PutSSH CriCmd, Cell ' Filter Apply Clear InsRow RmvRow Load
+SetCmt Cell, Cmt
+RplMd M, Cd
+P.References.AddFromFile Pjf
+End Sub
+
+Private Sub Z_Apply()
+If False Then
+    Dim Ws As Worksheet: Set Ws = WsMthP
+                                  InsCri FstLo(Ws)
+    Dim Fx$:                 Fx = SavAsTmpFxm(WbzWs(Ws))
+End If
 Dim Rg As Range: Set Rg = CWs.Range("B1")
 ApplyFilter Rg
 End Sub
-Sub ApplyFilter(ByVal Rg As Range)
-Dim FCell As Range:      Set FCell = XFCell(Rg) '  # Filter-Cell ! the cell with str-"Filter"
-Dim Lo    As ListObject:    Set Lo = XLo(FCell)
-If IsNothing(Lo) Then Exit Sub
-Dim R2&:                   R2 = Lo.ListColumns(1).Range.Row - 1
-Dim C2&:                   C2 = Lo.ListColumns.Count
-Dim CriRg As Range: Set CriRg = RgRCRC(FCell, 2, 1, R2, C2)
-Select Case Rg.Value
-Case "Clear": CriRg.Clear
-Case "Apply": XApply Lo, CriRg
+
+Private Function XFCellzL(L As ListObject)
+'Ret : :FCell #Filter-Cell fm Lo
+Dim A1 As Range: Set A1 = A1zLo(L)
+Dim R&: For R = A1.Row - 1 To 1 Step -1
+    If RgRC(A1, R, 1).Value = "Filter" Then
+        Set XFCellzL = RgRC(A1, R, 1)
+        Exit Function
+    End If
+Next
+End Function
+
+Private Function XLozFCell(FCell As Range) As ListObject
+Dim L As ListObjects: Set L = WszRg(FCell).ListObjects
+Dim SamCol() As ListObject: SamCol = XSamCol(L, FCell.Column)
+If Si(SamCol) = 0 Then Exit Function
+#If True Then
+Dim R&():         R = XRnyzSamCol(SamCol) ' Rno
+Dim MinRno&: MinRno = MinEle(R)
+      Set XLozFCell = XLozWhereR(SamCol, MinRno)
+#Else
+Dim R&():         R = LngAyzOyPrp(SamCol, "Range.Row") ' Rno
+Dim MinRno&: MinRno = MinEle(R)
+      Set XLozFCell = FstzObj(SamCol, "Range.Row", MinRno)
+#End If
+End Function
+
+Private Function XCriRgzL(L As ListObject) As Range
+'Ret : :CriRg fm @L ! used by testing
+Dim F As Range: Set F = XFCellzL(L)
+Set XCriRgzL = XCriRgzFL(F, L)
+End Function
+
+Private Function XCriRgzFL(FCell As Range, L As ListObject) As Range
+Dim R2&:   R2 = L.ListColumns(1).Range.Row - 1
+Dim C2&:   C2 = L.ListColumns.Count
+Set XCriRgzFL = RgRCRC(FCell, 2, 1, R2, C2)
+End Function
+
+Sub ApplyFilter(ByVal Tar As Range)
+'Fm  Tar :            ! It is the-cur-active-cell just moved to by user.
+'Ret     : do-the-cmd ! cmd comes from the @Tar.value and @Tar comes from %Sub:Worksheet_ChangeSeletion%.
+'                     ! If the @Tar is a Filt-cmd-cell, carry the cmd else nop
+'-- Fnd L & CriRg ---
+Dim FCell As Range: Set FCell = XFCellzT(Tar) '  # Filter-Cell ! the cell with str-"Filter"
+                                If IsNothing(FCell) Then Exit Sub
+Dim L As ListObject:    Set L = XLozFCell(FCell)
+                                If IsNothing(L) Then Debug.Print "ApplyFilter: with FCell, but no Lo": Exit Sub
+Dim CriRg As Range: Set CriRg = XCriRgzFL(FCell, L)
+'Private Const CriCmd$ = "Filter Apply Clear InsRow RmvRow Load"
+Select Case Tar.Value ' The Cmd is listed in %CriCmd
+Case "Filter": CmdTglFilt CriRg
+Case "Apply":  CmdApply L, CriRg: CmdSav CriRg, L
+Case "Clear":  CriRg.Clear
+Case "InsRow": InsRow Tar
+Case "RmvRow": RmvRowEmp CriRg
+Case "Load":   CmdLoad CriRg
+Case Else: Debug.Print "ApplyFIlter...should not reach here.'"
 End Select
 End Sub
 
-Private Function XFCell(Rg As Range) As Range
-'Ret :  # Filter-Cell ! the cell with str-"Filter" @@
-Dim O As Range
-If Rg.Count <> 1 Then Exit Function
-Dim C&: C = Rg.Column
-Dim V: V = Rg.Value
-Select Case True
-Case V = "Apply" And C > 1: Set O = RgRC(Rg, 1, 0)
-Case V = "Clear" And C > 2: Set O = RgRC(Rg, 1, -1)
-Case Else: Exit Function
+Function VzXStr(XStr)
+'Ret : ! a val (Str|Dbl|Bool|Dte|Empty) fm @XStr.  :XStr: is #Xls-Cell-Str.  A str coming fm xls cell
+'      ! having following lgc to determine the val type
+'      ! case XStr
+'      ! true or false:           :b
+'      ! fstChr='                 :s
+'      ! fstChr not (dig and sgn) :s
+'      ! can cv to dte:           :dte
+'      ! can cv to dbl:           :dbl
+'      ! else                     :s
+Select Case XStr
+Case "True", "False": VzXStr = CBool(XStr)
+Case Else
+    Dim F$: F = FstChr(XStr)
+    If F = "'" Then
+        VzXStr = Mid(XStr, 2)
+    ElseIf Not IsAscDigSgn(Asc(F)) Then
+        VzXStr = XStr
+    Else
+        Dim V: V = CvDbl(XStr)
+        If Not IsEmpty(V) Then
+            VzXStr = V
+        Else
+            V = CvDte(XStr)
+            If Not IsEmpty(V) Then
+                VzXStr = V
+            Else
+                VzXStr = CStr(XStr)
+            End If
+        End If
+    End If
 End Select
-If O.Value = "Filter" Then Set XFCell = O
+End Function
+
+
+Private Sub CmdSav(CriRg As Range, L As ListObject)
+Exit Sub
+Dim Ws As Worksheet: Set Ws = WszRg(CriRg)
+Dim S$: S = SqStrzRg(RgMoreTop(CriRg, -1))
+Dim Snm$: Snm = CriSnm(L)
+Dim D$: D = SzSnm(Ws, Snm)
+Dim N$: N = NewCriStr(D, S)
+Stop
+End Sub
+Private Function NewCriStr$(Saved$, NewStr$)
+'Fm Saved  : :CriStr: saved in :Ws-Names:
+'Fm NewStr : :CriStr: new cri str to be saved
+'Ret : new cri str aft saving @NewStr to @Saved
+End Function
+Sub ClnUpSavedCri(B As Workbook)
+Dim S As Worksheet: For Each S In B.Sheets
+    ClnUpSavedCrizS S
+Next
+End Sub
+Function CvWsn$(S As Worksheet)
+CvWsn = CvNm(S.Name)
+End Function
+Function CvLoNm$(L As ListObject)
+CvLoNm = CvNm(L.Name)
+End Function
+Function CriSnmPfx$(L As ListObject)
+CriSnmPfx = "Cri_" & CvWsn(WszLo(L)) & "_" & CvLoNm(L) & "_"
+End Function
+Sub ClnUpSavedCrizS(S As Worksheet)
+Dim PfxAy$()
+    Dim L As ListObject: For Each L In S.ListObjects
+        PushI PfxAy, CriSnmPfx(L)
+    Next
+RmvSnm S, PfxAy
+End Sub
+Sub RmvSnm(S As Worksheet, SnmPfxAy$())
+Dim N As Excel.Name: For Each N In S.Names
+    If HasPfxAy(N.Name, SnmPfxAy) Then N.Delete
+Next
+End Sub
+Private Function CriSnm$(L As ListObject)
+'Ret : :CriSnm: ! :CriSnm: is :Ws-Names-Name: in format of Cri_<NmStr-of-Wsn>_<NmStr-of-LoNm>_<TimId-when-it-saved>.
+CriSnm = CriSnmPfx(L) & NowId
+End Function
+Function CvNm$(S$)
+'Ret : ret a nm fm @S by rpl non-nm-chr to [_].  Put [N] in front if fst is non-nm-chr
+Dim O$: O = S
+Dim J%: For J = 1 To Len(O)
+    If Not IsChrzNm(Mid(O, J, 1)) Then
+        Mid(O, J, 1) = "_"
+    End If
+Next
+If Not IsLetter(FstChr(O)) Then
+    O = "N" & O
+End If
+CvNm = O
+End Function
+
+Sub AA()
+Dim S As Worksheet: Set S = CWs
+Dim O As CustomProperties: Set O = S.CustomProperties
+O.Add "aasdf", Dup("ab", 1000)
+Stop
+End Sub
+Function IxzSprp%(S As Worksheet, Sprpn$)
+Dim O%: For O = 1 To S.CustomProperties.Count
+    If S.CustomProperties.Item(O).Name = Sprpn Then IxzSprp = O: Exit Function
+Next
+End Function
+
+Function Sprp(S As Worksheet, Sprpn$)
+Dim Ix&: Ix = IxzSprp(S, Sprpn)
+If Ix <> 0 Then Sprp = S.CustomProperties.Item(Ix)
+End Function
+Sub EnsSprp(S As Worksheet, Sprpn$, V)
+'Ret : ens a @Sprpnm in @S being val @V.  :Sprpn: is #wS-doc-PRP-Nm.  @@
+Dim Ix&: Ix = IxzSprp(S, Sprpn)
+If Ix = 0 Then
+    S.CustomProperties.Add Sprpn, V
+Else
+    If S.CustomProperties(Ix).Value <> V Then
+        S.CustomProperties(Ix).Value = V
+    End If
+End If
+End Sub
+
+Sub EnsSnm(Ws As Worksheet, Snm$, S$)
+'Ret : ens a @Snm in @S being const @S.  @@
+If HasSnm(Ws, Snm) Then
+    If SzSnm(Ws, Snm) <> S Then Ws.Names(Snm).RefersTo = "=" & Qvbs(S)
+Else
+    Ws.Names.Add Snm, "=" & Qvbs(S)
+End If
+End Sub
+Function SzSnm$(S As Worksheet, Snm$)
+'Ret : a str stored in ws name stated as @S & @Snm if any.  If not fnd ret blnk & inf.
+'      Assume the val stored is a :Qvbs:.  If not, ret blnk & inf
+If Not HasSnm(S, Snm, CSub) Then Exit Function
+Dim O$: O = S.Names(Snm).RefersTo
+If Fst2Chr(O) <> "=""" Then Inf CSub, "Ws-Names-Nm exist, but it is not a str cnst", "Ws Snm Stored-RfTo", S.Name, Snm, O: Exit Function
+SzSnm = SzQvbs(RmvFstChr(O))
+End Function
+Function HasSnm(S As Worksheet, Snm$, Optional Fun$) As Boolean
+'Fm Snm : :Snm: is #Ws-Names-Nm#
+'Fm Fun : is to inf @Snm not fnd if given
+'Ret : true if @S has @Snm and inf if not fnd and @Fun is given  @@
+If HasItn(S.Names, Snm) Then HasSnm = True: Exit Function
+If Fun = "" Then Exit Function
+Inf Fun, ":Snm:#Ws-Names-Nm is not fnd in ws", "Snm Ws", Snm, S.Name
+End Function
+Function SzQvbs$(Qvbs$)
+' Ret : a fm :Qvbs: #Quoted-vb-str#.  a str with fst and lst chr is vQtezDblQ and inside each vbQtezDblQ is in pair, which will cv to one vbQtezDblQ  @@
+SzQvbs = UnEscQtezDblQ(RmvFstLasChr(Qvbs))
+End Function
+
+Function Qvbs$(S$)
+Qvbs = vbQtezDblQ & EscQtezDblQ(S) & vbQtezDblQ
+End Function
+
+Function EscQtezDblQ$(S$)
+EscQtezDblQ = Replace(S, vbQtezDblQ, vb2QtezDblQ)
+End Function
+
+Function UnEscQtezDblQ$(S$)
+UnEscQtezDblQ = Replace(S, vb2QtezDblQ, vbQtezDblQ)
+End Function
+
+Private Sub CmdRmvRow(CriRg As Range)
+
+End Sub
+Private Sub CmdLoad(CriRg As Range)
+
+End Sub
+Private Sub CmdTglFilt(CriRg As Range)
+
+End Sub
+Private Function XFCellzT(Tar As Range) As Range
+'Fm  : :TarCell: is the cell with one of this value: Filter Apply Clear InsRow RmvRow Load, otherwise, don't return :FCell
+'Ret : :FCell: is #Filter-Cell ! the cell with str-"Filter" @@
+    If Tar.Count <> 1 Then Exit Function
+    Dim V:        V = Tar.Value
+                      If Not IsStr(V) Then Exit Function
+    Dim I%:       I = IxzAy(XCriCmdAy, V)    ' Assume the Cri-Tit-Lin has list of cmd in the order of %CriCmdAy
+                      If I = -1 Then Exit Function
+    Dim TCno%: TCno = Tar.Column
+
+Dim FCno%: FCno = 1 - I
+
+Dim O As Range: Set O = RgRC(Tar, 1, FCno)
+If O.Value <> "Filter" Then Stop
+Set XFCellzT = O
 'Insp "QXls_Cmd_ApplyFilter.XFCell", "Inspect", "Oup(XFCell) Rg", "NoFmtr(Range)", "NoFmtr(Range)": Stop
 End Function
 
@@ -58,21 +325,20 @@ Dim C As ListObject: For Each C In A
 Next
 End Function
 
-Private Function XLo(FCell As Range) As ListObject
-'Fm FCell :  # Filter-Cell ! the cell with str-"Filter" @@
-If IsNothing(FCell) Then Exit Function
-Dim Ws     As Worksheet:  Set Ws = WszRg(FCell)
-Dim C&:                        C = FCell.Column
+Private Function XLozCriRg(CriRg As Range) As ListObject
+'Fm CriRg :  # Filter-Cell ! the cell with str-"Filter" @@
+If IsNothing(CriRg) Then Exit Function
+Dim Ws       As Worksheet:  Set Ws = WszRg(CriRg)
+Dim C&:                          C = CriRg.Column
 Dim SamCol() As ListObject: SamCol = XSamCol(Ws.ListObjects, C)
-Dim R&():                      R = XRnoAy(SamCol)
-Dim M&:                        M = MinEle(R)
-                         Set XLo = XLozWhereR(SamCol, M)
-'Insp "QXls_Cmd_ApplyFilter.XLo", "Inspect", "Oup(XLo) FCell", "NoFmtr(ListObject)", "NoFmtr(Range)": Stop
+Dim R&():                        R = XRnyzSamCol(SamCol)
+Dim M&:                          M = MinEle(R)
+                     Set XLozCriRg = XLozWhereR(SamCol, M)
 End Function
 
-Private Function XRnoAy(SamCol() As ListObject) As Long()
+Private Function XRnyzSamCol(SamCol() As ListObject) As Long()
 Dim L: For Each L In Itr(SamCol)
-    PushI XRnoAy, CvLo(L).Range.Row
+    PushI XRnyzSamCol, CvLo(L).Range.Row
 Next
 End Function
 
@@ -82,79 +348,308 @@ Dim J%: For J = 0 To UB(A)
 Next
 ThwImpossible CSub
 End Function
+Private Sub Z_CmdApply()
+Dim Lo As Range, CriRg As Range
+GoSub T0
+Exit Sub
+T0:
+    Set Lo = FstLo(CWs)
+End Sub
 
-Private Sub XApply(Lo As ListObject, CriRg As Range)
-'Fm T : The FilterCell
-'Ret  : KSet ! Filter-KSet for each column.  K is the coln V is the vset
+Private Sub CmdApply(Lo As ListObject, CriRg As Range)
+'Fm Lo    : The FilterCell
+'Fm CriRg : the rg that user ent to criterior to do filter.
+'Ret      : Clr/Set the @CriRg, On & Off vis of row in @Lo.  See Dim Oup* & '<==.
 
 '== ClrMsg==============================================================================================================
 DltCmtzRg CriRg     '<==
 BdrAroundNone CriRg '<==
 
 '-- Fnd Cri & CriBrk ---------------------------------------------------------------------------------------------------
-Dim Fny$():             Fny = FnyzLo(Lo)                                             ' from Lo
-Dim CriCell As Drs: CriCell = XCriCell(Fny, CriRg)                                   ' F R C CriCell
-Dim CriBrk  As Drs:  CriBrk = XCriBrk(CriCell)                                       ' F R C Op V1 V2 Patn T1 IsEr Msg
-Dim Cri     As Drs:     Cri = ColEqSel(CriBrk, "IsEr", False, "F Op V1 V2 Patn Sim") ' F Op V1 V2 Patn Sim             ! All-IsEr = false
+Dim Fny$():             Fny = FnyzLo(Lo)           ' from Lo
+Dim CriCell As Drs: CriCell = XCriCell(Fny, CriRg) ' F R C CriCell ! *CriCell is cri-cell-val
 
-'== Set Cmt & BdrEr to those cell with CriStr has err ==================================================================
-'   Fm  CriBrk
-Dim Er       As Drs:       Er = ColEqSel(CriBrk, "IsEr", True, "R C Msg") ' R C Msg
-Dim CellAy() As Range: CellAy = RgAy(CriRg, Er)                           ' Cell with er need to BdrEr and set cmt with msg
-Dim ErMsg$():           ErMsg = StrCol(Er, "Msg")
-Dim OSetCm:                     SetCmtzAy CellAy, ErMsg                   ' <==
-Dim OBrkEr:                     BdrErzAy CellAy                           ' <==
+Dim CriBrk As Drs: CriBrk = XCriBrk(CriCell)                                    ' F R C Op V1 V2 Patn IsEr Msg
+Dim Cri    As Drs:    Cri = DwEqSel(CriBrk, "IsEr", False, "Op V1 V2 Patn C F") ' Op V1 V2 Patn C F            ! All-IsEr = false
+
+'== Set Cmt & BdrEr to those cri cell with CriStr has err ==============================================================
+Dim Er       As Drs:       Er = DwEqSel(CriBrk, "IsEr", True, "R C Msg") ' R C Msg
+Dim CellAy() As Range: CellAy = RgAy(CriRg, Er)                          ' Cell with er need to BdrEr and set cmt with msg
+Dim Msg$():               Msg = StrCol(Er, "Msg")
+
+Dim OupSetCmt:   SetCmtzAy CellAy, Msg ' <==
+Dim OupBdrCriEr: BdrErzAy CellAy       ' <==
 
 '== ShowAllData if there is no Criterior ===============================================================================
 If NoReczDrs(Cri) Then
     SetOnFilter Lo
-    Lo.AutoFilter.ShowAllData
+    Dim OupShwAll: Lo.AutoFilter.ShowAllData ' <== if no cri, shw all dta & return
     Exit Sub
 End If
 
 '== Apply Filter with Diff =============================================================================================
-Dim CFny$():        CFny = DistColzStr(Cri, "F")  '  # Cri-Fny ! The Fny with cri entered
-Dim CCol() As Aset: CCol = VsetAyzLo(Lo, CFny)    '  # Cri-Col ! The col-vset with cri entered
-Dim CSel() As Aset: CSel = XCSel(CCol, CFny, Cri) '  # Cri-Sel ! aft the Cri apply, what val in col-vset has been selected
-                                                  '            ! [CFny CCol CSet] hav sam nbr of ele
-                                                  '            ! ele in @CSel may have no ele, it will consider as warning, need to rpt by
-                                                  '            ! by bdr er all the cri cell.
-Dim FmRno&: FmRno = Lo.DataBodyRange.Row
-Dim ToRno&: ToRno = R2zRg(Lo.DataBodyRange)
-Dim EptRny&(): EptRny = XEptRny(FmRno, ToRno, CFny, CSel)     '      # Ept-Rny ! Those row is ept visible
-Dim ActRny&(): ActRny = XActRny(Lo)                         '      # Act-Rny ! Those row is visible
-Dim ToSetOn&(): '! Rno to set on
-Dim ToSetOff&(): '! Rno to set off
+Dim LRg As Range: Set LRg = Lo.DataBodyRange
+    
+Dim RFm&:     RFm = LRg.Row                     ' #Fm-Rno-of-the-Lo
+Dim RTo&:     RTo = R2zRg(LRg)                  ' #To-Rno-of-the-Lo
+Dim CCny%(): CCny = AwDistAsI(IntCol(Cri, "C")) ' #Cri-Cny          ! #With-Cri-Colno-Ay. The Cno with cri entered
+Dim CCol():  CCol = ColAyzLo(Lo, CCny)          ' #Cri-Col          ! #With-Cri-Col.  Ayof-@L-col-wi-cri.  1-#CCol-ele is 1-col.  1-col is ay-of-val-of-a-@L-col.
+
+Dim CCri(): CCri = XCCri(Cri, CCny) ' #Cri-Ay ! 1-%CCriAy-ele is 1-DyOf-[Op V1 V2 Patn C F]
+                                    '         ! coming from %Cri, where *C is Cno and *F is Fldn they are for ref
+                                    '         ! The *I-th-DyOf-%CCriAy will have sam-*C-and-sam-*F.  The *C will eq to %CCny(*I)
+                                    '         ! %CCriAy has sam of ele as %CCny
+                                    '         ! %CCriAy is used to sel %CCol in &XVisI
+                                                         
+Dim VisIxy&(): VisIxy = XVisI(CCol, CCri) ' #Vis-Rxy ! Each ele in %VisI is rix from 0..URow.  All are pointing to row should be visble.
+                                          '          ! according to %CCol and %Cri
+                                        
+Dim Ept() As Boolean: Ept = BoolAybT(RFm, RTo, VisIxy) ' #Ept-Rny-Vis      ! The ix is Rno of @Lo
+Dim Act() As Boolean: Act = VisAyzLo(Lo)               ' #Act-Rny-Vis      ! The ix is Rno of @Lo
+Dim Vis   As RnyPair: Vis = XVis(Ept, Act)             ' #Vis-Hid-Rny-Pair ! %Vis:RnyPair.A is Vis and .B is Hid
+
 Dim Ws As Worksheet: Set Ws = WszLo(Lo)
-Dim OupOn:                    XOupOn Ws, ToSetOn       ' <== Turn on  the row
-Dim OupOff:                   XOupOff Ws, ToSetOff     ' <== Turn off the row
+Dim OupVisHid:                SetVis Ws, Vis ' ! <== Turn on or off the row
+
 '== Bdr the cri selecting no record (Ns) (no-sel) ======================================================================
-Dim NsFny$(): NsFny = XNsFny(CSel, CFny) '  ! What CFny selecting no rec
-If Si(NsFny) > 0 Then
-    Dim NsCri    As Drs:     NsCri = DrswIn(CriBrk, "F", NsFny)   ' Cri causing the no sel
-    Dim NsExlEr  As Drs:   NsExlEr = ColEq(NsCri, "IsEr", False) ' Exl those already @IsEr
-    Dim NsRpt    As Drs:     NsRpt = DrszSel(NsExlEr, "R C")      ' Need to report ns cri
-    Dim NsCell() As Range:  NsCell = RgAy(CriRg, NsRpt)
-    BdrErzAy NsCell, "Red"
+'Dim NsFny$(): NsFny = XNsFny(CSel, CFny) '  ! What CFny selecting no rec
+'If Si(NsFny) > 0 Then
+'    Dim NsCri    As Drs:     NsCri = DwIn(CriBrk, "F", NsFny) ' Cri causing the no sel
+'    Dim NsExlEr  As Drs:   NsExlEr = DwEq(NsCri, "IsEr", False) ' Exl those already @IsEr
+'    Dim NsRpt    As Drs:     NsRpt = DrszSel(NsExlEr, "R C")     ' Need to report ns cri
+'    Dim NsCell() As Range:  NsCell = RgAy(CriRg, NsRpt)
+'    Dim OupBdrNoRec:                 BdrErzAy NsCell, "Red"      ' <== Bdr the Cri cell which does not sel and record
+'End If
+End Sub
+Private Function XVisI(CCol(), CCri()) As Long()
+'Fm CCol   :  #Cri-Col ! #With-Cri-Col.  Ayof-@L-col-wi-cri.  1-#CCol-ele is 1-col.  1-col is ay-of-val-of-a-@L-col.
+'Fm CCriAy :  #Cri-Ay  ! 1-%CCriAy-ele is 1-DyOf-[Op V1 V2 Patn C F]
+'                      ! coming from %Cri, where *C is Cno and *F is Fldn they are for ref
+'                      ! The *I-th-DyOf-%CCriAy will have sam-*C-and-sam-*F.  The *C will eq to %CCny(*I)
+'                      ! %CCriAy has sam of ele as %CCny
+'                      ! %CCriAy is used to sel %CCol in &XVisI
+'Ret       :  #Vis-Ixy ! Each ele in %VisI is rix from 0..URow.  All are pointing to row should be visble.
+'                      ! according to %CCol and %Cri @@
+If Si(CCol) <> Si(CCri) Then Stop
+Dim CCol0(): CCol0 = CCol(0) ' #Cri-Col-0 ! the fst col of %CCol #Cri-Col
+Dim URow&: URow = UB(CCol0)   '            ! same as @L-URow
+Dim O&(): O = LngSeqzFT(0, URow) ' ! assume all row are selected
+Dim ICol, J%: For Each ICol In CCol
+    Dim Col(): Col = ICol
+    Dim CriAy(): CriAy = CCri(J)
+    O = XRxywCri(O, Col, CriAy)
+    J = J + 1
+Next
+XVisI = O
+'Insp "QXls_Cmd_ApplyFilter.XVisI", "Inspect", "Oup(XVisI) CCol CCriAy", XVisI, CCol, CCriAy: Stop
+End Function
+
+Private Function XIsSelAy(SubCol(), CriAy()) As Boolean()
+'Fm SubCol : to be further selected by @Cri
+'Fm Cri    : Dy-Op-V1-V2-Patn-F-C, where *F is Fldn & *C is Cno for rf.
+'Ret : ! %IsSelAy which has sam # of ele as @SubCol.  This fun is further determine they are selected.
+Dim ICri: For Each ICri In CriAy
+    Dim Op As EmOp:       Op = ICri(0)
+    Dim V1:               V1 = ICri(1)
+    Dim V2:               V2 = ICri(2)
+    Dim Patn$:          Patn = ICri(3)
+    Dim Re As RegExp: Set Re = RegExp(Patn)
+    Dim V: For Each V In SubCol
+        Dim IsSel As Boolean: IsSel = XIsSel(V, Op, V1, V2, Re)
+        PushI XIsSelAy, IsSel
+    Next
+Next
+End Function
+Private Function XRxywAy(Rxy&(), IsSelAy() As Boolean) As Long()
+'-- Use %IsSelAy to select subset of %RxySel as %Ret:XRxywCri.  It will be less or eq @RxySel.
+Dim J&: For J = 0 To UB(IsSelAy)
+    If IsSelAy(J) Then
+        PushI XRxywAy, Rxy(J)
+    End If
+Next
+End Function
+
+Private Function XRxywCri(RxySel() As Long, Col(), CriAy()) As Long()
+'Fm RxySel : #Rxy-Selected          ! it is AyOf-Ix-pointing to %Col.  Each ele is bet 0..UB(%Col).  The ele are pointing selected row.
+'                                   ! They need further select by %Cri.
+'Fm Col    : #Col-Vy                ! It is cur-col-vy.  It has sam nbr of ele as @L-Rows.
+'                                   ! Only sub-set of this %Col is used to be test to selected, which is indicated by @RxySel
+'Fm Cri    : :Dy:Op-V1-V2-Patn-C-F !
+'Ret       : #Rxy-Further-Selected  ! It is sub set of @RxySel
+Dim SubCol():               SubCol = AwIxy(Col, RxySel)     ' ! sam ele as @RxySel
+Dim IsSelAy() As Boolean:  IsSelAy = XIsSelAy(SubCol, CriAy)
+                          XRxywCri = XRxywAy(RxySel, IsSelAy)
+End Function
+
+Function VisAyzLo(L As ListObject) As Boolean()
+'Ret : #Vis-Array-Fm-Lo# ! ret a boolean array with true means visible and false means hidden of each row stated in @R.
+'                        ! the ix of the @Ret is row no.
+VisAyzLo = VisAyzRg(RgzLc(L, 1))
+End Function
+
+Private Sub Z_DrszFTnbr()
+Dim R&(): R = RnyzSamp
+XBox "SampRny"
+X R
+XLin
+XBox "DrszFTnbr"
+X FmtDrs(DrszFTnbr(R))
+Brw XX
+End Sub
+
+Function DrszFTnbr(SrtedNumAy, Optional CntCol As EmCntCol) As Drs
+Stop
+Dim A$:       If CntCol = EiWiCntCol Then A = " Cnt"
+Dim FF$: FF = "Fm To" & A
+DrszFTnbr = DrszFF("Fm To", DyoFTnbr(SrtedNumAy, CntCol))
+End Function
+
+Function DyoFTnbr(NumAy, Optional CntCol As EmCntCol) As Variant()
+'Fm NumAy : assume srted.
+'Ret      : :DyoFTnbr: is dry with 2 nbr col fst is *FmNum and snd is *ToNum.
+If Si(NumAy) = 0 Then Exit Function
+Dim O()
+Dim LasF&: LasF = NumAy(0)
+Dim LasT&: LasT = LasF
+Dim N: For Each N In NumAy
+    If N - 1 = LasT Then
+        LasT = N
+    ElseIf N = LasT Then
+    ElseIf N > LasT Then
+        PushI O, Array(LasF, LasT)
+        LasF = N
+        LasT = N
+    Else
+         Thw CSub, "NumAy is not sorted", "Not-srt-ele NumAy", N, NumAy
+    End If
+Next
+PushI O, Array(LasF, LasT)
+If CntCol = EiWiCntCol Then
+    Dim J&: For J = 0 To UB(O)
+        O(J) = AddEle(O, O(J)(1) - O(J)(0))
+    Next
+End If
+DyoFTnbr = O
+End Function
+Sub WrtRes(Prim_or_Ay, Resn$, Optional Pseg$, Optional OvrWrt As Boolean)
+Dim Ft$: Ft = FtzRes(Resn, Pseg)
+Dim V: V = Prim_or_Ay
+If IsPrim(V) Then
+    WrtStr V, Ft, OvrWrt
+ElseIf IsArray(V) Then
+    WrtAy V, Ft, OvrWrt
+Else
+    Thw CSub, "Prim_Or_Ay ty er", "TyOf-Prim_Or_Ay", TypeName(Prim_or_Ay)
 End If
 End Sub
-Private Sub XOupOn(Ws As Worksheet, ToSetOn&())
-
-End Sub
-Private Sub XOupOff(Ws As Worksheet, ToSetOff&())
-
-End Sub
-Private Function XEptRny(FmRno&, ToRno&, CFny$(), CSel() As Aset) As Long()
-
+Function LyzRes(Resn$, Optional Pseg$) As String()
+LyzRes = LyzFt(FtzRes(Resn, Pseg))
 End Function
-Private Function XActRny(Lo As ListObject) As Long()
-
+Function ResHom$()
+ResHom = AddFdrEns(TmpHom, "Res")
 End Function
+Function FtzRes$(Resn$, Optional Pseg$)
+'Fm Pseg : :Pseg: is :Fdr joined by $PthSep.  No $PthSep in front and at end
+'Fm Resn : :Resn: is :Fn under :ResHom @Pseg
+FtzRes = AddFdrEns(ResHom, Pseg) & Resn
+End Function
+Function RnyzSamp() As Long()
+RnyzSamp = IntozAy(EmpLngAy, LyzRes("RnyzSamp"))
+End Function
+Function ColontAy(L&()) As String()
+ColontAy = ColontAyzFT(DyoFTnbr(L))
+End Function
+Function ColontAyzFT(DyoFTnbr()) As String()
+'Ret : :Colont: is #Colon-Term#
+Dim FTnbr: For Each FTnbr In Itr(DyoFTnbr)
+    PushI ColontAyzFT, FTnbr(0) & ":" & FTnbr(1)
+Next
+End Function
+Function EntRzWsRny(Ws As Worksheet, Rny&()) As Range
+Dim S$: S = JnComma(ColontAy(Rny))
+S = "88:90,92:271"
+Set EntRzWsRny = Ws.Range(S).EntireRow
+End Function
+
+Sub SetViszWsRny(Ws As Worksheet, Rny&(), Vis As Boolean)
+If Si(Rny) = 0 Then Exit Sub
+#If False Then
+Dim R As Range
+Dim Rno: For Each Rno In Itr(Rny)
+    Set R = Ws.Rows(Rno)
+    R.EntireRow.Hidden = Not Vis
+Next
+#Else
+EntRzWsRny(Ws, Rny).Hidden = Not Vis
+#End If
+End Sub
+
+Sub Z_BrwNumAy()
+BrwNumAy RnyzSamp, EiWiCntCol
+End Sub
+
+Sub BrwNumAy(SrtedNumAy, Optional CntCol As EmCntCol)
+BrwAy FmtNumAy(SrtedNumAy, CntCol)
+End Sub
+
+Function FmtNumAy(SrtedNumAy, Optional CntCol As EmCntCol = EiWiCntCol) As String()
+FmtNumAy = FmtDrs(DrszFTnbr(SrtedNumAy, CntCol))
+End Function
+Function FmtFnyPair(A As RnyPair, Optional Nm$) As String()
+Dim B As New Bfr
+B.Box Nm & ":RnyPair"
+B.ULin "A-Rny"
+B.Var FmtNumAy(A.A)
+B.ULin "B-Rny"
+B.Var FmtNumAy(A.B)
+FmtFnyPair = B.Ly
+End Function
+Sub SetVis(Ws As Worksheet, VisHid As RnyPair)
+Stop
+SetViszWsRny Ws, VisHid.A, True
+SetViszWsRny Ws, VisHid.B, False
+End Sub
+
+Function VisAyzRg(R As Range) As Boolean()
+'Ret : #Vis-Array-Fm-Rg# ! ret a boolean array with true means visible and false means hidden of each row stated in @R.
+'                        ! the ix of the @Ret is row no.
+Dim RFm&: RFm = R.Row
+Dim RTo&: RTo = R2zRg(R)
+Dim O() As Boolean: ReDim O(RFm To RTo)
+Dim Rg As Range: For Each Rg In RgC(R, 1)
+    With Rg
+        O(.Row) = Not .EntireRow.Hidden
+    End With
+Next
+VisAyzRg = O
+End Function
+
+Private Function XVis(Ept() As Boolean, Act() As Boolean) As RnyPair
+'Fm Ept :  #Ept-Rny-Vis      ! The ix is Rno of @Lo
+'Fm Act :  #Act-Rny-Vis      ! The ix is Rno of @Lo
+'Ret    :  #Vis-Hid-Rny-Pair ! %Vis:RnyPair.A is Vis and .B is Hid @@
+'Fm Ept : #Visible-Array#
+'Fm Act : #Visible-Array#
+'Ret    : @Ret.A is visible, @Ret.B is hidden
+Dim Vis&(), Hid&() ' :Rno:
+Dim R&: For R = LBound(Ept) To UBound(Ept)
+    Dim E&: E = Ept(R)
+    Dim A&: A = Act(R)
+    Select Case True
+    Case E And Not A: PushI Vis, R
+    Case Not E And A: PushI Hid, R
+    End Select
+Next
+XVis.A = Vis
+XVis.B = Hid
+'Insp "QXls_Cmd_ApplyFilter.XVis", "Inspect", "Oup(XVis) Ept Act", "NoFmtr(RnyPair)", "NoFmtr(() As Boolean)", "NoFmtr(() As Boolean)": Stop
+End Function
+
 Private Function XNsFny(CSel() As Aset, CFny$()) As String()
 'Fm CSel :  # Cri-Sel ! aft the Cri apply, what val in col-vset has been selected
-'        :            ! [CFny CCol CSet] hav sam nbr of ele
-'        :            ! ele in @CSel may have no ele, it will consider as warning, need to rpt by
-'        :            ! by bdr er all the cri cell.
+'                     ! [CFny CCol CSet] hav sam nbr of ele
+'                     ! ele in @CSel may have no ele, it will consider as warning, need to rpt by
+'                     ! by bdr er all the cri cell.
 'Fm CFny :  # Cri-Fny ! The Fny with cri entered
 'Ret     :            ! What CFny selecting no rec @@
 Dim I, J%: For Each I In CSel
@@ -171,7 +666,7 @@ Dim J%: For J = 0 To MinUB(Rg, Cmt)
 Next
 End Sub
 
-Sub Z_SetCmt()
+Private Sub Z_SetCmt()
 Dim R As Range: Set R = A1zWs(CWs)
 SetCmt R, "lskdfjsdlfk"
 End Sub
@@ -190,90 +685,31 @@ If C.text = Cmt Then Exit Sub
 C.text Cmt
 End Sub
 
-Sub Z_BdrEr()
+Private Sub Z_BdrEr()
 BdrEr CWs.Range("C2"), "Red"
 End Sub
 
-Sub BdrEr(R As Range, Optional ColrNm$ = "Red")
-R.BorderAround xlContinuous, xlMedium, Color:=Colr(ColrNm)
-End Sub
-
-Sub BdrErzAy(RgAy() As Range, Optional ColrNm$ = "Red")
-Dim R: For Each R In Itr(RgAy)
-    BdrEr CvRg(R), ColrNm
-Next
-End Sub
-
-Function XCSel(CCol() As Aset, CFny$(), Cri As Drs) As Aset()
-'Fm CCol :                     # Cri-Col ! The col-vset with cri entered
-'Fm CFny :                     # Cri-Fny ! The Fny with cri entered
-'Fm Cri  : F Op V1 V2 Patn Sim           ! All-IsEr = false
-'Ret     :                     # Cri-Sel ! aft the Cri apply, what val in col-vset has been selected
-'        :                               ! [CFny CCol CSet] hav sam nbr of ele
-'        :                               ! ele in @CSel may have no ele, it will consider as warning, need to rpt by
-'        :                               ! by bdr er all the cri cell. @@
-Dim U%: U = UB(CCol)
-If U = -1 Then Exit Function
-Dim O() As Aset: ReDim O(U)
-Dim J%, F: For Each F In CFny
-    Dim FCri As Drs: FCri = ColEqE(Cri, "F", F) ' Op V1 V2 Patn T
-    Set O(J) = XCSelC(CCol(J), F, FCri)
-    J = J + 1
-Next
-XCSel = O
-'Insp "QXls_Cmd_ApplyFilter.XCSel", "Inspect", "Oup(XCSel) CCol CFny Cri", "NoFmtr(Aset())", "NoFmtr(() As Aset)", CFny, LinzDrs(Cri): Stop
-End Function
-
-Private Function XCSelC(Col As Aset, F, FCri As Drs) As Aset
-Dim Op As EmOp, V1, V2, Patn$, T As EmSimTy, Re As RegExp
-Set XCSelC = New Aset
-Dim Vy(): Vy = Col.Av
-Dim CriDr: For Each CriDr In FCri.Dry
-    If Si(Vy) = 0 Then Exit For
-    AsgAp CriDr, Op, V1, V2, Patn, T
-    Set Re = RegExp(Patn)
-    Vy = XCSelVy(Vy, Op, V1, V2, Re, T)
-Next
-Set XCSelC = AsetzAy(Vy)
-End Function
-
-Function VsetzLc(Lc As ListColumn) As Aset
-Set VsetzLc = AsetzAy(ColzLc(Lc))
-End Function
-
-Function VsetAyzLo(Lo As ListObject, Fny$()) As Aset()
-Dim F: For Each F In Itr(Fny)
-    Dim Lc As ListColumn: Set Lc = Lo.ListColumns(F)
-    Dim Aset As Aset:   Set Aset = VsetzLc(Lc)
-    PushObj VsetAyzLo, Aset
-Next
-End Function
 
 Private Function XCriBrk(CriCell As Drs) As Drs
-'Fm CriCell : F R C CriCell
-'Ret        : F R C Op V1 V2 Patn T1 IsEr Msg @@
-Dim Dr, Dry(): For Each Dr In Itr(CriCell.Dry)
-    Dim CriVal: CriVal = Pop(Dr)          ' The cell value with criteria val
-    Dim CriAv:   CriAv = XCriAvzC(CriVal) ' Op V1 V2 Patn T1 IsEr Msg        ! brk the criteria str in these 7 values
-    PushIAy Dr, CriAv
-    PushI Dry, Dr
+'Fm CriCell : F R C CriCell                ! *CriCell is cri-cell-val
+'Ret        : F R C Op V1 V2 Patn IsEr Msg @@
+Dim Dr, Dy(): For Each Dr In Itr(CriCell.Dy)
+    Dim CriCellVal: CriCellVal = Pop(Dr)          ' The cell value with criteria val
+    Dim CriDr:   CriDr = XCriDrzCellVal(CriCellVal) ' Op V1 V2 Patn IsEr Msg        ! brk the criteria str in these 6 values
+    If Si(CriDr) <> 6 Then Stop
+    PushIAy Dr, CriDr
+    PushI Dy, Dr
 Next
-XCriBrk = DrszFF("F R C Op V1 V2 Patn Sim IsEr Msg", Dry)
-'Insp "QXls_Cmd_ApplyFilter.XCriBrk", "Inspect", "Oup(XCriBrk) CriCell", LinzDrs(XCriBrk), LinzDrs(CriCell): Stop
+XCriBrk = DrszFF("F R C Op V1 V2 Patn IsEr Msg", Dy)
+'Insp "QXls_Cmd_ApplyFilter.XCriBrk", "Inspect", "Oup(XCriBrk) CriCell", FmtDrs(XCriBrk), FmtDrs(CriCell): Stop
 End Function
 
-Private Function XCSelVy(Vy(), Op As EmOp, V1, V2, Re As RegExp, T As EmSimTy) As Variant()
-Dim V: For Each V In Vy
-    If XIsSel(V, Op, V1, V2, Re, T) Then
-        PushI XCSelVy, V
-    End If
-Next
-End Function
-
-Private Function XIsSel(V, Op As EmOp, V1, V2, Re As RegExp, T1 As EmSimTy) As Boolean
+Private Function XIsSel(V, Op As EmOp, V1, V2, Re As RegExp) As Boolean
+'Ret : If @V is selected by @*
 On Error GoTo X
 Dim O As Boolean
 Select Case True
+Case Op = EiPatn: O = Re.Test(V)
 Case Op = EiBET:  O = IsBet(V, V1, V2)
 Case Op = EiNBET: O = Not IsBet(V, V1, V2)
 Case Op = EiGE:   O = V >= V1
@@ -284,50 +720,50 @@ Case Op = EiLIS:  O = HasEle(V1, V)
 Case Op = EiNLIS: O = Not HasEle(V1, V)
 Case Op = EiNE:   O = V <> V1
 Case Op = EiEQ:   O = V = V1
-Case Op = EiPatn: O = Re.Test(V)
 Case Else: Thw CSub, "Op error"
 End Select
 XIsSel = O
 Exit Function
 X: Dim E$: E = Err.Description
-   Inf CSub, "Runtime er", "Er V-To-Be-Select Op V1 V2 Patn T1", E, V, Op, V1, V2, Re.Pattern, T1
+   Inf CSub, "Runtime er", "Er V-To-Be-Select Op V1 V2 Patn", E, V, Op, V1, V2, Re.Pattern
 End Function
 
 Private Function XCriCell(Fny$(), CriRg As Range) As Drs
 'Fm Fny : from Lo
-'Ret    : F R C CriCell @@
+'Ret    : F R C CriCell ! *CriCell is cri-cell-val @@
 Dim Sq(): Sq = CriRg.Value
 Dim CriCol()
-Dim C%, F, Dry(): For Each F In Fny
+Dim C%, F, Dy(): For Each F In Fny
     C = C + 1
     CriCol = ColzSq(Sq, C)
     Dim R%: R = 0
     Dim CriCell: For Each CriCell In CriCol
         R = R + 1
         If Not IsEmpty(CriCell) Then
-            PushI Dry, Array(F, R, C, CriCell)
+            PushI Dy, Array(F, R, C, CriCell)
         End If
     Next
 Next
-XCriCell = DrszFF("F R C CriCell", Dry)
-'Insp "QXls_Cmd_ApplyFilter.XCriCell", "Inspect", "Oup(XCriCell) Fny CriRg", LinzDrs(XCriCell), Fny, "NoFmtr(Range)": Stop
+XCriCell = DrszFF("F R C CriCell", Dy)
+'Insp "QXls_Cmd_ApplyFilter.XCriCell", "Inspect", "Oup(XCriCell) Fny CriRg", FmtDrs(XCriCell), Fny, "NoFmtr(Range)": Stop
 End Function
 
-Private Function XCriAv(Op As EmOp, V1, Optional V2, Optional Patn$, Optional IsEr As Boolean, Optional Msg$) As Variant()
-XCriAv = Array(Op, V1, V2, Patn, SimTy(V1), IsEr, Msg)
+Private Function XCriDr(Op As EmOp, V1, Optional V2, Optional Patn$, Optional IsEr As Boolean, Optional Msg$) As Variant()
+XCriDr = Array(Op, V1, V2, Patn, IsEr, Msg)
 End Function
 
-Private Function XCriAvzC(CriVal)
-'Fm CriVal : The cell value with criteria val @@
-Dim V: V = CriVal
+Private Function XCriDrzCellVal(CriCellVal)
+'Fm CriVal : The cell value with criteria val
+'Ret : DrOf Op-V1-V2-Patn-IsEr-Msg
+Dim V: V = CriCellVal
 Dim T As EmSimTy: T = SimTy(V)
 Dim O()
 Select Case T
-Case EiYes, EiDte, EiNbr: O = XCriAv(EiEQ, V)
-Case EiStr:               O = XCriAvzStr(CStr(V))
+Case EiYes, EiDte, EiNum: O = XCriDr(EiEQ, V)
+Case EiStr:               O = XCriDrzStr(CStr(V))
 End Select
-XCriAvzC = O
-'Insp "QXls_Cmd_ApplyFilter.XCriAv", "Inspect", "Oup(XCriAv) CriVal", XCriAv, CriVal: Stop
+XCriDrzCellVal = O
+'Insp "QXls_Cmd_ApplyFilter.XCriDr", "Inspect", "Oup(XCriDr) CriVal", XCriDr, CriVal: Stop
 End Function
 
 Private Function XShfOp(OStr$) As EmOp
@@ -380,46 +816,47 @@ X2:
     XShfOp = O: OStr = Mid(OStr, 3)
 End Function
 
-Private Function XCriAvzBet(Op As EmOp, IsStr As Boolean, S$) As Variant()
+Private Function XCriDrzBet(Op As EmOp, IsStr As Boolean, S$) As Variant()
 Dim V1$, V2$: AsgTRst S, V1, V2
 Dim O()
 Select Case True
-Case IsStr:                       O = XCriAv(Op, V1, V2)
-Case IsNbrzS(V1) And IsNbrzS(V2): O = XCriAv(Op, CDbl(V1), CDbl(V2))
-Case IsDtezS(V1) And IsNbrzS(V2): O = XCriAv(Op, CDate(V1), CDate(V2))
-Case Else:                        O = XCriAv(Op, V1, V2)
+Case IsStr:                       O = XCriDr(Op, V1, V2)
+Case IsNumzS(V1) And IsNumzS(V2): O = XCriDr(Op, CDbl(V1), CDbl(V2))
+Case IsDtezS(V1) And IsNumzS(V2): O = XCriDr(Op, CDate(V1), CDate(V2))
+Case Else:                        O = XCriDr(Op, V1, V2)
 End Select
-If V1 > V2 Then Inf CSub, "V1 cannot > V2", "Ty V1 V2", TypeName(V1), V1, V2: Exit Function
-XCriAvzBet = O
+If V1 > V2 Then Inf CSub, "V1 cannot > V2", "V1-TyNm V1 V2", TypeName(V1), V1, V2: Exit Function
+XCriDrzBet = O
 End Function
 
-Private Function XCriAvzLis(Op As EmOp, IsStr As Boolean, S$) As Variant()
+Private Function XCriDrzLis(Op As EmOp, IsStr As Boolean, S$) As Variant()
 Dim Sy$(): Sy = SyzSS(S)
-If IsDteSy(Sy) Then XCriAvzLis = XCriAv(Op, DteAyzSy(Sy)): Exit Function
-If IsDblSy(Sy) Then XCriAvzLis = XCriAv(Op, DblAyzSy(Sy)): Exit Function
-XCriAvzLis = XCriAv(Op, Sy)
+If IsDteSy(Sy) Then XCriDrzLis = XCriDr(Op, DteAyzSy(Sy)): Exit Function
+If IsDblSy(Sy) Then XCriDrzLis = XCriDr(Op, DblAyzSy(Sy)): Exit Function
+XCriDrzLis = XCriDr(Op, Sy)
 End Function
 
-Private Function XCriAvzSng(Op As EmOp, IsStr As Boolean, S$) As Variant()
+Private Function XCriDrzSng(Op As EmOp, IsStr As Boolean, S$) As Variant()
 Dim A$: A = Trim(S)
 If IsStr Then
-    XCriAvzSng = XCriAv(Op, S)
+    XCriDrzSng = XCriDr(Op, S)
     Exit Function
 End If
 If IsDtezS(S) Then
     Dim D As Date: D = A
-    XCriAvzSng = XCriAv(Op, D)
+    XCriDrzSng = XCriDr(Op, D)
     Exit Function
 End If
 
-If IsNbrzS(S) Then
+If IsNumzS(S) Then
     Dim Dbl#: Dbl = A
-    XCriAvzSng = XCriAv(Op, Dbl)
+    XCriDrzSng = XCriDr(Op, Dbl)
     Exit Function
 End If
-XCriAvzSng = XCriAv(Op, A)
+XCriDrzSng = XCriDr(Op, A)
 End Function
-Private Function XCriAvzStr(S$) As Variant()
+Private Function XCriDrzStr(S$) As Variant()
+'Ret : DrOf Op V1 V2 Patn IsEr Msg
 Dim Op As EmOp: Op = XShfOp(S)
 If S = "" Then
     Inf CSub, "S should be blank"
@@ -429,34 +866,16 @@ Dim L$: L = S
 Dim IsStr As Boolean: If Op <> EiPatn Then If ShfPfx(L, "'") Then IsStr = True
 L = Trim(L)
 Select Case Op
-Case EiBET, EiNBET:                      XCriAvzStr = XCriAvzBet(Op, IsStr, L)
-Case EiLE, EiLT, EiGT, EiGE, EiNE, EiEQ: XCriAvzStr = XCriAvzSng(Op, IsStr, L)
-Case EiLIS, EiNLIS:                      XCriAvzStr = XCriAvzLis(Op, IsStr, L)
-Case EiPatn:                             XCriAvzStr = XCriAv(Op, Empty, Patn:=L)
-Case Else:                               XCriAvzStr = XCriAvzEr("Invalid EmOp from CellVal")
+Case EiBET, EiNBET:                      XCriDrzStr = XCriDrzBet(Op, IsStr, L)
+Case EiLE, EiLT, EiGT, EiGE, EiNE, EiEQ: XCriDrzStr = XCriDrzSng(Op, IsStr, L)
+Case EiLIS, EiNLIS:                      XCriDrzStr = XCriDrzLis(Op, IsStr, L)
+Case EiPatn:                             XCriDrzStr = XCriDr(Op, Empty, Patn:=L)
+Case Else:                               XCriDrzStr = XCriDrzEr("Invalid EmOp from CellVal")
 End Select
 End Function
-Private Function XCriAvzEr(Msg$) As Variant()
-XCriAvzEr = XCriAv(EiNop, "", IsEr:=True, Msg:=Msg)
+Private Function XCriDrzEr(Msg$) As Variant()
+XCriDrzEr = XCriDr(EiNop, "", IsEr:=True, Msg:=Msg)
 End Function
-Private Sub XApplyzDif(KSetzDif As Dictionary, Lo As ListObject)
-'Fm Fld : Fld [V]  'Idx is the filter index
-'Ret    : For each F in Fld, apply the filter
-Dim K: For Each K In KSetzDif.Keys
-    XApplyzLc Lo, K, CvAset(KSetzDif(K))
-Next
-End Sub
-
-Private Sub XApplyzLc(Lo As ListObject, F, S As Aset)
-Dim Fld%:  Fld = Lo.ListColumns(F).Index
-Dim Sel(): Sel = S.Av
-SetOnFilter Lo
-Stop
-If Si(Sel) > 0 Then 'If no data is selected
-Lo.Range.AutoFilter Fld, Sel, xlFilterValues
-End If
-Stop
-End Sub
 
 Private Function NotUse_XAsk$()
 Dim T$: T = "Filter"
@@ -474,4 +893,19 @@ End Select
 NotUse_XAsk = O
 End Function
 
-
+Private Function XCCri(Cri As Drs, CCny%())
+'Fm Cri  : Op V1 V2 Patn C F          ! All-IsEr = false
+'Fm CCny :                   #Cri-Cny ! #With-Cri-Colno-Ay. The Cno with cri entered
+'Ret     :                   #Cri-Ay  ! 1-%CCriAy-ele is 1-DyOf-[Op V1 V2 Patn C F]
+'                                     ! coming from %Cri, where *C is Cno and *F is Fldn they are for ref
+'                                     ! The *I-th-DyOf-%CCriAy will have sam-*C-and-sam-*F.  The *C will eq to %CCny(*I)
+'                                     ! %CCriAy has sam of ele as %CCny
+'                                     ! %CCriAy is used to sel %CCol in &XVisI @@
+'Insp "QXls_Cmd_ApplyFilter.XCCriAy", "Inspect", "Oup(XCCriAy) Cri CCny", XCCriAy, FmtDrs(Cri), CCny: Stop
+Dim O()
+    Dim C: For Each C In CCny
+        PushI O, DwEq(Cri, "C", C).Dy
+    Next
+XCCri = O
+'Insp "QXls_Cmd_ApplyFilter.XCCri", "Inspect", "Oup(XCCri) Cri CCny", XCCri, FmtDrs(Cri), CCny: Stop
+End Function

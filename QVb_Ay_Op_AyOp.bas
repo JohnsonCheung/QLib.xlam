@@ -15,21 +15,25 @@ For Each I In Itr(Ay)
 Next
 End Function
 
-Function AyeBlnkEleAtEnd(A$()) As String()
+Function AeBlnkEleAtEnd(A$()) As String()
 If Si(A) = 0 Then Exit Function
-If LasEle(A) <> "" Then AyeBlnkEleAtEnd = A: Exit Function
+If LasEle(A) <> "" Then AeBlnkEleAtEnd = A: Exit Function
 Dim J%
 For J = UB(A) To 0 Step -1
     If Trim(A(J)) <> "" Then
         Dim O$()
         O = A
         ReDim Preserve O(J)
-        AyeBlnkEleAtEnd = O
+        AeBlnkEleAtEnd = O
         Exit Function
     End If
 Next
 End Function
 
+Function AddAy(A, B)
+AddAy = A
+PushIAy AddAy, B
+End Function
 Function IntersectAy(A, B)
 IntersectAy = ResiU(A)
 If Si(A) = 0 Then Exit Function
@@ -177,11 +181,11 @@ For Each I In Itr(Ay)
 Next
 End Function
 
-Function AyeSngQRmk(Ay) As String()
+Function AeSngQRmk(Ay) As String()
 Dim I, S$
 For Each I In Itr(Ay)
     S = I
-    If Not IsSngQRmk(S) Then PushI AyeSngQRmk, S
+    If Not IsSngQRmk(S) Then PushI AeSngQRmk, S
 Next
 End Function
 

@@ -12,14 +12,14 @@ Function WrdCntg$(S)
 Dim NW&, ND&, Sy$()
 Sy = WrdSy(S)
 NW = Si(Sy)
-ND = Si(AywDist(Sy))
+ND = Si(AwDist(Sy))
 WrdCntg = FmtQQ("Len: ?|Lines: ?|Words: ?|Distinct Words: ?", Len(S), NLines(S), NW, ND)
 End Function
 Function NWrd&(S)
 NWrd = Si(WrdSy(S))
 End Function
 Function NDistWrd&(S)
-NDistWrd = Si(AywDist(WrdSy(S)))
+NDistWrd = Si(AwDist(WrdSy(S)))
 End Function
 Function WrdCntDic(S) As Dictionary
 Set WrdCntDic = CntDic(WrdSy(S))

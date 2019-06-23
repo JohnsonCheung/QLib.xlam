@@ -3,16 +3,23 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Ens_MthMdy."
-Function MthLinzEnsPrv$(MthLin)
-Const CSub$ = CMod & "MthLinzEnsPrv"
+Sub EnsPrvzNm(Mdn$, Mthn$)
+'Ret : Ens a @Mthn in @Mdn as Private @@
+If Not HasMd(CPj, Mdn, IsInf:=True) Then Exit Sub
+Dim M As CodeModule: Set M = Md(Mdn)
+Dim L&: L = MthLnozMM(M, Mthn, IsInf:=True)
+
+End Sub
+Function EnsPrv$(MthLin)
+Const CSub$ = CMod & "EnsPrv"
 If Not IsLinMth(MthLin) Then Thw CSub, "Given MthLin is not MthLin", "Lin", MthLin
-MthLinzEnsPrv = "Private " & RmvMdy(MthLin)
+EnsPrv = "Private " & RmvMdy(MthLin)
 End Function
 
-Function MthLinzEnsPub$(MthLin)
-Const CSub$ = CMod & "MthLinzEnsPub"
+Function EnsPub$(MthLin)
+Const CSub$ = CMod & "EnsPub"
 If Not IsLinMth(MthLin) Then Thw CSub, "Given MthLin is not MthLin", MthLin
-MthLinzEnsPub = RmvMdy(MthLin)
+EnsPub = RmvMdy(MthLin)
 End Function
 
 Sub EnsPjPrvZ()
@@ -52,13 +59,13 @@ Asg Itr(LnoAyOfPubZ(M)), LnoItrOfPubZ
 End Function
 
 
-Private Function MthLinzEnsMdy$(OldMthLin, ShtMdy$)
-Const CSub$ = CMod & "MthLinzEnsMdy"
+Private Function EnsMdy$(OldMthLin, ShtMdy$)
+Const CSub$ = CMod & "EnsMdy"
 Dim L$: L = RmvMdy(OldMthLin)
     Select Case ShtMdy
-    Case "Pub", "": MthLinzEnsMdy = L
-    Case "Prv":     MthLinzEnsMdy = "Private " & L
-    Case "Frd":     MthLinzEnsMdy = "Friend " & L
+    Case "Pub", "": EnsMdy = L
+    Case "Prv":     EnsMdy = "Private " & L
+    Case "Frd":     EnsMdy = "Friend " & L
     Case Else
         Thw CSub, "Given parameter [ShtMdy] must be ['' Pub Prv Frd]", "ShtMdy", ShtMdy
     End Select

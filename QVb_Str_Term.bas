@@ -64,17 +64,6 @@ Function ShfCnst(OLin$) As Boolean
 ShfCnst = ShfT1(OLin) = "Const"
 End Function
 
-Function ShfCnstLin$(Src$())
-If Si(Src) = 0 Then Exit Function
-Dim L$: L = RmvMdy(Src(0))
-'IsLinCnst
-Stop
-'ShfCnstLin = ShfT1(OLin) = "Const"
-End Function
-
-Function ShfDim(OLin$) As Boolean
-ShfDim = ShfT1(OLin) = "Dim"
-End Function
 Function ShfT1$(OLin$)
 ShfT1 = T1(OLin)
 OLin = RmvT1(OLin)

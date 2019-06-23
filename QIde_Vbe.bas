@@ -10,14 +10,14 @@ End Function
 Sub DmpIsPjSav()
 DmpDrs DrszIsPjSav(CVbe)
 End Sub
-Function Dry_IsPjSav(A As Vbe) As Variant()
+Function Dy_IsPjSav(A As Vbe) As Variant()
 Dim I As VBProject
 For Each I In A.VBProjects
-    PushI Dry_IsPjSav, Array(I.Saved, I.Name, I.GenFileName)
+    PushI Dy_IsPjSav, Array(I.Saved, I.Name, I.GenFileName)
 Next
 End Function
 Function DrszIsPjSav(A As Vbe) As Drs
-DrszIsPjSav = DrszFF("IsSav Pjn GenFfn", Dry_IsPjSav(A))
+DrszIsPjSav = DrszFF("IsSav Pjn GenFfn", Dy_IsPjSav(A))
 End Function
 
 Function PjzV(A As Vbe, Pjn$) As VBProject
@@ -31,10 +31,10 @@ For Each I In Vbe.VBProjects
 Next
 End Function
 
-Function MdDryzV(A As Vbe) As Variant()
+Function MdDyoV(A As Vbe) As Variant()
 Dim C, Pnm$, P As VBProject
 For Each P In A.VBProjects
-    Push MdDryzV, MdDr(C.CodeModule)
+    Push MdDyoV, MdDr(C.CodeModule)
 Next
 End Function
 Function MdDr(M As CodeModule) As Variant()

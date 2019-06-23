@@ -5,46 +5,46 @@ Private Const CMod$ = "MDta_Ay."
 Private Const Asm$ = "QDta"
 
 Function DtzAy(Ay, Optional FldNm$ = "Itm", Optional DtNm$ = "Ay") As Dt
-Dim Dry(), J&
+Dim Dy(), J&
 For J = 0 To UB(Ay)
-    PushI Dry, Array(Ay(J))
+    PushI Dy, Array(Ay(J))
 Next
-DtzAy = Dt(DtNm, Sy(FldNm), Dry)
+DtzAy = Dt(DtNm, Sy(FldNm), Dy)
 End Function
 
-Function DryGpCntzAy(Ay) As Variant()
+Function GRxyzCyCntzAy(Ay) As Variant()
 If Si(Ay) = 0 Then Exit Function
 Dim Dup, O(), X, T&, Cnt&
-Dup = AywDup(Ay)
+Dup = AwDup(Ay)
 For Each X In Itr(Dup)
     Cnt = AyItmCnt(Ay, X)
     Push O, Array(X, AyItmCnt(Ay, X))
     T = T + Cnt
 Next
 Push O, Array("~Tot", T)
-DryGpCntzAy = O
+GRxyzCyCntzAy = O
 End Function
 
-Function DryGpCntzAyWhDup(A) As Variant()
-DryGpCntzAyWhDup = DrywColGt(DryGpCntzAy(A), 1, 1)
+Function GRxyzCyCntzAyWhDup(A) As Variant()
+GRxyzCyCntzAyWhDup = DywColGt(GRxyzCyCntzAy(A), 1, 1)
 End Function
-Sub BrwDryGpCntzAy(Ay)
-Brw LyzDryGpCntzAy(Ay)
+Sub BrwGRxyzCyCntzAy(Ay)
+Brw JnGRxyzCyCntzAy(Ay)
 End Sub
 
-Function LyzDryGpCntzAy(Ay) As String()
-LyzDryGpCntzAy = LyzDry(DryGpCntzAy(Ay), Fmt:=EiSSFmt)
+Function JnGRxyzCyCntzAy(Ay) As String()
+JnGRxyzCyCntzAy = JnDy(GRxyzCyCntzAy(Ay))
 End Function
 
-Private Sub Z_LyzDryGpCntzAy()
+Private Sub Z_JnGRxyzCyCntzAy()
 Dim Ay()
-Brw LyzDryGpCntzAy(Ay)
+Brw JnGRxyzCyCntzAy(Ay)
 End Sub
 
-Private Sub Z_CntDryzAy()
+Private Sub Z_CntDyoAy()
 Dim A$(): A = SplitSpc("a a a b c b")
-Dim Act(): Act = CntDryzAy(A)
+Dim Act(): Act = CntDyoAy(A)
 Dim Exp(): Exp = Array(Array("a", 3), Array("b", 2), Array("c", 1))
 Stop
-'AssEqDry Act, Exp
+'AssEqDy Act, Exp
 End Sub

@@ -13,21 +13,22 @@ Dim L&: L = Len(S)
 If L > 64 Then Exit Function
 Dim J%
 For J = 2 To L
-   If Not IsNmChr(Mid(S, J, 1)) Then Exit Function
+   If Not IsChrzNm(Mid(S, J, 1)) Then Exit Function
 Next
 IsNm = True
 End Function
 
-Function IsNmChr(A$) As Boolean
-IsNmChr = True
-If IsLetter(A) Then Exit Function
-If A = "_" Then Exit Function
-If IsDigit(A) Then Exit Function
-IsNmChr = False
+Function IsChrzNm(C$) As Boolean
+IsChrzNm = True
+If IsLetter(C) Then Exit Function
+If C = "_" Then Exit Function
+If IsDigit(C) Then Exit Function
+IsChrzNm = False
 End Function
-Function IsDotNmChr(A$) As Boolean
-If IsNmChr(A) Then IsDotNmChr = True: Exit Function
-IsDotNmChr = A = "."
+
+Function IsChrDotNm(A$) As Boolean
+If IsChrzNm(A) Then IsChrDotNm = True: Exit Function
+IsChrDotNm = A = "."
 End Function
 
 Function WhNmzS(WhStr$) As WhNm
@@ -35,20 +36,20 @@ Dim P As Dictionary: Set P = Lpm(WhStr, "-Sw Prv Pub Frd Sub Fun Prp Get Set Let
 'WhNmzS = WhNmzP(P,WhNm(NmPfx)
 End Function
 
-Function ChrQte$(S, Chr$)
-ChrQte = Chr & S & Chr
+Function QtezChr$(S, Chr$)
+QtezChr = Chr & S & Chr
 End Function
 
-Function SpcQte$(S)
-SpcQte = ChrQte(S, " ")
+Function QtezSpc$(S)
+QtezSpc = QtezChr(S, " ")
 End Function
 
-Function DblQte$(S)
-DblQte = ChrQte(S, vbDblQte)
+Function QtezDblQ$(S)
+QtezDblQ = QtezChr(S, vbQtezDblQ)
 End Function
 
 Function SngQte$(S)
-SngQte = ChrQte(S, vbSngQte)
+SngQte = QtezChr(S, vbSngQte)
 End Function
 
 Function HitRe(S, Re As RegExp) As Boolean

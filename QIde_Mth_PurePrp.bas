@@ -6,12 +6,12 @@ Private Const Asm$ = "QIde"
 
 Function DMthPrpWiPm() As Drs
 Dim A As Drs: A = AddColzHasPm(DMthPrp)
-DMthPrpWiPm = ColEqE(A, "HasPm", True)
+DMthPrpWiPm = DwEqExl(A, "HasPm", True)
 End Function
 
 Property Get DMthPrpWoPm() As Drs
 Dim A As Drs: A = AddColzHasPm(DMthPrp)
-DMthPrpWoPm = ColEqE(A, "HasPm", False)
+DMthPrpWoPm = DwEqExl(A, "HasPm", False)
 End Property
 
 Function LetSetPrpNset(MthLinAy$()) As Aset

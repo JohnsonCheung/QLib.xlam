@@ -49,7 +49,7 @@ L = RmvFstChr(Lbl)
 For J = 0 To UB(Ay)
     If Ay(J) = L Then
         ShfBool = True
-        OAy = AyeEleAt(Ay, J)
+        OAy = AeEleAt(Ay, J)
         Exit Function
     End If
 Next
@@ -65,7 +65,7 @@ For Each I In Itr(Ay)
     With Brk2(S, "=")
         If .S1 = Lbl Then
             ShfTxt = .S2
-            OAy = AyeEleAt(Ay, J)
+            OAy = AeEleAt(Ay, J)
             Exit Function
         End If
     End With

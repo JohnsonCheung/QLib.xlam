@@ -13,6 +13,12 @@ End Sub
 Function CUsr$()
 CUsr = Environ$("USERNAME")
 End Function
+Sub AsgT1Fny(LinOf_T1_Likss, Fny$(), OT1, OFny$())
+Dim Rst$: AsgTRst LinOf_T1_Likss, OT1, Rst
+Dim LikAy$(): LikAy = SyzSS(Rst)
+OFny = AwLikAy(Fny, LikAy)
+End Sub
+
 Sub Asg(Fm, OTo)
 Select Case True
 Case IsObject(Fm): Set OTo = Fm
@@ -166,19 +172,21 @@ End Sub
 Sub B(A, Optional Fnn$, Optional UseVc As Boolean)
 Brw A, Fnn, UseVc
 End Sub
-Sub Brw(A, Optional Fnn$, Optional UseVc As Boolean)
-BrwAy Fmt(A), Fnn, UseVc
+
+Sub Brw(V, Optional Fnn$, Optional UseVc As Boolean)
+BrwAy Fmt(V), Fnn, UseVc
 End Sub
-Function Fmt(A) As String()
+
+Function Fmt(V) As String()
 Select Case True
-Case IsStr(A): Fmt = Sy(A)
-Case IsLinesAy(A): Fmt = FmtLinesAy(A)
-Case IsArray(A): Fmt = SyzAy(A)
-Case IsAset(A):  Fmt = CvAset(A).Sy
-Case IsDic(A): Fmt = FmtDic(CvDic(A), InclValTy:=True, AddIx:=True)
-Case IsEmpty(A): Fmt = Sy("#Empty")
-Case IsNothing(A): Fmt = Sy("#Nothing")
-Case Else: Fmt = Sy("#TypeName:" & TypeName(A))
+Case IsStr(V):     Fmt = Sy(V)
+Case IsLinesAy(V): Fmt = FmtLinesAy(V)
+Case IsArray(V):   Fmt = SyzAy(V)
+Case IsAset(V):    Fmt = CvAset(V).Sy
+Case IsDic(V):     Fmt = FmtDic(CvDic(V), InclValTy:=True, AddIx:=True)
+Case IsEmpty(V):   Fmt = Sy("#Empty")
+Case IsNothing(V): Fmt = Sy("#Nothing")
+Case Else:         Fmt = Sy("#TypeName:" & TypeName(V))
 End Select
 End Function
 Function ValzPatn(Patn$, S)

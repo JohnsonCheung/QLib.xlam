@@ -42,7 +42,7 @@ Dim Mdy$: If Not IsPub Then Mdy = "Private "
 X FmtQQ(C, Mdy, Mthn)
 X "Erase XX"
 Dim I: For Each I In Itr(Ly)
-    Dim L$: L = "X """ & Replace(I, vbDblQte, vb2DblQte) & """"
+    Dim L$: L = "X """ & Replace(I, vbQtezDblQ, vb2QtezDblQ) & """"
     X L
 Next
 X Mthn & " = XX"
@@ -56,20 +56,20 @@ End Function
 Function SycvzMthLy(MthLy$()) As String()
 'Fm SycMthLy :
 If IsSycm(MthLy) Then Thw CSub, "Given MthLy is not Syc.  SycMth must 1. Return String() 2. Ctx is [Erase|X..|Mthn=XX|Erase]", "SycMthLy", MthLy
-Dim L$(): L = AyeLasNEle(AyeFstNEle(MthLy, 2), 2)
+Dim L$(): L = AeLasNEle(AeFstNEle(MthLy, 2), 2)
 Stop
 Erase XX
 Dim I: For Each I In Itr(L)
-    Dim A$: A = Replace(RmvLasChr(Mid(I, 4)), vb2DblQte, vbDblQte)
+    Dim A$: A = Replace(RmvLasChr(Mid(I, 4)), vb2QtezDblQ, vbQtezDblQ)
     X A
 Next
 SycvzMthLy = XX
 End Function
 
 Function TakVbStr$(VbStr$)
-If FstChr(VbStr) <> """" Then Thw CSub, "FstChr of VbStr must be DblQte", "VbStr", VbStr
+If FstChr(VbStr) <> """" Then Thw CSub, "FstChr of VbStr must be QtezDblQ", "VbStr", VbStr
 Dim P%: P = InStr(2, VbStr, """")
-If P = 0 Then Thw CSub, "There is no ending DblQte", "VbStr", VbStr
+If P = 0 Then Thw CSub, "There is no ending QtezDblQ", "VbStr", VbStr
 TakVbStr = Mid(VbStr, 2, P - 2)
 End Function
 Function TakVbStrzSy(Sy$()) As String()
@@ -119,7 +119,7 @@ If Not ShfPfx(L, "Const ") Then Exit Function
 If ShfNm(L) <> SycNm Then Exit Function
 If ShfTyChr(L) = "$" Then Thw CSub, "Given constant name is found, but is not a Str", "ConstLin SycNm", Lin, SycNm
 Dim O$: O = Bet(L, """", """")
-If O = "" Then Thw CSub, "Between DblQte is nothing", "ConstLin SycNm", Lin, SycNm
+If O = "" Then Thw CSub, "Between QtezDblQ is nothing", "ConstLin SycNm", Lin, SycNm
 CnstBrkzLinNm = O
 End Function
 
@@ -133,11 +133,11 @@ Wend
 End Function
 
 Function DCnst(Src$()) As Drs
-Dim Dry()
+Dim Dy()
 Dim Ly$(): Ly = CnstLy(Src)
 Dim L: For Each L In Itr(Ly)
 Next
-DCnst = DrszFF("Mdy Cnstn TyChr Lin", Dry)
+DCnst = DrszFF("Mdy Cnstn TyChr Lin", Dy)
 End Function
 Function Cnstn$(Lin)
 Dim L$: L = Lin
@@ -197,11 +197,11 @@ Function DStrCnstP() As Drs
 DStrCnstP = DStrCnst(SrczP(CPj))
 End Function
 Function DStrCnst(Src$()) As Drs
-Dim ODry(), L
+Dim ODy(), L
 For Each L In Itr(Src)
-    PushISomSi ODry, DrzStrCnst(L)
+    PushISomSi ODy, DrzStrCnst(L)
 Next
-DStrCnst = DrszFF("Cnstn StrVal", ODry)
+DStrCnst = DrszFF("Cnstn StrVal", ODy)
 End Function
 
 Function StrValzCnstLy$(Ly$(), Cnstn$)
@@ -244,7 +244,7 @@ Function CMFunLines$(CMSrcLin)
 If InStr(CMSrcLin, "{") = 0 Then Exit Function
 Dim O$(), Nm$, Pm$, PmOnlyNm$, Ny$(), NyOnlyNm$()
 Nm = T1(CMSrcLin)
-Ny = AywDist(NyzMacro(CMSrcLin))
+Ny = AwDist(NyzMacro(CMSrcLin))
 Pm = JnComma(Ny)
 'NyOnlyNm = TakNm zAy(Ny)
 PmOnlyNm = JnComma(NyOnlyNm)
@@ -329,10 +329,10 @@ Erase XX
 End Property
 Function FtzCnstQNm$(CnstQNm$)
 Dim Mdn, Nm$
-FtzCnstQNm = ConstPrpPth(Mdn) & Nm & ".txt"
+FtzCnstQNm = CnstPrpPth(Mdn) & Nm & ".txt"
 End Function
-Private Function ConstPrpPth$(Mdn)
-ConstPrpPth = AddFdrEns(TmpHom, "ConstPrp", Mdn)
+Private Function CnstPrpPth$(Mdn)
+CnstPrpPth = AddFdrEns(TmpHom & "CnstPrp", Mdn)
 End Function
 
 Function IsLinCnstStr(Lin) As Boolean

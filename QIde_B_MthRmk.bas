@@ -27,16 +27,16 @@ Case Else
 End Select
 Exit Sub
 Ins:
-    Debug.Print "EnsMthRmk: Inserted.  Mthn[" & Mthn & "]"
-    Debug.Print BoxLines(NewRmk)
-    Debug.Print
+    D "EnsMthRmk: Inserted.  Mthn[" & Mthn & "]"
+    D Box(NewRmk)
+    D
     M.InsertLines RLno, NewRmk
     Return
 
 End Sub
 
-Sub EnsMthRmkzS1S2(M As CodeModule, NewRmk As S1S2s)
-Dim Ay() As S1S2: Ay = NewRmk.Ay
+Sub EnsMthRmkzS12(M As CodeModule, NewRmk As S12s)
+Dim Ay() As S12: Ay = NewRmk.Ay
 Dim J%
 For J = 0 To NewRmk.N - 1
     EnsMthRmk M, Ay(J).S1, Ay(J).S2
@@ -85,52 +85,52 @@ Next
 ThwImpossible CSub
 End Function
 
-Sub Z_MthRmkzM()
-Dim M As CodeModule: Set M = Md("QIde_B_MthOp__AlignMthDimzML")
-BrwS1S2s MthRmkzM(M)
+Private Sub Z_MthRmkzM()
+Dim M As CodeModule: Set M = Md("QIde_B_MthOp__AlignMthzML")
+BrwS12s MthRmkzM(M)
 End Sub
 
-Function MthRmkzNy(M As CodeModule, MthNy$()) As S1S2s
+Function MthRmkzNy(M As CodeModule, MthNy$()) As S12s
 Dim S$(): S = Src(M)
 Dim MthIxy&(): MthIxy = MthIxyzSNy(S, MthNy)
 MthRmkzNy = MthRmkzMthIxy(Src(M), MthIxy)
 End Function
 
-Private Function MthRmkzMthIxy(Src$(), MthIxy&()) As S1S2s
-Dim Ix, O As S1S2s: For Each Ix In Itr(MthIxy)
+Private Function MthRmkzMthIxy(Src$(), MthIxy&()) As S12s
+Dim Ix, O As S12s: For Each Ix In Itr(MthIxy)
     Dim R$: R = MthRmkzMthIx(Src, Ix)
     If R <> "" Then
         Dim N$: N = Mthn(Src(Ix))
-        PushS1S2 O, S1S2(N, R)
+        PushS12 O, S12(N, R)
     End If
 Next
 MthRmkzMthIxy = O
 End Function
 
-Function MthRmkP() As S1S2s
+Function MthRmkP() As S12s
 MthRmkP = MthRmkzP(CPj)
 End Function
 
-Sub Z_MthRmkP()
-BrwS1S2s MthRmkP
+Private Sub Z_MthRmkP()
+BrwS12s MthRmkP
 End Sub
 
-Function MthRmkzP(P As VBProject) As S1S2s
+Function MthRmkzP(P As VBProject) As S12s
 Dim C As VBComponent
 For Each C In P.VBComponents
-    Dim A As S1S2s: A = MthRmkzM(C.CodeModule)
-    Dim B As S1S2s: B = AddS1Pfx(A, C.Name & ".")
-    PushS1S2s MthRmkzP, B
+    Dim A As S12s: A = MthRmkzM(C.CodeModule)
+    Dim B As S12s: B = AddS1Pfx(A, C.Name & ".")
+    PushS12s MthRmkzP, B
 Next
 End Function
 
-Function MthRmkzM(M As CodeModule) As S1S2s
+Function MthRmkzM(M As CodeModule) As S12s
 Dim S$(): S = Src(M)
 Dim Ixy&(): Ixy = MthIxy(S)
 MthRmkzM = MthRmkzMthIxy(S, Ixy)
 End Function
 
-Sub Z_EnsMthRmk()
+Private Sub Z_EnsMthRmk()
 'GoSub Z1
 Dim M As CodeModule
 GoSub Z1

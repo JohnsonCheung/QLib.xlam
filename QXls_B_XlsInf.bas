@@ -1,6 +1,8 @@
 Attribute VB_Name = "QXls_B_XlsInf"
 Option Compare Text
 Option Explicit
+Public Const MaxCno% = 16384
+Public Const MaxRno& = 1048576
 Public Const XlsPgmFfn$ = "C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE"
 Public Const DoczLowZ$ = "z when used in Nm, it has special meaning.  It can occur in Cml las-one, las-snd, las-thrid chr, else it is er."
 Public Const DoczNmBrk$ = "NmBrk is z or zx or zxx where z is letter-z and x is lowcase or digit.  NmBrk must be sfx of a cml."
@@ -9,6 +11,7 @@ Enum EmAddgWay ' Adding data to ws way
     EiWcWay
     EiSqWay
 End Enum
+
 Function WszWc(WC As WorkbookConnection) As Worksheet
 Dim Wb As Workbook, Ws As Worksheet
 Set Wb = WC.Parent
@@ -63,8 +66,6 @@ Function LasCno%(A As Worksheet)
 LasCno = LasCell(A).Column
 End Function
 
-
-
 Function RgzWs(A As Worksheet) As Range
 Dim R, C
 With LasCell(A)
@@ -78,9 +79,6 @@ End Function
 Function PtNyzWs(A As Worksheet) As String()
 PtNyzWs = Itn(A.PivotTables)
 End Function
-
-
-
 
 Function WbzWs(A As Worksheet) As Workbook
 Set WbzWs = A.Parent
@@ -223,9 +221,8 @@ Function WcnyzWb(A As Workbook) As String()
 WcnyzWb = Itn(A.Connections)
 End Function
 
-
 Function WcsyzWbOLE(A As Workbook) As String()
-WcsyzWbOLE = SyzOyPrp(WcyzOle(A), PrpPth("Connection"))
+WcsyzWbOLE = SyzOyP(WcyzOle(A), "Connection")
 End Function
 
 Function WszWb(A As Workbook, WsIx) As Worksheet
@@ -310,23 +307,24 @@ If Not InclTot And Not InclHdr Then
     Set RgzLc = R
     Exit Function
 End If
-If InclTot Then Set RgzLc = RgzMoreBelow(R, 1)
-If InclHdr Then Set RgzLc = RgzMoreTop(R, 1)
+If InclTot Then Set RgzLc = RgMoreBelow(R, 1)
+If InclHdr Then Set RgzLc = RgMoreTop(R, 1)
 End Function
 
 
 Function DrszLo(A As ListObject) As Drs
-DrszLo = Drs(FnyzLo(A), DryzLo(A))
+DrszLo = Drs(FnyzLo(A), DyoLo(A))
 End Function
-Function DryzLo(A As ListObject) As Variant()
-DryzLo = DryzSq(SqzLo(A))
+Function DyoLo(A As ListObject) As Variant()
+DyoLo = DyoSq(SqzLo(A))
 End Function
-Function DryRgColAy(Rg As Range, ColIxy) As Variant()
-DryRgColAy = DryzSqCol(SqzRg(Rg), ColIxy)
+
+Function DyzRgCny(Rg As Range, Cny) As Variant()
+DyzRgCny = DyzSqc(SqzRg(Rg), Cny)
 End Function
-Function DryRgzLoCC(Lo As ListObject, CC) As Variant() _
+Function DyzLoCC(Lo As ListObject, CC) As Variant() _
 ' Return as many column as columns in [CC] from Lo
-DryRgzLoCC = DryRgColAy(Lo.DataBodyRange, Ixy(FnyzLo(Lo), CC))
+DyzLoCC = DyzRgCny(Lo.DataBodyRange, Ixy(FnyzLo(Lo), CC))
 End Function
 
 Function DtaAdrzLo$(A As ListObject)
@@ -375,7 +373,7 @@ Function LoNCol%(A As ListObject)
 LoNCol = A.ListColumns.Count
 End Function
 Function LozWs(A As Worksheet, Lon$) As ListObject 'Return LoOpt
-Set LozWs = FstItmzNm(A.ListObjects, Lon)
+Set LozWs = FstzItrNm(A.ListObjects, Lon)
 End Function
 
 Function FstLo(A As Worksheet) As ListObject 'Return LoOpt
@@ -542,9 +540,9 @@ End Property
 
 
 Property Get SampDr_AToJ() As Variant()
-Const Nc% = 10
+Const NC% = 10
 Dim J%
-For J = 0 To Nc - 1
+For J = 0 To NC - 1
     PushI SampDr_AToJ, Chr(Asc("A") + J)
 Next
 End Property
@@ -552,10 +550,10 @@ End Property
 Property Get SampSq1() As Variant()
 Dim O(), R&, C&
 Const NR& = 1000
-Const Nc& = 100
-ReDim O(1 To NR, 1 To Nc)
+Const NC& = 100
+ReDim O(1 To NR, 1 To NC)
 For R = 1 To NR
-For C = 1 To Nc
+For C = 1 To NC
     O(R, C) = R + C
 Next
 Next
@@ -599,7 +597,7 @@ End Function
 Function VbarRgAt(At As Range, Optional AtLeastOneCell As Boolean) As Range
 If IsEmpty(At.Value) Then
     If AtLeastOneCell Then
-        Set VbarRgAt = A1zRg(At)
+        Set VbarRgAt = RgA1(At)
     End If
     Exit Function
 End If
@@ -621,7 +619,7 @@ End Property
 Property Get SampWs() As Worksheet
 Dim O As Worksheet
 Set O = NewWs
-LozDrs SampDrs, WsRC(O, 2, 2)
+LozDrs DoSamp, WsRC(O, 2, 2)
 Set SampWs = O
 ShwWs O
 End Property
@@ -641,11 +639,11 @@ For Each Wb In Xls.Workbooks
 Next
 End Function
 
-Private Sub Z_RgzMoreBelow()
+Private Sub Z_RgMoreBelow()
 Dim R As Range, Act As Range, Ws As Worksheet
 Set Ws = NewWs
 Set R = Ws.Range("A3:B5")
-Set Act = RgzMoreTop(R, 1)
+Set Act = RgMoreTop(R, 1)
 Debug.Print Act.Address
 Stop
 Debug.Print RgRR(R, 1, 2).Address
@@ -665,13 +663,13 @@ Function CvRg(A) As Range
 Set CvRg = A
 End Function
 Function BarHzAt(At As Range) As Range
-Dim A1 As Range: Set A1 = A1zRg(At)
+Dim A1 As Range: Set A1 = RgA1(At)
 If IsEmpty(A1.Value) Then Set BarHzAt = A1: Exit Function
 Dim C2&: C2 = A1.End(xlRight).Column - A1.Column + 1
 Set BarHzAt = RgCRR(A1, 1, 1, C2)
 End Function
 Function BarVzAt(At As Range) As Range
-Dim A1 As Range: Set A1 = A1zRg(At)
+Dim A1 As Range: Set A1 = RgA1(At)
 If IsEmpty(A1.Value) Then Set BarVzAt = A1: Exit Function
 Dim R2&: R2 = A1.End(xlDown).Row - A1.Row + 1
 Set BarVzAt = RgCRR(A1, 1, 1, R2)
@@ -679,8 +677,8 @@ End Function
 Function A1(Ws As Worksheet) As Range
 Set A1 = WsRC(Ws, 1, 1)
 End Function
-Function A1zRg(A As Range) As Range
-Set A1zRg = RgRC(A, 1, 1)
+Function RgA1(A As Range) As Range
+Set RgA1 = RgRC(A, 1, 1)
 End Function
 Function IsA1(A As Range) As Boolean
 If A.Row <> 1 Then Exit Function
@@ -754,8 +752,8 @@ Function NColRg%(A As Range)
 NColRg = A.Columns.Count
 End Function
 
-Function RgzMoreBelow(A As Range, Optional N% = 1)
-Set RgzMoreBelow = RgRR(A, 1, A.Rows.Count + N)
+Function RgMoreBelow(A As Range, Optional N% = 1)
+Set RgMoreBelow = RgRR(A, 1, A.Rows.Count + N)
 End Function
 
 Function LasRow(Lo As ListObject) As Range
@@ -777,10 +775,10 @@ With Lo
 End With
 End Function
 
-Function RgzMoreTop(A As Range, Optional N = 1)
+Function RgMoreTop(A As Range, Optional N = 1)
 Dim O As Range
 Set O = RgRR(A, 1 - N, A.Rows.Count)
-Set RgzMoreTop = O
+Set RgMoreTop = O
 End Function
 
 Function NRowzRg&(A As Range)
@@ -790,7 +788,7 @@ End Function
 Function RgAy(Rg As Range, RC As Drs) As Range()
 'Fm RC : .. R C .. @@
 Dim IxR%, IxC%: AsgIx RC, "R C", IxR, IxC
-Dim Dr: For Each Dr In Itr(RC.Dry)
+Dim Dr: For Each Dr In Itr(RC.Dy)
     Dim R&: R = Dr(IxR)
     Dim C%: C = Dr(IxC)
     PushObj RgAy, RgRC(Rg, R, C)
@@ -810,6 +808,7 @@ Dim A: A = RgRC(Cell1, 1, 1).Value
 RgRC(Cell1, 1, 1).Value = RgRC(Cell2, 1, 1).Value
 RgRC(Cell2, 1, 1).Value = A
 End Sub
+
 Function CellAbove(Cell As Range, Optional Above = 1) As Range
 Set CellAbove = RgRC(Cell, 1 - Above, 1)
 End Function
@@ -817,6 +816,7 @@ End Function
 Function CellRight(A As Range, Optional Right = 1) As Range
 Set CellRight = RgRC(A, 1, 1 + Right)
 End Function
+
 Function RgRC(A As Range, R, C) As Range
 Set RgRC = A.Cells(R, C)
 End Function
@@ -842,7 +842,7 @@ Set RgRR = RgRCRC(A, R1, 1, R2, NColRg(A))
 End Function
 
 Function ResiRg(At As Range, Sq()) As Range
-If Si(Sq) = 0 Then Set ResiRg = A1zRg(At): Exit Function
+If Si(Sq) = 0 Then Set ResiRg = RgA1(At): Exit Function
 Set ResiRg = RgRCRC(At, 1, 1, NRowzSq(Sq), NColzSq(Sq))
 End Function
 
@@ -859,23 +859,49 @@ End If
 SqzRg = A.Value
 End Function
 
+Function RxyzEmpRow(Sq()) As Long()
+'Ret : #Rxy-Of:EmpRow-[Fm:Sq] ! a Rxy of @Sq for which the row is all emp @@
+Dim LC%: LC = LBound(Sq, 2)
+Dim UC%: UC = UBound(Sq, 2)
+Dim R&: For R = LBound(Sq, 1) To UBound(Sq, 1)
+    If IsEmpRow(Sq, R, UC, LC) Then PushI RxyzEmpRow, R
+Next
+End Function
+
+Function IsEmpRow(Sq(), R&, LC%, UC%) As Boolean
+Dim C%: For C = LC To UC
+    If Not IsEmpty(Sq(R, C)) Then Exit Function
+Next
+IsEmpRow = True
+End Function
+
+Function SqzRgNo(A As Range) As Variant()
+'Ret : #Sq-Fm:Rg-How:No ! a sq fm:@A how:no means the @ret:sq is using Rno & Cno as index.
+Dim O(): O = SqzRg(A)
+Dim R1&, R2&, C1%, C2%
+ReDim Preserve O(R1 To R2, C1 To C2)
+SqzRgNo = O
+End Function
+
 Function WbzRg(A As Range) As Workbook
 Set WbzRg = WbzWs(WszRg(A))
 End Function
+
 Function WszRg(A As Range) As Worksheet
 Set WszRg = A.Parent
 End Function
 
 Private Sub Z()
-Z_RgzMoreBelow
+Z_RgMoreBelow
 MXls_Z_Rg:
 End Sub
+
 Function DrszWL(Ws As Worksheet, LoNm$) As Drs
 DrszWL = DrszLo(Ws.ListObjects(LoNm))
 End Function
 
-Function ColzLc(Lc As ListColumn) As Variant()
-ColzLc = ColzSq(SqzRg(Lc.DataBodyRange))
+Function ColzLc(LC As ListColumn) As Variant()
+ColzLc = ColzSq(SqzRg(LC.DataBodyRange))
 End Function
 
 Function ColzLo(Lo As ListObject, C) As Variant()
@@ -886,8 +912,8 @@ Function StrColzLo(Lo As ListObject, C) As String()
 StrColzLo = StrColzLc(Lo.ListColumns(C))
 End Function
 
-Function StrColzLc(Lc As ListColumn) As String()
-StrColzLc = StrColzSq(SqzRg(Lc.DataBodyRange))
+Function StrColzLc(LC As ListColumn) As String()
+StrColzLc = StrColzSq(SqzRg(LC.DataBodyRange))
 End Function
 
 Function StrColzWsLC(Ws As Worksheet, LoNm$, C$) As String()
@@ -1099,8 +1125,8 @@ Function N_ZerFill$(N, NDig&)
 N_ZerFill = Format(N, String(NDig, "0"))
 End Function
 
-Function WszS1S2s(A As S1S2s, Optional Nm1$ = "S1", Optional Nm2$ = "S2") As Worksheet
-Set WszS1S2s = WszSq(SqzS1S2s(A, Nm1, Nm2))
+Function WszS12s(A As S12s, Optional Nm1$ = "S1", Optional Nm2$ = "S2") As Worksheet
+Set WszS12s = WszSq(SqzS12s(A, Nm1, Nm2))
 End Function
 
 Private Sub Z_AyabWs()
@@ -1138,4 +1164,26 @@ End Function
 Function HasWbn(Xls As Excel.Application, Wbn$) As Boolean
 HasWbn = HasItn(Xls.Workbooks, Wbn)
 End Function
+
+Function EntColzLc(L As ListObject, C) As Range
+Set EntColzLc = L.ListColumns(C).DataBodyRange.EntireColumn
+End Function
+
+Function ColAyzLoCny(L As ListObject, Cny$()) As Range()
+'Ret : :ColAy:RgAy: of each @L-col stated in @Cny.
+Dim C
+For Each C In Itr(Cny)
+    PushObj ColAyzLoCny, L.ListColumns(C).DataBodyRange
+Next
+End Function
+
+Function ColAyzLo(Lo As ListObject, Cxy) As Variant()
+'Fm Cxy : #Col-iX-aY ! a col-ix can be a number running fm 1 or a coln.
+'Ret    : #Col-Ay    ! ay-of-col.  A col is ay-of-val-of-a-col.  All col has same # of ele. @@
+Dim C: For Each C In Itr(Cxy)
+    Dim LC As ListColumn: Set LC = Lo.ListColumns(C)
+    PushI ColAyzLo, ColzLo(Lo, C)
+Next
+End Function
+
 

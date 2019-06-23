@@ -3,19 +3,19 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDta_ObjPrp."
 Private Const Asm$ = "QDta"
+
 Function DrszItrPP(Itr, PP$) As Drs
 Dim P$(): P = SyzSS(PP)
-Dim Dry()
-    Dim Obj
-    For Each Obj In Itr
-        PushI Dry, DrzObjPny(Obj, P)
+    Dim Obj, Dy(): For Each Obj In Itr
+        PushI Dy, DrzObjPny(Obj, P)
     Next
-DrszItrPP = Drs(P, Dry)
+DrszItrPP = Drs(P, Dy)
 End Function
+
 Function DrzObjPny(Obj, Pny$(), Optional ThwEr As EmThw) As Variant()
 Dim P
 For Each P In Pny
-    Push DrzObjPny, PrpzP(Obj, P, ThwEr)
+    Push DrzObjPny, Prp(Obj, P, ThwEr)
 Next
 End Function
 Function PrpzP(Obj, P, Optional ThwEr As EmThw)
@@ -30,7 +30,7 @@ Asg CallByName(Obj, P, VbGet), P_QuietEmp
 End Function
 
 Function DrszItrPrpPthSy(Itr, PrpPthSy$()) As Drs
-DrszItrPrpPthSy = Drs(PrpPthSy, DryzItrPrpPthSy(Itr, PrpPthSy))
+DrszItrPrpPthSy = Drs(PrpPthSy, DyoItrPrpPthSy(Itr, PrpPthSy))
 End Function
 
 Private Function WFmlEr(PrpVy$(), PPzFml$()) As String()
@@ -71,23 +71,23 @@ Next
 End Function
 
 Function AddFml(A As Drs, NewFld$, FunNm$, PmAy$()) As Drs
-Dim Dry(): Dry = A.Dry
-If Si(Dry) = 0 Then AddFml = A: Exit Function
+Dim Dy(): Dy = A.Dy
+If Si(Dy) = 0 Then AddFml = A: Exit Function
 Dim Dr, U&, Ixy1&(), Av()
 Ixy1 = Ixy(A.Fny, PmAy)
 U = UB(A.Fny)
-For Each Dr In Dry
+For Each Dr In Dy
     If UB(Dr) <> U Then Thw CSub, "Dr-Si is diff", "Dr-Si U", UB(Dr), U
-    Av = AywIxy(Dr, Ixy1)
+    Av = AwIxy(Dr, Ixy1)
     Push Dr, RunAv(FunNm, Av)
 Next
-AddFml = Drs(SyzAddItm(A.Fny, NewFld), Dry)
+AddFml = Drs(SyzAddItm(A.Fny, NewFld), Dy)
 End Function
 
-Function DryzItrPrpPthSy(Itr, PrpPthSy$()) As Variant()
+Function DyoItrPrpPthSy(Itr, PrpPthSy$()) As Variant()
 Dim Obj As Object
 For Each Obj In Itr
-    Push DryzItrPrpPthSy, DrzObjPrpPthSy(Obj, PrpPthSy)
+    Push DyoItrPrpPthSy, DrzPrpPthAy(Obj, PrpPthSy)
 Next
 End Function
 

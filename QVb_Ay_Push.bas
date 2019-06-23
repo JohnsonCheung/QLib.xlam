@@ -6,7 +6,7 @@ Private Const CMod$ = "MVb_Ay_Push."
 
 Function Shf(OAy)
 Shf = OAy(0)
-OAy = AyeFstNEle(OAy)
+OAy = AeFstNEle(OAy)
 End Function
 
 Sub Push(O, M)
@@ -77,12 +77,12 @@ Sub PushNoDupNBStr(O, M)
 If M = "" Then Exit Sub
 If Not HasEle(O, M) Then PushI O, M
 End Sub
-Sub PushNoDupDr(ODry(), Dr)
+Sub PushNDupDr(ODy(), Dr)
 Dim IDr
-For Each IDr In Itr(ODry)
+For Each IDr In Itr(ODy)
     If IsEqAy(IDr, Dr) Then Exit Sub
 Next
-PushI ODry, Dr
+PushI ODy, Dr
 End Sub
 Sub PushNoDupAy(O, Ay)
 Dim I

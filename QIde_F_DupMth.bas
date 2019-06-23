@@ -1,4 +1,4 @@
-Attribute VB_Name = "QIde_F_Mth_DupMth"
+Attribute VB_Name = "QIde_F_DupMth"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Mth_Nm_Dup_X."
@@ -14,8 +14,8 @@ End Function
 
 Private Function DDupMthzP(P As VBProject) As Drs
 Dim A As Drs: A = DMthzP(P)
-Dim B As Drs: B = DrswDup(A, "Mthn")
-Dim C As Drs: C = DrseDup(B, "Mthn Mdn") '<==
+Dim B As Drs: B = DwDup(A, "Mthn")
+Dim C As Drs: C = DeDup(B, "Mthn Mdn") '<==
 Dim D As Drs: D = AddColzMthL(C)
 Dim E As Drs: E = AddColzValIdzCntzDrs(D, "MthL")
 DDupMthzP = SrtDrs(E)
@@ -24,14 +24,14 @@ End Function
 
 Function FmtDupMthWs(DupMthWs As Worksheet) As Worksheet
 Dim Lo As ListObject: Set Lo = FstLo(DupMthWs)
-SetLcWdt Lo, "MthL", 10
-SetLcWrp Lo, "MthL", False
+SetWdtLc Lo, "MthL", 10
+SetWrpLc Lo, "MthL", False
 End Function
 
 
 Private Function AddColzMthL(Mthn As Drs) As Drs
-Dim A():  A = DrszSel(Mthn, "Md Mthn Ty").Dry
-Dim B$(): B = MthLAyzDry_Md_Mthn_ShtMthTy(A)
+Dim A():  A = DrszSel(Mthn, "Md Mthn Ty").Dy
+Dim B$(): B = MthLAyzDy_Md_Mthn_ShtMthTy(A)
 Dim C As Drs: C = DrsAddColzNmVy(Mthn, "MthL", B)
 AddColzMthL = C
 End Function
@@ -42,13 +42,13 @@ Set DupMthWszP = FmtDupMthWs(WszDrs(DDupMthzP(P), "DupMth"))
 End Function
 
 
-Private Function MthLAyzDry_Md_Mthn_ShtMthTy(Dry()) As String()
+Private Function MthLAyzDy_Md_Mthn_ShtMthTy(Dy()) As String()
 Dim Dr, M As CodeModule, Mthn, ShtMthTy$
-For Each Dr In Itr(Dry)
+For Each Dr In Itr(Dy)
     Set M = Md(Dr(0))
     Mthn = Dr(1)
     ShtMthTy = Dr(2)
-    PushI MthLAyzDry_Md_Mthn_ShtMthTy, MthLzMTN(M, ShtMthTy, Mthn)
+    PushI MthLAyzDy_Md_Mthn_ShtMthTy, MthLzMTN(M, ShtMthTy, Mthn)
 Next
 End Function
 

@@ -20,7 +20,7 @@ FrfeezRfLin = Mid(A.Lin, P + 1)
 End Function
 
 Function HasFrfee(P As VBProject, Frfee) As Boolean
-HasFrfee = HasItrPEv(P.References, "FullPath", Frfee)
+HasFrfee = HasItrEq(P.References, "FullPath", Frfee)
 End Function
 Property Get FrfC$()
 FrfC = Frf(CPj)
@@ -59,7 +59,7 @@ Next
 End Function
 
 Function HasRfGuid(P As VBProject, RfGuid)
-HasRfGuid = HasItrPEv(P.References, "GUID", RfGuid)
+HasRfGuid = HasItrEq(P.References, "GUID", RfGuid)
 End Function
 
 Function RffyzP(P As VBProject) As String()

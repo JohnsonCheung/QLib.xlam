@@ -1,4 +1,4 @@
-Attribute VB_Name = "QIde_B_LinIs"
+Attribute VB_Name = "QIde_B_IsLin"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Mth_Lin_Is_Hit."
@@ -66,11 +66,40 @@ End Select
 End Function
 
 Function IsLinPubMth(Lin) As Boolean
-With Mthn3zL(Lin)
-    Select Case True
-    Case .Nm = "":
-    Case .ShtMdy = "Pub": IsLinPubMth = True
-    End Select
-End With
+Dim L$: L = Lin
+Dim Mdy$: Mdy = ShfMdy(L): If Mdy <> "" And Mdy <> "Public" Then Exit Function
+IsLinPubMth = TakMthKd(Lin) <> ""
 End Function
+
+Function IsLinMth(Lin) As Boolean
+IsLinMth = MthKd(Lin) <> ""
+End Function
+Function IsLinMthNm(Lin, Nm) As Boolean
+IsLinMthNm = Mthn(Lin) = Nm
+End Function
+
+Function IsLinEmn(A) As Boolean
+IsLinEmn = HasPfx(RmvMdy(A), "Enum ")
+End Function
+
+Function IsLinTy(A) As Boolean
+IsLinTy = HasPfx(RmvMdy(A), "Type ")
+End Function
+
+Function IsLinEmpSrc(A) As Boolean
+IsLinEmpSrc = True
+If HasPfx(A, "Option ") Then Exit Function
+Dim L$: L = Trim(A)
+If L = "" Then Exit Function
+IsLinEmpSrc = False
+End Function
+
+Function IsLinSngTerm(Lin) As Boolean
+IsLinSngTerm = InStr(Trim(Lin), " ") = 0
+End Function
+
+Function IsLinDD(Lin) As Boolean
+IsLinDD = Fst2Chr(LTrim(Lin)) = "--"
+End Function
+
 

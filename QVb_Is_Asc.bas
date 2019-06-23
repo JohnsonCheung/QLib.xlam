@@ -3,6 +3,9 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Is_Asc."
 Private Const Asm$ = "QVb"
+Private Const AscPlus% = &H2B ' + sign
+Private Const AscMinus% = &H2D ' - sign
+
 Function ÷()
 
 End Function
@@ -10,6 +13,17 @@ End Function
 Function IsAscDig(A%) As Boolean
 IsAscDig = &H30 <= A And A <= &H39
 End Function
+Function IsAscSgn(A%) As Boolean
+If A = AscPlus Then IsAscSgn = True: Exit Function
+If A = AscMinus Then IsAscSgn = True: Exit Function
+End Function
+
+Function IsAscDigSgn(A%) As Boolean
+Select Case True
+Case IsAscDig(A), IsAscSgn(A): IsAscDigSgn = True
+End Select
+End Function
+
 Property Get AscAyzNonPrt() As Integer()
 Dim J%
 For J = 0 To 255

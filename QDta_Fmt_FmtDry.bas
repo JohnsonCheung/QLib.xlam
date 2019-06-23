@@ -1,7 +1,7 @@
 Attribute VB_Name = "QDta_Fmt_FmtDry"
 Option Compare Text
 Option Explicit
-Private Const CMod$ = "MDta_Fmt_Dry_Fun."
+Private Const CMod$ = "MDta_Fmt_Dy_Fun."
 Private Const Asm$ = "QDta"
 Type Syay
     Syay() As Variant ' Each element is Sy
@@ -42,27 +42,27 @@ For Each I In ResiMax(Dr, WdtAy)
 Next
 End Function
 
-Function DryzSySepss(Ly$(), SepSS$) As Variant()
-DryzSySepss = DryzSySep(Sy, SyzSS(SepSS))
+Function DyoSySepss(Ly$(), SepSS$) As Variant()
+DyoSySepss = DyoSySep(Sy, SyzSS(SepSS))
 End Function
 
-Function DryzSySep(Sy$(), Sep$()) As Variant()
+Function DyoSySep(Sy$(), Sep$()) As Variant()
 'Ret : a dry wi each rec as a sy of brkg one lin of @Sy.  Each lin is brk by @Sep using fun-BrkLin @@
 Dim I, Lin
 For Each I In Itr(Sy)
     Lin = I
-    PushI DryzSySep, BrkLin(Lin, Sep)
+    PushI DyoSySep, BrkLin(Lin, Sep)
 Next
 End Function
 
-Function SslSyzDry(Dry()) As Variant()
+Function SslSyzDy(Dy()) As Variant()
 Dim Dr
-For Each Dr In Itr(Dry)
-    Push SslSyzDry, SslzDr(Dr) ' Fmtss(X)
+For Each Dr In Itr(Dy)
+    Push SslSyzDy, SslzDr(Dr) ' Fmtss(X)
 Next
 End Function
 
-Private Sub Z_DryzSySepss()
+Private Sub Z_DyoSySepss()
 Dim Ly$(), Sep$
 GoSub T0
 Exit Sub
@@ -72,7 +72,7 @@ T0:
     Ept = Sy("AStkShpCst_Rpt", ".OupFx", ".Fun", ".")
     GoTo Tst
 Tst:
-    BrwDry DryzSySepss(Sy, Sep)
+    BrwDy DyoSySepss(Sy, Sep)
     C
     Return
 End Sub
@@ -96,36 +96,37 @@ Else
 End If
 End Function
 
-Function LyzDry(Dry(), Optional Sep$ = " ") As String()
-Dim Dr: For Each Dr In Itr(Dry)
-    PushI LyzDry, Join(Dr, Sep)
+Function JnDy(Dy(), Optional QteStr$, Optional Sep$ = " ") As String()
+'Ret: :Ly by joining each :Dr in @Dy by @Sep
+Dim Dr: For Each Dr In Itr(Dy)
+    PushI JnDy, QteJn(Dr, Sep, QteStr)
 Next
 End Function
 
-Function AlignzDryAsLy(Dry()) As String()
-AlignzDryAsLy = LyzDry(AlignzDry(Dry))
+Function AlignzDyAsLy(Dy()) As String()
+AlignzDyAsLy = JnDy(AlignzDy(Dy))
 End Function
 
 Function AlignzSepss(Sy$(), SepSS$) As String()
-AlignzSepss = AlignzDryAsLy(DryzSySep(Sy, SyzSS(SepSS)))
+AlignzSepss = AlignzDyAsLy(DyoSySep(Sy, SyzSS(SepSS)))
 End Function
 
 '=======================
-Function AlignzDryW(Dry(), WdtAy%()) As Variant()
+Function AlignzDyW(Dy(), WdtAy%()) As Variant()
 Dim Dr
-For Each Dr In Itr(Dry)
-    PushI AlignzDryW, AlignzDrW(Dr, WdtAy)
+For Each Dr In Itr(Dy)
+    PushI AlignzDyW, AlignzDrW(Dr, WdtAy)
 Next
 End Function
 
-Function AlignzDry(Dry()) As Variant()
-AlignzDry = AlignzDryW(Dry, WdtAyzDry(Dry))
+Function AlignzDy(Dy()) As Variant()
+AlignzDy = AlignzDyW(Dy, WdtAyzDy(Dy))
 End Function
 
-Private Function CellgzDry(Dry(), ShwZer As Boolean, MaxColWdt%) As Variant()
+Private Function CellgzDy(Dy(), ShwZer As Boolean, MaxColWdt%) As Variant()
 Dim Dr
-For Each Dr In Itr(Dry)
-   Push CellgzDry, CellgzDr(Dr, ShwZer, MaxColWdt)
+For Each Dr In Itr(Dy)
+   Push CellgzDy, CellgzDr(Dr, ShwZer, MaxColWdt)
 Next
 End Function
 
@@ -189,10 +190,10 @@ Dim L, J&: For Each L In JnD
 Next
 End Function
 
-Function WdtAyzDry(Dry()) As Integer()
+Function WdtAyzDy(Dy()) As Integer()
 Dim J&
-For J = 0 To NColzDry(Dry) - 1
-    Push WdtAyzDry, WdtzAy(StrColzDry(Dry, J))
+For J = 0 To NColzDy(Dy) - 1
+    Push WdtAyzDy, WdtzAy(StrColzDy(Dy, J))
 Next
 End Function
 
@@ -202,71 +203,71 @@ LinzDr = Qte(Jn(Dr, Sep), QteStr)
 End Function
 
 Function LinzSep$(W%())
-LinzSep = LinzDr(DupzWy(W), "|-*-|", "-|-")
+LinzSep = LinzDr(DupzWy(W), "-|-", "|-*-|")
 End Function
 
-Sub BrwDry(A(), Optional MaxColWdt% = 100, Optional BrkCCIxy, Optional ShwZer As Boolean, Optional Fmt As EmTblFmt = EmTblFmt.EiTblFmt)
-BrwAy FmtDry(A, MaxColWdt, BrkCCIxy, ShwZer, Fmt)
+Sub BrwDy(A(), Optional MaxColWdt% = 100, Optional BrkCCIxy, Optional ShwZer As Boolean, Optional Fmt As EmTblFmt = EmTblFmt.EiTblFmt)
+BrwAy FmtDy(A, MaxColWdt, BrkCCIxy, ShwZer, Fmt)
 End Sub
 
-Sub BrwDryzSpc(A(), Optional MaxColWdt% = 100, Optional BrkCCIxy, Optional ShwZer As Boolean)
-BrwAy FmtDry(A, MaxColWdt, BrkCCIxy, ShwZer, Fmt:=EiSSFmt)
+Sub BrwDyoSpc(A(), Optional MaxColWdt% = 100, Optional BrkCCIxy, Optional ShwZer As Boolean)
+BrwAy FmtDy(A, MaxColWdt, BrkCCIxy, ShwZer, Fmt:=EiSSFmt)
 End Sub
-Private Function XIsBrk(NoBrk As Boolean, Dry(), Ixy&()) As Boolean()
+Private Function XIsBrk(NoBrk As Boolean, Dy(), Ixy&()) As Boolean()
 If NoBrk Then Exit Function
 Dim LasK, CurK, Dr
-LasK = AywIxy(Dry(0), Ixy)
-For Each Dr In Itr(Dry)
-    CurK = AywIxy(Dr, Ixy)
+LasK = AwIxy(Dy(0), Ixy)
+For Each Dr In Itr(Dy)
+    CurK = AwIxy(Dr, Ixy)
     PushI XIsBrk, Not IsEqAy(CurK, LasK)
     LasK = CurK
 Next
 End Function
-Function FmtDry(Dry(), _
+Function FmtDy(Dy(), _
 Optional MaxColWdt% = 100, _
 Optional BrkCCIxy0, _
 Optional ShwZer As Boolean, _
 Optional Fmt As EmTblFmt) _
 As String()
-If Si(Dry) = 0 Then Exit Function
-Dim StrD():     StrD = CellgzDry(Dry, ShwZer, MaxColWdt)
-Dim W%():          W = WdtAyzDry(StrD)
-Dim AlignD(): AlignD = AlignzDryW(StrD, W)
+If Si(Dy) = 0 Then Exit Function
+Dim StrD():     StrD = CellgzDy(Dy, ShwZer, MaxColWdt)
+Dim W%():          W = WdtAyzDy(StrD)
+Dim AlignD(): AlignD = AlignzDyW(StrD, W)
 
 Dim Ixy&():               Ixy = CvLngAy(BrkCCIxy0)
 Dim NoBrk As Boolean:   NoBrk = Si(Ixy) = 0
-Dim IsBrk() As Boolean: IsBrk = XIsBrk(NoBrk, Dry, Ixy)
+Dim IsBrk() As Boolean: IsBrk = XIsBrk(NoBrk, Dy, Ixy)
 
 Dim S$:       S = IIf(Fmt = EiSSFmt, " ", " | ")
 Dim Q$:       Q = IIf(Fmt = EiSSFmt, "", "| * |")
-Dim JnD$(): JnD = FmtDryzSepQte(AlignD, S, Q)
+Dim JnD$(): JnD = FmtDyoSepQte(AlignD, S, Q)
 Dim Sep$(): Sep = DupzWy(W)
               S = IIf(Fmt = EiSSFmt, " ", "-|-")
               Q = IIf(Fmt = EiSSFmt, "", "|-*-|")
 Dim L$:       L = LinzDr(Sep, S, Q)
 Dim Ins$(): Ins = A_Ins(NoBrk, IsBrk, JnD, L)
-         FmtDry = Sy(L, Ins, L)
+         FmtDy = Sy(L, Ins, L)
 End Function
 
-Function FmtDryzSepQte(Dry(), Sep$, QteStr$) As String()
+Function FmtDyoSepQte(Dy(), Sep$, QteStr$) As String()
 Dim Dr
-For Each Dr In Itr(Dry)
-    PushI FmtDryzSepQte, LinzDr(Dr, Sep, QteStr)
+For Each Dr In Itr(Dy)
+    PushI FmtDyoSepQte, LinzDr(Dr, Sep, QteStr)
 Next
 End Function
 
-Sub DmpDryzSpc(Dry(), _
+Sub DmpDyoSpc(Dy(), _
 Optional MaxColWdt% = 100, _
 Optional BrkCCIxy0, _
 Optional ShwZer As Boolean)
-D FmtDry(Dry, MaxColWdt, BrkCCIxy0, ShwZer, Fmt:=EiSSFmt)
+D FmtDy(Dy, MaxColWdt, BrkCCIxy0, ShwZer, Fmt:=EiSSFmt)
 End Sub
 
-Sub DmpDry(Dry(), _
+Sub DmpDy(Dy(), _
 Optional MaxColWdt% = 100, _
 Optional BrkCCIxy0, _
 Optional ShwZer As Boolean, _
 Optional Fmt As EmTblFmt)
-D FmtDry(Dry, MaxColWdt, BrkCCIxy0, ShwZer, Fmt)
+D FmtDy(Dy, MaxColWdt, BrkCCIxy0, ShwZer, Fmt)
 End Sub
 

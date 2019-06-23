@@ -14,8 +14,8 @@ Dim ArgAy$():            ArgAy = ArgAyzPmAy(PubMthPm)    ' Each ArgAy in ArgAy b
                                                          ' ArgSfxDic is Key=ArgSfx and Val=A, B, C
                                                          ' ArgSfx is ArgAy-without-Nm
 
-Dim ArgSfx$():                          ArgSfx = SrtAy(AywDist(ArgSfxy(ArgAy)))
-Dim ArgSfxToABC As Dictionary: Set ArgSfxToABC = DiczEleToABC(ArgSfx)
+Dim ArgSfx$():                          ArgSfx = SrtAy(AwDist(ArgSfxy(ArgAy)))
+Dim ArgSfxToABC As Dictionary: Set ArgSfxToABC = DiEleqABC(ArgSfx)
 Dim CallgPm$():                        CallgPm = XCallgPm(PubMthPm, ArgSfxToABC)
 Dim HasPrp      As Boolean:             HasPrp = PubGet.Cnt > 0
 Dim DimLy$():                            DimLy = XDimLy(ArgSfxToABC, HasPrp)                      ' 1-ArgAy => 1-DimLin
@@ -137,7 +137,7 @@ End Function
 Private Function CdCallZDash$(Src$())
 'SubZ is [Mth-`Sub Z()`-Lines], each line is calling a Z_XX, where Z_XX is a testing function
 Dim M$(): M = MthNyzS(Src)
-Dim ZDash$(): ZDash = AywPfx(M, "Z_")
+Dim ZDash$(): ZDash = AwPfx(M, "Z_")
 Dim S$(): S = SrtAy(ZDash)
 PushI S, "Exit Sub"
 PushI S, ""

@@ -1,4 +1,4 @@
-Attribute VB_Name = "QIde_Export_Export"
+Attribute VB_Name = "QIde_F_Export"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Export."

@@ -9,12 +9,17 @@ Dim Fdy() As DAO.Field2
 PushObj Fdy, FdzTxt("F1")
 Set TmpTd = TdzTF("Tmp", Fdy)
 End Property
-
-Property Get TmpPthzDb$()
-TmpPthzDb = EnsPth(TmpHom & "TmpDb\")
+Function TdzTF(T, Fdy() As DAO.Field2) As DAO.TableDef
+Dim O As New TableDef
+O.Name = T
+AddFdy O, Fdy
+Set TdzTF = O
+End Function
+Property Get TmpDbPth$()
+TmpDbPth = EnsPth(TmpHom & "TmpDb\")
 End Property
 
-Function TmpDb(Optional Fdr$, Optional Fnn$) As Database
+Function TmpDb() As Database
 Dim Fb$: Fb = TmpFb
 CrtFb Fb
 Set TmpDb = Db(Fb)
@@ -26,13 +31,13 @@ Sub BrwLasTmpDb()
 BrwDb LasTmpDb
 End Sub
 Function LasTmpFb$()
-Dim Fn$: Fn = MaxEle(FnAy(TmpPthzDb, "*.accdb"))
-If Fn = "" Then Thw CSub, "No *.accdb TmpDbPth", "TmpDbPth", TmpPthzDb
-LasTmpFb = TmpPthzDb & Fn
+Dim Fn$: Fn = MaxEle(FnAy(TmpDbPth, "*.accdb"))
+If Fn = "" Then Thw CSub, "No *.accdb TmpDbPth", "TmpDbPth", TmpDbPth
+LasTmpFb = TmpDbPth & Fn
 End Function
 
 Function TmpFb$()
-TmpFb = TmpPthzDb & TmpNm & ".accdb"
+TmpFb = TmpDbPth & TmpNm & ".accdb"
 End Function
 
 

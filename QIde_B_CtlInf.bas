@@ -110,8 +110,8 @@ Property Get PopupOfDbg() As CommandBarPopup
 Set PopupOfDbg = BarOfMnu.Controls("Debug")
 End Property
 
-Private Function FstCaption(Itr, Caption$) 'Return FstItm with Caption-Prp = Caption$
-FstCaption = FstItmPEv(Itr, PrpPth("Caption"), Caption)
+Private Function FstCaption(Itr, Caption) 'Return FstItm with Caption-Prp = Caption$
+FstCaption = FstzItrEq(Itr, "Caption", Caption)
 End Function
 
 Function BarNyzV(A As Vbe) As String()
@@ -119,7 +119,7 @@ BarNyzV = Itn(A.CommandBars)
 End Function
 
 Function CapNy(A As Controls) As String()
-CapNy = SyzItrP(A, PrpPth("Caption"))
+CapNy = SyzItrP(A, "Caption")
 End Function
 
 Property Get WinOfBrwObj() As VBIDE.Window

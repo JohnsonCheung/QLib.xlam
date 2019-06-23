@@ -1,23 +1,21 @@
-Attribute VB_Name = "QIde_Cmp_CntCmp"
+Attribute VB_Name = "QIde_B_Cnt"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Cnt_Cmp."
 Private Const Asm$ = "QIde"
 
-Enum EmHdr
-    EiNoHdr
-    EiWiHdr
-End Enum
-
 Sub CntCmpP()
 BrwDrs DCmpCntP
 End Sub
+
 Function DCmpCntP() As Drs
 DCmpCntP = DCmpCntzP(CPj)
 End Function
+
 Function DCmpCntzP(P As VBProject) As Drs
 DCmpCntzP = DrszFF("Pj Tot Mod Cls Doc Frm Oth", Av(DrCmpCntzP(P)))
 End Function
+
 Function DrCmpCntzP(P As VBProject) As Variant()
 Dim NCls%, NDoc%, NFrm%, NMod%, NOth%, NTot%
 Dim C As VBComponent
@@ -61,15 +59,18 @@ If P.Protection = vbext_pp_locked Then Exit Function
 NCmpzP = P.VBComponents.Count
 End Function
 
+
 Function NModzP%(P As VBProject)
 NModzP = NCmpzTy(P, vbext_ct_StdModule)
 End Function
 
+Function NDoczP%(P As VBProject)
+NDoczP = NCmpzTy(P, vbext_ct_Document)
+End Function
 
 Function NClszP%(P As VBProject)
 NClszP = NCmpzTy(P, vbext_ct_ClassModule)
 End Function
-
 
 Function NCmpzTy%(P As VBProject, Ty As vbext_ComponentType)
 If P.Protection = vbext_pp_locked Then Exit Function

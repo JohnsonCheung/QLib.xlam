@@ -47,7 +47,7 @@ Private Function LnkAdr$(A As Range)
 'LnkAdr = FmtQQ("'?'!?", Wsn, AdrzCell(A))
 End Function
 Function AdrzCell$(A As Range)
-AdrzCell = A1zRg(A).Address
+AdrzCell = RgA1(A).Address
 End Function
 Private Function SomLnkg(Itm As Lnkg) As SomLnkg
 With SomLnkg

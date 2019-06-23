@@ -1,4 +1,4 @@
-Attribute VB_Name = "QVb_Lin_Shf"
+Attribute VB_Name = "QVb_B_Shf"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Lin_Shf."
@@ -38,9 +38,6 @@ Function ShfTermX(OLin$, TermX$) As Boolean
 If T1(OLin) <> TermX Then Exit Function
 ShfTermX = True
 OLin = RmvT1(OLin)
-End Function
-Function ShfAs(OLin$) As Boolean
-ShfAs = ShfTermX(OLin, "As")
 End Function
 Function ShfEq(OLin$) As Boolean
 ShfEq = ShfTermX(OLin, "=")

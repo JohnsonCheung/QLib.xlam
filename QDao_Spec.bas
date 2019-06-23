@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Spec."
-
+Public Const PFldLis$ = "Boolean Byte Integer Int Long Single Double Char Text Memo Attachment" ' used in CrtTblzPFld
 Sub ImpSpec(A As Database, Spnm)
 Const CSub$ = CMod & "ImpSpec"
 Dim Ft$
@@ -90,6 +90,46 @@ Sub EnsTblSpec(A As Database)
 If Not HasTbl(A, "Spec") Then CrtTblSpec A
 End Sub
 
+
+Function FdAy(PFldLis$) As DAO.Field2()
+'Fm PFldLis: #Sql-FldLis-Phrase.  !The fld spec of create table sql inside the bkt.  It allows attachment.  It uses DAO to create
+Dim F: For Each F In Itr(AyTrim(SplitComma(PFldLis)))
+    PushObj FdAy, FdzPFld(F)
+Next
+End Function
+
+Sub CrtTblzPFld(D As Database, T, PFldLis$)
+'Fm PFldLis: #Sql-FldLis-Phrase.  !The fld spec of create table sql inside the bkt.  Each fld sep by comma.  The spec allows:
+'                                 !Boolean Byte Integer Int Long Single Double Char Text Memo Attachment
+'Ret : create the @T in @D by DAO
+Dim Td As DAO.TableDef: Set Td = TdzNm(T)
+AddFdy Td, FdAy(PFldLis)
+D.TableDefs.Append Td
+'AddFdy D.TableDefs(T), FdAy(PFldLis)
+End Sub
+Function FdzPFld(PFld) As DAO.Field2
+'Fm PFld: #Sql-Fld-Phrase.  !The single fld spec of create table sql inside the bkt.  It allows attachment.
+Dim N$, S$ ' #Fldn and #Spec
+Dim O As DAO.Field2
+AsgBrkSpc PFld, N, S
+Select Case True
+Case S = "Boolean":  Set O = FdzBool(N)
+Case S = "Byte":     Set O = FdzByt(N)
+Case S = "Integer", S = "Int": Set O = FdzInt(N)
+Case S = "Long":     Set O = FdzLng(N)
+Case S = "Single":   Set O = FdzSng(N)
+Case S = "Double":   Set O = FdzDbl(N)
+Case S = "Currency": Set O = FdzCur(N)
+Case S = "Char":     Set O = FdzChr(N)
+Case HasPfx(S, "Text"): Set O = FdzTxt(N, BetBkt(S))
+Case S = "Memo":     Set O = FdzMem(N)
+Case S = "Attachment": Set O = FdzAtt(N)
+Case S = "Time":     Set O = FdzTim(N)
+Case S = "Date":     Set O = FdzDte(N)
+Case Else: Thw CSub, "Invalid PFld", "Nm Spec vdt-PFld", N, S, PFldLis
+End Select
+Set FdzPFld = O
+End Function
 Sub CrtTblSpec(A As Database)
 CrtSchm A, SplitVBar(SpecSchmVbl)
 End Sub

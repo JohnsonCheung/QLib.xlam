@@ -1,4 +1,4 @@
-Attribute VB_Name = "QIde_B_Emp"
+Attribute VB_Name = "QIde_B_EmpMd"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Md_Emp."
@@ -64,20 +64,12 @@ Tst:
     Return
 End Sub
 
-Function IsEmpSrc(A$()) As Boolean
+Function IsSrcEmp(A$()) As Boolean
 Dim L
 For Each L In Itr(A)
     If Not IsLinEmpSrc(L) Then Exit Function
 Next
-IsEmpSrc = True
-End Function
-
-Function IsLinEmpSrc(A) As Boolean
-IsLinEmpSrc = True
-If HasPfx(A, "Option ") Then Exit Function
-Dim L$: L = Trim(A)
-If L = "" Then Exit Function
-IsLinEmpSrc = False
+IsSrcEmp = True
 End Function
 
 Function EmpMdNyzV(A As Vbe) As String()
@@ -87,12 +79,11 @@ For Each P In A.VBProjects
 Next
 End Function
 
-
-Function IsNoMthMd(M As CodeModule) As Boolean
+Function IsMdNoMth(M As CodeModule) As Boolean
 Dim J&
 For J = M.CountOfDeclarationLines + 1 To M.CountOfLines
     If IsLinMth(M.Lines(J, 1)) Then Exit Function
 Next
-IsNoMthMd = True
+IsMdNoMth = True
 End Function
 

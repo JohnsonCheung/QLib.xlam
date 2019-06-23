@@ -14,15 +14,15 @@ Ix = IxzAy(Fny, ColNm): If Ix = -1 Then Stop
     If HasEle(Fny, X) Then Stop
     If HasEle(Fny, Y) Then Stop
     PushIAy Fny, Array(X, Y)
-AddColzValIdzCntzDrs = Drs(Fny, AddColzValIdzCntzDry(A.Dry, Ix))
+AddColzValIdzCntzDrs = Drs(Fny, AddColzValIdzCntzDy(A.Dy, Ix))
 End Function
 
-Function AddColzValIdzCntzDry(Dry(), ValColIx&) As Variant()
+Function AddColzValIdzCntzDy(Dy(), ValColIx&) As Variant()
 Dim NCol%, Dic As Dictionary, O(), Dr, IdCnt, R&
-NCol = NColzDry(Dry)
-Set Dic = IdCntDiczAy(ColzDry(Dry, ValColIx))
-O = Dry
-For Each Dr In Itr(Dry)
+NCol = NColzDy(Dy)
+Set Dic = IdCntDiczAy(ColzDy(Dy, ValColIx))
+O = Dy
+For Each Dr In Itr(Dy)
     ReDim Preserve Dr(NCol + 1)
     IdCnt = Dic(Dr(ValColIx))
     Dr(NCol) = IdCnt(0)
@@ -30,7 +30,7 @@ For Each Dr In Itr(Dry)
     O(R) = Dr
     R = R + 1
 Next
-AddColzValIdzCntzDry = O
+AddColzValIdzCntzDy = O
 End Function
 
 

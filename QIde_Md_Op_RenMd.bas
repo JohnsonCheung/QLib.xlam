@@ -27,9 +27,10 @@ For Each C In P.VBComponents
     End If
 Next
 End Sub
+
 Sub RenMd(M As CodeModule, NewNm$)
 If HasMd(PjzM(M), NewNm) Then
-    Debug.Print FmtQQ("NewMdn[?] exists, cannot rename Md[?]", NewNm, Mdn(M))
+    Debug.Print "New mdn[" & NewNm & "] exist, cannot rename"
     Exit Sub
 End If
 M.Parent.Name = NewNm

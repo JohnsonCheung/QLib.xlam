@@ -30,13 +30,13 @@ End Function
 
 Private Function ErzExcessPmBlk(A As Blks) As String()
 If CntBlk(A, "PM") > 1 Then
-'    PushIAy ErzExcessPmBlk, ErzBlk(CvBlk(AyeFstEle(Blk)), "Excess Pm block, they are ignored")
+'    PushIAy ErzExcessPmBlk, ErzBlk(CvBlk(AeFstEle(Blk)), "Excess Pm block, they are ignored")
 End If
 End Function
 
 Private Function ErzExcessSwBlk(A As Blks) As String()
 If CntBlk(A, "SW") > 1 Then
-'    PushIAy ErzExcessSwBlk, ErzBlk(CvBlk(AyeFstEle(Blk)), "Excess Sw block, they are ignored")
+'    PushIAy ErzExcessSwBlk, ErzBlk(CvBlk(AeFstEle(Blk)), "Excess Sw block, they are ignored")
 End If
 End Function
 

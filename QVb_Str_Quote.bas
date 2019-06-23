@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Str_Qte."
 Private Const Asm$ = "QVb"
-Function BrkQte(QteStr$) As S1S2
+Function BrkQte(QteStr$) As S12
 Dim L%: L = Len(QteStr)
 Dim S1$, S2$
 Select Case L
@@ -21,7 +21,7 @@ Case Else
     End If
     Stop
 End Select
-BrkQte = S1S2(S1, S2)
+BrkQte = S12(S1, S2)
 End Function
 Sub AsgQte(OQ1$, OQ2$, QteStr$)
 With BrkQte(QteStr)
@@ -55,11 +55,11 @@ End With
 End Function
 
 Function QteDblVb$(S)
-QteDblVb = QteDbl(Replace(S, vbDblQte, vbTwoDblQte))
+QteDblVb = QteDbl(Replace(S, vbQtezDblQ, vbTwoQtezDblQ))
 End Function
 
 Function QteDbl$(S)
-QteDbl = vbDblQte & S & vbDblQte
+QteDbl = vbQtezDblQ & S & vbQtezDblQ
 End Function
 
 Function QteSng$(S)

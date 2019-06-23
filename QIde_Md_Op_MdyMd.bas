@@ -85,7 +85,7 @@ Stop
 Dim B As Drs: B = SrtDrs(L_OldL, "-L")
 Dim Dr
 Stop
-For Each Dr In Itr(B.Dry)
+For Each Dr In Itr(B.Dy)
     Dim L&: L = Dr(0)
     Dim OldL$: OldL = Dr(2)
     Dim NewL$: NewL = Dr(1)
@@ -100,7 +100,7 @@ Stop
 Dim B As Drs: B = SrtDrs(L_NewL, "-L")
 Dim Dr
 Stop
-For Each Dr In Itr(B.Dry)
+For Each Dr In Itr(B.Dy)
     Dim L&: L = Dr(0)
     Dim OldL$: OldL = Dr(2)
     Dim NewL$: NewL = Dr(1)
@@ -118,7 +118,7 @@ Sub RplLin(M As CodeModule, L_NewL_OldL As Drs)
 Dim B As Drs: B = L_NewL_OldL
 If JnSpc(B.Fny) <> "L NewL OldL" Then Stop: Exit Sub
 Dim Dr
-For Each Dr In Itr(B.Dry)
+For Each Dr In Itr(B.Dy)
     Dim L&: L = Dr(0)
     Dim OldL$: OldL = Dr(2)
     Dim NewL$: NewL = Dr(1)

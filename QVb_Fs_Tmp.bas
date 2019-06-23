@@ -28,6 +28,7 @@ End Function
 Function TmpFxm$(Optional Fdr$, Optional Fnn0$)
 TmpFxm = TmpFfn(".xlsm", Fdr, Fnn0)
 End Function
+
 Property Get TmpRoot$()
 Static X$
 If X = "" Then X = Fso.GetSpecialFolder(TemporaryFolder) & "\"

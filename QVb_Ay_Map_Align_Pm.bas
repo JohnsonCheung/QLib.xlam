@@ -12,7 +12,7 @@ Next
 End Function
 
 Private Function FmtAyPmzT1(Ay, T1, AlignNCol) As String()
-FmtAyPmzT1 = FmtSyzNTerm(AywT1(Ay, T1), CInt(AlignNCol))
+FmtAyPmzT1 = FmtSyzNTerm(AwT1(Ay, T1), CInt(AlignNCol))
 End Function
 
 Private Function T1ToAlignNColDic(PmStr$) As Dictionary

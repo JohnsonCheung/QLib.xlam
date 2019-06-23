@@ -62,10 +62,6 @@ Function ShtCmpTyzM$(M As CodeModule)
 ShtCmpTyzM = ShtCmpTy(CmpTyzM(M))
 End Function
 
-Function NUsrTyMd%(M As CodeModule)
-NUsrTyMd = NUsrTySrc(DclLyzM(M))
-End Function
-
 Function PjnzC(A As VBComponent)
 PjnzC = A.Collection.Parent.Name
 End Function

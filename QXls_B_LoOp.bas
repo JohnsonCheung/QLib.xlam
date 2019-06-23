@@ -1,4 +1,4 @@
-Attribute VB_Name = "QXls_Lo_LoAct"
+Attribute VB_Name = "QXls_B_LoOp"
 Option Compare Text
 Option Explicit
 Private Const Asm$ = "QXls"
@@ -116,7 +116,7 @@ Sq(1, 2) = "B"
 Sq(2, 1) = "123123"
 Sq(2, 2) = String(1234, "A")
 Ws.Range("A1:B2").Value = Sq
-AutoFitLo LozWsDta(Ws)
+AutoFit LozWsDta(Ws)
 ClsWsNoSav Ws
 End Sub
 
@@ -144,7 +144,6 @@ Dim H As Range
 CvLo A
 LoAllCol B
 LoAllEntCol B
-AutoFitLo B
 BdrLoAround B
 RgzLoCC B, A, A, C, C
 RgzLc B, A, C, C

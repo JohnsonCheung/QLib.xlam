@@ -4,7 +4,7 @@ Option Explicit
 Private Const CMod$ = "MVb_Dic_CntDic."
 Private Const Asm$ = "QVb"
 Function FmtCntDic(Ay, Optional Opt As EmCnt) As String()
-FmtCntDic = FmtS1S2s(SwapS1S2s(S1S2szDic(CntDic(Ay, Opt))), N1:="Cnt", N2:="Mth")
+FmtCntDic = FmtS12s(SwapS12s(S12szDic(CntDic(Ay, Opt))), N1:="Cnt", N2:="Mth")
 End Function
 
 Function CntzAyD(Ay, Optional C As VbCompareMethod = vbTextCompare) As Dictionary

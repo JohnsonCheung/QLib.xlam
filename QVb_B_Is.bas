@@ -1,4 +1,4 @@
-Attribute VB_Name = "QVb_Is_Var"
+Attribute VB_Name = "QVb_B_Is"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Is_Var."
@@ -86,7 +86,7 @@ IsItr = TypeName(V) = "Collection"
 End Function
 
 Function IsLetter(V$) As Boolean
-Dim C1$: C1 = UCase(V)
+Dim C1$: C1 = UCase(FstChr(V))
 IsLetter = ("A" <= C1 And C1 <= "Z")
 End Function
 
@@ -171,8 +171,8 @@ Function IsSngQted(S) As Boolean
 IsSngQted = IsQted(S, "'")
 End Function
 
-Function IsSomething(V) As Boolean
-IsSomething = Not IsNothing(V)
+Function IsSomFething(V) As Boolean
+IsSomFething = Not IsNothing(V)
 End Function
 Function IsNeedQte(S) As Boolean
 If IsSqBktQted(S) Then Exit Function
@@ -186,10 +186,10 @@ Dim D As Date: D = S
 IsDtezS = True
 X:
 End Function
-Function IsNbrzS(S$) As Boolean
+Function IsNumzS(S$) As Boolean
 On Error GoTo X
 Dim D#: D = S
-IsNbrzS = CStr(D) = S
+IsNumzS = CStr(D) = S
 Exit Function
 X:
 End Function
@@ -203,6 +203,17 @@ End Function
 Function IsEmpSy(V) As Boolean
 If Not IsSy(V) Then Exit Function
 IsEmpSy = Si(V) = 0
+End Function
+Function IsLy(V) As Boolean
+If Not IsLy(V) Then Exit Function
+Dim L: For Each L In Itr(V)
+    If IsLin(L) Then Exit Function
+Next
+End Function
+Function IsLin(V) As Boolean
+If HasSubStr(V, vbCr) Then Exit Function
+If HasSubStr(V, vbLf) Then Exit Function
+IsLin = True
 End Function
 Function IsSy(V) As Boolean
 IsSy = IsStrAy(V)
@@ -284,5 +295,36 @@ Function IsBlnkStr(V) As Boolean
 If IsStr(V) Then
     If Trim(V) = "" Then IsBlnkStr = True
 End If
+End Function
+Function IsBet(V, A, B) As Boolean
+If A > V Then Exit Function
+If V > B Then Exit Function
+IsBet = True
+End Function
+Function IsErObj(A) As Boolean
+IsErObj = TypeName(A) = "Error"
+End Function
+Function IsEmp(A) As Boolean
+Select Case True
+Case IsStr(A):    IsEmp = Trim(A) = ""
+Case IsArray(A):  IsEmp = Si(A) = 0
+Case IsEmpty(A), IsNothing(A), IsMissing(A), IsNull(A): IsEmp = True
+End Select
+End Function
+
+Function IsNBet(V, A, B) As Boolean
+IsNBet = Not IsBet(V, A, B)
+End Function
+
+Function IsSqBktQted(S) As Boolean
+IsSqBktQted = IsQted(S, "[", "]")
+End Function
+
+Function Limit(V, A, B)
+Select Case V
+Case V > B: Limit = B
+Case V < A: Limit = A
+Case Else: Limit = V
+End Select
 End Function
 

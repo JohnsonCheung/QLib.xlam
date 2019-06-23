@@ -2,7 +2,8 @@ Attribute VB_Name = "QDao_Lnk_LnkImp"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "BLnkImp."
-Sub Z_LnkImp()
+
+Private Sub Z_LnkImp()
 Dim LnkImpSrc$(), Db As Database
 GoSub T0
 Exit Sub
@@ -47,15 +48,15 @@ End Sub
 Private Function WDStru(Ip As DLTDH) As Drs
 'Fm Ip : L T1 Dta IsHdr}
 'Ret WDStru: Stru F Ty E
-Dim A As Drs, Dr, Dry(), B As Drs, T1$, Dta$
-A = ColEqSel(Ip.D, "IsHdr", False, "T1 Dta")
+Dim A As Drs, Dr, Dy(), B As Drs, T1$, Dta$
+A = DwEqSel(Ip.D, "IsHdr", False, "T1 Dta")
 B = ColPfx(A, "T1", "Stru.") 'T1 Dta
-For Each Dr In Itr(B.Dry)
+For Each Dr In Itr(B.Dy)
     T1 = Dr(0)
     Dta = Dr(1)
-    PushI Dry, XDrOfStru(T1, Dta)
+    PushI Dy, XDrOfStru(T1, Dta)
 Next
-WDStru = DrszFF("Stru F Ty E", Dry)
+WDStru = DrszFF("Stru F Ty E", Dy)
 End Function
 
 Private Function XDrOfStru(T1$, Dta$) As Variant()
@@ -74,7 +75,7 @@ For Each T In Itr(FbTny)
     WDic_T_Stru.Add T, T
 Next
 AsgIx DFx, "T Stru", IxT, IxStru
-For Each Dr In Itr(DFx.Dry)
+For Each Dr In Itr(DFx.Dy)
     WDic_T_Stru.Add Dr(IxT), Dr(IxStru)
 Next
 End Function
@@ -85,7 +86,7 @@ For Each I In Dic_T_Stru.Keys
     Stru = Dic_T_Stru(I)
        T = ">" & I
     Into = "#I" & I
-       A = ColEqSel(DStru, "Stru", Stru, "F Ty E")
+       A = DwEqSel(DStru, "Stru", Stru, "F Ty E")
      Fny = StrColzDrs(A, "F")
       Ey = RmvSqBktzSy(StrColzDrs(A, "E"))
    Bexp = ValzDicIf(Dic_T_Bexp, I)
@@ -95,7 +96,7 @@ End Function
 
 Private Function WDFx(FxTblLy$()) As Drs
 'Ret DFx : T Fxn Ws Stru
-Dim Lin, L$, A$, T$, Fxn$, Ws$, Stru$, Dry()
+Dim Lin, L$, A$, T$, Fxn$, Ws$, Stru$, Dy()
 For Each Lin In Itr(FxTblLy)
     L = Lin
     T = ShfT1(L)
@@ -105,14 +106,14 @@ For Each Lin In Itr(FxTblLy)
     If Fxn = "" Then Fxn = T
     If Ws = "" Then Ws = "Sheet1"
     Stru = StrDft(L, T)
-    PushI Dry, Array(T, Fxn, Ws, Stru)
+    PushI Dy, Array(T, Fxn, Ws, Stru)
 Next
-WDFx = DrszFF("T Fxn Ws Stru", Dry)
+WDFx = DrszFF("T Fxn Ws Stru", Dy)
 End Function
 
 Private Function WLnkFb(Dic_Fbt_Fbn As Dictionary, Dic_Fbn_Fb As Dictionary) As Drs
 'Ret: *LnkFb::Drs{T S Cn)
-Dim Fbn$, A$, S$, Fbt, T$, Cn$, Fb$, Dry()
+Dim Fbn$, A$, S$, Fbt, T$, Cn$, Fb$, Dy()
 For Each Fbt In Dic_Fbt_Fbn.Keys
     Fbn = Dic_Fbt_Fbn(Fbt)
     If Not Dic_Fbn_Fb.Exists(Fbn) Then
@@ -122,17 +123,17 @@ For Each Fbt In Dic_Fbt_Fbn.Keys
     Cn = CnStrzFbDao(Fb)
     T = ">" & Fbt
     S = Fbt
-    PushI Dry, Array(T, S, Cn)
+    PushI Dy, Array(T, S, Cn)
 Next
-WLnkFb = DrszFF("T S Cn", Dry)
+WLnkFb = DrszFF("T S Cn", Dy)
 End Function
 
 Private Function WLnkFx(DFx As Drs, Dic_Fxn_Fx As Dictionary) As Drs
 'Fm : @DFx :: Drs{T Fxn Ws Stru}
 'Ret: *LnkFx::Drs{T S Cn}
-Dim Dry(), Dr, S$, Fx$, Ws$, Cn$, T$, Fxn$, IxT%, IxWs%, IxFxn%
+Dim Dy(), Dr, S$, Fx$, Ws$, Cn$, T$, Fxn$, IxT%, IxWs%, IxFxn%
 AsgIx DFx, "T Ws Fxn", IxT, IxWs, IxFxn
-For Each Dr In Itr(DFx.Dry)
+For Each Dr In Itr(DFx.Dy)
     T = Dr(IxT)
     Ws = Dr(IxWs)
     Fxn = Dr(IxFxn)
@@ -145,9 +146,9 @@ For Each Dr In Itr(DFx.Dry)
     End If
     Cn = CnStrzFxDao(Fx)
     T = ">" & T
-    PushI Dry, Array(T, S, Cn)
+    PushI Dy, Array(T, S, Cn)
 Next
-WLnkFx = DrszFF("T S Cn", Dry)
+WLnkFx = DrszFF("T S Cn", Dy)
 End Function
 
 Private Property Get Y_LnkImpSrc() As String()
@@ -236,7 +237,7 @@ Y_LnkImpSrc = XX
 Erase XX
 End Property
 
-Private Sub ZZZ()
+Private Sub Z()
 QDao_Lnk_LnkImp:
 End Sub
 

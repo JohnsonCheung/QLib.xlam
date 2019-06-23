@@ -103,12 +103,12 @@ For J = 0 To UB(SubAy)
     PushI IntIxy, IxzAy(Ay, SubAy(J))
 Next
 End Function
-Function IxyzDup(AyWithDup) As Long()
-Dim A As Aset: Set A = AsetzAy(AywDup(AyWithDup))
+Function IxyzDup(Ay) As Long()
+Dim A As Aset: Set A = AsetzAy(AwDup(Ay))
 If A.IsEmp Then Exit Function
 Dim J&
-For J = 0 To UB(AyWithDup)
-    If A.Has(AyWithDup(J)) Then PushI IxyzDup, J
+For J = 0 To UB(Ay)
+    If A.Has(Ay(J)) Then PushI IxyzDup, J
 Next
 End Function
 

@@ -1,10 +1,89 @@
-Attribute VB_Name = "QIde_Dcl_Dcl"
+Attribute VB_Name = "QIde_B_Dcl"
 Option Compare Text
 Option Explicit
-Private Const CMod$ = "MIde_Dcl_Lines."
+Private Const CMod$ = "MIde_Dim."
 Private Const Asm$ = "QIde"
-Public Const DoczDclDic$ = "Key is Pjn.Mdn.  Value is Dcl (which is Lines)"
-Public Const DoczDcl$ = "It is Lines."
+':DiPmdnqDclL: it is :Pmdn: to :DclL:
+':DclL:        it is :Lines: coming from a Module.
+
+Function IsDimItmzAs(DimItm$) As Boolean
+Dim A$(): A = SyzSS(DimItm)
+If Si(A) <> 3 Then Exit Function
+If A(1) <> "As" Then Thw CSub, "2nd term is not a [As]", "DimItm", DimItm
+If IsNm(A(0)) Then Thw CSub, "1st term is not a name", "DimItm", DimItm
+IsDimItmzAs = True
+End Function
+
+Function DimNmzSht$(DimShtItm$)
+DimNmzSht = RmvChrzSfx(RmvSfxzBkt(DimShtItm), TyChrLis)
+End Function
+
+Function DimNmzAs$(DimAsItm$)
+DimNmzAs = RmvSfxzBkt(Bef(DimAsItm, " As"))
+End Function
+Function DimTy$(DimItm$)
+Select Case True
+Case IsDimItmzSht(DimItm): DimTy = RmvNm(DimItm)
+Case IsDimItmzAs(DimItm):  DimTy = Bef(DimItm, " As")
+Case Else: Thw CSub, "Not a DimItm", "DimItm", DimItm
+End Select
+End Function
+
+Function DimNm$(DimItm$)
+Select Case True
+Case IsDimItmzSht(DimItm): DimNm = DimNmzSht(DimItm)
+Case IsDimItmzAs(DimItm):  DimNm = DimNmzAs(DimItm)
+Case Else: Thw CSub, "Not a DimItm", "DimItm", DimItm
+End Select
+End Function
+
+Function IsDimItmzSht(DimItm$) As Boolean
+If HasSpc(DimItm) Then Exit Function
+IsDimItmzSht = IsNm(RmvTyChr(RmvSfxzBkt(DimItm)))
+End Function
+
+Function DimItmAy(Lin) As String()
+Dim L$: L = Lin
+If Not ShfPfx(L, "Dim ") Then Exit Function
+DimItmAy = SplitCommaSpc(L)
+End Function
+
+Function DimNyzDimItmAy(DimItmAy$()) As String()
+Dim DimItm$, I
+For Each I In Itr(DimItmAy)
+    DimItm = I
+    PushI DimNyzDimItmAy, DimNm(DimItm)
+Next
+End Function
+
+Function MdPosStr$(A As MdPos)
+Dim B$
+With A
+    'With .LinPos.Pos
+        'If .Cno1 > 0 Then B = " " & .Cno1 & " " & .Cno2
+    'End With
+    'MdPosStr = "MdPos " & Mdn(A.Md) & A.LinPos.Lno & B
+End With
+End Function
+
+Function MdPoszMLCC(Md As CodeModule, L, Cno1, Cno2) As MdPos
+'MdPoszMLCC = MdPos(Md, LinPoszLCC(L, Cno1, Cno2))
+End Function
+
+Function MdPoszMLP(Md As CodeModule, Lno, P As Pos) As MdPos
+'MdPoszMLP = MdPos(Md, LinPos(Lno, P))
+End Function
+
+Function MdPos(Md As CodeModule, RRCC As RRCC) As MdPos
+Set MdPos.Md = Md
+MdPos.RRCC = RRCC
+End Function
+
+
+Function NUsrTyMd%(M As CodeModule)
+NUsrTyMd = NUsrTySrc(DclLyzM(M))
+End Function
+
 
 Function EnmBdyLyzS(Src$(), Enmn) As String()
 EnmBdyLyzS = EnmBdyLy(EnmLy(Src, Enmn))
@@ -20,7 +99,7 @@ EnmFei = Fei(Fm, EndLix(Src, Fm))
 End Function
 
 Function EnmLy(Src$(), Enmn) As String()
-EnmLy = AywFei(Src, EnmFei(Src, Enmn))
+EnmLy = AwFei(Src, EnmFei(Src, Enmn))
 End Function
 
 Function EnmFmIx&(Src$(), Enmn)
@@ -93,7 +172,7 @@ UsrTyLines = JnCrLf(UsrTyLy(Dcl, Tyn))
 End Function
 
 Function UsrTyLy(Dcl$(), TyNm$) As String()
-UsrTyLy = AywFei(Dcl, UsrTyFei(Dcl, TyNm))
+UsrTyLy = AwFei(Dcl, UsrTyFei(Dcl, TyNm))
 End Function
 
 Function UsrTyFmIx&(Src$(), TyNm)
@@ -116,14 +195,6 @@ For Each L In Itr(Src)
     PushNB TyNyzS, TynzLin(L)
     If IsLinMth(L) Then Exit Function
 Next
-End Function
-
-Function IsLinEmn(A) As Boolean
-IsLinEmn = HasPfx(RmvMdy(A), "Enum ")
-End Function
-
-Function IsLinTy(A) As Boolean
-IsLinTy = HasPfx(RmvMdy(A), "Type ")
 End Function
 
 Function Enmn(Lin)
@@ -204,7 +275,7 @@ Debug.Assert A1 = A2
 End Sub
 
 Sub BrwDclLinCntP()
-BrwDry DclLinCntzP(CPj)
+BrwDy DclLinCntzP(CPj)
 End Sub
 
 Function DclLinCntzP(P As VBProject) As Variant()
@@ -344,5 +415,6 @@ For J = 1 To M.CountOfDeclarationLines
     End If
 Next
 End Function
+
 
 

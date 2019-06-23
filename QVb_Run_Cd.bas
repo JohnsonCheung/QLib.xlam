@@ -23,7 +23,7 @@ RunCdMd.AddFromString MthL(Mthn, CdLines)
 End Sub
 Private Function MthL$(Mthn, CdLines$)
 Dim Lines$, L1$, L2$
-L1 = "Sub Z_" & Mthn & "()"
+L1 = "Private Sub Z_" & Mthn & "()"
 L2 = "End Sub"
 MthL = L1 & vbCrLf & CdLines & vbCrLf & L2
 End Function

@@ -5,15 +5,10 @@ Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Obj."
 Const DoczP$ = "PrpPth."
 Const DoczPn$ = "PrpNm."
-Type PrpPth: P As String: End Type
 Enum EmThw
     EiNoThw
     EiThwEr
 End Enum
-
-Function PrpPth(P) As PrpPth
-PrpPth.P = P
-End Function
 Function IsEqObj(A, B) As Boolean
 IsEqObj = ObjPtr(A) = ObjPtr(B)
 End Function
@@ -30,17 +25,16 @@ For Each I In Itr(Oy)
 Next
 End Function
 
-Function LngAyzOyPrp(Oy, Prp) As Long()
-LngAyzOyPrp = CvLngAy(IntozOPrp(EmpLngAy, Oy, Prp))
+Function LngAyzOyPrp(Oy, PrpPth$) As Long()
+LngAyzOyPrp = CvLngAy(IntozOyPrp(EmpLngAy, Oy, PrpPth))
 End Function
 
-Function IntozOPrp(OInto, Oy, Prp)
-Dim O, I
-O = ResiU(OInto)
-For Each I In Itr(Oy)
-    Push O, Prp(I, Prp)
+Function IntozOyPrp(OInto, Oy, PrpPth$)
+Dim O: O = ResiU(OInto)
+Dim Obj: For Each Obj In Itr(Oy)
+    Push O, Prp(Obj, PrpPth)
 Next
-IntozOPrp = O
+IntozOyPrp = O
 End Function
 
 Function ObjAyzAdd(Obj As Object, Oy)
@@ -60,52 +54,44 @@ X:
 ObjNm = "#" & Err.Description & "#"
 End Function
 
-Function DrzObjPrpPthSy(Obj As Object, PrpPthSy$()) As Variant()
+Function DrzPrpPthAy(Obj, PthPthAy$()) As Variant()
 Const CSub$ = CMod & "DrzObjPrpNy"
-If IsNothing(Obj) Then Inf CSub, "Given object is nothing", "PrpPthSy", PrpPthSy: Exit Function
-Dim P, PP As PrpPth
-For Each P In PrpPthSy
-    PP = PrpPth(P)
-    Push DrzObjPrpPthSy, Prp(Obj, PrpPth(P))
+If IsNothing(Obj) Then Inf CSub, "Given object is nothing", "PthPthAy", PthPthAy: Exit Function
+Dim P: For Each P In PthPthAy
+    Dim PrpPth$: PrpPth = P
+    Push DrzPrpPthAy, Prp(Obj, PrpPth)
 Next
 End Function
 
-Function DiczObjPP(Obj As Object, PP$) As Dictionary
-Set DiczObjPP = DiczObjPrpPthSy(Obj, Ny(PP))
-End Function
 Function DiczObjPrpPthSy(Obj As Object, PrpPthSy$()) As Dictionary
 Dim P, O As New Dictionary
 For Each P In PrpPthSy
-    O.Add P, Prp(Obj, PrpPth(P))
+    O.Add P, Prp(Obj, P)
 Next
 Set DiczObjPrpPthSy = O
 End Function
-Function ObjToStr$(Obj As Excel.Application)
-On Error GoTo X
-ObjToStr = Obj.ToStr: Exit Function
-X: ObjToStr = QteSq(TypeName(Obj))
-End Function
 
-Function Prp(Obj As Object, P As PrpPth, Optional ThwEr As EmThw)
+Function PrpzP(Obj, Prp)
+Asg CallByName(Obj, Prp, VbGet), PrpzP
+End Function
+Function Prp(Obj, PrpPth, Optional ThwEr As EmThw)
 Const CSub$ = CMod & "Prp"
 'ThwIf_Nothing Obj, CSub
 On Error GoTo X
 'Ret the Obj's Get-Property-Value using Pth, which is dot-separated-string
-Dim SegSy$()
-    SegSy = Split(P.P, ".")
+Dim PrpSeg$(): PrpSeg = Split(PrpPth, ".")
 Dim O
-    Dim J%, U%
     Set O = Obj
-    U = UB(SegSy)
-    For J = 0 To U - 1      ' U-1 is to skip the last Pth-Seg
-        Set O = CallByName(O, SegSy(J), VbGet) ' in the middle of each path-seg, they must be object, so use [Set O = ...] is OK
+    Dim U%: U = UB(PrpSeg)
+    Dim J%: For J = 0 To U - 1     ' U-1 is to skip the last Pth-Seg
+        Set O = PrpzP(O, PrpSeg(J)) ' in the middle of each path-seg, they must be object, so use [Set O = ...] is OK
     Next
-Asg CallByName(O, SegSy(U), VbGet), Prp ' Last Prp may be non-object, so must use 'Asg'
+Asg PrpzP(O, PrpSeg(U)), Prp ' Last Prp may be non-object, so must use 'Asg'
 Exit Function
 X:
 Dim E$: E = Err.Description
 If ThwEr = EiThwEr Then
-    Thw CSub, "Err", "Er ObjTy PrpPth", E, TypeName(Obj), P.P
+    Thw CSub, "Err", "Er ObjTy PrpPth", E, TypeName(Obj), PrpPth
 End If
 End Function
 

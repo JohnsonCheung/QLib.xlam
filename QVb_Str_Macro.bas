@@ -13,7 +13,7 @@ Function NyzMacro(Macro, Optional OpnBkt$ = vbOpnBigBkt, Optional InclBkt As Boo
 Dim Q1$:   Q1 = OpnBkt
 Dim Q2$:   Q2 = ClsBkt(OpnBkt)
 Dim Sy$(): Sy = Split(Macro, Q1)
-Dim O$():   O = AywDist(RmvBlnkLin(BefSy(Sy, Q2)))
+Dim O$():   O = AwDist(RmvBlnkLin(BefSy(Sy, Q2)))
 If InclBkt Then O = AddPfxSzAy(O, Q1, Q2)
 NyzMacro = O
 End Function

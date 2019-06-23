@@ -29,7 +29,7 @@ End Function
 Function AsetzSsl(Ssl$) As Aset
 Set AsetzSsl = EmpAset
 Dim Sy$(): Sy = SyzSS(Ssl)
-If HasDup(Sy) Then Thw CSub, "Ssl has dup", "Ssl DupEle", Ssl, AywDup(Sy)
+If HasDup(Sy) Then Thw CSub, "Ssl has dup", "Ssl DupEle", Ssl, AwDup(Sy)
 AsetzSsl.PushAy SyzSS(Ssl)
 End Function
 

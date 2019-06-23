@@ -184,7 +184,7 @@ Stop
 End Sub
 
 Function LineszLasN$(Lines$, N%)
-LineszLasN = JnCrLf(AywLasN(SplitCrLf(Lines), N))
+LineszLasN = JnCrLf(AwLasN(SplitCrLf(Lines), N))
 End Function
 
 Function LinCnt&(Lines$)

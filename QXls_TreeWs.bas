@@ -50,7 +50,6 @@ Private Sub ShwCurCol(Cur As Range)
 ShwCurEnt Cur
 End Sub
 
-
 Private Sub ShwNxtEnt()
 
 End Sub
@@ -65,8 +64,9 @@ MgeCurFnCol Si(SubPthy), Si(FnAy)
 End Sub
 
 Private Function PthzCur$(Cur As Range)
-PthzCur = EnsPthSfx(A1zRg(Cur).Value)
+PthzCur = EnsPthSfx(RgA1(Cur).Value)
 End Function
+
 Private Sub PutCurEnt(Cur As Range, SubPthy$(), FnAy$())
 EntRg(Cur, Si(SubPthy) + Si(FnAy)).Value = Sqv(AyzAdd(SubPthy, FnAy))
 End Sub

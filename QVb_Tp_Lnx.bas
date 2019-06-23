@@ -109,7 +109,7 @@ Next
 End Function
 Function SIxyszDup(A As Lnxs) As SIxys
 Dim Dup$, I
-For Each I In Itr(AywDup(LinyzLnxs(A)))
+For Each I In Itr(AwDup(LinyzLnxs(A)))
     Dup = I
     PushIIxy SIxyszDup, SIxy(Dup, IxyzLnxsLin(A, Dup))
 Next
@@ -184,7 +184,7 @@ DupT1zLnxs = DupLinzLnxs(T1Lnxs(A))
 End Function
 Function DupLinzLnxs(A As Lnxs) As SIxys
 Dim Dup$, I
-For Each I In Itr(AywDup(LinyzLnxs(A)))
+For Each I In Itr(AwDup(LinyzLnxs(A)))
     Dup = I
     PushIIxy DupLinzLnxs, SIxy(Dup, IxyzLnxsLin(A, Dup))
 Next
@@ -255,7 +255,7 @@ T1AyzLnxs = T1Ay(LinAyzLnxs(A))
 End Function
 
 Function DupT1AyzLnxs(A As Lnxs) As String()
-DupT1AyzLnxs = AywDup(T1AyzLnxs(A))
+DupT1AyzLnxs = AwDup(T1AyzLnxs(A))
 End Function
 Private Function ErOfDupT1zLnxs(A As Lnxs) As String()
 Dim Dup
@@ -331,7 +331,7 @@ Function DupT1ErzLnxs(A As Lnxs) As String()
 
 End Function
 Function DupT2AyzLnxs(A As Lnxs) As String()
-DupT2AyzLnxs = AywDup(T2Ay(LyzLnxs(A)))
+DupT2AyzLnxs = AwDup(T2Ay(LyzLnxs(A)))
 End Function
 
 Function LnxswT1Ay(A As Lnxs, T1Ay$()) As Lnxs

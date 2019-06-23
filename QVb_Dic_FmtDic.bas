@@ -21,10 +21,10 @@ Sub DmpDic(A As Dictionary, Optional InclDicValOptTy As Boolean, Optional Tit$ =
 D FmtDic(A, InclDicValOptTy, Tit)
 End Sub
 
-Function S1S2szSyDic(A As Dictionary) As S1S2s
+Function S12szSyDic(A As Dictionary) As S12s
 Dim K
 For Each K In A.Keys
-    PushS1S2 S1S2szSyDic, S1S2(K, JnCrLf(A(K)))
+    PushS12 S12szSyDic, S12(K, JnCrLf(A(K)))
 Next
 End Function
 Function FmtDicTit(A As Dictionary, Tit$) As String()
@@ -36,8 +36,8 @@ End Function
 Function FmtDic(A As Dictionary, Optional InclValTy As Boolean, Optional Nm1$ = "Key", Optional Nm2$ = "Val", Optional AddIx As Boolean) As String()
 ThwIf_Nothing A, "Dic", CSub
 Select Case True
-Case IsDicSy(A):    FmtDic = FmtS1S2s(S1S2szSyDic(A), Nm1, Nm2)
-Case IsDicLines(A): FmtDic = FmtS1S2s(S1S2szDic(A), Nm1, Nm2)
+Case IsDicSy(A):    FmtDic = FmtS12s(S12szSyDic(A), Nm1, Nm2)
+Case IsDicLines(A): FmtDic = FmtS12s(S12szDic(A), Nm1, Nm2)
 Case Else:           FmtDic = FmtDiczLin(A, " ", InclValTy, Nm1, Nm2)
 End Select
 End Function

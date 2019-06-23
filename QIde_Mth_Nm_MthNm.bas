@@ -56,13 +56,6 @@ Function RmvMthMdy$(Lin)
 RmvMthMdy = RmvTerm(Lin, MthMdyAy)
 End Function
 
-Function IsLinPubMth(Lin) As Boolean 'Pum = PubMthn
-Dim L$: L = Lin
-If ShfShtMdy(L) <> "Pub" Then Exit Function
-If MthTy(L) = "" Then Exit Function
-IsLinPubMth = True
-End Function
-
 Function Dimn$(Lin)
 Dim L$: L = Lin
 If ShfTerm(L, "Dim") Then Dimn = Nm(LTrim(L))
@@ -247,16 +240,19 @@ End Sub
 Private Sub Z_MthnsetVWiVerb()
 MthnsetVWiVerb.Srt.Vc
 End Sub
-Private Sub Z_Dry__Mthn_Verb_InVbe()
-BrwDry Dry__Mthn_Verb_InVbe
+Private Sub Z_DyoMthnaVerbV()
+BrwDy DyoMthnaVerbV
 End Sub
-Function Dry__Mthn_Verb_InVbe() As Variant()
-Dim Mthn, I, ODry()
-For Each I In Itr(MthNyV)
-    Mthn = I
-    PushI ODry, Sy(Mthn, Verb(Mthn))
+Sub PushNDupDy(ODy(), Dr)
+If HasDr(ODy, Dr) Then Exit Sub
+PushI ODy, Dr
+End Sub
+Function DyoMthnaVerbV() As Variant()
+Dim Mthn, O(): For Each Mthn In Itr(MthNyV)
+    PushI O, Sy(Mthn, Verb(Mthn))
 Next
-Dry__Mthn_Verb_InVbe = DrywDist(ODry)
+DyoDis
+Stop
 End Function
 Private Sub Z_MthnsetVWoVerb()
 MthnsetVWoVerb.Srt.Vc

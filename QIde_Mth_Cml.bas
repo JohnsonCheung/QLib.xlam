@@ -10,8 +10,8 @@ Function AsetzMthCmlP() As Aset
 Set AsetzMthCmlP = CmlAset(MthnsetP.Sy)
 End Function
 
-Function FnyzMthCml(NDryCol%) As String()
-FnyzMthCml = AyzAddAp(SyzSS("Mdy Kd Mth"), FnyzPfxN("Seg", NDryCol - 3))
+Function FnyzMthCml(NDyCol%) As String()
+FnyzMthCml = AyzAddAp(SyzSS("Mdy Kd Mth"), FnyzPfxN("Seg", NDyCol - 3))
 End Function
 Function WszMthCm() As Worksheet
 Dim Ws As Worksheet
@@ -23,9 +23,9 @@ LozAyH Seg1ErNy, WbzLo(Lo), "Seg1Er"
 Set WszMthCm = ShwWs(Lo.Parent)
 End Function
 Function MthCmlLinWsBase() As Worksheet
-Dim Dry()
-'Dry = DryzSslAy(MthCmlLyInVbe)
-Set MthCmlLinWsBase = WszDrs(Drs(FnyzMthCml(NColzDry(Dry)), Dry))
+Dim Dy()
+'Dy = DyoSslAy(MthCmlLyInVbe)
+Set MthCmlLinWsBase = WszDrs(Drs(FnyzMthCml(NColzDy(Dy)), Dy))
 End Function
 
 Sub BrwMthCmlLyV()

@@ -4,33 +4,33 @@ Option Explicit
 Private Const CMod$ = "MVb_Lin_Vbl."
 Private Const Asm$ = "QVb"
 Function DrszTRst(FF$, TRstLy$()) As Drs
-DrszTRst = DrszFF(FF, DryzTRst(TRstLy))
+DrszTRst = DrszFF(FF, DyoTRst(TRstLy))
 End Function
-Function DryzTRst(TRstLy$()) As Variant()
+Function DyoTRst(TRstLy$()) As Variant()
 Dim L: For Each L In Itr(TRstLy)
-    PushI DryzTRst, SyzTRst(L)
+    PushI DyoTRst, SyzTRst(L)
 Next
 End Function
-Function DryzTLiny(TLiny$()) As Variant()
+Function DyoTLiny(TLiny$()) As Variant()
 Dim I
 For Each I In Itr(TLiny)
-    PushI DryzTLiny, TermAy(I)
+    PushI DyoTLiny, TermAy(I)
 Next
 End Function
 
-Function DryzVblLy(A$()) As Variant()
+Function DyoVblLy(A$()) As Variant()
 Dim I
 For Each I In Itr(A)
-    PushI DryzVblLy, AyTrim(SplitVBar(I))
+    PushI DyoVblLy, AyTrim(SplitVBar(I))
 Next
 End Function
-Function DryzSSVbl(SSVbl$) As Variant()
+Function DyoSSVbl(SSVbl$) As Variant()
 Dim SS: For Each SS In Itr(SplitVBar(SSVbl))
-    PushI DryzSSVbl, SyzSS(SS)
+    PushI DyoSSVbl, SyzSS(SS)
 Next
 End Function
 
-Private Sub Z_DryzVblLy()
+Private Sub Z_DyoVblLy()
 Dim VblLy$()
 GoSub T1
 Exit Sub
@@ -54,13 +54,13 @@ T1:
     Ept = ""
     GoTo Tst
 Tst:
-    Act = DryzVblLy(VblLy)
-    DmpDry CvAv(Act)
+    Act = DyoVblLy(VblLy)
+    DmpDy CvAv(Act)
 '    C
     Return
 End Sub
 
 Private Sub Z()
-Z_DryzVblLy
+Z_DyoVblLy
 MVb_Lin_Vbl:
 End Sub

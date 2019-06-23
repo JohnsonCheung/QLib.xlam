@@ -4,22 +4,22 @@ Option Explicit
 Private Const CMod$ = "MVb_Ay_Op_Cnt."
 Private Const Asm$ = "QVb"
 
-Function CntDryWhGt1zAy(A) As Variant()
-CntDryWhGt1zAy = CntDryWhGt1(DryzDic(CntDic(A)))
+Function CntDyWhGt1zAy(A) As Variant()
+CntDyWhGt1zAy = CntDyWhGt1(DyoDic(CntDic(A)))
 End Function
 
-Function CntDryzAy(A) As Variant()
-CntDryzAy = DryzDic(CntDic(A))
+Function CntDyoAy(A) As Variant()
+CntDyoAy = DyoDic(CntDic(A))
 End Function
 
-Private Sub Z_CntDryzAy()
+Private Sub Z_CntDyoAy()
 Dim A$()
 A = SplitSpc("a a a b c b")
 Ept = Array(Array("a", 3), Array("b", 2), Array("c", 1))
 GoSub Tst
 Exit Sub
 Tst:
-    Act = CntDryzAy(A)
+    Act = CntDyoAy(A)
     Ass IsEqAy(Act, Ept)
     Return
 End Sub
@@ -38,6 +38,6 @@ Function CntSiLin(Ay)
 CntSiLin = "AyCntSi(" & Si(Ay) & "." & SumSi(Ay) & ")"
 End Function
 Private Sub Z()
-Z_CntDryzAy
+Z_CntDyoAy
 MVb_AyCnt:
 End Sub

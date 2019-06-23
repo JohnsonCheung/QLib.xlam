@@ -3,21 +3,21 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Fun_FmtMulLinSrc."
 Private Const Asm$ = "QIde"
-Private Function DryzMulStmtSrc(MulStmtSrc$()) As Variant()
-Dim ODry(): ODry = DryzLyWithColon(MulStmtSrc)
+Private Function DyoMulStmtSrc(MulStmtSrc$()) As Variant()
+Dim ODy(): ODy = DyoLyWithColon(MulStmtSrc)
 Dim Dr, J%, I&
-For Each Dr In ODry
+For Each Dr In ODy
     For J = 0 To UB(Dr) - 1
         Dr(J) = Dr(J) & ":"
     Next
-    ODry(I) = Dr
+    ODy(I) = Dr
     I = I + 1
 Next
-DryzMulStmtSrc = ODry
+DyoMulStmtSrc = ODy
 End Function
 
 Function FmtMulStmtSrc(MulStmtSrc$()) As String()
-FmtMulStmtSrc = LyzDry(DryzMulStmtSrc(MulStmtSrc), MaxColWdt:=200)
+FmtMulStmtSrc = FmtDy(DyoMulStmtSrc(MulStmtSrc), MaxColWdt:=200)
 End Function
 
 

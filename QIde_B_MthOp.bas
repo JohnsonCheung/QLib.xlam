@@ -38,7 +38,7 @@ RmvMthzMN M, Mthn
 End Sub
 
 Sub RmvMthzMN(M As CodeModule, Mthn)
-With MthSC(M, Mthn)
+With MthLnoC2(M, Mthn)
     If .S2 > 0 Then M.DeleteLines .S2, .C2
     If .S1 > 0 Then M.DeleteLines .S1, .C1
 End With

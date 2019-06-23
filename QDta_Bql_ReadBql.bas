@@ -13,13 +13,13 @@ Public Const DoczShtTyscf$ = "Full: ShtTy-Si-Colon-FldNm. Mmic:ShtTy.s.c.f.  FmT
 Public Const DoczShtTyBql$ = "ShtTyscf-Bql:ShtTy.Bql:It is a [Bql] with each field is a [ShtTyscf].  It is used to create an empty table by CrtTblzShtTyscfBql"
 
 Function ShtTyscfBqlzDrs$(A As Drs)
-Dim Dry(): Dry = A.Dry
-If Si(Dry) = 0 Then ShtTyscfBqlzDrs = Jn(A.Fny, "`"): Exit Function
+Dim Dy(): Dy = A.Dy
+If Si(Dy) = 0 Then ShtTyscfBqlzDrs = Jn(A.Fny, "`"): Exit Function
 Dim O$(), F$, I, C&, Fny$()
 Fny = A.Fny
 For C = 0 To NColzDrs(A) - 1
     F = Fny(C)
-    PushI O, ShtTyscfzCol(ColzDry(Dry, C), F)
+    PushI O, ShtTyscfzCol(ColzDy(Dy, C), F)
 Next
 ShtTyscfBqlzDrs = Jn(O, "`")
 End Function

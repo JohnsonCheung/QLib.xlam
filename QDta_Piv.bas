@@ -3,9 +3,9 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QDta"
 Private Const CMod$ = "MDta_Piv."
-Type KKCntMulItmColDry
+Type KKCntMulItmColDy
     NKK As Integer
-    Dry() As Variant
+    Dy() As Variant
 End Type
     
 Enum EmAgg
@@ -13,7 +13,7 @@ Enum EmAgg
     EiCnt
     EiAvg
 End Enum
-Function DryBlk(A, KIx%, Gix%) As Variant()
+Function DyBlk(A, KIx%, Gix%) As Variant()
 If Si(A) = 0 Then Exit Function
 Dim J%, O, K, Blk(), O_Ix&, Gp, Dr, K_Ay()
 For Each Dr In A
@@ -27,11 +27,11 @@ For Each Dr In A
         Push O(O_Ix)(1), Gp
     End If
 Next
-DryBlk = O
+DyBlk = O
 End Function
-Private Function KKDrIx&(KKDr, FstColIsKKDrDry)
+Private Function KKDrIx&(KKDr, FstColIsKKDrDy)
 Dim Ix&, CurKKDr
-For Each CurKKDr In Itr(FstColIsKKDrDry)
+For Each CurKKDr In Itr(FstColIsKKDrDy)
     If IsEqAy(KKDr, CurKKDr) Then
         KKDrIx = Ix
         Exit Function
@@ -40,11 +40,11 @@ For Each CurKKDr In Itr(FstColIsKKDrDry)
 Next
 Ix = -1
 End Function
-Private Function KKDrToItmAyDualColDry(Dry(), KKColIx&(), ItmColIx&) As Variant()
+Private Function KKDrToItmAyDualColDy(Dy(), KKColIx&(), ItmColIx&) As Variant()
 Dim Dr, Ix&, KKDr(), Itm
-Dim O() 'KKDr_To_ItmAy_DualColDry
-For Each Dr In Itr(Dry)
-    KKDr = AywIxy(Dry, KKColIx)
+Dim O() 'KKDr_To_ItmAy_DualColDy
+For Each Dr In Itr(Dy)
+    KKDr = AwIxy(Dy, KKColIx)
     Itm = Dr(ItmColIx)
     Ix = KKDrIx(KKDr, O)
     If Ix = -1 Then
@@ -53,13 +53,13 @@ For Each Dr In Itr(Dry)
         O(Ix)(1) = AyzAdd(O(Ix)(1), Itm)
     End If
 Next
-KKDrToItmAyDualColDry = O
+KKDrToItmAyDualColDy = O
 End Function
-Function KKCntMulItmColDry(Dry(), KKColIx&(), ItmColIx&) As Variant()
-Dim A(): A = KKDrToItmAyDualColDry(Dry, KKColIx, ItmColIx)
-KKCntMulItmColDry = KKCntMulItmColDryD(A)
+Function KKCntMulItmColDy(Dy(), KKColIx&(), ItmColIx&) As Variant()
+Dim A(): A = KKDrToItmAyDualColDy(Dy, KKColIx, ItmColIx)
+KKCntMulItmColDy = KKCntMulItmColDyD(A)
 End Function
-Private Function KKCntMulItmColDryD(KKDrToItmAyDualColDry()) As Variant()
+Private Function KKCntMulItmColDyD(KKDrToItmAyDualColDy()) As Variant()
 
 End Function
 Function GpDic(A As Drs, KK$, G$) As Dictionary
@@ -69,9 +69,9 @@ Dim KeyIxy&(), Gix%
     KeyIxy = Ixy(A.Fny, Fny)
     PushI Fny, G & "_Gp"
     Gix = IxzAy(Fny, G)
-Set GpDic = DryGpDic(A.Dry, KeyIxy, Gix)
+Set GpDic = GRxyzCyDic(A.Dy, KeyIxy, Gix)
 End Function
-Function DryzDotLyz2Col(DotLy$()) As Variant()
+Function DyoDotLyz2Col(DotLy$()) As Variant()
 Dim O(), I, S$
 For Each I In Itr(DotLy)
     S = I
@@ -79,33 +79,33 @@ For Each I In Itr(DotLy)
        Push O, Sy(.S1, .S2)
    End With
 Next
-DryzDotLyz2Col = O
+DyoDotLyz2Col = O
 End Function
 
-Function DryzDotLy(DotLy$()) As Variant()
+Function DyoDotLy(DotLy$()) As Variant()
 Dim I
 For Each I In Itr(DotLy)
-    PushI DryzDotLy, SplitDot(I)
+    PushI DyoDotLy, SplitDot(I)
 Next
 End Function
-Function DryzDotLyzTwoCol(DotLy$()) As Variant()
+Function DyoDotLyzTwoCol(DotLy$()) As Variant()
 Dim I
 For Each I In Itr(DotLy)
     With Brk1Dot(CStr(I))
-    PushI DryzDotLyzTwoCol, Array(.S1, .S2)
+    PushI DyoDotLyzTwoCol, Array(.S1, .S2)
     End With
 Next
 End Function
 
-Function DryzLyWithColon(LyWithColon$()) As Variant()
+Function DyoLyWithColon(LyWithColon$()) As Variant()
 Dim I
 For Each I In Itr(LyWithColon)
-    PushI DryzLyWithColon, SplitColon(CStr(I))
+    PushI DyoLyWithColon, SplitColon(CStr(I))
 Next
 End Function
 
-Function DryGpDic(A, KeyIxy, G) As Dictionary
-Const CSub$ = CMod & "DryGpDic"
+Function GRxyzCyDic(A, KeyIxy, G) As Dictionary
+Const CSub$ = CMod & "GRxyzCyDic"
 'If K < 0 Or G < 0 Then
 '    Thw CSub, "K-Idx and G-Idx should both >= 0", "K-Idx G-Idx", K, G
 'End If
@@ -122,7 +122,7 @@ Const CSub$ = CMod & "DryGpDic"
 '        O.Add KK, Array(GG)
 '    End If
 'Next
-'Set DryGpDic = O
+'Set GRxyzCyDic = O
 End Function
 
 Function DrszFbt(Fb, T) As Drs

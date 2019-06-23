@@ -21,12 +21,12 @@ For Each F In Itr(SkFny(A, T))
 Next
 End Function
 Sub IupDbt(A As Database, T, Drs As Drs)
-Dim Dry(): Dry = Drs.Dry
-If Si(Dry) = 0 Then Exit Sub
+Dim Dy(): Dy = Drs.Dy
+If Si(Dy) = 0 Then Exit Sub
 'ThwIf_DrsGoodToIupDbt CSub, Drs, A, T
 Dim R As DAO.Recordset, Q$, Sql$, Dr
 'Sql = SqlSel_T_Wh(T, BexpzFnyzSqlQPfxSy(SkFny(A, T), SkSqlQPfxSy(A, T)))
-For Each Dr In Dry
+For Each Dr In Dy
     Q = FmtQQAv(Sql, CvAv(Dr))
     Set R = Rs(A, Q)
     If HasRec(R) Then
@@ -36,10 +36,10 @@ For Each Dr In Dry
     End If
 Next
 End Sub
-Sub InsDbt(A As Database, T, Dry())
+Sub InsDbt(A As Database, T, Dy())
 
 End Sub
-Sub UpdDbt(A As Database, T, Dry())
+Sub UpdDbt(A As Database, T, Dy())
 
 End Sub
 

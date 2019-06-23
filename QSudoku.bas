@@ -282,7 +282,7 @@ End Function
 
 Private Property Get SampSudokuSq() As Variant()
 Dim E: E = Empty
-SampSudokuSq = SqzDry(Av( _
+SampSudokuSq = SqzDy(Av( _
 Array(5, E, 7, 6, 9, E, E, E, 2), _
 Array(9, 3, E, E, E, 2, 7, 4, 5), _
 Array(E, E, E, 3, E, 7, 1, E, E), _

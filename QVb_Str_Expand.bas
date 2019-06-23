@@ -34,7 +34,7 @@ Z:
     X ""
     QVblTp = JnVBar(XX)
     Erase XX
-    Brw Expandss(QVblTp, "S1S2 XX")
+    Brw Expandss(QVblTp, "S12 XX")
 T0:
     QVblTp = "Sub Tst?()|Dim A As New ?: A.Tst|End Sub"
     Seed = SyzSS("Xws Xwb Xfx Xrg")

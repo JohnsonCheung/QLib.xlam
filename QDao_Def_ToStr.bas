@@ -28,7 +28,7 @@ For Each I In Itr(TdLy)
     TdStr = I
     PushIAy O, FnyzTdLin(TdStr)
 Next
-FnyzTdLy = CvSy(AywDist(O))
+FnyzTdLy = CvSy(AwDist(O))
 End Function
 
 Function TdStrzT$(A As Database, T)

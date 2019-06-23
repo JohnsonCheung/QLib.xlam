@@ -27,16 +27,16 @@ Next
 End Function
 
 Private Sub Z_DrzFds()
-Dim Rs As DAO.Recordset, Dry()
+Dim Rs As DAO.Recordset, Dy()
 Set Rs = Db(SampFbzShpRate).OpenRecordset("Select * from YMGRnoIR")
 With Rs
     While Not .EOF
-        PushI Dry, DrzFds(Rs.Fields)
+        PushI Dy, DrzFds(Rs.Fields)
         .MoveNext
     Wend
     .Close
 End With
-BrwDry Dry
+BrwDy Dy
 End Sub
 
 Private Sub Z_DrzFds1()

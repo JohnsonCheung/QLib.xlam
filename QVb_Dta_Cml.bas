@@ -275,7 +275,7 @@ X "Cmd"
 X "Db"
 X "Dbtt"
 X "Dic"
-X "Dry"
+X "Dy"
 X "Ds"
 X "Ent"
 X "F"
@@ -326,12 +326,12 @@ Seg1ErNy = XX
 End Function
 
 Function ShfCml$(OStr)
-Dim J&, Fst As Boolean, Cml$, C$, A%, IsNmChr As Boolean, IsFstNmChr As Boolean
+Dim J&, Fst As Boolean, Cml$, C$, A%, IsChrzNm As Boolean, IsFstNmChr As Boolean
 Fst = True
 For J = 1 To Len(OStr)
     C = Mid(OStr, J, 1)
     A = Asc(C)
-    IsNmChr = IsAscNmChr(A)
+    IsChrzNm = IsAscNmChr(A)
     IsFstNmChr = IsAscFstNmChr(A)
     Select Case True
     Case Fst

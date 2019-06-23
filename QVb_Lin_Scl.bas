@@ -10,7 +10,7 @@ Dim Av(): Av = OAp
 Dim V, Ny$(), I, J%
 Ny = TermAy(NN)
 If Si(Ny) <> Si(Av) Then Stop
-For Each I In Itr(AyeEmpEle(AyTrim(SplitSemi(Scl))))
+For Each I In Itr(AeEmpEle(AyTrim(SplitSemi(Scl))))
 '    V = SclItm_V(I, Ny)
     Select Case True
     Case IsByt(V) And (V = 1 Or V = 2)
@@ -25,7 +25,7 @@ Function ChkSclNN(A$, Ny0) As String()
 Const CSub$ = CMod & "ChkSclNN"
 Dim V, Ny$(), I, Er1$(), Er2$()
 Ny = TermAy(Ny0)
-For Each I In Itr(AyeEmpEle(AyTrim(SplitSemi(A))))
+For Each I In Itr(AeEmpEle(AyTrim(SplitSemi(A))))
 '    V = SclItm_V(I, Ny)
     Select Case True
     Case IsByt(V) And V = 1: Push Er1, I

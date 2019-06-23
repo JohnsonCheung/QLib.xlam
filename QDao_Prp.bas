@@ -23,42 +23,49 @@ Function PrpNyzFd(A As DAO.Field) As String()
 PrpNyzFd = Itn(A.Properties)
 End Function
 
-Private Sub Z_PrpDryzFd()
+Private Sub Z_PrpDyoFd()
 Dim Db As Database: Set Db = SampDbzDutyDta
 Dim Fd As DAO.Field
 Dim Rs As DAO.Recordset
 Set Rs = RszT(Db, "Permit")
 Set Fd = Rs.Fields("Permit")
 Debug.Print Fd.Value
-DmpDry PrpDryzFd(Fd)
+DmpDy PrpDyoFd(Fd)
 End Sub
 
-Function PrpDryzFd(A As DAO.Field) As Variant()
+Function PrpDyoFd(A As DAO.Field) As Variant()
 Dim PrpV, I, P$, V
 For Each I In Itn(A.Properties)
     P = I
-    V = PrpVal(A, P)
-    PushI PrpDryzFd, Array(P, V, TypeName(V))
+    V = VzOPrps(A, P)
+    PushI PrpDyoFd, Array(P, V, TypeName(V))
 Next
 End Function
 
-Property Let PrpVal(WiDaoPrps As Object, P$, V)
-Dim Prps As DAO.Properties
-Set Prps = WiDaoPrps.Properties
+Property Let VzOPrps(ObjWiPrps, P$, V)
+Dim Prps As DAO.Properties: Set Prps = PrpszO(ObjWiPrps)
 If HasItn(Prps, P) Then
     Prps(P).Value = V
 Else
-    Prps.Append WiDaoPrps.CreateProperty(P, DaoTyzVal(V), V) ' will break if V=""
+    Prps.Append ObjWiPrps.CreateProperty(P, DaoTyzV(V), V) ' will break if V=""
 End If
 End Property
 
-Property Get PrpVal(WiDaoPrps As Object, P$)
-Dim Prps As DAO.Properties
-Set Prps = WiDaoPrps.Properties
-On Error GoTo X
-PrpVal = Prps(P).Value
-X:
+Property Get VzOPrps(ObjWiPrps, P$)
+'Ret : #Val-fm-ObjWithPrps ! Notes: Just passing @ObjWiPrps.Properties is Ok for &Get, but &Let.
+'                          ! Because the prp is at at :ObjWiPrps level, not :Properties level.
+On Error Resume Next
+VzOPrps = PrpszO(ObjWiPrps)(P).Value
 End Property
+
+Function PrpszO(ObjWiPrps) As DAO.Properties
+On Error GoTo X
+Set PrpszO = ObjWiPrps.Properties
+Exit Function
+X:
+    Dim E$: E = Err.Description
+    Thw CSub, "Obj does not have prp-[Properties]", "Obj-TyNm Er", TypeName(ObjWiPrps), E
+End Function
 
 Private Sub Z_FldPrp()
 Dim P$, Db As Database, T, F$, V
@@ -77,19 +84,19 @@ Tst:
     Ass FldPrp(Db, T, F, P) = V
     Dim Fd As DAO.Field: Set Fd = FdzTF(Db, T, F)
     Stop
-    DmpDry PrpDryzFd(Fd)
+    DmpDy PrpDyoFd(Fd)
     Return
 End Sub
 
 Property Get FldDeszTd$(A As DAO.Field)
-FldDeszTd = PrpVal(A.Properties, C_Des)
+FldDeszTd = VzOPrps(A.Properties, C_Des)
 End Property
 
 Property Let FldDeszTd(A As DAO.Field, Des$)
 
 End Property
 
-Private Sub ZZZ()
+Private Sub Z()
 MDao_Z_Prp_Fld:
 End Sub
 
@@ -123,7 +130,7 @@ If HasItn(Prps, P) Then
     End If
     Prps(P).Value = V
 Else
-    Prps.Append WiDaoPrps.CreateProperty(P, DaoTyzVal(V), V)
+    Prps.Append WiDaoPrps.CreateProperty(P, DaoTyzV(V), V)
 End If
 End Sub
 

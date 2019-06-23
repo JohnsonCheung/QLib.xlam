@@ -20,7 +20,7 @@ Function PthzDb$(A As Database)
 PthzDb = Pth(Dbn(A))
 End Function
 Function IsDbTmp(A As Database) As Boolean
-IsDbTmp = PthzDb(A) = TmpPthzDb
+IsDbTmp = PthzDb(A) = TmpDbPth
 End Function
 
 
@@ -34,7 +34,7 @@ End If
 End Sub
 
 Function TmpFbAy() As String()
-TmpFbAy = Ffny(TmpPthzDb, "*.accdb")
+TmpFbAy = Ffny(TmpDbPth, "*.accdb")
 End Function
 
 Sub BrwDbzLasTmp()
@@ -61,7 +61,7 @@ Stru = AlignzTRst(StruzTny(A, Tny(A)))
 End Function
 
 Function OupTny(A As Database) As String()
-OupTny = AywPfx(Tny(A), "@")
+OupTny = AwPfx(Tny(A), "@")
 End Function
 Sub DrpTny(A As Database, Tny$())
 Dim T
@@ -83,7 +83,7 @@ Sub CrtTbl(A As Database, T, FldDclAy)
 A.Execute FmtQQ("Create Table [?] (?)", T, JnComma(FldDclAy))
 End Sub
 
-Function DszDb(A As Database, Optional DsNm$) As DS
+Function DszDb(A As Database, Optional DsNm$) As Ds
 Dim Nm$
 If DsNm = "" Then
     Nm = Dbn(A)
@@ -93,7 +93,7 @@ End If
 DszDb = DszTny(A, Tny(A), Nm)
 End Function
 
-Function DszTny(A As Database, Tny$(), Optional DsNm$) As DS
+Function DszTny(A As Database, Tny$(), Optional DsNm$) As Ds
 Dim T
 For Each T In Tny
     AddDt DszTny, DtzT(A, CStr(T))
@@ -142,16 +142,24 @@ Function HasReczQ(A As Database, Q) As Boolean
 HasReczQ = HasRec(Rs(A, Q))
 End Function
 
-Function HasReczT(A As Database, T) As Boolean
-HasReczT = HasRec(RszT(A, T))
+Function HasReczT(D As Database, T) As Boolean
+HasReczT = HasRec(RszT(D, T))
 End Function
 
-Function HasQryz(A As Database, Q) As Boolean
-HasQryz = HasReczQ(A, FmtQQ("Select * from MSysObjects where Name='?' and Type=5", Q))
+Function HasQry(D As Database, Q) As Boolean
+HasQry = HasReczQ(D, FmtQQ("Select * from MSysObjects where Name='?' and Type=5", Q))
 End Function
 
-Function HasTbl(A As Database, T) As Boolean
-HasTbl = HasItn(DbzReOpn(A).TableDefs, T)
+Function HasTbl(D As Database, T) As Boolean
+HasTbl = HasItn(DbzReOpn(D).TableDefs, T)
+End Function
+
+Function FFzT$(D As Database, T)
+FFzT = TermLin(Fny(D, T))
+End Function
+
+Function HasFF(D As Database, T, FF$) As Boolean
+HasFF = FFzT(D, T) = FF
 End Function
 
 Function HasTblByMSys(A As Database, T) As Boolean
@@ -178,7 +186,7 @@ Next
 End Function
 
 Function TmpTny(A As Database) As String()
-TmpTny = AywPfx(Tny(A), "#")
+TmpTny = AwPfx(Tny(A), "#")
 End Function
 
 Function Tntt$(A As Database)
@@ -232,7 +240,7 @@ Private Sub Z_Qny()
 End Sub
 
 Private Sub Z_DszDb()
-Dim A As Database, Tny0, Act As DS, Ept As DS
+Dim A As Database, Tny0, Act As Ds, Ept As Ds
 Stop
 ZZ1:
     Set A = Db(SampFbzDutyDta)
@@ -306,11 +314,11 @@ DrpzTT Av
 End Sub
 
 Property Get TblDes$(A As Database, T)
-TblDes = PrpVal(A.TableDefs(T).Properties, C_Des)
+TblDes = VzOPrps(A.TableDefs(T), C_Des)
 End Property
 
 Property Let TblDes(A As Database, T, Des$)
-PrpVal(A.TableDefs(T).Properties, C_Des) = Des
+VzOPrps(A.TableDefs(T), C_Des) = Des
 End Property
 
 Property Get TblAttDes$(A As Database)
@@ -391,7 +399,7 @@ Asg Itr(TnyzInp(A)), TnizInp
 End Function
 
 Function TnyzInp(A As Database) As String()
-TnyzInp = AywLik(Tny(A), ">*")
+TnyzInp = AwLik(Tny(A), ">*")
 End Function
 
 Function DbzReOpn(A As Database) As Database

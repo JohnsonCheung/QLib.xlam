@@ -33,7 +33,7 @@ With Lo.QueryTable
 End With
 End Sub
 Function TmpInpTny(A As Database) As String()
-TmpInpTny = AywPfx(Tny(A), "#I")
+TmpInpTny = AwPfx(Tny(A), "#I")
 End Function
 
 Private Sub Z_LoIxSq()
@@ -82,8 +82,8 @@ Private Function LoDr(A As ListObject) As Variant()
 Dim WN$: WN = WsnzLo(A)
 Dim LN$:: LN = A.Name
 Dim NR&: NR = NRowzLo(A)
-Dim Nc&: Nc = A.ListColumns.Count
-LoDr = Array(WN, LN, NR, Nc)
+Dim NC&: NC = A.ListColumns.Count
+LoDr = Array(WN, LN, NR, NC)
 End Function
 
 Sub AddLoIx(At As Range)
@@ -206,14 +206,23 @@ Sub ClrLo(A As ListObject)
 If A.ListRows.Count = 0 Then Exit Sub
 A.DataBodyRange.Delete xlShiftUp
 End Sub
-Sub PutAyAtV(Ay, At As Range)
-PutSq SqzAyV(Ay), At
+Sub PutAyV(AyV, At As Range)
+PutSq SqzAyV(AyV), At
 End Sub
 Function CrtLo(Ws As Worksheet, FF$, Optional Lon$) As ListObject
 Set CrtLo = LozRg(RgzAyH(SyzSS(FF), A1zWs(Ws)), Lon)
 End Function
-Sub PutAyAtH(Ay, At As Range)
-PutSq SqzAyH(Ay), At
+
+Sub PutSSH(SSH$, At As Range)
+PutAyH SyzSS(SSH), At
+End Sub
+
+Sub PutSSV(SSV$, At As Range)
+PutAyV SyzSS(SSV), At
+End Sub
+
+Sub PutAyH(AyH, At As Range)
+PutSq SqzAyH(AyH), At
 End Sub
 Sub PutDbtAt(A As Database, T, At As Range, Optional AddgWay As EmAddgWay)
 LozRg PutSq(SqzT(A, T), At), Lon(T)

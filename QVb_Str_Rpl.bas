@@ -94,40 +94,40 @@ End Function
 Function SzQBy$(RplQ, By)
 SzQBy = Replace(RplQ, "?", By)
 End Function
-Function DryzAyAv(AyAv()) As Variant()
+Function DyoAyAv(AyAv()) As Variant()
 If Si(AyAv) = 0 Then Exit Function
 Dim UAy%: UAy = UB(AyAv)
 Dim URec&: URec = UB(AyAv(0))
-Dim ODry(): ReDim ODry(URec)
+Dim ODy(): ReDim ODy(URec)
 Dim R&: For R = 0 To URec
     Dim Dr(): ReDim Dr(UAy)
     Dim C%: For C = 0 To UAy
         Dr(C) = AyAv(C)(R)
     Next
-    ODry(R) = Dr
+    ODy(R) = Dr
 Next
-DryzAyAv = ODry
+DyoAyAv = ODy
 End Function
 Function SyzMacro(RplMacro$, ParamArray ByAyAp()) As String()
 Dim AyAv(): AyAv = ByAyAp
-SyzMacro = SyzMacroDry(RplMacro, DryzAyAv(AyAv))
+SyzMacro = SyzMacroDy(RplMacro, DyoAyAv(AyAv))
 End Function
 
-Function SyzMacroDry(RplMacro$, ByDry()) As String()
-If Si(ByDry) = 0 Then Exit Function
+Function SyzMacroDy(RplMacro$, ByDy()) As String()
+If Si(ByDy) = 0 Then Exit Function
 Dim M$():     M = NyzMacro(RplMacro, InclBkt:=True)
-Dim URec&: URec = UB(ByDry)
-Dim UFld%: UFld = UB(ByDry(0))
+Dim URec&: URec = UB(ByDy)
+Dim UFld%: UFld = UB(ByDy(0))
 
 If UB(M) <> UFld Then Thw CSub, "UFld should = UB(MacroNy)", "UFld UB(MacroNy)", UFld, UB(M)
 
 '-- O --
 Dim O$(): ReDim O(URec)
-Dim J&, Dr: For Each Dr In ByDry
+Dim J&, Dr: For Each Dr In ByDy
     O(J) = SzMacro(RplMacro, M, Dr)
     J = J + 1
 Next
-SyzMacroDry = O
+SyzMacroDy = O
 End Function
 
 Function SzMacro$(RplMacro$, OfMacroNy$(), ByDr)

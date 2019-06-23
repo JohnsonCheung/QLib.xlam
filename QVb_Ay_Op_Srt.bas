@@ -40,11 +40,11 @@ If N <= 1 Then QSrt = Ay: Exit Function
 Dim V
     V = Ay(0)
 Dim L, H
-    L = AywLT(Ay, V):
-    H = AywGT(Ay, V):
+    L = AwLT(Ay, V):
+    H = AwGT(Ay, V):
 Dim L1, V1, H1
     L1 = QSrt(L)
-    V1 = AywEQ(Ay, V)
+    V1 = AwEQ(Ay, V)
     H1 = QSrt(H)
 Dim O
     O = AyzAddAp(L1, V1, H1)
@@ -52,42 +52,42 @@ If Ord = EiDes Then O = RevAy(O)
 QSrt = O
 End Function
 
-Function AywEQ(Ay, V)
-If Si(Ay) <= 1 Then AywEQ = Ay: Exit Function
+Function AwEQ(Ay, V)
+If Si(Ay) <= 1 Then AwEQ = Ay: Exit Function
 Dim O: O = Ay: Erase O
 Dim I
 For Each I In Ay
     If I = V Then PushI O, I
 Next
-AywEQ = O
+AwEQ = O
 End Function
 
-Function AywLE(Ay, V)
-If Si(Ay) <= 1 Then AywLE = Ay: Exit Function
+Function AwLE(Ay, V)
+If Si(Ay) <= 1 Then AwLE = Ay: Exit Function
 Dim O: O = Ay: Erase O
 Dim I
 For Each I In Ay
     If I <= V Then PushI O, I
 Next
-AywLE = O
+AwLE = O
 End Function
-Function AywLT(Ay, V)
-If Si(Ay) = 1 Then AywLT = Ay: Exit Function
+Function AwLT(Ay, V)
+If Si(Ay) = 1 Then AwLT = Ay: Exit Function
 Dim O: O = Ay: Erase O
 Dim I
 For Each I In Ay
     If I < V Then PushI O, I
 Next
-AywLT = O
+AwLT = O
 End Function
-Function AywGT(Ay, V)
-If Si(Ay) = 1 Then AywGT = Ay: Exit Function
+Function AwGT(Ay, V)
+If Si(Ay) = 1 Then AwGT = Ay: Exit Function
 Dim O: O = Ay: Erase O
 Dim I
 For Each I In Ay
     If I > V Then PushI O, I
 Next
-AywGT = O
+AwGT = O
 End Function
 Function QSrt1(Ay, Optional IsDes As Boolean)
 If Si(Ay) = 0 Then Exit Function

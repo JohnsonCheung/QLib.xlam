@@ -5,7 +5,7 @@ Private Const CMod$ = "MVb_Ay_Sub_Fst."
 Private Const Asm$ = "QVb"
 Function ShfFstEle(OAy)
 ShfFstEle = FstEle(OAy)
-OAy = AyeFstNEle(OAy)
+OAy = AeFstNEle(OAy)
 End Function
 
 Function FstEle(Ay)
@@ -102,7 +102,7 @@ Function FstEleRmvTT$(Sy$(), T1, T2)
 Dim I, L$, X1$, X2$, Rst$
 For Each I In Itr(Sy)
     L = I
-    AsgN2tRst L, X1, X2, Rst
+    AsgTTRst L, X1, X2, Rst
     If X1 = T1 Then
         If X2 = T2 Then
             FstEleRmvTT = L

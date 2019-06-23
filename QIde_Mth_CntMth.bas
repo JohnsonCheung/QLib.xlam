@@ -22,10 +22,10 @@ DMthCntP = DMthCntzP(CPj)
 End Function
 
 Function DMthCntzP(P As VBProject) As Drs
-Dim C As VBComponent, Dry(): For Each C In P.VBComponents
-    PushI Dry, DrMthCnt(C.CodeModule, C.Name)
+Dim C As VBComponent, Dy(): For Each C In P.VBComponents
+    PushI Dy, DrMthCnt(C.CodeModule, C.Name)
 Next
-DMthCntzP = DrszFF("Mdn NLines NMth NPubSub NPubFun NPubPrp NPrvSub NPrvFun NPrvPrp NFrdSub NFrdFun NFrdPrp", Dry)
+DMthCntzP = DrszFF("Mdn NLines NMth NPubSub NPubFun NPubPrp NPrvSub NPrvFun NPrvPrp NFrdSub NFrdFun NFrdPrp", Dy)
 End Function
 
 Property Get NMth%(A As CntgMth)
@@ -121,17 +121,6 @@ For Each C In P.VBComponents
 Next
 NSrcLinPj = O
 End Function
-Function PMthLinAy(Src$()) As String()
-Dim L
-For Each L In Itr(Src)
-    If IsLinPubMth(L) Then PushI PMthLinAy, L
-Next
-End Function
-
-Function PMthLinItr(Src$())
-Asg Itr(PMthLinAy(Src)), PMthLinItr
-End Function
-
 Function NPMthzS%(Src$())
 NPMthzS = NItr(PMthLinItr(Src))
 End Function

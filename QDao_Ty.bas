@@ -8,16 +8,16 @@ Enum EmSimTy
     EiUnk
     EiEmp
     EiYes
-    EiNbr
+    EiNum
     EiDte
     EiStr
 End Enum
 Property Get DShtTy() As Drs
-Dim Dry(), I
+Dim Dy(), I
 For Each I In SyzSS(ShtTyss)
-    PushI Dry, Sy(I, DtaTyzShtTy(I))
+    PushI Dy, Sy(I, DtaTyzShtTy(I))
 Next
-DShtTy = DrszFF("ShtTy DtaTy", Dry)
+DShtTy = DrszFF("ShtTy DtaTy", Dy)
 End Property
 
 Property Get ShtTyAy() As String()
@@ -105,6 +105,7 @@ Case DAO.DataTypeEnum.dbSingle:     O = "Single"
 Case DAO.DataTypeEnum.dbText:       O = "Text"
 Case DAO.DataTypeEnum.dbChar:       O = "Char"
 Case DAO.DataTypeEnum.dbTime:       O = "Time"
+Case DAO.DataTypeEnum.dbLongBinary: O = "LongBinary"
 Case Else: Stop
 End Select
 DtaTy = O
@@ -125,7 +126,7 @@ Dim O As EmSimTy
 Select Case True
 Case V = Empty: O = EiEmp
 Case V = vbBoolean: O = EiYes
-Case V = vbByte, V = vbCurrency, V = vbDecimal, V = vbDouble, V = vbInteger, V = vbLong, V = vbSingle: O = EiNbr
+Case V = vbByte, V = vbCurrency, V = vbDecimal, V = vbDouble, V = vbInteger, V = vbLong, V = vbSingle: O = EiNum
 Case V = vbDate: O = EiDte
 Case V = vbString: O = EiStr
 End Select
@@ -194,17 +195,17 @@ End Select
 DaoTyzVbTy = O
 End Function
 
-Function DaoTyzVal(V) As DAO.DataTypeEnum
+Function DaoTyzV(V) As DAO.DataTypeEnum
 Dim T As VbVarType: T = VarType(V)
 If T = vbString Then
     If Len(V) > 255 Then
-        DaoTyzVal = dbMemo
+        DaoTyzV = dbMemo
     Else
-        DaoTyzVal = dbText
+        DaoTyzV = dbText
     End If
     Exit Function
 End If
-DaoTyzVal = DaoTyzVbTy(T)
+DaoTyzV = DaoTyzVbTy(T)
 End Function
 
 Function CvDaoTy(A) As DAO.DataTypeEnum
@@ -222,7 +223,7 @@ End Function
 Function ErzShtTyLis(ShtTyLis$) As String()
 Dim O$(), ShtTy
 For Each ShtTy In CmlSy(ShtTyLis)
-    If Not IsVdtShtTy(CStr(ShtTy)) Then
+    If Not IsShtTy(CStr(ShtTy)) Then
         PushI ErzShtTyLis, ShtTy
     End If
 Next

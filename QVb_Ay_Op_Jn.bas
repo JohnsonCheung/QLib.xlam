@@ -33,13 +33,13 @@ End Function
 
 Function JnSpcAp$(ParamArray Ap())
 Dim Av(): Av = Ap
-JnSpcAp = JnSpc(AyeEmpEle(Av))
+JnSpcAp = JnSpc(AeEmpEle(Av))
 End Function
 
 
 Function JnSemiColonAp$(ParamArray Ap())
 Dim Av(): Av = Ap
-JnSemiColonAp = JnSemi(AyeEmpEle(Av))
+JnSemiColonAp = JnSemi(AeEmpEle(Av))
 End Function
 
 Private Sub Z()

@@ -20,13 +20,3 @@ If FF = CC Then Exit Function
 MsgBox FmtQQ("Expected: ?|Actual: ?", CC, FF), vbCritical, FmtQQ("Lo[?] fields error", Lo.Name)
 ChkLoCCExact = True
 End Function
-Function ChkLoCCAtLeast(Lo As ListObject, CC$) As Boolean
-
-End Function
-
-Function ChkNotHasFfn(Ffn) As Boolean
-If HasFfn(Ffn) Then Exit Function
-MsgBox FmtQQ("File not file:|?", Ffn), vbCritical
-ChkNotHasFfn = True
-End Function
-

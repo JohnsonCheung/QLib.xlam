@@ -1,4 +1,4 @@
-Attribute VB_Name = "QXls_Lo_LofVbl"
+Attribute VB_Name = "QXls_B_LofVbl"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "MXls_Lo_LofVbl."
@@ -13,7 +13,7 @@ LofVblzT = TblPrp(A, T, "LofVbl")
 End Property
 
 Property Let LofVblzT(A As Database, T, V$)
-TblPrp(A, T, "LofVal") = V
+TblPrp(A, T, "LofVbl") = V
 End Property
 
 Function LofVblzLo$(A As ListObject)

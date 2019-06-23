@@ -16,22 +16,22 @@ Private Sub FmtDocWs(DocWs As Worksheet)
 
 End Sub
 Private Function DocSqzP(P As VBProject) As Variant()
-Dim Dry(), K$, I, D As Dictionary, TermAset As Aset
-PushI Dry, SyzSS("Term Lnk DfnStmt")
+Dim Dy(), K$, I, D As Dictionary, TermAset As Aset
+PushI Dy, SyzSS("Term Lnk DfnStmt")
 'Set D = DocDiczP(P)
 Set TermAset = AsetzItr(D.Keys)
 For Each I In D.Keys
     K = I
-    PushIAy Dry, DryzDocDfn(K, D(K), TermAset)
+    PushIAy Dy, DyoDocDfn(K, D(K), TermAset)
 Next
-DocSqzP = SqzDry(Dry)
+DocSqzP = SqzDy(Dy)
 End Function
 
-Function DryzDocDfn(Nm$, Lines$, TermAset As Aset) As Variant()  'DocDfn = Nm + Lines.  DocDry = Term + Lnk + Stmt
+Function DyoDocDfn(Nm$, Lines$, TermAset As Aset) As Variant()  'DocDfn = Nm + Lines.  DocDy = Term + Lnk + Stmt
 Dim S$(): S = StmtLy(Lines)
-Dim N0$(): N0 = AywDist(NyzStr(Lines))
-Dim N1$(): N1 = AywInAset(N0, TermAset)
-Dim N$(): N = AyeEle(N1, Nm)
+Dim N0$(): N0 = AwDist(NyzStr(Lines))
+Dim N1$(): N1 = AwInAset(N0, TermAset)
+Dim N$(): N = AeEle(N1, Nm)
 Dim J%, Term, Nm1, Stmt, UN%, US%
 UN = UB(N)
 US = UB(S)
@@ -44,7 +44,7 @@ Next
 For J = 0 To UN
     O(J + 1, 2) = N(J)
 Next
-DryzDocDfn = DryzSq(O)
+DyoDocDfn = DyoSq(O)
 End Function
 
 Function DocDicP() As Dictionary

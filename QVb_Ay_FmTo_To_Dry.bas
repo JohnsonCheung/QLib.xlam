@@ -1,32 +1,32 @@
 Attribute VB_Name = "QVb_Ay_FmTo_To_Dry"
 Option Compare Text
 Option Explicit
-Private Const CMod$ = "MVb_Ay_FmTo_To_Dry."
+Private Const CMod$ = "MVb_Ay_FmTo_To_Dy."
 Private Const Asm$ = "QVb"
 
-Function DryzAyzAddC(Ay, C) As Variant()
-'XCDry is AyItmX-Const-Dry
+Function DyoAyzAddC(Ay, C) As Variant()
+'XCDy is AyItmX-Const-Dy
 Dim I
 For Each I In Itr(Ay)
-    PushI DryzAyzAddC, Array(I, C)
+    PushI DyoAyzAddC, Array(I, C)
 Next
 End Function
 
-Function DryzCAyzAdd(A, C) As Variant()
-'CXDry is Const-AyItmX-Dry
+Function DyoCAyzAdd(A, C) As Variant()
+'CXDy is Const-AyItmX-Dy
 Dim I
 For Each I In Itr(A)
-    PushI DryzCAyzAdd, Array(C, I)
+    PushI DyoCAyzAdd, Array(C, I)
 Next
 End Function
 
-Function DryzAyzTyNmVal(Ay) As Variant()
+Function DyoAyzTyNmVal(Ay) As Variant()
 Dim I
 For Each I In Itr(Ay)
-    PushI DryzAyzTyNmVal, Array(TypeName(I), I)
+    PushI DyoAyzTyNmVal, Array(TypeName(I), I)
 Next
 End Function
 
 Sub DmpAyzTyNmVal(Ay)
-DmpDry DryzAyzTyNmVal(Ay)
+DmpDy DyoAyzTyNmVal(Ay)
 End Sub

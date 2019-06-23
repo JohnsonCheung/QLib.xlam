@@ -53,10 +53,6 @@ Dim Av(): Av = Ap
 IntAy = IntozAy(EmpIntAy, Av)
 End Function
 
-Function LngSeq(Fm&, ToLng&) As Long()
-
-End Function
-
 Function LngAp(ParamArray Ap()) As Long()
 Dim Av(): Av = Ap
 LngAp = IntozAy(EmpLngAy, Av)

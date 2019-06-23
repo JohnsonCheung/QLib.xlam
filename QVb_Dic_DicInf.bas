@@ -130,11 +130,20 @@ For Each K In Itr(Ky)
     J = J + 1
 Next
 End Function
+
 Function Vy(A As Dictionary) As Variant()
 Vy = IntozItr(EmpAv, A.Items)
 End Function
 Function TyNmAyzDic(A As Dictionary) As String()
 TyNmAyzDic = TyNmAy(Vy(A))
+End Function
+Function IsDicLy(A As Dictionary) As Boolean
+Dim D As Dictionary, I, V
+If Not IsDic(A) Then Exit Function
+Dim Ly: For Each Ly In A.Items
+    If Not IsLy(Ly) Then Exit Function
+Next
+IsDicLy = True
 End Function
 
 Function IsDicSy(A As Dictionary) As Boolean

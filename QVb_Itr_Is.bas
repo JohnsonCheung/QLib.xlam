@@ -10,10 +10,10 @@ For Each I In Itr
 Next
 IsAllTrue = True
 End Function
-Function IsSomTrue(Itr, P As IPred) As Boolean
+Function IsSomFTrue(Itr, P As IPred) As Boolean
 Dim I
 For Each I In Itr
-    If P.Pred(I) Then IsSomTrue = True: Exit Function
+    If P.Pred(I) Then IsSomFTrue = True: Exit Function
 Next
 End Function
 Function IsAllFalse(Itr, P As IPred) As Boolean
@@ -23,10 +23,10 @@ For Each I In Itr
 Next
 IsAllFalse = False
 End Function
-Function IsSomFalse(Itr, P As IPred) As Boolean
+Function IsSomFFalse(Itr, P As IPred) As Boolean
 Dim I
 For Each I In Itr
-    If Not P.Pred(I) Then IsSomFalse = True: Exit Function
+    If Not P.Pred(I) Then IsSomFFalse = True: Exit Function
 Next
 End Function
 
@@ -40,5 +40,5 @@ Function IsItrOfStr(Itr) As Boolean:   IsItrOfStr = IsAllTrue(Itr, PredIsStr):  
 Function IsItrOfPrim(Itr) As Boolean:  IsItrOfPrim = IsAllTrue(Itr, PredIsPrim): End Function
 Function IsItrOfNm(Itr) As Boolean:    IsItrOfNm = IsAllTrue(Itr, PredIsNm):     End Function
 Function IsItrOfSy(Itr) As Boolean:    IsItrOfSy = IsAllTrue(Itr, PredIsSy):     End Function
-Function IsItrOfLines(Itr) As Boolean: IsItrOfLines = IsItrOfStr(Itr) And IsSomTrue(Itr, PredIsLines): End Function
+Function IsItrOfLines(Itr) As Boolean: IsItrOfLines = IsItrOfStr(Itr) And IsSomFTrue(Itr, PredIsLines): End Function
 

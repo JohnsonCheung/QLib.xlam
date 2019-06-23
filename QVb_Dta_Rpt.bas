@@ -9,6 +9,11 @@ Enum EmRpt
     EiUpdAndPush
 End Enum
 
+Enum EmHdr
+    EiNoHdr
+    EiWiHdr
+End Enum
+
 Function StrzRpt$(Rpt As EmRpt)
 Dim O$
 Select Case True

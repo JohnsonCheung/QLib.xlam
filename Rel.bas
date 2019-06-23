@@ -309,7 +309,7 @@ Property Get SampRel() As Rel
 Set SampRel = RelVbl("B C D | D E | X")
 End Property
 
-Friend Sub Z_Itms()
+Private Sub Z_Itms()
 Dim Act As Aset, Ept As Aset, A As Rel
 Set Ept = AsetzSsl("A B C D E")
 Set A = RelVbl("A B C | B D E | C D")
@@ -321,7 +321,7 @@ Tst:
     Return
 End Sub
 
-Friend Sub Z_InDpdOrdItms()
+Private Sub Z_InDpdOrdItms()
 Dim Act As Aset, Ept As Aset
 Dim R As Rel
 GoSub T1

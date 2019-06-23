@@ -69,21 +69,21 @@ JnStrDic = Join(SyzItr(StrDic.Items), Sep)
 End Function
 Function DiczDrsCC(A As Drs, Optional CC$) As Dictionary
 If CC = "" Then
-    Set DiczDrsCC = DiczDryCC(A.Dry)
+    Set DiczDrsCC = DiczDyCC(A.Dy)
 Else
     With BrkSpc(CC)
         Dim C1%: C1 = IxzAy(A.Fny, .S1)
         Dim C2%: C2 = IxzAy(A.Fny, .S2)
-        Set DiczDrsCC = DiczDryCC(A.Dry, C1, C2)
+        Set DiczDrsCC = DiczDyCC(A.Dy, C1, C2)
     End With
 End If
 End Function
 
-Function DiczDryCC(Dry(), Optional C1 = 0, Optional C2 = 1) As Dictionary
-Set DiczDryCC = New Dictionary
+Function DiczDyCC(Dy(), Optional C1 = 0, Optional C2 = 1) As Dictionary
+Set DiczDyCC = New Dictionary
 Dim Dr
-For Each Dr In Itr(Dry)
-    DiczDryCC.Add Dr(C1), Dr(C2)
+For Each Dr In Itr(Dy)
+    DiczDyCC.Add Dr(C1), Dr(C2)
 Next
 End Function
 Function DiczUniq(Ly$()) As Dictionary 'T1 of each Ly must be uniq
@@ -93,28 +93,72 @@ For Each I In Itr(Ly)
     DiczUniq.Add T1(I), RmvT1(I)
 Next
 End Function
-Function AddSfxzDic(A As Dictionary, Sfx$) As Dictionary
+
+Function AddSfxzDic(D As Dictionary, Sfx$) As Dictionary
 Dim O As New Dictionary
-Dim K: For Each K In A.Keys
-    Dim V$: V = A(K) & Sfx
+Dim K: For Each K In D.Keys
+    Dim V$: V = D(K) & Sfx
     O.Add K, V
 Next
 Set AddSfxzDic = O
 End Function
-Function DiczEleToABC(Ay) As Dictionary
-Set DiczEleToABC = New Dictionary
+
+Function DiEleqABC(Ay) As Dictionary
+Set DiEleqABC = New Dictionary
 Dim V, J&: For Each V In Itr(Ay)
-    DiczEleToABC.Add CStr(V), Chr(65 + J)
+    DiEleqABC.Add CStr(V), Chr(65 + J)
     J = J + 1
 Next
 End Function
-Function DiczEleToIx(Ay) As Dictionary
-Set DiczEleToIx = New Dictionary
+
+Function DiEleqIx(Ay) As Dictionary
+Set DiEleqIx = New Dictionary
 Dim V, J&: For Each V In Itr(Ay)
-    DiczEleToIx.Add CStr(V), J
+    DiEleqIx.Add CStr(V), J
     J = J + 1
 Next
 End Function
+
+Function LyzLyItr(LyItr) As String()
+If TypeName(LyItr) = "Collection" Then Exit Function
+If Not IsSy(LyItr) Then Thw CSub, "LyItr is valid", "TypeName(LyItr)", TypeName(LyItr)
+LyzLyItr = LyItr
+End Function
+
+Function DiT1qLyItr(TRstLy$(), T1ss$) As Dictionary
+'Fm TRstLy : T Rst             ! it is ly of [T1 Rst]
+'Fm T1ss   : SS                ! it is a list T1 in SS fmt.
+'Ret       : DicOf T1 to LyItr ! it will have sam of keys as (@T1ss nitm + 1).
+'                              ! Each val is either :Ly or emp Vb.Collection if no such T1.  The :Ly will have T1 rmv.
+'                              ! The las key is '*Er' and the val is :Ly or emp-vb.Collection.  The :Ly will have T1 incl.
+Dim T1Ay$(): T1Ay = SyzSS(T1ss)
+
+Dim O As New Dictionary
+Dim Er$()               ' The er lin of @TRstLy
+    Dim T1: For Each T1 In Itr(T1Ay)  ' Put all T1 in @T1Ay to @O
+        O.Add T1, EmpSy
+    Next
+    Dim T$, Rst$, L, Ly$(): For Each L In Itr(TRstLy) ' For each @TRstLy lin put it to either @O or @Er
+        AsgTRst L, T, Rst
+        If O.Exists(T) Then
+            Ly = O(T)
+            PushI Ly, Rst
+            O(T) = Ly       '<-- Put to @O
+        Else
+            PushI Er, L      '<-- Put to @Er
+        End If
+    Next
+SetDicValAsItr O                '<-- for each dic val setting to itr
+O.Add "*Er", Itr(Er)
+Set DiT1qLyItr = O
+End Function
+
+Sub SetDicValAsItr(O As Dictionary)
+Dim K: For Each K In O.Keys
+    O(K) = Itr(O(K))
+Next
+End Sub
+
 Function Dic(Ly$(), Optional JnSep$ = vbCrLf) As Dictionary
 Dim O As New Dictionary
 Dim L, T$, Rst$
@@ -130,6 +174,7 @@ For Each L In Itr(Ly)
 Next
 Set Dic = O
 End Function
+
 Function DiczKyVy(Ky, Vy) As Dictionary
 ThwIf_DifSi Ky, Vy, CSub
 Dim J&
@@ -142,6 +187,7 @@ End Function
 Function DiczVbl(Vbl$, Optional JnSep$ = vbCrLf) As Dictionary
 Set DiczVbl = Dic(SplitVBar(Vbl), JnSep)
 End Function
+
 Function DiczAyIx(Ay) As Dictionary
 Dim V&, K
 Set DiczAyIx = New Dictionary
@@ -150,6 +196,7 @@ For Each K In Ay
     V = V + 1
 Next
 End Function
+
 Function DiczAyab(A, B) As Dictionary
 ThwIf_DifSi A, B, CSub
 Dim N1&, N2&

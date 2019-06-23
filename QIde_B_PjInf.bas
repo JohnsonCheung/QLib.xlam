@@ -190,7 +190,7 @@ Dim C As VBComponent, O$()
 For Each C In P.VBComponents
     If IsCmpzMod(C) Then PushI O, C.Name
 Next
-'ModNyzP = AywNmStr(O)
+'ModNyzP = AwNmStr(O)
 End Function
 
 Private Sub Z_ClsNyzP()

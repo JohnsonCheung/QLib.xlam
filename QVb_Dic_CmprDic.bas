@@ -76,36 +76,36 @@ End Sub
 Private Function FmtDif(A As Dictionary, B As Dictionary) As String()
 If A.Count <> B.Count Then Thw CSub, "Dic A & B should have same size", "Dic-A-Si Dic-B-Si", A.Count, B.Count
 If A.Count = 0 Then Exit Function
-Dim O$(), K, S1$, S2$, S As S1S2s, KK$
+Dim O$(), K, S1$, S2$, S As S12s, KK$
 For Each K In A
     KK = K
     S1 = "!" & "Er Dif" & vbCrLf & K & vbCrLf & UnderLinzLines(KK) & vbCrLf & A(K)
     S2 = "!" & "Er Dif" & vbCrLf & K & vbCrLf & UnderLinzLines(KK) & vbCrLf & B(K)
-    PushS1S2 S, S1S2(S1, S2)
+    PushS12 S, S12(S1, S2)
 Next
-FmtDif = FmtS1S2s(S, N1:="", N2:="")
+FmtDif = FmtS12s(S, N1:="", N2:="")
 End Function
 
 Private Function FmtExcess(A As Dictionary, Nm$) As String()
 If A.Count = 0 Then Exit Function
-Dim K, S1$, S2$, S As S1S2s
+Dim K, S1$, S2$, S As S12s
 S2 = "!" & "Er Excess (" & Nm & ")"
 For Each K In A.Keys
     S1 = UnderLinzLines(CStr(K))
     S2 = A(K)
-    PushS1S2 S, S1S2(S1, S2)
+    PushS12 S, S12(S1, S2)
 Next
-PushAy FmtExcess, FmtS1S2s(S, N1:="Exccess", N2:=Nm)
+PushAy FmtExcess, FmtS12s(S, N1:="Exccess", N2:=Nm)
 End Function
 
 Private Function FmtSam(A As Dictionary) As String()
 If A.Count = 0 Then Exit Function
-Dim O$(), K, S As S1S2s, KK$
+Dim O$(), K, S As S12s, KK$
 For Each K In A.Keys
     KK = K
-    PushS1S2 S, S1S2("*Same", K & vbCrLf & UnderLinzLines(KK) & vbCrLf & A(K))
+    PushS12 S, S12("*Same", K & vbCrLf & UnderLinzLines(KK) & vbCrLf & A(K))
 Next
-FmtSam = FmtS1S2s(S)
+FmtSam = FmtS12s(S)
 End Function
 
 Private Sub Z_BrwCmpgDicAB()

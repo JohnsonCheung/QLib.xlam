@@ -5,12 +5,12 @@ Private Const CMod$ = "MDta_Col_Get."
 Private Const Asm$ = "QDta"
 Public Const vbFldSep$ = ""
 Function ColzDrs(A As Drs, ColNm$) As Variant()
-ColzDrs = ColzDry(A.Dry, IxzAy(A.Fny, ColNm))
+ColzDrs = ColzDy(A.Dy, IxzAy(A.Fny, ColNm))
 End Function
 Function ValzColEq(A As Drs, SelC$, Col$, Eq)
 Dim Dr, I&
 I = IxzAy(A.Fny, Col)
-For Each Dr In Itr(A.Dry)
+For Each Dr In Itr(A.Dy)
     If Dr(I) = Eq Then ValzColEq = Dr(IxzAy(A.Fny, SelC))
 Next
 End Function
@@ -19,33 +19,33 @@ Function WdtzCol%(A As Drs, C$)
 WdtzCol = WdtzAy(StrColzDrs(A, C))
 End Function
 Function StrCol(A As Drs, C) As String()
-StrCol = StrColzDry(A.Dry, IxzAy(A.Fny, C))
+StrCol = StrColzDy(A.Dy, IxzAy(A.Fny, C))
 End Function
 
 Function StrColzDrs(A As Drs, C) As String()
-StrColzDrs = StrColzDry(A.Dry, IxzAy(A.Fny, C))
+StrColzDrs = StrColzDy(A.Dy, IxzAy(A.Fny, C))
 End Function
 Function BoolColzDrs(A As Drs, C) As Boolean()
-BoolColzDrs = BoolColzDry(A.Dry, IxzAy(A.Fny, C))
+BoolColzDrs = BoolColzDy(A.Dy, IxzAy(A.Fny, C))
 End Function
 
 Function FstCol(A As Drs) As Variant()
-FstCol = ColzDry(A.Dry, 0)
+FstCol = ColzDy(A.Dy, 0)
 End Function
 
 Function StrColzDrsFstCol(A As Drs) As String()
-StrColzDrsFstCol = StrColzDry(A.Dry, 0)
+StrColzDrsFstCol = StrColzDy(A.Dy, 0)
 End Function
 
 Function StrColzColEqSel(A As Drs, Col$, V, ColNm$) As String()
 Dim B As Drs
-B = ColEqSel(A, Col, V, ColNm)
+B = DwEqSel(A, Col, V, ColNm)
 StrColzColEqSel = StrColzDrs(B, ColNm)
 End Function
-Function LyzDryCC(Dry(), CCIxy&(), Optional FldSep$ = vbFldSep) As String()
+Function JnDyCC(Dy(), CCIxy&(), Optional FldSep$ = vbFldSep) As String()
 Dim Dr
-For Each Dr In Itr(Dry)
-    PushI LyzDryCC, Jn(AyeIxy(Dr, CCIxy), FldSep)
+For Each Dr In Itr(Dy)
+    PushI JnDyCC, Jn(AeIxy(Dr, CCIxy), FldSep)
 Next
 End Function
 
@@ -70,53 +70,53 @@ Next
 SqzAyH = O
 End Function
 
-Function SqzDry(Dry()) As Variant()
-SqzDry = SqzDrySkip(Dry, 0)
+Function SqzDy(Dy()) As Variant()
+SqzDy = SqzDySkip(Dy, 0)
 End Function
 
-Function StrColzDry(Dry(), C) As String()
-StrColzDry = IntozDryC(EmpSy, Dry, C)
+Function StrColzDy(Dy(), C) As String()
+StrColzDy = IntozDyC(EmpSy, Dy, C)
 End Function
-Function BoolColzDry(Dry(), C&) As Boolean()
-BoolColzDry = IntozDryC(EmpBoolAy, Dry, C)
+Function BoolColzDy(Dy(), C&) As Boolean()
+BoolColzDy = IntozDyC(EmpBoolAy, Dy, C)
 End Function
 
-Function SqzDrySkip(Dry(), Optional SkipNRow& = 1)
-SqzDrySkip = SqzDry(CvAv(AySkip(Dry, SkipNRow)))
+Function SqzDySkip(Dy(), Optional SkipNRow& = 1)
+SqzDySkip = SqzDy(CvAv(AwSkip(Dy, SkipNRow)))
 End Function
 
 Function IntCol(A As Drs, C) As Integer()
-IntCol = IntColzDry(A.Dry, IxzAy(A.Fny, C))
+IntCol = IntColzDy(A.Dy, IxzAy(A.Fny, C))
 End Function
 
-Function IntColzDry(Dry(), C) As Integer()
-IntColzDry = IntozDryC(EmpIntAy, Dry, C)
+Function IntColzDy(Dy(), C) As Integer()
+IntColzDy = IntozDyC(EmpIntAy, Dy, C)
 End Function
 
-Function ColzDry(Dry(), C) As Variant()
-ColzDry = IntozDryC(EmpAv(), Dry, C)
+Function ColzDy(Dy(), C) As Variant()
+ColzDy = IntozDyC(EmpAv(), Dy, C)
 End Function
 
-Function IntozDryC(Into, Dry(), C)
+Function IntozDyC(Into, Dy(), C)
 Dim O, J&, Dr, U&
 O = Into
-U = UB(Dry)
+U = UB(Dy)
 O = ResiU(O, U)
-For Each Dr In Itr(Dry)
+For Each Dr In Itr(Dy)
     If UB(Dr) >= C Then
         O(J) = Dr(C)
     End If
     J = J + 1
 Next
-IntozDryC = O
+IntozDyC = O
 End Function
 
-Function HasReczDry2V(Dry(), C1, C2, V1, V2) As Boolean
+Function HasReczDy2V(Dy(), C1, C2, V1, V2) As Boolean
 Dim Dr
-For Each Dr In Itr(Dry)
+For Each Dr In Itr(Dy)
     If Dr(C1) = V1 Then
         If Dr(C2) = V2 Then
-            HasReczDry2V = True
+            HasReczDy2V = True
             Exit Function
         End If
     End If
@@ -125,7 +125,7 @@ End Function
 
 Function IsSamNCol(A As Drs, NCol%) As Boolean
 Dim Dr
-For Each Dr In Itr(A.Dry)
+For Each Dr In Itr(A.Dy)
     If Si(Dr) = NCol Then Exit Function
 Next
 IsSamNCol = True
@@ -135,10 +135,10 @@ Function ResiDrs(A As Drs, NCol%) As Drs
 If IsSamNCol(A, NCol) Then ResiDrs = A: Exit Function
 Dim O As Drs, U%, Dr, J%
 U = NCol - 1
-For J = 0 To UB(O.Dry)
-    Dr = O.Dry(J)
+For J = 0 To UB(O.Dy)
+    Dr = O.Dy(J)
     ReDim Preserve Dr(U)
-    O.Dry(J) = Dr
+    O.Dy(J) = Dr
 Next
 End Function
 

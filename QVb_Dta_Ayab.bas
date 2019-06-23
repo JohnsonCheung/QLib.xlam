@@ -47,15 +47,15 @@ AyabzAyPfx = O
 End Function
 
 Function AyabzAyN(Ay, N&) As Ayab
-AyabzAyN = Ayab(FstNEle(Ay, N), AyeFstNEle(Ay, N))
+AyabzAyN = Ayab(FstNEle(Ay, N), AeFstNEle(Ay, N))
 End Function
 
 Function AyabczAyFE(Ay, FmIx&, EIx&) As Ayabc
 Dim O As Ayabc
 AyabczAyFE = Ayabc( _
-    AywFE(Ay, 0, FmIx), _
-    AywFE(Ay, FmIx, EIx), _
-    AywFmIx(Ay, EIx))
+    AwFE(Ay, 0, FmIx), _
+    AwFE(Ay, FmIx, EIx), _
+    AwFmIx(Ay, EIx))
 End Function
 
 Function AyabczAyFei(Ay, B As Fei) As Ayabc
@@ -63,13 +63,13 @@ AyabczAyFei = AyabczAyFE(Ay, B.FmIx, B.EIx)
 End Function
 
 
-Function DryzAyab(A, B) As Variant()
+Function DyoAyab(A, B) As Variant()
 Dim J&
 For J = 0 To Min(UB(A), UB(B))
-    PushI DryzAyab, Array(A(J), B(J))
+    PushI DyoAyab, Array(A(J), B(J))
 Next
 End Function
 Function DrszAyab(A, B, Optional N1$ = "Ay1", Optional N2$ = "Ay2") As Drs
-DrszAyab = Drs(Sy(N1, N2), DryzAyab(A, B))
+DrszAyab = Drs(Sy(N1, N2), DyoAyab(A, B))
 End Function
 

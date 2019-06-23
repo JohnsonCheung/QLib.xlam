@@ -49,13 +49,13 @@ DFTyzFxw = DFTy(CatzFx(Fx), CatTnzWsn(W))
 End Function
 
 Function DFTy(Cat As ADOX.Catalog, T) As Drs
-Dim CT As ADOX.Table, ODry()
+Dim CT As ADOX.Table, ODy()
 Set CT = Cat.Tables(T)
 Dim C As Column
 For Each C In Cat.Tables(T).Columns
-    PushI ODry, Array(C.Name, ShtTyzAdo(C.Type))
+    PushI ODy, Array(C.Name, ShtTyzAdo(C.Type))
 Next
-DFTy = DrszFF("T Ty", ODry)
+DFTy = DrszFF("T Ty", ODy)
 End Function
 
 Function DrszFxw(Fx, Wsn) As Drs
@@ -99,22 +99,22 @@ Set ArszFbq = CnzFb(Fb).Execute(Q)
 End Function
 
 Function DrszArs(A As AdoDb.Recordset) As Drs
-DrszArs = Drs(FnyzArs(A), DryzArs(A))
+DrszArs = Drs(FnyzArs(A), DyoArs(A))
 End Function
 
-Function DryzArs(A As AdoDb.Recordset) As Variant()
+Function DyoArs(A As AdoDb.Recordset) As Variant()
 While Not A.EOF
-    PushI DryzArs, DrzAfds(A.Fields)
+    PushI DyoArs, DrzAfds(A.Fields)
     A.MoveNext
 Wend
 End Function
 
-Private Sub Z_DryArs()
+Private Sub Z_DyArs()
 Dim S$
 Const Q$ = "Select * from KE24"
 S = "GRANT SELECT ON MSysObjects TO Admin;"
 'CurrentProject.Connection.Execute S
-BrwDry DryzArs(ArsCnq(CnzFb(SampFbzDutyDta), Q))
+BrwDy DyoArs(ArsCnq(CnzFb(SampFbzDutyDta), Q))
 End Sub
 
 Function FnyzArs(A As AdoDb.Recordset) As String()
@@ -160,7 +160,7 @@ End Function
 
 Function TnyzFbByAdo(Fb) As String()
 'TnyzAdoFb = TnyzCat(CatzFb(Fb))
-TnyzFbByAdo = AyeLikss(TnyzCat(CatzFb(Fb)), "MSys* f_*_Data")
+TnyzFbByAdo = AeLikss(TnyzCat(CatzFb(Fb)), "MSys* f_*_Data")
 End Function
 
 Function WnyzWb(A As Workbook) As String()
@@ -314,7 +314,7 @@ End Select
 End Function
 Function DWsfzFxw(Fx, W) As Drs
 Stop
-'DWsfzFxw = DrszFF("Fx Wsn F Ty", ODry)
+'DWsfzFxw = DrszFF("Fx Wsn F Ty", ODy)
 End Function
 Function FnyzFxw(Fx, W) As String()
 FnyzFxw = FnyzCatT(CatzFx(Fx), CatTnzWsn(W))

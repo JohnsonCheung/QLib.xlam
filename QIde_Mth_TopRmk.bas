@@ -33,7 +33,7 @@ TopRmkLyzSIW = TopRmkLy(Src, MthIx)
 End Function
 Function TopRmkLy(Src$(), MthIx) As String()
 Dim Fm&: Fm = TopRmkIx(Src, MthIx): If Fm = -1 Then Exit Function
-TopRmkLy = RmvBlnkLin(AywFT(Src, Fm, MthIx - 1))
+TopRmkLy = RmvBlnkLin(AwFT(Src, Fm, MthIx - 1))
 End Function
 
 Function TopRmkIx&(Src$(), MthIx)

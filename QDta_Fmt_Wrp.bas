@@ -11,8 +11,8 @@ For Each Col In Itr(WrpDr)
 Next
 WrpDrNRow = R
 End Function
-
-Function AywrpPad(Sy$(), W%) As String() ' Each Itm of Sy[Sy] is padded to line with WdtzAy(Sy).  return all padded lines as String()
+'^^^
+Function AwrpPad(Sy$(), W%) As String() ' Each Itm of Sy[Sy] is padded to line with WdtzAy(Sy).  return all padded lines as String()
 Dim O$(), X, I%
 ReDim O(0)
 For Each X In Itr(Sy)
@@ -23,7 +23,7 @@ For Each X In Itr(Sy)
         I = I + 1
     End If
 Next
-AywrpPad = O
+AwrpPad = O
 End Function
 
 Function WrpDrPad(WrpDr, W%()) As Variant() _
@@ -33,7 +33,7 @@ O = WrpDr
 For Each Cell In Itr(O)
     If IsArray(Cell) Then
         Stop
-'        O(J) = AywrpPad(Cell, W(J))
+'        O(J) = AwrpPad(Cell, W(J))
     End If
     J = J + 1
 Next
@@ -67,20 +67,20 @@ Next
 SqzWrpDr = O
 End Function
 
-Function WdtzWrpgDry(WrpgDry(), WrpWdt%) As Integer() _
-'WrpgDry is dry having 1 or more wrpCol, which mean need Wrpping.
+Function WdtzWrpgDy(WrpgDy(), WrpWdt%) As Integer() _
+'WrpgDy is dry having 1 or more wrpCol, which mean need Wrpping.
 'WrpWdt is for wrpCol. _
 'WrpCol is col with each cell being array.
 'if maxWdt of array-ele of wrpCol has wdt > WrpWdt, use that wdt
 'otherwise use WrpWdt
-If Si(WrpgDry) = 0 Then Exit Function
+If Si(WrpgDy) = 0 Then Exit Function
 Dim J&, Col()
-For J = 0 To NColzDry(WrpgDry) - 1
-    Col = ColzDry(WrpgDry, J)
+For J = 0 To NColzDy(WrpgDy) - 1
+    Col = ColzDy(WrpgDy, J)
     If IsArray(Col(0)) Then
-'        Push WdtzWrpgDry, WdtzAy(AyFlat(Col))
+'        Push WdtzWrpgDy, WdtzAy(AyFlat(Col))
     Else
-'        Push WdtzWrpgDry, WdtzAy(Col)
+'        Push WdtzWrpgDy, WdtzAy(Col)
     End If
 Next
 End Function
@@ -102,13 +102,13 @@ Dim Ly$(): Ly = LyzSq(Sq1)
 PushIAy LinzDrWrp, Ly
 End Function
 
-Function DryWrpCell(A(), Optional WrpWdt% = 40) As String() _
+Function DyWrpCell(A(), Optional WrpWdt% = 40) As String() _
 'WrpWdt is for wrp-col.  If maxWdt of an ele of wrp-col > WrpWdt, use the maxWdt
 Dim W%(), Dr, A1(), M$()
-W = WdtzWrpgDry(A, WrpWdt)
+W = WdtzWrpgDy(A, WrpWdt)
 For Each Dr In Itr(A)
     M = LinzDrWrp(Dr, W)
-    PushIAy DryWrpCell, M
+    PushIAy DyWrpCell, M
 Next
 End Function
 

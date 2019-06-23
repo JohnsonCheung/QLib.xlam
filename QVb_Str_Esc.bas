@@ -10,6 +10,9 @@ End Function
 Function EscOpnSqBkt$(S)
 EscOpnSqBkt = EscChr(S, "[")
 End Function
+Function UnSlashCrLfTab$(S)
+UnSlashCrLfTab = UnSlashCr(UnSlashLf(UnSlashTab(S)))
+End Function
 Function EscClsSqBkt$(S)
 EscClsSqBkt = EscChr(S, "]")
 End Function
@@ -21,6 +24,9 @@ SlashAsc = Slash(S, Chr(Asc), C)
 End Function
 Function SlashCrLf$(S)
 SlashCrLf = SlashLf(SlashCr(S))
+End Function
+Function SlashCrLfTab$(S)
+SlashCrLfTab = SlashTab(SlashLf(SlashCr(S)))
 End Function
 Function SlashLf$(S)
 SlashLf = SlashAsc(S, 10, "n")
@@ -36,11 +42,10 @@ If InStr(S, "\" & SlashC) > 0 Then
 End If
 Slash = Replace(S, C, "\" & SlashC)
 End Function
-Function UnEsc$(S, C$)
 
-End Function
 Function UnEscBackSlash$(S)
-UnEscBackSlash = UnEsc(S, "\")
+Stop
+'UnEscBackSlash = UnEscChr(S, "\")
 End Function
 Function EscBackSlash$(S)
 EscBackSlash = EscChr(S, "\")

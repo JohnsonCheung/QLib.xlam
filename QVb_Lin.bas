@@ -8,14 +8,6 @@ Function HasDDRmk(Lin) As Boolean
 HasDDRmk = HasSubStr(Lin, "--")
 End Function
 
-Function IsLinSngTerm(Lin) As Boolean
-IsLinSngTerm = InStr(Trim(Lin), " ") = 0
-End Function
-
-Function IsLinDD(Lin) As Boolean
-IsLinDD = Fst2Chr(LTrim(Lin)) = "--"
-End Function
-
 Function HitT1Ay(Lin, T1Ay$()) As Boolean
 HitT1Ay = HasEle(T1Ay, T1(Lin))
 End Function

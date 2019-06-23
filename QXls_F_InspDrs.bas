@@ -1,4 +1,4 @@
-Attribute VB_Name = "QXls_B_XlsOp_InspDrs"
+Attribute VB_Name = "QXls_F_InspDrs"
 Option Explicit
 Option Compare Text
 Enum EmFixWdt
@@ -60,7 +60,7 @@ End Sub
 Private Function XNxtDrsNo%(DrsNm$)
 Dim A As Drs, B As Drs, C As Drs
 A = DrszLo(X.IxLo)
-B = ColEqSel(A, "Nm", DrsNm, "Nm Drs# ValTy")
+B = DwEqSel(A, "Nm", DrsNm, "Nm Drs# ValTy")
 C = ColEqExlEqCol(B, "ValTy", "Drs")
 If NoReczDrs(C) Then XNxtDrsNo = 1: Exit Function
 XNxtDrsNo = MaxzAy(IntCol(C, "Drs#")) + 1

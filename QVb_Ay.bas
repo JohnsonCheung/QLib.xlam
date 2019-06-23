@@ -36,7 +36,7 @@ End Function
 
 Function ChkDup(Ay, QMsg$) As String()
 Dim Dup
-Dup = AywDup(Ay)
+Dup = AwDup(Ay)
 If Si(Dup) = 0 Then Exit Function
 PushI ChkDup, FmtQQ(QMsg, JnSpc(Dup))
 End Function
@@ -45,7 +45,7 @@ LyzVbl = SplitVBar(Vbl)
 End Function
 Function DupT1Ay(Ly$(), Optional C As VbCompareMethod = vbTextCompare) As String()
 Dim A$(): A = T1Ay(Ly)
-DupT1Ay = AywDup(A, C)
+DupT1Ay = AwDup(A, C)
 End Function
 
 Function ChkAyEmp(Ay, Msg$) As String()
@@ -122,24 +122,24 @@ For Each X In Itr(Ay)
 Next
 AyItmCnt = O
 End Function
-Function AywSubStr(Ay, SubStr) As String()
-AywSubStr = AywPred(Ay, PredzSubStr(SubStr))
+Function AwSubStr(Ay, SubStr) As String()
+AwSubStr = AwPred(Ay, PredzSubStr(SubStr))
 End Function
-Function AywPredzSy(Ay, P As IPred) As String()
+Function AwPredzSy(Ay, P As IPred) As String()
 Dim I
 For Each I In Itr(Ay)
-    If P.Pred(I) Then PushI AywPredzSy, I
+    If P.Pred(I) Then PushI AwPredzSy, I
 Next
 End Function
 
-Function AywPfx(Ay, Pfx) As String()
-AywPfx = AywPred(Ay, PredzPfx(Pfx))
+Function AwPfx(Ay, Pfx) As String()
+AwPfx = AwPred(Ay, PredzPfx(Pfx))
 End Function
 
-Function AywLasN(Ay, N)
+Function AwLasN(Ay, N)
 Dim O, J&, I&, U&, Fm&, NewU&
 U = UB(Ay)
-If U < N Then AywLasN = Ay: Exit Function
+If U < N Then AwLasN = Ay: Exit Function
 O = Ay
 Fm = U - N + 1
 NewU = N - 1
@@ -148,7 +148,7 @@ For J = Fm To U
     I = I + 1
 Next
 ReDim Preserve O(NewU)
-AywLasN = O
+AwLasN = O
 End Function
 Function LasSndEle(Ay)
 Dim N&: N = Si(Ay)
@@ -186,7 +186,7 @@ End Function
 
 Function NxtFn$(Fn$, FnAy$(), Optional MaxN% = 999)
 If Not HasEle(FnAy, Fn) Then NxtFn = Fn: Exit Function
-NxtFn = MaxzAy(AywLik(FnAy, Fn & "(???)"))
+NxtFn = MaxzAy(AwLik(FnAy, Fn & "(???)"))
 End Function
 
 Function ItrzLines(Lines$)
@@ -340,8 +340,8 @@ Next
 Sqv = O
 End Function
 
-Function AywT1SelRst(Sy$(), T1) As String()
-AywT1SelRst = RmvT1zAy(AywT1(Sy, T1))
+Function AwT1SelRst(Sy$(), T1) As String()
+AwT1SelRst = RmvT1zAy(AwT1(Sy, T1))
 End Function
 
 Function IndentSy(Sy$(), Optional Indent% = 4) As String()
@@ -443,9 +443,9 @@ Dim URowAy&()
         If IURow > URow Then URow = IURow
     Next
 
-Dim ODry()
+Dim ODy()
     Dim Dr()
-    ODry = ResiU(ODry, URow)
+    ODy = ResiU(ODy, URow)
     Dim I%
     For J = 0 To URow
         Erase Dr
@@ -461,9 +461,9 @@ Dim ODry()
                 Push Dr, Empty
             End If
         Next
-        ODry(J) = Dr
+        ODy(J) = Dr
     Next
-AyZip_Ap = ODry
+AyZip_Ap = ODy
 End Function
 
 Function ItmAyzAdd(Itm, Ay)
@@ -510,9 +510,9 @@ Exp = Array(1, 2, 4)
 ThwIf_NE Exp, Act
 End Sub
 
-Private Sub Z_AyeEmpEleAtEnd()
+Private Sub Z_AeEmpEleAtEnd()
 Dim Ay: Ay = Array(Empty, Empty, Empty, 1, Empty, Empty)
-Dim Act: Act = AyeEmpEleAtEnd(Ay)
+Dim Act: Act = AeEmpEleAtEnd(Ay)
 Ass Si(Act) = 4
 Ass Act(3) = 1
 End Sub
@@ -612,14 +612,14 @@ Private Sub Z_AyTrim2()
 DmpAy AyTrim(Sy(1, 2, 3, "  a"))
 End Sub
 
-Private Sub Z_KKCMiDry()
-Dim Dry(), Act As KKCntMulItmColDry, KKColIx%(), IxzAy%
-PushI Dry, Array()
-PushI Dry, Array()
-PushI Dry, Array()
-PushI Dry, Array()
-PushI Dry, Array()
-PushI Dry, Array()
+Private Sub Z_KKCMiDy()
+Dim Dy(), Act As KKCntMulItmColDy, KKColIx%(), IxzAy%
+PushI Dy, Array()
+PushI Dy, Array()
+PushI Dy, Array()
+PushI Dy, Array()
+PushI Dy, Array()
+PushI Dy, Array()
 'Ass Si(Act) = 4
 'Ass IsEqAy(Act(0), Array("Ay", 3, 1, 2, 3))
 'Ass IsEqAy(Act(1), Array("B", 3, 2, 3, 4))

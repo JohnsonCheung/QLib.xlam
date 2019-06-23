@@ -1,96 +1,96 @@
 Attribute VB_Name = "QVb_S1S2"
 Option Compare Text
 Option Explicit
-Private Const CMod$ = "MVb_S1S2."
+Private Const CMod$ = "MVb_S12."
 Private Const Asm$ = "QVb"
-Type S1S2: S1 As String: S2 As String: End Type
-Type S1S2s: N As Long: Ay() As S1S2: End Type
+Type S12: S1 As String: S2 As String: End Type
+Type S12s: N As Long: Ay() As S12: End Type
 Type S3: A As String: B As String: C As String: End Type
-Function MapS1(A As S1S2s, Dic As Dictionary) As S1S2s
+Function MapS1(A As S12s, Dic As Dictionary) As S12s
 Dim J&: For J = 0 To A.N - 1
-    Dim M As S1S2: M = A.Ay(J)
+    Dim M As S12: M = A.Ay(J)
     If Not Dic.Exists(M.S1) Then
-        Thw CSub, "Som S1 in [S1S2s] not found in [Dic]", "S1-not-found S1S2s Dic", M.S1, FmtS1S2s(A), FmtDic(Dic)
+        Thw CSub, "Som S1 in [S12s] not found in [Dic]", "S1-not-found S12s Dic", M.S1, FmtS12s(A), FmtDic(Dic)
     End If
     M.S1 = Dic(M.S1)
-    PushS1S2 MapS1, M
+    PushS12 MapS1, M
 Next
 End Function
-Function SwapS1S2s(A As S1S2s) As S1S2s
-Dim J&, Ay() As S1S2: Ay = A.Ay
-Dim O As S1S2s: O = A
+Function SwapS12s(A As S12s) As S12s
+Dim J&, Ay() As S12: Ay = A.Ay
+Dim O As S12s: O = A
 For J = 1 To A.N - 1
-    O.Ay(J) = SwapS1S2(Ay(J))
+    O.Ay(J) = SwapS12(Ay(J))
 Next
-SwapS1S2s = O
+SwapS12s = O
 End Function
-Function SwapS1S2(A As S1S2) As S1S2
-With SwapS1S2
+Function SwapS12(A As S12) As S12
+With SwapS12
     .S1 = A.S2
     .S2 = A.S1
 End With
 End Function
-Sub PushS1S2(O As S1S2s, M As S1S2)
+Sub PushS12(O As S12s, M As S12)
 ReDim Preserve O.Ay(O.N)
 O.Ay(O.N) = M
 O.N = O.N + 1
 End Sub
-Function AddS1S2(A As S1S2, B As S1S2) As S1S2s
-Dim O As S1S2s
-O = S1S2szU(1)
+Function AddS12(A As S12, B As S12) As S12s
+Dim O As S12s
+O = S12szU(1)
 O.Ay(0) = A
 O.Ay(1) = B
-AddS1S2 = O
+AddS12 = O
 End Function
-Private Function Y_S1S2s() As S1S2s
-Dim O As S1S2s
-PushS1S2 O, S1S2("sldjflsdkjf", "lksdjf")
-PushS1S2 O, S1S2("sldjflsdkjf", "lksdjf")
-PushS1S2 O, S1S2("sldjf", "lksdjf")
-PushS1S2 O, S1S2("sldjdkjf", "lksdjf")
-Y_S1S2s = O
+Private Function Y_S12s() As S12s
+Dim O As S12s
+PushS12 O, S12("sldjflsdkjf", "lksdjf")
+PushS12 O, S12("sldjflsdkjf", "lksdjf")
+PushS12 O, S12("sldjf", "lksdjf")
+PushS12 O, S12("sldjdkjf", "lksdjf")
+Y_S12s = O
 End Function
-Function S1S2szU(U&) As S1S2s
-S1S2szU.N = U + 1
-ReDim S1S2szU.Ay(U)
+Function S12szU(U&) As S12s
+S12szU.N = U + 1
+ReDim S12szU.Ay(U)
 End Function
-Function S1S2szAyab(A, B, Optional NoTrim As Boolean) As S1S2s
+Function S12szAyab(A, B, Optional NoTrim As Boolean) As S12s
 ThwIf_DifSi A, B, CSub
-Dim U&, O As S1S2s
+Dim U&, O As S12s
 U = UB(A)
-O = S1S2szU(U)
+O = S12szU(U)
 Dim J&
 For J = 0 To U
-    O.Ay(J) = S1S2(A(J), B(J), NoTrim)
+    O.Ay(J) = S12(A(J), B(J), NoTrim)
 Next
-S1S2szAyab = O
+S12szAyab = O
 End Function
 
-Function FstS2(S1, A As S1S2s) As StrOpt
+Function FstS2(S1, A As S12s) As StrOpt
 'Ret : Lookup S1 in A return S2 @@
-Dim Ay() As S1S2: Ay = A.Ay
+Dim Ay() As S12: Ay = A.Ay
 Dim J&: For J = 0 To A.N - 1
     With Ay(J)
         If .S1 = S1 Then FstS2 = SomStr(.S2): Exit Function
     End With
 Next
 End Function
-Function AddS2Sfx(A As S1S2s, S2Sfx$) As S1S2s
-Dim O As S1S2s: O = A
+Function AddS2Sfx(A As S12s, S2Sfx$) As S12s
+Dim O As S12s: O = A
 Dim J&: For J = 0 To O.N - 1
     O.Ay(J).S2 = O.Ay(J).S2 & S2Sfx
 Next
 AddS2Sfx = O
 End Function
 
-Function S1S2szDrs(D As Drs, Optional CC$) As S1S2s
+Function S12szDrs(D As Drs, Optional CC$) As S12s
 'Fm D  : ..@CC.. ! A drs with col-@CC.  At least has 2 col
 'Fm CC :         ! if isBlnk, use fst 2 col
 'Ret   :         ! fst col will be S1 and snd col will be S2 join with vbCrLf
 Dim S1$(), S2() ' S2 is ay of sy
 Dim I1%, I2%
     If CC = "" Then I1 = 0: I2 = 1 Else AsgIx D, CC, I1, I2
-Dim Dr: For Each Dr In Itr(D.Dry)
+Dim Dr: For Each Dr In Itr(D.Dy)
     Dim A$, B$: A = Dr(I1): B = Dr(I2)
     Dim R&: R = IxzAy(S1, A)
     If R = -1 Then
@@ -101,60 +101,60 @@ Dim Dr: For Each Dr In Itr(D.Dry)
     End If
 Next
 Dim J&: For J = 0 To UB(S1)
-    PushS1S2 S1S2szDrs, S1S2(S1(J), JnCrLf(S2(J)))
+    PushS12 S12szDrs, S12(S1(J), JnCrLf(S2(J)))
 Next
 End Function
 
-Function IsEqS1S2(A As S1S2, B As S1S2) As Boolean
+Function IsEqS12(A As S12, B As S12) As Boolean
 With A
     If .S1 <> B.S1 Then Exit Function
     If .S2 <> B.S2 Then Exit Function
 End With
-IsEqS1S2 = True
+IsEqS12 = True
 End Function
 
-Function HasS1S2(A As S1S2s, B As S1S2) As Boolean
-Dim Ay() As S1S2: Ay = A.Ay
+Function HasS12(A As S12s, B As S12) As Boolean
+Dim Ay() As S12: Ay = A.Ay
 Dim J&: For J = 0 To A.N - 1
-    If IsEqS1S2(Ay(J), B) Then HasS1S2 = True: Exit Function
+    If IsEqS12(Ay(J), B) Then HasS12 = True: Exit Function
 Next
 End Function
-Function S1S2szDif(A As S1S2s, B As S1S2s) As S1S2s
+Function S12szDif(A As S12s, B As S12s) As S12s
 'Ret : Subset of @A.  Those itm in @A also in @B will be exl.
-Dim Ay() As S1S2: Ay = A.Ay
+Dim Ay() As S12: Ay = A.Ay
 Dim J&: For J = 0 To A.N - 1
-    If Not HasS1S2(B, Ay(J)) Then
-        PushS1S2 S1S2szDif, Ay(J)
+    If Not HasS12(B, Ay(J)) Then
+        PushS12 S12szDif, Ay(J)
     End If
 Next
 End Function
-Function S1S2(Optional S1, Optional S2, Optional NoTrim As Boolean) As S1S2
+Function S12(Optional S1, Optional S2, Optional NoTrim As Boolean) As S12
 If NoTrim Then
-    S1S2.S1 = S1
-    S1S2.S2 = S2
+    S12.S1 = S1
+    S12.S2 = S2
 Else
-    S1S2.S1 = Trim(S1)
-    S1S2.S2 = Trim(S2)
+    S12.S1 = Trim(S1)
+    S12.S2 = Trim(S2)
 End If
 End Function
 
-Sub AsgS1S2(A As S1S2, O1, O2)
+Sub AsgS12(A As S12, O1, O2)
 O1 = A.S1
 O2 = A.S2
 End Sub
 
-Sub BrwS1S2s(A As S1S2s)
-BrwAy FmtS1S2s(A)
+Sub BrwS12s(A As S12s)
+BrwAy FmtS12s(A)
 End Sub
 
-Function S1S2szDic(A As Dictionary) As S1S2s
+Function S12szDic(A As Dictionary) As S12s
 Dim K
 For Each K In A.Keys
-    PushS1S2 S1S2szDic, S1S2(K, A(K))
+    PushS12 S12szDic, S12(K, A(K))
 Next
 End Function
 
-Function DiczS1S2s(A As S1S2s, Optional Sep$ = " ") As Dictionary
+Function DiczS12s(A As S12s, Optional Sep$ = " ") As Dictionary
 Dim J&, O As New Dictionary
 For J = 0 To A.N - 1
     With A.Ay(J)
@@ -165,17 +165,17 @@ For J = 0 To A.N - 1
         End If
     End With
 Next
-Set DiczS1S2s = O
+Set DiczS12s = O
 End Function
 
-Function S1Ay(A As S1S2s) As String()
+Function S1Ay(A As S12s) As String()
 Dim J&
 For J = 0 To A.N - 1
    PushI S1Ay, A.Ay(J).S1
 Next
 End Function
 
-Function S2Ay(A As S1S2s) As String()
+Function S2Ay(A As S12s) As String()
 Dim O$(), J&
 For J = 0 To A.N - 1
    Push S2Ay, A.Ay(J).S2
@@ -183,7 +183,7 @@ Next
 S2Ay = O
 End Function
 
-Function SqzS1S2s(A As S1S2s, Optional Nm1$ = "S1", Optional Nm2$ = "S2") As Variant()
+Function SqzS12s(A As S12s, Optional Nm1$ = "S1", Optional Nm2$ = "S2") As Variant()
 If A.N = 0 Then Exit Function
 Dim O(), I, R&, J&
 ReDim O(1 To A.N + 1, 1 To 2)
@@ -197,35 +197,35 @@ For J = 0 To A.N - 1
         R = R + 1
     End With
 Next
-SqzS1S2s = O
+SqzS12s = O
 End Function
-Function S1S2szColonVbl(ColonVbl$) As S1S2s
+Function S12szColonVbl(ColonVbl$) As S12s
 Dim I
 For Each I In SplitVBar(ColonVbl)
-    PushS1S2 S1S2szColonVbl, BrkBoth(I, ":")
+    PushS12 S12szColonVbl, BrkBoth(I, ":")
 Next
 End Function
 
-Function S1S2szSySep(Sy$(), Sep$, Optional NoTrim As Boolean) As S1S2s
-Dim O As S1S2s, J%
+Function S12szSySep(Sy$(), Sep$, Optional NoTrim As Boolean) As S12s
+Dim O As S12s, J%
 Dim U&: U = UB(Sy)
-O = S1S2szU(U)
+O = S12szU(U)
 For J = 0 To U
     O.Ay(J) = Brk1(Sy(J), Sep, NoTrim)
 Next
-S1S2szSySep = O
+S12szSySep = O
 End Function
-Private Sub Z_S1S2szDic()
+Private Sub Z_S12szDic()
 Dim A As New Dictionary
 A.Add "A", "BB"
 A.Add "B", "CCC"
-Dim Act As S1S2s
-Act = S1S2szDic(A)
+Dim Act As S12s
+Act = S12szDic(A)
 Stop
 End Sub
 
 
 Private Sub Z()
-Z_S1S2szDic
-MVb__S1S2:
+Z_S12szDic
+MVb__S12:
 End Sub

@@ -1,59 +1,59 @@
 Attribute VB_Name = "QVb_S1S2_Fmt"
 Option Compare Text
 Option Explicit
-Private Const CMod$ = "MVb_S1S2_Fmt."
+Private Const CMod$ = "MVb_S12_Fmt."
 Private Const Asm$ = "QVb"
-Function AddS1S2(A As S1S2, B As S1S2) As S1S2s
-Dim O As S1S2s
-PushS1S2 O, A
-PushS1S2 O, B
-AddS1S2 = O
+Function AddS12(A As S12, B As S12) As S12s
+Dim O As S12s
+PushS12 O, A
+PushS12 O, B
+AddS12 = O
 End Function
-Function S1S2szS1S2(S1, S2) As S1S2s
-Dim O As S1S2s
-PushS1S2 O, S1S2(S1, S2)
-S1S2szS1S2 = O
+Function S12szS12(S1, S2) As S12s
+Dim O As S12s
+PushS12 O, S12(S1, S2)
+S12szS12 = O
 End Function
-Function AddS1Pfx(A As S1S2s, S1Pfx$) As S1S2s
+Function AddS1Pfx(A As S12s, S1Pfx$) As S12s
 Dim J&: For J = 0 To A.N - 1
-    Dim M As S1S2: M = A.Ay(J)
+    Dim M As S12: M = A.Ay(J)
     M.S1 = S1Pfx & M.S1
-    PushS1S2 AddS1Pfx, M
+    PushS12 AddS1Pfx, M
 Next
 End Function
-Sub PushS1S2s(O As S1S2s, A As S1S2s)
+Sub PushS12s(O As S12s, A As S12s)
 Dim J&
 For J = 0 To A.N - 1
-    PushS1S2 O, A.Ay(J)
+    PushS12 O, A.Ay(J)
 Next
 End Sub
-Function DryzInsIx(Dry()) As Variant()
-' Ret Dry with each row has ix run from 0..{N-1} in front
-Dim Ix&, Dr: For Each Dr In Itr(Dry)
+Function DyoInsIx(Dy()) As Variant()
+' Ret Dy with each row has ix run from 0..{N-1} in front
+Dim Ix&, Dr: For Each Dr In Itr(Dy)
     InsEle Dr, Ix
 Next
 End Function
 
-Private Function XDry(A As S1S2s, N1$, N2$) As Variant()
+Private Function XDy(A As S12s, N1$, N2$) As Variant()
 'Ret : a 2 col of dry with fst row is @N1..2 and snd row is ULin and rst from @A @@
-PushI XDry, Array(N1, N2)
-PushI XDry, Array(ULin(N1), ULin(N2))
+PushI XDy, Array(N1, N2)
+PushI XDy, Array(ULin(N1), ULin(N2))
 Dim J&: For J& = 0 To A.N - 1
     With A.Ay(J)
-    PushI XDry, Array(.S1, .S2)
+    PushI XDy, Array(.S1, .S2)
     End With
 Next
 End Function
 
-Function FmtS1S2s(A As S1S2s, Optional N1$ = "S1", Optional N2$ = "S2", Optional SkipIx As Boolean) As String()
+Function FmtS12s(A As S12s, Optional N1$ = "S1", Optional N2$ = "S2", Optional SkipIx As Boolean) As String()
 If A.N = 0 Then
-    PushI FmtS1S2s, "(NoRec-S1S2s) (" & N1 & ") (" & N2 & ")"
+    PushI FmtS12s, "(NoRec-S12s) (" & N1 & ") (" & N2 & ")"
     Exit Function
 End If
 If Not XHasLines(A) Then
-    Dim Dry(): Dry = XDry(A, N1, N2)
-                     If Not SkipIx Then Dry = DryzInsIx(Dry)
-    FmtS1S2s = AlignzDryAsLy(Dry)
+    Dim Dy(): Dy = XDy(A, N1, N2)
+                     If Not SkipIx Then Dy = DyoInsIx(Dy)
+    FmtS12s = AlignzDyAsLy(Dy)
     Exit Function
 End If
 
@@ -67,7 +67,7 @@ Dim Tit$:     Tit = AlignzDrWyAsLin(Array(N1, N2), W2Ay)
 Dim M$():       M = XM(A, W2Ay, SepL) ' #Middle ! Middle part
 Dim O$():       O = Sy(SepL, Tit, SepL, M)
                     If Not SkipIx Then O = XAddIx(O, A.N) ' ! Add Ix col in front
-         FmtS1S2s = O
+         FmtS12s = O
 End Function
 
 Private Function XIxFront$(Fst2Chr$, IsIxAdd As Boolean, Sep$, Ix&, W%)
@@ -102,7 +102,7 @@ Dim J&: For J = 2 To UB(Fmt)
 Next
 End Function
 
-Private Function XLyzS1S2(A As S1S2, W2Ay%()) As String()
+Private Function XLyzS12(A As S12, W2Ay%()) As String()
 Dim Ly1$(), Ly2$()
     Ly1 = SplitCrLf(A.S1)
     Ly2 = SplitCrLf(A.S2)
@@ -113,12 +113,12 @@ Dim J%, O$(): For J = 0 To UB(Ly1)
     Dim Dr(): Dr = Array(Ly1(J), Ly2(J))
                    PushI O, AlignzDrWyAsLin(Dr, W2Ay)
 Next
-XLyzS1S2 = O
+XLyzS12 = O
 End Function
 
-Private Function XM(A As S1S2s, W2Ay%(), SepL$) As String()
+Private Function XM(A As S12s, W2Ay%(), SepL$) As String()
 Dim J&: For J = 0 To A.N - 1
-    PushIAy XM, XLyzS1S2(A.Ay(J), W2Ay)
+    PushIAy XM, XLyzS12(A.Ay(J), W2Ay)
     PushI XM, SepL
 Next
 End Function
@@ -142,14 +142,14 @@ Function AlignzDrWyAsLin$(Dr, WdtAy%())
 AlignzDrWyAsLin = QteJnzAsTLin(AlignzDrWy(Dr, WdtAy))
 End Function
 
-Function S2Ay(A As S1S2s) As String()
+Function S2Ay(A As S12s) As String()
 Dim J&
 For J = 0 To A.N - 1
     PushI S2Ay, A.Ay(J).S2
 Next
 End Function
 
-Private Function XHasLines(A As S1S2s) As Boolean
+Private Function XHasLines(A As S12s) As Boolean
 Dim J&
 XHasLines = True
 For J = 0 To A.N - 1
@@ -161,8 +161,8 @@ Next
 XHasLines = False
 End Function
 
-Sub Z_FmtS1S2s()
-Dim A As S1S2s, N1$, N2$
+Private Sub Z_FmtS12s()
+Dim A As S12s, N1$, N2$
 'GoSub T0
 GoSub T1
 GoSub T2
@@ -170,24 +170,21 @@ Exit Sub
 T0:
     N1 = "AA"
     N2 = "BB"
-    A = AddS1S2(S1S2("A", "B"), S1S2("AA", "B"))
+    A = AddS12(S12("A", "B"), S12("AA", "B"))
     GoTo Tst
 T1:
     N1 = "AA"
     N2 = "BB"
-    A = SampS1S2szwLin
+    A = SampS12szwLin
     GoTo Tst
 T2:
     N1 = "AA"
     N2 = "BB"
-    A = SampS1S2zwLines
+    A = SampS12zwLines
     GoTo Tst
 Tst:
-    Act = FmtS1S2s(A, N1, N2, SkipIx:=False)
+    Act = FmtS12s(A, N1, N2, SkipIx:=False)
     BrwAy Act
     Return
 End Sub
 
-Sub Z()
-Z_FmtS1S2s
-End Sub

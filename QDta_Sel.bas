@@ -4,14 +4,14 @@ Option Explicit
 Private Const CMod$ = "MDta_Sel."
 Private Const Asm$ = "QDta"
 
-Function DryzSel(Dry(), Ixy&()) As Variant()
-Dim Dr: For Each Dr In Itr(Dry)
-    PushI DryzSel, AywIxy(Dr, Ixy)
+Function DyoSel(Dy(), Ixy&()) As Variant()
+Dim Dr: For Each Dr In Itr(Dy)
+    PushI DyoSel, AwIxy(Dr, Ixy)
 Next
 End Function
-Function DryzSelAlwE(Dry(), Ixy&()) As Variant()
-Dim Dr: For Each Dr In Itr(Dry)
-    PushI DryzSelAlwE, AywIxyAlwE(Dr, Ixy)
+Function DyoSelAlwE(Dy(), Ixy&()) As Variant()
+Dim Dr: For Each Dr In Itr(Dy)
+    PushI DyoSelAlwE, AwIxyAlwE(Dr, Ixy)
 Next
 End Function
 Function ExpandFF(FF$, Fny$()) As String() '
@@ -23,7 +23,7 @@ Expanded-ele means either the ele itself if there is no ele in Ay is like the `e
 Dim Lik
 For Each Lik In LikAy
     Dim A$()
-    A = AywLik(Ay, Lik)
+    A = AwLik(Ay, Lik)
     If Si(A) = 0 Then
         PushI ExpandLikAy, Lik
     Else
@@ -32,7 +32,7 @@ For Each Lik In LikAy
 Next
 End Function
 Function LDrszJn(A As Drs, B As Drs, Jn$, Add$, Optional AnyFld$) As Drs
-LDrszJn = DrszJn(A, B, Jn, Add, IsLeftJn:=True, AnyFld:=AnyFld)
+LDrszJn = JnDrs(A, B, Jn, Add, IsLeftJn:=True, AnyFld:=AnyFld)
 End Function
 Function FnyAzJn(Jn$) As String()
 Dim J
@@ -48,21 +48,20 @@ Next
 End Function
 
 Sub AsgFnyAB(FFWiColon$, OFnyA$(), OFnyB$())
-Dim F
 Erase OFnyA, OFnyB
-For Each F In SyzSS(FFWiColon)
+Dim F: For Each F In SyzSS(FFWiColon)
     With BrkBoth(F, ":")
         PushI OFnyA, .S1
         PushI OFnyB, .S2
     End With
 Next
 End Sub
-Function GpRxy(Dry()) As Variant()
-'Fm Dry : all col in @Dry will be used to gp
-'Ret    : N-Gp of Rxy (Rec-Ix-Ay) pointing to @Dry.  That means each gp contain a Rxy.
-'         and each ele in each Rxy is a Rix pointing a dist rec of @Dry
-Dim K(), Dr, O(), Rix&: For Each Dr In Itr(Dry)
-    Dim Gix&: Gix = IxzDryDr(K, Dr)
+Function GpRxy(Dy()) As Variant()
+'Fm Dy : all col in @Dy will be used to gp
+'Ret    : N-Gp of Rxy (Rec-Ix-Ay) pointing to @Dy.  That means each gp contain a Rxy.
+'         and each ele in each Rxy is a Rix pointing a dist rec of @Dy
+Dim K(), Dr, O(), Rix&: For Each Dr In Itr(Dy)
+    Dim Gix&: Gix = IxzDyDr(K, Dr)
     If Gix = -1 Then
         Dim Rxy&(): ReDim Rxy(0)
         Rxy(0) = Rix
@@ -76,69 +75,77 @@ Next
 GpRxy = O
 End Function
 
-Function DrszAddFst(D As Drs, Gpcc$) As Drs
+Function AddColzFst(D As Drs, Gpcc$) As Drs
 'Fm D    : ..@Gpcc.. ! a drs with col-@Gpcc
 'Fm Gpcc :           ! col-@Gpcc in @D have dup.
 'Ret     : @D Fst    ! a drs of col-Fst add to @D at end.  col-Fst is bool value.  TRUE when if it fst rec of a gp
 '                    ! and rst of rec of the gp to FALSE
-Dim O As Drs: O = DrszAddCV(D, "Fst", False) ' Add col-Fst with val all FALSE
-Dim GDry(): GDry = DrszSel(D, Gpcc).Dry  ' Dry with Gp-col only.
-Dim R(): R = GpRxy(GDry)                 ' Gp the @GDry into `GpRxy`
-Dim Cix&: Cix = UB(O.Dry(0))             ' Las col Ix aft adding col-Fst
-Dim Rxy: For Each Rxy In R               ' for each gp, get the Row-ixy (pointing to @D.Dry)
-    Dim Rix&: Rix = Rxy(0)               ' Rix is Row-ix pointing one of @D.Dry which is the fst rec of a gp
-    O.Dry(Rix)(Cix) = True
+Dim O As Drs: O = AddCol(D, "Fst", False) ' Add col-Fst with val all FALSE
+If NoReczDrs(D) Then AddColzFst = O: Exit Function
+Dim GDy(): GDy = DrszSel(D, Gpcc).Dy  ' Dy with Gp-col only.
+Dim R(): R = GpRxy(GDy)                 ' Gp the @GDy into `GpRxy`
+Dim Cix&: Cix = UB(O.Dy(0))             ' Las col Ix aft adding col-Fst
+Dim Rxy: For Each Rxy In R               ' for each gp, get the Row-ixy (pointing to @D.Dy)
+    Dim Rix&: Rix = Rxy(0)               ' Rix is Row-ix pointing one of @D.Dy which is the fst rec of a gp
+    O.Dy(Rix)(Cix) = True
 Next
-DrszAddFst = O
+AddColzFst = O
 End Function
 
-Function DrszJn(A As Drs, B As Drs, Jn$, Add$, Optional IsLeftJn As Boolean, Optional AnyFld$) As Drs
+Function JnDrs(A As Drs, B As Drs, Jn$, Add$, Optional IsLeftJn As Boolean, Optional AnyFld$) As Drs
 'Fm A        : ..@Jn-LHS..              ! It is a drs with col-@Jn-LHS.
-'Fm B        : ..@Jn-RHS..@Add-RHS      ! It is a drs with col-@Jn-RHS and col-@Add-RHS.
-'Fm Jn       : SS-of-ColonStr           ! It is SS-str of str term with optional [:].  LHS of [:] is for @A and RHS of [:] is for @B
+'Fm B        : ..@Jn-RHS..@Add-RHS      ! It is a drs with col-@Jn-RHS & col-@Add-RHS.
+'Fm Jn       : :SS-of-:ColonTerm        ! It is :SS-of-:ColTerm. :ColTerm: is a :Term with 1-or-0 [:]. :Term: is a fm :TLin: or :TermLin:  LHS of [:] is for @A and RHS of [:] is for @B
 '                                       ! It is used to jn @A & @B
 'Fm Add      : SS-of-ColonStr-Fld-@B    ! What col in @B to be added to @A.  It may use new name, if it has colon.
 'Fm IsLeftJn :                          ! Is it left join, otherwise, it is inner join
 'Fm AnyFld   : Fldn                     ! It is optional fld to be add to rslt drs stating if any rec in @B according to @Jn.
 '                                       ! It is vdt only when IsLeftJn=True.
 '                                       ! It has bool value.  It will be TRUE if @B has jn rec else FALSE.
-'Ret         : ..@A..@Add-RHS.. @AnyFld ! It has all fld from @A and @Add-RHS-fld and optional @AnyFld.
+'Ret         : ..@A..@Add-RHS..@AnyFld ! It has all fld from @A and @Add-RHS-fld and optional @AnyFld.
 '                                       ! If @IsLeftJn, it will have at least same rec as @A, and may have if there is dup rec in @B accord to @Jn fld.
 '                                       ! If not @IsLeftJn, only those records fnd in both @A & @B
-'
-Dim Dr, IDr, Dr1(), IDry(), ODry(), AddFny$(), AddFnyFm$(), AddFnyAs$(), F, JnFnyA$(), JnFnyB$(), AJnIxy&(), BJnIxy&(), AddIxy&(), Vy()
-Dim Emp(), EmpWithAny(), NoRec As Boolean, O As Drs
-AsgFnyAB Jn, JnFnyA, JnFnyB
-AsgFnyAB Add, AddFnyFm, AddFnyAs
-AddIxy = IxyzSubAy(B.Fny, AddFnyFm, ThwNFnd:=True)
-BJnIxy = IxyzSubAy(B.Fny, JnFnyB, ThwNFnd:=True)
-AJnIxy = IxyzSubAy(A.Fny, JnFnyA, ThwNFnd:=True)
-If IsLeftJn Then ReDim Emp(UB(AddFnyFm))
-If IsLeftJn And AnyFld <> "" Then ReDim EmpWithAny(UB(AddFnyFm)): PushI EmpWithAny, False
-For Each Dr In Itr(A.Dry)
-    Vy = AywIxy(Dr, AJnIxy)
-    IDry = DrywIxyVySel(B.Dry, BJnIxy, Vy, AddIxy)
-    NoRec = Si(IDry) = 0
-    Select Case True
-    Case NoRec And IsLeftJn And AnyFld = "": PushI ODry, AyzAdd(Dr, Emp)
-    Case NoRec And IsLeftJn:                 PushI ODry, AyzAdd(Dr, EmpWithAny)
-    Case NoRec
-    Case AnyFld = ""
-        For Each IDr In IDry
-            PushI ODry, AyzAdd(Dr, IDr)
-        Next
-    Case Else
-        For Each IDr In IDry
-            PushI IDr, True
-            PushI ODry, AyzAdd(Dr, IDr)
-        Next
-    End Select
-Next
-O = Drs(SyNB(A.Fny, AddFnyAs, AnyFld), ODry)
+Dim JnFnyA$(), JnFnyB$()
+Dim AddFnyFm$(), AddFnyAs$()
+    AsgFnyAB Jn, JnFnyA, JnFnyB
+    AsgFnyAB Add, AddFnyFm, AddFnyAs
+    
+Dim AddIxy&(): AddIxy = IxyzSubAy(B.Fny, AddFnyFm, ThwNFnd:=True)
+Dim BJnIxy&(): BJnIxy = IxyzSubAy(B.Fny, JnFnyB, ThwNFnd:=True)
+Dim AJnIxy&(): AJnIxy = IxyzSubAy(A.Fny, JnFnyA, ThwNFnd:=True)
+
+Dim Emp() ' it is for LeftJn and for those rec when @B has no rec joined.  It is for @Add-fld & @AnyFld.
+          ' It has sam ele as @Add.  1 more fld is @AnyFld<>""
+    If IsLeftJn Then
+        ReDim Emp(UB(AddFnyFm))
+        If AnyFld <> "" Then PushI Emp, False
+    End If
+Dim ODy()                       ' Bld %ODy for each %ADr, that mean fld-Add & fld-Any
+    Dim ADr: For Each ADr In Itr(A.Dy)
+        Dim JnVy():            JnVy = AwIxy(ADr, AJnIxy)                     'JnFld-Vy-Fm-@A
+        Dim BDy():            BDy = DywKeySel(B.Dy, BJnIxy, JnVy, AddIxy) '@B-Dy-joined
+        Dim NoRec As Boolean: NoRec = Si(BDy) = 0                           'no rec joined
+            
+        Select Case True
+        Case NoRec And IsLeftJn: PushI ODy, AyzAdd(ADr, Emp) '<== ODy, Only for NoRec & LeftJn
+        Case NoRec
+        Case Else
+            '
+            Dim BDr: For Each BDr In BDy
+                If AnyFld <> "" Then
+                    Push BDr, True
+                End If
+                PushI ODy, AyzAdd(ADr, BDr) '<== ODy, for each %BDr in %BDy, push to %ODy
+            Next
+        End Select
+    Next ADr
+
+Dim O As Drs: O = Drs(SyNB(A.Fny, AddFnyAs, AnyFld), ODy)
+JnDrs = O
 
 If False Then
     Erase XX
-    XBox "Debug DrszJn"
+    XBox "Debug JnDrs"
     X "A-Fny  : " & TermLin(A.Fny)
     X "B-Fny  : " & TermLin(B.Fny)
     X "Jn     : " & Jn
@@ -154,60 +161,68 @@ If False Then
     Erase XX
     Stop
 End If
-DrszJn = O
+End Function
+Function DywKeySel(Dy(), KeyIxy&(), Key(), SelIxy&()) As Variant()
+DywKeySel = SelDy(DywKey(Dy, KeyIxy, Key), SelIxy)
+End Function
+Function SelDy(Dy(), SelIxy&()) As Variant()
+'Ret : SubSet-of-col of @Dy indicated by @SelIxy
+Dim Dr: For Each Dr In Itr(Dy)
+    PushI SelDy, AwIxy(Dr, SelIxy)
+Next
 End Function
 
-Function DrywIxyVySel(Dry(), WhIxy&(), Vy(), SelIxy&()) As Variant()
-Dim Dr, IVy, IDr()
-For Each Dr In Itr(Dry)
-    IVy = AywIxy(Dr, WhIxy)
-    If IsEqAy(Vy, IVy) Then
-        IDr = AywIxy(Dr, SelIxy)
-        PushI DrywIxyVySel, IDr
+Function DywKey(Dy(), KeyIxy&(), Key()) As Variant()
+'Ret : SubSet-of-row of @Dy for each row has val of %CurKey = @Key
+Dim Dr: For Each Dr In Itr(Dy)
+    Dim CurK: CurK = AwIxy(Dr, KeyIxy)
+    If IsEqAy(CurK, Key) Then         '<- If %CurKey = @Key, select it.
+        PushI DywKey, Dr
     End If
 Next
 End Function
-Function InsColzDryVyBef(Dry(), Vy()) As Variant()
-Dim Dr: For Each Dr In Itr(Dry)
-    PushI InsColzDryVyBef, AyzAdd(Vy, Dr)
+
+
+
+Function InsColzDyVyBef(Dy(), Vy()) As Variant()
+Dim Dr: For Each Dr In Itr(Dy)
+    PushI InsColzDyVyBef, AyzAdd(Vy, Dr)
 Next
 End Function
-Function InsColzDryBef(Dry(), V) As Variant()
-InsColzDryBef = InsColzDryVyBef(Dry, Av(V))
+Function InsColzDyBef(Dy(), V) As Variant()
+InsColzDyBef = InsColzDyVyBef(Dy, Av(V))
 End Function
 Function InsColzDrsCC(A As Drs, CC$, V1, V2) As Drs
-InsColzDrsCC = DrswInsFF(A, CC, InsColzDryV2(A.Dry, V1, V2))
+InsColzDrsCC = DwInsFF(A, CC, InsColzDyV2(A.Dy, V1, V2))
 End Function
 Function InsColzDrsC3(A As Drs, CCC$, V1, V2, V3) As Drs
-InsColzDrsC3 = DrswInsFF(A, CCC, InsColzDryV3(A.Dry, V1, V2, V3))
+InsColzDrsC3 = DwInsFF(A, CCC, InsColzDyV3(A.Dy, V1, V2, V3))
 End Function
 Function InsColzFront(A As Drs, C$, V) As Drs
-InsColzFront = DrswInsFF(A, C, InsColzDryBef(A.Dry, V))
+InsColzFront = DwInsFF(A, C, InsColzDyBef(A.Dy, V))
 End Function
 Function InsCol(A As Drs, C$, V) As Drs
 InsCol = InsColzFront(A, C, V)
 End Function
-Function UpdDrs(A As Drs, B As Drs) As Drs
-'Fm  A      K X    ! to be updated
-'Fm  B      K NewX ! used to update A.  K is unique
-'Ret UpdDrs K X    ! new Drs from A with A.X may updated from B.NewX.
-
+Function UpdDrs(A As Drs, B As Drs, Jn$, Upd$, IsLefJn As Boolean) As Drs
+'Fm  A  : ..@Jn-LHS..@Upd-LHS.. ! to be updated
+'Fm  B  : ..@Jn-RHS..@Upd-RHS.. ! used to update @A.@Upd-LHS
+'Fm  Jn : :SS-JnTerm            ! :JnTerm is :ColonTerm.  LHS is @A-fld and RHS is @B-fld
+'Fm Upd : :Upd-UpdTerm          ! :UpdTer: is :ColTerm.  LHS is @A-fld and RHS is @B-fld
+'Ret    : sam as @A             ! new Drs from @A with @A.@Upd-LHS updated from @B.@Upd-RHS. @@
 Dim C As Dictionary: Set C = DiczDrsCC(B)
 Dim O As Drs
     O.Fny = A.Fny
     Dim Dr, K
-    For Each Dr In A.Dry
+    For Each Dr In A.Dy
         K = Dr(0)
         If C.Exists(K) Then
             Dr(0) = C(K)
         End If
-        PushI O.Dry, Dr
+        PushI O.Dy, Dr
     Next
 UpdDrs = O
 'BrwDrs3 A, B, O, NN:="A B O", Tit:= _
-"Fm  A      K X    ! to be updated" & vbcrlf & _
-"Fm  B      K NewX ! used to update A.  K is unique"  & vbcrlf & _
-"Ret UpdDrs K X    ! new Drs from A with A.X may updated from B.NewX.
 Stop
 End Function
 
@@ -221,8 +236,8 @@ Function SelDist(D As Drs, FF$) As Drs
 Dim OKey(), OCnt&()
     Dim A As Drs: A = DrszSel(D, FF)
     Dim I%: I = Si(A.Fny)
-    Dim Dr: For Each Dr In Itr(A.Dry)
-        Dim Ix&: Ix = IxzDryDr(OKey, Dr)
+    Dim Dr: For Each Dr In Itr(A.Dy)
+        Dim Ix&: Ix = IxzDyDr(OKey, Dr)
         If Ix = -1 Then
             PushI OCnt, 1
             PushI OKey, Dr
@@ -230,33 +245,32 @@ Dim OKey(), OCnt&()
             OCnt(Ix) = OCnt(Ix) + 1
         End If
     Next
-Dim ODry()
+Dim ODy()
     Dim J&: For Each Dr In Itr(OKey)
         Push Dr, OCnt(J)
-        PushI ODry, Dr
+        PushI ODy, Dr
         J = J + 1
     Next
-SelDist = DrszFF(FF & " Cnt", ODry)
+SelDist = DrszFF(FF & " Cnt", ODy)
 End Function
 
 Function DrszSel(A As Drs, FF$) As Drs
-Dim Fny$(): Fny = SyzSS(FF)
-DrszSel = Drs(Fny, DryzSel(A.Dry, Ixy(A.Fny, Fny)))
+DrszSel = DrszSelFny(A, SyzSS(FF))
 End Function
 
-Function DrszSelzFny(A As Drs, Fny$()) As Drs
+Function DrszSelFny(A As Drs, Fny$()) As Drs
 ThwNotSuperAy A.Fny, Fny
-DrszSelzFny = Drs(Fny, DryzSel(A.Dry, Ixy(A.Fny, Fny)))
+DrszSelFny = Drs(Fny, DyoSel(A.Dy, Ixy(A.Fny, Fny)))
 End Function
 
 Function DrszSelAs(A As Drs, FFAs$) As Drs
 Dim FA$(), Fb$(): AsgFnyAB FFAs, FA, Fb
-DrszSelAs = Drs(Fb, DrszSelzFny(A, FA).Dry)
+DrszSelAs = Drs(Fb, DrszSelFny(A, FA).Dy)
 End Function
 
 Function DrszSelAlwEzFny(A As Drs, Fny$()) As Drs
 If IsEqAy(A.Fny, Fny) Then DrszSelAlwEzFny = A: Exit Function
-DrszSelAlwEzFny = Drs(Fny, DryzSelAlwE(A.Dry, IxyzAlwE(A.Fny, Fny)))
+DrszSelAlwEzFny = Drs(Fny, DyoSelAlwE(A.Dy, IxyzAlwE(A.Fny, Fny)))
 End Function
 
 Function DrszSelAlwE(A As Drs, FF$) As Drs
@@ -265,21 +279,21 @@ End Function
 
 Function DrszUpdC(A As Drs, C$, V) As Drs
 Dim I&: I = IxzAy(A.Fny, C)
-Dim Dr, Dry(): For Each Dr In Itr(A.Dry)
+Dim Dr, Dy(): For Each Dr In Itr(A.Dy)
     Dr(I) = V
-    PushI Dry, Dr
+    PushI Dy, Dr
 Next
-DrszUpdC = Drs(A.Fny, Dry)
+DrszUpdC = Drs(A.Fny, Dy)
 End Function
 
 Function DrszUpdCC(A As Drs, CC$, V1, V2) As Drs
 Dim I1&, I2&: AsgIx A, CC, I1, I2
-Dim Dr, Dry(): For Each Dr In Itr(A.Dry)
+Dim Dr, Dy(): For Each Dr In Itr(A.Dy)
     Dr(I1) = V1
     Dr(I2) = V2
-    PushI Dry, Dr
+    PushI Dy, Dr
 Next
-DrszUpdCC = Drs(A.Fny, Dry)
+DrszUpdCC = Drs(A.Fny, Dy)
 End Function
 
 Function SelDt(A As Dt, FF$) As Dt

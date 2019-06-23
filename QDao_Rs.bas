@@ -113,18 +113,18 @@ DrzRs = DrzFds(A.Fields, FF)
 End Function
 
 Function DrszRs(A As DAO.Recordset) As Drs
-DrszRs = Drs(FnyzRs(A), DryzRs(A))
+DrszRs = Drs(FnyzRs(A), DyoRs(A))
 End Function
 
-Function DryzRs(A As DAO.Recordset, Optional IsIncFldn As Boolean) As Variant()
+Function DyoRs(A As DAO.Recordset, Optional IsIncFldn As Boolean) As Variant()
 If IsIncFldn Then
-    PushI DryzRs, FnyzRs(A)
+    PushI DyoRs, FnyzRs(A)
 End If
 If Not HasRec(A) Then Exit Function
 With A
     .MoveFirst
     While Not .EOF
-        PushI DryzRs, DrzFds(.Fields)
+        PushI DyoRs, DrzFds(.Fields)
         .MoveNext
     Wend
     .MoveFirst
@@ -243,6 +243,6 @@ End With
 End Function
 
 Function SqzRs(A As DAO.Recordset, Optional ExlFldNm As Boolean) As Variant()
-SqzRs = SqzDry(DryzRs(A, ExlFldNm))
+SqzRs = SqzDy(DyoRs(A, ExlFldNm))
 End Function
 

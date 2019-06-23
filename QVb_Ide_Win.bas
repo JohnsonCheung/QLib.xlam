@@ -113,11 +113,11 @@ Next
 End Property
 
 Function FstWinTy(A As vbext_WindowType) As VBIDE.Window
-Set FstWinTy = FstItmPEv(CVbe.Windows, PrpPth("Type"), A)
+Set FstWinTy = FstzItrEq(CVbe.Windows, "Type", A)
 End Function
 
 Function WinyWinTy(T As vbext_WindowType) As VBIDE.Window()
-WinyWinTy = ItrwPrpEqval(CVbe.Windows, "Type", T)
+WinyWinTy = IwEq(CVbe.Windows, "Type", T)
 End Function
 
 Function ShwWin(A As VBIDE.Window) As VBIDE.Window
@@ -187,7 +187,7 @@ W.Visible = False
 End Sub
 
 Property Get VisWinCapAy() As String()
-VisWinCapAy = SyzOyPrp(VisWiny, PrpPth("Caption"))
+VisWinCapAy = SyzOyP(VisWiny, "Caption")
 End Property
 
 Property Get VisWiny() As VBIDE.Window()

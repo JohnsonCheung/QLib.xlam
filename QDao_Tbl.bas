@@ -26,7 +26,7 @@ Set CntDiczTF = CntDiczRs(ColzRs(A, T, F$))
 End Function
 
 Function IdxzTd(A As DAO.TableDef, IdxNm$) As DAO.Index
-Set IdxzTd = FstItmzNm(A.Indexes, IdxNm$)
+Set IdxzTd = FstzItrNm(A.Indexes, IdxNm$)
 End Function
 
 Function Idx(A As Database, T, IdxNm$) As DAO.Index
@@ -42,7 +42,7 @@ HasIdx = HasItn(A.TableDefs(T).Indexes, IdxNm)
 End Function
 
 Function FstUniqIdx(A As Database, T) As DAO.Index
-Set FstUniqIdx = FstItmTrueP(A.TableDefs(T).Indexes, PrpPth("Unique"))
+Set FstUniqIdx = FstzItrT(A.TableDefs(T).Indexes, "Unique")
 End Function
 
 Function HasFld(A As Database, T, F$) As Boolean
@@ -80,8 +80,8 @@ If HasPk(A, T) Then
 End If
 End Function
 
-Function DryzTFF(A As Database, T, FF$) As Variant()
-DryzTFF = DryzQ(A, SqlSel_FF_T(FF, T))
+Function DyoTFF(A As Database, T, FF$) As Variant()
+DyoTFF = DyoQ(A, SqlSel_FF_T(FF, T))
 End Function
 
 Sub AsgColApzDrsFF(A As Drs, FF$, ParamArray OColAp())
@@ -103,12 +103,12 @@ End Function
 Function DrszT(A As Database, T) As Drs
 DrszT = DrszRs(RszT(A, T))
 End Function
-Function DryzT(A As Database, T) As Variant()
-DryzT = DryzRs(RszT(A, T))
+Function DyoT(A As Database, T) As Variant()
+DyoT = DyoRs(RszT(A, T))
 End Function
 
 Function DtzT(A As Database, T) As Dt
-DtzT = Dt(T, Fny(A, T), DryzT(A, T))
+DtzT = Dt(T, Fny(A, T), DyoT(A, T))
 End Function
 
 Function FdStrAy(A As Database, T) As String()
@@ -157,7 +157,7 @@ PkIdxNm = ObjNm(PkIdx(A, T))
 End Function
 
 Function PkizTd(A As DAO.TableDef) As DAO.Index
-Set PkizTd = FstItn(A.Indexes, C_PkNm)
+Set PkizTd = FstzItn(A.Indexes, C_PkNm)
 End Function
 
 Function PkIdx(A As Database, T) As DAO.Index
@@ -228,7 +228,7 @@ LasUpdTim = TblPrp(A, T, "LastUpdated")
 End Function
 
 Sub InsTblzDrs(A As Database, T, B As Drs)
-InsRszDry RszTFny(A, T, B.Fny), B.Dry
+InsRszDy RszTFny(A, T, B.Fny), B.Dy
 End Sub
 
 Sub AddFd(A As Database, T, Fd As DAO.Fields)
@@ -296,26 +296,26 @@ Exit Sub
 Z:
     Set D = TmpDb
     DrpTmp D
-    CrtTzDrs D, "#A", SampDrs
+    CrtTzDrs D, "#A", DoSamp
     BrwDb D
     Return
 End Sub
 
 Sub CrtTzDrs(A As Database, T, Drs As Drs)
 CrtTblOfEmpzDrs A, T, Drs
-InsTblzDry A, T, Drs.Dry
+InsTblzDy A, T, Drs.Dy
 End Sub
 
 Sub CrtTzDrszAllStr(A As Database, T, Drs As Drs)
 CrtTzDrszEmpzAllStr A, T, Drs
-InsTblzDry A, T, Drs.Dry
+InsTblzDy A, T, Drs.Dy
 End Sub
 
 Sub CrtTzDrszEmpzAllStr(A As Database, T, Drs As Drs)
-Dim C&, F, O$(), Dry()
-Dry = Drs.Dry
+Dim C&, F, O$(), Dy()
+Dy = Drs.Dy
 For Each F In Drs.Fny
-    If IsMemCol(ColzDry(Dry, C)) Then
+    If IsMemCol(ColzDy(Dy, C)) Then
         PushI O, "M:" & F
     Else
         PushI O, F
@@ -334,7 +334,7 @@ Dim Drs As Drs
 GoSub T0
 Exit Sub
 T0:
-    Drs = SampDrs
+    Drs = DoSamp
     Ept = "A`B:B`Byt:C`I:D`L:E`D:G`S:H`C:I`Dte:J`M:K"
     GoTo Tst
 Tst:
@@ -445,8 +445,8 @@ Next
 IsDteCol = True
 End Function
 
-Sub InsTblzDry(A As Database, T, Dry())
-InsRszDry RszT(A, T), Dry
+Sub InsTblzDy(A As Database, T, Dy())
+InsRszDy RszT(A, T), Dy
 End Sub
 
 Sub CrtTblzJnFld(A As Database, T, KK$, JnFld$, Optional Sep$ = " ")
@@ -458,7 +458,7 @@ AddFld A, T, LisFld, dbMemo
 Dim KKIdx&(), JnFldIx&
     KKIdx = Ixy(Fny(A, T), Ny(KK))
     JnFldIx = IxzTF(A, T, JnFld)
-InsTblzDry A, T, DryzJnFldKK(DryzT(A, T), KKIdx, JnFldIx)
+InsTblzDy A, T, DyoJnFldKK(DyoT(A, T), KKIdx, JnFldIx)
 End Sub
 
 Function IxzTF%(A As Database, T, Fld$)
@@ -561,15 +561,15 @@ Private Sub Z_PkFny()
 Z:
     Dim A As Database
     Set A = Db(SampFbzDutyDta)
-    Dim Dr(), Dry(), T, I
+    Dim Dr(), Dy(), T, I
     For Each I In Tny(A)
         T = I
         Erase Dr
         Push Dr, T
         PushIAy Dr, PkFny(A, T)
-        PushI Dry, Dr
+        PushI Dy, Dr
     Next
-    BrwDry Dry
+    BrwDy Dy
     Exit Sub
 End Sub
 

@@ -1,8 +1,8 @@
 Attribute VB_Name = "QDta_Dta_SqlTy"
 Option Explicit
 Option Compare Text
-Function SqlTyzDryC$(Dry(), C&)
-SqlTyzDryC = SqlTyzAv(ColzDry(Dry, C))
+Function SqlTyzDyC$(Dy(), C&)
+SqlTyzDyC = SqlTyzAv(ColzDy(Dy, C))
 End Function
 Function SqlTyzAv$(Av())
 Dim O As VbVarType, V, T As VbVarType
@@ -14,9 +14,9 @@ For Each V In Av
     O = MaxVbTy(O, T)
 Next
 End Function
-Function SqlTyzVbTy$(Dry As VbVarType)
+Function SqlTyzVbTy$(Dy As VbVarType)
 Dim O$
-Select Case Dry
+Select Case Dy
 Case vbEmpty:   O = "Text(255)"
 Case vbBoolean: O = "YesNo"
 Case vbByte:    O = "Byte"

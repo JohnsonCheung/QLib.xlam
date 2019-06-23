@@ -4,10 +4,10 @@ Option Explicit
 Private Const CMod$ = "MDao_Rs_Mdy."
 Private Const Asm$ = "QDao"
 
-Sub InsRszDry(A As DAO.Recordset, Dry())
+Sub InsRszDy(A As DAO.Recordset, Dy())
 Dim Dr
 With A
-    For Each Dr In Itr(Dry)
+    For Each Dr In Itr(Dy)
         InsRs A, Dr
     Next
 End With

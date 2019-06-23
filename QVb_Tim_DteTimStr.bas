@@ -29,15 +29,28 @@ End Function
 Function TimStr$(A As Date)
 TimStr = DteTimStr(A)
 End Function
+
 Function DteTimStr$(A As Date)
 DteTimStr = Format(A, "YYYY-MM-DD HHMMSS")
 End Function
-Property Get NowDteTimStr$()
-NowDteTimStr = DteTimStr(Now)
-End Property
+Function DteTimId$(A As Date)
+DteTimId = Format(A, "YYYY_MM_DD_HHMMSS")
+End Function
+Function NowId$()
+NowId = DteTimId(Now)
+End Function
 
 Property Get NowStr$()
-NowStr = NowDteTimStr
+NowStr = DteTimStr(Now)
 End Property
 
+
+
+Function CvDbl(S, Optional Fun$)
+'Ret : a dbl of @S if can be converted, otherwise empty and debug.print S$
+On Error GoTo X
+CvDbl = CDbl(S)
+Exit Function
+X: If Fun <> "" Then Inf CSub, "str[" & S & "] cannot cv to dbl, emp is ret"
+End Function
 

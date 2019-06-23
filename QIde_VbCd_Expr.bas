@@ -111,7 +111,7 @@ End Function
 Private Function ExprzQte$(BytAy() As Byte)
 Dim O$(), I
 For Each I In BytAy
-    If I = vbDblQteAsc Then PushI O, vbTwoDblQte Else PushI O, Chr(I)
+    If I = vbQtezDblQAsc Then PushI O, vbTwoQtezDblQ Else PushI O, Chr(I)
 Next
 ExprzQte = QteDbl(Jn(O))
 End Function

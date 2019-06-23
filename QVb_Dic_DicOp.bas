@@ -91,14 +91,14 @@ End Function
 Function DicFny(InclDicValOptTy As Boolean) As String()
 DicFny = SplitSpc("Key Val"): If InclDicValOptTy Then PushI DicFny, "ValTy"
 End Function
-Function DryzDotAy(DotAy$()) As Variant()
+Function DyoDotAy(DotAy$()) As Variant()
 Dim I, Lin
 For Each I In Itr(DotAy)
     Lin = I
-    PushI DryzDotAy, SplitDot(Lin)
+    PushI DyoDotAy, SplitDot(Lin)
 Next
 End Function
-Function DryzDic(A As Dictionary, Optional InclDicValOptTy As Boolean) As Variant()
+Function DyoDic(A As Dictionary, Optional InclDicValOptTy As Boolean) As Variant()
 Dim I, Dr
 If A.Count = 0 Then Exit Function
 Dim K(): K = A.Keys
@@ -109,7 +109,7 @@ For Each I In K
     Else
         Dr = Array(I, A(I))
     End If
-    Push DryzDic, Dr
+    Push DyoDic, Dr
 Next
 End Function
 
@@ -211,18 +211,18 @@ BrwDrs DrszKSet(KSet)
 End Sub
 
 Function DrszKSet(KSet As Dictionary) As Drs
-Dim K, Dry(), S As Aset, V
+Dim K, Dy(), S As Aset, V
 For Each K In KSet.Keys
     Set S = KSet(K)
     If S.Cnt = 0 Then
-        PushI Dry, Array(K, "#EmpSet#")
+        PushI Dy, Array(K, "#EmpSet#")
     Else
         For Each V In S.Itms
-            PushI Dry, Array(K, V)
+            PushI Dy, Array(K, V)
         Next
     End If
 Next
-DrszKSet = DrszFF("K V", Dry)
+DrszKSet = DrszFF("K V", Dy)
 End Function
 Function HasKSet(KSet As Dictionary, K, S As Aset) As Boolean
 'Fm KSet : KSet if a dictionary with value is Aset.

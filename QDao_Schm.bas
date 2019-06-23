@@ -23,13 +23,13 @@ End Sub
 Sub CrtSchm(A As Database, Schm$())
 Const CSub$ = CMod & "CrtSchm"
 ThwIf_ErMsg ErzSchm(Schm), CSub, "there is error in the Schm", "Schm Db", AddIxPfx(Schm, 1), Dbn(A)
-Dim TdLy$():            TdLy = AywRmvT1(Schm, C_Tbl)
+Dim TdLy$():            TdLy = AwRmvT1(Schm, C_Tbl)
 Dim EF As EF:             EF = EFzSchm(Schm)
 Dim T() As DAO.TableDef:   T = TdAy(TdLy, EF)
 Dim P$():                  P = SqyCrtPkzTny(PkTny(TdLy))
 Dim S$():                  S = SqyCrtSk(TdLy)
-Dim DicT As Dictionary: Set DicT = Dic(AywRmvTT(Schm, C_Des, C_Tbl))
-Dim DicF As Dictionary: Set DicF = Dic(AywRmvTT(Schm, C_Des, C_Fld))
+Dim DicT As Dictionary: Set DicT = Dic(AwRmvTT(Schm, C_Des, C_Tbl))
+Dim DicF As Dictionary: Set DicF = Dic(AwRmvTT(Schm, C_Des, C_Fld))
                    AppTdAy A, T
                    RunSqy A, P
                    RunSqy A, S
@@ -38,8 +38,8 @@ Set FldDesDic(A) = DicF
 End Sub
 
 Private Function EFzSchm(Schm$()) As EF
-EFzSchm.EleLy = AywRmvT1(Schm, "Ele")
-EFzSchm.FldLy = AywRmvT1(Schm, "Fld")
+EFzSchm.EleLy = AwRmvT1(Schm, "Ele")
+EFzSchm.FldLy = AwRmvT1(Schm, "Fld")
 End Function
 
 Private Function PkTny(TdLy$()) As String()

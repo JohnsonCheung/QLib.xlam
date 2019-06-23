@@ -31,13 +31,9 @@ Next
 Set NewSkIdx = O
 End Function
 
-Function TdzTF(T, Fdy() As DAO.Field2, Optional Skff$) As DAO.TableDef
-Dim O As New TableDef, F
-O.Name = T
-AddSk O, Skff
-AddPk O
-AddFdy O, Fdy
-Set TdzTF = O
+Function TdzNm(T) As DAO.TableDef
+Set TdzNm = New TableDef
+TdzNm.Name = T
 End Function
 
 Private Sub AddPk(A As DAO.TableDef)

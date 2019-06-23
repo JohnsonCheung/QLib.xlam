@@ -18,7 +18,7 @@ AddModzPN CPj, T
 Set TmpMod = Md(T)
 End Function
 Function TmpModNyzP(P As VBProject) As String()
-TmpModNyzP = AywPfx(ModNyzP(P), "TmpMod")
+TmpModNyzP = AwPfx(ModNyzP(P), "TmpMod")
 End Function
 
 Sub ClrTmpMod()

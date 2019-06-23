@@ -4,7 +4,7 @@ Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Fs_Ffn_MisEr."
 Function ErzColDup(A As Drs, C$) As String()
-Dim B As Drs: B = ColDup(A, C)
+Dim B As Drs: B = DwDup(A, C)
 Dim Msg$: Msg = "Dup [" & C & "]"
 ErzColDup = ErzDrsMsg(B, Msg)
 End Function
@@ -24,7 +24,7 @@ XDrs A
 XLin
 ErzDrsMsg = XX
 End Function
-Sub Z_ErzDInp()
+Private Sub Z_ErzDInp()
 Brw ErzDInp(DInpzSamp)
 End Sub
 Function ErzDInp(DInp As Drs) As String()
@@ -36,10 +36,10 @@ ErzDInp = Sy(E1, E2, E3)
 End Function
 Private Function ErzFfnMis(A As Drs) As String()
 Dim I%: I = IxzAy(A.Fny, "Ffn")
-Dim Dr, Dry(): For Each Dr In Itr(A.Dry)
-    If Not HasFfn(Dr(I)) Then PushI Dry, Dr
+Dim Dr, Dy(): For Each Dr In Itr(A.Dy)
+    If Not HasFfn(Dr(I)) Then PushI Dy, Dr
 Next
-Dim B As Drs: B = DrszNewDry(A, Dry)
+Dim B As Drs: B = DrszNewDy(A, Dy)
 ErzFfnMis = ErzDrsMsg(B, "File not exist")
 End Function
 

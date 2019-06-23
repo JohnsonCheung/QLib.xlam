@@ -4,24 +4,25 @@ Option Explicit
 Private Const CMod$ = "MXls_AddIn."
 Private Const Asm$ = "QXls"
 
-Function DAddins(A As Excel.Application) As Drs
-'DAddins = DrszItrPP(A.AddIns, "Name FullName Installed IsOpen ProgId CLSID")
-End Function
-Sub DmpAddinsXls()
-DmpAddins Xls
-End Sub
-
-Sub DmpAddins(A As Excel.Application)
-DmpDrs DAddins(A)
-End Sub
-
-Function AddinsWs(A As Excel.Application) As Worksheet
-Set AddinsWs = ShwWs(WszDrs(DAddins(A)))
+Function DAddin(A As Excel.Application) As Drs
+DAddin = DrszItrPP(A.AddIns, "Name FullName Installed IsOpen ProgId CLSID")
 End Function
 
-Function Addin(A As Excel.Application, FxaNm) As Excel.Addin
+Sub DmpAddinX()
+DmpAddinzX Xls
+End Sub
+
+Sub DmpAddinzX(X As Excel.Application)
+DmpDrs DAddin(X)
+End Sub
+
+Function WsAddin(X As Excel.Application) As Worksheet
+Set WsAddin = ShwWs(WszDrs(DAddin(X)))
+End Function
+
+Function Addin(X As Excel.Application, FxaNm) As Excel.Addin
 Dim I As Excel.Addin
-For Each I In A.AddIns
+For Each I In X.AddIns
     If I.Name = FxaNm & ".xlam" Then Set Addin = I
 Next
 End Function

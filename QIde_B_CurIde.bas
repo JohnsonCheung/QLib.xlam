@@ -17,7 +17,7 @@ Set PjzPjfC = PjzPjf(CVbe, Pjf)
 End Function
 
 Function MdDrszV(A As Vbe) As Drs
-MdDrszV = Drs(MdTblFny, MdDryzV(A))
+MdDrszV = Drs(MdTblFny, MdDyoV(A))
 End Function
 Function MdTblFny() As String()
 
@@ -34,17 +34,6 @@ Dim O&
 For O = Lno To 1 Step -1
     If IsLinMth(Md.Lines(O, 1)) Then MthLno = O: Exit Function
 Next
-End Function
-Function NMthLin%(M As CodeModule, MthLno&)
-Dim K$, J&, N&, E$
-K = MthKd(M.Lines(MthLno, 1))
-If K = "" Then Thw CSub, "Given MthLno is not a MthLin", "Md MthLno MthLin", Mdn(M), MthLno, M.Lines(MthLno, 1)
-E = "End " & K
-For J = MthLno To M.CountOfLines
-    N = N + 1
-    If M.Lines(J, 1) = E Then NMthLin = N: Exit Function
-Next
-ThwImpossible CSub
 End Function
 Property Get CLno&()
 CLno = LnozM(CMd)
@@ -71,7 +60,7 @@ Set CPne = CVbe.ActiveCodePane
 End Property
 
 Property Get CMthLno&()
-CMthLno = MthLnozM(CMd, CLno)
+CMthLno = MthLno(CMd, CLno)
 End Property
 
 Property Get CMthLin$()
@@ -89,11 +78,14 @@ Property Get CPj() As VBProject
 Set CPj = CVbe.ActiveVBProject
 End Property
 
-Function HasMd(P As VBProject, Mdn) As Boolean
+Function HasMd(P As VBProject, Mdn, Optional IsInf As Boolean) As Boolean
 Dim C As VBComponent
 For Each C In P.VBComponents
     If C.Name = Mdn Then HasMd = True: Exit Function
 Next
+If IsInf Then
+    Debug.Print FmtQQ("Mdn[?] not exist", Mdn)
+End If
 End Function
 
 Sub ThwIf_NotMod(M As CodeModule, Fun$)

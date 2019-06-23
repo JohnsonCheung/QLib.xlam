@@ -11,7 +11,7 @@ End Function
 
 Private Sub Z_RmkPoszVb()
 Dim I, O$(), L$, P%
-For Each I In AywSubStr(AywSubStr(SrczP(CPj), "'"), """")
+For Each I In AwSubStr(AwSubStr(SrczP(CPj), "'"), """")
     P = RmkPoszVb(I)
     If P = 0 Then
         PushI O, I
@@ -154,10 +154,6 @@ End Sub
 
 Private Sub ABtn_Click(ByVal Ctrl As Office.CommandBarButton, CancelDefault As Boolean)
 Stop
-End Sub
-
-Private Sub ZZZ()
-QIde_Base_CtlOp:
 End Sub
 
 Property Get Y_BtnSpec() As String()

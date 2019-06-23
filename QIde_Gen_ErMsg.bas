@@ -13,7 +13,7 @@ Public Const DoczDimItm$ = "DimStmt :: `Dim` DimItm, ..."
 
 Private Sub Init(Src$())
 Dim Dcl$(): Dcl = DclLy(Src)
-Dim SrcLy$(): SrcLy = CvSy(AywBetEle(Dcl, "'GenErMsg-Src-Beg.", "'GenErMsg-Src-End."))
+Dim SrcLy$(): SrcLy = CvSy(AwBetEle(Dcl, "'GenErMsg-Src-Beg.", "'GenErMsg-Src-End."))
 'Brw SrcLy, CSub
 A.ErNy = T1Ay(RmvFstChrzAy(SrcLy))
 A.ErMsgAy = RmvT1zAy(SrcLy)
@@ -104,11 +104,11 @@ ErMsgzSrc = O
 End Function
 
 Function SrcRplConstDic(Src$(), ConstDic As Dictionary) As String()
-Dim Cnstn, Dcl$(), Bdy$(), Dcl1$(), Dcl2$()
-AsgDclAndBdy Src, Dcl, Bdy
+Dim Cnstn, Dcl$(), BDy$(), Dcl1$(), Dcl2$()
+AsgDclAndBdy Src, Dcl, BDy
 Dcl1 = RmvConstLin(Dcl, KeySet(ConstDic)): 'Brw Dcl1: Stop
 'Brw LyzLinesDicItems(ConstDic): Stop
-Dcl2 = Sy(Dcl1, LyzLinesDicItems(ConstDic), Bdy): 'Brw Dcl2: Stop
+Dcl2 = Sy(Dcl1, LyzLinesDicItems(ConstDic), BDy): 'Brw Dcl2: Stop
 SrcRplConstDic = Dcl2
 End Function
 Function RmvConstLin(Dcl$(), CnstnDic As Aset) As String() 'Assume: the const in Dcl to be remove is SngLin
@@ -206,7 +206,7 @@ End Function
 Private Function ErMthLByNm$(ErNm$, ErMsg$)
 Dim CNm$:         CNm = ErCnstn(ErNm)
 Dim ErNy$():     ErNy = NyzMacro(ErMsg)
-Dim Pm$:           Pm = JnCommaSpc(AywDist(ErNy))
+Dim Pm$:           Pm = JnCommaSpc(AwDist(ErNy))
 Dim Calling$: Calling = Jn(AddPfxzAy(DimNyzDimItmAy(ErNy), ", "))
 Dim Mthn:     Mthn = ErMthn(ErNm)
 ErMthLByNm = FmtQQ("Private Function ?(?) As String():? = FmtMacro(??):End Function", _

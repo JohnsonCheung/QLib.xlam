@@ -38,6 +38,29 @@ Next
 InsAy = O
 End Function
 
+Private Sub Z_ReBaseR()
+Dim Ay&(): ReDim Ay(9)
+Dim J%: For J = 0 To 9: Ay(J) = J: Next
+Dim Act: Act = ReBase(Ay, 100)
+Debug.Assert LBound(Act) = 100
+Debug.Assert UBound(Act) = 109
+For J = 100 To 109
+    Debug.Assert Act(J) = J - 100
+Next
+End Sub
+Function ReBase(Ay, FmIx)
+'Fm Ay : assume Ay-LBound is 0
+'Ret   : new re-based ay of LBound is @FmIx preserve.  Note standard redim preserve X(F To T) does not work  @@
+Dim ToIx&: ToIx = FmIx + UB(Ay)
+Dim O:        O = Ay: ReDim O(FmIx To ToIx)
+Dim J&:       J = FmIx
+Dim V:            For Each V In Ay
+    Asg V, O(J)
+J = J + 1
+Next
+ReBase = O
+End Function
+
 Function ResiAt(Ay, At&, Optional Cnt = 1)
 Dim J&, F&, T&, U&, O, NewU&
 U = UB(Ay)

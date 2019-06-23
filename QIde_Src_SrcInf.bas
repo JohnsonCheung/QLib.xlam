@@ -18,7 +18,7 @@ Function SrczMdn(Mdn) As String()
 SrczMdn = Src(Md(Mdn))
 End Function
 Private Sub Y__MthTopRmIx_SrcFm()
-Dim ODry()
+Dim ODy()
     Dim Src$(): Src = SrczMdn("IdeSrcLin")
     Dim Dr(), Lx&
     Dim J%, IsMth$, RmkLx$, Lin, I
@@ -32,10 +32,10 @@ Dim ODry()
 
         End If
         Dr = Array(IsMth, RmkLx, Lin)
-        Push ODry, Dr
+        Push ODy, Dr
         Lx = Lx + 1
     Next
-BrwDrs DrszFF("Mth RmkLx Lin", ODry)
+BrwDrs DrszFF("Mth RmkLx Lin", ODy)
 End Sub
 
 Private Property Get Y_Src() As String()
@@ -49,17 +49,6 @@ End Property
 Sub AsgMthDr(MthDr, OMdy$, OTy$, ONm$, OPrm$, ORet$, OLinRmk$, OLines$, OTopRmk$)
 AsgAp MthDr, OMdy, OTy, ONm, OPrm, ORet, OLinRmk, OLines, OTopRmk
 End Sub
-
-Private Sub Z_Dry_MthLinzS()
-BrwDry Dry_MthLinzS(CSrc)
-End Sub
-
-Function Dry_MthLinzS(Src$()) As Variant()
-Dim L
-For Each L In Itr(Src)
-    PushISomSi Dry_MthLinzS, Dr_MthLin(CStr(L))
-Next
-End Function
 
 Function CSrcL$()
 CSrcL = SrcLzM(CMd)

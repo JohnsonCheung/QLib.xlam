@@ -53,24 +53,24 @@ For Each I In B
 Next
 WdtAyab = O
 End Function
-Function S1S2zAtChr(S, AtChr$, Optional IfNoAtChr As EmAlign) As S1S2
+Function S12zAtChr(S, AtChr$, Optional IfNoAtChr As EmAlign) As S12
 Dim P%: P = InStr(S, AtChr)
 Select Case True
-Case P = 0 And IfNoAtChr = EiLeft:  S1S2zAtChr = S1S2(S, "")
-Case P = 0 And IfNoAtChr = EiRight: S1S2zAtChr = S1S2("", S)
-Case Else:                          S1S2zAtChr = S1S2(Left(S, P - 1), Mid(S, P))
+Case P = 0 And IfNoAtChr = EiLeft:  S12zAtChr = S12(S, "")
+Case P = 0 And IfNoAtChr = EiRight: S12zAtChr = S12("", S)
+Case Else:                          S12zAtChr = S12(Left(S, P - 1), Mid(S, P))
 End Select
 End Function
 
-Function S1S2szSyAtChr(Sy$(), AtChr$, Optional IfNotAtChr As EmAlign) As S1S2s
+Function S12szSyAtChr(Sy$(), AtChr$, Optional IfNotAtChr As EmAlign) As S12s
 Dim I
 For Each I In Itr(Sy)
-    PushS1S2 S1S2szSyAtChr, S1S2zAtChr(CStr(I), AtChr, EiLeft)
+    PushS12 S12szSyAtChr, S12zAtChr(CStr(I), AtChr, EiLeft)
 Next
 End Function
 
 Function FmtSyzAtChr(Sy$(), AtChr$, Optional IfNoAtChr As EmAlign) As String()
-FmtSyzAtChr = FmtS1S2s(S1S2szSyAtChr(Sy, AtChr))
+FmtSyzAtChr = FmtS12s(S12szSyAtChr(Sy, AtChr))
 End Function
 
 Function FmtSyzAtDot(Sy$(), Optional IfNoDt As EmAlign) As String()
@@ -82,11 +82,11 @@ Brw FmtDotLy(DotLy)
 End Sub
 
 Function FmtDotLy(DotLy$()) As String()
-FmtDotLy = LyzDry(DryzDotLy(DotLy), Fmt:=EiSSFmt)
+FmtDotLy = FmtDy(DyoDotLy(DotLy), Fmt:=EiSSFmt)
 End Function
 
 Function FmtDotLyzTwoCol(DotLy$()) As String()
-FmtDotLyzTwoCol = LyzDry(DryzDotLyzTwoCol(DotLy), Fmt:=EiSSFmt)
+FmtDotLyzTwoCol = FmtDy(DyoDotLyzTwoCol(DotLy), Fmt:=EiSSFmt)
 End Function
 
 Function FmtSyz1Term(Sy$()) As String()

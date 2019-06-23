@@ -31,12 +31,12 @@ Function LnkTblPm(T, S, Cn$) As LnkTblPm
 With LnkTblPm: .T = T: .S = S: .Cn = Cn: End With
 End Function
 Sub LnkTblzDrs(A As Database, DrsTSCn As Drs)
-LnkTblzDryTSCn A, DrsTSCn.Dry
+LnkTblzDyTSCn A, DrsTSCn.Dy
 End Sub
 
-Sub LnkTblzDryTSCn(A As Database, DryTSCn())
+Sub LnkTblzDyTSCn(A As Database, DyTSCn())
 Dim Dr, T$, S$, Cn$
-For Each Dr In Itr(DryTSCn)
+For Each Dr In Itr(DyTSCn)
     T = Dr(0)
     S = Dr(1)
     Cn = Dr(2)

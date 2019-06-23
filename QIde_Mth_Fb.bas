@@ -22,7 +22,7 @@ Function EnsMthFb(MthFb$) As Database
 EnsFb MthFb
 Dim D As Database
 Set EnsMthFb = Db(MthFb)
-EnsSchm D, MthSchm
+EnsSchm D, LnoChm
 End Function
 
 Function MthDbzP(P As VBProject) As Database
@@ -39,7 +39,7 @@ Sub BrwMthFb()
 BrwFb MthFb
 End Sub
 
-Private Property Get MthSchm() As String()
+Private Property Get LnoChm() As String()
 Erase XX
 X "Fld Nm  Md Pj"
 X "Fld T50 MchStr"
@@ -52,7 +52,7 @@ X "Fld Mem Lines TopRmk"
 X "Tbl Pj  *Id Pjf | Pjn PjDte"
 X "Tbl Md  *Id PjId Mdn | MdTy"
 X "Tbl Mth *Id MdId Mthn ShtTy | ShtMdy Prm Ret LinRmk TopRmk Lines Lno"
-MthSchm = XX
+LnoChm = XX
 Erase XX
 End Property
 

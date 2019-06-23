@@ -77,7 +77,7 @@ End Function
 
 Private Function ErDT_InvalidFld1$(D As Lnx, T$, Fny$())
 Dim Tbl$, Fld$, Des$, X$
-AsgN3tRst D.Lin, X, Tbl, Fld, Des
+Asg3TRst D.Lin, X, Tbl, Fld, Des
 If X <> "Des" Then Stop
 If Tbl <> T Then Exit Function
 
@@ -92,7 +92,7 @@ Private Function ErDF_Er(A As Lnxs, T As Lnxs) As String() _
 Dim J%, Fld$, Tbl$, Tny$(), FnyAy$()
 
 'For J = 0 To UB(A)
-    'AsgN2t A(J).Lin, Tbl, Fld
+    'AsgTT A(J).Lin, Tbl, Fld
     If Tbl <> "." Then
 '        PushIAy ErDF_Er, ErDF_Er1(A(J), Tny, FnyAy)
     End If
@@ -115,7 +115,7 @@ End Function
 
 Private Function ErE_DupE(E As Lnxs, Eny$()) As String()
 Dim Ele
-For Each Ele In Itr(AywDup(Eny))
+For Each Ele In Itr(AwDup(Eny))
     Push ErE_DupE, MsgE_DupE(LnoAyzEle(E, Ele), Ele)
 Next
 End Function
@@ -174,7 +174,7 @@ End Function
 
 Private Function ErT_DupTbl(T As Lnxs, Tny$()) As String()
 Dim Tbl$, I
-For Each I In Itr(AywDup(Tny))
+For Each I In Itr(AwDup(Tny))
     Tbl = I
     Push ErT_DupTbl, MsgT_DupT(LnoAyzTbl(T, Tbl), Tbl)
 Next
@@ -217,7 +217,7 @@ If HasSubStr(L, "|") Then
 End If
 '5
     Dim Dup$()
-    Dup = AywDup(Fny)
+    Dup = AwDup(Fny)
     If Si(Dup) > 0 Then
         PushI ErT_LinEr_zLnx, MsgT_DupF(T, Tbl, Dup)
         Exit Function
@@ -345,7 +345,7 @@ MsgT_FldEr = Msg(A, FmtQQ("Fld[?] cannot be found in any Ele-Lines"))
 End Function
 
 Private Function Msg_LinTyEr$(A As Lnx, Ty$)
-Msg_LinTyEr = Msg(A, FmtQQ(CM_LinTyEr, Ty, LinzDrs(DShtTy)))
+Msg_LinTyEr = Msg(A, FmtQQ(CM_LinTyEr, Ty, FmtDrs(DShtTy)))
 End Function
 
 Private Function ErD(Tny$(), T As Lnxs, D As Lnxs) As String()

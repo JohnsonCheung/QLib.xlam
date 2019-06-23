@@ -67,6 +67,7 @@ Sub EdtStr(S, Ft)
 WrtStr S, Ft, OvrWrt:=True
 Brw Ft
 End Sub
+
 Function WrtStr$(S, Ft, Optional OvrWrt As Boolean)
 If OvrWrt Then DltFfnIf Ft
 Dim Fno%: Fno = FnoO(Ft)

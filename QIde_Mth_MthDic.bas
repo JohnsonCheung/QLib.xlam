@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Const CMod$ = "MIde_Mth_Dic."
 Const Asm$ = "QIde"
-Public Const DoczSMdDic$ = "SMdDic is Sorted-Mdn-To-SrcL."
+Public Const DoczSMdDic$ = "SMdDic is Srted-Mdn-To-SrcL."
 
 Function MthDiczP(P As VBProject) As Dictionary
 Dim C As VBComponent
@@ -164,12 +164,12 @@ Ass:
     B = MinusAy(AftSrt, BefSrt)
     Debug.Print
     If Si(A) = 0 And Si(B) = 0 Then Return
-    If Si(AyeEmpEle(A)) <> 0 Then
+    If Si(AeEmpEle(A)) <> 0 Then
         Debug.Print "Si(A)=" & Si(A)
         BrwAy A
         Stop
     End If
-    If Si(AyeEmpEle(B)) <> 0 Then
+    If Si(AeEmpEle(B)) <> 0 Then
         Debug.Print "Si(B)=" & Si(B)
         BrwAy B
         Stop

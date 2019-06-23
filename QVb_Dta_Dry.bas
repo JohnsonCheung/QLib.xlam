@@ -4,12 +4,12 @@ Option Explicit
 Private Const CMod$ = "MVb_Dta."
 Private Const Asm$ = "QVb"
 
-Function IsEqDry(A(), B()) As Boolean
-IsEqDry = IsEqAy(A, B)
+Function IsEqDy(A(), B()) As Boolean
+IsEqDy = IsEqAy(A, B)
 End Function
 
 Private Sub Z()
 Dim A()
-IsEqDry A, A
+IsEqDy A, A
 End Sub
 

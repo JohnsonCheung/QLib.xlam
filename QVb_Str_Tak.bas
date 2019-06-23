@@ -112,8 +112,8 @@ End Sub
 Private Sub Z_Tak_BefFstLas()
 Dim S, Fst$, Las$
 S = " A_1$ = ""Private Function ZChunk$(ConstLy$(), IChunk%)"" & _"
-Fst = vbDblQte
-Las = vbDblQte
+Fst = vbQtezDblQ
+Las = vbQtezDblQ
 Ept = "Private Function ZChunk$(ConstLy$(), IChunk%)"
 GoSub Tst
 Exit Sub
@@ -152,7 +152,7 @@ Function TakDotNm$(S)
 Dim J%
 If Not IsLetter(FstChr(S)) Then Exit Function
 For J = 2 To Len(S)
-    If Not IsDotNmChr(Mid(S, J, 1)) Then
+    If Not IsChrDotNm(Mid(S, J, 1)) Then
         TakDotNm = Left(S, J - 1)
         Exit Function
     End If
@@ -169,7 +169,7 @@ Function TakNm$(S)
 Dim J%
 If Not IsLetter(FstChr(S)) Then Exit Function
 For J = 2 To Len(S)
-    If Not IsNmChr(Mid(S, J, 1)) Then
+    If Not IsChrzNm(Mid(S, J, 1)) Then
         TakNm = Left(S, J - 1)
         Exit Function
     End If

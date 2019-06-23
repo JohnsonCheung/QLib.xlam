@@ -8,8 +8,8 @@ Function DrzQ(A As Database, Q) As Variant()
 DrzQ = DrzRs(Rs(A, Q))
 End Function
 
-Function DryzQ(A As Database, Q) As Variant()
-DryzQ = DryzRs(Rs(A, Q))
+Function DyoQ(A As Database, Q) As Variant()
+DyoQ = DyoRs(Rs(A, Q))
 End Function
 
 

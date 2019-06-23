@@ -20,7 +20,17 @@ Enum EmAndOrOp
 End Enum
 
 Function AndBoolAy(A() As Boolean) As Boolean
-AndBoolAy = IsAllTruezB(A)
+AndBoolAy = IsAllT(A)
+End Function
+
+Function BoolAybT(IFm&, ITo&, TrueIxy&()) As Boolean()
+'Fm TIxy : #True-Ixy#  :Ixy: is Ix-Ay and Ix is always running from 0.
+'Ret     : #BoolAyb-fm-TrueIxy# ! where :Ayb: is Ay-base-Ix <> 0.  a bool ay of lbound=@IFm and ubound=@ITo.  Those ele pointed by @TIxy set to True.
+Dim O() As Boolean: ReDim O(IFm To ITo)
+Dim I: For Each I In TrueIxy
+    O(I + IFm) = True
+Next
+BoolAybT = O
 End Function
 
 Function BoolOp(BoolOpStr$) As EmBoolOp
@@ -39,20 +49,20 @@ Function IfStr$(IfTrue As Boolean, RetStr$)
 If IfTrue Then IfStr = RetStr
 End Function
 
-Function IsAllFalsezB(A() As Boolean) As Boolean
+Function IsAllF(A() As Boolean) As Boolean
 Dim I
 For Each I In A
     If I Then Exit Function
 Next
-IsAllFalsezB = True
+IsAllF = True
 End Function
 
-Function IsAllTruezB(A() As Boolean) As Boolean
+Function IsAllT(A() As Boolean) As Boolean
 Dim I
 For Each I In A
     If Not I Then Exit Function
 Next
-IsAllTruezB = True
+IsAllT = True
 End Function
 
 Function IsAndOrStr(A$) As Boolean
@@ -67,26 +77,20 @@ Case "EQ", "NE": IsEqNeStr = True
 End Select
 End Function
 
-Function IsSomFalsezB(A() As Boolean) As Boolean
-Dim J%
-For J = 0 To UB(A)
-    If Not A(J) Then IsSomFalsezB = True: Exit Function
+Function IsSomF(A() As Boolean) As Boolean
+Dim B: For Each B In A
+    If Not B Then IsSomF = True: Exit Function
 Next
 End Function
 
-Function IsSomTruezB(A() As Boolean) As Boolean
-Dim I
-For Each I In A
-    If I Then IsSomTruezB = True: Exit Function
+Function IsSomT(A() As Boolean) As Boolean
+Dim B: For Each B In A
+    If B Then IsSomT = True: Exit Function
 Next
 End Function
 
 Function IsVdtBoolOpStr(BoolOpStr$) As Boolean
 IsVdtBoolOpStr = HitAy(BoolOpStr, BoolOpSy)
-End Function
-
-Function OrBoolAy(A() As Boolean) As Boolean
-OrBoolAy = IsSomTruezB(A)
 End Function
 
 Property Get BoolOpSy() As String()

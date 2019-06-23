@@ -41,16 +41,16 @@ Next
 RplPun = Jn(O)
 End Function
 
-Function SyeNonNm(Sy$()) As String()
+Function AyeNonNm(Sy$()) As String()
 Dim Nm$, I
 For Each I In Sy
     Nm = I
-    If IsNm(Nm) Then PushI SyeNonNm, Nm
+    If IsNm(Nm) Then PushI AyeNonNm, Nm
 Next
 End Function
 
 Function NyzStr(S) As String()
-NyzStr = SyeNonNm(SyzSS(RplLf(RplCr(RplPun(S)))))
+NyzStr = AyeNonNm(SyzSS(RplLf(RplCr(RplPun(S)))))
 End Function
 
 Function RelOfPMthn_ToMdny_P() As Rel
@@ -102,7 +102,7 @@ Dim Nm
 For Each Nm In Itr(Ny)
     If PMthn_To_PjDotModNy.Exists(Nm) Then
         Dim PjDotModNy$():
-            PjDotModNy = AyeEle(PMthn_To_PjDotModNy(Nm), MthPjDotMdn)
+            PjDotModNy = AeEle(PMthn_To_PjDotModNy(Nm), MthPjDotMdn)
         If HasEle(PjDotModNy, Nm) Then
             PushI MthExtny, Nm
         End If
