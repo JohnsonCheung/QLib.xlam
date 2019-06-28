@@ -4,6 +4,9 @@ Option Explicit
 Private Const CMod$ = "MTerm."
 Const Ns$ = "Vb.Str.Term"
 Private Const Asm$ = "Q"
+':Term: ! is :s.  It a printable-sub-string fm a :TermLin.
+':TermLin: ! is :Lin.  with lis of terms sep by spc.  If a :Term has spc, it will have sq-bkt.
+':NN: It a Str or Sy will give Ny.  See TermAy"
 
 Function RmvTerm$(Lin, Term$())
 RmvTerm = JnTerm(MinusAy(TermAy(Lin), Term))
@@ -60,9 +63,6 @@ If T1(OLin) = X Then
 End If
 End Function
 
-Function ShfCnst(OLin$) As Boolean
-ShfCnst = ShfT1(OLin) = "Const"
-End Function
 
 Function ShfT1$(OLin$)
 ShfT1 = T1(OLin)

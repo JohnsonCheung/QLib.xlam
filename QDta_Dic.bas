@@ -9,7 +9,7 @@ Fny = SyzSS(Tit): If InclDicValOptTy Then Push Fny, "Val-TypeName"
 DrszDic = Drs(Fny, DyoDic(A, InclDicValOptTy))
 End Function
 
-Function DtzDic(A As Dictionary, Optional DtNm$ = "Dic", Optional InclDicValOptTy As Boolean) As Dt
+Function DtzDic(A As Dictionary, Optional DtNm$ = "Dic", Optional InclDicValOptTy As Boolean) As DT
 Dim Dy()
 Dy = DyoDic(A, InclDicValOptTy)
 Dim F$

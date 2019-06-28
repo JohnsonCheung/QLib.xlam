@@ -3,56 +3,47 @@ Option Compare Text
 Option Explicit
 Const CMod$ = "MIde_Mth_Dic."
 Const Asm$ = "QIde"
-Public Const DoczSMdDic$ = "SMdDic is Srted-Mdn-To-SrcL."
+':SMdDic$ = "SMdDic is Srted-Mdn-To-SrcL."
 
-Function MthDiczP(P As VBProject) As Dictionary
+Function DiMthnqLineszP(P As VBProject) As Dictionary
 Dim C As VBComponent
 For Each C In P.VBComponents
-    PushDic MthDiczP, MthDiczM(C.CodeModule)
+    PushDic DiMthnqLineszP, DiMthnqLineszM(C.CodeModule)
 Next
 End Function
 
-Private Sub Z_SMthDicM()
-B SMthDicM
+Private Sub Z_SDiMthnqLinesM()
+B SDiMthnqLinesM
 End Sub
-Function SMthDicM() As Dictionary
-Set SMthDicM = SMthDIczM(CMd)
+Function SDiMthnqLinesM() As Dictionary
+Set SDiMthnqLinesM = SDiMthnqLineszM(CMd)
 End Function
-Function SMthDIczM(M As CodeModule) As Dictionary
-Set SMthDIczM = SrtDic(MthDiczM(M))
+Function SDiMthnqLineszM(M As CodeModule) As Dictionary
+Set SDiMthnqLineszM = SrtDic(DiMthnqLineszM(M))
 End Function
 
-Private Sub Z_MthDiczP()
-Dim A As Dictionary: Set A = MthDiczP(CPj)
+Private Sub Z_DiMthnqLineszP()
+Dim A As Dictionary: Set A = DiMthnqLineszP(CPj)
 Ass IsDicLines(A) '
 Vc A
 End Sub
 
-Private Sub Z_MthDicM()
-B MthDicM
+Private Sub Z_DiMthnqLinesM()
+B DiMthnqLinesM
 End Sub
 
-Function MthDicP()
-Set MthDicP = MthDiczP(CPj)
+Function DiMthnqLinesP()
+Set DiMthnqLinesP = DiMthnqLineszP(CPj)
 End Function
 
-Function CSMthDicP() As Dictionary
-Static X As Boolean, Y As Dictionary
-If Not X Then
-    X = True
-    Set Y = SMthDicP
-End If
-Set CSMthDicP = Y
+Function DiMthnqLinesM() As Dictionary
+Set DiMthnqLinesM = DiMthnqLineszM(CMd)
 End Function
 
-Function MthDicM() As Dictionary
-Set MthDicM = MthDiczM(CMd)
-End Function
-
-Function MthDic(Src$(), Optional Mdn$, Optional ExlDcl As Boolean) As Dictionary 'Key is MthDn, Val is MthLWiTopRmk
-Set MthDic = New Dictionary
+Function DiMthnqLines(Src$(), Optional Mdn$, Optional ExlDcl As Boolean) As Dictionary 'Key is MthDn, Val is MthLWiTopRmk
+Set DiMthnqLines = New Dictionary
 Dim P$: If Mdn <> "" Then P = Mdn & "."
-With MthDic
+With DiMthnqLines
     If Not ExlDcl Then .Add P & "*Dcl", Dcl(Src)
     Dim Ix: For Each Ix In MthIxItr(Src)
         Dim Dn$:       Dn = MthDnzLin(Src(Ix))
@@ -62,24 +53,24 @@ With MthDic
 End With
 End Function
 
-Function MthDiczM(M As CodeModule, Optional ExlDcl As Boolean) As Dictionary
-Set MthDiczM = MthDic(Src(M), Mdn(M), ExlDcl)
+Function DiMthnqLineszM(M As CodeModule, Optional ExlDcl As Boolean) As Dictionary
+Set DiMthnqLineszM = DiMthnqLines(Src(M), Mdn(M), ExlDcl)
 End Function
 
 Function LineszJnLinesItr$(LinesItr, Optional Sep$ = vbCrLf)
 LineszJnLinesItr = Jn(IntozItr(EmpSy, LinesItr), Sep)
 End Function
 
-Function SMthDiczP(P As VBProject) As Dictionary
-Set SMthDiczP = SrtDic(MthDiczP(P))
+Function SDiMthnqLineszP(P As VBProject) As Dictionary
+Set SDiMthnqLineszP = SrtDic(DiMthnqLineszP(P))
 End Function
 
-Function SMthDicP() As Dictionary
-Set SMthDicP = SMthDiczP(CPj)
+Function SDiMthnqLinesP() As Dictionary
+Set SDiMthnqLinesP = SDiMthnqLineszP(CPj)
 End Function
 
 Function SSrcLzS$(Src$())
-SSrcLzS = JnStrDic(SrtDic(MthDic(Src)), vb2CrLf)
+SSrcLzS = JnStrDic(SrtDic(DiMthnqLines(Src)), vb2CrLf)
 End Function
 Function SSrcLM$()
 SSrcLM = SSrcLzM(CMd)
@@ -155,7 +146,7 @@ Ass:
         If LasEle(AftSrt) = "" Then
             Dim Pfx
             Pfx = Array("There is non-blank-line at end after sorting", "Md=[" & Mdn(Md) & "=====")
-            BrwAy AyzAddAp(Pfx, AftSrt)
+            BrwAy AddAyAp(Pfx, AftSrt)
             Stop
         End If
     End If

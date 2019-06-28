@@ -4,19 +4,19 @@ Option Explicit
 Private Const CMod$ = "MDao_Db_DbInf."
 Private Const Asm$ = "QDao"
 
-Sub BrwDbInf(A As Database)
-BrwDs DbInf(A), 2000, BrkColVbl:="TblFld Tbl"
+Sub BrwDbInf(D As Database)
+BrwDs DbInf(D), 2000, BrkColVbl:="TblFld Tbl"
 End Sub
 
-Function DbInf(A As Database) As Ds
+Function DbInf(D As Database) As Ds
 Dim O As Ds, T$()
-T = Tny(A)
-AddDt O, DtoInfoLnk(A, T)
-AddDt O, DtoInfoTbl(A, T)
-AddDt O, DtoInfoTblF(A, T)
-AddDt O, DtoInfoPrp(A)
-AddDt O, DtoInfoFld(A, T)
-O.DsNm = A.Name
+T = Tny(D)
+AddDt O, DtoInfoLnk(D, T)
+AddDt O, DtoInfoTbl(D, T)
+AddDt O, DtoInfoTblF(D, T)
+AddDt O, DtoInfoPrp(D)
+AddDt O, DtoInfoFld(D, T)
+O.DsNm = D.Name
 DbInf = O
 End Function
 
@@ -33,37 +33,37 @@ Stop
 DmpDt DtoInfoTbl(D, Tny(D))
 End Sub
 
-Private Function DtoInfoTbl(A As Database, Tny$()) As Dt
+Private Function DtoInfoTbl(D As Database, Tny$()) As DT
 Dim T$, Dy(), I
 For Each I In Tny
     T = I
-    Push Dy, Array(T, NReczT(A, T), TblDes(A, T), StruzT(A, T))
+    Push Dy, Array(T, NReczT(D, T), TblDes(D, T), StruzT(D, T))
 Next
 DtoInfoTbl = DtzFF("DbTbl", "Tbl RecCnt Des Stru", Dy)
 End Function
 
-Private Function DtoInfoLnk(A As Database, Tny$()) As Dt
+Private Function DtoInfoLnk(D As Database, Tny$()) As DT
 Dim T, Dy(), C$
-For Each T In Tni(A)
-   C = A.TableDefs(T).Connect
+For Each T In Tni(D)
+   C = D.TableDefs(T).Connect
    If C <> "" Then Push Dy, Array(T, C)
 Next
-Dim O As Dt
+Dim O As DT
 DtoInfoLnk = DtzFF("DbLnk", "Tbl Connect", Dy)
 End Function
 
-Private Function DtoInfoPrp(A As Database) As Dt
+Private Function DtoInfoPrp(D As Database) As DT
 Dim Dy()
 DtoInfoPrp = DtzFF("DbPrp", "Prp Ty Val", Dy)
 End Function
-Private Function DtoInfoFld(A As Database, Tny$()) As Dt
+Private Function DtoInfoFld(D As Database, Tny$()) As DT
 Dim Dy(), T
-For Each T In Tni(A)
+For Each T In Tni(D)
 Next
 DtoInfoFld = DtzFF("DbFld", "Tbl Fld Pk Ty Si Dft Req Des", Dy)
 End Function
 
-Private Function DtoInfoTblF(D As Database, Tny$()) As Dt
+Private Function DtoInfoTblF(D As Database, Tny$()) As DT
 Dim Dy()
 Dim T$, I
 For Each I In Tni(D)
@@ -82,18 +82,18 @@ For Each I In Fny(D, T)
 Next
 End Function
 
-Private Function DroInfoTblF(T, Seq%, F As DAO.Field2) As Variant()
+Private Function DroInfoTblF(T, Seq%, F As Dao.Field2) As Variant()
 DroInfoTblF = Array(T, Seq, F.Name, DtaTy(F.Type))
 End Function
 Private Sub Z()
 MDao_Z_Db_DbInf:
 End Sub
 
-Private Function DtoInfoLnkLy(A As Database) As String()
+Private Function DtoInfoLnkLy(D As Database) As String()
 Dim T$, I
-For Each I In Tny(A)
+For Each I In Tny(D)
     T = I
-    PushNB DtoInfoLnkLy, CnStrzT(A, T)
+    PushNB DtoInfoLnkLy, CnStrzT(D, T)
 Next
 End Function
 

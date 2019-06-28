@@ -3,32 +3,32 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Mth_DCache."
 Private Const Asm$ = "QIde"
-Public Const DoczTof$ = "DashNm: tbl-of.  IsCml. After Tof, it is a table-name."
+':Tof$ = "DashNm: tbl-of.  IsCml. After Tof, it is a table-name."
 
 Function CacheDtezPjf(Pjf) As Date
-CacheDtezPjf = ValzQ(MthDbP, FmtQQ("Select PjDte from Mth where Pjf='?'", Pjf))
+CacheDtezPjf = VzQ(MthDbP, FmtQQ("Select PjDte from Mth where Pjf='?'", Pjf))
 End Function
 
-Function DMthzPjfzFmCache(Pjf) As Drs
+Function DoMthzPjfzFmCache(Pjf) As Drs
 Dim Sql$: Sql = FmtQQ("Select * from MthCache where Pjf='?'", Pjf)
-DMthzPjfzFmCache = DrszFbq(MthDbP, Sql)
+DoMthzPjfzFmCache = DrszFbq(MthDbP, Sql)
 End Function
 
-Function SkFnyWiSqlQPfx(A As Database, T) As String()
+Function SkFnyWiSqlQPfx(D As Database, T) As String()
 Dim F
-For Each F In Itr(SkFny(A, T))
-    PushI SkFnyWiSqlQPfx, SqlQteChrzT(DaoTyzTF(A, T, F)) & F
+For Each F In Itr(SkFny(D, T))
+    PushI SkFnyWiSqlQPfx, SqlQteChrzT(DaoTyzTF(D, T, F)) & F
 Next
 End Function
-Sub IupDbt(A As Database, T, Drs As Drs)
+Sub IupDbt(D As Database, T, Drs As Drs)
 Dim Dy(): Dy = Drs.Dy
 If Si(Dy) = 0 Then Exit Sub
 'ThwIf_DrsGoodToIupDbt CSub, Drs, A, T
-Dim R As DAO.Recordset, Q$, Sql$, Dr
+Dim R As Dao.Recordset, Q$, Sql$, Dr
 'Sql = SqlSel_T_Wh(T, BexpzFnyzSqlQPfxSy(SkFny(A, T), SkSqlQPfxSy(A, T)))
 For Each Dr In Dy
     Q = FmtQQAv(Sql, CvAv(Dr))
-    Set R = Rs(A, Q)
+    Set R = Rs(D, Q)
     If HasRec(R) Then
         UpdRs R, Dr
     Else
@@ -36,10 +36,10 @@ For Each Dr In Dy
     End If
 Next
 End Sub
-Sub InsDbt(A As Database, T, Dy())
+Sub InsDbt(D As Database, T, Dy())
 
 End Sub
-Sub UpdDbt(A As Database, T, Dy())
+Sub UpdDbt(D As Database, T, Dy())
 
 End Sub
 

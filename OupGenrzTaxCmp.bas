@@ -12,8 +12,8 @@ Option Compare Text
 Implements IOupGenr
 Private Const CMod$ = "ATaxExpCmp_OupTblGenr."
 Const A$ = "A"
-Sub GenOupTblFmTmpInp(A As Database)
-IOupGenr_GenOupTblFmTmpInp A
+Sub GenOupTblFmTmpInp(D As Database)
+IOupGenr_GenOupTblFmTmpInp D
 End Sub
-Private Sub IOupGenr_GenOupTblFmTmpInp(A As Database)
+Private Sub IOupGenr_GenOupTblFmTmpInp(D As Database)
 End Sub

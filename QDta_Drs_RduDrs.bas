@@ -8,20 +8,20 @@ Private Type RduDrs  ' #Reduced-Drs ! if a drs col all val are sam, mov those co
     RduColDic As Dictionary '        ! one entry is one col.  Key is coln and val is coln val.
 End Type
 
-Private Function RduDrs(A As Drs) As RduDrs
+Private Function RduDrs(D As Drs) As RduDrs
 'Ret : @A as :t:RduDrs
-If NoReczDrs(A) Then GoTo X
-Dim C$(): C = ReducibleCny(A)
+If NoReczDrs(D) Then GoTo X
+Dim C$(): C = ReducibleCny(D)
 If Si(C) = 0 Then GoTo X
-Dim Ixy&(): Ixy = IxyzSubAy(A.Fny, C)
-Dim Dr: Dr = A.Dy(0)
-Dim Vy: Vy = AwIxy(Dr, Ixy)
+Dim Ixy&(): Ixy = IxyzSubAy(D.Fny, C)
+Dim Dr:      Dr = D.Dy(0)
+Dim Vy:      Vy = AwIxy(Dr, Ixy)
 Set RduDrs.RduColDic = DiczKyVy(C, Vy)
-RduDrs.Drs = DrpColFny(A, C)
+          RduDrs.Drs = DrpColzFny(D, C)
 Exit Function
 X:
-    RduDrs.Drs = A
-    Set RduDrs.RduColDic = New Dictionary
+RduDrs.Drs = D
+Set RduDrs.RduColDic = New Dictionary
 End Function
 Private Function ReducibleCny(A As Drs) As String() '
 'Ret : ColNy ! if any col in Drs-A has all sam val, this col is reduciable.  Return them
@@ -40,10 +40,12 @@ Sub BrwDrsRdu(A As Drs)
 'Ret : Brw @A in reduced fmt @@
 BrwAy FmtRduDrs(RduDrs(A))
 End Sub
-Function FmtDrszRdu(A As Drs) As String()
-FmtDrszRdu = FmtRduDrs(RduDrs(A))
+
+Function FmtDrszRdu(A As Drs, Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol, Optional Fmt As EmTblFmt = EiTblFmt) As String()
+FmtDrszRdu = FmtRduDrs(RduDrs(A), MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt)
 End Function
-Private Function FmtRduDrs(A As RduDrs) As String()
+
+Private Function FmtRduDrs(A As RduDrs, Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol, Optional Fmt As EmTblFmt = EiTblFmt) As String()
 PushIAy FmtRduDrs, FmtDic(A.RduColDic)
-PushIAy FmtRduDrs, FmtDrs(A.Drs)
+PushIAy FmtRduDrs, FmtDrs(A.Drs, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt)
 End Function

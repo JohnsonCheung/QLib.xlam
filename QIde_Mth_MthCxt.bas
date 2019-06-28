@@ -160,16 +160,16 @@ Function IsRmkedzMFe(M As CodeModule, B As Fei) As Boolean
 'IsRmkedzMFe = IsRmkedzS(LyzMdFei(A, B))
 End Function
 
-Function DMthCxt() As Drs
-DMthCxt = DMthCxtzML(CMd, CMthLno)
+Function DoMthCxt() As Drs
+DoMthCxt = DoMthCxtzML(CMd, CMthLno)
 End Function
 
-Function DMthnM() As Drs
-DMthnM = DMthn(CMd)
+Function DoMthnM() As Drs
+DoMthnM = DoMthn(CMd)
 End Function
 
-Function DMthn(M As CodeModule) As Drs
-DMthn = DrpCol(DMth(M), "MthLin")
+Function DoMthn(M As CodeModule) As Drs
+DoMthn = DrpCol(DoMth(M), "MthLin")
 End Function
 Function AddColzHasPm(A As Drs) As Drs
 'Fm A : ..MthLin..
@@ -181,7 +181,7 @@ Dim Dr, Dy(): For Each Dr In Itr(A.Dy)
     PushI Dr, HasPm
     PushI Dy, Dr
 Next
-AddColzHasPm = DrszAddFF(A, "HasPm", Dy)
+AddColzHasPm = AddColzFFDy(A, "HasPm", Dy)
 End Function
 
 Private Sub Z_TblMthP()
@@ -192,24 +192,41 @@ End Sub
 
 Function TblMthP$(D As Database)
 Dim T$: T = "Mth"
-CrtTzDrs D, T, DMthP
+CrtTzDrs D, T, DoMthP
 TblMthP = T
 End Function
 
-Function AddColzRetAs(DMthLin As Drs) As Drs
-'Fm DMthLin : ..MthLin..
+Function AddColzBetBkt(D As Drs, ColnAs$, Optional IsDrp As Boolean) As Drs
+Dim BetColn$, NewC$: AsgBrk1 ColnAs, ":", BetColn, NewC
+If NewC = "" Then NewC = BetColn & "InsideBkt"
+Dim Ix%: Ix = IxzAy(D.Fny, BetColn)
+Dim Dr, Dy(): For Each Dr In Itr(D.Dy)
+    PushI Dr, BetBkt(Dr(Ix))
+    PushI Dy, Dr
+Next
+Dim O As Drs: O = AddColzFFDy(D, NewC, Dy)
+If IsDrp Then O = DrpCol(O, BetColn)
+AddColzBetBkt = O
+End Function
+
+Function AddColzMthPm(DoMthLin As Drs, Optional IsDrp As Boolean) As Drs
+AddColzMthPm = AddColzBetBkt(DoMthLin, "MthLin:MthPm", IsDrp)
+End Function
+
+Function AddColzRetAs(DoMthLin As Drs) As Drs
+'Fm DoMthLin : ..MthLin..
 'Ret        : ..RetAs
-Dim IxMthLin%: IxMthLin = IxzAy(DMthLin.Fny, "MthLin")
-Dim Dr, Dy(): For Each Dr In Itr(DMthLin.Dy)
+Dim IxMthLin%: IxMthLin = IxzAy(DoMthLin.Fny, "MthLin")
+Dim Dr, Dy(): For Each Dr In Itr(DoMthLin.Dy)
     Dim MthLin$: MthLin = Dr(IxMthLin)
     Dim R$: R = RetAszL(MthLin)
     PushI Dr, R
     PushI Dy, Dr
 Next
-AddColzRetAs = DrszAddFF(DMthLin, "RetAs", Dy)
+AddColzRetAs = AddColzFFDy(DoMthLin, "RetAs", Dy)
 End Function
-Function DMthezS(Src$()) As Drs
-Dim A As Drs: A = DMthzS(Src)
+Function DoMthezS(Src$()) As Drs
+Dim A As Drs: A = DoMthzS(Src)
 Dim Dy(), Dr
 For Each Dr In Itr(A.Dy)
     Dim Ix&: Ix = Dr(0) - 1
@@ -217,11 +234,11 @@ For Each Dr In Itr(A.Dy)
     Dr = InsEle(Dr, E, 1)
     PushI Dy, Dr
 Next
-DMthezS = DrszFF("L E Mdy Ty Mthn MthLin", Dy)
+DoMthezS = DrszFF("L E Mdy Ty Mthn MthLin", Dy)
 End Function
 
-Function DMthzS(Src$()) As Drs
-'Ret DMth : L Mdy Ty Mthn MthLin ! Mdy & Ty are Sht
+Function DoMthzS(Src$()) As Drs
+'Ret DoMth : L Mdy Ty Mthn MthLin ! Mdy & Ty are Sht
 Dim Dy(), Dr, Ix
 For Each Ix In MthIxItr(Src)
     Dim L&:              L = Ix + 1
@@ -232,11 +249,11 @@ For Each Ix In MthIxItr(Src)
     Dim Mthn$:        Mthn = A.Nm
     PushI Dy, Array(L, Mdy, Ty, Mthn, MthLin)
 Next
-DMthzS = DrszFF("L Mdy Ty Mthn MthLin", Dy)
+DoMthzS = DrszFF("L Mdy Ty Mthn MthLin", Dy)
 End Function
 
-Function DMthCxtzML(M As CodeModule, MthLno&) As Drs
-'Ret DMthCxt : L Lin
+Function DoMthCxtzML(M As CodeModule, MthLno&) As Drs
+'Ret DoMthCxt : L Lin
 Dim Dy(), L&, ELin$, MthLin$, Lin$
 MthLin = M.Lines(MthLno, 1)
 ELin = MthELin(MthLin)
@@ -250,7 +267,7 @@ For L = NxtLnozML(M, MthLno) To M.CountOfLines
 Next
 ThwImpossible CSub
 X:
-DMthCxtzML = DrszFF("L MthLin", Dy)
+DoMthCxtzML = DrszFF("L MthLin", Dy)
 End Function
 Function IsRmkedzMthLy(MthLy$()) As Boolean
 If Si(MthLy) = 0 Then Exit Function
@@ -304,7 +321,7 @@ InspExprLiszPm = JnCommaSpc(O)
 End Function
 
 Private Sub Z_InspMthStmt()
-Dim A As Drs: A = DMthzM(CMd)
+Dim A As Drs: A = DoMthzM(CMd)
 Dim B$(): B = StrCol(A, "MthLin")
 Dim L, ODy()
 For Each L In B
@@ -318,12 +335,12 @@ Function InspMthStmt$(MthLin, Mdn$)
 With MthLinRec(MthLin)
     If .Pm = "" And Not .IsRetVal Then Exit Function
     Dim NN$: NN = JnSpc(ArgNyzPm(.Pm))
-    Dim EE$: EE = InspExprLiszPm(.Pm)
+    Dim Ee$: Ee = InspExprLiszPm(.Pm)
     Dim IsN0$: IsN0 = XIsN0(.IsRetVal, .Nm)  '#Insp-Nm-0.
     Dim IsE0$: IsE0 = XIsE0(.IsRetVal, .Nm, .TyChr, .RetTy) '#Insp-Expr-0
     NN = IsN0 & NN
-    EE = IsE0 & EE
-    InspMthStmt = InspStmt(NN, EE, Mdn, .Nm)
+    Ee = IsE0 & Ee
+    InspMthStmt = InspStmt(NN, Ee, Mdn, .Nm)
 End With
 End Function
 
@@ -353,7 +370,7 @@ Private Function InspExprzDclSfx$(V, DclSfx$)
 Dim O$, S$
 S = RmvPfx(DclSfx, " As ")
 Select Case S
-Case "DLTDH": O = FmtQQ("FmtDrs(?.D)", V)
+Case "DoLTDH": O = FmtQQ("FmtDrs(?.D)", V)
 Case "Drs": O = FmtQQ("FmtDrs(?)", V)
 Case "S12s": O = FmtQQ("FmtS12s(?)", V)
 Case "CodeModule": O = FmtQQ("Mdn(?)", V)

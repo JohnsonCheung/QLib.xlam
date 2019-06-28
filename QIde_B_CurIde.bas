@@ -74,6 +74,7 @@ End Property
 Property Get CPjf$()
 CPjf = CPj.Filename
 End Property
+
 Property Get CPj() As VBProject
 Set CPj = CVbe.ActiveVBProject
 End Property
@@ -109,7 +110,7 @@ Sub BrwPjp()
 BrwPth PjpP
 End Sub
 Property Get CQMdn$()
-CQMdn = MdDNm(CMd)
+CQMdn = MdDn(CMd)
 End Property
 
 Property Get CQMthn$()

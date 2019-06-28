@@ -64,12 +64,12 @@ Function NModzP%(P As VBProject)
 NModzP = NCmpzTy(P, vbext_ct_StdModule)
 End Function
 
-Function NDoczP%(P As VBProject)
-NDoczP = NCmpzTy(P, vbext_ct_Document)
-End Function
-
 Function NClszP%(P As VBProject)
 NClszP = NCmpzTy(P, vbext_ct_ClassModule)
+End Function
+
+Function NDoczP%(P As VBProject)
+NDoczP = NCmpzTy(P, vbext_ct_Document)
 End Function
 
 Function NCmpzTy%(P As VBProject, Ty As vbext_ComponentType)

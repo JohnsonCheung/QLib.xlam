@@ -45,7 +45,7 @@ O = RmvOnErGoNonX(MthLy)
 EnsLinzOnEr = InsOnErGoX(O)
 End Function
 
-Function MthExitLin$(MthLin)
+Private Function MthExitLin$(MthLin)
 MthExitLin = MthXXXLin(MthLin, "Exit")
 End Function
 Private Function MthXXXLin(MthLin, XXX$)
@@ -98,10 +98,8 @@ Z:
     Vc EnsPrpOnErzS(Src)
     Return
 End Sub
-Function EnsPrpOnErzS(Src$()) As String()
 
-End Function
-Private Sub Z_IsLinSngLMth()
+Private Sub Z_IsLinMthSngL()
 Dim L
 GoSub T1
 Exit Sub
@@ -110,16 +108,10 @@ T1:
     Ept = True
     GoTo Tst
 Tst:
-    Act = IsLinSngLMth(L)
+    Act = IsLinMthSngL(L)
     C
     Return
 End Sub
-
-Function IsLinSngLMth(L) As Boolean
-Dim K$: K = MthKd(L): If K = "" Then Exit Function
-IsLinSngLMth = HasSubStr(L, "End " & K)
-End Function
-
 Private Sub RmvPrpOnErzM(M As CodeModule, Optional Rpt As EmRpt)
 'Dim L&(): L = LngAp( _
 IxOfExit(PurePrpLy), _
@@ -136,10 +128,14 @@ Sub EnsPrpOnErzM(M As CodeModule)
 'RplMd A, JnCrLf(EnsPrpOnErzS(Src(A)))
 End Sub
 
+Function EnsPrpOnErzS(Src$()) As String()
+'RplMd A, JnCrLf(EnsPrpOnErzS(Src(A)))
+End Function
+
 Sub EnsPrpOnErM()
 EnsPrpOnErzM CMd
 End Sub
 
 Private Sub Z()
-QIde_Ens_PrpEr:
+QIde_Ens_PrpE:
 End Sub

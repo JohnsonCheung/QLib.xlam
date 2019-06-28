@@ -58,7 +58,7 @@ Function IsInstScrp(Pth) As Boolean
 If Not IsPth(Pth) Then Exit Function
 If Fdr(Pth) <> "Src" Then Exit Function
 Dim P$: P = ParPth(Pth)
-If Not IsDteTimStr(Fdr(P)) Then Exit Function
+If Not IsTimStr(Fdr(P)) Then Exit Function
 IsInstScrp = True
 End Function
 

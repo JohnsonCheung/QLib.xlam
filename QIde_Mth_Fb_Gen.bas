@@ -4,16 +4,15 @@ Option Explicit
 Private Const CMod$ = "MIde_Mth_Fb_Gen."
 Private Const Asm$ = "QIde"
 
-Sub CrtTblMth()
-Dim W As Database
-'WDrp "DistMth #A #B"
-Q = "Select Distinct Nm,Count(*) as LinesIdCnt Into DistMth from DistLines group by Nm": W.Execute Q
-Q = "Alter Table DistMth Add Column LinesIdLis Text(255), LinesLis Memo, ToMd Text(50)": W.Execute Q
+Sub EnsTblMth(D As Database)
+DrpTT D, "DistMth #A #B"
+Q = "Select Distinct Nm,Count(*) as LinesIdCnt Into DistMth from DistLines group by Nm": D.Execute Q
+Q = "Alter Table DistMth Add Column LinesIdLis Text(255), LinesLis Memo, ToMd Text(50)": D.Execute Q
 'WtCrt_FldLisTbl "DistLines", "#A", "Nm", "LinesId", " ", True
 'WtCrt_FldLisTbl "DistLines", "#B", "Nm", "Lines", vb2CrLf, True
-Q = "Update DistMth x inner join [#A] a on x.Nm = a.Nm set x.LinesIdLis = a.LinesIdLis":                W.Execute Q
-Q = "Update DistMth x inner join [#B] a on x.Nm = a.Nm set x.LinesLis = a.LinesLis":                    W.Execute Q
-Q = "Update DistMth x inner join MthLoc a on x.Nm = a.Nm set x.ToMd = IIf(a.ToMd='','AAMod',a.ToMd)":   W.Execute Q
+Q = "Update DistMth x inner join [#A] a on x.Nm = a.Nm set x.LinesIdLis = a.LinesIdLis":                D.Execute Q
+Q = "Update DistMth x inner join [#B] a on x.Nm = a.Nm set x.LinesLis = a.LinesLis":                    D.Execute Q
+Q = "Update DistMth x inner join MthLoc a on x.Nm = a.Nm set x.ToMd = IIf(a.ToMd='','AAMod',a.ToMd)":   D.Execute Q
 End Sub
 
 Sub CrtMdDic()

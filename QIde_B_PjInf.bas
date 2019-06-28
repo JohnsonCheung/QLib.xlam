@@ -3,15 +3,16 @@ Option Explicit
 Option Compare Text
 
 Function PjzFxa(Fxa) As VBProject
-ThwIf_NotFxa Fxa, CSub
-ThwIf_FfnNotExist Fxa, CSub, "Fxa"
-Dim O As VBProject: Set O = PjzPjf(Xls.Vbe, Fxa): If Not IsNothing(O) Then Set PjzFxa = O: Exit Function
+'Ret: Ret :Pj of @Fxa fm @Xls if exist, else @Xls.Opn @Fxa
+Dim O As VBProject: Set O = PjzPjf(Xls.Vbe, Fxa)
+If Not IsNothing(O) Then Set PjzFxa = O: Exit Function
 Set PjzFxa = OpnFx(Fxa).VBProject
 End Function
 
 Function HasFxa(Fxa$) As Boolean
 HasFxa = HasEleS(PjfnAyV, Fn(Fxa))
 End Function
+
 Sub OpnFxa(Fxa$)
 If Not IsFxa(Fxa) Then Thw CSub, "Not a Fxa", "Fxa", Fxa
 If HasFxa(Fxa) Then
@@ -20,22 +21,25 @@ If HasFxa(Fxa) Then
 End If
 Xls.Workbooks.Open Fxa
 End Sub
-Sub CrtFxa(Fxa$)  'Under Xls, crt an empty Fxa; set Pjn
+Private Function PjnzFxa$(Fxa)
+PjnzFxa = Fnn(RmvNxtNo(Fxa))
+End Function
+
+Sub CrtFxa(Fxa$)
+'Do: crt an emp Fxa with pjn derived from @Fxa
 If Not IsFxa(Fxa) Then Thw CSub, "Not a Fxa", "Fxa", Fxa
 If HasFxa(Fxa) Then Thw CSub, "In Xls, there is Pjn = Fxa", "Fxa AllPj-In-Xls", Fxa, PjnyV
 Dim Wb As Workbook: Set Wb = Xls.Workbooks.Add
 Wb.SaveAs Fxa, XlFileFormat.xlOpenXMLAddIn 'Must save first, otherwise PjzFxa will fail.
-PjzFxa(Fxa).Name = Fnn(RmvNxtNo(Fxa))
+PjzFxa(Fxa).Name = PjnzFxa(Fxa)
 Wb.Close True
 End Sub
 
-Function FrmFfny(Srcp$) As String()
-Dim I
-For Each I In Itr(Ffny(Srcp, "*.frm.txt"))
+Function FrmFfny(Pth) As String()
+Dim I: For Each I In Itr(Ffny(Pth, "*.frm.txt"))
     PushI FrmFfny, I
 Next
 End Function
-
 
 Function ClsAyzP(P As VBProject) As CodeModule()
 Dim C As VBComponent

@@ -4,11 +4,6 @@ Option Explicit
 Private Const CMod$ = "MDta_Sel."
 Private Const Asm$ = "QDta"
 
-Function DyoSel(Dy(), Ixy&()) As Variant()
-Dim Dr: For Each Dr In Itr(Dy)
-    PushI DyoSel, AwIxy(Dr, Ixy)
-Next
-End Function
 Function DyoSelAlwE(Dy(), Ixy&()) As Variant()
 Dim Dr: For Each Dr In Itr(Dy)
     PushI DyoSelAlwE, AwIxyAlwE(Dr, Ixy)
@@ -82,7 +77,7 @@ Function AddColzFst(D As Drs, Gpcc$) As Drs
 '                    ! and rst of rec of the gp to FALSE
 Dim O As Drs: O = AddCol(D, "Fst", False) ' Add col-Fst with val all FALSE
 If NoReczDrs(D) Then AddColzFst = O: Exit Function
-Dim GDy(): GDy = DrszSel(D, Gpcc).Dy  ' Dy with Gp-col only.
+Dim GDy(): GDy = SelDrs(D, Gpcc).Dy  ' Dy with Gp-col only.
 Dim R(): R = GpRxy(GDy)                 ' Gp the @GDy into `GpRxy`
 Dim Cix&: Cix = UB(O.Dy(0))             ' Las col Ix aft adding col-Fst
 Dim Rxy: For Each Rxy In R               ' for each gp, get the Row-ixy (pointing to @D.Dy)
@@ -127,7 +122,7 @@ Dim ODy()                       ' Bld %ODy for each %ADr, that mean fld-Add & fl
         Dim NoRec As Boolean: NoRec = Si(BDy) = 0                           'no rec joined
             
         Select Case True
-        Case NoRec And IsLeftJn: PushI ODy, AyzAdd(ADr, Emp) '<== ODy, Only for NoRec & LeftJn
+        Case NoRec And IsLeftJn: PushI ODy, AddAy(ADr, Emp) '<== ODy, Only for NoRec & LeftJn
         Case NoRec
         Case Else
             '
@@ -135,7 +130,7 @@ Dim ODy()                       ' Bld %ODy for each %ADr, that mean fld-Add & fl
                 If AnyFld <> "" Then
                     Push BDr, True
                 End If
-                PushI ODy, AyzAdd(ADr, BDr) '<== ODy, for each %BDr in %BDy, push to %ODy
+                PushI ODy, AddAy(ADr, BDr) '<== ODy, for each %BDr in %BDy, push to %ODy
             Next
         End Select
     Next ADr
@@ -165,12 +160,6 @@ End Function
 Function DywKeySel(Dy(), KeyIxy&(), Key(), SelIxy&()) As Variant()
 DywKeySel = SelDy(DywKey(Dy, KeyIxy, Key), SelIxy)
 End Function
-Function SelDy(Dy(), SelIxy&()) As Variant()
-'Ret : SubSet-of-col of @Dy indicated by @SelIxy
-Dim Dr: For Each Dr In Itr(Dy)
-    PushI SelDy, AwIxy(Dr, SelIxy)
-Next
-End Function
 
 Function DywKey(Dy(), KeyIxy&(), Key()) As Variant()
 'Ret : SubSet-of-row of @Dy for each row has val of %CurKey = @Key
@@ -186,7 +175,7 @@ End Function
 
 Function InsColzDyVyBef(Dy(), Vy()) As Variant()
 Dim Dr: For Each Dr In Itr(Dy)
-    PushI InsColzDyVyBef, AyzAdd(Vy, Dr)
+    PushI InsColzDyVyBef, AddAy(Vy, Dr)
 Next
 End Function
 Function InsColzDyBef(Dy(), V) As Variant()
@@ -227,14 +216,14 @@ Stop
 End Function
 
 Private Sub Z_SelDist()
-BrwDrs SelDist(DMthP, "Mdn Ty")
+BrwDrs SelDist(DoMthP, "Mdn Ty")
 End Sub
 
 Function SelDist(D As Drs, FF$) As Drs
 'Fm  D : ..{Gpcc} {C}.. ! it has columns-Gpcc and column-C
 'Ret   : {Gpcc} {C}     ! where C is group of column-C @@
 Dim OKey(), OCnt&()
-    Dim A As Drs: A = DrszSel(D, FF)
+    Dim A As Drs: A = SelDrs(D, FF)
     Dim I%: I = Si(A.Fny)
     Dim Dr: For Each Dr In Itr(A.Dy)
         Dim Ix&: Ix = IxzDyDr(OKey, Dr)
@@ -253,28 +242,37 @@ Dim ODy()
     Next
 SelDist = DrszFF(FF & " Cnt", ODy)
 End Function
-
-Function DrszSel(A As Drs, FF$) As Drs
-DrszSel = DrszSelFny(A, SyzSS(FF))
+Function FnyzSelAtEnd(Fny$(), AtEndFny$())
+FnyzSelAtEnd = AddSy(MinusSy(Fny, AtEndFny), AtEndFny)
 End Function
 
-Function DrszSelFny(A As Drs, Fny$()) As Drs
+Function SelDrsAtEnd(D As Drs, FF$) As Drs
+Dim NewFny$(): NewFny = FnyzSelAtEnd(D.Fny, SyzSS(FF))
+SelDrsAtEnd = SelDrsFny(D, NewFny)
+End Function
+
+Function SelDrs(A As Drs, FF$) As Drs
+SelDrs = SelDrsFny(A, SyzSS(FF))
+End Function
+
+Function SelDrsFny(A As Drs, Fny$()) As Drs
 ThwNotSuperAy A.Fny, Fny
-DrszSelFny = Drs(Fny, DyoSel(A.Dy, Ixy(A.Fny, Fny)))
+Dim I&(): I = Ixy(A.Fny, Fny)
+SelDrsFny = Drs(Fny, SelDy(A.Dy, I))
 End Function
 
-Function DrszSelAs(A As Drs, FFAs$) As Drs
+Function SelDrsAs(A As Drs, FFAs$) As Drs
 Dim FA$(), Fb$(): AsgFnyAB FFAs, FA, Fb
-DrszSelAs = Drs(Fb, DrszSelFny(A, FA).Dy)
+SelDrsAs = Drs(Fb, SelDrsFny(A, FA).Dy)
 End Function
 
-Function DrszSelAlwEzFny(A As Drs, Fny$()) As Drs
-If IsEqAy(A.Fny, Fny) Then DrszSelAlwEzFny = A: Exit Function
-DrszSelAlwEzFny = Drs(Fny, DyoSelAlwE(A.Dy, IxyzAlwE(A.Fny, Fny)))
+Function SelDrsAlwEzFny(A As Drs, Fny$()) As Drs
+If IsEqAy(A.Fny, Fny) Then SelDrsAlwEzFny = A: Exit Function
+SelDrsAlwEzFny = Drs(Fny, DyoSelAlwE(A.Dy, IxyzAlwE(A.Fny, Fny)))
 End Function
 
-Function DrszSelAlwE(A As Drs, FF$) As Drs
-DrszSelAlwE = DrszSelAlwEzFny(A, SyzSS(FF))
+Function SelDrsAlwE(A As Drs, FF$) As Drs
+SelDrsAlwE = SelDrsAlwEzFny(A, SyzSS(FF))
 End Function
 
 Function DrszUpdC(A As Drs, C$, V) As Drs
@@ -296,8 +294,8 @@ Next
 DrszUpdCC = Drs(A.Fny, Dy)
 End Function
 
-Function SelDt(A As Dt, FF$) As Dt
-SelDt = DtzDrs(DrszSel(DrszDt(A), FF), A.DtNm)
+Function SelDt(A As DT, FF$) As DT
+SelDt = DtzDrs(SelDrs(DrszDt(A), FF), A.DtNm)
 End Function
 
 

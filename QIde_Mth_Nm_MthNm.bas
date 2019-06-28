@@ -3,9 +3,24 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Mth_Nm_Get."
 Private Const Asm$ = "QIde"
-Public Const DoczDta_MthQVNm$ = "It is a String dervied from Nm.  Q for quoted.  V for verb.  It has 3 Patn: NoVerb-[#xxx], MidVerb-[xxx(vvv)xxx], FstVerb-[(vvv)xxx]."
-Public Const DoczNmRul_FstVerbBeingDo1$ = "The Fun will not return any value"
-Public Const DoczNmRul_FstVerbBeingDo2$ = "The Cmls aft Do is a verb"
+':Dta_MthQVNm$ = "It is a String dervied from Nm.  Q for quoted.  V for verb.  It has 3 Patn: NoVerb-[#xxx], MidVerb-[xxx(vvv)xxx], FstVerb-[(vvv)xxx]."
+':Mthn: ! Rule1-FstVerbBeingDo: the mthn will not return any value
+'       ! Rule2-FstVerbBeingDo: tThe Cmls aft Do is a verb
+':Mthn: ! is :Nm less that 64 chr.  The rule for a Mthn is:
+'       ! If there is a Subj in pm, put the Subj as fst CmlTerm and return that Subj;
+'       ! give a Noun to the subj noun is MulCml.
+'       ! Each Mthn must belong to one of these rule:
+'       !   Noun | Noun.Verb.Extra | Verb.Variant | Noun.z.Variant
+'       ! Pm-Rule
+'       !   Subj    : Choose a subj in pm if there is more than one arg"
+'       !   MuliNoun: It is Ok to group mul-arg as one subj
+'       !   MulNounUseOneCml: Mul-noun as one subj use one Cml
+':Noun: ! it is 1 or more Cml to form a Noun."
+':Cml:     ! Tag:Type. P1.NumIsLCase:.  P2.LowDashIsLCase:.  P3.FstChrCanAnyNmChr:.
+':Sfxss: Tag:NmRul. NmRul means variable or function name.
+':VdtVerss:  P1.Opt: Each module may one DoczVdtVerbss.  P2.OneOccurance: "
+':NounVerbExtra: "Tag: FunNmRule.  Prp1.TakAndRetNoun: Fst Cml is Noun and Return Noun.  Prp2.OneCmlNoun: Noun should be 1 Cml.  " & _
+'                ! Prp3.VdtVerb: Snd Cml should be approved/valid noun.  Prp4.OptExtra: Extra is optional."
 Sub AsgDNm(DNm$, O1$, O2$, O3$)
 Dim Ay$(): Ay = Split(DNm, ".")
 Select Case Si(Ay)
@@ -19,7 +34,7 @@ End Sub
 
 Function QMthn$(M As CodeModule, Lin)
 Dim D$: D = MthDnzLin(Lin): If D = "" Then Exit Function
-QMthn = MdDNm(M) & "." & D
+QMthn = MdDn(M) & "." & D
 End Function
 
 Function PMthNy(Src$()) As String()
@@ -78,8 +93,9 @@ Dim Lin$
 End Sub
 
 Function MthDnzMthn3$(A As Mthn3)
-
+MthDnzMthn3 = JnDotAp(A.Nm, A.ShtMdy, A.ShtTy)
 End Function
+
 Function MthDnzLin$(Lin)
 MthDnzLin = MthDnzMthn3(Mthn3zL(Lin))
 End Function
@@ -147,7 +163,7 @@ Z:
 End Sub
 
 Function MthMdy$(Lin)
-MthMdy = FstEleEv(MthMdyAy, T1(Lin))
+MthMdy = IfIn(T1(Lin), MthMdyAy)
 End Function
 
 Function MthKd$(Lin)
@@ -159,15 +175,13 @@ Dim P&: P = InStrWiIthSubStr(S, SubStr, Ith)
 If P = 0 Then Rpl = S: Exit Function
 Rpl = Replace(S, SubStr, By, P, 1)
 End Function
-Function PoszSubStr(S, SubStr) As Pos
-InStr
-End Function
+
 Property Get Rel0Mthn2Mdn() As Rel
 Dim O As New Rel
 End Property
 
-Function ModNyzPum(PMthn) As String()
-ModNyzPum = ModNyzPPm(CPj, PMthn)
+Function ModNyzPMth(PMthn) As String()
+ModNyzPMth = ModNyzPjPMth(CPj, PMthn)
 End Function
 Function PMthNyzS(Src$()) As String()
 Dim L
@@ -176,12 +190,12 @@ For Each L In Itr(Src)
 Next
 End Function
 
-Private Sub Z_ModNyzPPm()
+Private Sub Z_ModNyzPjPMth()
 Dim P As VBProject, PMthn
 GoSub Z
 Exit Sub
 Z:
-    D ModNyzPPm(CPj, "AA")
+    D ModNyzPjPMth(CPj, "AA")
     Stop
     Return
 End Sub
@@ -198,19 +212,21 @@ For Each L In Itr(Src)
     End With
 Next
 End Function
-Function ModNyzPPm(P As VBProject, PMthn) As String()
+Function ModNyzPjPMth(P As VBProject, PMthn) As String()
+#If True Then
+Dim Src As Drs: Src = DoMthP
+Dim Sel As Drs: Sel = Dw2Eq(Src, "Mdy MdTy", "Pub", "Std")
+#Else
 Dim I, Md As CodeModule
 For Each I In ModItrzP(P)
     Set Md = I
-    Debug.Print Mdn(Md)
-    Stop
-    If Mdn(Md) = "QId_Mth_Nm" Then Stop
-    If HasPMth(Src(Md), PMthn) Then PushI ModNyzPPm, Mdn(Md)
+    If HasPMth(Src(Md), PMthn) Then PushI ModNyzPjPMth, Mdn(Md)
 Next
+#End If
 End Function
 
 Function MthTy$(Lin)
-MthTy = PfxzPfxSyPlusSpc(RmvMthMdy(Lin), MthTyAy)
+MthTy = PfxzAyS(RmvMthMdy(Lin), MthTyAy)
 End Function
 
 Private Sub Z_MthTy()
@@ -247,12 +263,15 @@ Sub PushNDupDy(ODy(), Dr)
 If HasDr(ODy, Dr) Then Exit Sub
 PushI ODy, Dr
 End Sub
+Function DoMthnaVerbV() As Drs
+DoMthnaVerbV = DrszFF("Mthn Verb", DyoMthnaVerbV)
+End Function
+
 Function DyoMthnaVerbV() As Variant()
 Dim Mthn, O(): For Each Mthn In Itr(MthNyV)
     PushI O, Sy(Mthn, Verb(Mthn))
 Next
-DyoDis
-Stop
+DyoMthnaVerbV = O
 End Function
 Private Sub Z_MthnsetVWoVerb()
 MthnsetVWoVerb.Srt.Vc
@@ -394,33 +413,33 @@ End Function
 Function MthnCmlSetVbe() As Aset
 Set MthnCmlSetVbe = CmlSetzNy(MthNyV)
 End Function
-Function DMthnzV(V As Vbe) As Drs
+Function DoMthnzV(V As Vbe) As Drs
 
 End Function
-Function DMthnzM(M As CodeModule) As Drs
-DMthnzM = DMthn(M)
+Function DoMthnzM(M As CodeModule) As Drs
+DoMthnzM = DoMthn(M)
 End Function
-Function DMthnzP(P As VBProject) As Drs
+Function DoMthnzP(P As VBProject) As Drs
 Dim C As VBComponent
 Dim Pn$: Pn = P.Name
 For Each C In P.VBComponents
     Dim Mn$: Mn = C.Name
-    Dim A As Drs: A = DMthn(C.CodeModule)
+    Dim A As Drs: A = DoMthn(C.CodeModule)
     Dim B As Drs: B = InsColzDrsCC(A, "Pj Md", Pn, Mn)
-    Dim O As Drs: O = DrszAdd(O, A)
+    Dim O As Drs: O = AddDrs(O, A)
 Next
-DMthnzP = O
+DoMthnzP = O
 End Function
 
-Function DMthnV() As Drs
-DMthnV = DMthnzV(CVbe)
+Function DoMthnV() As Drs
+DoMthnV = DoMthnzV(CVbe)
 End Function
 
-Function DMthnP() As Drs
-DMthnP = DMthnzP(CPj)
+Function DoMthnP() As Drs
+DoMthnP = DoMthnzP(CPj)
 End Function
 
-Function DMthnM() As Drs
-DMthnM = DMthnzM(CMd)
+Function DoMthnM() As Drs
+DoMthnM = DoMthnzM(CMd)
 End Function
 

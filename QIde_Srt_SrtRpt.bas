@@ -6,7 +6,7 @@ Private Const Asm$ = "QIde"
 Private Function SrtRpt(Src$(), Optional Mdn$) As String()
 Dim X As Dictionary
 Dim Y As Dictionary
-Set X = MthDic(Src, Mdn)
+Set X = DiMthnqLines(Src, Mdn)
 Set Y = SrtDic(X)
 SrtRpt = FmtCmpgDic(X, Y, "BefSrt", "AftSrt")
 End Function
@@ -20,7 +20,7 @@ SrtRptM = SrtRptzM(CMd)
 End Property
 
 Function SrtSrc(Src$()) As String()
-SrtSrc = SplitCrLf(JnStrDic(SrtDic(MthDic(Src)), vb2CrLf))
+SrtSrc = SplitCrLf(JnStrDic(SrtDic(DiMthnqLines(Src)), vb2CrLf))
 End Function
 Function SrtRptzP(P As VBProject) As String()
 Dim O$(), C As VBComponent

@@ -23,8 +23,15 @@ Next
 IsAyOfAy = True
 End Function
 
+Function IsBoolAyU(V, U&) As Boolean
+If Not IsBoolAy(V) Then Exit Function
+IsBoolAyU = UB(V) = U
+End Function
 Function IsBool(V) As Boolean
 IsBool = VarType(V) = vbBoolean
+End Function
+Function IsBoolAy(V) As Boolean
+IsBoolAy = VarType(V) = vbArray + vbBoolean
 End Function
 
 Function IsByt(V) As Boolean
@@ -47,23 +54,23 @@ Function IsDte(V) As Boolean
 IsDte = VarType(V) = vbDate
 End Function
 
-Function IsEq(V, B) As Boolean
-If Not IsEqTy(V, B) Then Exit Function
+Function IsEq(A, B) As Boolean
+If Not IsEqTy(A, B) Then Exit Function
 Select Case True
-Case IsArray(V): IsEq = IsEqAy(V, B)
-Case IsDic(V): IsEq = IsEqDic(CvDic(V), CvDic(B))
-Case IsObject(V): IsEq = ObjPtr(V) = ObjPtr(B)
-Case Else: IsEq = V = B
+Case IsArray(A): IsEq = IsEqAy(A, B)
+Case IsDic(A): IsEq = IsEqDic(CvDic(A), CvDic(B))
+Case IsObject(A): IsEq = ObjPtr(A) = ObjPtr(B)
+Case Else: IsEq = A = B
 End Select
 End Function
 
 Function IsEqDic(V As Dictionary, B As Dictionary) As Boolean
 If V.Count <> B.Count Then Exit Function
 If V.Count = 0 Then IsEqDic = True: Exit Function
-Dim K1, K2
-K1 = QSrt1(V.Keys)
-K2 = QSrt1(B.Keys)
-If Not IsEqAy(K1, K2) Then Exit Function
+Dim K1, k2
+K1 = SrtAyQ(V.Keys)
+k2 = SrtAyQ(B.Keys)
+If Not IsEqAy(K1, k2) Then Exit Function
 Dim K
 For Each K In K1
    If B(K) <> V(K) Then Exit Function
@@ -320,11 +327,32 @@ Function IsSqBktQted(S) As Boolean
 IsSqBktQted = IsQted(S, "[", "]")
 End Function
 
-Function Limit(V, A, B)
-Select Case V
-Case V > B: Limit = B
-Case V < A: Limit = A
-Case Else: Limit = V
-End Select
+Function IsIxyOut(Ixy, U&) As Boolean
+Dim Ix
+For Each Ix In Itr(Ixy)
+    If 0 > Ix Then IsIxyOut = True: Exit Function
+    If Ix > U Then IsIxyOut = True: Exit Function
+Next
+End Function
+
+
+Function IsEqStr(A, B, Optional C As VbCompareMethod = vbBinaryCompare) As Boolean
+IsEqStr = StrComp(A, B, C) = 0
+End Function
+
+Function IsDteStr(S) As Boolean
+On Error GoTo X
+Dim A As Date: A = S
+IsDteStr = True
+Exit Function
+X:
+End Function
+
+Function IsDblStr(S) As Boolean
+On Error GoTo X
+Dim A#: A = S
+IsDblStr = True
+Exit Function
+X:
 End Function
 

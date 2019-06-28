@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Str_Esc."
-Public Const DoczSlashC$ = "It is 1 chr.  It will combine with sfx-\.  Eg.  SlashC = 'r', it measns it will be '\r'"
+':SlashC$ = "It is 1 chr.  It will combine with sfx-\.  Eg.  SlashC = 'r', it measns it will be '\r'"
 Function SlashCr$(S) 'Escapeing vbCr in S.
 SlashCr = Slash$(S, vbCr, "r")
 End Function

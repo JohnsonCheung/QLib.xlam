@@ -223,6 +223,16 @@ For Each Dr In Itr(Dy)
     LasK = CurK
 Next
 End Function
+
+Function DyoInsIx(Dy()) As Variant()
+' Ret Dy with each row has ix run from 0..{N-1} in front
+Dim Ix&, Dr: For Each Dr In Itr(Dy)
+    Dr = InsEle(Dr, Ix)
+    PushI DyoInsIx, Dr
+    Ix = Ix + 1
+Next
+End Function
+
 Function FmtDy(Dy(), _
 Optional MaxColWdt% = 100, _
 Optional BrkCCIxy0, _

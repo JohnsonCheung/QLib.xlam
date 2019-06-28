@@ -71,7 +71,7 @@ End Function
 Private Function XAct(Mth As Drs) As Drs
 'Fm Mth : L E Mdy Ty Mthn MthLin MthLy
 'Ret    : L Mthn MthLy ActL Lno        ! ActL & Lno: If Ty=*Dcl, they are the CModL & CModLnom Otherwise, CSubL and CSubLno @@
-Dim A As Drs: A = DrszSel(Mth, "L Mthn MthLy")
+Dim A As Drs: A = SelDrs(Mth, "L Mthn MthLy")
 Dim Dr, Dy(): For Each Dr In Itr(A.Dy)
     Dim L&:           L = Dr(0)
     Dim Mthn$:     Mthn = Dr(1)
@@ -83,7 +83,7 @@ Dim Dr, Dy(): For Each Dr In Itr(A.Dy)
                                                   '          ! ActL will be the CSubL from MthLy.  If may fnd or "" if not fnd
                                                   '          ! Lno  will the CSubLno if fnd or the NxtLno of MthLin (Using L & MthLy to fnd)
 
-    PushI Dy, AyzAdd(Dr, Av)
+    PushI Dy, AddAy(Dr, Av)
 Next
 XAct = DrszFF("L Mthn MthLy ActL Lno", Dy)
 'Insp "QIde_Ens_EnsCModSub.XAct", "Inspect", "Oup(XAct) Mth", FmtDrs(XAct), FmtDrs(Mth): Stop
@@ -100,13 +100,13 @@ Dim Dr, Dy(): For Each Dr In Itr(Act.Dy)
     PushI Dr, CSubL
     PushI Dy, Dr
 Next
-XEpt = DrszAddFF(Act, "EptL", Dy)
+XEpt = AddColzFFDy(Act, "EptL", Dy)
 'Insp "QIde_Ens_EnsCModSub.XEpt", "Inspect", "Oup(XEpt) Act", FmtDrs(XEpt), FmtDrs(Act): Stop
 End Function
 
 Function EnsCModSubzM(M As CodeModule, Optional Rpt As EmRpt) As Boolean
 '-- Prepare Data -------------------------------------------------------------------------------------------------------
-Dim Mth As Drs: Mth = DMthc(M)                   ' L E Mdy Ty Mthn MthLin MthLy
+Dim Mth As Drs: Mth = DoMthc(M)                   ' L E Mdy Ty Mthn MthLin MthLy
 Dim Act As Drs: Act = XAct(Mth)                  ' L Mthn MthLy ActL Lno        ! ActL & Lno: If Ty=*Dcl, they are the CModL & CModLnom Otherwise, CSubL and CSubLno
 Dim Ept As Drs: Ept = XEpt(Act)                  ' L Mthn MthLy ActL Lno EptL
 Dim Dif As Drs: Dif = DeCeqC(Ept, "ActL EptL") ' L Mthn MthLy ActL Lno EptL   ! Only those Act<>Ept
@@ -115,20 +115,20 @@ Dim IsUpd As Boolean: IsUpd = IsUpdzRpt(Rpt)
 '== Rpl=================================================================================================================
 Dim R1   As Drs:  R1 = DwNe(Dif, "EptL", "")                 ' L Nm MthLy ActL Lno EptL
 Dim R2   As Drs:  R2 = DwNe(R1, "ActL", "")                  ' L Nm MthLy ActL Lno EptL
-Dim Rpl  As Drs: Rpl = DrszSelAs(R2, "L EptL:NewL ActL:OldL") ' L NewL OldL
-Dim ORpl As Drs:       If IsUpd Then RplLin M, Rpl
+Dim Rpl  As Drs: Rpl = SelDrsAs(R2, "L EptL:NewL ActL:OldL") ' L NewL OldL
+: If IsUpd Then RplLin M, Rpl '<==
 
 '== Dlt=================================================================================================================
 Dim D1   As Drs:  D1 = DwEq(Dif, "EptL", "")            ' L Nm MthLy ActL Lno EptL
 Dim D2   As Drs:  D2 = DwNe(D1, "ActL", "")             ' L Nm MthLy ActL Lno EptL
-Dim Dlt  As Drs: Dlt = DrszSelAs(D2, "Mthn L ActL:OldL") ' Mthn L OldL
-Dim ODlt As Drs:       If IsUpd Then DltLinzD M, Dlt
+Dim Dlt  As Drs: Dlt = SelDrsAs(D2, "Mthn L ActL:OldL") ' Mthn L OldL
+:                      If IsUpd Then DltLinzD M, Dlt '<==
 
 '== Ins=================================================================================================================
 Dim I1   As Drs:  I1 = DwEq(Dif, "ActL", "")            ' L Nm MthLy ActL Lno EptL
 Dim I2   As Drs:  I2 = DwNe(I1, "EptL", "")             ' L Nm MthLy ActL Lno EptL
-Dim Ins  As Drs: Ins = DrszSelAs(I2, "Mthn L EptL:NewL") ' Mthn L NewL
-Dim OIns As Drs:       If IsUpd Then InsLinzD M, Ins
+Dim Ins  As Drs: Ins = SelDrsAs(I2, "Mthn L EptL:NewL") ' Mthn L NewL
+: If IsUpd Then InsLinzD M, Ins '<==
 
 '== Return True is any Dif
 EnsCModSubzM = HasReczDrs(Dif)

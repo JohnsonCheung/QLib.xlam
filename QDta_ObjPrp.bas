@@ -81,7 +81,7 @@ For Each Dr In Dy
     Av = AwIxy(Dr, Ixy1)
     Push Dr, RunAv(FunNm, Av)
 Next
-AddFml = Drs(SyzAddItm(A.Fny, NewFld), Dy)
+AddFml = Drs(AddSyItm(A.Fny, NewFld), Dy)
 End Function
 
 Function DyoItrPrpPthSy(Itr, PrpPthSy$()) As Variant()

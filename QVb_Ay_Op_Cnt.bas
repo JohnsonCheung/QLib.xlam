@@ -5,11 +5,11 @@ Private Const CMod$ = "MVb_Ay_Op_Cnt."
 Private Const Asm$ = "QVb"
 
 Function CntDyWhGt1zAy(A) As Variant()
-CntDyWhGt1zAy = CntDyWhGt1(DyoDic(CntDic(A)))
+CntDyWhGt1zAy = CntDyWhGt1(DyoDic(DiKqCnt(A)))
 End Function
 
 Function CntDyoAy(A) As Variant()
-CntDyoAy = DyoDic(CntDic(A))
+CntDyoAy = DyoDic(DiKqCnt(A))
 End Function
 
 Private Sub Z_CntDyoAy()

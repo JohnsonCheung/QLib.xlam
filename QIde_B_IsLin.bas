@@ -1,10 +1,10 @@
 Attribute VB_Name = "QIde_B_IsLin"
 Option Compare Text
 Option Explicit
-Private Const CMod$ = "MIde_Mth_Lin_Is_Hit."
+Private Const CMod$ = "MIde_Mth_L_Is_Hit."
 Private Const Asm$ = "QIde"
-Function IsLinPrp(Lin) As Boolean
-IsLinPrp = MthKd(Lin) = "Property"
+Function IsLinPrp(L) As Boolean
+IsLinPrp = MthKd(L) = "Property"
 End Function
 
 Private Sub Z_IsLinMth()
@@ -28,10 +28,6 @@ Next
 Brw O
 End Sub
 
-Function HitCnstn(SrcLin, Cnstn$) As Boolean
-HitCnstn = CnstnzL(SrcLin) = Cnstn
-End Function
-
 Function HitCnstnDic(SrcLin, Cnstn As Aset) As Boolean
 HitCnstnDic = Cnstn.Has(CnstnzL(SrcLin))
 End Function
@@ -40,42 +36,46 @@ Function HitShtMdy(ShtMdy$, ShtMthMdyAy$()) As Boolean
 HitShtMdy = HitAy(IIf(ShtMdy = "", "Pub", ShtMdy), ShtMthMdyAy)
 End Function
 
-Function IsLinOptOrImplOrBlnk(Lin) As Boolean
+Function IsLinOptOrImplOrBlnk(L) As Boolean
 IsLinOptOrImplOrBlnk = True
-If IsLinOpt(Lin) Then Exit Function
-If IsLinImpl(Lin) Then Exit Function
-If Lin = "" Then Exit Function
+If IsLinOpt(L) Then Exit Function
+If IsLinImpl(L) Then Exit Function
+If L = "" Then Exit Function
 IsLinOptOrImplOrBlnk = False
 End Function
 
-Function IsLinImpl(Lin) As Boolean
-IsLinImpl = HasPfx(Lin, "Implements ")
+Function IsLinImpl(L) As Boolean
+IsLinImpl = HasPfx(L, "Implements ")
 End Function
 
-Function IsLinOpt(Lin) As Boolean
-If Not HasPfx(Lin, "Option ") Then Exit Function
+Function IsLinOpt(L) As Boolean
+If Not HasPfx(L, "Option ") Then Exit Function
 Select Case True
 Case _
-    HasPfx(Lin, "Option Explicit"), _
-    HasPfx(Lin, "Option Compare Text"), _
-    HasPfx(Lin, "Option Compare Binary"), _
-    HasPfx(Lin, "Option Compare Database")
+    HasPfx(L, "Option Explicit"), _
+    HasPfx(L, "Option Compare Text"), _
+    HasPfx(L, "Option Compare Binary"), _
+    HasPfx(L, "Option Compare Database")
     IsLinOpt = True
 End Select
-
 End Function
 
-Function IsLinPubMth(Lin) As Boolean
-Dim L$: L = Lin
-Dim Mdy$: Mdy = ShfMdy(L): If Mdy <> "" And Mdy <> "Public" Then Exit Function
+Function IsLinPubMth(L) As Boolean
+Dim Lin$: Lin = L
+Dim Mdy$: Mdy = ShfMdy(Lin): If Mdy <> "" And Mdy <> "Public" Then Exit Function
 IsLinPubMth = TakMthKd(Lin) <> ""
 End Function
 
-Function IsLinMth(Lin) As Boolean
-IsLinMth = MthKd(Lin) <> ""
+Function IsLinMthSngL(L) As Boolean
+Dim K$: K = MthKd(L): If K = "" Then Exit Function
+IsLinMthSngL = HasSubStr(L, "End " & K)
 End Function
-Function IsLinMthNm(Lin, Nm) As Boolean
-IsLinMthNm = Mthn(Lin) = Nm
+
+Function IsLinMth(L) As Boolean
+IsLinMth = MthKd(L) <> ""
+End Function
+Function IsLinMthNm(L, Nm) As Boolean
+IsLinMthNm = Mthn(L) = Nm
 End Function
 
 Function IsLinEmn(A) As Boolean
@@ -94,12 +94,12 @@ If L = "" Then Exit Function
 IsLinEmpSrc = False
 End Function
 
-Function IsLinSngTerm(Lin) As Boolean
-IsLinSngTerm = InStr(Trim(Lin), " ") = 0
+Function IsLinSngTerm(L) As Boolean
+IsLinSngTerm = InStr(Trim(L), " ") = 0
 End Function
 
-Function IsLinDD(Lin) As Boolean
-IsLinDD = Fst2Chr(LTrim(Lin)) = "--"
+Function IsLinDD(L) As Boolean
+IsLinDD = Fst2Chr(LTrim(L)) = "--"
 End Function
 
 

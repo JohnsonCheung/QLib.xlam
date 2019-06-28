@@ -103,9 +103,8 @@ Dim L$
 L = BarBtncc
 EnsBtnzCC EnsBar(ShfT1(L)), L
 End Sub
-Sub RmvBarNy(BarNy$())
-Dim IBar
-For Each IBar In BarNy
+Sub RmvBarByNy(BarNy$())
+Dim IBar: For Each IBar In BarNy
     If HasBar(IBar) Then
         If Not Bar(IBar).BuiltIn Then
             Bar(IBar).Delete

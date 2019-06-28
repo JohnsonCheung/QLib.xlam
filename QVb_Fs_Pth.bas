@@ -39,7 +39,7 @@ End Function
 Function MsyzFfnAlreadyLoaded(Ffn, FilKind$, LTimStr$) As String()
 Dim Si&, Tim$, Ld$, Msg$
 Si = SizFfn(Ffn)
-Tim = DteTimStrzFfn(Ffn)
+Tim = TimStrzFfn(Ffn)
 Msg = FmtQQ("[?] file of [time] and [size] is already loaded [at].", FilKind)
 MsyzFfnAlreadyLoaded = LyzMsgNap(Msg, Ffn, Tim, Si, LTimStr)
 End Function

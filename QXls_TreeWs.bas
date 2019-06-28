@@ -68,7 +68,7 @@ PthzCur = EnsPthSfx(RgA1(Cur).Value)
 End Function
 
 Private Sub PutCurEnt(Cur As Range, SubPthy$(), FnAy$())
-EntRg(Cur, Si(SubPthy) + Si(FnAy)).Value = Sqv(AyzAdd(SubPthy, FnAy))
+EntRg(Cur, Si(SubPthy) + Si(FnAy)).Value = Sqv(AddAy(SubPthy, FnAy))
 End Sub
 Private Function EntRg(Cur As Range, EntCnt%) As Range
 Dim Ws As Worksheet: Set Ws = WszRg(Cur)

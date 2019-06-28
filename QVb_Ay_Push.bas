@@ -60,7 +60,7 @@ For Each M In Itr(MAy)
 Next
 End Sub
 
-Sub PushISomSi(OAy, IAy)
+Sub PushSomSi(OAy, IAy)
 If Si(IAy) = 0 Then Exit Sub
 PushI OAy, IAy
 End Sub
@@ -138,12 +138,6 @@ Dim I
 For Each I In Itr(Oy)
     PushObj O, I
 Next
-End Sub
-
-Sub PushWithSz(O, Ay)
-If Not IsArray(Ay) Then Stop
-If Si(Ay) = 0 Then Exit Sub
-Push O, Ay
 End Sub
 
 Function Si&(A)

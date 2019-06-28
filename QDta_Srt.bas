@@ -3,9 +3,9 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDta_Srt."
 Private Const Asm$ = "QDta"
-Dim A_KeyDy()
+Dim A_Dy()
 Dim A_IsDesAy() As Boolean
-
+Dim A_UC&
 Private Function SrtDrszFstCol(A As Drs) As Drs
 Dim F():      F = FstCol(A)
 Dim Ixy&(): Ixy = IxyzSrtAy(F)
@@ -27,26 +27,61 @@ Tst:
     Return
 End Sub
 
-Function SrtDrs(A As Drs, Optional SrtByFF$ = "") As Drs
-'Fm SrtByFF : If SrtByFF is blank use fst col. @
-If NoReczDrs(A) Then SrtDrs = A: Exit Function
-If SrtByFF = "" Then
-    SrtDrs = SrtDrszFstCol(A)
+Function SrtDrs(D As Drs, Optional SrtByDashFF$ = "") As Drs
+'Fm SrtByDashFF : :SrtByDashFF: ! If @SrtByDashFF is blank use fst col.  DashFF is wi opt Dash in front of a fld.
+'                           ! meaning is descending @@
+If NoReczDrs(D) Then SrtDrs = D: Exit Function
+If SrtByDashFF = "" Then
+    SrtDrs = SrtDrszFstCol(D)
     Exit Function
 End If
-Dim Ay$():                Ay = Ny(SrtByFF)           ' Each ele may have - as pfx, which mean descending
+Dim Ay$():                Ay = Ny(SrtByDashFF)           ' Each ele may have - as pfx, which mean descending
 Dim Fny$():              Fny = RmvPfxzAy(Ay, "-")
-Dim ColIxy&():        ColIxy = Ixy(A.Fny, Fny)
+Dim Cxy&():              Cxy = Ixy(D.Fny, Fny)
 Dim Des() As Boolean:    Des = SrtDrs__IsDesAy(Ay)
-Dim Dy():               Dy = SrtDy(A.Dy, ColIxy, Des)
-                      SrtDrs = Drs(A.Fny, Dy)
+Dim Dy():                 Dy = SrtDyzCy(D.Dy, Cxy, Des)
+                      SrtDrs = Drs(D.Fny, Dy)
 End Function
 
-Function SrtDy(Dy(), SrtColIxy&(), IsDesAy() As Boolean) As Variant()
-         A_IsDesAy = IsDesAy
-          A_KeyDy = DyoSel(Dy, SrtColIxy)
-Dim R&():        R = SrtDy__Rxy
-            SrtDy = AwIxy(Dy, R)
+Function BoolAyzDft(BoolAy, U&) As Boolean()
+If IsBoolAyU(BoolAy, U) Then
+    BoolAyzDft = BoolAy
+Else
+    ReDim BoolAyzDft(U)
+End If
+End Function
+
+Sub Z_RxyzSrtDy()
+Dim Dy(), IsDesAy() As Boolean
+GoSub T0
+GoSub T1
+Exit Sub
+T0:
+    Dy = DyzVbl("2 a C|1 c B|3 b A")
+    Ept = LngAp(1, 0, 2)
+    Erase IsDesAy
+    GoTo Tst
+T1:
+    Dy = DyzVbl("2 a C|1 c B|3 b A")
+    Ept = LngAp(2, 0, 1)
+    IsDesAy = BoolAyzTDot("t..")
+    GoTo Tst
+Tst:
+    Act = RxyzSrtDy(Dy, IsDesAy)
+    C
+    Return
+End Sub
+Private Function RxyzSrtDy(Dy(), Optional IsDesAy) As Long()
+If Si(Dy) = 0 Then Exit Function
+               A_UC = UB(Dy(0))
+          A_IsDesAy = BoolAyzDft(IsDesAy, A_UC)
+               A_Dy = Dy
+Dim L&():         L = LngSeqzU(UB(Dy))
+          RxyzSrtDy = RxyzSrtDy___Srt(L)
+End Function
+
+Function SrtDyzCy(Dy(), SrtCxy&(), Optional IsDesAy) As Variant()
+SrtDyzCy = AwIxy(Dy, RxyzSrtDy(SelDy(Dy, SrtCxy), IsDesAy))
 End Function
 
 Private Function SrtDrs__IsDesAy(Ay$()) As Boolean()
@@ -55,89 +90,88 @@ Dim I: For Each I In Ay
 Next
 End Function
 
-Private Function SrtDy__Rxy() As Long()
-Dim U&: U = UB(A_KeyDy) ' Always >=1
-Dim L&():     L = LngSeqzU(U)          ' Use the LasEle as pivot, so don't include it in L&()
-SrtDy__Rxy = SrtDy__SIxyR(L)
+Function SrtDy(Dy(), Optional IsDesAy) As Variant()
+SrtDy = AwIxy(Dy, RxyzSrtDy(Dy, IsDesAy))
 End Function
-
-Private Function SrtDy__TakH(I&, Ixy&()) As Long()
+Private Function RxyzSrtDy__LE(Ixy&(), I&) As Long()
+'Ret : sub-sub-of-Ixy which is LE than I
+Dim KeyB: KeyB = A_Dy(I)
 Dim J: For Each J In Ixy
-    If Not SrtDy__IsGT(CLng(J), I) Then PushI SrtDy__TakH, J
+    If RxyzSrtDy__IsLE(J, KeyB) Then PushI RxyzSrtDy__LE, J
 Next
 End Function
 
-Private Function SrtDy__TakL(I&, Ixy&()) As Long()
+Private Function RxyzSrtDy__GT(Ixy&(), I&) As Long()
+'Ret : sub-sub-of-Ixy which is GT than I
+Dim KeyB: KeyB = A_Dy(I)
 Dim J: For Each J In Ixy
-    If SrtDy__IsGT(CLng(J), I) Then PushI SrtDy__TakL, J
+    If Not RxyzSrtDy__IsLE(J, KeyB) Then PushI RxyzSrtDy__GT, J
 Next
 End Function
 
-Private Function SrtDy__Cmp%(Des As Boolean, A, B)
-If A = B Then Exit Function
-If Des Then
-    SrtDy__Cmp = IIf(A > B, 1, -1)
+Private Function RxyzSrtDy__IsLE(IxA, KeyB) As Boolean
+'Ret : true if @A is LE than @B
+Dim KeyA: KeyA = A_Dy(IxA)
+RxyzSrtDy__IsLE = IsLEzAy(KeyA, KeyB, A_IsDesAy)
+End Function
+Function IsLEzAy(Ay1, Ay2, IsDesAy() As Boolean) As Boolean
+Dim J&: For J = 0 To UB(Ay1)
+    If IsDesAy(J) Then
+        If Ay1(J) < Ay2(J) Then Exit Function
+        If Ay1(J) > Ay2(J) Then IsLEzAy = True: Exit Function
+    Else
+        If Ay1(J) > Ay2(J) Then Exit Function
+        If Ay1(J) < Ay2(J) Then IsLEzAy = True: Exit Function
+    End If
+Next
+IsLEzAy = True
+End Function
+
+Function IsGTzAy(Ay1, Ay2) As Boolean
+Dim J&: For J = 0 To UB(Ay1)
+    If Ay1(J) <= Ay2(J) Then Exit Function
+Next
+IsGTzAy = True
+End Function
+
+Private Function RxyzSrtDy__Swap(Ixy2&()) As Long()
+Dim KeyB: KeyB = A_Dy(Ixy2(1))
+If RxyzSrtDy__IsLE(Ixy2(0), KeyB) Then
+    RxyzSrtDy__Swap = Ixy2
 Else
-    SrtDy__Cmp = IIf(A < B, 1, -1)
+    PushI RxyzSrtDy__Swap, Ixy2(1)
+    PushI RxyzSrtDy__Swap, Ixy2(0)
 End If
 End Function
 
-Private Function SrtDy__IsGT(I1&, I2&) As Boolean
-Dim K1: K1 = A_KeyDy(I1)
-Dim K2: K2 = A_KeyDy(I2)
-Dim A, J&: For Each A In K1
-    Dim B:                B = K2(J)
-    Dim Des As Boolean: Des = A_IsDesAy(J)
-    Select Case SrtDy__Cmp(Des, A, B)
-    Case -1: Exit Function
-    Case 1: SrtDy__IsGT = True: Exit Function
+Private Function RxyzSrtDy___Srt(Ixy&()) As Long()
+Dim O&()
+    Select Case UB(Ixy)
+    Case -1
+    Case 0: O = Ixy
+    Case 1:
+        O = RxyzSrtDy__Swap(Ixy)
+    Case Else
+        Dim I&(): I = Ixy
+        Dim P&:   P = Pop(I)
+        Dim A&(): A = RxyzSrtDy__LE(I, P)
+        Dim B&(): B = RxyzSrtDy__GT(I, P)
+        Dim L&(): L = RxyzSrtDy___Srt(A)
+        Dim H&(): H = RxyzSrtDy___Srt(B)
+
+        PushIAy O, L
+          PushI O, P
+        PushIAy O, H
     End Select
-J = J + 1
-Next
-End Function
-Private Function SrtDy__SIxyR(Ixy&()) As Long()
-Dim O&()
-Dim U&: U = UB(Ixy)
-Select Case U
-Case -1
-Case 0: O = Ixy
-Case 1:
-    Dim A&: A = Ixy(0)
-    Dim B&: B = Ixy(1)
-    If SrtDy__IsGT(A, B) Then
-        O = LngAp(A, B)
-    Else
-        O = LngAp(B, A)
-    End If
-Case Else
-    Dim L&(): L = Ixy
-    Dim P&:       P = Pop(L)
-    Dim P1&():   P1 = SrtDy__TakL(U, L)
-    Dim P2&():   P2 = SrtDy__TakH(U, L)
-    Dim LAy&(): LAy = SrtDy__SIxyR(P1)
-    Dim HAy&(): HAy = SrtDy__SIxyR(P2)
-                  O = SrtDy__Add(LAy, P, HAy)
-End Select
-SrtDy__SIxyR = O
-End Function
-Private Function SrtDy__Add(LH1&(), P&, LH2&()) As Long()
-Dim O&()
-Dim L: For Each L In LH1
-    PushI O, L
-Next
-PushI O, P
-For Each L In LH2
-    PushI O, L
-Next
-SrtDy__Add = O
+RxyzSrtDy___Srt = O
 End Function
 
-Function SrtDt(A As Dt, Optional SrtByFF$ = "") As Dt
+Function SrtDt(A As DT, Optional SrtByFF$ = "") As DT
 SrtDt = DtzDrs(SrtDrs(DrszDt(A), SrtByFF), A.DtNm)
 End Function
 
-Function SrtDyoC(Dy(), C&, Optional IsDes As Boolean) As Variant()
-Attribute SrtDyoC.VB_Description = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
+Function SrtDyzC(Dy(), C&, Optional IsDes As Boolean) As Variant()
+Attribute SrtDyzC.VB_Description = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
 Dim Col(): Col = ColzDy(Dy, C)
 Dim Ix&(): Ix = IxyzSrtAy(Col, IsDes)
 Dim IFm&, ITo&, IStp%
@@ -147,6 +181,6 @@ Else
     IFm = UB(Ix): ITo = 0: IStp = -1
 End If
 Dim J&: For J = IFm To ITo Step IStp
-   Push SrtDyoC, Dy(Ix(J))
+   Push SrtDyzC, Dy(Ix(J))
 Next
 End Function

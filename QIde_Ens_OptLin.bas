@@ -30,7 +30,7 @@ GoSub T0
 GoSub Clean
 Exit Sub
 T0:
-    Set Md = MdzDNm(Mdn)
+    Set Md = MdzDn(Mdn)
     GoTo Tst
 Tst:
     EnsOptLinzM Md
@@ -55,7 +55,7 @@ Dim Md As CodeModule
 GoSub T0
 Exit Sub
 T0:
-    Set Md = MdzDNm("ATaxExpCmp_OupTblGenr")
+    Set Md = MdzDn("ATaxExpCmp_OupTblGenr")
     Ept = 2&
     GoTo Tst
 Tst:

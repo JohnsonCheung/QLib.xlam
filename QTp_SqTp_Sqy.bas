@@ -315,9 +315,9 @@ End Sub
 Function SqyzTp(SqTp$) As String()
 ThwIf_Er ErzSqTp(SqTp), CSub
 Dim B As Blks:             B = BlkszSqTp(SqTp)
-Dim Pm As Dictionary: Set Pm = Dic(LyzBlksTy(B, "PM"))
-Dim S As Sw:               S = Sw(LyzBlksTy(B, "SW"), Pm)
-SqyzTp = Sqy(LyAyzBlksTy(B, "SQ"), Pm, S)
+Dim Pm As Dictionary: Set Pm = Dic(LyzBlkTy(B, "PM"))
+Dim S As Sw:               S = Sw(LyzBlkTy(B, "SW"), Pm)
+SqyzTp = Sqy(LyAyzBlkTy(B, "SQ"), Pm, S)
 End Function
 
 Private Sub Z_Pm()
@@ -329,7 +329,7 @@ Y_Blks = BlkszSqTp(Y_SqTp)
 End Function
 
 Private Function Y_PmLy() As String()
-Y_PmLy = LyzBlksTy(Y_Blks, "PM")
+Y_PmLy = LyzBlkTy(Y_Blks, "PM")
 End Function
 
 Private Function Sqy(SqLyAy(), Pm As Dictionary, Sw As Sw) As String()
@@ -340,43 +340,10 @@ Next
 End Function
 
 Private Function BlkszSqTp(SqTp$) As Blks
-Dim O As Blks, J&
-O = Blks(SqTp)
-For J = 0 To O.N - 1
-    O.Ay(J).BlkTy = BlkTy(LinAyzLnxs(O.Ay(J).Lnxs))
-Next
-BlkszSqTp = O
+Dim A$(): A = SyzSS("SQ PM SW RM")
+BlkszSqTp = BlkszTp(SqTp, A)
 End Function
 
-Private Function IsPm(Ly$()) As Boolean
-IsPm = HasPfxOfAllEle(Ly, ">")
-End Function
-
-Private Function IsRm(Ly$()) As Boolean
-IsRm = Si(Ly) = 0
-End Function
-Private Sub Z_IsSq()
-Dim Ly$()
-GoSub Z
-Exit Sub
-Z:
-    Debug.Assert IsSq(Sy("Drp sdf"))
-    Return
-End Sub
-Private Function IsSq(Ly$()) As Boolean
-If Si(Ly) = 0 Then Exit Function
-Dim L$: L = Ly(0)
-Dim Sy$(): Sy = SyzSS("?SEL SEL ?SELDIS SELDIS UPD DRP")
-If HitPfxAySpc(L, Sy, vbTextCompare) Then IsSq = True: Exit Function
-End Function
-
-Private Function IsSw(Ly$()) As Boolean
-IsSw = HasPfxOfAllEle(Ly, "?")
-End Function
-
-
-Private Property Get Y_SwLnxs() As Lnxs
-End Property
 Private Property Get Y_Sw() As Dictionary
 End Property
 Private Property Get Y_FldSw() As Dictionary
@@ -544,19 +511,6 @@ SampSqTp = JnCrLf(XX)
 Erase XX
 End Property
 
-Private Function BlkTy$(Ly$())
-Dim O$
-Select Case True
-Case IsPm(Ly): O = "PM"
-Case IsSw(Ly): O = "SW"
-Case IsRm(Ly): O = "RM"
-Case IsSq(Ly): O = "SQ"
-'Case Else: Brw Ly: Stop: O = "ER"
-Case Else:        O = "ER"
-End Select
-BlkTy = O
-End Function
-
 Private Function SQ_ExprLis$(Fny$(), EDic As Dictionary, FzDiAlias As Dictionary)
 'SqpSelX_Fny_ExtNy_ODis
 End Function
@@ -692,7 +646,7 @@ PushI O, "E FF"
 'Set Y_ExprDic = LyDic(O)
 End Property
 
-Private Property Get Y_SqLnxs() As Lnxs
+Private Property Get Y_SqLLin() As Drs
 Dim O$()
 PushI O, "sel ?MbrCnt RecCnt TxCnt Qty Amt"
 PushI O, "into #Cnt"
@@ -706,13 +660,15 @@ PushI O, "RecCnt  Count(*)"
 PushI O, "TxCnt   Sum(TxCnt)"
 PushI O, "Qty     Sum(Qty)"
 PushI O, "Amt     Sum(Amt)"
-Y_SqLnxs = Lnxs(O)
+Y_SqLLin = DoLLin(DyoLLinzLy(O))
 End Property
-
+Function DyoLLin(A_DyoLLin()) As DyoLLin
+DyoLLin.Dy = A_DyoLLin
+End Function
 Private Function SQ_And(A$(), E As Dictionary)
 'and f bet xx xx
 'and f in xx
-Dim F$, I, L$, Ix%, M As Lnx
+Dim F$, I, L$, Ix%
 For Each I In Itr(A)
     'Set M = I
     'LnxAsg M, L, Ix
@@ -762,11 +718,11 @@ For Each F In Fny
 Next
 End Function
 
-Private Function SQ_Set(A As Lnx, E As Dictionary, OEr$())
+Private Function SQ_Set(DroLLin(), E As Dictionary, OEr$())
 
 End Function
 
-Private Function SQ_Upd(A As Lnx, E As Dictionary, OEr$())
+Private Function SQ_Upd(DroLLin(), E As Dictionary, OEr$())
 
 End Function
 Private Function SQ_Wh$() ' (L$, E As Dictionary)
@@ -783,15 +739,15 @@ End If
 'XWh = SqpWhFldInVy_Str(F, Vy)
 End Function
 
-Private Function SQ_WhBetNum$(A As Lnx, E As Dictionary, OEr$())
+Private Function SQ_WhBetNum$(DroLLin(), E As Dictionary, OEr$())
 
 End Function
 
-Private Function SQ_WhExpr(A As Lnx, E As Dictionary, OEr$())
+Private Function SQ_WhExpr(DroLLin(), E As Dictionary, OEr$())
 
 End Function
 
-Private Function SQ_WhInNumLis$(A As Lnx, E As Dictionary, OEr$())
+Private Function SQ_WhInNumLis$(DroLLin(), E As Dictionary, OEr$())
 
 End Function
 

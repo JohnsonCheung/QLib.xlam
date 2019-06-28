@@ -17,30 +17,29 @@ For Each Dr In Itr(Dy)
 Next
 End Function
 
-
-
-Function DrsAddColzNmVy(A As Drs, ColNm$, ColVy) As Drs
-Dim Fny$(): Fny = AyzAddItm(A.Fny, ColNm)
+Function AddColByColVy(A As Drs, ColNm$, ColVy) As Drs
+Dim Fny$(): Fny = AddAyItm(A.Fny, ColNm)
 Dim AtIx&: AtIx = UB(Fny)
-Dim Dy(): Dy = DyAddColzColVy(A.Dy, ColVy, AtIx)
-DrsAddColzNmVy = Drs(Fny, Dy)
+Dim Dy(): Dy = AddColzDyColVy(A.Dy, ColVy, AtIx)
+AddColByColVy = Drs(Fny, Dy)
 End Function
     
-Function DyAddColz(Dy(), C) As Variant()
+Function AddColzDy(Dy(), ValToBeAddAsLasCol) As Variant()
+'Ret : a new :Dy with a col of value all eq to @ValToBeAddAsLasCol at end
 Dim O(): O = Dy
 Dim ToU&
     ToU = NColzDy(Dy)
 Dim J&, Dr
 For Each Dr In Itr(O)
     ReDim Preserve Dr(ToU)
-    Dr(ToU) = C
+    Dr(ToU) = ValToBeAddAsLasCol
     O(J) = Dr
     J = J + 1
 Next
-DyAddColz = O
+AddColzDy = O
 End Function
 
-Function DyAddColzC3(A(), C1, C2, C3) As Variant()
+Function AddColzDyC3(A(), C1, C2, C3) As Variant()
 Dim U%, R&, Dr, O()
 O = A
 U = NColzDy(A) + 2
@@ -52,10 +51,10 @@ For Each Dr In Itr(A)
     O(R) = Dr
     R = R + 1
 Next
-DyAddColzC3 = O
+AddColzDyC3 = O
 End Function
 
-Function DyAddColzBy(Dy(), Optional ByNCol% = 1) As Variant()
+Function AddColzDyBy(Dy(), Optional ByNCol% = 1) As Variant()
 Dim NewU&
     NewU = NColzDy(Dy) + ByNCol - 1
 Dim O()
@@ -65,25 +64,25 @@ Dim O()
     For J = 0 To UDy
         O(J) = AyReSzU(Dy(J), NewU)
     Next
-DyAddColzBy = O
+AddColzDyBy = O
 End Function
 
-Function DyAddColzC(Dy(), C) As Variant()
+Function AddColzDyC(Dy(), C) As Variant()
 If Si(Dy) = 0 Then Exit Function
-Dim O(): O = DyAddColzBy(Dy)
+Dim O(): O = AddColzDyBy(Dy)
     Dim UCol%: UCol = UB(Dy(0))
     Dim J&
     For J = 0 To UB(Dy)
        O(J)(UCol) = C
     Next
-DyAddColzC = O
+AddColzDyC = O
 End Function
 
-Function DyAddColzCC(Dy(), V1, V2) As Variant()
-DyAddColzCC = DyAddColzAv(Dy, Av(V1, V2))
+Function AddColzDyCC(Dy(), V1, V2) As Variant()
+AddColzDyCC = AddColzDyAv(Dy, Av(V1, V2))
 End Function
 
-Function DyAddColzAv(Dy(), Av()) As Variant()
+Function AddColzDyAv(Dy(), Av()) As Variant()
 Dim O(): O = Dy
 Dim ToU&
     ToU = NColzDy(Dy) + 1
@@ -96,13 +95,13 @@ For Each Dr In Itr(O)
     O(J) = Dr
     J = J + 1
 Next
-DyAddColzAv = O
+AddColzDyAv = O
 End Function
 
 Function InsColzDyAv(Dy(), Av()) As Variant()
 Dim Dr
 For Each Dr In Itr(Dy)
-    PushI InsColzDyAv, AyzAdd(Av, Dr)
+    PushI InsColzDyAv, AddAy(Av, Dr)
 Next
 End Function
 Function InsColzDyV3(Dy(), V1, V2, V3) As Variant()
@@ -124,9 +123,7 @@ Function InsColzDyV2(A(), V1, V2) As Variant()
 InsColzDyV2 = InsColzDyAv(A, Av(V1, V2))
 End Function
 
-
-
-Private Function DyAddColzColVy(Dy(), ColVy, AtIx&) As Variant()
+Private Function AddColzDyColVy(Dy(), ColVy, AtIx&) As Variant()
 Dim Dr, J&, O(), U&
 U = UB(ColVy)
 If U = -1 Then Exit Function
@@ -140,10 +137,10 @@ For Each Dr In Itr(Dy)
     O(J) = Dr
     J = J + 1
 Next
-DyAddColzColVy = O
+AddColzDyColVy = O
 End Function
 
-Function DrsAddColzMap(A As Drs, NewFldEqFunQteFmFldSsl$) As Drs
+Function AddColzMap(A As Drs, NewFldEqFunQteFmFldSsl$) As Drs
 Dim NewColVy(), FmVy()
 Dim I, S$, NewFld$, Fun$, FmFld$
 For Each I In SyzSS(NewFldEqFunQteFmFldSsl)

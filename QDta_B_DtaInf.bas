@@ -7,17 +7,26 @@ Public Const vbFldSep$ = ""
 Function ColzDrs(A As Drs, ColNm$) As Variant()
 ColzDrs = ColzDy(A.Dy, IxzAy(A.Fny, ColNm))
 End Function
-Function ValzColEq(A As Drs, SelC$, Col$, Eq)
+Function VzColEq(A As Drs, SelC$, Col$, Eq)
 Dim Dr, I&
 I = IxzAy(A.Fny, Col)
 For Each Dr In Itr(A.Dy)
-    If Dr(I) = Eq Then ValzColEq = Dr(IxzAy(A.Fny, SelC))
+    If Dr(I) = Eq Then VzColEq = Dr(IxzAy(A.Fny, SelC))
 Next
 End Function
 
 Function WdtzCol%(A As Drs, C$)
 WdtzCol = WdtzAy(StrColzDrs(A, C))
 End Function
+
+Function StrColzFst(A As Drs) As String()
+StrColzFst = StrColzDy(A.Dy, 0)
+End Function
+
+Function StrColzSnd(A As Drs) As String()
+StrColzSnd = StrColzDy(A.Dy, 1)
+End Function
+
 Function StrCol(A As Drs, C) As String()
 StrCol = StrColzDy(A.Dy, IxzAy(A.Fny, C))
 End Function
@@ -28,9 +37,12 @@ End Function
 Function BoolColzDrs(A As Drs, C) As Boolean()
 BoolColzDrs = BoolColzDy(A.Dy, IxzAy(A.Fny, C))
 End Function
+Function FstColzDy(Dy()) As Variant()
+FstColzDy = ColzDy(Dy, 0)
+End Function
 
 Function FstCol(A As Drs) As Variant()
-FstCol = ColzDy(A.Dy, 0)
+FstCol = FstColzDy(A.Dy)
 End Function
 
 Function StrColzDrsFstCol(A As Drs) As String()
@@ -77,6 +89,14 @@ End Function
 Function StrColzDy(Dy(), C) As String()
 StrColzDy = IntozDyC(EmpSy, Dy, C)
 End Function
+
+Function StrColzDyFst(Dy()) As String()
+StrColzDyFst = StrColzDy(Dy, 0)
+End Function
+Function StrColzDySnd(Dy()) As String()
+StrColzDySnd = StrColzDy(Dy, 1)
+End Function
+
 Function BoolColzDy(Dy(), C&) As Boolean()
 BoolColzDy = IntozDyC(EmpBoolAy, Dy, C)
 End Function

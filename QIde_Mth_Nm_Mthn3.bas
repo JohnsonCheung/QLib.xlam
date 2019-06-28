@@ -15,23 +15,27 @@ End Function
 Function Mthn3zL(Lin) As Mthn3
 Mthn3zL = ShfMthn3(CStr(Lin))
 End Function
+
 Function ShfLHS$(OLin$)
-Dim L$: L = OLin
+Dim L$:                   L = OLin
 Dim IsSet As Boolean: IsSet = ShfTermX(L, "Set")
-Dim S$: If IsSet Then S = "Set "
-Dim LHS$: LHS = ShfNm(L)
-If ShfPfx(L, " = ") Then
-    ShfLHS = S & LHS & " = "
-    OLin = L
+Dim S$:                       If IsSet Then S = "Set "
+Dim LHS$:               LHS = ShfDotNm(L)
+If FstChr(L) = "(" Then
+    LHS = LHS & QteBkt(BetBkt(L))
+    L = AftBkt(L)
 End If
+If Not ShfPfx(L, " = ") Then Exit Function
+ShfLHS = S & LHS & " = "
+OLin = L
 End Function
+
 Function ShfLRHS(OLin$) As Variant()
-'If HasSubStr(OLin, "Then RplLin Md, DeLNewO") Then Stop
-Dim L$: L = OLin
+Dim L$:     L = OLin
 Dim LHS$: LHS = ShfLHS(L)
 With Brk1(L, "'")
-    Dim RHS$: RHS = .S1
-    OLin = "'" & .S2
+    Dim RHS$:  RHS = .S1
+              OLin = "   ' " & .S2
 End With
 ShfLRHS = Array(LHS, RHS)
 End Function
@@ -49,6 +53,7 @@ If ShfMthTy(L) = "" Then Exit Function
 If ShfNm(L) = "" Then Thw CSub, "Not as SrcLin", "Lin", Lin
 RmvMthn3 = L
 End Function
+
 Function FmtMthn3$(A As Mthn3)
 With A
 FmtMthn3 = JnDotAp(.Nm, .ShtMdy, .ShtTy)

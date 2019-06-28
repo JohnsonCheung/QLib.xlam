@@ -20,6 +20,7 @@ With A
 FmtLnoC2 = FmtQQ("LnoC(? ? ? ? ?)", .S1, .C1, "|", .S2, .C2)
 End With
 End Function
+
 Function MthLnoC2(M As CodeModule, Mthn) As LnoC2
 Dim A&(): A = MthLnoAyzMN(M, Mthn)
 Dim O As LnoC2

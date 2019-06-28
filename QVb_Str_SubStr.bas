@@ -11,6 +11,7 @@ End Function
 Function SndChr$(S)
 SndChr = Mid(S, 2, 1)
 End Function
+
 Function FstAsc%(S)
 FstAsc = Asc(FstChr(S))
 End Function
@@ -23,6 +24,9 @@ If P > 0 Then
 Else
     LeftIf = S
 End If
+End Function
+Function UCasFst$(S)
+UCasFst = UCase(FstChr(S)) & RmvFstChr(S)
 End Function
 Function FstChr$(S)
 FstChr = Left(S, 1)

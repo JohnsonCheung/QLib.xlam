@@ -25,6 +25,11 @@ PushI BoxzS, "** " & S & " **"
 PushI BoxzS, H
 End Function
 Function Box(V) As String()
+If IsStr(V) Then
+    If V = "" Then
+        Exit Function
+    End If
+End If
 Select Case True
 Case IsLines(V): Box = BoxzLines(CStr(V))
 Case IsStr(V): Box = BoxzS(CStr(V))

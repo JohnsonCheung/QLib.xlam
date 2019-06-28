@@ -10,40 +10,32 @@ End Function
 Function ErzSqLy(SqLy$()) As LyRslt
 
 End Function
-Private Function MsgAp_Lin_TyEr(A As Lnx) As String()
+Private Function MsgAp_Lin_TyEr(DroLLin()) As String()
 
 
 End Function
 
-Private Function MsgMustBeIntoLin(A As Lnx)
+Private Function MsgMustBeIntoLin(DroLLin())
 
 End Function
 
-Private Function MsgMustBeSelorSelDis$(A As Lnx)
+Private Function MsgMustBeSelorSelDis$(DroLLin())
 
 End Function
 
-Private Function MsgMustNotHasSpcInTbl_NmOfIntoLin(A As Lnx)
+Private Function MsgMustNotHasSpcInTbl_NmOfIntoLin(DroLLin())
 
 End Function
-
-
-Private Function ErzExcessPmBlk(A As Blks) As String()
-If CntBlk(A, "PM") > 1 Then
-'    PushIAy ErzExcessPmBlk, ErzBlk(CvBlk(AeFstEle(Blk)), "Excess Pm block, they are ignored")
-End If
+Function BlkIx%(B As Blk)
+BlkIx = B.DroBlk(3)
 End Function
-
-Private Function ErzExcessSwBlk(A As Blks) As String()
-If CntBlk(A, "SW") > 1 Then
-'    PushIAy ErzExcessSwBlk, ErzBlk(CvBlk(AeFstEle(Blk)), "Excess Sw block, they are ignored")
-End If
+Private Function ErzExcessBlk(B As Blks, BlkTy$) As String()
+Dim M As Blk: M = BlkzTy(B, BlkTy)
+If IsBlkEmp(M) Then Exit Function
+PushI ErzExcessBlk, FmtQQ("Excess [?] block, they are ignored", BlkTy)
+PushI ErzExcessBlk, ErzAftBlk(B, M)
 End Function
-
-Function ErzBlk(Blk As Blk, Msg$) As String()
-
-End Function
-
+ErzBlk
 Private Function MsgzLeftOvrAftEvl(A() As SwLin, Sw As Sw) As String()
 'If Si(A) = 0 Then Exit Function
 Dim I

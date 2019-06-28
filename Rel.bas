@@ -121,15 +121,15 @@ Stop '
 'Rel_IsEq = True
 End Function
 
-Sub ThwIf_NE(A As Rel, Optional Msg$ = "Two rel are diff", Optional ANm$ = "Rel-B")
+Sub ThwIf_NE(A As Rel, Optional Msg$ = "Two rel are diff", Optional N1$ = "Rel-B")
 Const CSub$ = CMod & "ThwIf_NE"
 If IsEq(A) Then Exit Sub
 Dim O$()
 PushI O, Msg
-PushI O, FmtQQ("?-ParCnt(?) / ?-ParCnt(?)", Nm, NPar, ANm, A.NPar)
+PushI O, FmtQQ("?-ParCnt(?) / ?-ParCnt(?)", Nm, NPar, N1, A.NPar)
 PushI O, Nm & " --------------------"
 PushIAy O, Fmt
-PushI O, ANm & " --------------------"
+PushI O, N1 & " --------------------"
 PushIAy O, A.Fmt
 ThwIf_ErMsg O, CSub, "Two rel not eq"
 End Sub

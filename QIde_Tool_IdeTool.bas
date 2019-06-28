@@ -38,5 +38,5 @@ ToolBarNy = T1Ay(BtnSpec)
 End Function
 
 Sub RmvIdeTools()
-RmvBarNy ToolBarNy
+RmvBarByNy ToolBarNy
 End Sub

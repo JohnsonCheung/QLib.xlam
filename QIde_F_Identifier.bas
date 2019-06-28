@@ -11,7 +11,7 @@ Exit Sub
 Z:
     Dim Lines$: Lines = SrcLP
     Dim Ny1$(): Ny1 = NyzStr(Lines)
-    Dim Ny2$(): Ny2 = WrdSy(Lines)
+    Dim Ny2$(): Ny2 = WrdAy(Lines)
     If Not IsEqAy(Ny1, Ny2) Then Stop
     Return
 T0:

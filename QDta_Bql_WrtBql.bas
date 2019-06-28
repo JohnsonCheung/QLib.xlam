@@ -19,10 +19,10 @@ Private Const CMod$ = "BBqlWrite."
 'It has first line as ShtTyscfQBLin.  " & _
 "It rest of lines are records."
 
-Sub InsRszBql(R As DAO.Recordset, Bql$)
+Sub InsRszBql(R As Dao.Recordset, Bql$)
 R.AddNew
 Dim Ay$(): Ay = Split(Bql, "`")
-Dim F As DAO.Field, J%
+Dim F As Dao.Field, J%
 For Each F In R.Fields
     If Ay(J) <> "" Then
         F.Value = Ay(J)
@@ -31,8 +31,8 @@ For Each F In R.Fields
 Next
 R.Update
 End Sub
-Function BqlzRs$(A As DAO.Recordset)
-Dim O$(), F As DAO.Field
+Function BqlzRs$(A As Dao.Recordset)
+Dim O$(), F As Dao.Field
 For Each F In A.Fields
     If IsNull(F.Value) Then
         PushI O, ""
@@ -49,37 +49,37 @@ End Function
 
 Private Sub Z_WrtFbqlzDb()
 Dim P$: P = TmpPth
-WrtFbqlzDb P, SampDbzDutyDta
+WrtFbqlzDb P, SampDboDutyDta
 BrwPth P
 Stop
 End Sub
 
 Private Sub Z_WrtFbqlzT()
 Dim T$: T = TmpFt
-WrtFbql T, SampDbzDutyDta, "PermitD"
+WrtFbql T, SampDboDutyDta, "PermitD"
 BrwFt T
 End Sub
 
-Sub WrtFbqlzDb(Pth, A As Database)
-WrtFbqlzTny Pth, A, Tny(A)
+Sub WrtFbqlzDb(Pth, D As Database)
+WrtFbqlzTny Pth, D, Tny(D)
 End Sub
 
-Sub WrtFbqlzTny(Pth, A As Database, Tny$())
+Sub WrtFbqlzTny(Pth, D As Database, Tny$())
 Dim T, P$
 P = EnsPthSfx(Pth)
 For Each T In Tny
-    WrtFbql P & T & ".bql.txt", A
+    WrtFbql P & T & ".bql.txt", D
 Next
 End Sub
 
-Sub WrtFbql(Fbql$, A As Database, Optional T0$)
+Sub WrtFbql(Fbql$, D As Database, Optional T0$)
 Dim T$
     T = T0
     If T = "" Then T = TblNmzFbql(Fbql)
 Dim F%: F = FnoO(Fbql)
-Dim R As DAO.Recordset
-Set R = RszT(A, T)
-Dim L$: L = ShtTyBqlzT(A, T)
+Dim R As Dao.Recordset
+Set R = RszT(D, T)
+Dim L$: L = ShtTyBqlzT(D, T)
 Print #F, L
 With R
     While Not .EOF

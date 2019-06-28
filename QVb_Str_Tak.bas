@@ -46,16 +46,16 @@ End Function
 Function BefSpc$(S)
 BefSpc = Bef(S, " ")
 End Function
-Function AftSpc$(S)
-AftSpc = Aft(S, " ")
+Function AftSpc$(S, Optional NoTrim As Boolean)
+AftSpc = Aft(S, " ", NoTrim)
 End Function
 Function BefSpcOrAll$(S)
 BefSpcOrAll = BefOrAll(S, " ")
 End Function
-Function BefSy(Sy$(), Sep$, Optional NoTrim As Boolean) As String()
+Function BefzSy(Sy$(), Sep$, Optional NoTrim As Boolean) As String()
 Dim I
 For Each I In Itr(Sy)
-    PushI BefSy, Bef(I, Sep, NoTrim)
+    PushI BefzSy, Bef(I, Sep, NoTrim)
 Next
 End Function
 Function Bef$(S, Sep$, Optional NoTrim As Boolean)
@@ -94,6 +94,7 @@ End Function
 Function BefRev$(S, Sep$, Optional NoTrim As Boolean)
 BefRev = Brk2Rev(S, Sep, NoTrim).S1
 End Function
+
 Function P123(S, S1$, S2$) As String()
 Dim P1&, P2&
 P1 = InStr(S, S1)
@@ -177,35 +178,6 @@ Next
 TakNm = S
 End Function
 
-Function Pfx$(S, P$) ' Return Pfx-P if S has such Pfx else return ""
-If HasPfx(S, P) Then Pfx = P
-End Function
-
-Function PfxSySpc$(S, PfxSy$()) ' Return Fst ele-P of [PfxSy] if [S] has pfx ele-P and a space
-Dim P
-For Each P In PfxSy
-    If HasPfx(S, P & " ") Then PfxSySpc = P: Exit Function
-Next
-End Function
-
-Function PfxzAy$(S, PfxSy$()) ' Return Fst ele-P of [PfxSy] if [S] has pfx ele-P
-Dim P
-For Each P In PfxSy
-    If HasPfx(S, P) Then PfxzAy = P: Exit Function
-Next
-End Function
-
-Function SfxzAySpc$(S, SfxSy$()) ' Return Fst ele-P of [PfxSy] if [S] has pfx ele-P
-Dim Sfx$, I
-For Each I In SfxSy
-    Sfx = I
-    If HasSfx(S, Sfx) Then SfxzAySpc = S: Exit Function
-Next
-End Function
-
-Function PfxS(S, Pfx$) ' Return [Pfx] if [S] has such pfx+" " else return ""
-If HasPfx(S, Pfx) Then If Mid(S, Len(Pfx) + 1, 1) = " " Then PfxS = Pfx
-End Function
 
 Private Sub Z_AftBkt()
 Dim A$

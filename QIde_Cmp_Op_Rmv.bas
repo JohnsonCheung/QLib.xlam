@@ -18,8 +18,8 @@ If Cfm("Rmv those Md as show in the notepad?") Then
     Next
 End If
 End Sub
-Sub RmvMd(MdDNm)
-RmvMdzMd Md(MdDNm)
+Sub RmvMd(MdDn)
+RmvMdzMd Md(MdDn)
 End Sub
 Sub RmvMdzMd(M As CodeModule)
 Dim N$, P$

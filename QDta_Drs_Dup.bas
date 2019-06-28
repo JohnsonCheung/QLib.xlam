@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDta_DDup."
 Private Const Asm$ = "QDta"
-Function DrszSelExlCC(A As Drs, ExlCCLik$) As Drs
+Function SelDrsExlCC(A As Drs, ExlCCLik$) As Drs
 Dim LikC
 For Each LikC In SyzSS(ExlCCLik)
 '    MinusAy(
@@ -43,7 +43,7 @@ If Si(Fny) = 1 Then
     Exit Function
 End If
 Dim ColIxy&(): ColIxy = Ixy(A.Fny, Fny)
-Dim Dy(): Dy = DyoSel(A.Dy, ColIxy)
+Dim Dy(): Dy = SelDy(A.Dy, ColIxy)
 RxyzDup = RxyzDupDy(Dy)
 End Function
 
@@ -97,7 +97,7 @@ Dim OKeyDy(), OCnt&(), Dr
     Next
     If Si(OKeyDy) <> Si(OCnt) Then Thw CSub, "Si Diff", "OKeyDy-Si OCnt-Si", Si(OKeyDy), Si(OCnt)
 For J = 0 To UB(OCnt)
-    PushI GRxyzCyCntzSlow, AyzAdd(Array(OCnt(J)), OKeyDy(J)) '<===========
+    PushI GRxyzCyCntzSlow, AddAy(Array(OCnt(J)), OKeyDy(J)) '<===========
 Next
 End Function
 

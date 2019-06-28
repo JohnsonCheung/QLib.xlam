@@ -6,25 +6,21 @@ Private Const Asm$ = "QVb"
 Function DiczFt(Ft) As Dictionary
 Set DiczFt = Dic(LyzFt(Ft))
 End Function
-Function SyDic(TermLiny$()) As Dictionary
+
+Function DiT1qLy(TermLiny$()) As Dictionary
 Dim L$, I, T$, Ssl$
 Dim O As New Dictionary
 For Each I In Itr(TermLiny)
     L = I
     AsgTRst L, T, Ssl
     If O.Exists(T) Then
-        O(T) = AyzAdd(O(T), SyzSS(Ssl))
+        O(T) = AddAy(O(T), SyzSS(Ssl))
     Else
         O.Add T, SyzSS(Ssl)
     End If
 Next
-Set SyDic = O
+Set DiT1qLy = O
 End Function
-
-Sub AddDiczNBStr(ODic As Dictionary, K, S$)
-If S = "" Then Exit Sub
-ODic.Add K, S
-End Sub
 
 Function DiczLines(Lines$, Optional JnSep$ = vbCrLf) As Dictionary
 Set DiczLines = Dic(SplitCrLf(Lines), JnSep)
@@ -94,32 +90,24 @@ For Each I In Itr(Ly)
 Next
 End Function
 
-Function AddSfxzDic(D As Dictionary, Sfx$) As Dictionary
+
+Function DiKqABC(Ay) As Dictionary
+'Ret : :DiKqABC: is a dic wi v running fm A-Z at most 26 ele.  The k is CStr fm @Ay-ele.
+If Si(Ay) > 26 Then Thw CSub, "Si-@Ay cannot >26", "Si-@Ay", Si(Ay)
 Dim O As New Dictionary
-Dim K: For Each K In D.Keys
-    Dim V$: V = D(K) & Sfx
-    O.Add K, V
-Next
-Set AddSfxzDic = O
-End Function
-
-Function DiEleqABC(Ay) As Dictionary
-Set DiEleqABC = New Dictionary
 Dim V, J&: For Each V In Itr(Ay)
-    DiEleqABC.Add CStr(V), Chr(65 + J)
+    V = CStr(V)
+    If Not O.Exists(V) Then
+        O.Add V, Chr(65 + J)
+    End If
     J = J + 1
 Next
-End Function
-
-Function DiEleqIx(Ay) As Dictionary
-Set DiEleqIx = New Dictionary
-Dim V, J&: For Each V In Itr(Ay)
-    DiEleqIx.Add CStr(V), J
-    J = J + 1
-Next
+Set DiKqABC = O
 End Function
 
 Function LyzLyItr(LyItr) As String()
+'Fm: :LyItr: is either :Ly: or emp-:Collection:
+'Ret : @LyItr as :Ly:
 If TypeName(LyItr) = "Collection" Then Exit Function
 If Not IsSy(LyItr) Then Thw CSub, "LyItr is valid", "TypeName(LyItr)", TypeName(LyItr)
 LyzLyItr = LyItr
@@ -188,15 +176,6 @@ Function DiczVbl(Vbl$, Optional JnSep$ = vbCrLf) As Dictionary
 Set DiczVbl = Dic(SplitVBar(Vbl), JnSep)
 End Function
 
-Function DiczAyIx(Ay) As Dictionary
-Dim V&, K
-Set DiczAyIx = New Dictionary
-For Each K In Ay
-    DiczAyIx.Add K, V
-    V = V + 1
-Next
-End Function
-
 Function DiczAyab(A, B) As Dictionary
 ThwIf_DifSi A, B, CSub
 Dim N1&, N2&
@@ -210,4 +189,25 @@ For Each X In Itr(A)
     J = J + 1
 Next
 End Function
+
+Function DiKqIx(Ay) As Dictionary
+Dim O As New Dictionary, J&
+For J = 0 To UB(Ay)
+    If Not O.Exists(Ay(J)) Then
+        O.Add Ay(J), J
+    End If
+Next
+Set DiKqIx = O
+End Function
+
+Function DiKqNum(Ay) As Dictionary
+Dim O As New Dictionary, J&
+For J = 0 To UB(Ay)
+    If Not O.Exists(Ay(J)) Then
+        O.Add Ay(J), J + 1
+    End If
+Next
+Set DiKqNum = O
+End Function
+
 

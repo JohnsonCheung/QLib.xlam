@@ -130,7 +130,7 @@ Rmv:
 End Sub
 Sub EnsHyp(Rg As Range)
 'Ret: Ens the hyp lnk in @Rg is pointing ws A1 if the @Rg val is a ws name. @@
-Dim W$(): W = WsNy(WbzRg(Rg))   ' Ws ny
+Dim W$(): W = Wsny(WbzRg(Rg))   ' Ws ny
 Dim Cell As Range: For Each Cell In Rg
     XEnsHyp Cell, W 'Ens the @Cell is pointing of one of @W if the @cell val is in @W else rmv the hyp lnk
 Next
@@ -352,10 +352,10 @@ Function AddWszDrs(A As Workbook, B As Drs, Optional Wsn$) As Worksheet
 Set AddWszDrs = AddWszSq(A, SqzDrs(B), Wsn)
 End Function
 
-Sub PutTbl(A As Database, T, At As Range, Optional AddgWay As EmAddgWay)
+Sub PutTbl(D As Database, T, At As Range, Optional AddgWay As EmAddgWay)
 Select Case AddgWay
-Case EmAddgWay.EiSqWay: PutSq SqzT(A, T), At
-Case EmAddgWay.EiWcWay: AddLo At, A.Name, T
+Case EmAddgWay.EiSqWay: PutSq SqzT(D, T), At
+Case EmAddgWay.EiWcWay: AddLo At, D.Name, T
 Case Else: Thw CSub, "Invalid AddgWay"
 End Select
 End Sub
@@ -368,10 +368,10 @@ For Each I In Tny
 Next
 End Sub
 
-Function WszDt(Wb As Workbook, Dt As Dt) As Worksheet
+Function WszDt(Wb As Workbook, DT As DT) As Worksheet
 Dim O As Worksheet
-Set O = AddWs(Wb, Dt.DtNm)
-LozDrs DrszDt(Dt), A1zWs(O)
+Set O = AddWs(Wb, DT.DtNm)
+LozDrs DrszDt(DT), A1zWs(O)
 Set WszDt = O
 End Function
 
@@ -380,21 +380,21 @@ Set AddWc = ToWb.Connections.Add2(T, T, CnStrzFbzForWc(FmFb), T, XlCmdType.xlCmd
 End Function
 
 Sub ThwWbMisOupNy(A As Workbook, OupNy$())
-Dim O$(), N$, B$(), WNy$()
-WNy = WsCdNy(A)
-O = MinusAy(AddPfxzAy(OupNy, "WsO"), WNy)
+Dim O$(), N$, B$(), Wny$()
+Wny = WsCdNy(A)
+O = MinusAy(AddPfxzAy(OupNy, "WsO"), Wny)
 If Si(O) > 0 Then
     N = "OupNy":  B = OupNy:  GoSub Dmp
-    N = "WbCdNy": B = WNy: GoSub Dmp
+    N = "WbCdNy": B = Wny: GoSub Dmp
     N = "Mssing": B = O:      GoSub Dmp
     Stop
     Exit Sub
 End If
 Exit Sub
 Dmp:
-Debug.Print UnderLin(N)
+Debug.Print ULin(N)
 Debug.Print N
-Debug.Print UnderLin(N)
+Debug.Print ULin(N)
 DmpAy B
 Return
 End Sub
@@ -448,11 +448,15 @@ Dim T As TextConnection: Set T = TxtWc(A)
 Dim C$: C = T.Connection: If Not HasPfx(C, "TEXT;") Then Stop
 T.Connection = "TEXT;" & Fcsv
 End Sub
-Function HasWsCd(WsCdn$) As Boolean
+
+Function HasWsCd(WsCdn$, Optional IsInf As Boolean) As Boolean
 Dim Ws As Worksheet
 For Each Ws In CWb.Sheets
     If Ws.CodeName = WsCdn Then HasWsCd = True: Exit Function
 Next
+If IsInf Then
+    MsgBox RplVBar("No worksheet code||" & WsCdn), vbCritical
+End If
 End Function
 Function HasWs(A As Workbook, WsIx) As Boolean
 If IsNumeric(WsIx) Then
@@ -496,7 +500,7 @@ Dim C As Workbook
 Dim D$
 Dim E As Database
 Dim F As Boolean
-Dim G As Dt
+Dim G As DT
 Dim H$()
 Dim I()
 Dim XX
@@ -508,7 +512,7 @@ LasWs C
 MainWs C
 TxtWcCnt C
 TxtWcStr C
-WsNy C
+Wsny C
 WszCdNm C, D
 ThwWbMisOupNy C, H
 ClsWbNoSav C
@@ -796,14 +800,14 @@ For Each Lo In Ws.ListObjects
 Next
 End Sub
 
-Private Sub RplLozT(A As ListObject, Db As Database, T)
-Dim Fny1$(): Fny1 = Fny(Db, T)
+Private Sub RplLozT(A As ListObject, D As Database, T)
+Dim Fny1$(): Fny1 = Fny(D, T)
 Dim Fny2$(): Fny2 = FnyzLo(A)
 If Not IsSamAy(Fny1, Fny2) Then
-    Thw CSub, "LoFny and TblFny are not same", "LoFny TblNm TblFny Db", Fny2, T, Fny1, Dbn(A)
+    Thw CSub, "LoFny and TblFny are not same", "LoFny TblNm TblFny Db", Fny2, T, Fny1, D.Name
 End If
 Dim Sq()
-    Dim R As DAO.Recordset
+    Dim R As Dao.Recordset
     Set R = Rs(A, SqlSel_Fny_T(Fny2, T))
     Sq = AddSngQtezSq(SqzRs(R))
 MinxLo A
@@ -884,7 +888,7 @@ With FstWs(O)
    .Name = "Ds"
    .Range("A1").Value = A.DsNm
 End With
-Dim J%, Ay() As Dt
+Dim J%, Ay() As DT
 For J = 0 To A.N - 1
     'WszDt O, Ay(J)
 Next
@@ -927,7 +931,7 @@ Sq = SqVzN(HBar.Rows.Count)
 ResiRg(HBar, Sq).Value = Sq
 End Sub
 Sub ClrCellBelow(Cell As Range)
-RgzBelowCell(Cell).Clear
+CellBelow(Cell).Clear
 End Sub
 
 Sub FillSeqV(VBar As Range)
@@ -937,7 +941,7 @@ ResiRg(VBar, Sq).Value = Sq
 End Sub
 
 Sub FillWsny(At As Range)
-RgzAyV WsNy(WbzRg(At)), At
+RgzAyV Wsny(WbzRg(At)), At
 End Sub
 
 
@@ -970,21 +974,21 @@ End Sub
 Sub RunFxqByCn(Fx, Q)
 CnzFx(Fx).Execute Q
 End Sub
-Function DKValzKSet(KSet As Dictionary) As Drs
+Function DKVzKSet(KSet As Dictionary) As Drs
 Dim K, Dy(): For Each K In KSet.Keys
     Dim S As Aset: Set S = KSet(K)
     Dim V: For Each V In S.Itms
         PushI Dy, Array(K, V)
     Next
 Next
-DKValzKSet = DrszFF("K V", Dy)
+DKVzKSet = DrszFF("K V", Dy)
 End Function
-Private Sub Z_DKValzLoFilter()
+Private Sub Z_DKVzLoFilter()
 Dim Lo As ListObject: Set Lo = FstLo(CWs)
-BrwDrs DKValzLoFilter(Lo)
+BrwDrs DKVzLoFilter(Lo)
 End Sub
-Function DKValzLoFilter(L As ListObject) As Drs
-DKValzLoFilter = DKValzKSet(KSetzLoFilter(L))
+Function DKVzLoFilter(L As ListObject) As Drs
+DKVzLoFilter = DKVzKSet(KSetzLoFilter(L))
 End Function
 
 Function KSetzKyAsetAy(Ky$(), AsetAy() As Aset) As Dictionary
@@ -1068,24 +1072,24 @@ Dim O As Worksheet: Set O = NewWs
 A1zWs(O).Value = "*Ds " & A.DsNm
 Dim At As Range, J%
 Set At = WsRC(O, 2, 1)
-Dim BelowN&, Dt As Dt, Ay() As Dt
+Dim BelowN&, DT As DT, Ay() As DT
 Ay = A.Ay
 For J = 0 To A.N - 1
-    Dt = Ay(J)
-    LozDt Dt, At
-    BelowN = 2 + Si(Dt.Dy)
+    DT = Ay(J)
+    LozDt DT, At
+    BelowN = 2 + Si(DT.Dy)
     Set At = CellBelow(At, BelowN)
 Next
 Set WszDs = O
 End Function
 
-Function RgzDt(A As Dt, At As Range, Optional DtIx%)
+Function RgzDt(A As DT, At As Range, Optional DtIx%)
 Dim Pfx$: If DtIx > 0 Then Pfx = QteBkt(CStr(DtIx))
 At.Value = Pfx & A.DtNm
 RgzSq SqzDrs(DrszDt(A)), CellBelow(At)
 End Function
 
-Function LozDt(A As Dt, At As Range) As ListObject
+Function LozDt(A As DT, At As Range) As ListObject
 Dim R As Range
 If At.Row = 1 Then
     Set R = RgRC(At, 2, 1)
@@ -1124,4 +1128,19 @@ Else
 End If
 Set EnsWbzXls = ShwWb(O)
 End Function
+
+
+Sub StopXls()
+Const Ps1Str$ = "Stop-Process -Id{try{(Get-Process -Name Excel).Id}finally{@()}}.invoke()"
+Dim F$: F = TmpHom & "StopXls.ps1"
+Static X As Boolean
+If Not X Then
+    X = True
+    If Not HasFfn(F) Then
+        WrtStr Ps1Str, F
+    End If
+End If
+'PowerRun F
+End Sub
+
 

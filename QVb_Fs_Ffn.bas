@@ -72,13 +72,12 @@ For J = 1 To NUp
 Next
 UpPth = O
 End Function
-Function Pth(Ffn)
+
+Function Pth$(Ffn)
 Dim P%: P = InStrRev(Ffn, "\")
 If P = 0 Then Exit Function
 Pth = Left(Ffn, P)
 End Function
-
-
 
 Function IsEqFfn(A, B, Optional FilCmp As EmFilCmp = EiCmpEq) As Boolean
 ThwIf_FfnNotExist A, CSub, "Fst File"
@@ -200,8 +199,14 @@ For Each Ffn In Itr(Ffny)
 Next
 End Sub
 
-Function HasFfn(Ffn) As Boolean
-HasFfn = Fso.FileExists(Ffn)
+Function HasFfn(Ffn, Optional IsInf As Boolean) As Boolean
+Dim O As Boolean: O = Fso.FileExists(Ffn)
+HasFfn = O
+If Not O Then
+    If IsInf Then
+        Debug.Print "HasFfn: File not fnd [" & Ffn & "]"
+    End If
+End If
 End Function
 
 Function ExiFfnAset(Ffny$()) As Aset
@@ -239,7 +244,7 @@ If Not HasFfn(Ffn) Then SizFfn = -1: Exit Function
 SizFfn = FileLen(Ffn)
 End Function
 Function SiDotDTim$(Ffn)
-If HasFfn(Ffn) Then SiDotDTim = DteTimStr(DtezFfn(Ffn)) & "." & SizFfn(Ffn)
+If HasFfn(Ffn) Then SiDotDTim = TimStr(DtezFfn(Ffn)) & "." & SizFfn(Ffn)
 End Function
 
 Sub AsgTimSi(Ffn, OTim As Date, OSz&)
@@ -247,8 +252,8 @@ OTim = DtezFfn(Ffn)
 OSz = SizFfn(Ffn)
 End Sub
 
-Function DteTimStrzFfn$(Ffn)
-DteTimStrzFfn = DteTimStr(DtezFfn(Ffn))
+Function TimStrzFfn$(Ffn)
+TimStrzFfn = TimStr(DtezFfn(Ffn))
 End Function
 
 
@@ -345,8 +350,6 @@ End Select
 End Function
 
 
-
-
 Function InstFfn$(Ffn)
 InstFfn = InstPth(Pth(Ffn)) & Fn(Ffn)
 End Function
@@ -367,6 +370,6 @@ IsInstFfn = IsInstFdr(FdrzFfn(Ffn))
 End Function
 
 Function IsInstFdr(Fdr$) As Boolean
-IsInstFdr = IsDteTimStr(Fdr)
+IsInstFdr = IsTimStr(Fdr)
 End Function
 

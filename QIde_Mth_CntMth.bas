@@ -5,6 +5,7 @@ Private Const CMod$ = "MIde_Mth_Cnt."
 Private Const Asm$ = "QIde"
 Const CntgMthPP$ = "NPubSub NPubFun NPubPrp NPrvSub NPrvFun NPrvPrp NFrdSub NFrdFun NFrdPrp"
 Type CntgMth
+    Lib As String
     Mdn As String
     NPubSub As Integer
     NPubFun As Integer
@@ -17,17 +18,20 @@ Type CntgMth
     NFrdPrp As Integer
 End Type
 Type CntgMths: N As Long: Ay() As CntgMth: End Type
-Function DMthCntP() As Drs
-DMthCntP = DMthCntzP(CPj)
+
+Function DoMthCntP() As Drs
+DoMthCntP = DoMthCntzP(CPj)
 End Function
 
-Function DMthCntzP(P As VBProject) As Drs
+Private Function DoMthCntzP(P As VBProject) As Drs
 Dim C As VBComponent, Dy(): For Each C In P.VBComponents
-    PushI Dy, DrMthCnt(C.CodeModule, C.Name)
+    PushI Dy, DroMthCnt(C.CodeModule)
 Next
-DMthCntzP = DrszFF("Mdn NLines NMth NPubSub NPubFun NPubPrp NPrvSub NPrvFun NPrvPrp NFrdSub NFrdFun NFrdPrp", Dy)
+DoMthCntzP = Drs(FoMthCnt, Dy)
 End Function
-
+Private Function FoMthCnt() As String()
+FoMthCnt = SyzSS("Lib Mdn NLines NMth NPubSub NPubFun NPubPrp NPrvSub NPrvFun NPrvPrp NFrdSub NFrdFun NFrdPrp")
+End Function
 Property Get NMth%(A As CntgMth)
 With A
 NMth = .NPubSub + .NPubFun + .NPubPrp + .NPrvSub + .NPrvFun + .NPrvPrp + .NFrdSub + .NFrdFun + .NFrdPrp
@@ -61,7 +65,7 @@ Next
 NMthzP = O
 End Function
 
-Private Function DrMthCnt(M As CodeModule, Mdn$) As Variant()
+Private Function DroMthCnt(M As CodeModule) As Variant()
 Dim S$(): S = Src(M)
 Dim Mth$(): Mth = MthLinAyzS(S)
 Dim L: For Each L In Itr(Mth)
@@ -99,15 +103,34 @@ Dim L: For Each L In Itr(Mth)
         Case Else: Thw CSub, "Invalid Mthn3", "MthLin", L
     End Select
     Dim NMth%: NMth = NMth + 1
+    If NPubSub + NPubFun + NPubPrp + NPrvSub + NPrvFun + NPrvPrp + NFrdSub + NFrdFun + NFrdPrp <> NMth Then Stop
 Next
 Dim NLin&: NLin = Si(S)
-DrMthCnt = Array(Mdn, NLin, NMth, NPubSub, NPubFun, NPubPrp, NPrvSub, NPrvPrp, NFrdSub, NFrdFun, NFrdPrp)
+Dim Mdn$: Mdn = MdnzM(M)
+Dim Lib$: Lib = Bef(Mdn, "_")
+DroMthCnt = Array(Lib, Mdn, NLin, NMth, NPubSub, NPubFun, NPubPrp, NPrvSub, NPrvFun, NPrvPrp, NFrdSub, NFrdFun, NFrdPrp)
 End Function
 
 Sub CntMthP()
 CntMthzP CPj
 End Sub
-Sub CntMthzP(A As VBProject)
+Private Sub CntMthzM(M As CodeModule)
+DmpDrs DoMthCntzM(M)
+End Sub
+
+Private Function DoMthCntzM(M As CodeModule) As Drs
+
+End Function
+
+Sub CntWrdP()
+Debug.Print WrdCnt(JnCrLf(SrczP(CPj)))
+End Sub
+Sub CntMthM()
+CntMthzM CMd
+End Sub
+
+Private Sub CntMthzP(P As VBProject)
+BrwDrs DoMthCntzP(P)
 End Sub
 
 Function NMthzM%(M As CodeModule)
@@ -121,11 +144,12 @@ For Each C In P.VBComponents
 Next
 NSrcLinPj = O
 End Function
-Function NPMthzS%(Src$())
+
+Private Function NPMthzS%(Src$())
 NPMthzS = NItr(PMthLinItr(Src))
 End Function
 
-Function NPMthzM%(M As CodeModule)
+Private Function NPMthzM%(M As CodeModule)
 NPMthzM = NPMthzS(Src(M))
 End Function
 

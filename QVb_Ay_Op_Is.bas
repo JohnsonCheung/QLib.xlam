@@ -29,6 +29,10 @@ Function IsNeAy(A, B) As Boolean
 IsNeAy = Not IsEqAy(A, B)
 End Function
 
+Function IsEqDy(A, B) As Boolean
+IsEqDy = IsEqAy(A, B)
+End Function
+
 Function IsEqAy(A, B) As Boolean
 If Not IsArray(A) Then Exit Function
 If Not IsArray(B) Then Exit Function
@@ -42,7 +46,7 @@ IsEqAy = True
 End Function
 
 Function IsSamAy(A, B) As Boolean
-IsSamAy = IsEqDic(CntDic(A), CntDic(B))
+IsSamAy = IsEqDic(DiKqCnt(A), DiKqCnt(B))
 End Function
 
 Private Sub Z()

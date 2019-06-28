@@ -32,8 +32,8 @@ With Lo.QueryTable
     .Refresh BackgroundQuery:=False
 End With
 End Sub
-Function TmpInpTny(A As Database) As String()
-TmpInpTny = AwPfx(Tny(A), "#I")
+Function TmpInpTny(D As Database) As String()
+TmpInpTny = AwPfx(Tny(D), "#I")
 End Function
 
 Private Sub Z_LoIxSq()
@@ -90,15 +90,15 @@ Sub AddLoIx(At As Range)
 LozSq LoIxSq(WbzRg(At)), At
 End Sub
 
-Function WbzTmpInp(A As Database) As Workbook
-Set WbzTmpInp = WbzTny(A, TmpInpTny(A))
+Function WbzTmpInp(D As Database) As Workbook
+Set WbzTmpInp = WbzTny(D, TmpInpTny(D))
 End Function
 
-Function WbzTny(A As Database, Tny$()) As Workbook
+Function WbzTny(D As Database, Tny$()) As Workbook
 Dim T, O As Workbook
 Set O = NewWb
 For Each T In Itr(Tny)
-    AddWszT O, A, CStr(T)
+    AddWszT O, D, CStr(T)
 Next
 DltSheet1 O
 Set WbzTny = O
@@ -195,12 +195,12 @@ DltWsIf O, "Sheet1"
 Set NewWbzOupTbl = O
 End Function
 
-Function WbzT(A As Database, T, Optional Wsn$ = "Data") As Workbook
-Set WbzT = WszRg(AddWszT(NewWb, A, T, Wsn))
+Function WbzT(D As Database, T, Optional Wsn$ = "Data") As Workbook
+Set WbzT = WszRg(AddWszT(NewWb, D, T, Wsn))
 End Function
 
-Sub PutDbtWs(A As Database, T, Ws As Worksheet)
-PutDbtAt A, T, A1zWs(Ws)
+Sub PutDbtWs(D As Database, T, Ws As Worksheet)
+PutDbtAt D, T, A1zWs(Ws)
 End Sub
 Sub ClrLo(A As ListObject)
 If A.ListRows.Count = 0 Then Exit Sub
@@ -224,8 +224,8 @@ End Sub
 Sub PutAyH(AyH, At As Range)
 PutSq SqzAyH(AyH), At
 End Sub
-Sub PutDbtAt(A As Database, T, At As Range, Optional AddgWay As EmAddgWay)
-LozRg PutSq(SqzT(A, T), At), Lon(T)
+Sub PutDbtAt(D As Database, T, At As Range, Optional AddgWay As EmAddgWay)
+LozRg PutSq(SqzT(D, T), At), Lon(T)
 End Sub
 Sub SetQtFbt(QT As QueryTable, Fb, T)
 With QT
@@ -256,8 +256,8 @@ Sub FxzTny(Fx, Db As Database, Tny$())
 WbzTny(Db, Tny).SaveAs Fx
 End Sub
 
-Function WszT(A As Database, T, Optional Wsn$) As Worksheet
-Dim Sq(): Sq = SqzT(A, T)
+Function WszT(D As Database, T, Optional Wsn$) As Worksheet
+Dim Sq(): Sq = SqzT(D, T)
 Dim A1 As Range: Set A1 = NewA1(Wsn)
 Set WszT = WszLo(LozSq(Sq(), A1))
 End Function

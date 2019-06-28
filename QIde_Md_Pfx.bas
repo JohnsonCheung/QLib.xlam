@@ -4,19 +4,19 @@ Option Explicit
 Private Const CMod$ = "MIde_Md_Pfx."
 Private Const Asm$ = "QIde"
 Sub BrwMdPfx()
-BrwDic MdPfxCntDic
+BrwDic MdPfxDiKqCnt
 End Sub
 
 Function MdPfxSyzP(P As VBProject) As String()
 MdPfxSyzP = MdPfxSy(MdNyzP(P))
 End Function
 
-Function MdPfxCntDiczP(P As VBProject) As Dictionary
-Set MdPfxCntDiczP = CntDic(QSrt1(MdPfxSyzP(P)))
+Function MdPfxDiKqCntzP(P As VBProject) As Dictionary
+Set MdPfxDiKqCntzP = DiKqCnt(SrtAyQ(MdPfxSyzP(P)))
 End Function
 
-Function MdPfxCntDic() As Dictionary
-Set MdPfxCntDic = MdPfxCntDiczP(CPj)
+Function MdPfxDiKqCnt() As Dictionary
+Set MdPfxDiKqCnt = MdPfxDiKqCntzP(CPj)
 End Function
 
 Function MdPfxSy(MdNy$()) As String()

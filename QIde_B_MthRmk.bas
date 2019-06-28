@@ -3,27 +3,34 @@ Option Explicit
 Option Compare Text
 
 Sub EnsMthRmk(M As CodeModule, Mthn, NewRmk$)
-'Ret : mk sure the rmk of #Mthn will be #NewRmk
+'Ret : mk sure the rmk of #Mthn will be @NewRmk
+
+'== No such @Mthn, just ret
 Dim MthLno&: MthLno = MthLnozMM(M, Mthn)
 If MthLno = 0 Then
     Debug.Print "EnsMthRmk: no such mth[" & Mthn & "]"
     Debug.Print
-    Exit Sub
+    Exit Sub                              'Exit=>
 End If
+
+'== case1: @Mthn has no rmk & @NewRmk<>"" : '<== Ins
+'   case2: @Mthn has no rmk               : '<== Nop
+'   case3: @Mthn rmk        = @NewRmk     : '<== Nop
+'   case4: @Mthn rmk        <> @NewRmk    : '<== Dlt & Ins
 Dim RLno&: RLno = MthRmkLno(M, MthLno)
 Dim RmkL$: RmkL = MthRmkLzRmkLno(M, RLno)
 
 Select Case True
 Case RmkL = "" And NewRmk <> ""
     RLno = NxtLnozML(M, MthLno)
-    GoSub Ins
+    GoSub Ins                               '<== case1 Ins
 Case RmkL = ""
-    Debug.Print "EnsMthRmk: mth[" & Mthn & "] has no rmk and no new rmk"
+    Debug.Print "EnsMthRmk: mth[" & Mthn & "] has no rmk and no new rmk" '<== case2 Nop
 Case RmkL = NewRmk
-    Debug.Print "EnsMthRmk: Same": Exit Sub
+    Debug.Print "EnsMthRmk: Same": Exit Sub '<== case3 Nop
 Case Else
-    DltLines M, RLno, RmkL
-    If NewRmk <> "" Then GoSub Ins
+    DltLines M, RLno, RmkL                  '<== case4 dlt
+    If NewRmk <> "" Then GoSub Ins          '<== case4 ins
 End Select
 Exit Sub
 Ins:
@@ -44,7 +51,7 @@ Next
 End Sub
 
 Private Function MthRmkIx&(Src$(), MthIx)
-If IsLinSngLMth(Src(MthIx)) Then Exit Function
+If IsLinMthSngL(Src(MthIx)) Then Exit Function
 Dim ELin$: ELin = EndLin(Src, MthIx)
 Dim Ix&: For Ix = MthIx + 1 To UB(Src)
     Dim L$: L = Src(Ix)
@@ -115,7 +122,7 @@ Private Sub Z_MthRmkP()
 BrwS12s MthRmkP
 End Sub
 
-Function MthRmkzP(P As VBProject) As S12s
+Private Function MthRmkzP(P As VBProject) As S12s
 Dim C As VBComponent
 For Each C In P.VBComponents
     Dim A As S12s: A = MthRmkzM(C.CodeModule)
@@ -124,7 +131,7 @@ For Each C In P.VBComponents
 Next
 End Function
 
-Function MthRmkzM(M As CodeModule) As S12s
+Private Function MthRmkzM(M As CodeModule) As S12s
 Dim S$(): S = Src(M)
 Dim Ixy&(): Ixy = MthIxy(S)
 MthRmkzM = MthRmkzMthIxy(S, Ixy)

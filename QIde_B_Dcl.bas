@@ -328,7 +328,7 @@ For Each C In P.VBComponents
     Set M = C.CodeModule
     Dim Dcl$: Dcl = DclzM(M)
     If Dcl <> "" Then
-        DclDiczP.Add MdDNm(M), Dcl
+        DclDiczP.Add MdDn(M), Dcl
     End If
 Next
 End Function
@@ -365,56 +365,3 @@ End Function
 Function DclLyzM(M As CodeModule) As String()
 DclLyzM = SplitCrLf(DclzM(M))
 End Function
-Function CnstLnxszS(Src$()) As Lnxs
-Dim L, J&
-For Each L In Itr(Src)
-    If IsLinCnst(L) Then PushLnx CnstLnxszS, Lnx(L, J)
-    J = J + 1
-Next
-End Function
-
-Function CnstLnxzSN(Src$(), CnstnPfx$) As Lnx
-Dim L, J%
-For Each L In Itr(Src)
-    If IsLinCnstPfx(L, CnstnPfx) Then CnstLnxzSN = Lnx(L, J): Exit Function
-    J = J + 1
-Next
-End Function
-
-Function IsLinCnstPfx(L, CnstnPfx$) As Boolean
-Dim Lin$: Lin = RmvMdy(L)
-If Not ShfTermCnst(Lin) Then Exit Function
-IsLinCnstPfx = HasPfx(L, CnstnPfx)
-End Function
-Function IsLinCnst(L) As Boolean
-IsLinCnst = T1(RmvMdy(L)) = "Const"
-End Function
-Function CnstLnxszM(M As CodeModule) As Lnxs
-Dim J&, L$, P$, L1$, L2$
-P = "Const "
-For J = 1 To M.CountOfDeclarationLines
-    L = M.Lines(J, 1)
-    L1 = RmvMdy(L)
-    If HasPfx(L1, P) Then
-        L2 = ContLinzML(M, J)
-        PushLnx CnstLnxszM, Lnx(L, J - 1)
-    End If
-Next
-End Function
-
-Function CnstLnxzMN(M As CodeModule, Cnstn$) As Lnx
-Dim J&, L$, P$, L1$, L2$
-P = "Const " & Cnstn
-For J = 1 To M.CountOfDeclarationLines
-    L = M.Lines(J, 1)
-    L1 = RmvMdy(L)
-    If HasPfx(L1, P) Then
-        L2 = ContLinzML(M, J)
-        CnstLnxzMN = Lnx(L2, J - 1)
-        Exit Function
-    End If
-Next
-End Function
-
-
-

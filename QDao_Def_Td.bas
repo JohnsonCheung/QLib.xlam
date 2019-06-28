@@ -4,29 +4,43 @@ Option Explicit
 Private Const CMod$ = "MDao_Def_Td."
 Private Const Asm$ = "QDao"
 
-Function CvTd(A) As DAO.TableDef
+Function CvTd(A) As Dao.TableDef
 Set CvTd = A
 End Function
 
-Sub AddFdy(A As TableDef, Fdy() As DAO.Field2)
+Function TdzTF(T, Fdy() As Dao.Field2) As Dao.TableDef
+Dim O As New TableDef
+O.Name = T
+AddFdy O, Fdy
+Set TdzTF = O
+End Function
+
+Function FdAy(PFldLis$) As Dao.Field2()
+'Fm PFldLis: #Sql-FldLis-Phrase.  !The fld spec of create table sql inside the bkt.  It allows attachment.  It uses DAO to create
+Dim F: For Each F In Itr(AyTrim(SplitComma(PFldLis)))
+    PushObj FdAy, FdzPFld(F)
+Next
+End Function
+
+Sub AddFdy(A As TableDef, Fdy() As Dao.Field2)
 Dim I: For Each I In Fdy
     A.Fields.Append I
 Next
 End Sub
 
-Sub AddFldzId(A As DAO.TableDef)
+Sub AddFldzId(A As Dao.TableDef)
 A.Fields.Append FdzId(A.Name)
 End Sub
 
-Sub AddFldzLng(A As DAO.TableDef, FF$)
+Sub AddFldzLng(A As Dao.TableDef, FF$)
 AddFdy A, Fdy(FF, dbLong)
 End Sub
 
-Sub AddFldzTimstmp(A As DAO.TableDef, F$)
-A.Fields.Append Fd(F, DAO.dbDate, Dft:="Now")
+Sub AddFldzTimstmp(A As Dao.TableDef, F$)
+A.Fields.Append Fd(F, Dao.dbDate, Dft:="Now")
 End Sub
 
-Sub AddFldzTxt(A As DAO.TableDef, FF$, Optional Req As Boolean, Optional Si As Byte = 255)
+Sub AddFldzTxt(A As Dao.TableDef, FF$, Optional Req As Boolean, Optional Si As Byte = 255)
 Dim F$, I
 For Each I In TermAy(FF)
     F = I
@@ -34,11 +48,11 @@ For Each I In TermAy(FF)
 Next
 End Sub
 
-Function FnyzTd(A As DAO.TableDef) As String()
+Function FnyzTd(A As Dao.TableDef) As String()
 FnyzTd = Itn(A.Fields)
 End Function
 
-Function IsEqTd(A As DAO.TableDef, B As DAO.TableDef) As Boolean
+Function IsEqTd(A As Dao.TableDef, B As Dao.TableDef) As Boolean
 With A
 Select Case True
 Case .Name <> B.Name
@@ -50,41 +64,41 @@ End Select
 End With
 End Function
 
-Sub ThwIf_NETd(A As DAO.TableDef, B As DAO.TableDef)
+Sub ThwIf_NETd(A As Dao.TableDef, B As Dao.TableDef)
 Dim A1$(): A1 = TdLy(A)
 Dim B1$(): B1 = TdLy(B)
 If Not IsEqAy(A, B) Then Thw CSub, "Two 2 Td as diff", "Td-A Td-B", TdLy(A), TdLy(B)
 End Sub
 
-Sub DmpTdAy(TdAy() As DAO.TableDef)
+Sub DmpTdAy(TdAy() As Dao.TableDef)
 Dim I
 For Each I In TdAy
     D "------------------------"
     D TdLy(I)
 Next
 End Sub
-Function TdLyzDb(A As Database) As String()
+Function TdLyzDb(D As Database) As String()
 Dim T
-For Each T In Tni(A)
-    PushIAy TdLyzDb, TdLy(A.TableDefs(T))
+For Each T In Tni(D)
+    PushIAy TdLyzDb, TdLy(D.TableDefs(T))
 Next
 End Function
 
-Function TdLyzT(A As Database, T) As String()
-TdLyzT = TdLy(A.TableDefs(T))
+Function TdLyzT(D As Database, T) As String()
+TdLyzT = TdLy(D.TableDefs(T))
 End Function
 
 Function TdLy(Td) As String()
-Dim O$(), A As DAO.TableDef
+Dim O$(), A As Dao.TableDef
 Set A = Td
 PushI TdLy, TdStr(A)
-Dim F As DAO.Field
+Dim F As Dao.Field
 For Each F In A.Fields
     PushI TdLy, FdStr(F)
 Next
 End Function
 
-Private Function Fdy(FF$, T As DAO.DataTypeEnum) As DAO.Field2()
+Private Function Fdy(FF$, T As Dao.DataTypeEnum) As Dao.Field2()
 Dim I, F$
 For Each I In TermAy(FF)
     F = I
@@ -94,21 +108,54 @@ End Function
 
 Private Sub Z()
 Dim A As Variant
-Dim B As DAO.TableDef
-Dim C() As DAO.Field2
+Dim B As Dao.TableDef
+Dim C() As Dao.Field2
 Dim D$
 Dim E As Boolean
 Dim F As Byte
-Dim G As DAO.TableDefAttributeEnum
+Dim G As Dao.TableDefAttributeEnum
 CvTd A
 AddFldzId B
 End Sub
 
-Function IsTdSys(A As DAO.TableDef) As Boolean
-IsTdSys = A.Attributes And DAO.TableDefAttributeEnum.dbSystemObject <> 0
+Function IsTdSys(A As Dao.TableDef) As Boolean
+IsTdSys = A.Attributes And Dao.TableDefAttributeEnum.dbSystemObject <> 0
 End Function
 
-Function IsTdHid(A As DAO.TableDef) As Boolean
-IsTdHid = A.Attributes And DAO.TableDefAttributeEnum.dbHiddenObject <> 0
+Function IsTdHid(A As Dao.TableDef) As Boolean
+IsTdHid = A.Attributes And Dao.TableDefAttributeEnum.dbHiddenObject <> 0
 End Function
+
+
+Property Get TmpTd() As Dao.TableDef
+Dim Fdy() As Dao.Field2
+PushObj Fdy, FdzTxt("F1")
+Set TmpTd = TdzTF("Tmp", Fdy)
+End Property
+Property Get TmpDbPth$()
+TmpDbPth = EnsPth(TmpHom & "TmpDb\")
+End Property
+
+Function TmpDb() As Database
+Dim Fb$: Fb = TmpFb
+CrtFb Fb
+Set TmpDb = Db(Fb)
+End Function
+Function LasTmpDb() As Database
+Set LasTmpDb = Db(LasTmpFb)
+End Function
+Sub BrwLasTmpDb()
+BrwDb LasTmpDb
+End Sub
+Function LasTmpFb$()
+Dim Fn$: Fn = MaxEle(FnAy(TmpDbPth, "*.accdb"))
+If Fn = "" Then Thw CSub, "No *.accdb TmpDbPth", "TmpDbPth", TmpDbPth
+LasTmpFb = TmpDbPth & Fn
+End Function
+
+Function TmpFb$()
+TmpFb = TmpDbPth & TmpNm & ".accdb"
+End Function
+
+
 

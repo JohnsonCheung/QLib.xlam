@@ -15,7 +15,7 @@ Dim ArgAy$():            ArgAy = ArgAyzPmAy(PubMthPm)    ' Each ArgAy in ArgAy b
                                                          ' ArgSfx is ArgAy-without-Nm
 
 Dim ArgSfx$():                          ArgSfx = SrtAy(AwDist(ArgSfxy(ArgAy)))
-Dim ArgSfxToABC As Dictionary: Set ArgSfxToABC = DiEleqABC(ArgSfx)
+Dim ArgSfxToABC As Dictionary: Set ArgSfxToABC = DiKqABC(ArgSfx)
 Dim CallgPm$():                        CallgPm = XCallgPm(PubMthPm, ArgSfxToABC)
 Dim HasPrp      As Boolean:             HasPrp = PubGet.Cnt > 0
 Dim DimLy$():                            DimLy = XDimLy(ArgSfxToABC, HasPrp)                      ' 1-ArgAy => 1-DimLin
@@ -46,7 +46,7 @@ Dim Mthn, J%, O$(): For Each Mthn In Itr(MthNy)
     PushI O, XCallgLin(Mthn, CallingPm, PrpGetAset)
     J = J + 1
 Next
-XCallgLy = QSrt1(O)
+XCallgLy = SrtAyQ(O)
 End Function
 
 Private Function XCallgPmzPm$(Pm, ArgDic As Dictionary)

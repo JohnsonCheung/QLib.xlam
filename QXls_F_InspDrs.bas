@@ -61,7 +61,7 @@ Private Function XNxtDrsNo%(DrsNm$)
 Dim A As Drs, B As Drs, C As Drs
 A = DrszLo(X.IxLo)
 B = DwEqSel(A, "Nm", DrsNm, "Nm Drs# ValTy")
-C = ColEqExlEqCol(B, "ValTy", "Drs")
+C = DwEqE(B, "ValTy", "Drs")
 If NoReczDrs(C) Then XNxtDrsNo = 1: Exit Function
 XNxtDrsNo = MaxzAy(IntCol(C, "Drs#")) + 1
 End Function

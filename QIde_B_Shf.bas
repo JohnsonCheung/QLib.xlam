@@ -4,7 +4,7 @@ Option Compare Text
 ':ShtArg: It is :s: coming from :Arg:
 ':Arg:    It is :s: splitting :MthPm:
 ':Sset:   It is :Aset: with all ele is :s:
-':DArg:   It is :Drs:Nm IsByVal IsOpt IsPmAy IsAy TyChr:C AsTy DftVal:
+':DoArg:   It is :Drs:Nm IsByVal IsOpt IsPmAy IsAy TyChr:C AsTy DftVal:
 ':ArgTy:  It is :s: coming :Arg: which dfn the type of an :Arg:
 '         Eg, Dim A() as integer: :Arg:   => "A() As Integer"
 '                                 :ArgTy: => "%()"
@@ -292,6 +292,10 @@ Function NArg(MthLin) As Byte
 NArg = Si(SplitComma(BetBkt(MthLin)))
 End Function
 
+Function RetAsAyP() As String()
+RetAsAyP = DistColoS(DoMthRetAs, "RetAs")
+End Function
+
 Function RetAs$(Ret)
 If IsTyChr(FstChr(Ret)) Then
     RetAs = TyNmzTyChr(FstChr(Ret)) & RmvFstChr(Ret)
@@ -357,17 +361,17 @@ Case Else: ArgSfxzRet = " As " & Ret
 End Select
 End Function
 
-Private Sub Z_DArg()
-Dim Mth$(): Mth = StrCol(DMthP, "MthLin")
+Private Sub Z_DoArg()
+Dim Mth$(): Mth = StrCol(DoMthP, "MthLin")
 Dim L, Dy(): For Each L In Itr(Mth)
     PushIAy Dy, DyoArg(L)
 Next
-BrwDrs Drs(FnyArg, Dy)
+BrwDrs Drs(FoArg, Dy)
 End Sub
 
-Private Function DyoArgzMthLinAy(MthLinAy$()) As Variant()
+Private Function DyoArgzMthL(MthLinAy$()) As Variant()
 Dim L: For Each L In Itr(MthLinAy)
-    PushIAy DyoArgzMthLinAy, DyoArg(L)
+    PushIAy DyoArgzMthL, DyoArg(L)
 Next
 End Function
 
@@ -375,34 +379,35 @@ Private Function DyoArg(MthLin) As Variant()
 Dim Pm$: Pm = BetBkt(MthLin)
 Dim A$(): A = SplitCommaSpc(Pm)
 Dim Mthn$: Mthn = MthnzLin(MthLin)
-Dim Arg, Dy(): For Each Arg In Itr(A)
-    PushI DyoArg, DrArg(Arg, Mthn)
+Dim Arg$, Dy(), ArgNo%: For ArgNo = 1 To Si(A)
+    Arg = A(ArgNo - 1)
+    PushI DyoArg, DroArg(Arg, ArgNo, Mthn)
 Next
 End Function
-Private Function FnyArg() As String()
-FnyArg = SyzSS("Mthn Nm IsOpt IsByVal IsPmAy IsAy TyChr AsTy DftVal")
+Private Function FoArg() As String()
+FoArg = SyzSS("Mthn No Nm IsOpt IsByVal IsPmAy IsAy TyChr AsTy DftVal")
 End Function
 
-Function DArgzMthLinAy(MthLinAy$()) As Drs
-DArgzMthLinAy = Drs(FnyArg, DyoArgzMthLinAy(MthLinAy))
+Function DoArgzMthL(MthLinAy$()) As Drs
+DoArgzMthL = Drs(FoArg, DyoArgzMthL(MthLinAy))
 End Function
 
 Function DArgzM(M As CodeModule) As Drs
-Dim L$(): L = StrCol(DMthzM(M), "MthLin")
-     DArgzM = Drs(FnyArg, DyoArgzMthLinAy(L))
+Dim L$(): L = StrCol(DoMthzM(M), "MthLin")
+     DArgzM = Drs(FoArg, DyoArgzMthL(L))
 End Function
 
 Function DArgzP(P As VBProject) As Drs
-Dim M$(): M = StrCol(DMthzP(P), "MthLin")
-     DArgzP = Drs(FnyArg, DyoArgzMthLinAy(M))
+Dim M$(): M = StrCol(DoMthzP(P), "MthLin")
+     DArgzP = Drs(FoArg, DyoArgzMthL(M))
 End Function
 
 Function DArgP() As Drs
 DArgP = DArgzP(CPj)
 End Function
 
-Function DArg(MthLin) As Drs
-DArg = DrszFF("Mthn Nm IsOpt IsByVal IsPmAy IsAy TyChr RetAs DftVal", DyoArg(MthLin))
+Function DoArg(MthLin) As Drs
+DoArg = DrszFF("Mthn Nm ArgNo IsOpt IsByVal IsPmAy IsAy TyChr RetAs DftVal", DyoArg(MthLin))
 End Function
 Function ArgSfx$(Arg)
 Dim L$: L = Arg
@@ -418,7 +423,7 @@ Dim Arg: For Each Arg In Itr(Argy)
 Next
 End Function
 
-Function DrArg(Arg, Mthn$) As Variant()
+Function DroArg(Arg$, ArgNo%, Mthn$) As Variant()
 Dim L$: L = Arg
 Dim IsOpt   As Boolean:   IsOpt = ShfPfxSpc(L, "Optional")
 Dim IsByVal As Boolean: IsByVal = ShfPfxSpc(L, "ByVal")
@@ -436,10 +441,12 @@ Dim IsAy    As Boolean:    IsAy = ShfBkt(L)
         If Not ShfPfx(L, " = ") Then Stop
         Dim DftVal$: DftVal = L
     End If
-DrArg = Array(Mthn, Nm, IsOpt, IsPmAy, IsAy, TyChr, AsTy, DftVal)
+DroArg = Array(Mthn, ArgNo, Nm, IsOpt, IsByVal, IsPmAy, IsAy, TyChr, AsTy, DftVal)
 End Function
 
-
+Function DoArgV() As Drs
+DoArgV = DoArgzMthL(MthLinAyV)
+End Function
 
 Private Sub Z_MthRetTy()
 'Dim MthLin

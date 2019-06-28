@@ -51,7 +51,7 @@ TmpNmzWithSfx = TmpNm(Pfx) & "_" & X
 End Function
 
 Function TmpNm$(Optional Pfx$ = "N")
-TmpNm = Pfx & Format(Now(), "YYYYMMDD_HHMMSS")
+TmpNm = Pfx & TimId(Now)
 End Function
 
 Function TmpFdr$(Fdr)

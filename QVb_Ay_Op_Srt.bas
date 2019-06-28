@@ -7,6 +7,7 @@ Enum EmOrd
     EiAsc
     EiDes
 End Enum
+Private A_Ay
 Function SrtLines$(A$)
 SrtLines = JnCrLf(SrtAy(SplitCrLf(A)))
 End Function
@@ -19,38 +20,27 @@ Next
 IsSrtedzAy = True
 End Function
 
-Private Sub Z_QSrt()
-Dim Act, Ay
+Private Sub Z_SrtAyQ()
+Dim Ay, IsDes As Boolean
 GoSub T0
+GoSub T1
 Exit Sub
 T0:
+    Ay = Array(1, 2, 3, 4, 0, 1, 1, 5)
+    IsDes = False
+    Ept = Array(0, 1, 1, 1, 2, 3, 4, 5)
+    GoTo Tst
+T1:
     Ay = Array(1, 2, 4, 87, 4, 2)
+    IsDes = True
     Ept = Array(87, 4, 4, 2, 2, 1)
     GoTo Tst
 Tst:
-    Act = QSrt(Ay, EiDes)
-    Stop
+    Act = SrtAyQ(Ay, IsDes:=IsDes)
     C
     Return
 End Sub
 
-Function QSrt(Ay, Optional Ord As EmOrd)
-Dim N&: N = Si(Ay)
-If N <= 1 Then QSrt = Ay: Exit Function
-Dim V
-    V = Ay(0)
-Dim L, H
-    L = AwLT(Ay, V):
-    H = AwGT(Ay, V):
-Dim L1, V1, H1
-    L1 = QSrt(L)
-    V1 = AwEQ(Ay, V)
-    H1 = QSrt(H)
-Dim O
-    O = AyzAddAp(L1, V1, H1)
-If Ord = EiDes Then O = RevAy(O)
-QSrt = O
-End Function
 
 Function AwEQ(Ay, V)
 If Si(Ay) <= 1 Then AwEQ = Ay: Exit Function
@@ -89,78 +79,70 @@ For Each I In Ay
 Next
 AwGT = O
 End Function
-Function QSrt1(Ay, Optional IsDes As Boolean)
-If Si(Ay) = 0 Then Exit Function
-Dim O: O = Ay
-QSrt1LH O, 0, UB(Ay)
+
+Function SrtAyQ(Ay, Optional IsDes As Boolean)
+If Si(Ay) = 0 Then SrtAyQ = Ay: Exit Function
+A_Ay = Ay  ' Put it is A_Ay, which is untouch, only sort the %Ixy
+Dim Ixy&(): Ixy = LngSeqzFT(0, UB(Ay))
+Ixy = SrtAyQ__Srt(Ixy)  'Srt the %Ixy
 If IsDes Then
-    QSrt1 = RevAyAyI(O)
-Else
-    QSrt1 = O
+    Ixy = RevAyI(Ixy)
 End If
+SrtAyQ = AwIxy(Ay, Ixy)
 End Function
-Private Sub QSrt1LH(Ay, L&, H&)
-If L >= H Then Exit Sub
-Dim P&
-P = QSrt1Partition(Ay, L, H)
-QSrt1LH Ay, L, P
-QSrt1LH Ay, P + 1, H
-End Sub
-Function QSrt1Partition1&(OAy, L&, H&) 'Try mdy
-Dim V, I&, J&, X
-V = OAy(L)
-I = L
-J = H
-Dim Z&
-Z = 0
-Do
-    Z = Z + 1
-    If Z > 10000 Then Stop
-    While OAy(I) < V
-        I = I + 1
-    Wend
+
+Private Function SrtAyQ__Srt(Ixy&()) As Long()
+'Ret : a sorted ix of @Ixy
+Dim O&()
+    Select Case Si(Ixy)
+    Case 0
+    Case 1: O = Ixy
+    Case 2:
+        If SrtAyQ__IsLE(Ixy(0), Ixy(1)) Then
+            O = Ixy
+        Else
+            PushI O, Ixy(1)
+            PushI O, Ixy(0)
+        End If
+    Case Else
+        Dim L&():   L = Ixy
+        Dim P&:   P = Pop(L)
+        Dim A&(): A = SrtAyQ__LE(L, P)
+        Dim B&(): B = SrtAyQ__GT(L, P)
+                  A = SrtAyQ__Srt(A) 'Srt-it
+                  B = SrtAyQ__Srt(B)
+        PushIAy O, A
+          PushI O, P
+        PushIAy O, B
+    End Select
+SrtAyQ__Srt = O
+End Function
+Private Function SrtAyQ__IsLE(A, B&) As Boolean
+SrtAyQ__IsLE = A_Ay(A) <= A_Ay(B)
+End Function
+Private Function SrtAyQ__LE(Ixy&(), P&) As Long()
+'@Ixy : Ix to be selected
+'@P   : the Pivot-Ix to select those ix in @Ixy
+'Ret : a subset of @Ixy so that each the ret ix is LE than the Pivot-@P
+Dim I: For Each I In Itr(Ixy)
+    If SrtAyQ__IsLE(I, P) Then PushI SrtAyQ__LE, I  ' If the running-Ix-%I IsGT pivot-Ix-@P, push it to ret
+Next
+End Function
+Private Function SrtAyQ__GT(Ixy&(), P&) As Long()
+'@Ixy : Ix to be selected
+'@P   : the Pivot-Ix to select those ix in @Ixy
+'Ret : a subset of @Ixy so that each the ret ix is GT than the Pivot-@P
+Dim I: For Each I In Itr(Ixy)
+    If Not SrtAyQ__IsLE(I, P) Then PushI SrtAyQ__GT, I  ' If the running-Ix-%I IsGT pivot-Ix-@P, push it to ret
+Next
+End Function
     
-    While OAy(J) > V
-        J = J - 1
-    Wend
-    If I >= J Then
-        QSrt1Partition1 = J
-        Exit Function
-    End If
-
-    X = OAy(I)
-    OAy(I) = OAy(J)
-    OAy(J) = X
-Loop
-End Function
-
-Function QSrt1Partition&(OAy, L&, H&)
-Dim V, I&, J&, X
-V = OAy(L)
-I = L - 1
-J = H + 1
-Dim Z&
-Do
-    Z = Z + 1
-    If Z > 10000 Then Stop
-    Do
-        I = I + 1
-    Loop Until OAy(I) >= V
     
-    Do
-        J = J - 1
-    Loop Until OAy(J) <= V
 
-    If I >= J Then
-        QSrt1Partition = J
-        Exit Function
-    End If
 
-    X = OAy(I)
-    OAy(I) = OAy(J)
-    OAy(J) = X
-Loop
-End Function
+        
+    
+
 
 Private Sub Z_SrtAyByAy()
 Dim Ay, ByAy
@@ -245,7 +227,7 @@ Push Exp, "Private:MdMthDRsFunBdyLy:Function"
 Push Exp, "Private:SrcMthLx_ToLx:Function"
 Push Exp, "~Private:JnContinueLin:Sub"
 Push Exp, "~~:Tst:Sub"
-Act = QSrt1(A)
+Act = SrtAyQ(A)
 ThwIf_AyabNE Exp, Act
 End Sub
 
@@ -300,11 +282,12 @@ End Function
 
 Function SrtDic(A As Dictionary, Optional IsDesc As Boolean) As Dictionary
 If A.Count = 0 Then Set SrtDic = New Dictionary: Exit Function
-Dim K
-Set SrtDic = New Dictionary
-For Each K In QSrt1(A.Keys, IsDesc)
-   SrtDic.Add K, A(K)
+Dim O As New Dictionary
+Dim Srt: Srt = SrtAyQ(A.Keys, IsDesc)
+Dim K: For Each K In Srt
+   O.Add K, A(K)
 Next
+Set SrtDic = O
 End Function
 
 Private Sub Z_SrtAy4()

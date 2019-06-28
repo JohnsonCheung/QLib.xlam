@@ -85,17 +85,17 @@ Function SyzLpm(Lpm As Dictionary, PmNm) As String()
 '    SyzLpm = Lpm(PmNm)
 'End If
 End Function
-Function StrValzLpm$(Lpm As Dictionary, PmNm)
+Function StrVzLpm$(Lpm As Dictionary, PmNm)
 Dim Vy$()
     Vy = SyzLpm(Lpm, PmNm)
 Select Case Si(Vy)
 Case 0
-Case 1: StrValzLpm = Vy(0)
-'Case Else: Thw CSub, FmtQQ("Parameter [-?] should have one value", PmNm), "Pm PmValSz ValzPm-Sy", Fmt, Si(Vy), Vy
+Case 1: StrVzLpm = Vy(0)
+'Case Else: Thw CSub, FmtQQ("Parameter [-?] should have one value", PmNm), "Pm PmValSz VzPm-Sy", Fmt, Si(Vy), Vy
 End Select
 End Function
 Function LpmPatn$(Lpm As Dictionary, NmPfx)
-LpmPatn = StrValzLpm(Lpm, NmPfx & "Patn")
+LpmPatn = StrVzLpm(Lpm, NmPfx & "Patn")
 End Function
 
 

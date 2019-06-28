@@ -4,12 +4,12 @@ Option Explicit
 Private Const CMod$ = "MDta_Ay."
 Private Const Asm$ = "QDta"
 
-Function DtzAy(Ay, Optional FldNm$ = "Itm", Optional DtNm$ = "Ay") As Dt
+Function DtzAy(Ay, Optional FldNm$ = "Itm", Optional DtNm$ = "Ay") As DT
 Dim Dy(), J&
 For J = 0 To UB(Ay)
     PushI Dy, Array(Ay(J))
 Next
-DtzAy = Dt(DtNm, Sy(FldNm), Dy)
+DtzAy = DT(DtNm, Sy(FldNm), Dy)
 End Function
 
 Function GRxyzCyCntzAy(Ay) As Variant()
@@ -48,3 +48,4 @@ Dim Exp(): Exp = Array(Array("a", 3), Array("b", 2), Array("c", 1))
 Stop
 'AssEqDy Act, Exp
 End Sub
+

@@ -3,20 +3,20 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Dte."
 Private Const Asm$ = "QVb"
-Property Get CurMth() As Byte
-CurMth = Month(Now)
+Property Get CurMon() As Byte
+CurMon = Month(Now)
 End Property
 
-Function NxtMthzM(M As Byte) As Byte
-NxtMthzM = IIf(M = 12, 1, M + 1)
+Function NxtMonzM(M As Byte) As Byte
+NxtMonzM = IIf(M = 12, 1, M + 1)
 End Function
 
-Function PrvMthzM(M As Byte) As Byte
-PrvMthzM = IIf(M = 1, 12, M - 1)
+Function PrvMonzM(M As Byte) As Byte
+PrvMonzM = IIf(M = 1, 12, M - 1)
 End Function
 
-Function FstDteOfMth(A As Date) As Date
-FstDteOfMth = DateSerial(Year(A), Month(A), 1)
+Function FstDteOfMon(A As Date) As Date
+FstDteOfMon = DateSerial(Year(A), Month(A), 1)
 End Function
 
 Function IsVdtDte(A) As Boolean
@@ -24,12 +24,12 @@ On Error Resume Next
 IsVdtDte = Format(CDate(A), "YYYY-MM-DD") = A
 End Function
 
-Function LasDteOfMth(A As Date) As Date
-LasDteOfMth = PrvDte(FstDteOfMth(NxtMth(A)))
+Function LasDteOfMon(A As Date) As Date
+LasDteOfMon = PrvDte(FstDteOfMon(NxtMon(A)))
 End Function
 
-Function NxtMth(A As Date) As Date
-NxtMth = DateTime.DateAdd("M", 1, A)
+Function NxtMon(A As Date) As Date
+NxtMon = DateTime.DateAdd("M", 1, A)
 End Function
 Function IsHHMMDD(S) As Boolean
 Select Case True
@@ -41,6 +41,7 @@ Case _
 Case Else: IsHHMMDD = True
 End Select
 End Function
+
 Function IsHH(S) As Boolean
 Select Case True
 Case _
@@ -50,6 +51,7 @@ Case _
 Case Else: IsHH = True
 End Select
 End Function
+
 Function Is0059(S) As Boolean
 Select Case True
 Case _
@@ -59,6 +61,7 @@ Case _
 Case Else: Is0059 = True
 End Select
 End Function
+
 Function IsYYYYMMDD(S) As Boolean
 If Len(S) <> 8 Then Exit Function
 If Not IsYYYY(Left(S, 4)) Then Exit Function
@@ -115,7 +118,7 @@ FstDtezYM = DateSerial(2000 + Y, M, 1)
 End Function
 
 Function LasDtezYM(Y As Byte, M As Byte) As Date
-LasDtezYM = NxtMth(FstDtezYM(Y, M))
+LasDtezYM = NxtMon(FstDtezYM(Y, M))
 End Function
 
 Function YofNxtMzYM(Y As Byte, M As Byte) As Byte
@@ -133,3 +136,57 @@ End Property
 Property Get CurYY%()
 CurYY = Year(Now)
 End Property
+
+Function IsTimStr(Str) As Boolean
+If Len(Str) <> 17 Then Exit Function
+Select Case True
+Case IsHHMMSS(Right(Str, 6)), IsYYYYDashMMDashMM(Left(Str, 10)): IsTimStr = True
+End Select
+End Function
+Function IsHHMMSS(HHMMSS$) As Boolean
+On Error GoTo X
+Dim T As Date: T = CDate(Format(HHMMSS, "00:00:00"))
+IsHHMMSS = Format(T, "HHMMSS")
+Exit Function
+X:
+End Function
+Function TimId$(A As Date)
+TimId = Format(A, "YYYYMMDD_HHMMSS")
+End Function
+Function IsYYYYDashMMDashMM(A$) As Boolean
+Select Case True
+Case Len(A) <> 10, Mid(A, 5, 1) <> "-", Mid(A, 8, 1) <> "-": Exit Function
+End Select
+On Error GoTo X
+Dim T As Date: T = CDate(A)
+IsYYYYDashMMDashMM = Format(T, "YYYY-MM-DD")
+Exit Function
+X:
+End Function
+
+Function TimNm$(A As Date, Optional Pfx$ = "N")
+TimNm = Pfx & TimId(A)
+End Function
+
+Function TimStr$(A As Date)
+TimStr = Format(A, "YYYY-MM-DD HHMMSS")
+End Function
+Function NowId$()
+NowId = TimId(Now)
+End Function
+
+Property Get NowStr$()
+NowStr = TimStr(Now)
+End Property
+
+
+
+Function CvDbl(S, Optional Fun$)
+'Ret : a dbl of @S if can be converted, otherwise empty and debug.print S$
+On Error GoTo X
+CvDbl = CDbl(S)
+Exit Function
+X: If Fun <> "" Then Inf CSub, "str[" & S & "] cannot cv to dbl, emp is ret"
+End Function
+
+

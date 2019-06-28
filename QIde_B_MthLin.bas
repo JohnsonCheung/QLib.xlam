@@ -93,7 +93,7 @@ Tst:
 End Sub
 
 Function MthLinAyP() As String()
-MthLinAyP = StrCol(DMthP, "MthLin")
+MthLinAyP = StrCol(DoMthP, "MthLin")
 End Function
 
 Function MthLinAyzPub(Src$()) As String()
@@ -103,7 +103,7 @@ Next
 End Function
 
 Function MthLinAyzP(P As VBProject) As String()
-MthLinAyzP = StrCol(DMthzP(P), "MthLin")
+MthLinAyzP = StrCol(DoMthzP(P), "MthLin")
 End Function
 
 Function MthLinAyV() As String()
@@ -135,7 +135,7 @@ Function MthLzPum(PMthn)
 End Function
 
 Function MthLzPP$(P As VBProject, PMthn)
-Dim B$(): B = ModNyzPum(PMthn)
+Dim B$(): B = ModNyzPMth(PMthn)
 If Si(B) <> 1 Then
     Thw CSub, "Should be 1 module found", "PMthn [#Mod having PMthn] ModNy-Found", PMthn, Si(B), B
 End If

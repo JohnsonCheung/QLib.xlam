@@ -4,9 +4,9 @@ Option Explicit
 Public Const MaxCno% = 16384
 Public Const MaxRno& = 1048576
 Public Const XlsPgmFfn$ = "C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE"
-Public Const DoczLowZ$ = "z when used in Nm, it has special meaning.  It can occur in Cml las-one, las-snd, las-thrid chr, else it is er."
-Public Const DoczNmBrk$ = "NmBrk is z or zx or zxx where z is letter-z and x is lowcase or digit.  NmBrk must be sfx of a cml."
-Public Const DoczNmBrk_za$ = "It means `and`."
+':LowZ$ = "z when used in Nm, it has special meaning.  It can occur in Cml las-one, las-snd, las-thrid chr, else it is er."
+':NmBrk$ = "NmBrk is z or zx or zxx where z is letter-z and x is lowcase or digit.  NmBrk must be sfx of a cml."
+':NmBrk_za$ = "It means `and`."
 Enum EmAddgWay ' Adding data to ws way
     EiWcWay
     EiSqWay
@@ -31,6 +31,7 @@ End Function
 Sub ClrDtaRg(A As Worksheet)
 DtaRgzWs(A).Clear
 End Sub
+
 Function DtaRgzWs(Ws As Worksheet) As Range
 Set DtaRgzWs = Ws.Range(A1zWs(Ws), LasCell(Ws))
 End Function
@@ -43,15 +44,16 @@ Function A1zWb(A As Workbook, Optional NewWsn$) As Range ' Return A1 of a new Ws
 Set A1zWb = A1zWs(AddWs(A, NewWsn))
 End Function
 
-
 Function A1zWs(A As Worksheet) As Range
 Set A1zWs = A.Range("A1")
 End Function
 
-Function HasLo(A As Worksheet, Lon$) As Boolean
-HasLo = HasItn(A.ListObjects, Lon)
+Function HasLo(A As Worksheet, Lon$, Optional IsInf As Boolean) As Boolean
+Dim O As Boolean: O = HasItn(A.ListObjects, Lon)
+If Not O Then
+    MsgBox RplVBar("No Lo: " & Lon & "||In Ws: " & A.Name), vbCritical
+End If
 End Function
-
 
 Function LasCell(A As Worksheet) As Range
 Set LasCell = A.Cells.SpecialCells(xlCellTypeLastCell)
@@ -60,7 +62,6 @@ End Function
 Function LasRno&(A As Worksheet)
 LasRno = LasCell(A).Row
 End Function
-
 
 Function LasCno%(A As Worksheet)
 LasCno = LasCell(A).Column
@@ -75,7 +76,6 @@ End With
 Set RgzWs = WsRCRC(A, 1, 1, R, C)
 End Function
 
-
 Function PtNyzWs(A As Worksheet) As String()
 PtNyzWs = Itn(A.PivotTables)
 End Function
@@ -84,43 +84,35 @@ Function WbzWs(A As Worksheet) As Workbook
 Set WbzWs = A.Parent
 End Function
 
-
 Function WsC(A As Worksheet, C) As Range
 Dim R As Range
 Set R = A.Columns(C)
 Set WsC = R.EntireColumn
 End Function
 
-
 Function WsCC(A As Worksheet, C1, C2) As Range
 Set WsCC = WsRCC(A, 1, C1, C2).EntireColumn
 End Function
-
 
 Function WsCRR(A As Worksheet, C, R1, R2) As Range
 Set WsCRR = WsRCRC(A, R1, C, R2, C)
 End Function
 
-
 Function WsRC(A As Worksheet, R, C) As Range
 Set WsRC = A.Cells(R, C)
 End Function
-
 
 Function WsRCC(A As Worksheet, R, C1, C2) As Range
 Set WsRCC = WsRCRC(A, R, C1, R, C2)
 End Function
 
-
 Function WsRCRC(A As Worksheet, R1, C1, R2, C2) As Range
 Set WsRCRC = A.Range(WsRC(A, R1, C1), WsRC(A, R2, C2))
 End Function
 
-
 Function WsRR(A As Worksheet, R1, R2) As Range
 Set WsRR = A.Range(WsRC(A, R1, 1), WsRC(A, R2, 1)).EntireRow
 End Function
-
 
 Function SqzWs(A As Worksheet) As Variant()
 SqzWs = RgzWs(A).Value
@@ -230,11 +222,11 @@ Set WszWb = A.Sheets(WsIx)
 End Function
 
 Function WsnyzRg(A As Range) As String()
-WsnyzRg = WsNy(WbzRg(A))
+WsnyzRg = Wsny(WbzRg(A))
 End Function
 
-Function WsNy(A As Workbook) As String()
-WsNy = Itn(A.Sheets)
+Function Wsny(A As Workbook) As String()
+Wsny = Itn(A.Sheets)
 End Function
 
 
@@ -619,13 +611,13 @@ End Property
 Property Get SampWs() As Worksheet
 Dim O As Worksheet
 Set O = NewWs
-LozDrs DoSamp, WsRC(O, 2, 2)
+LozDrs SampDrs, WsRC(O, 2, 2)
 Set SampWs = O
 ShwWs O
 End Property
 
 Function FstWsn$(Fx)
-FstWsn = FstItm(WNy(Fx))
+FstWsn = FstItm(Wny(Fx))
 End Function
 
 Function OleCnStrzFx$(Fx)
@@ -706,11 +698,6 @@ ColzRg = ColzSq(SqzRg(R))
 End Function
 Function RgCEnt(A As Range, C) As Range
 Set RgCEnt = RgC(A, C).EntireColumn
-End Function
-Function NxtCellBelow(A As Range) As Range
-Dim O As Range: Set O = RgRC(A, 2, 1)
-If IsEmpty(O.Value) Then Exit Function
-Set NxtCellBelow = O
 End Function
 Function RgC(A As Range, C) As Range
 Set RgC = RgCC(A, C, C)
@@ -803,7 +790,7 @@ Function CellBelow(Cell As Range, Optional N = 1) As Range
 Set CellBelow = RgRC(Cell, 1 + N, 1)
 End Function
 
-Sub SwapValzRg(Cell1 As Range, Cell2 As Range)
+Sub SwapVzRg(Cell1 As Range, Cell2 As Range)
 Dim A: A = RgRC(Cell1, 1, 1).Value
 RgRC(Cell1, 1, 1).Value = RgRC(Cell2, 1, 1).Value
 RgRC(Cell2, 1, 1).Value = A
@@ -932,24 +919,19 @@ Function VbarSy(A As Range) As String()
 VbarSy = SyzAy(VbarAy(A))
 End Function
 
-Function RgzBelowCell(Cell As Range)
-Dim Ws As Worksheet: Set Ws = WszRg(Cell)
-Set RgzBelowCell = WsCRR(Ws, Cell.Column, Cell.Row, LasRno(Ws))
-End Function
-
 Function DrszFxq(Fx, Q) As Drs
 DrszFxq = DrszArs(CnzFx(Fx).Execute(Q))
 End Function
 Function TmpDbzFx(Fx) As Database
-Set TmpDbzFx = TmpDbzFxWny(Fx, WNy(Fx))
+Set TmpDbzFx = TmpDbzFxWny(Fx, Wny(Fx))
 End Function
 
-Function TmpDbzFxWny(Fx, WNy$()) As Database
+Function TmpDbzFxWny(Fx, Wny$()) As Database
 Dim O As Database
    Set O = TmpDb
 Dim W
-For Each W In Itr(WNy)
-    LnkFx O, ">" & W, Fx, W
+For Each W In Itr(Wny)
+    LnkFxw O, ">" & W, Fx, W
 Next
 Set TmpDbzFxWny = O
 End Function
@@ -976,7 +958,7 @@ WsCdNyzFx = WsCdNy(Wb)
 Wb.Close False
 End Function
 
-Function DtzFxw(Fx, Optional Wsn0$) As Dt
+Function DtzFxw(Fx, Optional Wsn0$) As DT
 Dim N$: N = DftWsn(Wsn0, Fx)
 Dim Q$: Q = FmtQQ("Select * from [?$]", N)
 DtzFxw = DtzDrs(DrszFxq(Fx, Q), N)
@@ -992,7 +974,7 @@ End Function
 
 Private Sub Z_Wny()
 Const Fx$ = "Users\user\Desktop\Invoices 2018-02.xlsx"
-D WNy(Fx)
+D Wny(Fx)
 End Sub
 
 Private Sub Z_FstWsn()
@@ -1024,11 +1006,11 @@ T1:
     GoSub Tst
     Return
 Tst:
-    Act = WNy(Fx)
+    Act = Wny(Fx)
     C
     Return
 Z:
-    DmpAy WNy(SampFxzKE24)
+    DmpAy Wny(SampFxzKE24)
 End Sub
 Function ErzFfnMis(Ffn$, Optional Inpn$ = "File") As String()
 If HasFfn(Ffn) Then Exit Function
@@ -1051,7 +1033,7 @@ Erase XX
 XLin FmtQQ("[?] miss ws [?]", Inpn, Wsn)
 XTab "Path  : " & Pth(Fx)
 XTab "File  : " & Fn(Fx)
-XTab "Has Ws: " & TermLin(WNy(Fx))
+XTab "Has Ws: " & TermLin(Wny(Fx))
 ErzWsMis = XX
 End Function
 
@@ -1076,7 +1058,7 @@ Function WszDic(Dic As Dictionary, Optional InclDicValOptTy As Boolean) As Works
 Set WszDic = WszDrs(DrszDic(Dic, InclDicValOptTy))
 End Function
 
-Function WszDt(A As Dt) As Worksheet
+Function WszDt(A As DT) As Worksheet
 Dim O As Worksheet
 Set O = NewWs(A.DtNm)
 LozDrs DrszDt(A), A1zWs(O)
@@ -1186,4 +1168,21 @@ Dim C: For Each C In Itr(Cxy)
 Next
 End Function
 
+Sub AddHypLnk(Rg As Range, Wsn)
+Dim A1 As Range: Set A1 = WszWb(WbzRg(Rg), Wsn).Range("A1")
+Rg.Hyperlinks.Add Rg, "", SubAddress:=A1.Address(External:=True)
+End Sub
+
+Function AdrzCell$(A As Range)
+AdrzCell = RgA1(A).Address(External:=True)
+End Function
+
+Function IsSqEmp(Sq()) As Boolean
+Dim R&: For R = 1 To UBound(Sq, 1)
+    Dim C%: For C = 1 To UBound(Sq, 2)
+        If Not IsEmpty(Sq(R, C)) Then Exit Function
+    Next
+Next
+IsSqEmp = True
+End Function
 

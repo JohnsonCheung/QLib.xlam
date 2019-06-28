@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Ay_Map_Transform."
 Private Const Asm$ = "QVb"
-Public Const DoczTLin = "Is a line with Terms separated by spc."
+':TLin = "Is a line with Terms separated by spc."
 Function AyIncEle1(Ay)
 AyIncEle1 = AyIncEleN(Ay, 1)
 End Function

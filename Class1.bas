@@ -26,10 +26,6 @@ Private Sub BoAlignMth_Click(ByVal Ctrl As Office.CommandBarButton, CancelDefaul
 QIde_B_AlignMth.AlignMth
 End Sub
 
-Private Sub BoRunZ_Click(ByVal Ctrl As Office.CommandBarButton, CancelDefault As Boolean)
-Z
-End Sub
-
 Friend Sub Class_Initialize()
 Dim Spec$():              Spec = Y_BtnSpec  ' Spec
 EnsBtns IndentedLy(Spec, "Bars")
@@ -37,6 +33,7 @@ Set BoRunZ = Bars("XX").Controls("RunZ")
 Set BoAlignMth = Bars("XX").Controls("AlignMth")
 'BoRunZ.ShortcutText = "Alt+Z"
 End Sub
+
 Private Sub Class_Terminate()
 MsgBox "Class1 terminated"
 End Sub

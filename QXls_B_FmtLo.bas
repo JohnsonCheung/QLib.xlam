@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QXls"
 Private Const CMod$ = "MXls_Lo_Fmt."
-Public Const DoczLof$ = "It is Ly with T1 LofT1nn"
+':Lof$ = "It is Ly with T1 LofT1nn"
 Private Type A
     Lo As ListObject
     Fny() As String
@@ -116,7 +116,7 @@ Dim R1 As Range
 Dim R2 As Range
 Set R1 = XHdrCell(Fld)
 Set R2 = CellAbove(R1)
-SwapValzRg R1, R2
+SwapVzRg R1, R2
 End Sub
 
 'Lvl----------------------------------------------------------

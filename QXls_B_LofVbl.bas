@@ -8,12 +8,12 @@ Function LofVblzQt$(A As QueryTable)
 LofVblzQt = LofVblzFbtStr(FbtStrzQt(A))
 End Function
 
-Property Get LofVblzT$(A As Database, T)
-LofVblzT = TblPrp(A, T, "LofVbl")
+Property Get LofVblzT$(D As Database, T)
+LofVblzT = TblPrp(D, T, "LofVbl")
 End Property
 
-Property Let LofVblzT(A As Database, T, V$)
-TblPrp(A, T, "LofVbl") = V
+Property Let LofVblzT(D As Database, T, V$)
+TblPrp(D, T, "LofVbl") = V
 End Property
 
 Function LofVblzLo$(A As ListObject)

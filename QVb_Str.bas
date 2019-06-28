@@ -8,10 +8,6 @@ Function SzIf$(IfTrue As Boolean, S)
 If IfTrue Then SzIf = S
 End Function
 
-Function IsEqStr(A, B, Optional C As VbCompareMethod = vbBinaryCompare) As Boolean
-IsEqStr = StrComp(A, B, C) = 0
-End Function
-
 Function Pad0$(N&, NDig&)
 Pad0 = Format(N, Dup("0", NDig))
 End Function
@@ -29,15 +25,11 @@ Function StrDft$(S, Dft)
 StrDft = IIf(S = "", Dft, S)
 End Function
 
-Function ULin$(S$, Optional ULChr$ = "-")
-ULin = Dup(ULChr, Len(S))
-End Function
 Function DupzWy(W%(), Optional C$ = "-") As String()
 Dim I: For Each I In W
     Push DupzWy, Dup(C, I)
 Next
 End Function
-
 
 Function Dup$(S, N)
 Dim O$, J&

@@ -19,13 +19,13 @@ End Function
 Function FmtCmpgDiczCmpg(A As CmpgDic, Optional ExlSam As Boolean) As String()
 Dim O$()
 With A
-    O = AyzAddAp( _
+    O = AddAyAp( _
         FmtExcess(.AExcess, .Nm1), _
         FmtExcess(.BExcess, .Nm2), _
         FmtDif(.ADif, .BDif))
 End With
 If Not ExlSam Then
-    O = AyzAdd(O, FmtSam(A.Sam))
+    O = AddAy(O, FmtSam(A.Sam))
 End If
 FmtCmpgDiczCmpg = O
 End Function
@@ -79,8 +79,8 @@ If A.Count = 0 Then Exit Function
 Dim O$(), K, S1$, S2$, S As S12s, KK$
 For Each K In A
     KK = K
-    S1 = "!" & "Er Dif" & vbCrLf & K & vbCrLf & UnderLinzLines(KK) & vbCrLf & A(K)
-    S2 = "!" & "Er Dif" & vbCrLf & K & vbCrLf & UnderLinzLines(KK) & vbCrLf & B(K)
+    S1 = "!" & "Er Dif" & vbCrLf & K & vbCrLf & ULinzLines(KK) & vbCrLf & A(K)
+    S2 = "!" & "Er Dif" & vbCrLf & K & vbCrLf & ULinzLines(KK) & vbCrLf & B(K)
     PushS12 S, S12(S1, S2)
 Next
 FmtDif = FmtS12s(S, N1:="", N2:="")
@@ -91,7 +91,7 @@ If A.Count = 0 Then Exit Function
 Dim K, S1$, S2$, S As S12s
 S2 = "!" & "Er Excess (" & Nm & ")"
 For Each K In A.Keys
-    S1 = UnderLinzLines(CStr(K))
+    S1 = ULinzLines(CStr(K))
     S2 = A(K)
     PushS12 S, S12(S1, S2)
 Next
@@ -103,7 +103,7 @@ If A.Count = 0 Then Exit Function
 Dim O$(), K, S As S12s, KK$
 For Each K In A.Keys
     KK = K
-    PushS12 S, S12("*Same", K & vbCrLf & UnderLinzLines(KK) & vbCrLf & A(K))
+    PushS12 S, S12("*Same", K & vbCrLf & ULinzLines(KK) & vbCrLf & A(K))
 Next
 FmtSam = FmtS12s(S)
 End Function

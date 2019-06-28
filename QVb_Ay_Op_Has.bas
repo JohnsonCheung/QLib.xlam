@@ -3,25 +3,23 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Ay_Op_Has."
 Private Const Asm$ = "QVb"
-Function HasObj(Ay, Obj) As Boolean
-Dim I, OPtr&
-OPtr = ObjPtr(Obj)
-For Each I In Ay
+Function HasObj(ObjAy, Obj) As Boolean
+Dim OPtr&: OPtr = ObjPtr(Obj)
+Dim I: For Each I In ObjAy
     If ObjPtr(I) = OPtr Then HasObj = True: Exit Function
 Next
 End Function
 Function HasDup(Ay) As Boolean
 Dim S As New Dictionary
-Dim I
-For Each I In Ay
+Dim I: For Each I In Ay
     If S.Exists(I) Then HasDup = True: Exit Function
     S.Add I, Empty
 Next
 End Function
 
 Function HasEleS(Ay, StrEle$, Optional C As VbCompareMethod = vbBinaryCompare) As Boolean
-Dim I
-For Each I In Itr(Ay)
+'Ret: true if @Ay has @StrEle
+Dim I: For Each I In Itr(Ay)
     If IsEqStr(I, StrEle, C) Then HasEleS = True: Exit Function
 Next
 End Function
@@ -47,18 +45,19 @@ For Each Ay In Itr(AvAp)
     If Si(Ay) > 0 Then HasElezInSomAyzOfAp = True: Exit Function
 Next
 End Function
-Function IsSubAy(SubAy, SuperAy) As Boolean
-Dim I
-For Each I In Itr(SubAy)
+
+Function IsAySub(SubAy, SuperAy) As Boolean
+Dim I: For Each I In Itr(SubAy)
     If Not HasEle(SuperAy, I) Then Exit Function
 Next
-IsSubAy = True
+IsAySub = True
 End Function
-Function IsSuperAy(SuperAy, SubAy) As Boolean
-IsSuperAy = IsSubAy(SubAy, SuperAy)
+
+Function IsAySuper(SuperAy, SubAy) As Boolean
+IsAySuper = IsAySub(SubAy, SuperAy)
 End Function
 Function ThwNotSuperAy(SuperAy, SubAy) As String()
-If IsSuperAy(SuperAy, SubAy) Then Exit Function
+If IsAySuper(SuperAy, SubAy) Then Exit Function
 Thw CSub, "Some element in SubAy are found in SuperAy", "[Som Ele in SubAy] SubAy SuperAy", MinusAy(SubAy, SuperAy), SubAy, SuperAy
 End Function
 
@@ -107,16 +106,6 @@ For Each X In Itr(A)
         Exit Function
     End If
 Next
-End Function
-
-Function IsAySub(Ay, SubAy) As Boolean
-If Si(Ay) = 0 Then Exit Function
-If Si(SubAy) = 0 Then IsAySub = True: Exit Function
-Dim I
-For Each I In SubAy
-    If Not HasEle(Ay, I) Then Exit Function
-Next
-IsAySub = True
 End Function
 
 Private Sub Z_HasEleAyInSeq()

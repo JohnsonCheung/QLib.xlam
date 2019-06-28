@@ -31,52 +31,54 @@ Private Const C_Lo_MisNm$ = ""
 Private Const C_Lo_ErNm = ""
 Private Const MAli_MustLRCenter$ = ""
 
-Private Function M_Lo_ErNm$(LnoAy&())
-If Si(LnoAy) = 0 Then Exit Function
-M_Lo_ErNm = FmtQQ(C_Lo_ErNm, JnSpc(LnoAy))
-End Function
-
 Function LofT1Ny() As String()
 LofT1Ny = TermAy(LofT1nn)
-End Function
-
-Private Function B_ELo_DupNm(Dup As Lnxses) As String()
-
 End Function
 
 Private Function B_ELo_MisFld(IsMisLoFld As Boolean) As String()
 
 End Function
-Private Function B_ELo_DupLofFld(DupFny$()) As String()
+Private Function XELoFldDup(DupFny$()) As String()
 
 End Function
-Private Function B_ELo_IsMisNm$(IsMisNm As Boolean)
+Private Function XELoNmMis$(IsMisNm As Boolean)
 Stop
 'B_ELo_IsMisNm = SzIf(IsMisNm, MLo_MisNm)
 End Function
 
-Private Function B_ELo_ErNm$(LnoAy() As Long)
-B_ELo_ErNm = M_Lo_ErNm(LnoAy)
+Private Function XELoNmEr$(LnoAy() As Long)
+'XELoNmEr = M_Lo_ErNm(LnoAy)
 End Function
-Private Function B_ELo_MisNm(IsMisNm As Boolean)
+
+Private Function XELoNmDup(LnossAy$()) As String()
+Dim Lnoss: For Each Lnoss In Itr(LnossAy)
+    PushI XELoNmDup, FmtQQ(C_Lo_ErNm, Lnoss)
+Next
+End Function
+
+Private Function XELoFldMis(LoFldMis As Boolean) As String()
 
 End Function
+
 Function ErzLof(Lof$(), LoFny$()) As String() 'Erzror-of-ListObj-Formatter:Erz.z.Lo.f
-Dim Lo_IsMisNm As Boolean
-Dim Lo_DupNm As Lnxses
-Dim Lo_ErNmLnoAy&()
-Dim Lo_IsMisFldLin As Boolean
-Dim Lo_DupFny$()
-Dim LofFny$()
+'== Lo-Lvl
+Dim LNmMis As Boolean
+Dim LNmDup$()
+Dim LNmEr&()
+Dim LFldMis As Boolean
+Dim LFldDup$()
+
 '--
 Dim AliKwErLnoss$
 Dim DupLofFny$()
-Dim ELo1$:   ELo1 = B_ELo_MisNm(Lo_IsMisNm)
-Dim ELo2$:   ELo2 = B_ELo_ErNm(Lo_ErNmLnoAy)
-Dim ELo3$(): ELo3 = B_ELo_DupNm(Lo_DupNm)
-Dim ELo4$(): ELo4 = B_ELo_MisFld(Lo_IsMisFldLin)
-Dim ELo5$(): ELo5 = B_ELo_DupLofFld(DupLofFny)
-Dim ELo6$(): ' ELo6 = B_ELo_NoLofFny(LofFny)
+Dim ELo1$:   ELo1 = XELoNmMis(LNmMis)
+Dim ELo2$:   ELo2 = XELoNmEr(LNmEr)
+Dim ELo3$(): ELo3 = XELoNmDup(LNmDup)
+Dim ELo4$(): ELo4 = XELoFldMis(LFldMis)
+Dim ELo5$(): ELo5 = XELoFldDup(LFldDup)
+
+'-- LofFny
+Dim LofFny$()
 
 Dim EAli1$(): EAli1 = Sy(FmtQQ(MAli_MustLRCenter, AliKwErLnoss))
 Dim EWdt1$(): EWdt1 = B_EVal_NotBet("Wdt", 10, 200)
@@ -102,7 +104,7 @@ Dim EBet1$()
 Dim EBet2$()
 Dim EBet3$()
 
-Dim ELo$(): ELo = Sy(ELo1, ELo2, ELo3)
+Dim ELo$():  ELo = Sy(ELo1, ELo2, ELo3)
 Dim EAli$(): EAli = Sy(EAli1)
 Dim EBdr$(): ELo = Sy(ELo1, ELo2, ELo3)
 Dim ETot$(): ELo = Sy(ELo1, ELo2, ELo3)
@@ -116,14 +118,7 @@ Dim ETit$(): ETit = Sy(ETit1)
 Dim EBet$(): EBet = Sy(EBet1)
 ErzLof = Sy(ELo, EAli, EBdr, ETot, EWdt, EFmt, ELvl, ECor, EFml, ELbl, ETit, EBet)
 End Function
-Function FnywLikssAy(Fny$(), LikssAy$()) As String()
-Dim F$, I, LikAy$()
-LikAy = TermAsetzTLiny(LikssAy).Sy
-For Each I In Itr(Fny)
-    F = I
-    If HitLikAy(F, LikAy) Then PushI FnywLikssAy, F
-Next
-End Function
+
 
 Private Function WAli_LeftRightCenter() As String()
 'ErzAli_LinErz = WMsgzAliLin(SyeT1Sy(Ali, "Left Right Center"))
@@ -216,46 +211,40 @@ For Each I In SyzSS(LofT1nnzSng) 'It is for [SngFldLin] only
     PushIAy ErzFldSngzDup, ErzFldSngzDup__WithinT1(T1)
 Next
 End Function
-Private Function ErzFldSngzDup__DupFld_is_fnd(DupFld$, Lnxs As Lnxs, T1) As String() '[DupFld] is found within [Lnxs].  All [Lnxs] has [T1]
-Dim LnoAy&(): ' LnoAy = LngAyzOyPrp(LnxswT2(Lnxs, DupFld), "Lno")
-Dim J%, Lno0&
-For J = 1 To UB(LnoAy)
-    Lno0 = LnoAy(0)
-'    PushI ErzFldSngzDup__DupFld_is_fnd, MsgOf_Fld_Dup(LnoAy(J), T1, DupFld, Lno0)
-Next
-End Function
+
 Private Function ErzFldSngzDup__WithinT1(T1) As String() 'Within T1 any fld is dup?
-Dim DupFld$, I, Lnxs As Lnxs
-Lnxs = WLnxszT1(T1)
-For Each I In Itr(DupT2AyzLnxs(Lnxs))
+Dim DupFld$, I
+
+'For Each I In Itr(DupT2AyzLnxs())
     DupFld = I
 '    PushIAy ErzFldSngzDup__WithinT1, ErzFldSngzDup__DupFld_is_fnd(DupFld, Lnxs, T1)
-Next
+'Next
 End Function
-Private Function ErzFml(Fny$()) As String()
-ErzFml = ErzFml__InsideFmlHasInvalidFld(Fny)
+Private Function XErFml(Fny$()) As String()
+XErFml = XErFml__InsideFmlHasInvalidFld(Fny)
 End Function
-Private Function ErzFml__InsideFmlHasInvalidFld(Fny$()) As String()
+Private Function XErFml__InsideFmlHasInvalidFld(Fny$()) As String()
 Dim J&, Fld$, Fml$, O$(), S$, T1
-Dim Lnxs As Lnxs: Lnxs = WLnxszT1("Fml")
-For J = 0 To Lnxs.N - 1
-    With Lnxs.Ay(J)
-        AsgTTRst .Lin, S, Fld, Fml
+'Dim Lnxs As Lnxs: Lnxs = WLnxszT1("Fml")
+'For J = 0 To Lnxs.N - 1
+    'With Lnxs.Ay(J)
+'        AsgTTRst .Lin, S, Fld, Fml
         If FstChr(Fml) <> "=" Then
             'PushI O, WMsg_Fml_FstChr(.Lno)
         Else
-            Dim ErzFny$(): ErzFny = ErzFnyzFml(Fld, Fml, Fny)
+            Dim ErzFny$(): 'ErzFny = ErzFnyzFml(Fld, Fml, Fny)
 '            PushIAy O, ErzFml__InsideFmlHasInvalidFld1(ErzFny, .Lno, Fld, Fml)
         End If
-    End With
-Next
-ErzFml__InsideFmlHasInvalidFld = O
+    'End With
+'Next
+XErFml__InsideFmlHasInvalidFld = O
 End Function
-Function ErzFnyzFml(Fld$, Fml$, Fny$()) As String() 'Return Subset-Fny (quote by []) in [Fml] which is error. _
+Function zFnyzFml(Fld$, Fml$, Fny$()) As String() 'Return Subset-Fny (quote by []) in [Fml] which is error. _
 It is error if any-FmlFny not in [Fny] or =[Fld]
 Dim Ny$(): Ny = NyzMacro(Fml, OpnBkt:="[")
-If HasEle(Ny, Fld) Then PushI ErzFnyzFml, Fld
-PushIAy ErzFnyzFml, MinusAy(Fml, Fny)
+If HasEle(Ny, Fld) Then 'PushI ErzFnyzFml, Fld
+'PushIAy ErzFnyzFml, MinusAy(Fml, Fny)
+End If
 End Function
 Private Function ErzFmt() As String()
 
@@ -265,17 +254,19 @@ Private Function ErzLbl() As String()
 End Function
 Private Function B_ErzMisFnyzFmti(Fmti) As String()
 End Function
+
 Private Function B_ETot_Cnt_Must_1_Fld() As String()
 
 End Function
-Private Function B_ETot_Must_Sum_Cnt_Avg(TotT1 As Lnxs) As String()
+
+Private Function B_ETot_Must_Sum_Cnt_Avg() As String()
 Dim J%
 Dim TotKw$(): TotKw = SyzSS("Avg Cnt Sum")
-For J = 0 To TotT1.N - 1
-    With TotT1.Ay(J)
+'For J = 0 To TotT1.N - 1
+'    With TotT1.Ay(J)
 '    If Not HasEle(TotKw, .Lin) Then PushI B_ETot_Must_Sum_Cnt_Avg, MTot_Must_Sum_Cnt_Avg
-    End With
-Next
+'    End With
+'Next
 End Function
 Private Function ErzTot_1() '(Cnt$(), CntLxAy%(), Sum$(), SumLxAy%(), Avg$(), AvgLxAy%()) As Erz
 'Dim O As New Erz
@@ -300,30 +291,29 @@ Private Function B_ELo_() As String()
 'W-Erzror-of-LofLinVal:W means working-value. _
 which is using the some Module-Lvl-variables and it is private. _
 Val here means the LofValFld of LofLin
-'E_BLo = Sy(ErzValzNotNum, ErzValzNotInLis, ErzValzFml, ErzValzNotBet)
+'E_BLo = Sy(ErzVzNotNum, ErzVzNotInLis, ErzVzFml, ErzVzNotBet)
 End Function
-Private Function ErzValzFml() As String()
+Private Function ErzVzFml() As String()
 
 End Function
 Private Function B_EVal_NotBet(T1, FmNumVal, ToNumval) As String()
 'Dim Lnx(): Lnx = A_T1ToLnxsDic(T1)
 End Function
-Private Function ErzValzNotInLis() As String()
+Private Function ErzVzNotInLis() As String()
 
 End Function
-Private Function ErzValzNotNum() As String()
+Private Function ErzVzNotNum() As String()
 Dim T
 For Each T In SyzSS("Wdt Lvl")
 Next
 End Function
 Private Function ErzWdt() As String()
 End Function
-Private Function WLnxszT1(T1) As Lnxs
-'If A.KLxs.Exists(T1) Then WLnxszT1 = A.KLxs(T1)
-End Function
+
 Private Function WMsgzBetTermCnt$(L, NTerm%)
 
 End Function
+
 Private Function WMsgzDupNy(DupNy$(), LnoStrAy$()) As String()
 Dim N, J&
 For Each N In Itr(DupNy)

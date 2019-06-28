@@ -34,7 +34,7 @@ Next
 End Function
 
 Private Sub Z_FmtA()
-DmpAy JnDy(DyoSamp1)
+DmpAy JnDy(SampDy1)
 End Sub
 
 Function DywDup(Dy(), C&) As Variant()
@@ -102,12 +102,12 @@ For Each I In Itr(SslAy)
 Next
 End Function
 
-Function CntDiczDyC(Dy(), C&) As Dictionary
-Set CntDiczDyC = CntDic(ColzDy(Dy, C))
+Function DiKqCntzDyC(Dy(), C&) As Dictionary
+Set DiKqCntzDyC = DiKqCnt(ColzDy(Dy, C))
 End Function
 
-Function SeqCntDiczDy(Dy(), C&) As Dictionary
-Set SeqCntDiczDy = SeqCntDic(ColzDy(Dy, C&))
+Function SeqDiKqCntzDy(Dy(), C&) As Dictionary
+Set SeqDiKqCntzDy = SeqDiKqCnt(ColzDy(Dy, C&))
 End Function
 
 
@@ -234,12 +234,12 @@ For Each Dr In Itr(Dy)
 Next
 Thw CSub, "No first rec in Dy of Col-A eq to Val-B", "Col-A Val-B Dy", C, Eq, JnDy(Dy)
 End Function
-Function FstDrEqzDy(Dy(), C, Eq, SelIxy&()) As Variant()
-Dim Dr
-For Each Dr In Itr(Dy)
-    If Dr(C) = Eq Then FstDrEqzDy = AwIxy(Dr, SelIxy): Exit Function
+
+Function FstDrzDy(Dy(), C, V) As Variant()
+Dim Dr: For Each Dr In Itr(Dy)
+    If Dr(C) = V Then FstDrzDy = Dr: Exit Function
 Next
-Thw CSub, "No first Dr in Dy of Col-A eq to Val-B", "Col-A Val-B Dy", C, Eq, JnDy(Dy)
+Thw CSub, "No first Dr in Dy of Cix eq to V", "Cix V Dy", C, V, JnDy(Dy)
 End Function
 
 Function DywDupCC(Dy(), CCIxy&()) As Variant()
@@ -280,6 +280,12 @@ Function IxyzCny(Cny) As Long()
 If Si(Cny) = 0 Then Exit Function
 Dim Cno: For Each Cno In Cny
     PushI IxyzCny, Cno - 1
+Next
+End Function
+
+Function DyzVbl(Vbl$) As Variant()
+Dim L: For Each L In Itr(SplitVBar(Vbl))
+    PushI DyzVbl, SyzSS(L)
 Next
 End Function
 

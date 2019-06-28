@@ -3,6 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Str_Trim."
 Private Const Asm$ = "QVb"
+
 Function TrimWhite$(A)
 TrimWhite = TrimWhiteL(TrimWhiteL(A))
 End Function

@@ -3,9 +3,9 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Fun_VerbPatn."
 Private Const Asm$ = "QIde"
-Public Const Verbss$ = "Zip Wrt Wrp Wait Vis Vc UnderLin UnRmk UnEsc Trim Tile Thw Tak Sye Swap Sum Stop Srt Split Solve Shw Shf Set Sel Sav Run Rpl Rmv Rmk Rfh RevAy Resi Ren ReSz ReSeq ReOrd RTrim Qte Quit Push Prompt Pop Opn Nxt Norm New Mov Mk Minus Min Mid Mge Max Map Lnk Lis Lik Las Kill Jn Jmp Is Into IntersectAy Ins Initialize Init Inf Indent Inc Imp Hit Has Halt Gen Fst Fmt Flat Fill Extend Expand Exp Exl Evl Esc Ens EndTrim Edt Dyw Dye Dw De Drp Down Do Dmp Dlt Cv Cut Crt Cpy Compress Cls Clr Clone Cln Clear Chk3 Chk2 Chk1 Chk Chg Change Cfm Brw Brk Box Bld Bet Below Bef Bdr Backup Aw Ae AutoFit AutoExec Ass Asg And Align Aft Add Above"
+Public Const Verbss$ = "Zip Wrt Wrp Wait Vis Vc ULin UnRmk UnEsc Trim Tile Thw Tak Sye Swap Sum Stop Srt Split Solve Shw Shf Set Sel Sav Run Rpl Rmv Rmk Rfh RevAy Resi Ren ReSz ReSeq ReOrd RTrim Qte Quit Push Prompt Pop Opn Nxt Norm New Mov Mk Minus Min Mid Mge Max Map Lnk Lis Lik Las Kill Jn Jmp Is Into IntersectAy Ins Initialize Init Inf Indent Inc Imp Hit Has Halt Gen Fst Fmt Flat Fill Extend Expand Exp Exl Evl Esc Ens EndTrim Edt Dyw Dye Dw De Drp Down Do Dmp Dlt Cv Cut Crt Cpy Compress Cls Clr Clone Cln Clear Chk3 Chk2 Chk1 Chk Chg Change Cfm Brw Brk Box Bld Bet Below Bef Bdr Backup Aw Ae AutoFit AutoExec Ass Asg And Align Aft Add Above"
 Public Const C_BRKCmlss$ = "Wi Wo By Of To"
-Public Const DoczQBNm$ = "Qte-Brk-Nm.  If the Cml is BRKCml, quote-bkt."
+':QBNm$ = "Qte-Brk-Nm.  If the Cml is BRKCml, quote-bkt."
 Property Get BRKCmlASet() As Aset
 Static X As Aset
 If IsNothing(X) Then Set X = AsetzSsl(C_BRKCmlss)
@@ -56,9 +56,9 @@ End Function
 
 Function QBNm$(Nm)
 Dim Cml$, I, O$()
-For Each I In Itr(Cml1Ay(Nm))
+For Each I In Itr(CmlAy(Nm))
     Cml = I
-    If IsBRKCml(Cml) Then
+    If IsCmlBRK(Cml) Then
         PushI O, QteBkt(Cml)
     Else
         PushI O, Cml
@@ -161,7 +161,7 @@ RmvEndDig = Left(S, J)
 End Function
 Function Verb$(Nm)
 Dim Cml$, I, LetterCml$
-For Each I In Cml1Ay(Nm)
+For Each I In CmlAy(Nm)
     Cml = I
     LetterCml = RmvDigSfx(Cml)
     If VerbAset.Has(LetterCml) Then Verb = Cml: Exit Function
@@ -171,7 +171,7 @@ Property Get NormVerbss$()
 NormVerbss = NormSsl(Verbss, IsDes:=True)
 End Property
 Function NormSsl$(Ssl$, Optional IsDes As Boolean)
-NormSsl = JnSpc(QSrt1(AwDist(SyzSS(Ssl)), IsDes:=True))
+NormSsl = JnSpc(SrtAyQ(AwDist(SyzSS(Ssl)), IsDes:=True))
 End Function
 
 Function PatnzVerbss$(Verbss$)

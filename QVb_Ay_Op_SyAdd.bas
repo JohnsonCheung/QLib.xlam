@@ -4,14 +4,19 @@ Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Ay_Op_Add."
 
-Function SyzAdd(A$(), B$()) As String()
-SyzAdd = A
-PushIAy SyzAdd, B
+Function AddSy(A$(), B$()) As String()
+AddSy = A
+PushIAy AddSy, B
 End Function
 
-Function AyzAdd(AyA, AyB)
-AyzAdd = AyA
-PushAy AyzAdd, AyB
+Function AddAy(AyA, AyB)
+AddAy = AyA
+PushAy AddAy, AyB
+End Function
+
+Function AddAv(A(), B()) As Variant()
+AddAv = A
+PushAy AddAv, B
 End Function
 
 Function VbTyNyzAy(Ay) As String()
@@ -21,17 +26,17 @@ For Each I In Itr(Ay)
 Next
 End Function
 
-Function AyzAddAp(Ay, ParamArray Itm_or_AyAp())
-Const CSub$ = CMod & "AyzAddAp"
+Function AddAyAp(Ay, ParamArray Itm_or_AyAp())
+Const CSub$ = CMod & "AddAyAp"
 Dim Av(): Av = Itm_or_AyAp
 If Not IsArray(Ay) Then Thw CSub, "Fst parameter must be array", "Fst-Pm-TyeName", TypeName(Ay)
 Dim I
-AyzAddAp = Ay
+AddAyAp = Ay
 For Each I In Av
     If IsArray(I) Then
-        PushAy AyzAddAp, I
+        PushAy AddAyAp, I
     Else
-        Push AyzAddAp, I
+        Push AddAyAp, I
     End If
 Next
 End Function
@@ -50,15 +55,15 @@ End Function
 Function AddElezStr(Sy$(), Ele$) As String()
 Dim O$(): O = Sy: PushI O, Ele: AddElezStr = O
 End Function
-Function SyzAddItm(Sy$(), Itm$) As String()
-SyzAddItm = AyzAddItm(Sy, Itm)
+Function AddSyItm(Sy$(), Itm$) As String()
+AddSyItm = AddAyItm(Sy, Itm)
 End Function
 
-Function AyzAddItm(Ay, Itm)
+Function AddAyItm(Ay, Itm)
 Dim O
 O = Ay
 Push O, Itm
-AyzAddItm = O
+AddAyItm = O
 End Function
 
 Function IncAy(Ay, Optional N& = 1)
@@ -69,7 +74,7 @@ For Each X In Itr(Ay)
 Next
 End Function
 
-Private Sub Z_AyzAdd()
+Private Sub Z_AddAy()
 Dim Ay1(), Ay2()
 GoSub T1
 Exit Sub
@@ -79,7 +84,7 @@ T1:
     Ept = Array(1, 2, 2, 2, 4, 5, 2, 2)
     GoTo Tst
 Tst:
-    Act = AyzAdd(Ay1, Ay2)
+    Act = AddAy(Ay1, Ay2)
     C
     Return
 End Sub
@@ -132,5 +137,5 @@ End Sub
 
 
 Private Sub Z()
-MVb_AyzAdd:
+MVb_AddAy:
 End Sub

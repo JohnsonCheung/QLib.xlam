@@ -280,11 +280,11 @@ Function SzQvbs$(Qvbs$)
 SzQvbs = UnEscQtezDblQ(RmvFstLasChr(Qvbs))
 End Function
 
-Function Qvbs$(S$)
+Function Qvbs$(S)
 Qvbs = vbQtezDblQ & EscQtezDblQ(S) & vbQtezDblQ
 End Function
 
-Function EscQtezDblQ$(S$)
+Function EscQtezDblQ$(S)
 EscQtezDblQ = Replace(S, vbQtezDblQ, vb2QtezDblQ)
 End Function
 
@@ -416,7 +416,7 @@ Dim OupVisHid:                SetVis Ws, Vis ' ! <== Turn on or off the row
 'If Si(NsFny) > 0 Then
 '    Dim NsCri    As Drs:     NsCri = DwIn(CriBrk, "F", NsFny) ' Cri causing the no sel
 '    Dim NsExlEr  As Drs:   NsExlEr = DwEq(NsCri, "IsEr", False) ' Exl those already @IsEr
-'    Dim NsRpt    As Drs:     NsRpt = DrszSel(NsExlEr, "R C")     ' Need to report ns cri
+'    Dim NsRpt    As Drs:     NsRpt = SelDrs(NsExlEr, "R C")     ' Need to report ns cri
 '    Dim NsCell() As Range:  NsCell = RgAy(CriRg, NsRpt)
 '    Dim OupBdrNoRec:                 BdrErzAy NsCell, "Red"      ' <== Bdr the Cri cell which does not sel and record
 'End If
@@ -488,7 +488,7 @@ VisAyzLo = VisAyzRg(RgzLc(L, 1))
 End Function
 
 Private Sub Z_DrszFTnbr()
-Dim R&(): R = RnyzSamp
+Dim R&(): R = SampRny
 XBox "SampRny"
 X R
 XLin
@@ -553,8 +553,8 @@ Function FtzRes$(Resn$, Optional Pseg$)
 'Fm Resn : :Resn: is :Fn under :ResHom @Pseg
 FtzRes = AddFdrEns(ResHom, Pseg) & Resn
 End Function
-Function RnyzSamp() As Long()
-RnyzSamp = IntozAy(EmpLngAy, LyzRes("RnyzSamp"))
+Function SampRny() As Long()
+SampRny = IntozAy(EmpLngAy, LyzRes("SampRny"))
 End Function
 Function ColontAy(L&()) As String()
 ColontAy = ColontAyzFT(DyoFTnbr(L))
@@ -585,7 +585,7 @@ EntRzWsRny(Ws, Rny).Hidden = Not Vis
 End Sub
 
 Sub Z_BrwNumAy()
-BrwNumAy RnyzSamp, EiWiCntCol
+BrwNumAy SampRny, EiWiCntCol
 End Sub
 
 Sub BrwNumAy(SrtedNumAy, Optional CntCol As EmCntCol)
@@ -831,8 +831,8 @@ End Function
 
 Private Function XCriDrzLis(Op As EmOp, IsStr As Boolean, S$) As Variant()
 Dim Sy$(): Sy = SyzSS(S)
-If IsDteSy(Sy) Then XCriDrzLis = XCriDr(Op, DteAyzSy(Sy)): Exit Function
-If IsDblSy(Sy) Then XCriDrzLis = XCriDr(Op, DblAyzSy(Sy)): Exit Function
+If IsSyDte(Sy) Then XCriDrzLis = XCriDr(Op, DteAyzSy(Sy)): Exit Function
+If IsSyDbl(Sy) Then XCriDrzLis = XCriDr(Op, DblAyzSy(Sy)): Exit Function
 XCriDrzLis = XCriDr(Op, Sy)
 End Function
 

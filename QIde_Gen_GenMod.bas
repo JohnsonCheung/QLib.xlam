@@ -3,34 +3,34 @@ Option Compare Text
 Option Explicit
 
 Sub Cmd_SavGendMod()
-Const C$ = "WsGenMod"
 Const LoNm$ = "T_GenMod"
-Dim Ws As Worksheet, Lo As ListObject, FxaCell As Range, Fxa$, Pj As VBProject, MdnCell As Range
+Dim Lo As ListObject, FxaCell As Range, Fxa$, Pj As VBProject, MdnCell As Range
 Dim Mdn$, Md As CodeModule
 Dim NewSrc$(), OldL$, NewL$
-              If ChkNoWsCd(C) Then Exit Sub
+Dim Ws As Worksheet
+Const C$ = "WsGenMod"
+:             If Not HasWsCd(C, IsInf:=True) Then Exit Sub          ' Exit=>
      Set Ws = WszCd(C)
-              If ChkNoLo(Ws, LoNm) Then Exit Sub
+:             If Not HasLo(Ws, LoNm, IsInf:=True) Then Exit Sub
      Set Lo = Ws.ListObjects(LoNm)
-              If ChkLoCCExact(Lo, "SrcCd") Then Exit Sub
+:             If Not IsEqCC(Lo, "SrcCd", IsInf:=True) Then Exit Sub ' Exit=>
 Set FxaCell = Ws.Range("A1")
         Fxa = FxaCell.Value
-    Stop
         '      If ChkNotHasFfn(Fxa) Then FxaCell.Activate: Exit Sub
               OpnFxa Fxa
      Set Pj = PjzFxa(Fxa)
 Set MdnCell = Ws.Range("A2")
         Mdn = MdnCell.Value
-              If ChkMdn(Pj, Mdn) Then MdnCell.Activate: Exit Sub
-              ActWs Ws
+:             If ChkMdn(Pj, Mdn) Then MdnCell.Activate: Exit Sub
+:             ActWs Ws
      Set Md = MdzPN(Pj, Mdn)
      NewSrc = StrColzWsLC(Lo, "T_GenMod", "SrcCd")
-              If Si(NewSrc) = 0 Then MsgBox "No source code is generated", vbCritical: Exit Sub
+:             If Si(NewSrc) = 0 Then MsgBox "No source code is generated", vbCritical: Exit Sub
        OldL = SrcL(Md)
        NewL = JnCrLf(NewSrc)
-              If OldL <> NewL Then MsgBox "The source in WsSrc <> the soruce from Mod", vbCritical: Exit Sub
-              PutAyV NewSrc, A1zLo(Lo)     '<== Save
-              MsgBox "SrcCd saved:" & vbCrLf & WrdCntg(NewL), vbInformation
+:             If OldL <> NewL Then MsgBox "The source in WsSrc <> the soruce from Mod", vbCritical: Exit Sub
+:             PutAyV NewSrc, A1zLo(Lo)                                                                       ' <== Save
+:             MsgBox "SrcCd saved:" & vbCrLf & WrdCnt(NewL), vbInformation
 
 End Sub
 
@@ -46,54 +46,48 @@ Dim Pj As VBProject
 Dim MdnCell As Range
 Dim Md As CodeModule
 Dim SrcCd$()
-              If ChkNoWsCd(C) Then Exit Sub
+:             If Not HasWsCd(C, IsInf:=True) Then Exit Sub
      Set Ws = WszCd(C)
-              If ChkNoLo(Ws, LoNm) Then Exit Sub
+:             If Not HasLo(Ws, LoNm, IsInf:=True) Then Exit Sub
      Set Lo = Ws.ListObjects(LoNm)
-              If ChkLoCCExact(Lo, "SrcCd") Then Exit Sub
+:             If Not IsEqCC(Lo, "SrcCd", IsInf:=True) Then Exit Sub
 Set FxaCell = Ws.Range("A1")
         Fxa = FxaCell.Value
-Stop
-    '          If ChkNotHasFfn(Fxa) Then FxaCell.Activate: Exit Sub
-              OpnFxa Fxa
+:          If HasFfn(Fxa, IsInf:=True) Then FxaCell.Activate: Exit Sub
+:              OpnFxa Fxa
      Set Pj = PjzFxa(Fxa)
 Set MdnCell = Ws.Range("A2")
         Mdn = MdnCell.Value
-              If ChkMdn(Pj, Mdn) Then MdnCell.Activate: Exit Sub
-              ActWs Ws
+:             If ChkMdn(Pj, Mdn) Then MdnCell.Activate: Exit Sub
+:             ActWs Ws
      Set Md = MdzPN(Pj, Mdn)
       SrcCd = Src(Md)
-              DltLoRow Lo                   '<== Delete
-              PutAyV SrcCd, A1zLo(Lo)     '<== Load
-              MsgBox "SrcCd loaded:" & vbCrLf & WrdCntg(JnCrLf(SrcCd)), vbInformation
-End Sub
-
-Sub Cmd_Srt()
-'EnsBnmzLcPfx WsSrc, "T_Src", "Key", "Stp"
+:             DltLoRow Lo                                                             ' <== Delete
+:             PutAyV SrcCd, A1zLo(Lo)                                                 ' <== Load
+:             MsgBox "SrcCd loaded:" & vbCrLf & WrdCnt(JnCrLf(SrcCd)), vbInformation
 End Sub
 
 Sub VdtSrc(ISrc As Drs, IDes As Drs)
 Const C$ = "WsGenMod"
 Const LoNm$ = "T_SrcCd"
-                                    If ChkNoWsCd(C) Then Exit Sub
+:                                    If Not HasWsCd(C, IsInf:=True) Then Exit Sub
 Dim Ws As Worksheet:       Set Ws = WszCd(C)
-                                    If ChkNoLo(Ws, LoNm) Then Exit Sub
+                                    If Not HasLo(Ws, LoNm, IsInf:=True) Then Exit Sub
 Dim Lo As ListObject:      Set Lo = Ws.ListObjects(LoNm)
-                                    If ChkLoCCExact(Lo, "SrcCd") Then Exit Sub
+                                    If Not IsEqCC(Lo, "SrcCd", IsInf:=True) Then Exit Sub
 Dim FxaCell As Range: Set FxaCell = Ws.Range("A1")
 Dim Fxa$:                     Fxa = FxaCell.Value
-Stop
-    '                                If ChkNotHasFfn(Fxa) Then FxaCell.Activate: Exit Sub
-                                    OpnFxa Fxa
+:                                    If HasFfn(Fxa, IsInf:=True) Then FxaCell.Activate: Exit Sub
+:                                    OpnFxa Fxa
 Dim Pj As VBProject:       Set Pj = PjzFxa(Fxa)
 Dim MdnCell As Range: Set MdnCell = Ws.Range("A2")
 Dim Mdn$:                     Mdn = MdnCell.Value
-                                    If ChkMdn(Pj, Mdn) Then MdnCell.Activate: Exit Sub
-                                    ActWs Ws
+:                                    If ChkMdn(Pj, Mdn) Then MdnCell.Activate: Exit Sub
+:                                    ActWs Ws
 Dim SrcCd$():                       SrcCd = CdB(ISrc, IDes, SrcCd)
-                                    DltLoRow Lo                   '<== Delete
-                                    PutAyV SrcCd, A1zLo(Lo)     '<== Load
-                                    MsgBox "SrcCd generated:" & vbCrLf & WrdCntg(JnCrLf(SrcCd)), vbInformation
+:                                    DltLoRow Lo                   '<== Delete
+:                                    PutAyV SrcCd, A1zLo(Lo)     '<== Load
+:                                    MsgBox "SrcCd generated:" & vbCrLf & WrdCnt(JnCrLf(SrcCd)), vbInformation
 End Sub
 
 Sub Cmd_GenMod(ISrc As Drs, IDes As Drs, InpSrc$(), OupLo As ListObject)
@@ -105,57 +99,57 @@ End Sub
 Function CdB(Src As Drs, Des As Drs, InpSrc$()) As String()
 'Fm Src : V DclSfx Pm Expr
 'Fm Des : V R1 R2 R3
-Dim JSrcPm As Drs:   JSrcPm = B_JSrcPm(Src)  '! With Col-Pm added
+Dim JSrcPm As Drs: JSrcPm = B_JSrcPm(Src) ' ! With Col-Pm added
 
-'== CdRmk OK ==============================================================================================
-Dim RmkVer%:       RmkVer = 2
-Dim Rmk1 As Drs:     Rmk1 = DrszSel(JSrcPm, "Key Ret Fss Pm Id StpFor")
-Dim Rmk2 As Drs:     Rmk2 = B_Rmk2(RmkVer, Rmk1)
-Dim CdRmk$():       CdRmk = AddPfxzAy(JnDy(Rmk2.Dy), "'")
+'== CdRmk OK ===========================================================================================================
+Dim RmkVer%:     RmkVer = 2
+Dim Rmk1 As Drs:   Rmk1 = SelDrs(JSrcPm, "Key Ret Fss Pm Id StpFor")
+Dim Rmk2 As Drs:   Rmk2 = B_Rmk2(RmkVer, Rmk1)
+Dim CdRmk$():     CdRmk = AddPfxzAy(JnDy(Rmk2.Dy), "                 ' ")
 
-'== CdDes OK ==============================================================================================
-Dim CdDes$():       CdDes = AddPfxzAy(JnDy(Des.Dy), "'")
+'== CdDes OK ===========================================================================================================
+Dim CdDes$(): CdDes = AddPfxzAy(JnDy(Des.Dy), " ' ")
 
-'== CdCnst OK ==============================================================================================
-Dim JCnst As Drs:   JCnst = DrszSel(Src, "Key Fss")
-Dim CdCnst$():     CdCnst = B_CdCnst(JCnst)
+'== CdCnst OK ==========================================================================================================
+Dim JCnst As Drs:  JCnst = SelDrs(Src, "Key Fss")
+Dim CdCnst$():    CdCnst = B_CdCnst(JCnst)
 
-'== CdMain OK ==============================================================================================
+'== CdMain OK ==========================================================================================================
 Dim InpPm As Drs:    InpPm = DwEqSel(Src, "StpTy", "Inp", "Key Ret StpTy")
 Dim MMPm$:            MMPm = B_MPm(InpPm)
-Dim Las():             Las = DrszSel(LasRec(Src), "Key Ret StpTy").Dy(0)
+Dim Las():             Las = SelDrs(LasRec(Src), "Key Ret StpTy").Dy(0)
 Dim MMthn$:          MMthn = Las(0)
 Dim MMRetAs$:      MMRetAs = Las(1)
 Dim LasStpTy$:    LasStpTy = Las(2)
 Dim MMthSorF$:    MMthSorF = B_MMthSorF(LasStpTy)
 Dim MMthLin$:      MMthLin = B_MMthLin(MMthSorF, MMthn, MMPm, MMRetAs)
 
-Dim MBdy As Drs:    MBdy = DwNeSel(JSrcPm, "StpTy", "Inp", "Key StpTy Stmt Expr Ret Pm BrkNm BrkChr")
+Dim MBdy As Drs: MBdy = DwNeSel(JSrcPm, "StpTy", "Inp", "Key StpTy Stmt Expr Ret Pm BrkNm BrkChr")
 
-Dim MBdy3Col As Drs:
+Dim MBdy3Col As Drs: MBdy3Col = XMBdy3Col
     If True Then
-        MBdy3Col = B_MBdy3Col1(MBdy)
+MBdy3Col = B_MBdy3Col1(MBdy)
     Else
-        MBdy3Col = B_MBdy3Col(MBdy)
+MBdy3Col = B_MBdy3Col(MBdy)
     End If
-Dim MMLy$():             MMLy = JnDy(MBdy3Col.Dy)
-Dim CdMain$():         CdMain = Sy(MMthLin, CdRmk, CdDes, MMLy, "End " & MMthSorF)
+Dim MMLy$():     MMLy = JnDy(MBdy3Col.Dy)
+Dim CdMain$(): CdMain = Sy(MMthLin, CdRmk, CdDes, MMLy, "End " & MMthSorF)
 
-'== CdY ==============================================================================================
-Dim CdYLisa As Drs:    CdYLisa = ColInSel(JSrcPm, "StpTy", SyzSS("Stmt Sub"), "Key StpTy Expr Stmt Ret Pm")
-Dim CdYLisb As Drs:    CdYLisb = ColInSel(JSrcPm, "StpTy", SyzSS("Expr Fun Inp"), "Key StpTy Expr Stmt Ret Pm")
-Dim CdY4Cola As Drs:  CdY4Cola = B_CdY4Cola(CdYLisa)
-Dim CdY4Colb As Drs:  CdY4Colb = B_CdY4Colb(CdYLisb)
-Dim CdY$():                CdY = Sy(JnDy(CdY4Cola.Dy), Sy(JnDy(CdY4Colb.Dy)))
+'== CdY ================================================================================================================
+Dim CdYLisa  As Drs:  CdYLisa = ColInSel(JSrcPm, "StpTy", SyzSS("Stmt Sub"), "Key StpTy Expr Stmt Ret Pm")
+Dim CdYLisb  As Drs:  CdYLisb = ColInSel(JSrcPm, "StpTy", SyzSS("Expr Fun Inp"), "Key StpTy Expr Stmt Ret Pm")
+Dim CdY4Cola As Drs: CdY4Cola = B_CdY4Cola(CdYLisa)
+Dim CdY4Colb As Drs: CdY4Colb = B_CdY4Colb(CdYLisb)
+Dim CdY$():               CdY = Sy(JnDy(CdY4Cola.Dy), Sy(JnDy(CdY4Colb.Dy)))
 
-'== CdZZ OK ==============================================================================================
-Dim CdZZLis As Drs:   CdZZLis = DrszSel(JSrcPm, "Key StpTy Stmt Expr Ret")
+'== CdZZ OK ============================================================================================================
+Dim CdZZLis  As Drs:  CdZZLis = SelDrs(JSrcPm, "Key StpTy Stmt Expr Ret")
 Dim CdZZ4Col As Drs: CdZZ4Col = B_CdZZ4Col(CdZZLis)
 Dim CdZZ$():             CdZZ = JnDy(CdZZ4Col.Dy)
 
-'== CdB ==============================================================================================
-'-- BBMLin OK -----------------------------------------------------------------------------------------------
-Dim BLis As Drs:                BLis = ColInSel(JSrcPm, "StpTy", SyzSS("Sub Fun"), "Key StpTy Ret Pm Fss StpFor")
+'== CdB ================================================================================================================
+'-- BBMLin OK ----------------------------------------------------------------------------------------------------------
+Dim BLis As Drs: BLis = ColInSel(JSrcPm, "StpTy", SyzSS("Sub Fun"), "Key StpTy Ret Pm Fss StpFor")
 
 Dim BCKey$():                  BCKey = SyzDrsC(BLis, "Key")
 Dim BCStpTy$():              BCStpTy = SyzDrsC(BLis, "StpTy")
@@ -171,40 +165,40 @@ Dim BCPmStr$(): BCPmStr = B_BCPmStr(BCPm, BCCArg)
 Dim BCRetAs$(): BCRetAs = B_BCRetAs(BCRet, BCStpTy)
 Dim BBMLin$():   BBMLin = B_BCMLin(BCSorF, BCMthn, BCTyChr, BCPmStr, BCRetAs)
 
-'-- BBRmkRet -----------------------------------------------------------------------------------------------
+'-- BBRmkRet -----------------------------------------------------------------------------------------------------------
 Dim BCFss$():       BCFss = SyzDrsC(BLis, "Fss")
 Dim BCStpFor$(): BCStpFor = SyzDrsC(BLis, "StpFor")
 Dim BBRmkRet$(): BBRmkRet = B_BBRmkRet(BCFss, BCStpFor)
 
-'-- BBRmkFm ------------------------------------------------------------------------------------------------
+'-- BBRmkFm ------------------------------------------------------------------------------------------------------------
 Dim BBRmkFm$(): BBRmkFm = B_BBRmkFm(BCPm, BCKey, BCFss, BCStpFor)
 
-'-- BBRmkDes ------------------------------------------------------------------------------------------------
+'-- BBRmkDes -----------------------------------------------------------------------------------------------------------
 Dim BBRmkDes$()
 
-'-- BBCxt OK -----------------------------------------------------------------------------------------------
+'-- BBCxt OK -----------------------------------------------------------------------------------------------------------
 Dim BKey$()
-Dim UsedMthn$():            UsedMthn = AddPfxzAy(BKey, "B_")
+Dim UsedMthn$(): UsedMthn = AddPfxzAy(BKey, "B_")
 
-Dim MDic As Dictionary:     Set MDic = MthDic(InpSrc, ExlDcl:=True)
-Dim MDic1 As Dictionary:   Set MDic1 = B_MDic1(MDic)
-Dim MPair As DicAB:            MPair = DicabzInKy(MDic1, UsedMthn)
+Dim MDic   As Dictionary:   Set MDic = DiMthnqLines(InpSrc, ExlDcl:=True)
+Dim MDic1  As Dictionary:  Set MDic1 = B_MDic1(MDic)
+Dim MPair  As DicAB:           MPair = DicabzInKy(MDic1, UsedMthn)
 Dim MExist As Dictionary: Set MExist = MPair.A
 Dim MLines$():                MLines = B_MLines(BCKey, MExist)
 Dim BBCxt$():                  BBCxt = B_BBCxt(MLines)
 
-'-- BBExtra OK -----------------------------------------------------------------------------------------------
-Dim MExtra As Dictionary:    Set MExtra = MPair.B
-Dim BBExtra$:                   BBExtra = JnDblCrLf(SyzItr(SrtDic(MExtra).Items))
+'-- BBExtra OK ---------------------------------------------------------------------------------------------------------
+Dim MExtra As Dictionary: Set MExtra = MPair.B
+Dim BBExtra$:                BBExtra = JnDblCrLf(SyzItr(SrtDic(MExtra).Items))
 
-'-- BBELin  -----------------------------------------------------------------------------------------------
+'-- BBELin  ------------------------------------------------------------------------------------------------------------
 Dim BBELin$(): BBELin = AddPfxzAy(BCSorF, "End ")
 
-'-- CdB  -----------------------------------------------------------------------------------------------
+'-- CdB  ---------------------------------------------------------------------------------------------------------------
 CdB = B_CdB(BBMLin, BBRmkFm, BBRmkRet, BBRmkDes, BBCxt, BBELin, BBExtra)
 
-Dim CdOpt$():         CdOpt = B_CdOpt
-CdB = Sy(CdOpt, CdCnst, CdMain, CdB, CdY, CdZZ)
+Dim CdOpt$(): CdOpt = B_CdOpt
+                CdB = Sy(CdOpt, CdCnst, CdMain, CdB, CdY, CdZZ)
 Brw CdB
 Stop
 End Function
@@ -454,7 +448,7 @@ Private Function B_JSrcPm(ISrc As Drs) As Drs
 'Ret: Key Pfx Id StpTy StpFor Ret Fss Ret Stmt Expr BrkNm BrkChr Pm
 Const CC$ = "Key Pfx Id StpTy StpFor Ret Fss Ret Stmt Expr BrkNm BrkChr Fm1 Fm2 Fm3 Fm4 Fm5"
 Dim Dr, I1%, I2%, I3%, I4%, I5%, ODy()
-Dim O As Drs: O = DrszSel(ISrc, CC)
+Dim O As Drs: O = SelDrs(ISrc, CC)
 AsgIx ISrc, "Fm1 Fm2 Fm3 Fm4 Fm5", I1, I2, I3, I4, I5
 For Each Dr In Itr(ISrc.Dy)
     PushI Dr, JnSpc(SyNB(Dr(I1), Dr(I2), Dr(I3), Dr(I4), Dr(I5)))
@@ -705,3 +699,7 @@ End If
 B_MMthLin = FmtQQ("? ??(?)?", MthTy, Mthn, TyChr, Pm, RetAs)
 End Function
 
+
+Private Function XMBdy3Col() As Drs
+'Insp "QIde_Gen_GenMod.XMBdy3Col", "Inspect", "Oup(XMBdy3Col) ", FmtDrs(XMBdy3Col), : Stop
+End Function

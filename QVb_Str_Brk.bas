@@ -3,6 +3,9 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Str_Brk."
+':Dn1:  is :Dn with one dot
+':Dn:   is :s  multi-:Nm sep by Dot
+
 Sub AsgBrkBet(L$, A$, B$, O1, O2, O3)
 AsgS3 BrkBet(L, A, B), O1, O2, O3
 End Sub
@@ -49,6 +52,11 @@ End Function
 Function BrkSpc(S) As S12
 BrkSpc = Brk(S, " ")
 End Function
+
+Sub AsgDn1(Dn1, OA$, OB$)
+AsgBrkDot Dn1, OA, OB
+End Sub
+
 Function Brk(S, Sep$, Optional NoTrim As Boolean) As S12
 Const CSub$ = CMod & "Brk"
 Dim P&: P = InStr(S, Sep)

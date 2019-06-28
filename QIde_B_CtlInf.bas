@@ -86,7 +86,7 @@ Function BoSavzV(A As Vbe) As CommandBarButton
 Dim I As CommandBarControl, S As Office.CommandBarControls
 Set S = StdBarzV(A).Controls
 For Each I In S
-    If HasPfx(I.Caption, "&Sav") Then Set BoSav = I: Exit Function
+    If HasPfx(I.Caption, "&Sav") Then Set BoSavzV = I: Exit Function
 Next
 Stop
 End Function

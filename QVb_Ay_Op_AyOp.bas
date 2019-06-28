@@ -4,9 +4,10 @@ Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Ay_Op."
 Enum EmIxCol
-EiNoIx
-EiBeg0
 EiBeg1
+EiBeg0
+EiBegI
+EiNoIx
 End Enum
 Function DashLT1Ay(Ay) As String()
 Dim I
@@ -30,10 +31,12 @@ For J = UB(A) To 0 Step -1
 Next
 End Function
 
-Function AddAy(A, B)
-AddAy = A
-PushIAy AddAy, B
+Function ReOrdAy(Ay, SubAy)
+Dim HasSubAy: HasSubAy = IntersectAy(Ay, SubAy)
+Dim Rest: Rest = MinusAy(Ay, SubAy)
+ReOrdAy = AddAy(HasSubAy, Rest)
 End Function
+
 Function IntersectAy(A, B)
 IntersectAy = ResiU(A)
 If Si(A) = 0 Then Exit Function
@@ -62,6 +65,11 @@ For Each IAy In Ap
 Next
 MinusAyAp = O
 End Function
+
+Function MinusSy(A$(), B$()) As String()
+MinusSy = MinusAy(A, B)
+End Function
+
 
 Function MinusAy(A, B)
 If Si(B) = 0 Then MinusAy = A: Exit Function
@@ -234,18 +242,19 @@ Function RplT1zAy(Ay, NewT1) As String()
 RplT1zAy = AddPfxzAy(RmvT1zAy(Ay), NewT1 & " ")
 End Function
 
-Function OffsetzEmBeg(B As EmIxCol) As Byte
+Function OffsetzEmBeg(B As EmIxCol, Optional FmI&) As Byte
 Select Case True
 Case B = EiBeg0: OffsetzEmBeg = 0
 Case B = EiBeg1: OffsetzEmBeg = 1
+Case B = EiBegI: OffsetzEmBeg = FmI
 Case Else: Thw CSub, "EmIxCol value error", "EmIxCol", B
 End Select
 End Function
 
-Function AddIxPfx(Ay, Optional B As EmIxCol = EiBeg0) As String()
+Function AddIxPfx(Ay, Optional B As EmIxCol = EiBeg0, Optional FmI&) As String()
 If B = EiNoIx Then AddIxPfx = CvSy(Ay): Exit Function
 Dim L, J&, N%
-J = OffsetzEmBeg(B)
+J = OffsetzEmBeg(B, FmI)
 N = Len(CStr(UB(Ay) + J))
 For Each L In Itr(Ay)
     PushI AddIxPfx, AlignR(J, N) & ": " & L
@@ -298,3 +307,27 @@ End Function
 Function TabAy(Ay, Optional NTab% = 1) As String()
 TabAy = AddPfxzAy(Ay, TabN(NTab))
 End Function
+
+Sub SplitAsgzAyPred(Ay, P As IPred, OTrueAy, OFalseAy)
+Dim V: For Each V In Itr(Ay)
+    If P.Pred(V) Then
+        Push OTrueAy, V
+    Else
+        Push OFalseAy, V
+    End If
+Next
+End Sub
+
+Function AddSS(Sy$(), SS$) As String()
+AddSS = SyzAp(Sy, SyzSS(SS))
+End Function
+
+Function LookupT1$(Itm, T1LikssAy$())
+Dim L$, I, Likss$, T1$
+For Each I In T1LikssAy
+    L = I
+    AsgTRst L, T1, Likss
+    If HitLikss(Itm, Likss) Then LookupT1 = T1: Exit Function
+Next
+End Function
+

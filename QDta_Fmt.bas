@@ -20,7 +20,7 @@ N1 = DftStr(BefSpc(NN), "Drs-A")
 N2 = DftStr(AftSpc(NN), " Drs-B")
 AyA = FmtDrs(A, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Nm:=N1)
 AyB = FmtDrs(B, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Nm:=N2)
-T = Sy(Tit, UnderLinDbl(Tit))
+T = Sy(Tit, ULinDbl(Tit))
 Ay = Sy(T, AyA, AyB)
 Brw Ay, FnPfx, UseVc
 End Sub
@@ -36,7 +36,7 @@ N3 = DftStr(RmvTT(NN), " Drs-C")
 AyA = FmtDrs(A, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Nm:=N1)
 AyB = FmtDrs(B, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Nm:=N2)
 AyC = FmtDrs(C, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Nm:=N3)
-T = Sy(Tit, UnderLinDbl(Tit))
+T = Sy(Tit, ULinDbl(Tit))
 Ay = Sy(T, AyA, AyB, AyC)
 Brw Ay, FnPfx, UseVc
 End Sub
@@ -82,7 +82,7 @@ Dim Ly$(), Lixy&()
         PushI Ly, Empty
         PushI Lixy, UB(Ly)
         Dim I$: I = J & " of " & N
-        Dim Av(): Av = AyzAdd(Array(I), Dr)
+        Dim Av(): Av = AddAy(Array(I), Dr)
         PushIAy Ly, LyzNyAv(AFny, Av)
     Next
 Dim Align$(): Align = AlignzAy(Ly)
@@ -115,7 +115,7 @@ If NoReczDrs(A) Then
     Exit Function
 End If
       
-Dim IxD As Drs:      IxD = DrsAddIxCol(A, IxCol)
+Dim IxD As Drs:      IxD = AddColzIx(A, IxCol)
 Dim IxyB&():        IxyB = Ixy(IxD.Fny, TermAy(BrkColnn))
 Dim WiFnyDy(): WiFnyDy = AddEle(IxD.Dy, IxD.Fny)
 Dim Ly$():            Ly = FmtDy(WiFnyDy, MaxColWdt, IxyB, ShwZer, Fmt)
@@ -125,14 +125,14 @@ Dim Ly1$():          Ly1 = AeLasNEle(Ly, 2)
                   FmtDrs = Sy(NmBox, L, H, Ly1, L)
 End Function
 
-Function FmtDt(A As Dt, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EiBeg1) As String()
+Function FmtDt(A As DT, Optional MaxColWdt% = 100, Optional BrkColNm$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EiBeg1) As String()
 PushI FmtDt, "*Tbl " & A.DtNm
 PushIAy FmtDt, FmtDrs(DrszDt(A), MaxColWdt, BrkColNm, ShwZer, IxCol)
 End Function
 
 Private Sub Z_FmtDrs()
 Dim A As Drs, MaxColWdt%, BrkColVbl$, ShwZer As Boolean, IxCol As EmIxCol
-A = DoSamp
+A = SampDrs
 GoSub Tst
 Exit Sub
 Tst:
@@ -143,10 +143,10 @@ Tst:
 End Sub
 
 Private Sub Z_FmtDt()
-Dim A As Dt, MaxColWdt%, BrkColNm$, ShwZer As Boolean
+Dim A As DT, MaxColWdt%, BrkColNm$, ShwZer As Boolean
 '--
 A = SampDt1
-'Ept = Z_DteTimStrpt1
+'Ept = Z_TimStrpt1
 GoSub Tst
 '--
 Exit Sub

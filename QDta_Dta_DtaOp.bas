@@ -37,7 +37,7 @@ Function LngAyzColEqSel(A As Drs, C$, V, Sel$) As Long()
 LngAyzColEqSel = LngAyzDrs(DwEqSel(A, C, V, Sel), Sel)
 End Function
 Function DwEqSel(A As Drs, C$, V, Sel$) As Drs
-DwEqSel = DrszSel(DwEq(A, C, V), Sel)
+DwEqSel = SelDrs(DwEq(A, C, V), Sel)
 End Function
 Function CntColNe&(A As Drs, C$, V)
 Dim I%: I = IxzAy(A.Fny, C)
@@ -58,7 +58,7 @@ DwNe = DwColNe(A, C, V)
 End Function
 
 Function ColEqSelFny(A As Drs, C$, V, SelFny$()) As Drs
-ColEqSelFny = DrszSelFny(DwEq(A, C, V), SelFny)
+ColEqSelFny = SelDrsFny(DwEq(A, C, V), SelFny)
 End Function
 
 Function DwVap(D As Drs, CC$, ParamArray Vap()) As Drs
@@ -66,7 +66,7 @@ Function DwVap(D As Drs, CC$, ParamArray Vap()) As Drs
 'Fm Vap : #Val-Ay-of-Param ! to select what rec in @D to be returned
 'Ret    : ..@D..           ! sam stru as @D.  Subset of @D.  @@
 Dim Vy(): Vy = Vap
-Dim KeyDy(): KeyDy = DrszSel(D, CC).Dy
+Dim KeyDy(): KeyDy = SelDrs(D, CC).Dy
 Dim Rxy&(): Rxy = RxywDyVy(KeyDy, Vy)
 Dim ODy(): ODy = AwIxy(D.Dy, Rxy)
 DwVap = Drs(D.Fny, ODy)
@@ -81,37 +81,32 @@ DeVap = DeVy(D, CC, Vy)
 End Function
 
 Function DeVy(D As Drs, CC$, Vy) As Drs
-'Fm D : ..@CC..            ! to be selected.  It has col-@CC
-'Fm Vap : #Val-Ay-of-Param ! to select what rec in @D to be selected
-'Ret    : ..@D..           ! sam stru as @D.  Subset of @D.  @@
-Dim KeyDy(): KeyDy = DrszSel(D, CC).Dy
+'Fm D  : ..@CC..            ! to be selected.  It has col-@CC
+'Fm Vy : #Val-Ay-of-Param ! to select what rec in @D to be selected
+'Ret   : ..@D..           ! sam stru as @D.  Subset of @D.  @@
+Dim KeyDy(): KeyDy = SelDrs(D, CC).Dy
 Dim Rxy&(): Rxy = RxyeDyVy(KeyDy, Vy)
 Dim ODy(): ODy = AwIxy(D.Dy, Rxy)
 DeVy = Drs(D.Fny, ODy)
 End Function
 
-Function DwCCEqExlEqCol(A As Drs, CC$, V1, V2) As Drs
-Dim C1$, C2$
-C1 = BefSpc(CC)
-C2 = AftSpc(CC)
-DwCCEqExlEqCol = ColEqExlEqCol(ColEqExlEqCol(A, C1, V1), C2, V2)
+Function Dw2EqE(D As Drs, C2$, V1, V2) As Drs
+Dw2EqE = DrpCol(Dw2Eq(D, C2, V1, V2), C2)
 End Function
 
-Function DwCCEq(A As Drs, CC$, V1, V2) As Drs
-Dim C1$, C2$
-C1 = BefSpc(CC)
-C2 = AftSpc(CC)
-DwCCEq = DwEq(DwEq(A, C1, V1), C2, V2)
+Function Dw2Eq(D As Drs, C2$, V1, V2) As Drs
+Dim A$, B$: AsgTRst C2, A, B
+Dw2Eq = DwEq(DwEq(D, A, V1), B, V2)
+End Function
+Function Dw3Eq(D As Drs, C3$, V1, V2, V3) As Drs
+Dim A$, B$, C$: AsgTTRst C3, A, B, C
+Dw3Eq = DwEq(DwEq(DwEq(D, A, V1), B, V2), C, V3)
 End Function
 
-Function DwCCCEqExlEqCol(A As Drs, CCC$, V1, V2, V3) As Drs
-Dim C1$, C2$, C3$, L$
-L = CCC
-C1 = ShfT1(L)
-C2 = ShfT1(L)
-C3 = L
-DwCCCEqExlEqCol = ColEqExlEqCol(ColEqExlEqCol(ColEqExlEqCol(A, C1, V1), C2, V2), C3, V3)
+Function Dw3EqE(D As Drs, C3$, V1, V2, V3) As Drs
+Dw3EqE = DrpCol(Dw3Eq(D, C3, V1, V2, V3), C3)
 End Function
+
 Function DrpCol(A As Drs, CC$) As Drs
 Dim C$(), Dr, Ixy&(), OFny$(), ODy()
 C = SyzSS(CC)
@@ -126,13 +121,13 @@ Dim Dr: For Each Dr In Itr(Dy)
     PushI DrpColzDy, AeIxy(Dr, Ixy)
 Next
 End Function
-Function ColEqExlEqCol(A As Drs, C$, V) As Drs
+Function DwEqE(A As Drs, C$, V) As Drs
 Dim SelFny$()
 SelFny = AeEle(A.Fny, C)
-ColEqExlEqCol = ColEqSelFny(A, C, V, SelFny)
+DwEqE = ColEqSelFny(A, C, V, SelFny)
 End Function
 Function DwNeSel(A As Drs, C$, V, Sel$) As Drs
-DwNeSel = DrszSel(DwNe(A, C, V), Sel)
+DwNeSel = SelDrs(DwNe(A, C, V), Sel)
 End Function
 
 Function DeIn(A As Drs, C, InVy) As Drs
@@ -151,7 +146,7 @@ Dim Ix&: Ix = IxzAy(A.Fny, C)
 DwIn = Drs(A.Fny, DywIn(A.Dy, Ix, InVy))
 End Function
 Function ColInSel(A As Drs, C, InVy, Sel$) As Drs
-ColInSel = DrszSel(DwIn(A, C, InVy), Sel)
+ColInSel = SelDrs(DwIn(A, C, InVy), Sel)
 End Function
 
 Function DwEq(A As Drs, C$, V) As Drs
@@ -209,25 +204,22 @@ Fny = A.Fny
 Ix = IxzAy(Fny, C, ThwEr:=EiThwEr)
 DwColEq = Drs(Fny, DywColEq(A.Dy, Ix, V))
 End Function
+
 Function HasColEq(A As Drs, C$, V) As Boolean
 HasColEq = HasColEqzDy(A.Dy, IxzAy(A.Fny, C), V)
 End Function
 
-Function FstRecEqzDrs(A As Drs, C$, V, Sel$) As Drs
-Dim Ix&, Ixy&(), ODy(), OFny$()
-OFny = SyzSS(Sel)
-Ix = IxzAy(A.Fny, C)
-Ixy = IxyzSubAy(A.Fny, OFny)
-ODy = FstRecEqzDy(A.Dy, Ix, V, Ixy)
-FstRecEqzDrs = Drs(OFny, ODy)
+Function FstRec(A As Drs, C$, V) As Drs
+FstRec = Drs(A.Fny, FstDr(A, C, V))
 End Function
 
-Function FstDrEqzDrs(A As Drs, C$, V, Sel$) As Variant()
-Dim Ix&, Ixy&(), ODy(), OFny$()
-OFny = SyzSS(Sel)
-Ix = IxzAy(A.Fny, C)
-Ixy = IxyzSubAy(A.Fny, OFny)
-FstDrEqzDrs = FstDrEqzDy(A.Dy, Ix, V, Ixy)
+Function FstDr(A As Drs, C$, V) As Variant()
+Dim Ix&: Ix = IxzAy(A.Fny, C)
+FstDr = A.Dy(Ix)
+End Function
+
+Function FstDrSel(A As Drs, C$, V, Sel$) As Variant()
+FstDrSel = AwIxy(FstDr(A, C, V), IxyzAyCC(A.Fny, Sel))
 End Function
 
 Function DwColNe(A As Drs, C$, V) As Drs
@@ -273,13 +265,13 @@ Dim Dy(): Dy = AwIxy(A.Dy, Rxy)
 DwRxy = Drs(A.Fny, Dy)
 End Function
 
-Function ValzColEqSel(A As Drs, C$, V, ColNm$)
+Function VzColEqSel(A As Drs, C$, V, ColNm$)
 Dim Dr, Ix%, IxRet%
 Ix = IxzAy(A.Fny, C)
 IxRet = IxzAy(A.Fny, ColNm)
 For Each Dr In Itr(A.Dy)
     If Dr(Ix) = V Then
-        ValzColEqSel = Dr(IxRet)
+        VzColEqSel = Dr(IxRet)
         Exit Function
     End If
 Next

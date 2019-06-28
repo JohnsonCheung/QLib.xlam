@@ -4,8 +4,18 @@ Option Explicit
 Private Const CMod$ = "MDao_Tbl_ReseqFld."
 Private Const Asm$ = "QDao"
 
-Sub ReSeqFldzSpec(A As Database, T, ReSeqSpec$)
-ReSeqFldzFny A, T, FnyzReseqSpec(ReSeqSpec)
+Public Const SampReSeqLin$ = _
+"Flg RecTy Amt Key Uom MovTy Qty BchRateUX RateTy Bch Las GL |" & _
+" Flg IsAlert IsWithSku |" & _
+" Key Sku PstMth PstDte |" & _
+" Bch BchNo BchPermitDate BchPermit |" & _
+" Las LasBchNo LasPermitDate LasPermit |" & _
+" GL GLDocNo GLDocDte GLAsg GLDocTy GLLin GLPstKy GLPc GLAc GLBusA GLRef |" & _
+" Uom Des StkUom Ac_U"
+Public Const LgSchmNm$ = "LgSchm" ' The LgSchm-Spnm
+
+Sub ReSeqFldzSpec(D As Database, T, ReSeqSpec$)
+ReSeqFldzFny D, T, FnyzReseqSpec(ReSeqSpec)
 End Sub
 
 Private Sub Y_FnyzReseqSpec()
@@ -37,11 +47,11 @@ Next
 FnyzReseqSpec = O
 End Function
 
-Sub ReSeqFldzFny(A As Database, T, ByFny$())
+Sub ReSeqFldzFny(D As Database, T, ByFny$())
 Dim F, J%
-For Each F In ReSeqAy(Fny(A, T), ByFny)
+For Each F In ReSeqAy(Fny(D, T), ByFny)
     J = J + 1
-    A.TableDefs(T).Fields(F).OrdinalPosition = J
+    D.TableDefs(T).Fields(F).OrdinalPosition = J
 Next
 End Sub
 

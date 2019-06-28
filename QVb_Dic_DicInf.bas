@@ -78,7 +78,7 @@ Next
 End Sub
 
 Function IsDicKeyStr(A As Dictionary) As Boolean
-IsDicKeyStr = IsItrOfSy(A.Keys)
+IsDicKeyStr = IsItrSy(A.Keys)
 End Function
 
 Private Sub Z_IsDicKeyStr()
@@ -149,22 +149,22 @@ End Function
 Function IsDicSy(A As Dictionary) As Boolean
 Dim D As Dictionary, I, V
 If Not IsDic(A) Then Exit Function
-IsDicSy = IsItrOfSy(CvDic(A).Items)
+IsDicSy = IsItrSy(CvDic(A).Items)
 End Function
 
 Function IsDicLines(A As Dictionary) As Boolean
 IsDicLines = True
-If IsItrOfLines(A.Items) Then Exit Function
-If IsItrOfStr(A.Keys) Then Exit Function
+If IsItrLines(A.Items) Then Exit Function
+If IsItrStr(A.Keys) Then Exit Function
 IsDicLines = False
 End Function
 Function IsDicPrim(A As Dictionary) As Boolean
-If Not IsItrOfPrim(A.Keys) Then Exit Function
-IsDicPrim = IsItrOfPrim(A.Items)
+If Not IsItrPrim(A.Keys) Then Exit Function
+IsDicPrim = IsItrPrim(A.Items)
 End Function
 Function IsDicStr(A As Dictionary) As Boolean
-If Not IsItrOfStr(A.Keys) Then Exit Function
-IsDicStr = IsItrOfStr(A.Items)
+If Not IsItrStr(A.Keys) Then Exit Function
+IsDicStr = IsItrStr(A.Items)
 End Function
 
 Function DicTy$(A As Dictionary)
@@ -173,7 +173,7 @@ Select Case True
 Case IsDicEmp(A):   O = "EmpDic"
 Case IsDicStr(A):   O = "StrDic"
 Case IsDicLines(A): O = "LineszDic"
-Case IsDicSy(A):    O = "SyDic"
+Case IsDicSy(A):    O = "DiT1qLy"
 Case Else:           O = "Dic"
 End Select
 End Function
@@ -199,9 +199,9 @@ If S.Has("*Er") Then Thw CSub, "KK cannot have Term-*Er", "KK Ly", KK, Ly
 For Each L In Ly
     AsgTRst L, T1, Rst
     If S.Has(T1) Then
-        PushItmzSyDic O, T1, Rst
+        PushItmzDiT1qLy O, T1, Rst
     Else
-'        PushItmzSyDic , O, L
+'        PushItmzDiT1qLy , O, L
     End If
     Set DefDic = O
 Next

@@ -241,20 +241,20 @@ End Function
 ' 1      SK    0     ""            ""
 ' 2      SK    1     "Expression"  "={FunNm}()"
 ' 3      SK    1     "Library"     "|ACCDIDR\{fba}"
-Sub CrtTblzUSysRegInf(A As Database)
-RunQ A, "Create Table [USysRegInf] (Subky Text,Type Long,ValName Text,Value Text)"
+Sub CrtTzUSysRegInf(D As Database)
+Rq D, "Create Table [USysRegInf] (Subky Text,Type Long,ValName Text,Value Text)"
 End Sub
-Sub EnsTblzUSysRegInf(A As Database)
-If HasTbl(A, "USysRegInf") Then CrtTblzUSysRegInf A
+Sub EnsTblzUSysRegInf(D As Database)
+If HasTbl(D, "USysRegInf") Then CrtTzUSysRegInf D
 End Sub
 
-Sub InstallAddin(A As Database, Fb, Optional AutoFunNm$ = "AutoExec")
+Sub InstallAddin(D As Database, Fb, Optional AutoFunNm$ = "AutoExec")
 Dim Sk$: Sk = "HKEY_CURRENT_ACCESS_PROFILE\Menu Add-Ins\&NameOfYourAdd-inHere"
 Dim Fba$: Fba = ""
 Dim FunNm$
 Stop '
-RunQQ A, "Insert into [USysRegInf] Values('?',0,'','')"
-RunQQ A, "Insert into [USysRegInf] Values('?',1,'Expression','?')", Sk, FunNm
-RunQQ A, "Insert into [USysRegInf] Values('?',1,'Library','?')", Sk, Fba
+Rqq D, "Insert into [USysRegInf] Values('?',0,'','')"
+Rqq D, "Insert into [USysRegInf] Values('?',1,'Expression','?')", Sk, FunNm
+Rqq D, "Insert into [USysRegInf] Values('?',1,'Library','?')", Sk, Fba
 End Sub
 

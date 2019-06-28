@@ -3,17 +3,17 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Gen_ErMsg."
 Private Const Asm$ = "QIde"
-Public Const DoczVdtVerbss$ = "Tag:Definition.  Gen"
+':VdtVerbss$ = "Tag:Definition.  Gen"
 Private Type A
     ErNy() As String
     ErMsgAy() As String
 End Type
 Private A As A
-Public Const DoczDimItm$ = "DimStmt :: `Dim` DimItm, ..."
+':DimItm$ = "DimStmt :: `Dim` DimItm, ..."
 
 Private Sub Init(Src$())
 Dim Dcl$(): Dcl = DclLy(Src)
-Dim SrcLy$(): SrcLy = CvSy(AwBetEle(Dcl, "'GenErMsg-Src-Beg.", "'GenErMsg-Src-End."))
+Dim SrcLy$(): SrcLy = CvSy(AwBet(Dcl, "'GenErMsg-Src-Beg.", "'GenErMsg-Src-End."))
 'Brw SrcLy, CSub
 A.ErNy = T1Ay(RmvFstChrzAy(SrcLy))
 A.ErMsgAy = RmvT1zAy(SrcLy)
@@ -99,7 +99,7 @@ If Si(A.ErNy) = 0 Then Inf CSub, "No GenErMsg-Src-Beg. / GenErMsg-Src-End.", "Md
 Dim O$(), O1$(), O2$()
 O1 = SrcRplConstDic(Src, ErConstDic): 'Brw O1: Stop
 O2 = RmvMthInSrc(O1, ErMthnSet):       'Brw LyzNNAp("MthToRmv BefRmvMth AftRmvMth", ErMthnSet, O1, O2): Stop
-O = SyzAdd(O2, ErMthLinAy):            'Brw O:Stop
+O = AddSy(O2, ErMthLinAy):            'Brw O:Stop
 ErMsgzSrc = O
 End Function
 

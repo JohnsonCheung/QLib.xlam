@@ -3,8 +3,9 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Md."
-Public Const DoczMdDic$ = "It is from Pj. Key is Mdn and Val is MdLines"
-Public Const DoczMdDNm$ = "Full: Md-Dot-Nm.  It is Either Mdn or Pjn-Dot-Mdn."
+':MdDic$ = "It is from Pj. Key is Mdn and Val is MdLines"
+':MdDn$ = "Full: Md-Dot-Nm.  It is Either Mdn or Pjn-Dot-Mdn."
+':MdDn: is :s is [:Pjn.:Mdn | :Pjn]
 Function IsCls(M As CodeModule) As Boolean
 IsCls = M.Parent.Type = vbext_ct_ClassModule
 End Function
@@ -13,21 +14,22 @@ Function IsMod(M As CodeModule) As Boolean
 IsMod = M.Parent.Type = vbext_ct_StdModule
 End Function
 
-Function MdzDNm(MdDNm) As CodeModule
-Set MdzDNm = Md(MdDNm)
+Function MdzDn(MdDn) As CodeModule
+Set MdzDn = Md(MdDn)
 End Function
-Function Md(MdDNm) As CodeModule
+
+Function Md(MdDn) As CodeModule
 Const CSub$ = CMod & "Md"
-Dim A1$(): A1 = Split(MdDNm, ".")
+Dim A1$(): A1 = Split(MdDn, ".")
 Select Case Si(A1)
 Case 1: Set Md = CPj.VBComponents(A1(0)).CodeModule
 Case 2: Set Md = Pj(A1(0)).VBComponents(A1(1)).CodeModule
-Case Else: Thw CSub, "[MdDNm] should be XXX.XXX or XXX", MdDNm
+Case Else: Thw CSub, "[MdDn] should be XXX.XXX or XXX", MdDn
 End Select
 End Function
 
-Function MdDNm$(M As CodeModule)
-MdDNm = PjnzM(M) & "." & Mdn(M)
+Function MdDn$(M As CodeModule)
+MdDn = PjnzM(M) & "." & Mdn(M)
 End Function
 
 Function MdDic(P As VBProject) As Dictionary
@@ -93,8 +95,8 @@ If IsNothing(P) Then Exit Property
 Set CMd = P.CodeModule
 End Property
 
-Property Get CMdDNm$()
-CMdDNm = MdDNm(CMd)
+Property Get CMdDn$()
+CMdDn = MdDn(CMd)
 End Property
 
 Sub ClsMd(M As CodeModule)
@@ -102,11 +104,7 @@ M.CodePane.Window.Close
 End Sub
 
 Sub CmprMd(M As CodeModule, B As CodeModule)
-'BrwCmpgDicAB MthDiczM(A), MthDiczMd(B), MdDNm(A), MdDNm(B)
-End Sub
-
-Sub DltLin(M As CodeModule, Lno)
-M.DeleteLines Lno, 1
+'BrwCmpgDicAB DiMthnqLineszM(A), DiMthnqLineszMd(B), MdDn(A), MdDn(B)
 End Sub
 
 Private Function Y_Md() As CodeModule

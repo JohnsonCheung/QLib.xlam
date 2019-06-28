@@ -277,7 +277,7 @@ Exit Function
 X: If Fun <> "" Then Inf CSub, "str[" & S & "] cannot cv to dte, emp is ret"
 End Function
 Private Sub Z_SqStr()
-Brw SqStrzDrs(DMthP)
+Brw SqStrzDrs(DoMthP)
 End Sub
 Function SqStrzDy$(Dy())
 SqStrzDy = SqStr(SqzDy(Dy))

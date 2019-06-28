@@ -4,8 +4,13 @@ Option Explicit
 Private Const Asm$ = ""
 Private Const CMod$ = "MIde_Mth_Op."
 Function IsLinAsg(L) As Boolean
-Dim A$: A = L
+'Note: [Dr(NCol) = DicId(K)] is determined as Asg-lin
+Dim A$: A = LTrim(L)
+ShfPfxSpc A, "Set"
 If ShfDotNm(A) = "" Then Exit Function
+If FstChr(A) = "(" Then
+    A = AftBkt(A)
+End If
 IsLinAsg = T1(A) = "="
 End Function
 

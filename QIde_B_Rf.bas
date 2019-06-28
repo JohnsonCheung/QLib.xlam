@@ -4,7 +4,7 @@ Option Explicit
 Private Const CMod$ = "MIde_Gen_Rf_1."
 Private Const Asm$ = "QIde"
 Type RfLin: Lin As String: End Type
-Public Const DoczFrf$ = "It a file Rf.Txt in Srcp with RfLin"
+':Frf$ = "It a file Rf.Txt in Srcp with RfLin"
 Public Const FFzRfLin = "Nm Guid Mjr Mnr Frfee"
 Function RfLin(Lin) As RfLin
 RfLin.Lin = Lin
@@ -83,19 +83,19 @@ Private Sub Z()
 End Sub
 
 Sub DmpPjRfP()
-DmpDrs DPjRfP
+DmpDrs DoPjRfP
 End Sub
 
-Function DPjRfP() As Drs
-DPjRfP = DPjRfzP(CPj)
+Function DoPjRfP() As Drs
+DoPjRfP = DoPjRfzP(CPj)
 End Function
-Function DPjRfzP(P As VBProject) As Drs
+Function DoPjRfzP(P As VBProject) As Drs
 Dim FF$: FF = "Name GUID Major Minor FullPath Description BuiltIn Type IsBroken"
 Dim A As Drs: A = DrszItrPP(P.References, FF)
-DPjRfzP = InsCol(A, "Pj", P.Name)
+DoPjRfzP = InsCol(A, "Pj", P.Name)
 End Function
 
-Function DPjRfUsr() As Drs
+Function DoPjRfUsr() As Drs
 Erase XX
 X "MVb"
 X "MIde  MVb MXls MAcs"
@@ -109,11 +109,11 @@ X "MTp   MVb"
 X "MSql  MVb"
 X "AStkShpCst MVb MXls MAcs"
 X "MAcs  MVb MXls"
-DPjRfUsr = DrszTRstLy(XX, "Pj Rfnn")
+DoPjRfUsr = DrszTRstLy(XX, "Pj Rfnn")
 Erase XX
 End Function
 
-Function DPjRfzStd() As Drs
+Function DoPjRfzStd() As Drs
 Erase XX
 X "MVb   Scripting VBScript_RegExp_55 DAO VBIDE Office"
 X "MIde  Scripting VBIDE Excel"
@@ -127,10 +127,10 @@ X "MTp   Scripting"
 X "MSql  Scripting"
 X "AStkShpCst Scripting"
 X "MAcs  Scripting Office Access"
-DPjRfzStd = DrszTRstLy(XX, "Pj Rfnn")
+DoPjRfzStd = DrszTRstLy(XX, "Pj Rfnn")
 End Function
 
-Function DStdLib() As Drs
+Function DoStdLib() As Drs
 Erase XX
 X "VBA                {000204EF-0000-0000-C000-000000000046} 4  2 C:\Program Files (x86)\Common Files\Microsoft Shared\VBA\VBA7.1\VBE7.DLL"
 X "Access             {4AFFC9A0-5F99-101B-AF4E-00AA003F0F07} 9  0 C:\Program Files (x86)\Microsoft Office\Root\Office16\MSACC.OLB"
@@ -143,12 +143,12 @@ X "ADODB              {B691E011-1797-432E-907A-4D8C69339129} 6  1 C:\Program Fil
 X "ADOX               {00000600-0000-0010-8000-00AA006D2EA4} 6  0 C:\Program Files (x86)\Common Files\System\ado\msadox.dll"
 X "VBScript_RegExp_55 {3F4DACA7-160D-11D2-A8E9-00104B365C9F} 5  5 C:\Windows\SysWOW64\vbscript.dll"
 X "VBIDE              {0002E157-0000-0000-C000-000000000046} 5  3 C:\Program Files (x86)\Common Files\Microsoft Shared\VBA\VBA6\VBE6EXT.OLB"
-DStdLib = Drsz4TRstLy(XX, "Libn Guid Maj Mnr Ffn")
+DoStdLib = Drsz4TRstLy(XX, "Libn Guid Maj Mnr Ffn")
 Erase XX
 End Function
 
-Sub BrwDPjRfzStd()
-BrwDrs DPjRfzStd
+Sub BrwDoPjRfzStd()
+BrwDrs DoPjRfzStd
 End Sub
 
 

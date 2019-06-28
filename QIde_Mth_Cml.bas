@@ -4,14 +4,14 @@ Option Explicit
 Private Const CMod$ = "MIde_Mth_Cml."
 Private Const Asm$ = "QIde"
 #Const Sav = True
-Public Const DoczMthCml$ = "NewType:Sy."
+':MthCml$ = "NewType:Sy."
 
 Function AsetzMthCmlP() As Aset
 Set AsetzMthCmlP = CmlAset(MthnsetP.Sy)
 End Function
 
 Function FnyzMthCml(NDyCol%) As String()
-FnyzMthCml = AyzAddAp(SyzSS("Mdy Kd Mth"), FnyzPfxN("Seg", NDyCol - 3))
+FnyzMthCml = AddAyAp(SyzSS("Mdy Kd Mth"), FnyzPfxN("Seg", NDyCol - 3))
 End Function
 Function WszMthCm() As Worksheet
 Dim Ws As Worksheet

@@ -4,27 +4,23 @@ Option Explicit
 Private Const CMod$ = "MVb_Dic_Fmt."
 Private Const Asm$ = "QVb"
 Private Sub Z_BrwDic()
-Dim R As DAO.Recordset
-Set R = Rs(SampDbzDutyDta, "Select Sku,BchNo from PermitD where BchNo<>''")
+Dim R As Dao.Recordset
+Set R = Rs(SampDboDutyDta, "Select Sku,BchNo from PermitD where BchNo<>''")
 BrwDic JnStrDicTwoFldRs(R), True
 End Sub
 
 Sub BrwDic(A As Dictionary, Optional InclValTy As Boolean, Optional UseVc As Boolean, Optional ExlIx As Boolean)
-Dim B As Dictionary: Set B = SrtDic(A)
-If Not ExlIx Then
-    Set B = DiczAddIxToKey(B)
-End If
-BrwAy FmtDic(B, InclValTy), UseVc:=UseVc
+BrwAy FmtDic(A, InclValTy), UseVc:=UseVc
 End Sub
 
 Sub DmpDic(A As Dictionary, Optional InclDicValOptTy As Boolean, Optional Tit$ = "Key Val")
 D FmtDic(A, InclDicValOptTy, Tit)
 End Sub
 
-Function S12szSyDic(A As Dictionary) As S12s
+Function S12szDiT1qLy(A As Dictionary) As S12s
 Dim K
 For Each K In A.Keys
-    PushS12 S12szSyDic, S12(K, JnCrLf(A(K)))
+    PushS12 S12szDiT1qLy, S12(K, JnCrLf(A(K)))
 Next
 End Function
 Function FmtDicTit(A As Dictionary, Tit$) As String()
@@ -33,12 +29,12 @@ PushI FmtDicTit, vbTab & "Count=" & A.Count
 PushIAy FmtDicTit, AddPfxzAy(FmtDic(A, InclValTy:=True), vbTab)
 End Function
 
-Function FmtDic(A As Dictionary, Optional InclValTy As Boolean, Optional Nm1$ = "Key", Optional Nm2$ = "Val", Optional AddIx As Boolean) As String()
+Function FmtDic(A As Dictionary, Optional InclValTy As Boolean, Optional Nm1$ = "Key", Optional Nm2$ = "Val", Optional IxCol As EmIxCol) As String()
 ThwIf_Nothing A, "Dic", CSub
 Select Case True
-Case IsDicSy(A):    FmtDic = FmtS12s(S12szSyDic(A), Nm1, Nm2)
-Case IsDicLines(A): FmtDic = FmtS12s(S12szDic(A), Nm1, Nm2)
-Case Else:           FmtDic = FmtDiczLin(A, " ", InclValTy, Nm1, Nm2)
+Case IsDicSy(A):    FmtDic = FmtS12s(S12szDiT1qLy(A), Nm1, Nm2, IxCol)
+Case IsDicLines(A): FmtDic = FmtS12s(S12szDic(A), Nm1, Nm2, IxCol)
+Case Else:          FmtDic = FmtDiczLin(A, " ", InclValTy, Nm1, Nm2)
 End Select
 End Function
 

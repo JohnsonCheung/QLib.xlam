@@ -4,8 +4,8 @@ Option Explicit
 Private Const CMod$ = "MIde_Loc."
 Private Const Asm$ = "QIde"
 
-Function DMthPos(Mthn) As Drs
-Dim A As Drs: A = DwEq(DMthP, "Mthn", Mthn)
+Function DoMthPos(Mthn) As Drs
+Dim A As Drs: A = DwEq(DoMthP, "Mthn", Mthn)
 End Function
 
 Sub JmpzML(M As CodeModule, Lno)
@@ -22,6 +22,10 @@ Function HasMdn(Mdn, Optional Inf As Boolean) As Boolean
 HasMdn = HasMdnzP(CPj, Mdn, Inf)
 End Function
 
+Sub Z_Jmp()
+Jmp "QIde_Md.10"
+End Sub
+
 Sub Jmp(MdnDotLno$)
 JmpMdn BefOrAll(MdnDotLno, ".")
 JmpLin Aft(MdnDotLno, ".")
@@ -37,9 +41,11 @@ JmpzM Md(Mdn)
 End Sub
 
 Sub JmpLin(Lno)
+Dim L&: L = CLng(Lno)
+Dim C2%: C2 = Len(CMd.Lines(L, 1)) + 1
 With CPne
     .TopLine = Lno
-    .SetSelection Lno, 1, Lno, Len(CMd.Lines(Lno, 1))
+    .SetSelection Lno, 1, Lno, C2
 End With
 
 End Sub

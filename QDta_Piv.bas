@@ -50,7 +50,7 @@ For Each Dr In Itr(Dy)
     If Ix = -1 Then
         PushI O, Array(KKDr, Array(Itm))
     Else
-        O(Ix)(1) = AyzAdd(O(Ix)(1), Itm)
+        O(Ix)(1) = AddAy(O(Ix)(1), Itm)
     End If
 Next
 KKDrToItmAyDualColDy = O

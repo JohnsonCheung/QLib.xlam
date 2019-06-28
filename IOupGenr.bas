@@ -10,5 +10,5 @@ Attribute VB_Exposed = True
 Option Explicit
 Option Compare Text
 Private Const CMod$ = "IGenr."
-Sub GenOupTblFmTmpInp(A As Database)
+Sub GenOupTblFmTmpInp(D As Database)
 End Sub

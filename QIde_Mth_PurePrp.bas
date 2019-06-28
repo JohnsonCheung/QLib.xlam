@@ -4,14 +4,14 @@ Option Explicit
 Private Const CMod$ = "MIde_Mth_PurePrp."
 Private Const Asm$ = "QIde"
 
-Function DMthPrpWiPm() As Drs
-Dim A As Drs: A = AddColzHasPm(DMthPrp)
-DMthPrpWiPm = DwEqExl(A, "HasPm", True)
+Function DoMthPrpWiPm() As Drs
+Dim A As Drs: A = AddColzHasPm(DoMthPrp)
+DoMthPrpWiPm = DwEqExl(A, "HasPm", True)
 End Function
 
-Property Get DMthPrpWoPm() As Drs
-Dim A As Drs: A = AddColzHasPm(DMthPrp)
-DMthPrpWoPm = DwEqExl(A, "HasPm", False)
+Property Get DoMthPrpWoPm() As Drs
+Dim A As Drs: A = AddColzHasPm(DoMthPrp)
+DoMthPrpWoPm = DwEqExl(A, "HasPm", False)
 End Property
 
 Function LetSetPrpNset(MthLinAy$()) As Aset

@@ -17,11 +17,11 @@ Sub AlignMthzSelf()
 'Cpy Md
     Const TMdn$ = "QIde_B_AlignMth"      ' #The-Mdn
     Const TmMdn$ = "ATmp"                ' #Tmp-Mdn
-    Dim OEns:                        EnsCls CPj, TmMdn
+:                                    EnsCls CPj, TmMdn
     Dim FmM As CodeModule: Set FmM = Md(TMdn)
     Dim ToM As CodeModule: Set ToM = Md(TmMdn)
     Dim OIsCpy As Boolean:  OIsCpy = CpyMd(FmM, ToM)
-    Dim OExit:                       If OIsCpy Then MsgBox "Copied": Exit Sub
+:                                    If OIsCpy Then MsgBox "Copied": Exit Sub
 
 'Align
     Const TMthn$ = "AlignMthzML"      ' #The-Mthn

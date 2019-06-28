@@ -29,6 +29,9 @@ End Function
 Function RplCr$(S)
 RplCr = Replace(S, vbCr, " ")
 End Function
+Function RplCrLf$(S)
+RplCrLf = RplLf(RplCr(S))
+End Function
 Function RplLf$(S)
 RplLf = Replace(S, vbLf, " ")
 End Function

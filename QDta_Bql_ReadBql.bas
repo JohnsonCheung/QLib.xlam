@@ -5,12 +5,12 @@ Private Const CMod$ = "BBqlRead."
 Const Asm$ = "Dao"
 Const Ns$ = "Dao.Bql"
 Const ShtTyBql$ = "Short-Type-Si-Colon-FldNm-Bql:Sht.Ty.s.c.f.Bql: It is a [Bql] with each field is a [ShtTyscf]"
-Public Const DoczBql$ = "Full:Back-Qte-Line.  BasLin:Lin.  Brk:B.q.l.  Back-Qte is (`) and it is a String.  Each field is separated by (`)"
-Public Const DoczFbql$ = "Fullfilename-Bql:F.bql:it is a [Ft]|Each line is a [Bql]|Fst line is [ShtTyBql]"
-Public Const DoczShtTys$ = "ShtTy-Si:It is a [ShtTy] or (Tnnn) where nnn can 1 to 3 digits of value 1-255"
-Public Const DoczShtTyLis$ = "ShtTyLis Short-Type-List Sht.Ty.Lis (String)|is a Cml-String of each 1 to 3 char of ShtTy"
-Public Const DoczShtTyscf$ = "Full: ShtTy-Si-Colon-FldNm. Mmic:ShtTy.s.c.f.  FmTy:ColVal.   If FldNm have space, then ShtTyscf should be sq bracket"
-Public Const DoczShtTyBql$ = "ShtTyscf-Bql:ShtTy.Bql:It is a [Bql] with each field is a [ShtTyscf].  It is used to create an empty table by CrtTblzShtTyscfBql"
+':Bql: = "Full:Back-Qte-Line.  BasLin:Lin.  Brk:B.q.l.  Back-Qte is (`) and it is a String.  Each field is separated by (`)"
+':Fbql: Fullfilename-Bql:F.bql:it is a [Ft]|Each line is a [Bql]|Fst line is [ShtTyBql]"
+':ShtTys: ShtTy-Si:It is a [ShtTy] or (Tnnn) where nnn can 1 to 3 digits of value 1-255"
+':ShtTyLis: ShtTyLis Short-Type-List Sht.Ty.Lis (String)|is a Cml-String of each 1 to 3 char of ShtTy"
+':ShtTyscf: Full: ShtTy-Si-Colon-FldNm. Mmic:ShtTy.s.c.f.  FmTy:ColVal.   If FldNm have space, then ShtTyscf should be sq bracket"
+':ShtTyBql: ShtTyscf-Bql:ShtTy.Bql:It is a [Bql] with each field is a [ShtTyscf].  It is used to create an empty table by CrtTzShtTyscfBql"
 
 Function ShtTyscfBqlzDrs$(A As Drs)
 Dim Dy(): Dy = A.Dy
@@ -31,31 +31,31 @@ ShtTyscfzCol = O
 End Function
 
 Private Sub Z_CrtTTzFbqlPth()
-Dim A As Database: Set A = TmpDb
+Dim D As Database: Set D = TmpDb
 Dim P$: P = TmpPth
-WrtFbqlzDb P, SampDbzDutyDta
-CrtTTzFbqlPth A, P
-BrwDb A
+WrtFbqlzDb P, SampDboDutyDta
+CrtTTzFbqlPth D, P
+BrwDb D
 End Sub
 
-Sub CrtTTzFbqlPth(A As Database, FbqlPth$)
-CrtTTzFbqlPthFnny A, FbqlPth, Fnny(FbqlPth, "*.bql.txt")
+Sub CrtTTzFbqlPth(D As Database, FbqlPth$)
+CrtTTzFbqlPthFnny D, FbqlPth, Fnny(FbqlPth, "*.bql.txt")
 End Sub
 
-Sub CrtTTzFbqlPthFnny(A As Database, FbqlPth$, Fnny$())
+Sub CrtTTzFbqlPthFnny(D As Database, FbqlPth$, Fnny$())
 Dim T, P$, Fbql$
 P = EnsPthSfx(FbqlPth)
 For Each T In Fnny
     Fbql = P & T & ".txt"
-    CrtTblzFbql A, Fbql
+    CrtTzFbql D, Fbql
 Next
 End Sub
 
-Private Sub Z_CrtTblzFbql()
+Private Sub Z_CrtTzFbql()
 Dim Fbql$: Fbql = TmpFt
-WrtFbql Fbql, SampDbzDutyDta, "PermitD"
+WrtFbql Fbql, SampDboDutyDta, "PermitD"
 Dim D As Database: Set D = TmpDb
-CrtTblzFbql D, "PermitD", Fbql
+CrtTzFbql D, "PermitD", Fbql
 BrwDb D
 Stop
 End Sub
@@ -69,7 +69,7 @@ CrtFb Fb
 Dim D As Database, IFfn, T$
 Set D = Db(Fb)
 For Each IFfn In Ffny(FbqlPth, "*.bql.txt")
-    CrtTblzFbql D, CStr(IFfn)
+    CrtTzFbql D, CStr(IFfn)
 Next
 End Sub
 
@@ -78,17 +78,17 @@ If Not HasSfx(Fbql, ".bql.txt") Then Thw CSub, "Fbql does not have .bql.txt sfx"
 TblNmzFbql = RmvSfx(Fn(Fbql), ".bql.txt")
 End Function
 
-Sub CrtTblzFbql(A As Database, Fbql$, Optional T0$)
+Sub CrtTzFbql(D As Database, Fbql$, Optional T0$)
 Dim T$
     T = T0
     If T = "" Then T = TblNmzFbql(Fbql)
 
-Dim F%, L$, R As DAO.Recordset
+Dim F%, L$, R As Dao.Recordset
 F = FnoI(Fbql)
 Line Input #F, L
-CrtTblzShtTyscfBql A, T, L
+CrtTzShtTyscfBql D, T, L
 
-Set R = RszT(A, T)
+Set R = RszT(D, T)
 While Not EOF(F)
     Line Input #F, L
     InsRszBql R, L
@@ -97,18 +97,18 @@ R.Close
 Close #F
 End Sub
 
-Sub CrtTblzShtTyscfBql(A As Database, T, ShtTyscfBql$)
-Dim Td As New DAO.TableDef
+Sub CrtTzShtTyscfBql(D As Database, T, ShtTyscfBql$)
+Dim Td As New Dao.TableDef
 Td.Name = T
 Dim I
 For Each I In Split(ShtTyscfBql, "`")
     Td.Fields.Append FdzShtTyscf(CStr(I))
 Next
-A.TableDefs.Append Td
+D.TableDefs.Append Td
 End Sub
 
-Private Function FdzShtTyscf(ShtTyscf$) As DAO.Field
-Dim T As DAO.DataTypeEnum
+Private Function FdzShtTyscf(ShtTyscf$) As Dao.Field
+Dim T As Dao.DataTypeEnum
 Dim S As Byte
 With Brk2(ShtTyscf, ":")
     Select Case True
@@ -121,15 +121,15 @@ With Brk2(ShtTyscf, ":")
 End With
 End Function
 
-Function ShtTyBqlzT$(A As Database, T)
-Dim Ay$(), F As DAO.Field
-For Each F In A.TableDefs(T).Fields
+Function ShtTyBqlzT$(D As Database, T)
+Dim Ay$(), F As Dao.Field
+For Each F In D.TableDefs(T).Fields
     PushI Ay, ShtTyszFd(F) & ":" & F.Name
 Next
 ShtTyBqlzT = Jn(Ay, "`")
 End Function
 
-Private Function ShtTyszFd$(A As DAO.Field)
+Private Function ShtTyszFd$(A As Dao.Field)
 Dim B$: B = ShtTyzDao(A.Type)
 If A.Type = dbText Then
     B = B & A.Size

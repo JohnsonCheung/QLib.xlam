@@ -19,6 +19,37 @@ Const KwIJn$ = "inner join"
 Const KwOr$ = "or"
 Const KwOrd$ = "order by"
 Const KwLeftJn$ = "left join"
+Type SelIntoPm: Fny() As String: Ey() As String: Into As String: T As String: Bexp As String: End Type
+Type SelIntoPms: N As Byte: Ay() As SelIntoPm: End Type
+Function SelIntoPm(Fny$(), Ey$(), Into$, T$, Optional Bexp$) As SelIntoPm
+With SelIntoPm
+    .Fny = Fny
+    .Ey = Ey
+    .Into = Into
+    .T = T
+    .Bexp = Bexp
+End With
+End Function
+
+Sub PushIelIntoPm(O As SelIntoPms, M As SelIntoPm)
+ReDim Preserve O.Ay(O.N)
+O.Ay(O.N) = M
+O.N = O.N + 1
+End Sub
+
+Function SqyzSelIntoPms(A As SelIntoPms) As String()
+Dim J As Byte
+For J = 0 To A.N - 1
+    PushI SqyzSelIntoPms, SqlzSelIntoPm(A.Ay(J))
+Next
+End Function
+
+Function SqlzSelIntoPm$(A As SelIntoPm)
+With A
+'SqlzSelIntoPm = SqlSel_Fny_Extny_Into_T(.Fny, .Extny, .Into, .T, .Bexp)
+End With
+End Function
+
 
 Private Function PSel_Fny_Extny_NOFMT(Fny$(), Extny$(), Optional IsDis As Boolean)
 Dim O$(), J%, E$, F$
@@ -539,25 +570,25 @@ End Select
 SqlQte = O
 End Function
 
-Function SqlQteChrzT$(A As DAO.DataTypeEnum)
+Function SqlQteChrzT$(A As Dao.DataTypeEnum)
 Select Case A
 Case _
-    DAO.DataTypeEnum.dbBigInt, _
-    DAO.DataTypeEnum.dbByte, _
-    DAO.DataTypeEnum.dbCurrency, _
-    DAO.DataTypeEnum.dbDecimal, _
-    DAO.DataTypeEnum.dbDouble, _
-    DAO.DataTypeEnum.dbFloat, _
-    DAO.DataTypeEnum.dbInteger, _
-    DAO.DataTypeEnum.dbLong, _
-    DAO.DataTypeEnum.dbNumeric, _
-    DAO.DataTypeEnum.dbSingle: Exit Function
+    Dao.DataTypeEnum.dbBigInt, _
+    Dao.DataTypeEnum.dbByte, _
+    Dao.DataTypeEnum.dbCurrency, _
+    Dao.DataTypeEnum.dbDecimal, _
+    Dao.DataTypeEnum.dbDouble, _
+    Dao.DataTypeEnum.dbFloat, _
+    Dao.DataTypeEnum.dbInteger, _
+    Dao.DataTypeEnum.dbLong, _
+    Dao.DataTypeEnum.dbNumeric, _
+    Dao.DataTypeEnum.dbSingle: Exit Function
 Case _
-    DAO.DataTypeEnum.dbChar, _
-    DAO.DataTypeEnum.dbMemo, _
-    DAO.DataTypeEnum.dbText: SqlQteChrzT = "'"
+    Dao.DataTypeEnum.dbChar, _
+    Dao.DataTypeEnum.dbMemo, _
+    Dao.DataTypeEnum.dbText: SqlQteChrzT = "'"
 Case _
-    DAO.DataTypeEnum.dbDate: SqlQteChrzT = "#"
+    Dao.DataTypeEnum.dbDate: SqlQteChrzT = "#"
 Case Else
     Thw CSub, "Invalid DaoTy", "DaoTy", A
 End Select
@@ -664,7 +695,7 @@ End Function
 Function SqlAddCol_T_Fny_FzDiSqlTy$(T, Fny$(), FzDiSqlTy As Dictionary)
 Dim O$(), F
 For Each F In Fny
-    PushI O, F & " " & ValzDicK(FzDiSqlTy, F, "FzDiSqlTy", "Fld")
+    PushI O, F & " " & VzDicK(FzDiSqlTy, F, "FzDiSqlTy", "Fld")
 Next
 SqlAddCol_T_Fny_FzDiSqlTy = FmtQQ("Alter Table [?] add column ?", T, JnComma(O))
 End Function
@@ -776,20 +807,6 @@ X_A:
     Return
 End Function
 
-Private Sub Z_SqlDtlTWhfInAset()
-Dim T$, F$, S As Aset, SqlWdt%
-T = "Tbl-1"
-F = "Fld-1"
-T1:
-    Set S = AsetNRndStr(1000)
-    GoTo Tst
-T2:
-    Set S = AsetNRndInt(1000)
-Tst:
-    D SqyDlt_T_WhFld_InAset(T, F, S)
-    Return
-End Sub
-
 Function SqlDlt_T$(T)
 SqlDlt_T = "Delete * from [" & T & "]"
 End Function
@@ -896,7 +913,6 @@ End Function
 Function SqlSelzIntoCpy$(Into$, Fm$)
 SqlSelzIntoCpy = PSelzX("*") & PInto_T(Into) & PFm(Fm)
 End Function
-
 
 Function SqlSelzIntoFmX$(Into$, SelX$, FmX$, Optional Gp$, Optional Bexp$)
 Dim Dis As Boolean: If Gp <> "" Then Dis = True

@@ -4,19 +4,19 @@ Option Explicit
 Private Const CMod$ = "MVb_Ay_FmTo_To_Dy."
 Private Const Asm$ = "QVb"
 
-Function DyoAyzAddC(Ay, C) As Variant()
+Function DyoAddAyC(Ay, C) As Variant()
 'XCDy is AyItmX-Const-Dy
 Dim I
 For Each I In Itr(Ay)
-    PushI DyoAyzAddC, Array(I, C)
+    PushI DyoAddAyC, Array(I, C)
 Next
 End Function
 
-Function DyoCAyzAdd(A, C) As Variant()
+Function DyoCAddAy(A, C) As Variant()
 'CXDy is Const-AyItmX-Dy
 Dim I
 For Each I In Itr(A)
-    PushI DyoCAyzAdd, Array(C, I)
+    PushI DyoCAddAy, Array(C, I)
 Next
 End Function
 

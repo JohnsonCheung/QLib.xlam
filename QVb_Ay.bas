@@ -3,10 +3,10 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Ay."
 Private Const Asm$ = "QVb"
-Public Const DoczStmt$ = "Stmt is a string between StmtBrkPatn"
+':Stmt$ = "Stmt is a string between StmtBrkPatn"
 Public Const StmtBrkPatn$ = "(\.  |\r\n|\r)"
-Public Const DoczSsLin = "Spc-Sep-Lin.  SplitSpc after trim and rmvDblSpc."
-Public Const DoczSsl$ = "Spc-Sep-Lin-Escaped.  SpcSepStrRev each ele after SyzSS"
+':SsLin = "Spc-Sep-Lin.  SplitSpc after trim and rmvDblSpc."
+':Ssl$ = "Spc-Sep-Lin-Escaped.  SpcSepStrRev each ele after SyzSS"
 
 Sub AsgAp(Ay, ParamArray OAp())
 Dim J%, OAv()
@@ -158,6 +158,7 @@ Else
     Asg Ay(N - 2), LasSndEle
 End If
 End Function
+
 Function LasEle(Ay)
 Dim N&: N = Si(Ay)
 If N = 0 Then
@@ -218,7 +219,10 @@ Function ResiN(Ay, N&)
 'Ret : empty ay of si @N of sam base ele as @Ay @@
 ResiN = ResiU(Ay, N - 1)
 End Function
-
+Function IfIn(V, Ay)
+'Ret @V if in @Ay else Empty
+If HasEle(Ay, V) Then IfIn = V
+End Function
 Function ResiMax(OAy1, OAy2)
 'Ret : resi the min si of ay to sam si as the other @@
 Dim U1&, U2&: U1 = UB(OAy1): U2 = UB(OAy2)
@@ -247,14 +251,14 @@ Next
 RevAy = O
 End Function
 
-Function RevAyAyI(Ay)
+Function RevAyI(Ay)
 Dim O: O = Ay
 Dim J&, U&
 U = UB(O)
 For J = 0 To U
     O(J) = Ay(U - J)
 Next
-RevAyAyI = O
+RevAyI = O
 End Function
 
 Function RevAyOy(Oy() As Object)
@@ -269,7 +273,7 @@ End Function
 
 Function RplAyzMid(Ay, B As Fei, ByAy)
 With AyabczAyFei(Ay, B)
-RplAyzMid = AyzAddAp(.A, ByAy, .C)
+RplAyzMid = AddAyAp(.A, ByAy, .C)
 End With
 End Function
 
@@ -286,7 +290,7 @@ End If
 SampLinzAy = "*Ay:[" & U & "]" & S
 End Function
 
-Function SeqCntDic(Ay) As Dictionary 'The return dic of key=AyEle pointing to 2-Ele-LngAp with Ele-0 as Seq#(0..) and Ele- as Cnt
+Function SeqDiKqCnt(Ay) As Dictionary 'The return dic of key=AyEle pointing to 2-Ele-LngAp with Ele-0 as Seq#(0..) and Ele- as Cnt
 Dim S&, O As New Dictionary, L&(), X
 For Each X In Itr(Ay)
     If O.Exists(X) Then
@@ -300,7 +304,7 @@ For Each X In Itr(Ay)
         O.Add X, L
     End If
 Next
-Set SeqCntDic = O
+Set SeqDiKqCnt = O
 End Function
 Function StrColzSq(Sq(), Optional C = 1) As String()
 If Si(Sq) = 0 Then Exit Function
@@ -466,8 +470,8 @@ Dim ODy()
 AyZip_Ap = ODy
 End Function
 
-Function ItmAyzAdd(Itm, Ay)
-ItmAyzAdd = InsEle(Ay, Itm)
+Function ItmAddAy(Itm, Ay)
+ItmAddAy = InsEle(Ay, Itm)
 End Function
 
 Private Sub Z_AyabczAyFE()
@@ -684,29 +688,14 @@ For Each I In SyzSS(Ssl)
 Next
 End Function
 
-Function IsDteStr(S) As Boolean
-On Error GoTo X
-Dim A As Date: A = S
-IsDteStr = True
-Exit Function
-X:
-End Function
 
-Function IsDblStr(S) As Boolean
-On Error GoTo X
-Dim A#: A = S
-IsDblStr = True
-Exit Function
-X:
-End Function
-
-Function IsDteSy(Sy$()) As Boolean
+Function IsSyDte(Sy$()) As Boolean
 Dim S: For Each S In Sy
     If Not IsDteStr(S) Then Exit Function
 Next
 End Function
 
-Function IsDblSy(Sy$()) As Boolean
+Function IsSyDbl(Sy$()) As Boolean
 Dim S: For Each S In Sy
     If Not IsDblStr(S) Then Exit Function
 Next

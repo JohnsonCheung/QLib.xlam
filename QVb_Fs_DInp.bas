@@ -9,12 +9,12 @@ Dim Msg$: Msg = "Dup [" & C & "]"
 ErzColDup = ErzDrsMsg(B, Msg)
 End Function
 
-Function DInpzSamp() As Drs
+Function SampDoInp() As Drs
 Erase XX
 X "MB52 C:\Users\user\Desktop\MHD\SAPAccessReports\StockShipCost\Sample\MB52 2018-07-30.xls"
 X "UOM  C:\Users\user\Desktop\MHD\SAPAccessReports\StockShipCost\Sample\sales text.xlsx"
 X "ZHT1 C:\Users\user\Desktop\MHD\SAPAccessReports\StockShipCost\Sample\ZHT1.XLSX"
-DInpzSamp = DrszTRst("Inpn Ffn", XX)
+SampDoInp = DrszTRst("Inpn Ffn", XX)
 End Function
 Function ErzDrsMsg(A As Drs, Msg$) As String()
 If NoReczDrs(A) Then Exit Function
@@ -25,7 +25,7 @@ XLin
 ErzDrsMsg = XX
 End Function
 Private Sub Z_ErzDInp()
-Brw ErzDInp(DInpzSamp)
+Brw ErzDInp(SampDoInp)
 End Sub
 Function ErzDInp(DInp As Drs) As String()
 Dim E1$(), E2$(), E3$()
