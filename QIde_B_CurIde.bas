@@ -1,6 +1,6 @@
 Attribute VB_Name = "QIde_B_CurIde"
-Option Compare Text
 Option Explicit
+Option Compare Text
 Private Const CMod$ = "MIde_Vbe_Cur."
 Private Const Asm$ = "QIde"
 
@@ -16,46 +16,32 @@ Function PjzPjfC(Pjf) As VBProject
 Set PjzPjfC = PjzPjf(CVbe, Pjf)
 End Function
 
-Function MdDrszV(A As Vbe) As Drs
-MdDrszV = Drs(MdTblFny, MdDyoV(A))
-End Function
-Function MdTblFny() As String()
-
-End Function
 
 Sub SavCurVbe()
 SavVbe CVbe
 End Sub
+
 Property Get CMdn()
 CMdn = CCmp.Name
 End Property
-Function MthLno(Md As CodeModule, Lno&)
-Dim O&
-For O = Lno To 1 Step -1
-    If IsLinMth(Md.Lines(O, 1)) Then MthLno = O: Exit Function
-Next
-End Function
+
 Property Get CLno&()
 CLno = LnozM(CMd)
 End Property
+
 Property Get CMthn$()
 Dim M As CodeModule: Set M = CMd
 If IsNothing(M) Then Exit Property
 CMthn = CMthnzM(CMd)
 End Property
-Function WinyzV(V As Vbe) As VBIDE.Window
-End Function
-Function WinyV() As VBIDE.Window()
-WinyV = WinyzV(CVbe)
-End Function
 
-Function CWin() As VBIDE.Window
+Function CWin() As vbide.Window
 Dim A As CodePane: Set A = CPne
 If IsNothing(A) Then Exit Function
 Set CWin = A.Window
 End Function
 
-Property Get CPne() As VBIDE.CodePane
+Property Get CPne() As vbide.CodePane
 Set CPne = CVbe.ActiveCodePane
 End Property
 

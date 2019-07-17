@@ -10,22 +10,24 @@ Function ShfBktStr$(OLin$)
 ShfBktStr = BetBkt(OLin)
 OLin = AftBkt(OLin$)
 End Function
-Function RmvChr$(S, ChrLis$) ' Rmv fst chr if it is in ChrLis
-If HasSubStr(ChrLis, FstChr(S)) Then
-    RmvChr = RmvFstChr(S)
+
+Function RmvLasChrzzLis$(S, ChrLis$) ' Rmv fst chr if it is in ChrLis
+If HasSubStr(ChrLis, LasChr(S)) Then
+    RmvLasChrzzLis = RmvLasChr(S)
 Else
-    RmvChr = S
+    RmvLasChrzzLis = S
 End If
 End Function
+
 Function TakChr$(S, ChrLis$) ' Ret fst chr if it is in ChrLis
 If HasSubStr(ChrLis, FstChr(S)) Then TakChr = FstChr(S)
 End Function
 
-Function RmvChrzSfx$(S, ChrLis$)
-If HasSubStr(ChrLis, LasChr(S)) Then
-    RmvChrzSfx = RmvLasChr(S)
+Function RmvFstChrzzLis$(S, ChrLis$)
+If HasSubStr(ChrLis, FstChr(S)) Then
+    RmvFstChrzzLis = RmvFstChr(S)
 Else
-    RmvChrzSfx = S
+    RmvFstChrzzLis = S
 End If
 End Function
 Function ShfChr$(OLin$, ChrList$)

@@ -48,6 +48,13 @@ ReDim Preserve O(U - Cnt)
 AeAtCnt = O
 End Function
 
+Function AeBlnk(Ay) As String()
+Dim I: For Each I In Itr(Ay)
+    If Trim(I) <> "" Then PushI AeBlnk, I
+Next
+End Function
+
+
 Function AeEle(Ay, Ele) 'Rmv Fst-Ele eq to Ele from Ay
 Dim Ix&: Ix = IxzAy(Ay, Ele): If Ix = -1 Then AeEle = Ay: Exit Function
 AeEle = AeEleAt(Ay, IxzAy(Ay, Ele))
@@ -61,7 +68,6 @@ For J = N To UB(Ay)
 Next
 AeFstNEle = O
 End Function
-
 
 Function AeEleAt(Ay, Optional At& = 0, Optional Cnt& = 1)
 AeEleAt = AeAtCnt(Ay, At, Cnt)

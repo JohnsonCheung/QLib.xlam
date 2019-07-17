@@ -3,6 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_UI."
 Private Const Asm$ = "QVb"
+
 Function Cfm(Msg$) As Boolean
 Cfm = MsgBox(Msg, vbYesNo + vbDefaultButton2) = vbYes
 End Function

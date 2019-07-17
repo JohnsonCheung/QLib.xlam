@@ -35,11 +35,11 @@ Sub TileV()
 BoTileV.Execute
 End Sub
 Sub Compile(Pjn$)
-JmpzP Pj(Pjn)
+JmpPj Pj(Pjn)
 BoCompile.Execute
 End Sub
 Sub CompilezP(P As VBProject)
-JmpzP P
+JmpPj P
 ThwIf_BoCompile P.Name
 With BoCompile
     If .Enabled Then

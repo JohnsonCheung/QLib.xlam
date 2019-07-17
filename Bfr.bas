@@ -17,8 +17,8 @@ Sub Var(Optional V)
 If IsEmpty(V) Then PushI A, "": Exit Sub
 PushIAy A, Fmt(V)
 End Sub
-Sub Box(S$)
-PushI A, QVb_Str_Box.Box(S)
+Sub Box(S$, Optional C$ = "*")
+PushIAy A, QVb_Str_Box.Box(S, C)
 End Sub
 Sub ULin(S$, Optional ULinChr$ = "-")
 PushI A, S
@@ -29,5 +29,9 @@ BrwAy A
 End Sub
 Function Ly() As String()
 Ly = A
+End Function
+
+Function Lines$()
+Lines = JnCrLf(Ly)
 End Function
 

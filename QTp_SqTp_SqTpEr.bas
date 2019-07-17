@@ -30,12 +30,12 @@ Function BlkIx%(B As Blk)
 BlkIx = B.DroBlk(3)
 End Function
 Private Function ErzExcessBlk(B As Blks, BlkTy$) As String()
-Dim M As Blk: M = BlkzTy(B, BlkTy)
+Dim M As Blk: 'M = BlkswTy(B, BlkTy)
 If IsBlkEmp(M) Then Exit Function
 PushI ErzExcessBlk, FmtQQ("Excess [?] block, they are ignored", BlkTy)
-PushI ErzExcessBlk, ErzAftBlk(B, M)
+'PushI ErzExcessBlk, ErzAftBlk(B, M)
 End Function
-ErzBlk
+
 Private Function MsgzLeftOvrAftEvl(A() As SwLin, Sw As Sw) As String()
 'If Si(A) = 0 Then Exit Function
 Dim I

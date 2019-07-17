@@ -55,7 +55,7 @@ Dim D1 As Drs, D2 As Drs
 '== Exit if parameter error ============================================================================================
 Dim IsErPm As Boolean: IsErPm = XIsErPm(M, MthLno)                 '        #Is-Parameter-er.     ! M-isnothg | MthLno<=0
 :                               If IsErPm Then Exit Sub            ' Exit=>                       ! If
-Dim Ml$:                   Ml = ContLinzML(M, MthLno)
+Dim Ml$:                   Ml = ContLinzLno(M, MthLno)
 Dim IsUpd  As Boolean:  IsUpd = IsUpdzRpt(Rpt)
 Dim MlNm$:               MlNm = Mthn(Ml)                           '        #Ml-Name.
 Dim IsSelf As Boolean: IsSelf = XIsSelf(IsUpd, IsUpdSelf, M, MlNm) '        #Is-Self-aligning-er. ! Mdn<>'QIde...' & MlNm<>'AlignMthzML
@@ -122,7 +122,7 @@ Dim CmlPm     As Drs:     CmlPm = XCmlPm(CmEpt)                           ' V Sf
 Dim CmlDclPm  As Drs:  CmlDclPm = XCmlDclPm(CmlPm, CmlVSfx)               ' V Sfx RHS CmNm Pm DclPm             ! use [CmlVSfx] & [Pm] to bld [DclPm]
 Dim CmlMthRet As Drs: CmlMthRet = XCmlMthRet(CmlDclPm)                    ' V Sfx RHS CmNm Pm DclPm TyChr RetAs
 Dim CmlEpt    As Drs:    CmlEpt = XCmlEpt(CmlMthRet)                      ' V CmNm EptL
-                             D1 = DoMth(M)                                 ' L Mdy Ty Mthn MthLin
+                             D1 = DoMthzM(M)                              ' L Mdy Ty Mthn MthLin
                              D1 = DwEq(D1, "Mdy", "Prv")
 Dim CmlAct    As Drs:    CmlAct = SelDrsAs(D1, "L Mthn:CmNm MthLin:ActL") ' L CmNm ActL
 Dim CmlJn     As Drs:     CmlJn = JnDrs(CmlEpt, CmlAct, "CmNm", "L ActL") ' V CmNm EptL L ActL                  ! som EptL & ActL may eq
@@ -179,7 +179,7 @@ Dim CrVpr1 As Drs: CrVpr1 = AddCol(CrVpr, "IsRet", False)   ' V P R1 R2 R3 IsRet
 '   Fm  #WiRmk   : V R1 R2 R3
                        FF = "V P R1 R2 R3 IsRet"
 Dim CrEmpP As Drs: CrEmpP = SelDrsAlwE(CrWiRmk, FF)                ' V P R1 R2 R3 IsRet ! All P & IsRet is empty
-Dim CrRet  As Drs:  CrRet = DrszUpdCC(CrEmpP, "P IsRet", "", True) ' V P R1 R2 R3 IsRet ! All P is '' & IsRet is TRUE
+Dim CrRet  As Drs:  CrRet = UpdCC(CrEmpP, "P IsRet", "", True) ' V P R1 R2 R3 IsRet ! All P is '' & IsRet is TRUE
 
 '.. Fnd #RmkL : V Rmk           ! each V can map to CmNm................................................................
 '   Fm  #Vrp1 : V P R1 R2 R3    ! P is pm | IsRet = false
@@ -984,11 +984,9 @@ Next
 XWAs = WdtzAy(C)
 End Function
 
-
-
 Private Function XCmlAct(CmlEpt As Drs, M As CodeModule) As Drs
-Dim CV$(): CV = StrColzDrs(CmlEpt, "V")
-Dim Act$(): Act = StrCol(DoMth(M), "MthLin")
+Dim CV$(): CV = StrCol(CmlEpt, "V")
+Dim Act$(): Act = StrCol(DoMthzM(M), "MthLin")
 Insp CSub, "CmlAct", "CV Act", CV, Act
 Stop
 End Function

@@ -46,16 +46,6 @@ For Each V In A
     If HasEle(B, V) Then PushI IntersectAy, V
 Next
 End Function
-Function MinAy(A)
-Dim O, J&
-If Si(A) = 0 Then Exit Function
-O = A(0)
-For J = 1 To UB(A)
-    If A(J) < O Then O = A(J)
-Next
-MinAy = O
-End Function
-
 Function MinusAyAp(Ay, ParamArray Ap())
 Dim IAy, O
 O = Ay

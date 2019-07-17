@@ -111,8 +111,8 @@ Private Function Y_Md() As CodeModule
 Set Y_Md = CVbe.VBProjects("StockShipRate").VBComponents("Schm").CodeModule
 End Function
 
-Private Sub Z_MdDrs()
-'BrwDrs MdDrs(Md("IdeFeature_EnsZ_AsPrivate"))
+Private Sub Z_DroMds()
+'BrwDrs DroMds(Md("IdeFeature_EnsZ_AsPrivate"))
 End Sub
 
 Private Sub Z_MthLnozMM()
@@ -138,3 +138,15 @@ End Sub
 Private Sub Z_CMd()
 Ass CMd.Parent.Name = "Cur_d"
 End Sub
+
+Function CvMd(A) As CodeModule
+Set CvMd = A
+End Function
+
+Function LibNyP() As String()
+LibNyP = LibNyzP(CPj)
+End Function
+
+Function LibNyzP(P As VBProject) As String()
+LibNyzP = AeBlnk(AwDistAsSy(AyBef(MdNyzP(P), "_")))
+End Function

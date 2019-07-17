@@ -4,6 +4,11 @@ Option Explicit
 Private Const CMod$ = "MIde_Mth_Cnt."
 Private Const Asm$ = "QIde"
 Const CntgMthPP$ = "NPubSub NPubFun NPubPrp NPrvSub NPrvFun NPrvPrp NFrdSub NFrdFun NFrdPrp"
+Enum EmOupTy
+    EiOtDmp
+    EiOtBrw
+    EiOtVc
+End Enum
 Type CntgMth
     Lib As String
     Mdn As String
@@ -19,15 +24,19 @@ Type CntgMth
 End Type
 Type CntgMths: N As Long: Ay() As CntgMth: End Type
 
-Function DoMthCntP() As Drs
-DoMthCntP = DoMthCntzP(CPj)
+Function DoMthCntP(Optional MdnPatn$ = ".+", Optional SrtCol$ = "Mdn") As Drs
+DoMthCntP = DoMthCntzP(CPj, MdnPatn, SrtCol)
 End Function
 
-Private Function DoMthCntzP(P As VBProject) As Drs
+Private Function DoMthCntzP(P As VBProject, MdnPatn$, SrtCol$) As Drs
+Dim R As RegExp: Set R = RegExp(MdnPatn, IgnoreCase:=True)
 Dim C As VBComponent, Dy(): For Each C In P.VBComponents
-    PushI Dy, DroMthCnt(C.CodeModule)
+    If R.Test(C.Name) Then
+        PushI Dy, DroMthCnt(C.CodeModule)
+    End If
 Next
-DoMthCntzP = Drs(FoMthCnt, Dy)
+Dim D As Drs: D = Drs(FoMthCnt, Dy)
+DoMthCntzP = SrtDrs(D, SrtCol)
 End Function
 Private Function FoMthCnt() As String()
 FoMthCnt = SyzSS("Lib Mdn NLines NMth NPubSub NPubFun NPubPrp NPrvSub NPrvFun NPrvPrp NFrdSub NFrdFun NFrdPrp")
@@ -111,26 +120,28 @@ Dim Lib$: Lib = Bef(Mdn, "_")
 DroMthCnt = Array(Lib, Mdn, NLin, NMth, NPubSub, NPubFun, NPubPrp, NPrvSub, NPrvFun, NPrvPrp, NFrdSub, NFrdFun, NFrdPrp)
 End Function
 
-Sub CntMthP()
-CntMthzP CPj
+Sub LisMdP(Optional MdnPatn$ = ".+", Optional SrtCol$ = "Mdn", Optional OupTy As EmOupTy)
+LisMdzP CPj, MdnPatn, SrtCol, OupTy
 End Sub
-Private Sub CntMthzM(M As CodeModule)
+
+Private Sub LisMdzM(M As CodeModule)
 DmpDrs DoMthCntzM(M)
 End Sub
 
 Private Function DoMthCntzM(M As CodeModule) As Drs
-
+DoMthCntzM = Drs(FoMthCnt, Av(DroMthCnt(M)))
 End Function
 
 Sub CntWrdP()
 Debug.Print WrdCnt(JnCrLf(SrczP(CPj)))
 End Sub
-Sub CntMthM()
-CntMthzM CMd
+
+Sub LisMdM()
+LisMdzM CMd
 End Sub
 
-Private Sub CntMthzP(P As VBProject)
-BrwDrs DoMthCntzP(P)
+Private Sub LisMdzP(P As VBProject, MdnPatn$, SrtCol$, OupTy As EmOupTy)
+Dmp FmtDrs(DoMthCntzP(P, MdnPatn, SrtCol), Fmt:=EiSSFmt), OupTy
 End Sub
 
 Function NMthzM%(M As CodeModule)
@@ -145,30 +156,30 @@ Next
 NSrcLinPj = O
 End Function
 
-Private Function NPMthzS%(Src$())
-NPMthzS = NItr(PMthLinItr(Src))
+Private Function NPubMthzS%(Src$())
+NPubMthzS = NItr(PubMthLinItr(Src))
 End Function
 
-Private Function NPMthzM%(M As CodeModule)
-NPMthzM = NPMthzS(Src(M))
+Private Function NPubMthzM%(M As CodeModule)
+NPubMthzM = NPubMthzS(Src(M))
 End Function
 
-Function NPMthzV%(A As Vbe)
+Function NPubMthzV%(A As Vbe)
 Dim O%, P As VBProject
 For Each P In A.VBProjects
-    O = O + NPMthzP(P)
+    O = O + NPubMthzP(P)
 Next
-NPMthzV = O
+NPubMthzV = O
 End Function
 
-Property Get NPMthV%()
-NPMthV = NPMthzV(CVbe)
+Property Get NPubMthV%()
+NPubMthV = NPubMthzV(CVbe)
 End Property
 
-Function NPMthzP%(P As VBProject)
+Function NPubMthzP%(P As VBProject)
 Dim O%, C As VBComponent
 For Each C In P.VBComponents
-    O = O + NPMthzM(C.CodeModule)
+    O = O + NPubMthzM(C.CodeModule)
 Next
-NPMthzP = O
+NPubMthzP = O
 End Function

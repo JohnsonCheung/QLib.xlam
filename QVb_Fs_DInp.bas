@@ -24,9 +24,11 @@ XDrs A
 XLin
 ErzDrsMsg = XX
 End Function
+
 Private Sub Z_ErzDInp()
 Brw ErzDInp(SampDoInp)
 End Sub
+
 Function ErzDInp(DInp As Drs) As String()
 Dim E1$(), E2$(), E3$()
 E1 = ErzColDup(DInp, "Ffn")
@@ -34,12 +36,13 @@ E2 = ErzColDup(DInp, "Inpn")
 E3 = ErzFfnMis(DInp)
 ErzDInp = Sy(E1, E2, E3)
 End Function
+
 Private Function ErzFfnMis(A As Drs) As String()
 Dim I%: I = IxzAy(A.Fny, "Ffn")
 Dim Dr, Dy(): For Each Dr In Itr(A.Dy)
     If Not HasFfn(Dr(I)) Then PushI Dy, Dr
 Next
-Dim B As Drs: B = DrszNewDy(A, Dy)
+Dim B As Drs: B = Drs(A.Fny, Dy)
 ErzFfnMis = ErzDrsMsg(B, "File not exist")
 End Function
 

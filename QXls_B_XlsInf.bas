@@ -365,7 +365,7 @@ Function LoNCol%(A As ListObject)
 LoNCol = A.ListColumns.Count
 End Function
 Function LozWs(A As Worksheet, Lon$) As ListObject 'Return LoOpt
-Set LozWs = FstzItrNm(A.ListObjects, Lon)
+Set LozWs = FstzItn(A.ListObjects, Lon)
 End Function
 
 Function FstLo(A As Worksheet) As ListObject 'Return LoOpt
@@ -1055,7 +1055,7 @@ For Each Ws In CWb.Sheets
 Next
 End Function
 Function WszDic(Dic As Dictionary, Optional InclDicValOptTy As Boolean) As Worksheet
-Set WszDic = WszDrs(DrszDic(Dic, InclDicValOptTy))
+Set WszDic = WszDrs(DoDic(Dic, InclDicValOptTy))
 End Function
 
 Function WszDt(A As DT) As Worksheet
@@ -1184,5 +1184,18 @@ Dim R&: For R = 1 To UBound(Sq, 1)
     Next
 Next
 IsSqEmp = True
+End Function
+
+Function FilterzLo(Lo As ListObject, Coln)
+'Ret : Set filter of all Lo of CWs @
+Dim Ws  As Worksheet:   Set Ws = CWs
+Dim C$:                      C = "Mthn"
+Dim LC  As ListColumn:  Set LC = Lo.ListColumns(C)
+Dim OFld%:                OFld = LC.Index
+Dim Itm():                 Itm = ColzLc(LC)
+Dim Patn$:                Patn = "^Ay"
+Dim OSel:                 OSel = AwPatn1(Itm, Patn)
+Dim ORg As Range:      Set ORg = Lo.Range
+ORg.AutoFilter Field:=OFld, Criteria1:=OSel, Operator:=xlFilterValues
 End Function
 

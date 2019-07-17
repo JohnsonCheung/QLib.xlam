@@ -48,3 +48,6 @@ Function TmpFxa$(Optional Fdr$, Optional Fnn$)
 TmpFxa = TmpFfn(".xlam", Fdr, Fnn)
 End Function
 
+Private Sub Z()
+QIde_Pjf:
+End Sub

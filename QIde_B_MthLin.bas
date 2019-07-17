@@ -55,7 +55,7 @@ End Function
 
 
 Function MthLinzML$(M As CodeModule, Lno&)
-MthLinzML = ContLinzML(M, MthLno(M, Lno))
+MthLinzML = ContLinzLno(M, MthLno(M, Lno))
 End Function
 
 
@@ -93,7 +93,7 @@ Tst:
 End Sub
 
 Function MthLinAyP() As String()
-MthLinAyP = StrCol(DoMthP, "MthLin")
+MthLinAyP = StrCol(DoPubMth, "MthLin")
 End Function
 
 Function MthLinAyzPub(Src$()) As String()
@@ -127,22 +127,22 @@ End Property
 Private Property Let XX1(V)
 
 End Property
-Function PMthNyzP(P As VBProject) As String()
+Function PubMthNyzP(P As VBProject) As String()
 
 End Function
-Function MthLzPum(PMthn)
+Function MthLzPum(PubMthn)
 
 End Function
 
-Function MthLzPP$(P As VBProject, PMthn)
-Dim B$(): B = ModNyzPMth(PMthn)
+Function MthLzPP$(P As VBProject, PubMthn)
+Dim B$(): B = ModNyzPubMth(PubMthn)
 If Si(B) <> 1 Then
-    Thw CSub, "Should be 1 module found", "PMthn [#Mod having PMthn] ModNy-Found", PMthn, Si(B), B
+    Thw CSub, "Should be 1 module found", "PubMthn [#Mod having PubMthn] ModNy-Found", PubMthn, Si(B), B
 End If
-MthLzPP = MthLzSP(SrczMdn(B(0)), PMthn)
+MthLzPP = MthLzSP(SrczMdn(B(0)), PubMthn)
 End Function
 '
-Function MthLzSP$(Src$(), PMthn)
+Function MthLzSP$(Src$(), PubMthn)
 
 End Function
 '
@@ -177,7 +177,7 @@ End Function
 Function MdzMthn(P As VBProject, Mthn) As CodeModule
 Dim C As VBComponent, O As CodeModule
 For Each C In P.VBComponents
-    If HasEle(PMthNyzM(C.CodeModule), Mthn) Then
+    If HasEle(PubMthNyzM(C.CodeModule), Mthn) Then
         If Not IsNothing(O) Then Thw CSub, FmtQQ("Mthn fnd in 2 or more md: [?] & [?]", Mdn(O), C.Name)
         Set O = C.CodeModule
     End If
@@ -231,15 +231,15 @@ MthLzSTN = MthLzSI(Src, Ix)
 End Function
 
 
-Function PMthLinAy(Src$()) As String()
+Function PubMthLinAy(Src$()) As String()
 Dim L
 For Each L In Itr(Src)
-    If IsLinPubMth(L) Then PushI PMthLinAy, L
+    If IsLinPubMth(L) Then PushI PubMthLinAy, L
 Next
 End Function
 
-Function PMthLinItr(Src$())
-Asg Itr(PMthLinAy(Src)), PMthLinItr
+Function PubMthLinItr(Src$())
+Asg Itr(PubMthLinAy(Src)), PubMthLinItr
 End Function
 
 

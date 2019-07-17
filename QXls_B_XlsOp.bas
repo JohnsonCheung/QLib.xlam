@@ -803,7 +803,7 @@ End Sub
 Private Sub RplLozT(A As ListObject, D As Database, T)
 Dim Fny1$(): Fny1 = Fny(D, T)
 Dim Fny2$(): Fny2 = FnyzLo(A)
-If Not IsSamAy(Fny1, Fny2) Then
+If Not IsAySam(Fny1, Fny2) Then
     Thw CSub, "LoFny and TblFny are not same", "LoFny TblNm TblFny Db", Fny2, T, Fny1, D.Name
 End If
 Dim Sq()

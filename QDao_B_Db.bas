@@ -23,7 +23,6 @@ Function IsDbTmp(D As Database) As Boolean
 IsDbTmp = PthzDb(D) = TmpDbPth
 End Function
 
-
 Sub DrpDbIfTmp(D As Database)
 If IsDbTmp(D) Then
     Dim N$
@@ -57,24 +56,28 @@ StruzTT = StruzTny(D, Ny(TT))
 End Function
 
 Function Stru(D As Database) As String()
-Stru = AlignzTRst(StruzTny(D, Tny(D)))
+Stru = AlignTRst(StruzTny(D, Tny(D)))
 End Function
 
 Function OupTny(D As Database) As String()
 OupTny = AwPfx(Tny(D), "@")
 End Function
+
 Sub DrpTny(D As Database, Tny$())
 Dim T
 For Each T In Tny
     DrpT D, CStr(T)
 Next
 End Sub
+
 Sub DrpTT(D As Database, TT$)
 Dim T
 End Sub
-Sub DrpTmp(D As Database)
+
+Sub DrpTmpTbl(D As Database)
 DrpTny D, TmpTny(D)
 End Sub
+
 Sub DrpT(D As Database, T)
 If HasTbl(D, T) Then D.Execute "Drop Table [" & T & "]"
 End Sub

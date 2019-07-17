@@ -3,21 +3,29 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Vbe."
 Private Const Asm$ = "QIde"
-
+Enum EmSrtLisMd
+    EiByMdn
+    EiByMdnDes
+    EiByNLines
+    EiByNLinesDes
+End Enum
 Function CvVbe(A) As Vbe
 Set CvVbe = A
 End Function
+
 Sub DmpIsPjSav()
-DmpDrs DrszIsPjSav(CVbe)
+DmpDrs DoIsPjSav(CVbe)
 End Sub
-Function Dy_IsPjSav(A As Vbe) As Variant()
+
+Private Function DyoIsPjSav(A As Vbe) As Variant()
 Dim I As VBProject
 For Each I In A.VBProjects
-    PushI Dy_IsPjSav, Array(I.Saved, I.Name, I.GenFileName)
+    PushI DyoIsPjSav, Array(I.Saved, I.Name, I.GenFileName)
 Next
 End Function
-Function DrszIsPjSav(A As Vbe) As Drs
-DrszIsPjSav = DrszFF("IsSav Pjn GenFfn", Dy_IsPjSav(A))
+
+Function DoIsPjSav(A As Vbe) As Drs
+DoIsPjSav = DrszFF("IsSav Pjn GenFfn", DyoIsPjSav(A))
 End Function
 
 Function PjzV(A As Vbe, Pjn$) As VBProject
@@ -31,14 +39,43 @@ For Each I In Vbe.VBProjects
 Next
 End Function
 
-Function MdDyoV(A As Vbe) As Variant()
-Dim C, Pnm$, P As VBProject
-For Each P In A.VBProjects
-    Push MdDyoV, MdDr(C.CodeModule)
+Sub LisMd(Optional MdPatn$ = ".+", Optional SrtBy As EmSrtLisMd, Optional Oup As EmOupTy)
+Dim Srt$
+Select Case True
+Case SrtBy = EiByMdn: Srt = "Mdn"
+Case SrtBy = EiByMdnDes: Srt = "-Mdn"
+Case SrtBy = EiByNLines: Srt = "Mdn"
+Case SrtBy = EiByNLinesDes: Srt = "-NLines"
+Case Else:    Srt = "Mdn"
+End Select
+Dmp FmtDrs(SrtDrs(DoMdV(MdPatn), Srt), , Fmt:=EiSSFmt), Oup
+End Sub
+
+Function DoMdV(Optional MdPatn$ = ".*") As Drs
+DoMdV = Drs(FoMd, DyoMd(CVbe, MdPatn))
+End Function
+
+Function DoMd(A As Vbe) As Drs
+DoMd = Drs(FoMd, DyoMd(A))
+End Function
+
+Function FoMd() As String()
+FoMd = SyzSS("Mdn NLines")
+End Function
+
+Function DyoMd(A As Vbe, Optional MdPatn$ = ".*") As Variant()
+Dim Re As RegExp: Set Re = RegExp(MdPatn)
+Dim P As VBProject: For Each P In A.VBProjects
+    Dim C As VBComponent: For Each C In P.VBComponents
+        If Re.Test(C.Name) Then
+            PushI DyoMd, DroMd(C.CodeModule)
+        End If
+    Next
 Next
 End Function
-Function MdDr(M As CodeModule) As Variant()
 
+Function DroMd(M As CodeModule) As Variant()
+DroMd = Array(M.Parent.Name, M.CountOfLines)
 End Function
 
 Sub SavVbe(A As Vbe)

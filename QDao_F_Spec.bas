@@ -77,6 +77,12 @@ Select Case True
 Case Else: Stop
 End Select
 End Sub
+Function FdAy(PFldLis$) As Dao.Field2()
+'Fm PFldLis: #Sql-FldLis-Phrase.  !The fld spec of create table sql inside the bkt.  It allows attachment.  It uses DAO to create
+Dim F: For Each F In Itr(AyTrim(SplitComma(PFldLis)))
+    PushObj FdAy, FdzPFld(F)
+Next
+End Function
 
 Function SpecPth$(WPth$)
 SpecPth = EnsPth(WPth & "Spec\")
@@ -99,6 +105,7 @@ AddFdy Td, FdAy(PFldLis)
 D.TableDefs.Append Td
 'AddFdy D.TableDefs(T), FdAy(PFldLis)
 End Sub
+
 Function FdzPFld(PFld) As Dao.Field2
 'Fm PFld: #Sql-Fld-Phrase.  !The single fld spec of create table sql inside the bkt.  It allows attachment.
 Dim N$, S$ ' #Fldn and #Spec
@@ -122,6 +129,7 @@ Case Else: Thw CSub, "Invalid PFld", "Nm Spec vdt-PFld", N, S, PFldLis
 End Select
 Set FdzPFld = O
 End Function
+
 Sub CrtTblSpec(D As Database)
 CrtSchm D, SplitVBar(SpecSchmVbl)
 End Sub
@@ -134,11 +142,11 @@ For Each I In Itr(SpecNy(D))
     ExpSpeczNm D, N, ToPth
 Next
 End Sub
+
 Sub ExpSpeczNm(D As Database, SpecNm$, ToPth$)
 
 End Sub
+
 Function SpecNy(D As Database) As String()
 SpecNy = SyzTF(D, "Spec", "SpecNm")
 End Function
-
-

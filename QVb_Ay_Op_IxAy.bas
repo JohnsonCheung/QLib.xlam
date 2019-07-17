@@ -75,7 +75,7 @@ End Function
 Function IxyzAlwE(Ay, SubAy) As Long()
 Dim I, HasNegIx As Boolean, Ix&
 For Each I In Itr(SubAy)
-    Ix = IxzAy(Ay, I)
+    Ix = IxzAy(Ay, I, , EiNoThw)
     PushI IxyzAlwE, Ix
 Next
 End Function

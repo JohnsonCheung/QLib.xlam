@@ -46,7 +46,7 @@ Dim P$: If Mdn <> "" Then P = Mdn & "."
 With DiMthnqLines
     If Not ExlDcl Then .Add P & "*Dcl", Dcl(Src)
     Dim Ix: For Each Ix In MthIxItr(Src)
-        Dim Dn$:       Dn = MthDnzLin(Src(Ix))
+        Dim Dn$:       Dn = MthDn(Src(Ix))
         Dim Lines$: Lines = MthLzSI(Src, Ix)
         .Add P & Dn, Lines
     Next

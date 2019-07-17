@@ -53,8 +53,8 @@ Function NyzStr(S) As String()
 NyzStr = AyeNonNm(SyzSS(RplLf(RplCr(RplPun(S)))))
 End Function
 
-Function RelOfPMthn_ToMdny_P() As Rel
-Set RelOfPMthn_ToMdny_P = RelOfPMthn_ToMdny_zP(CPj)
+Function RelOfPubMthn_ToMdny_P() As Rel
+Set RelOfPubMthn_ToMdny_P = RelOfPubMthn_ToMdny_zP(CPj)
 End Function
 Function RelOfMthn_ToCml_V() As Rel
 Set RelOfMthn_ToCml_V = RelOfMthn_ToCml_zV(CVbe)
@@ -68,7 +68,7 @@ Next
 Set RelOfMthn_ToCml_zV = O
 End Function
 
-Function RelOfPMthn_ToMdny_zP(P As VBProject) As Rel
+Function RelOfPubMthn_ToMdny_zP(P As VBProject) As Rel
 Dim C As VBComponent, S$(), O As New Rel, Mthn, Modn, Cmp As VBComponent
 For Each C In P.VBComponents
     Set Cmp = C
@@ -78,7 +78,7 @@ For Each C In P.VBComponents
         O.PushParChd Mthn, C.Name
     Next
 Next
-Set RelOfPMthn_ToMdny_zP = O
+Set RelOfPubMthn_ToMdny_zP = O
 End Function
 Function RelOfMthn_ToMdny_zP(P As VBProject) As Rel
 Dim C As VBComponent, O As New Rel, Mthn, Mdn
@@ -95,14 +95,14 @@ Static O As Rel
 If IsNothing(O) Then Set O = RelOfMthn_ToMdny_zP(CPj)
 Set MthnzRlMdnP = O
 End Function
-Function MthExtny(MthPjDotMdn, PMthLy$(), PMthn_To_PjDotModNy As Dictionary) As String()
-Dim Cxt$: Cxt = JnSpc(MthCxtLy(PMthLy))
+Function MthExtny(MthPjDotMdn, PubMthLy$(), PubMthn_To_PjDotModNy As Dictionary) As String()
+Dim Cxt$: Cxt = JnSpc(MthCxtLy(PubMthLy))
 Dim Ny$(): Ny = NyzStr(Cxt)
 Dim Nm
 For Each Nm In Itr(Ny)
-    If PMthn_To_PjDotModNy.Exists(Nm) Then
+    If PubMthn_To_PjDotModNy.Exists(Nm) Then
         Dim PjDotModNy$():
-            PjDotModNy = AeEle(PMthn_To_PjDotModNy(Nm), MthPjDotMdn)
+            PjDotModNy = AeEle(PubMthn_To_PjDotModNy(Nm), MthPjDotMdn)
         If HasEle(PjDotModNy, Nm) Then
             PushI MthExtny, Nm
         End If

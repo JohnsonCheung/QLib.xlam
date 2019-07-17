@@ -28,12 +28,12 @@ End If
 
 Dim S1$():     S1 = S1Ay(A)
 Dim S2$():     S2 = S2Ay(A)
-Dim W1%:       W1 = WdtzLinesAy(AddElezStr(S1, N1))
-Dim W2%:       W2 = WdtzLinesAy(AddElezStr(S2, N2))
+Dim W1%:       W1 = WdtzLinesAy(AddEleS(S1, N1))
+Dim W2%:       W2 = WdtzLinesAy(AddEleS(S2, N2))
 Dim W2Ay%(): W2Ay = IntAy(W1, W2)
 Dim SepL$:   SepL = LinzSep(W2Ay)
-Dim Tit$:     Tit = AlignzDrWyAsLin(Array(N1, N2), W2Ay)
-Dim M$():       M = XM(A, W2Ay, SepL)                    ' #Middle ! Middle part
+Dim Tit$:     Tit = AlignDrWyAsLin(Array(N1, N2), W2Ay)
+Dim M$():       M = XMiddle(A, W2Ay, SepL)                    ' #Middle ! Middle part
 Dim O$():       O = Sy(SepL, Tit, SepL, M)
                O = XAddIx(O, A.N, IxCol) '         ! Add Ix col in front
 
@@ -82,25 +82,25 @@ Dim Ly1$(), Ly2$()
     Ly1 = SplitCrLf(A.S1)
     Ly2 = SplitCrLf(A.S2)
           ResiMax Ly1, Ly2
-    Ly1 = AlignzAy(Ly1, W2Ay(0))
-    Ly2 = AlignzAy(Ly2, W2Ay(1))
+    Ly1 = AlignAy(Ly1, W2Ay(0))
+    Ly2 = AlignAy(Ly2, W2Ay(1))
 Dim O$()
     Dim J%, Dr(): For J = 0 To UB(Ly1)
         Dr = Array(Ly1(J), Ly2(J))
-:            PushI O, AlignzDrWyAsLin(Dr, W2Ay)
+:            PushI O, AlignDrWyAsLin(Dr, W2Ay)
     Next
 XFmtzS12 = O
 End Function
 
-Private Function XM(A As S12s, W2Ay%(), SepL$) As String()
+Private Function XMiddle(A As S12s, W2Ay%(), SepL$) As String()
 'Ret :  #Middle ! Middle part @@
 Dim J&: For J = 0 To A.N - 1
-    PushIAy XM, XFmtzS12(A.Ay(J), W2Ay)
-    PushI XM, SepL
+    PushIAy XMiddle, XFmtzS12(A.Ay(J), W2Ay)
+    PushI XMiddle, SepL
 Next
-'Insp "QVb_S1S2_Fmt.XM", "Inspect", "Oup(XM) A W2Ay SepL", XM, FmtS12s(A), W2Ay, SepL: Stop
+'Insp "QVb_S1S2_Fmt.XMiddle", "Inspect", "Oup(XMiddle) A W2Ay SepL", XMiddle, FmtS12s(A), W2Ay, SepL: Stop
 End Function
-Function AlignzDrWy(Dr, WdtAy%()) As String()
+Function AlignDrWy(Dr, WdtAy%()) As String()
 Dim O$()
 Dim UDr&: UDr = UB(Dr)
 Dim W, J%, S$: For Each W In WdtAy
@@ -112,19 +112,12 @@ Dim W, J%, S$: For Each W In WdtAy
     PushI O, S
     J = J + 1
 Next
-AlignzDrWy = O
+AlignDrWy = O
 End Function
 
-Function AlignzDrWyAsLin$(Dr, WdtAy%())
+Function AlignDrWyAsLin$(Dr, WdtAy%())
 'Ret : a lin by joing [ | ] and quoting [| * |] after aligng @Dr with @WdtAy. @@
-AlignzDrWyAsLin = QteJnzAsTLin(AlignzDrWy(Dr, WdtAy))
-End Function
-
-Function S2Ay(A As S12s) As String()
-Dim J&
-For J = 0 To A.N - 1
-    PushI S2Ay, A.Ay(J).S2
-Next
+AlignDrWyAsLin = QteJnzAsTLin(AlignDrWy(Dr, WdtAy))
 End Function
 
 Private Function XHasLines(A As S12s) As Boolean

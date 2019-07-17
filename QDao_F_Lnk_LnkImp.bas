@@ -47,7 +47,7 @@ Dim FbTny$():                            FbTny = SyzDicKey(Dic_Fbt_Fbn)
 
 Dim FxTblLy$(): FxTblLy = IndentedLy(LnkImpSrc, "FxTbl")
 Dim DFx As Drs:     DFx = WDFx(FxTblLy)                  ' T Fxn Wsn Stru
-Dim FxTny$():     FxTny = StrColzDrs(DFx, "T")
+Dim FxTny$():     FxTny = StrCol(DFx, "T")
 
 Dim Dic_Fn_Ffn As Dictionary: Set Dic_Fn_Ffn = Dic(IndentedLy(LnkImpSrc, "Inp"))
 
@@ -109,8 +109,8 @@ For Each I In Dic_T_Stru.Keys
        T = ">" & I
     Into = "#I" & I
        A = DwEqSel(DStru, "Stru", Stru, "F Ty E")
-     Fny = StrColzDrs(A, "F")
-      Ey = RmvSqBktzSy(StrColzDrs(A, "E"))
+     Fny = StrCol(A, "F")
+      Ey = RmvSqBktzSy(StrCol(A, "E"))
    Bexp = VzDicIf(Dic_T_Bexp, I)
     PushI WImpSqy, SqlSel_Fny_Extny_Into_T_OB(Fny, Ey, Into, T, Bexp)
 Next

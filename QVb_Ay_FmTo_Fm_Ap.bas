@@ -3,6 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Ay_FmTo_Fm_Ap."
 Private Const Asm$ = "QVb"
+
 Function AvzAy(Ay) As Variant()
 If IsAv(Ay) Then AvzAy = Ay: Exit Function
 Dim I
@@ -10,9 +11,11 @@ For Each I In Itr(Ay)
     Push AvzAy, I
 Next
 End Function
+
 Function Av(ParamArray Ap()) As Variant()
 Av = Ap
 End Function
+
 Function AvzAp(ParamArray Ap()) As Variant()
 AvzAp = Ap
 End Function
@@ -27,6 +30,7 @@ For Each I In Itr(Av)
     End Select
 Next
 End Function
+
 Function SyzAp(ParamArray ApOf_Itm_or_Ay()) As String()
 Dim Av(): Av = ApOf_Itm_or_Ay
 SyzAp = SyzAv(Av)
@@ -48,6 +52,13 @@ For Each I In Itr(LngAp)
     PushI IntAyzLngAy, I
 Next
 End Function
+Function IntAySS(IntSS$) As Integer()
+Dim I
+For Each I In Itr(SyzSS(IntSS))
+    PushI IntAySS, I
+Next
+End Function
+
 Function IntAy(ParamArray Ap()) As Integer()
 Dim Av(): Av = Ap
 IntAy = IntozAy(EmpIntAy, Av)

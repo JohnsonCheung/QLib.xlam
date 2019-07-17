@@ -41,7 +41,7 @@ End Function
 Function FmtDiczLin(A As Dictionary, Optional Sep$ = " ", Optional InclValTy As Boolean, Optional Nm1$, Optional Nm2$) As String()
 If A.Count = 0 Then Exit Function
 Dim Key: Key = A.Keys
-Dim O$(): O = AlignzAy(SyzItr(A.Keys))
+Dim O$(): O = AlignAy(SyzItr(A.Keys))
 Dim J&, I
 For Each I In A.Items
    O(J) = O(J) & Sep & I

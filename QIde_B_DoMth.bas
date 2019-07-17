@@ -66,34 +66,39 @@ End With
 End Function
 
 Function WsMthP() As Worksheet
-Dim O As Worksheet: Set O = WszDrs(DoMthP)
+Dim O As Worksheet: Set O = WszDrs(DoPubMth)
 Dim L As ListObject: Set L = FstLo(O)
 SetWdtLc L, "MthLin", 80
 SetWdtLc L, "Mdn", 15
 SetWdtLc L, "Mthn", 20
 Set WsMthP = ShwWs(O)
 End Function
+
+Function DoPubMth() As Drs
+DoPubMth = DwEq(DoMthP, "Mdy", "Pub")
+End Function
+
 Function DoMthP() As Drs
 Static A As Drs
 If NoReczDrs(A) Then A = DoMthzP(CPj)
 DoMthP = A
 End Function
 
+Function DoMthRetAs() As Drs
+
+End Function
+
 Function DoMthzP(P As VBProject) As Drs
 Dim C As VBComponent, ODy(), Dy(), Pjn$
 Pjn = P.Name
 For Each C In P.VBComponents
-    Dy = DoMth(C.CodeModule).Dy
+    Dy = DoMthzM(C.CodeModule).Dy
     Dy = InsColzDyAv(Dy, Av(Pjn, ShtCmpTy(C.Type), C.Name))
     PushIAy ODy, Dy
 Next
 DoMthzP = DrszFF("Pjn MdTy Mdn L Mdy Ty Mthn MthLin", ODy)
 End Function
 
-Function DoMth(M As CodeModule) As Drs
-'Ret : L Mdy Ty Mthn MthLin ! Mdy & Ty are Sht @@
-DoMth = DoMthzS(Src(M))
-End Function
 Function DoMthzM(M As CodeModule) As Drs
 'Ret : L Mdy Ty Mthn MthLin ! Mdy & Ty are Sht @@
 DoMthzM = DoMthzS(Src(M))

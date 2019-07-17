@@ -297,14 +297,13 @@ Function IsShtTy(S) As Boolean
 Select Case Len(S)
 Case 1, 3
     If Not IsAscUCas(Asc(S)) Then Exit Function
-    IsShtTy = HasSubStr(ShtTyss, " " & S & " ", IgnCas:=True)
+    IsShtTy = HasSubStr(ShtTyss, " " & S & " ")
 End Select
 End Function
 
 Function DtaTyAyzS(ShtTyAy$()) As String()
-Dim ShtTy
-For Each ShtTy In Itr(ShtTyAy)
-    PushI DtaTyAyzS, DtaTyzShtTy(CStr(ShtTy))
+Dim ShtTy: For Each ShtTy In Itr(ShtTyAy)
+    PushI DtaTyAyzS, DtaTyzShtTy(ShtTy)
 Next
 End Function
 

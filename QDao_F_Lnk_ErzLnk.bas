@@ -10,7 +10,7 @@ End Function
 
 Private Function XIpbFb(Ipf As Drs) As String()
 'Fm  Ipf : L Inpn Ffn IsFx HasFfn @@
-XIpbFb = StrColzColEqSel(Ipf, "IsFx", False, "Inpn")
+XIpbFb = StrColzEq(Ipf, "IsFx", False, "Inpn")
 'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpbFb) IpbFb Ipf",IpbFb, IpbFb, FmtDrs(Ipf): Stop
 End Function
 Function ErzLnk(LnkImpSrc$()) As String()
@@ -46,7 +46,7 @@ Dim IpxExi   As Drs:   IpxExi = DwEqE(IpxHasWs, "HasWs", True)          ' IpxExi
 Dim IpxMis   As Drs:   IpxMis = DwEqE(IpxHasWs, "HasWs", False)
 
 Dim Ips As Drs:     Ips = XIps(Ip)                ' L Stru F Ty E
-Dim IpsStru$(): IpsStru = StrColzDrs(Ips, "Stru")
+Dim IpsStru$(): IpsStru = StrCol(Ips, "Stru")
 
 Dim Ipb As Drs:    Ipb = DoLTT(Ip, "FbTbl", "Fbn Fbtt").D ' L Fbn Fbtt
 Dim IpxTny$():  IpxTny = XIpxTny(Ipx)
@@ -227,7 +227,7 @@ Private Function XExWsMisFldTy(Ipxf As Drs, ActWsf As Drs) As String()
 'Fm IpxFld : Fxn Ws Stru Ipxf Ty Fx ! Where HasFx and HasWs and Not HasFld
 'Fm WsActf : Fxn Ws Ipxf Ty @@
 'Dim OFxn$(), J%, Fxn$, Fx$, Act$(), Lno&(), Ws$(), ActWsf()
-'OFxn = AwDist(StrColzDrs(IpXB, "Fxn"))
+'OFxn = AwDist(StrCol(IpXB, "Fxn"))
 ''====
 'If Si(OFxn) = 0 Then Exit Function
 'PushI XExWsMis, "Some expected ws not found"
@@ -247,7 +247,7 @@ End Function
 Private Function XExWsMis(IpxMis As Drs, ActWs As Drs) As String()
 'Fm  ActWs : Fxn Ws @@
 Dim OFxn$(), J%, Fxn$, Fx$, Act$(), Lno&(), Ws$(), ActWsnn$, IpxMisi As Drs, O$()
-OFxn = AwDist(StrColzDrs(IpxMis, "Fxn"))
+OFxn = AwDist(StrCol(IpxMis, "Fxn"))
 '====
 If Si(OFxn) = 0 Then Exit Function
 PushI O, "Some expected ws not found"
@@ -306,7 +306,7 @@ End Sub
 
 Private Function XEiFfnDup(Ipf As Drs) As String()
 'Fm  Ipf : L Inpn Ffn IsFx HasFfn @@
-Dim Ffn$(): Ffn = StrColzDrs(Ipf, "Ffn")
+Dim Ffn$(): Ffn = StrCol(Ipf, "Ffn")
 Dim Dup$(): Dup = AwDup(Ffn)
 If Si(Dup) = 0 Then Exit Function
 Dim DupD As Drs: DupD = DwIn(Ipf, "Ffn", Dup)
@@ -339,7 +339,7 @@ End Function
 
 Private Function XEiInpnDup(Ipf As Drs) As String()
 'Fm  Ipf : L Inpn Ffn IsFx HasFfn @@
-Dim Inpn$(): Inpn = StrColzDrs(Ipf, "Inpn")
+Dim Inpn$(): Inpn = StrCol(Ipf, "Inpn")
 Dim Dup$(): Dup = AwDup(Inpn)
 If Si(Dup) = 0 Then Exit Function
 Dim DupD As Drs: DupD = DwIn(Ipf, "Inpn", Dup)
@@ -372,7 +372,7 @@ Dim Ix As Dictionary, IxL%, IxFbn%, Dup, LAy&(), Fbn, Lss, OLss$(), OFbn$(), J%
 Set Ix = DiKqIx(Ipb.Fny)
 IxL = Ix("L")
 IxFbn = Ix("Fbn")
-For Each Dup In Itr(AwDup(StrColzDrs(Ipb, "Fbn")))
+For Each Dup In Itr(AwDup(StrCol(Ipb, "Fbn")))
     LAy = LngAyzColEqSel(Ipb, "Fbn", Dup, "L")
     Fbn = Dup
     Lss = JnSpc(LAy)
@@ -661,7 +661,7 @@ End Function
 Private Function XEwTblDup(Ipw As Drs) As String()
 'Fm:Wh@Ipw::Drs{L T Bexp}
 Dim OLss$(), OT$(), J%, T, Dr, DupTny$(), Dup, O$()
-DupTny = AwDup(StrColzDrs(Ipw, "T"))
+DupTny = AwDup(StrCol(Ipw, "T"))
 For Each Dup In Itr(DupTny)
     PushI OLss, XLsszWhT(Ipw, Dup)
     PushI OT, Dup
@@ -728,7 +728,7 @@ End Function
 Private Function XIpsFx(Ipx As Drs) As String()
 'Fm  Ipx   : T Fxn Ws Stru   ! Inp-Fx which is FxTbl
 'Ret IpsFx : IpsFx::Sy{Stru} ! the stru used by Fx @@
-XIpsFx = AwDist(StrColzDrs(Ipx, "Stru"))
+XIpsFx = AwDist(StrCol(Ipx, "Stru"))
 'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpsFx) IpsFx Ipx",IpsFx, IpsFx, FmtDrs(Ipx): Stop
 End Function
 Private Function XIps1(Ips As Drs, IpsFx$()) As Drs

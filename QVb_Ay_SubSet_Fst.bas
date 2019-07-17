@@ -4,14 +4,16 @@ Option Explicit
 Private Const CMod$ = "MVb_Ay_Sub_Fst."
 Private Const Asm$ = "QVb"
 
-Function ShfFstEle(OAy)
-ShfFstEle = FstEle(OAy)
-OAy = AeFstNEle(OAy)
-End Function
-
 Function FstEle(Ay)
 If Si(Ay) = 0 Then Exit Function
 Asg Ay(0), FstEle
+End Function
+
+Function FstEleInAset(Ay, InAset As Aset)
+Dim I
+For Each I In Ay
+    If InAset.Has(I) Then FstEleInAset = I: Exit Function
+Next
 End Function
 
 Function FstEleLik$(A, Lik$)
@@ -19,20 +21,6 @@ If Si(A) = 0 Then Exit Function
 Dim X
 For Each X In A
     If X Like Lik Then FstEleLik = X: Exit Function
-Next
-End Function
-
-Function FstElezPfxSy$(PfxSy$(), Lin)
-Dim I, P$
-For Each I In PfxSy
-    P = I
-    If HasPfx(Lin, P) Then FstElezPfxSy = P: Exit Function
-Next
-End Function
-Function FstEleInAset(Ay, InAset As Aset)
-Dim I
-For Each I In Ay
-    If InAset.Has(I) Then FstEleInAset = I: Exit Function
 Next
 End Function
 
@@ -56,6 +44,25 @@ If Si(A) = 0 Then Exit Function
 Dim X
 For Each X In Itr(A)
     If Run(Xp, X, P) Then Asg X, FstElePredXP: Exit Function
+Next
+End Function
+
+Function FstElewRmvT1$(Sy$(), T1)
+FstElewRmvT1 = RmvT1(FstElewT1(Sy, T1))
+End Function
+
+Function FstElewT1$(Ay, T1)
+Dim I
+For Each I In Itr(Ay)
+    If T1zS(I) = T1 Then FstElewT1 = I: Exit Function
+Next
+End Function
+
+Function FstElezPfxSy$(PfxSy$(), Lin)
+Dim I, P$
+For Each I In PfxSy
+    P = I
+    If HasPfx(Lin, P) Then FstElezPfxSy = P: Exit Function
 Next
 End Function
 
@@ -86,32 +93,12 @@ For Each I In Itr(Sy)
     If HasTT(S, T1, T2) Then FstElezTT = S: Exit Function
 Next
 End Function
-Function FstElewT1$(Ay, T1)
-Dim I
-For Each I In Itr(Ay)
-    If T1zS(I) = T1 Then FstElewT1 = I: Exit Function
-Next
-End Function
-Function FstElewRmvT1$(Sy$(), T1)
-FstElewRmvT1 = RmvT1(FstElewT1(Sy, T1))
-End Function
-Function FstEleRmvTT$(Sy$(), T1, T2)
-Dim I, L$, X1$, X2$, Rst$
-For Each I In Itr(Sy)
-    L = I
-    AsgTTRst L, X1, X2, Rst
-    If X1 = T1 Then
-        If X2 = T2 Then
-            FstEleRmvTT = L
-            Exit Function
-        End If
-    End If
-Next
-End Function
-
 
 Function FstNEle(Ay, N)
 FstNEle = AwFstUEle(Ay, N - 1)
 End Function
 
-
+Function ShfFstEle(OAy)
+ShfFstEle = FstEle(OAy)
+OAy = AeFstNEle(OAy)
+End Function

@@ -3,6 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Ens_MthMdy."
+
 Sub EnsPrvzNm(Mdn$, Mthn$)
 'Ret : Ens a @Mthn in @Mdn as Private @@
 If Not HasMd(CPj, Mdn, IsInf:=True) Then Exit Sub
@@ -57,7 +58,6 @@ End Function
 Function LnoItrOfPubZ(M As CodeModule)
 Asg Itr(LnoAyOfPubZ(M)), LnoItrOfPubZ
 End Function
-
 
 Private Function EnsMdy$(OldMthLin, ShtMdy$)
 Const CSub$ = CMod & "EnsMdy"

@@ -4,9 +4,11 @@ Option Explicit
 Private Const CMod$ = "MDta_Col_Get."
 Private Const Asm$ = "QDta"
 Public Const vbFldSep$ = ""
+
 Function ColzDrs(A As Drs, ColNm$) As Variant()
 ColzDrs = ColzDy(A.Dy, IxzAy(A.Fny, ColNm))
 End Function
+
 Function VzColEq(A As Drs, SelC$, Col$, Eq)
 Dim Dr, I&
 I = IxzAy(A.Fny, Col)
@@ -16,44 +18,9 @@ Next
 End Function
 
 Function WdtzCol%(A As Drs, C$)
-WdtzCol = WdtzAy(StrColzDrs(A, C))
+WdtzCol = WdtzAy(StrCol(A, C))
 End Function
 
-Function StrColzFst(A As Drs) As String()
-StrColzFst = StrColzDy(A.Dy, 0)
-End Function
-
-Function StrColzSnd(A As Drs) As String()
-StrColzSnd = StrColzDy(A.Dy, 1)
-End Function
-
-Function StrCol(A As Drs, C) As String()
-StrCol = StrColzDy(A.Dy, IxzAy(A.Fny, C))
-End Function
-
-Function StrColzDrs(A As Drs, C) As String()
-StrColzDrs = StrColzDy(A.Dy, IxzAy(A.Fny, C))
-End Function
-Function BoolColzDrs(A As Drs, C) As Boolean()
-BoolColzDrs = BoolColzDy(A.Dy, IxzAy(A.Fny, C))
-End Function
-Function FstColzDy(Dy()) As Variant()
-FstColzDy = ColzDy(Dy, 0)
-End Function
-
-Function FstCol(A As Drs) As Variant()
-FstCol = FstColzDy(A.Dy)
-End Function
-
-Function StrColzDrsFstCol(A As Drs) As String()
-StrColzDrsFstCol = StrColzDy(A.Dy, 0)
-End Function
-
-Function StrColzColEqSel(A As Drs, Col$, V, ColNm$) As String()
-Dim B As Drs
-B = DwEqSel(A, Col, V, ColNm)
-StrColzColEqSel = StrColzDrs(B, ColNm)
-End Function
 Function JnDyCC(Dy(), CCIxy&(), Optional FldSep$ = vbFldSep) As String()
 Dim Dr
 For Each Dr In Itr(Dy)
@@ -161,4 +128,17 @@ For J = 0 To UB(O.Dy)
     O.Dy(J) = Dr
 Next
 End Function
+
+Function LngAyzColEqSel(A As Drs, C$, V, Sel$) As Long()
+LngAyzColEqSel = LngAyzDrs(DwEqSel(A, C, V, Sel), Sel)
+End Function
+
+Function LngAyzDrs(A As Drs, C$) As Long()
+LngAyzDrs = IntozDrsC(EmpLngAy, A, C)
+End Function
+
+Function LngAyzDyC(Dy(), C) As Long()
+LngAyzDyC = IntozDyC(EmpLngAy, Dy, C)
+End Function
+
 

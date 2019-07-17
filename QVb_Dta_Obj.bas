@@ -6,8 +6,8 @@ Private Const CMod$ = "MVb_Obj."
 Const DoczP$ = "PrpPth."
 Const DoczPn$ = "PrpNm."
 Enum EmThw
-    EiNoThw
     EiThwEr
+    EiNoThw
 End Enum
 Function IsEqObj(A, B) As Boolean
 IsEqObj = ObjPtr(A) = ObjPtr(B)

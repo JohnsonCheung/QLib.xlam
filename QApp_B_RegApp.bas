@@ -12,15 +12,14 @@ Public Const AppJJFb$ = H & "TaxExpCmp\TaxExpCmp\PgmObj\Lib\jj.accdb"
 
 Property Get MHDAppFbDic() As Dictionary
 Const A$ = "N:\SAPAccessReports\"
-Erase XX
-X "Duty     " & A & "DutyPrepay\.accdb"
-X "SkHld    " & A & "StkHld\.accdb"
-X "ShpRate  " & A & "DutyPrepay\StockShipRate_Data.accdb"
-X "ShpCst   " & A & "StockShipCost\.accdb"
-X "TaxCmp   " & A & "TaxExpCmp\.accdb"
-X "TaxAlert " & A & "TaxRateAlert\.accdb"
-Set MHDAppFbDic = Dic(XX)
-Erase XX
+Dim X As New Bfr
+X.Var "Duty     " & A & "DutyPrepay\.accdb"
+X.Var "SkHld    " & A & "StkHld\.accdb"
+X.Var "ShpRate  " & A & "DutyPrepay\StockShipRate_Data.accdb"
+X.Var "ShpCst   " & A & "StockShipCost\.accdb"
+X.Var "TaxCmp   " & A & "TaxExpCmp\.accdb"
+X.Var "TaxAlert " & A & "TaxRateAlert\.accdb"
+Set MHDAppFbDic = Dic(X.Ly)
 End Property
 
 Function AppFbAy() As String()

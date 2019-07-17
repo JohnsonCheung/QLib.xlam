@@ -3,6 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Dic_DiKqCnt."
 Private Const Asm$ = "QVb"
+
 Function FmtDiKqCnt(Ay, Optional Opt As EmCnt) As String()
 FmtDiKqCnt = FmtS12s(SwapS12s(S12szDic(DiKqCnt(Ay, Opt))), N1:="Cnt", N2:="Mth")
 End Function
@@ -20,6 +21,7 @@ For Each I In Itr(Ay)
 Next
 Set CntzAyD = O
 End Function
+
 Function DiKqCntwDup(DiKqCnt As Dictionary) As Dictionary
 Set DiKqCntwDup = New Dictionary
 Dim Cnt&, K
@@ -37,6 +39,7 @@ For Each K In DiKqCnt.Keys
     If Cnt = 1 Then DiKqCntwSng.Add K, Cnt
 Next
 End Function
+
 Function DiKqCntwEmCnt(DiKqCnt As Dictionary, B As EmCnt) As Dictionary
 Select Case B
 Case EmCnt.EiCntDup: Set DiKqCntwEmCnt = DiKqCntwDup(DiKqCnt)

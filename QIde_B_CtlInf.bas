@@ -122,7 +122,7 @@ Function CapNy(A As Controls) As String()
 CapNy = SyzItrP(A, "Caption")
 End Function
 
-Property Get WinOfBrwObj() As VBIDE.Window
+Property Get WinOfBrwObj() As vbide.Window
 Set WinOfBrwObj = FstWinTy(vbext_wt_Browser)
 End Property
 

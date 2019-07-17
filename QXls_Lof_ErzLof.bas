@@ -239,7 +239,7 @@ Dim J&, Fld$, Fml$, O$(), S$, T1
 'Next
 XErFml__InsideFmlHasInvalidFld = O
 End Function
-Function zFnyzFml(Fld$, Fml$, Fny$()) As String() 'Return Subset-Fny (quote by []) in [Fml] which is error. _
+Function ErzFnyzFml(Fld$, Fml$, Fny$()) As String() 'Return Subset-Fny (quote by []) in [Fml] which is error. _
 It is error if any-FmlFny not in [Fny] or =[Fld]
 Dim Ny$(): Ny = NyzMacro(Fml, OpnBkt:="[")
 If HasEle(Ny, Fld) Then 'PushI ErzFnyzFml, Fld
@@ -411,3 +411,7 @@ End Property
 Property Get SampLofT1nn$()
 SampLofT1nn$ = "Lo Ali Bdr Tot Wdt Fmt Lvl Cor Fml Lbl Tit Bet"
 End Property
+Function Lnoss$(Ixy() As Long)
+Lnoss = JnSpc(AyIncEle1(Ixy))
+End Function
+

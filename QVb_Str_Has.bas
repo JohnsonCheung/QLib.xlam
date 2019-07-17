@@ -12,12 +12,8 @@ Function HasDot(S) As Boolean
 HasDot = HasSubStr(S, ".")
 End Function
 
-Function HasSubStr(S, SubStr, Optional IgnCas As Boolean) As Boolean
-If IgnCas Then
-    HasSubStr = InStr(1, S, SubStr, vbTextCompare) > 0
-Else
-    HasSubStr = InStr(1, S, SubStr, vbBinaryCompare) > 0
-End If
+Function HasSubStr(S, SubStr, Optional Cmpr As VbCompareMethod) As Boolean
+HasSubStr = InStr(1, S, SubStr, Cmpr) > 0
 End Function
 
 Function HasCrLf(S) As Boolean
@@ -40,10 +36,10 @@ Function HasSqBkt(S) As Boolean
 HasSqBkt = FstChr(S) = "[" And LasChr(S) = "]"
 End Function
 
-Function HasChrList(S, ChrList$) As Boolean
+Function HasChrList(S, ChrList$, Optional Cmpr As VbCompareMethod) As Boolean
 Dim J%
 For J = 1 To Len(ChrList)
-    If HasSubStr(S, Mid(ChrList, J, 1)) Then HasChrList = True: Exit Function
+    If HasSubStr(S, Mid(ChrList, J, 1), Cmpr) Then HasChrList = True: Exit Function
 Next
 End Function
 

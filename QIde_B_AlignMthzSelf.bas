@@ -27,7 +27,7 @@ Sub AlignMthzSelf()
     Const TMthn$ = "AlignMthzML"      ' #The-Mthn
     Dim M As CodeModule: Set M = Md(TMdn)
     Dim MthLno&:        MthLno = MthLnozMM(M, TMthn)
-    ATmp.AlignMthzML M, MthLno, Rpt:=EiUpdAndRpt, IsUpdSelf:=True
+    'ATmp.AlignMthzML M, MthLno, Rpt:=EiUpdAndRpt, IsUpdSelf:=True
 End Sub
 
 Sub AlignMthErzLnk()

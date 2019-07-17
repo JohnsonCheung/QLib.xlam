@@ -31,7 +31,6 @@ Set MdnCell = Ws.Range("A2")
 :             If OldL <> NewL Then MsgBox "The source in WsSrc <> the soruce from Mod", vbCritical: Exit Sub
 :             PutAyV NewSrc, A1zLo(Lo)                                                                       ' <== Save
 :             MsgBox "SrcCd saved:" & vbCrLf & WrdCnt(NewL), vbInformation
-
 End Sub
 
 Sub Cmd_LoadSrcCd()
@@ -70,24 +69,24 @@ End Sub
 Sub VdtSrc(ISrc As Drs, IDes As Drs)
 Const C$ = "WsGenMod"
 Const LoNm$ = "T_SrcCd"
-:                                    If Not HasWsCd(C, IsInf:=True) Then Exit Sub
-Dim Ws As Worksheet:       Set Ws = WszCd(C)
-                                    If Not HasLo(Ws, LoNm, IsInf:=True) Then Exit Sub
-Dim Lo As ListObject:      Set Lo = Ws.ListObjects(LoNm)
-                                    If Not IsEqCC(Lo, "SrcCd", IsInf:=True) Then Exit Sub
-Dim FxaCell As Range: Set FxaCell = Ws.Range("A1")
-Dim Fxa$:                     Fxa = FxaCell.Value
-:                                    If HasFfn(Fxa, IsInf:=True) Then FxaCell.Activate: Exit Sub
-:                                    OpnFxa Fxa
-Dim Pj As VBProject:       Set Pj = PjzFxa(Fxa)
-Dim MdnCell As Range: Set MdnCell = Ws.Range("A2")
-Dim Mdn$:                     Mdn = MdnCell.Value
-:                                    If ChkMdn(Pj, Mdn) Then MdnCell.Activate: Exit Sub
-:                                    ActWs Ws
-Dim SrcCd$():                       SrcCd = CdB(ISrc, IDes, SrcCd)
-:                                    DltLoRow Lo                   '<== Delete
-:                                    PutAyV SrcCd, A1zLo(Lo)     '<== Load
-:                                    MsgBox "SrcCd generated:" & vbCrLf & WrdCnt(JnCrLf(SrcCd)), vbInformation
+:                                        If Not HasWsCd(C, IsInf:=True) Then Exit Sub
+Dim Ws      As Worksheet:       Set Ws = WszCd(C)
+:                                        If Not HasLo(Ws, LoNm, IsInf:=True) Then Exit Sub
+Dim Lo      As ListObject:      Set Lo = Ws.ListObjects(LoNm)
+:                                        If Not IsEqCC(Lo, "SrcCd", IsInf:=True) Then Exit Sub
+Dim FxaCell As Range:      Set FxaCell = Ws.Range("A1")
+Dim Fxa$:                          Fxa = FxaCell.Value
+:                                        If HasFfn(Fxa, IsInf:=True) Then FxaCell.Activate: Exit Sub
+:                                        OpnFxa Fxa
+Dim Pj      As VBProject:       Set Pj = PjzFxa(Fxa)
+Dim MdnCell As Range:      Set MdnCell = Ws.Range("A2")
+Dim Mdn$:                          Mdn = MdnCell.Value
+:                                        If ChkMdn(Pj, Mdn) Then MdnCell.Activate: Exit Sub
+:                                        ActWs Ws
+Dim SrcCd$():                    SrcCd = CdB(ISrc, IDes, SrcCd)
+:                                        DltLoRow Lo                                                               ' <== Delete
+:                                        PutAyV SrcCd, A1zLo(Lo)                                                   ' <== Load
+:                                        MsgBox "SrcCd generated:" & vbCrLf & WrdCnt(JnCrLf(SrcCd)), vbInformation
 End Sub
 
 Sub Cmd_GenMod(ISrc As Drs, IDes As Drs, InpSrc$(), OupLo As ListObject)
@@ -97,8 +96,9 @@ PutCd Src, OupLo
 End Sub
 
 Function CdB(Src As Drs, Des As Drs, InpSrc$()) As String()
-'Fm Src : V DclSfx Pm Expr
-'Fm Des : V R1 R2 R3
+'Fm Src : V DclSfx Pm Expr !
+'Fm Des : V R1 R2 R3       !
+'Ret    :                  !  @@
 Dim JSrcPm As Drs: JSrcPm = B_JSrcPm(Src) ' ! With Col-Pm added
 
 '== CdRmk OK ===========================================================================================================
@@ -136,8 +136,8 @@ Dim MMLy$():     MMLy = JnDy(MBdy3Col.Dy)
 Dim CdMain$(): CdMain = Sy(MMthLin, CdRmk, CdDes, MMLy, "End " & MMthSorF)
 
 '== CdY ================================================================================================================
-Dim CdYLisa  As Drs:  CdYLisa = ColInSel(JSrcPm, "StpTy", SyzSS("Stmt Sub"), "Key StpTy Expr Stmt Ret Pm")
-Dim CdYLisb  As Drs:  CdYLisb = ColInSel(JSrcPm, "StpTy", SyzSS("Expr Fun Inp"), "Key StpTy Expr Stmt Ret Pm")
+Dim CdYLisa  As Drs:  CdYLisa = DwInSel(JSrcPm, "StpTy", SyzSS("Stmt Sub"), "Key StpTy Expr Stmt Ret Pm")
+Dim CdYLisb  As Drs:  CdYLisb = DwInSel(JSrcPm, "StpTy", SyzSS("Expr Fun Inp"), "Key StpTy Expr Stmt Ret Pm")
 Dim CdY4Cola As Drs: CdY4Cola = B_CdY4Cola(CdYLisa)
 Dim CdY4Colb As Drs: CdY4Colb = B_CdY4Colb(CdYLisb)
 Dim CdY$():               CdY = Sy(JnDy(CdY4Cola.Dy), Sy(JnDy(CdY4Colb.Dy)))
@@ -149,7 +149,7 @@ Dim CdZZ$():             CdZZ = JnDy(CdZZ4Col.Dy)
 
 '== CdB ================================================================================================================
 '-- BBMLin OK ----------------------------------------------------------------------------------------------------------
-Dim BLis As Drs: BLis = ColInSel(JSrcPm, "StpTy", SyzSS("Sub Fun"), "Key StpTy Ret Pm Fss StpFor")
+Dim BLis As Drs: BLis = DwInSel(JSrcPm, "StpTy", SyzSS("Sub Fun"), "Key StpTy Ret Pm Fss StpFor")
 
 Dim BCKey$():                  BCKey = SyzDrsC(BLis, "Key")
 Dim BCStpTy$():              BCStpTy = SyzDrsC(BLis, "StpTy")
@@ -703,3 +703,7 @@ End Function
 Private Function XMBdy3Col() As Drs
 'Insp "QIde_Gen_GenMod.XMBdy3Col", "Inspect", "Oup(XMBdy3Col) ", FmtDrs(XMBdy3Col), : Stop
 End Function
+
+Sub Z()
+QIde_Gen_GenMod:
+End Sub

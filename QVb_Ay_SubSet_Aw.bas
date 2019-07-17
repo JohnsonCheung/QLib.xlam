@@ -30,6 +30,10 @@ Next
 AwBet = O
 End Function
 
+Function AwDistAsSy(Ay, Optional IgnCas As Boolean) As String()
+AwDistAsSy = CvSy(AwDist(Ay, IgnCas))
+End Function
+
 Function AwDistAsI(Ay, Optional IgnCas As Boolean) As Integer()
 AwDistAsI = CvIntAy(AwDist(Ay, IgnCas))
 End Function
@@ -37,6 +41,7 @@ End Function
 Function AwDist(Ay, Optional IgnCas As Boolean)
 AwDist = IntozItr(ResiU(Ay), DiKqCnt(Ay).Keys)
 End Function
+
 Private Sub Z_FmtDiKqCnt()
 Dim Ay
 GoSub Z
@@ -66,26 +71,29 @@ For Each I In Ay
     End If
 Next
 End Function
-Function AwFmIx(Ay, FmIx)
-AwFmIx = Ay: Erase AwFmIx
-If 0 <= FmIx And FmIx <= UB(Ay) Then
-    Dim J&
-    For J = FmIx To UB(Ay)
-        Push AwFmIx, Ay(J)
-    Next
-End If
-End Function
 
 Function AwFE(Ay, FmIx, EIx)
 AwFE = AwFT(Ay, FmIx, EIx - 1)
 End Function
 
 Function AwFT(Ay, FmIx, ToIx)
-Dim J&
-AwFT = ResiU(Ay)
+Dim J&, I&
+Dim O: O = ResiU(Ay, ToIx - FmIx)
 For J = FmIx To ToIx
-    Push AwFT, Ay(J)
+    Asg Ay(J), O(I)
+    I = I + 1
 Next
+AwFT = O
+End Function
+
+Function AwFm(Ay, FmIx)
+Dim J&, I&
+Dim O: O = ResiU(Ay, UB(Ay) - FmIx)
+For J = FmIx To UB(Ay)
+    Asg Ay(J), O(I)
+    I = I + 1
+Next
+AwFm = O
 End Function
 
 Function AwFstUEle(Ay, U)

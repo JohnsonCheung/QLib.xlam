@@ -188,6 +188,13 @@ Next
 FstMthIxzS = -1
 End Function
 
+Function MthLno(Md As CodeModule, Lno&)
+Dim O&
+For O = Lno To 1 Step -1
+    If IsLinMth(Md.Lines(O, 1)) Then MthLno = O: Exit Function
+Next
+End Function
+
 Function MthLnozMM&(M As CodeModule, Mthn, Optional IsInf As Boolean)
 Dim L&: L = FstMthIxzN(Src(M), Mthn, 0)
 If L = -1 Then

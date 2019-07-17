@@ -26,10 +26,6 @@ Private Function XCriCmdAy() As String()
 XCriCmdAy = SyzSS(CriCmd)
 End Function
 
-Sub Z()
-Z_Apply
-End Sub
-
 Sub InsCri(L As ListObject)
 'Ret : Insert :CriRg: of 3 rows (1 tit and 2 enties) above @L.
 '      #1 Ins 3 rows
@@ -584,7 +580,7 @@ EntRzWsRny(Ws, Rny).Hidden = Not Vis
 #End If
 End Sub
 
-Sub Z_BrwNumAy()
+Private Sub Z_BrwNumAy()
 BrwNumAy SampRny, EiWiCntCol
 End Sub
 
@@ -821,8 +817,8 @@ Dim V1$, V2$: AsgTRst S, V1, V2
 Dim O()
 Select Case True
 Case IsStr:                       O = XCriDr(Op, V1, V2)
-Case IsNumzS(V1) And IsNumzS(V2): O = XCriDr(Op, CDbl(V1), CDbl(V2))
-Case IsDtezS(V1) And IsNumzS(V2): O = XCriDr(Op, CDate(V1), CDate(V2))
+Case IsNumeric(V1) And IsNumeric(V2): O = XCriDr(Op, CDbl(V1), CDbl(V2))
+Case IsDtezS(V1) And IsNumeric(V2): O = XCriDr(Op, CDate(V1), CDate(V2))
 Case Else:                        O = XCriDr(Op, V1, V2)
 End Select
 If V1 > V2 Then Inf CSub, "V1 cannot > V2", "V1-TyNm V1 V2", TypeName(V1), V1, V2: Exit Function
@@ -848,7 +844,7 @@ If IsDtezS(S) Then
     Exit Function
 End If
 
-If IsNumzS(S) Then
+If IsNumeric(S) Then
     Dim Dbl#: Dbl = A
     XCriDrzSng = XCriDr(Op, Dbl)
     Exit Function

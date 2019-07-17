@@ -26,7 +26,7 @@ Set DiKqCntzTF = DiKqCntzRs(ColzRs(D, T, F$))
 End Function
 
 Function IdxzTd(A As Dao.TableDef, IdxNm$) As Dao.Index
-Set IdxzTd = FstzItrNm(A.Indexes, IdxNm$)
+Set IdxzTd = FstzItn(A.Indexes, IdxNm$)
 End Function
 
 Function Idx(D As Database, T, IdxNm$) As Dao.Index
@@ -227,7 +227,7 @@ Function LasUpdTim(D As Database, T) As Date
 LasUpdTim = TblPrp(D, T, "LastUpdated")
 End Function
 
-Sub InsTblzDrs(D As Database, T, B As Drs)
+Sub InsTbl(D As Database, T, B As Drs)
 InsRszDy RszTFny(D, T, B.Fny), B.Dy
 End Sub
 
@@ -296,7 +296,7 @@ GoSub Z
 Exit Sub
 Z:
     Set D = TmpDb
-    DrpTmp D
+    DrpTmpTbl D
     CrtTzDrs D, "#D", SampDrs
     BrwDb D
     Return

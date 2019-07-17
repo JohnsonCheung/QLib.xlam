@@ -4,13 +4,13 @@ Option Explicit
 Private Const CMod$ = "MIde_Loc."
 Private Const Asm$ = "QIde"
 
-Function DoMthPos(Mthn) As Drs
-Dim A As Drs: A = DwEq(DoMthP, "Mthn", Mthn)
+Function DoPubMthos(Mthn) As Drs
+Dim A As Drs: A = DwEq(DoPubMth, "Mthn", Mthn)
 End Function
 
-Sub JmpzML(M As CodeModule, Lno)
-JmpzM M
-JmpLin Lno
+Sub JmpLinzMd(M As CodeModule, Lno&)
+JmpMd M
+JmpLno Lno
 End Sub
 
 Function HasMdnzP(P As VBProject, Mdn, Optional Inf As Boolean) As Boolean
@@ -22,7 +22,7 @@ Function HasMdn(Mdn, Optional Inf As Boolean) As Boolean
 HasMdn = HasMdnzP(CPj, Mdn, Inf)
 End Function
 
-Sub Z_Jmp()
+Private Sub Z_Jmp()
 Jmp "QIde_Md.10"
 End Sub
 
@@ -37,17 +37,21 @@ End Sub
 
 Sub JmpMdn(Mdn)
 If Not HasMdn(Mdn) Then Debug.Print "Mdn not exist": Exit Sub
-JmpzM Md(Mdn)
+JmpMd Md(Mdn)
 End Sub
-
-Sub JmpLin(Lno)
-Dim L&: L = CLng(Lno)
-Dim C2%: C2 = Len(CMd.Lines(L, 1)) + 1
+Sub JmpLno(Lno&)
+Dim C2%: C2 = Len(CMd.Lines(Lno, 1)) + 1
 With CPne
     .TopLine = Lno
     .SetSelection Lno, 1, Lno, C2
 End With
-
+End Sub
+Sub JmpLin(MdLnoStr$)
+':MdLnoStr: :Term ! Mdn:Lno
+Dim Mdn$, Lno&
+AsgBrk MdLnoStr, ":", Mdn, Lno
+JmpMdn Mdn
+JmpLno Lno
 End Sub
 
 Sub JmpRRCC(A As RRCC)
@@ -64,7 +68,7 @@ End With
 End Sub
 
 Sub JmpMthzMN(M As CodeModule, Mthn)
-JmpzM M
+JmpMd M
 JmpMth Mthn
 End Sub
 
@@ -72,7 +76,7 @@ Function MdPoseszMM(M As CodeModule, Mthn) As MdPoses
 Dim I, IMthLin$, ILno, IPos As Pos
 For Each I In MthIxyzMN(M, Mthn)
     ILno = I + 1
-    IMthLin = ContLinzML(M, ILno)
+    IMthLin = ContLinzLno(M, ILno)
     IPos = PoszSS(IMthLin, Mthn)
     PushMdPos MdPoseszMM, MdPoszMLP(M, ILno, IPos)
 Next
@@ -96,45 +100,43 @@ Next
 End Function
 
 Sub JmpMth(Mthn)
-Dim M As CodeModule
-Dim L&: L = MthLnozMM(M, Mthn)
-JmpzML M, L
+Dim M As CodeModule: Set M = MdzMthn(CPj, Mthn)
+JmpMd M
+JmpLno MthLnozMM(M, Mthn)
 End Sub
 
 Sub JmpM()
-JmpzM CMd
+JmpMd CMd
 End Sub
 
-Sub JmpzP(P As VBProject)
+Sub JmpPj(P As VBProject)
 ClsWin
 Dim M As CodeModule
 Set M = FstMd(P)
 If IsNothing(M) Then Exit Sub
-JmpzM M
+JmpMd M
 TileV
 DoEvents
 End Sub
-Sub JmpzRRCC(A As RRCC)
 
+Sub JmpMdRRCC(M As CodeModule, R As RRCC)
+JmpMd M
+JmpRRCC R
 End Sub
-Sub JmpzMR(M As CodeModule, R As RRCC)
-JmpzM M
-JmpzRRCC R
-End Sub
-Function WinyzMdAy(MdAy() As CodeModule) As VBIDE.Window()
+Function WinyzMdAy(MdAy() As CodeModule) As vbide.Window()
 
 End Function
 Sub JmpMdnn(Mdnn$)
 Dim MdAy() As CodeModule: MdAy = MdAyzNN(Mdnn)
 Dim I
 For Each I In Itr(MdAy)
-    JmpzM CvMd(I)
+    JmpMd CvMd(I)
 Next
 ClsWinExlAp WinyzMdAy(MdAy)
 TileV
 End Sub
 
-Sub JmpzM(M As CodeModule)
+Sub JmpMd(M As CodeModule)
 M.CodePane.Show
 End Sub
 

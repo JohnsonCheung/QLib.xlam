@@ -8,14 +8,6 @@ Private Function LinzEptCMod$(Mdn)
 LinzEptCMod = FmtQQ("Const CMod$ = ""?.""", Mdn)
 End Function
 
-Function IxzCnst&(Src$(), Cnstn)
-Dim L, O&
-For Each L In Itr(Src)
-    If CnstnzL(L) = Cnstn Then IxzCnst = O: Exit Function
-    O = O + 1
-Next
-IxzCnst = -1
-End Function
 Private Function XCSubLzMthLy$(MthLy$(), Mthn$)
 If Not XIsUsingCSub(MthLy) Then Exit Function
 XCSubLzMthLy = XCSubLzMthn(Mthn)
@@ -26,7 +18,7 @@ XCSubLzMthn = FmtQQ("Const CSub$ = CMod & ""?""", Mthn)
 End Function
 
 Private Function XCSubLno&(MthLy$(), MthLno&)
-Dim I&: I = IxzCnst(MthLy, "CSub")
+Dim I&: I = CnstIx(MthLy, "CSub")
 If I = 0 Then Exit Function
 XCSubLno = I + MthLno
 End Function
@@ -49,18 +41,16 @@ Sub EnsCModSubM(Optional Rpt As EmRpt)
 EnsCModSubzM CMd, Rpt
 End Sub
 
-Sub EnsCModSubzP(P As VBProject, Optional Rpt As EmRpt = EmRpt.EiPushOnly)
+Private Sub EnsCModSubzP(P As VBProject, Optional Rpt As EmRpt = EmRpt.EiPushOnly)
 Dim C As VBComponent
-Erase XX
 For Each C In P.VBComponents
     EnsCModSubzM C.CodeModule, Rpt
 Next
-If IsPushzRpt(Rpt) Then Brw XX
 End Sub
 
 Private Function XCSubAv(L&, Mthn$, MthLy$())
 Dim Cnstn$:   Cnstn = IIf(Mthn = "*Dcl", "CMod", "CSub")
-Dim Ix&:         Ix = IxzCnst(MthLy, Cnstn)
+Dim Ix&:         Ix = CnstIx(MthLy, Cnstn)
 Dim ActL$:            If Ix > 0 Then ActL = MthLy(Ix)
 Dim Ix1&:             If Ix = -1 Then Ix1 = NxtIxzSrc(MthLy, 0) Else Ix1 = Ix
 Dim Lno&:       Lno = L + Ix1
@@ -104,44 +94,41 @@ XEpt = AddColzFFDy(Act, "EptL", Dy)
 'Insp "QIde_Ens_EnsCModSub.XEpt", "Inspect", "Oup(XEpt) Act", FmtDrs(XEpt), FmtDrs(Act): Stop
 End Function
 
-Function EnsCModSubzM(M As CodeModule, Optional Rpt As EmRpt) As Boolean
+Private Function EnsCModSubzM(M As CodeModule, Optional Rpt As EmRpt, Optional IOMsg) As String()
+
 '-- Prepare Data -------------------------------------------------------------------------------------------------------
-Dim Mth As Drs: Mth = DoMthc(M)                   ' L E Mdy Ty Mthn MthLin MthLy
-Dim Act As Drs: Act = XAct(Mth)                  ' L Mthn MthLy ActL Lno        ! ActL & Lno: If Ty=*Dcl, they are the CModL & CModLnom Otherwise, CSubL and CSubLno
-Dim Ept As Drs: Ept = XEpt(Act)                  ' L Mthn MthLy ActL Lno EptL
+Dim Mth As Drs: Mth = DoMthc(M)                ' L E Mdy Ty Mthn MthLin MthLy
+Dim Act As Drs: Act = XAct(Mth)                ' L Mthn MthLy ActL Lno        ! ActL & Lno: If Ty=*Dcl, they are the CModL & CModLnom Otherwise, CSubL and CSubLno
+Dim Ept As Drs: Ept = XEpt(Act)                ' L Mthn MthLy ActL Lno EptL
 Dim Dif As Drs: Dif = DeCeqC(Ept, "ActL EptL") ' L Mthn MthLy ActL Lno EptL   ! Only those Act<>Ept
 
-Dim IsUpd As Boolean: IsUpd = IsUpdzRpt(Rpt)
 '== Rpl=================================================================================================================
-Dim R1   As Drs:  R1 = DwNe(Dif, "EptL", "")                 ' L Nm MthLy ActL Lno EptL
-Dim R2   As Drs:  R2 = DwNe(R1, "ActL", "")                  ' L Nm MthLy ActL Lno EptL
-Dim Rpl  As Drs: Rpl = SelDrsAs(R2, "L EptL:NewL ActL:OldL") ' L NewL OldL
-: If IsUpd Then RplLin M, Rpl '<==
+Dim IsUpd As Boolean: IsUpd = IsUpdzRpt(Rpt)
+Dim Rpl As Drs: Rpl = XRpl(Dif)
+                      RplLin M, Rpl      ' <==
+Dim Dlt As Drs: Dlt = XDlt(Dif)
+                      DltLinzD M, Dlt    ' <==
+Dim Ins As Drs: Ins = XIns(Dif)
+                      InsLinzD M, Ins    ' <==
 
-'== Dlt=================================================================================================================
-Dim D1   As Drs:  D1 = DwEq(Dif, "EptL", "")            ' L Nm MthLy ActL Lno EptL
-Dim D2   As Drs:  D2 = DwNe(D1, "ActL", "")             ' L Nm MthLy ActL Lno EptL
-Dim Dlt  As Drs: Dlt = SelDrsAs(D2, "Mthn L ActL:OldL") ' Mthn L OldL
-:                      If IsUpd Then DltLinzD M, Dlt '<==
-
-'== Ins=================================================================================================================
-Dim I1   As Drs:  I1 = DwEq(Dif, "ActL", "")            ' L Nm MthLy ActL Lno EptL
-Dim I2   As Drs:  I2 = DwNe(I1, "EptL", "")             ' L Nm MthLy ActL Lno EptL
-Dim Ins  As Drs: Ins = SelDrsAs(I2, "Mthn L EptL:NewL") ' Mthn L NewL
-: If IsUpd Then InsLinzD M, Ins '<==
-
-'== Return True is any Dif
-EnsCModSubzM = HasReczDrs(Dif)
-
+'== Return True is any Dif==============================================================================================
 Dim IsRpt  As Boolean:  IsRpt = IsRptzRpt(Rpt)
 Dim IsPush As Boolean: IsPush = IsPushzRpt(Rpt)
 If IsRpt Or IsPush Then
-    Dim NCSub%: NCSub = CntColNe(Ept, "EptL", "")
-    Dim Msg$(): Msg = XMsg(M, Rpl, Dlt, Ins, NCSub)
+    Dim Msg$(): Msg = XMsg(M, Ept, Rpl, Dlt, Ins)
     If IsRpt Then Brw Msg
-    If IsPush Then X Msg
+    If IsPush Then EnsCModSubzM = AddSy(CvSy(IOMsg), Msg)
 End If
 'Insp CSub, Msg, "Rpl Dlt Ins", FmtDrs(Rpl), FmtDrs(Dlt), FmtDrs(Ins)
+End Function
+Private Function XIns(Dif As Drs) As Drs
+
+End Function
+Private Function XDlt(Dif As Drs) As Drs
+
+End Function
+Private Function XRpl(Dif As Drs) As Drs
+
 End Function
 
 Private Sub XPush(Nm$, Drs As Drs, ONy$(), OAv())
@@ -150,6 +137,7 @@ If HasReczDrs(Drs) Then
     PushI OAv, FmtDrs(Drs)
 End If
 End Sub
+
 Private Function XMsgI$(A As Drs, Nm$)
 Dim N%: N = NReczDrs(A)
 If N = 0 Then
@@ -158,7 +146,8 @@ Else
     XMsgI = "N" & Nm & "(" & N & ")"
 End If
 End Function
-Private Function XMsg(M As CodeModule, Rpl As Drs, Dlt As Drs, Ins As Drs, NCSub%) As String()
+Private Function XMsg(M As CodeModule, Ept As Drs, Rpl As Drs, Dlt As Drs, Ins As Drs) As String()
+Dim NCSub%: NCSub = CntColNe(Ept, "EptL", "")
 Dim MRpl$: MRpl = XMsgI(Rpl, "Rpl")
 Dim MIns$: MIns = XMsgI(Ins, "Ins")
 Dim MDlt$: MDlt = XMsgI(Dlt, "Dlt")
@@ -168,9 +157,10 @@ XPush "Rpl", Rpl, Ny, Av
 XPush "Dlt", Dlt, Ny, Av
 XPush "Ins", Ins, Ny, Av
 XMsg = LyzFunMsgNyAv(CSub, Msg, Ny, Av)
+'Insp "QIde_Ens_EnsCModSub.XMsg", "Inspect", "Oup(XMsg) M Rpl Dlt Ins NCSub", XMsg, Mdn(M), FmtDrs(Rpl), FmtDrs(Dlt), FmtDrs(Ins), NCSub: Stop
 End Function
     
 Private Sub Z()
-QIde_Ens_CModSub:
+QIde_Ens_EnsCModSub.EnsCModSubP
 End Sub
 

@@ -33,17 +33,17 @@ End Sub
 
 
 Function QMthn$(M As CodeModule, Lin)
-Dim D$: D = MthDnzLin(Lin): If D = "" Then Exit Function
+Dim D$: D = MthDn(Lin): If D = "" Then Exit Function
 QMthn = MdDn(M) & "." & D
 End Function
 
-Function PMthNy(Src$()) As String()
+Function PubMthNy(Src$()) As String()
 Dim Ix, N$, B As Mthn3
 For Each Ix In MthIxItr(Src)
     B = Mthn3zL(Src(Ix))
     If B.Nm <> "" Then
         If B.ShtMdy = "" Or B.ShtMdy = "Pub" Then
-            PushI PMthNy, B.Nm
+            PushI PubMthNy, B.Nm
         End If
     End If
 Next
@@ -75,20 +75,22 @@ Function Dimn$(Lin)
 Dim L$: L = Lin
 If ShfTerm(L, "Dim") Then Dimn = Nm(LTrim(L))
 End Function
+
 Function DimNy(Ly$()) As String()
 Dim L
 For Each L In Itr(Ly)
     PushI DimNy, Dimn(L)
 Next
 End Function
+
 Function Mthn$(Lin)
 Dim L$: L = RmvMdy(Lin)
 If ShfMthTy(L) = "" Then Exit Function
 Mthn = Nm(L)
 End Function
 
-Private Sub Z_MthDnzLin()
-Debug.Print MthDnzLin("Function MthnzMthDn$(MthDn$)")
+Private Sub Z_MthDn()
+Debug.Print MthDn("Function MthnzMthDn$(MthDn$)")
 Dim Lin$
 End Sub
 
@@ -96,31 +98,28 @@ Function MthDnzMthn3$(A As Mthn3)
 MthDnzMthn3 = JnDotAp(A.Nm, A.ShtMdy, A.ShtTy)
 End Function
 
-Function MthDnzLin$(Lin)
-MthDnzLin = MthDnzMthn3(Mthn3zL(Lin))
-End Function
-
-Function MthTyc$(ShtMthTy$)
+Function MthTyChr$(ShtMthTy$)
 Select Case ShtMthTy
-Case "Fun": MthTyc = "F"
-Case "Sub": MthTyc = "S"
-Case "Get": MthTyc = "G"
-Case "Let": MthTyc = "L"
-Case "Set": MthTyc = "T"
+Case "Fun": MthTyChr = "F"
+Case "Sub": MthTyChr = "S"
+Case "Get": MthTyChr = "G"
+Case "Let": MthTyChr = "L"
+Case "Set": MthTyChr = "T"
 Case Else: Thw CSub, "Invalid ShtMthTy.", "ShtMthTy VdtShtMthTy", ShtMthTy, ShtMthTyAy
 End Select
 End Function
-Function MthMdyc$(ShtMthMdy$)
-Select Case ShtMthMdy
-Case "Pub": MthMdyc = "P"
-Case "Prv": MthMdyc = "V"
-Case "Frd": MthMdyc = "F"
-Case Else: Thw CSub, "Invalid ShtMthMdy.", "ShtMthMdy VdtShtMthMdy", ShtMthMdy, ShtMthMdyAy
+
+Function MthMdyChr$(ShtMdy$)
+Select Case ShtMdy
+Case "Pub": MthMdyChr = "P"
+Case "Prv": MthMdyChr = "V"
+Case "Frd": MthMdyChr = "F"
+Case Else: Thw CSub, "Invalid ShtMdy.", "ShtMdy VdtShtMthMdy", ShtMdy, ShtMthMdyAy
 End Select
 End Function
 
-Function MthDn$(L)
-MthDn = MthDnzMthn3(Mthn3zL(L))
+Function MthDn$(Lin)
+MthDn = MthDnzMthn3(Mthn3zL(Lin))
 End Function
 
 Function MthnzLin(Lin)
@@ -128,14 +127,13 @@ MthnzLin = Mthn(Lin)
 End Function
 
 Function PrpNm$(Lin)
-Dim L$
-L = RmvMdy(Lin)
+Dim L$: L = RmvMdy(Lin)
 If ShfKd(L) <> "Property" Then Exit Function
 PrpNm = Nm(L)
 End Function
 
-Function MthnzDNm$(Mthn)
-Dim Ay$(): Ay = Split(Mthn, ".")
+Function MthnzDNm$(MthDn)
+Dim Ay$(): Ay = Split(MthDn, ".")
 Dim Nm$
 Select Case Si(Ay)
 Case 1: Nm = Ay(0)
@@ -180,47 +178,47 @@ Property Get Rel0Mthn2Mdn() As Rel
 Dim O As New Rel
 End Property
 
-Function ModNyzPMth(PMthn) As String()
-ModNyzPMth = ModNyzPjPMth(CPj, PMthn)
+Function ModNyzPubMth(PubMthn) As String()
+ModNyzPubMth = ModNyzPjPubMth(CPj, PubMthn)
 End Function
-Function PMthNyzS(Src$()) As String()
+Function PubMthNyzS(Src$()) As String()
 Dim L
 For Each L In Itr(Src)
-    If IsLinPubMth(L) Then PushI PMthNyzS, Mthn(L)
+    If IsLinPubMth(L) Then PushI PubMthNyzS, Mthn(L)
 Next
 End Function
 
-Private Sub Z_ModNyzPjPMth()
-Dim P As VBProject, PMthn
+Private Sub Z_ModNyzPjPubMth()
+Dim P As VBProject, PubMthn
 GoSub Z
 Exit Sub
 Z:
-    D ModNyzPjPMth(CPj, "AA")
+    D ModNyzPjPubMth(CPj, "AA")
     Stop
     Return
 End Sub
-Function HasPMth(Src$(), PMthn) As Boolean
+Function HasPubMth(Src$(), PubMthn) As Boolean
 Dim L
 For Each L In Itr(Src)
     With Mthn3zL(L)
         If .ShtMdy = "Pub" Then
-            If .Nm = PMthn Then
-                HasPMth = True
+            If .Nm = PubMthn Then
+                HasPubMth = True
                 Exit Function
             End If
         End If
     End With
 Next
 End Function
-Function ModNyzPjPMth(P As VBProject, PMthn) As String()
+Function ModNyzPjPubMth(P As VBProject, PubMthn) As String()
 #If True Then
-Dim Src As Drs: Src = DoMthP
+Dim Src As Drs: Src = DoPubMth
 Dim Sel As Drs: Sel = Dw2Eq(Src, "Mdy MdTy", "Pub", "Std")
 #Else
 Dim I, Md As CodeModule
 For Each I In ModItrzP(P)
     Set Md = I
-    If HasPMth(Src(Md), PMthn) Then PushI ModNyzPjPMth, Mdn(Md)
+    If HasPubMth(Src(Md), PubMthn) Then PushI ModNyzPjPubMth, Mdn(Md)
 Next
 #End If
 End Function
@@ -366,8 +364,8 @@ For Each L In Itr(Src)
 Next
 End Function
 
-Function PMthNyzM(M As CodeModule) As String()
-PMthNyzM = PMthNyzS(Src(M))
+Function PubMthNyzM(M As CodeModule) As String()
+PubMthNyzM = PubMthNyzS(Src(M))
 End Function
 
 Private Sub Z()
@@ -441,5 +439,14 @@ End Function
 
 Function DoMthnM() As Drs
 DoMthnM = DoMthnzM(CMd)
+End Function
+
+Function PrpNyzCmp(A As VBComponent) As String()
+PrpNyzCmp = Itn(A.Properties)
+End Function
+
+Function MthRetTy$(Lin)
+Dim A$: A = AftBkt(Lin)
+If ShfTerm(A, "As") Then MthRetTy = T1(A)
 End Function
 

@@ -71,7 +71,7 @@ Fwaitg = Fcmd & ".wait.txt"
 End Function
 
 Function Fcmdw$(CmdLines$)
-Dim T$: T = TmpCmd
+Dim T$: T = TmpFcmd
 Dim EchoLin: EchoLin = FmtQQ("Echo > ""?""", Fwaitg(T))
 Dim S$: S = CmdLines & vbCrLf & EchoLin
 Fcmdw = WrtStr(S, T)

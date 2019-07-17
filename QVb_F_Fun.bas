@@ -211,7 +211,7 @@ Set CvRe = A
 End Function
 
 Function RegExp(Patn$, Optional MultiLine As Boolean, Optional IgnoreCase As Boolean, Optional IsGlobal As Boolean) As RegExp
-If Patn = "" Or Patn = "." Then Exit Function
+If Patn = "" Or Patn = ".*" Then Exit Function
 Dim O As New RegExp
 With O
    .Pattern = Patn

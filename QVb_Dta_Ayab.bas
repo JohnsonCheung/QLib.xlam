@@ -55,7 +55,7 @@ Dim O As Ayabc
 AyabczAyFE = Ayabc( _
     AwFE(Ay, 0, FmIx), _
     AwFE(Ay, FmIx, EIx), _
-    AwFmIx(Ay, EIx))
+    AwFm(Ay, EIx))
 End Function
 
 Function AyabczAyFei(Ay, B As Fei) As Ayabc

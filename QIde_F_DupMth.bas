@@ -32,7 +32,7 @@ End Function
 Private Function AddColzMthL(Mthn As Drs) As Drs
 Dim A():  A = SelDrs(Mthn, "Md Mthn Ty").Dy
 Dim B$(): B = MthLAyzDy_Md_Mthn_ShtMthTy(A)
-Dim C As Drs: C = AddColByColVy(Mthn, "MthL", B)
+Dim C As Drs: C = AddColzVy(Mthn, "MthL", B)
 AddColzMthL = C
 End Function
 

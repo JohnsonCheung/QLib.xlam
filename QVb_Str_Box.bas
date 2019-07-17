@@ -4,10 +4,10 @@ Option Explicit
 Private Const CMod$ = "MVb_Str_Box."
 Private Const Asm$ = "QVb"
 
-Function BoxzLines(Lines$) As String()
+Function BoxzLines(Lines$, Optional C$ = "*") As String()
 BoxzLines = BoxzLy(SplitCrLf(Lines))
 End Function
-Function BoxzLy(Ly$()) As String()
+Function BoxzLy(Ly$(), Optional C$ = "*") As String()
 If Si(Ly) = 0 Then Exit Function
 Dim W%, L$, I
 W = WdtzAy(Ly)
@@ -18,24 +18,24 @@ For Each I In Ly
 Next
 PushI BoxzLy, L
 End Function
-Function BoxzS(S$) As String()
-Dim H$: H = Dup("*", Len(S) + 6)
+Function BoxzS(S$, Optional C$ = "*") As String()
+Dim H$: H = Dup(C, Len(S) + 6)
 PushI BoxzS, H
-PushI BoxzS, "** " & S & " **"
+PushI BoxzS, C & C & " " & S & " " & C & C
 PushI BoxzS, H
 End Function
-Function Box(V) As String()
+Function Box(V, Optional C$ = "*") As String()
 If IsStr(V) Then
     If V = "" Then
         Exit Function
     End If
 End If
 Select Case True
-Case IsLines(V): Box = BoxzLines(CStr(V))
-Case IsStr(V): Box = BoxzS(CStr(V))
-Case IsSy(V): Box = BoxzLy(CvSy(Sy))
+Case IsLines(V): Box = BoxzLines(CStr(V), C)
+Case IsStr(V): Box = BoxzS(CStr(V), C)
+Case IsSy(V): Box = BoxzLy(CvSy(Sy), C)
 Case IsArray(V): Box = BoxzAy(V)
-Case Else: Box = BoxzS(CStr(V))
+Case Else: Box = BoxzS(CStr(V), C)
 End Select
 End Function
 

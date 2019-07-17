@@ -3,6 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Re."
 Private Const Asm$ = "QVb"
+
 Private Sub Z_ReMatch()
 Dim A As MatchCollection
 Dim R  As RegExp: Set R = RegExp("m[ae]n")

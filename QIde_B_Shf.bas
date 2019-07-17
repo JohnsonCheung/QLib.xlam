@@ -8,7 +8,7 @@ Option Compare Text
 ':ArgTy:  It is :s: coming :Arg: which dfn the type of an :Arg:
 '         Eg, Dim A() as integer: :Arg:   => "A() As Integer"
 '                                 :ArgTy: => "%()"
-Public Const TyChrLis$ = "!@#$%^&"
+Public Const MthTyChrLis$ = "!@#$%^&"
 Function ShfMthTy$(OLin$)
 Dim O$: O = TakMthTy(OLin$)
 If O = "" Then Exit Function
@@ -21,7 +21,7 @@ If Not ShfTerm(OLin, "As") Then Exit Function
 ShfTermAftAs = ShfT1(OLin)
 End Function
 Function ShfShtMdy$(OLin$)
-ShfShtMdy = ShtMthMdy(ShfMdy(OLin))
+ShfShtMdy = ShtMdy(ShfMdy(OLin))
 End Function
 Function ShfShtMthTy$(OLin$)
 ShfShtMthTy = ShtMthTy(ShfMthTy(OLin))
@@ -128,7 +128,7 @@ End Function
 
 Function IsTyChr(A) As Boolean
 If Len(A) <> 1 Then Exit Function
-IsTyChr = HasSubStr(TyChrLis, A)
+IsTyChr = HasSubStr(MthTyChrLis, A)
 End Function
 Function TyChrzTyNm$(TyNm)
 Select Case TyNm
@@ -152,14 +152,14 @@ Case "@": O = "Currency"
 Case "^": O = "LongLong"
 Case "$": O = "String"
 Case "&": O = "Long"
-Case Else: Thw CSub, "Invalid TyChr", "TyChr VdtTyChrLis", TyChr, TyChrLis
+Case Else: Thw CSub, "Invalid TyChr", "TyChr VdtTyChrLis", TyChr, MthTyChrLis
 End Select
 TyNmzTyChr = O
 End Function
 
 Function RmvTyChr$(S)
 
-RmvTyChr = RmvChrzSfx(S, TyChrLis)
+RmvTyChr = RmvLasChrzzLis(S, MthTyChrLis)
 End Function
 
 Function ShfDclSfx$(OLin$)
@@ -181,7 +181,7 @@ Else
 End If
 End Function
 Function ShfTyChr$(OLin$)
-ShfTyChr = ShfChr(OLin, TyChrLis)
+ShfTyChr = ShfChr(OLin, MthTyChrLis)
 End Function
 
 Function TyChr$(Lin)
@@ -189,7 +189,7 @@ If IsLinMth(Lin) Then TyChr = TakTyChr(RmvMthn3(Lin))
 End Function
 
 Function TakTyChr$(S)
-TakTyChr = TakChr(S, TyChrLis)
+TakTyChr = TakChr(S, MthTyChrLis)
 End Function
 
 Function MthTyChr$(Lin)
@@ -223,9 +223,18 @@ Dim Pfx$:     Pfx = ShfArgPfx(L)
 Dim Ty$: Ty = ArgTy(L)
 'ShtArg = Pfx & Nm & Ty
 End Function
+Function DclSfx$(DclItm$)
 
-Function DimItmzArg$(Arg$)
-DimItmzArg = BefOrAll(RmvPfxSpc(RmvPfxSpc(Arg, "Optional"), "ParamArray"), " =")
+End Function
+Function DclSfxzArg$(Arg$)
+DclSfxzArg = DclSfx(DclItm(Arg))
+End Function
+
+Function DclItm$(Arg$)
+DclItm = BefOrAll(RmvPfxSpc(RmvPfxSpc(Arg, "Optional"), "ParamArray"), " =")
+End Function
+Function PmNm$(Arg$)
+PmNm = RmvLasChrzzLis(BefOrAll(DclItm(Arg), "="), MthTyChrLis)
 End Function
 
 
@@ -279,21 +288,8 @@ End Select
 ShtRetTy = O
 End Function
 
-Function ArgAyzPmAy(PmAy$()) As String()
-Dim Pm, Arg
-For Each Pm In Itr(PmAy)
-    For Each Arg In Itr(SplitCommaSpc(Pm))
-        PushI ArgAyzPmAy, Arg
-    Next
-Next
-End Function
-
-Function NArg(MthLin) As Byte
-NArg = Si(SplitComma(BetBkt(MthLin)))
-End Function
-
 Function RetAsAyP() As String()
-RetAsAyP = DistColoS(DoMthRetAs, "RetAs")
+'RetAsAyP = DistColoS(DoMth, "RetAs")
 End Function
 
 Function RetAs$(Ret)
@@ -362,7 +358,7 @@ End Select
 End Function
 
 Private Sub Z_DoArg()
-Dim Mth$(): Mth = StrCol(DoMthP, "MthLin")
+Dim Mth$(): Mth = StrCol(DoPubMth, "MthLin")
 Dim L, Dy(): For Each L In Itr(Mth)
     PushIAy Dy, DyoArg(L)
 Next
@@ -476,10 +472,27 @@ Private Sub Z_MthRetTy()
 'Ass A.TyChr = ""
 End Sub
 
-Function MthRetTy$(Lin)
-Dim A$: A = AftBkt(Lin)
-If ShfTerm(A, "As") Then MthRetTy = T1(A)
+Function ShfLHS$(OLin$)
+Dim L$:                   L = OLin
+Dim IsSet As Boolean: IsSet = ShfTermX(L, "Set")
+Dim S$:                       If IsSet Then S = "Set "
+Dim LHS$:               LHS = ShfDotNm(L)
+If FstChr(L) = "(" Then
+    LHS = LHS & QteBkt(BetBkt(L))
+    L = AftBkt(L)
+End If
+If Not ShfPfx(L, " = ") Then Exit Function
+ShfLHS = S & LHS & " = "
+OLin = L
 End Function
 
-
+Function ShfLRHS(OLin$) As Variant()
+Dim L$:     L = OLin
+Dim LHS$: LHS = ShfLHS(L)
+With Brk1(L, "'")
+    Dim RHS$:  RHS = .S1
+              OLin = "   ' " & .S2
+End With
+ShfLRHS = Array(LHS, RHS)
+End Function
 

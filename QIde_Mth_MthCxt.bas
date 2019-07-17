@@ -169,8 +169,9 @@ DoMthnM = DoMthn(CMd)
 End Function
 
 Function DoMthn(M As CodeModule) As Drs
-DoMthn = DrpCol(DoMth(M), "MthLin")
+DoMthn = DrpCol(DoMthzM(M), "MthLin")
 End Function
+
 Function AddColzHasPm(A As Drs) As Drs
 'Fm A : ..MthLin..
 'Ret  : ..MthLin.. HasPm
@@ -192,7 +193,7 @@ End Sub
 
 Function TblMthP$(D As Database)
 Dim T$: T = "Mth"
-CrtTzDrs D, T, DoMthP
+CrtTzDrs D, T, DoPubMth
 TblMthP = T
 End Function
 
@@ -207,6 +208,16 @@ Next
 Dim O As Drs: O = AddColzFFDy(D, NewC, Dy)
 If IsDrp Then O = DrpCol(O, BetColn)
 AddColzBetBkt = O
+End Function
+
+Function AddColzFstArgSfx(D As Drs) As Drs
+Dim Ix%: Ix = IxzAy(D.Fny, "MthPm")
+Dim Dr, Dy(): For Each Dr In Itr(D.Dy)
+    PushI Dr, ArgSfx(Bef(Dr(Ix), ","))
+    PushI Dy, Dr
+Next
+Dim O As Drs: O = AddColzFFDy(D, "FstArgSfx", Dy)
+AddColzFstArgSfx = O
 End Function
 
 Function AddColzMthPm(DoMthLin As Drs, Optional IsDrp As Boolean) As Drs

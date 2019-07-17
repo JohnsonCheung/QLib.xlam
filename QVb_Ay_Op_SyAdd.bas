@@ -52,18 +52,9 @@ Function AddEle(Ay, Ele)
 AddEle = Ay
 Push AddEle, Ele
 End Function
-Function AddElezStr(Sy$(), Ele$) As String()
-Dim O$(): O = Sy: PushI O, Ele: AddElezStr = O
-End Function
-Function AddSyItm(Sy$(), Itm$) As String()
-AddSyItm = AddAyItm(Sy, Itm)
-End Function
 
-Function AddAyItm(Ay, Itm)
-Dim O
-O = Ay
-Push O, Itm
-AddAyItm = O
+Function AddEleS(Sy$(), Itm$) As String()
+AddEleS = AddEle(Sy, Itm)
 End Function
 
 Function IncAy(Ay, Optional N& = 1)

@@ -13,6 +13,7 @@ End Function
 Function IsAscDig(A%) As Boolean
 IsAscDig = &H30 <= A And A <= &H39
 End Function
+
 Function IsAscSgn(A%) As Boolean
 If A = AscPlus Then IsAscSgn = True: Exit Function
 If A = AscMinus Then IsAscSgn = True: Exit Function
@@ -53,6 +54,7 @@ End Function
 Function IsAscFstNmChr(A%) As Boolean
 IsAscFstNmChr = IsAscLetter(A)
 End Function
+
 Function IsAscLDash(A%) As Boolean
 IsAscLDash = A = 95
 End Function
@@ -62,12 +64,14 @@ If A < 97 Then Exit Function
 If A > 122 Then Exit Function
 IsAscLCas = True
 End Function
+
 Function IsAscLetterDig(A%) As Boolean
 IsAscLetterDig = True
 If IsAscLetter(A) Then Exit Function
 If IsAscDig(A) Then Exit Function
 IsAscLetterDig = False
 End Function
+
 Function IsAscLetter(A%) As Boolean
 IsAscLetter = True
 If IsAscUCas(A) Then Exit Function
@@ -96,13 +100,16 @@ Select Case True
 Case IsAscPun1(A), IsAscPun2(A), IsAscPun3(A), IsAscPun4(A): IsAscPun = True
 End Select
 End Function
-Function IsAscPun1(A%) As Boolean
+
+Private Function IsAscPun1(A%) As Boolean
 IsAscPun1 = (&H21 <= A And A <= &H2F)
 End Function
-Function IsAscPun2(A%) As Boolean
+
+Private Function IsAscPun2(A%) As Boolean
 IsAscPun2 = (&H3A <= A And A <= &H40)
 End Function
-Function IsAscPun3(A%) As Boolean
+
+Private Function IsAscPun3(A%) As Boolean
 IsAscPun3 = (&H5B <= A And A <= &H60)
 End Function
 

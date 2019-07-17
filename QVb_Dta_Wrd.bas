@@ -4,7 +4,7 @@ Option Explicit
 Private Const CMod$ = "MVb_Wrd_Cnt."
 Private Const Asm$ = "QVb"
 Const WrdPatn$ = "[a-zA-Z][a-zA-Z0-9_]*"
-Sub Z_DiWrdqCnt()
+Private Sub Z_DiWrdqCnt()
 Dim A As Dictionary: Set A = DiWrdqCnt(JnCrLf(SrczP(CPj)))
 Set A = SrtDic(A)
 BrwDic A

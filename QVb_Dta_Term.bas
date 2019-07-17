@@ -5,11 +5,11 @@ Private Const CMod$ = "MVb_Lin_Term_Asg."
 Private Const Asm$ = "QVb"
 
 Sub AsgTTRst(Lin, OT1, OT2, ORst$)
-AsgAp Syz2TRst(Lin), OT1, OT2, ORst
+AsgAp T2Rst(Lin), OT1, OT2, ORst
 End Sub
 
 Sub Asg3TRst(Lin, OT1, OT2, OT3, ORst$)
-AsgAp Syz3TRst(Lin), OT1, OT2, OT3, ORst
+AsgAp T3Rst(Lin), OT1, OT2, OT3, ORst
 End Sub
 
 Sub Asg4T(Lin, O1$, O2$, O3$, O4$)
@@ -17,7 +17,7 @@ AsgAp Fst4Term(Lin), O1, O2, O3, O4
 End Sub
 
 Sub Asg4TRst(Lin, O1$, O2$, O3$, O4$, ORst$)
-AsgAp Syz4TRst(Lin), O1, O2, O3, O4, ORst
+AsgAp T4Rst(Lin), O1, O2, O3, O4, ORst
 End Sub
 
 Sub AsgTRst(Lin, OT1, ORst)
@@ -25,7 +25,7 @@ AsgAp SyzTRst(Lin), OT1, ORst
 End Sub
 
 Sub AsgTT(Lin, O1, O2)
-AsgAp Syz2TRst(Lin), O1, O2
+AsgAp T2Rst(Lin), O1, O2
 End Sub
 
 Sub AsgT1Sy(LinOf_T1_SS, OT1, OSy$())
@@ -41,6 +41,7 @@ End Function
 Function Fst3Term(Lin) As String()
 Fst3Term = FstNTerm(Lin, 3)
 End Function
+
 Function Fst4Term(Lin) As String()
 Fst4Term = FstNTerm(Lin, 4)
 End Function
@@ -55,31 +56,31 @@ End Function
 
 
 Function SyzTRst(Lin) As String()
-SyzTRst = SyzNTermRst(Lin, 1)
+SyzTRst = NTermRst(Lin, 1)
 End Function
 
-Function Syz2TRst(Lin) As String()
-Syz2TRst = SyzNTermRst(Lin, 2)
+Function T2Rst(Lin) As String()
+T2Rst = NTermRst(Lin, 2)
 End Function
 
-Function Syz3TRst(Lin) As String()
-Syz3TRst = SyzNTermRst(Lin, 3)
+Function T3Rst(Lin) As String()
+T3Rst = NTermRst(Lin, 3)
 End Function
 
-Function Syz4TRst(Lin) As String()
-Syz4TRst = SyzNTermRst(Lin, 4)
+Function T4Rst(Lin) As String()
+T4Rst = NTermRst(Lin, 4)
 End Function
 
-Function SyzNTermRst(Lin, N%) As String()
+Function NTermRst(Lin, N%) As String()
 Dim L$, J%
 L = Lin
 For J = 1 To N
-    PushI SyzNTermRst, ShfT1(L)
+    PushI NTermRst, ShfT1(L)
 Next
-PushI SyzNTermRst, L
+PushI NTermRst, L
 End Function
 
-Private Sub Z_SyzNTermRst()
+Private Sub Z_NTermRst()
 Dim Lin
 Lin = "  [ksldfj ]":  Ept = "ksldfj ": GoSub Tst
 Lin = "  [ ksldfj ]": Ept = " ksldf ": GoSub Tst
@@ -120,6 +121,7 @@ If FstChr(O) = "[" Then
 End If
 T1 = BefOrAll(O, " ")
 End Function
+
 Function T2zS$(S)
 T2zS = T2(S)
 End Function

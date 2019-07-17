@@ -36,7 +36,7 @@ End Function
 Private Function FmtCmprLines__Rst(A$(), DifAt&, N1$) As String()
 Dim O$()
 PushI O, FmtQQ("-- Rst-? (?-?) ----------", N1, DifAt + 1, UB(A))
-PushIAy O, AddIxPfx(AwFmIx(A, DifAt + 1), EiBegI, DifAt + 1)
+PushIAy O, AddIxPfx(AwFm(A, DifAt + 1), EiBegI, DifAt + 1)
 FmtCmprLines__Rst = O
 End Function
 Sub CmprStr(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$)
@@ -89,7 +89,7 @@ For O = 0 To Min(UB(A), UB(B))
 Next
 'Thw_Never CSub
 End Function
-Sub Z_Lbl123()
+Private Sub Z_Lbl123()
 Dmp Lbl123(543)
 End Sub
 Function Lbl123(L) As String()

@@ -3,7 +3,6 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Mth_DCache."
 Private Const Asm$ = "QIde"
-':Tof$ = "DashNm: tbl-of.  IsCml. After Tof, it is a table-name."
 
 Function CacheDtezPjf(Pjf) As Date
 CacheDtezPjf = VzQ(MthDbP, FmtQQ("Select PjDte from Mth where Pjf='?'", Pjf))
@@ -20,12 +19,12 @@ For Each F In Itr(SkFny(D, T))
     PushI SkFnyWiSqlQPfx, SqlQteChrzT(DaoTyzTF(D, T, F)) & F
 Next
 End Function
-Sub IupDbt(D As Database, T, Drs As Drs)
+
+Sub IupTbl(D As Database, T, Drs As Drs)
 Dim Dy(): Dy = Drs.Dy
 If Si(Dy) = 0 Then Exit Sub
-'ThwIf_DrsGoodToIupDbt CSub, Drs, A, T
 Dim R As Dao.Recordset, Q$, Sql$, Dr
-'Sql = SqlSel_T_Wh(T, BexpzFnyzSqlQPfxSy(SkFny(A, T), SkSqlQPfxSy(A, T)))
+'Sql = SqlSel_T_Wh(T, BexpzFnyzSqlQPfxSy(SkFny(D, T), SkSqlQPfxSy(D, T)))
 For Each Dr In Dy
     Q = FmtQQAv(Sql, CvAv(Dr))
     Set R = Rs(D, Q)
@@ -36,10 +35,3 @@ For Each Dr In Dy
     End If
 Next
 End Sub
-Sub InsDbt(D As Database, T, Dy())
-
-End Sub
-Sub UpdDbt(D As Database, T, Dy())
-
-End Sub
-

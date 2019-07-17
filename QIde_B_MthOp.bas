@@ -89,6 +89,7 @@ End Function
 Function CdzEmpSub$(Subn)
 CdzEmpSub = FmtQQ("Sub ?()|End Sub", Subn)
 End Function
+
 Sub AddSub(Subn)
 ApdLines CMd, CdzEmpSub(Subn)
 JmpMth Subn
@@ -98,11 +99,6 @@ Sub AddFun(FunNm)
 ApdLines CMd, CdzEmpFun(FunNm)
 JmpMth FunNm
 End Sub
-
-Function CpyMd(FmM As CodeModule, ToM As CodeModule) As Boolean
-'@FmM & @ToM must exist @@
-CpyMd = RplMd(ToM, SrcL(FmM))
-End Function
 
 Function CpyMth(Mthn, FmM As CodeModule, ToM As CodeModule) As Boolean
 Dim NewL$

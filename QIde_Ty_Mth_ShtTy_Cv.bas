@@ -19,9 +19,9 @@ Function IsMthMdy(S) As Boolean
 IsMthMdy = HasEle(MthMdyAy, S)
 End Function
 
-Function MthMdyzSht$(ShtMthMdy)
+Function MthMdyzSht$(ShtMdy)
 Dim O$
-Select Case ShtMthMdy
+Select Case ShtMdy
 Case "Pub": O = "Public"
 Case "Prv": O = "Private"
 Case "Frd": O = "Friend"
@@ -31,7 +31,7 @@ End Select
 MthMdyzSht = O
 End Function
 
-Function ShtMthMdy$(MthMdy)
+Function ShtMdy$(MthMdy)
 Dim O$
 Select Case MthMdy
 Case "Public", "": O = "Pub"
@@ -39,7 +39,7 @@ Case "Private": O = "Prv"
 Case "Friend": O = "Frd"
 Case Else: O = "???"
 End Select
-ShtMthMdy = O
+ShtMdy = O
 End Function
 
 Function MthTyzSht$(ShtMthTy)

@@ -46,3 +46,25 @@ End Function
 Function CvFd2(A As Dao.Field) As Dao.Field2
 Set CvFd2 = A
 End Function
+
+Function FdStrAyFds(A As Dao.Fields) As String()
+Dim F As Dao.Field
+For Each F In A
+    PushI FdStrAyFds, FdStr(F)
+Next
+End Function
+
+Function FdStr$(A As Dao.Field2)
+Dim D$, R$, Z$, VTxt$, VRul, E$, S$
+If A.Type = Dao.DataTypeEnum.dbText Then S = " TxtSz=" & A.Size
+If A.DefaultValue <> "" Then D = "Dft=" & A.DefaultValue
+If A.Required Then R = "Req"
+If A.AllowZeroLength Then Z = "AlwZLen"
+If A.Expression <> "" Then E = "Expr=" & A.Expression
+If A.ValidationRule <> "" Then VRul = "VRul=" & A.ValidationRule
+If A.ValidationText <> "" Then VTxt = "VTxt=" & A.ValidationText
+FdStr = TLinzAp(A.Name, ShtTyzDao(A.Type), R, Z, VTxt, VRul, D, E, IIf((A.Attributes And Dao.FieldAttributeEnum.dbAutoIncrField) <> 0, "Auto", ""))
+End Function
+
+
+

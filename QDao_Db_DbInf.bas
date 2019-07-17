@@ -20,7 +20,7 @@ O.DsNm = D.Name
 DbInf = O
 End Function
 
-Sub Z_BrwDbInf()
+Private Sub Z_BrwDbInf()
 'strDdl = "GRANT SELECT ON MSysObjects TO Admin;"
 'CurrentProject.Connection.Execute strDdlDim A As DBEngine: Set A = dao.DBEngine
 'not work: dao.DBEngine.Workspaces(1).Databases(1).Execute "GRANT SELECT ON MSysObjects TO Admin;"

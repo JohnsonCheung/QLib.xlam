@@ -123,17 +123,6 @@ If Not IsAscUCas(Asc(SndChr(Mdn))) Then Exit Function
 HasAsmn = True
 End Function
 
-Function IxzCnst&(Src$(), Cnstn$)
-Dim O&, S
-For Each S In Itr(Src)
-    If CnstnzL(S) = Cnstn Then
-        IxzCnst = O
-    End If
-    O = O + 1
-Next
-IxzCnst = -1
-End Function
-
 Function LnozDclCnst%(M As CodeModule, Cnstn$)
 Dim O%, L$
 Dim C$: C = "Const " & Cnstn

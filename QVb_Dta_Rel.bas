@@ -16,11 +16,11 @@ SampRelLy = XX
 Erase XX
 End Property
 
-Property Get SampMthRel() As Rel
-Set SampMthRel = Rel(SampMthRelLy)
+Property Get SamPubMthRel() As Rel
+Set SamPubMthRel = Rel(SamPubMthRelLy)
 End Property
 
-Property Get SampMthRelLy() As String()
+Property Get SamPubMthRelLy() As String()
 'SampMthRelLy = RelOf_MthSDNm_To_Mdn_InVbe
 End Property
 

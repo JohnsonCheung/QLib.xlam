@@ -4,6 +4,12 @@ Option Explicit
 Private Const CMod$ = "MDao_Def_Td."
 Private Const Asm$ = "QDao"
 
+Property Get TmpTd() As Dao.TableDef
+Dim Fdy() As Dao.Field2
+PushObj Fdy, FdzTxt("F1")
+Set TmpTd = TdzTF("Tmp", Fdy)
+End Property
+
 Function CvTd(A) As Dao.TableDef
 Set CvTd = A
 End Function
@@ -13,13 +19,6 @@ Dim O As New TableDef
 O.Name = T
 AddFdy O, Fdy
 Set TdzTF = O
-End Function
-
-Function FdAy(PFldLis$) As Dao.Field2()
-'Fm PFldLis: #Sql-FldLis-Phrase.  !The fld spec of create table sql inside the bkt.  It allows attachment.  It uses DAO to create
-Dim F: For Each F In Itr(AyTrim(SplitComma(PFldLis)))
-    PushObj FdAy, FdzPFld(F)
-Next
 End Function
 
 Sub AddFdy(A As TableDef, Fdy() As Dao.Field2)
@@ -127,35 +126,38 @@ IsTdHid = A.Attributes And Dao.TableDefAttributeEnum.dbHiddenObject <> 0
 End Function
 
 
-Property Get TmpTd() As Dao.TableDef
-Dim Fdy() As Dao.Field2
-PushObj Fdy, FdzTxt("F1")
-Set TmpTd = TdzTF("Tmp", Fdy)
-End Property
-Property Get TmpDbPth$()
-TmpDbPth = EnsPth(TmpHom & "TmpDb\")
-End Property
 
-Function TmpDb() As Database
-Dim Fb$: Fb = TmpFb
-CrtFb Fb
-Set TmpDb = Db(Fb)
-End Function
-Function LasTmpDb() As Database
-Set LasTmpDb = Db(LasTmpFb)
-End Function
-Sub BrwLasTmpDb()
-BrwDb LasTmpDb
-End Sub
-Function LasTmpFb$()
-Dim Fn$: Fn = MaxEle(FnAy(TmpDbPth, "*.accdb"))
-If Fn = "" Then Thw CSub, "No *.accdb TmpDbPth", "TmpDbPth", TmpDbPth
-LasTmpFb = TmpDbPth & Fn
+Function TdStr$(A As Dao.TableDef)
+Dim T$, Id$, S$, R$
+    T = A.Name
+    If HasStdPkzTd(A) Then Id = "*Id"
+    Dim Pk$(): Pk = Sy(T & "Id")
+    Dim Sk$(): Sk = SkFnyzTd(A)
+    If HasStdSkzTd(A) Then S = TLin(RplAy(Sk, T, "*")) & " |"
+    R = TLin(CvSy(MinusAyAp(FnyzTd(A), Pk, Sk)))
+TdStr = JnSpc(SyNB(T, Id, S, R))
 End Function
 
-Function TmpFb$()
-TmpFb = TmpDbPth & TmpNm & ".accdb"
+Function FnyzTdLy(TdLy$()) As String()
+Dim O$(), TdStr$, I
+For Each I In Itr(TdLy)
+    TdStr = I
+    PushIAy O, FnyzTdLin(TdStr)
+Next
+FnyzTdLy = CvSy(AwDist(O))
 End Function
 
+Function TdStrzT$(D As Database, T)
+TdStrzT = TdStr(D.TableDefs(T))
+End Function
 
+Function SkFnyzTdLin(TdLin) As String()
+Dim A1$, T$, Rst$
+    A1 = Bef(TdLin, "|")
+    If A1 = "" Then Exit Function
+AsgTRst A1, T, Rst
+T = RmvSfx(T, "*")
+Rst = Replace(Rst, "*", T)
+SkFnyzTdLin = SyzSS(Rst)
+End Function
 

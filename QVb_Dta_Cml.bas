@@ -162,7 +162,7 @@ For Each I In Itr(Sy)
 Next
 End Function
 
-Function FstCmlzWiSng$(S)
+Function FstCmlzSng$(S)
 Dim Lin, A$, O$, J%
 Lin = S
 While Lin <> ""
@@ -170,10 +170,10 @@ While Lin <> ""
     A = ShfCml(Lin)
     Select Case Len(A)
     Case 1: O = O & A
-    Case Else: FstCmlzWiSng = O & A: Exit Function
+    Case Else: FstCmlzSng = O & A: Exit Function
     End Select
 Wend
-FstCmlzWiSng = O
+FstCmlzSng = O
 End Function
 
 Function IsAscCmlChr(A%) As Boolean

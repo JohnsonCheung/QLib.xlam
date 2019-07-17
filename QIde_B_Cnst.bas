@@ -46,7 +46,7 @@ With BrkCnst(Lin)
     End If
 End With
 End Function
-Sub Z_BrkCnst()
+Private Sub Z_BrkCnst()
 Dim Lin, Act As CnstBrk, Ept As CnstBrk
 GoSub T0
 Exit Sub
@@ -185,4 +185,12 @@ Next
 BrwAy O
 End Sub
 
+Function CnstIx&(Src$(), Cnstn)
+Dim L, O&
+For Each L In Itr(Src)
+    If CnstnzL(L) = Cnstn Then CnstIx = O: Exit Function
+    O = O + 1
+Next
+CnstIx = -1
+End Function
 

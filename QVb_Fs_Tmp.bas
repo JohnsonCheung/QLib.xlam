@@ -4,8 +4,8 @@ Option Explicit
 Private Const CMod$ = "MVb_Fs_Tmp."
 Private Const Asm$ = "QVb"
 
-Function TmpCmd$(Optional FnPfx$)
-TmpCmd = TmpFfn(".cmd", "Cmd", FnPfx)
+Function TmpFcmd$(Optional FnPfx$)
+TmpFcmd = TmpFfn(".cmd", "Cmd", FnPfx)
 End Function
 
 Function TmpFcsv$(Optional Fdr$, Optional FnPfx$)

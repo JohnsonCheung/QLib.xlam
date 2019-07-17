@@ -31,6 +31,7 @@ With SwapS12
     .S2 = A.S1
 End With
 End Function
+
 Sub PushS12(O As S12s, M As S12)
 ReDim Preserve O.Ay(O.N)
 O.Ay(O.N) = M

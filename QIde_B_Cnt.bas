@@ -44,8 +44,9 @@ End Function
 Function NCls%()
 NCls = NClszP(CPj)
 End Function
-Function NCmpPj%()
-NCmpPj = CPj.VBComponents.Count
+
+Function NCmpP%()
+NCmpP = CPj.VBComponents.Count
 End Function
 
 

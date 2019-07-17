@@ -198,6 +198,7 @@ End Property
 Private Sub X(A$)
 PushI XSchm, A
 End Sub
+
 Property Get LgSchm() As String()
 If Si(XSchm) = 0 Then
 X "E Mem | Mem Req AlwZLen"
@@ -300,7 +301,6 @@ Debug.Assert Dir(LgFb) = ""
 LgBeg
 Debug.Assert Dir(LgFb) = LgFn
 End Sub
-
 
 Private Sub Z()
 Z_Lg

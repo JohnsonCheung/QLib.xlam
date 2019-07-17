@@ -187,3 +187,12 @@ PfxzPfxAp = PfxzPfxSy(S, PfxSy)
 End Function
 
 
+
+Function EnsSfxDot$(S)
+EnsSfxDot = EnsSfx(S, ".")
+End Function
+
+Function EnsSfxSemi$(S)
+EnsSfxSemi = EnsSfx(S, ";")
+End Function
+

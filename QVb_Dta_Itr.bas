@@ -82,17 +82,6 @@ For Each X In Ay
 Next
 End Function
 
-Function FstzItrNm(Itr, Nm$)
-'Ret : fst ele in @Itr with prp-Name eq @Nm
-Dim O: For Each O In Itr
-    If ObjNm(O) = Nm Then
-        Set FstzItrNm = O
-        Exit Function
-    End If
-Next
-Set FstzItrNm = Nothing
-End Function
-
 Function FstzItrEq(Itr, PrpPth, V)
 'Ret : fst ele in @Itr with its prpOf-@PrpPth eq to @V
 Dim Obj: For Each Obj In Itr
@@ -100,6 +89,7 @@ Dim Obj: For Each Obj In Itr
 Next
 Set FstzItrEq = Nothing
 End Function
+
 Function FstzItn(Itr, Nm$) 'Return first element in Itr with its PrpNm=Nm being true
 Set FstzItn = FstzItrEq(Itr, "Name", Nm)
 End Function
@@ -129,7 +119,7 @@ Next
 End Function
 
 Function IsEqNmItr(Itr, B)
-IsEqNmItr = IsSamAy(Itn(Itr), Itn(B))
+IsEqNmItr = IsAySam(Itn(Itr), Itn(B))
 End Function
 
 Function AvzItrMap(Itr, Map$) As Variant()

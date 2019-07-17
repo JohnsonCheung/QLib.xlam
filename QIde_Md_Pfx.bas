@@ -27,5 +27,5 @@ For Each I In MdNy
 Next
 End Function
 Function MdPfx$(Mdn)
-'MdPfx = FstCmlzWithSng(Mdn)
+MdPfx = FstCmlzSng(Mdn)
 End Function

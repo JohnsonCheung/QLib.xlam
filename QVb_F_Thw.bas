@@ -163,26 +163,29 @@ If Si(Er) = 0 Then Exit Sub
 BrwAy AddSy(LyzFunMsgNap(Fun, ""), Er)
 Halt
 End Sub
+
 Sub ThwLoopingTooMuch(Fun$)
 Thw Fun, "Looping too much"
 End Sub
+
 Sub ThwPmEr(VzPm, Fun$, Optional MsgWhyPmEr$ = "Invalid value")
 Thw Fun, "Parameter error: " & MsgWhyPmEr, "Pm-Type Pm-Val", TypeName(VzPm), FmtV(VzPm)
 End Sub
 
-Sub D(Optional A)
+Sub D(Optional V, Optional OupTy As EmOupTy)
+Dim A$(): A = FmtV(V)
 Select Case True
-Case IsMissing(A): Debug.Print
-Case IsArray(A): DmpAy A
-Case IsDic(A):   DmpDic CvDic(A), True
-Case IsRel(A):   CvRel(A).Dmp
-Case IsAset(A):  CvAset(A).Dmp
-Case Else: Debug.Print A
+Case OupTy = EiOtDmp: DmpAy A
+Case OupTy = EiOtVc: VcAy A
+Case OupTy = EiOtBrw:  BrwAy A
+Case Else: BrwAy A
 End Select
 End Sub
-Sub Dmp(A)
-D A
+
+Sub Dmp(A, Optional OupTy As EmOupTy)
+D A, OupTy
 End Sub
+
 Sub DmpTy(A)
 Debug.Print TypeName(A)
 End Sub
@@ -193,6 +196,7 @@ For J = 0 To UB(Ay)
     Debug.Print J; ": "; Ay(J)
 Next
 End Sub
+
 Sub DmpAy(Ay)
 Dim J&
 For J = 0 To UB(Ay)
@@ -358,7 +362,7 @@ End Sub
 Function LyzNyAv(Ny$(), Av(), Optional Sep$ = ": ") As String()
 Dim J%, O$(), N$()
 ResiMax Ny, Av
-N = AlignzAy(Ny)
+N = AlignAy(Ny)
 For J = 0 To UB(Ny)
     PushIAy LyzNyAv, LyzNv(N(J), Av(J), Sep)
 Next

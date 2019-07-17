@@ -355,12 +355,25 @@ For Each I In Itr(Sy)
     PushI IndentSy, S & I
 Next
 End Function
+
 Function AyTrim(Sy$()) As String()
-Dim X
-For Each X In Itr(Sy)
-    Push AyTrim, Trim(X)
+Dim S: For Each S In Itr(Sy)
+    Push AyTrim, Trim(S)
 Next
 End Function
+
+Function AyBef(Sy$(), Sep$) As String()
+Dim S: For Each S In Itr(Sy)
+    Push AyBef, Bef(S, Sep)
+Next
+End Function
+
+Function AyRTrim(Sy$()) As String()
+Dim S: For Each S In Itr(Sy)
+    Push AyRTrim, RTrim(S)
+Next
+End Function
+
 Function MinzAy(Ay)
 Dim O, I
 For Each I In Ay
@@ -728,4 +741,17 @@ End Function
 Function ItrzTT(TT$)
 Asg Itr(TermAy(TT)), ItrzTT
 End Function
+
+Function IsEqAy(A, B) As Boolean
+If Not IsArray(A) Then Exit Function
+If Not IsArray(B) Then Exit Function
+If Not IsEqSi(A, B) Then Exit Function
+Dim J&, X
+For Each X In Itr(A)
+    If Not IsEq(X, B(J)) Then Exit Function
+    J = J + 1
+Next
+IsEqAy = True
+End Function
+
 

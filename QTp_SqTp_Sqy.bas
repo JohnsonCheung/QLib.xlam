@@ -314,8 +314,9 @@ End Sub
 
 Function SqyzTp(SqTp$) As String()
 ThwIf_Er ErzSqTp(SqTp), CSub
-Dim B As Blks:             B = BlkszSqTp(SqTp)
-Dim Pm As Dictionary: Set Pm = Dic(LyzBlkTy(B, "PM"))
+Dim Brk As TpBrk:             Brk = TpBrkzSq(SqTp)
+Dim B As Blks:                  B = Brk.Ok
+Dim Pm As Dictionary:      Set Pm = Dic(LyzBlkTy(B, "PM"))
 Dim S As Sw:               S = Sw(LyzBlkTy(B, "SW"), Pm)
 SqyzTp = Sqy(LyAyzBlkTy(B, "SQ"), Pm, S)
 End Function
@@ -325,7 +326,7 @@ BrwDic Y_Pm
 End Sub
 
 Private Function Y_Blks() As Blks
-Y_Blks = BlkszSqTp(Y_SqTp)
+Y_Blks = TpBrkzSq(Y_SqTp).Ok
 End Function
 
 Private Function Y_PmLy() As String()
@@ -338,10 +339,13 @@ For Each SqLy In Itr(SqLyAy)
     PushI Sqy, Sql(CvSy(SqLy), Pm, Sw)
 Next
 End Function
-
-Private Function BlkszSqTp(SqTp$) As Blks
-Dim A$(): A = SyzSS("SQ PM SW RM")
-BlkszSqTp = BlkszTp(SqTp, A)
+Private Sub Z_TpBrkzSq()
+Dim A As TpBrk: A = TpBrkzSq(SampSqTp)
+Stop
+End Sub
+Private Function TpBrkzSq(SqTp$) As TpBrk
+TpBrkzSq = TpBrk(SqTp, "SQ", "PM SW")
+Stop
 End Function
 
 Private Property Get Y_Sw() As Dictionary
@@ -373,9 +377,9 @@ X "-- All other gp is sql-statement or sql-statements"
 X "-- sql-statments: Drp xxx xxx"
 X "-- sql-statment: [sel|selDis|upd|into|fm|whBetStr|whBetNum|whInStrLis|whInNumLis|andInNumLis|andInStrLis|gp|jn|left|expr]"
 X "-- optional: Whxxx and Andxxx can have ?-pfx becomes: ?Whxxx and ?Andxxx.  The line will become empty"
-X "=============================================="
+X "== SQ ============================================"
 X "Drp Tx TxMbr MbrDta Div Sto Crd Cnt Oup MbrWs"
-X "============================================="
+X "== PM ==========================================="
 X "-- >?XXX means input switch, value must be 0 or 1"
 X "-- >XXX  means input txt and optional, allow, blank"
 X "-- >>XXX means input compulasary, that means not allow blank"
@@ -396,7 +400,7 @@ X ">LisCrd"
 X ">CrdExpr ..."
 X ">CrdExpr ..."
 X ">CrdExpr ..."
-X "============================================"
+X "== SW =========================================="
 X "-- EQ & NE t1 only TxtPm is allowed"
 X "--         t2 allow TxtPm, *BLANK, and other text"
 X "?LvlY    EQ >>SumLvl Y"
@@ -417,7 +421,9 @@ X "?Crd     OR >?BrkCrd"
 X "?:#Div NE >LisDiv *blank"
 X "?:#Sto NE >LisSto *blank"
 X "?:#Crd NE >LisCrd *blank"
-X "============================================= #Tx"
+X "== XX ==========="
+X "aa bb"
+X "== SQ =========================================== #Tx"
 X "sel  ?Crd ?Mbr ?Div ?Sto ?Y ?M ?W ?WD ?D ?Dte Amt Qty Cnt"
 X "into #Tx"
 X "fm   SalesHistory"
@@ -438,11 +444,11 @@ X "$Dte"
 X "$Amt Sum(SHAmount)"
 X "$Qty Sum(SHQty)"
 X "$Cnt Count(SHInvoice+SHSDate+SHRef)"
-X "============================================= #TxMbr"
+X "== SQ =========================================== #TxMbr"
 X "selDis  Mbr"
 X "fm      #Tx"
 X "into    #TxMbr"
-X "============================================= #MbrDta"
+X "== SQ =========================================== #MbrDta"
 X "sel   Mbr Age Sex Sts Dist Area"
 X "fm    #TxMbr x"
 X "jn    JCMMember a on x.Mbr = a.JCMMCode"
@@ -453,7 +459,7 @@ X "$Sex  a.JCMSex"
 X "$Sts  a.JCMStatus"
 X "$Dist a.JCMDist"
 X "$Area a.JCMArea"
-X "==-=========================================== #Div"
+X "== SQ =========================================== #Div"
 X "?sel Div DivNm DivSeq DivSts"
 X "fm   Division"
 X "into #Div"
@@ -462,7 +468,7 @@ X "$Div Dept + Division"
 X "$DivNm LongDies"
 X "$DivSeq Seq"
 X "$DivSts Status"
-X "============================================ #Sto"
+X "== SQ ========================================== #Sto"
 X "?sel Sto StoNm StoCNm"
 X "fm   Location"
 X "into #Sto"
@@ -470,14 +476,14 @@ X "?wh in strLis Loc >LisLoc"
 X "$Sto"
 X "$StoNm"
 X "$StoCNm"
-X "============================================= #Crd"
+X "== SQ =========================================== #Crd"
 X "?sel        Crd CrdNm"
 X "fm          Location"
 X "into        #Crd"
 X "?wh in nbrLis Crd >LisCrd"
 X "$Crd"
 X "$CrdNm"
-X "============================================= #Oup"
+X "== SQ =========================================== #Oup"
 X "sel  ?Crd ?CrdNm ?Mbr ?Age ?Sex ?Sts ?Dist ?Area ?Div ?DivNm ?Sto ?StoNm ?StoCNm ?Y ?M ?W ?WD ?D ?Dte Amt Qty Cnt"
 X "into #Oup"
 X "fm   #Tx x"
@@ -486,7 +492,7 @@ X "left #Div b on x.Div = b.Div"
 X "left #Sto c on x.Sto = c.Sto"
 X "left #MbrDta d on x.Mbr = d.Mbr"
 X "wh   JCMCode in (Select Mbr From #TxMbr)"
-X "============================================ #Cnt"
+X "== SQ ========================================== #Cnt"
 X "sel ?MbrCnt RecCnt TxCnt Qty Amt"
 X "into #Cnt"
 X "fm  #Tx"
@@ -499,7 +505,7 @@ X "============================================"
 X "--"
 X "============================================"
 X "df eror fs--"
-X "============================================"
+X "== SW =========================================="
 X "-- EQ & NE t1 only TxtPm is allowed"
 X "--         t2 allow TxtPm, *BLANK, and other text"
 X "?LvlY    EQ >>SumLvl Y"
@@ -631,11 +637,9 @@ If RmvPfx(ShfT1(Lin1), "?") <> "upd" Then Stop
 StmtSwKeyzUpd = Lin1
 End Function
 
-
 Private Function IsXXX(A$(), XXX$) As Boolean
 IsXXX = UCase(T1(A(UB(A)))) = XXX
 End Function
-
 
 Private Property Get Y_ExprDic() As Dictionary
 Dim O$()
@@ -818,6 +822,7 @@ Tst:
     
     Return
 End Sub
+
 Private Sub Z_StmtSwKey()
 Dim Ly$(), Ty As EmStmtTy
 GoSub T0

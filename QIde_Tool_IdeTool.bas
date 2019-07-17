@@ -1,11 +1,11 @@
 Attribute VB_Name = "QIde_Tool_IdeTool"
 Option Explicit
 Option Compare Text
-Function AAA(X)
+Function aaa(X)
 Dim Rg As Range
 Set Rg = CWs.Range("D5")
 Rg.Value = 123
-AAA = X + 1
+aaa = X + 1
 Exit Function
 X: Debug.Print Err.Description
 End Function
@@ -39,4 +39,7 @@ End Function
 
 Sub RmvIdeTools()
 RmvBarByNy ToolBarNy
+End Sub
+
+Private Sub Z()
 End Sub

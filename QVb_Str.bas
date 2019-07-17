@@ -21,14 +21,9 @@ End Sub
 Sub VcStr(S, Optional Fnn$)
 BrwStr S, Fnn, UseVc:=True
 End Sub
+
 Function StrDft$(S, Dft)
 StrDft = IIf(S = "", Dft, S)
-End Function
-
-Function DupzWy(W%(), Optional C$ = "-") As String()
-Dim I: For Each I In W
-    Push DupzWy, Dup(C, I)
-Next
 End Function
 
 Function Dup$(S, N)
@@ -77,4 +72,54 @@ Dim D As Boolean
 Dim E&
 Dim F$()
 End Sub
+
+Function Align$(V, W%)
+Dim S: S = V
+If IsStr(V) Then
+    Align = AlignL(S, W)
+Else
+    Align = AlignR(S, W)
+End If
+End Function
+
+Function AlignL$(S, W)
+Dim L%: L = Len(S)
+If L >= W Then
+    AlignL = S
+Else
+    AlignL = S & Space(W - Len(S))
+End If
+End Function
+
+Function AlignR$(S, W%)
+Dim L%: L = Len(S)
+If W > L Then
+    AlignR = Space(W - L) & S
+Else
+    AlignR = S
+End If
+End Function
+
+
+Function TrimWhite$(A)
+TrimWhite = TrimWhiteL(TrimWhiteL(A))
+End Function
+
+Function TrimWhiteL$(A)
+Dim J%
+    For J = 1 To Len(A)
+        If Not IsWhiteChr(Mid(A, J, 1)) Then Exit For
+    Next
+TrimWhiteL = Left(A, J)
+End Function
+
+Function TrimWhiteR$(S)
+Dim J%
+    Dim A$
+    For J = Len(S) To 1 Step -1
+        If Not IsWhiteChr(Mid(S, J, 1)) Then Exit For
+    Next
+    If J = 0 Then Exit Function
+TrimWhiteR = Mid(S, J)
+End Function
 

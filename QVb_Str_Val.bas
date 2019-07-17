@@ -38,20 +38,27 @@ Case Else
 End Select
 StrCellzV = O
 End Function
+
 Function AddIxPfxzLines(Lines, Optional B As EmIxCol = EiBeg0) As String()
 AddIxPfxzLines = AddIxPfx(SplitCrLf(Lines), B)
 End Function
+
 Function FmtPrim$(Prim)
 FmtPrim = Prim & " (" & TypeName(Prim) & ")"
 End Function
 
-Function FmtV(V) As String()
+Function FmtV(V, Optional IsAddIx As Boolean) As String()
 Select Case True
 Case IsDic(V): FmtV = FmtDic(CvDic(V))
 Case IsAset(V): FmtV = CvAset(V).Sy
 Case IsLines(V): FmtV = AddIxPfxzLines(V)
 Case IsPrim(V): FmtV = Sy(FmtPrim(V))
-Case IsSy(V): FmtV = AddIxPfx(CvSy(V))
+Case IsSy(V)
+    If IsAddIx Then
+        FmtV = AddIxPfx(CvSy(V))
+    Else
+        FmtV = V
+    End If
 Case IsNothing(V): FmtV = Sy("#Nothing")
 Case IsEmpty(V): FmtV = Sy("#Empty")
 Case IsMissing(V): FmtV = Sy("#Missing")
@@ -62,7 +69,12 @@ Case IsArray(V)
     For Each I In V
         PushI O, StrCellzV(I)
     Next
-    FmtV = AddIxPfx(O)
+    Stop
+    If IsAddIx Then
+        FmtV = AddIxPfx(O)
+    Else
+        FmtV = O
+    End If
 Case Else
 End Select
 End Function
