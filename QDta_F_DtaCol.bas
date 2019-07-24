@@ -271,6 +271,10 @@ Function StrCol(A As Drs, C) As String()
 StrCol = StrColzDy(A.Dy, IxzAy(A.Fny, C))
 End Function
 
+Function DblCol(A As Drs, C) As Double()
+DblCol = DblColzDy(A.Dy, IxzAy(A.Fny, C))
+End Function
+
 Function BoolColzDrs(A As Drs, C) As Boolean()
 BoolColzDrs = BoolColzDy(A.Dy, IxzAy(A.Fny, C))
 End Function

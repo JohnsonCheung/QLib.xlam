@@ -182,7 +182,7 @@ X " MB52  C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\S
 X " Uom   C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\sales text.xlsx"
 X " GLBal C:\Users\user\Desktop\MHD\SAPAccessReports\TaxRateAlert\TaxRateAlert\Sample\DutyPrepayGLTot.xlsx"
 X "FbTbl"
-X "--  Fbn TblNm.."
+X "--  Fbn Tn.."
 X " DutyPay Permit PermitD"
 X "FxTbl T  FxNm.Wsn  Stru"
 X " ZHT086  ZHT0.8600 ZHT0"

@@ -388,6 +388,7 @@ For Each I In Ay
 Next
 MaxzAy = O
 End Function
+
 Function WdtzAy%(Ay)
 Dim O%, V
 For Each V In Itr(Ay)
@@ -409,9 +410,8 @@ Function SyEnsSfxDot(Ay) As String()
 SyEnsSfxDot = SyEnsSfx(Sy, ".")
 End Function
 Function SyEnsSfx(Sy$(), Sfx$) As String()
-Dim I
-For Each I In Itr(Sy)
-    PushI SyEnsSfx, EnsSfx(CStr(I), Sfx)
+Dim I: For Each I In Itr(Sy)
+    PushI SyEnsSfx, EnsSfx(I, Sfx)
 Next
 End Function
 Function StmtLy(StmtLin) As String()
@@ -678,9 +678,9 @@ If S = "" Then SpcSepStr = ".": Exit Function
 SpcSepStr = QteSqIf(EscSqBkt(SlashCrLf(EscBackSlash(S))))
 End Function
 
-Function RevSpcSepStr$(SpcSepStr$)
-If SpcSepStr = "." Then Exit Function
-RevSpcSepStr = UnTidleSpc(UnSlashTab(UnSlashCrLf(SpcSepStr)))
+Function RevSS$(SS)
+If SS = "." Then Exit Function
+RevSS = UnTidleSpc(UnSlashTab(UnSlashCrLf(SS)))
 End Function
 
 Function SslzDr$(Dr)
@@ -689,18 +689,10 @@ U = UB(Dr)
 If U < 0 Then Exit Function
 ReDim O(U)
 For J = 0 To U
-    O(J) = SpcSepStr(CStr(Dr(J)))
+    O(J) = SpcSepStr(Dr(J))
 Next
 SslzDr = JnSpc(O)
 End Function
-
-Function SyzSsl(Ssl$) As String()
-Dim I
-For Each I In SyzSS(Ssl)
-    PushI SyzSsl, RevSpcSepStr(CStr(I))
-Next
-End Function
-
 
 Function IsSyDte(Sy$()) As Boolean
 Dim S: For Each S In Sy

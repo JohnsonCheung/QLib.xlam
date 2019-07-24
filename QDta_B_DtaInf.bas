@@ -57,9 +57,14 @@ Function StrColzDy(Dy(), C) As String()
 StrColzDy = IntozDyC(EmpSy, Dy, C)
 End Function
 
+Function DblColzDy(Dy(), C) As Double()
+DblColzDy = IntozDyC(EmpDblAy, Dy, C)
+End Function
+
 Function StrColzDyFst(Dy()) As String()
 StrColzDyFst = StrColzDy(Dy, 0)
 End Function
+
 Function StrColzDySnd(Dy()) As String()
 StrColzDySnd = StrColzDy(Dy, 1)
 End Function

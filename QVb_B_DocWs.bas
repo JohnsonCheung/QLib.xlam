@@ -2,9 +2,27 @@ Attribute VB_Name = "QVb_B_DocWs"
 Option Explicit
 Option Compare Text
 
-Sub Z_DoTyDfnP()
+Private Sub Z_DoTyDfnP()
 BrwDrs DoTyDfnP
 End Sub
+
+Function TyDfnNyP() As String()
+TyDfnNyP = TyDfnNyzP(CPj)
+End Function
+
+Function TyDfnNyzP(P As VBProject) As String()
+Dim L: For Each L In RmkLy(SrczP(P))
+    PushNB TyDfnNyzP, TyDfnNm(L)
+Next
+End Function
+
+Function TyDfnNm$(L)
+Dim T$: T = T1(L)
+If T = "" Then Exit Function
+If Fst2Chr(T) <> "':" Then Exit Function
+If LasChr(T) <> ":" Then Exit Function
+TyDfnNm = RmvFstChr(T)
+End Function
 
 Function DoTyDfnP() As Drs
 ':DoTyDfn: :Drs<Nm-Ty-Mem-Rmk>
@@ -49,17 +67,18 @@ Private Function DyoTyDfn(RmkLy$()) As Variant()
 Dim Gp(): Gp = DyoTyDfn__Gp(RmkLy)
 Dim I%:
 Dim IGp: For Each IGp In Itr(Gp)
-    If Si(IGp) > 1 Then Stop
-    PushI DyoTyDfn, DyoTyDfn__Dr(IGp)
+    PushSomSi DyoTyDfn, DyoTyDfn__Dr(IGp)
 Next
 End Function
-Private Function DyoTyDfn__Gp(Filter$()) As Variant()
+Private Function DyoTyDfn__Gp(RmkLy$()) As Variant()
 Dim IsFstLin As Boolean, IsRstLin As Boolean
 Dim Gp(), O()
-Dim L: For Each L In Itr(Filter)
+Dim L: For Each L In Itr(RmkLy)
+    Dim NFstLin%
     DyoTyDfn__AsgWhatLin L, IsFstLin, IsRstLin
     Select Case True
     Case IsFstLin
+        NFstLin = NFstLin + 1
         PushSomSi O, Gp
         Erase Gp
         PushI Gp, L
@@ -78,52 +97,59 @@ End Function
 Private Sub DyoTyDfn__AsgWhatLin(RmkLin, OIsFstLin As Boolean, OIsRstLin As Boolean)
 OIsRstLin = False
 OIsRstLin = False
-OIsFstLin = DyoTyDfn__IsFstLin(RmkLin): If OIsFstLin Then Exit Sub
+OIsFstLin = TyDfnNm(RmkLin) <> "": If OIsFstLin Then Exit Sub
 OIsRstLin = DyoTyDfn__IsRstLin(RmkLin)
 End Sub
-Private Function DyoTyDfn__IsFstLin(Lin) As Boolean
-Dim T$(): T = T3Rst(Lin)
-Dim NTerm%: NTerm = Si(T)
-If NTerm < 2 Then Exit Function         ' At least 2 terms
-If Fst2Chr(T(0)) <> "':" Then Exit Function '
-If LasChr(T(0)) <> ":" Then Exit Function
-If FstChr(T(1)) <> ":" Then Exit Function
-Dim T3$: T3 = T(2)
-Select Case FstChr(T3)
-Case "!": DyoTyDfn__IsFstLin = True '<==
-Case "#":
-    If LasChr(T3) = "#" Then
-        If NTerm >= 4 Then
-            If FstChr(T(3)) = "!" Then
-                DyoTyDfn__IsFstLin = True
-            End If
-        End If
-    End If
-End Select
-End Function
+
 Private Function DyoTyDfn__IsRstLin(Lin) As Boolean
 If FstChr(Lin) <> "'" Then Exit Function
 If FstChr(LTrim(RmvFstChr(Lin))) <> "!" Then Exit Function
 DyoTyDfn__IsRstLin = True
 End Function
 
-Private Function DyoTyDfn__Dr(Gp) As Variant()
-'Assume: Fst Lin is ':nn: :dd #mm# !rr
-'        Rst Lin is '              !rr
-Dim Nm$, Mem$, Dfn$, Rmk$, R$
+Private Sub Z_DyoTyDfn__Dr()
+Dim RmkLy
+GoSub ZZ
+Exit Sub
+ZZ:
+    RmkLy = Sy("':Cell: :SCell-or-:WCell")
+    Dmp DyoTyDfn__Dr(RmkLy)
+    Return
+End Sub
+
+Private Function IsTyDfn(Nm$, Dfn$, T3$, Rst$) As Boolean
+Select Case True
+Case Fst2Chr(Nm) <> "':"
+Case LasChr(Nm) <> ":"
+Case FstChr(Dfn) <> ":"
+Case T3 <> "" And Not HasPfxSfx(T3, "#", "#") And FstChr(T3) <> "!"
+Case Else: IsTyDfn = True
+End Select
+End Function
+
+Private Function IsLinTyDfn(Lin) As Boolean
+Dim Nm$, Dfn$, T3$, Rst$
+Asg3TRst Lin, Nm, Dfn, T3, Rst
+If Not IsTyDfn(Nm, Dfn, T3, Rst) Then Exit Function
+End Function
+
+Private Function DyoTyDfn__Dr(RmkLy) As Variant()
+'Assume: Fst Lin is ':nn: :dd [#mm#] [!rr]
+'        Rst Lin is '                 !rr
+Dim Nm$, T3$, Dfn$, Mem$, Rst$, Rmk$, R$
 Dim Fst As Boolean: Fst = True
-Dim L: For Each L In Gp
+Dim L: For Each L In RmkLy
     If Fst Then
         Fst = False
-        Nm = Bef(Mid(L, 3), ":") ' Must
-        R = AftSpc(L)
-        Dfn = RmvFstChr(BefSpc(R)) 'Must
-        R = AftSpc(R)
-        If FstChr(R) = "#" Then
-            Mem = RmvFstLasChr(T1(R))               'Optional
-            R = RmvT1(R)
+        Asg3TRst L, Nm, Dfn, T3, Rst
+        If Not IsTyDfn(Nm, Dfn, T3, Rst) Then
+            Debug.Print Nm, Dfn, T3, Rst
+            Stop
+            Debug.Print "DyoTyDfn__Dr: Fst lin of @RmkLy is not ':nn: :dd [#mm#] [!rr].  FstLin=[" & L & "]"
+            Exit Function
         End If
-        Rmk = Aft(R, "!")
+        If HasPfxSfx(T3, "#", "#") Then Mem = T3
+        Rmk = Trim(RmvPfx(Rst, "!"))
     Else
         ' L is in ' !rr fmt
         R = RmvFstChr(L)        ' Rmv '
@@ -132,9 +158,6 @@ Dim L: For Each L In Gp
         Rmk = ApdIf(Rmk, vbCrLf & R)
     End If
 Next
-Nm = Qte(Nm, ":")
-If Mem <> "" Then Mem = Qte(Mem, "#")
-Dfn = ":" & Dfn
+Nm = RmvFstChr(Nm)
 DyoTyDfn__Dr = Array(Nm, Dfn, Mem, Rmk)
 End Function
-

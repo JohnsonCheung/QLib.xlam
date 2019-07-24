@@ -96,7 +96,7 @@ Dim I1%, I2%
     If CC = "" Then I1 = 0: I2 = 1 Else AsgIx D, CC, I1, I2
 Dim Dr: For Each Dr In Itr(D.Dy)
     Dim A$, B$: A = Dr(I1): B = Dr(I2)
-    Dim R&: R = IxzAy(S1, A)
+    Dim R&: R = IxzAy(S1, A, ThwEr:=EiNoThw)
     If R = -1 Then
         PushI S1, A
         PushI S2, Sy(B)

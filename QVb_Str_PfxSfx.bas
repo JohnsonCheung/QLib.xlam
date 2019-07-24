@@ -106,6 +106,12 @@ End Function
 Function HasPfx(S, Pfx, Optional C As VbCompareMethod = vbTextCompare) As Boolean
 HasPfx = StrComp(Left(S, Len(Pfx)), Pfx, C) = 0
 End Function
+Function HasPfxSfx(S, Pfx, Sfx, Optional C As VbCompareMethod = vbTextCompare) As Boolean
+If Not HasPfx(S, Pfx, C) Then Exit Function
+If Not HasSfx(S, Sfx, C) Then Exit Function
+HasPfxSfx = True
+End Function
+
 Function HasPfxss(S, Pfxss$, Optional C As VbCompareMethod = vbTextCompare) As Boolean
 Dim PfxAy$(): PfxAy = SyzSS(Pfxss)
 HasPfxss = HasPfxAy(S, PfxAy, C)
@@ -141,16 +147,8 @@ For Each Sfx In SfxAv
 Next
 End Function
 
-
-Function PfxSySpc$(S, PfxSy$()) ' Return Fst ele-P of [PfxSy] if [S] has pfx ele-P and a space
-Dim P
-For Each P In PfxSy
-    If HasPfx(S, P & " ") Then PfxSySpc = P: Exit Function
-Next
-End Function
-
 Function PfxzAy$(S, PfxSy$())
-'Ret : #PfxAy-Space ! fst ele-$ of @PfxSy so that @S has $.
+'Ret : :Pfx #Pfx-Fm-Ay#  fst ele-$ of @PfxSy so that @S has $.
 Dim P
 For Each P In PfxSy
     If HasPfx(S, P) Then PfxzAy = P: Exit Function
@@ -158,7 +156,7 @@ Next
 End Function
 
 Function PfxzAyS$(S, PfxAy$())
-'Ret : #Pfx-Ay-Spc# ! fst pfx-$ in @PfxAy so that @S &HasPfx $ & " "
+'Ret : :Pfx #Pfx-Fm-Ay-Spc# fst pfx-$ in @PfxAy so that @S &HasPfx $ & " "
 Dim P: For Each P In PfxAy
     If HasPfx(S, P & " ") Then PfxzAyS = P: Exit Function
 Next

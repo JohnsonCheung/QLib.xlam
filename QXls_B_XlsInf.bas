@@ -1033,7 +1033,7 @@ Erase XX
 XLin FmtQQ("[?] miss ws [?]", Inpn, Wsn)
 XTab "Path  : " & Pth(Fx)
 XTab "File  : " & Fn(Fx)
-XTab "Has Ws: " & TermLin(Wny(Fx))
+XTab "Has Ws: " & Termss(Wny(Fx))
 ErzWsMis = XX
 End Function
 

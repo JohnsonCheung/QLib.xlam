@@ -4,16 +4,16 @@ Option Explicit
 Private Const CMod$ = "MTerm."
 Const Ns$ = "Vb.Str.Term"
 Private Const Asm$ = "Q"
-':Term: ! is :s.  It a printable-sub-string fm a :TermLin.
-':TermLin: ! is :Lin.  with lis of terms sep by spc.  If a :Term has spc, it will have sq-bkt.
-':NN: It a Str or Sy will give Ny.  See TermAy"
+':Term: :S ! No-spc-str or Sq-quoted-str
+':Termss: :SS
+':NN: :SS ! spc-sep-str of :Nm
 
 Function RmvTerm$(Lin, Term$())
 RmvTerm = JnTerm(MinusAy(TermAy(Lin), Term))
 End Function
 
-Function TermLin(TermAy)
-TermLin = TLin(TermAy)
+Function Termss(TermAy)
+Termss = TLin(TermAy)
 End Function
 
 Function TLin(TermAy)

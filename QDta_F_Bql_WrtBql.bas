@@ -2,22 +2,22 @@ Attribute VB_Name = "QDta_F_Bql_WrtBql"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "BBqlWrite."
-':Fbka: # :Ft:       ! #Fil-BacK-Apostrophe#  It is a fil of ext *.bka.txt.  There 1-Sgn-Lin, 0-to-N-Rmk-Lines and 0-To-N-Tbl-Lines.
-'Sgn-Lin             ! is  **BackApostropheSeparatedFile**<Dsn>**, where <Dsn> is a dta-set-nm.
-'Rmk-Lines           ! are lines between Sgn-Lin and (fst-TblNm-Lin or eof)
-'1-Tbl-Lines         ! is  1-TblNm-Lin, 0-to-N-TblRmk-Lines, 1-Fld-Lin and 0-to-N-Dta-Lines.
-'TblNm-Lin           ! is
-'                    ! Rmk-Lines are lines before fst *-Lin.  Rmk are for all tbl in the :Fbka:  Each individual tbl does not have it own rmk
-'Lines before fst *-lin are Rmk.  Each gp of one-*-Lin & N-`-Lin is one tbl.
-'                    ! *-lin is a lin wi fst chr is *, :Starl: #Star-Line#.  `-lin is a lin wi fst chr is `, :Bkal:, #BacK-Apostrophe-Lin#.
-'                    ! The *-Lin is *<Tn>
-'                    ! The fst `-Lin is :Scff:
-'                    ! The rst `-Lin is :dta:
-':Scff: # :SS:Sc
-':Tn:   # :s:        ! #Table-Name#.
-':Scff: # :SS:Scfld: ! #ShtTyChr-Colon-FF#.  It is spc sep of :Scfld:.  It desc ty and fldn of the tbl.
-'It has first line as ShtTyscfQBLin.  " & _
-"It rest of lines are records."
+':Fbka: :Ft #Fil-name-of-BacK-Apostrophe#
+' ! It is a fil of ext *.bka.txt.  There 1-Sgn-Lin, 0-to-N-Rmk-Lines and 0-To-N-Tbl-Lines.
+' ! Sgn-Lin is  **BackApostropheSeparatedFile**<Dsn>**, where <Dsn> is a dta-set-nm.
+' ! Rmk-Lines are lines between Sgn-Lin and (fst-T-Lin or eof)
+' ! 1-Tbl-Lines is  1-T-Lin, 0-to-N-TblRmk-Lines, 1-Fld-Lin and 0-to-N-Dta-Lines.
+' ! T-Lin           is
+' ! Rmk-Lines are lines before fst *-Lin.  Rmk are for all tbl in the :Fbka:  Each individual tbl does not have it own rmk
+' ! Lines before fst *-lin are Rmk.  Each gp of one-*-Lin & N-`-Lin is one tbl.
+' ! *-lin is a lin wi fst chr is *, :Starl: #Star-Line#.  `-lin is a lin wi fst chr is `, :Bkal:, #BacK-Apostrophe-Lin#.
+' ! The *-Lin is *<T>
+' ! The fst `-Lin is :Scff
+' ! The rst `-Lin is :dta
+':T:   :S  #Table-Name#
+':Scff: :FF #ShtTyChr-Colon-FF#  ! It is spc sep of :Scfld:.  It desc ty and fldn of the tbl.
+'!It has first line as ShtTyscfQBLin.
+'!It rest of lines are records."
 
 Sub InsRszBql(R As Dao.Recordset, Bql$)
 R.AddNew
@@ -75,7 +75,7 @@ End Sub
 Sub WrtFbql(Fbql$, D As Database, Optional T0$)
 Dim T$
     T = T0
-    If T = "" Then T = TblNmzFbql(Fbql)
+    If T = "" Then T = TzFbql(Fbql)
 Dim F%: F = FnoO(Fbql)
 Dim R As Dao.Recordset
 Set R = RszT(D, T)

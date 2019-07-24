@@ -39,7 +39,7 @@ XCdDim = JnCrLf(O)
 End Function
 
 
-Sub Z_MthSubZ()
+Private Sub Z_MthSubZ()
 Dim M As CodeModule ' Pm
 GoSub Z
 'GoSub T1

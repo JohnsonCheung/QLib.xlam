@@ -169,13 +169,6 @@ If A = "" Then LinesApp = L: Exit Function
 LinesApp = A & vbCrLf & L
 End Function
 
-Function LyzLinesAy(LinesAy$()) As String()
-Dim Lines
-For Each Lines In Itr(LinesAy)
-    PushIAy LyzLinesAy, SplitCrLf(Lines)
-Next
-End Function
-
 Private Sub Z_LineszRTrim1()
 Dim Lines$: Lines = LineszVbl("lksdf|lsdfj|||")
 Dim Act$: Act = LineszRTrim(Lines)

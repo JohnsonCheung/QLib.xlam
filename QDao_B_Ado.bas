@@ -138,7 +138,7 @@ D Wny(SampFxzKE24)
 End Sub
 
 Function HasTblzFfnT(Ffn, T) As Boolean
-Const CSub$ = CMod & "HasTblzFfnTblNm"
+Const CSub$ = CMod & "HasTblzFfnTn"
 Select Case True
 Case IsFx(Ffn): HasTblzFfnT = HasFxw(Ffn, T)
 Case IsFx(Ffn): HasTblzFfnT = HasFxw(Ffn, T)
@@ -304,12 +304,12 @@ End Sub
 Function FFzFxw$(Fx, Wsn)
 FFzFxw = TLin(FnyzFxw(Fx, Wsn))
 End Function
-Function FnyzFfnTblNm(Ffn, TblNm$) As String()
-Const CSub$ = CMod & "FnyzFfnTblNm"
+Function FnyzFfnTn(Ffn, T$) As String()
+Const CSub$ = CMod & "FnyzFfnTn"
 Select Case True
-Case IsFx(Ffn): FnyzFfnTblNm = FnyzFxw(Ffn, TblNm$)
-Case IsFb(Ffn): FnyzFfnTblNm = FnyzFbt(Ffn, TblNm$)
-Case Else: Thw CSub, "Ffn must be Fx or Fb", "Ffn TblNm", Ffn, TblNm
+Case IsFx(Ffn): FnyzFfnTn = FnyzFxw(Ffn, T)
+Case IsFb(Ffn): FnyzFfnTn = FnyzFbt(Ffn, T)
+Case Else: Thw CSub, "Ffn must be Fx or Fb", "Ffn T", Ffn, T
 End Select
 End Function
 Function DWsfzFxw(Fx, W) As Drs

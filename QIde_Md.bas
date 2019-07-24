@@ -3,9 +3,9 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Md."
-':MdDic$ = "It is from Pj. Key is Mdn and Val is MdLines"
+':DiMdnqSrc$ = "It is from Pj. Key is Mdn and Val is MdLines"
 ':MdDn$ = "Full: Md-Dot-Nm.  It is Either Mdn or Pjn-Dot-Mdn."
-':MdDn: is :s is [:Pjn.:Mdn | :Pjn]
+':MdDn: :Pjn.Mdn-or-Pjn
 Function IsCls(M As CodeModule) As Boolean
 IsCls = M.Parent.Type = vbext_ct_ClassModule
 End Function
@@ -32,16 +32,16 @@ Function MdDn$(M As CodeModule)
 MdDn = PjnzM(M) & "." & Mdn(M)
 End Function
 
-Function MdDic(P As VBProject) As Dictionary
+Function DiMdnqSrc(P As VBProject) As Dictionary
 Dim C As VBComponent
-Set MdDic = New Dictionary
+Set DiMdnqSrc = New Dictionary
 For Each C In P.VBComponents
-    MdDic.Add C.Name, SrcL(C.CodeModule)
+    DiMdnqSrc.Add C.Name, SrcL(C.CodeModule)
 Next
 End Function
 
-Function MdDicP() As Dictionary
-Set MdDicP = MdDic(CPj)
+Function DiMdnqSrcP() As Dictionary
+Set DiMdnqSrcP = DiMdnqSrc(CPj)
 End Function
 
 Function MdFn$(M As CodeModule)

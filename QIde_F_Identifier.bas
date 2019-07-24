@@ -63,7 +63,7 @@ End Function
 Function RelOfMthn_ToCml_zV(A As Vbe) As Rel
 Dim O As New Rel, I
 For Each I In MthNyzV(A)
-    O.PushRelLin CmlLin(I)
+    O.PushRelLin Cmlss(I)
 Next
 Set RelOfMthn_ToCml_zV = O
 End Function

@@ -37,12 +37,12 @@ End Function
 'Const CDT_Tbl_NotIn_Tny$ = "T[?] is invalid.  Valid T[?]"
 'Const MDupE$ = "This E[?] is dup"
 'Const CM_LinTyEr$ = "Invalid DaoTy[?].  Valid Ty[?]"
-':FunPfx-Mf:  #Msg-Fld      ! this error msg comes from Fld
-':FunPfx-Mdt: #Msg-Des-Tbl  ! des-tbl
-':FunPfx-Mdf: #Msg-Des-Fld  ! des-fld
-':FunPfx-Me:  #Msg-Ele      ! ele
-':FunPfx-Mt:  #Msg-Tbl      ! tbl
-':FUnPFx-Ms:  #Msg-Schm     ! schm
+':FunPfx-Mf:  :FunNmRul #Msg-Fld#      ! this error msg comes from Fld
+':FunPfx-Mdt: :FunNmRul #Msg-Des-Tbl#  ! des-tbl
+':FunPfx-Mdf: :FunNmRul #Msg-Des-Fld#  ! des-fld
+':FunPfx-Me:  :FunNmRul #Msg-Ele#      ! ele
+':FunPfx-Mt:  :FunNmRul #Msg-Tbl#      ! tbl
+':FUnPFx-Ms:  :FunNmRul #Msg-Schm#     ! schm
 Function ClnLin$(Lin)
 If IsEmp(Lin) Then Exit Function
 If FstChr(Lin) = "." Then Exit Function

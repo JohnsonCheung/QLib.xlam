@@ -33,6 +33,7 @@ End Property
 Property Get EmpSngAy() As Single()
 End Property
 
-Function EmpSy(Optional Anything) As String()
+Function EmpSy() As String()
 End Function
+
 

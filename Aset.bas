@@ -11,12 +11,12 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "Aset."
 Private Aset As New Dictionary
-Property Get TermLin()
+Property Get Termss()
 Dim I, O$()
 For Each I In Itms
-    PushI O, QteSqIf(CStr(I))
+    PushI O, QteSqIf(I)
 Next
-TermLin = JnSpc(O)
+Termss = JnSpc(O)
 End Property
 
 Property Get Cnt&()

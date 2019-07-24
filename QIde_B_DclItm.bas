@@ -3,15 +3,6 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Dim."
 Private Const Asm$ = "QIde"
-':DclL:        it is :Lines coming from a Module.
-
-Function DclTy$(DclItm$)
-If HasSubStr(DclItm, " As ") Then
-    DclTy = Bef(DclItm, " As")
-Else
-    DclTy = RmvNm(DclItm)
-End If
-End Function
 
 Function DclNm$(DclItm$)
 If HasSubStr(DclItm, " As ") Then
@@ -189,7 +180,7 @@ If ShfPfx(L, "Enum ") Then Enmn = Nm(L)
 End Function
 
 Function Tyn$(Lin)
-':Tyn: #Type-Name# ! Vb Type Name of @Lin
+':Tyn: :Nm #Type-Name# ! Vb Type Name of @Lin
 Dim L$: L = RmvMdy(Lin)
 If ShfPfx(L, "Type ") Then Tyn = Nm(L)
 End Function
@@ -318,6 +309,11 @@ End Function
 
 Function DclItr(M As CodeModule)
 Asg Itr(DclLyzM(M)), DclItr
+End Function
+
+Function DclL(Src$()) As String()
+':DclL: :Lines ! comes fm a module
+DclL = JnCrLf(DclLy(Src))
 End Function
 
 Function DclLy(Src$()) As String()

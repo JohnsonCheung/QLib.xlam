@@ -16,27 +16,27 @@ End Function
 Function WszMthCm() As Worksheet
 Dim Ws As Worksheet
 Dim Lo As ListObject
-Set Ws = MthCmlLinWsBase
+Set Ws = MthCmlssWsBase
 Set Lo = FstLo(Ws)
 'AddFml Lo, "Sel", "" ' "=IF(ISNA(VLOOKUP([@Seg1],Seg1Er,1,True))),"""",""Err"")"
 LozAyH Seg1ErNy, WbzLo(Lo), "Seg1Er"
 Set WszMthCm = ShwWs(Lo.Parent)
 End Function
-Function MthCmlLinWsBase() As Worksheet
+Function MthCmlssWsBase() As Worksheet
 Dim Dy()
-'Dy = DyoSslAy(MthCmlLyInVbe)
-Set MthCmlLinWsBase = WszDrs(Drs(FnyzMthCml(NColzDy(Dy)), Dy))
+'Dy = DyoSslAy(MthCmlssAyInVbe)
+Set MthCmlssWsBase = WszDrs(Drs(FnyzMthCml(NColzDy(Dy)), Dy))
 End Function
 
-Sub BrwMthCmlLyV()
-Brw FmtSy3Term(MthCmlLyV)
+Sub BrwMthCmlssAyV()
+Brw FmtSy3Term(MthCmlssAyV)
 End Sub
 
-Function MthCmlLyV() As String()
-MthCmlLyV = MthCmlLyzV(CVbe)
+Function MthCmlssAyV() As String()
+MthCmlssAyV = MthCmlssAyzV(CVbe)
 End Function
 
-Function MthCmlLyzV(A As Vbe) As String()
-MthCmlLyzV = CmlLy(MthNyzV(A))
+Function MthCmlssAyzV(A As Vbe) As String()
+MthCmlssAyzV = CmlssAy(MthNyzV(A))
 End Function
 

@@ -404,9 +404,8 @@ End Function
 
 Function AwT1InAy(Ay, InAy) As String()
 If Si(Ay) = 0 Then Exit Function
-Dim O$(), L
-For Each L In Ay
-    If HasEle(InAy, T1(CStr(L))) Then Push O, L
+Dim O$(), L: For Each L In Ay
+    If HasEle(InAy, T1(L)) Then Push O, L
 Next
 AwT1InAy = O
 End Function

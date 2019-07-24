@@ -45,3 +45,10 @@ End Function
 Function SplitVBar(S) As String()
 SplitVBar = AyTrim(CvSy(Split(S, "|")))
 End Function
+
+Function LyzLinesAy(LinesAy$()) As String()
+Dim L: For Each L In Itr(LinesAy)
+    PushIAy LyzLinesAy, SplitCrLf(L)
+Next
+End Function
+

@@ -50,11 +50,23 @@ End Function
 Function ShfBkt(OLin$) As Boolean
 ShfBkt = ShfPfx(OLin, "()")
 End Function
+
 Function ShfPfx(OLin$, Pfx$) As Boolean
 If HasPfx(OLin, Pfx) Then
     OLin = RmvPfx(OLin, Pfx)
     ShfPfx = True
 End If
+End Function
+Function ShfPfxAy$(OLin$, PfxAy$())
+Dim O$: O = PfxzAy(OLin, PfxAy): If O = "" Then Exit Function
+ShfPfxAy = O
+OLin = RmvPfx(OLin, O)
+End Function
+
+Function ShfPfxAyS$(OLin$, PfxAy$())
+Dim O$: O = PfxzAyS(OLin, PfxAy): If O = "" Then Exit Function
+ShfPfxAyS = O
+OLin = RmvPfxSpc(OLin, O)
 End Function
 
 Function ShfPfxSpc(OLin$, Pfx$) As Boolean

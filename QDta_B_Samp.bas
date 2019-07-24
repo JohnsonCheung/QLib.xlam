@@ -39,16 +39,17 @@ Property Get SampDrs() As Drs
 SampDrs = DrszFF("A B C D E G H I J K", SampDy)
 End Property
 
-Property Get SampDFnyRs() As String()
-SampDFnyRs = SyzSS("A B C D E F G")
-End Property
-
 Property Get SampDy1() As Variant()
 SampDy1 = Array(SampDr1, SampDr2, SampDr3)
 End Property
 
 Property Get SampDy2() As Variant()
 SampDy2 = Array(SampDr3, SampDr4, SampDr5)
+End Property
+
+Property Get SampDy3() As Variant()
+PushI SampDy3, Array("A", True, CByte(8), 1, 2&, 3#, 4!, 5@, Now, String(100, "A") & vbCrLf & String(100, "X"))
+PushI SampDy3, Array("B", True, CByte(8), 1, 2&, 3#, 4!, 5@, Now, String(100, "A") & vbCrLf & String(100, "X"))
 End Property
 
 Property Get SampDy() As Variant()

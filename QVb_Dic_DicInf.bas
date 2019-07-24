@@ -89,7 +89,7 @@ T1:
     Set A = New Dictionary
     Dim J&
     For J = 1 To 10000
-        A.Add CStr(J), J
+        A.Add J, J
     Next
     Ept = True
     GoSub Tst

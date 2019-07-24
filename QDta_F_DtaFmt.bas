@@ -3,9 +3,6 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDta_Fmt."
 Private Const Asm$ = "QDta"
-Type Syay
-    Syay() As Variant ' Each element is Sy
-End Type
 
 Function AlignQteSq(Fny$()) As String()
 AlignQteSq = AlignAy(SyzQteSq(Fny))
@@ -17,6 +14,18 @@ Dim S, J&: For Each S In Ay
     J = J + 1
 Next
 End Function
+
+Function AlignSq(Sq(), W%()) As Variant()
+Dim O(): O = Sq
+Dim IC%: For IC = 1 To UBound(Sq, 2)
+    Dim Wdt%: Wdt = W(IC - 1)
+    Dim IR&: For IR = 1 To UBound(Sq, 1)
+        O(IR, IC) = Align(O(IR, IC), Wdt)
+    Next
+Next
+AlignSq = O
+End Function
+
 Function AlignAy(Ay, Optional W0%) As String()
 Dim W%: If W0 <= 0 Then W = WdtzAy(Ay) Else W = W0
 Dim S: For Each S In Itr(Ay)
@@ -33,9 +42,8 @@ Next
 End Function
 
 Function AlignDrW(Dr, WdtAy%()) As String() 'Fmt-Dr-ToWdt
-Dim J%, W%, Cell$, I
-For Each I In ResiMax(Dr, WdtAy)
-    Cell = I
+Dim J%, W%
+Dim Cell: For Each Cell In ResiMax(Dr, WdtAy)
     W = WdtAy(J)
     PushI AlignDrW, AlignL(Cell, W)
     J = J + 1
@@ -112,7 +120,7 @@ AlignSepss = AlignDyAsLy(DyoSySep(Sy, SyzSS(SepSS)))
 End Function
 
 '=======================
-Private Function AlignDyzW(Dy(), WdtAy%()) As Variant()
+Function AlignDyzW(Dy(), WdtAy%()) As Variant()
 Dim Dr
 For Each Dr In Itr(Dy)
     PushI AlignDyzW, AlignDrW(Dr, WdtAy)
@@ -123,54 +131,45 @@ Function AlignDy(Dy()) As Variant()
 AlignDy = AlignDyzW(Dy, WdtAyzDy(Dy))
 End Function
 
-Private Function FmtDy__CellDy(Dy(), ShwZer As Boolean, MaxColWdt%) As Variant()
-Dim Dr
-For Each Dr In Itr(Dy)
-   Push FmtDy__CellDy, CellgzDr(Dr, ShwZer, MaxColWdt)
-Next
+Private Function Cell__N$(N, MaxW%, ShwZer As Boolean)
+Select Case True
+Case N = 0: If ShwZer Then Cell__N = "0"
+Case Else:  Cell__N = N
+End Select
 End Function
 
-Private Function CellgzDr(Dr, ShwZer As Boolean, MaxWdt%) As String()
-Dim V
-For Each V In Itr(Dr)
-    PushI CellgzDr, Cellg(V, ShwZer, MaxWdt)
+Private Function Cell__Str$(S, W%)
+Cell__Str = SlashCrLf(Left(S, W))
+End Function
+
+Private Function Cell__Lines$(Lines, W%)
+'Ret : each lin in @Lines will be cut to @W and jn it back
+Dim O$(), S: For Each S In Itr(SplitCrLf(Lines))
+    PushI O, Cell__Str(S, W)
 Next
+Cell__Lines = JnCrLf(O)
 End Function
-Private Function CellgzN$(N, MaxW%, ShwZer As Boolean)
-If N = 0 Then
-    If ShwZer Then
-        CellgzN = "0"
-    End If
-Else
-    CellgzN = N
-End If
-End Function
-Private Function CellgzS$(S, MaxW%)
-CellgzS = SlashCrLf(Left(S, MaxW))
-End Function
-Private Function CellgzAy$(Ay, MaxW%)
-Dim N&: N = Si(Ay)
-If N = 0 Then
-    CellgzAy = "*[0]"
-Else
-    CellgzAy = "*[" & N & "]"
-End If
-End Function
-Function Cellg$(V, Optional ShwZer As Boolean, Optional MaxWdt0% = 30) ' Convert V into a string fit in a cell
-Dim O$, MaxWdt%
-MaxWdt = EnsBet(MaxWdt0, 1, 1000)
+
+Function Cell$(V, Optional ShwZer As Boolean, Optional MaxWdt0% = 30) ' Convert V into a string fit in a cell
+':Cell: :SCell-or-:WCell
+':SCell: :S      ! can fill in a cell without wrap
+':WCell: :Lines  ! can fill in a cell with wrap
+Dim O$, W%: W = EnsBet(MaxWdt0, 1, 1000)
 Select Case True
-Case IsStr(V):     O = CellgzS(V, MaxWdt)
+Case IsLines(V):   O = Cell__Lines(V, W)
+Case IsStr(V):     O = Cell__Str(V, W)
 Case IsBool(V):    O = IIf(V, "True", "")
-Case IsNumeric(V): O = CellgzN(V, MaxWdt, ShwZer)
+Case IsNumeric(V): O = Cell__N(V, W, ShwZer)
+Case IsPrim(V):    O = V
 Case IsEmp(V):     O = "#Emp#"
 Case IsNull(V):    O = "#Null#"
-Case IsArray(V):   O = CellgzAy(V, MaxWdt)
+Case IsArray(V):   O = Cell = "*[" & Si(V) & "]"
+Case IsDic(V):     O = "#Dic:Cnt(" & CvDic(V).Count & ")"
 Case IsObject(V):  O = "#O:" & TypeName(V)
 Case IsErObj(V)
 Case Else:         O = V
 End Select
-Cellg = O
+Cell = O
 End Function
 
 Function IsEqAyzIxy(A, B, Ixy&()) As Boolean
@@ -181,19 +180,11 @@ Next
 IsEqAyzIxy = True
 End Function
 
-Function FmtDy__InsSep(Bdy$(), IsBrk() As Boolean, LinzSep$) As String()
-If Si(IsBrk) = 0 Then FmtDy__InsSep = Bdy: Exit Function
-Dim L, J&: For Each L In Bdy
-    If IsBrk(J) Then PushI FmtDy__InsSep, LinzSep
-    PushI FmtDy__InsSep, L
-    J = J + 1
-Next
-End Function
-
-Function WdtAyzDy(Dy()) As Integer()
+Function WdtAyzDy(CellDy()) As Integer()
+':CellDy: :Dy ! Each cell is a Str or Lines
 Dim J&
-For J = 0 To NColzDy(Dy) - 1
-    Push WdtAyzDy, WdtzAy(StrColzDy(Dy, J))
+For J = 0 To NColzDy(CellDy) - 1
+    Push WdtAyzDy, WdtzAy(StrColzDy(CellDy, J))
 Next
 End Function
 
@@ -203,7 +194,7 @@ LinzDr = Qte(Jn(Dr, Sep), QteStr)
 End Function
 
 Function LinzSep$(W%())
-LinzSep = LinzDr(DupzWdtAy(W), "-|-", "|-*-|")
+LinzSep = LinzDr(SepDr(W), "-|-", "|-*-|")
 End Function
 
 Sub BrwDy(A(), Optional MaxColWdt% = 100, Optional BrkCCIxy, Optional ShwZer As Boolean, Optional Fmt As EmTblFmt = EmTblFmt.EiTblFmt)
@@ -213,18 +204,6 @@ End Sub
 Sub BrwDyoSpc(A(), Optional MaxColWdt% = 100, Optional BrkCCIxy, Optional ShwZer As Boolean)
 BrwAy FmtDy(A, MaxColWdt, BrkCCIxy, ShwZer, Fmt:=EiSSFmt)
 End Sub
-Private Function FmtDy__IsBrkAy(Dy(), BrkCCIxy0) As Boolean()
-Dim Ixy&(): Ixy = CvLngAy(BrkCCIxy0)
-If Si(Ixy) = 0 Then Exit Function
-Dim LasK, CurK, Dr
-LasK = AwIxy(Dy(0), Ixy)
-For Each Dr In Itr(Dy)
-    CurK = AwIxy(Dr, Ixy)
-    PushI FmtDy__IsBrkAy, Not IsEqAy(CurK, LasK)
-    LasK = CurK
-Next
-'Insp "QDta_F_DtaFmt.XIsBrk", "Inspect", "Oup(XIsBrk) NoBrk Dy Ixy", "NoFmtr(Boolean())", NoBrk, "NoFmtr(())", Ixy: Stop
-End Function
 
 Function DyoInsIx(Dy()) As Variant()
 ' Ret Dy with each row has ix run from 0..{N-1} in front
@@ -234,42 +213,10 @@ Dim Ix&, Dr: For Each Dr In Itr(Dy)
     Ix = Ix + 1
 Next
 End Function
-Function DupzWdtAy(W%(), Optional C$ = "-") As String()
+
+Function SepDr(W%(), Optional C$ = "-") As String()
 Dim I: For Each I In W
-    Push DupzWdtAy, Dup(C, I)
-Next
-End Function
-
-Function FmtDy(Dy(), _
-Optional MaxColWdt% = 100, _
-Optional BrkCCIxy0, _
-Optional ShwZer As Boolean, _
-Optional Fmt As EmTblFmt) _
-As String()
-If Si(Dy) = 0 Then Exit Function
-Dim CellDy(): CellDy = FmtDy__CellDy(Dy, ShwZer, MaxColWdt)
-
-Dim W%(): W = WdtAyzDy(CellDy)
-
-Dim AlignDy(): AlignDy = AlignDyzW(CellDy, W)
-Dim S$:              S = IIf(Fmt = EiSSFmt, " ", " | ")
-Dim Q$:              Q = IIf(Fmt = EiSSFmt, "", "| * |")
-Dim Bdy$():        Bdy = FmtDyoSepQte(AlignDy, S, Q)
-
-Dim SepDr$(): SepDr = DupzWdtAy(W)
-                  S = IIf(Fmt = EiSSFmt, " ", "-|-")
-                  Q = IIf(Fmt = EiSSFmt, "", "|-*-|")
-Dim Sep$:       Sep = LinzDr(SepDr, S, Q)
-
-Dim IsBrk() As Boolean:  IsBrk = FmtDy__IsBrkAy(Dy, BrkCCIxy0)
-Dim BdyBrk$():          BdyBrk = FmtDy__InsSep(Bdy, IsBrk, Sep)
-                         FmtDy = Sy(Sep, BdyBrk, Sep)
-End Function
-
-Function FmtDyoSepQte(Dy(), Sep$, QteStr$) As String()
-Dim Dr
-For Each Dr In Itr(Dy)
-    PushI FmtDyoSepQte, LinzDr(Dr, Sep, QteStr)
+    Push SepDr, Dup(C, I)
 Next
 End Function
 
@@ -387,14 +334,26 @@ LinzDrsR = O
 End Function
 
 Private Function FmtDrs__SumDr(D As Drs, IsSum As Boolean, SumFF$) As Variant()
+'Ret : :Dr ! a dr of sum of @SumFF in @D is @IsSum=True else empty dr.
 If Not IsSum Then Exit Function
+Dim SumFny$(): SumFny = SyzSS(SumFF)
+Dim O(), F: For Each F In D.Fny
+    If HasEle(SumFny, F) Then
+        Dim Col#(): Col = DblCol(D, F)
+        Dim T$: T = SumAy(Col)
+        PushI O, T
+    Else
+        PushI O, ""
+    End If
+Next
+FmtDrs__SumDr = O
 End Function
 
 Private Function FmtDrs__NoRec(D As Drs, NmBox$()) As String()
 Dim S$:        S = JnSpc(D.Fny)
 Dim S1$:           If S1 = "" Then S1 = " (No Fny)"
 Dim Lin$:    Lin = "(NoRec) " & S1
-          FmtDrs__NoRec = Sy(NmBox, Lin)
+   FmtDrs__NoRec = Sy(NmBox, Lin)
 End Function
 
 Function FmtDrs(D As Drs, _
@@ -406,13 +365,13 @@ Dim NmBox$(): If Nm <> "" Then NmBox = Box(Nm)
 If NoReczDrs(D) Then FmtDrs = FmtDrs__NoRec(D, NmBox): Exit Function
 Dim IxD As Drs:    IxD = AddColzIx(D, IxCol)                     ' Add Col-Ix
 Dim IxyB&():      IxyB = Ixy(IxD.Fny, TermAy(BrkColnn))          ' Ixy-Of-BrkCol
-Dim Dy():           Dy = AddEle(IxD.Dy, IxD.Fny)                 ' Dy-With-Fny
+Dim Dy():           Dy = AddEle(IxD.Dy, IxD.Fny)                 ' Dy<Bdy-Fny-Sep>
 Dim SumDr():     SumDr = FmtDrs__SumDr(D, IsSum, SumFF)          '              Sam-ele-as-Col-or-no-ele.  Each ele is Sum of the num-col or emp
                          If IsSum Then PushI Dy, SumDr
-Dim Bdy$():        Bdy = FmtDy(Dy, MaxColWdt, IxyB, ShwZer, Fmt) ' Ly-For-Dy
-Dim Sep$:          Sep = Pop(Bdy)                              ' Sep-Lin
+Dim Bdy$():        Bdy = FmtDy(Dy, MaxColWdt, IxyB, ShwZer, Fmt) ' Ly<Bdy-Fny-Sep-?Sum>
+Dim Sum$:                If IsSum Then Sum = Pop(Bdy)       ' Sum-Lin
+Dim Sep$:          Sep = Pop(Bdy)                           ' Sep-Lin
 Dim Hdr$:          Hdr = Pop(Bdy)                           ' Hdr-Lin
-Dim Sum$:          Sum = Pop(Bdy)
 Dim O$():            O = Sy(NmBox, Sep, Hdr, Bdy, Sep)
 :                        If IsSum Then PushI O, Sum
                 FmtDrs = O

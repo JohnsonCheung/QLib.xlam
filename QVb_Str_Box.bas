@@ -4,25 +4,25 @@ Option Explicit
 Private Const CMod$ = "MVb_Str_Box."
 Private Const Asm$ = "QVb"
 
-Function BoxzLines(Lines$, Optional C$ = "*") As String()
-BoxzLines = BoxzLy(SplitCrLf(Lines))
+Function BoxLines(Lines, Optional C$ = "*") As String()
+BoxLines = BoxLy(SplitCrLf(Lines))
 End Function
-Function BoxzLy(Ly$(), Optional C$ = "*") As String()
+Function BoxLy(Ly$(), Optional C$ = "*") As String()
 If Si(Ly) = 0 Then Exit Function
 Dim W%, L$, I
 W = WdtzAy(Ly)
 L = Qte(Dup("-", W), "|-*-|")
-PushI BoxzLy, L
+PushI BoxLy, L
 For Each I In Ly
-    PushI BoxzLy, "| " & AlignL(I, W) & " |"
+    PushI BoxLy, "| " & AlignL(I, W) & " |"
 Next
-PushI BoxzLy, L
+PushI BoxLy, L
 End Function
-Function BoxzS(S$, Optional C$ = "*") As String()
+Function BoxS(S, Optional C$ = "*") As String()
 Dim H$: H = Dup(C, Len(S) + 6)
-PushI BoxzS, H
-PushI BoxzS, C & C & " " & S & " " & C & C
-PushI BoxzS, H
+PushI BoxS, H
+PushI BoxS, C & C & " " & S & " " & C & C
+PushI BoxS, H
 End Function
 Function Box(V, Optional C$ = "*") As String()
 If IsStr(V) Then
@@ -31,15 +31,15 @@ If IsStr(V) Then
     End If
 End If
 Select Case True
-Case IsLines(V): Box = BoxzLines(CStr(V), C)
-Case IsStr(V): Box = BoxzS(CStr(V), C)
-Case IsSy(V): Box = BoxzLy(CvSy(Sy), C)
-Case IsArray(V): Box = BoxzAy(V)
-Case Else: Box = BoxzS(CStr(V), C)
+Case IsLines(V): Box = BoxLines(V, C)
+Case IsStr(V):   Box = BoxS(V, C)
+Case IsSy(V):    Box = BoxLy(CvSy(Sy), C)
+Case IsArray(V): Box = BoxAy(V)
+Case Else:       Box = BoxS(V, C)
 End Select
 End Function
 
-Function BoxzFny(Fny$()) As String()
+Function BoxFny(Fny$()) As String()
 If Si(Fny) = 0 Then Exit Function
 Const S$ = " | ", Q$ = "| * |"
 Const LS$ = "-|-", LQ$ = "|-*-|"
@@ -50,17 +50,17 @@ Dim L$, H$, Ay$(), J%
     Next
 L = Qte(Jn(Fny, S), Q)
 H = Qte(Jn(Ay, LS), LQ)
-BoxzFny = Sy(H, L, H)
+BoxFny = Sy(H, L, H)
 End Function
 
-Function BoxzAy(Ay) As String()
+Function BoxAy(Ay) As String()
 If Si(Ay) = 0 Then Exit Function
 Dim W%: W = WdtzAy(Ay)
 Dim H$: H = "|" & Dup("-", W + 2) & "|"
-Push BoxzAy, H
+Push BoxAy, H
 Dim I
 For Each I In Ay
-    Push BoxzAy, "| " & AlignL(I, W) + " |"
+    Push BoxAy, "| " & AlignL(I, W) + " |"
 Next
-Push BoxzAy, H
+Push BoxAy, H
 End Function

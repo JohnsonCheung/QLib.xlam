@@ -3,17 +3,18 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Str_Brk."
-':Dn1:  is :Dn with one dot
-':Dn:   is :s  multi-:Nm sep by Dot
+':Dn:   :S #Dot-Nm# one-or-more-nm sep by Dot
 
 Sub AsgBrkBet(L$, A$, B$, O1, O2, O3)
 AsgS3 BrkBet(L, A, B), O1, O2, O3
 End Sub
+
 Sub AsgS3(A As S3, O1, O2, O3)
 O1 = A.A
 O2 = A.B
 O3 = A.C
 End Sub
+
 Function BrkBet(L$, A$, B$) As S3
 If L = "" Then Exit Function
 Dim P1%, P2%, O As S3, LA%, LB%
@@ -34,21 +35,27 @@ End Function
 Sub AsgBrkSpc(S, OA$, OB$, Optional NoTrim As Boolean)
 AsgS12 BrkSpc(S), OA, OB
 End Sub
+
 Sub AsgBrk1Dot(S, OA$, OB$, Optional NoTrim As Boolean)
 AsgS12 Brk1Dot(S), OA, OB
 End Sub
+
 Sub AsgBrkDot(S, OA$, OB$, Optional NoTrim As Boolean)
 AsgS12 BrkDot(S), OA, OB
 End Sub
+
 Function Brk1Dot(S, Optional NoTrim As Boolean) As S12
 Brk1Dot = Brk1(S, ".", NoTrim)
 End Function
+
 Function Brk2Dot(S, Optional NoTrim As Boolean) As S12
 Brk2Dot = Brk2(S, ".", NoTrim)
 End Function
+
 Function BrkDot(S, Optional NoTrim As Boolean) As S12
 BrkDot = Brk(S, ".", NoTrim)
 End Function
+
 Function BrkSpc(S) As S12
 BrkSpc = Brk(S, " ")
 End Function
@@ -85,7 +92,7 @@ Dim P&: P = InStr(S, Sep)
 Brk2 = Brk2__(S, P, Sep, NoTrim)
 End Function
 
-Function Brk2__(S, P&, Sep, NoTrim As Boolean) As S12
+Private Function Brk2__(S, P&, Sep, NoTrim As Boolean) As S12
 If P = 0 Then
     If NoTrim Then
         Brk2__ = S12("", S)

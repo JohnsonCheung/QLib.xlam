@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Const CMod$ = "MIde_Mth_Dic."
 Const Asm$ = "QIde"
-':SMdDic$ = "SMdDic is Srted-Mdn-To-SrcL."
+':SDiMdnqSrc$ = "SDiMdnqSrc is Srted-Mdn-To-SrcL."
 
 Function DiMthnqLineszP(P As VBProject) As Dictionary
 Dim C As VBComponent

@@ -13,6 +13,7 @@ Private Function XIpbFb(Ipf As Drs) As String()
 XIpbFb = StrColzEq(Ipf, "IsFx", False, "Inpn")
 'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpbFb) IpbFb Ipf",IpbFb, IpbFb, FmtDrs(Ipf): Stop
 End Function
+
 Function ErzLnk(LnkImpSrc$()) As String()
 'Fm: *InpFilSrc::SSAy{Inpn Ffn}
 'Fm: *LnkImpSrc::IndentedLy{
@@ -255,7 +256,7 @@ For J = 0 To UB(OFxn)
     Fxn = OFxn(J)
     Fx = VzColEqSel(IpxMis, "Fxn", Fxn, "Fx")
     IpxMisi = DwEqSel(IpxMis, "Fxn", Fxn, "L Ws")
-    ActWsnn = TermLin(FstCol(DwEqE(ActWs, "Fxn", Fxn)))
+    ActWsnn = Termss(FstCol(DwEqE(ActWs, "Fxn", Fxn)))
     '-
     X "Fxn    : " & Fxn
     X "Fx pth : " & Pth(Fx)
@@ -423,7 +424,7 @@ IxL = Ix("L")
 IxFbtt = Ix("Fbtt")
 For Each Dr In Itr(Ipb.Dy)
     Fbtt = Dr(IxFbtt)
-    B = TermLin(AwDup(TermAy(Fbtt)))
+    B = Termss(AwDup(TermAy(Fbtt)))
     If B <> "" Then
         L = Dr(IxL)
         PushI OL, L
@@ -779,7 +780,7 @@ End Property
 Private Property Get Y_LnkImpSrc() As String()
 X Y_InpFilSrc
 X "FbTbl"
-X "--  Fbn TblNm.."
+X "--  Fbn T.."
 X " DutyPay Permit PermitD"
 X "FxTbl T  FxNm.Wsn  Stru"
 X " ZHT086  ZHT0.8600 ZHT0"

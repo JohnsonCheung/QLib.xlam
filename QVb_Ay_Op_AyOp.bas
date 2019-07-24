@@ -12,7 +12,7 @@ End Enum
 Function DashLT1Ay(Ay) As String()
 Dim I
 For Each I In Itr(Ay)
-    PushNoDup DashLT1Ay, BefOrAll(CStr(I), "_")
+    PushNoDup DashLT1Ay, BefOrAll(I, "_")
 Next
 End Function
 
@@ -120,7 +120,7 @@ Select Case True
 Case IsSy(A): CvSy = A
 Case IsArray(A): CvSy = SyzAy(A)
 Case IsEmpty(A) Or IsMissing(A)
-Case Else: CvSy = Sy(CStr(A))
+Case Else: CvSy = Sy(A)
 End Select
 End Function
 
@@ -154,28 +154,27 @@ End Sub
 Function RmvFstChrzAy(Ay) As String()
 Dim I
 For Each I In Itr(Ay)
-    PushI RmvFstChrzAy, RmvFstChr(CStr(I))
+    PushI RmvFstChrzAy, RmvFstChr(I)
 Next
 End Function
 
 Function RmvFstNonLetterzAy(Ay) As String() 'Gen:AyXXX
 Dim I
 For Each I In Itr(Ay)
-    PushI RmvFstNonLetterzAy, RmvFstNonLetter(CStr(I))
+    PushI RmvFstNonLetterzAy, RmvFstNonLetter(I)
 Next
 End Function
 Function RmvLasChrzAy(Ay) As String()
 'Gen:AyFor RmvLasChr
 Dim I
 For Each I In Itr(Ay)
-    PushI RmvLasChrzAy, RmvLasChr(CStr(I))
+    PushI RmvLasChrzAy, RmvLasChr(I)
 Next
 End Function
 
 Function RmvPfxzAy(Ay, Pfx$) As String()
-Dim I
-For Each I In Itr(Ay)
-    PushI RmvPfxzAy, RmvPfx(CStr(I), Pfx)
+Dim I: For Each I In Itr(Ay)
+    PushI RmvPfxzAy, RmvPfx(I, Pfx)
 Next
 End Function
 
@@ -188,23 +187,20 @@ Next
 End Function
 
 Function RmvSngQtezAy(Ay) As String()
-Dim I
-For Each I In Itr(Ay)
-    PushI RmvSngQtezAy, RmvSngQte(CStr(I))
+Dim I: For Each I In Itr(Ay)
+    PushI RmvSngQtezAy, RmvSngQte(I)
 Next
 End Function
 
 Function RmvT1zAy(Ay) As String()
-Dim I
-For Each I In Itr(Ay)
-    PushI RmvT1zAy, RmvT1(CStr(I))
+Dim I: For Each I In Itr(Ay)
+    PushI RmvT1zAy, RmvT1(I)
 Next
 End Function
 
 Function RmvTTzAy(Ay) As String()
-Dim I
-For Each I In Itr(Ay)
-    PushI RmvTTzAy, RmvTT(CStr(I))
+Dim I: For Each I In Itr(Ay)
+    PushI RmvTTzAy, RmvTT(I)
 Next
 End Function
 
@@ -215,9 +211,8 @@ For Each I In Itr(Ay)
 Next
 End Function
 Function Rmv2DashzAy(Ay) As String()
-Dim I
-For Each I In Itr(Ay)
-    PushI Rmv2DashzAy, Rmv2Dash(CStr(I))
+Dim I: For Each I In Itr(Ay)
+    PushI Rmv2DashzAy, Rmv2Dash(I)
 Next
 End Function
 
@@ -253,23 +248,20 @@ Next
 End Function
 
 Function T1Ay(Ay) As String()
-Dim I
-For Each I In Itr(Ay)
-    PushI T1Ay, T1(CStr(I))
+Dim I: For Each I In Itr(Ay)
+    PushI T1Ay, T1(I)
 Next
 End Function
 
 Function T2Ay(Ay) As String()
-Dim L
-For Each L In Itr(Ay)
-    PushI T2Ay, T2(CStr(L))
+Dim L: For Each L In Itr(Ay)
+    PushI T2Ay, T2(L)
 Next
 End Function
 
 Function T3Ay(Ay) As String()
-Dim L
-For Each L In Itr(Ay)
-    PushI T3Ay, T3(CStr(L))
+Dim L: For Each L In Itr(Ay)
+    PushI T3Ay, T3(L)
 Next
 End Function
 Function TabN$(N%)

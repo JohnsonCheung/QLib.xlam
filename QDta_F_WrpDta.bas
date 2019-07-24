@@ -120,7 +120,7 @@ O = Sq
 For C = 1 To UBound(Sq(), 2) - 1 ' The last column no need to align
     W = WdtAy(C - 1)
     For R = 1 To UBound(Sq(), 1)
-        O(R, C) = AlignL(CStr(Sq(R, C)), W)
+        O(R, C) = AlignL(Sq(R, C), W)
     Next
 Next
 SqzAlignW = O

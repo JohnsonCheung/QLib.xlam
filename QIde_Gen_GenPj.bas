@@ -3,11 +3,11 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Gen_Pjf_Fba."
 Private Const Asm$ = "QIde"
-':SrcRoot: #Src-Root          is a :Pth.  Its :Fdr eq ".Src"
-':Srcp:    #Src-Path          is a :Pth.  Its :Fdr is a PjFn and par fdr is :SrcRoot
-':Disp:    #Distribution-Path is a :Pth.  d
-':InstPth: #Instance-Path     of a @pth is any :TimNm :Fdr under @pth
-':TimNm:
+':SrcRoot: :Pth #Src-Root#          is a :Pth.  Its :Fdr eq ".Src"
+':Srcp:    :Pth #Src-Path#          is a :Pth.  Its :Fdr is a PjFn and par fdr is :SrcRoot
+':Disp:    :Pth #Distribution-Path# is a :Pth.  d
+':InstPth: :Pth #Instance-Path#     of a @pth is any :TimNm :Fdr under @pth
+':TimNm:   :Nm
 
 Function Fxa$(FxaNm, Srcp)
 Fxa = Distp(Srcp) & FxaNm & ".xlam"

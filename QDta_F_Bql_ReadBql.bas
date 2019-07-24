@@ -7,7 +7,7 @@ Const Ns$ = "Dao.Bql"
 Const ShtTyBql$ = "Short-Type-Si-Colon-FldNm-Bql:Sht.Ty.s.c.f.Bql: It is a [Bql] with each field is a [ShtTyscf]"
 ':Bql: :Lin #Back-Qte-Line# ! Back-Qte is (`) and it is a String.  Each field is separated by (`)
 ':Fbql: :Ft #Fullfilename-Bql# ! Each line is a [Bql]|Fst line is [ShtTyBql]
-':ShtTys: ShtTy-Si:It is a [ShtTy] or (Tnnn) where nnn can 1 to 3 digits of value 1-255"
+':ShtTys: :Nm #ShtTy-Size# It is a [ShtTy] or (Tnnn) where nnn can 1 to 3 digits of value 1-255"
 ':ShtTyLis: :Cml #Short-Type-List# ! Each :Cml is 1 or 3 chr of :ShtTy
 ':ShtTyscf: :Term #ShtTy-Si-Colon-FldNm#  ! If FldNm have space, then ShtTyscf should be sq bracket"
 ':ShtTyBql: :Bql #ShtTyscf-Bql# ! Each field is a [ShtTyscf].  It is used to create an empty table by CrtTzShtTyscfBql"
@@ -69,19 +69,19 @@ CrtFb Fb
 Dim D As Database, IFfn, T$
 Set D = Db(Fb)
 For Each IFfn In Ffny(FbqlPth, "*.bql.txt")
-    CrtTzFbql D, CStr(IFfn)
+    CrtTzFbql D, IFfn
 Next
 End Sub
 
-Function TblNmzFbql$(Fbql$)
+Function TzFbql$(Fbql)
 If Not HasSfx(Fbql, ".bql.txt") Then Thw CSub, "Fbql does not have .bql.txt sfx", "Fbql", Fbql
-TblNmzFbql = RmvSfx(Fn(Fbql), ".bql.txt")
+TzFbql = RmvSfx(Fn(Fbql), ".bql.txt")
 End Function
 
-Sub CrtTzFbql(D As Database, Fbql$, Optional T0$)
+Sub CrtTzFbql(D As Database, Fbql, Optional T0$)
 Dim T$
     T = T0
-    If T = "" Then T = TblNmzFbql(Fbql)
+    If T = "" Then T = TzFbql(Fbql)
 
 Dim F%, L$, R As Dao.Recordset
 F = FnoI(Fbql)
@@ -102,12 +102,12 @@ Dim Td As New Dao.TableDef
 Td.Name = T
 Dim I
 For Each I In Split(ShtTyscfBql, "`")
-    Td.Fields.Append FdzShtTyscf(CStr(I))
+    Td.Fields.Append FdzShtTyscf(I)
 Next
 D.TableDefs.Append Td
 End Sub
 
-Private Function FdzShtTyscf(ShtTyscf$) As Dao.Field
+Private Function FdzShtTyscf(ShtTyscf) As Dao.Field
 Dim T As Dao.DataTypeEnum
 Dim S As Byte
 With Brk2(ShtTyscf, ":")

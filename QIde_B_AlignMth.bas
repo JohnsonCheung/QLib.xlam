@@ -129,6 +129,8 @@ Dim CmlJn     As Drs:     CmlJn = JnDrs(CmlEpt, CmlAct, "CmNm", "L ActL") ' V Cm
                              D2 = DeCeqC(CmlJn, "EptL ActL")              ' V CmNm EptL L ActL                  ! All EptL & ActL are diff
 Dim CmlLNewO  As Drs:  CmlLNewO = SelDrsAs(D2, "L EptL:NewL ActL:OldL")   ' L NewL OldL
 :                                 If IsUpd Then RplLin M, CmlLNewO        ' <==
+BrwDrs CmlLNewO
+Stop
 
 '== Rpl Mth-Brw (Mb)====================================================================================================
 '   Des: Mth-Brw is a remarked Insp-stmt in each las lin of cm.  It insp all the inp oup

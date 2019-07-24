@@ -28,11 +28,7 @@ Type TpBrk
     Excess As Blks    ' Those Blks in *BlkTyAyoSng, but excess
 End Type
 Public Const FFoBlks$ = "BlkTy SepLin DyoLLin BlkIx SepLno"
-':CnstPfx:FFo: #Spc-Sep-Fld-Of# ! :Ssl of fld nm
-':FunPfx:Do:   #Drs-Of#         ! :Drs of ..
-':FunPfx:Dyo:  #Dry-Of#!        ! :Dy of ..
-
-':SepLin: is a lin with Pfx of [:SepLinPfx & " " & One-Of-@BlkAyTy & " "]
+':SepLin: :Lin ! is a lin with Pfx of [:SepLinPfx & " " & One-Of-@BlkAyTy & " "]
     
 Function TpBrk(Tp$, Mul_BlkTyss$, Sng_BlkTyss$, Optional SepLinPfx$ = "==") As TpBrk
 'Fm Mul_BlkTyss : these blk ty alw mul, in a tp more than 1 is alw
@@ -55,7 +51,7 @@ End Function
 
 Private Function RmkLy(TpLy$(), SepLinPfx$) As String()
 'Ret : :RmkLy from @TpLy using @BlkTyAy @@
-':RmkLy: Those line above fst :SepLin
+':RmkLy: :Ly ! Fst chr of :Ly is [']
 Dim L, O$(): For Each L In TpLy
     If HasPfx(L, SepLinPfx) Then ' when True, means it a :SepLin
         RmkLy = O

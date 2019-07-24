@@ -5,9 +5,8 @@ Private Const CMod$ = "MVb_Ay_Map_Tak."
 Private Const Asm$ = "QVb"
 
 Function SyTakBefDD(Sy$()) As String()
-Dim I
-For Each I In Itr(Sy)
-    PushI SyTakBefDD, BefDD(CStr(I))
+Dim I: For Each I In Itr(Sy)
+    PushI SyTakBefDD, BefDD(I)
 Next
 End Function
 
@@ -16,16 +15,14 @@ SyTakAftDot = SyTakAft(Sy, ".")
 End Function
 
 Function SyTakAft(Sy$(), Sep$) As String()
-Dim I
-For Each I In Itr(Sy)
-    PushI SyTakAft, Aft(CStr(I), Sep)
+Dim I: For Each I In Itr(Sy)
+    PushI SyTakAft, Aft(I, Sep)
 Next
 End Function
 
 Function SyTakAftOrAll(Sy$(), Sep$) As String()
-Dim I
-For Each I In Itr(Sy)
-    PushI SyTakAftOrAll, AftOrAll(CStr(I), Sep)
+Dim I: For Each I In Itr(Sy)
+    PushI SyTakAftOrAll, AftOrAll(I, Sep)
 Next
 End Function
 

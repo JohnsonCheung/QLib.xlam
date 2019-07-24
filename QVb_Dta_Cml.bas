@@ -3,7 +3,6 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Cml."
 Private Const Asm$ = "QVb"
-':CmlLin: is :Lin separated by spc
 
 Private Function MthDotCmlGpAsetzV(A As Vbe) As Aset
 Set MthDotCmlGpAsetzV = AsetzAy(MthDotCmlGpzV(A))
@@ -86,14 +85,15 @@ For Each I In Itr(O)
 Next
 End Function
 
-Function CmlLin(Nm)
-CmlLin = Nm & " " & JnSpc(CmlAy(Nm))
+Function Cmlss(Nm)
+':Cmlss: :SS
+Cmlss = Nm & " " & JnSpc(CmlAy(Nm))
 End Function
 
-Function CmlLy(Ny$()) As String()
+Function CmlssAy(Ny$()) As String()
 Dim L
 For Each L In Itr(Ny)
-    PushI CmlLy, CmlLin(CStr(L))
+    PushI CmlssAy, Cmlss(CStr(L))
 Next
 End Function
 
@@ -348,6 +348,6 @@ Next
 End Sub
 
 Function CmlRel(Ny$()) As Rel
-Set CmlRel = Rel(CmlLy(Ny))
+Set CmlRel = Rel(CmlssAy(Ny))
 End Function
 

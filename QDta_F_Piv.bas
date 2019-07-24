@@ -89,18 +89,16 @@ For Each I In Itr(DotLy)
 Next
 End Function
 Function DyoDotLyzTwoCol(DotLy$()) As Variant()
-Dim I
-For Each I In Itr(DotLy)
-    With Brk1Dot(CStr(I))
-    PushI DyoDotLyzTwoCol, Array(.S1, .S2)
+Dim I: For Each I In Itr(DotLy)
+    With Brk1Dot(I)
+        PushI DyoDotLyzTwoCol, Array(.S1, .S2)
     End With
 Next
 End Function
 
 Function DyoLyWithColon(LyWithColon$()) As Variant()
-Dim I
-For Each I In Itr(LyWithColon)
-    PushI DyoLyWithColon, SplitColon(CStr(I))
+Dim I: For Each I In Itr(LyWithColon)
+    PushI DyoLyWithColon, SplitColon(I)
 Next
 End Function
 

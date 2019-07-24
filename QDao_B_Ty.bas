@@ -369,11 +369,11 @@ End Function
 
 
 
-Function ShtTyDic(FxOrFb$, TblNm$) As Dictionary
+Function ShtTyDic(FxOrFb$, T) As Dictionary
 Select Case True
-Case IsFb(FxOrFb): Set ShtTyDic = ShtTyDiczFbt(FxOrFb, TblNm$)
-Case IsFx(FxOrFb): Set ShtTyDic = ShtTyDiczFxw(FxOrFb, TblNm$)
-Case Else: Thw CSub, "FxOrFb should be Fx or Fb", "FxOrFb TblNm", FxOrFb, TblNm
+Case IsFb(FxOrFb): Set ShtTyDic = ShtTyDiczFbt(FxOrFb, T)
+Case IsFx(FxOrFb): Set ShtTyDic = ShtTyDiczFxw(FxOrFb, T)
+Case Else: Thw CSub, "FxOrFb should be Fx or Fb", "FxOrFb T", FxOrFb, T
 End Select
 End Function
 
@@ -385,7 +385,7 @@ For Each F In Db(Fb).TableDefs(T).Fields
 Next
 End Function
 
-Private Function ShtTyDiczFxw(Fx, W$) As Dictionary
+Private Function ShtTyDiczFxw(Fx, W) As Dictionary
 Dim C As Column, Cat As Catalog, I
 Set Cat = CatzFx(Fx)
 For Each I In Cat.Tables(CatTnzWsn(W)).Columns

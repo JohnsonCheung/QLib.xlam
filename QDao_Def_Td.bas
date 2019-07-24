@@ -21,12 +21,6 @@ AddFdy O, Fdy
 Set TdzTF = O
 End Function
 
-Sub AddFdy(A As TableDef, Fdy() As Dao.Field2)
-Dim I: For Each I In Fdy
-    A.Fields.Append I
-Next
-End Sub
-
 Sub AddFldzId(A As Dao.TableDef)
 A.Fields.Append FdzId(A.Name)
 End Sub

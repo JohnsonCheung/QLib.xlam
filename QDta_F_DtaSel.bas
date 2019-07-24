@@ -93,7 +93,7 @@ End Function
 Function JnDrs(A As Drs, B As Drs, Jn$, Add$, Optional IsLeftJn As Boolean, Optional AnyFld$) As Drs
 'Fm A        : ..@Jn-LHS..              ! It is a drs with col-@Jn-LHS.
 'Fm B        : ..@Jn-RHS..@Add-RHS      ! It is a drs with col-@Jn-RHS & col-@Add-RHS.
-'Fm Jn       : :SS-of-:ColonTerm        ! It is :SS-of-:ColTerm. :ColTerm: is a :Term with 1-or-0 [:]. :Term: is a fm :TLin: or :TermLin:  LHS of [:] is for @A and RHS of [:] is for @B
+'Fm Jn       : :SS-of-:ColonTerm        ! It is :SS-of-:ColTerm. :ColTerm: is a :Term with 1-or-0 [:]. :Term: is a fm :TLin: or :Termss:  LHS of [:] is for @A and RHS of [:] is for @B
 '                                       ! It is used to jn @A & @B
 'Fm Add      : SS-of-ColonStr-Fld-@B    ! What col in @B to be added to @A.  It may use new name, if it has colon.
 'Fm IsLeftJn :                          ! Is it left join, otherwise, it is inner join
@@ -144,13 +144,13 @@ JnDrs = O
 If False Then
     Erase XX
     XBox "Debug JnDrs"
-    X "A-Fny  : " & TermLin(A.Fny)
-    X "B-Fny  : " & TermLin(B.Fny)
+    X "A-Fny  : " & Termss(A.Fny)
+    X "B-Fny  : " & Termss(B.Fny)
     X "Jn     : " & Jn
     X "Add    : " & Add
     X "IsLefJn: " & IsLeftJn
     X "AnyFld : [" & AnyFld & "]"
-    X "O-Fny  : " & TermLin(O.Fny)
+    X "O-Fny  : " & Termss(O.Fny)
     X "More ..: A-Drs B-Drs Rslt"
     X LyzNmDrs("A-Drs  : ", A)
     X LyzNmDrs("B-Drs  : ", B)

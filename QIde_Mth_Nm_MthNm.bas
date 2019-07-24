@@ -3,11 +3,11 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MIde_Mth_Nm_Get."
 Private Const Asm$ = "QIde"
-':Dta_MthQVNm$ = "It is a String dervied from Nm.  Q for quoted.  V for verb.  It has 3 Patn: NoVerb-[#xxx], MidVerb-[xxx(vvv)xxx], FstVerb-[(vvv)xxx]."
-':Mthn: ! Rule1-FstVerbBeingDo: the mthn will not return any value
+':Mthn: :Nm ! Rule1-FstVerbBeingDo: the mthn will not return any value
 '       ! Rule2-FstVerbBeingDo: tThe Cmls aft Do is a verb
-':Mthn: ! is :Nm less that 64 chr.  The rule for a Mthn is:
-'       ! If there is a Subj in pm, put the Subj as fst CmlTerm and return that Subj;
+':Dta_MthQVNm: :Nm ! It is a String dervied from Nm.  Q for quoted.  V for verb.  It has 3 Patn: NoVerb-[#xxx], MidVerb-[xxx(vvv)xxx], FstVerb-[(vvv)xxx]."
+':Nm: :S ! less that 64 chr.
+':FunNm: :Rul ! If there is a Subj in pm, put the Subj as fst CmlTerm and return that Subj;
 '       ! give a Noun to the subj noun is MulCml.
 '       ! Each Mthn must belong to one of these rule:
 '       !   Noun | Noun.Verb.Extra | Verb.Variant | Noun.z.Variant
@@ -15,11 +15,11 @@ Private Const Asm$ = "QIde"
 '       !   Subj    : Choose a subj in pm if there is more than one arg"
 '       !   MuliNoun: It is Ok to group mul-arg as one subj
 '       !   MulNounUseOneCml: Mul-noun as one subj use one Cml
-':Noun: ! it is 1 or more Cml to form a Noun."
-':Cml:     ! Tag:Type. P1.NumIsLCase:.  P2.LowDashIsLCase:.  P3.FstChrCanAnyNmChr:.
-':Sfxss: Tag:NmRul. NmRul means variable or function name.
-':VdtVerss:  P1.Opt: Each module may one DoczVdtVerbss.  P2.OneOccurance: "
-':NounVerbExtra: "Tag: FunNmRule.  Prp1.TakAndRetNoun: Fst Cml is Noun and Return Noun.  Prp2.OneCmlNoun: Noun should be 1 Cml.  " & _
+':Noun: :Nm  ! it is 1 or more Cml to form a Noun."
+':Cml:  :Nm  ! Tag:Type. P1.NumIsLCase:.  P2.LowDashIsLCase:.  P3.FstChrCanAnyNmChr:.
+':Sfxss: :SS !  NmRul means variable or function name.
+':VdtVerss: :SS ! P1.Opt: Each module may one DoczVdtVerbss.  P2.OneOccurance: "
+':NounVerbExtra :SS !Tag: FunNmRule.  Prp1.TakAndRetNoun: Fst Cml is Noun and Return Noun.  Prp2.OneCmlNoun: Noun should be 1 Cml.  " & _
 '                ! Prp3.VdtVerb: Snd Cml should be approved/valid noun.  Prp4.OptExtra: Extra is optional."
 Sub AsgDNm(DNm$, O1$, O2$, O3$)
 Dim Ay$(): Ay = Split(DNm, ".")

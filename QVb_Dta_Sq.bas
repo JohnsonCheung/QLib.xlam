@@ -129,8 +129,8 @@ Function ColzSq(Sq(), Optional C = 1) As Variant()
 ColzSq = IntozSqc(EmpAv, Sq, C)
 End Function
 
-Function DrzSq(Sq(), Optional C = 1) As Variant()
-DrzSq = IntozSqc(EmpAv, Sq, C)
+Function DrzSq(Sq(), Optional R = 1) As Variant()
+DrzSq = IntozSqr(EmpAv, Sq, R)
 End Function
 
 Function IntozSqc(Into, Sq(), C)

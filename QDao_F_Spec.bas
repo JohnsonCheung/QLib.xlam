@@ -77,12 +77,6 @@ Select Case True
 Case Else: Stop
 End Select
 End Sub
-Function FdAy(PFldLis$) As Dao.Field2()
-'Fm PFldLis: #Sql-FldLis-Phrase.  !The fld spec of create table sql inside the bkt.  It allows attachment.  It uses DAO to create
-Dim F: For Each F In Itr(AyTrim(SplitComma(PFldLis)))
-    PushObj FdAy, FdzPFld(F)
-Next
-End Function
 
 Function SpecPth$(WPth$)
 SpecPth = EnsPth(WPth & "Spec\")
@@ -96,10 +90,23 @@ Sub EnsTblSpec(D As Database)
 If Not HasTbl(D, "Spec") Then CrtTblSpec D
 End Sub
 
+Sub AddFdy(A As TableDef, Fdy() As Dao.Field2)
+Dim I: For Each I In Fdy
+    A.Fields.Append I
+Next
+End Sub
+
+Function FdAy(PFldLis$) As Dao.Field2()
+'Fm PFldLis: #Sql-FldLis-Phrase.  !The fld spec of create table sql inside the bkt.  It allows attachment.  It uses DAO to create
+Dim F: For Each F In Itr(AyTrim(SplitComma(PFldLis)))
+    PushObj FdAy, FdzPFld(F)
+Next
+End Function
+
 Sub CrtTzPFld(D As Database, T, PFldLis$)
 'Fm PFldLis: #Sql-FldLis-Phrase.  !The fld spec of create table sql inside the bkt.  Each fld sep by comma.  The spec allows:
 '                                 !Boolean Byte Integer Int Long Single Double Char Text Memo Attachment
-'Ret : create the @T in @D by DAO
+'Ret : create the @T in @D by DAO @@
 Dim Td As Dao.TableDef: Set Td = TdzNm(T)
 AddFdy Td, FdAy(PFldLis)
 D.TableDefs.Append Td

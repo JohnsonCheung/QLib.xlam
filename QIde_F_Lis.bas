@@ -94,25 +94,24 @@ End Sub
 
 Sub LisMth(Optional Patn$, Optional Patn2$, Optional Pub As Boolean, Optional MdnPatn$, Optional RetAsPatn$, _
 Optional NPm% = -1, Optional FstPmDclSfx$, Optional FstPmNmPatn$, _
-Optional Oup As EmOupTy)
+Optional Oup As EmOupTy, Optional NTop% = 50)
 Dim IPub  As Drs:        If Pub Then IPub = DoMthP Else IPub = DoPubMth
 Dim IPatn As Drs:        If Patn = "" Then IPatn = IPub Else IPatn = DwPatn(IPub, "Mthn", Patn)
 Dim IPatn2 As Drs:       If Patn2 = "" Then IPatn2 = IPatn Else IPatn = DwPatn(IPatn2, "Mthn", Patn2)
 Dim IPm As Drs:    IPm = AddColzMthPm(IPatn2)
 Dim ILin As Drs:  ILin = SelDrsAtEnd(IPm, "MthLin")
 Dim IMdn As Drs:         If MdnPatn = "" Then IMdn = ILin Else IMdn = DwPatn(ILin, "Mdn", MdnPatn)
-Dim ITop As Drs:  ITop = TopN(IMdn)
-Dim IRet As Drs:         IRet = LisMth__RetAs(ITop, RetAsPatn)
+Dim IRet As Drs:         IRet = LisMth__RetAs(IMdn, RetAsPatn)
 Dim INPm As Drs:         INPm = LisMth__NPm(IRet, NPm)
 Dim IFstPmNm As Drs:     IFstPmNm = LisMth__FstPmNm(IRet, FstPmNmPatn)
 Dim IFstPmDclSfx As Drs: IFstPmDclSfx = LisMth__FstPmDclSfx(IFstPmNm, FstPmDclSfx)
-Stop
-Dmp FmtDrszRdu(IFstPmDclSfx, , , , EiBeg1, EiSSFmt), Oup
+Dim ITop As Drs:  ITop = TopN(IFstPmDclSfx, NTop)
+Dmp FmtDrszRdu(ITop, , , , EiBeg1, EiSSFmt), Oup
 End Sub
 
 Private Function LisMth__FstPmNm(D As Drs, FstPmNmPatn$) As Drs
 If FstPmNmPatn = "" Then LisMth__FstPmNm = D: Exit Function
-Dim Ix%: Ix = IxzAy(D.Fny, "Pm")
+Dim Ix%: Ix = IxzAy(D.Fny, "MthPm")
 Dim Re As RegExp: Set Re = RegExp(FstPmNmPatn)
 Dim FstPmNm$, ODy(), Dr, Pm$: For Each Dr In Itr(D.Dy)
     Pm = Dr(Ix)

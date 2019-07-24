@@ -294,10 +294,6 @@ Next
 ColGp = O
 End Function
 
-Private Function AlignDrsC__Dy(WiWdtDy(), Cix%) As Variant()
-
-End Function
-
 Sub AlignCol(ODy(), C)
 'Fm ODy : the col @C will be aligned
 'Fm C    : the column ix
@@ -316,6 +312,7 @@ Dim C: For Each C In Cix
 Next
 AlignDy = O
 End Function
+
 Function AlignDrs(D As Drs, Gpcc$, CC$) As Drs
 'Fm D : ..@Gpcc..@CC.. ! It has a str col @CC to be alignL and @Gpcc to be gp
 'Ret  : @D             ! all col @CC are aligned within the gp and rec will gp together.

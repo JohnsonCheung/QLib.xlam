@@ -165,7 +165,7 @@ HasTbl = HasItn(DbzReOpn(D).TableDefs, T)
 End Function
 
 Function FFzT$(D As Database, T)
-FFzT = TermLin(Fny(D, T))
+FFzT = Termss(Fny(D, T))
 End Function
 
 Function HasFF(D As Database, T, FF$) As Boolean
@@ -199,7 +199,7 @@ TmpTny = AwPfx(Tny(D), "#")
 End Function
 
 Function Tntt$(D As Database)
-Tntt = TermLin(Tny(D))
+Tntt = Termss(Tny(D))
 End Function
 
 Function Tni(D As Database)

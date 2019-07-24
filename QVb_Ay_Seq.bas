@@ -27,8 +27,13 @@ On Error Resume Next
 CvIntAy = A
 End Function
 Function CvLngAy(A) As Long()
-On Error Resume Next
-CvLngAy = A
+On Error GoTo X
+If IsLngAy(A) Then CvLngAy = A: Exit Function
+Dim I: For Each I In A
+    PushI CvLngAy, I
+Next
+Exit Function
+X:
 End Function
 Function IntSeqzFT(FmNum%, ToNum%) As Integer()
 IntSeqzFT = IntoSeqzFT(EmpIntAy, FmNum, ToNum)

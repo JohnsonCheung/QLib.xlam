@@ -1,7 +1,6 @@
 Attribute VB_Name = "QIde_B_Shf"
 Option Explicit
 Option Compare Text
-':ShtArg: It is :s: coming from :Arg:
 ':Arg:    It is :s: splitting :MthPm:
 ':Sset:   It is :Aset: with all ele is :s:
 ':DoArg:   It is :Drs:Nm IsByVal IsOpt IsPmAy IsAy TyChr:C AsTy DftVal:
@@ -9,6 +8,9 @@ Option Compare Text
 '         Eg, Dim A() as integer: :Arg:   => "A() As Integer"
 '                                 :ArgTy: => "%()"
 Public Const MthTyChrLis$ = "!@#$%^&"
+Type AA
+AA() As String
+End Type
 Function ShfMthTy$(OLin$)
 Dim O$: O = TakMthTy(OLin$)
 If O = "" Then Exit Function
@@ -20,12 +22,15 @@ Function ShfTermAftAs$(OLin$)
 If Not ShfTerm(OLin, "As") Then Exit Function
 ShfTermAftAs = ShfT1(OLin)
 End Function
+
 Function ShfShtMdy$(OLin$)
 ShfShtMdy = ShtMdy(ShfMdy(OLin))
 End Function
+
 Function ShfShtMthTy$(OLin$)
 ShfShtMthTy = ShtMthTy(ShfMthTy(OLin))
 End Function
+
 Function ShfShtMthKd$(OLin$)
 ShfShtMthKd = ShtMthKdzShtMthTy(ShtMthTy(ShfMthTy(OLin)))
 End Function
@@ -107,11 +112,11 @@ End If
 End Function
 
 Function TakMthKd$(Lin)
-TakMthKd = PfxSySpc(Lin, MthKdAy)
+TakMthKd = PfxzAy(Lin, MthKdAy)
 End Function
 
 Function TakMthTy$(Lin)
-TakMthTy = PfxSySpc(Lin, MthTyAy)
+TakMthTy = PfxzAy(Lin, MthTyAy)
 End Function
 
 Function RmvMdy$(Lin)
@@ -208,24 +213,86 @@ Function ShfDim(OLin$) As Boolean
 ShfDim = ShfT1(OLin) = "Dim"
 End Function
 
-Function ShfArgPfx$(OLin$)
-Select Case True
-Case ShfTerm(OLin, "Optional "):   ShfArgPfx = "?"
-Case ShfTerm(OLin, "Paramarray "): ShfArgPfx = ".."
+Function ArgMdyAy() As String()
+Static X As Boolean, Y
+If Not X Then
+    Dim O$()
+    PushI O, "ByVal"
+    PushI O, "ByRef"
+    PushI O, "Optional ByVal"
+    PushI O, "Optional ByRef"
+    PushI O, "Optional"
+    PushI O, "ParamArray"
+    Y = O
+End If
+ArgMdyAy = O
+End Function
+
+Function ShfArgMdy$(OArg$)
+Dim A$: A = ShfPfxAyS(OArg, ArgMdyAy)
+Select Case A
+Case "ByVal":: ShfArgMdy = "*"
+Case "ByRef":
+Case "Optional ByVal": ShfArgMdy = "?*"
+Case "Optional ByRef", "Optional": ShfArgMdy = "?"
+Case "ParamArray": ShfArgMdy = ".."
 End Select
 End Function
-Function ArgTy$(AftNm$)
-
+Private Function DclSfxzAftNm$(AftNm$)
+If AftNm = "" Then Exit Function
+Dim L$: L = AftNm
+Select Case True
+Case L = "As Boolean":: DclSfxzAftNm = "-"
+Case L = "As Boolean()": DclSfxzAftNm = "-()"
+Case Else
+    ShfPfx L, "As "
+    DclSfxzAftNm = L
+End Select
 End Function
-Function ShtArg$(Arg$)
-Dim L$:     L = Arg
-Dim Pfx$:     Pfx = ShfArgPfx(L)
-Dim Ty$: Ty = ArgTy(L)
-'ShtArg = Pfx & Nm & Ty
+Sub Z_ShtArg()
+Dim Arg$: Arg = "Optional UseVc As Boolean"
+'Debug.Print ShtArg(Arg)
+Debug.Print ShtArg("Optional NoBlnkStr As Boolean")
+End Sub
+Sub Z_ShtArgAy()
+Dim A As S12s
+Dim Arg: For Each Arg In AwDist(ArgAyP)
+    PushS12 A, S12(Arg, ShtArg(Arg))
+Next
+BrwS12s A
+End Sub
+Function ShtArgAy(ArgAy$()) As String()
+Dim Arg: For Each Arg In Itr(ArgAy)
+    PushI ShtArgAy, ShtArg(Arg)
+Next
+End Function
+
+Function ShtArg$(Arg)
+'Ret : :ShtArg @@
+':ShtArg: :S ! Fmt: <Mdy><Nm><Sep><Sfx><Dft>
+'            ! *Dft* :S  Fmt: =<D>-or-Blnk
+'            ! *Sep* :C  Blnk-or-:
+'            ! *Mdy* :S  One-of-ArgMdyAy
+Dim L$: L = Arg
+Dim Mdy:  Mdy = ShfArgMdy(L)
+Dim Nm$: Nm = ShfNm(L):     If Nm = "" Then Exit Function
+Dim AftNm$, D$: AsgBrk1 L, "=", AftNm, D
+Dim Sfx$: Sfx = DclSfxzAftNm(AftNm)
+Dim Sep$: Sep = DclSfxSep(Sfx)
+Dim Dft$: If D <> "" Then Dft = "=" & D
+Dim Ty$: Ty = DclSfxzAftNm(AftNm):   If IsEmpty(Ty) Then Exit Function
+ShtArg = Mdy & Nm & Sep & Sfx & Dft
+End Function
+Function DclSfxSep$(DclSfx$)
+If DclSfx = "" Then Exit Function
+Dim C$: C = FstChr(DclSfx)
+Dim A%: A = Asc(C)
+If IsAscUCas(A) Then DclSfxSep = ":"
 End Function
 Function DclSfx$(DclItm$)
-
+DclSfx = DclSfxzAftNm(RmvNm(DclItm))
 End Function
+
 Function DclSfxzArg$(Arg$)
 DclSfxzArg = DclSfx(DclItm(Arg))
 End Function

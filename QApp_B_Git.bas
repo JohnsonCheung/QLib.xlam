@@ -27,7 +27,7 @@ Dim X As New Bfr
     Dim P$: P = SrcpP
     X.Var FmtQQ("Cd ""?""", P)
     X.Var FmtQQ("git push -u https://johnsoncheung@github.com/johnsoncheung/?.git master", PjnzSrcp(P))
-    X "Pause ....."
+    X.Var "Pause ....."
 Dim F$
     F = TmpFcmd("Push")
     WrtStr X.Lines, F

@@ -96,13 +96,13 @@ End Sub
 Sub Insp(Fun$, Msg$, ParamArray Nap())
 Dim Nav(): Nav = Nap
 Dim F$: If Fun <> "" Then F = " (@" & Fun & ")"
-Dim A$(): A = BoxzS("Insp: " & Msg & F)
+Dim A$(): A = BoxS("Insp: " & Msg & F)
 BrwAy Sy(A, LyzNav(Nav))
 End Sub
 
 Sub Thw(Fun$, Msg$, ParamArray Nap())
 Dim Nav(): Nav = Nap
-Dim A$(): A = BoxzS("Program error")
+Dim A$(): A = BoxS("Program error")
 ThwNav Fun, JnCrLf(Sy(A, Msg)), Nav
 End Sub
 
@@ -309,7 +309,7 @@ Next
 End Function
 
 Function LinzNv$(Nm$, V)
-LinzNv = Nm & "=[" & StrCellzV(V) & "]"
+LinzNv = Nm & "=[" & Cell(V) & "]"
 End Function
 Function LyzMsgNap(Msg$, ParamArray Nap()) As String()
 Dim Nav(): Nav = Nap
@@ -384,7 +384,7 @@ U1 = UB(Ny)
 U2 = UB(Av)
 For J = 0 To Max(U1, U2)
     If J <= U1 Then N = QteSq(Ny(J)) Else N = "[?]"
-    If J <= U2 Then V = StrCellzV(Av(J)) Else V = "?"
+    If J <= U2 Then V = Cell(Av(J)) Else V = "?"
     PushI O, N & " " & V
 Next
 LinzNyAv = JnVbarSpc(O)

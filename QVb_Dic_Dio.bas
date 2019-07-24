@@ -56,7 +56,7 @@ End Sub
 Function IsDicKeyNm(A As Dictionary) As Boolean
 Dim K
 For Each K In A.Keys
-    If Not IsNm(CStr(K)) Then Exit Function
+    If Not IsNm(K) Then Exit Function
 Next
 IsDicKeyNm = True
 End Function
@@ -163,21 +163,18 @@ LineszDic = JnCrLf(FmtDic2(A))
 End Function
 
 Function FmtDic2(A As Dictionary) As String()
-Dim K
-For Each K In A.Keys
-    Push FmtDic2, LyzKzLines(CStr(K), A(K))
+Dim K: For Each K In A.Keys
+    Push FmtDic2, LyzKLines(K, A(K))
 Next
 End Function
 
-Function LyzKzLines(K$, Lines$) As String()
-Dim J&
-Dim Ly$()
-    Ly = SplitCrLf(Lines)
-For J = 0 To UB(Ly)
+Function LyzKLines(K, Lines$) As String()
+Dim Ly$(): Ly = SplitCrLf(Lines)
+Dim J&: For J = 0 To UB(Ly)
     Dim Lin
         Lin = Ly(J)
         If FstChr(Lin) = " " Then Lin = "~" & RmvFstChr(Lin)
-    Push LyzKzLines, K & " " & Lin
+    Push LyzKLines, K & " " & Lin
 Next
 End Function
 

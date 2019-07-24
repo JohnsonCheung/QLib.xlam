@@ -58,7 +58,9 @@ Function MthLinzML$(M As CodeModule, Lno&)
 MthLinzML = ContLinzLno(M, MthLno(M, Lno))
 End Function
 
-
+Function MthPm$(MthLin)
+MthPm = BetBkt(MthLin)
+End Function
 
 Function MthLinAyM() As String()
 MthLinAyM = MthLinAyzM(CMd)
