@@ -164,7 +164,7 @@ T3:
     GoTo Tst
 Tst:
     Act = ShfVy(Lin, Lblss)
-    C Act, Ept
+    C
     Return
 End Sub
 

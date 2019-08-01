@@ -39,6 +39,7 @@ Sub JmpMdn(Mdn)
 If Not HasMdn(Mdn) Then Debug.Print "Mdn not exist": Exit Sub
 JmpMd Md(Mdn)
 End Sub
+
 Sub JmpLno(Lno&)
 Dim C2%: C2 = Len(CMd.Lines(Lno, 1)) + 1
 With CPne
@@ -46,6 +47,8 @@ With CPne
     .SetSelection Lno, 1, Lno, C2
 End With
 End Sub
+
+
 Sub JmpLin(MdLnoStr$)
 ':MdLnoStr: :Term ! Mdn:Lno
 Dim Mdn$, Lno&
@@ -123,9 +126,11 @@ Sub JmpMdRRCC(M As CodeModule, R As RRCC)
 JmpMd M
 JmpRRCC R
 End Sub
+
 Function WinyzMdAy(MdAy() As CodeModule) As vbide.Window()
 
 End Function
+
 Sub JmpMdnn(Mdnn$)
 Dim MdAy() As CodeModule: MdAy = MdAyzNN(Mdnn)
 Dim I

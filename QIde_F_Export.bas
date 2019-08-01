@@ -66,19 +66,13 @@ ExpPj CPj
 End Sub
 
 Sub ExpPj(Pj As VBProject)
-Dim P$
-P = Srcp(Pj)
-InfLin CSub, "... Clr src pth"
-    EnsPthzAllSeg P
-    ClrPthFil P
-InfLin CSub, "... Cpy pj to src pth"
-    CpyFfnzToPth Pj.Filename, P
-InfLin CSub, "... Exp src"
-    ExpSrc Pj
-InfLin CSub, "... Exp rf"
-    ExpRf Pj
-InfLin CSub, "... Exp frm"
-    ExpFrm Pj
+Dim P$: P = Srcp(Pj)
+InfLin CSub, "... Clr src pth":       EnsPthzAllSeg P
+                                      ClrPthFil P
+InfLin CSub, "... Cpy pj to src pth": CpyFfnzToPth Pj.Filename, P
+InfLin CSub, "... Exp src":           ExpSrc Pj
+InfLin CSub, "... Exp rf":            ExpRf Pj
+InfLin CSub, "... Exp frm":           ExpFrm Pj
 InfLin CSub, "Done"
 End Sub
 

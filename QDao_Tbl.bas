@@ -609,13 +609,13 @@ Function NReczT&(D As Database, T, Optional Bexp$)
 NReczT = VzQ(D, SqlSelCnt_T_OB(T, Bexp))
 End Function
 
-Property Get LofVblzDbt$(D As Database, T)
+Function LofVblzDbt$(D As Database, T)
 LofVblzDbt = TblPrp(D, T, "LofVbl")
-End Property
+End Function
 
-Property Let LofVblzDbt(D As Database, T, LofVbl$)
+Sub SetLofVblzDbt(D As Database, T, LofVbl$)
 TblPrp(D, T, "LofVbl") = LofVbl
-End Property
+End Sub
 
 Function IsLnk(D As Database, T) As Boolean
 IsLnk = IsLnkzFb(D, T) Or IsLnkzFx(D, T)

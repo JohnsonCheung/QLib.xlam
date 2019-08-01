@@ -469,9 +469,9 @@ Sub CrtSchm(D As Database, Schm$())
 Const CSub$ = CMod & "CrtSchm"
 ThwIf_ErMsg ErzSchm(Schm), CSub, "there is error in the Schm", "Schm Db", AddIxPfx(Schm, 1), D.Name
 Dim X As DoLTDH:           X = DoLTDH(Schm)
-Dim TdLy$():            TdLy = LyzLTDH(X, C_Tbl)
-Dim E$():                  E = LyzLTDH(X, C_Ele)
-Dim F$():                  F = LyzLTDH(X, C_Fld)
+Dim TdLy$():            TdLy = FmtDoLTDH(X, C_Tbl)
+Dim E$():                  E = FmtDoLTDH(X, C_Ele)
+Dim F$():                  F = FmtDoLTDH(X, C_Fld)
 Dim DF$()
 Dim DT$()
 Dim T() As Dao.TableDef:   T = TdAy(TdLy, E, F)
@@ -482,8 +482,8 @@ Dim DicF As Dictionary: Set DicF = Dic(AwRmvTT(Schm, C_Des, C_Fld))
                    AppTdAy D, T
                    RunSqy D, P
                    RunSqy D, S
-Set TblDesDic(D) = DicT
-Set FldDesDic(D) = DicF
+SetTblDesDic D, DicT
+SetFldDesDic D, DicF
 End Sub
 
 Private Function EFzSchm(Schm$()) As Ef

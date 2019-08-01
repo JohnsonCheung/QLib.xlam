@@ -23,6 +23,13 @@ Dim I: For Each I In Itr(Ay)
     If IsEqStr(I, StrEle, C) Then HasEleS = True: Exit Function
 Next
 End Function
+
+Function HasEleRe(Ay, Re As RegExp) As Boolean
+Dim Ele: For Each Ele In Itr(Ay)
+    If Re.Test(Ele) Then HasEleRe = True: Exit Function
+Next
+End Function
+
 Function HasEle(Ay, Ele) As Boolean
 Dim I
 For Each I In Itr(Ay)

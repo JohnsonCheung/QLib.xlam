@@ -161,7 +161,7 @@ Private Function Blks(DyoBlk()) As Blks
 'Fm DyoBlk: Dyo<BlkTy SepLin Dyo<Lno Lin> BlkIx SepLno>
 Blks.D = Drs(FoBlks, DyoBlk)
 End Function
-Sub Z()
+Private Sub Z()
 Z_TpBrk
 End Sub
 Private Sub Z_TpBrk()

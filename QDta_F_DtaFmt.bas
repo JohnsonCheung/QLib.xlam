@@ -333,22 +333,6 @@ PushI O, Lin
 LinzDrsR = O
 End Function
 
-Private Function FmtDrs__SumDr(D As Drs, IsSum As Boolean, SumFF$) As Variant()
-'Ret : :Dr ! a dr of sum of @SumFF in @D is @IsSum=True else empty dr.
-If Not IsSum Then Exit Function
-Dim SumFny$(): SumFny = SyzSS(SumFF)
-Dim O(), F: For Each F In D.Fny
-    If HasEle(SumFny, F) Then
-        Dim Col#(): Col = DblCol(D, F)
-        Dim T$: T = SumAy(Col)
-        PushI O, T
-    Else
-        PushI O, ""
-    End If
-Next
-FmtDrs__SumDr = O
-End Function
-
 Private Function FmtDrs__NoRec(D As Drs, NmBox$()) As String()
 Dim S$:        S = JnSpc(D.Fny)
 Dim S1$:           If S1 = "" Then S1 = " (No Fny)"
@@ -358,22 +342,18 @@ End Function
 
 Function FmtDrs(D As Drs, _
 Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EmIxCol.EiBeg1, _
-Optional Fmt As EmTblFmt = EiTblFmt, Optional Nm$, Optional IsSum As Boolean, Optional SumFF$) As String()
+Optional Fmt As EmTblFmt = EiTblFmt, Optional Nm$) As String()
 'Fm IsSum    : If true all num col will have a sum as las lin in the fmt
 'Fm BrkColnn : if changed, insert a break line if BrkColNm is given
 Dim NmBox$(): If Nm <> "" Then NmBox = Box(Nm)
 If NoReczDrs(D) Then FmtDrs = FmtDrs__NoRec(D, NmBox): Exit Function
-Dim IxD As Drs:    IxD = AddColzIx(D, IxCol)                     ' Add Col-Ix
-Dim IxyB&():      IxyB = Ixy(IxD.Fny, TermAy(BrkColnn))          ' Ixy-Of-BrkCol
-Dim Dy():           Dy = AddEle(IxD.Dy, IxD.Fny)                 ' Dy<Bdy-Fny-Sep>
-Dim SumDr():     SumDr = FmtDrs__SumDr(D, IsSum, SumFF)          '              Sam-ele-as-Col-or-no-ele.  Each ele is Sum of the num-col or emp
-                         If IsSum Then PushI Dy, SumDr
-Dim Bdy$():        Bdy = FmtDy(Dy, MaxColWdt, IxyB, ShwZer, Fmt) ' Ly<Bdy-Fny-Sep-?Sum>
-Dim Sum$:                If IsSum Then Sum = Pop(Bdy)       ' Sum-Lin
-Dim Sep$:          Sep = Pop(Bdy)                           ' Sep-Lin
-Dim Hdr$:          Hdr = Pop(Bdy)                           ' Hdr-Lin
-Dim O$():            O = Sy(NmBox, Sep, Hdr, Bdy, Sep)
-:                        If IsSum Then PushI O, Sum
+Dim IxD As Drs:     IxD = AddColzIx(D, IxCol)                     ' Add Col-Ix
+Dim IxyB&():       IxyB = Ixy(IxD.Fny, TermAy(BrkColnn))          ' Ixy-Of-BrkCol
+Dim Dy():            Dy = AddEle(IxD.Dy, IxD.Fny)                 ' Dy<Bdy-Fny-Sep>
+Dim Bdy$():         Bdy = FmtDy(Dy, MaxColWdt, IxyB, ShwZer, Fmt) ' Ly<Bdy-Fny-Sep-?Sum>
+Dim Sep$:           Sep = Pop(Bdy)                           ' Sep-Lin
+Dim Hdr$:           Hdr = Pop(Bdy)                           ' Hdr-Lin
+Dim O$():             O = Sy(NmBox, Sep, Hdr, Bdy, Sep)
                 FmtDrs = O
 End Function
 

@@ -8,25 +8,25 @@ Function LofVblzQt$(A As QueryTable)
 LofVblzQt = LofVblzFbtStr(FbtStrzQt(A))
 End Function
 
-Property Get LofVblzT$(D As Database, T)
+Function LofVblzT$(D As Database, T)
 LofVblzT = TblPrp(D, T, "LofVbl")
-End Property
+End Function
 
-Property Let LofVblzT(D As Database, T, V$)
+Sub SetLofVblzT(D As Database, T, V$)
 TblPrp(D, T, "LofVbl") = V
-End Property
+End Sub
 
 Function LofVblzLo$(A As ListObject)
 LofVblzLo = LofVblzQt(LoQt(A))
 End Function
 
-Property Get LofVblzFbt$(Fb, T)
+Function LofVblzFbt$(Fb, T)
 LofVblzFbt = LofVblzT(Db(Fb), T)
-End Property
+End Function
 
-Property Let LofVblzFbt(Fb, T, LofVblzVbl$)
-LofVblzT(Db(Fb), T) = LofVblzVbl
-End Property
+Sub SetLofVblzFbt(Fb, T, LofVblzVbl$)
+SetLofVblzT Db(Fb), T, LofVblzVbl
+End Sub
 
 Function LofVblzFbtStr$(FbtStr$)
 Dim Fb$, T$

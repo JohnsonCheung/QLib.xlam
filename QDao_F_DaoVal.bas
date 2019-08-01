@@ -11,21 +11,21 @@ Act = VzQ(D, "Select Y from [^YM]")
 C
 End Sub
 
-Property Get VzQ(D As Database, Q)
+Function VzQ(D As Database, Q)
 VzQ = VzRs(D.OpenRecordset(Q))
-End Property
-Property Let VzQ(D As Database, Q, V)
+End Function
+Sub SetVzQ(D As Database, Q, V)
 VzRs(D.OpenRecordset(Q)) = V
-End Property
+End Sub
 
-Property Let VzSsk(D As Database, T, F$, Sskv(), V)
+Sub SetVzSsk(D As Database, T, F$, Sskv(), V)
 VzRs(Rs(D, SqlSel_F_T_F_Ev(F, T, SskFld(D, T), Sskv))) = V
-End Property
+End Sub
 
-Property Get VzSsk(D As Database, T, F$, Sskv())
+Function VzSsk(D As Database, T, F$, Sskv())
 Dim Ssk$: Ssk = SskFld(D, T)
 VzSsk = VzRs(Rs(D, SqlSel_F_T_F_Ev(F, T, Ssk, Sskv)))
-End Property
+End Function
 
 Function VzTF(D As Database, T, F)
 VzTF = D.TableDefs(T).OpenRecordset.Fields(F).Value
@@ -35,7 +35,7 @@ Dim Av(): Av = Ap
 VzQQ = VzQ(D, FmtQQAv(QQSql, Av))
 End Function
 
-Property Let VzRs(A As Dao.Recordset, V)
+Sub SetVzRs(A As Dao.Recordset, V)
 If NoRec(A) Then
     A.AddNew
 Else
@@ -43,27 +43,27 @@ Else
 End If
 A.Fields(0).Value = V
 A.Update
-End Property
+End Sub
 
-Property Get VzRs(A As Dao.Recordset)
-If NoRec(A) Then Exit Property
+Function VzRs(A As Dao.Recordset)
+If NoRec(A) Then Exit Function
 Dim V: V = A.Fields(0).Value
-If IsNull(V) Then Exit Property
+If IsNull(V) Then Exit Function
 VzRs = V
-End Property
+End Function
 
-Property Let VzRsFld(Rs As Dao.Recordset, Fld, V)
+Sub SetVzRsFld(Rs As Dao.Recordset, Fld, V)
 With Rs
     .Edit
     .Fields(Fld).Value = V
     .Update
 End With
-End Property
+End Sub
 
-Property Get VzRsFld(Rs As Dao.Recordset, Fld)
+Function VzRsFld(Rs As Dao.Recordset, Fld)
 With Rs
-    If .EOF Then Exit Property
-    If .BOF Then Exit Property
+    If .EOF Then Exit Function
+    If .BOF Then Exit Function
     VzRsFld = .Fields(Fld).Value
 End With
-End Property
+End Function

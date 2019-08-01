@@ -527,31 +527,12 @@ If CntCol = EiWiCntCol Then
 End If
 DyoFTnbr = O
 End Function
-Sub WrtRes(Prim_or_Ay, Resn$, Optional Pseg$, Optional OvrWrt As Boolean)
-Dim Ft$: Ft = FtzRes(Resn, Pseg)
-Dim V: V = Prim_or_Ay
-If IsPrim(V) Then
-    WrtStr V, Ft, OvrWrt
-ElseIf IsArray(V) Then
-    WrtAy V, Ft, OvrWrt
-Else
-    Thw CSub, "Prim_Or_Ay ty er", "TyOf-Prim_Or_Ay", TypeName(Prim_or_Ay)
-End If
-End Sub
-Function LyzRes(Resn$, Optional Pseg$) As String()
-LyzRes = LyzFt(FtzRes(Resn, Pseg))
-End Function
-Function ResHom$()
-ResHom = AddFdrEns(TmpHom, "Res")
-End Function
-Function FtzRes$(Resn$, Optional Pseg$)
-'Fm Pseg : :Pseg: is :Fdr joined by $PthSep.  No $PthSep in front and at end
-'Fm Resn : :Resn: is :Fn under :ResHom @Pseg
-FtzRes = AddFdrEns(ResHom, Pseg) & Resn
-End Function
+
 Function SampRny() As Long()
-SampRny = IntozAy(EmpLngAy, LyzRes("SampRny"))
+':Rny: :Long() #RowNo-Ay# ! RowNo is started from 1
+SampRny = IntozAy(EmpLngAy, ResLy("SampRny"))
 End Function
+
 Function ColontAy(L&()) As String()
 ColontAy = ColontAyzFT(DyoFTnbr(L))
 End Function

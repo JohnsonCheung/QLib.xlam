@@ -107,9 +107,9 @@ End Sub
 
 Private Sub Z_RmkMth()
 Dim Md As CodeModule, Mthn
-'            Ass LineszVbl(MthL(M)) = "Property Get ZZA()|End Property||Property Let YYA(V)||End Property"
-'RmkMth M:   Ass LineszVbl(MthL(M)) = "Property Get ZZA()|Stop '|End Property||Property Let YYA(V)|Stop '|'|End Property"
-'UnRmkMth M: Ass LineszVbl(MthL(M)) = "Property Get ZZA()|End Property||Property Let YYA(V)||End Property"
+'            Ass LineszVbl(MthL(M)) = "Property Get ZZA()|End Property||Sub SetYYA(V)||End Property"
+'RmkMth M:   Ass LineszVbl(MthL(M)) = "Property Get ZZA()|Stop '|End Property||Sub SetYYA(V)|Stop '|'|End Property"
+'UnRmkMth M: Ass LineszVbl(MthL(M)) = "Property Get ZZA()|End Property||Sub SetYYA(V)||End Property"
 End Sub
 Function NxtMdLno(M As CodeModule, Lno)
 Const CSub$ = CMod & "NxtMdLno"
@@ -208,16 +208,6 @@ Next
 Dim O As Drs: O = AddColzFFDy(D, NewC, Dy)
 If IsDrp Then O = DrpCol(O, BetColn)
 AddColzBetBkt = O
-End Function
-
-Function AddColzFstArgSfx(D As Drs) As Drs
-Dim Ix%: Ix = IxzAy(D.Fny, "MthPm")
-Dim Dr, Dy(): For Each Dr In Itr(D.Dy)
-    PushI Dr, ArgSfx(Bef(Dr(Ix), ","))
-    PushI Dy, Dr
-Next
-Dim O As Drs: O = AddColzFFDy(D, "FstArgSfx", Dy)
-AddColzFstArgSfx = O
 End Function
 
 Function AddColzMthPm(DoMthLin As Drs, Optional IsDrp As Boolean) As Drs

@@ -33,7 +33,7 @@ End Sub
 
 
 Function QMthn$(M As CodeModule, Lin)
-Dim D$: D = MthDn(Lin): If D = "" Then Exit Function
+Dim D$: D = MthDnzL(Lin): If D = "" Then Exit Function
 QMthn = MdDn(M) & "." & D
 End Function
 
@@ -89,13 +89,16 @@ If ShfMthTy(L) = "" Then Exit Function
 Mthn = Nm(L)
 End Function
 
-Private Sub Z_MthDn()
-Debug.Print MthDn("Function MthnzMthDn$(MthDn$)")
-Dim Lin$
+Private Sub Z_MthDnzL()
+Debug.Print MthDnzL("Function MthnzMthDn$(MthDn$)")
 End Sub
 
+Function MthDn$(Nm$, ShtMdy$, ShtTy$)
+MthDn = JnDotAp(Nm, ShtMdy, ShtTy)
+End Function
+
 Function MthDnzMthn3$(A As Mthn3)
-MthDnzMthn3 = JnDotAp(A.Nm, A.ShtMdy, A.ShtTy)
+MthDnzMthn3 = MthDn(A.Nm, A.ShtMdy, A.ShtTy)
 End Function
 
 Function MthTyChr$(ShtMthTy$)
@@ -118,8 +121,9 @@ Case Else: Thw CSub, "Invalid ShtMdy.", "ShtMdy VdtShtMthMdy", ShtMdy, ShtMthMdy
 End Select
 End Function
 
-Function MthDn$(Lin)
-MthDn = MthDnzMthn3(Mthn3zL(Lin))
+
+Function MthDnzL$(Lin)
+MthDnzL = MthDnzMthn3(Mthn3zL(Lin))
 End Function
 
 Function MthnzLin(Lin)

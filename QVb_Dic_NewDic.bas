@@ -61,6 +61,7 @@ For Each K In A.Keys
 Next
 End Function
 Function JnStrDic$(StrDic As Dictionary, Optional Sep$)
+':StrDic: :Dic<Str,Str> #Str-Dic# ! Key is str and Val is str
 JnStrDic = Join(SyzItr(StrDic.Items), Sep)
 End Function
 Function DiczDrsCC(A As Drs, Optional CC$) As Dictionary
@@ -89,7 +90,6 @@ For Each I In Itr(Ly)
     DiczUniq.Add T1(I), RmvT1(I)
 Next
 End Function
-
 
 Function DiKqABC(Ay) As Dictionary
 'Ret : :DiKqABC: is a dic wi v running fm A-Z at most 26 ele.  The k is CStr fm @Ay-ele.

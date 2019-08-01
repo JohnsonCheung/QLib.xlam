@@ -320,19 +320,24 @@ Function SelDt(A As DT, FF$) As DT
 SelDt = DtzDrs(SelDrs(DrszDt(A), FF), A.DtNm)
 End Function
 
-
 Private Sub Z()
 MDta_Sel:
 End Sub
+
 Function SelDrsExlCC(A As Drs, ExlCCLik$) As Drs
 Dim LikC
 For Each LikC In SyzSS(ExlCCLik)
 '    MinusAy(
 Next
 End Function
-Function DeDup(A As Drs, FF$) As Drs
+
+Function DeDup(A As Drs) As Drs
+DeDup = DeDupzFF(A, JnSpc(A.Fny))
+End Function
+
+Function DeDupzFF(A As Drs, FF$) As Drs
 Dim Rxy&(): Rxy = RxyzDup(A, FF)
-DeDup = DeRxy(A, Rxy)
+DeDupzFF = DeRxy(A, Rxy)
 End Function
 
 Function DwCeqC(A As Drs, CC$) As Drs

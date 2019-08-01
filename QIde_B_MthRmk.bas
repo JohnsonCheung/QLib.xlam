@@ -93,7 +93,7 @@ ThwImpossible CSub
 End Function
 
 Private Sub Z_MthRmkzM()
-Dim M As CodeModule: Set M = Md("QIde_B_MthOp__AlignMthzML")
+Dim M As CodeModule: Set M = Md("QIde_B_MthOp__AlignMthzLno")
 BrwS12s MthRmkzM(M)
 End Sub
 

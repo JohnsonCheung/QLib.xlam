@@ -9,6 +9,42 @@ AddSy = A
 PushIAy AddSy, B
 End Function
 
+Function AddSyItm(A$(), Itm$) As String()
+AddSyItm = A
+PushI AddSyItm, Itm
+End Function
+
+Private Sub Z_GpAy()
+Dim Ay(), N%
+GoSub T0
+Exit Sub
+T0:
+    Ay = Array(1, 2, 3, 4, 5, 6)
+    Ept = Array(Array(1, 2, 3, 4, 5), Array(6))
+    N = 5
+    GoTo Tst
+Tst:
+    Act = GpAy(Ay, N%)
+    C
+    Return
+End Sub
+
+Function GpAy(Ay, N%) As Variant()
+Dim NEle&: NEle = Si(Ay): If NEle = 0 Then Exit Function
+Dim Emp: Emp = Ay: Erase Emp
+Dim M: M = Emp
+Dim V, GpI%, Ix%: For Each V In Itr(Ay)
+    PushI M, V
+    GpI = GpI + 1
+    If GpI = N Then
+        GpI = 0
+        PushI GpAy, M
+        M = Emp
+    End If
+Next
+If Si(M) > 0 Then PushI GpAy, M
+End Function
+
 Function AddAy(AyA, AyB)
 AddAy = AyA
 PushAy AddAy, AyB

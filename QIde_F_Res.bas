@@ -1,10 +1,6 @@
 Attribute VB_Name = "QIde_F_Res"
-Option Compare Text
-Option Explicit
-Private Const CMod$ = "MIde_Md_Res."
-Private Const Asm$ = "QIde"
 
-Function ResLyzM(M As CodeModule, Mthn$) As String()
+Function ResLyzMthn(M As CodeModule, Mthn$) As String()
 Dim Z$
     Z = MthLzM(M, Mthn)
     If Si(Z) = 0 Then
@@ -12,9 +8,10 @@ Dim Z$
     End If
     Z = AeFstEle(Z)
     Z = AeLasEle(Z)
-ResLyzM = RmvFstChrzAy(Z)
+ResLyzMthn = RmvFstChrzAy(Z)
 End Function
 
-Function ReszM$(M As CodeModule, Mthn$)
-ReszM = JnCrLf(ResLyzM(M, Mthn))
+Function ReszMthn$(M As CodeModule, Mthn$)
+ReszMthn = JnCrLf(ResLyzMthn(M, Mthn))
 End Function
+

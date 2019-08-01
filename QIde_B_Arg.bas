@@ -1,8 +1,25 @@
 Attribute VB_Name = "QIde_B_Arg"
 Option Explicit
 Option Compare Text
+
 Function ArgAy(MthLin) As String()
 ArgAy = SplitCommaSpc(MthPm(MthLin))
+End Function
+
+Function MthPm$(MthLin)
+MthPm = BetBkt(MthLin)
+End Function
+
+Function ArgAyzMthPmAy(MthPmAy$()) As String()
+Dim MthPm: For Each MthPm In Itr(MthPmAy)
+    PushIAy ArgAyzMthPmAy, SplitCommaSpc(MthPm)
+Next
+End Function
+
+Function MthPmAy(MthLinAy$()) As String()
+Dim MthLin: For Each MthLin In Itr(MthLinAy)
+    PushI MthPmAy, BetBkt(MthLin)
+Next
 End Function
 
 Function ArgAyzMthLinAy(MthLinAy$()) As String()
@@ -14,6 +31,7 @@ End Function
 Function ArgAyP() As String()
 ArgAyP = ArgAyzP(CPj)
 End Function
+
 Function ArgAyzP(P As VBProject) As String()
 ArgAyzP = ArgAyzMthLinAy(MthLinAyzP(P))
 End Function

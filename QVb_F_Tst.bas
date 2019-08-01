@@ -37,16 +37,15 @@ End Function
 Function TstHomzP$(P As VBProject)
 TstHomzP = AddFdrEns(Srcp(P), ".TstRes")
 End Function
+
 Sub StopNE()
 If Not IsEq(Act, Ept) Then Stop
 End Sub
-Sub C(Optional A, Optional E)
-If IsMissing(A) Then
-    ThwIf_NE Act, Ept, "Act", "Ept"
-Else
-    ThwIf_NE A, E, "Act", "Ept"
-End If
+
+Sub C()
+ThwIf_NE Act, Ept, "Act", "Ept"
 End Sub
+
 Function TstCasPth$(TstId&, Cas$)
 TstCasPth = AddFdrEns(TstPth(TstId), "Cas-" & Cas)
 End Function

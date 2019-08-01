@@ -66,8 +66,10 @@ Function SrczMd(M As CodeModule) As String()
 SrczMd = Src(M)
 End Function
 Function CSrc() As String()
+':CSrc: :Src #Cur-Src#
 CSrc = Src(CMd)
 End Function
+
 Function RmkLy(Src$()) As String()
 Dim L: For Each L In Itr(Src)
     If IsLinVbRmk(L) Then PushI RmkLy, L

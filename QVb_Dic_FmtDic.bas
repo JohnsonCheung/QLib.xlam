@@ -38,7 +38,7 @@ Case Else:          FmtDic = FmtDiczLin(A, " ", InclValTy, Nm1, Nm2)
 End Select
 End Function
 
-Function FmtDiczLin(A As Dictionary, Optional Sep$ = " ", Optional InclValTy As Boolean, Optional Nm1$, Optional Nm2$) As String()
+Private Function FmtDiczLin(A As Dictionary, Optional Sep$ = " ", Optional InclValTy As Boolean, Optional Nm1$, Optional Nm2$) As String()
 If A.Count = 0 Then Exit Function
 Dim Key: Key = A.Keys
 Dim O$(): O = AlignAy(SyzItr(A.Keys))

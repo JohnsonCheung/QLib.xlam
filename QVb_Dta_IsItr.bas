@@ -33,6 +33,17 @@ Function PredIsPrim() As IPred:  Static X As New PredIsPrim:  Set PredIsPrim = X
 Function PredIsStr() As IPred:   Static X As New PredIsStr:   Set PredIsStr = X:   End Function
 Function PredIsSy() As IPred:    Static X As New PredIsSy:    Set PredIsSy = X:    End Function
 
+Function PredHasPfx(Pfx$) As IPred
+Dim O As New PredHasPfx
+O.Init Pfx
+Set PredHasPfx = O
+End Function
+Function PredHasPatn(Patn$) As IPred
+Dim O As New PredHasPatn
+O.Init Patn
+Set PredHasPatn = O
+End Function
+
 Function IsItrStr(Itr) As Boolean:   IsItrStr = AllTrue(Itr, PredIsStr):   End Function
 Function IsItrPrim(Itr) As Boolean:  IsItrPrim = AllTrue(Itr, PredIsPrim): End Function
 Function IsItrNm(Itr) As Boolean:    IsItrNm = AllTrue(Itr, PredIsNm):     End Function

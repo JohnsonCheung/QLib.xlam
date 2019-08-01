@@ -4,13 +4,13 @@ Option Explicit
 Private Const CMod$ = "MDao_Prp."
 Private Const Asm$ = "QDao"
 
-Property Get FldDes$(D As Database, T, F$)
+Function FldDes$(D As Database, T, F$)
 FldDes = FldPrp(D, T, F, C_Des)
-End Property
+End Function
 
-Property Let FldDes(D As Database, T, F$, Des$)
+Sub SetFldDes(D As Database, T, F$, Des$)
 FldPrp(D, T, F, C_Des) = Des
-End Property
+End Sub
 
 Private Sub Z_PrpNy()
 Dim Db As Database: Set Db = SampDboDutyDta
@@ -42,21 +42,21 @@ For Each I In Itn(A.Properties)
 Next
 End Function
 
-Property Let VzOPrps(ObjWiPrps, P$, V)
+Sub SetVzOPrps(ObjWiPrps, P$, V)
 Dim Prps As Dao.Properties: Set Prps = PrpszO(ObjWiPrps)
 If HasItn(Prps, P) Then
     Prps(P).Value = V
 Else
     Prps.Append ObjWiPrps.CreateProperty(P, DaoTyzV(V), V) ' will break if V=""
 End If
-End Property
+End Sub
 
-Property Get VzOPrps(ObjWiPrps, P$)
+Function VzOPrps(ObjWiPrps, P$)
 'Ret : #Val-fm-ObjWithPrps ! Notes: Just passing @ObjWiPrps.Properties is Ok for &Get, but &Let.
 '                          ! Because the prp is at at :ObjWiPrps level, not :Properties level.
 On Error Resume Next
 VzOPrps = PrpszO(ObjWiPrps)(P).Value
-End Property
+End Function
 
 Function PrpszO(ObjWiPrps) As Dao.Properties
 On Error GoTo X
@@ -88,13 +88,13 @@ Tst:
     Return
 End Sub
 
-Property Get FldDeszTd$(A As Dao.Field)
+Function FldDeszTd$(A As Dao.Field)
 FldDeszTd = VzOPrps(A.Properties, C_Des)
-End Property
+End Function
 
-Property Let FldDeszTd(A As Dao.Field, Des$)
+Sub SetFldDeszTd(A As Dao.Field, Des$)
 
-End Property
+End Sub
 
 Private Sub Z()
 MDao_Z_Prp_Fld:
@@ -112,15 +112,15 @@ Function HasDbtPrp(D As Database, T, P) As Boolean
 HasDbtPrp = HasItn(D.TableDefs(T).Properties, P)
 End Function
 
-Property Get TblPrp(D As Database, T, P)
-If Not HasDbtPrp(D, T, P) Then Exit Property
+Function TblPrp(D As Database, T, P)
+If Not HasDbtPrp(D, T, P) Then Exit Function
 TblPrp = D.TableDefs(T).Properties(P).Value
-End Property
+End Function
 
-Property Let TblPrp(D As Database, T, P, V)
+Sub SetTblPrp(D As Database, T, P, V)
 Dim Td As Dao.TableDef: Set Td = D.TableDefs(T)
 SetDaoPrp Td, Td.Properties, P, V
-End Property
+End Sub
 
 Sub SetDaoPrp(WiDaoPrps As Object, Prps As Dao.Properties, P, V)
 If HasItn(Prps, P) Then
@@ -134,15 +134,15 @@ Else
 End If
 End Sub
 
-Property Let FldPrp(D As Database, T, F$, P$, V)
+Sub SetFldPrp(D As Database, T, F$, P$, V)
 Dim Fd As Dao.Field: Set Fd = D.TableDefs(T).Fields(F)
 SetDaoPrp Fd, Fd.Properties, P, V
-End Property
+End Sub
 
-Property Get FldPrp(D As Database, T, F$, P$)
-If Not HasFldPrp(D, T, F, P) Then Exit Property
+Function FldPrp(D As Database, T, F$, P$)
+If Not HasFldPrp(D, T, F, P) Then Exit Function
 FldPrp = D.TableDefs(T).Fields(F).Properties(P).Value
-End Property
+End Function
 
 Function HasFldPrp(D As Database, T, F$, P$) As Boolean
 HasFldPrp = HasItn(D.TableDefs(T).Fields(F).Properties, P)

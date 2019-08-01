@@ -102,6 +102,14 @@ Function MdNyP() As String()
 MdNyP = MdNyzP(CPj)
 End Function
 
+Function MdNyoNoLin() As String()
+Dim C As VBComponent: For Each C In CPj.VBComponents
+    If C.CodeModule.CountOfLines = 0 Then
+        PushI MdNyoNoLin, C.Name
+    End If
+Next
+End Function
+
 Function MdNyWiPrpV() As String()
 MdNyWiPrpV = MdNyWiPrpzV(CVbe)
 End Function

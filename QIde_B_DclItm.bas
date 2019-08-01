@@ -20,10 +20,10 @@ Private Function DclNm__As$(DimAsItm$)
 DclNm__As = RmvSfxzBkt(Bef(DimAsItm, " As"))
 End Function
 
-Function DclItmAy(DimLin) As String()
+Function DclItmAyzDimLin(DimLin) As String()
 Dim L$: L = DimLin
 If Not ShfPfx(L, "Dim ") Then Exit Function
-DclItmAy = SplitCommaSpc(L)
+DclItmAyzDimLin = SplitCommaSpc(L)
 End Function
 
 Function DclNy(DclItmAy$()) As String()
@@ -311,7 +311,7 @@ Function DclItr(M As CodeModule)
 Asg Itr(DclLyzM(M)), DclItr
 End Function
 
-Function DclL(Src$()) As String()
+Function DclL$(Src$())
 ':DclL: :Lines ! comes fm a module
 DclL = JnCrLf(DclLy(Src))
 End Function

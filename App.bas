@@ -148,18 +148,18 @@ Function Pjfnm$(D As Database, PmNm$)
 Pjfnm = VzPm(D, PmNm & "Fn")
 End Function
 
-Property Get VzPm(D As Database, PmNm$)
+Function VzPm(D As Database, PmNm$)
 Dim Q$: Q = FmtQQ("Select ? From Pm where CUsr='?'", PmNm, CUsr)
 VzPm = VzQ(D, Q)
-End Property
+End Function
 
-Property Let VzPm(D As Database, PmNm$, V)
+Sub SetVzPm(D As Database, PmNm$, V)
 With D.TableDefs("Pm").OpenRecordset
     .Edit
     .Fields(PmNm).Value = V
     .Update
 End With
-End Property
+End Sub
 
 Sub BrwPm(D As Database)
 BrwT D, "Pm"

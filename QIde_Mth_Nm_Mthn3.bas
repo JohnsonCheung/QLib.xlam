@@ -3,10 +3,10 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "Mthn3."
 Type Mthn3: Nm As String: ShtTy As String: ShtMdy As String: End Type
-':Mthn_ZDash$ = "Mthn rule.  When beg with Z_, it is trying to test.  Try use own resource, like Y_.  Don't use other md resource."
-':Mthn_ZZDash$ = "Mthn rule.  When beg with Z_, it is tested ok.  It should always pass.  Using Z_ due to it sinks to bottom."
-':Mthn_Z$ = "Mthn rule.  A private mth with all Z_ fun and a Lbl eq the mdn."
-':Mthn_YDash$ = "Mthn rule.  PurePrp for testing.  Used to Z_ mth."
+':Mthn-ZDash: :Mthn-Rul ! All mth beg with Z_XXX is n rule.  When beg with Z_, it is trying to test.  Try use own resource, like Y_.  Don't use other md resource."
+':Mthn-ZZDash :Mthn-Rul ! All mth with XXX__YYY means sub-mth.  XXX is ParNm and YYY is ChdNm
+':Mthn-Z:     :Mthn-Rul ! It must be Private Sub.  CdZ
+':Mthn-YDash: :Mthn-Rul ! PurePrp for testing.  Used to Z_ mth."
 
 Function Mthn3(Nm, ShtMdy, ShtTy) As Mthn3
 With Mthn3

@@ -62,7 +62,7 @@ Const Mthn$ = "ZZRmv1"
 Dim Bef$(), Aft$()
 Crt:
         Set Md = TmpMod
-        ApdLines Md, LineszVbl("|'sdklfsdf||'dsklfj|Property Get ZZRmv1()||End Property||Function ZZRmv2()|End Function||'|Property Let ZZRmv1(V)|End Property")
+        ApdLines Md, LineszVbl("|'sdklfsdf||'dsklfj|Property Get ZZRmv1()||End Property||Function ZZRmv2()|End Function||'|Sub SetZZRmv1(V)|End Property")
 Tst:
         Bef = Src(Md)
         RmvMthzMN Md, Mthn

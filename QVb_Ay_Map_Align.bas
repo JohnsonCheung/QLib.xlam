@@ -7,15 +7,15 @@ Enum EmAlign
     EiLeft
     EiRight
 End Enum
-Function FmtSyzNTerm(Ay, N%) As String()
+Function AlignLyzFstNTerm(Ay, N%) As String()
 Dim W%(), L
 W = WdtAyNTermAy(N, Ay)
 For Each L In Itr(Ay)
-    PushI FmtSyzNTerm, FmtSyzNTerm1(L, W)
+    PushI AlignLyzFstNTerm, AlignLyzFstNTerm1(L, W)
 Next
 End Function
 
-Private Function FmtSyzNTerm1$(Sy, W%())
+Private Function AlignLyzFstNTerm1$(Sy, W%())
 Dim Ay$(), J%, N%, O$(), I
 N = Si(W)
 Ay = NTermRst(Sy, N)
@@ -24,7 +24,7 @@ For J = 0 To N - 1
     PushI O, AlignL(Ay(J), W(J))
 Next
 PushI O, Ay(N)
-FmtSyzNTerm1 = RTrim(JnSpc(O))
+AlignLyzFstNTerm1 = RTrim(JnSpc(O))
 End Function
 
 Private Function WdtAyNTermAy(NTerm%, Ay) As Integer()
@@ -90,19 +90,19 @@ FmtDotLyzTwoCol = FmtDy(DyoDotLyzTwoCol(DotLy), Fmt:=EiSSFmt)
 End Function
 
 Function FmtSyz1Term(Sy$()) As String()
-FmtSyz1Term = FmtSyzNTerm(Sy, 1)
+FmtSyz1Term = AlignLyzFstNTerm(Sy, 1)
 End Function
 
 Function FmtSyz2Term(Sy$()) As String()
-FmtSyz2Term = FmtSyzNTerm(Sy, 2)
+FmtSyz2Term = AlignLyzFstNTerm(Sy, 2)
 End Function
 
 Function FmtSy3Term(Sy$()) As String()
-FmtSy3Term = FmtSyzNTerm(Sy, 3)
+FmtSy3Term = AlignLyzFstNTerm(Sy, 3)
 End Function
 
 Function FmtSyT4(Sy$()) As String()
-FmtSyT4 = FmtSyzNTerm(Sy, 4)
+FmtSyT4 = AlignLyzFstNTerm(Sy, 4)
 End Function
 
 

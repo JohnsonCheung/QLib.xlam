@@ -8,7 +8,7 @@ Type DoLTD: D As Drs: End Type  'L T1 Dta
 Type DoLTDH: D As Drs: End Type 'L T1 Dta IsHdr
 
 Private Property Get Y_LofT1nn$()
-Y_LofT1nn = SampLofT1nn
+Y_LofT1nn = LofT1nn
 End Property
 
 Private Property Get Y_Lof() As String()
@@ -18,6 +18,7 @@ End Property
 Private Sub Z()
 QVb_Dta_IndentSrc:
 End Sub
+
 Private Sub Z_IndentSrcDy()
 Dim IndentSrc$()
 GoSub Z
@@ -189,7 +190,7 @@ DoLDta.D = DwEqE(B, "IsHdr", False)
 'BrwDrs2 A.D, DoLDta.D, NN:="LTDH LDta": Stop
 End Function
 
-Private Function DyOfLTD(Src$()) As Variant()
+Private Function DyoLTD(Src$()) As Variant()
 'Ret:: Dy{L T1 Dta}
 Dim L&, Dta$, T1$, Lin
 For Each Lin In Itr(Src)
@@ -197,7 +198,7 @@ For Each Lin In Itr(Src)
     If Fst2Chr(LTrim(L)) = "--" Then GoTo X
     T1 = T1zS(Lin)
     Dta = RmvT1(Lin)
-    PushI DyOfLTD, Array(L, T1, Dta)
+    PushI DyoLTD, Array(L, T1, Dta)
 X:
 Next
 End Function
@@ -219,13 +220,16 @@ Next
 End Function
 
 Function DoLTD(Src$()) As Drs
-'Ret: L T1 Dta
-DoLTD = DrszFF("L T1 Dta", DyOfLTD(Src))
+'Ret : :DoLTD @@
+':DoLTD: :Drs<L-T1-Dta>
+DoLTD = DrszFF("L T1 Dta", DyoLTD(Src))
 End Function
-Function LyzLTDH(A As DoLTDH, T1$) As String()
+
+Function FmtDoLTDH(A As DoLTDH, T1$) As String()
 Dim B As Drs: B = Dw2Eq(A.D, "IsHdr T1", False, T1)
-LyzLTDH = StrCol(B, "Lin")
+FmtDoLTDH = StrCol(B, "Lin")
 End Function
+
 Function DoLTDH(IndentedSrc$()) As DoLTDH
 'Ret: L T1 Dta IsHdr:
 DoLTDH.D = DrszFF("L T1 Dta IsHdr", DyoLTDH(IndentedSrc))

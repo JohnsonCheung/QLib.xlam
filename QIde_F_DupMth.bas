@@ -15,7 +15,7 @@ End Function
 Private Function DDupMthzP(P As VBProject) As Drs
 Dim A As Drs: A = DoMthzP(P)
 Dim B As Drs: B = DwDup(A, "Mthn")
-Dim C As Drs: C = DeDup(B, "Mthn Mdn") '<==
+Dim C As Drs: C = DeDupzFF(B, "Mthn Mdn") '<==
 Dim D As Drs: D = AddColzMthL(C)
 Dim E As Drs: E = AddColzValIdqCnt(D, "MthL")
 DDupMthzP = SrtDrs(E)
@@ -48,7 +48,7 @@ For Each Dr In Itr(Dy)
     Set M = Md(Dr(0))
     Mthn = Dr(1)
     ShtMthTy = Dr(2)
-    PushI MthLAyzDy_Md_Mthn_ShtMthTy, MthLzMTN(M, ShtMthTy, Mthn)
+    PushI MthLAyzDy_Md_Mthn_ShtMthTy, MthLzNmTy(M, Mthn, ShtMthTy)
 Next
 End Function
 

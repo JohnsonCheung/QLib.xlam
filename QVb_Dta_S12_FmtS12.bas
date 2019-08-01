@@ -20,12 +20,12 @@ If A.N = 0 Then
 End If
 Dim Dy(), D As Drs
 If Not XHasLines(A) Then
-     Dy = XDy(A)
-      D = Drs(Sy(N1, N2), Dy)
-      FmtS12s = FmtDrs(D, Fmt:=EiSSFmt, IxCol:=IxCol)
-:         Exit Function
+          Dy = XDy(A)
+           D = Drs(Sy(N1, N2), Dy)
+     FmtS12s = FmtDrs(D, Fmt:=EiSSFmt, IxCol:=IxCol)
+:              Exit Function
 End If
-
+Stop
 Dim S1$():     S1 = S1Ay(A)
 Dim S2$():     S2 = S2Ay(A)
 Dim W1%:       W1 = WdtzLinesAy(AddEleS(S1, N1))
@@ -33,9 +33,9 @@ Dim W2%:       W2 = WdtzLinesAy(AddEleS(S2, N2))
 Dim W2Ay%(): W2Ay = IntAy(W1, W2)
 Dim SepL$:   SepL = LinzSep(W2Ay)
 Dim Tit$:     Tit = AlignDrWyAsLin(Array(N1, N2), W2Ay)
-Dim M$():       M = XMiddle(A, W2Ay, SepL)                    ' #Middle ! Middle part
+Dim M$():       M = XMiddle(A, W2Ay, SepL)              '  #Middle ! Middle part
 Dim O$():       O = Sy(SepL, Tit, SepL, M)
-               O = XAddIx(O, A.N, IxCol) '         ! Add Ix col in front
+                O = XAddIx(O, A.N, IxCol)               '          ! Add Ix col in front
 
 FmtS12s = O
 End Function
@@ -133,11 +133,19 @@ XHasLines = False
 End Function
 
 Private Sub Z_FmtS12s()
-Dim A As S12s, N1$, N2$
+Dim A As S12s, N1$, N2$, Pseg$
 'GoSub T0
-GoSub T1
-GoSub T2
+'GoSub T1
+'GoSub T2
+GoSub T3
 Exit Sub
+T3:
+    N1 = "AA"
+    N2 = "BB"
+    Pseg = "Z_FmtS12s\Cas3"
+    A = S12szRes("S12s.Txt", Pseg & "\Inp")
+    Ept = Res("Ept", Pseg)
+    GoTo Tst
 T0:
     N1 = "AA"
     N2 = "BB"
@@ -155,7 +163,7 @@ T2:
     GoTo Tst
 Tst:
     Act = FmtS12s(A, N1, N2)
-    BrwAy Act
+    C
     Return
 End Sub
 

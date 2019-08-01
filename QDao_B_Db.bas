@@ -56,7 +56,7 @@ StruzTT = StruzTny(D, Ny(TT))
 End Function
 
 Function Stru(D As Database) As String()
-Stru = AlignTRst(StruzTny(D, Tny(D)))
+Stru = AlignLyzTRst(StruzTny(D, Tny(D)))
 End Function
 
 Function OupTny(D As Database) As String()
@@ -318,29 +318,29 @@ Dim Av(): Av = TblAp
 DrpzTT Av
 End Sub
 
-Property Get TblDes$(D As Database, T)
+Function TblDes$(D As Database, T)
 TblDes = VzOPrps(D.TableDefs(T), C_Des)
-End Property
+End Function
 
-Property Let TblDes(D As Database, T, Des$)
+Sub SetTblDes(D As Database, T, Des$)
 VzOPrps(D.TableDefs(T), C_Des) = Des
-End Property
+End Sub
 
-Property Get TblAttDes$(D As Database)
+Function TblAttDes$(D As Database)
 TblAttDes = TblDes(D, "Att")
-End Property
+End Function
 
-Property Let TblAttDes(D As Database, Des$)
-TblDes(D, "Att") = Des
-End Property
+Sub SetTblAttDes(D As Database, Des$)
+SetTblDes D, "Att", Des
+End Sub
 
-Property Set TblDesDic(D As Database, Dic As Dictionary)
+Sub SetTblDesDic(D As Database, Dic As Dictionary)
 Dim T: For Each T In Dic.Keys
-    TblDes(D, T) = Dic(T)
+    SetTblDes D, T, Dic(T)
 Next
-End Property
+End Sub
 
-Property Get FldDesDic(D As Database) As Dictionary
+Function FldDesDic(D As Database) As Dictionary
 Dim T$, I, J, F$, Des$
 Set FldDesDic = New Dictionary
 For Each I In Tni(D)
@@ -351,39 +351,39 @@ For Each I In Tni(D)
         If Des <> "" Then FldDesDic.Add T & "." & F, D
     Next
 Next
-End Property
+End Function
 
-Property Set FldDesDic(D As Database, Dic As Dictionary)
+Sub SetFldDesDic(D As Database, Dic As Dictionary)
 Dim T$, F$, Des$, TDotF$, I, J
 For Each I In Dic.Keys
     TDotF = I
     Des = Dic(TDotF)
     If HasDot(TDotF) Then
         AsgBrkDot TDotF, T, F
-        FldDes(D, T, F) = Des
+        SetFldDes D, T, F, Des
     Else
         For Each J In Tny(D)
             T = J
             If HasFld(D, T, F) Then
-                FldDes(D, T, F) = Des
+                SetFldDes D, T, F, Des
             End If
         Next
     End If
 Next
-End Property
+End Sub
 
 Sub ClsDb(D As Database)
 On Error Resume Next
 D.Close
 End Sub
 
-Property Get TblDesDic(D As Database) As Dictionary
+Function TblDesDic(D As Database) As Dictionary
 Dim T, O As New Dictionary
 For Each T In Tni(D)
     PushKqNBStr O, T, TblDes(D, T)
 Next
 Set TblDesDic = O
-End Property
+End Function
 
 Function JnStrDiczTwoColSql(TwoColSql) As Dictionary _
 'Return a dictionary of Ay with Fst-Fld as Key and Snd-Fld as Sy

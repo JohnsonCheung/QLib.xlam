@@ -71,6 +71,16 @@ Dim I As Match: For Each I In X.Execute(S)
 Next
 End Function
 
+Function Wrdss$(S)
+Wrdss = JnSpc(WrdAy(S))
+End Function
+
+Function WrdssAy(Sy$()) As String()
+Dim S: For Each S In Itr(Sy)
+    PushI WrdssAy, Wrdss(S)
+Next
+End Function
+
 
 Function WrdLblLinPos$(WrdPos%(), OFmNo&)
 Dim O$(), A$, B$, W%, J%

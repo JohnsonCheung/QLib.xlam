@@ -290,7 +290,7 @@ Dim Mdn$:              Mdn = "QIde_Ens_CModSub"
 Dim Mthn$:            Mthn = "EnsCModSubzM"
 Dim M As CodeModule: Set M = Md(Mdn)
 Dim L&:                  L = MthLnozMM(M, Mthn)
-QIde_B_AlignMth.AlignMthzML M, L, Rpt:=Rpt
+QIde_B_AlignMth.AlignMthzLno M, L, Rpt:=Rpt
 End Sub
 
 Sub FF(Optional Rpt As EmRpt)
@@ -298,7 +298,7 @@ Dim Mdn$: Mdn = "QIde_Ens_CModSub"
 Dim Mthn$: Mthn = "EnsCModSubzM"
 Dim M As CodeModule: Set M = Md(Mdn)
 Dim L&:                  L = MthLnozMM(M, Mthn)
-QIde_B_AlignMth.AlignMthzML M, L, Rpt:=Rpt
+QIde_B_AlignMth.AlignMthzLno M, L, Rpt:=Rpt
 End Sub
 
 Private Sub Z_ErzLnk()

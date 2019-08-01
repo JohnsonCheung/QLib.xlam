@@ -223,7 +223,7 @@ FEs_AlignExtNm E
 FEs_AddAs_Or4Spc_ToExtNm E
 FEs_AddTab2Spc_ToExtNm E
 FEs_AlignFld F
-PSel_Fny_Extny = KwSel & PDis(IsDis) & C_NL & Join(SyzAyab(E, F), C_CNL)
+PSel_Fny_Extny = KwSel & PDis(IsDis) & C_NL & Join(LyzAyab(E, F), C_CNL)
 End Function
 
 Private Sub FEs_AddTab2Spc_ToExtNm(OE$())
@@ -298,7 +298,7 @@ PSet_FF_Ey = PSet_Fny_Ey(SyzSS(FF), Ey)
 End Function
 
 Private Function PSet_Fny_Ey$(Fny$(), Ey$())
-Dim J$(): J = SyzAyab(SyzQteSq(Fny), Ey, " = ")
+Dim J$(): J = LyzAyab(SyzQteSq(Fny), Ey, " = ")
 Dim J1$(): J1 = AddPfxzAy(J, C_TT)
 Dim S$: S = Jn(J, "," & C_NL)
 PSet_Fny_Ey = C_NLT & KwSet & C_NL & S
@@ -317,7 +317,7 @@ End Function
 Private Function PSet_Fny_Vy$(Fny$(), Vy())
 Dim F$(): F = SyzQteSq(Fny)
 Dim V$(): V = SqlQteVy(Vy)
-PSet_Fny_Vy = JnComma(SyzAyab(F, V, "="))
+PSet_Fny_Vy = JnComma(LyzAyab(F, V, "="))
 End Function
 
 Private Property Get C_Comma$()
@@ -636,7 +636,7 @@ End Function
 Private Function POnzJnXA(JnFny$())
 Dim X$(): X = SyzQAy("x.[?]", JnFny)
 Dim A$(): A = SyzQAy("a.[?]", JnFny)
-Dim J$(): J = SyzAyab(X, A, " = ")
+Dim J$(): J = LyzAyab(X, A, " = ")
 Dim S$: S = JnAnd(J)
 POnzJnXA = KwOn & " " & S
 End Function
@@ -655,7 +655,7 @@ End Function
 Private Function PSetzXA(FnyX$(), FnyA$())
 Dim X$(): X = AddPfxSzAy(FnyX, "x.[", "]")
 Dim A$(): A = AddPfxSzAy(FnyA, "a.[", "]")
-Dim J$(): J = SyzAyab(X, A, " = ")
+Dim J$(): J = LyzAyab(X, A, " = ")
           J = AddPfxzAy(J, C_TT)
 Dim S$:   S = Jn(J, "," & C_NL)
 PSetzXA = PSetzX(S)
@@ -871,7 +871,7 @@ Dim A1$: A1 = BefSpc(AliasAB) ' Alias1
 Dim A2$: A2 = BefSpc(AliasAB) ' Alias2
 Dim A$(): A = AddPfxzAy(Fny, A1 & ".")
 Dim B$(): B = AddPfxzAy(Fny, A2 & ".")
-Dim J$(): J = SyzAyab(A, B, " = ")
+Dim J$(): J = LyzAyab(A, B, " = ")
 SqpAEqB_Fny_AliasAB = JnCommaSpc(J)
 End Function
 

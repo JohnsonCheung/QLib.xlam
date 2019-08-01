@@ -704,6 +704,6 @@ Private Function XMBdy3Col() As Drs
 'Insp "QIde_Gen_GenMod.XMBdy3Col", "Inspect", "Oup(XMBdy3Col) ", FmtDrs(XMBdy3Col), : Stop
 End Function
 
-Sub Z()
+Private Sub Z()
 QIde_Gen_GenMod:
 End Sub

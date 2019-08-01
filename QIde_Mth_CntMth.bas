@@ -41,11 +41,11 @@ End Function
 Private Function FoMthCnt() As String()
 FoMthCnt = SyzSS("Lib Mdn NLines NMth NPubSub NPubFun NPubPrp NPrvSub NPrvFun NPrvPrp NFrdSub NFrdFun NFrdPrp")
 End Function
-Property Get NMth%(A As CntgMth)
+Function NMth%(A As CntgMth)
 With A
 NMth = .NPubSub + .NPubFun + .NPubPrp + .NPrvSub + .NPrvFun + .NPrvPrp + .NFrdSub + .NFrdFun + .NFrdPrp
 End With
-End Property
+End Function
 Function FmtCntgMth(A As CntgMth, Optional Hdr As EmHdr)
 Dim Pfx$: If Hdr = EiWiHdr Then Pfx = "Pub* | Prv* | Frd* : *{Sub Fun Frd} "
 With A

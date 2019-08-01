@@ -81,6 +81,7 @@ SizMd = Len(SrcL(M))
 End Function
 
 Function SrcL$(M As CodeModule)
+':SrcL: :Lines #Src-Lines#
 SrcL = JnCrLf(Src(M)) & vbCrLf
 End Function
 

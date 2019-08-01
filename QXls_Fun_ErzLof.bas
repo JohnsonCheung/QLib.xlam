@@ -1,4 +1,4 @@
-Attribute VB_Name = "QXls_Lof_ErzLof"
+Attribute VB_Name = "QXls_Fun_ErzLof"
 Option Compare Text
 Option Explicit
 Private Const Asm$ = "QXls"
@@ -7,122 +7,113 @@ Public Const LofT1nn$ = _
                             "Lo Ali Bdr Tot Wdt Fmt Lvl Cor Fml Lbl Tit Bet" ' Fmt. i.tm s.pace s.eparated string
 Public Const LofT1nnzSng$ = "                               Fml Lbl Tit Bet" ' Sng.sigle field per line
 Public Const LofT1nnzMul$ = "Lo Ali Bdr Tot Wdt Fmt Lvl Cor                " ' Mul.tiple field per line
-'GenErzMsg-Src-Beg.
-'Val_NotNum      Lno#{Lno} is [{T1$}] line having Val({Val$}) which should be a number
-'Val_NotBet      Lno#{Lno} is [{T1$}] line having Val({Val$}) which between ({FmNo}) and (ToNm})
-'Val_NotInLis    Lno#{Lno} is [{T1$}] line having invalid Val({ErzVal$}).  See valid-value-{VdtValNm$}
-'Val_FmlFld      Lno#{Lno} is [Fml] line having invalid Fml({Fml$}) due to invalid Fny({ErzFny$()}).  Valid-Fny are [{VdtFny$()}]
-'Val_FmlNotBegEq Lno#{Lno} is [Fml] line having [{Fml$}] which is not started with [=]
-'Fld_NotInFny    Lno#{Lno} is [{T1$}] line having Fld({F}) which should one of the Fny value.  See [Fny-Value]
-'Fld_Dup         Lno#{Lno} is [{T1}] line having Fld({F}) which is duplicated and ignored due to it has defined in Lno#{AlreadyInLno}
-'Fldss_NotSel    Lno#{Lno} is [{T1$}] line having Fldss({Fldss$}) which should select one for Fny value.  See [Fny-Value]
-'Fldss_DupSel    Lno#{Lno} is [{T1$}] line having
-'Lo_ErNm           Lno#{Lno} is [Lo-Nm] line having value({Val$}) which is not a good name.
-'Lo_MisNm          [Lo-Nm] line is missing
-'Lo_DupNm          Lno#{Lnoss$} is [Lo-Nm] which is duplicated and ignored due to there is already a [Lo-Nm] in Lno#{AlreadyInLno}
-'Tot_MustAvgCntSum Lno#({Lnoss$}) is [Tot] line having 2nd term value.  Valid 2nd term value is [Avg Cnt Sum]
-'Tot_DupSel        Lno#{Lno} is [Tot-{TotKd$}] line having Fldss({Fldss$}) selecting SelFld({SelFld$}) which is already selected by Lno#{AlreadyInLno} of [Tot-{AlreadyTotKd$}].  The SelFld is ignored.
-'Bet_N3Fld          Lno#{Lno} is [Bet] line.  It should have 3 fields, but now it has (?) fields of [?]"
-'Bet_EqFmTo         Lno#{Lno} is [Bet] line and ignored due to FmFld(?) and ToFld(?) are equal.
-'Bet_FldSeq         Lno#{Lno} is [Bet] line and ignored due to Fld(?), FmFld(?) and ToFld(?) are not in order.  See order the Fld, FmFld and ToFld in [Fny-Value]"
-'GenErzMsg-Src-End.
-Private Const C_Tot_MustAvgCntSum$ = ""
-Private Const C_Lo_MisNm$ = ""
-Private Const C_Lo_ErNm = ""
-Private Const MAli_MustLRCenter$ = ""
+'
+'Lo  Nm  Er    [Lo Nm] has error
+'Lo  Nm  Mis   [Lo Nm] line is missed
+'Lo  Nm  Dup   [Lo Nm] is Dup
+'Lo  Fny Mis   [Lo Fny] is missed
+'Lo  Fny Dup   [Lo Fny] is missed
+'Ali Val NLis  [Ali Val] is not in @AliVal
+'Ali Fld NLis  [Ali Fld] is not in @LoFny
+'Bdr Val NLis  [Bdr Val] is not in @BdrVal
+'Tot Val NLis  [Tot Val] is not in @TotVal
+'Wdt Val NNum  [Wdt Val] is not number
+'Wdt Val Mis   [Wdt Val] is missed
+'Wdt Val NBet  [Wdt Val] is not between 3 to 100
+'Lvl Val NNum  [Lvl Val] is not a number
+'Lvl Val NBet  [Lvl Val] is not between 2 and 8
+'Lvl Fld NLis  [Lvl Fld] is not in @LoFny
+'Lvl Fld Dup
+'
 
 Function LofT1Ny() As String()
 LofT1Ny = TermAy(LofT1nn)
 End Function
 
-Private Function B_ELo_MisFld(IsMisLoFld As Boolean) As String()
+Private Function XELoFldDup(DoLo As Drs) As String()
 
 End Function
-Private Function XELoFldDup(DupFny$()) As String()
+
+Private Function XLoNmMis(LoLy$()) As Boolean
 
 End Function
-Private Function XELoNmMis$(IsMisNm As Boolean)
-Stop
-'B_ELo_IsMisNm = SzIf(IsMisNm, MLo_MisNm)
+Private Function XELoNmMis(DoLo As Drs) As String()
+'If IsLoMisNm Then XELoNmMis = Sy("No LoNm")
 End Function
 
-Private Function XELoNmEr$(LnoAy() As Long)
+Private Function XELoNmEr(DoLo As Drs) As String()
 'XELoNmEr = M_Lo_ErNm(LnoAy)
 End Function
 
-Private Function XELoNmDup(LnossAy$()) As String()
-Dim Lnoss: For Each Lnoss In Itr(LnossAy)
-    PushI XELoNmDup, FmtQQ(C_Lo_ErNm, Lnoss)
-Next
+Private Function XELoNmDup(DoLo As Drs) As String()
+'Dim Lnoss: For Each Lnoss In Itr(LnossAy)
+'    PushI XELoNmDup, FmtQQ(C_Lo_ErNm, Lnoss)
+'Next
 End Function
 
-Private Function XELoFldMis(LoFldMis As Boolean) As String()
+Private Function XELoFldMis(DoLo As Drs) As String()
 
 End Function
+Private Function XDoLo(LTD As Drs) As Drs
 
-Function ErzLof(Lof$(), LoFny$()) As String() 'Erzror-of-ListObj-Formatter:Erz.z.Lo.f
-'== Lo-Lvl
-Dim LNmMis As Boolean
-Dim LNmDup$()
-Dim LNmEr&()
-Dim LFldMis As Boolean
-Dim LFldDup$()
+End Function
+Private Sub Z_ErzLof()
+Dim Lof$(), LofNy$()
+GoSub T0
+T0:
+    Lof = SampLof
+    LofNy = SyzSS("A B C D E F G")
+    Ept = Sy()
+    GoTo Tst
+Tst:
+    Act = ErzLof(Lof, LofNy)
+    C
+    Return
+End Sub
+Function ErzLof(Lof$(), LofNy$()) As String()
+':Lof: :Fmtr #ListObj-Fmtr# !
+':Fmtr: :Ly #Formatter#
+Dim A$(), B$(), C$(), D$(), E$()
+Dim LTD As Drs: LTD = DoLTD(Lof)
+Dim DoLo As Drs: DoLo = XDoLo(LTD)
+                A = XELoNmMis(DoLo)
+                B = XELoNmEr(DoLo)
+                C = XELoNmDup(DoLo)
+                D = XELoFldMis(DoLo)
+                E = XELoFldDup(DoLo)
+Dim ELo$():   ELo = Sy(A, B, C, D, E)
 
-'--
-Dim AliKwErLnoss$
-Dim DupLofFny$()
-Dim ELo1$:   ELo1 = XELoNmMis(LNmMis)
-Dim ELo2$:   ELo2 = XELoNmEr(LNmEr)
-Dim ELo3$(): ELo3 = XELoNmDup(LNmDup)
-Dim ELo4$(): ELo4 = XELoFldMis(LFldMis)
-Dim ELo5$(): ELo5 = XELoFldDup(LFldDup)
+'                A = Sy(FmtQQ(MAli_MustLRCenter))
+Dim EAli$(): EAli = Sy(A)
 
-'-- LofFny
-Dim LofFny$()
+                A = XEVal_NotBet("Wdt", 10, 200)
+Dim EWdt$(): EWdt = Sy(A)
 
-Dim EAli1$(): EAli1 = Sy(FmtQQ(MAli_MustLRCenter, AliKwErLnoss))
-Dim EWdt1$(): EWdt1 = B_EVal_NotBet("Wdt", 10, 200)
-Dim ELvl1$()
-Dim EFmt1$()
-Dim EFmt2$()
-Dim EFmt3$()
-Dim ELvl2$(): ELvl2 = B_EVal_NotBet("Lvl", 2, 9)
-Dim ELvl3$()
-Dim ECor1$()
-Dim ECor2$()
-Dim ECor3$()
-Dim EFml1$()
-Dim EFml2$()
-Dim EFml3$()
-Dim ELbl1$()
-Dim ELbl2$()
-Dim ELbl3$()
-Dim ETit1$()
-Dim ETit2$()
-Dim ETit3$()
-Dim EBet1$()
-Dim EBet2$()
-Dim EBet3$()
 
-Dim ELo$():  ELo = Sy(ELo1, ELo2, ELo3)
-Dim EAli$(): EAli = Sy(EAli1)
-Dim EBdr$(): ELo = Sy(ELo1, ELo2, ELo3)
-Dim ETot$(): ELo = Sy(ELo1, ELo2, ELo3)
-Dim EWdt$(): EWdt = Sy(EWdt1)
-Dim EFmt$(): EFmt = Sy(EFmt1, EFmt2, EFmt3)
-Dim ELvl$(): ELvl = Sy(ELvl1, ELvl2, ELvl3)
-Dim ECor$(): ECor = Sy(ECor1, ECor2, ECor3)
-Dim EFml$(): EFml = Sy(EFml1, EFml2, EFml3)
-Dim ELbl$(): ELbl = Sy(ELbl1, ELbl2, ELbl3)
-Dim ETit$(): ETit = Sy(ETit1)
-Dim EBet$(): EBet = Sy(EBet1)
+Dim EFmt$(): EFmt = Sy(A, B, C)
+
+                B = XEVal_NotBet("Lvl", 2, 9)
+Dim ELvl$(): ELvl = Sy(A, B, C)
+
+
+Dim ECor$(): ECor = Sy(A, B, C)
+
+Dim EFml$(): EFml = Sy(A, B, C)
+
+
+Dim ELbl$(): ELbl = Sy(A, B, C)
+
+Dim ETit$(): ETit = Sy(A, B, C)
+
+Dim EBet$(): EBet = Sy(A)
+
+Dim EBdr$(): EBdr = Sy(A, B)
+
+Dim ETot$(): ETot = Sy(A, B, C)
+
 ErzLof = Sy(ELo, EAli, EBdr, ETot, EWdt, EFmt, ELvl, ECor, EFml, ELbl, ETit, EBet)
 End Function
 
-
-Private Function WAli_LeftRightCenter() As String()
-'ErzAli_LinErz = WMsgzAliLin(SyeT1Sy(Ali, "Left Right Center"))
-End Function
 Private Function WAny_Tot() As Boolean
 Dim LC As ListColumn
 'For Each Lc In A_Lo.ListColumns
@@ -204,6 +195,7 @@ End Function
 Private Function ErzFldss() As String()
 
 End Function
+
 Private Function ErzFldSngzDup(Fny$(), Lof$()) As String() 'It is for [SngFldLin] only.  That means T2 of LofLin is field name.  Return error msg for any FldNm is dup.
 Dim T1$, I
 For Each I In SyzSS(LofT1nnzSng) 'It is for [SngFldLin] only
@@ -220,9 +212,11 @@ Dim DupFld$, I
 '    PushIAy ErzFldSngzDup__WithinT1, ErzFldSngzDup__DupFld_is_fnd(DupFld, Lnxs, T1)
 'Next
 End Function
+
 Private Function XErFml(Fny$()) As String()
 XErFml = XErFml__InsideFmlHasInvalidFld(Fny)
 End Function
+
 Private Function XErFml__InsideFmlHasInvalidFld(Fny$()) As String()
 Dim J&, Fld$, Fml$, O$(), S$, T1
 'Dim Lnxs As Lnxs: Lnxs = WLnxszT1("Fml")
@@ -232,20 +226,23 @@ Dim J&, Fld$, Fml$, O$(), S$, T1
         If FstChr(Fml) <> "=" Then
             'PushI O, WMsg_Fml_FstChr(.Lno)
         Else
-            Dim ErzFny$(): 'ErzFny = ErzFnyzFml(Fld, Fml, Fny)
+            Dim ErzFny$(): 'ErzFny = ErzFmlFld(Fld, Fml, Fny)
 '            PushIAy O, ErzFml__InsideFmlHasInvalidFld1(ErzFny, .Lno, Fld, Fml)
         End If
     'End With
 'Next
 XErFml__InsideFmlHasInvalidFld = O
 End Function
-Function ErzFnyzFml(Fld$, Fml$, Fny$()) As String() 'Return Subset-Fny (quote by []) in [Fml] which is error. _
+
+Private Function ErzFmlFld(Fld$, Fml$, Fny$()) As String()
+'Ret :urn Subset-Fny (quote by []) in [Fml] which is error. _
 It is error if any-FmlFny not in [Fny] or =[Fld]
 Dim Ny$(): Ny = NyzMacro(Fml, OpnBkt:="[")
-If HasEle(Ny, Fld) Then 'PushI ErzFnyzFml, Fld
-'PushIAy ErzFnyzFml, MinusAy(Fml, Fny)
+If HasEle(Ny, Fld) Then 'PushI ErzFmlFld, Fld
+'PushIAy ErzFmlFld, MinusAy(Fml, Fny)
 End If
 End Function
+
 Private Function ErzFmt() As String()
 
 End Function
@@ -296,7 +293,7 @@ End Function
 Private Function ErzVzFml() As String()
 
 End Function
-Private Function B_EVal_NotBet(T1, FmNumVal, ToNumval) As String()
+Private Function XEVal_NotBet(T1, FmNumVal, ToNumval) As String()
 'Dim Lnx(): Lnx = A_T1ToLnxsDic(T1)
 End Function
 Private Function ErzVzNotInLis() As String()
@@ -354,64 +351,55 @@ T1:
 Tst:
     Act = ErzFldSngzDup(Fny, Lof)
 End Sub
-Private Sub Z_ErzLof()
-Dim Lof$(), LoFny$()
-GoSub Z
-Exit Sub
-Z:
-    Brw ErzLof(Y_Lof, Y_LoFny)
-    Return
-Tst:
-    Act = ErzLof(Lof, LoFny)
-    Brw Act
-    Stop
-    C
-    Return
-End Sub
+
 Private Function Y_Lof() As String()
 Y_Lof = SampLof
 End Function
+
 Private Function Y_LoFny() As String()
-Y_LoFny = SampLoFny
+Y_LoFny = FoSampLo
 End Function
-Property Get SampLoFny() As String()
-SampLoFny = SyzSS("A B C D E F")
-End Property
-Property Get SampLof() As String()
-Erase XX
-X "Bet A B C"
-X "Lo Nm ABC"
-X "Lo Fld A B C D E F G"
-X "Ali Left A B"
-X "Ali Right D E"
-X "Ali Center F"
-X "Wdt 10 A B X"
-X "Wdt 20 D C C"
-X "Wdt 3000 E F G C"
-X "Fmt #,## A B C"
-X "Fmt #,##.## D E"
-X "Lvl 2 A C"
-X "Bdr Left A"
-X "Bdr Right G"
-X "Bdr Col F"
-X "Tot Sum A B"
-X "Tot Cnt C"
-X "Tot Avg D"
-X "Tit A abc | sdf"
-X "Tit B abc | sdkf | sdfdf"
-X "Cor 12345 A B"
-X "Fml F A + B"
-X "Fml C A * 2"
-X "Lbl A lksd flks dfj"
-X "Lbl B lsdkf lksdf klsdj f"
-SampLof = XX
-Erase XX
+
+Property Get FoSampLo() As String()
+FoSampLo = SyzSS("A B C D E F")
 End Property
 
-Property Get SampLofT1nn$()
-SampLofT1nn$ = "Lo Ali Bdr Tot Wdt Fmt Lvl Cor Fml Lbl Tit Bet"
+Property Get SampLof() As String()
+Dim A As New Bfr
+With A
+.Var "Sum Bet  A B C"
+.Var "Lo Nm BC"
+.Var "Lo Fld  B C D E F G"
+.Var "Ali Left  B"
+.Var "Ali Right D E"
+.Var "Ali Center F"
+.Var "Wdt 10  B X"
+.Var "Wdt 20 D C C"
+.Var "Wdt 3000 E F G C"
+.Var "Fmt #,##  B C"
+.Var "Fmt #,##.## D E"
+.Var "Lvl 2  C"
+.Var "Bdr Left "
+.Var "Bdr Right G"
+.Var "Bdr Center F"
+.Var "Tot Sum  B"
+.Var "Tot Cnt C"
+.Var "Tot Avg D"
+.Var "Tit A bc | sdf"
+.Var "Tit B bc | sdkf | sdfdf"
+.Var "Cor 12345  B"
+.Var "Fml F  A + B"
+.Var "Fml C  B * 2"
+.Var "Lbl A lksd flks dfj"
+.Var "Lbl B lsdkf lksdf klsdj f"
+End With
+SampLof = AlignLyzTTRst(A.Ly)
 End Property
+
 Function Lnoss$(Ixy() As Long)
 Lnoss = JnSpc(AyIncEle1(Ixy))
 End Function
 
+Private Sub Z()
+QXls_Fun_ErzLof:
+End Sub

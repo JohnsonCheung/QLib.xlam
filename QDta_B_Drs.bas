@@ -434,11 +434,11 @@ With Drs
 End With
 End Function
 
-Function EnsColTyzInt(A As Drs, C) As Drs
-If NoReczDrs(A) Then EnsColTyzInt = A: Exit Function
+Function EnsColTyzInt(D As Drs, C) As Drs
+If NoReczDrs(D) Then EnsColTyzInt = D: Exit Function
 Dim O As Drs, J&, Ix%, Dr
-Ix = IxzAy(A.Fny, C)
-O = A
+Ix = IxzAy(D.Fny, C)
+O = D
 If IsSy(O.Dy(0)) Then Stop
 For Each Dr In Itr(O.Dy)
     Dr(Ix) = CInt(Dr(Ix))
@@ -448,15 +448,15 @@ Next
 EnsColTyzInt = O
 End Function
 
-Function AddColzIx(A As Drs, IxCol As EmIxCol) As Drs
+Function AddColzIx(D As Drs, IxCol As EmIxCol) As Drs
 Dim J&, Fny$(), Dy(), I, Dr
 Select Case True
-Case IxCol = EiNoIx: AddColzIx = A: Exit Function
+Case IxCol = EiNoIx: AddColzIx = D: Exit Function
 Case IxCol = EiBeg0
 Case IxCol = EiBeg1: J = 1
 End Select
-Fny = InsEle(A.Fny, "Ix")
-For Each Dr In Itr(A.Dy)
+Fny = InsEle(D.Fny, "Ix")
+For Each Dr In Itr(D.Dy)
     Push Dy, InsEle(Dr, J)
     J = J + 1
 Next
@@ -504,7 +504,7 @@ IntozDrsC = O
 End Function
 
 Sub DmpDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional Nm$, Optional IxCol As EmIxCol, Optional Fmt As EmTblFmt = EiTblFmt, Optional IsSum As Boolean)
-DmpAy FmtDrs(A, MaxColWdt, BrkColnn$, ShwZer, IxCol, Fmt, Nm, IsSum)
+DmpAy FmtDrs(A, MaxColWdt, BrkColnn$, ShwZer, IxCol, Fmt, Nm)
 End Sub
 
 Function DrpColzFny(D As Drs, Fny$()) As Drs

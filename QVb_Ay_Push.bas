@@ -157,6 +157,13 @@ Else
     ReDim Preserve O(UB(O) - 1)
 End If
 End Function
+
+Function RmvLasEle(Ay)
+Dim O: O = Ay
+ReDim Preserve O(UB(O) - 1)
+RmvLasEle = O
+End Function
+
 Function PopI(O)
 PopI = LasEle(O)
 If Si(O) = 1 Then

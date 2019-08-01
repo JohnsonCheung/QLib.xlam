@@ -21,6 +21,11 @@ End Function
 Function JnCommaCrLf$(Ay)
 JnCommaCrLf = Jn(Ay, "," & vbCrLf)
 End Function
+
+Function CatAy(AyA, AyB, Optional Sep$) As String()
+
+End Function
+
 Function JnAp$(Sep$, ParamArray Ap())
 Dim Av(): Av = Ap
 JnAp = Jn(Av, Sep)

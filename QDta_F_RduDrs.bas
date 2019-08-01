@@ -47,7 +47,7 @@ FmtDrszRdu = FmtRduDrs(RduDrs(A), MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt)
 End Function
 
 Private Function FmtRduDrs(A As RduDrs, Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol, Optional Fmt As EmTblFmt = EiTblFmt) As String()
-PushIAy FmtRduDrs, FmtDic(A.RduColDic)
+PushIAy FmtRduDrs, RmvLasEle(FmtDic(A.RduColDic))
 PushIAy FmtRduDrs, FmtDrs(A.Drs, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt)
 End Function
 

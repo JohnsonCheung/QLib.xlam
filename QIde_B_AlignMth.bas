@@ -50,7 +50,7 @@ Z:
     Return
 End Sub
 
-Sub AlignMthzML(M As CodeModule, MthLno&, Optional Rpt As EmRpt, Optional IsUpdSelf As Boolean)
+Sub AlignMthzLno(M As CodeModule, MthLno&, Optional Rpt As EmRpt, Optional IsUpdSelf As Boolean)
 Dim D1 As Drs, D2 As Drs
 '== Exit if parameter error ============================================================================================
 Dim IsErPm As Boolean: IsErPm = XIsErPm(M, MthLno)                 '        #Is-Parameter-er.     ! M-isnothg | MthLno<=0
@@ -58,7 +58,7 @@ Dim IsErPm As Boolean: IsErPm = XIsErPm(M, MthLno)                 '        #Is-
 Dim Ml$:                   Ml = ContLinzLno(M, MthLno)
 Dim IsUpd  As Boolean:  IsUpd = IsUpdzRpt(Rpt)
 Dim MlNm$:               MlNm = Mthn(Ml)                           '        #Ml-Name.
-Dim IsSelf As Boolean: IsSelf = XIsSelf(IsUpd, IsUpdSelf, M, MlNm) '        #Is-Self-aligning-er. ! Mdn<>'QIde...' & MlNm<>'AlignMthzML
+Dim IsSelf As Boolean: IsSelf = XIsSelf(IsUpd, IsUpdSelf, M, MlNm) '        #Is-Self-aligning-er. ! Mdn<>'QIde...' & MlNm<>'AlignMthzLno
 
 :                   If IsSelf Then Exit Sub        ' Exit=>                 ! If
 Dim Mc As Drs: Mc = DoMthCxtzML(M, MthLno)          ' L MthLin #Mth-Context.
@@ -129,8 +129,6 @@ Dim CmlJn     As Drs:     CmlJn = JnDrs(CmlEpt, CmlAct, "CmNm", "L ActL") ' V Cm
                              D2 = DeCeqC(CmlJn, "EptL ActL")              ' V CmNm EptL L ActL                  ! All EptL & ActL are diff
 Dim CmlLNewO  As Drs:  CmlLNewO = SelDrsAs(D2, "L EptL:NewL ActL:OldL")   ' L NewL OldL
 :                                 If IsUpd Then RplLin M, CmlLNewO        ' <==
-BrwDrs CmlLNewO
-Stop
 
 '== Rpl Mth-Brw (Mb)====================================================================================================
 '   Des: Mth-Brw is a remarked Insp-stmt in each las lin of cm.  It insp all the inp oup
@@ -254,14 +252,14 @@ End Function
 Sub AlignMth(Optional Rpt As EmRpt)
 Dim M As CodeModule: Set M = CMd
 If IsNothing(M) Then Exit Sub
-AlignMthzML M, CMthLno, Rpt:=Rpt
+AlignMthzLno M, CMthLno, Rpt:=Rpt
 End Sub
 
 Sub AlignMthzNm(Mdn$, Mthn$, Optional Rpt As EmRpt)
 If Not HasMd(CPj, Mdn) Then Debug.Print "[" & Mdn & "] not exist": Exit Sub
 Dim M As CodeModule: Set M = Md(Mdn)
 Dim L&: L = MthLnozMM(M, Mthn): If L = 0 Then Debug.Print "[" & Mthn & "] not exist": Exit Sub
-AlignMthzML M, L, Rpt:=Rpt
+AlignMthzLno M, L, Rpt:=Rpt
 End Sub
 
 Private Function XAddColzF0(A As Drs) As Drs
@@ -622,11 +620,11 @@ End Function
 
 Private Function XIsSelf(IsUpd As Boolean, IsUpdSelf As Boolean, M As CodeModule, MlNm$) As Boolean
 'Fm MlNm :  #Ml-Name.
-'Ret     :  #Is-Self-aligning-er. ! Mdn<>'QIde...' & MlNm<>'AlignMthzML @@
+'Ret     :  #Is-Self-aligning-er. ! Mdn<>'QIde...' & MlNm<>'AlignMthzLno @@
 If Not IsUpd Then Exit Function
 If IsUpdSelf Then Exit Function
 Dim O As Boolean
-O = Mdn(M) = "QIde_B_AlignMth" And MlNm = "AlignMthzML"
+O = Mdn(M) = "QIde_B_AlignMth" And MlNm = "AlignMthzLno"
 If O Then Inf CSub, "Self aligning"
 XIsSelf = O
 'Insp "QIde_B_AlignMth.XIsSelf", "Inspect", "Oup(XIsSelf) IsUpd IsUpdSelf M MlNm", XIsSelf, IsUpd, IsUpdSelf, Mdn(M), MlNm: Stop

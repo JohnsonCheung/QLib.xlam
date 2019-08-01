@@ -19,6 +19,7 @@ End Function
 Function BkPjfzLasP$()
 BkPjfzLasP = BkFfnzLas(PjfP)
 End Function
+
 Function BkFfnzLas$(Ffn)
 Dim H$: H = BkHom(Ffn)
 Dim F$(): F = FdrAyzIsInst(H)

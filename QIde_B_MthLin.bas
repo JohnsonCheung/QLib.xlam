@@ -58,10 +58,6 @@ Function MthLinzML$(M As CodeModule, Lno&)
 MthLinzML = ContLinzLno(M, MthLno(M, Lno))
 End Function
 
-Function MthPm$(MthLin)
-MthPm = BetBkt(MthLin)
-End Function
-
 Function MthLinAyM() As String()
 MthLinAyM = MthLinAyzM(CMd)
 End Function
@@ -126,9 +122,9 @@ Private Property Get XX1()
 End Property
 
 'BB
-Private Property Let XX1(V)
+Private Sub SetXX1(V)
 
-End Property
+End Sub
 Function PubMthNyzP(P As VBProject) As String()
 
 End Function
@@ -173,7 +169,7 @@ End Function
 Function MthLAyzS(Src$()) As String()
 Dim Ix
 For Each Ix In Itr(MthIxy(Src))
-    PushI MthLAyzS, MthLzSI(Src, Ix)
+    PushI MthLAyzS, MthLzIx(Src, Ix)
 Next
 End Function
 Function MdzMthn(P As VBProject, Mthn) As CodeModule
@@ -196,40 +192,40 @@ MthLzN = MthLzPN(CPj, Mthn)
 End Function
 
 Function MthLzM$(M As CodeModule, Mthn)
-MthLzM = MthLzSN(Src(M), Mthn)
+MthLzM = MthLzNm(Src(M), Mthn)
 End Function
 
 Function MthLyzM(M As CodeModule, Mthn) As String()
 MthLyzM = SplitCrLf(MthLzM(M, Mthn))
 End Function
 
-Function MthLzMTN$(Md As CodeModule, ShtMthTy$, Mthn)
-Dim S$(): S = Src(Md)
-Dim Ix&: Ix = MthIxzSTN(S, ShtMthTy, Mthn)
-MthLzMTN = MthLzSI(S, Ix)
+Function MthLzNmTy$(M As CodeModule, Mthn, ShtMthTy$)
+Dim S$(): S = Src(M)
+Dim Ix&: Ix = MthIxzNmTy(S, Mthn, ShtMthTy)
+MthLzNmTy = MthLzIx(S, Ix)
 End Function
 
-Function MthLzSI$(Src$(), MthIx)
+Function MthLzIx$(Src$(), MthIx)
 Dim EIx&:       EIx = EndLix(Src, MthIx)
 Dim MthLy$(): MthLy = AwFT(Src, MthIx, EIx)
-MthLzSI = JnCrLf(MthLy)
+MthLzIx = JnCrLf(MthLy)
 End Function
 
-Function MthLinzSTN$(Src$(), ShtMthTy$, Mthn)
-MthLinzSTN = Src(MthIxzSTN(Src, ShtMthTy, Mthn))
+Function MthLinzNmTy$(Src$(), Mthn, ShtMthTy$)
+MthLinzNmTy = Src(MthIxzNmTy(Src, Mthn, ShtMthTy))
 End Function
 
-Function MthLzSN$(Src$(), Mthn)
+Function MthLzNm$(Src$(), Mthn)
 Dim Ix, O$()
 For Each Ix In Itr(MthIxyzSN(Src, Mthn))
-    PushI O, MthLzSI(Src, Ix)
+    PushI O, MthLzIx(Src, Ix)
 Next
-MthLzSN = JnDblCrLf(O)
+MthLzNm = JnDblCrLf(O)
 End Function
 
 Function MthLzSTN$(Src$(), ShtMthTy$, Mthn)
-Dim Ix&: Ix = MthIxzSTN(Src, ShtMthTy, Mthn)
-MthLzSTN = MthLzSI(Src, Ix)
+Dim Ix&: Ix = MthIxzNmTy(Src, Mthn, ShtMthTy)
+MthLzSTN = MthLzIx(Src, Ix)
 End Function
 
 

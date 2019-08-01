@@ -41,7 +41,7 @@ For J = FmIx To UB(Ay)
     If Ay(J) = Itm Then IxzAy = J: Exit Function
 Next
 If ThwEr = EiThwEr Then
-    Thw CSub, "Itm not found in Ay", "Itm Ay", Itm, Ay
+    Thw CSub, "Itm not found in Ay", "Itm Si(Ay) Ay", Itm, Si(Ay), Ay
 End If
 IxzAy = -1
 End Function

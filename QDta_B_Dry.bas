@@ -148,7 +148,22 @@ Dim Dr: For Each Dr In Itr(Dy)
 Next
 End Function
 
-Function AlignTRst(Ly$()) As String()
+Function AlignLyzTTRst(Ly$()) As String()
+Dim AT1$(), AT2$(), ARst$()
+Dim L, T1$, T2$, Rst$: For Each L In Itr(Ly)
+    AsgTTRst L, T1, T2, Rst
+    PushI AT1, T1
+    PushI AT2, T2
+    PushI ARst, Rst
+Next
+AT1 = AlignAy(AT1)
+AT2 = AlignAy(AT2)
+Dim J&: For J = 0 To UB(AT1)
+    PushI AlignLyzTTRst, AT1(J) & " " & AT2(J) & " " & ARst(J)
+Next
+End Function
+
+Function AlignLyzTRst(Ly$()) As String()
 Dim TAy$(), RstAy$()
 Dim L, T$, Rst$: For Each L In Itr(Ly)
     AsgTRst L, T, Rst
@@ -157,7 +172,7 @@ Dim L, T$, Rst$: For Each L In Itr(Ly)
 Next
 TAy = AlignAy(TAy)
 Dim J&: For J = 0 To UB(TAy)
-    PushI AlignTRst, TAy(J) & " " & RstAy(J)
+    PushI AlignLyzTRst, TAy(J) & " " & RstAy(J)
 Next
 End Function
 Function AlignRzDyC(Dy(), C) As Variant()

@@ -243,8 +243,8 @@ SrtzP CPj
 End Sub
 
 Function SrtzM(M As CodeModule) As Boolean
-Const C$ = "QIde_Md_Op_RplMd"
-If Mdn(M) = C Then Debug.Print "SrtzM: Skipping..."; C
+Const C$ = "QIde_B_CmpOp"
+If Mdn(M) = C Then Debug.Print "SrtzM: Skipping..."; C: Exit Function
 SrtzM = RplMd(M, SSrcLzM(M))
 End Function
 

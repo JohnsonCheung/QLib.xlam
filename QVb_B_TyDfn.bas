@@ -1,4 +1,4 @@
-Attribute VB_Name = "QVb_B_DocWs"
+Attribute VB_Name = "QVb_B_TyDfn"
 Option Explicit
 Option Compare Text
 

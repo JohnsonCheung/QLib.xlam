@@ -16,6 +16,36 @@ Dim J&: For J = 0 To A.N - 1
     PushS12 MapS1, M
 Next
 End Function
+
+Sub WrtS12s(A As S12s, Ft$, Optional OvrWrt As Boolean)
+WrtStr S12sStr(A), Ft, OvrWrt
+End Sub
+
+Function S12Str$(A As S12)
+S12Str = A.S1 & Chr(5) & A.S2
+End Function
+
+Function S12zStr(S12Str$) As S12
+S12zStr = Brk(S12Str, Chr(5), NoTrim:=True)
+End Function
+
+Function S12szStr(S12sStr$) As S12s
+Dim S: For Each S In Itr(Split(S12sStr, Chr(&H14)))
+    PushS12 S12szStr, Brk(S, Chr(5), NoTrim:=True)
+Next
+End Function
+
+Function S12szRes(ResFn$, Optional ResPseg$) As S12s
+S12szRes = S12szStr(Res(ResFn, ResPseg))
+End Function
+
+Function S12sStr$(A As S12s)
+Dim J&, O$(): For J = 0 To A.N - 1
+    PushI O, S12Str(A.Ay(J))
+Next
+S12sStr = Jn(O, Chr(&H14))
+End Function
+
 Function SwapS12s(A As S12s) As S12s
 Dim J&, Ay() As S12: Ay = A.Ay
 Dim O As S12s: O = A

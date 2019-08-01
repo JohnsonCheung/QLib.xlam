@@ -32,7 +32,7 @@ Private Sub Z_DiMthnqLinesM()
 B DiMthnqLinesM
 End Sub
 
-Function DiMthnqLinesP()
+Function DiMthnqLinesP() As Dictionary
 Set DiMthnqLinesP = DiMthnqLineszP(CPj)
 End Function
 
@@ -46,8 +46,8 @@ Dim P$: If Mdn <> "" Then P = Mdn & "."
 With DiMthnqLines
     If Not ExlDcl Then .Add P & "*Dcl", Dcl(Src)
     Dim Ix: For Each Ix In MthIxItr(Src)
-        Dim Dn$:       Dn = MthDn(Src(Ix))
-        Dim Lines$: Lines = MthLzSI(Src, Ix)
+        Dim Dn$:       Dn = MthDnzL(Src(Ix))
+        Dim Lines$: Lines = MthLzIx(Src, Ix)
         .Add P & Dn, Lines
     Next
 End With
@@ -69,15 +69,16 @@ Function SDiMthnqLinesP() As Dictionary
 Set SDiMthnqLinesP = SDiMthnqLineszP(CPj)
 End Function
 
-Function SSrcLzS$(Src$())
-SSrcLzS = JnStrDic(SrtDic(DiMthnqLines(Src)), vb2CrLf)
+Function SSrcL$(Src$())
+':SSrcL :SrcL #Sorted-SrcLines#
+SSrcL = JnStrDic(SrtDic(DiMthnqLines(Src)), vb2CrLf)
 End Function
 Function SSrcLM$()
 SSrcLM = SSrcLzM(CMd)
 End Function
 
 Function SSrcLzM$(M As CodeModule)
-SSrcLzM = SSrcLzS(Src(M))
+SSrcLzM = SSrcL(Src(M))
 End Function
 
 Function SrcLzM$(M As CodeModule)

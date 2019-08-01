@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QXls"
 Private Const CMod$ = "MXls_Lo_Fmt."
-':Lof$ = "It is Ly with T1 LofT1nn"
+':Lof$ = "It is Ly with T1 LofLofT1nn"
 Private Type A
     Lo As ListObject
     Fny() As String
@@ -338,7 +338,7 @@ Private Function XTitAt(Lo As ListObject, NTitRow%) As Range
 Set XTitAt = RgRC(Lo.DataBodyRange, 0 - NTitRow, 1)
 End Function
 
-Private Function XTitSq(TitLy$(), LoFny$()) As Variant()
+Private Function XTitSq(TitLy$(), LofNy$()) As Variant()
 Dim Fny$()
 Dim Col()
     Dim F$, I, Tit$
@@ -394,27 +394,18 @@ Brw FmtLof(SampLof)
 End Sub
 
 Function FmtLof(Lof$()) As String()
-FmtLof = FmtSpec(Lof, LofT1nn, 2)
-End Function
-
-Function FmtSpec(Spec$(), Optional T1nn$, Optional FmtFstNTerm% = 1) As String()
-Dim mT1Ay$()
-    If IsMissing(T1nn) Then
-        mT1Ay = T1Ay(Spec)
-    Else
-        mT1Ay = TermAy(T1nn)
-    End If
+Dim mT1Ay$():    mT1Ay = TermAy(LofT1nn)
 Dim O$()
     Dim T$, I
     For Each I In mT1Ay
         T = I
-        PushIAy O, AwT1(Spec, T)
+        PushIAy O, AwT1(Lof, T)
     Next
-    Dim M$(): M = SyeT1Sy(Spec, mT1Ay)
+    Dim M$(): M = SyeT1Sy(Lof, mT1Ay)
     If Si(M) > 0 Then
         PushI O, FmtQQ("# Error: in not T1Ay(?)", TLin(mT1Ay))
         PushIAy O, M
     End If
-FmtSpec = FmtSyzNTerm(O, FmtFstNTerm)
+FmtLof = AlignLyzTTRst(O)
 End Function
 
