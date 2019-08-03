@@ -93,7 +93,7 @@ End Function
 
 Function IsVbaItm(Itm$) As Boolean
 ':VbaItm: :S ! One of :VbaItmAy
-':VbaItmAy: :Ny ! One of {Function Sub Type Enum Property Dim Private}
+':VbaItmAy: :Ny ! One of {Function Sub Type Enum Property Dim Const}
 IsVbaItm = HasEle(VbaItmAy, Itm)
 End Function
 
@@ -112,6 +112,18 @@ End Function
 Function MthIxItr(Src$())
 Asg Itr(MthIxy(Src)), MthIxItr
 End Function
+
+Private Sub Z_MthIxy()
+Dim Src$()
+GoSub Z
+Exit Sub
+Z:
+    Src = SrczMdn("QVb_Fs_Pth")
+    Dim MIxy&(): MIxy = MthIxy(Src)
+    Brw AwIxy(Src, MIxy)
+    Return
+
+End Sub
 
 Function MthIxy(Src$()) As Long()
 Dim Ix
@@ -211,16 +223,3 @@ For Each S In Itr(Src)
 Next
 End Function
 
-Private Sub Z()
-MIde_Mth_Ix:
-End Sub
-
-Private Sub Z_MthIxy()
-Dim Ix, Src$()
-Src = CSrc
-For Each Ix In MthIxItr(Src)
-    If MthKd(Src(Ix)) <> "" Then
-        Debug.Print Ix; Src(Ix)
-    End If
-Next
-End Sub

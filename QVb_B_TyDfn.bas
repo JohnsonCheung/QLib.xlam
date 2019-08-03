@@ -155,7 +155,7 @@ Dim L: For Each L In RmkLy
         R = RmvFstChr(L)        ' Rmv '
         R = LTrim(R)
         R = RmvFstChr(R)        ' Rmv !
-        Rmk = ApdIf(Rmk, vbCrLf & R)
+        Rmk = AddNB(Rmk, vbCrLf & R)
     End If
 Next
 Nm = RmvFstChr(Nm)

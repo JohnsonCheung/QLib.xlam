@@ -1,4 +1,6 @@
 Attribute VB_Name = "QVb_F_Res"
+Option Explicit
+Option Compare Text
 Private X_ResPseg$
 Property Get ResPseg()
 ResPseg = X_ResPseg
@@ -36,7 +38,7 @@ WrtRes = Ft
 End Function
 
 Function ResLy(ResFn$, Optional ResPseg$) As String()
-LyzRes = LyzFt(FtzRes(ResFn, ResPseg))
+ResLy = LyzFt(FtzRes(ResFn, ResPseg))
 End Function
 
 Function ResHom$()

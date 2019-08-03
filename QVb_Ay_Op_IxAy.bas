@@ -26,10 +26,11 @@ Tst:
     Debug.Print C = Ec
     Return
 End Sub
+
 Sub AsgIx(A As Drs, FF$, ParamArray OIxAp())
 Dim F, J%, I&
 For Each F In SyzSS(FF)
-    I = IxzAy(A.Fny, F): If I < 0 Then Thw CSub, "F in FF not found in Fny", "Fny FF F", A.Fny, FF, F
+    I = IxzAy(A.Fny, F, ThwEr:=EiThwEr)
     OIxAp(J) = IxzAy(A.Fny, F)
     J = J + 1
 Next

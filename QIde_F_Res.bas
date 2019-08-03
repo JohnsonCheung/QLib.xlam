@@ -1,4 +1,6 @@
 Attribute VB_Name = "QIde_F_Res"
+Option Explicit
+Option Compare Text
 
 Function ResLyzMthn(M As CodeModule, Mthn$) As String()
 Dim Z$

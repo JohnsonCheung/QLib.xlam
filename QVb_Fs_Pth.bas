@@ -4,7 +4,7 @@ Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Fs_Pth."
 Function AddFdr$(Pth, Fdr)
-AddFdr = EnsPthSfx(Pth) & ApdIf(Fdr, "\")
+AddFdr = EnsPthSfx(Pth) & AddNB(Fdr, "\")
 End Function
 Function AddPsegEns$(Pth, Pseg)
 AddPsegEns = EnsPthzAllSeg(AddFdr(Pth, Pseg))

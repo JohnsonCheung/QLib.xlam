@@ -136,6 +136,22 @@ Function IsObjAy(V) As Boolean
 IsObjAy = VarType(V) = vbArray + vbObject
 End Function
 
+Function IsPrimTy(Ty$) As Boolean
+Select Case Ty
+Case _
+   "Boolean", _
+   "Byte", _
+   "Currency", _
+   "Date", _
+   "Decimal", _
+   "Double", _
+   "Integer", _
+   "Long", _
+   "Single", _
+   "String"
+   IsPrimTy = True
+End Select
+End Function
 Function IsPrim(V) As Boolean
 Select Case VarType(V)
 Case _

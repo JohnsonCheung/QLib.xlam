@@ -58,8 +58,8 @@ MdPos.RRCC = RRCC
 End Function
 
 
-Function NUsrTyMd%(M As CodeModule)
-NUsrTyMd = NUsrTySrc(DclLyzM(M))
+Function NTyMd%(M As CodeModule)
+NTyMd = NTySrc(DclLyzM(M))
 End Function
 
 
@@ -127,10 +127,10 @@ Next
 NEnm = O
 End Function
 
-Function UsrTyFei(Dcl$(), TyNm$) As Fei
-Dim FmI&: FmI = UsrTyFmIx(Dcl, TyNm)
+Function TyFei(Dcl$(), TyNm$) As Fei
+Dim FmI&: FmI = TyFmIx(Dcl, TyNm)
 Dim ToI&: ToI = EndLix(Dcl, FmI)
-UsrTyFei = Fei(FmI, ToI)
+TyFei = Fei(FmI, ToI)
 End Function
 Function MthELno&(M As CodeModule, MthLno&)
 Dim MLin$: MLin = M.Lines(MthLno, 1)
@@ -145,33 +145,27 @@ If K = "" Then Thw CSub, "MthLin Error", "MthLin", MthLin
 MthELin = "End " & K
 End Function
 
-Function UsrTyLines$(Dcl$(), Tyn$)
-UsrTyLines = JnCrLf(UsrTyLy(Dcl, Tyn))
+Function TyLines$(Dcl$(), Tyn$)
+TyLines = JnCrLf(TyLy(Dcl, Tyn))
 End Function
 
-Function UsrTyLy(Dcl$(), TyNm$) As String()
-UsrTyLy = AwFei(Dcl, UsrTyFei(Dcl, TyNm))
+Function TyLy(Dcl$(), TyNm$) As String()
+TyLy = AwFei(Dcl, TyFei(Dcl, TyNm))
 End Function
 
-Function UsrTyFmIx&(Src$(), TyNm)
+Function TyFmIx&(Src$(), TyNm)
 Dim J%
 For J = 0 To UB(Src)
-   If IsLinTy(Src(J)) = TyNm Then UsrTyFmIx = J: Exit Function
+   If IsLinTy(Src(J)) = TyNm Then TyFmIx = J: Exit Function
    If IsLinMth(Src(J)) Then Exit For
 Next
-UsrTyFmIx = -1
+TyFmIx = -1
 End Function
 
-Function TynzLin$(L)
-Dim Lin$: Lin = RmvMdy(L)
-If Not ShfTy(Lin) Then Exit Function
-TynzLin = Nm(Lin)
-End Function
-Function TyNyzS(Src$()) As String()
+Function TyNy(DclLy$()) As String()
 Dim L
-For Each L In Itr(Src)
-    PushNB TyNyzS, TynzLin(L)
-    If IsLinMth(L) Then Exit Function
+For Each L In Itr(DclLy)
+    PushNB TyNy, Tyn(L)
 Next
 End Function
 Function Enmn(Lin)
@@ -217,14 +211,23 @@ Function NEnmzM%(M As CodeModule)
 NEnmzM = NEnm(DclLyzM(M))
 End Function
 
-Function TynyzM(M As CodeModule) As String()
-TynyzM = TyNyzS(DclLyzM(M))
+Function TyNyzM(M As CodeModule) As String()
+TyNyzM = TyNy(DclLyzM(M))
 End Function
 
-Function TynyzP(P As VBProject) As String()
+Function TyNyP() As String()
+Static X As Boolean, Y
+If Not X Then
+    X = True
+    Y = TyNyzP(CPj)
+End If
+TyNyP = Y
+End Function
+
+Function TyNyzP(P As VBProject) As String()
 Dim I, C As VBComponent
 For Each C In P.VBComponents
-    PushIAy TynyzP, TynyzM(C.CodeModule)
+    PushIAy TyNyzP, TyNyzM(C.CodeModule)
 Next
 End Function
 

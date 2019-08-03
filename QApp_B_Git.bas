@@ -47,7 +47,3 @@ Private Sub Z()
 MApp_Commit:
 End Sub
 
-Function RunFps1&(Fps1$, Optional PmStr$)
-RunFps1 = RunFcmd("PowerShell", FmtQQ("""?""", Fps1) & PpdSpcIf(PmStr))
-End Function
-

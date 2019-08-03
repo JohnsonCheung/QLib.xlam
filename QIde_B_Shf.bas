@@ -109,7 +109,7 @@ End If
 End Function
 
 Function TakMthKd$(Lin)
-TakMthKd = PfxzAy(Lin, MthKdAy)
+TakMthKd = PfxzAyS(Lin, MthKdAy)
 End Function
 
 Function TakMthTy$(Lin)
@@ -327,15 +327,15 @@ DclSfx = ShtDclSfx(RmvNm(DclItm))
 End Function
 
 Function DclSfxzArg$(Arg$)
-DclSfxzArg = DclSfx(DclItm(Arg))
+DclSfxzArg = DclSfx(ArgItm(Arg))
 End Function
 
 Function ShtDclSfxzArg$(Arg$)
-ShtDclSfxzArg = ShtDclSfx(DclSfx(DclItm(Arg)))
+ShtDclSfxzArg = ShtDclSfx(DclSfx(ArgItm(Arg)))
 End Function
 
-Function DclItm$(Arg)
-DclItm = BefOrAll(RmvPfxSpc(RmvPfxSpc(Arg, "Optional"), "ParamArray"), " =")
+Function ArgItm$(Arg)
+ArgItm = BefOrAll(RmvPfxSpc(RmvPfxSpc(Arg, "Optional"), "ParamArray"), " =")
 End Function
 
 Function FmtPm(Pm$, Optional IsNoBkt As Boolean) 'Pm is wo bkt.
@@ -392,15 +392,6 @@ Function RetAsAyP() As String()
 'RetAsAyP = DistColoS(DoMth, "RetAs")
 End Function
 
-Function RetAs$(Ret)
-If IsTyChr(FstChr(Ret)) Then
-    RetAs = TyNmzTyChr(FstChr(Ret)) & RmvFstChr(Ret)
-    Exit Function
-End If
-If TyChrzTyNm(Ret) <> "" Then Exit Function
-RetAs = " As " & Ret
-End Function
-
 Private Sub Z_RetAszL()
 Dim L, A As S12s: For Each L In MthLinAyP
     PushS12 A, S12(RetAszL(L), L)
@@ -416,8 +407,14 @@ RetAszL = RmvPfx(C, "As ")
 End Function
 
 Function RetAszRet$(Ret)
-RetAszRet = RetAs(Ret)
+If IsTyChr(FstChr(Ret)) Then
+    RetAszRet = TyNmzTyChr(FstChr(Ret)) & RmvFstChr(Ret)
+    Exit Function
+End If
+If TyChrzTyNm(Ret) <> "" Then Exit Function
+RetAszRet = " As " & Ret
 End Function
+
 Function RetAszDclSfx$(DclSfx)
 If DclSfx = "" Then Exit Function
 Dim B$

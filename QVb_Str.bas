@@ -100,6 +100,14 @@ Else
 End If
 End Function
 
+Function AlignRzT1(Ly$()) As String()
+Dim T1$(), Rst$()
+AsgT1AyRstAy Ly, T1, Rst
+T1 = AlignRzAy(T1)
+Dim J&: For J = 0 To UB(T1)
+    PushI AlignRzT1, T1(J) & " " & Rst(J)
+Next
+End Function
 
 Function TrimWhite$(A)
 TrimWhite = TrimWhiteL(TrimWhiteL(A))

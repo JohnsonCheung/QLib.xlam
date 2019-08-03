@@ -28,6 +28,14 @@ Sub AsgTT(Lin, O1, O2)
 AsgAp T2Rst(Lin), O1, O2
 End Sub
 
+Sub AsgT1AyRstAy(Ly$(), OT1Ay$(), ORstAy$())
+Erase OT1Ay, ORstAy
+Dim L: For Each L In Itr(Ly)
+    PushI OT1Ay, T1(L)
+    PushI ORstAy, RmvT1(L)
+Next
+End Sub
+
 Sub AsgT1Sy(LinOf_T1_SS, OT1, OSy$())
 Dim Rst$
 AsgTRst LinOf_T1_SS, OT1, Rst

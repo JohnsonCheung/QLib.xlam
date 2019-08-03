@@ -549,7 +549,7 @@ Private Function XMbEpt(CmLis As Drs, Mdn$) As Drs
 Dim Dr, Dy()
 For Each Dr In Itr(CmLis.Dy)
     Dim MthLin$: MthLin = LasEle(Dr)
-    Dim MbStmt$: MbStmt = "'" & InspMthStmt(MthLin, Mdn) & ": Stop"
+    Dim MbStmt$: MbStmt = "'" & InspStmtzMthLin(MthLin, Mdn) & ": Stop"
     PushI Dr, MbStmt
     PushI Dy, Dr
 Next
@@ -559,7 +559,7 @@ End Function
 
 Private Function XMbAct(Cm$(), M As CodeModule) As Drs
 'Ret : L Mthn OldL ! OldL is MbStmt @@
-Dim A As Drs: A = DoMthe(M)             ' L E CmMdy Ty Mthn MthLin
+Dim A As Drs: A = DoMthezM(M)             ' L E CmMdy Ty Mthn MthLin
 Dim B As Drs: B = DwIn(A, "Mthn", Cm)
 Dim Dr, Dy(): For Each Dr In Itr(B.Dy)
     Dim E&:           E = Dr(1)

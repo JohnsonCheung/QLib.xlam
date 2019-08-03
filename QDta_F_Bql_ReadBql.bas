@@ -25,7 +25,7 @@ ShtTyscfBqlzDrs = Jn(O, "`")
 End Function
 
 Function ShtTyscfzCol$(Col(), F$)
-Dim O$: O = ApdIf(ShtTyszCol(Col), ":") & F
+Dim O$: O = AddNB(ShtTyszCol(Col), ":") & F
 If IsNeedQte(F) Then O = QteSqBkt(O)
 ShtTyscfzCol = O
 End Function

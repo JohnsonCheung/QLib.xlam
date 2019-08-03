@@ -104,9 +104,8 @@ Function DoMthzM(M As CodeModule) As Drs
 DoMthzM = DoMthzS(Src(M))
 End Function
 
-Function DoMthe(M As CodeModule) As Drs
-'Ret : L E Mdy Ty Mthn MthLin ! Mdy & Ty are Sht. L is Lno E is ELno @@d
-DoMthe = DoMthezS(Src(M))
+Function DoMthezM(M As CodeModule) As Drs
+DoMthezM = DoMthe(Src(M))
 End Function
 
 Function DoMthc(M As CodeModule) As Drs
@@ -115,8 +114,9 @@ DoMthc = DoMthczS(Src(M))
 End Function
 
 Function DoMtheM() As Drs
-DoMtheM = DoMthe(CMd)
+DoMtheM = DoMthezM(CMd)
 End Function
+
 Function DoMthcM() As Drs
 DoMthcM = DoMthczM(CMd)
 End Function

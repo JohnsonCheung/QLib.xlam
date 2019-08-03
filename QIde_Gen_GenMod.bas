@@ -301,7 +301,7 @@ For J = 0 To UB(Ret)
     If StpTy(J) = "Sub" Then
         PushI B_BCRetAs, ""
     Else
-        PushI B_BCRetAs, RetAs(Ret(J))
+        PushI B_BCRetAs, RetAszRet(Ret(J))
     End If
 Next
 End Function

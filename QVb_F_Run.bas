@@ -32,6 +32,10 @@ End Property
 Sub KillProcessId(ProcessId&)
 End Sub
 
+Function RunFps1&(Fps1$, Optional PmStr$)
+RunFps1 = RunFcmd("PowerShell", QteDbl(Fps1) & " " & PmStr)
+End Function
+
 Function RunFcmd&(Fcmd$, Optional PmStr$, Optional Sty As VbAppWinStyle = vbMaximizedFocus)
 Dim Lin
     Lin = QteDbl(Fcmd) & PpdSpcIf(PmStr)

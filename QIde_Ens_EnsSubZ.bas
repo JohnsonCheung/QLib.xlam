@@ -7,18 +7,13 @@ Private Type DiArgItmqVar '
     D As Dictionary
 End Type
 
-Private Function WCdCall$(MthNy$(), Pm$(), Mdy$)
-Dim O$(), I: For Each I In Itr(IxyzSrtAy(MthNy))
-    PushI O, MthNy(I) & " " & Pm(I)
-Next
-WCdCall = XCd(O, Mdy)
-End Function
-Private Function XCd$(CdLy$(), Itm$)
-If Si(CdLy) = 0 Then Exit Function
-Dim O$(): PushI O, "-- " & Itm & " --"
-PushIAy O, CdLy
-PushI O, ""
-XCd = JnCrLf(O)
+Private Function WCd$(MdMdyCall As Drs, Itm$)
+Dim Cl$():           Cl = StrCol(DwEq(MdMdyCall, "Mdy", Itm), "Call") ' Cl = CallLy
+Dim ClSrt$():     ClSrt = SrtAy(Cl)
+Dim ClAliR$():   ClAliR = AlignRzT1(ClSrt)
+Dim ClCrPfx$(): ClCrPfx = AddPfxzAy(ClAliR, vbCrLf)
+Dim Cd$:             Cd = Jn(ClCrPfx)
+WCd = AddNB(vbCrLf, "'-- " & Itm & " -----", Cd)
 End Function
 
 Private Function XCdDim$(ArgVar$(), DclSfx$())
@@ -28,7 +23,7 @@ Dim DclSfxGp(): DclSfxGp = GpAy(DclSfx, N)
 Dim J%, O$(): For J = 0 To UB(ArgVarGp)
     PushI O, XCdDim__OneLin(CvSy(ArgVarGp(J)), CvSy(DclSfxGp(J)))
 Next
-XCdDim = JnCrLf(O)
+XCdDim = AddNB(vbCrLf, "'-- Dim -----", Jn(AddPfxzAy(O, vbCrLf)))
 'Insp "QIde_Ens_EnsSubZ.XCdDim", "Inspect", "Oup(XCdDim) ArgVar DclSfx", XCdDim, ArgVar, DclSfx: Stop
 End Function
 
@@ -50,7 +45,7 @@ Z:
     Debug.Print CdSubZ(M)
     Return
 T1:
-    Set M = Md("QIde_EnsSubZ")
+    Set M = Md("QIde_Ens_EnsSubZ")
     Ept = ""
     GoTo Tst
 Tst:
@@ -61,12 +56,10 @@ End Sub
 
 Sub EnsSubZP()
 EnsSubZzP CPj
-EnsPrvZzP CPj
 End Sub
 
 Sub EnsSubZM()
 EnsSubZ CMd
-EnsPrvZ CMd
 End Sub
 
 Function CdSubZM$()
@@ -74,7 +67,7 @@ CdSubZM = CdSubZ(CMd)
 End Function
 
 Private Sub EnsSubZ(M As CodeModule)
-RplMth M, "SubZ", CdSubZ(M)
+RplMth M, "Z", CdSubZ(M)
 End Sub
 
 Private Sub EnsSubZzP(P As VBProject)
@@ -88,32 +81,18 @@ Private Function WMthNyzTy(DoMth As Drs, Ty$) As String()
 WMthNyzTy = StrCol(DwEq(DoMth, "Ty", Ty), "Mthn")
 End Function
 
-Private Function WCallPm(DoMth As Drs, Mdy$, D As DiArgItmqVar) As String()
-Dim MthPmAy$(): MthPmAy = StrCol(DwEq(DoMth, "Mdy", Mdy), "MthPm")
-Dim MthPm: For Each MthPm In Itr(MthPmAy)
-    PushI WCallPm, WCallPm__Lin(MthPm, D)
-Next
-End Function
-Private Function WCallPm__Arg$(Arg, D As DiArgItmqVar)
-Dim ArgNm$:
-End Function
-Private Function WCallPm__Lin$(MthPm, D As DiArgItmqVar)
-Dim O$()
+Private Function WCallPm$(MthPm$, D As DiArgItmqVar)
+Dim O$(), Dic As Dictionary
+Set Dic = D.D
 Dim Arg: For Each Arg In Itr(SplitCommaSpc(MthPm))
-    PushI O, WCallPm__Arg(Arg, D)
+    If Not Dic.Exists(Arg) Then Stop
+    PushI O, Dic(Arg)
 Next
-WCallPm__Lin = JnCommaSpc(O)
+WCallPm = JnCommaSpc(O)
 End Function
 
 Private Function WMthNy(DoMth As Drs, Mdy$) As String()
 WMthNy = StrCol(DwEq(DoMth, "Mdy", Mdy), "Mthn")
-End Function
-
-Private Function XDi2(Do2 As Drs) As Dictionary
-'Fm Do2 : Do<Ty-MthPm-PmLet-RHS>
-'Ret    : Di<ArgNm,DclSfx> @@
-
-'Insp "QIde_Ens_EnsSubZ.XDi2", "Inspect", "Oup(XDi2) Do2", XDi2, FmtDrs(Do2): Stop
 End Function
 
 Private Function XDiArgNmqArgVar(Do2 As Drs) As Dictionary
@@ -126,116 +105,90 @@ Function RmvLasTermzCommaSpc$(CommaSpc$)
 RmvLasTermzCommaSpc = JnCommaSpc(RmvLasEle(SplitCommaSpc(CommaSpc)))
 End Function
 
-Private Function XDo2__Dr(Dr) As Variant()
-    Dim PmLet$
-    Dim Ty$: Ty = Dr(0)
-    Dim PmAy$(): PmAy = SplitComma(PmLet)
-    If Ty = "Let" Or Ty = "Set" Then
-        'LetRHS = Pop(Dr)
-    Else
-        'LetRHS = ""
-        'PmLet = Pm
-    End If
-'    PushI Dr, Pm
-
-End Function
-
-Private Function XDo2(Do1 As Drs) As Drs
-'Fm Do1 : Do<Ty-MthPm>
-'Ret    : Do<Ty-MthPm-PmLet-RHS> @@
-Dim ODry(), Dr: For Each Dr In Itr(Do1.Dy)
-    PushI ODry, XDo2__Dr(Dr)
-Next
-XDo2 = DrszFF("Ty Pm LetRHS", ODry)
-'Insp "QIde_Ens_EnsSubZ.XDo2", "Inspect", "Oup(XDo2) Do1", FmtDrs(XDo2), FmtDrs(Do1): Stop
-End Function
-
 Private Function CdSubZ$(M As CodeModule)
 'Assume: No Set|Let-Prp, All Get-Prp is Pure
-Dim Src$():           Src = SrczM(M)
-Dim DoMth  As Drs:  DoMth = AddColzMthPm(DoMthzS(Src))
-Dim DoMthX As Drs: DoMthX = SelDrs(DoMth, "Mdy Ty Mthn MthPm") ' :Drs<Mdy Ty Mthn MthPm>
+':VarPfx-Md: :VarPfx #Mn-Drs#
+Dim Md       As Drs:       Md = AddColzMthPm(DoMth(M))                               ' :Drs<L Mdy Ty Mthn MthLin>
+Dim MdNoZ    As Drs:    MdNoZ = DwNe(Md, "Mthn", "Z")
+Dim MdAddRet As Drs: MdAddRet = AddColzIsRetObj(AddColzRetAs(MdNoZ))
+Dim MdRetObj As Drs: MdRetObj = SelDrs(MdAddRet, "Mdy Ty Mthn MthPm RetAs IsRetObj") ' :Drs<Mdy Ty Mthn MthPm RetAs IsRetObj>
 
-'-- CdZDashXX-----------------------------------------------------------------------------------------------------------
+'-- CdZDashXX(Md)-------------------------------------------------------------------------------------------------------
 '   is list of Mthn of Z_XXX within @M
 '   is calling such lis of mth as the test of the M@
-Dim Mth$():             Mth = StrCol(DoMth, "Mthn")
-Dim ZDash$():         ZDash = AwPfx(Mth, "Z_")
-Dim A$():                 A = Sy(SrtAy(ZDash), "Exit Sub")
-Dim CdZDashXX$:   CdZDashXX = JnCrLf(A)
-Dim DoArg As Drs:     DoArg = XDoArg(DoMthX)               ' :Drs<ArgNm DclSfx ArgVar DclSfx> <ArgNm DclSfx> are unique
+Dim Mn$():              Mn = StrCol(MdRetObj, "Mthn")
+Dim MnZDash$():    MnZDash = AwPfx(Mn, "Z_")
+Dim MnZDash1$():             If Si(MnZDash) > 0 Then MnZDash1 = Sy(SrtAy(MnZDash), "Exit Sub")
+Dim CdZDashXX$:  CdZDashXX = JnCrLf(MnZDash1)
 
-'-- CdDim --------------------------------------------------------------------------------------------------------------
+Dim DoArg As Drs: DoArg = XDoArg(MdRetObj) ' :Drs<ArgItm ArgNm DclSfx ArgVar DclSfx> <ArgNm DclSfx> are unique
+
+'-- CdDim(DoArg)  ------------------------------------------------------------------------------------------------------
 'Dim Di2 As Dictionary: Set Di2 = DiczDrsCC(DoArg, "ArgVar DclSfx")
 Dim ArgVar$(): ArgVar = StrCol(DoArg, "ArgVar")
 Dim DclSfx$(): DclSfx = StrCol(DoArg, "DclSfx")
 Dim CdDim$:     CdDim = XCdDim(ArgVar, DclSfx)
 
-'-- CdPub --------------------------------------------------------------------------------------------------------------
+'-- CdPub(MdRetObj,DoArg) ----------------------------------------------------------------------------------------------
 '   CdPrv
 '   CdFrd
-Dim Pub$():                Pub = WMthNy(DoMthX, "Pub")
-Dim Prv$():                Prv = WMthNy(DoMthX, "Prv")
-Dim Frd$():                Frd = WMthNy(DoMthX, "Frd")
-Dim Di1 As Dictionary: Set Di1 = DiczDrsCC(DoArg, "ArgNm ArgVar")
-Dim PubPm$():            PubPm = WCallPm(DoMthX, "Pub", Di1)
-Stop
-Dim PrvPm$():            PrvPm = WCallPm(DoMthX, "Prv", Di1)
-Dim FrdPm$():            FrdPm = WCallPm(DoMthX, "Frd", Di1)
-Dim CdPub$:              CdPub = WCdCall(Pub, PubPm, "Pub")
-Dim CdPrv$:              CdPrv = WCdCall(Prv, PrvPm, "Prv")
-Dim CdFrd$:              CdFrd = WCdCall(Frd, FrdPm, "Frd")
-
-'-- CdGet --------------------------------------------------------------------------------------------------------------
-Dim GetNy$():   GetNy = WMthNyzTy(DoMthX, "Get")
-Dim GetLHS$(): GetLHS = XGetLHS(DoMthX)
-Dim CdGet$:     CdGet = XCdGet(GetLHS, GetNy)
+Dim Pub$():                              Pub = WMthNy(MdRetObj, "Pub")
+Dim Prv$():                              Prv = WMthNy(MdRetObj, "Prv")
+Dim Frd$():                              Frd = WMthNy(MdRetObj, "Frd")
+Dim D           As DiArgItmqVar:     Set D.D = DiczDrsCC(DoArg, "ArgItm ArgVar")
+Dim MdAddCallPm As Drs:          MdAddCallPm = XMdAddCallPm(MdRetObj, D)                            ' :Drs<Mdy Ty Mthn MthPm RetAs IsRetObj CallPm>
+Dim MdAddCall   As Drs:            MdAddCall = XMdAddCall(MdAddCallPm)                              ' :Drs<Mdy Ty Mthn MthPm RetAs IsRetObj CallPm Call>
+Dim MdGet    As Drs:             MdGet = DwEqSel(MdAddCall, "Ty", "Get", "Call")
+Dim MdMdyCall   As Drs:            MdMdyCall = DwNeSel(MdAddCall, "Ty", "Get", "Mdy Call")
+Dim CdPub$:                            CdPub = WCd(MdMdyCall, "Pub")
+Dim CdPrv$:                            CdPrv = WCd(MdMdyCall, "Prv")
+Dim CdFrd$:                            CdFrd = WCd(MdMdyCall, "Frd")
+Dim CdGet$:                            CdGet = AddNB("Call", vbCrLf, StrColLines(MdGet, "Call"))
 
 '-- Cd -----------------------------------------------------------------------------------------------------------------
 Dim O$()
 PushI O, "Private Sub Z()"
 PushI O, Mdn(M) & ":"    '<-- Som the chg <Lbl>: to <Lbl>. will have drp down
-PushI O, CdZDashXX
-PushI O, CdDim
-PushI O, CdPub
-PushI O, CdPrv
-PushI O, CdFrd
-PushI O, CdGet
+PushNB O, CdZDashXX
+PushNB O, CdDim
+PushNB O, CdPub
+PushNB O, CdPrv
+PushNB O, CdFrd
+PushNB O, CdGet
 PushI O, "End Sub"
 CdSubZ = JnCrLf(O)
 End Function
 
-Private Function XCdGet$(GetLHS$(), GetNy$())
-'Insp "QIde_Ens_EnsSubZ.XCdGet", "Inspect", "Oup(XCdGet) GetLHS GetNy", XCdGet, GetLHS, GetNy: Stop
-End Function
-
-Private Function XGetLHS(DoMthX As Drs) As String()
-'Fm DoMthX : :Drs<Mdy Ty Mthn MthPm> @@
-
-'Insp "QIde_Ens_EnsSubZ.XGetLHS", "Inspect", "Oup(XGetLHS) DoMthX", XGetLHS, FmtDrs(DoMthX): Stop
-End Function
-
-Private Function XDi1(Do2 As Drs) As Dictionary
-'Fm Do2 : Do<Ty-MthPm-PmLet-RHS>
-'Ret    : Di<ArgNm,ArgVar> @@
-'Insp "QIde_Ens_EnsSubZ.XDi1", "Inspect", "Oup(XDi1) Do2", XDi1, FmtDrs(Do2): Stop
+Private Function XMdAddCallPm(MdRetObj As Drs, D As DiArgItmqVar) As Drs
+'Fm MdRetObj : :Drs<Mdy Ty Mthn MthPm RetAs IsRetObj>
+'Ret         : :Drs<Mdy Ty Mthn MthPm RetAs IsRetObj CallPm> @@
+Dim Ix%: Ix = IxzAy(MdRetObj.Fny, "MthPm", EmThw.EiThwEr)
+Dim ODy()
+Dim Dr: For Each Dr In Itr(MdRetObj.Dy)
+    Dim MthPm$: MthPm = Dr(Ix)
+    Dim CallPm$: CallPm = WCallPm(MthPm, D)
+    PushI Dr, CallPm
+    PushI ODy, Dr
+Next
+XMdAddCallPm = AddColzFFDy(MdRetObj, "CallPm", ODy)
+'Insp "QIde_Ens_EnsSubZ.XMdAddCallPm", "Inspect", "Oup(XMdAddCallPm) MdRetObj D", FmtDrs(XMdAddCallPm), FmtDrs(MdRetObj), "NoFmtr(DiArgItmqVar)": Stop
 End Function
 
 Private Sub XDoArg__SetArgVar(ODy())
-'ODy : :Dy<ArgNm DclSfx Empty>
-'Ret : :Dy<ArgNm DclSfx ArgVar>  (ArgVar,DiDupArgNmqNxtIx) = \ArgNm SngArgNy DiDupArgNmqNxtIx
+'ODy : :Dy<ArgItm ArgNm DclSfx Empty>
+'Ret : :Dy<ArgItm ArgNm DclSfx ArgVar>  (ArgVar,DiDupArgNmqNxtIx) = \ArgNm SngArgNy DiDupArgNmqNxtIx
 Dim D As New Dictionary
-Dim SngArgNy$(): SngArgNy = AwSingleEle(StrColzDy(ODy, 0))
+Dim SngArgNy$(): SngArgNy = AwSingleEle(StrColzDy(ODy, 1))
 Dim J%: For J = 0 To UB(ODy)
     Dim Dr(): Dr = ODy(J)
-    Dim ArgNm$: ArgNm = Dr(0)
+    Dim ArgNm$: ArgNm = Dr(1)
     Dim ArgVar$: ArgVar = XDoArg__ArgVar(ArgNm, SngArgNy, D)
-    Dr(2) = ArgVar
+    Dr(3) = ArgVar
     ODy(J) = Dr
 Next
 End Sub
 
-Function XDoArg__ArgVar$(ArgNm$, SngArgNy$(), ODiDupArgNmqNxtIx As Dictionary)
+Private Function XDoArg__ArgVar$(ArgNm$, SngArgNy$(), ODiDupArgNmqNxtIx As Dictionary)
 If HasEle(SngArgNy, ArgNm) Then XDoArg__ArgVar = ArgNm: Exit Function
 If ODiDupArgNmqNxtIx.Exists(ArgNm) Then
     Dim I%: I = ODiDupArgNmqNxtIx(ArgNm)
@@ -248,23 +201,90 @@ End If
 End Function
 
 Private Function XDoArg__FmArgAy(ArgAy$()) As Drs
-'Fm DoMthX : :Drs<Mdy Ty Mthn MthPm>
-'Ret       : :Drs<ArgNm DclSfx ArgVar> <ArgNm DclSfx> are unique @@
+'Ret       : :Drs<ArgItm ArgNm DclSfx ArgVar> <ArgNm DclSfx> are unique @@
 Dim Arg, ODy(): For Each Arg In Itr(ArgAy)
-    Dim Itm$: Itm = DclItm(Arg)
+    Dim Itm$: Itm = ArgItm(Arg)
     Dim ArgNm$: ArgNm = Nm(Itm)
     Dim DclSfx$: DclSfx = RmvPfx(Itm, ArgNm)
-    PushI ODy, Array(ArgNm, DclSfx, Empty)
+    PushI ODy, Array(Itm, ArgNm, DclSfx, Empty)
 Next
 XDoArg__SetArgVar ODy
-XDoArg__FmArgAy = DrszFF("ArgNm DclSfx ArgVar", ODy)
+XDoArg__FmArgAy = DrszFF("ArgItm ArgNm DclSfx ArgVar", ODy)
 'Insp "QIde_Ens_EnsSubZ.XDoArg", "Inspect", "Oup(XDoArg__FmArgAy) ArgAy", FmtDrs(XDoArg__FmArgAy), ArgAy: Stop
 End Function
 
-Private Function XDoArg(DoMthX As Drs) As Drs
-'Fm DoMthX : :Drs<Mdy Ty Mthn MthPm>
-'Ret       : :Drs<ArgNm DclSfx ArgVar> <ArgNm DclSfx> are unique @@
-Dim MthPmAy$(): MthPmAy = AeBlnk(StrCol(DoMthX, "MthPm"))
+Private Function XDoArg(MdRetObj As Drs) As Drs
+'Fm MdRetObj : :Drs<Mdy Ty Mthn MthPm RetAs IsRetObj>
+'Ret         : :Drs<ArgItm ArgNm DclSfx ArgVar DclSfx> <ArgNm DclSfx> are unique @@
+Dim MthPmAy$(): MthPmAy = AeBlnk(StrCol(MdRetObj, "MthPm"))
 Dim ArgAy$(): ArgAy = AwDist(AyTrim(SplitComma(JnComma(MthPmAy))))
 XDoArg = XDoArg__FmArgAy(ArgAy)
+'Insp "QIde_Ens_EnsSubZ.XDoArg", "Inspect", "Oup(XDoArg) MdRetObj", FmtDrs(XDoArg), FmtDrs(MdRetObj): Stop
 End Function
+
+Private Function XMdAddCall__CallStmt$(Mthn$, CallPm$, Ty$, IsRetObj As Boolean)
+If Ty = "Get" Then
+    XMdAddCall__CallStmt = IIf(IsRetObj, "Set ", "") & "X_" & Mthn & " = " & Mthn
+Else
+    XMdAddCall__CallStmt = Mthn & " " & CallPm
+End If
+End Function
+
+Private Function XMdAddCall__Dr(Dr, ITy%, IMthn%, ICallPm%, IIsRetObj%) As Variant()
+Dim CallPm$:               CallPm = Dr(ICallPm)
+Dim Mthn$:                   Mthn = Dr(IMthn)
+Dim Ty$:                       Ty = Dr(ITy)
+Dim IsRetObj As Boolean: IsRetObj = Dr(IIsRetObj)
+Dim CallStmt$:           CallStmt = XMdAddCall__CallStmt(Mthn, CallPm, Ty, IsRetObj)
+                      XMdAddCall__Dr = Av(Dr, CallStmt)
+End Function
+
+Private Function XMdAddCall(MdAddCallPm As Drs) As Drs
+'Fm MdAddCallPm : :Drs<Mdy Ty Mthn MthPm RetAs IsRetObj CallPm>
+'Ret            : :Drs<Mdy Ty Mthn MthPm RetAs IsRetObj CallPm Call> @@
+Dim IIsRetObj%, ITy%, IMthn%, ICallPm%: AsgIx MdAddCallPm, "Ty Mthn CallPm IsRetObj", ITy, IMthn, ICallPm, IIsRetObj
+Dim ODy(), Dr: For Each Dr In Itr(MdAddCallPm.Dy)
+    PushI ODy, XMdAddCall__Dr(Dr, ITy, IMthn, ICallPm, IIsRetObj)
+Next
+XMdAddCall = AddColzFFDy(MdAddCallPm, "Call", ODy)
+'Insp "QIde_Ens_EnsSubZ.XMdAddCall", "Inspect", "Oup(XMdAddCall) MdAddCallPm", FmtDrs(XMdAddCall), FmtDrs(MdAddCallPm): Stop
+End Function
+
+Private Sub Z()
+QIde_Ens_EnsSubZ:
+Z_CdSubZ
+Exit Sub
+
+'-- Dim -----
+Dim MdMdyCall As Drs, Itm$, ArgVar$(), DclSfx$(), DclSfxGp$(), M As CodeModule, P As VBProject, DoMth As Drs, Ty$, MthPm$
+Dim D As DiArgItmqVar, Mdy$, Do2 As Drs, CommaSpc$, Dr, Do1 As Drs, MdRetObj As Drs, ODy(), ArgNm$, SngArgNy$()
+Dim ODiDupArgNmqNxtIx As Dictionary, ArgAy$(), Mthn$, CallPm$, IsRetObj As Boolean, ITy%, IMthn%, ICallPm%, IIsRetObj%, MdAddCallPm As Drs
+
+'-- Pub -----
+            CdSubZM
+           EnsSubZM
+           EnsSubZP
+RmvLasTermzCommaSpc CommaSpc
+           Z_CdSubZ
+
+'-- Prv -----
+           CdSubZ M
+          EnsSubZ M
+        EnsSubZzP P
+          WCallPm MthPm, D
+              WCd MdMdyCall, Itm
+           WMthNy DoMth, Mdy
+        WMthNyzTy DoMth, Ty
+           XCdDim ArgVar, DclSfx
+   XCdDim__OneLin ArgVar, DclSfxGp
+  XDiArgNmqArgVar Do2
+           XDoArg MdRetObj
+   XDoArg__ArgVar ArgNm, SngArgNy, ODiDupArgNmqNxtIx
+  XDoArg__FmArgAy ArgAy
+XDoArg__SetArgVar ODy
+          XMdAddCallPm MdRetObj, D
+          XMdAddCall MdAddCallPm
+XMdAddCall__CallStmt Mthn, CallPm, Ty, IsRetObj
+      XMdAddCall__Dr Dr, ITy, IMthn, ICallPm, IIsRetObj
+                Z
+End Sub

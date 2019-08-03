@@ -12,32 +12,45 @@ For Each I In Itr(Ay)
 Next
 End Function
 
-Function Av(ParamArray Ap()) As Variant()
-Av = Ap
+Function Av(ParamArray ApOf_Itm_Or_Ay()) As Variant()
+Dim Av1(): Av = ApOf_Itm_Or_Ay
+Av1 = ApOf_Itm_Or_Ay
+Av = AvzAyOfItmOrAy(Av1)
 End Function
 
-Function AvzAp(ParamArray Ap()) As Variant()
-AvzAp = Ap
-End Function
-
-Private Function SyzAv(AvOf_Itm_or_Ay()) As String()
-Dim I, Av()
-Av = AvOf_Itm_or_Ay
-For Each I In Itr(Av)
-    Select Case True
-    Case IsArray(I): PushIAy SyzAv, I
-    Case Else: PushI SyzAv, I
-    End Select
+Function AvzAyOfItmOrAy(AyOfItmOrAy) As Variant()
+Dim V: For Each V In Itr(AyOfItmOrAy)
+    If IsArray(V) Then
+        PushIAy AvzAyOfItmOrAy, V
+    Else
+        PushI AvzAyOfItmOrAy, V
+    End If
 Next
 End Function
 
-Function SyzAp(ParamArray ApOf_Itm_or_Ay()) As String()
-Dim Av(): Av = ApOf_Itm_or_Ay
+Function AvzAp(ParamArray ApOf_Itm_Or_Ay()) As Variant()
+Dim Av(): Av = ApOf_Itm_Or_Ay
+Av = ApOf_Itm_Or_Ay
+AvzAp = AvzAyOfItmOrAy(Av)
+End Function
+
+Private Function SyzAv(AvOf_Itm_or_Ay()) As String()
+Dim I: For Each I In Itr(AvOf_Itm_or_Ay)
+    If IsArray(I) Then
+        PushIAy SyzAv, I
+    Else
+        PushI SyzAv, I
+    End If
+Next
+End Function
+
+Function SyzAp(ParamArray ApOf_Itm_Or_Ay()) As String()
+Dim Av(): Av = ApOf_Itm_Or_Ay
 SyzAp = SyzAv(Av)
 End Function
 
-Function Sy(ParamArray ApOf_Itm_or_Ay()) As String()
-Dim Av(): Av = ApOf_Itm_or_Ay
+Function Sy(ParamArray ApOf_Itm_Or_Ay()) As String()
+Dim Av(): Av = ApOf_Itm_Or_Ay
 Sy = SyzAv(Av)
 End Function
 
@@ -85,7 +98,6 @@ For Each I In Av
 Next
 End Function
 
-'=========================================================
 Function IntAyzFT(F%, T%) As Integer()
 Stop
 Dim O%(): ReDim O(Abs(T - F))
@@ -107,10 +119,8 @@ Dim O&(): ReDim O(T - F)
 LngAyzFT = IntozFT(O, F, T)
 End Function
 
-'=========================================================
 
 Function SyzAy(Ay) As String()
 SyzAy = IntozAy(EmpSy, Ay)
 End Function
-
 

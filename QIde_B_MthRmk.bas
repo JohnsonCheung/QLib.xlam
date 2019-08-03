@@ -3,7 +3,7 @@ Option Explicit
 Option Compare Text
 
 Sub EnsMthRmk(M As CodeModule, Mthn, NewRmk$)
-'Ret : mk sure the rmk of #Mthn will be @NewRmk
+'Ret : mk sure the rmk of #Mthn will be @NewRmk @@
 
 '== No such @Mthn, just ret
 Dim MthLno&: MthLno = MthLnozMM(M, Mthn)
@@ -194,4 +194,35 @@ End Function
 
 Private Sub Z()
 QIde_B_MthRmk:
+Z_EnsMthRmk
+Z_MthRmkP
+Z_MthRmkzM
+Exit Sub
+
+'-- Dim -----
+Dim M As CodeModule, Mthn, NewRmk_1$, NewRmk_2 As S12s, Src$(), MthIx, MthLno&, RmkIx&, RLno&, MthNy$()
+Dim MthIxy&(), P As VBProject, RBlk$()
+
+'-- Pub -----
+    EnsMthRmk M, Mthn, NewRmk_1
+EnsMthRmkzS12 M, NewRmk_2
+      MthRmkP
+    MthRmkzNy M, MthNy
+
+'-- Prv -----
+      MthRmkIx Src, MthIx
+       MthRmkL M, MthLno
+     MthRmkLno M, MthLno
+ MthRmkLzRmkIx Src, RmkIx
+MthRmkLzRmkLno M, RLno
+      MthRmkzM M
+  MthRmkzMthIx Src, MthIx
+ MthRmkzMthIxy Src, MthIxy
+      MthRmkzP P
+          RAdj RBlk
+      RmkBlkzM M, RLno
+      RmkBlkzS Src, RmkIx
+   Z_EnsMthRmk
+     Z_MthRmkP
+    Z_MthRmkzM
 End Sub

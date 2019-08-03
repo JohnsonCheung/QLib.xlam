@@ -4,24 +4,30 @@ Option Explicit
 Private Const CMod$ = "MVb_Str_Apd."
 Private Const Asm$ = "QVb"
 Private Const Ns$ = "MVb_Str"
-Function ApdCrLf$(S)
-ApdCrLf = ApdIf(S, vbCrLf)
-End Function
+
 Function PpdSpcIf$(S)
 PpdSpcIf = PpdIf(S, " ")
 End Function
-Function ApdIf$(S, Sfx$)
-If S = "" Then ApdIf = S: Exit Function
-ApdIf = S & Sfx
-End Function
-Function ApdIfzAy(Ay, Sfx$) As String()
+
+Function AddNBzAy(Ay, Sfx$) As String()
 Dim I
 For Each I In Itr(Ay)
-    PushI ApdIfzAy, ApdIf(I, Sfx)
+    PushI AddNBzAy, AddNB(I, Sfx)
 Next
 End Function
+
 Function PpdIf$(S, Pfx$)
-If S = "" Then PpdIf = S: Exit Function
+If S = "" Then Exit Function
 PpdIf = Pfx & S
 End Function
 
+Function AddNB$(ParamArray ApOf_Str())
+'Ret : :S ! ret a str by adding each ele of @ApOf_Str one by one, if all them is <>'' else ret blank @@
+Dim Av(): Av = ApOf_Str
+Dim O$()
+Dim S: For Each S In Itr(Av)
+    If S = "" Then Exit Function
+    Push O, S
+Next
+AddNB = Jn(O)
+End Function

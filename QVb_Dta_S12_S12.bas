@@ -271,6 +271,7 @@ Dim J&: For J = 0 To A.N - 1
     PushS12 AddS1Pfx, M
 Next
 End Function
+
 Sub PushS12s(O As S12s, A As S12s)
 Dim J&
 For J = 0 To A.N - 1

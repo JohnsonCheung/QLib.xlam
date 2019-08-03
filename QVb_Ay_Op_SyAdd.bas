@@ -45,6 +45,12 @@ Next
 If Si(M) > 0 Then PushI GpAy, M
 End Function
 
+Function AddItm(Ay, Itm)
+Dim O: O = Ay
+PushI O, Itm
+AddItm = O
+End Function
+
 Function AddAy(AyA, AyB)
 AddAy = AyA
 PushAy AddAy, AyB

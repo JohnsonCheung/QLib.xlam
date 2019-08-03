@@ -82,7 +82,7 @@ For Each Dr In Itr(Dy)
         PushI O, Dr
     Else
         Stop
-'        O(Ix)(U) = ApdIf(O(Ix)(U), Sep) & Dr(U)
+'        O(Ix)(U) = AddNB(O(Ix)(U), Sep) & Dr(U)
     End If
 Next
 DyJnFldNFld = O
