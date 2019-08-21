@@ -7,7 +7,7 @@ Const Mdn$ = "QIde_B_AlignMth"
 Const Mthn$ = "AlignMthzLno"
 Dim M As CodeModule: Set M = Md(Mdn)
 Dim L&: L = MthLnozMM(M, Mthn)
-QIde_B_AlignMth.AlignMthzLno M, L, Rpt:=EiRptOnly
+QIde_B_AlignMth.AlignMthzLno M, L, Upd:=EiRptOnly
 End Sub
 
 Sub Z1()
@@ -28,7 +28,7 @@ Sub AlignMthzSelf()
     Const TMthn$ = "AlignMthzLno"      ' #The-Mthn
     Dim M As CodeModule: Set M = Md(TMdn)
     Dim MthLno&:        MthLno = MthLnozMM(M, TMthn)
-    'ATmp.AlignMthzLno M, MthLno, Rpt:=EiUpdAndRpt, IsUpdSelf:=True
+    'ATmp.AlignMthzLno M, MthLno, Upd:=EiUpdAndRpt, IsUpdSelf:=True
 End Sub
 
 Sub AlignMthErzLnk()

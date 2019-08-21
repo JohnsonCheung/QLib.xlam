@@ -203,18 +203,15 @@ Set DiczS12s = O
 End Function
 
 Function S1Ay(A As S12s) As String()
-Dim J&
-For J = 0 To A.N - 1
+Dim J&: For J = 0 To A.N - 1
    PushI S1Ay, A.Ay(J).S1
 Next
 End Function
 
 Function S2Ay(A As S12s) As String()
-Dim O$(), J&
-For J = 0 To A.N - 1
+Dim J&: For J = 0 To A.N - 1
    Push S2Ay, A.Ay(J).S2
 Next
-S2Ay = O
 End Function
 
 Function SqzS12s(A As S12s, Optional Nm1$ = "S1", Optional Nm2$ = "S2") As Variant()

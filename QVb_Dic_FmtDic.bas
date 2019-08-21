@@ -9,8 +9,8 @@ Set R = Rs(SampDboDutyDta, "Select Sku,BchNo from PermitD where BchNo<>''")
 BrwDic JnStrDicTwoFldRs(R), True
 End Sub
 
-Sub BrwDic(A As Dictionary, Optional InclValTy As Boolean, Optional UseVc As Boolean, Optional ExlIx As Boolean)
-BrwAy FmtDic(A, InclValTy), UseVc:=UseVc
+Sub BrwDic(A As Dictionary, Optional InclValTy As Boolean, Optional ExlIx As Boolean, Optional Fnn$, Optional UseVc As Boolean)
+BrwAy FmtDic(A, InclValTy), Fnn, UseVc:=UseVc
 End Sub
 
 Sub DmpDic(A As Dictionary, Optional InclDicValOptTy As Boolean, Optional Tit$ = "Key Val")
@@ -23,6 +23,7 @@ For Each K In A.Keys
     PushS12 S12szDiT1qLy, S12(K, JnCrLf(A(K)))
 Next
 End Function
+
 Function FmtDicTit(A As Dictionary, Tit$) As String()
 PushI FmtDicTit, Tit
 PushI FmtDicTit, vbTab & "Count=" & A.Count

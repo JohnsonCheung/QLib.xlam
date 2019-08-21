@@ -1,27 +1,27 @@
 Attribute VB_Name = "QVb_Str_Likss"
 Option Compare Text
 Option Explicit
-Private Const CMod$ = "MVb_Str_Likss."
+Private Const CMod$ = "MVb_Str_Kss."
 Private Const Asm$ = "QVb"
-Function StrLikss(A, Likss) As Boolean
-StrLikss = StrLikAy(A, SyzSS(Likss))
+Function IsLikzSS(A, Kss) As Boolean
+IsLikzSS = IsLikzAy(A, SyzSS(Kss))
 End Function
 
-Function StrLikAy(A, LikAy$()) As Boolean
+Function IsLikzAy(A, LikAy$()) As Boolean
 Dim I
 For Each I In Itr(LikAy)
-    If A Like I Then StrLikAy = True: Exit Function
+    If A Like I Then IsLikzAy = True: Exit Function
 Next
 End Function
 
-Function StrLikssAy(A, LikssAy) As Boolean
-Dim Likss
-For Each Likss In LikssAy
-    If StrLikss(A, Likss) Then StrLikssAy = True: Exit Function
+Function IsLikzSSAy(A, KssAy) As Boolean
+Dim Kss
+For Each Kss In KssAy
+    If IsLikzSS(A, Kss) Then IsLikzSSAy = True: Exit Function
 Next
 End Function
 
-Private Sub Z_T1zT1LikTLiny()
+Private Sub Z_T1zTkssLy()
 Dim A$(), Nm$
 GoSub T1
 GoSub T2
@@ -37,25 +37,24 @@ T2:
     Ept = "a"
     GoTo Tst
 Tst:
-    Act = T1zT1LikTLiny(A, Nm)
+    Act = T1zTkssLy(A, Nm)
     C
     Return
 End Sub
 
-Function T1zT1LikTLiny$(T1LikTLiny$(), Nm)
-Dim L, T1$
-If Si(T1LikTLiny) = 0 Then Exit Function
-For Each L In T1LikTLiny
-    'T1 = ShfT1(L)
-    If StrLikss(Nm, L) Then
-        T1zT1LikTLiny = T1
+Function T1zTkssLy$(TkssLy$(), Nm)
+':Tkss: :SS #T1-Likss# ! It is SS with T1 and Likss
+':Kss:  :SS #Likss#    ! It is SS with each term is LikStr
+Dim L: For Each L In Itr(TkssLy)
+    Dim T1$: T1 = ShfT1(L)
+    If IsLikzSS(Nm, L) Then
+        T1zTkssLy = T1
         Exit Function
     End If
 Next
 End Function
 
-
 Private Sub Z()
-Z_T1zT1LikTLiny
-MVb_Str_Likss:
+Z_T1zTkssLy
+MVb_Str_Kss:
 End Sub

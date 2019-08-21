@@ -126,34 +126,34 @@ Case Else: Debug.Print "ApplyFIlter...should not reach here.'"
 End Select
 End Sub
 
-Function VzXStr(XStr)
-'Ret : ! a val (Str|Dbl|Bool|Dte|Empty) fm @XStr.  :XStr: is #Xls-Cell-Str.  A str coming fm xls cell
+Function VzXStr(CellStr)
+'Ret : ! a val (Str|Dbl|Bool|Dte|Empty) fm @CellStr.
 '      ! having following lgc to determine the val type
-'      ! case XStr
+'      ! case CellStr
 '      ! true or false:           :b
 '      ! fstChr='                 :s
 '      ! fstChr not (dig and sgn) :s
 '      ! can cv to dte:           :dte
 '      ! can cv to dbl:           :dbl
 '      ! else                     :s
-Select Case XStr
-Case "True", "False": VzXStr = CBool(XStr)
+Select Case CellStr
+Case "True", "False": VzXStr = CBool(CellStr)
 Case Else
-    Dim F$: F = FstChr(XStr)
+    Dim F$: F = FstChr(CellStr)
     If F = "'" Then
-        VzXStr = Mid(XStr, 2)
+        VzXStr = Mid(CellStr, 2)
     ElseIf Not IsAscDigSgn(Asc(F)) Then
-        VzXStr = XStr
+        VzXStr = CellStr
     Else
-        Dim V: V = CvDbl(XStr)
+        Dim V: V = CvDbl(CellStr)
         If Not IsEmpty(V) Then
             VzXStr = V
         Else
-            V = CvDte(XStr)
+            V = CvDte(CellStr)
             If Not IsEmpty(V) Then
                 VzXStr = V
             Else
-                VzXStr = CStr(XStr)
+                VzXStr = CStr(CellStr)
             End If
         End If
     End If
@@ -250,53 +250,42 @@ End Sub
 Sub EnsSnm(Ws As Worksheet, Snm$, S$)
 'Ret : ens a @Snm in @S being const @S.  @@
 If HasSnm(Ws, Snm) Then
-    If SzSnm(Ws, Snm) <> S Then Ws.Names(Snm).RefersTo = "=" & Qvbs(S)
+    If SzSnm(Ws, Snm) <> S Then Ws.Names(Snm).RefersTo = "=" & QteVb(S)
 Else
-    Ws.Names.Add Snm, "=" & Qvbs(S)
+    Ws.Names.Add Snm, "=" & QteVb(S)
 End If
 End Sub
+
 Function SzSnm$(S As Worksheet, Snm$)
 'Ret : a str stored in ws name stated as @S & @Snm if any.  If not fnd ret blnk & inf.
-'      Assume the val stored is a :Qvbs:.  If not, ret blnk & inf
+'      Assume the val stored is a :QteVb:.  If not, ret blnk & inf
 If Not HasSnm(S, Snm, CSub) Then Exit Function
 Dim O$: O = S.Names(Snm).RefersTo
 If Fst2Chr(O) <> "=""" Then Inf CSub, "Ws-Names-Nm exist, but it is not a str cnst", "Ws Snm Stored-RfTo", S.Name, Snm, O: Exit Function
-SzSnm = SzQvbs(RmvFstChr(O))
+SzSnm = UnQteVb(RmvFstChr(O))
 End Function
+
 Function HasSnm(S As Worksheet, Snm$, Optional Fun$) As Boolean
-'Fm Snm : :Snm: is #Ws-Names-Nm#
 'Fm Fun : is to inf @Snm not fnd if given
 'Ret : true if @S has @Snm and inf if not fnd and @Fun is given  @@
+':Snm: is #Sheet-Names-Nm#
 If HasItn(S.Names, Snm) Then HasSnm = True: Exit Function
 If Fun = "" Then Exit Function
 Inf Fun, ":Snm:#Ws-Names-Nm is not fnd in ws", "Snm Ws", Snm, S.Name
 End Function
-Function SzQvbs$(Qvbs$)
-' Ret : a fm :Qvbs: #Quoted-vb-str#.  a str with fst and lst chr is vQtezDblQ and inside each vbQtezDblQ is in pair, which will cv to one vbQtezDblQ  @@
-SzQvbs = UnEscQtezDblQ(RmvFstLasChr(Qvbs))
-End Function
-
-Function Qvbs$(S)
-Qvbs = vbQtezDblQ & EscQtezDblQ(S) & vbQtezDblQ
-End Function
-
-Function EscQtezDblQ$(S)
-EscQtezDblQ = Replace(S, vbQtezDblQ, vb2QtezDblQ)
-End Function
-
-Function UnEscQtezDblQ$(S$)
-UnEscQtezDblQ = Replace(S, vb2QtezDblQ, vbQtezDblQ)
-End Function
-
+'
 Private Sub CmdRmvRow(CriRg As Range)
 
 End Sub
+
 Private Sub CmdLoad(CriRg As Range)
 
 End Sub
+'
 Private Sub CmdTglFilt(CriRg As Range)
 
 End Sub
+
 Private Function XFCellzT(Tar As Range) As Range
 'Fm  : :TarCell: is the cell with one of this value: Filter Apply Clear InsRow RmvRow Load, otherwise, don't return :FCell
 'Ret : :FCell: is #Filter-Cell ! the cell with str-"Filter" @@

@@ -50,13 +50,13 @@ Z:
     Return
 End Sub
 
-Sub AlignMthzLno(M As CodeModule, MthLno&, Optional Rpt As EmRpt, Optional IsUpdSelf As Boolean)
+Sub AlignMthzLno(M As CodeModule, MthLno&, Optional Upd As EmUpd, Optional IsUpdSelf As Boolean)
 Dim D1 As Drs, D2 As Drs
 '== Exit if parameter error ============================================================================================
 Dim IsErPm As Boolean: IsErPm = XIsErPm(M, MthLno)                 '        #Is-Parameter-er.     ! M-isnothg | MthLno<=0
 :                               If IsErPm Then Exit Sub            ' Exit=>                       ! If
 Dim Ml$:                   Ml = ContLinzLno(M, MthLno)
-Dim IsUpd  As Boolean:  IsUpd = IsUpdzRpt(Rpt)
+Dim IsUpd  As Boolean:  IsUpd = IsEmUpdUpd(Upd)
 Dim MlNm$:               MlNm = Mthn(Ml)                           '        #Ml-Name.
 Dim IsSelf As Boolean: IsSelf = XIsSelf(IsUpd, IsUpdSelf, M, MlNm) '        #Is-Self-aligning-er. ! Mdn<>'QIde...' & MlNm<>'AlignMthzLno
 
@@ -120,7 +120,7 @@ Dim MlVSfx    As Drs:    MlVSfx = XMlVSfx(Ml)                             ' Ret 
 Dim CmlVSfx   As Drs:   CmlVSfx = AddDrs(MlVSfx, D1)
 Dim CmlPm     As Drs:     CmlPm = XCmlPm(CmEpt)                           ' V Sfx RHS CmNm Pm
 Dim CmlDclPm  As Drs:  CmlDclPm = XCmlDclPm(CmlPm, CmlVSfx)               ' V Sfx RHS CmNm Pm DclPm             ! use [CmlVSfx] & [Pm] to bld [DclPm]
-Dim CmlMthRet As Drs: CmlMthRet = XCmlMthRet(CmlDclPm)                    ' V Sfx RHS CmNm Pm DclPm TyChr RetAs
+Dim CmlMthRet As Drs: CmlMthRet = XCmlMthRet(CmlDclPm)                    ' V Sfx RHS CmNm Pm DclPm TyChr RetSfx
 Dim CmlEpt    As Drs:    CmlEpt = XCmlEpt(CmlMthRet)                      ' V CmNm EptL
                              D1 = DoMthzM(M)                              ' L Mdy Ty Mthn MthLin
                              D1 = DwEq(D1, "Mdy", "Prv")
@@ -153,7 +153,7 @@ Dim MbNew As Drs: MbNew = SelDrsAs(D2, "Mthn MbStmt:NewL")
 '== Upd Chd-Rmk (Cr) ===================================================================================================
 
 '-- Fnd CrEpt as Drs ---------------------------------------------------------------------------------------------------
-'   Fnd #Ept      : CmNm RmkLines  ! The expected chd mth rmk lines
+'   Fnd #Ept      : CmNm RmkMdes  ! The expected chd mth rmk lines
 '   #Fm1-McR123   : V R1 R2 R3     ! The rmk lines of each variable
 '   #Fm2-CmlDclPm : V Pm           ! The v is calling chd mth is using what pm
 '   #Fm3-CmlEpt   : V CmNm         ! The v is calling what chd mth
@@ -189,7 +189,7 @@ Dim CrAli As Drs: CrAli = AlignDrs(CrMge, "V", "P R1 R2") ' V P R1 R2 IsRet    !
 If False Then
     Dim CrInspAli As Drs:      CrInspAli = XCrInspAli(CrAli)
     Dim Db        As Database:    Set Db = TmpDb
-    CrtTzDrs Db, "#InspAli", CrInspAli
+    CrtTblzDrs Db, "#InspAli", CrInspAli
     BrwT Db, "#InspAli"
     Stop
 End If
@@ -197,7 +197,7 @@ Dim CrFst  As Drs:  CrFst = AddColzFst(CrAli, "V P") ' V P R1 R2 R3 IsRet Fst   
 Dim CrRmk  As Drs:  CrRmk = XCrRmk(CrFst)            ' V P R1 R2 R3 IsRet Fst Rmk ! Bld Rmk from P R1 R2 R3 & Fst
 Dim CrRmkL As Drs: CrRmkL = SelDrs(CrRmk, "V Rmk")   ' V Rmk
 
-'.. Fnd #Ept : CmNm RmkLines :S12s ! each @CmNm should have waht @RmkLines..............................................
+'.. Fnd #Ept : CmNm RmkMdes :S12s ! each @CmNm should have waht @RmkMdes..............................................
 '   Fm  CmlEpt:V CmNm
 '   Fm  RmkL  :
 Dim CrVCm    As Drs:             CrVCm = SelDrs(CmlEpt, "V CmNm") ' V CmNm
@@ -206,12 +206,12 @@ Dim CrVRmkCm As Drs:          CrVRmkCm = DwIn(CrRmkL, "V", CrV)   ' V Rmk       
 Dim CrVRmk   As S12s:           CrVRmk = S12szDrs(CrVRmkCm)       ' V Rmk
 Dim CrVRmkS  As S12s:          CrVRmkS = AddS2Sfx(CrVRmk, " @@")
 Dim CrVCmD   As Dictionary: Set CrVCmD = DiczDrsCC(CrVCm)
-Dim CrEpt    As S12s:            CrEpt = MapS1(CrVRmkS, CrVCmD)   ' CmNm RmkLines ' <--
+Dim CrEpt    As S12s:            CrEpt = MapS1(CrVRmkS, CrVCmD)   ' CmNm RmkMdes ' <--
 
 '-- Upd Chd-Rmk (Cr)----------------------------------------------------------------------------------------------------
 '   If any of the calling pm's rmk is changed, the chd-mth-rmk will be updated
 Dim CrAct As S12s: CrAct = MthRmkzNy(M, Cm)
-Dim CrChg As S12s: CrChg = S12szDif(CrEpt, CrAct)         ' CmNm RmkLines ! Only those need to change
+Dim CrChg As S12s: CrChg = S12szDif(CrEpt, CrAct)         ' CmNm RmkMdes ! Only those need to change
 :                          If IsUpd Then XOUpdCr CrChg, M ' <==
 If False Then
     Erase XX
@@ -221,12 +221,12 @@ If False Then
     Brw XX
 End If
 
-'== Rpt <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-If IsRptzRpt(Rpt) Then
+'== Upd <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+If IsEmUpdRpt(Upd) Then
     Insp CSub, "Changes", _
-        "EmRpt DblEqRmk Align BrwStmt " & _
+        "EmUpd DblEqRmk Align BrwStmt " & _
         "Crt-Chd-Mth Rpl-Mth-Brw Crt-Mth-Brw Upd-Chd-MthLin Rfh-Chd-Mth-Rmk", _
-        StrzRpt(Rpt), _
+        EmUpdStr(Upd), _
         FmtDrs(DeLNewO), FmtDrs(McLNewO), FmtDrs(BsLNewO), _
         CdNewCm, FmtDrs(MbLNewO), FmtDrs(MbNew), FmtDrs(CmlLNewO), FmtS12s(CrChg)
 End If
@@ -249,17 +249,17 @@ XCrInspAli = AddColzFFDy(CrAli, "WP W1 W2 W3", Dy)
 'Insp "QIde_B_AlignMth.XCrInspAli", "Inspect", "Oup(XCrInspAli) CrAli", FmtDrs(XCrInspAli), FmtDrs(CrAli): Stop
 End Function
 
-Sub AlignMth(Optional Rpt As EmRpt)
+Sub AlignMth(Optional Upd As EmUpd)
 Dim M As CodeModule: Set M = CMd
 If IsNothing(M) Then Exit Sub
-AlignMthzLno M, CMthLno, Rpt:=Rpt
+AlignMthzLno M, CMthLno, Upd:=Upd
 End Sub
 
-Sub AlignMthzNm(Mdn$, Mthn$, Optional Rpt As EmRpt)
+Sub AlignMthzNm(Mdn$, Mthn$, Optional Upd As EmUpd)
 If Not HasMd(CPj, Mdn) Then Debug.Print "[" & Mdn & "] not exist": Exit Sub
 Dim M As CodeModule: Set M = Md(Mdn)
 Dim L&: L = MthLnozMM(M, Mthn): If L = 0 Then Debug.Print "[" & Mthn & "] not exist": Exit Sub
-AlignMthzLno M, L, Rpt:=Rpt
+AlignMthzLno M, L, Upd:=Upd
 End Sub
 
 Private Function XAddColzF0(A As Drs) As Drs
@@ -360,7 +360,7 @@ Private Function XMcTRmk(McRmk As Drs) As Drs
 'Ret      : L *Rmk                     ! RmvRec wh-TopRmk.  Each gp, the above rmk lines are TopRmk, rmv them.
 '                                      ! [*Rmk McLin Gpno IsRmk] @@
 Dim IGpno%, MaxGpno, A As Drs, B As Drs, O As Drs
-MaxGpno = MaxzAy(IntCol(McRmk, "Gpno"))
+MaxGpno = AyMax(IntCol(McRmk, "Gpno"))
 For IGpno = 1 To MaxGpno
     A = DwEq(McRmk, "Gpno", IGpno)
     B = XMcTRmkI(A)
@@ -433,9 +433,9 @@ Dim Dr, O$(): For Each Dr In Itr(A.Dy)
     Dim Sfx$:   Sfx = Dr(0)
     Dim CmNm$: CmNm = Dr(1)
     Dim TyChr$: TyChr = TyChrzDclSfx(Sfx)
-    Dim RetAs$: RetAs = RetAszDclSfx(Sfx)
+    Dim RetSfx$: RetSfx = RetAszDclSfx(Sfx)
     PushI O, ""
-    PushI O, FmtQQ("Private Function ??()?", CmNm, TyChr, RetAs)
+    PushI O, FmtQQ("Private Function ??()?", CmNm, TyChr, RetSfx)
     PushI O, "End Function"
 Next
 XCdNewCm = JnCrLf(O)
@@ -444,11 +444,11 @@ End Function
 
 
 Private Function XCmlEpt(CmlMthRet As Drs) As Drs
-'Fm CmlMthRet : V Sfx RHS CmNm Pm DclPm TyChr RetAs
+'Fm CmlMthRet : V Sfx RHS CmNm Pm DclPm TyChr RetSfx
 'Ret          : V CmNm EptL
 '               L Mdy Ty Mthn MthLin @@
 Dim Dr, Dy(), Nm$, Ty$, Pm$, Ret$, V$, EptL$, INm%, ITy%, IPm%, IRet%, IV%
-AsgIx CmlMthRet, "CmNm TyChr DclPm RetAs V", INm, ITy, IPm, IRet, IV
+AsgIx CmlMthRet, "CmNm TyChr DclPm RetSfx V", INm, ITy, IPm, IRet, IV
 'BrwDrs CmlMthRet: Stop
 For Each Dr In Itr(CmlMthRet.Dy)
     Nm = Dr(INm)
@@ -605,15 +605,15 @@ XMcAlign = O
 End Function
 
 Private Function XCmLin(CmDta As Drs, CmMdy$) As String()
-'Fm  CmDta  V TyChr Pm RetAs
+'Fm  CmDta  V TyChr Pm RetSfx
 'Ret CmLin MthLin                     ! MthLin is always a function @@
-Dim Dr, CmNm$, MthPfx$, Pm$, TyChr$, RetAs$
+Dim Dr, CmNm$, MthPfx$, Pm$, TyChr$, RetSfx$
 For Each Dr In Itr(CmDta.Dy)
     CmNm = Dr(0)
     TyChr = Dr(1)
     Pm = Dr(2)
-    RetAs = Dr(4)
-    Dim MthLin$: MthLin = FmtQQ("? Function ???(?)?", CmMdy, CmNm, TyChr, Pm, RetAs)
+    RetSfx = Dr(4)
+    Dim MthLin$: MthLin = FmtQQ("? Function ???(?)?", CmMdy, CmNm, TyChr, Pm, RetSfx)
     PushI XCmLin, MthLin
 Next
 End Function
@@ -981,7 +981,7 @@ Dim C$(), J%: For J = 0 To UB(V)
     Case HasPfx(Sfx(J), "() As "): Push C, V(J) & "()"
     End Select
 Next
-XWAs = WdtzAy(C)
+XWAs = AyWdt(C)
 End Function
 
 Private Function XCmlAct(CmlEpt As Drs, M As CodeModule) As Drs
@@ -1008,18 +1008,18 @@ End Function
 
 Private Function XCmlMthRet(CmlDclPm As Drs) As Drs
 'Fm CmlDclPm : V Sfx RHS CmNm Pm DclPm             ! use [CmlVSfx] & [Pm] to bld [DclPm]
-'Ret         : V Sfx RHS CmNm Pm DclPm TyChr RetAs @@
-Dim Dr, Sfx$, TyChr$, RetAs$, I%, Dy()
+'Ret         : V Sfx RHS CmNm Pm DclPm TyChr RetSfx @@
+Dim Dr, Sfx$, TyChr$, RetSfx$, I%, Dy()
 I = IxzAy(CmlDclPm.Fny, "Sfx")
 For Each Dr In Itr(CmlDclPm.Dy)
     Sfx = Dr(I)
     TyChr = TyChrzDclSfx(Sfx)
-    RetAs = RetAszDclSfx(Sfx)
+    RetSfx = RetAszDclSfx(Sfx)
     PushI Dr, TyChr
-    PushI Dr, RetAs
+    PushI Dr, RetSfx
     PushI Dy, Dr
 Next
-XCmlMthRet = AddColzFFDy(CmlDclPm, "TyChr RetAs", Dy)
+XCmlMthRet = AddColzFFDy(CmlDclPm, "TyChr RetSfx", Dy)
 'BrwDrs CmlMthRet: Stop
 'Insp "QIde_B_AlignMth.XCmlMthRet", "Inspect", "Oup(XCmlMthRet) CmlDclPm", FmtDrs(XCmlMthRet), FmtDrs(CmlDclPm): Stop
 End Function
@@ -1048,7 +1048,7 @@ End Function
 
 Private Function XCrEpt(CrJn As Drs) As S12s
 'Fm  CrJn : V Rmk CmNm
-'Ret      : CmNm RmkLines ! RmkLines is find by each V in CrVpr & Mthn = V & CmPfx @@
+'Ret      : CmNm RmkMdes ! RmkMdes is find by each V in CrVpr & Mthn = V & CmPfx @@
 Dim A As Drs: A = SelDrs(CrJn, "CmNm Rmk")
 Dim Dr, Ly$(): For Each Dr In Itr(A.Dy)
     PushI Ly, Dr(0) & " " & Dr(1)

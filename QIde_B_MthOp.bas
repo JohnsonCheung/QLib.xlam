@@ -3,6 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = ""
 Private Const CMod$ = "MIde_Mth_Op."
+
 Function IsLinAsg(L) As Boolean
 'Note: [Dr(NCol) = DicId(K)] is determined as Asg-lin
 Dim A$: A = LTrim(L)

@@ -8,12 +8,11 @@ Private Const Asm$ = "QVb"
 "Where -Mul xx are allowed multiple-value Pm.  " & _
 "Where xx are PmNm."
 Public Const vbOpnBkt$ = "("
-Public Const vbQtezDblQ$ = """"
+Public Const vbDblQ$ = """"
 Public Const vb2CrLf$ = vbCrLf & vbCrLf
-Public Const vb2QtezDblQ$ = vbQtezDblQ & vbQtezDblQ
-Public Const vbTwoQtezDblQ$ = vbQtezDblQ & vbQtezDblQ
-Public Const vbQtezDblQAsc As Byte = 34
-Public Const vbSngQte$ = "'"
+Public Const vb2DblQ$ = vbDblQ & vbDblQ
+Public Const vbDblQAsc As Byte = 34
+Public Const vbSngQ$ = "'"
 Public Const vbExcM$ = "!"
 Public Const vbPround$ = "#"
 Public Const vbOpnSqBkt$ = "["

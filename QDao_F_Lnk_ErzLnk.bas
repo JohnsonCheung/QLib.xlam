@@ -278,27 +278,27 @@ QIde_B_AlignMth.AlignMthzNm "QXls_Cmd_ApplyFilter", "CmdApply"
 End Sub
 
 Sub AU()
-QIde_B_AlignMth.AlignMth Rpt:=EiUpdAndRpt
+QIde_B_AlignMth.AlignMth Upd:=EiUpdAndRpt
 End Sub
 
 Sub AUO()
-QIde_B_AlignMth.AlignMth Rpt:=EiUpdOnly
+QIde_B_AlignMth.AlignMth Upd:=EiUpdOnly
 End Sub
 
-Sub E(Optional Rpt As EmRpt)
+Sub E(Optional Upd As EmUpd)
 Dim Mdn$:              Mdn = "QIde_Ens_CModSub"
 Dim Mthn$:            Mthn = "EnsCModSubzM"
 Dim M As CodeModule: Set M = Md(Mdn)
 Dim L&:                  L = MthLnozMM(M, Mthn)
-QIde_B_AlignMth.AlignMthzLno M, L, Rpt:=Rpt
+QIde_B_AlignMth.AlignMthzLno M, L, Upd:=Upd
 End Sub
 
-Sub FF(Optional Rpt As EmRpt)
+Sub FF(Optional Upd As EmUpd)
 Dim Mdn$: Mdn = "QIde_Ens_CModSub"
 Dim Mthn$: Mthn = "EnsCModSubzM"
 Dim M As CodeModule: Set M = Md(Mdn)
 Dim L&:                  L = MthLnozMM(M, Mthn)
-QIde_B_AlignMth.AlignMthzLno M, L, Rpt:=Rpt
+QIde_B_AlignMth.AlignMthzLno M, L, Upd:=Upd
 End Sub
 
 Private Sub Z_ErzLnk()
@@ -522,7 +522,7 @@ IWs = IxzAy(IpxExi.Fny, "Ws")
 For Each Dr In Itr(IpxExi.Dy)
     Fx = Dr(IFx)
     Ws = Dr(IWs)
-    For Each IDr In Itr(DFTyzFxw(Fx, Ws).Dy)
+    For Each IDr In Itr(DoFTyzFxw(Fx, Ws).Dy)
         PushI ODy, AddAy(Dr, IDr)
     Next
 Next
@@ -536,7 +536,7 @@ Private Function XIpbTny(Ipb As Drs) As String()
 Dim Dr, Fbtt$
 For Each Dr In Itr(Ipb.Dy)
     Fbtt = Dr(2)
-    PushNoDupAy XIpbTny, SyzSS(Fbtt)
+    PushNDupAy XIpbTny, SyzSS(Fbtt)
 Next
 'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpbTny) IpbTny Ipb",IpbTny, IpbTny, FmtDrs(Ipb): Stop
 End Function
@@ -545,7 +545,7 @@ Private Function XIpxTny(Ipx As Drs) As String()
 'Fm  Ipx : T Fxn Ws Stru ! Inp-Fx which is FxTbl @@
 Dim Dr
 For Each Dr In Itr(Ipx.Dy)
-    PushNoDup XIpxTny, Dr(1)
+    PushNDup XIpxTny, Dr(1)
 Next
 'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpxTny) IpxTny Ipx",IpxTny, IpxTny, FmtDrs(Ipx): Stop
 End Function

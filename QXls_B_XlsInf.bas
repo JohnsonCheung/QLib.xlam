@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Public Const MaxCno% = 16384
 Public Const MaxRno& = 1048576
-Public Const XlsPgmFfn$ = "C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE"
+Public Const FpgmXls$ = "C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE"
 ':LowZ$ = "z when used in Nm, it has special meaning.  It can occur in Cml las-one, las-snd, las-thrid chr, else it is er."
 ':NmBrk$ = "NmBrk is z or zx or zxx where z is letter-z and x is lowcase or digit.  NmBrk must be sfx of a cml."
 ':NmBrk_za$ = "It means `and`."
@@ -25,7 +25,7 @@ WsnzLo = WszLo(A).Name
 End Function
 
 Function CWs() As Worksheet
-Set CWs = Xls.ActiveSheet
+Set CWs = Exl.ActiveSheet
 End Function
 
 Sub ClrDtaRg(A As Worksheet)
@@ -119,7 +119,7 @@ SqzWs = RgzWs(A).Value
 End Function
 
 Property Get CWb() As Workbook
-Set CWb = Xls.ActiveWorkbook
+Set CWb = Exl.ActiveWorkbook
 End Property
 
 Function CvWbs(A) As Workbooks
@@ -247,16 +247,16 @@ On Error Resume Next
 WbFullNm = A.FullName
 End Function
 
-Private Sub Z_XlsOfGetObj()
-Debug.Print XlsOfGetObj.Name
+Private Sub Z_ExloGetObj()
+Debug.Print ExloGetObj.Name
 End Sub
 
-Function XlsOfGetObj() As Excel.Application
-Set XlsOfGetObj = GetObject(XlsPgmFfn)
+Function ExloGetObj() As Excel.Application
+Set ExloGetObj = GetObject(FpgmXls)
 End Function
 
-Function Xls() As Excel.Application
-Set Xls = Excel.Application
+Function Exl() As Excel.Application
+Set Exl = Excel.Application
 End Function
 
 Function HasAddinFn(A As Excel.Application, AddinFn$) As Boolean
@@ -396,7 +396,7 @@ Exit Function
 X: Wbn = "WbnErr:[" & Err.Description & "]"
 End Function
 Function LasWb() As Workbook
-Set LasWb = LasWbz(Xls)
+Set LasWb = LasWbz(Exl)
 End Function
 Function LasWbz(A As Excel.Application) As Workbook
 Set LasWbz = A.Workbooks(A.Workbooks.Count)
@@ -626,7 +626,7 @@ End Function
 
 Function HasFx(Fx) As Boolean
 Dim Wb As Workbook
-For Each Wb In Xls.Workbooks
+For Each Wb In Exl.Workbooks
     If Wb.FullName = Fx Then HasFx = True: Exit Function
 Next
 End Function
@@ -647,6 +647,7 @@ Dim A: A = L.AutoFilter
 If IsNothing(A) Then Stop
 Set AutoFilterzLo = A
 End Function
+
 Function CvAutoFilter(A) As AutoFilter
 Set CvAutoFilter = A
 End Function
@@ -654,29 +655,35 @@ End Function
 Function CvRg(A) As Range
 Set CvRg = A
 End Function
+
 Function BarHzAt(At As Range) As Range
 Dim A1 As Range: Set A1 = RgA1(At)
 If IsEmpty(A1.Value) Then Set BarHzAt = A1: Exit Function
 Dim C2&: C2 = A1.End(xlRight).Column - A1.Column + 1
 Set BarHzAt = RgCRR(A1, 1, 1, C2)
 End Function
+
 Function BarVzAt(At As Range) As Range
 Dim A1 As Range: Set A1 = RgA1(At)
 If IsEmpty(A1.Value) Then Set BarVzAt = A1: Exit Function
 Dim R2&: R2 = A1.End(xlDown).Row - A1.Row + 1
 Set BarVzAt = RgCRR(A1, 1, 1, R2)
 End Function
+
 Function A1(Ws As Worksheet) As Range
 Set A1 = WsRC(Ws, 1, 1)
 End Function
+
 Function RgA1(A As Range) As Range
 Set RgA1 = RgRC(A, 1, 1)
 End Function
+
 Function IsA1(A As Range) As Boolean
 If A.Row <> 1 Then Exit Function
 If A.Column <> 1 Then Exit Function
 IsA1 = True
 End Function
+
 Function WsRgAdr$(A As Range)
 WsRgAdr = "'" & WszRg(A).Name & "'!" & A.Address
 End Function
@@ -937,7 +944,7 @@ Set TmpDbzFxWny = O
 End Function
 
 Function Wb(Fx) As Workbook
-Set Wb = Xls.Workbooks(Fx)
+Set Wb = Exl.Workbooks(Fx)
 End Function
 Function WbzFx(Fx) As Workbook
 Set WbzFx = Wb(Fx)
@@ -1077,7 +1084,7 @@ Property Get MaxWsCol&()
 Static C&, Y As Boolean
 If Not Y Then
     Y = True
-    C = IIf(Xls.Version = "16.0", 16384, 255)
+    C = IIf(Exl.Version = "16.0", 16384, 255)
 End If
 MaxWsCol = C
 End Property
@@ -1086,7 +1093,7 @@ Property Get MaxWsRow&()
 Static R&, Y As Boolean
 If Not Y Then
     Y = True
-    R = IIf(Xls.Version = "16.0", 1048576, 65535)
+    R = IIf(Exl.Version = "16.0", 1048576, 65535)
 End If
 MaxWsRow = R
 End Property
@@ -1143,8 +1150,8 @@ Function FnyzWs(A As Worksheet) As String()
 FnyzWs = FnyzLo(FstLo(A))
 End Function
 
-Function HasWbn(Xls As Excel.Application, Wbn$) As Boolean
-HasWbn = HasItn(Xls.Workbooks, Wbn)
+Function HasWbn(Exl As Excel.Application, Wbn$) As Boolean
+HasWbn = HasItn(Exl.Workbooks, Wbn)
 End Function
 
 Function EntColzLc(L As ListObject, C) As Range

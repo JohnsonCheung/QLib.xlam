@@ -25,7 +25,6 @@ If Not XHasLines(A) Then
      FmtS12s = FmtDrs(D, Fmt:=EiSSFmt, IxCol:=IxCol)
 :              Exit Function
 End If
-Stop
 Dim S1$():     S1 = S1Ay(A)
 Dim S2$():     S2 = S2Ay(A)
 Dim W1%:       W1 = WdtzLinesAy(AddEleS(S1, N1))

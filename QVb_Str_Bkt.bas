@@ -89,6 +89,7 @@ A2 = Mid(A, P1 + 1, P2 - P1 - 1)
 A3 = Mid(A, P2 + 1)
 BrkBkt = Sy(A1, A2, A3)
 End Function
+
 Function BetBktMust$(S, Fun$, Optional OpnBkt$ = vbOpnBkt)
 Dim P1%, P2%
 AsgBktPos S, OpnBkt, P1, P2
@@ -120,5 +121,4 @@ End Function
 Private Sub Z()
 Z_Brk_Bkt
 Z_AsgBktPos
-MVb_Str_Bkt:
 End Sub

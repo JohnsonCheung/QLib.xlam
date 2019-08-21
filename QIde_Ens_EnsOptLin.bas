@@ -24,7 +24,7 @@ Next
 End Sub
 Private Sub Z_EnsOptLinzM()
 Dim Md As CodeModule
-Const Mdn = "AA"
+Const Mdn$ = "AA"
 GoSub Setup
 GoSub T0
 GoSub Clean

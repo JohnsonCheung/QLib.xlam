@@ -112,7 +112,7 @@ Tst:
     C
     Return
 End Sub
-Private Sub RmvPrpOnErzM(M As CodeModule, Optional Rpt As EmRpt)
+Private Sub RmvPrpOnErzM(M As CodeModule, Optional Upd As EmUpd)
 'Dim L&(): L = LngAp( _
 IxOfExit(PurePrpLy), _
 IxOfOnEr(PurePrpLy), _

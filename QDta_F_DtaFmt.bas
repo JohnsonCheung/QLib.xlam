@@ -27,14 +27,14 @@ AlignSq = O
 End Function
 
 Function AlignAy(Ay, Optional W0%) As String()
-Dim W%: If W0 <= 0 Then W = WdtzAy(Ay) Else W = W0
+Dim W%: If W0 <= 0 Then W = AyWdt(Ay) Else W = W0
 Dim S: For Each S In Itr(Ay)
     PushI AlignAy, AlignL(S, W)
 Next
 End Function
 
 Function AlignRzAy(Ay, Optional W0%) As String() 'Fmt-Dr-ToWdt
-Dim W%: If W0 <= 0 Then W = WdtzAy(Ay) Else W = W0
+Dim W%: If W0 <= 0 Then W = AyWdt(Ay) Else W = W0
 Dim I
 For Each I In Itr(Ay)
     PushI AlignRzAy, AlignR(I, W)
@@ -184,7 +184,7 @@ Function WdtAyzDy(CellDy()) As Integer()
 ':CellDy: :Dy ! Each cell is a Str or Lines
 Dim J&
 For J = 0 To NColzDy(CellDy) - 1
-    Push WdtAyzDy, WdtzAy(StrColzDy(CellDy, J))
+    Push WdtAyzDy, AyWdt(StrColzDy(CellDy, J))
 Next
 End Function
 
@@ -292,6 +292,7 @@ Optional Fmt As EmTblFmt = EiTblFmt, _
 Optional FnPfx$, Optional UseVc As Boolean)
 BrwAy FmtDrs(A, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt), FnPfx, UseVc
 End Sub
+
 Function DrszFmtg(DrsFmtg$()) As Drs
 Dim TitLin$: TitLin = DrsFmtg(1)
 Dim Fny$(): Fny = AeFstLas(SyzTrim(Split(TitLin, "|")))
@@ -335,7 +336,7 @@ End Function
 
 Private Function FmtDrs__NoRec(D As Drs, NmBox$()) As String()
 Dim S$:        S = JnSpc(D.Fny)
-Dim S1$:           If S1 = "" Then S1 = " (No Fny)"
+Dim S1$:           If S = "" Then S1 = " (No Fny)" Else S1 = S
 Dim Lin$:    Lin = "(NoRec) " & S1
    FmtDrs__NoRec = Sy(NmBox, Lin)
 End Function

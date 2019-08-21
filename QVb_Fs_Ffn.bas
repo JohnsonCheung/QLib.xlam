@@ -228,8 +228,12 @@ Dim F: For Each F In Itr(Ffny)
 Next
 End Function
 
-Sub ThwIf_FfnNotExist(Ffn, Fun$, Optional KF$)
-If Not HasFfn(Ffn) Then Thw Fun, "File not found", "File-Pth File-Name File-Kind", Pth(Ffn), Fn(Ffn), KF
+Sub ThwIf_FfnNotExist(Ffn, Fun$, Optional FilKind$)
+If Not HasFfn(Ffn) Then Thw Fun, "File not found", "File-Pth File-Name File-Kind", Pth(Ffn), Fn(Ffn), FilKind
+End Sub
+
+Sub ThwIf_FfnExist(Ffn, Fun$, Optional FilKind$)
+If HasFfn(Ffn) Then Thw Fun, "File already exist", "File-Pth File-Name File-Kind", Pth(Ffn), Fn(Ffn), FilKind
 End Sub
 
 Function RplExt$(Ffn, NewExt)

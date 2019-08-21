@@ -141,7 +141,7 @@ LisMdzM CMd
 End Sub
 
 Private Sub LisMdzP(P As VBProject, MdnPatn$, SrtCol$, OupTy As EmOupTy)
-Dmp FmtDrs(DoMthCntzP(P, MdnPatn, SrtCol), Fmt:=EiSSFmt), OupTy
+Oup FmtDrs(DoMthCntzP(P, MdnPatn, SrtCol), Fmt:=EiSSFmt), OupTy
 End Sub
 
 Function NMthzM%(M As CodeModule)

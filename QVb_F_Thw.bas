@@ -51,8 +51,8 @@ Dim IsLinesA As Boolean, IsLinesB As Boolean
 IsLinesA = IsLines(A)
 IsLinesB = IsLines(B)
 Select Case True
-Case IsLinesA Or IsLinesB: If A <> B Then CmprLines CStr(A), CStr(B), Hdr:=FmtQQ("Lines [?] [?] not eq.", N1, N2): Stop: Exit Sub
-Case IsStr(A):    If A <> B Then CmprStr CStr(A), CStr(B), Hdr:=FmtQQ("String [?] [?] not eq.", N1, N2): Stop: Exit Sub
+Case IsLinesA Or IsLinesB: If A <> B Then CprLines CStr(A), CStr(B), Hdr:=FmtQQ("Lines [?] [?] not eq.", N1, N2): Stop: Exit Sub
+Case IsStr(A):    If A <> B Then CprStr CStr(A), CStr(B), Hdr:=FmtQQ("String [?] [?] not eq.", N1, N2): Stop: Exit Sub
 Case IsDic(A):    If Not IsEqDic(CvDic(A), CvDic(B)) Then BrwCmpgDicAB CvDic(A), CvDic(B): Stop: Exit Sub
 Case IsArray(A):  ThwIf_DifAy A, B, N1, N2
 Case IsObject(A): If ObjPtr(A) <> ObjPtr(B) Then Thw CSub, "Two object are diff", FmtQQ("Ty-? Ty-?", N1, N2), TypeName(A), TypeName(B)
@@ -182,18 +182,21 @@ Sub ThwPmEr(VzPm, Fun$, Optional MsgWhyPmEr$ = "Invalid value")
 Thw Fun, "Parameter error: " & MsgWhyPmEr, "Pm-Type Pm-Val", TypeName(VzPm), FmtV(VzPm)
 End Sub
 
-Sub D(Optional V, Optional OupTy As EmOupTy)
+Sub D(Optional V)
 Dim A$(): A = FmtV(V)
+DmpAy A
+End Sub
+
+Sub Oup(V, Optional OupTy As EmOupTy = EmOupTy.EiOtDmp)
 Select Case True
-Case OupTy = EiOtDmp: DmpAy A
-Case OupTy = EiOtVc: VcAy A
-Case OupTy = EiOtBrw:  BrwAy A
-Case Else: BrwAy A
+Case OupTy = EiOtBrw:   Brw V, UseVc:=False
+Case OupTy = EiOtVc:    Brw V, UseVc:=True
+Case Else:              Dmp V
 End Select
 End Sub
 
-Sub Dmp(A, Optional OupTy As EmOupTy)
-D A, OupTy
+Sub Dmp(A)
+D A
 End Sub
 
 Sub DmpTy(A)

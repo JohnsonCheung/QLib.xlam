@@ -10,7 +10,7 @@ Const ShtTyBql$ = "Short-Type-Si-Colon-FldNm-Bql:Sht.Ty.s.c.f.Bql: It is a [Bql]
 ':ShtTys: :Nm #ShtTy-Size# It is a [ShtTy] or (Tnnn) where nnn can 1 to 3 digits of value 1-255"
 ':ShtTyLis: :Cml #Short-Type-List# ! Each :Cml is 1 or 3 chr of :ShtTy
 ':ShtTyscf: :Term #ShtTy-Si-Colon-FldNm#  ! If FldNm have space, then ShtTyscf should be sq bracket"
-':ShtTyBql: :Bql #ShtTyscf-Bql# ! Each field is a [ShtTyscf].  It is used to create an empty table by CrtTzShtTyscfBql"
+':ShtTyBql: :Bql #ShtTyscf-Bql# ! Each field is a [ShtTyscf].  It is used to create an empty table by CrtTblzShtTyscfBql"
 
 Function ShtTyscfBqlzDrs$(A As Drs)
 Dim Dy(): Dy = A.Dy
@@ -47,15 +47,15 @@ Dim T, P$, Fbql$
 P = EnsPthSfx(FbqlPth)
 For Each T In Fnny
     Fbql = P & T & ".txt"
-    CrtTzFbql D, Fbql
+    CrtTblzFbql D, Fbql
 Next
 End Sub
 
-Private Sub Z_CrtTzFbql()
+Private Sub Z_CrtTblzFbql()
 Dim Fbql$: Fbql = TmpFt
 WrtFbql Fbql, SampDboDutyDta, "PermitD"
 Dim D As Database: Set D = TmpDb
-CrtTzFbql D, "PermitD", Fbql
+CrtTblzFbql D, "PermitD", Fbql
 BrwDb D
 Stop
 End Sub
@@ -69,7 +69,7 @@ CrtFb Fb
 Dim D As Database, IFfn, T$
 Set D = Db(Fb)
 For Each IFfn In Ffny(FbqlPth, "*.bql.txt")
-    CrtTzFbql D, IFfn
+    CrtTblzFbql D, IFfn
 Next
 End Sub
 
@@ -78,7 +78,7 @@ If Not HasSfx(Fbql, ".bql.txt") Then Thw CSub, "Fbql does not have .bql.txt sfx"
 TzFbql = RmvSfx(Fn(Fbql), ".bql.txt")
 End Function
 
-Sub CrtTzFbql(D As Database, Fbql, Optional T0$)
+Sub CrtTblzFbql(D As Database, Fbql, Optional T0$)
 Dim T$
     T = T0
     If T = "" Then T = TzFbql(Fbql)
@@ -86,7 +86,7 @@ Dim T$
 Dim F%, L$, R As Dao.Recordset
 F = FnoI(Fbql)
 Line Input #F, L
-CrtTzShtTyscfBql D, T, L
+CrtTblzShtTyscfBql D, T, L
 
 Set R = RszT(D, T)
 While Not EOF(F)
@@ -97,7 +97,7 @@ R.Close
 Close #F
 End Sub
 
-Sub CrtTzShtTyscfBql(D As Database, T, ShtTyscfBql$)
+Sub CrtTblzShtTyscfBql(D As Database, T, ShtTyscfBql$)
 Dim Td As New Dao.TableDef
 Td.Name = T
 Dim I

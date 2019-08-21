@@ -1,91 +1,66 @@
 Attribute VB_Name = "QIde_Ens_EnsAsm"
 Option Compare Text
 Option Explicit
-Private Const Asm$ = "QIde"
-Private Const Ns$ = "QIde.Qualify"
-Private Const CMod$ = "BEnsAsm."
+Private Const CMod$ = "EnsNsNm."
 
-Function AsmnzMdn$(Mdn$)
-If FstChr(Mdn) = "Q" Then
-    If HasSubStr(Mdn, "_") Then
-        AsmnzMdn = Bef(Mdn, "_")
-    End If
-End If
+Function NsNm$(Mdn$)
+NsNm = AftRev(Mdn, "_")
 End Function
 
-Sub EnsAsmP()
-EnsAsmzP CPj
-End Sub
-
-Function EnsAsmzM(M As CodeModule, Optional Rpt As EmRpt) As Boolean
+Function EnsNsNmzM$(M As CodeModule, Optional Upd As EmUpd)
+'Ret : :Msg # Only when Rpt=EiPushOnly or EiUpdAndPush
+'       Add/Rpl Line - Private Const NsNm$ = "<NsNm>" if NsNm='', no upd, just shw msg.  @@
 If IsMdEmp(M) Then Exit Function
 If CmpTyzM(M) = vbext_ct_Document Then Exit Function
-Const T$ = "Private Const ?$ = ""?"""
-'-- Fnd-CMod-Dta
-Dim Mdn$:                Mdn = MdnzM(M)
-Dim CModLno&:        CModLno = LnozDclCnst(M, "CMod")
-Dim CModLAct$:                 If CModLno > 0 Then CModLAct = M.Lines(CModLno, 1)
-Dim CModLEpt$:      CModLEpt = FmtQQ(T, "CMod", Mdn & ".")
-Dim CModRpl As Drs:  CModRpl = XRpl(CModLno, CModLAct, CModLEpt)
-Dim CModIns$:                  If CModLno = 0 Then CModIns = CModLEpt
 
-'-- Fnd-Asm-Dta
-Dim Asmn$:                   Asmn = AsmnzMdn(Mdn)
-Dim AsmLno&:               AsmLno = LnozDclCnst(M, "Asm")
-Dim AsmLAct$:                       If AsmLno > 0 Then AsmLAct = M.Lines(AsmLno, 1)
-Dim AsmNoUpd As Boolean: AsmNoUpd = Asmn <> ""
-If Not AsmNoUpd Then
-    Dim AsmLEpt$:      AsmLEpt = FmtQQ(T, "Asm", Asmn)
-    Dim AsmRpl As Drs:  AsmRpl = XRpl(AsmLno, AsmLAct, AsmLEpt)
-    Dim AsmIns$:        AsmIns = AsmLEpt
-End If
+Dim L As LLin: 'LLin = ConstLLin(M, "NsNm")
 
-'-- Fnd-Ns-Dta
-Dim Nsn$:                   Nsn = NsnzMdn(Mdn)
-Dim NsLno&:               NsLno = LnozDclCnst(M, "Ns")
-Dim NsLAct$:                      If NsLno > 0 Then NsLAct = M.Lines(NsLno, 1)
-Dim NsNoUpd As Boolean: NsNoUpd = Nsn <> ""
-If Not NsNoUpd Then
-    Dim NsLEpt$:      NsLEpt = FmtQQ(T, "Ns", Nsn)
-    Dim NsRpl As Drs:  NsRpl = XRpl(NsLno, NsLAct, NsLEpt)
-    Dim NsIns$:        NsIns = NsLEpt
-End If
-
-'-- Fnd-All-Dta
-Dim AllIns$():     AllIns = SyNB(CModIns, AsmIns, NsIns)
-Dim AllRpl As Drs: AllRpl = AddDrs3(CModRpl, AsmRpl, NsRpl)
-'== RplLin =============================================================================================================
-'== InsLin =============================================================================================================
-If IsUpdzRpt(Rpt) Then
-    If HasReczDrs(AllRpl) Then EnsAsmzM = True Else If Si(AllIns) > 0 Then EnsAsmzM = True
-    RplLin M, AllRpl
-    InsLinzDcl M, AllIns
-End If
-Rpt:
-    Dim IsRpt As Boolean, IsPush As Boolean
-    IsRpt = IsRptzRpt(Rpt)
-    IsPush = IsPushzRpt(Rpt)
-    If IsRpt Or IsPush Then
-        X "======================================"
-        X Mdn
-        X "Insert Const lines: Count=" & Si(AllIns)
-        X TabAy(AllIns)
-        X "Update Const lines: COunt=" & NReczDrs(AllRpl)
-        XDrs AllRpl
-        XEnd
-        Dim Msg$(): Msg = XX
+Dim OLno%
+    If L.Lno = 0 Then
+        OLno = 1
+        Stop
+    Else
+        OLno = L.Lno
     End If
-    If IsRpt Then Brw Msg
-    If IsPush Then X Msg
+
+Dim Mdn$: Mdn = MdnzM(M)
+Const T$ = "Private Const ?$ = ""?"""
+Dim ONewL$: ONewL = FmtQQ(T, NsNm(Mdn))
+
+Dim OldL$: OldL = L.Lin
+
+Dim OIsIns As Boolean:    OIsIns = OldL = ""
+
+Dim OIsRpl As Boolean:    OIsRpl = OldL <> "" And OldL <> ONewL
+
+'== RplLin =============================================================================================================
+'   InsLin
+If IsEmUpdUpd(Upd) Then
+    If OIsIns Then M.InsertLines OLno, ONewL
+    If OIsRpl Then M.ReplaceLine OLno, ONewL
+End If
+
+    Dim IsRpt As Boolean, IsPush As Boolean
+    IsRpt = IsEmUpdRpt(Upd)
+    IsPush = IsEmUpdRpt(Upd)
+    If IsRpt Or IsPush Then
+        Dim Msg$: Msg = XMsg(OIsIns, OIsRpl, OLno, ONewL)
+        If IsRpt Then Brw Msg
+        If IsPush Then EnsNsNmzM = Msg
+    End If
 End Function
 
-Sub EnsAsmzP(P As VBProject, Optional Rpt As EmRpt)
+Private Function XMsg$(IsIns As Boolean, IsRpl As Boolean, Lno%, NewL$)
+
+End Function
+
+Sub EnsNsNmzP(P As VBProject, Optional Upd As EmUpd)
 Dim C As VBComponent, Mdyd%, Skpd%
-Dim Rpt1 As EmRpt
+Dim Rpt1 As EmUpd
 Rpt1 = EiPushOnly
 Erase XX
 For Each C In P.VBComponents
-    If EnsAsmzM(C.CodeModule, Rpt1) Then
+    If EnsNsNmzM(C.CodeModule, Rpt1) Then
     Stop
         Mdyd = Mdyd + 1
     Else
@@ -96,31 +71,11 @@ Next
 Brw XX
 Inf CSub, "Done", "Pj Mdyd Skpd Tot", P.Name, Mdyd, Skpd, Mdyd + Skpd
 End Sub
+
 Private Function XRpl(Lno&, LAct$, LEpt$) As Drs
 If Lno = 0 Then Exit Function
 If LAct = LEpt Then Exit Function
 XRpl = LNewO(Av(Array(Lno, LEpt, LAct)))
-End Function
-
-Sub EnsCnstzMth(M As CodeModule, Mthn$, Cnstn$, NewL$)
-
-End Sub
-
-Function EnsLin(M As CodeModule, L&, NewL$) As Boolean
-If L = 0 Then Exit Function
-If M.Lines(L, 1) = NewL Then Exit Function
-If NewL = "" Then
-    M.DeleteLines L, 1
-Else
-    M.ReplaceLine L, NewL
-End If
-EnsLin = True
-End Function
-
-Function HasAsmn(Mdn) As Boolean
-If FstChr(Mdn) <> "M" Then Exit Function
-If Not IsAscUCas(Asc(SndChr(Mdn))) Then Exit Function
-HasAsmn = True
 End Function
 
 Function LnozDclCnst%(M As CodeModule, Cnstn$)
@@ -152,17 +107,6 @@ Next
 
 End Function
 
-Function NsnzMdn$(Mdn$)
-If FstChr(Mdn) = "Q" Then
-    Dim A$: A = BefOrAll(Mdn, "__")
-    Dim P1%: P1 = InStr(A, "_")
-    If P1 = 0 Then Exit Function
-    Dim P2%: P2 = InStrRev(A, "_")
-    If P1 = P2 Then Exit Function
-    NsnzMdn = Mid(A, P1 + 1, P2 - P1 - 1)
-End If
-End Function
-
 Private Sub Z_LnozDclConst()
 Dim Md As CodeModule, Cnstn$
 GoSub T0
@@ -178,10 +122,10 @@ Tst:
     Return
 End Sub
 
-Private Sub Z_AsmnzMdn()
-BrwDrs DrszMapAy(Itn(CPj.VBComponents), "AsmnzMdn NsnzMdn")
+Private Sub Z_NsNm()
+BrwDrs DrszMapAy(Itn(CPj.VBComponents), "NsNm", , "Mdn")
 End Sub
 
 Private Sub Z()
-QIde_Ens_EnsAsm:
+QIde_Ens_EnsNsNm:
 End Sub

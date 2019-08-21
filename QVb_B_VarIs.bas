@@ -64,8 +64,8 @@ Function IsEqDic(V As Dictionary, B As Dictionary) As Boolean
 If V.Count <> B.Count Then Exit Function
 If V.Count = 0 Then IsEqDic = True: Exit Function
 Dim K1, k2
-K1 = SrtAyQ(V.Keys)
-k2 = SrtAyQ(B.Keys)
+K1 = AySrtQ(V.Keys)
+k2 = AySrtQ(B.Keys)
 If Not IsEqAy(K1, k2) Then Exit Function
 Dim K
 For Each K In K1

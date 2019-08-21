@@ -3,6 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Str_Rpl."
 Private Const Asm$ = "QVb"
+':Q: :S #Str-With-QuestionMark#
 Private Sub Z_RplBet()
 Dim S$, Exp$, By$, S1$, S2$
 S1 = "Data Source="
@@ -94,9 +95,10 @@ Next
 RplPun = Join(O, "")
 End Function
 
-Function SzQBy$(RplQ, By)
-SzQBy = Replace(RplQ, "?", By)
+Function RplQ$(Q, By)
+RplQ = Replace(Q, "?", By)
 End Function
+
 Function DyoAyAv(AyAv()) As Variant()
 If Si(AyAv) = 0 Then Exit Function
 Dim UAy%: UAy = UB(AyAv)
@@ -142,9 +144,9 @@ Next
 SzMacro = O
 End Function
 
-Function SyzQAy(RplQ, ByAy) As String()
+Function SyzQAy(Q, ByAy) As String()
 Dim By: For Each By In Itr(ByAy)
-    PushI SyzQAy, SzQBy(RplQ, By)
+    PushI SyzQAy, RplQ(Q, By)
 Next
 End Function
 

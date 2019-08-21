@@ -13,9 +13,11 @@ If Not HasFfn(Ft) Then
 End If
 EnsFt = Ft
 End Function
+
 Sub BrwFt(Ft, Optional UseVc As Boolean)
 Shell IIf(UseVc, "code.cmd", "notepad.exe") & " """ & Ft & """", vbMaximizedFocus
 End Sub
+
 Function LineszFt$(Ft)
 LineszFt = Fso.GetFile(Ft).OpenAsTextStream.ReadAll
 End Function

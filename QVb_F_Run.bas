@@ -88,7 +88,7 @@ End Sub
 
 Function Wait(Optional Sec% = 1) As EmWaitRslt
 Dim Till As Date: Till = AftSec(Sec)
-Wait = IIf(Xls.Wait(Till), EiTimUp, EiCnl)
+Wait = IIf(Exl.Wait(Till), EiTimUp, EiCnl)
 End Function
 
 Function AftSec(Sec%) As Date 'Return the Date after Sec from Now

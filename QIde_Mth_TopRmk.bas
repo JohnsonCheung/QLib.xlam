@@ -25,8 +25,8 @@ For Each I In Itr(Ay)
 Next
 End Function
 
-Function TopRmkLines$(Src$(), MthIx)
-TopRmkLines = JnCrLf(TopRmkLy(Src, MthIx))
+Function TopRmkMdes$(Src$(), MthIx)
+TopRmkMdes = JnCrLf(TopRmkLy(Src, MthIx))
 End Function
 Function TopRmkLyzSIW(Src$(), MthIx) As String()
 TopRmkLyzSIW = TopRmkLy(Src, MthIx)

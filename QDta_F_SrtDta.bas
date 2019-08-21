@@ -8,7 +8,7 @@ Dim A_IsDesAy() As Boolean
 Dim A_UC&
 Private Function SrtDrszFstCol(A As Drs) As Drs
 Dim F():      F = FstCol(A)
-Dim Ixy&(): Ixy = IxyzSrtAy(F)
+Dim Ixy&(): Ixy = IxyzAySrt(F)
   SrtDrszFstCol = DwRxy(A, Ixy)
 End Function
 
@@ -176,7 +176,7 @@ End Function
 Function SrtDyzC(Dy(), C&, Optional IsDes As Boolean) As Variant()
 Attribute SrtDyzC.VB_Description = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
 Dim Col(): Col = ColzDy(Dy, C)
-Dim Ix&(): Ix = IxyzSrtAy(Col, IsDes)
+Dim Ix&(): Ix = IxyzAySrt(Col, IsDes)
 Dim IFm&, ITo&, IStp%
 If IsDes Then
     IFm = 0: ITo = UB(Ix): IStp = 1

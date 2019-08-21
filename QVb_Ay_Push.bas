@@ -37,7 +37,7 @@ End Sub
 Sub PushAyNoDup(O, Ay)
 Dim I
 For Each I In Itr(Ay)
-    PushNoDup O, I
+    PushNDup O, I
 Next
 End Sub
 
@@ -70,10 +70,10 @@ Push O, Itm
 PushAy O, Ay
 End Sub
 
-Sub PushNoDup(O, M)
+Sub PushNDup(O, M)
 If Not HasEle(O, M) Then PushI O, M
 End Sub
-Sub PushNoDupNBStr(O, M)
+Sub PushNDupNBStr(O, M)
 If M = "" Then Exit Sub
 If Not HasEle(O, M) Then PushI O, M
 End Sub
@@ -84,10 +84,10 @@ For Each IDr In Itr(ODy)
 Next
 PushI ODy, Dr
 End Sub
-Sub PushNoDupAy(O, Ay)
+Sub PushNDupAy(O, Ay)
 Dim I
 For Each I In Itr(Ay)
-    PushNoDup O, I
+    PushNDup O, I
 Next
 End Sub
 
@@ -160,7 +160,13 @@ End Function
 
 Function RmvLasEle(Ay)
 Dim O: O = Ay
-ReDim Preserve O(UB(O) - 1)
+Dim U&: U = UB(O)
+If U = 0 Then
+    Erase O
+    RmvLasEle = O
+    Exit Function
+End If
+ReDim Preserve O(U - 1)
 RmvLasEle = O
 End Function
 

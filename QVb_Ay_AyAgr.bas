@@ -1,44 +1,7 @@
 Attribute VB_Name = "QVb_Ay_AyAgr"
 Option Explicit
 Option Compare Text
-Function SumAy#(NumAy)
-Dim O#, V: For Each V In Itr(NumAy)
-    O = O + V
-Next
-SumAy = O
-End Function
-Function MaxAy(Ay)
-If Si(Ay) = 0 Then Exit Function
-Dim O: O = Ay(0)
-Dim V: For Each V In Ay
-    If V > O Then O = V
-Next
-MaxAy = O
-End Function
 
-Function MinAy(Ay)
-If Si(Ay) = 0 Then Exit Function
-Dim O: O = Ay(0)
-Dim V: For Each V In Ay
-    If V < 0 Then O = V
-Next
-MinAy = O
-End Function
-
-Function MinAyzGT0(Ay)
-If Si(Ay) = 0 Then Exit Function
-Dim O: O = Ay(0)
-Dim V: For Each V In Ay
-    If V > 0 Then
-        If O = 0 Then
-            O = V
-        Else
-            If V < O Then O = V
-        End If
-    End If
-Next
-MinAyzGT0 = O
-End Function
 
 Function LcAgrP() As Drs
 LcAgrP = AgrzNum(LinCntP)
@@ -65,7 +28,7 @@ End Function
 Function AgrzNum(NumAy) As Drs
 'Ret : Agr Val ! where *Arg has Cnt Avg Max Min Sum
 Dim ODy()
-Dim Sum#: Sum = SumAy(NumAy)
+Dim Sum#: Sum = AySum(NumAy)
 Dim NNo0&: NNo0 = CntNo0(NumAy)
 Dim N&: N = Si(NumAy)
 Dim AvgAll#, AvgNo0#
@@ -77,9 +40,9 @@ Push ODy, Array("CntAll", N)
 Push ODy, Array("AvgNo0", AvgNo0)
 Push ODy, Array("AvgAll", AvgAll)
 Push ODy, Array("Sum", Sum)
-Push ODy, Array("Max", MaxAy(NumAy))
-Push ODy, Array("Min", MinAy(NumAy))
-Push ODy, Array("MinGT0", MinAyzGT0(NumAy))
+Push ODy, Array("Max", AyMax(NumAy))
+Push ODy, Array("Min", AyMin(NumAy))
+Push ODy, Array("MinGT0", AyMinzGT0(NumAy))
 AgrzNum = DrszFF("Agr Val", ODy)
 End Function
 

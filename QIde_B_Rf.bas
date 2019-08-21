@@ -5,7 +5,7 @@ Private Const CMod$ = "MIde_Gen_Rf_1."
 Private Const Asm$ = "QIde"
 Type RfLin: Lin As String: End Type
 ':Frf$ = "It a file Rf.Txt in Srcp with RfLin"
-Public Const FFzRfLin = "Nm Guid Mjr Mnr Frfee"
+Public Const FFoRfLin$ = "Nm Guid Mjr Mnr Frfee"
 Function RfLin(Lin) As RfLin
 RfLin.Lin = Lin
 End Function

@@ -38,9 +38,16 @@ Dim O As New PredHasPfx
 O.Init Pfx
 Set PredHasPfx = O
 End Function
-Function PredHasPatn(Patn$) As IPred
+
+Function PredHasIdf(Idf$) As IPred
+Dim O As New PredHasIdf
+O.Init Idf
+Set PredHasIdf = O
+End Function
+
+Function PredHasPatn(Patn$, Optional AndPatn1$, Optional AndPatn2$) As IPred
 Dim O As New PredHasPatn
-O.Init Patn
+O.Init Patn, AndPatn1, AndPatn2
 Set PredHasPatn = O
 End Function
 
@@ -55,9 +62,9 @@ Next
 IsItrLines = True
 End Function
 
-Function PredzLikss(Likss$) As IPred
+Function PredzKss(Kss$) As IPred
 Dim O As New PredLikAy
-O.Init SyzSS(Likss)
-Set PredzLikss = O
+O.Init SyzSS(Kss)
+Set PredzKss = O
 End Function
 

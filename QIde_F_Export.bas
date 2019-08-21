@@ -38,7 +38,7 @@ End Function
 
 
 
-Sub ExpPjf(Pjf, Optional Xls As Excel.Application, Optional Acs As Access.Application)
+Sub ExpPjf(Pjf, Optional Exl As Excel.Application, Optional Acs As Access.Application)
 Stamp "ExpPj: Begin"
 Stamp "ExpPj: Pjf " & Pjf
 Select Case True

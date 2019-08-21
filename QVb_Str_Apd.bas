@@ -4,7 +4,7 @@ Option Explicit
 Private Const CMod$ = "MVb_Str_Apd."
 Private Const Asm$ = "QVb"
 Private Const Ns$ = "MVb_Str"
-
+':FF: :Lin #Fldn-Spc-Sep# ! a list of Fldn has no space and separated by space.
 Function PpdSpcIf$(S)
 PpdSpcIf = PpdIf(S, " ")
 End Function
@@ -21,9 +21,10 @@ If S = "" Then Exit Function
 PpdIf = Pfx & S
 End Function
 
-Function AddNB$(ParamArray ApOf_Str())
-'Ret : :S ! ret a str by adding each ele of @ApOf_Str one by one, if all them is <>'' else ret blank @@
-Dim Av(): Av = ApOf_Str
+
+Function AddNB$(ParamArray StrAp())
+'Ret : :S ! ret a str by adding each ele of @StrAp one by one, if all them is <>'' else ret blank @@
+Dim Av(): Av = StrAp
 Dim O$()
 Dim S: For Each S In Itr(Av)
     If S = "" Then Exit Function

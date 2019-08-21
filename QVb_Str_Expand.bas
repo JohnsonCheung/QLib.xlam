@@ -3,16 +3,16 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Str_Expand."
 Private Const Asm$ = "QVb"
-Function Expand$(QVblTp$, Seed$())
-Dim O$(), Tp$, ISeed
+
+Function Expand(QVblTp$, Seed$()) As String()
+Dim Tp$, ISeed
 Tp = RplVBar(QVblTp)
 For Each ISeed In Itr(Seed)
-    PushI O, SzQBy(Tp, ISeed)
+    PushI Expand, RplQ(Tp, ISeed)
 Next
-Expand = Join(O, "")
 End Function
 
-Function Expandss$(QVblTp$, Seedss$)
+Function Expandss(QVblTp$, Seedss$) As String()
 Expandss = Expand(QVblTp, SyzSS(Seedss))
 End Function
 Private Sub Z_Expandss()

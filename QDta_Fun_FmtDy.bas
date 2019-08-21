@@ -137,7 +137,7 @@ Next
 'Insp "QDta_Fun_FmtDy.XBrkAy", "Inspect", "Oup(XBrkAy) Dy BrkCCIxy0", "NoFmtr(Boolean())", "NoFmtr(())", BrkCCIxy0: Stop
 End Function
 
-Function XBrkBdy(Bdy$(), Brk() As Boolean, LinzSep$) As String()
+Private Function XBrkBdy(Bdy$(), Brk() As Boolean, LinzSep$) As String()
 If Si(Brk) = 0 Then XBrkBdy = Bdy: Exit Function
 Dim L, J&: For Each L In Bdy
     If Brk(J) Then PushI XBrkBdy, LinzSep

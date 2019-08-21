@@ -55,18 +55,17 @@ Dim O$, S$
 S = RmvPfx(DclSfx, " As ")
 Select Case S
 Case "DoLTDH": O = FmtQQ("FmtDrs(?.D)", V)
-Case "Drs": O = FmtQQ("FmtDrs(?)", V)
-Case "S12s": O = FmtQQ("FmtS12s(?)", V)
+Case "Drs":    O = FmtQQ("FmtDrs(?)", V)
+Case "S12s":   O = FmtQQ("FmtS12s(?)", V)
 Case "CodeModule": O = FmtQQ("Mdn(?)", V)
-Case "", "$", "$()", "#", "@", "%", "&", "%()", "&()", "#()", "@()", "$()": O = V
 Case "Dictionary", "Byte", "Boolean", "String", "Integer": O = V
-Case "", "String()", "Integer()", "Long()", "Byte()": O = V
+Case "", "String()", "Integer()", "Long()", "Byte()":      O = V
+Case "", "$", "$()", "#", "@", "%", "&", "%()", "&()", "#()", "@()", "$()": O = V
 Case Else: O = """NoFmtr(" & S & ")"""
 End Select
 InspExprzDclSfx = O
-Exit Function
-X: InspExprzDclSfx = FmtQQ(Q, V)
 End Function
+
 Function InspExprLis$(PP$, VSfx As Dictionary)
 InspExprLis = Join(InspExprs(PP, VSfx), ", ")
 End Function

@@ -64,7 +64,7 @@ End Function
 Function DicAyKy(A() As Dictionary) As Variant()
 Dim I
 For Each I In Itr(A)
-   PushNoDupAy DicAyKy, CvDic(I).Keys
+   PushNDupAy DicAyKy, CvDic(I).Keys
 Next
 End Function
 
@@ -295,11 +295,11 @@ For Each K In Dic.Keys
 Next
 End Function
 
-Function KeyzLikssDic_Itm$(A As Dictionary, Itm$)
-Dim Likss$, K
+Function KeyzKssDic_Itm$(A As Dictionary, Itm$)
+Dim Kss$, K
 For Each K In A
-    Likss = A(K)
-    If HitLikss(Itm, Likss) Then KeyzLikssDic_Itm = K: Exit Function
+    Kss = A(K)
+    If HitKss(Itm, Kss) Then KeyzKssDic_Itm = K: Exit Function
 Next
 End Function
 

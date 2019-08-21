@@ -229,14 +229,14 @@ For Each K In TermAy(KK)
 Next
 End Function
 
-Function KeyToLikAyDic_T1LikssLy(TLikssLy$()) As Dictionary
+Function KeyToLikAyDic_TkssLy(TkssLy$()) As Dictionary
 Dim O As Dictionary
-    Set O = Dic(TLikssLy)
+    Set O = Dic(TkssLy)
 Dim K
 For Each K In O.Keys
     O(K) = SyzSS(O(K))
 Next
-Set KeyToLikAyDic_T1LikssLy = O
+Set KeyToLikAyDic_TkssLy = O
 End Function
 
 

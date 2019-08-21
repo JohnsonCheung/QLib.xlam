@@ -90,11 +90,38 @@ Dim Dup(): Dup = AwDup(ColzDrs(A, C))
 DwDupC = DwIn(A, C, Dup)
 End Function
 
+Function DwBlnk(A As Drs, C$) As Drs
+DwBlnk = DwEq(A, C, "")
+End Function
+
+Function DwNBlnk(A As Drs, C$) As Drs
+DwNBlnk = DwNe(A, C, "")
+End Function
+
 Function DwEq(A As Drs, C$, V) As Drs
-Dim Dy(), Ix&, Fny$()
+Dim Ix&, Fny$()
 Fny = A.Fny
 Ix = IxzAy(Fny, C, ThwEr:=EiThwEr)
 DwEq = Drs(Fny, DywEq(A.Dy, Ix, V))
+End Function
+
+Function DwEqStr(A As Drs, C$, Str$) As Drs
+If Str = "" Then DwEqStr = A: Exit Function
+DwEqStr = DwEq(A, C, Str)
+End Function
+
+Function DwSubStr(A As Drs, C$, SubStr) As Drs
+Dim Ix&, Fny$()
+Fny = A.Fny
+Ix = IxzAy(Fny, C, ThwEr:=EiThwEr)
+DwSubStr = Drs(Fny, DywSubStr(A.Dy, Ix, SubStr))
+End Function
+
+Function DwLik(A As Drs, C$, Lik) As Drs
+Dim Ix&, Fny$()
+Fny = A.Fny
+Ix = IxzAy(Fny, C, ThwEr:=EiThwEr)
+DwLik = Drs(Fny, DywLik(A.Dy, Ix, Lik))
 End Function
 
 Function DwEqE(A As Drs, C$, V) As Drs
@@ -146,11 +173,12 @@ Dim O(), Dy()
 DwNotRxy = Drs(A.Fny, O)
 End Function
 
-Function DwPatn(A As Drs, C$, Patn$) As Drs
+Function DwPatn(A As Drs, C$, Patn$, Optional Patn1$, Optional Patn2$) As Drs
+If Patn = "" Then DwPatn = A: Exit Function
 Dim I%: I = IxzAy(A.Fny, C, ThwEr:=EiThwEr)
-Dim Re As RegExp: Set Re = RegExp(Patn)
+Dim P As IPred: Set P = PredHasPatn(Patn, Patn1, Patn2)
 Dim Dy(), Dr: For Each Dr In Itr(A.Dy)
-    If Re.Test(Dr(I)) Then PushI Dy, Dr
+    If P.Pred(Dr(I)) Then PushI Dy, Dr
 Next
 DwPatn = Drs(A.Fny, Dy)
 End Function

@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MDao_Dic."
 Private Const Asm$ = "QDao"
-Public Const ShtTyss$ = " A Att B Bool Byt C Chr D Dbl Dte Dec I Int L Lng M Mem S T Tim Txt "
+Public Const ShtTySS$ = " A Att B Bool Byt C Chr D Dbl Dte Dec I Int L Lng M Mem S T Tim Txt "
 Enum EmSimTy
     EiUnk
     EiEmp
@@ -78,14 +78,14 @@ End Function
 
 Property Get DShtTy() As Drs
 Dim Dy(), I
-For Each I In SyzSS(ShtTyss)
+For Each I In SyzSS(ShtTySS)
     PushI Dy, Sy(I, DtaTyzShtTy(I))
 Next
 DShtTy = DrszFF("ShtTy DtaTy", Dy)
 End Property
 
 Property Get ShtTyAy() As String()
-ShtTyAy = SyzSS(ShtTyss)
+ShtTyAy = SyzSS(ShtTySS)
 End Property
 
 Property Get ShtTyDtaTyLy() As String()
@@ -297,7 +297,7 @@ Function IsShtTy(S) As Boolean
 Select Case Len(S)
 Case 1, 3
     If Not IsAscUCas(Asc(S)) Then Exit Function
-    IsShtTy = HasSubStr(ShtTyss, " " & S & " ")
+    IsShtTy = HasSubStr(ShtTySS, " " & S & " ")
 End Select
 End Function
 
@@ -388,7 +388,7 @@ End Function
 Private Function ShtTyDiczFxw(Fx, W) As Dictionary
 Dim C As Column, Cat As Catalog, I
 Set Cat = CatzFx(Fx)
-For Each I In Cat.Tables(CatTnzWsn(W)).Columns
+For Each I In Cat.Tables(CattnzWsn(W)).Columns
     ShtTyDiczFxw.Add C.Name, ShtTyzAdo(C.Type)
 Next
 End Function

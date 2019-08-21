@@ -38,14 +38,14 @@ Next
 End Function
 Function TreeWbAy() As Workbook()
 Dim Wb As Workbook, Ws As Worksheet
-For Each Wb In Xls.Workbooks
+For Each Wb In Exl.Workbooks
     If IsTreeWb(Wb) Then PushObj TreeWbAy, Wb
 Next
 
 End Function
 Function TreeWsAy() As Worksheet()
 Dim Wb As Workbook, Ws As Worksheet
-For Each Wb In Xls.Workbooks
+For Each Wb In Exl.Workbooks
     For Each Ws In Wb.Sheets
         If Ws.Name = "TreeWs" Then PushObj TreeWsAy, Ws
     Next

@@ -33,7 +33,7 @@ Sub Brw(Optional Fnn$, Optional UseVc As Boolean)
 B Aset.Keys, DftStr(Fnn, "Aset"), UseVc
 End Sub
 Function Srt() As Aset
-Set Srt = AsetzAy(SrtAyQ(Itms))
+Set Srt = AsetzAy(AySrtQ(Itms))
 End Function
 Function AddAset(A As Aset) As Aset
 Dim O As New Aset

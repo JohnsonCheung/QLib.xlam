@@ -3,8 +3,6 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Str_Nm."
 Private Const Asm$ = "QVb"
-Public Const C_Dbl$ = """"
-Public Const C_Sng$ = "'"
 
 Function IsNm(S) As Boolean
 If S = "" Then Exit Function
@@ -45,11 +43,11 @@ QtezSpc = QtezChr(S, " ")
 End Function
 
 Function QtezDblQ$(S)
-QtezDblQ = QtezChr(S, vbQtezDblQ)
+QtezDblQ = QtezChr(S, vbDblQ)
 End Function
 
 Function SngQte$(S)
-SngQte = QtezChr(S, vbSngQte)
+SngQte = QtezChr(S, vbSngQ)
 End Function
 
 Function HitRe(S, Re As RegExp) As Boolean

@@ -1,18 +1,22 @@
 Attribute VB_Name = "QDao_B_Ado"
 Option Compare Text
 Option Explicit
+Public Const FFoFTy$ = "T F Ty"
+Public Const FFoFxwFTy$ = "Fx Ws T F Ty"
 Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Ado."
-Function CvTc(A) As ADOX.Table
-Set CvTc = A
+Function CvAxt(A) As ADOX.Table
+':Axt: :Adox.Table #Catalog-Table#
+Set CvAxt = A
 End Function
-Function NoReczAdo(A As AdoDb.Recordset) As Boolean
+Function NoReczArs(A As AdoDb.Recordset) As Boolean
 If Not A.EOF Then Exit Function
 If Not A.BOF Then Exit Function
-NoReczAdo = True
+NoReczArs = True
 End Function
-Function HasReczAdo(A As AdoDb.Recordset) As Boolean
-HasReczAdo = Not NoReczAdo(A)
+
+Function HasReczArs(A As AdoDb.Recordset) As Boolean
+HasReczArs = Not NoReczArs(A)
 End Function
 
 Function TnyzCat(A As Catalog) As String()
@@ -20,49 +24,55 @@ TnyzCat = Itn(A.Tables)
 End Function
 
 Function CatzFb(Fb) As Catalog
-Set CatzFb = CatCn(CnzFb(Fb))
+Set CatzFb = Cat(CnzFb(Fb))
 End Function
 
-Function CatCn(A As AdoDb.Connection) As Catalog
+Function Cat(A As AdoDb.Connection) As Catalog
 Dim O As New Catalog
 Set O.ActiveConnection = A
-Set CatCn = O
+Set Cat = O
 End Function
 
 Function CatzFx(Fx) As Catalog
-Set CatzFx = CatCn(CnzFx(Fx))
+Set CatzFx = Cat(CnzFx(Fx))
 End Function
 
-Function FnyzCatT(Cat As ADOX.Catalog, T) As String()
-Dim CT As ADOX.Table
-Set CT = Cat.Tables(T)
-FnyzCatT = Itn(Cat.Tables(T).Columns)
+Function FnyzCatt(Cat As ADOX.Catalog, T) As String()
+':Catt: :Cat,T
+Dim Axt As ADOX.Table
+Set Axt = Cat.Tables(T)
+FnyzCatt = Itn(Cat.Tables(T).Columns)
 End Function
 
-Function DFxwFTy(Fx, W) As Drs
+Function DoFxwFTy(Fx, W) As Drs
 Dim A As Drs
-A = DFTyzFxw(Fx, W)
-DFxwFTy = InsColzDrsCC(A, "Fx W", Fx, W)
-End Function
-Function DFTyzFxw(Fx, W) As Drs
-DFTyzFxw = DFTy(CatzFx(Fx), CatTnzWsn(W))
+A = DoFTyzFxw(Fx, W)
+DoFxwFTy = InsColzDrsCC(A, "Fx W", Fx, W)
 End Function
 
-Function DFTy(Cat As ADOX.Catalog, T) As Drs
-Dim CT As ADOX.Table, ODy()
-Set CT = Cat.Tables(T)
+Function DoFTyzFxw(Fx, W) As Drs
+DoFTyzFxw = DoFTy(CatzFx(Fx), CattnzWsn(W))
+End Function
+
+Function DoFTy(Cat As ADOX.Catalog, T) As Drs
+Dim Axt As ADOX.Table, ODy()
+Set Axt = Cat.Tables(T)
 Dim C As Column
 For Each C In Cat.Tables(T).Columns
-    PushI ODy, Array(C.Name, ShtTyzAdo(C.Type))
+    PushI ODy, Array(T, C.Name, ShtTyzAdo(C.Type))
 Next
-DFTy = DrszFF("T Ty", ODy)
+DoFTy = Drs(FoFTy, ODy)
+End Function
+
+Function FoFTy() As String()
+FoFTy = SyzSS(FFoFTy)
 End Function
 
 Function DrszFxw(Fx, Wsn) As Drs
 DrszFxw = DrszArs(ArszFxw(Fx, Wsn))
 End Function
 Function ArszFxw(Fx, Wsn) As AdoDb.Recordset
-Set ArszFxw = ArsCnq(CnzFx(Fx), SqlSel_T(CatTnzWsn(Wsn)))
+Set ArszFxw = ArsCnq(CnzFx(Fx), SqlSel_T(CattnzWsn(Wsn)))
 End Function
 Sub RunCnSqy(Cn As AdoDb.Connection, Sqy$())
 Dim Q
@@ -160,7 +170,7 @@ End Function
 
 Function TnyzFbByAdo(Fb) As String()
 'TnyzAdoFb = TnyzCat(CatzFb(Fb))
-TnyzFbByAdo = AeLikss(TnyzCat(CatzFb(Fb)), "MSys* f_*_Data")
+TnyzFbByAdo = AeKss(TnyzCat(CatzFb(Fb)), "MSys* f_*_Data")
 End Function
 
 Function WnyzWb(A As Workbook) As String()
@@ -178,7 +188,7 @@ If InclAllOtherTbl Then
     Exit Function
 End If
 For Each T In Itr(Tny)
-    PushNB Wny, WsnzCatTn(T)
+    PushNB Wny, WsnzCattn(T)
 Next
 End Function
 
@@ -189,7 +199,7 @@ End Function
 Function FnyzFbtAdo(Fb, T) As String()
 Dim C As ADOX.Catalog
 Set C = CatzFb(Fb)
-FnyzFbtAdo = FnyzCatT(C, T)
+FnyzFbtAdo = FnyzCatt(C, T)
 End Function
 
 
@@ -317,23 +327,23 @@ Stop
 'DWsfzFxw = DrszFF("Fx Wsn F Ty", ODy)
 End Function
 Function FnyzFxw(Fx, W) As String()
-FnyzFxw = FnyzCatT(CatzFx(Fx), CatTnzWsn(W))
+FnyzFxw = FnyzCatt(CatzFx(Fx), CattnzWsn(W))
 End Function
 Function CvAdoTy(A) As AdoDb.DataTypeEnum
 CvAdoTy = A
 End Function
 
-Function CatTnzWsn$(Wsn)
+Function CattnzWsn$(Wsn)
 If IsNeedQte(Wsn) Then
-    CatTnzWsn = QteSng(Wsn & "$")
+    CattnzWsn = QteSng(Wsn & "$")
 Else
-    CatTnzWsn = Wsn & "$"
+    CattnzWsn = Wsn & "$"
 End If
 End Function
 
-Function WsnzCatTn$(CatTn)
-If HasSfx(CatTn, "FilterDatabase") Then Exit Function
-WsnzCatTn = RmvSfx(RmvSngQte(CatTn), "$")
+Function WsnzCattn$(Cattn)
+If HasSfx(Cattn, "FilterDatabase") Then Exit Function
+WsnzCattn = RmvSfx(RmvSngQte(Cattn), "$")
 End Function
 
 Private Sub Z()

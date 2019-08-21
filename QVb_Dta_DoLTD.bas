@@ -1,11 +1,12 @@
 Attribute VB_Name = "QVb_Dta_DoLTD"
 Option Explicit
 Option Compare Text
-Type DoLTTT: D As Drs: End Type 'L T1 T2 T3
-Type DoLTT: D As Drs: End Type  'L T1 T2
-Type DoLDta: D As Drs: End Type 'L Dta
-Type DoLTD: D As Drs: End Type  'L T1 Dta
-Type DoLTDH: D As Drs: End Type 'L T1 Dta IsHdr
+Public Const FFoLTDH$ = "L T1 Dta IsHdr"
+Type DoLTTT: D As Drs: End Type 'Drs-L-T1-T2-T3
+Type DoLTT:  D As Drs: End Type 'Drs-L-T1-T2
+Type DoLDta: D As Drs: End Type 'Drs-L-Dta
+Type DoLTD:  D As Drs: End Type 'Drs-L-T1-Dta
+Type DoLTDH: D As Drs: End Type 'Drs-L-T1-Dta-IsHdr
 
 Private Property Get Y_LofT1nn$()
 Y_LofT1nn = LofT1nn
@@ -221,7 +222,7 @@ End Function
 
 Function DoLTD(Src$()) As Drs
 'Ret : :DoLTD @@
-':DoLTD: :Drs<L-T1-Dta>
+':DoLTD: :Drs-L-T1-Dta
 DoLTD = DrszFF("L T1 Dta", DyoLTD(Src))
 End Function
 
@@ -231,7 +232,7 @@ FmtDoLTDH = StrCol(B, "Lin")
 End Function
 
 Function DoLTDH(IndentedSrc$()) As DoLTDH
-'Ret: L T1 Dta IsHdr:
-DoLTDH.D = DrszFF("L T1 Dta IsHdr", DyoLTDH(IndentedSrc))
+'Ret: L T1 Dta IsHdr: @@
+DoLTDH.D = DrszFF(FFoLTDH, DyoLTDH(IndentedSrc))
 End Function
 

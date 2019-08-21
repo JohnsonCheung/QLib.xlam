@@ -12,7 +12,7 @@ Next
 WrpDrNRow = R
 End Function
 '^^^
-Function AwrpPad(Sy$(), W%) As String() ' Each Itm of Sy[Sy] is padded to line with WdtzAy(Sy).  return all padded lines as String()
+Function AwrpPad(Sy$(), W%) As String() ' Each Itm of Sy[Sy] is padded to line with AyWdt(Sy).  return all padded lines as String()
 Dim O$(), X, I%
 ReDim O(0)
 For Each X In Itr(Sy)
@@ -78,9 +78,9 @@ Dim J&, Col()
 For J = 0 To NColzDy(WrpgDy) - 1
     Col = ColzDy(WrpgDy, J)
     If IsArray(Col(0)) Then
-'        Push WdtzWrpgDy, WdtzAy(AyFlat(Col))
+'        Push WdtzWrpgDy, AyWdt(AyFlat(Col))
     Else
-'        Push WdtzWrpgDy, WdtzAy(Col)
+'        Push WdtzWrpgDy, AyWdt(Col)
     End If
 Next
 End Function

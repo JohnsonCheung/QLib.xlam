@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MRmv."
 Private Const Asm$ = "QVb"
-Private Const Ns = "Str"
+Private Const Ns$ = "Str"
 Function RmvDotComma$(S)
 RmvDotComma = Replace(Replace(S, ",", ""), ".", "")
 End Function

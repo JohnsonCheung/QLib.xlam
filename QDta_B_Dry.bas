@@ -31,8 +31,8 @@ Private Sub Z_FmtA()
 DmpAy JnDy(SampDy1)
 End Sub
 
-Function DywDup(Dy(), C&) As Variant()
-DywDup = AwIxy(Dy, IxyzDup(ColzDy(Dy, C)))
+Function DywDupzC(Dy(), C&) As Variant()
+DywDupzC = AwIxy(Dy, IxyzDup(ColzDy(Dy, C)))
 End Function
 Private Sub Z_DyoJnFldKK()
 Dim Dy(), KKIxy&(), JnFldIx&, Sep$
@@ -233,6 +233,18 @@ Dim Dr: For Each Dr In Itr(Dy)
 Next
 End Function
 
+Function DywSubStr(Dy(), C&, SubStr) As Variant()
+Dim Dr: For Each Dr In Itr(Dy)
+    If HasSubStr(Dr(C), SubStr) Then PushI DywSubStr, Dr
+Next
+End Function
+
+Function DywLik(Dy(), C&, Lik) As Variant()
+Dim Dr: For Each Dr In Itr(Dy)
+    If Dr(C) Like Lik Then PushI DywLik, Dr
+Next
+End Function
+
 Function HasColEqzDy(Dy(), C&, Eq) As Boolean
 Dim Dr
 For Each Dr In Itr(Dy)
@@ -255,11 +267,11 @@ Next
 Thw CSub, "No first Dr in Dy of Cix eq to V", "Cix V Dy", C, V, JnDy(Dy)
 End Function
 
-Function DywDupCC(Dy(), CCIxy&()) As Variant()
+Function DywDupC(Dy(), Coxiy&()) As Variant()
 Dim Dup$(), Dr
-Dup = AwDup(JnDyCC(Dy, CCIxy))
+Dup = AwDup(JnDyCC(Dy, Coxiy))
 For Each Dr In Itr(Dy)
-    If HasEle(Dup, Jn(AwIxy(Dr, CCIxy), vbFldSep)) Then Push DywDupCC, Dr
+    If HasEle(Dup, Jn(AwIxy(Dr, Coxiy), vbFldSep)) Then Push DywDupC, Dr
 Next
 End Function
 

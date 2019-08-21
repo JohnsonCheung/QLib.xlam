@@ -1,71 +1,43 @@
 Attribute VB_Name = "QIde_Cd_TyCd"
 Option Explicit
 Option Compare Text
+Const Tp_Push$ = "|" & _
+"|Sub Push{n}(O As {n}s, M As {n}" & _
+"|ReDim Preserve O.Ay(O.N)" & _
+"|O.Ay(O.N) = M" & _
+"|O.N = O.N + 1" & _
+"|End Sub"
 
-Function TyCd$(Tyn, Optional IsPrv As Boolean)
-Dim C1$: C1 = Tp_Tys(IsPrv)
-Dim C2$: C2 = Tp_Push(IsPrv)
-Dim C3$: C3 = Tp_Pushs(IsPrv)
-Dim C4$: C4 = Tp_Add(IsPrv)
-Dim C5$: C5 = Tp_Sng(IsPrv)
-TyCd = SzQBy(JnCrLf(Sy(C1, C2, C3, C4, C5)), Tyn)
+Const Tp_Pushs$ = "|" & _
+"|Sub Push{n}s(O As {n}s, M As {n}s)" & _
+"|Dim J&" & _
+"|For J=0 To {n}.N - 1" & _
+"|    Push{n} O, A.Ay(J)" & _
+"|Next" & _
+"|End Sub"
+
+Const Tp_Tys$ = "|" & _
+"|Type {n}s: N As Long: Ay() As {n}: End Type"
+
+Const Tp_Sng$ = "|" & _
+"|Sub Sng{n}(A As {n}) As {n}s" & _
+"|Push{n} Sng{n}, A" & _
+"|End Sub"
+
+Const Tp_Add$ = "|" & _
+"|Sub Add{n}(A As {n}, B As {n}) As {n}s" & _
+"|Push{n} Add{n}, A" & _
+"|Push{n} Add{n}, B" & _
+"|End Sub"
+
+Const Tp$ = Tp_Tys & Tp_Push & Tp_Pushs & Tp_Add & Tp_Sng
+
+':Mtyn:      :Nm    #Module-Type-Name#
+':MthPfx-Cd: :Lines                    ! always Lines of code
+Function CdMty$(Mtyn)
+CdMty = FmtMacro(Tp, Mtyn)
 End Function
 
-Private Function TyCd_Tys$(Tyn, Optional IsPrv As Boolean)
-TyCd_Tys = SzQBy(Tp_Tys(IsPrv), Tyn)
-End Function
-
-Private Function Tp_Push$(Optional IsPrv As Boolean)
-Erase XX
-X ""
-X Prv(IsPrv) & "Sub Push?(O As ?s, M As ?)"
-X "ReDim Preserve O.Ay(O.N)"
-X "O.Ay(O.N) = M"
-X "O.N = O.N + 1"
-X "End Sub"
-Tp_Push = JnCrLf(XX)
-Erase XX
-End Function
-
-Private Function Tp_Pushs$(Optional IsPrv As Boolean)
-Erase XX
-X ""
-X Prv(IsPrv) & "Sub Push?s(O As ?s, M As ?s)"
-X "Dim J&"
-X "For J=0 To ?.N - 1"
-X "    Push? O, A.Ay(J)"
-X "Next"
-X "End Sub"
-Tp_Pushs = JnCrLf(XX)
-Erase XX
-End Function
-
-Private Function Prv$(IsPrv As Boolean)
-If IsPrv Then Prv = "Private "
-End Function
-
-Private Function Tp_Tys$(Optional IsPrv As Boolean)
-Tp_Tys = vbCrLf & Prv(IsPrv) & "Type ?s: N As Long: Ay() As ?: End Type"
-End Function
-
-Private Function Tp_Add$(Optional IsPrv As Boolean)
-Erase XX
-X ""
-X Prv(IsPrv) & "Sub Add?(A As ?, B As ?) As ?s"
-X "Push? Add?, A"
-X "Push? Add?, B"
-X "End Sub"
-Tp_Add = JnCrLf(XX)
-Erase XX
-End Function
-
-Function Tp_Sng$(Optional IsPrv As Boolean)
-Erase XX
-X ""
-X Prv(IsPrv) & "Sub Sng?(A As ?) As ?s"
-X "Push? Sng?, A"
-X "End Sub"
-Tp_Sng = JnCrLf(XX)
-Erase XX
-End Function
-
+Private Sub Z()
+Stop
+End Sub

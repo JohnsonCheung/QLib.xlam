@@ -249,7 +249,7 @@ SrtzM = RplMd(M, SSrcLzM(M))
 End Function
 
 Sub SrtzP(P As VBProject)
-BackupPj
+BackupP
 Dim C As VBComponent
 For Each C In P.VBComponents
     SrtzM C.CodeModule

@@ -77,7 +77,7 @@ End Sub
 
 Function OpnFx(Fx) As Workbook
 ThwIf_FfnNotExist Fx, CSub
-Set OpnFx = Xls.Workbooks.Open(Fx)
+Set OpnFx = Exl.Workbooks.Open(Fx)
 End Function
 
 Sub ClrWsNm(Ws As Worksheet)
@@ -696,7 +696,7 @@ End Function
 
 Function NewWb(Optional Wsn$) As Workbook
 Dim O As Workbook
-Set O = Xls.Workbooks.Add
+Set O = Exl.Workbooks.Add
 Set NewWb = WbzWs(SetWsn(FstWs(O), Wsn))
 End Function
 
@@ -966,11 +966,6 @@ Sub FillAtH(Ay, At As Range)
 FillSq Sqh(Ay), At
 End Sub
 
-Sub X123()
-Dim Lo As ListObject: Set Lo = FstLo(CWs)
-Dim F As Filters: Set F = Lo.AutoFilter.Filters
-Stop
-End Sub
 Sub RunFxqByCn(Fx, Q)
 CnzFx(Fx).Execute Q
 End Sub
@@ -1117,13 +1112,13 @@ Private Sub Z_WszDs()
 ShwWs WszDs(SampDs)
 End Sub
 
-Function EnsWbzXls(Xls As Excel.Application, Wbn$) As Workbook
+Function EnsWbzXls(Exl As Excel.Application, Wbn$) As Workbook
 Dim O As Workbook
 Const FxFn$ = "Insp.xlsx"
-If HasWbn(Xls, FxFn) Then
-    Set O = Xls.Workbooks(FxFn)
+If HasWbn(Exl, FxFn) Then
+    Set O = Exl.Workbooks(FxFn)
 Else
-    Set O = Xls.Workbooks.Add
+    Set O = Exl.Workbooks.Add
     O.SaveAs InstFdr("Insp") & "Insp.xlsx"
 End If
 Set EnsWbzXls = ShwWb(O)

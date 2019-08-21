@@ -36,7 +36,7 @@ End Sub
 Private Function Z_EnsPrv(A As Drs) As Drs
 
 End Function
-Sub EnsPrvZ(M As CodeModule, Optional Rpt)
+Sub EnsPrvZ(M As CodeModule, Optional Upd)
 Const CmPfx$ = "X_"
 Dim A As Drs: ' A = DPubZMth(M) ' L MthLin
 Dim B As Drs: ' B = X_EnsPrv(A)   ' L MthLin PrvZ

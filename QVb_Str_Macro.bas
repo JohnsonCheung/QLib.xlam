@@ -18,15 +18,27 @@ If InclBkt Then O = AddPfxSzAy(O, Q1, Q2)
 NyzMacro = O
 End Function
 
-Function FmtMacro(Macro, ParamArray Ap())
-Dim Av(): Av = Ap
-FmtMacro = FmtMacrozAv(Macro, Av)
+Function RplMacro(MacroVbl, NN$, ParamArray ValAp())
+Dim O$
+    O = RplVbl(MacroVbl)
+    Dim J%
+    Dim Nm: For Each Nm In Itr(SyzSS(NN))
+        Dim V: V = ValAp(J)
+        O = Replace(O, "{" & Nm & "}", V)
+        J = J + 1
+    Next
+RplMacro = O
 End Function
 
-Function FmtMacrozAv$(Macro, Av())
-Dim O$: O = Macro
+Function FmtMacro(MacroVbl, ParamArray Ap())
+Dim Av(): Av = Ap
+FmtMacro = FmtMacrozAv(MacroVbl, Av)
+End Function
+
+Function FmtMacrozAv$(MacroVbl, Av())
+Dim O$: O = RplVBar(MacroVbl)
 Dim N, J%
-For Each N In NyzMacro(Macro)
+For Each N In NyzMacro(MacroVbl)
     O = Replace(O, "{" & N & "}", Av(J))
     J = J + 1
 Next

@@ -106,6 +106,14 @@ End Function
 Function HasPfx(S, Pfx, Optional C As VbCompareMethod = vbTextCompare) As Boolean
 HasPfx = StrComp(Left(S, Len(Pfx)), Pfx, C) = 0
 End Function
+
+Function IdfAy(S) As String()
+IdfAy = WrdAy(S)
+End Function
+
+Function HasIdf(S, Idf) As Boolean
+HasIdf = HasEle(IdfAy(S), Idf)
+End Function
 Function HasPfxSfx(S, Pfx, Sfx, Optional C As VbCompareMethod = vbTextCompare) As Boolean
 If Not HasPfx(S, Pfx, C) Then Exit Function
 If Not HasSfx(S, Sfx, C) Then Exit Function

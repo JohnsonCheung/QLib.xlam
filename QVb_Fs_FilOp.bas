@@ -3,11 +3,14 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Fs_Ffn_Backup."
 Private Const Asm$ = "QVb"
-Sub BrwBkPth()
-BrwPth BkPthzP(CPj)
+':FunVerb-Backup: :FunVerb
+':Bkp:            :Pth #Backup-Path# ! Backup path of a Ffn
+Sub BrwBkp()
+BrwPth BkpzP(CPj)
 End Sub
-Function BkPthzP$(P As VBProject)
-BkPthzP = BkPth(Pjf(P))
+
+Function BkpzP$(P As VBProject)
+BkpzP = Bkp(Pjf(P))
 End Function
 Function BkRoot$(Pth)
 BkRoot = AddFdr(Pth, ".Backup")
@@ -17,27 +20,31 @@ BkHom = AddFdr(BkRoot(Pth(Ffn)), Fn(Ffn))
 End Function
 
 Function BkPjfzLasP$()
-BkPjfzLasP = BkFfnzLas(PjfP)
+BkPjfzLasP = LasBkFfn(PjfP)
 End Function
 
-Function BkFfnzLas$(Ffn)
+Function LasBkFfn$(Ffn)
 Dim H$: H = BkHom(Ffn)
 Dim F$(): F = FdrAyzIsInst(H)
 Dim Fdr$: Fdr = MaxEle(F)
-BkFfnzLas = H & Fdr & "\" & Fn(Ffn)
+LasBkFfn = H & Fdr & "\" & Fn(Ffn)
 End Function
 
-Function BkPth$(Ffn)
-BkPth = AddFdr(BkHom(Ffn), TmpNm)
+Function LasBkPj$()
+LasBkPj = LasBkFfn(CPjf)
 End Function
 
-Sub BackupPj()
-Attribute BackupPj.VB_Description = "lkdj flksdjf lsdkfj"
+Function Bkp$(Ffn)
+Bkp = AddFdr(BkHom(Ffn), TmpNm)
+End Function
+
+Sub BackupP()
+Attribute BackupP.VB_Description = "lkdj flksdjf lsdkfj"
 BackupFfn Pjf(CPj)
 End Sub
 
 Function BkFfn$(Ffn)
-BkFfn = BkPth(Ffn) & Fn(Ffn)
+BkFfn = Bkp(Ffn) & Fn(Ffn)
 End Function
 
 Function BackupFfn$(Ffn)

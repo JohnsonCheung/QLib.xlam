@@ -18,7 +18,7 @@ Next
 End Function
 
 Function WdtzCol%(A As Drs, C$)
-WdtzCol = WdtzAy(StrCol(A, C))
+WdtzCol = AyWdt(StrCol(A, C))
 End Function
 
 Function JnDyCC(Dy(), CCIxy&(), Optional FldSep$ = vbFldSep) As String()

@@ -22,7 +22,7 @@ CompressFxa Pjf(CPj)
 End Sub
 
 Sub CompressFxa(Fxa$)
-ExpPj PjzPjf(Xls.Vbe, Fxa)
+ExpPj PjzPjf(Exl.Vbe, Fxa)
 Dim Srcp$: Srcp = SrcpzPjf(Fxa)
 GenFxazSrcp Srcp
 'BackupFfn Fxa, Srcp

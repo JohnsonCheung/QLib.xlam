@@ -36,18 +36,18 @@ For Each L In D("Lbl"): SetLbl L: Next ' Must run Last
 End Sub
 
 'Ali -----------------------------------------------------------
-Sub SetAli(LinOf_Ali_FldLikss)
-'Fm LinOf_Ali_FldLikss : T1 is :Ali: Rst is FldLikss.  :Ali: is 'Left | Right | Center'
-'Ret                   : align those col as stated in @FldLikss and in @LoFny as @Ali
-Dim Ali$, Fny$(): XAsgT1Fny LinOf_Ali_FldLikss, Ali, Fny
+Sub SetAli(LinOf_Ali_FldKss)
+'Fm LinOf_Ali_FldKss : T1 is :Ali: Rst is FldKss.  :Ali: is 'Left | Right | Center'
+'Ret                   : align those col as stated in @FldKss and in @LoFny as @Ali
+Dim Ali$, Fny$(): XAsgT1Fny LinOf_Ali_FldKss, Ali, Fny
 Dim H As XlHAlign: H = XHAlign(Ali)
 Dim F: For Each F In Itr(Fny)
     XCol(F).HorizontalAlignment = H
 Next
 End Sub
 
-Private Sub XAsgT1Fny(LinOf_T1_FldLikss, OT1$, OFny$())
-AsgT1Fny LinOf_T1_FldLikss, A.Fny, OT1, OFny
+Private Sub XAsgT1Fny(LinOf_T1_FldKss, OT1$, OFny$())
+AsgT1Fny LinOf_T1_FldKss, A.Fny, OT1, OFny
 End Sub
 
 Private Function XHAlign(Ali$) As XlHAlign
@@ -60,11 +60,11 @@ End Select
 End Function
 
 'Bdr -----------------------------------------------------------
-Sub SetBdr(LinOf_LRBoth_FldLikss)
+Sub SetBdr(LinOf_LRBoth_FldKss)
 '#  A.Fny                 :
-'Fm LinOf_LRBoth_FldLikss : T1 is :Ali: Rst is FldLikss.  :LRBoth: is 'Left | Right | Both'
-'Ret                   : align those col as stated in @FldLikss and in @LoFny as @Ali
-Dim L$: L = LinOf_LRBoth_FldLikss
+'Fm LinOf_LRBoth_FldKss : T1 is :Ali: Rst is FldKss.  :LRBoth: is 'Left | Right | Both'
+'Ret                   : align those col as stated in @FldKss and in @LoFny as @Ali
+Dim L$: L = LinOf_LRBoth_FldKss
 Dim LRBoth$, Fny$(): XAsgT1Fny L, LRBoth, Fny
 Dim IsLeft As Boolean: IsLeft = HasEle(SyzSS("Left Both"), LRBoth)
 Dim IsRight As Boolean: IsRight = HasEle(SyzSS("Right Both"), LRBoth)
@@ -83,8 +83,8 @@ Dim FSum$, FFm$, FTo$: AsgTTRst LinOf_Sum_Fm_To, FSum, FFm, FTo
 XCol(FSum).Formula = FmtQQ("=Sum([?]:[?])", FFm, FTo)
 End Sub
 'Cor----------------------------------------------------------
-Sub SetCor(LinOf_Cor_FldLikss)
-Dim Cor$, Fny$(): XAsgT1Fny LinOf_Cor_FldLikss, Cor, Fny
+Sub SetCor(LinOf_Cor_FldKss)
+Dim Cor$, Fny$(): XAsgT1Fny LinOf_Cor_FldKss, Cor, Fny
 Dim C&: C = Colr(Cor)
 Dim F
 For Each F In Itr(Fny)
@@ -100,8 +100,8 @@ XCol(F).Formula = Fml
 End Sub
 
 'Fmt----------------------------------------------------------
-Sub SetFmt(LinOf_Fmt_FldLikss)
-Dim Fmt$, Fny$(): XAsgT1Fny LinOf_Fmt_FldLikss, Fmt, Fny
+Sub SetFmt(LinOf_Fmt_FldKss)
+Dim Fmt$, Fny$(): XAsgT1Fny LinOf_Fmt_FldKss, Fmt, Fny
 Dim F: For Each F In Itr(Fny)
     XCol(F).NumberFormat = Fmt
 Next
@@ -120,18 +120,18 @@ SwapVzRg R1, R2
 End Sub
 
 'Lvl----------------------------------------------------------
-Sub SetLvl(LinOf_Lvl_FldLikss)
-Dim T1$, Fny$():       XAsgT1Fny LinOf_Lvl_FldLikss, T1, Fny
+Sub SetLvl(LinOf_Lvl_FldKss)
+Dim T1$, Fny$():       XAsgT1Fny LinOf_Lvl_FldKss, T1, Fny
 Dim Lvl As Byte: Lvl = T1
-If Not IsBet(T1, "2", "8") And Len(T1) <> 1 Then Inf CSub, "Lvl should betwee 2 to 8", "Lvl LvlLin", Lvl, LinOf_Lvl_FldLikss: Exit Sub
+If Not IsBet(T1, "2", "8") And Len(T1) <> 1 Then Inf CSub, "Lvl should betwee 2 to 8", "Lvl LvlLin", Lvl, LinOf_Lvl_FldKss: Exit Sub
 Dim F: For Each F In Itr(Fny)
     XCol(F).OutlineLevel = Lvl
 Next
 End Sub
 
 'Tot----------------------------------------------------------
-Sub SetTot(LinOf_SACnt_FldLikss)
-Dim SACnt$, Fny$():               XAsgT1Fny LinOf_SACnt_FldLikss, SACnt, Fny
+Sub SetTot(LinOf_SACnt_FldKss)
+Dim SACnt$, Fny$():               XAsgT1Fny LinOf_SACnt_FldKss, SACnt, Fny
 Dim T As XlTotalsCalculation: T = XTotCalc(SACnt)
 Dim F: For Each F In Itr(Fny)
     A.Lo.ListColumns(F).Total = T
@@ -151,10 +151,10 @@ XTotCalc = O
 End Function
 
 'Wdt----------------------------------------------------------
-Private Sub SetWdt(LinOf_Wdt_FldLikss)
-Dim Wdt$, Fny$(): XAsgT1Fny LinOf_Wdt_FldLikss, Wdt, Fny
+Private Sub SetWdt(LinOf_Wdt_FldKss)
+Dim Wdt$, Fny$(): XAsgT1Fny LinOf_Wdt_FldKss, Wdt, Fny
 Dim W%: W = Wdt
-If Not IsBet(W, 5, 200) Then Inf CSub, "Invalid Wdt (should between 5 200)", "Wdt Lin", W, LinOf_Wdt_FldLikss: Exit Sub
+If Not IsBet(W, 5, 200) Then Inf CSub, "Invalid Wdt (should between 5 200)", "Wdt Lin", W, LinOf_Wdt_FldKss: Exit Sub
 Dim F: For Each F In Itr(Fny)
     RgzLc(A.Lo, F).EntireColumn.Width = W
 Next
@@ -198,7 +198,7 @@ QXls_B_FmtLo:
 End Sub
 
 'Fun===========================================================================
-Function XCol(F) As Range
+Private Function XCol(F) As Range
 Set XCol = A.Lo.ListColumns(F).DataBodyRange.EntireColumn
 End Function
 

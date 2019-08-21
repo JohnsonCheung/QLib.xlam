@@ -63,7 +63,7 @@ A = DrszLo(X.IxLo)
 B = DwEqSel(A, "Nm", DrsNm, "Nm Drs# ValTy")
 C = DwEqE(B, "ValTy", "Drs")
 If NoReczDrs(C) Then XNxtDrsNo = 1: Exit Function
-XNxtDrsNo = MaxzAy(IntCol(C, "Drs#")) + 1
+XNxtDrsNo = AyMax(IntCol(C, "Drs#")) + 1
 End Function
 
 Private Sub EnsIxWs()
@@ -76,7 +76,7 @@ Set X.IxLo = X.IxWs.ListObjects(1)
 End Sub
 
 Private Sub EnsWb()
-Set X.Wb = EnsWbzXls(Xls, "Insp")
+Set X.Wb = EnsWbzXls(Exl, "Insp")
 End Sub
 
 Private Sub Z()

@@ -4,11 +4,11 @@ Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Str_Cmp."
 
-Sub CmprLines(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$)
-Brw FmtCmprLines(A, B, N1, N2, Hdr)
+Sub CprLines(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$)
+Brw FmtCprLines(A, B, N1, N2, Hdr)
 End Sub
 
-Private Function FmtCmprLines(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$ = "Compare 2 Lines") As String()
+Private Function FmtCprLines(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$ = "Compare 2 Lines") As String()
 If A = B Then Exit Function
 Dim AA$(): AA = SplitCrLf(A)
 Dim BB$(): BB = SplitCrLf(B)
@@ -25,36 +25,36 @@ Dim O$()
     
     '-- Dif Lin ---
     PushI O, FmtQQ("-- Dif (?)---------", DifAt - 1)
-    PushIAy O, FmtCmprStr(AA(DifAt), BB(DifAt), "", "")
+    PushIAy O, FmtCprStr(AA(DifAt), BB(DifAt), "", "")
     
     '-- Rst-A & B---
-    PushIAy O, FmtCmprLines__Rst(AA, DifAt, N1)
-    PushIAy O, FmtCmprLines__Rst(BB, DifAt, N2)
-FmtCmprLines = O
+    PushIAy O, FmtCprLines__Rst(AA, DifAt, N1)
+    PushIAy O, FmtCprLines__Rst(BB, DifAt, N2)
+FmtCprLines = O
 End Function
 
-Private Function FmtCmprLines__Rst(A$(), DifAt&, N1$) As String()
+Private Function FmtCprLines__Rst(A$(), DifAt&, N1$) As String()
 Dim O$()
 PushI O, FmtQQ("-- Rst-? (?-?) ----------", N1, DifAt + 1, UB(A))
 PushIAy O, AddIxPfx(AwFm(A, DifAt + 1), EiBegI, DifAt + 1)
-FmtCmprLines__Rst = O
+FmtCprLines__Rst = O
 End Function
-Sub CmprStr(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$)
+Sub CprStr(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$)
 If A = B Then Exit Sub
-Brw FmtCmprStr(A, B, N1, N2, Hdr)
+Brw FmtCprStr(A, B, N1, N2, Hdr)
 End Sub
 
-Function FmtCmprStr(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$) As String()
+Function FmtCprStr(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$) As String()
 '== Case1 A=B ===
 If A = B Then
-    PushIAy FmtCmprStr, Box(Hdr)
-    PushI FmtCmprStr, FmtQQ("Str(?) = Str(?).  Len(?)", N1, N2, Len(A))
+    PushIAy FmtCprStr, Box(Hdr)
+    PushI FmtCprStr, FmtQQ("Str(?) = Str(?).  Len(?)", N1, N2, Len(A))
     Exit Function
 End If
 '== Case2 IsLines ==
 Select Case True
 Case IsLines(A), IsLines(B)
-    FmtCmprStr = FmtCmprLines(A, B, N1, N2, Hdr)
+    FmtCprStr = FmtCprLines(A, B, N1, N2, Hdr)
     Exit Function
 End Select
 '== Case3 IsStr
@@ -67,7 +67,7 @@ Dim O$()
     PushI O, A
     PushI O, B
     PushI O, Space(At - 1) & "^"
-FmtCmprStr = O
+FmtCprStr = O
 End Function
 
 Private Function DifAt&(A$, B$)
@@ -130,14 +130,14 @@ Dim O$()
 Lbl123__Hundred = Left(Jn(O), L)
 End Function
 
-Private Sub Z_FmtCmprLines()
+Private Sub Z_FmtCprLines()
 Dim A$, B$
 A = LineszVbl("AAAAAAA|bbbbbbbb|cc|dd")
 B = LineszVbl("AAAAAAA|bbbbbbbb |cc")
 GoSub Tst
 Exit Sub
 Tst:
-    Act = FmtCmprLines(A, B)
+    Act = FmtCprLines(A, B)
     Brw Act
     Return
 

@@ -75,9 +75,28 @@ Dim L: For Each L In Itr(Src)
     If IsLinVbRmk(L) Then PushI RmkLy, L
 Next
 End Function
+
+Function SrczFc(M As CodeModule, Fc As Fc) As String()
+SrczFc = SplitCrLf(M.Lines(Fc.FmLno, Fc.Cnt))
+End Function
+
+Function SrceRmkLin(Src$()) As String()
+Dim L: For Each L In Itr(Src)
+    If Not IsLinRmk(L) Then PushI SrceRmkLin, L
+Next
+End Function
+
+
+Function SrcwSngDblQ(Src$()) As String()
+Dim L: For Each L In Itr(Src)
+    If HasSngDblQ(L) Then PushI SrcwSngDblQ, L
+Next
+End Function
+
 Function Src(M As CodeModule) As String()
 Src = SplitCrLf(SrcLzM(M))
 End Function
+
 Function SrczM(M As CodeModule) As String()
 SrczM = SplitCrLf(SrcLzM(M))
 End Function
@@ -86,6 +105,15 @@ Function SrcV() As String()
 SrcV = SrczV(CVbe)
 End Function
 
+Function WrdAyP() As String()
+WrdAyP = WrdAyzP(CPj)
+End Function
+
+Function WrdAyzP(P As VBProject) As String()
+Dim L: For Each L In SrczP(P)
+    PushIAy WrdAyzP, WrdAy(L)
+Next
+End Function
 
 Function SrczP(P As VBProject) As String()
 If P.Protection = vbext_pp_locked Then Exit Function
@@ -94,6 +122,7 @@ For Each C In P.VBComponents
     PushIAy SrczP, Src(C.CodeModule)
 Next
 End Function
+
 Function SrczV(A As Vbe) As String()
 Dim P As VBProject
 For Each P In A.VBProjects
@@ -113,4 +142,19 @@ For Each I In A
 Next
 NTySrc = O
 End Function
+
+
+Property Get NSrcLin&()
+NSrcLin = NSrcLinzP(CPj)
+End Property
+
+Function NSrcLinzP&(P As VBProject)
+Dim O&, C As VBComponent
+If P.Protection = vbext_pp_locked Then Exit Function
+For Each C In P.VBComponents
+    O = O + C.CodeModule.CountOfLines
+Next
+NSrcLinzP = O
+End Function
+
 

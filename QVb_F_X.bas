@@ -4,6 +4,7 @@ Option Explicit
 Private Const CMod$ = "MVb_X."
 Private Const Asm$ = "QVb"
 Private A$()
+
 Function XX() As String()
 XX = A
 Erase A

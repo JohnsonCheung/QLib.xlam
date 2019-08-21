@@ -6,11 +6,12 @@ Type Fc
     Cnt As Long
 End Type
 Type Fcs: N As Long: Ay() As Fc: End Type
+Public Const FFoMthn$ = "Mdn Mthn Mdy Ty"
 Private Const Asm$ = "QIde"
 Private Const CMod$ = "MIde_Mth_Rmk."
 
 Sub UnRmkMth(M As CodeModule, Mthn)
-'UnRmkMdzFes A, MthCxtFes(Src(A), Mthn)
+UnRmkMdzFcs M, MthCxtFcs(Src(M), Mthn)
 End Sub
 
 Function Fc(FmLno, Cnt) As Fc
@@ -20,8 +21,8 @@ Fc.FmLno = FmLno
 Fc.Cnt = Cnt
 End Function
 
-Sub RmkLineszFc(M As CodeModule, Fc As Fc)
-RmkLines M, Fc.FmLno, Fc.Cnt
+Sub RmkMdeszFc(M As CodeModule, Fc As Fc)
+RmkMdes M, Fc.FmLno, Fc.Cnt
 End Sub
 
 Function MthCxtFcs(Src$(), Mthn) As Fcs
@@ -73,7 +74,7 @@ Function MthCxtFc(M As CodeModule, Mthn) As Fc
 
 End Function
 Sub RmkMthzN(M As CodeModule, Mthn)
-RmkLineszFc M, MthCxtFc(M, Mthn)
+RmkMdeszFc M, MthCxtFc(M, Mthn)
 End Sub
 
 Function MthFcs(M As CodeModule, Mthn) As Fcs
@@ -90,14 +91,14 @@ O.Ay(O.N) = M
 O.N = O.N + 1
 End Sub
 
-Sub RmkLines(M As CodeModule, Lno&, N&)
+Sub RmkMdes(M As CodeModule, Lno&, N&)
 Dim J&
 For J = Lno To Lno + N - 1
-    RmkLin M, J
+    RmkMd M, J
 Next
 End Sub
 
-Sub RmkLin(M As CodeModule, Lno&)
+Sub RmkMd(M As CodeModule, Lno&)
 M.ReplaceLine M, "'" & M.Lines(Lno, 1)
 End Sub
 
@@ -123,15 +124,14 @@ Next
 Thw CSub, "All line From Lno has _ as LasChr", "Lno Md Src", Lno, Mdn(M), AddIxPfx(Src(M), 1)
 End Function
 
-Sub UnRmkMdzFes(M As CodeModule, B As Feis)
-Dim J&
-For J = 0 To B.N - 1
-    UnRmkMdzFei M, B.Ay(J)
+Sub UnRmkMdzFcs(M As CodeModule, B As Fcs)
+Dim J&: For J = 0 To B.N - 1
+    UnRmkMdzFc M, B.Ay(J)
 Next
 End Sub
 
-Sub UnRmkMdzFei(M As CodeModule, B As Fei)
-'If Not IsRmkedzS(LyzMdFei(A, B)) Then Exit Sub
+Sub UnRmkMdzFc(M As CodeModule, B As Fc)
+'If Not IsRmkzS(LyzMdFei(A, B)) Then Exit Sub
 Stop
 Dim J%, L$
 'For J = NxtMdLno(A, B.FmNo) To B.ToNo - 1
@@ -141,61 +141,41 @@ Dim J%, L$
 'Next
 End Sub
 
-Sub RmkMdzFes(M As CodeModule, B As Feis)
+Sub RmkMdzFcs(M As CodeModule, B As Fcs)
 Dim J%
 For J = 0 To B.N - 1
-    RmkMdzFe M, B.Ay(J)
+    RmkMdzFc M, B.Ay(J)
 Next
 End Sub
 
-Sub RmkMdzFe(M As CodeModule, B As Fei)
-If IsRmkedzMFe(M, B) Then Exit Sub
-Dim J%
-'For J = 0 To UB(B)
-    M.ReplaceLine J, "'" & M.Lines(J, 1)
-'Next
+Sub RmkMdzFc(M As CodeModule, B As Fc)
+If IsRmkzFc(M, B) Then Exit Sub
+Dim J&: For J = 0 To B.Cnt - 1
+    M.ReplaceLine J, "'" & M.Lines(B.FmLno + J, 1)
+Next
 End Sub
 
-Function IsRmkedzMFe(M As CodeModule, B As Fei) As Boolean
-'IsRmkedzMFe = IsRmkedzS(LyzMdFei(A, B))
+Function IsRmkzFc(M As CodeModule, B As Fc) As Boolean
+IsRmkzFc = IsRmkzS(SrczFc(M, B))
 End Function
 
 Function DoMthCxt() As Drs
 DoMthCxt = DoMthCxtzML(CMd, CMthLno)
 End Function
 
-Function DoMthnM() As Drs
-DoMthnM = DoMthn(CMd)
-End Function
-
 Function DoMthn(M As CodeModule) As Drs
-DoMthn = DrpCol(DoMthzM(M), "MthLin")
+DoMthn = DwEq(SelDrs(DoMthnP, FFoMthn), "Mthn", Mdn(M))
 End Function
 
-Function AddColzHasPm(A As Drs) As Drs
-'Fm A : ..MthLin..
-'Ret  : ..MthLin.. HasPm
-Dim I%: I = IxzAy(A.Fny, "MthLin")
-Dim Dr, Dy(): For Each Dr In Itr(A.Dy)
-    Dim MthLin$: MthLin = Dr(I)
-    Dim HasPm As Boolean: HasPm = BetBkt(MthLin) <> ""
-    PushI Dr, HasPm
-    PushI Dy, Dr
-Next
-AddColzHasPm = AddColzFFDy(A, "HasPm", Dy)
-End Function
-
-Private Sub Z_TblMthP()
+Private Sub Z_CrtTblMth()
 Dim D As Database: Set D = TmpDb
-Dim T$: T = TblMthP(D)
+CrtTblMth D
 BrwDb D
 End Sub
 
-Function TblMthP$(D As Database)
-Dim T$: T = "Mth"
-CrtTzDrs D, T, DoPubMth
-TblMthP = T
-End Function
+Sub CrtTblMth(D As Database)
+CrtTblzDrs D, "Mth", DoPubMth
+End Sub
 
 Function AddColzBetBkt(D As Drs, ColnAs$, Optional IsDrp As Boolean) As Drs
 Dim BetColn$, NewC$: AsgBrk1 ColnAs, ":", BetColn, NewC
@@ -210,47 +190,31 @@ If IsDrp Then O = DrpCol(O, BetColn)
 AddColzBetBkt = O
 End Function
 
-Function AddColzMthPm(DoMthLin As Drs, Optional IsDrp As Boolean) As Drs
-AddColzMthPm = AddColzBetBkt(DoMthLin, "MthLin:MthPm", IsDrp)
-End Function
 
-Function AddColzIsRetObj(DoMthLin As Drs) As Drs
-'Fm DoMthLin : ..RetAs..
-'Ret         : ..IsRetObj @@
-Dim IxRetAs%: IxRetAs = IxzAy(DoMthLin.Fny, "RetAs")
-Dim Dr, Dy(): For Each Dr In Itr(DoMthLin.Dy)
-    Dim RetAs$: RetAs = Dr(IxRetAs)
-    Dim R As Boolean: R = IsRetObj(RetAs)
-    PushI Dr, R
-    PushI Dy, Dr
-Next
-AddColzIsRetObj = AddColzFFDy(DoMthLin, "IsRetObj", Dy)
-End Function
-
-Function IsRetObj(RetAs$) As Boolean
-':IsRetObj: :B ! False if @RetAs (isBlnk | IsAy | IsPrimTy | Is in TyNyP)
-If RetAs = "" Then Exit Function
-If HasSfx(RetAs, "()") Then Exit Function
-If IsPrimTy(RetAs) Then Exit Function
-If HasEle(TyNyP, RetAs) Then Exit Function
+Function IsRetObj(RetSfx$) As Boolean
+':IsRetObj: :B ! False if @RetSfx (isBlnk | IsAy | IsPrimTy | Is in TyNyP)
+If RetSfx = "" Then Exit Function
+If HasSfx(RetSfx, "()") Then Exit Function
+If IsPrimTy(RetSfx) Then Exit Function
+If HasEle(TyNyP, RetSfx) Then Exit Function
 IsRetObj = True
 End Function
 
 Function AddColzRetAs(DoMthLin As Drs) As Drs
 'Fm DoMthLin : ..MthLin..
-'Ret        : ..RetAs  @@
+'Ret        : ..RetSfx  @@
 Dim IxMthLin%: IxMthLin = IxzAy(DoMthLin.Fny, "MthLin")
 Dim Dr, Dy(): For Each Dr In Itr(DoMthLin.Dy)
     Dim MthLin$: MthLin = Dr(IxMthLin)
-    Dim R$: R = RetAszL(MthLin)
+    Dim R$: R = RetSfx(MthLin)
     PushI Dr, R
     PushI Dy, Dr
 Next
-AddColzRetAs = AddColzFFDy(DoMthLin, "RetAs", Dy)
+AddColzRetAs = AddColzFFDy(DoMthLin, "RetSfx", Dy)
 End Function
 
 Function DoMthe(Src$()) As Drs
-':DoMthe: :Drs<L E Mdy Ty Mthn MthLin> #Drs-of-Mth-with-ELno# ! *Mdy & *Ty are Sht *L is Lno & *E is ELno
+':DoMthe: :Drs-L-E-Mdy-Ty-Mthn-MthLin #Drs-of-Mth-with-ELno# ! *Mdy & *Ty are Sht *L is Lno & *E is ELno
 Dim A As Drs: A = DoMthzS(Src)
 Dim Dy(), Dr
 For Each Dr In Itr(A.Dy)
@@ -299,14 +263,14 @@ ThwImpossible CSub
 X:
 DoMthCxtzML = DrszFF("L MthLin", Dy)
 End Function
-Function IsRmkedzMthLy(MthLy$()) As Boolean
+Function IsRmkzMthLy(MthLy$()) As Boolean
 If Si(MthLy) = 0 Then Exit Function
 If Not HasPfx(MthLy(0), "Stop '") Then Exit Function
 Dim L
 For Each L In MthLy
     If Left(L, 1) <> "'" Then Exit Function
 Next
-IsRmkedzMthLy = True
+IsRmkzMthLy = True
 End Function
 Function MthCxtFe(MthLy$(), Fe As Fei) As Fei
 MthCxtFe = Fei(NxtIxzSrc(MthLy, Fe.FmIx), Fe.EIx - 1)
@@ -336,4 +300,3 @@ Dim I
     'End With
 'Next
 End Sub
-

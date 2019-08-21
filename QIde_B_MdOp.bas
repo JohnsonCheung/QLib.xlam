@@ -114,6 +114,17 @@ Dim L: For Each L In Itr(Ly)
     M.InsertLines Lno, L
 Next
 End Sub
+Sub InsLin(M As CodeModule, L_NewL As Drs)
+Dim B As Drs: B = L_NewL
+If JnSpc(B.Fny) <> "L NewL" Then Stop: Exit Sub
+Dim Dr
+For Each Dr In Itr(B.Dy)
+    Dim L&: L = Dr(0)
+    Dim NewL$: NewL = Dr(1)
+    M.InsertLines L, NewL
+Next
+End Sub
+
 Sub RplLin(M As CodeModule, L_NewL_OldL As Drs)
 Dim B As Drs: B = L_NewL_OldL
 If JnSpc(B.Fny) <> "L NewL OldL" Then Stop: Exit Sub
@@ -176,7 +187,7 @@ End Sub
 
 Private Function IfUnRmkMd(M As CodeModule) As Boolean
 Debug.Print "UnRmk " & M.Parent.Name,
-If Not IsRmkedMd(M) Then
+If Not IsRmkzMd(M) Then
     Debug.Print "No need"
     Exit Function
 End If
@@ -190,12 +201,23 @@ Next
 IfUnRmkMd = True
 End Function
 
-Function IsRmkedMd(M As CodeModule) As Boolean
+Function IsLinRmk(S) As Boolean
+IsLinRmk = FstChr(LTrim(S)) = "'"
+End Function
+
+Function IsRmkzS(Src$()) As Boolean
+Dim L: For Each L In Itr(Src)
+    If Not IsLinRmk(L) Then Exit Function
+Next
+IsRmkzS = True
+End Function
+
+Function IsRmkzMd(M As CodeModule) As Boolean
 Dim J%, L$
 For J = 1 To M.CountOfLines
     If Left(M.Lines(J, 1), 1) <> "'" Then Exit Function
 Next
-IsRmkedMd = True
+IsRmkzMd = True
 End Function
 
 Sub Rmk()
@@ -220,7 +242,7 @@ End Sub
 
 Private Function RmkMd(M As CodeModule) As Boolean
 Debug.Print "Rmk " & M.Parent.Name,
-If IsRmkedMd(M) Then
+If IsRmkzMd(M) Then
     Debug.Print " No need"
     Exit Function
 End If

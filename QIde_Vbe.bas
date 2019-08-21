@@ -39,7 +39,7 @@ For Each I In Vbe.VBProjects
 Next
 End Function
 
-Sub LisMd(Optional MdPatn$ = ".+", Optional SrtBy As EmSrtLisMd, Optional Oup As EmOupTy)
+Sub LisMd(Optional MdPatn$ = ".+", Optional SrtBy As EmSrtLisMd, Optional OupTy As EmOupTy)
 Dim Srt$
 Select Case True
 Case SrtBy = EiByMdn: Srt = "Mdn"
@@ -48,7 +48,7 @@ Case SrtBy = EiByNLines: Srt = "Mdn"
 Case SrtBy = EiByNLinesDes: Srt = "-NLines"
 Case Else:    Srt = "Mdn"
 End Select
-Dmp FmtDrs(SrtDrs(DoMdV(MdPatn), Srt), , Fmt:=EiSSFmt), Oup
+Oup FmtDrs(SrtDrs(DoMdV(MdPatn), Srt), , Fmt:=EiSSFmt), OupTy
 End Sub
 
 Function DoMdV(Optional MdPatn$ = ".*") As Drs

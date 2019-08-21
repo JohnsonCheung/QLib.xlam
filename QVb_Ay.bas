@@ -5,9 +5,10 @@ Private Const CMod$ = "MVb_Ay."
 Private Const Asm$ = "QVb"
 ':Stmt$ = "Stmt is a string between StmtBrkPatn"
 Public Const StmtBrkPatn$ = "(\.  |\r\n|\r)"
-':SsLin = "Spc-Sep-Lin.  SplitSpc after trim and rmvDblSpc."
-':Ssl$ = "Spc-Sep-Lin-Escaped.  SpcSepStrRev each ele after SyzSS"
-
+':Sy: #String-Array#
+':SS: :Lin #Spc-Separated# ! It will be separated in :Sy
+':IntSeg: :IntAy #Int-Sequence# ! Each next element is always 1 more than previous one
+':LngSeg: :LngAy #Int-Sequence# ! Each next element is always 1 more than previous one
 Sub AsgAp(Ay, ParamArray OAp())
 Dim J%, OAv()
 OAv = OAp
@@ -21,18 +22,12 @@ OT1Sy = T1Ay(Sy)
 ORestSy = RmvT1zAy(Sy)
 End Sub
 
-Function VcAy(Ay, Optional Fnn$)
-BrwAy Ay, Fnn, UseVc:=True
-End Function
-
 Function BrwAy(Ay, Optional Fnn$, Optional UseVc As Boolean)
-Dim T$
-T = TmpFt("BrwAy", Fnn)
+Dim T$: T = TmpFt("BrwAy", Fnn)
 WrtAy Ay, T
 BrwFt T, UseVc
 BrwAy = Ay
 End Function
-
 
 Function ChkDup(Ay, QMsg$) As String()
 Dim Dup
@@ -40,6 +35,7 @@ Dup = AwDup(Ay)
 If Si(Dup) = 0 Then Exit Function
 PushI ChkDup, FmtQQ(QMsg, JnSpc(Dup))
 End Function
+
 Function LyzVbl(Vbl) As String()
 LyzVbl = SplitVBar(Vbl)
 End Function
@@ -187,7 +183,7 @@ End Function
 
 Function NxtFn$(Fn$, FnAy$(), Optional MaxN% = 999)
 If Not HasEle(FnAy, Fn) Then NxtFn = Fn: Exit Function
-NxtFn = MaxzAy(AwLik(FnAy, Fn & "(???)"))
+NxtFn = AyMax(AwLik(FnAy, Fn & "(???)"))
 End Function
 
 Function ItrzLines(Lines$)
@@ -200,6 +196,10 @@ For Each V In Itr
     O = O + 1
 Next
 NItr = O
+End Function
+
+Function ItrzAy(Ay)
+ItrzAy = Itr(Ay)
 End Function
 
 Function Itr(Ay)
@@ -219,9 +219,9 @@ Function ResiN(Ay, N&)
 'Ret : empty ay of si @N of sam base ele as @Ay @@
 ResiN = ResiU(Ay, N - 1)
 End Function
-Function IfIn(V, Ay)
+Function IFin(V, Ay)
 'Ret @V if in @Ay else Empty
-If HasEle(Ay, V) Then IfIn = V
+If HasEle(Ay, V) Then IFin = V
 End Function
 Function ResiMax(OAy1, OAy2)
 'Ret : resi the min si of ay to sam si as the other @@
@@ -241,34 +241,34 @@ ReDim Preserve O(U)
 ResiU = O
 End Function
 
-Function RevAy(Ay) 'Return reversed Ay
+Function AyRev(Ay) 'Return reversed Ay
 Dim O: O = Ay
 Dim J&, U&
 U = UB(O)
 For J = 0 To U
     Asg Ay(U - J), O(J)
 Next
-RevAy = O
+AyRev = O
 End Function
 
-Function RevAyI(Ay)
+Function AyRevI(Ay)
 Dim O: O = Ay
 Dim J&, U&
 U = UB(O)
 For J = 0 To U
     O(J) = Ay(U - J)
 Next
-RevAyI = O
+AyRevI = O
 End Function
 
-Function RevAyOy(Oy() As Object)
+Function AyRevOy(Oy() As Object)
 Dim O: O = Oy
 Dim J&, U&
 U = UB(O)
 For J = 0 To U
     Set O(J) = Oy(U - J)
 Next
-RevAyOy = O
+AyRevOy = O
 End Function
 
 Function RplAyzMid(Ay, B As Fei, ByAy)
@@ -374,27 +374,52 @@ Dim S: For Each S In Itr(Sy)
 Next
 End Function
 
-Function MinzAy(Ay)
+Function AyMinzGT0(Ay)
+If Si(Ay) = 0 Then Exit Function
+Dim O: O = Ay(0)
+Dim V: For Each V In Ay
+    If V > 0 Then
+        If O = 0 Then
+            O = V
+        Else
+            If V < O Then O = V
+        End If
+    End If
+Next
+AyMinzGT0 = O
+End Function
+
+Function AySum#(NumAy)
+Dim O#, V: For Each V In Itr(NumAy)
+    O = O + V
+Next
+AySum = O
+End Function
+
+Function AyMin(Ay)
+If Si(Ay) = 0 Then Exit Function
 Dim O, I
 For Each I In Ay
     If I < O Then O = I
 Next
-MinzAy = O
+AyMin = O
 End Function
-Function MaxzAy(Ay)
+
+Function AyMax(Ay)
+If Si(Ay) = 0 Then Exit Function
 Dim O, I
 For Each I In Ay
     If I > O Then O = I
 Next
-MaxzAy = O
+AyMax = O
 End Function
 
-Function WdtzAy%(Ay)
+Function AyWdt%(Ay)
 Dim O%, V
 For Each V In Itr(Ay)
     O = Max(O, Len(V))
 Next
-WdtzAy = O
+AyWdt = O
 End Function
 
 Sub WrtAy(Ay, Ft$, Optional OvrWrt As Boolean)
@@ -717,6 +742,11 @@ Dim I: For Each I In Sy
     PushI DblAyzSy, I
 Next
 End Function
+
+Function ItrzSS(SS)
+ItrzSS = Itr(SyzSS(SS))
+End Function
+
 Function SyzSS(SS) As String()
 SyzSS = SplitSpc(RplDblSpc(Trim(SS)))
 End Function

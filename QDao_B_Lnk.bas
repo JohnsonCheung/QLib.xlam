@@ -33,7 +33,7 @@ On Error GoTo X
 LnkFxw D, T, Fx, Wsn
 Exit Function
 X: ErzLnkFxw = _
-    LyzMsgNap("Error in linking Xls file", "Er LnkFx LnkWs ToDb AsTbl", Err.Description, Fx, Wsn, D.Name, T)
+    LyzMsgNap("Error in linking Exl file", "Er LnkFx LnkWs ToDb AsTbl", Err.Description, Fx, Wsn, D.Name, T)
 End Function
 
 Sub LnkFxw(D As Database, T, Fx, Optional Wsn = "Sheet1")

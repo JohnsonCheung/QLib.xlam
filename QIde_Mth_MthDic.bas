@@ -107,7 +107,7 @@ Next
 End Sub
 
 Private Sub Z_Dcl_BefAndAft_Srt()
-Const Mdn = "VbStrRe"
+Const Mdn$ = "VbStrRe"
 Dim A$() ' Src
 Dim B$() ' Src->Srt
 Dim A1$() 'Src->Dcl

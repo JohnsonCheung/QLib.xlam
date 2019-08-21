@@ -62,8 +62,8 @@ End Function
 Function HasT2(Lin, T2) As Boolean
 HasT2 = T2zS(Lin) = T2
 End Function
-Function HitLikss(S, Likss) As Boolean
-HitLikss = HitLikAy(S, SyzSS(Likss))
+Function HitKss(S, Kss) As Boolean
+HitKss = HitLikAy(S, SyzSS(Kss))
 End Function
 
 Function HitLikAy(S, LikAy$()) As Boolean

@@ -23,7 +23,7 @@ Private Function XAttNm$(A As Attd)
 XAttNm = A.TblRs!AttNm
 End Function
 Private Sub XThwIf_CntNe1(Fun$, D As Database, Att$)
-Dim N%: N = XNAttInFld(D, Att)
+Dim N%: N = NAtt(D, Att)
 If N <> 1 Then
     Thw Fun, "AttNm should have only one file, no export.", _
         "AttNm FilCnt D", _
@@ -64,7 +64,7 @@ Dim Fd2 As Dao.Field2
 If IsNothing(Fd2) Then
     Thw CSub, "In record of AttNm there is no given AttFn, but only Act-AttFnAy", _
         "D Given-AttNm Given-AttFn Act-AttFny ToFfn", _
-        D.Name, Att, AttFn, XAttFnAy(D, Att), ToFfn
+        D.Name, Att, AttFn, AttFnAy(D, Att), ToFfn
 End If
 Fd2.SaveToFile ToFfn
 ExpAttzFn = ToFfn
@@ -96,10 +96,8 @@ Function FnyzAttTbl(D As Database) As String()
 FnyzAttTbl = Fny(D, "Att")
 End Function
 
-Function DAtt(D As Database) As Drs
-End Function
-Function DTblAtt(D As Database) As Drs
-DTblAtt = DrszT(D, "Att")
+Function DoTblAtt(D As Database) As Drs
+DoTblAtt = DrszT(D, "Att")
 End Function
 Private Sub Z_EnsTblAtt()
 Dim D As Database: Set D = TmpDb
@@ -117,7 +115,7 @@ If HasTbl(D, "Att") Then
     If FF <> "AttNm Att FilSi FilTim" Then Thw CSub, "Db has :Tbl:Att, but its FF is not [AttNm Att FilSi FilTim", "Dbn Tbl-Att-FF", D.Name, FF
 End If
 Dim PFld$: PFld = "AttNm Text(255), Att Attachment, FilSi Long,FilTim Date" ' #Sql-Fld-Phrase.  The fld spec of create table sql inside the bkt.
-CrtTzPFld D, "Att", PFld
+CrtTblzPFld D, "Att", PFld
 DbzReOpn(D).Execute "Create Index PrimaryKey on Att (AttNm) with Primary"
 End Sub
 Function DAttFld(A As Attd) As Drs
@@ -159,36 +157,37 @@ Dim A As Dao.Recordset2: Set A = T!Att.Value
 FnyzAttFld = Itn(A.Fields)
 End Function
 
-Function XIsAttOld(D As Database, Att$, Ffn$) As Boolean
-Const CSub$ = CMod & "XIsAttOld"
-Dim ATim$:   ATim = XAttTim(D, Att)
+Function IsAttOld(D As Database, Att$, Ffn$) As Boolean
+Const CSub$ = CMod & "IsAttOld"
+Dim ATim$:   ATim = AttTim(D, Att)
 Dim FTim$:   FTim = DtezFfn(Ffn)
 Dim AttIs$: AttIs = IIf(ATim > FTim, "new", "old")
 Dim M$:         M = "Att is " & AttIs
 Inf CSub, M, "Att Ffn AttTim FfnTim AttIs-Old-or-New?", Att, Ffn, ATim, FTim, AttIs
 End Function
 
-Function XAttSi&(D As Database, Att$)
-XAttSi = VzSsk(D, "Att", "FilSz", Av(Att))
+Function AttSi&(D As Database, Att$)
+AttSi = VzSsk(D, "Att", "FilSz", Av(Att))
 End Function
 
-Function XAttTim(D As Database, Att$) As Date
-XAttTim = VzSsk(D, "Att", "FilTim", Av(Att))
+Function AttTim(D As Database, Att$) As Date
+AttTim = VzSsk(D, "Att", "FilTim", Av(Att))
 End Function
 
-Function XNAttInTbl%(D As Attd)
-XNAttInTbl = NReczRs(D.AttRs)
-End Function
-Function XNAttInFld%(D As Database, Att$)
-XNAttInFld = XNAttInTbl(XAttd(D, Att))
+Function NAttzAttd%(D As Attd)
+NAttzAttd = NReczRs(D.AttRs)
 End Function
 
-Private Function XAttFnAy(D As Database, Att$) As String()
+Function NAtt%(D As Database, Att$)
+NAtt = NAttzAttd(XAttd(D, Att))
+End Function
+
+Private Function AttFnAy(D As Database, Att$) As String()
 Dim R As Attd: R = XAttd(D, Att)
-XAttFnAy = SyzRs(R.AttRs, "FileName")
+AttFnAy = SyzRs(R.AttRs, "FileName")
 End Function
 
-Private Function XAttFn$(D As Database, Att$)
+Private Function AttFn$(D As Database, Att$)
 'Ret : fst attachment fn in the att fld of att tbl, if no fn, return blnk @@
 Const CSub$ = CMod & "AttFnzAttd"
 Dim A As Attd: A = XAttd(D, Att) ' if @Att in exist in Tbl-Att, a rec will created
@@ -200,21 +199,21 @@ With A.AttRs
         End If
     End If
     .MoveFirst
-    XAttFn = !Filename
+    AttFn = !Filename
 End With
 End Function
 
-Function XIsAttOneFil(D As Database, Att$) As Boolean
+Function IsAttOneFil(D As Database, Att$) As Boolean
 Debug.Print "DbAttHasOnlyFile: " & XAttd(D, Att).AttRs.RecordCount
-XIsAttOneFil = XAttd(D, Att).AttRs.RecordCount = 1
+IsAttOneFil = XAttd(D, Att).AttRs.RecordCount = 1
 End Function
 
 Private Function XAttNy(D As Database) As String()
 XAttNy = SyzRs(Rs(D, "Select AttNm from Att order by AttNm"))
 End Function
 
-Private Sub Z_XAttFnAy()
-D XAttFnAy(SampDboShpCst, "AA")
+Private Sub Z_AttFnAy()
+D AttFnAy(SampDboShpCst, "AA")
 End Sub
 
 Private Sub Z()

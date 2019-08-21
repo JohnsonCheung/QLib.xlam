@@ -3,17 +3,18 @@ Option Explicit
 Option Compare Text
 
 Sub EnsMthRmk(M As CodeModule, Mthn, NewRmk$)
+Const Trc As Boolean = False
 'Ret : mk sure the rmk of #Mthn will be @NewRmk @@
 
-'== No such @Mthn, just ret
+'== No such @Mthn, just ret=============================================================================================
 Dim MthLno&: MthLno = MthLnozMM(M, Mthn)
 If MthLno = 0 Then
-    Debug.Print "EnsMthRmk: no such mth[" & Mthn & "]"
-    Debug.Print
+    If Trc Then Debug.Print "EnsMthRmk: no such mth[" & Mthn & "]"
+    If Trc Then Debug.Print
     Exit Sub                              'Exit=>
 End If
 
-'== case1: @Mthn has no rmk & @NewRmk<>"" : '<== Ins
+'== case1: @Mthn has no rmk & @NewRmk<>"" : '<== Ins====================================================================
 '   case2: @Mthn has no rmk               : '<== Nop
 '   case3: @Mthn rmk        = @NewRmk     : '<== Nop
 '   case4: @Mthn rmk        <> @NewRmk    : '<== Dlt & Ins
@@ -25,9 +26,9 @@ Case RmkL = "" And NewRmk <> ""
     RLno = NxtLnozML(M, MthLno)
     GoSub Ins                               '<== case1 Ins
 Case RmkL = ""
-    Debug.Print "EnsMthRmk: mth[" & Mthn & "] has no rmk and no new rmk" '<== case2 Nop
+    If Trc Then Debug.Print "EnsMthRmk: mth[" & Mthn & "] has no rmk and no new rmk" '<== case2 Nop
 Case RmkL = NewRmk
-    Debug.Print "EnsMthRmk: Same": Exit Sub '<== case3 Nop
+    If Trc Then Debug.Print "EnsMthRmk: Same": Exit Sub '<== case3 Nop
 Case Else
     DltLines M, RLno, RmkL                  '<== case4 dlt
     If NewRmk <> "" Then GoSub Ins          '<== case4 ins

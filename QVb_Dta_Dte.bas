@@ -3,6 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Dte."
 Private Const Asm$ = "QVb"
+
 Property Get CurMon() As Byte
 CurMon = Month(Now)
 End Property
@@ -31,6 +32,7 @@ End Function
 Function NxtMon(A As Date) As Date
 NxtMon = DateTime.DateAdd("M", 1, A)
 End Function
+
 Function IsHHMMDD(S) As Boolean
 Select Case True
 Case _

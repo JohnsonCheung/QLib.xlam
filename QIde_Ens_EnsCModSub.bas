@@ -33,18 +33,18 @@ Next
 XIsUsingCSub = False
 End Function
 
-Sub EnsCModSubP(Optional Rpt As EmRpt = EmRpt.EiPushOnly)
-EnsCModSubzP CPj, Rpt
+Sub EnsCModSubP(Optional Upd As EmUpd = EmUpd.EiPushOnly)
+EnsCModSubzP CPj, Upd
 End Sub
 
-Sub EnsCModSubM(Optional Rpt As EmRpt)
-EnsCModSubzM CMd, Rpt
+Sub EnsCModSubM(Optional Upd As EmUpd)
+EnsCModSubzM CMd, Upd
 End Sub
 
-Private Sub EnsCModSubzP(P As VBProject, Optional Rpt As EmRpt = EmRpt.EiPushOnly)
+Private Sub EnsCModSubzP(P As VBProject, Optional Upd As EmUpd = EmUpd.EiPushOnly)
 Dim C As VBComponent
 For Each C In P.VBComponents
-    EnsCModSubzM C.CodeModule, Rpt
+    EnsCModSubzM C.CodeModule, Upd
 Next
 End Sub
 
@@ -94,7 +94,7 @@ XEpt = AddColzFFDy(Act, "EptL", Dy)
 'Insp "QIde_Ens_EnsCModSub.XEpt", "Inspect", "Oup(XEpt) Act", FmtDrs(XEpt), FmtDrs(Act): Stop
 End Function
 
-Private Function EnsCModSubzM(M As CodeModule, Optional Rpt As EmRpt, Optional IOMsg) As String()
+Private Function EnsCModSubzM(M As CodeModule, Optional Upd As EmUpd, Optional IOMsg) As String()
 
 '-- Prepare Data -------------------------------------------------------------------------------------------------------
 Dim Mth As Drs: Mth = DoMthc(M)                ' L E Mdy Ty Mthn MthLin MthLy
@@ -103,7 +103,7 @@ Dim Ept As Drs: Ept = XEpt(Act)                ' L Mthn MthLy ActL Lno EptL
 Dim Dif As Drs: Dif = DeCeqC(Ept, "ActL EptL") ' L Mthn MthLy ActL Lno EptL   ! Only those Act<>Ept
 
 '== Rpl=================================================================================================================
-Dim IsUpd As Boolean: IsUpd = IsUpdzRpt(Rpt)
+Dim IsUpd As Boolean: IsUpd = IsEmUpdUpd(Upd)
 Dim Rpl As Drs: Rpl = XRpl(Dif)
                       RplLin M, Rpl      ' <==
 Dim Dlt As Drs: Dlt = XDlt(Dif)
@@ -112,8 +112,8 @@ Dim Ins As Drs: Ins = XIns(Dif)
                       InsLinzD M, Ins    ' <==
 
 '== Return True is any Dif==============================================================================================
-Dim IsRpt  As Boolean:  IsRpt = IsRptzRpt(Rpt)
-Dim IsPush As Boolean: IsPush = IsPushzRpt(Rpt)
+Dim IsRpt  As Boolean:  IsRpt = IsEmUpdRpt(Upd)
+Dim IsPush As Boolean: IsPush = IsEmUpdRpt(Upd)
 If IsRpt Or IsPush Then
     Dim Msg$(): Msg = XMsg(M, Ept, Rpl, Dlt, Ins)
     If IsRpt Then Brw Msg

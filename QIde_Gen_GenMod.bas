@@ -301,7 +301,7 @@ For J = 0 To UB(Ret)
     If StpTy(J) = "Sub" Then
         PushI B_BCRetAs, ""
     Else
-        PushI B_BCRetAs, RetAszRet(Ret(J))
+        PushI B_BCRetAs, RetAs(Ret(J))
     End If
 Next
 End Function
@@ -318,10 +318,10 @@ For J = 0 To UB(Ret)
 Next
 End Function
 
-Private Function B_BCMLin(SorF$(), Mthn$(), TyChr$(), Pm$(), RetAs$()) As String()
+Private Function B_BCMLin(SorF$(), Mthn$(), TyChr$(), Pm$(), RetSfx$()) As String()
 Dim J%
 For J = 0 To UB(SorF)
-    PushI B_BCMLin, FmtQQ("Private ? ??(?)?", SorF(J), Mthn(J), TyChr(J), Pm(J), RetAs(J))
+    PushI B_BCMLin, FmtQQ("Private ? ??(?)?", SorF(J), Mthn(J), TyChr(J), Pm(J), RetSfx(J))
 Next
 End Function
 Private Function B_BCSorF(StpTy$()) As String()
@@ -362,7 +362,7 @@ End Function
 Private Function B_CdY4Colb(CdYLisb As Drs) As Drs
 'CdYLis  Key StpTy Expr Stmt Ret Pm
 'CdY4Col Fun YEq Callg End
-Dim ODy(), YEq$, Dr, Key$, TyChr$, RetAs$, Ret$, Fun$, Callg$, StpTy$, Expr$, Pm$, Stmt$, EndLin$
+Dim ODy(), YEq$, Dr, Key$, TyChr$, RetSfx$, Ret$, Fun$, Callg$, StpTy$, Expr$, Pm$, Stmt$, EndLin$
 For Each Dr In Itr(CdYLisb.Dy)
     Key = Dr(0)
     StpTy = Dr(1)
@@ -371,14 +371,14 @@ For Each Dr In Itr(CdYLisb.Dy)
     Ret = Dr(4)
     Pm = Dr(5)
     Pm = JnCommaSpc(AddPfxzAy(SyzSS(Pm), "Y_"))
-    RetAs = RetAszRet(Ret)
+    RetSfx = RetAs(Ret)
     TyChrzRet (Ret)
     Select Case StpTy
     Case "Inp", "Fun", "Expr"
-        Fun = FmtQQ("Private Function Y_??()?:", Key, TyChr, RetAs)
+        Fun = FmtQQ("Private Function Y_??()?:", Key, TyChr, RetSfx)
         EndLin = "End Function"
     Case "Stmt", "Sub"
-        Fun = FmtQQ("Private Sub Y_??()?:", Key, TyChr, RetAs)
+        Fun = FmtQQ("Private Sub Y_??()?:", Key, TyChr, RetSfx)
         EndLin = "End Sub"
     Case Else
         Thw CSub, "StpTy Err:", "StpTy", StpTy
@@ -411,7 +411,7 @@ End Function
 Private Function B_CdZZ4Col(CdZZLis As Drs) As Drs
 'CdZZLis  Key StpTy Stmt Expr Ret
 'CdZZ4Col Fun Brwg Y End
-Dim ODy(), Dr, Key$, TyChr$, RetAs$, Ret$, Fun$, StpTy$, Expr$, Pm$, Stmt$, Y$, Brwg$
+Dim ODy(), Dr, Key$, TyChr$, RetSfx$, Ret$, Fun$, StpTy$, Expr$, Pm$, Stmt$, Y$, Brwg$
 For Each Dr In Itr(CdZZLis.Dy)
     Key = Dr(0)
     StpTy = Dr(1)
@@ -443,7 +443,7 @@ Erase XX
 End Function
 
 Private Function B_JSrcPm(ISrc As Drs) As Drs
-'Fm : ISrc ! From Xls Lo T_Src
+'Fm : ISrc ! From Exl Lo T_Src
 'Fm : CC   ! = Key Pfx Id StpTy StpFor Ret Fss Ret Stmt Expr BrkNm BrkChr Fm1..5
 'Ret: Key Pfx Id StpTy StpFor Ret Fss Ret Stmt Expr BrkNm BrkChr Pm
 Const CC$ = "Key Pfx Id StpTy StpFor Ret Fss Ret Stmt Expr BrkNm BrkChr Fm1 Fm2 Fm3 Fm4 Fm5"
@@ -690,13 +690,13 @@ End Function
 
 Private Function B_MMthLin$(MthTy$, Mthn$, Pm$, Ret$)
 'MthTy is Either Function or Sub
-Dim TyChr$, RetAs$
+Dim TyChr$, RetSfx$
 If IsTyChr(Ret) Then
     TyChr = Ret
 Else
-    RetAs = Ret
+    RetSfx = Ret
 End If
-B_MMthLin = FmtQQ("? ??(?)?", MthTy, Mthn, TyChr, Pm, RetAs)
+B_MMthLin = FmtQQ("? ??(?)?", MthTy, Mthn, TyChr, Pm, RetSfx)
 End Function
 
 

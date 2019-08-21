@@ -8,8 +8,8 @@ Function FmtDiKqCnt(Ay, Optional Opt As EmCnt) As String()
 FmtDiKqCnt = FmtS12s(SwapS12s(S12szDic(DiKqCnt(Ay, Opt))), N1:="Cnt", N2:="Mth")
 End Function
 
-Function CntzAyD(Ay, Optional C As VbCompareMethod = vbTextCompare) As Dictionary
-'Ret : :DiKqCnt #Cnt-Ay-Dic ! Cnt-Ay-ret-as-DiKqCnt.  :DiKqCnt is val is a cnt (num).  %Cnt always :DiKqCnt
+Function DiItmqCnt(Ay, Optional C As VbCompareMethod = vbTextCompare) As Dictionary
+'Ret : :DiKqCnt #Cnt-Ay-Dic ! Cnt-Ay-ret-as-DiKqCnt.  :DiKqCnt is val is a cnt (num).  %Cnt always :DiKqCnt @@
 Dim O As New Dictionary, I
 O.CompareMode = C
 For Each I In Itr(Ay)
@@ -19,7 +19,7 @@ For Each I In Itr(Ay)
         O.Add I, 1
     End If
 Next
-Set CntzAyD = O
+Set DiItmqCnt = O
 End Function
 
 Function DiKqCntwDup(DiKqCnt As Dictionary) As Dictionary
@@ -49,7 +49,7 @@ End Select
 End Function
 
 Function DiKqCnt(Ay, Optional Opt As EmCnt, Optional C As VbCompareMethod = vbTextCompare) As Dictionary
-Dim D As Dictionary: Set D = CntzAyD(Ay, C)
+Dim D As Dictionary: Set D = DiItmqCnt(Ay, C)
 Set DiKqCnt = DiKqCntwEmCnt(D, Opt)
 End Function
 

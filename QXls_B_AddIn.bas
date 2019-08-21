@@ -9,7 +9,7 @@ DoAddin = DrszItrPP(A.AddIns, "Name FullName Installed IsOpen ProgId CLSID")
 End Function
 
 Sub DmpAddinX()
-DmpAddinzX Xls
+DmpAddinzX Exl
 End Sub
 
 Sub DmpAddinzX(X As Excel.Application)

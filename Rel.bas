@@ -31,6 +31,7 @@ Else
     Dic.Add P, S
 End If
 End Sub
+
 Sub PushRelLin(RelLin)
 Dim Ay$(), P$, C
 Ay = SyzSS(RelLin)
@@ -89,9 +90,11 @@ For Each P In SetOfPar.Itms
     Next
 Next
 End Property
+
 Sub Vc()
-VcAy Fmt
+BrwAy Fmt, UseVc:=True
 End Sub
+
 Sub Brw()
 BrwAy Fmt
 End Sub

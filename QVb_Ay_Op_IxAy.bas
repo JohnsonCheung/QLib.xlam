@@ -36,6 +36,10 @@ For Each F In SyzSS(FF)
 Next
 End Sub
 
+Function Ele(Ay, Ix)
+If Bet(Si(Ay), 0, Ix) Then Ele = Ay(Ix)
+End Function
+
 Function IxzAy&(Ay, Itm, Optional FmIx& = 0, Optional ThwEr As EmThw)
 Dim J&
 For J = FmIx To UB(Ay)

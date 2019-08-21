@@ -5,12 +5,12 @@ Private Const CMod$ = "MIde_Mth_PurePrp."
 Private Const Asm$ = "QIde"
 
 Function DoPubPrpWiPm() As Drs
-Dim A As Drs: A = AddColzHasPm(DoPubPrp)
+Dim A As Drs: A = AddColoHasPm(DoPubPrp)
 DoPubPrpWiPm = DwEqExl(A, "HasPm", True)
 End Function
 
 Property Get DoPubPrpWoPm() As Drs
-Dim A As Drs: A = AddColzHasPm(DoPubPrp)
+Dim A As Drs: A = AddColoHasPm(DoPubPrp)
 DoPubPrpWoPm = DwEqExl(A, "HasPm", False)
 End Property
 

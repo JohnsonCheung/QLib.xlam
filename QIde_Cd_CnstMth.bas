@@ -24,7 +24,7 @@ Dim Mdy$: If Not IsPub Then Mdy = "Private "
 PushI CmCd, FmtQQ("?Function ?() As String()", Mdy, Cnstmn)
 PushI CmCd, "Dim A As New Bfr"
 Dim L: For Each L In Ly
-    PushI CmCd, "A.Var " & Qvbs(L)
+    PushI CmCd, "A.Var " & QteVb(L)
 Next
 PushI CmCd, Cnstmn & " = A.Bfr"
 PushI CmCd, "End Function"
@@ -40,7 +40,7 @@ Private Function CmLinVal$(CmSrcL)
 'Fm CmSrcL : # Cnst-Mth-Src-Lin  ! the src lin with a :CmSrc
 'Ret       : # Cnst-Mth-Lin-Val  ! ret [...] in A.Var "..."
 Dim L$: L = CmSrcL
-If ShfPfx(L, "A.Var ") Then CmLinVal = SzQvbs(L)
+If ShfPfx(L, "A.Var ") Then CmLinVal = UnQteVb(L)
 End Function
 
 Sub EdtCnstm(Cnstmn$)

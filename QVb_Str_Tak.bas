@@ -113,8 +113,8 @@ End Sub
 Private Sub Z_Tak_BefFstLas()
 Dim S, Fst$, Las$
 S = " A_1$ = ""Private Function ZChunk$(ConstLy$(), IChunk%)"" & _"
-Fst = vbQtezDblQ
-Las = vbQtezDblQ
+Fst = vbDblQ
+Las = vbDblQ
 Ept = "Private Function ZChunk$(ConstLy$(), IChunk%)"
 GoSub Tst
 Exit Sub
@@ -130,12 +130,18 @@ Function BetLng(L&, A&, B&) As Boolean
 BetLng = A <= L And L <= B
 End Function
 
-Function Bet$(S, S1$, S2$, Optional NoTrim As Boolean, Optional InclMarker As Boolean)
+Function Bet(X, A, B) As Boolean
+If A > X Then Exit Function
+If X > B Then Exit Function
+Bet = True
+End Function
+
+Function BetStr$(S, S1$, S2$, Optional NoTrim As Boolean, Optional InclMarker As Boolean)
 With Brk1(S, S1, NoTrim)
    If .S2 = "" Then Exit Function
    Dim O$: O = Brk1(.S2, S2, NoTrim).S1
    If InclMarker Then O = S1 & O & S2
-   Bet = O
+   BetStr = O
 End With
 End Function
 

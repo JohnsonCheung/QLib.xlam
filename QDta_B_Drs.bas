@@ -83,12 +83,6 @@ Function LasDr(A As Drs)
 LasDr = LasEle(A.Dy)
 End Function
 
-Sub XXX()
-Dim A$: A = "123456789"
-Mid(A, 2, 3) = "abcdex"
-Debug.Print A
-End Sub
-
 Function FmtLNewO(L_NewL_OldL As Drs, Org_L_Lin As Drs) As String()
 'Fm  : L_NewL_OldL ! Assume all NewL and OldL are nonEmp and <>
 'Ret : LinesAy !
@@ -183,7 +177,7 @@ End Function
 Private Function FmtLNewONLin(Gpno As Drs) As Drs
 'Fm  Gpno: L Lin NewL Gpno
 'Ret E: L Gpno NLin SNewL ! NLin=L# is in front; SNewL = Spc is in front, only when nonEmp
-Dim MaxL&: MaxL = MaxzAy(LngAyzDrs(Gpno, "L"))
+Dim MaxL&: MaxL = AyMax(LngAyzDrs(Gpno, "L"))
 Dim NDig%: NDig = Len(CStr(MaxL))
 Dim S$: S = Space(NDig + 1)
 Dim Dy(), Dr, L&, Lin$, NewL, IGpno&, NLin$, SNewL
@@ -280,7 +274,7 @@ Private Function ColGp(Col(), RLvlGpIx&()) As Variant()
 'Fm Col      : Col to gp
 'Fm RLvlGpIx : Each V in Col is mapped to GpIx by this RLvlGpix @@
 ThwIf_DifSi Col, RLvlGpIx, CSub
-Dim MaxGpIx&: MaxGpIx = MaxzAy(RLvlGpIx)
+Dim MaxGpIx&: MaxGpIx = AyMax(RLvlGpIx)
 Dim O(): ReDim O(MaxGpIx)
 Dim I&: For I = 0 To MaxGpIx
     O(I) = Array()
@@ -327,7 +321,7 @@ Next
 AlignDrs = Drs(D.Fny, ODy)
 End Function
 
-Sub CrtTzAlignCC(D As Database, T$, Fm$, Gpcc$, CC$)
+Sub CrtTblzAlignCC(D As Database, T$, Fm$, Gpcc$, CC$)
 'Fm T  : @Gpcc @CC
 'Fm Fm : ..@Gpcc..@CC..
 'Ret   :                ! Crt @T in @D @Fm.  @T will has sam rec as @Fm.  Each gp of rec the @CC will be align and the las chr of each col is [.].
@@ -523,7 +517,7 @@ Next
 End Function
 
 Function DrsInsCV(A As Drs, C$, V) As Drs
-DrsInsCV = Drs(CvSy(InsEle(A.Fny, C)), InsColzDyoV(A.Dy, V, IxzAy(A.Fny, C)))
+DrsInsCV = Drs(CvSy(InsEle(A.Fny, C)), InsColzDy(A.Dy, V, IxzAy(A.Fny, C)))
 End Function
 
 Function DrsInsCVAft(A As Drs, C$, V, AftFldNm$) As Drs
@@ -542,7 +536,7 @@ If IsAft Then
     Ix = Ix + 1
 End If
 Fny1 = InsEle(Fny, FldNm, CLng(Ix))
-Dy = InsColzDyoV(A.Dy, V, Ix)
+Dy = InsColzDy(A.Dy, V, Ix)
 DrsInsCVIsAftFld = Drs(Fny1, Dy)
 End Function
 Function IsNeFF(A As Drs, FF$) As Boolean
@@ -580,7 +574,7 @@ Select Case SrtOpt
 Case eNoSrt
     CntLy = CntLyzDiKqCnt(D, W)
 Case eSrtByCnt
-    CntLy = SrtAyQ(CntLyzDiKqCnt(D, W), IsDesc)
+    CntLy = AySrtQ(CntLyzDiKqCnt(D, W), IsDesc)
 Case eSrtByItm
     CntLy = CntLyzDiKqCnt(SrtDic(D, IsDesc), W)
 Case Else
@@ -807,17 +801,26 @@ Next
 AddColzExiB = Drs(AddSS(A.Fny, ExiB_FldNm), ODy)
 End Function
 
+Function DrszMapAy(Ay, MapFunNN$, Optional FF$, Optional ValNm$ = "V") As Drs
+DrszMapAy = DrszMapItr(Itr(Ay), MapFunNN, FF, ValNm)
+End Function
 
-Function DrszMapAy(Ay, MapFunNN$, Optional FF$) As Drs
-Dim Dy(), V: For Each V In Ay
+Function DrszMapItr(Itr, MapFunNN$, Optional FF0$, Optional ValNm$ = "V") As Drs
+Dim Dy(), V: For Each V In Itr
     Dim Dr(): Dr = Array(V)
-    Dim F: For Each F In Itr(SyzSS(MapFunNN))
+    Dim F: For Each F In ItrzSS(MapFunNN)
         PushI Dr, Run(F, V)
     Next
     PushI Dy, Dr
 Next
-Dim A$: A = DftStr(FF, "V " & MapFunNN)
-DrszMapAy = DrszFF(A, Dy)
+Dim FF$
+    If FF0 = "" Then
+        FF = ValNm & " " & MapFunNN
+    Else
+        FF = FF0
+    End If
+Stop
+DrszMapItr = DrszFF(FF, Dy)
 End Function
 
 Function AddColzLen(D As Drs, AsCol$) As Drs
@@ -866,7 +869,7 @@ Private Function AddColzFillerC(A As Drs, C) As Drs
 'Fm   C : #Coln.
 'Ret    : a new drs with addition col @F where F = "F" & C and value eq Len-of-Col-@C
 If NoReczDrs(A) Then Stop
-Dim W%: W = WdtzAy(StrCol(A, C))
+Dim W%: W = AyWdt(StrCol(A, C))
 Dim I%: I = IxzAy(A.Fny, C)
 Dim ODy(): ODy = A.Dy
 Dim Dr, J&

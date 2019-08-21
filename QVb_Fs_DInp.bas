@@ -3,6 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Fs_Ffn_MisEr."
+
 Function ErzColDup(A As Drs, C$) As String()
 Dim B As Drs: B = DwDup(A, C)
 Dim Msg$: Msg = "Dup [" & C & "]"

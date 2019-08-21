@@ -101,17 +101,6 @@ Function MthDnzMthn3$(A As Mthn3)
 MthDnzMthn3 = MthDn(A.Nm, A.ShtMdy, A.ShtTy)
 End Function
 
-Function MthTyChr$(ShtMthTy$)
-Select Case ShtMthTy
-Case "Fun": MthTyChr = "F"
-Case "Sub": MthTyChr = "S"
-Case "Get": MthTyChr = "G"
-Case "Let": MthTyChr = "L"
-Case "Set": MthTyChr = "T"
-Case Else: Thw CSub, "Invalid ShtMthTy.", "ShtMthTy VdtShtMthTy", ShtMthTy, ShtMthTyAy
-End Select
-End Function
-
 Function MthMdyChr$(ShtMdy$)
 Select Case ShtMdy
 Case "Pub": MthMdyChr = "P"
@@ -121,6 +110,9 @@ Case Else: Thw CSub, "Invalid ShtMdy.", "ShtMdy VdtShtMthMdy", ShtMdy, ShtMthMdy
 End Select
 End Function
 
+Function MthDnzN$(Mthn)
+
+End Function
 
 Function MthDnzL$(Lin)
 MthDnzL = MthDnzMthn3(Mthn3zL(Lin))
@@ -165,7 +157,7 @@ Z:
 End Sub
 
 Function MthMdy$(Lin)
-MthMdy = IfIn(T1(Lin), MthMdyAy)
+MthMdy = IFin(T1(Lin), MthMdyAy)
 End Function
 
 Function MthKd$(Lin)
@@ -255,45 +247,30 @@ Tst:
 End Sub
 
 
-Private Sub Z_MthnsetVWiVerb()
-MthnsetVWiVerb.Srt.Vc
+Private Sub Z_MthnsetoWiVerb()
+MthnsetoWiVerb.Srt.Vc
 End Sub
-Private Sub Z_DyoMthnaVerbV()
-BrwDy DyoMthnaVerbV
-End Sub
+
 Sub PushNDupDy(ODy(), Dr)
 If HasDr(ODy, Dr) Then Exit Sub
 PushI ODy, Dr
 End Sub
-Function DoMthnaVerbV() As Drs
-DoMthnaVerbV = DrszFF("Mthn Verb", DyoMthnaVerbV)
-End Function
 
-Function DyoMthnaVerbV() As Variant()
-Dim Mthn, O(): For Each Mthn In Itr(MthNyV)
-    PushI O, Sy(Mthn, Verb(Mthn))
-Next
-DyoMthnaVerbV = O
-End Function
-Private Sub Z_MthnsetVWoVerb()
-MthnsetVWoVerb.Srt.Vc
-End Sub
-
-Property Get MthNyVWiVerb() As String()
+Property Get WiVerbMthNy() As String()
 Dim Mthn, I, J&
 For Each I In Itr(MthNyV)
     Mthn = I
-'    If HasSubStr(Mthn, "Z_ExprDic") Then Stop
     If J Mod 100 = 0 Then Debug.Print J
-    If HasVerb(Mthn) Then PushI MthNyVWiVerb, Mthn
+    If HasVerb(Mthn) Then PushI WiVerbMthNy, Mthn
     J = J + 1
 Next
 End Property
-Property Get MthNyVWoVerb() As String()
+
+Property Get MthNyoNoVerb() As String()
 Dim Mthn, I
 For Each I In Itr(MthNyV)
     Mthn = I
-    If Not HasVerb(Mthn) Then PushI MthNyVWiVerb, Mthn
+    If Not HasVerb(Mthn) Then PushI MthNyoNoVerb, Mthn
 Next
 End Property
 
@@ -301,12 +278,12 @@ Function HasVerb(Nm) As Boolean
 HasVerb = Verb(Nm) <> ""
 End Function
 
-Property Get MthnsetVWiVerb() As Aset
-Set MthnsetVWiVerb = AsetzAy(MthNyVWiVerb)
+Property Get MthnsetoWiVerb() As Aset
+Set MthnsetoWiVerb = AsetzAy(WiVerbMthNy)
 End Property
 
-Property Get MthnsetVWoVerb() As Aset
-Set MthnsetVWoVerb = AsetzAy(MthNyVWoVerb)
+Property Get MthnsetoNoVerb() As Aset
+Set MthnsetoNoVerb = AsetzAy(MthNyoNoVerb)
 End Property
 
 Function MthnsetV() As Aset
@@ -333,8 +310,7 @@ MthNyP = MthNyzP(CPj)
 End Function
 
 Function MthNyzP(P As VBProject) As String()
-Dim C As VBComponent
-For Each C In P.VBComponents
+Dim C As VBComponent: For Each C In P.VBComponents
     PushIAy MthNyzP, MthNyzM(C.CodeModule)
 Next
 End Function
@@ -361,10 +337,9 @@ X_BrwOne:
     Return
 End Sub
 
-Function MthNyzS(Src$()) As String()
-Dim L
-For Each L In Itr(Src)
-    PushNB MthNyzS, Mthn(L)
+Function MthNy(Src$()) As String()
+Dim L: For Each L In Itr(Src)
+    PushNB MthNy, Mthn(L)
 Next
 End Function
 
@@ -378,14 +353,14 @@ MIde_Mth_Nm:
 End Sub
 
 Function MthNyzM(M As CodeModule) As String()
-MthNyzM = MthNyzS(Src(M))
+MthNyzM = MthNy(Src(M))
 End Function
 
 Private Sub Z_MthnzS()
 GoSub Z
 Exit Sub
 Z:
-   B MthNyzS(SrczP(CPj))
+   B MthNy(SrczP(CPj))
    Return
 End Sub
 
@@ -415,30 +390,29 @@ End Function
 Function MthnCmlSetVbe() As Aset
 Set MthnCmlSetVbe = CmlSetzNy(MthNyV)
 End Function
-Function DoMthnzV(V As Vbe) As Drs
 
+Function DoMthnzV(V As Vbe) As Drs
+Dim O As Drs
+    Dim P As VBProject: For Each P In V.VBProjects
+        AddDrs O, DoMthnzP(P)
+    Next
+DoMthnzV = O
 End Function
+
 Function DoMthnzM(M As CodeModule) As Drs
 DoMthnzM = DoMthn(M)
-End Function
-Function DoMthnzP(P As VBProject) As Drs
-Dim C As VBComponent
-Dim Pn$: Pn = P.Name
-For Each C In P.VBComponents
-    Dim Mn$: Mn = C.Name
-    Dim A As Drs: A = DoMthn(C.CodeModule)
-    Dim B As Drs: B = InsColzDrsCC(A, "Pj Md", Pn, Mn)
-    Dim O As Drs: O = AddDrs(O, A)
-Next
-DoMthnzP = O
-End Function
-
-Function DoMthnV() As Drs
-DoMthnV = DoMthnzV(CVbe)
 End Function
 
 Function DoMthnP() As Drs
 DoMthnP = DoMthnzP(CPj)
+End Function
+
+Function DoMthnzP(P As VBProject) As Drs
+DoMthnzP = SelDrs(DoMthzP(P), FFoMthn)
+End Function
+
+Function DoMthnV() As Drs
+DoMthnV = DoMthnzV(CVbe)
 End Function
 
 Function DoMthnM() As Drs

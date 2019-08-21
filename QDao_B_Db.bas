@@ -3,8 +3,9 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Db."
-Public Q$
 Public Const C_Des$ = "Description"
+':Q:  :S #Sql-Str#
+':QQ: :S #Sql-Str-With-Question-Rmk# !
 Function IsDbOk(D As Database) As Boolean
 On Error GoTo X
 IsDbOk = D.Name = D.Name
@@ -12,15 +13,16 @@ Exit Function
 X:
 End Function
 
-Sub AddTmpTbl(D As Database)
+Function IsDbTmp(D As Database) As Boolean
+IsDbTmp = PthzDb(D) = TmpDbPth
+End Function
+
+Sub CrtTblTmp(D As Database)
 D.TableDefs.Append TmpTd
 End Sub
 
 Function PthzDb$(D As Database)
 PthzDb = Pth(D.Name)
-End Function
-Function IsDbTmp(D As Database) As Boolean
-IsDbTmp = PthzDb(D) = TmpDbPth
 End Function
 
 Sub DrpDbIfTmp(D As Database)
@@ -46,7 +48,7 @@ End Sub
 
 Function StruzTny(D As Database, Tny$()) As String()
 Dim I
-For Each I In Itr(SrtAyQ(Tny))
+For Each I In Itr(AySrtQ(Tny))
     PushI StruzTny, StruzT(D, CStr(I))
 Next
 End Function
@@ -118,7 +120,9 @@ D.Execute Q
 Exit Sub
 X:
     CrtQry D, TmpNm, Q
-    Dim E$: E = Err.Description: Thw CSub, "Running Sql error", "Er Sql Db", E, Q, D.Name
+    Dim N$: N = D.Name
+    Dim E$: E = Err.Description:
+    Thw CSub, "Running Sql error", "Er Sql Db", E, Q, N
 End Sub
 
 Sub RqqAv(D As Database, QQ$, Av())
@@ -293,7 +297,7 @@ For Each I In ItrzTT(TT)
 Next
 End Function
 
-Sub CrtTzTmp(D As Database)
+Sub CrtTblzTmp(D As Database)
 DrpT D, "#Tmp"
 D.TableDefs.Append TmpTd
 End Sub

@@ -296,7 +296,7 @@ IsBlkEmp = Si(B.DroBlk) = 0
 End Function
 
 Private Function ErzBlkTy(B As Blks, BlkTy$, Optional FmIx = 0) As String()
-'Ret: Those Blk @FmIx and eq @BlkTy in @B are considered as error.  Rpt them as :ErLy @@
+'Ret: Those Blk @FmIx and eq @BlkTy in @B are considered as error.  Upd them as :ErLy @@
 Dim Dy(): Dy = B.D.Dy
 Dim Ix%: For Ix = FmIx To UB(Dy)
     PushIAy ErzBlkTy, ErzBlk(Blk(Dy(Ix)))

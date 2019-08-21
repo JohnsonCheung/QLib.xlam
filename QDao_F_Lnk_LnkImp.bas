@@ -2,6 +2,20 @@ Attribute VB_Name = "QDao_F_Lnk_LnkImp"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "BLnkImp."
+Public Const StdEleLines$ = _
+"E Crt Dte;Req;Dft=Now" & vbCrLf & _
+"E Tim Dte" & vbCrLf & _
+"E Lng Lng" & vbCrLf & _
+"E Mem Mem" & vbCrLf & _
+"E Dte Dte" & vbCrLf & _
+"E Nm  Txt;Req;Sz=50"
+Public Const StdETFLines$ = _
+"ETF Nm  * *Nm          " & vbCrLf & _
+"ETF Tim * *Tim         " & vbCrLf & _
+"ETF Dte * *Dte         " & vbCrLf & _
+"ETF Crt * CrtTim       " & vbCrLf & _
+"ETF Lng * Si           " & vbCrLf & _
+"ETF Mem * Lines *Ft *Fx"
 
 Private Property Get LnkSpecTp$()
 Const A_1$ = "E Mem | Mem Req AlwZLen" & _
@@ -24,6 +38,24 @@ vbCrLf & "D . Msg | ..."
 
 LnkSpecTp = A_1
 End Property
+
+
+Property Get SampSchm() As String()
+Erase XX
+X "Tbl LoFmt   *Id Lon"
+X "Tbl LoFmtWdt LoFmtId Wdt | Fldss"
+X "Tbl LoFmtLvl LoFmtId Lvl | Fldss"
+X "Tbl LoFmtBet LoFmtId Fld | FmFld ToFld"
+X "Tbl LoFmtTot LoFmtId TotCalc | Fldss"
+X "Fld Mem Fldss"
+X "Fld Nm  Fld FmFld ToFld"
+X "Fld Lng TotCalc"
+X "Ele Lvl B Req [VdtRul = >=2 and <=8] Dft=2"
+X ""
+SampSchm = XX
+Erase XX
+End Property
+
 
 Private Sub Z_LnkImp()
 Dim LnkImpSrc$(), Db As Database

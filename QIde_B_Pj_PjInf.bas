@@ -3,8 +3,8 @@ Option Explicit
 Option Compare Text
 
 Function PjzFxa(Fxa) As VBProject
-'Ret: Ret :Pj of @Fxa fm @Xls if exist, else @Xls.Opn @Fxa
-Dim O As VBProject: Set O = PjzPjf(Xls.Vbe, Fxa)
+'Ret: Ret :Pj of @Fxa fm @Exl if exist, else @Exl.Opn @Fxa
+Dim O As VBProject: Set O = PjzPjf(Exl.Vbe, Fxa)
 If Not IsNothing(O) Then Set PjzFxa = O: Exit Function
 Set PjzFxa = OpnFx(Fxa).VBProject
 End Function
@@ -16,10 +16,10 @@ End Function
 Sub OpnFxa(Fxa$)
 If Not IsFxa(Fxa) Then Thw CSub, "Not a Fxa", "Fxa", Fxa
 If HasFxa(Fxa) Then
-    Inf CSub, "In Xls, there is Pjn = Fxa", "Fxa AllPj-In-Xls", Fxa, PjnyV
+    Inf CSub, "In Exl, there is Pjn = Fxa", "Fxa AllPj-In-Exl", Fxa, PjnyV
     Exit Sub
 End If
-Xls.Workbooks.Open Fxa
+Exl.Workbooks.Open Fxa
 End Sub
 
 Private Function PjnzFxa$(Fxa)
@@ -29,8 +29,8 @@ End Function
 Sub CrtFxa(Fxa$)
 'Do: crt an emp Fxa with pjn derived from @Fxa
 If Not IsFxa(Fxa) Then Thw CSub, "Not a Fxa", "Fxa", Fxa
-If HasFxa(Fxa) Then Thw CSub, "In Xls, there is Pjn = Fxa", "Fxa AllPj-In-Xls", Fxa, PjnyV
-Dim Wb As Workbook: Set Wb = Xls.Workbooks.Add
+If HasFxa(Fxa) Then Thw CSub, "In Exl, there is Pjn = Fxa", "Fxa AllPj-In-Exl", Fxa, PjnyV
+Dim Wb As Workbook: Set Wb = Exl.Workbooks.Add
 Wb.SaveAs Fxa, XlFileFormat.xlOpenXMLAddIn 'Must save first, otherwise PjzFxa will fail.
 PjzFxa(Fxa).Name = PjnzFxa(Fxa)
 Wb.Close True

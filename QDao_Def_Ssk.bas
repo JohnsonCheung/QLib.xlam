@@ -3,8 +3,8 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Ssk."
-Public Const C_SkNm$ = "SecondaryKey"
-Public Const C_PkNm$ = "PrimaryKey"
+Public Const Skn$ = "SecondaryKey"
+Public Const Pkn$ = "PrimaryKey"
 
 Function SkFnyzTd(T As Dao.TableDef) As String()
 SkFnyzTd = FnyzIdx(SkIdxzTd(T))
@@ -24,11 +24,11 @@ Function Sskv(D As Database, T) As Aset
 End Function
 
 Function SkIdxzTd(T As Dao.TableDef) As Dao.Index
-Set SkIdxzTd = IdxzTd(T, C_SkNm)
+Set SkIdxzTd = IdxzTd(T, Skn)
 End Function
 
 Function SkIdx(D As Database, T) As Dao.Index
-Set SkIdx = Idx(D, T, C_SkNm)
+Set SkIdx = Idx(D, T, Skn)
 End Function
 
 Function SskFld$(D As Database, T)

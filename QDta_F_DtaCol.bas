@@ -150,7 +150,7 @@ Dim C$(), Dr, Ixy&(), OFny$(), ODy()
 C = SyzSS(CC)
 Ixy = IxyzSubAy(A.Fny, C)
 OFny = MinusAy(A.Fny, C)
-ODy = DrpColzDy(A.Dy, Ixy)
+ODy = DrpColzDy(A.Dy, CvLngAy(AySrt(Ixy)))
 DrpCol = Drs(OFny, ODy)
 End Function
 
@@ -191,10 +191,10 @@ For Each Dr In Itr(Dy)
 Next
 End Function
 
-Function InsColzDyoV(A(), V, Optional At& = 0) As Variant()
+Function InsColzDy(A(), V, Optional At& = 0) As Variant()
 Dim Dr
 For Each Dr In Itr(A)
-    PushI InsColzDyoV, InsEle(Dr, V, At)
+    PushI InsColzDy, InsEle(Dr, V, At)
 Next
 End Function
 
@@ -242,8 +242,9 @@ Dim Rix&, Dr: For Each Dr In Itr(Dy)
 Next
 End Function
 
-Function TopN(A As Drs, Optional N = 50) As Drs
-TopN = Drs(A.Fny, CvAv(FstNEle(A.Dy, N)))
+Function DwTopN(A As Drs, Optional N = 50) As Drs
+If N <= 0 Then DwTopN = A: Exit Function
+DwTopN = Drs(A.Fny, CvAv(FstNEle(A.Dy, N)))
 End Function
 
 Function VzColEqSel(A As Drs, C$, V, ColNm$)

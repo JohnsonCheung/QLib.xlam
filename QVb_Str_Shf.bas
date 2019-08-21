@@ -59,6 +59,12 @@ If HasPfx(OLin, Pfx) Then
     ShfPfx = True
 End If
 End Function
+Function ShfSfx(OLin$, Sfx$) As Boolean
+If HasSfx(OLin, Sfx) Then
+    OLin = RmvSfx(OLin, Sfx)
+    ShfSfx = True
+End If
+End Function
 Function ShfPfxAy$(OLin$, PfxAy$())
 Dim O$: O = PfxzAy(OLin, PfxAy): If O = "" Then Exit Function
 ShfPfxAy = O

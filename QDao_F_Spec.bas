@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Spec."
-Public Const PFldLis$ = "Boolean Byte Integer Int Long Single Double Char Text Memo Attachment" ' used in TzPFld
+Public Const PrimNN$ = "Boolean Byte Integer Int Long Single Double Char Text Memo Attachment" ' used in TzPFld
 Sub ImpSpec(D As Database, Spnm)
 Const CSub$ = CMod & "ImpSpec"
 Dim Ft$
@@ -18,6 +18,7 @@ Dim DifSz As Boolean
 Dim SamSz As Boolean
 Dim DifFt As Boolean
 Dim Rs As Dao.Recordset
+    Dim Q$
     Q = FmtQQ("Select SpecNm,Ft,Lines,Tim,Si,LTimStr_Dte from Spec where SpecNm = '?'", Spnm)
     Set Rs = D.OpenRecordset(Q)
     NoCur = Not HasFfn(Ft)
@@ -96,21 +97,21 @@ Dim I: For Each I In Fdy
 Next
 End Sub
 
-Function FdAy(PFldLis$) As Dao.Field2()
-'Fm PFldLis: #Sql-FldLis-Phrase.  !The fld spec of create table sql inside the bkt.  It allows attachment.  It uses DAO to create
-Dim F: For Each F In Itr(AyTrim(SplitComma(PFldLis)))
+Function FdAy(Prim$) As Dao.Field2()
+'Fm PrimNN: #Sql-FldLis-Phrase.  !The fld spec of create table sql inside the bkt.  It allows attachment.  It uses DAO to create
+Dim F: For Each F In Itr(AyTrim(SplitComma(PrimNN)))
     PushObj FdAy, FdzPFld(F)
 Next
 End Function
 
-Sub CrtTzPFld(D As Database, T, PFldLis$)
-'Fm PFldLis: #Sql-FldLis-Phrase.  !The fld spec of create table sql inside the bkt.  Each fld sep by comma.  The spec allows:
+Sub CrtTblzPFld(D As Database, T, PrimNN$)
+'Fm PrimNN: #Sql-FldLis-Phrase.  !The fld spec of create table sql inside the bkt.  Each fld sep by comma.  The spec allows:
 '                                 !Boolean Byte Integer Int Long Single Double Char Text Memo Attachment
 'Ret : create the @T in @D by DAO @@
 Dim Td As Dao.TableDef: Set Td = TdzNm(T)
-AddFdy Td, FdAy(PFldLis)
+AddFdy Td, FdAy(PrimNN)
 D.TableDefs.Append Td
-'AddFdy D.TableDefs(T), FdAy(PFldLis)
+'AddFdy D.TableDefs(T), FdAy(PrimNN)
 End Sub
 
 Function FdzPFld(PFld) As Dao.Field2
@@ -132,7 +133,7 @@ Case S = "Memo":     Set O = FdzMem(N)
 Case S = "Attachment": Set O = FdzAtt(N)
 Case S = "Time":     Set O = FdzTim(N)
 Case S = "Date":     Set O = FdzDte(N)
-Case Else: Thw CSub, "Invalid PFld", "Nm Spec vdt-PFld", N, S, PFldLis
+Case Else: Thw CSub, "Invalid PFld", "Nm Spec vdt-PFld", N, S, PrimNN
 End Select
 Set FdzPFld = O
 End Function

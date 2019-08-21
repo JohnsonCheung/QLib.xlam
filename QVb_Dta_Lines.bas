@@ -4,7 +4,7 @@ Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Lin_Lines."
 Function WdtzLines%(Lines)
-WdtzLines = WdtzAy(SplitCrLf(Lines))
+WdtzLines = AyWdt(SplitCrLf(Lines))
 End Function
 
 Function WdtzLinesAy%(LinesAy)

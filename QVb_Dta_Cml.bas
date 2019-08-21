@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Cml."
 Private Const Asm$ = "QVb"
-
+':CmlAy: :
 Private Function MthDotCmlGpAsetzV(A As Vbe) As Aset
 Set MthDotCmlGpAsetzV = AsetzAy(MthDotCmlGpzV(A))
 End Function
@@ -28,6 +28,7 @@ End Sub
 
 Function CmlAy(Nm) As String()
 'Ret : :Cml-ay.  Cml-ay is fm :Nm.  Each cml start with UCas and rest is LCas|Dig|_, ept fst cml the start letter may be LCas.
+
 If Nm = "" Then Exit Function
 #If PlaySav Then
 If Not IsNm(Nm) Then Thw CSub, "Given Nm is not a name", "Nm", Nm
@@ -291,7 +292,7 @@ X "To"
 X "Txtb"
 X "V"
 X "W"
-X "Xls"
+X "Exl"
 X "Y"
 Seg1ErNy = XX
 End Function

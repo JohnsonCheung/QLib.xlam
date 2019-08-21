@@ -87,7 +87,7 @@ Function PjnyzX(X As Excel.Application) As String()
 PjnyzX = PjnyzV(X.Vbe)
 End Function
 Property Get PjnyX() As String()
-PjnyX = PjnyzX(Xls)
+PjnyX = PjnyzX(Exl)
 End Property
 Property Get Pjn$()
 Pjn = CPj.Name

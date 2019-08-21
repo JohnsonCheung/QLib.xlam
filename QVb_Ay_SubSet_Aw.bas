@@ -167,10 +167,10 @@ Dim I: For Each I In Itr(Ay)
 Next
 End Function
 
-Function AwLikssAy(Ay, LikssAy$()) As String()
-Dim LikAy$(): LikAy = TermAsetzTLiny(LikssAy).Sy
+Function AwKssAy(Ay, KssAy$()) As String()
+Dim LikAy$(): LikAy = TermAsetzTLiny(KssAy).Sy
 Dim S: For Each S In Itr(Ay)
-    If HitLikAy(S, LikAy) Then PushI AwLikssAy, S
+    If HitLikAy(S, LikAy) Then PushI AwKssAy, S
 Next
 End Function
 
@@ -232,8 +232,8 @@ Function AwPatnAy(Ay, PatnAy$()) As Variant()
 If Si(Ay) = 0 Then Exit Function
 Stop
 End Function
-Function AwPatnExl(Ay, Patn$, ExlLikss$) As String()
-AwPatnExl = AeLikss(AwPatn(Ay, Patn), ExlLikss)
+Function AwPatnExl(Ay, Patn$, ExlKss$) As String()
+AwPatnExl = AeKss(AwPatn(Ay, Patn), ExlKss)
 End Function
 Function IxyzSubAy(Ay, SubAy, Optional ThwNFnd As Boolean) As Long()
 Dim E, Ix&
@@ -330,10 +330,6 @@ Next
 End Function
 Function ItrzAwRmvT1(Ay, T1)
 Asg Itr(AwRmvT1(Ay, T1)), ItrzAwRmvT1
-End Function
-
-Function ItrzSS(SS)
-Asg Itr(SyzSS(SS)), ItrzSS
 End Function
 
 Function AwRmvT1(Ay, T1) As String()

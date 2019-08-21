@@ -48,18 +48,23 @@ End With
 QteAy = AddPfxSzAy(Ay, P, S)
 End Function
 
+Function UnQteVb$(QteVb)
+UnQteVb = Replace(RmvFstLasChr(QteVb), vb2DblQ, vbDblQ)
+End Function
+
+Function QteVb$(S)
+':QteVb: #Quoted-Vb-Str# ! a str with fst and lst chr is vbDblQ and inside each vbDblQ is in pair, which will cv to one vbDblQ  @@
+QteVb = vbDblQ & Replace(S, vbDblQ, vb2DblQ) & vbDblQ
+End Function
+
 Function Qte$(S, QteStr$)
 With BrkQte(QteStr)
     Qte = .S1 & S & .S2
 End With
 End Function
 
-Function QteDblVb$(S)
-QteDblVb = QteDbl(Replace(S, vbQtezDblQ, vbTwoQtezDblQ))
-End Function
-
 Function QteDbl$(S)
-QteDbl = vbQtezDblQ & S & vbQtezDblQ
+QteDbl = vbDblQ & S & vbDblQ
 End Function
 
 Function QteSng$(S)

@@ -115,7 +115,7 @@ End Function
 Function HasTyn(Src$(), Nm$) As Boolean
 Dim L
 For Each L In Itr(Src)
-    If Tyn(L) = Nm Then HasTyn = True: Exit Function
+    If Mtyn(L) = Nm Then HasTyn = True: Exit Function
 Next
 End Function
 
@@ -145,8 +145,8 @@ If K = "" Then Thw CSub, "MthLin Error", "MthLin", MthLin
 MthELin = "End " & K
 End Function
 
-Function TyLines$(Dcl$(), Tyn$)
-TyLines = JnCrLf(TyLy(Dcl, Tyn))
+Function TyLines$(Dcl$(), Mtyn$)
+TyLines = JnCrLf(TyLy(Dcl, Mtyn))
 End Function
 
 Function TyLy(Dcl$(), TyNm$) As String()
@@ -165,7 +165,7 @@ End Function
 Function TyNy(DclLy$()) As String()
 Dim L
 For Each L In Itr(DclLy)
-    PushNB TyNy, Tyn(L)
+    PushNB TyNy, Mtyn(L)
 Next
 End Function
 Function Enmn(Lin)
@@ -173,10 +173,10 @@ Dim L$: L = RmvMdy(Lin)
 If ShfPfx(L, "Enum ") Then Enmn = Nm(L)
 End Function
 
-Function Tyn$(Lin)
-':Tyn: :Nm #Type-Name# ! Vb Type Name of @Lin
+Function Mtyn$(Lin)
+':Mtyn: :Nm #Type-Name# ! Vb Type Name of @Lin
 Dim L$: L = RmvMdy(Lin)
-If ShfPfx(L, "Type ") Then Tyn = Nm(L)
+If ShfPfx(L, "Type ") Then Mtyn = Nm(L)
 End Function
 
 Function EnmLyzMN(M As CodeModule, Enmn) As String()
@@ -280,14 +280,15 @@ Dim Top&
         DclLinCnt = UB(Src) + 1
         Exit Function
     End If
-DclLinCnt = IxOfPrvCdLin(Src, Fm) + 1
+DclLinCnt = IxoPrvCdLin(Src, Fm) + 1
 End Function
-Function IxOfPrvCdLin&(Src$(), Fm)
+
+Function IxoPrvCdLin&(Src$(), Fm)
 Dim O&
 For O = Fm - 1 To 0 Step -1
-    If IsLinCd(Src(O)) Then IxOfPrvCdLin = O: Exit Function
+    If IsLinCd(Src(O)) Then IxoPrvCdLin = O: Exit Function
 Next
-IxOfPrvCdLin = -1
+IxoPrvCdLin = -1
 End Function
 Function Dcl$(Src$())
 Dcl = JnCrLf(DclLy(Src))
@@ -328,12 +329,14 @@ O = FstNEle(Src, N)
 DclLy = O
 'Brw LyzNNAp("N Src DclLy", N, AddIxPfx(Src), O): Stop
 End Function
+
 Function LineszMLC$(M As CodeModule, Lno&, Cnt&)
 If Lno <= 0 Then Exit Function
 If Cnt <= 0 Then Exit Function
 If Lno > M.CountOfLines Then Exit Function
 LineszMLC = M.Lines(Lno, Cnt)
 End Function
+
 Private Sub Z_DclzM()
 Dim O$(), C As VBComponent
 For Each C In CPj.VBComponents
@@ -341,9 +344,11 @@ For Each C In CPj.VBComponents
 Next
 VcLinesAy O
 End Sub
+
 Function DclzM$(M As CodeModule)
 DclzM = LineszRTrim(LineszMLC(M, 1, DclLinCntzM(M)))
 End Function
+
 Function DclLyzM(M As CodeModule) As String()
 DclLyzM = SplitCrLf(DclzM(M))
 End Function

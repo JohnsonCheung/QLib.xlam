@@ -165,14 +165,14 @@ Next
 AeIxSet = O
 End Function
 
-Function AeIxy(Ay, Ixy)
-'Ixy holds index if Ay to be remove.  It has been sorted else will be stop
+Function AeIxy(Ay, SrtdIxy)
+'Fm SrtdIxy : holds index if Ay to be remove.  It has been sorted else will be stop
 Ass IsArray(Ay)
-Ass IsSrtedzAy(Ixy)
+Ass IsSrtedzAy(SrtdIxy)
 Dim J&
 Dim O: O = Ay
-For J = UB(Ixy) To 0 Step -1
-    O = AeEleAt(O, CLng(Ixy(J)))
+For J = UB(SrtdIxy) To 0 Step -1
+    O = AeEleAt(O, CLng(SrtdIxy(J)))
 Next
 AeIxy = O
 End Function
@@ -216,39 +216,39 @@ Function SyeLikAy(Sy$(), LikAy$()) As String()
 SyeLikAy = SyePred(Sy, PredzLikAy(LikAy))
 End Function
 
-Function SyeLikssAy(Sy$(), LikssAy$()) As String()
-If Si(LikssAy) = 0 Then SyeLikssAy = Sy: Exit Function
-SyeLikssAy = SyePred(Sy, PredzLikssAy(LikssAy))
+Function SyeKssAy(Sy$(), KssAy$()) As String()
+If Si(KssAy) = 0 Then SyeKssAy = Sy: Exit Function
+SyeKssAy = SyePred(Sy, PredzKssAy(KssAy))
 End Function
 
-Function PredzLikssAy(LikssAy$()) As PredLikAy
+Function PredzKssAy(KssAy$()) As PredLikAy
 Dim O As New PredLikAy
-O.Init LikssAy
-Set PredzLikssAy = O
+O.Init KssAy
+Set PredzKssAy = O
 End Function
 
-Private Sub Z_SyeLikss()
-Dim Sy$(), Likss$
+Private Sub Z_SyeKss()
+Dim Sy$(), Kss$
 GoSub Z
 GoSub T0
 Exit Sub
 T0:
     Sy = SyzSS("A B C CD E E1 E3")
-    Likss = "C* E*"
+    Kss = "C* E*"
     Ept = SyzSS("A B")
     GoTo Tst
 Z:
-    D SyeLikss(SyzSS("A B C CD E E1 E3"), "C* E*")
+    D SyeKss(SyzSS("A B C CD E E1 E3"), "C* E*")
     Return
 Tst:
-    Act = SyeLikss(Sy, Likss)
+    Act = SyeKss(Sy, Kss)
     C
     Return
 End Sub
 
-Function SyeLikss(Sy$(), Likss$) As String()
-If Likss = "" Then SyeLikss = Sy: Exit Function
-SyeLikss = SyePred(Sy, PredzLikAy(SyzSS(Likss)))
+Function SyeKss(Sy$(), Kss$) As String()
+If Kss = "" Then SyeKss = Sy: Exit Function
+SyeKss = SyePred(Sy, PredzLikAy(SyzSS(Kss)))
 End Function
 
 Function AeNegative(Ay)
@@ -384,9 +384,9 @@ Next
 End Function
 
 
-Function AeLikss(Ay, ExlLikss$) As String()
+Function AeKss(Ay, ExlKss$) As String()
 Stop
-'AeLikss = AePred(Ay, PredzIsLikss(ExlLikss))
+'AeKss = AePred(Ay, PredzIsKss(ExlKss))
 End Function
 
 Function AePfx(Ay, Pfx$) As String()

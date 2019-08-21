@@ -84,13 +84,16 @@ IsBtn B
 BarNyzV C
 BarNyzV C
 End Sub
+
 Sub DltBar(BarNm$)
 If Not HasBar(BarNm) Then Debug.Print "Bar[" & BarNm & "] not found": Exit Sub
 Bars(BarNm).Delete
 End Sub
+
 Private Sub Z_EnsBtns()
 Class1.Class_Initialize
 End Sub
+
 Sub EnsBtns(BarBtnccAy$())
 Dim I
 For Each I In Itr(BarBtnccAy)
@@ -103,6 +106,7 @@ Dim L$
 L = BarBtncc
 EnsBtnzCC EnsBar(ShfT1(L)), L
 End Sub
+
 Sub RmvBarByNy(BarNy$())
 Dim IBar: For Each IBar In BarNy
     If HasBar(IBar) Then
@@ -112,6 +116,7 @@ Dim IBar: For Each IBar In BarNy
     End If
 Next
 End Sub
+
 Private Function EnsBar(BarNm$) As CommandBar
 If HasBar(BarNm) Then
     Set EnsBar = Bars(BarNm)
@@ -120,12 +125,14 @@ Else
 End If
 EnsBar.Visible = True
 End Function
+
 Private Sub EnsBtnzCC(Bar As CommandBar, BtnCapcc$)
 Dim BtnCap
 For Each BtnCap In TermAy(BtnCapcc)
     EnsBtnzC Bar, BtnCap
 Next
 End Sub
+
 Private Function HasBtn(Bar As CommandBar, BtnCap) As Boolean
 Dim C As CommandBarControl
 For Each C In Bar.Controls
@@ -133,7 +140,6 @@ For Each C In Bar.Controls
         If C.Caption = BtnCap Then HasBtn = True: Exit Function
     End If
 Next
-
 End Function
 
 Private Sub EnsBtnzC(Bar As CommandBar, BtnCap)

@@ -33,7 +33,7 @@ Next
 End Sub
 
 Function VzLStr(LStr)
-'Ret : ! a val (Str|Dbl|Bool|Dte|Empty) fm @LStr.  :LStr: is #Letter-Str.  A str wi fst letter can-determine the str can converted to what value.
+'Ret : ! a val (Str|Dbl|Bool|Dte|Empty) fm @LStr.
 '      ! If fst letter is
 '      !   ['] is a str wi \r\n\t
 '      !   [D] is a str of date, if cannot convert to date, ret empty and debug.print msg.
@@ -301,24 +301,24 @@ SqStrzLo = SqStrzRg(L.DataBodyRange)
 End Function
 
 Function SqStr$(Sq())
-'Ret : :SqStr:   ! it is Lines of xstr lin.
-'      :XStrLin: ! #XStr-Lin is :XStr separaterd by vbTab with ending vbTab.
-'                ! the fst XStr-Lin will not trim the ending vbTab, because it is used to determine how many col.
-'                ! if any non-Lin1-XStr-Lin has more fld than lin1-XStr-lin-fld, the extra fld are ignored and inf (this is done in %SqS%
-'                ! the reverse fun is %SqzS @@
+':SqStr: :S  ! it is Lines of CellStr lin.
+'            ! #CellStr-Lin is :CellStr separaterd by vbTab with ending vbTab.
+'            ! the fst CellStr-Lin will not trim the ending vbTab, because it is used to determine how many col.
+'            ! if any non-Lin1-CellStr-Lin has more fld than lin1-CellStr-lin-fld, the extra fld are ignored and inf (this is done in %SqS%
+'            ! the reverse fun is %SqzS @@
 Dim L$(), O$()
 Dim UC%: UC = UBound(Sq, 1)
 Dim R&: For R = 1 To UBound(Sq, 1)
     ReDim L(UC)
     Dim C&: For C = 1 To UBound(Sq, 2)
-        L(C - 1) = XStr(Sq(R, C))
+        L(C - 1) = CellStr(Sq(R, C))
     Next
     PushI O, JnTab(L)
 Next
 SqStr = JnCrLf(O)
 End Function
 Function LStr$(V, Optional Fun$)
-'Ret : :LStr from a val-@V.
+':LStr: :S #Letter-Str#.  A str wi fst letter can-determine the str can converted to what value.
 Dim T$: T = TypeName(V)
 Dim O$
 Select Case T
@@ -331,14 +331,14 @@ End Select
 LStr = O
 End Function
 
-Function XStr$(V, Optional Fun$)
-'Ret : :XStr fm a val-@V.
+Function CellStr$(V, Optional Fun$)
+':CellStr: :S #Exl-Cell-Str#.  A str coming fm xls cell
 Dim T$: T = TypeName(V)
 Dim O$
 Select Case T
-Case "Boolean", "Long", "Integer", "Date", "Currency", "Single", "Double": XStr = V
-Case "String": If IsDblStr(V) Then XStr = "'" & V Else XStr = SlashCrLfTab(V)
-Case Else: If Fun <> "" Then Inf Fun, "Val-of-TypeName[" & T & "] cannot cv to :XStr"
+Case "Boolean", "Long", "Integer", "Date", "Currency", "Single", "Double": CellStr = V
+Case "String": If IsDblStr(V) Then CellStr = "'" & V Else CellStr = SlashCrLfTab(V)
+Case Else: If Fun <> "" Then Inf Fun, "Val-of-TypeName[" & T & "] cannot cv to :CellStr"
 End Select
 End Function
 

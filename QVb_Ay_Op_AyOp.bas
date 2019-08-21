@@ -12,7 +12,7 @@ End Enum
 Function DashLT1Ay(Ay) As String()
 Dim I
 For Each I In Itr(Ay)
-    PushNoDup DashLT1Ay, BefOrAll(I, "_")
+    PushNDup DashLT1Ay, BefOrAll(I, "_")
 Next
 End Function
 
@@ -90,7 +90,7 @@ MaxEle = O
 End Function
 
 Function Ny(S) As String()
-Ny = TermAy(S)
+Ny = WrdAy(S)
 End Function
 
 Function CvVy(Vy)
@@ -304,12 +304,12 @@ Function AddSS(Sy$(), SS$) As String()
 AddSS = SyzAp(Sy, SyzSS(SS))
 End Function
 
-Function LookupT1$(Itm, T1LikssAy$())
-Dim L$, I, Likss$, T1$
-For Each I In T1LikssAy
+Function LookupT1$(Itm, TkssAy$())
+Dim L$, I, Kss$, T1$
+For Each I In TkssAy
     L = I
-    AsgTRst L, T1, Likss
-    If HitLikss(Itm, Likss) Then LookupT1 = T1: Exit Function
+    AsgTRst L, T1, Kss
+    If HitKss(Itm, Kss) Then LookupT1 = T1: Exit Function
 Next
 End Function
 

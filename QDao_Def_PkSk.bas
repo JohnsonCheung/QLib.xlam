@@ -38,11 +38,11 @@ End Function
 
 Function ChkSk$(D As Database, T)
 Dim SkIdx As Dao.Index, I As Dao.Index
-If Not HasIdx(D, T, C_SkNm) Then
+If Not HasIdx(D, T, Skn) Then
     ChkSk = FmtQQ("Not SecondaryKey for Table[?] in Db[?]", T, D.Name)
     Exit Function
 End If
-Set SkIdx = D.TableDefs(T).Indexes(C_SkNm)
+Set SkIdx = D.TableDefs(T).Indexes(Skn)
 Select Case True
 Case Not SkIdx.Unique
     ChkSk = FmtQQ("SecondaryKey is not unique for Table[?] in Db[?]", T, D.Name)
