@@ -14,3 +14,5 @@ Private Const CMod$ = "PredzIsLines."
 Private Function IPred_Pred(V As Variant) As Boolean
 IPred_Pred = IsLines(V)
 End Function
+
+'

@@ -55,7 +55,7 @@ Sy = SyzAv(Av)
 End Function
 
 Function DteAy(ParamArray Ap()) As Date()
-Dim Av(): Av = Ap
+Dim Av(): If UBound(Ap) >= 0 Then Av = Ap
 DteAy = IntozAy(DteAy, Av)
 End Function
 
@@ -73,17 +73,17 @@ Next
 End Function
 
 Function IntAy(ParamArray Ap()) As Integer()
-Dim Av(): Av = Ap
+Dim Av(): If UBound(Ap) >= 0 Then Av = Ap
 IntAy = IntozAy(EmpIntAy, Av)
 End Function
 
 Function LngAp(ParamArray Ap()) As Long()
-Dim Av(): Av = Ap
+Dim Av(): If UBound(Ap) >= 0 Then Av = Ap
 LngAp = IntozAy(EmpLngAy, Av)
 End Function
 
 Function SngAy(ParamArray Ap()) As Single()
-Dim Av(): Av = Ap
+Dim Av(): If UBound(Ap) >= 0 Then Av = Ap
 SngAy = IntozAy(SngAy, Av)
 End Function
 
@@ -124,3 +124,5 @@ Function SyzAy(Ay) As String()
 SyzAy = IntozAy(EmpSy, Ay)
 End Function
 
+
+'

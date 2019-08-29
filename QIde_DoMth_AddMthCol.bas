@@ -1,4 +1,6 @@
 Attribute VB_Name = "QIde_DoMth_AddMthCol"
+Option Explicit
+Option Compare Text
 
 Function AddColoHasPm(WiMthLin As Drs) As Drs
 'Ret         : Add col-HasPm
@@ -53,3 +55,5 @@ Next
 AddColoIsRetObj = AddColzFFDy(WiRetSfx, "IsRetObj", Dy)
 End Function
 
+
+'

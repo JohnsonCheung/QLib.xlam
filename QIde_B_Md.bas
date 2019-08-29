@@ -32,16 +32,16 @@ Function MdDn$(M As CodeModule)
 MdDn = PjnzM(M) & "." & Mdn(M)
 End Function
 
-Function DiMdnqSrc(P As VBProject) As Dictionary
+Function DiMdnqSrcL(P As VBProject) As Dictionary
 Dim C As VBComponent
-Set DiMdnqSrc = New Dictionary
+Set DiMdnqSrcL = New Dictionary
 For Each C In P.VBComponents
-    DiMdnqSrc.Add C.Name, SrcL(C.CodeModule)
+    DiMdnqSrcL.Add C.Name, SrcL(C.CodeModule)
 Next
 End Function
 
-Function DiMdnqSrcP() As Dictionary
-Set DiMdnqSrcP = DiMdnqSrc(CPj)
+Function DiMdnqSrcLP() As Dictionary
+Set DiMdnqSrcLP = DiMdnqSrcL(CPj)
 End Function
 
 Function MdFn$(M As CodeModule)
@@ -151,3 +151,5 @@ End Function
 Function LibNyzP(P As VBProject) As String()
 LibNyzP = AeBlnk(AwDistAsSy(AyBef(MdNyzP(P), "_")))
 End Function
+
+'

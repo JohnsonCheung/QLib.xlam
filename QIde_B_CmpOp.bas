@@ -75,9 +75,9 @@ For Each N In TmpModNyzP(CPj)
 Next
 End Sub
 
-Function CpyMd(FmM As CodeModule, ToM As CodeModule) As Boolean
-'@FmM & @ToM must exist @@
-CpyMd = RplMd(ToM, SrcL(FmM))
+Function CpyMd(M As CodeModule, ToM As CodeModule, Optional Upd As EmUpd) As Boolean
+'Ret : Cpy @M to @ToM and  both must exist @@
+CpyMd = RplMd(ToM, SrcL(M), Upd)
 End Function
 
 Function DftMd(M As CodeModule) As CodeModule
@@ -198,19 +198,144 @@ For Each C In Pj.VBComponents
 Next
 End Sub
 
-Function RplMd(M As CodeModule, NewLines$) As Boolean
-Dim OldL$: OldL = SrcL(M)
-If LineszRTrim(OldL) = LineszRTrim(NewLines) Then Exit Function
-ClrMd M
-M.InsertLines 1, NewLines
-RplMd = True
-End Function
-
-Sub RplModPfx(FmPfx$, ToPfx$)
-RplModPfxzP CPj, FmPfx, ToPfx
+Sub ClrMd(M As CodeModule)
+If M.CountOfLines > 0 Then
+    M.DeleteLines 1, M.CountOfLines
+End If
 End Sub
 
-Sub RplModPfxzP(Pj As VBProject, FmPfx$, ToPfx$)
+Private Function SampDiMdnqSrcL() As Dictionary
+Set SampDiMdnqSrcL = New Dictionary
+Dim C As VBComponent: For Each C In CPj.VBComponents
+    SampDiMdnqSrcL.Add C.Name, SrcL(C.CodeModule) & vbCrLf & "'"
+Next
+End Function
+
+Private Sub Z_RplMdzD()
+RplMdzD CPj, SampDiMdnqSrcL, EiUpdAndRpt
+End Sub
+
+Private Function IsStrAtSpcCrLf(S, At) As Boolean
+IsStrAtSpcCrLf = IsAscSpcCrLf(AscAt(S, At))
+End Function
+
+Private Function AscAt%(S, At)
+AscAt = Asc(Mid(S, At, 1))
+End Function
+
+Private Function IsAscSpcCrLf(Asc%)
+Select Case True
+Case Asc = 13, Asc = 10, Asc = 32: IsAscSpcCrLf = True
+End Select
+End Function
+
+Private Function LineszRTrim$(Lines)
+Dim At&
+For At = Len(Lines) To 1 Step -1
+    If Not IsStrAtSpcCrLf(Lines, At) Then LineszRTrim = Left(Lines, At): Exit Function
+Next
+End Function
+
+Sub RplMdzD(P As VBProject, DiMdnqSrcL As Dictionary, Optional Upd As EmUpd, Optional Osy)
+'Ret : #Rpl-Md-By-Di-Mdn-SrcL# @@
+Dim Mdn: For Each Mdn In DiMdnqSrcL.Keys
+    RplMd P.VBComponents(Mdn).CodeModule, DiMdnqSrcL(Mdn), Upd, Osy
+Next
+End Sub
+
+Private Function Si&(A)
+On Error Resume Next
+Si = UBound(A) + 1
+End Function
+
+Private Function LinCnt&(Lines$)
+LinCnt = SubStrCnt(Lines, vbLf) + 1
+End Function
+
+Private Function SubStrCnt&(S, SubStr$)
+Dim P&: P = 1
+Dim O&, L%
+L = Len(SubStr)
+While P > 0
+    P = InStr(P, S, SubStr)
+    If P = 0 Then SubStrCnt = O: Exit Function
+    O = O + 1
+    P = P + L
+Wend
+End Function
+
+
+Private Sub Z_RplMd()
+Dim M As CodeModule: Set M = Md("QDao_Def_NewTd")
+RplMd M, SrcL(M) & vbCrLf & "'", EiUpdAndRpt
+End Sub
+
+Private Function SrcL$(M As CodeModule)
+':SrcL: :Lines #Src-Lines#
+SrcL = Join(Src(M), vbCrLf) & vbCrLf
+End Function
+
+Private Function SrcLzM$(M As CodeModule)
+If M.CountOfLines > 0 Then
+    SrcLzM = M.Lines(1, M.CountOfLines)
+End If
+End Function
+
+Private Function Src(M As CodeModule) As String()
+Src = SplitCrLf(SrcLzM(M))
+End Function
+
+Private Function SplitCrLf(S) As String()
+SplitCrLf = Split(Replace(S, vbCr, ""), vbLf)
+End Function
+
+Function RplMd(M As CodeModule, NewL$, Optional Upd As EmUpd, Optional Osy) As Boolean
+Dim Mdn$: Mdn = M.Parent.Name
+Select Case Mdn
+Case "QIde_B_CmpOp", "QVb_Dta_VbRpt", "QIde_B_Md", "QIde_Mth_CntMth": Exit Function
+End Select
+
+Dim OldL$: OldL = SrcL(M)
+Dim IsUpd As Boolean: IsUpd = IsEmUpdUpd(Upd)
+Dim IsRpt As Boolean: IsRpt = IsEmUpdRpt(Upd)
+Dim IsSam As Boolean: IsSam = LineszRTrim(OldL) = LineszRTrim(NewL)
+Dim IsPush As Boolean: IsPush = VarType(Osy) = vbArray + vbString
+Dim Msg$
+    If IsRpt Or IsPush Then
+        Dim OldC As String * 4: RSet OldC = LinCnt(OldL)
+        Msg = Replace("RplMd: OldCnt(?) ", "?", OldC)
+        If IsSam Then
+            Msg = Msg & "             " & Mdn & vbTab & "<--- Same"
+        Else
+            Dim NewC As String * 4: RSet NewC = LinCnt(NewL)
+            Msg = Msg & Replace("NewCnt(?) ", "?", NewC) & Mdn
+        End If
+    End If
+    If IsRpt Then Debug.Print Msg
+    If IsPush Then PushI Osy, Msg
+If IsSam Then Exit Function
+
+If IsUpd Then
+    ClrMd M:
+    M.InsertLines 1, NewL
+    RplMd = True
+Else
+    If IsRpt Then Debug.Print
+End If
+End Function
+
+Private Sub PushI(O, M)
+Dim N&
+N = Si(O)
+ReDim Preserve O(N)
+O(N) = M
+End Sub
+
+Sub RenModPfx(FmPfx$, ToPfx$)
+RenModPfxzP CPj, FmPfx, ToPfx
+End Sub
+
+Sub RenModPfxzP(Pj As VBProject, FmPfx$, ToPfx$)
 Dim C As VBComponent, N$
 For Each C In Pj.VBComponents
     If C.Type = vbext_ct_StdModule Then
@@ -235,25 +360,11 @@ Set SetCmpNm = A
 End Function
 
 Sub SrtM()
-SrtzM CMd
+SrtMd CMd
 End Sub
 
-Sub SrtP()
-SrtzP CPj
-End Sub
-
-Function SrtzM(M As CodeModule) As Boolean
-Const C$ = "QIde_B_CmpOp"
-If Mdn(M) = C Then Debug.Print "SrtzM: Skipping..."; C: Exit Function
-SrtzM = RplMd(M, SSrcLzM(M))
-End Function
-
-Sub SrtzP(P As VBProject)
-BackupP
-Dim C As VBComponent
-For Each C In P.VBComponents
-    SrtzM C.CodeModule
-Next
+Sub SrtMd(M As CodeModule, Optional Upd As EmUpd)
+RplMd M, SrtedSrcLzM(M), Upd
 End Sub
 
 Private Sub Z()
@@ -269,4 +380,3 @@ AddCls FmModn
 Md(FmModn).AddFromString SrcL(Md(T))
 RmvCmpzN T
 End Sub
-

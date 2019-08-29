@@ -428,3 +428,6 @@ Dim A$: A = AftBkt(Lin)
 If ShfTerm(A, "As") Then MthRetTy = T1(A)
 End Function
 
+
+'
+

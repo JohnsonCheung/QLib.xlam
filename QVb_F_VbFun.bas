@@ -87,12 +87,9 @@ Ass Exp = Act
 End Sub
 
 Function Max(A, B, ParamArray Ap())
-Dim Av(), O
-Av = Ap
-O = IIf(A > B, A, B)
-Dim J%
-For J = 1 To UB(Av)
-   If Av(J) > O Then O = Av(J)
+Dim O: O = IIf(A > B, A, B)
+Dim J%: For J = 0 To UBound(Ap)
+   If Ap(J) > O Then O = Ap(J)
 Next
 Max = O
 End Function
@@ -262,3 +259,5 @@ Function NBlk&(N&, BlkSz%)
 NBlk = ((N - 1) \ BlkSz) + 1
 End Function
 
+
+'

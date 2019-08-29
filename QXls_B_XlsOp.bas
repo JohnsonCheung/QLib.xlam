@@ -708,6 +708,11 @@ Function NewXls() As Excel.Application
 Set NewXls = CreateObject("Excel.Application") ' Don't use New Excel.Application
 End Function
 
+Private Sub Z_NewXls()
+Dim X As Excel.Application
+Set X = NewXls
+Stop
+End Sub
 
 Sub QuitXls(A As Excel.Application)
 Stamp "QuitXls: Start"
@@ -1139,3 +1144,5 @@ End If
 End Sub
 
 
+
+'

@@ -114,3 +114,5 @@ Next
 ThwImpossible CSub ' CSub, "each lines ends with sfx _ started from Lno, which is impossible", "Md Started-Fm-Lno", Mdn(A), Lno
 End Function
 
+
+'

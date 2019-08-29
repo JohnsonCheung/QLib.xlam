@@ -14,3 +14,5 @@ Private Const CMod$ = "PredzIsPrim."
 Private Function IPred_Pred(V As Variant) As Boolean
 IPred_Pred = IsPrim(V)
 End Function
+
+'

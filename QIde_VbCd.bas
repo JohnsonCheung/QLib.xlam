@@ -33,3 +33,5 @@ If Not IsLinCd(Lin) Then Exit Function
 If HasPfx(Lin, "Option") Then Exit Function
 IsLinNonOpt = True
 End Function
+
+'

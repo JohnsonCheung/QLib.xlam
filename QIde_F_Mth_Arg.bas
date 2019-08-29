@@ -278,7 +278,7 @@ O = AwDist(O)
 ArgNyzP = AySrt(O)
 End Function
 
-Sub Z_ShtArg()
+Private Sub Z_ShtArg()
 Dim Arg$
 GoSub Z
 'GoSub T0
@@ -690,3 +690,5 @@ End With
 ShfLRHS = Array(LHS, RHS)
 End Function
 
+
+'

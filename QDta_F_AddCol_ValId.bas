@@ -35,3 +35,5 @@ Dim Fny$():              Fny = AddSy(D.Fny, Sy(C1, C2))                  ' New-F
 End Function
 
 
+
+'

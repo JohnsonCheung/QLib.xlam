@@ -75,3 +75,5 @@ End Property
 Property Get SampDt2() As DT
 SampDt2 = DtzFF("SampDt2", "A B C", SampDy2)
 End Property
+
+'

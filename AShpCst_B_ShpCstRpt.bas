@@ -3,15 +3,6 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "AShpCst_Rpt."
 Private W As Database
-Function RptAppDb() As Database
-'Set RptAppDb = AppDb(RptApn)
-End Function
-
-Sub GenOupTbl()
-Dim IZHT187$, IZHT186$, IUom$, IMB52$
-GenORate IZHT187, IZHT186, IUom
-GenOMain IMB52, IUom
-End Sub
 
 Sub DocUOM _
 (A, _
@@ -35,6 +26,15 @@ B)
 ' "SC              as SC_U," & _  no need
 ' "[COL per case]  as AC_B," & _ no need
 End Sub
+
+Private Function ErzMB52MissingWhs8601Or8701(FxMB52$, Wsn$) As String()
+Const CSub$ = CMod & "ErzMB52MissingWhs8601Or8701"
+Const M$ = "Column-[Plant] must have value 8601 or 8701"
+If NReczFxw(FxMB52, Wsn, "Plant in ('8601','8701')") = 0 Then
+    ErzMB52MissingWhs8601Or8701 = _
+        LyzFunMsgNap(CSub, M, "MB52-File Worksheet", FxMB52, Wsn)
+End If
+End Function
 
 Private Function GenOMain$(IMB52$, IUom$)
 'Fm IMB52 : Whs Sku QUnRes QBlk QInsp
@@ -93,12 +93,13 @@ Rq W, "Select Whs,ZHT1,RateSc into [@Rate] from [#Cpy]"
 DrpTT W, "#Cpy #Cpy1 #Cpy2"
 End Function
 
-Private Function ErzMB52MissingWhs8601Or8701(FxMB52$, Wsn$) As String()
-Const CSub$ = CMod & "ErzMB52MissingWhs8601Or8701"
-Const M$ = "Column-[Plant] must have value 8601 or 8701"
-If NReczFxw(FxMB52, Wsn, "Plant in ('8601','8701')") = 0 Then
-    ErzMB52MissingWhs8601Or8701 = _
-        LyzFunMsgNap(CSub, M, "MB52-File Worksheet", FxMB52, Wsn)
-End If
+Sub GenOupTbl()
+Dim IZHT187$, IZHT186$, IUom$, IMB52$
+GenORate IZHT187, IZHT186, IUom
+GenOMain IMB52, IUom
+End Sub
+
+Function RptAppDb() As Database
+'Set RptAppDb = AppDb(RptApn)
 End Function
 

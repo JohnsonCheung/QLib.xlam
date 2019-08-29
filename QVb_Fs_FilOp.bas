@@ -3,24 +3,19 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MVb_Fs_Ffn_Backup."
 Private Const Asm$ = "QVb"
-':FunVerb-Backup: :FunVerb
-':Bkp:            :Pth #Backup-Path# ! Backup path of a Ffn
 Sub BrwBkp()
 BrwPth BkpzP(CPj)
 End Sub
 
 Function BkpzP$(P As VBProject)
-BkpzP = Bkp(Pjf(P))
+BkpzP = BkPth(Pjf(P))
 End Function
 Function BkRoot$(Pth)
 BkRoot = AddFdr(Pth, ".Backup")
 End Function
+
 Function BkHom$(Ffn)
 BkHom = AddFdr(BkRoot(Pth(Ffn)), Fn(Ffn))
-End Function
-
-Function BkPjfzLasP$()
-BkPjfzLasP = LasBkFfn(PjfP)
 End Function
 
 Function LasBkFfn$(Ffn)
@@ -30,28 +25,49 @@ Dim Fdr$: Fdr = MaxEle(F)
 LasBkFfn = H & Fdr & "\" & Fn(Ffn)
 End Function
 
-Function LasBkPj$()
-LasBkPj = LasBkFfn(CPjf)
+Function BkFfnAy(Ffn) As String()
+Dim H$: H = BkHom(Ffn)
+Dim F$(): F = FdrAyzIsInst(H)
+Dim Fn1$: Fn1 = Fn(Ffn)
+Dim Fdr: For Each Fdr In Itr(F)
+    Dim IFfn$: IFfn = H & Fdr & "\" & Fn1
+    If HasFfn(IFfn) Then
+        PushI BkFfnAy, IFfn
+    End If
+Next
 End Function
 
-Function Bkp$(Ffn)
-Bkp = AddFdr(BkHom(Ffn), TmpNm)
+Function BkPjfAy() As String()
+BkPjfAy = BkFfnAy(CPjf)
 End Function
 
-Sub BackupP()
-Attribute BackupP.VB_Description = "lkdj flksdjf lsdkfj"
-BackupFfn Pjf(CPj)
+Function LasBkPjf$()
+':FunAdj-Bk: :FunAdj #Backup#
+':FunAdj-Las: :FunAdj #Last#
+LasBkPjf = LasBkFfn(CPjf)
+End Function
+
+Function BkPth$(Ffn)
+':BkPth: :Pth #Backup-Path# ! Backup path of a Ffn
+BkPth = AddFdr(BkHom(Ffn), TmpNm)
+End Function
+
+Sub BackupP(Optional Msg$ = "Backup")
+':FunVerb-Backup: :FunVerb
+':FunSfx-P: :FunSfx #CurPj#
+BackupFfn Pjf(CPj), Msg
 End Sub
 
 Function BkFfn$(Ffn)
-BkFfn = Bkp(Ffn) & Fn(Ffn)
+BkFfn = BkPth(Ffn) & Fn(Ffn)
 End Function
 
-Function BackupFfn$(Ffn)
-Attribute BackupFfn.VB_Description = "lksdjfl sdfjklsd fj"
+Function BackupFfn$(Ffn, Optional Msg$ = "Backup")
 Dim T$: T = BkFfn(Ffn)
+Dim Fmsg$: Fmsg = BkPth(Ffn) & "Msg.txt"
 EnsPthzAllSeg Pth(T)
 CpyFfn Ffn, T
+WrtStr Msg, Fmsg
 BackupFfn = T
 End Function
 
@@ -202,3 +218,5 @@ End Sub
 
 
 
+
+'

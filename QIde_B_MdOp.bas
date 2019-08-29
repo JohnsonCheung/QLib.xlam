@@ -4,10 +4,9 @@ Option Explicit
 Private Const CMod$ = "MIde_Md_Op_Rmv_Lines."
 Private Const Asm$ = "QIde"
 
-Sub ClrMd(M As CodeModule)
+Private Sub ClrMd(M As CodeModule)
 With M
     If .CountOfLines = 0 Then Exit Sub
-    Debug.Print FmtQQ("ClrMd: Md(?) of Lines(?) is cleared", Mdn(M), .CountOfLines)
     .DeleteLines 1, .CountOfLines
     If .CountOfLines <> 0 Then Stop
 End With
@@ -272,3 +271,5 @@ Debug.Print "NUnRmk"; NUnRmk
 Debug.Print "SKip"; Skip
 End Sub
 
+
+'

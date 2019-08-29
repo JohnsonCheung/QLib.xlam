@@ -107,12 +107,38 @@ Function HasPfx(S, Pfx, Optional C As VbCompareMethod = vbTextCompare) As Boolea
 HasPfx = StrComp(Left(S, Len(Pfx)), Pfx, C) = 0
 End Function
 
-Function IdfAy(S) As String()
-IdfAy = WrdAy(S)
+Function RplNonNmChr$(S)
+Dim L&: L = Len(S): If L = 0 Then Exit Function
+Dim O$(): ReDim O(L - 1)
+Dim J&: For J = 1 To L
+    Dim Rpl As Boolean
+    Dim C$: C = Mid(S, J, 1)
+    If IsNmChr(C) Then
+        O(J - 1) = C
+    Else
+        O(J - 1) = " "
+    End If
+Next
+RplNonNmChr = Jn(O)
+End Function
+
+Function IdfAyP() As String()
+IdfAyP = IdfAy(SrczP(CPj))
+End Function
+
+Function IdfAy(Src$()) As String()
+Dim L: For Each L In Itr(SrceRmkLin(Src))
+    Dim S: For Each S In Itr(SyzSS(RplNonNmChr(RmvBetDblQ(L))))
+        If IsLetter(FstChr(S)) Then
+            PushI IdfAy, S
+        End If
+    Next
+Next
 End Function
 
 Function HasIdf(S, Idf) As Boolean
-HasIdf = HasEle(IdfAy(S), Idf)
+Stop
+'HasIdf = HasEle(IdfAy(S), Idf)
 End Function
 Function HasPfxSfx(S, Pfx, Sfx, Optional C As VbCompareMethod = vbTextCompare) As Boolean
 If Not HasPfx(S, Pfx, C) Then Exit Function
@@ -202,3 +228,5 @@ Function EnsSfxSemi$(S)
 EnsSfxSemi = EnsSfx(S, ";")
 End Function
 
+
+'

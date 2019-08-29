@@ -898,3 +898,6 @@ End Function
 Private Function XIpbStru() As String()
 'Insp "QDao_Lnk_ErzLnk.ErzLnk", "Inspect", "Oup(XIpbStru) IpbStru ",IpbStru, IpbStru: Stop
 End Function
+
+'
+

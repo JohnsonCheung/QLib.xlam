@@ -10,6 +10,14 @@ Public Const AppStkShpCstFb$ = H & "StockShipCost\StockShipCost (ver 1.0).accdb"
 Public Const AppTaxRateAlertFb$ = H & "TaxRateAlert\TaxRateAlert\TaxRateAlert (ver 1.3).accdb"
 Public Const AppJJFb$ = H & "TaxExpCmp\TaxExpCmp\PgmObj\Lib\jj.accdb"
 
+Function AppFbAy() As String()
+PushI AppFbAy, AppJJFb
+PushI AppFbAy, AppStkShpCstFb
+PushI AppFbAy, AppStkShpRateFb
+PushI AppFbAy, AppTaxExpCmpFb
+PushI AppFbAy, AppTaxRateAlertFb
+End Function
+
 Property Get MHDAppFbDic() As Dictionary
 Const A$ = "N:\SAPAccessReports\"
 Dim X As New Bfr
@@ -21,12 +29,3 @@ X.Var "TaxCmp   " & A & "TaxExpCmp\.accdb"
 X.Var "TaxAlert " & A & "TaxRateAlert\.accdb"
 Set MHDAppFbDic = Dic(X.Ly)
 End Property
-
-Function AppFbAy() As String()
-PushI AppFbAy, AppJJFb
-PushI AppFbAy, AppStkShpCstFb
-PushI AppFbAy, AppStkShpRateFb
-PushI AppFbAy, AppTaxExpCmpFb
-PushI AppFbAy, AppTaxRateAlertFb
-End Function
-

@@ -262,3 +262,6 @@ Dim A1 As Range: Set A1 = NewA1(Wsn)
 Set WszT = WszLo(LozSq(Sq(), A1))
 End Function
 
+
+'
+

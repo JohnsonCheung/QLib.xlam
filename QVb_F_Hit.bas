@@ -74,7 +74,7 @@ Next
 End Function
 
 Function HitAp(V, ParamArray Ap()) As Boolean
-Dim Av(): Av = Ap
+Dim Av(): If UBound(Ap) >= 0 Then Av = Ap
 HitAp = HasEle(Av, V)
 End Function
 Function HitNmStr(S, WhNmStr$) As Boolean
@@ -118,3 +118,5 @@ Z_HitPatn
 MVb_Str_Mch:
 End Sub
 
+
+'

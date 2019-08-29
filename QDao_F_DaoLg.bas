@@ -11,6 +11,10 @@ Private X_Msg&
 Private X_Lg&
 Private O$() ' Used by EntAyR
 
+Private Sub AsgRs(A As Dao.Recordset, ParamArray OAp())
+
+End Sub
+
 Sub CurLgLis(Optional Sep$ = " ", Optional Top% = 50)
 D CurLgLy(Sep, Top)
 End Sub
@@ -18,9 +22,7 @@ End Sub
 Function CurLgLy(Optional Sep$ = " ", Optional Top% = 50) As String()
 CurLgLy = RsLy(CurLgRs(Top), Sep)
 End Function
-Private Function RsLy(D As Database, Sep$) As String()
 
-End Function
 Function CurLgRs(Optional Top% = 50) As Dao.Recordset
 Set CurLgRs = L.OpenRecordset(FmtQQ("Select Top ? x.*,Fun,MsgTxt from Lg x left join Msg a on x.Msg=a.Msg order by Sess desc,Lg", Top))
 End Function
@@ -36,10 +38,16 @@ End Function
 Function CurSessRs(Optional Top% = 50) As Dao.Recordset
 Set CurSessRs = L.OpenRecordset(FmtQQ("Select Top ? * from sess order by Sess desc", Top))
 End Function
+
 Private Function CvSess&(A&)
 If A > 0 Then CvSess = A: Exit Function
 'CvSess = VzQ(L, "select Max(Sess) from Sess")
 End Function
+
+Sub DmpFei(A As Fei)
+'Debug.Print A.ToStr
+End Sub
+
 Private Sub EnsMsg(Fun$, MsgTxt$)
 With L.TableDefs("Msg").OpenRecordset
     .Index = "Msg"
@@ -93,7 +101,7 @@ Sub Lg(Fun$, MsgTxt$, ParamArray Ap())
 EnsSess
 EnsMsg Fun, MsgTxt
 WrtLg Fun, MsgTxt
-Dim Av(): Av = Ap
+Dim Av(): If UBound(Ap) >= 0 Then Av = Ap
 If Si(Av) = 0 Then Exit Sub
 Dim J%, V
 With L.TableDefs("LgV").OpenRecordset
@@ -104,10 +112,6 @@ With L.TableDefs("LgV").OpenRecordset
     Next
     .Close
 End With
-End Sub
-
-Private Sub AsgRs(A As Dao.Recordset, ParamArray OAp())
-
 End Sub
 
 Sub LgAsg(A&, OSess&, OTimStr_Dte$, OFun$, OMsgTxt$)
@@ -125,9 +129,6 @@ End Sub
 Sub LgBrw()
 BrwFt LgFt
 End Sub
-Property Get LgFt$()
-Stop '
-End Property
 
 Sub LgCls()
 On Error GoTo Er
@@ -182,7 +183,6 @@ Property Get LgDb() As Database
 Set LgDb = L
 End Property
 
-
 Sub LgEnd()
 Lg ".", "End"
 End Sub
@@ -195,32 +195,8 @@ Property Get LgFn$()
 LgFn = "Lg.accdb"
 End Property
 
-Private Sub X(A$)
-PushI XSchm, A
-End Sub
-
-Property Get LgSchm() As String()
-If Si(XSchm) = 0 Then
-X "E Mem | Mem Req AlwZLen"
-X "E Txt | Txt Req"
-X "E Crt | Dte Req Dft=Now"
-X "E Dte | Dte"
-X "E Amt | Cur"
-X "F Amt * | *Amt"
-X "F Crt * | CrtDte"
-X "F Dte * | *Dte"
-X "F Txt * | Fun * Txt"
-X "F Mem * | Lines"
-X "T Sess | * CrtDte"
-X "T Msg  | * Fun *Txt | CrtDte"
-X "T Lg   | * Sess Msg CrtDte"
-X "T LgV  | * Lg Lines"
-X "D . Fun | Function name that call the log"
-X "D . Fun | Function name that call the log"
-X "D . Msg | it will a new record when Lg-function is first time using the Fun+MsgTxt"
-X "D . Msg | ..."
-End If
-LgSchm = XSchm
+Property Get LgFt$()
+Stop '
 End Property
 
 Sub LgKill()
@@ -257,9 +233,33 @@ Static Y$
 LgPth = Y
 End Property
 
-Sub DmpFei(A As Fei)
-'Debug.Print A.ToStr
-End Sub
+Property Get LgSchm() As String()
+If Si(XSchm) = 0 Then
+X "E Mem | Mem Req AlwZLen"
+X "E Txt | Txt Req"
+X "E Crt | Dte Req Dft=Now"
+X "E Dte | Dte"
+X "E Amt | Cur"
+X "F Amt * | *Amt"
+X "F Crt * | CrtDte"
+X "F Dte * | *Dte"
+X "F Txt * | Fun * Txt"
+X "F Mem * | Lines"
+X "T Sess | * CrtDte"
+X "T Msg  | * Fun *Txt | CrtDte"
+X "T Lg   | * Sess Msg CrtDte"
+X "T LgV  | * Lg Lines"
+X "D . Fun | Function name that call the log"
+X "D . Fun | Function name that call the log"
+X "D . Msg | it will a new record when Lg-function is first time using the Fun+MsgTxt"
+X "D . Msg | ..."
+End If
+LgSchm = XSchm
+End Property
+
+Private Function RsLy(D As Database, Sep$) As String()
+
+End Function
 
 Sub SessBrw(Optional A&)
 BrwAy SessLy(CvSess(A))
@@ -295,14 +295,18 @@ With L.TableDefs("Lg").OpenRecordset
 End With
 End Sub
 
-Private Sub Z_Lg()
-LgKill
-Debug.Assert Dir(LgFb) = ""
-LgBeg
-Debug.Assert Dir(LgFb) = LgFn
+Private Sub X(A$)
+PushI XSchm, A
 End Sub
 
 Private Sub Z()
 Z_Lg
 MDao_Lg:
+End Sub
+
+Private Sub Z_Lg()
+LgKill
+Debug.Assert Dir(LgFb) = ""
+LgBeg
+Debug.Assert Dir(LgFb) = LgFn
 End Sub

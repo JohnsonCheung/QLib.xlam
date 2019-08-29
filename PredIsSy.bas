@@ -14,3 +14,5 @@ Private Const CMod$ = "PredzIsSy."
 Private Function IPred_Pred(V As Variant) As Boolean
 IPred_Pred = IsSy(V)
 End Function
+
+'

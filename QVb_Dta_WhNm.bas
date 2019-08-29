@@ -37,3 +37,6 @@ Function IsEmpWhNm(A As WhNm) As Boolean
 IsEmpWhNm = IsEqWhNm(A, EmpWhNm)
 End Function
 
+
+'
+

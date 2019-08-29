@@ -28,3 +28,5 @@ Dim O$:
 O = O & "Log\": EnsPth O
 LgrPth = O
 End Property
+
+'

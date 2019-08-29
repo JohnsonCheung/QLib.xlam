@@ -207,7 +207,7 @@ End Function
 
 Private Function HasAp(MthPm) As Boolean
 Dim A$(): A = SplitCommaSpc(MthPm): If Si(A) = 0 Then Exit Function
-HasAp = HasPfx(LasEle(A), "Paramarray ")
+HasAp = HasPfx(LasEle(A), "ParamArray ")
 End Function
 
 Function BoolzTriSte(A As EmTriSte) As Boolean
@@ -250,4 +250,7 @@ Dim Dr, Dy(): For Each Dr In Itr(WiMthLin.Dy)
 Next
 AddColoRetAs = AddColzFFDy(WiMthLin, "RetAs", Dy)
 End Function
+
+
+'
 

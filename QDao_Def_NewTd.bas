@@ -1,8 +1,26 @@
-Attribute VB_Name = "QDao_Def_NewTdNew"
+Attribute VB_Name = "QDao_Def_NewTd"
 Option Compare Text
 Option Explicit
 Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Def_Td_New."
+
+Private Sub AddPk(A As Dao.TableDef)
+'Any Pk Fields in A.Fields?, if no exit sub
+Dim F As Dao.Field2, IdFldNm$, J%
+IdFldNm = A.Name & "Id"
+If IsFdId(A.Fields(0), A.Name) Then
+    A.Indexes.Append PkizT(A.Name)
+    Exit Sub
+End If
+For J = 2 To A.Fields.Count
+    If A.Fields(J).Name = IdFldNm Then Thw CSub, "The Table Id fields must be the fst fld", "I-th", J
+Next
+End Sub
+
+Private Sub AddSk(A As Dao.TableDef, Skff$)
+Dim SkFny$(): SkFny = TermAy(Skff): If Si(SkFny) = 0 Then Exit Sub
+A.Indexes.Append NewSkIdx(A, SkFny)
+End Sub
 
 Private Function CvIdxFds(A) As Dao.IndexFields
 Set CvIdxFds = A
@@ -31,24 +49,6 @@ Next
 Set NewSkIdx = O
 End Function
 
-Function TdzNm(T) As Dao.TableDef
-Set TdzNm = New TableDef
-TdzNm.Name = T
-End Function
-
-Private Sub AddPk(A As Dao.TableDef)
-'Any Pk Fields in A.Fields?, if no exit sub
-Dim F As Dao.Field2, IdFldNm$, J%
-IdFldNm = A.Name & "Id"
-If IsFdId(A.Fields(0), A.Name) Then
-    A.Indexes.Append PkizT(A.Name)
-    Exit Sub
-End If
-For J = 2 To A.Fields.Count
-    If A.Fields(J).Name = IdFldNm Then Thw CSub, "The Table Id fields must be the fst fld", "I-th", J
-Next
-End Sub
-
 Private Function PkizT(T) As Dao.Index
 Dim O As New Dao.Index
 O.Name = "PrimaryKey"
@@ -57,8 +57,7 @@ CvIdxFds(O.Fields).Append FdzId(T & "Id")
 Set PkizT = O
 End Function
 
-Private Sub AddSk(A As Dao.TableDef, Skff$)
-Dim SkFny$(): SkFny = TermAy(Skff): If Si(SkFny) = 0 Then Exit Sub
-A.Indexes.Append NewSkIdx(A, SkFny)
-End Sub
-
+Function TdzNm(T) As Dao.TableDef
+Set TdzNm = New TableDef
+TdzNm.Name = T
+End Function

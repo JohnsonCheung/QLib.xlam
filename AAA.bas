@@ -1,4 +1,6 @@
 Attribute VB_Name = "AAA"
+Option Explicit
+Option Compare Text
 Sub Lis_InvdtMod()
 Dim C As VBComponent: For Each C In CPj.VBComponents
     If C.Type = vbext_ct_StdModule Then
@@ -21,3 +23,5 @@ Dmp FmtDy(SrtDy(DywDupzC(Dy, 0)), Fmt:=EiSSFmt)
 'Stop
 End Sub
 
+
+'

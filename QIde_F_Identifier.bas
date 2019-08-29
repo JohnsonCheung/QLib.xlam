@@ -121,3 +121,5 @@ End Property
 Property Get VbKwAset() As Aset
 Set VbKwAset = AsetzAy(VbKwAy)
 End Property
+
+'

@@ -87,3 +87,5 @@ Function NOthCmpzP%(P As VBProject)
 NOthCmpzP = NCmpzP(P) - NClszP(P) - NModzP(P) - NDoczP(P)
 End Function
 
+
+'

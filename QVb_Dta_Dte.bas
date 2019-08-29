@@ -192,3 +192,6 @@ X: If Fun <> "" Then Inf CSub, "str[" & S & "] cannot cv to dbl, emp is ret"
 End Function
 
 
+
+'
+

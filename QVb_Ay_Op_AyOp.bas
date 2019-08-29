@@ -32,18 +32,18 @@ Next
 End Function
 
 Function ReOrdAy(Ay, SubAy)
-Dim HasSubAy: HasSubAy = IntersectAy(Ay, SubAy)
+Dim HasSubAy: HasSubAy = AyIntersect(Ay, SubAy)
 Dim Rest: Rest = MinusAy(Ay, SubAy)
 ReOrdAy = AddAy(HasSubAy, Rest)
 End Function
 
-Function IntersectAy(A, B)
-IntersectAy = ResiU(A)
+Function AyIntersect(A, B)
+AyIntersect = ResiU(A)
 If Si(A) = 0 Then Exit Function
 If Si(A) = 0 Then Exit Function
 Dim V
 For Each V In A
-    If HasEle(B, V) Then PushI IntersectAy, V
+    If HasEle(B, V) Then PushI AyIntersect, V
 Next
 End Function
 Function MinusAyAp(Ay, ParamArray Ap())
@@ -107,6 +107,9 @@ CvBytAy = A
 End Function
 
 Function CvAv(A) As Variant()
+If VarType(A) = vbArray + vbVariant Then
+    If UBound(A) = -1 Then Exit Function
+End If
 CvAv = A
 End Function
 Function CvObj(A) As Object
@@ -313,3 +316,5 @@ For Each I In TkssAy
 Next
 End Function
 
+
+'

@@ -5,8 +5,6 @@ Enum EmUpd
     EiRptOnly
     EiUpdAndRpt
     EiUpdOnly
-    EiPushOnly  ' Pushing to XX$()
-    EiUpdAndPush
 End Enum
 
 Enum EmHdr
@@ -24,9 +22,10 @@ Case Else: O = "EmUpdEr(" & Upd & ")"
 End Select
 EmUpdStr = O
 End Function
+
 Function IsEmUpdRpt(Upd As EmUpd) As Boolean
 Select Case True
-Case Upd = EiPushOnly, Upd = EiUpdAndPush: IsEmUpdRpt = True
+Case Upd = EiRptOnly, Upd = EiUpdAndRpt: IsEmUpdRpt = True
 End Select
 End Function
 

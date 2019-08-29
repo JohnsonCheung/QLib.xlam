@@ -4,20 +4,12 @@ Option Explicit
 Private Const CMod$ = "MDao_Db_DbInf_Stru."
 Private Const Asm$ = "QDao"
 
-Function StruInf(D As Database) As DT
-Dim T$, TT, Dy(), Des$, NRec&, Stru$
-'For Each TT In TnyDb(D)
-    T = TT
-'    Des = Dbt_Des(D, T)
-'    Stru = RmvT1(Stru(D, T))
-'    NRec = NRecDT(D, T)
-    PushI Dy, Array(T, NRec, Des, Stru)
-'Next
-StruInf = DtzFF("Tbl", "Tbl NRec Des", Dy)
-End Function
-
 Sub DmpStru(D As Database)
 Dmp Stru(D)
+End Sub
+
+Sub DmpStruTT(D As Database, TT$)
+Dmp StruzTT(D, TT)
 End Sub
 
 Function StruFld(ParamArray Ap()) As Drs
@@ -34,6 +26,14 @@ Next
 StruFld = DrszFF("Ele FldLik", Dy)
 End Function
 
-Sub DmpStruTT(D As Database, TT$)
-Dmp StruzTT(D, TT)
-End Sub
+Function StruInf(D As Database) As DT
+Dim T$, TT, Dy(), Des$, NRec&, Stru$
+'For Each TT In TnyDb(D)
+    T = TT
+'    Des = Dbt_Des(D, T)
+'    Stru = RmvT1(Stru(D, T))
+'    NRec = NRecDT(D, T)
+    PushI Dy, Array(T, NRec, Des, Stru)
+'Next
+StruInf = DtzFF("Tbl", "Tbl NRec Des", Dy)
+End Function

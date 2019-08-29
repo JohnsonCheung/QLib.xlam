@@ -17,3 +17,5 @@ IOupGenr_GenOupTblFmTmpInp D
 End Sub
 Private Sub IOupGenr_GenOupTblFmTmpInp(D As Database)
 End Sub
+
+'

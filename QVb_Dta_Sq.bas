@@ -363,3 +363,5 @@ Function SqStrzRg$(R As Range)
 SqStrzRg = SqStr(SqzRg(R))
 End Function
 
+
+'

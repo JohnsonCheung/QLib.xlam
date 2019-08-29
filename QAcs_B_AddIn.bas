@@ -1,4 +1,6 @@
 Attribute VB_Name = "QAcs_B_AddIn"
+Option Explicit
+Option Compare Text
     
 
 Sub CrtTblzUSysRegInf(D As Database)
@@ -36,3 +38,5 @@ Rqq D, "Insert into [USysRegInf] Values('?',1,'Library','?')", Sk, Fba
 End Sub
 
 
+
+'

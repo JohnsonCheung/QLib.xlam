@@ -37,3 +37,5 @@ End Sub
 Private Sub Class_Terminate()
 MsgBox "Class1 terminated"
 End Sub
+
+'

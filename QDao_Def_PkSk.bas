@@ -17,13 +17,6 @@ End If
 ChkPk = "[?] does not have PrimaryKey-Idx"
 End Function
 
-Function ChkSsk$(D As Database, T)
-Dim O$, Sk$(): Sk = SkFny(D, T)
-O = ChkSk(D, T): If O <> "" Then ChkSsk = O: Exit Function
-If Si(Sk) <> 1 Then
-'    ChkSsk = FmtQQ("Secondary is not single field. Tbl[?] Db[?] SkFfn[?]", T, D.Name, JnTermAy(Sk))
-End If
-End Function
 Function ChkPkSk(D As Database) As String()
 Dim T$, I
 For Each I In Tny(D)
@@ -31,6 +24,7 @@ For Each I In Tny(D)
     PushIAy ChkPkSk, ChkPkSkzT(D, T)
 Next
 End Function
+
 Function ChkPkSkzT(D As Database, T) As String()
 PushNB ChkPkSkzT, ChkPk(D, T)
 PushNB ChkPkSkzT, ChkSk(D, T)
@@ -53,5 +47,13 @@ Case Else
             T, D.Name, I.Name, JnTermAy(FnyzIdx(I)))
     End If
 End Select
+End Function
+
+Function ChkSsk$(D As Database, T)
+Dim O$, Sk$(): Sk = SkFny(D, T)
+O = ChkSk(D, T): If O <> "" Then ChkSsk = O: Exit Function
+If Si(Sk) <> 1 Then
+'    ChkSsk = FmtQQ("Secondary is not single field. Tbl[?] Db[?] SkFfn[?]", T, D.Name, JnTermAy(Sk))
+End If
 End Function
 

@@ -3,3 +3,5 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "BLnkTbl."
 
+
+'

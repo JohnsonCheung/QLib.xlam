@@ -22,3 +22,5 @@ Function ReszMthn$(M As CodeModule, Mthn$)
 ReszMthn = JnCrLf(ResLyzMthn(M, Mthn))
 End Function
 
+
+'

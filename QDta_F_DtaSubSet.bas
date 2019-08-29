@@ -174,7 +174,7 @@ DwNotRxy = Drs(A.Fny, O)
 End Function
 
 Function DwPatn(A As Drs, C$, Patn$, Optional Patn1$, Optional Patn2$) As Drs
-If Patn = "" Then DwPatn = A: Exit Function
+If Patn = "" And Patn1 = "" And Patn2 = "" Then DwPatn = A: Exit Function
 Dim I%: I = IxzAy(A.Fny, C, ThwEr:=EiThwEr)
 Dim P As IPred: Set P = PredHasPatn(Patn, Patn1, Patn2)
 Dim Dy(), Dr: For Each Dr In Itr(A.Dy)
@@ -216,3 +216,5 @@ DwInSel = SelDrs(DwIn(A, C, InVy), Sel)
 End Function
 
 
+
+'

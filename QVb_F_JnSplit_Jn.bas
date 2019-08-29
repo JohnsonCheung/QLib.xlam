@@ -1,6 +1,7 @@
 Attribute VB_Name = "QVb_F_JnSplit_Jn"
 Option Compare Text
 Option Explicit
+Option Base 0
 Private Const CMod$ = "MVb_JnSplit_Jn."
 Private Const Asm$ = "QVb"
 Function Jn$(Ay, Optional Sep$ = "")
@@ -27,7 +28,7 @@ Function CatAy(AyA, AyB, Optional Sep$) As String()
 End Function
 
 Function JnAp$(Sep$, ParamArray Ap())
-Dim Av(): Av = Ap
+Dim Av(): If UBound(Ap) > 0 Then Av = Ap
 JnAp = Jn(Av, Sep)
 End Function
 
@@ -44,7 +45,7 @@ JnCrLf = Jn(Ay, vbCrLf)
 End Function
 
 Function JnCrLfAp$(ParamArray Ap())
-Dim Av(): Av = Ap
+Dim Av(): If UBound(Ap) >= 0 Then Av = Ap
 JnCrLfAp = Jn(Av, vbCrLf)
 End Function
 
@@ -53,7 +54,7 @@ JnDblCrLf = Jn(Ay, vb2CrLf)
 End Function
 
 Function JnDotAp$(ParamArray Ap())
-Dim Av(): Av = Ap: JnDotAp = JnDot(Av)
+Dim Av(): If UBound(Ap) > 0 Then Av = Ap: JnDotAp = JnDot(Av)
 End Function
 
 Function QteJnzAsTLin$(Ay)
@@ -140,3 +141,5 @@ Function JnVbarSpc$(Ay)
 JnVbarSpc = Jn(Ay, " | ")
 End Function
 
+
+'

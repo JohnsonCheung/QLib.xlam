@@ -4,6 +4,79 @@ Option Explicit
 Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Spec."
 Public Const PrimNN$ = "Boolean Byte Integer Int Long Single Double Char Text Memo Attachment" ' used in TzPFld
+
+Sub AddFdy(A As TableDef, Fdy() As Dao.Field2)
+Dim I: For Each I In Fdy
+    A.Fields.Append I
+Next
+End Sub
+
+Sub BrwSpecPth(Apn$)
+BrwPth SpecPth(Apn)
+End Sub
+
+Sub CrtTblSpec(D As Database)
+CrtSchm D, SplitVBar(SpecSchmVbl)
+End Sub
+
+Sub CrtTblzPFld(D As Database, T, PrimNN$)
+'Fm PrimNN: #Sql-FldLis-Phrase.  !The fld spec of create table sql inside the bkt.  Each fld sep by comma.  The spec allows:
+'                                 !Boolean Byte Integer Int Long Single Double Char Text Memo Attachment
+'Ret : create the @T in @D by DAO @@
+Dim Td As Dao.TableDef: Set Td = TdzNm(T)
+AddFdy Td, FdAy(PrimNN)
+D.TableDefs.Append Td
+'AddFdy D.TableDefs(T), FdAy(PrimNN)
+End Sub
+
+Sub EnsTblSpec(D As Database)
+If Not HasTbl(D, "Spec") Then CrtTblSpec D
+End Sub
+
+Sub ExpSpec(D As Database, ToPth$)
+ClrPth ToPth
+Dim N$, I
+For Each I In Itr(SpecNy(D))
+    N = I
+    ExpSpeczNm D, N, ToPth
+Next
+End Sub
+
+Sub ExpSpeczNm(D As Database, SpecNm$, ToPth$)
+
+End Sub
+
+Function FdAy(Prim$) As Dao.Field2()
+'Fm PrimNN: #Sql-FldLis-Phrase.  !The fld spec of create table sql inside the bkt.  It allows attachment.  It uses DAO to create
+Dim F: For Each F In Itr(AyTrim(SplitComma(PrimNN)))
+    PushObj FdAy, FdzPFld(F)
+Next
+End Function
+
+Function FdzPFld(PFld) As Dao.Field2
+'Fm PFld: #Sql-Fld-Phrase.  !The single fld spec of create table sql inside the bkt.  It allows attachment.
+Dim N$, S$ ' #Fldn and #Spec
+Dim O As Dao.Field2
+AsgBrkSpc PFld, N, S
+Select Case True
+Case S = "Boolean":  Set O = FdzBool(N)
+Case S = "Byte":     Set O = FdzByt(N)
+Case S = "Integer", S = "Int": Set O = FdzInt(N)
+Case S = "Long":     Set O = FdzLng(N)
+Case S = "Single":   Set O = FdzSng(N)
+Case S = "Double":   Set O = FdzDbl(N)
+Case S = "Currency": Set O = FdzCur(N)
+Case S = "Char":     Set O = FdzChr(N)
+Case HasPfx(S, "Text"): Set O = FdzTxt(N, BetBkt(S))
+Case S = "Memo":     Set O = FdzMem(N)
+Case S = "Attachment": Set O = FdzAtt(N)
+Case S = "Time":     Set O = FdzTim(N)
+Case S = "Date":     Set O = FdzDte(N)
+Case Else: Thw CSub, "Invalid PFld", "Nm Spec vdt-PFld", N, S, PrimNN
+End Select
+Set FdzPFld = O
+End Function
+
 Sub ImpSpec(D As Database, Spnm)
 Const CSub$ = CMod & "ImpSpec"
 Dim Ft$
@@ -79,82 +152,10 @@ Case Else: Stop
 End Select
 End Sub
 
-Function SpecPth$(WPth$)
-SpecPth = EnsPth(WPth & "Spec\")
-End Function
-
-Sub BrwSpecPth(Apn$)
-BrwPth SpecPth(Apn)
-End Sub
-
-Sub EnsTblSpec(D As Database)
-If Not HasTbl(D, "Spec") Then CrtTblSpec D
-End Sub
-
-Sub AddFdy(A As TableDef, Fdy() As Dao.Field2)
-Dim I: For Each I In Fdy
-    A.Fields.Append I
-Next
-End Sub
-
-Function FdAy(Prim$) As Dao.Field2()
-'Fm PrimNN: #Sql-FldLis-Phrase.  !The fld spec of create table sql inside the bkt.  It allows attachment.  It uses DAO to create
-Dim F: For Each F In Itr(AyTrim(SplitComma(PrimNN)))
-    PushObj FdAy, FdzPFld(F)
-Next
-End Function
-
-Sub CrtTblzPFld(D As Database, T, PrimNN$)
-'Fm PrimNN: #Sql-FldLis-Phrase.  !The fld spec of create table sql inside the bkt.  Each fld sep by comma.  The spec allows:
-'                                 !Boolean Byte Integer Int Long Single Double Char Text Memo Attachment
-'Ret : create the @T in @D by DAO @@
-Dim Td As Dao.TableDef: Set Td = TdzNm(T)
-AddFdy Td, FdAy(PrimNN)
-D.TableDefs.Append Td
-'AddFdy D.TableDefs(T), FdAy(PrimNN)
-End Sub
-
-Function FdzPFld(PFld) As Dao.Field2
-'Fm PFld: #Sql-Fld-Phrase.  !The single fld spec of create table sql inside the bkt.  It allows attachment.
-Dim N$, S$ ' #Fldn and #Spec
-Dim O As Dao.Field2
-AsgBrkSpc PFld, N, S
-Select Case True
-Case S = "Boolean":  Set O = FdzBool(N)
-Case S = "Byte":     Set O = FdzByt(N)
-Case S = "Integer", S = "Int": Set O = FdzInt(N)
-Case S = "Long":     Set O = FdzLng(N)
-Case S = "Single":   Set O = FdzSng(N)
-Case S = "Double":   Set O = FdzDbl(N)
-Case S = "Currency": Set O = FdzCur(N)
-Case S = "Char":     Set O = FdzChr(N)
-Case HasPfx(S, "Text"): Set O = FdzTxt(N, BetBkt(S))
-Case S = "Memo":     Set O = FdzMem(N)
-Case S = "Attachment": Set O = FdzAtt(N)
-Case S = "Time":     Set O = FdzTim(N)
-Case S = "Date":     Set O = FdzDte(N)
-Case Else: Thw CSub, "Invalid PFld", "Nm Spec vdt-PFld", N, S, PrimNN
-End Select
-Set FdzPFld = O
-End Function
-
-Sub CrtTblSpec(D As Database)
-CrtSchm D, SplitVBar(SpecSchmVbl)
-End Sub
-
-Sub ExpSpec(D As Database, ToPth$)
-ClrPth ToPth
-Dim N$, I
-For Each I In Itr(SpecNy(D))
-    N = I
-    ExpSpeczNm D, N, ToPth
-Next
-End Sub
-
-Sub ExpSpeczNm(D As Database, SpecNm$, ToPth$)
-
-End Sub
-
 Function SpecNy(D As Database) As String()
 SpecNy = SyzTF(D, "Spec", "SpecNm")
+End Function
+
+Function SpecPth$(WPth$)
+SpecPth = EnsPth(WPth & "Spec\")
 End Function

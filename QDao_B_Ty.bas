@@ -13,13 +13,13 @@ Enum EmSimTy
     EiStr
 End Enum
 
-
 Function AyDaoTy(A As Dao.DataTypeEnum)
 Dim O
 Select Case A
 Case Dao.DataTypeEnum.dbBigInt: O = EmpLngAy
 End Select
 End Function
+
 Function AyDic_RsKF(A As Dao.Recordset, DicKeyFld, AyFld) As Dictionary _
 'Return a dictionary of Ay using KeyFld and AyFld.  The Val-of-returned-Dic is Ay using the AyFld.Type to create
 Dim O As New Dictionary
@@ -51,170 +51,10 @@ End With
 Set AyDic_RsKF = O
 End Function
 
-
-Function JnStrDicTwoFldRs(A As Dao.Recordset, Optional Sep$ = " ") As Dictionary
-Set JnStrDicTwoFldRs = JnStrDicRsKeyJn(A, 0, 1, Sep)
+Function CvDaoTy(A) As Dao.DataTypeEnum
+CvDaoTy = A
 End Function
 
-Function JnStrDicRsKeyJn(A As Dao.Recordset, KeyFld, JnStrFld, Optional Sep$ = " ") As Dictionary
-Dim O As New Dictionary
-Dim K, V$
-While Not A.EOF
-    K = A.Fields(KeyFld).Value
-    V = Nz(A.Fields(JnStrFld).Value, "")
-    If O.Exists(K) Then
-        O(K) = O(K) & Sep & V
-    Else
-        O.Add K, CStr(Nz(V))
-    End If
-    A.MoveNext
-Wend
-Set JnStrDicRsKeyJn = O
-End Function
-
-Function DiKqCntzRs(A As Dao.Recordset, Optional Fld = 0) As Dictionary
-Set DiKqCntzRs = DiKqCnt(AvRsCol(A))
-End Function
-
-Property Get DShtTy() As Drs
-Dim Dy(), I
-For Each I In SyzSS(ShtTySS)
-    PushI Dy, Sy(I, DtaTyzShtTy(I))
-Next
-DShtTy = DrszFF("ShtTy DtaTy", Dy)
-End Property
-
-Property Get ShtTyAy() As String()
-ShtTyAy = SyzSS(ShtTySS)
-End Property
-
-Property Get ShtTyDtaTyLy() As String()
-Dim O$(), I
-For Each I In ShtTyAy
-    PushI O, I & " " & DtaTyzShtTy(CStr(I))
-Next
-ShtTyDtaTyLy = FmtSyz2Term(O)
-End Property
-
-Property Get DtaTyAy() As String()
-DtaTyAy = DtaTyAyzS(ShtTyAy)
-End Property
-
-Function DaoTyzShtTy(ShtTy) As Dao.DataTypeEnum
-Dim O As Dao.DataTypeEnum
-Select Case ShtTy
-Case "A", "Att":  O = dbAttachment
-Case "B", "Bool":  O = dbBoolean
-Case "Byt": O = dbByte
-Case "C", "Cur":  O = dbCurrency
-Case "Chr": O = dbChar
-Case "Dte": O = dbDate
-Case "Dec": O = dbDecimal
-Case "D", "Dbl":  O = dbDouble
-Case "I", "Int":  O = dbInteger
-Case "L", "Lng":  O = dbLong
-Case "M", "Mem":  O = dbMemo
-Case "S", "Sng":  O = dbSingle
-Case "T", "Txt":  O = dbText
-Case "Tim": O = dbTime
-Case Else: Thw CSub, "Invalid ShtTy", "The-Invalid-ShtTy Valid-ShtTy", ShtTy, ShtTyDtaTyLy
-End Select
-DaoTyzShtTy = O
-End Function
-
-Function SqlTyzDao$(T As Dao.DataTypeEnum, Optional Si%, Optional Precious%)
-Stop '
-End Function
-
-Function ShtTyzDao$(A As Dao.DataTypeEnum)
-Dim O$
-Select Case A
-Case Dao.DataTypeEnum.dbAttachment: O = "A"
-Case Dao.DataTypeEnum.dbBoolean:    O = "B"
-Case Dao.DataTypeEnum.dbByte:       O = "Byt"
-Case Dao.DataTypeEnum.dbCurrency:   O = "C"
-Case Dao.DataTypeEnum.dbChar:       O = "Chr"
-Case Dao.DataTypeEnum.dbDate:       O = "Dte"
-Case Dao.DataTypeEnum.dbDecimal:    O = "Dec"
-Case Dao.DataTypeEnum.dbDouble:     O = "D"
-Case Dao.DataTypeEnum.dbInteger:    O = "I"
-Case Dao.DataTypeEnum.dbLong:       O = "L"
-Case Dao.DataTypeEnum.dbMemo:       O = "Mem"
-Case Dao.DataTypeEnum.dbSingle:     O = "S"
-Case Dao.DataTypeEnum.dbText:       O = "T"
-Case Dao.DataTypeEnum.dbTime:       O = "Tim"
-Case Else: Thw CSub, "Unsupported DaoTy, cannot covert to ShtTy", "DaoTy", A
-End Select
-ShtTyzDao = O
-End Function
-
-Function DtaTyzTF$(D As Database, T, F$)
-DtaTyzTF = DtaTy(FdzTF(D, T, F).Type)
-End Function
-
-Function DtaTy$(T As Dao.DataTypeEnum)
-Dim O$
-Select Case T
-Case Dao.DataTypeEnum.dbAttachment: O = "Attachment"
-Case Dao.DataTypeEnum.dbBoolean:    O = "Boolean"
-Case Dao.DataTypeEnum.dbByte:       O = "Byte"
-Case Dao.DataTypeEnum.dbCurrency:   O = "Currency"
-Case Dao.DataTypeEnum.dbDate:       O = "Date"
-Case Dao.DataTypeEnum.dbDecimal:    O = "Decimal"
-Case Dao.DataTypeEnum.dbDouble:     O = "Double"
-Case Dao.DataTypeEnum.dbInteger:    O = "Integer"
-Case Dao.DataTypeEnum.dbLong:       O = "Long"
-Case Dao.DataTypeEnum.dbMemo:       O = "Memo"
-Case Dao.DataTypeEnum.dbSingle:     O = "Single"
-Case Dao.DataTypeEnum.dbText:       O = "Text"
-Case Dao.DataTypeEnum.dbChar:       O = "Char"
-Case Dao.DataTypeEnum.dbTime:       O = "Time"
-Case Dao.DataTypeEnum.dbLongBinary: O = "LongBinary"
-Case Else: Stop
-End Select
-DtaTy = O
-End Function
-
-Function SimTyzLo(L As ListObject) As EmSimTy()
-Dim Sq(): Sq = SqzLo(L)
-Dim C%: For C = 1 To UBound(Sq, 2)
-    PushI SimTyzLo, SimTyzCol(ColzSq(Sq, C))
-Next
-End Function
-Function SimTy(V) As EmSimTy
-SimTy = SimTyzV(VarType(V))
-End Function
-
-Function SimTyzV(V As VbVarType) As EmSimTy
-Dim O As EmSimTy
-Select Case True
-Case V = Empty: O = EiEmp
-Case V = vbBoolean: O = EiYes
-Case V = vbByte, V = vbCurrency, V = vbDecimal, V = vbDouble, V = vbInteger, V = vbLong, V = vbSingle: O = EiNum
-Case V = vbDate: O = EiDte
-Case V = vbString: O = EiStr
-End Select
-SimTyzV = O
-End Function
-Function MaxSim(A As EmSimTy, B As EmSimTy) As EmSimTy
-MaxSim = Max(A, B)
-End Function
-Function SimTyzCol(Col()) As EmSimTy
-Dim V: For Each V In Itr(Col)
-    Dim O As EmSimTy: O = MaxSim(O, SimTy(V))
-    If O = EiStr Then SimTyzCol = O: Exit Function
-Next
-End Function
-Function VbTyzCol(Col()) As EmSimTy
-Stop
-
-End Function
-Function VbTyAy(Ay) As VbVarType()
-Dim V
-For Each V In Ay
-    PushI VbTyAy, VarType(V)
-Next
-End Function
 Function DaoTyzCol(Col()) As Dao.DataTypeEnum
 DaoTyzCol = DaoTyzVbTy(VbTyzCol(Col))
 End Function
@@ -241,6 +81,41 @@ End Select
 DaoTyzDtaTy = O
 End Function
 
+Function DaoTyzShtTy(ShtTy) As Dao.DataTypeEnum
+Dim O As Dao.DataTypeEnum
+Select Case ShtTy
+Case "A", "Att":  O = dbAttachment
+Case "B", "Bool":  O = dbBoolean
+Case "Byt": O = dbByte
+Case "C", "Cur":  O = dbCurrency
+Case "Chr": O = dbChar
+Case "Dte": O = dbDate
+Case "Dec": O = dbDecimal
+Case "D", "Dbl":  O = dbDouble
+Case "I", "Int":  O = dbInteger
+Case "L", "Lng":  O = dbLong
+Case "M", "Mem":  O = dbMemo
+Case "S", "Sng":  O = dbSingle
+Case "T", "Txt":  O = dbText
+Case "Tim": O = dbTime
+Case Else: Thw CSub, "Invalid ShtTy", "The-Invalid-ShtTy Valid-ShtTy", ShtTy, ShtTyDtaTyLy
+End Select
+DaoTyzShtTy = O
+End Function
+
+Function DaoTyzV(V) As Dao.DataTypeEnum
+Dim T As VbVarType: T = VarType(V)
+If T = vbString Then
+    If Len(V) > 255 Then
+        DaoTyzV = dbMemo
+    Else
+        DaoTyzV = dbText
+    End If
+    Exit Function
+End If
+DaoTyzV = DaoTyzVbTy(T)
+End Function
+
 Function DaoTyzVbTy(A As VbVarType) As Dao.DataTypeEnum
 Dim O As Dao.DataTypeEnum
 Select Case A
@@ -259,29 +134,57 @@ End Select
 DaoTyzVbTy = O
 End Function
 
-Function DaoTyzV(V) As Dao.DataTypeEnum
-Dim T As VbVarType: T = VarType(V)
-If T = vbString Then
-    If Len(V) > 255 Then
-        DaoTyzV = dbMemo
-    Else
-        DaoTyzV = dbText
-    End If
-    Exit Function
-End If
-DaoTyzV = DaoTyzVbTy(T)
+Function DiKqCntzRs(A As Dao.Recordset, Optional Fld = 0) As Dictionary
+Set DiKqCntzRs = DiKqCnt(AvRsCol(A))
 End Function
 
-Function CvDaoTy(A) As Dao.DataTypeEnum
-CvDaoTy = A
-End Function
-
-Function ShtTyLiszDaoTyAy$(A() As DataTypeEnum)
-Dim O$, I
-For Each I In A
-    O = O & ShtTyzDao(CvDaoTy(I))
+Property Get DShtTy() As Drs
+Dim Dy(), I
+For Each I In SyzSS(ShtTySS)
+    PushI Dy, Sy(I, DtaTyzShtTy(I))
 Next
-ShtTyLiszDaoTyAy = O
+DShtTy = DrszFF("ShtTy DtaTy", Dy)
+End Property
+
+Function DtaTy$(T As Dao.DataTypeEnum)
+Dim O$
+Select Case T
+Case Dao.DataTypeEnum.dbAttachment: O = "Attachment"
+Case Dao.DataTypeEnum.dbBoolean:    O = "Boolean"
+Case Dao.DataTypeEnum.dbByte:       O = "Byte"
+Case Dao.DataTypeEnum.dbCurrency:   O = "Currency"
+Case Dao.DataTypeEnum.dbDate:       O = "Date"
+Case Dao.DataTypeEnum.dbDecimal:    O = "Decimal"
+Case Dao.DataTypeEnum.dbDouble:     O = "Double"
+Case Dao.DataTypeEnum.dbInteger:    O = "Integer"
+Case Dao.DataTypeEnum.dbLong:       O = "Long"
+Case Dao.DataTypeEnum.dbMemo:       O = "Memo"
+Case Dao.DataTypeEnum.dbSingle:     O = "Single"
+Case Dao.DataTypeEnum.dbText:       O = "Text"
+Case Dao.DataTypeEnum.dbChar:       O = "Char"
+Case Dao.DataTypeEnum.dbTime:       O = "Time"
+Case Dao.DataTypeEnum.dbLongBinary: O = "LongBinary"
+Case Else: Stop
+End Select
+DtaTy = O
+End Function
+
+Property Get DtaTyAy() As String()
+DtaTyAy = DtaTyAyzS(ShtTyAy)
+End Property
+
+Function DtaTyAyzS(ShtTyAy$()) As String()
+Dim ShtTy: For Each ShtTy In Itr(ShtTyAy)
+    PushI DtaTyAyzS, DtaTyzShtTy(ShtTy)
+Next
+End Function
+
+Function DtaTyzShtTy$(ShtTy)
+DtaTyzShtTy = DtaTy(DaoTyzShtTy(ShtTy))
+End Function
+
+Function DtaTyzTF$(D As Database, T, F$)
+DtaTyzTF = DtaTy(FdzTF(D, T, F).Type)
 End Function
 
 Function ErzShtTyLis(ShtTyLis$) As String()
@@ -301,14 +204,102 @@ Case 1, 3
 End Select
 End Function
 
-Function DtaTyAyzS(ShtTyAy$()) As String()
-Dim ShtTy: For Each ShtTy In Itr(ShtTyAy)
-    PushI DtaTyAyzS, DtaTyzShtTy(ShtTy)
+Function JnStrDicRsKeyJn(A As Dao.Recordset, KeyFld, JnStrFld, Optional Sep$ = " ") As Dictionary
+Dim O As New Dictionary
+Dim K, V$
+While Not A.EOF
+    K = A.Fields(KeyFld).Value
+    V = Nz(A.Fields(JnStrFld).Value, "")
+    If O.Exists(K) Then
+        O(K) = O(K) & Sep & V
+    Else
+        O.Add K, CStr(Nz(V))
+    End If
+    A.MoveNext
+Wend
+Set JnStrDicRsKeyJn = O
+End Function
+
+Function JnStrDicTwoFldRs(A As Dao.Recordset, Optional Sep$ = " ") As Dictionary
+Set JnStrDicTwoFldRs = JnStrDicRsKeyJn(A, 0, 1, Sep)
+End Function
+
+Function MaxSim(A As EmSimTy, B As EmSimTy) As EmSimTy
+MaxSim = Max(A, B)
+End Function
+
+Function ShtAdoTy$(A As AdoDb.DataTypeEnum)
+Dim O$
+Select Case A
+Case AdoDb.DataTypeEnum.adTinyInt: O = "Byt"
+Case AdoDb.DataTypeEnum.adInteger: O = "Lng"
+Case AdoDb.DataTypeEnum.adSmallInt: O = "Int"
+Case AdoDb.DataTypeEnum.adDate: O = "Dte"
+Case AdoDb.DataTypeEnum.adVarChar: O = "Txt"
+Case AdoDb.DataTypeEnum.adBoolean: O = "Yes"
+Case AdoDb.DataTypeEnum.adDouble: O = "Dbl"
+Case AdoDb.DataTypeEnum.adCurrency: O = "Cur"
+Case AdoDb.DataTypeEnum.adSingle: O = "Sng"
+Case AdoDb.DataTypeEnum.adDecimal: O = "Dec"
+Case AdoDb.DataTypeEnum.adVarWChar: O = "Mem"
+Case Else: O = "?" & A & "?"
+End Select
+ShtAdoTy = O
+End Function
+
+Function ShtAdoTyAy(A() As AdoDb.DataTypeEnum) As String()
+Dim I
+For Each I In Itr(A)
+    PushI ShtAdoTyAy, ShtAdoTy(CLng(I))
 Next
 End Function
 
-Function DtaTyzShtTy$(ShtTy)
-DtaTyzShtTy = DtaTy(DaoTyzShtTy(ShtTy))
+Property Get ShtTyAy() As String()
+ShtTyAy = SyzSS(ShtTySS)
+End Property
+
+Function ShtTyAyzShtTyLis(ShtTyLis$) As String()
+ShtTyAyzShtTyLis = CmlAy(ShtTyLis)
+End Function
+
+Function ShtTyDic(FxOrFb$, T) As Dictionary
+Select Case True
+Case IsFb(FxOrFb): Set ShtTyDic = ShtTyDiczFbt(FxOrFb, T)
+Case IsFx(FxOrFb): Set ShtTyDic = ShtTyDiczFxw(FxOrFb, T)
+Case Else: Thw CSub, "FxOrFb should be Fx or Fb", "FxOrFb T", FxOrFb, T
+End Select
+End Function
+
+Private Function ShtTyDiczFbt(Fb, T) As Dictionary
+Dim F As Dao.Field
+Set ShtTyDiczFbt = New Dictionary
+For Each F In Db(Fb).TableDefs(T).Fields
+    ShtTyDiczFbt.Add F.Name, ShtTyzDao(F.Type)
+Next
+End Function
+
+Private Function ShtTyDiczFxw(Fx, W) As Dictionary
+Dim C As Column, Cat As Catalog, I
+Set Cat = CatzFx(Fx)
+For Each I In Cat.Tables(CattnzWsn(W)).Columns
+    ShtTyDiczFxw.Add C.Name, ShtTyzAdo(C.Type)
+Next
+End Function
+
+Property Get ShtTyDtaTyLy() As String()
+Dim O$(), I
+For Each I In ShtTyAy
+    PushI O, I & " " & DtaTyzShtTy(CStr(I))
+Next
+ShtTyDtaTyLy = FmtSyz2Term(O)
+End Property
+
+Function ShtTyLiszDaoTyAy$(A() As DataTypeEnum)
+Dim O$, I
+For Each I In A
+    O = O & ShtTyzDao(CvDaoTy(I))
+Next
+ShtTyLiszDaoTyAy = O
 End Function
 
 Function ShtTyzAdo$(A As AdoDb.DataTypeEnum)
@@ -335,63 +326,71 @@ End Select
 ShtTyzAdo = O
 End Function
 
-Function ShtTyAyzShtTyLis(ShtTyLis$) As String()
-ShtTyAyzShtTyLis = CmlAy(ShtTyLis)
-End Function
-
-
-
-Function ShtAdoTyAy(A() As AdoDb.DataTypeEnum) As String()
-Dim I
-For Each I In Itr(A)
-    PushI ShtAdoTyAy, ShtAdoTy(CLng(I))
-Next
-End Function
-
-Function ShtAdoTy$(A As AdoDb.DataTypeEnum)
+Function ShtTyzDao$(A As Dao.DataTypeEnum)
 Dim O$
 Select Case A
-Case AdoDb.DataTypeEnum.adTinyInt: O = "Byt"
-Case AdoDb.DataTypeEnum.adInteger: O = "Lng"
-Case AdoDb.DataTypeEnum.adSmallInt: O = "Int"
-Case AdoDb.DataTypeEnum.adDate: O = "Dte"
-Case AdoDb.DataTypeEnum.adVarChar: O = "Txt"
-Case AdoDb.DataTypeEnum.adBoolean: O = "Yes"
-Case AdoDb.DataTypeEnum.adDouble: O = "Dbl"
-Case AdoDb.DataTypeEnum.adCurrency: O = "Cur"
-Case AdoDb.DataTypeEnum.adSingle: O = "Sng"
-Case AdoDb.DataTypeEnum.adDecimal: O = "Dec"
-Case AdoDb.DataTypeEnum.adVarWChar: O = "Mem"
-Case Else: O = "?" & A & "?"
+Case Dao.DataTypeEnum.dbAttachment: O = "A"
+Case Dao.DataTypeEnum.dbBoolean:    O = "B"
+Case Dao.DataTypeEnum.dbByte:       O = "Byt"
+Case Dao.DataTypeEnum.dbCurrency:   O = "C"
+Case Dao.DataTypeEnum.dbChar:       O = "Chr"
+Case Dao.DataTypeEnum.dbDate:       O = "Dte"
+Case Dao.DataTypeEnum.dbDecimal:    O = "Dec"
+Case Dao.DataTypeEnum.dbDouble:     O = "D"
+Case Dao.DataTypeEnum.dbInteger:    O = "I"
+Case Dao.DataTypeEnum.dbLong:       O = "L"
+Case Dao.DataTypeEnum.dbMemo:       O = "Mem"
+Case Dao.DataTypeEnum.dbSingle:     O = "S"
+Case Dao.DataTypeEnum.dbText:       O = "T"
+Case Dao.DataTypeEnum.dbTime:       O = "Tim"
+Case Else: Thw CSub, "Unsupported DaoTy, cannot covert to ShtTy", "DaoTy", A
 End Select
-ShtAdoTy = O
+ShtTyzDao = O
 End Function
 
+Function SimTy(V) As EmSimTy
+SimTy = SimTyzV(VarType(V))
+End Function
 
+Function SimTyzCol(Col()) As EmSimTy
+Dim V: For Each V In Itr(Col)
+    Dim O As EmSimTy: O = MaxSim(O, SimTy(V))
+    If O = EiStr Then SimTyzCol = O: Exit Function
+Next
+End Function
 
-Function ShtTyDic(FxOrFb$, T) As Dictionary
+Function SimTyzLo(L As ListObject) As EmSimTy()
+Dim Sq(): Sq = SqzLo(L)
+Dim C%: For C = 1 To UBound(Sq, 2)
+    PushI SimTyzLo, SimTyzCol(ColzSq(Sq, C))
+Next
+End Function
+
+Function SimTyzV(V As VbVarType) As EmSimTy
+Dim O As EmSimTy
 Select Case True
-Case IsFb(FxOrFb): Set ShtTyDic = ShtTyDiczFbt(FxOrFb, T)
-Case IsFx(FxOrFb): Set ShtTyDic = ShtTyDiczFxw(FxOrFb, T)
-Case Else: Thw CSub, "FxOrFb should be Fx or Fb", "FxOrFb T", FxOrFb, T
+Case V = Empty: O = EiEmp
+Case V = vbBoolean: O = EiYes
+Case V = vbByte, V = vbCurrency, V = vbDecimal, V = vbDouble, V = vbInteger, V = vbLong, V = vbSingle: O = EiNum
+Case V = vbDate: O = EiDte
+Case V = vbString: O = EiStr
 End Select
+SimTyzV = O
 End Function
 
-Private Function ShtTyDiczFbt(Fb, T) As Dictionary
-Dim F As Dao.Field
-Set ShtTyDiczFbt = New Dictionary
-For Each F In Db(Fb).TableDefs(T).Fields
-    ShtTyDiczFbt.Add F.Name, ShtTyzDao(F.Type)
+Function SqlTyzDao$(T As Dao.DataTypeEnum, Optional Si%, Optional Precious%)
+Stop '
+End Function
+
+Function VbTyAy(Ay) As VbVarType()
+Dim V
+For Each V In Ay
+    PushI VbTyAy, VarType(V)
 Next
 End Function
 
-Private Function ShtTyDiczFxw(Fx, W) As Dictionary
-Dim C As Column, Cat As Catalog, I
-Set Cat = CatzFx(Fx)
-For Each I In Cat.Tables(CattnzWsn(W)).Columns
-    ShtTyDiczFxw.Add C.Name, ShtTyzAdo(C.Type)
-Next
+Function VbTyzCol(Col()) As EmSimTy
+Stop
+
 End Function
-
-
 

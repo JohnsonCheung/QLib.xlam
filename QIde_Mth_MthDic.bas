@@ -69,16 +69,17 @@ Function SDiMthnqLinesP() As Dictionary
 Set SDiMthnqLinesP = SDiMthnqLineszP(CPj)
 End Function
 
-Function SSrcL$(Src$())
-':SSrcL :SrcL #Sorted-SrcLines#
-SSrcL = JnStrDic(SrtDic(DiMthnqLines(Src)), vb2CrLf)
-End Function
-Function SSrcLM$()
-SSrcLM = SSrcLzM(CMd)
+Function SrtedSrcL$(Src$())
+':SrtedSrcL :SrcL #Sorted-SrcLines#
+SrtedSrcL = JnStrDic(SrtDic(DiMthnqLines(Src)), vb2CrLf)
 End Function
 
-Function SSrcLzM$(M As CodeModule)
-SSrcLzM = SSrcL(Src(M))
+Function SrtedSrcLM$()
+SrtedSrcLM = SrtedSrcLzM(CMd)
+End Function
+
+Function SrtedSrcLzM$(M As CodeModule)
+SrtedSrcLzM = SrtedSrcL(Src(M))
 End Function
 
 Function SrcLzM$(M As CodeModule)
@@ -89,22 +90,29 @@ End Function
 
 Sub BrwSrtRptzM(M As CodeModule)
 Dim Old$: Old = SrcLzM(M)
-Dim NewLines$: NewLines = SSrcLzM(M)
+Dim NewLines$: NewLines = SrtedSrcLzM(M)
 Dim O$: O = IIf(Old = NewLines, "(Same)", "<====Diff")
 Debug.Print Mdn(M), O
 End Sub
 
-Sub SrtMd()
-SrtzM CMd
+Sub SrtM()
+SrtMd CMd
 End Sub
 
-Private Sub SrtzP(P As VBProject)
+Private Sub SrtPj(P As VBProject)
 BackupFfn Pjf(P)
 Dim C As VBComponent
 For Each C In P.VBComponents
-    SrtzM C.CodeModule
+    SrtMd C.CodeModule
 Next
 End Sub
+
+Function DiMdnqSrtdSrcL(P As VBProject) As Dictionary
+Set DiMdnqSrtdSrcL = New Dictionary
+Dim C As VBComponent: For Each C In P.VBComponents
+    DiMdnqSrtdSrcL.Add C.Name, SrtedSrcL(Src(C.CodeModule))
+Next
+End Function
 
 Private Sub Z_Dcl_BefAndAft_Srt()
 Const Mdn$ = "VbStrRe"
@@ -138,7 +146,7 @@ Ass:
     Debug.Print Mdn(Md); vbTab;
     Dim BefSrt$(), AftSrt$()
     BefSrt = Src(Md)
-    AftSrt = SplitCrLf(SSrcLzM(Md))
+    AftSrt = SplitCrLf(SrtedSrcLzM(Md))
     If JnCrLf(BefSrt) = JnCrLf(AftSrt) Then
         Debug.Print "Is Same of before and after sorting ......"
         Return
@@ -168,4 +176,3 @@ Ass:
     End If
     Return
 End Sub
-

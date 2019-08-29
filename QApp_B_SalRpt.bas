@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "MApp_SalRpt."
 Private Const Asm$ = "QApp"
-':Srp = "Sales-Report-Parameter."
+
 Property Get DftSrpDic() As Dictionary
 Dim X As Boolean, Y As New Dictionary
 If Not X Then
@@ -27,4 +27,3 @@ If Not X Then
 End If
 Set DftSrpDic = Y
 End Property
-

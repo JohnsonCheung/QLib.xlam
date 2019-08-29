@@ -99,3 +99,5 @@ LpmPatn = StrVzLpm(Lpm, NmPfx & "Patn")
 End Function
 
 
+
+'

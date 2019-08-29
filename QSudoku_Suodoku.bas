@@ -225,7 +225,7 @@ Dim M
 Dim I, J%
 For Each I In NineEle
     If IsBytAy(I) Then
-        M = IntersectAy(CvBytAy(I), Should)
+        M = AyIntersect(CvBytAy(I), Should)
         If Si(I) > Si(M) Then
             SolveNineEle.HasSolve = True
             O(J) = M
@@ -238,9 +238,9 @@ Next
 SolveNineEle.NineEle = O
 End Function
 
-Private Function IntersectAy(A() As Byte, B() As Byte)
-Dim O: O = IntersectAy(A, B)
-IntersectAy = IIf(Si(O) = 1, O(0), O)
+Private Function AyIntersect(A() As Byte, B() As Byte)
+Dim O: O = AyIntersect(A, B)
+AyIntersect = IIf(Si(O) = 1, O(0), O)
 End Function
 
 Private Function ShouldBe(NineEle()) As Byte()
@@ -331,3 +331,6 @@ End Sub
 Private Sub Z()
 QSudoku:
 End Sub
+
+'
+

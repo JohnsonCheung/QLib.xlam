@@ -298,12 +298,12 @@ Seg1ErNy = XX
 End Function
 
 Function ShfCml$(OStr)
-Dim J&, Fst As Boolean, Cml$, C$, A%, IsChrzNm As Boolean, IsFstNmChr As Boolean
+Dim J&, Fst As Boolean, Cml$, C$, A%, IsNmChr As Boolean, IsFstNmChr As Boolean
 Fst = True
 For J = 1 To Len(OStr)
     C = Mid(OStr, J, 1)
     A = Asc(C)
-    IsChrzNm = IsAscNmChr(A)
+    IsNmChr = IsAscNmChr(A)
     IsFstNmChr = IsAscFstNmChr(A)
     Select Case True
     Case Fst
@@ -351,4 +351,7 @@ End Sub
 Function CmlRel(Ny$()) As Rel
 Set CmlRel = Rel(CmlssAy(Ny))
 End Function
+
+
+'
 

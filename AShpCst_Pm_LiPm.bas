@@ -3,6 +3,7 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "AShpCst_Pm_LiPm."
 Private Db As Database
+
 Private Property Get ShpCstLnkPmLy() As String()
 Const LnkColVblzZHT1$ = _
     " ZHT1   D Brand  |" & _
@@ -29,3 +30,4 @@ Const LnkColVblzMB52$ = _
 '            PushObj O, LiFDtoInfoLnkColVbl("ZHT1", "ZHT18701", "8701", LnkColVblzZHT1)
 '            PushObj O, LiFDtoInfoLnkColVbl("ZHT1", "ZHT18601", "8601", LnkColVblzZHT1)
 End Property
+

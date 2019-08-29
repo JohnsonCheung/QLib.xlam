@@ -4,6 +4,10 @@ Option Explicit
 Private Const CMod$ = "MDta_Ay."
 Private Const Asm$ = "QDta"
 
+Sub BrwGRxyzCyCntzAy(Ay)
+Brw JnGRxyzCyCntzAy(Ay)
+End Sub
+
 Function DtzAy(Ay, Optional FldNm$ = "Itm", Optional DtNm$ = "Ay") As DT
 Dim Dy(), J&
 For J = 0 To UB(Ay)
@@ -28,18 +32,10 @@ End Function
 Function GRxyzCyCntzAyWhDup(A) As Variant()
 GRxyzCyCntzAyWhDup = DywColGt(GRxyzCyCntzAy(A), 1, 1)
 End Function
-Sub BrwGRxyzCyCntzAy(Ay)
-Brw JnGRxyzCyCntzAy(Ay)
-End Sub
 
 Function JnGRxyzCyCntzAy(Ay) As String()
 JnGRxyzCyCntzAy = JnDy(GRxyzCyCntzAy(Ay))
 End Function
-
-Private Sub Z_JnGRxyzCyCntzAy()
-Dim Ay()
-Brw JnGRxyzCyCntzAy(Ay)
-End Sub
 
 Private Sub Z_CntDyoAy()
 Dim A$(): A = SplitSpc("a a a b c b")
@@ -49,3 +45,7 @@ Stop
 'AssEqDy Act, Exp
 End Sub
 
+Private Sub Z_JnGRxyzCyCntzAy()
+Dim Ay()
+Brw JnGRxyzCyCntzAy(Ay)
+End Sub

@@ -208,3 +208,5 @@ Function CMthnzM$(M As CodeModule)
 Dim K As vbext_ProcKind
 CMthnzM = M.ProcOfLine(LnozM(M), K)
 End Function
+
+'

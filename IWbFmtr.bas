@@ -12,3 +12,5 @@ Option Compare Text
 Private Const CMod$ = "IWbFmtr."
 Sub FmtWb(Wb As Workbook)
 End Sub
+
+'

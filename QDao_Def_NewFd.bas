@@ -5,9 +5,6 @@ Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Def_Fd_New."
 Public Const EleLblss$ = "*Fld *Ty ?Req ?AlwZLen Dft VTxt VRul TxtSz Expr"
 
-Function FdzStr(FdStr$) As Dao.Field2
-End Function
-
 Function Fd(F, Optional Ty As Dao.DataTypeEnum = dbText, Optional Req As Boolean, Optional TxtSz As Byte = 255, Optional ZLen As Boolean, Optional Expr$, Optional Dft$, Optional VRul$, Optional VTxt$) As Dao.Field2
 Dim O As New Dao.Field
 With O
@@ -26,12 +23,20 @@ End With
 Set Fd = O
 End Function
 
+Function FdzAtt(F) As Dao.Field2
+Set FdzAtt = Fd(F, dbAttachment)
+End Function
+
 Function FdzBool(F) As Dao.Field2
 Set FdzBool = Fd(F, dbBoolean, True, Dft:="0")
 End Function
 
 Function FdzByt(F) As Dao.Field2
 Set FdzByt = Fd(F, dbByte, True, Dft:="0")
+End Function
+
+Function FdzChr(F) As Dao.Field2
+Set FdzChr = Fd(F, dbChar, True, Dft:="")
 End Function
 
 Function FdzCrtDte(F) As Dao.Field2
@@ -42,20 +47,16 @@ Function FdzCur(F) As Dao.Field2
 Set FdzCur = Fd(F, dbCurrency, True, Dft:="0")
 End Function
 
-Function FdzChr(F) As Dao.Field2
-Set FdzChr = Fd(F, dbChar, True, Dft:="")
-End Function
-
 Function FdzDbl(F) As Dao.Field2
 Set FdzDbl = Fd(F, dbDouble, True, Dft:="0")
 End Function
 
-Function FdzDte(F) As Dao.Field2
-Set FdzDte = Fd(F, dbDate, True, Dft:="0")
-End Function
-
 Function FdzDec(F) As Dao.Field2
 Set FdzDec = Fd(F, dbDecimal, True, Dft:="0")
+End Function
+
+Function FdzDte(F) As Dao.Field2
+Set FdzDte = Fd(F, dbDate, True, Dft:="0")
 End Function
 
 Function FdzEle(Ele$, F$) As Dao.Field2
@@ -75,17 +76,14 @@ Case "Mem": Set FdzEle = FdzMem(F)
 End Select
 End Function
 
-Private Function FdzTnnn(F$, EleTnnn) As Dao.Field2
-If Left(EleTnnn, 1) <> "T" Then Exit Function
-Dim A$
-A = Mid(EleTnnn, 2)
-If CStr(Val(A)) <> A Then Exit Function
-Set FdzTnnn = Fd(F, dbText, True)
-With FdzTnnn
-    .Size = A
-    .DefaultValue = """"""
-    .AllowZeroLength = True
-End With
+Function FdzFdStr(FdStr$) As Dao.Field2
+Dim Fld$, TyStr$, Req As Boolean, AlwZLen As Boolean, Dft$, VTxt$, VRul$, TxtSz As Byte, Expr$
+Dim L$: L = FdStr
+Dim Vy(): Vy = ShfVy(L, EleLblss)
+AsgAp Vy, _
+    Fld, TyStr, Req, AlwZLen, Dft, VTxt, VRul, TxtSz, Expr
+Set FdzFdStr = Fd( _
+    Fld, DaoTyzShtTy(TyStr), Req, TxtSz, AlwZLen, Expr, Dft, VRul, VTxt)
 End Function
 
 Function FdzFk(F) As Dao.Field2
@@ -116,10 +114,6 @@ Function FdzLng(F) As Dao.Field2
 Set FdzLng = Fd(F, dbLong, True, Dft:="0")
 End Function
 
-Function FdzAtt(F) As Dao.Field2
-Set FdzAtt = Fd(F, dbAttachment)
-End Function
-
 Function FdzMem(F) As Dao.Field2
 Set FdzMem = Fd(F, dbMemo, True, Dft:="""""")
 End Function
@@ -133,14 +127,6 @@ Function FdzPk(F) As Dao.Field2
 If Right(F, 2) <> "Id" Then Stop
 Set FdzPk = Fd(F, dbLong, True)
 FdzPk.Attributes = Dao.FieldAttributeEnum.dbAutoIncrField
-End Function
-
-Function FdzSng(F) As Dao.Field2
-Set FdzSng = Fd(F, dbSingle, True, Dft:="0")
-End Function
-
-Function FdzTim(F) As Dao.Field2
-Set FdzTim = Fd(F, dbTime, True, Dft:="0")
 End Function
 
 Function FdzShtTys(ShtTys, F) As Dao.Field2
@@ -173,6 +159,10 @@ End Select
 Set FdzShtTys = O
 End Function
 
+Function FdzSng(F) As Dao.Field2
+Set FdzSng = Fd(F, dbSingle, True, Dft:="0")
+End Function
+
 Function FdzStdFldNm(StdFldNm, Optional T) As Dao.Field2
 Dim R2$, R3$: R2 = Right(StdFldNm, 2): R3 = Right(StdFldNm, 3)
 Dim O As Dao.Field2
@@ -188,6 +178,38 @@ Case R3 = "Att":   Set O = FdzAtt(StdFldNm)
 End Select
 Set FdzStdFldNm = O
 End Function
+
+Function FdzStr(FdStr$) As Dao.Field2
+End Function
+
+Function FdzTim(F) As Dao.Field2
+Set FdzTim = Fd(F, dbTime, True, Dft:="0")
+End Function
+
+Private Function FdzTnnn(F$, EleTnnn) As Dao.Field2
+If Left(EleTnnn, 1) <> "T" Then Exit Function
+Dim A$
+A = Mid(EleTnnn, 2)
+If CStr(Val(A)) <> A Then Exit Function
+Set FdzTnnn = Fd(F, dbText, True)
+With FdzTnnn
+    .Size = A
+    .DefaultValue = """"""
+    .AllowZeroLength = True
+End With
+End Function
+
+Function FdzTxt(F, Optional TxtSz As Byte = 255, Optional ZLen As Boolean, Optional Expr$, Optional Dft$, Optional Req As Boolean, Optional VRul$, Optional VTxt$) As Dao.Field2
+Set FdzTxt = Fd(F, dbText, Req, TxtSz, ZLen, Expr, Dft, VRul, VTxt)
+End Function
+
+Private Sub Z()
+Dim A As Variant
+Dim B As Dao.DataTypeEnum
+Dim C As Boolean
+Dim D As Byte
+Dim E$
+End Sub
 
 Private Sub Z_FdzFdStr()
 Dim Act As Dao.Field2, Ept As Dao.Field2, mFdStr$
@@ -222,28 +244,4 @@ Tst:
     Stop
     Return
 End Sub
-
-Function FdzFdStr(FdStr$) As Dao.Field2
-Dim Fld$, TyStr$, Req As Boolean, AlwZLen As Boolean, Dft$, VTxt$, VRul$, TxtSz As Byte, Expr$
-Dim L$: L = FdStr
-Dim Vy(): Vy = ShfVy(L, EleLblss)
-AsgAp Vy, _
-    Fld, TyStr, Req, AlwZLen, Dft, VTxt, VRul, TxtSz, Expr
-Set FdzFdStr = Fd( _
-    Fld, DaoTyzShtTy(TyStr), Req, TxtSz, AlwZLen, Expr, Dft, VRul, VTxt)
-End Function
-
-Function FdzTxt(F, Optional TxtSz As Byte = 255, Optional ZLen As Boolean, Optional Expr$, Optional Dft$, Optional Req As Boolean, Optional VRul$, Optional VTxt$) As Dao.Field2
-Set FdzTxt = Fd(F, dbText, Req, TxtSz, ZLen, Expr, Dft, VRul, VTxt)
-End Function
-
-Private Sub Z()
-Dim A As Variant
-Dim B As Dao.DataTypeEnum
-Dim C As Boolean
-Dim D As Byte
-Dim E$
-End Sub
-
-
 

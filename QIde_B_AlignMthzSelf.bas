@@ -1,18 +1,6 @@
 Attribute VB_Name = "QIde_B_AlignMthzSelf"
-Option Explicit
 Option Compare Text
-
-Sub Z11()
-Const Mdn$ = "QIde_B_AlignMth"
-Const Mthn$ = "AlignMthzLno"
-Dim M As CodeModule: Set M = Md(Mdn)
-Dim L&: L = MthLnozMM(M, Mthn)
-QIde_B_AlignMth.AlignMthzLno M, L, Upd:=EiRptOnly
-End Sub
-
-Sub Z1()
-AlignMthzSelf
-End Sub
+Option Explicit
 
 Sub AlignMthzSelf()
 'Cpy Md

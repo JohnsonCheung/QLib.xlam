@@ -36,10 +36,10 @@ Dim L: For Each L In Itr(Ly)
 Next
 End Sub
 
-Sub AsgT1Sy(LinOf_T1_SS, OT1, OSy$())
+Sub AsgT1Sy(LinOf_T1_SS, OT1, Osy$())
 Dim Rst$
 AsgTRst LinOf_T1_SS, OT1, Rst
-OSy = SyzSS(Rst)
+Osy = SyzSS(Rst)
 End Sub
 
 Function Fst2Term(Lin) As String()
@@ -256,3 +256,5 @@ Tst:
 End Sub
 
 
+
+'

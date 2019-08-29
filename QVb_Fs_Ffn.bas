@@ -48,7 +48,7 @@ Function IsExtInAp(Ffn, ParamArray Ap()) As Boolean
 
 End Function
 Function IsInAp(V, ParamArray Ap()) As Boolean
-Dim Av(): Av = Ap
+Dim Av(): If UBound(Ap) >= 0 Then Av = Ap
 IsInAp = HasEle(Av, V)
 End Function
 
@@ -377,3 +377,5 @@ Function IsInstFdr(Fdr$) As Boolean
 IsInstFdr = IsTimStr(Fdr)
 End Function
 
+
+'

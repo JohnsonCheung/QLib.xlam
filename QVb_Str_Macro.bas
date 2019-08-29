@@ -31,7 +31,7 @@ RplMacro = O
 End Function
 
 Function FmtMacro(MacroVbl, ParamArray Ap())
-Dim Av(): Av = Ap
+Dim Av(): If UBound(Ap) >= 0 Then Av = Ap
 FmtMacro = FmtMacrozAv(MacroVbl, Av)
 End Function
 
@@ -77,3 +77,5 @@ For Each N In Itr(Ny)
     If Not IsNm(N) Then Thw Fun, "Ele of Sy is not nm", "Not-nm-Ele Sy", N, Sy
 Next
 End Sub
+
+'

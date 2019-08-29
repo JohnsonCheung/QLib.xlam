@@ -97,37 +97,37 @@ Next
 ShfVy = O
 End Function
 
-Private Function ShfTxtOpt(OAy$(), Lbl) As StrOpt
-If Si(OAy) = 0 Then Exit Function
-Dim S$: S = ShfTxt(OAy, Lbl)
+Private Function ShfTxtOpt(Oay$(), Lbl) As StrOpt
+If Si(Oay) = 0 Then Exit Function
+Dim S$: S = ShfTxt(Oay, Lbl)
 If S = "" Then ShfTxtOpt = SomStr(S)
 End Function
 
-Private Function ShfBool(OAy$(), Lbl$)
-If Si(OAy) = 0 Then Exit Function
+Private Function ShfBool(Oay$(), Lbl$)
+If Si(Oay) = 0 Then Exit Function
 Dim J&, L$, Ay$()
-Ay = OAy
+Ay = Oay
 L = RmvFstChr(Lbl)
 For J = 0 To UB(Ay)
     If Ay(J) = L Then
         ShfBool = True
-        OAy = AeEleAt(Ay, J)
+        Oay = AeEleAt(Ay, J)
         Exit Function
     End If
 Next
 End Function
 
-Private Function ShfTxt(OAy$(), Lbl)
-If Si(OAy) = 0 Then Exit Function
+Private Function ShfTxt(Oay$(), Lbl)
+If Si(Oay) = 0 Then Exit Function
 'Return either string or ""
 Dim I, S$, J&, Ay$()
-Ay = OAy
+Ay = Oay
 For Each I In Itr(Ay)
     S = I
     With Brk2(S, "=")
         If .S1 = Lbl Then
             ShfTxt = .S2
-            OAy = AeEleAt(Ay, J)
+            Oay = AeEleAt(Ay, J)
             Exit Function
         End If
     End With
@@ -169,4 +169,7 @@ Tst:
 End Sub
 
 
+
+
+'
 

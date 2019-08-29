@@ -66,3 +66,5 @@ End Function
 Sub ThwNotInstScrp(Pth)
 If Not IsInstScrp(Pth) Then Err.Raise 1, , "Not InstScrp(" & Pth & ")"
 End Sub
+
+'

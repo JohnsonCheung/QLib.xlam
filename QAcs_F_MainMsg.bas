@@ -1,4 +1,6 @@
 Attribute VB_Name = "QAcs_F_MainMsg"
+Option Explicit
+Option Compare Text
 'Assume there is Application.Forms("Main").Msg (TextBox)
 'MMsg means Main.Msg (TextBox)
 Sub ClrMainMsg()
@@ -24,3 +26,5 @@ On Error Resume Next
 Set MainFrm = Access.Forms("Main")
 End Property
 
+
+'

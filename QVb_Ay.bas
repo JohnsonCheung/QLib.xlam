@@ -314,7 +314,7 @@ For R = 1 To UBound(Sq, 1)
 Next
 End Function
 Function SqhzAp(ParamArray Ap()) As Variant()
-Dim Av(): Av = Ap
+Dim Av(): If UBound(Ap) >= 0 Then Av = Ap
 SqhzAp = Sqh(Av)
 End Function
 
@@ -468,7 +468,7 @@ AyZip = O
 End Function
 
 Function AyZip_Ap(Ay, ParamArray Ap()) As Variant()
-Dim Av(): Av = Ap
+Dim Av(): If UBound(Ap) >= 0 Then Av = Ap
 Dim UCol%
     UCol = UB(Av)
 
@@ -777,3 +777,5 @@ IsEqAy = True
 End Function
 
 
+
+'

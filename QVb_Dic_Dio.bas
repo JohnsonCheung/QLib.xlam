@@ -113,7 +113,7 @@ For Each I In K
 Next
 End Function
 
-Function DicIntersectAy(A As Dictionary, B As Dictionary) As Dictionary
+Function DicAyIntersect(A As Dictionary, B As Dictionary) As Dictionary
 Dim O As New Dictionary
 If A.Count = 0 Then GoTo X
 If B.Count = 0 Then GoTo X
@@ -125,7 +125,7 @@ For Each K In A.Keys
         End If
     End If
 Next
-X: Set DicIntersectAy = O
+X: Set DicAyIntersect = O
 End Function
 Sub ThwIf_DifDic(A As Dictionary, B As Dictionary, Fun$, Optional N1$ = "A", Optional N2$ = "B")
 If Not IsEqDic(A, B) Then Thw Fun, "2 given dic are diff", FmtQQ("[?] [?]", N1, N2), FmtDic(A), FmtDic(B)
@@ -449,4 +449,7 @@ If S = "" Then Exit Sub
 ODic.Add K, S
 End Sub
 
+
+
+'
 

@@ -3,16 +3,48 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QDao"
 Private Const CMod$ = "MDao_Ccm."
-Private Sub Z_LnkCcm()
-Dim D As Database, IsLcl As Boolean
-Set D = Db(SampFbzShpRate)
-IsLcl = True
-GoSub Tst
-Exit Sub
-Tst:
-    LnkCcm D, IsLcl
-    Return
+
+Private Function CcmTny(D As Database) As String()
+CcmTny = AwPfx(Tny(D), "^")
+End Function
+
+Private Sub Chk(D As Database, CcmTny$(), IsLcl As Boolean)
+Const CSub$ = CMod & "Chk"
+If Not IsLcl Then Chk2 D, CcmTny: Exit Sub ' Asserting for TarFb is stored in CcmTny's description
+
+'Asserting for TarFb = Db
+Dim Mis$(): Mis = Chk1(D, CcmTny)
+If Si(Mis) = 0 Then Exit Sub
+Thw CSub, "[Some-Missing-Tar-Tbl] in [Db] cannot be found according to given [CcmTny] in [Db]", Mis, D.Name, CcmTny, D.Name
 End Sub
+
+Private Function Chk1(D As Database, CcmTny$()) As String()
+Dim N1$(): N1 = Tny(D)
+Dim N2$(): N2 = RmvFstChrzAy(CcmTny)
+Chk1 = MinusAy(N2, N1)
+End Function
+
+Private Sub Chk2(D As Database, CcmTny$())
+'Throw if any Corresponding-Table in TarFb is not found
+Dim O$(), T$, I
+For Each I In CcmTny
+    T = I
+    PushIAy O, Chk3(D, T)
+Next
+'ErThw O
+End Sub
+
+Private Function Chk3(D As Database, CcmTbl$) As String()
+Dim TarFb$
+'    TarFb = Dbt_Des(Db, CcmTbl)
+Select Case True
+Case TarFb = "":            Chk3 = LyzMsgNap("[CcmTbl] in [Db] should have 'Des' which is TarFb, but this TarFb is blank", CcmTbl, D.Name)
+'Case NotHasFfn(TarFb):    Chk3 = LyzMsgNap("[CcmTbl] in [Db] should have [Des] which is TarFb, but this TarFb does not Has", CcmTbl, D.Name, TarFb)
+Case Not HasFbt(TarFb, RmvFstChr(CcmTbl)):
+    Chk3 = LyzMsgNap("[CcmTbl] in [Db] should have [Des] which is TarFb, but this TarFb does not Has [Tbl-RmvFstChr(CcmTbl)]", CcmTbl, D.Name, TarFb, RmvFstChr(CcmTbl))
+End Select
+End Function
+
 Sub LnkCcm(D As Database, IsLcl As Boolean)
 'Ccm stands for Space-[C]ir[c]umflex-accent
 'CcmTbl is ^xxx table in Db (pgm-database),
@@ -48,44 +80,12 @@ For Each I In CcmTny
     LnkFb D, RmvFstChr(CcmTbl), TarFb, CcmTbl
 Next
 End Sub
-Private Sub Chk(D As Database, CcmTny$(), IsLcl As Boolean)
-Const CSub$ = CMod & "Chk"
-If Not IsLcl Then Chk2 D, CcmTny: Exit Sub ' Asserting for TarFb is stored in CcmTny's description
 
-'Asserting for TarFb = Db
-Dim Mis$(): Mis = Chk1(D, CcmTny)
-If Si(Mis) = 0 Then Exit Sub
-Thw CSub, "[Some-Missing-Tar-Tbl] in [Db] cannot be found according to given [CcmTny] in [Db]", Mis, D.Name, CcmTny, D.Name
+Private Sub Z()
+Z_LnkCcm
+Z_CcmTny
+MDao__Ccm:
 End Sub
-Private Function Chk1(D As Database, CcmTny$()) As String()
-Dim N1$(): N1 = Tny(D)
-Dim N2$(): N2 = RmvFstChrzAy(CcmTny)
-Chk1 = MinusAy(N2, N1)
-End Function
-
-Private Sub Chk2(D As Database, CcmTny$())
-'Throw if any Corresponding-Table in TarFb is not found
-Dim O$(), T$, I
-For Each I In CcmTny
-    T = I
-    PushIAy O, Chk3(D, T)
-Next
-'ErThw O
-End Sub
-Private Function Chk3(D As Database, CcmTbl$) As String()
-Dim TarFb$
-'    TarFb = Dbt_Des(Db, CcmTbl)
-Select Case True
-Case TarFb = "":            Chk3 = LyzMsgNap("[CcmTbl] in [Db] should have 'Des' which is TarFb, but this TarFb is blank", CcmTbl, D.Name)
-'Case NotHasFfn(TarFb):    Chk3 = LyzMsgNap("[CcmTbl] in [Db] should have [Des] which is TarFb, but this TarFb does not Has", CcmTbl, D.Name, TarFb)
-Case Not HasFbt(TarFb, RmvFstChr(CcmTbl)):
-    Chk3 = LyzMsgNap("[CcmTbl] in [Db] should have [Des] which is TarFb, but this TarFb does not Has [Tbl-RmvFstChr(CcmTbl)]", CcmTbl, D.Name, TarFb, RmvFstChr(CcmTbl))
-End Select
-End Function
-
-Private Function CcmTny(D As Database) As String()
-CcmTny = AwPfx(Tny(D), "^")
-End Function
 
 Private Sub Z_CcmTny()
 Dim D As Database
@@ -100,8 +100,13 @@ Tst:
     Return
 End Sub
 
-Private Sub Z()
-Z_LnkCcm
-Z_CcmTny
-MDao__Ccm:
+Private Sub Z_LnkCcm()
+Dim D As Database, IsLcl As Boolean
+Set D = Db(SampFbzShpRate)
+IsLcl = True
+GoSub Tst
+Exit Sub
+Tst:
+    LnkCcm D, IsLcl
+    Return
 End Sub

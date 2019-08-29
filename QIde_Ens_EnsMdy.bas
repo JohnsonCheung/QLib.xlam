@@ -72,3 +72,5 @@ Dim L$: L = RmvMdy(OldMthLin)
 End Function
 
 
+
+'

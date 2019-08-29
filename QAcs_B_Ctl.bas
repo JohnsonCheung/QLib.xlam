@@ -1,4 +1,6 @@
 Attribute VB_Name = "QAcs_B_Ctl"
+Option Explicit
+Option Compare Text
 
 Sub SetNoTabStop(A As Access.Form)
 DoItrFun A.Controls, "CmdTurnOffTabStop"
@@ -38,3 +40,5 @@ Case IsTglBtn(A): CvAcsTgl(A).TabStop = False
 End Select
 End Sub
 
+
+'

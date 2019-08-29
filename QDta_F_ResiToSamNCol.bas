@@ -26,3 +26,5 @@ For Each Dr In Itr(O)
 Next
 ResiToNCol = O
 End Function
+
+'

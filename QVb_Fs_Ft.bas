@@ -64,3 +64,5 @@ Dim B1$: B1 = Replace("VERSION 1.0 CLASS|BEGIN|  MultiUse = -1  'True|END|", "|"
 If A2 <> B1 Then Stop
 Fso.CreateTextFile(Ft, True).Write A3
 End Sub
+
+'

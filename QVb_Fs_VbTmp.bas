@@ -77,3 +77,5 @@ Static X$
 If X = "" Then X = Fso.GetSpecialFolder(TemporaryFolder) & "\"
 TmpPthHom = X
 End Property
+
+'

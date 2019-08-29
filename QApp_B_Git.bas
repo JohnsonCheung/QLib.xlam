@@ -3,8 +3,6 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QApp"
 Private Const CMod$ = "MApp_Git."
-':Fwcmd$ = "It is a TmpFfn and the content is given-CmdLines plus EchoLin which is creating a Fcmdw."
-':WaitgFfn$ = "Fcmdw is a temp file without any content.  It is created at end of the Fwcmd."
 
 Sub GitCmit(Optional Msg$ = "commit", Optional ReInit As Boolean)
 Dim X As New Bfr
@@ -46,4 +44,3 @@ End Function
 Private Sub Z()
 MApp_Commit:
 End Sub
-

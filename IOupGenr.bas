@@ -12,3 +12,5 @@ Option Compare Text
 Private Const CMod$ = "IGenr."
 Sub GenOupTblFmTmpInp(D As Database)
 End Sub
+
+'

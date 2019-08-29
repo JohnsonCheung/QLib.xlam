@@ -4,9 +4,9 @@ Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Ay_Push."
 
-Function Shf(OAy)
-Shf = OAy(0)
-OAy = AeFstNEle(OAy)
+Function Shf(Oay)
+Shf = Oay(0)
+Oay = AeFstNEle(Oay)
 End Function
 
 Sub Push(O, M)
@@ -48,8 +48,8 @@ ReDim Preserve O(N)
 O(N) = M
 End Sub
 
-Sub PushIy(OSy$(), Sy$())
-PushIAy OSy, Sy
+Sub PushIy(Osy$(), Sy$())
+PushIAy Osy, Sy
 End Sub
 
 Sub PushIAy(O, MAy)
@@ -60,9 +60,9 @@ For Each M In Itr(MAy)
 Next
 End Sub
 
-Sub PushSomSi(OAy, IAy)
+Sub PushSomSi(Oay, IAy)
 If Si(IAy) = 0 Then Exit Sub
-PushI OAy, IAy
+PushI Oay, IAy
 End Sub
 
 Sub PushItmAy(O, Itm, Ay)
@@ -188,3 +188,5 @@ Else
 End If
 AyReSzU = O
 End Function
+
+'

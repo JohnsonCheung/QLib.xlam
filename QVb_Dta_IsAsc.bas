@@ -136,3 +136,6 @@ Select Case True
 Case Asc = 13, Asc = 10, Asc = 32: IsAscSpcCrLf = True
 End Select
 End Function
+
+'
+

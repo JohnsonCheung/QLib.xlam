@@ -34,3 +34,5 @@ Function ULin$(S$, Optional ULChr$ = "-")
 ULin = Dup(ULChr, Len(S))
 End Function
 
+
+'

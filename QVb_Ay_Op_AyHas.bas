@@ -127,3 +127,5 @@ Private Sub Z_HasEleDupEle()
 Ass HasEleDupEle(Array(1, 2, 3, 4)) = False
 Ass HasEleDupEle(Array(1, 2, 3, 4, 4)) = True
 End Sub
+
+'

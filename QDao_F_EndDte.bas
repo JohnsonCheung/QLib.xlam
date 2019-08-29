@@ -4,7 +4,6 @@ Option Explicit
 Private Const CMod$ = "MDao_Tbl_Upd_EndDteFld."
 Private Const Asm$ = "QDao"
 
-
 Sub UpdEndDte(D As Database, T, EndDteFld$, BegDteFld$, GpFF)
 Dim LasBegDte As Date
 LasBegDte = DateSerial(2099, 12, 31)
@@ -21,4 +20,3 @@ With Rs(D, Q)
     .Close
 End With
 End Sub
-

@@ -1,6 +1,37 @@
 Attribute VB_Name = "QVb_Str_Has"
 Option Compare Text
 Option Explicit
+Public Const NNoKw$ = "Option Compare Text"
+#If False Then
+As
+Boolean
+Const
+Dim
+Each
+Else
+Empty
+End
+Exit
+Explicit
+False
+For
+Function
+Get
+If
+In
+Me
+New
+Next
+Not
+Optional
+Private
+Property
+Set
+Sub
+Then
+True
+Variant
+#End If
 Private Const CMod$ = "MVb_S_Has."
 Private Const Asm$ = "QVb"
 Enum EmCas
@@ -18,14 +49,45 @@ Function HasDblQ(S) As Boolean
 HasDblQ = InStr(S, vbDblQ)
 End Function
 
+Private Sub Z_RmvBetDblQ()
+Dim S$
+GoSub T1
+GoSub T2
+GoSub ZZ
+Exit Sub
+T1:
+    S = "("""""""")"
+    Ept = "("""""""")"
+    GoTo Tst
+T2:
+    S = "For Each I In AwSubStr(AwSubStr(SrczP(CPj), ""'"")"
+    Ept = "For Each I In AwSubStr(AwSubStr(SrczP(CPj), """")"
+    GoTo Tst
+Tst:
+    Act = RmvBetDblQ(S)
+    C
+    Return
+ZZ:
+    Dim S12s As S12s
+    Dim L: For Each L In SrczP(CPj)
+        If Not IsLinRmk(L) Then
+            If HasDblQ(L) Then
+                PushS12 S12s, S12(L, RmvBetDblQ(L))
+            End If
+        End If
+    Next
+    BrwS12s S12s
+    Return
+End Sub
+
 Function RmvBetDblQ$(S)
 Dim P&: P = InStr(S, vbDblQ)
 Dim O$: O = S
 While P > 0
     Dim J%: J = J + 1: If J > 10000 Then Stop
     Dim P1&: P1 = InStr(P + 1, O, vbDblQ): If P1 = 0 Then Stop
-    O = Left(O, P - 1) & Mid(O, P1 + 1)
-    P = InStr(P + 1, O, vbDblQ)
+    O = Left(O, P) & Mid(O, P1)
+    P = InStr(P + 2, O, vbDblQ)
 Wend
 RmvBetDblQ = O
 End Function
@@ -80,3 +142,5 @@ End Function
 Function HasVbar(S) As Boolean
 HasVbar = HasSubStr(S, "|")
 End Function
+
+'

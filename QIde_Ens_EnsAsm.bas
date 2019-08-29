@@ -2,12 +2,12 @@ Attribute VB_Name = "QIde_Ens_EnsAsm"
 Option Compare Text
 Option Explicit
 Private Const CMod$ = "EnsNsNm."
-
+':Osy: :Missing|Sy #Oup-String-Array# ! if given as Sy, always push the msg into it.  Always together and aft Upd:EmpUpd.
 Function NsNm$(Mdn$)
 NsNm = AftRev(Mdn, "_")
 End Function
 
-Function EnsNsNmzM$(M As CodeModule, Optional Upd As EmUpd)
+Function EnsNsNmzM(M As CodeModule, Optional Upd As EmUpd, Optional Osy) As Boolean
 'Ret : :Msg # Only when Rpt=EiPushOnly or EiUpdAndPush
 '       Add/Rpl Line - Private Const NsNm$ = "<NsNm>" if NsNm='', no upd, just shw msg.  @@
 If IsMdEmp(M) Then Exit Function
@@ -54,14 +54,10 @@ Private Function XMsg$(IsIns As Boolean, IsRpl As Boolean, Lno%, NewL$)
 
 End Function
 
-Sub EnsNsNmzP(P As VBProject, Optional Upd As EmUpd)
+Sub EnsNsNmzP(P As VBProject, Optional Upd As EmUpd, Optional Osy)
 Dim C As VBComponent, Mdyd%, Skpd%
-Dim Rpt1 As EmUpd
-Rpt1 = EiPushOnly
-Erase XX
 For Each C In P.VBComponents
-    If EnsNsNmzM(C.CodeModule, Rpt1) Then
-    Stop
+    If EnsNsNmzM(C.CodeModule, Upd, Osy) Then
         Mdyd = Mdyd + 1
     Else
         Skpd = Skpd + 1
@@ -129,3 +125,5 @@ End Sub
 Private Sub Z()
 QIde_Ens_EnsNsNm:
 End Sub
+
+'

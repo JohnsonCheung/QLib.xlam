@@ -33,15 +33,15 @@ Next
 XIsUsingCSub = False
 End Function
 
-Sub EnsCModSubP(Optional Upd As EmUpd = EmUpd.EiPushOnly)
-EnsCModSubzP CPj, Upd
+Sub EnsCModSubP(Optional Upd As EmUpd, Optional Osy)
+EnsCModSubzP CPj, Upd, Osy
 End Sub
 
-Sub EnsCModSubM(Optional Upd As EmUpd)
+Sub EnsCModSubM(Optional Upd As EmUpd, Optional Osy)
 EnsCModSubzM CMd, Upd
 End Sub
 
-Private Sub EnsCModSubzP(P As VBProject, Optional Upd As EmUpd = EmUpd.EiPushOnly)
+Private Sub EnsCModSubzP(P As VBProject, Optional Upd As EmUpd, Optional Osy)
 Dim C As VBComponent
 For Each C In P.VBComponents
     EnsCModSubzM C.CodeModule, Upd
@@ -94,7 +94,7 @@ XEpt = AddColzFFDy(Act, "EptL", Dy)
 'Insp "QIde_Ens_EnsCModSub.XEpt", "Inspect", "Oup(XEpt) Act", FmtDrs(XEpt), FmtDrs(Act): Stop
 End Function
 
-Private Function EnsCModSubzM(M As CodeModule, Optional Upd As EmUpd, Optional IOMsg) As String()
+Private Function EnsCModSubzM(M As CodeModule, Optional Upd As EmUpd, Optional Osy) As String()
 
 '-- Prepare Data -------------------------------------------------------------------------------------------------------
 Dim Mth As Drs: Mth = DoMthc(M)                ' L E Mdy Ty Mthn MthLin MthLy
@@ -117,7 +117,7 @@ Dim IsPush As Boolean: IsPush = IsEmUpdRpt(Upd)
 If IsRpt Or IsPush Then
     Dim Msg$(): Msg = XMsg(M, Ept, Rpl, Dlt, Ins)
     If IsRpt Then Brw Msg
-    If IsPush Then EnsCModSubzM = AddSy(CvSy(IOMsg), Msg)
+    If IsPush Then EnsCModSubzM = AddSy(CvSy(Osy), Msg)
 End If
 'Insp CSub, Msg, "Rpl Dlt Ins", FmtDrs(Rpl), FmtDrs(Dlt), FmtDrs(Ins)
 End Function
@@ -164,3 +164,5 @@ Private Sub Z()
 QIde_Ens_EnsCModSub.EnsCModSubP
 End Sub
 
+
+'

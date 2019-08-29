@@ -98,7 +98,9 @@ Function FstNEle(Ay, N)
 FstNEle = AwFstUEle(Ay, N - 1)
 End Function
 
-Function ShfFstEle(OAy)
-ShfFstEle = FstEle(OAy)
-OAy = AeFstNEle(OAy)
+Function ShfFstEle(Oay)
+ShfFstEle = FstEle(Oay)
+Oay = AeFstNEle(Oay)
 End Function
+
+'

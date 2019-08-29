@@ -34,7 +34,6 @@ SrcRoot = ParPth(Srcp)
 End Function
 
 Function DistpP$() 'Distribution Path
-Attribute DistpP.VB_Description = "kkkk"
 DistpP = Distp(SrcpP)
 End Function
 
@@ -155,3 +154,5 @@ End Sub
 Private Sub Z()
 QIde_Gen_GenPj:
 End Sub
+
+'

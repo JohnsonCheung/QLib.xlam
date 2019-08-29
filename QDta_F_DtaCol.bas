@@ -298,3 +298,5 @@ B = DwEqSel(A, Col, V, ColNm)
 StrColzEq = StrCol(B, ColNm)
 End Function
 
+
+'

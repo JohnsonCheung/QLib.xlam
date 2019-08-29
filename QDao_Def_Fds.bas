@@ -26,6 +26,11 @@ For Each I In Fny
 Next
 End Function
 
+Private Sub Z()
+Z_DrzFds
+MDao_Z_Fds:
+End Sub
+
 Private Sub Z_DrzFds()
 Dim Rs As Dao.Recordset, Dy()
 Set Rs = Db(SampFbzShpRate).OpenRecordset("Select * from YMGRnoIR")
@@ -51,9 +56,3 @@ With Rs
     .Close
 End With
 End Sub
-
-Private Sub Z()
-Z_DrzFds
-MDao_Z_Fds:
-End Sub
-

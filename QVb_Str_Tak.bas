@@ -159,7 +159,7 @@ Function TakDotNm$(S)
 Dim J%
 If Not IsLetter(FstChr(S)) Then Exit Function
 For J = 2 To Len(S)
-    If Not IsChrDotNm(Mid(S, J, 1)) Then
+    If Not IsDotNmChr(Mid(S, J, 1)) Then
         TakDotNm = Left(S, J - 1)
         Exit Function
     End If
@@ -176,7 +176,7 @@ Function TakNm$(S)
 Dim J%
 If Not IsLetter(FstChr(S)) Then Exit Function
 For J = 2 To Len(S)
-    If Not IsChrzNm(Mid(S, J, 1)) Then
+    If Not IsNmChr(Mid(S, J, 1)) Then
         TakNm = Left(S, J - 1)
         Exit Function
     End If
@@ -243,3 +243,5 @@ End Function
 'End Function
 '
 
+
+'

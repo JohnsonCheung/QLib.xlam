@@ -26,3 +26,5 @@ T2: S = """aa""""""": Ept = "aa""": GoTo Tst
 T3: S = """aa""": Ept = "aa":       GoTo Tst
 Tst: Act = TakVbStr(S): Debug.Assert Act = Ept: Return
 End Sub
+
+'

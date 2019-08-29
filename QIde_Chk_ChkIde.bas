@@ -7,3 +7,5 @@ MsgBox FmtQQ("Mdn not found: ?|In Pj: ?", Mdn, P.Name), vbCritical
 ChkMdn = True
 End Function
 
+
+'

@@ -16,7 +16,7 @@ IsAset = TypeName(V) = "Aset"
 End Function
 
 Function AsetzAp(ParamArray Ap()) As Aset
-Dim Av(): Av = Ap
+Dim Av(): If UBound(Ap) >= 0 Then Av = Ap
 Set AsetzAp = AsetzAy(Av)
 End Function
 Function AsetzItr(Itr) As Aset
@@ -44,3 +44,5 @@ AsetzItm.PushItm Itm
 End Function
 
 
+
+'

@@ -11,22 +11,22 @@ Dim L&: L = Len(S)
 If L > 64 Then Exit Function
 Dim J%
 For J = 2 To L
-   If Not IsChrzNm(Mid(S, J, 1)) Then Exit Function
+   If Not IsNmChr(Mid(S, J, 1)) Then Exit Function
 Next
 IsNm = True
 End Function
 
-Function IsChrzNm(C$) As Boolean
-IsChrzNm = True
+Function IsNmChr(C$) As Boolean
+IsNmChr = True
 If IsLetter(C) Then Exit Function
 If C = "_" Then Exit Function
 If IsDigit(C) Then Exit Function
-IsChrzNm = False
+IsNmChr = False
 End Function
 
-Function IsChrDotNm(A$) As Boolean
-If IsChrzNm(A) Then IsChrDotNm = True: Exit Function
-IsChrDotNm = A = "."
+Function IsDotNmChr(A$) As Boolean
+If IsNmChr(A) Then IsDotNmChr = True: Exit Function
+IsDotNmChr = A = "."
 End Function
 
 Function WhNmzS(WhStr$) As WhNm
@@ -90,4 +90,7 @@ Case1:
 End Function
 
 
+
+
+'
 

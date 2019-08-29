@@ -209,7 +209,7 @@ Function CvNm$(S$)
 'Ret : ret a nm fm @S by rpl non-nm-chr to [_].  Put [N] in front if fst is non-nm-chr
 Dim O$: O = S
 Dim J%: For J = 1 To Len(O)
-    If Not IsChrzNm(Mid(O, J, 1)) Then
+    If Not IsNmChr(Mid(O, J, 1)) Then
         Mid(O, J, 1) = "_"
     End If
 Next
@@ -875,3 +875,5 @@ Dim O()
 XCCri = O
 'Insp "QXls_Cmd_ApplyFilter.XCCri", "Inspect", "Oup(XCCri) Cri CCny", XCCri, FmtDrs(Cri), CCny: Stop
 End Function
+
+'

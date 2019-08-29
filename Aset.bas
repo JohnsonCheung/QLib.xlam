@@ -11,13 +11,27 @@ Option Compare Text
 Option Explicit
 Private Const CMod$ = "Aset."
 Private Aset As New Dictionary
-Property Get Termss()
-Dim I, O$()
-For Each I In Itms
-    PushI O, QteSqIf(I)
-Next
-Termss = JnSpc(O)
-End Property
+
+Function AddAset(A As Aset) As Aset
+Dim O As New Aset
+O.PushAset Aset
+O.PushAset A
+Set AddAset = O
+End Function
+
+Function Av() As Variant()
+Av = AvzItr(Itms)
+End Function
+
+Sub Brw(Optional Fnn$, Optional UseVc As Boolean)
+B Aset.Keys, DftStr(Fnn, "Aset"), UseVc
+End Sub
+
+Function Clone() As Aset
+Dim O As New Aset
+O.PushItr Aset.Keys
+Set Clone = O
+End Function
 
 Property Get Cnt&()
 Cnt = Aset.Count
@@ -26,36 +40,69 @@ End Property
 Sub Dmp()
 D Aset.Keys
 End Sub
-Sub Vc()
-Brw UseVc:=True
-End Sub
-Sub Brw(Optional Fnn$, Optional UseVc As Boolean)
-B Aset.Keys, DftStr(Fnn, "Aset"), UseVc
-End Sub
-Function Srt() As Aset
-Set Srt = AsetzAy(AySrtQ(Itms))
-End Function
-Function AddAset(A As Aset) As Aset
-Dim O As New Aset
-O.PushAset Aset
-O.PushAset A
-Set AddAset = O
+
+Function FstItm()
+Const CSub$ = CMod & "FstItm"
+If IsEmp Then Thw CSub, "Given Aset is empty"
+Dim I
+For Each I In Itms
+    Asg I, FstItm
+Next
 End Function
 
-Function RmvItm(Itm) As Aset
-If Has(Itm) Then Aset.Remove Itm
-Set RmvItm = Me
+Function Has(Itm) As Boolean
+Has = Aset.Exists(Itm)
 End Function
 
-Sub PushItm(Itm)
-If Not Has(Itm) Then Aset.Add Itm, Empty
+Function IsEmp() As Boolean
+IsEmp = Aset.Count = 0
+End Function
+
+Function IsEq(B As Aset) As Boolean
+If Cnt <> B.Cnt Then Exit Function
+Dim K
+For Each K In Itms
+    If Not B.Has(K) Then Exit Function
+Next
+IsEq = True
+End Function
+
+Function IsInOrdEq(B As Aset) As Boolean
+IsInOrdEq = IsEqAy(Me.Av, B.Av)
+End Function
+
+Function Itms()
+Itms = Aset.Keys
+End Function
+
+Function Lin()
+Lin = JnSpc(Aset.Keys)
+End Function
+
+Function Minus(B As Aset) As Aset
+Dim O As Aset, I
+Set O = EmpAset
+For Each I In Itms
+    If Not B.Has(I) Then O.PushItm I
+Next
+Set Minus = O
+End Function
+
+Sub PushAset(A As Aset)
+PushItr A.Itms
 End Sub
+
 Sub PushAy(A)
 Dim I
 For Each I In Itr(A)
     PushItm I
 Next
 End Sub
+
+Sub PushItm(Itm)
+If Not Has(Itm) Then Aset.Add Itm, Empty
+End Sub
+
 Sub PushItr(Itr, Optional NoBlnkStr As Boolean)
 Dim I
 If NoBlnkStr Then
@@ -71,66 +118,30 @@ Else
 End If
 End Sub
 
-Function Clone() As Aset
-Dim O As New Aset
-O.PushItr Aset.Keys
-Set Clone = O
+Function RmvItm(Itm) As Aset
+If Has(Itm) Then Aset.Remove Itm
+Set RmvItm = Me
 End Function
 
-Function Minus(B As Aset) As Aset
-Dim O As Aset, I
-Set O = EmpAset
-For Each I In Itms
-    If Not B.Has(I) Then O.PushItm I
-Next
-Set Minus = O
+Function Srt() As Aset
+Set Srt = AsetzAy(AySrtQ(Itms))
 End Function
-Function Has(Itm) As Boolean
-Has = Aset.Exists(Itm)
-End Function
-
-Function IsEq(B As Aset) As Boolean
-If Cnt <> B.Cnt Then Exit Function
-Dim K
-For Each K In Itms
-    If Not B.Has(K) Then Exit Function
-Next
-IsEq = True
-End Function
-
-Function IsEmp() As Boolean
-IsEmp = Aset.Count = 0
-End Function
-Function Av() As Variant()
-Av = AvzItr(Itms)
-End Function
-
-Function IsInOrdEq(B As Aset) As Boolean
-IsInOrdEq = IsEqAy(Me.Av, B.Av)
-End Function
-Function FstItm()
-Const CSub$ = CMod & "FstItm"
-If IsEmp Then Thw CSub, "Given Aset is empty"
-Dim I
-For Each I In Itms
-    Asg I, FstItm
-Next
-End Function
-Function Itms()
-Itms = Aset.Keys
-End Function
-
-Function Lin()
-Lin = JnSpc(Aset.Keys)
-End Function
-
-Sub PushAset(A As Aset)
-PushItr A.Itms
-End Sub
 
 Function Sy() As String()
 Sy = SyzAy(Aset.Keys)
 End Function
+
+Property Get Termss()
+Dim I, O$()
+For Each I In Itms
+    PushI O, QteSqIf(I)
+Next
+Termss = JnSpc(O)
+End Property
+
+Sub Vc()
+Brw UseVc:=True
+End Sub
 
 Private Sub Z()
 Dim A As Variant
@@ -138,5 +149,3 @@ Dim B As Aset
 Dim C$
 
 End Sub
-
-

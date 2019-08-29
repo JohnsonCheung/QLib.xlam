@@ -12,3 +12,5 @@ Option Compare Text
 Private Const CMod$ = "IPredXAB."
 Function PredXAB(X, A, B) As Boolean
 End Function
+
+'

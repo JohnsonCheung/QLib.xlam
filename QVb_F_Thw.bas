@@ -218,7 +218,7 @@ Next
 End Sub
 
 Sub InfLin(Fun$, Msg$, ParamArray Nap())
-Dim Nav(): Nav = Nap
+Dim Nav(): If UBound(Nap) >= 0 Then Nav = Nap
 D LinzFunMsgNav(Fun, Msg, Nav)
 End Sub
 
@@ -359,7 +359,7 @@ LyzMsgNav = AddAy(LyzMsg(Msg), IndentSy(LyzNav(Nav)))
 End Function
 
 Function LyzNNAp(NN$, ParamArray Ap()) As String()
-Dim Av(): Av = Ap
+Dim Av(): If UBound(Ap) >= 0 Then Av = Ap
 LyzNNAp = LyzNNAv(NN, Av)
 End Function
 
@@ -372,7 +372,7 @@ LinzFunMsgNav = LinzFunMsg(Fun, Msg) & " " & LinzNav(Nav)
 End Function
 
 Sub DmpNNAp(NN$, ParamArray Ap())
-Dim Av(): Av = Ap
+Dim Av(): If UBound(Ap) >= 0 Then Av = Ap
 D LyzNyAv(Ny(NN), Av)
 End Sub
 
@@ -441,3 +441,5 @@ End Function
 
 
 
+
+'

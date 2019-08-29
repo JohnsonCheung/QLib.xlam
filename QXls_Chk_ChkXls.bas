@@ -7,3 +7,5 @@ Dim FF$: FF = JnSpc(FnyzLo(Lo))
 If FF = CC Then IsEqCC = True: Exit Function
 MsgBox FmtQQ("Expected: ?|Actual: ?", CC, FF), vbCritical, FmtQQ("Lo[?] fields error", Lo.Name)
 End Function
+
+'

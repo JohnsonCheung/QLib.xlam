@@ -6,34 +6,8 @@ Private Const CMod$ = "MDao_Ssk."
 Public Const Skn$ = "SecondaryKey"
 Public Const Pkn$ = "PrimaryKey"
 
-Function SkFnyzTd(T As Dao.TableDef) As String()
-SkFnyzTd = FnyzIdx(SkIdxzTd(T))
-End Function
-
-Function SkSqlQPfxSy(D As Database, T) As String()
-Stop '
-End Function
-Function SkFny(D As Database, T) As String()
-SkFny = SkFnyzTd(D.TableDefs(T))
-End Function
-
-Function Sskv(D As Database, T) As Aset
-'SSskv is [S]ingleFielded [S]econdKey [K]ey [V]alue [Aset], which is always a Value-Aset.
-'and Ssk is a field-name from , which assume there is a Unique-Index with name "SecordaryKey" which is unique and and have only one field
-'Set Sskv = ColSet(SskFld)
-End Function
-
-Function SkIdxzTd(T As Dao.TableDef) As Dao.Index
-Set SkIdxzTd = IdxzTd(T, Skn)
-End Function
-
-Function SkIdx(D As Database, T) As Dao.Index
-Set SkIdx = Idx(D, T, Skn)
-End Function
-
-Function SskFld$(D As Database, T)
-Dim Sk$(): Sk = SkFny(D, T): If Si(Sk) = 1 Then SskFld = Sk(0): Exit Function
-Thw CSub, "SkFny-Sz<>1", "Db T, SkFny-Si SkFny", D.Name, T, Si(Sk), Sk
+Function AsetzDbtf(D As Database, T, F$) As Aset
+Set AsetzDbtf = AsetzRs(Rs(D, SqlSel_F_T(F, T)), F)
 End Function
 
 Sub DltRecNotInSskv(D As Database, SskTbl$, NotInSSskv As Aset) _
@@ -46,14 +20,6 @@ Set Excess = SskVset(D, SskTbl).Minus(NotInSSskv)
 If Excess.IsEmp Then Exit Sub
 'RunSqy Db, SqyDlt_Fm_WhFld_InAset(SskTbl, SskFld_Dbt(Db, SskTbl), Excess)
 End Sub
-
-Function AsetzDbtf(D As Database, T, F$) As Aset
-Set AsetzDbtf = AsetzRs(Rs(D, SqlSel_F_T(F, T)), F)
-End Function
-
-Function SskVset(D As Database, T) As Aset
-Set SskVset = AsetzDbtf(D, T, SskFld(D, T))
-End Function
 
 Sub InsReczSskv(D As Database, T, ToInsSSskv As Aset) _
 'Insert Single-Field-Secondary-Key-Aset-A into Dbt
@@ -72,6 +38,41 @@ Dim I, F$
 '    .Close
 'End With
 End Sub
+
+Function SkFny(D As Database, T) As String()
+SkFny = SkFnyzTd(D.TableDefs(T))
+End Function
+
+Function SkFnyzTd(T As Dao.TableDef) As String()
+SkFnyzTd = FnyzIdx(SkIdxzTd(T))
+End Function
+
+Function SkIdx(D As Database, T) As Dao.Index
+Set SkIdx = Idx(D, T, Skn)
+End Function
+
+Function SkIdxzTd(T As Dao.TableDef) As Dao.Index
+Set SkIdxzTd = IdxzTd(T, Skn)
+End Function
+
+Function SkSqlQPfxSy(D As Database, T) As String()
+Stop '
+End Function
+
+Function SskFld$(D As Database, T)
+Dim Sk$(): Sk = SkFny(D, T): If Si(Sk) = 1 Then SskFld = Sk(0): Exit Function
+Thw CSub, "SkFny-Sz<>1", "Db T, SkFny-Si SkFny", D.Name, T, Si(Sk), Sk
+End Function
+
+Function Sskv(D As Database, T) As Aset
+'SSskv is [S]ingleFielded [S]econdKey [K]ey [V]alue [Aset], which is always a Value-Aset.
+'and Ssk is a field-name from , which assume there is a Unique-Index with name "SecordaryKey" which is unique and and have only one field
+'Set Sskv = ColSet(SskFld)
+End Function
+
+Function SskVset(D As Database, T) As Aset
+Set SskVset = AsetzDbtf(D, T, SskFld(D, T))
+End Function
 
 Private Sub Z()
 MDao_DML_SngFldSkTbl_Operation:

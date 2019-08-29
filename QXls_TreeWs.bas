@@ -138,3 +138,5 @@ Dim V: V = A1.Value
 If Not IsStr(V) Then Exit Function
 IsActionA1 = HasPth(V)
 End Function
+
+'

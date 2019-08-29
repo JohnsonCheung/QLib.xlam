@@ -18,3 +18,5 @@ Sub Stamp(S)
 If Not NoStamp Then Debug.Print NowStr; " "; S
 End Sub
 
+
+'

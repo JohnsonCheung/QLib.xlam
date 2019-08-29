@@ -14,20 +14,6 @@ Public Const SampReSeqLin$ = _
 " Uom Des StkUom Ac_U"
 Public Const LgSchmNm$ = "LgSchm" ' The LgSchm-Spnm
 
-Sub ReSeqFldzSpec(D As Database, T, ReSeqSpec$)
-ReSeqFldzFny D, T, FnyzReseqSpec(ReSeqSpec)
-End Sub
-
-Private Sub Y_FnyzReseqSpec()
-BrwAy FnyzReseqSpec("*Flg RecTy Amt *Key *Uom MovTy Qty BchRateUX RateTy *Bch *Las *GL |" & _
-" *Flg IsAlert IsWithSku |" & _
-" *Key Sku PstMth PstDte |" & _
-" *Bch BchNo BchPermitDate BchPermit |" & _
-" *Las LasBchNo LasPermitDate LasPermit |" & _
-" *GL GLDocNo GLDocDte GLAsg GLDocTy GLLin GLPstKy GLPc GLAc GLBusA GLRef |" & _
-" *Uom Des StkUom Ac_U")
-End Sub
-
 Function FnyzReseqSpec(ReSeqSpec$) As String()
 Dim L1$
 Dim D As Dictionary
@@ -47,6 +33,12 @@ Next
 FnyzReseqSpec = O
 End Function
 
+Function ReSeqAy(Ay, ByAy)
+Dim O
+O = AyIntersect(ByAy, Ay)
+ReSeqAy = MinusAy(Ay, O)
+End Function
+
 Sub ReSeqFldzFny(D As Database, T, ByFny$())
 Dim F, J%
 For Each F In ReSeqAy(Fny(D, T), ByFny)
@@ -55,12 +47,9 @@ For Each F In ReSeqAy(Fny(D, T), ByFny)
 Next
 End Sub
 
-Function ReSeqAy(Ay, ByAy)
-Dim O
-O = IntersectAy(ByAy, Ay)
-ReSeqAy = MinusAy(Ay, O)
-End Function
-
+Sub ReSeqFldzSpec(D As Database, T, ReSeqSpec$)
+ReSeqFldzFny D, T, FnyzReseqSpec(ReSeqSpec)
+End Sub
 
 Sub UpdSeqFld(D As Database, T, SeqFld$, GpFF$, OrdffMinus$)
 Dim Q$: Q = SqlSel_FF_T_Ordff(SeqFld & " " & GpFF, T, OrdffMinus)
@@ -85,6 +74,15 @@ With R
 End With
 End Sub
 
+Private Sub Y_FnyzReseqSpec()
+BrwAy FnyzReseqSpec("*Flg RecTy Amt *Key *Uom MovTy Qty BchRateUX RateTy *Bch *Las *GL |" & _
+" *Flg IsAlert IsWithSku |" & _
+" *Key Sku PstMth PstDte |" & _
+" *Bch BchNo BchPermitDate BchPermit |" & _
+" *Las LasBchNo LasPermitDate LasPermit |" & _
+" *GL GLDocNo GLDocDte GLAsg GLDocTy GLLin GLPstKy GLPc GLAc GLBusA GLRef |" & _
+" *Uom Des StkUom Ac_U")
+End Sub
 
 Private Sub Y_UpdSeqFld()
 Dim Db As Database, T$
@@ -95,5 +93,4 @@ UpdSeqFld Db, T, "BchRateSeq", "Sku", "Sku Rate"
 Stop
 DrpT Db, "#A"
 End Sub
-
 

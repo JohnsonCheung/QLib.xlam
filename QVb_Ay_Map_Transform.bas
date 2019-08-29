@@ -26,3 +26,5 @@ Next
 Set TermAsetzTLiny = AsetzAy(O)
 End Function
 
+
+'

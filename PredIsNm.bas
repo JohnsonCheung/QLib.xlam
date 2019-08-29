@@ -13,3 +13,5 @@ Implements IPred
 Private Function IPred_Pred(V As Variant) As Boolean
 IPred_Pred = IsNm(V)
 End Function
+
+'

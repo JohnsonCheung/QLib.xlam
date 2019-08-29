@@ -34,3 +34,5 @@ Case "ActX": O = vbext_ComponentType.vbext_ct_ActiveXDesigner
 Case Else: Stop
 End Select
 End Function
+
+'

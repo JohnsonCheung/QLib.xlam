@@ -93,3 +93,6 @@ Dim A
 Set A = Interaction.CreateObject("{00024500-0000-0000-C000-000000000046}", "Excel.Application")
 Stop
 End Sub
+
+'
+

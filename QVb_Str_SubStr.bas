@@ -70,3 +70,5 @@ Function DotCnt&(S)
 DotCnt = SubStrCnt(S, ".")
 End Function
 
+
+'

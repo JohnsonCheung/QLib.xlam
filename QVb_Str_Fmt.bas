@@ -3,8 +3,9 @@ Option Compare Text
 Option Explicit
 Private Const Asm$ = "QVb"
 Private Const CMod$ = "MVb_Str_Fmt."
+
 Function FmtQQ$(QQVbl$, ParamArray Ap())
-Dim Av(): Av = Ap
+Dim Av(): If UBound(Ap) >= 0 Then Av = Ap
 FmtQQ = FmtQQAv(QQVbl, Av)
 End Function
 
@@ -36,3 +37,5 @@ Function LblTabFmtAySepSS(Lbl$, Sy$()) As String()
 PushI LblTabFmtAySepSS, Lbl
 PushIAy LblTabFmtAySepSS, TabSy(Sy)
 End Function
+
+'

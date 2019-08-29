@@ -1,4 +1,4 @@
-Attribute VB_Name = "QVb_Dta_Dic_Dicab"
+Attribute VB_Name = "QVb_Dic_Dicab"
 Option Explicit
 Option Compare Text
 Type DicAB
@@ -24,3 +24,5 @@ For Each K In D.Keys
 Next
 DicabzInKy = DicAB(A, B)
 End Function
+
+'

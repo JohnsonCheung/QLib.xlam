@@ -1206,3 +1206,6 @@ Dim ORg As Range:      Set ORg = Lo.Range
 ORg.AutoFilter Field:=OFld, Criteria1:=OSel, Operator:=xlFilterValues
 End Function
 
+
+'
+

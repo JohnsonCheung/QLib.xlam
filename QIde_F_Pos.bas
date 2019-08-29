@@ -32,3 +32,5 @@ Dim P&: P = InStr(S, SubStr): If P = 0 Then Exit Function
 PoszSubStr = Pos(P, P + Len(SubStr) - 1)
 End Function
 
+
+'
