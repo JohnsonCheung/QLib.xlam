@@ -19,10 +19,6 @@ Sub VcLinesAy(LinesAy)
 Vc FmtLinesAy(LinesAy)
 End Sub
 
-Function CntsiStrzLy$(Ly$())
-CntsiStrzLy = CntsiStr(Si(Ly), Len(JnCrLf(Ly)))
-End Function
-
 Sub BrwLinesAy(LinesAy)
 B FmtLinesAy(LinesAy)
 End Sub
@@ -68,13 +64,6 @@ For Each L In Itr(SplitCrLf(Lines))
 Next
 End Function
 
-Function CntsiStrzLines$(Lines$)
-CntsiStrzLines = CntsiStr(LinCnt(Lines), Len(Lines))
-End Function
-
-Function CntsiStr$(Cnt&, Si&)
-CntsiStr = FmtQQ("Cnt-Size(? ?)", Cnt, Si)
-End Function
 
 Private Sub Z_WrpLines()
 Dim A$, W%
@@ -94,6 +83,7 @@ Function WrpLines$(Lines$, Optional Wdt% = 80)
 WrpLines = Lines: Exit Function
 WrpLines = JnCrLf(WrpLy(SplitCrLf(Lines), Wdt))
 End Function
+
 Private Sub Z_WrpLy()
 Dim Ly$(), Wdt%
 GoSub T1
@@ -193,8 +183,15 @@ Function LineszLasN$(Lines$, N%)
 LineszLasN = JnCrLf(AwLasN(SplitCrLf(Lines), N))
 End Function
 
-Function LinCnt&(Lines$)
+Function LinCnt&(Lines)
 LinCnt = Si(SplitCrLf(Lines))
+End Function
+
+Function MaxLinCnt&(LinesAy$())
+Dim O&, Lines: For Each Lines In Itr(LinesAy)
+    O = Max(O, LinCnt(Lines))
+Next
+MaxLinCnt = O
 End Function
 
 Function SqhzLines(Lines$) As Variant()
@@ -235,3 +232,25 @@ End Function
 Function LineszV$(V)
 LineszV = JnCrLf(FmtV(V))
 End Function
+
+Function ColRgAyzLinesDr(LinesDr$()) As Variant()
+Dim Lines: For Each Lines In LinesDr
+    PushI ColRgAyzLinesDr, SplitCrLf(Lines)
+Next
+End Function
+
+Function SqzLinesDr(LinesDr$()) As Variant()
+Dim NRow%: NRow = MaxLinCnt(LinesDr)
+Dim NCol%: NCol = Si(LinesDr)
+Dim ColAy(): ColAy = ColRgAyzLinesDr(LinesDr)
+Dim O(): ReDim O(1 To NRow, 1 To NCol)
+Dim Col$(), ICol%, S$: For ICol = 0 To NCol - 1
+    Col = ColAy(ICol)
+    Dim IRow%: For IRow = 0 To UB(Col)
+        S = Col(IRow)
+        O(IRow + 1, ICol + 1) = S
+    Next
+Next
+SqzLinesDr = O
+End Function
+

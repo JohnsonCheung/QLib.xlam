@@ -22,19 +22,17 @@ Else
 End If
 IntoSeqzFT = OInto
 End Function
+
 Function CvIntAy(A) As Integer()
 On Error Resume Next
 CvIntAy = A
 End Function
+
 Function CvLngAy(A) As Long()
-On Error GoTo X
-If IsLngAy(A) Then CvLngAy = A: Exit Function
-Dim I: For Each I In A
-    PushI CvLngAy, I
-Next
-Exit Function
-X:
+On Error Resume Next
+CvLngAy = A
 End Function
+
 Function IntSeqzFT(FmNum%, ToNum%) As Integer()
 IntSeqzFT = IntoSeqzFT(EmpIntAy, FmNum, ToNum)
 End Function

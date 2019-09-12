@@ -20,16 +20,16 @@ Function MdDn$(M As CodeModule)
 MdDn = PjnzM(M) & "." & Mdn(M)
 End Function
 
-Function DiMdnqSrcL(P As VBProject) As Dictionary
+Function DiMdnqSrclzP(P As VBProject) As Dictionary
 Dim C As VBComponent
-Set DiMdnqSrcL = New Dictionary
+Set DiMdnqSrclzP = New Dictionary
 For Each C In P.VBComponents
-    DiMdnqSrcL.Add C.Name, SrcL(C.CodeModule)
+    DiMdnqSrclzP.Add C.Name, SrcL(C.CodeModule)
 Next
 End Function
 
-Function DiMdnqSrcLP() As Dictionary
-Set DiMdnqSrcLP = DiMdnqSrcL(CPj)
+Function DiMdnqSrclP() As Dictionary
+Set DiMdnqSrclP = DiMdnqSrclzP(CPj)
 End Function
 
 Function MdFn$(M As CodeModule)
