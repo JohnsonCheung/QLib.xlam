@@ -5,7 +5,7 @@ Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxFmtDic."
 Private Sub Z_BrwDic()
 Dim R As dao.Recordset
-Set R = Rs(SampDboDutyDta, "Select Sku,BchNo from PermitD where BchNo<>''")
+Set R = Rs(SampDbDutyDta, "Select Sku,BchNo from PermitD where BchNo<>''")
 BrwDic JnStrDicTwoFldRs(R), True
 End Sub
 

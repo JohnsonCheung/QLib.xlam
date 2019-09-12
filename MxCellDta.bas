@@ -1,4 +1,6 @@
 Attribute VB_Name = "MxCellDta"
+Const CLib$ = "QDta."
+Const CMod$ = CLib & "MxCellDta."
 
 Function WdtAyzCellDy(CellDy()) As Integer()
 ':CellDy: :Dy ! each dr is sy and  ele of the sy is a cell

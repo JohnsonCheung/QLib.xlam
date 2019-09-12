@@ -1,6 +1,8 @@
 Attribute VB_Name = "MxNmlMd"
 Option Explicit
 Option Compare Text
+Const CLib$ = "QIde."
+Const CMod$ = CLib & "MxNmlMd."
 Function NmlSrc(XSrc$()) As String() ' #Normaliz-XSrc#
 'Ret: Normalized-Src from Exported-Src @@
 ':XSrc: :Src #Exported-Source# ! after :Cmp.Export, the file with have serval lines added.  This :Src is known as :XSrc

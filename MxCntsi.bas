@@ -1,4 +1,6 @@
 Attribute VB_Name = "MxCntsi"
+Const CLib$ = "QVb."
+Const CMod$ = CLib & "MxCntsi."
 Function CntsiStrzLines$(Lines$)
 CntsiStrzLines = CntsiStr(LinCnt(Lines), Len(Lines))
 End Function

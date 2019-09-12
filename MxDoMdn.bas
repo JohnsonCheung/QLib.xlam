@@ -1,6 +1,7 @@
 Attribute VB_Name = "MxDoMdn"
 Option Explicit
 Option Compare Text
+Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxDoMdn."
 Public Const FFoMdn$ = "Pjn MdTy Mdn"
 Private Function FoMdn() As String(): FoMdn = SyzSS(FFoMdn): End Function

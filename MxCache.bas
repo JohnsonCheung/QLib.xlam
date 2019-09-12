@@ -5,7 +5,7 @@ Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxCache."
 
 Function CacheDtezPjf(Pjf) As Date
-CacheDtezPjf = VzQ(MthDbP, FmtQQ("Select PjDte from Mth where Pjf='?'", Pjf))
+CacheDtezPjf = FvzQ(MthDbP, FmtQQ("Select PjDte from Mth where Pjf='?'", Pjf))
 End Function
 
 Function DoMthzPjfzFmCache(Pjf) As Drs

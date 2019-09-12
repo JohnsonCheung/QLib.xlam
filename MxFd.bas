@@ -62,7 +62,7 @@ End With
 IsEqFd = True
 End Function
 
-Function VzFd(A As dao.Field)
+Function Fv(A As dao.Field)
 On Error Resume Next
-VzFd = A.Value
+Fv = A.Value
 End Function

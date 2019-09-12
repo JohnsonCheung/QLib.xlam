@@ -28,8 +28,8 @@ Dim ShouldIns As Aset
     Set ShouldIns = ToInsSSskv.Minus(SskVset(D, T))
 If ShouldIns.IsEmp Then Exit Sub
 Dim I, F$
-'F = SskFld_Dbt(VzFd, T)
-'With RsDbt(VzFd, T)
+'F = SskFld_Dbt(Fv, T)
+'With RsDbt(Fv, T)
 '    For Each I In ShouldIns.Itms
 '        .AddNew
 '        .Fields(F).Value = I

@@ -132,7 +132,7 @@ Tst:
 End Sub
 
 Private Sub Z_PrpDyoFd()
-Dim Db As Database: Set Db = SampDboDutyDta
+Dim Db As Database: Set Db = SampDbDutyDta
 Dim Fd As dao.Field
 Dim Rs As dao.Recordset
 Set Rs = RszT(Db, "Permit")
@@ -142,7 +142,7 @@ DmpDy PrpDyoFd(Fd)
 End Sub
 
 Private Sub Z_PrpNy()
-Dim Db As Database: Set Db = SampDboDutyDta
+Dim Db As Database: Set Db = SampDbDutyDta
 Dim Fd As dao.Field
 Set Fd = FdzTF(Db, "Permit", "Permit")
 D PrpNyzFd(Fd)

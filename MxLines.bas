@@ -194,6 +194,13 @@ Next
 MaxLinCnt = O
 End Function
 
+Function KE24Rs() As Recordset
+Set KE24Rs = SampDb.TableDefs("KE24").OpenRecordset
+End Function
+
+Function XXX()
+BrwDrs DrszRs(KE24Rs)
+End Function
 Function SqhzLines(Lines$) As Variant()
 SqhzLines = SqH(SplitCrLf(Lines))
 End Function

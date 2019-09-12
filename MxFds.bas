@@ -46,7 +46,7 @@ End Sub
 
 Private Sub Z_DrzFds1()
 Dim Rs As dao.Recordset, Dr(), D As Database
-Set Rs = RszQ(SampDboDutyDta, "Select * from SkuB")
+Set Rs = RszQ(SampDbDutyDta, "Select * from SkuB")
 With Rs
     While Not .EOF
         Dr = DrzRs(Rs)

@@ -318,7 +318,7 @@ Dim GFny$(): GFny = SyzSS(Gpcc)
 Dim CFny$(): CFny = SyzSS(CC)
 
 Dim N&:         N = Si(CFny)
-Dim SeqN%(): SeqN = IntSeq(N, 1)        ' Seq
+Dim SeqN%(): SeqN = IntSeqzN(N, 1)        ' Seq
 Dim WFny$(): WFny = SyzQAy("#W?", SeqN) ' Wdt of each CC
 
 Dim WFnySq$(): WFnySq = SyzQteSq(WFny)
@@ -944,3 +944,41 @@ End Sub
 Private Sub Z_SelDrs()
 BrwDrs SelDrs(SampDrs1, "A B D")
 End Sub
+
+Function AddColzGpno(D As Drs, NumColn$, GpnoColn$, Optional RunFmNum% = 1) As Drs
+'Fm D : ..@NumColn..  ! must has a @NumColn which is a Num.  And assume they are sorted else thw
+'Ret  : ..@GpnoColn  ! a drs with @GpnoColn added at end, which is a Gpno running from @RunFmNum
+'                      if the conseq dr having @NumColn is in seg, given them a Gpno.
+'                      Thw &IncIfJmp if @NumColn is not in ascending order.
+Dim Gpno&: Gpno = RunFmNum
+Dim Dy()
+    If NoReczDrs(D) Then GoTo X
+    Dim Ix%: Ix = IxzAy(D.Fny, NumColn)
+    Dim CurNum&
+    Dim Dr: Dr = D.Dy(0)
+    Dim LasNum&: LasNum = Dr(Ix)
+    For Each Dr In Itr(D.Dy)
+        CurNum = Dr(Ix)
+        Gpno = IncIfJmp(Gpno, LasNum, CurNum)
+        PushI Dr, Gpno
+        PushI Dy, Dr
+        LasNum = CurNum
+    Next
+X:
+AddColzGpno = AddColzFFDy(D, GpnoColn, Dy)
+End Function
+
+Function IncIfJmp(N&, LasNum, CurNum)
+'Ret : Increased @N if LasNum has jumped else no chg @N
+'      @N        if LasNum = CurNum or LasNum - 1 = CurNm
+'      @N+1      If LasNum - 1 > CurNum
+'      Otherwise Thw
+Dim Dif&: Dif = CurNum - LasNum
+Select Case Dif
+Case 0, 1: IncIfJmp = N
+Case Is > 1: IncIfJmp = N + 1
+Case Else
+    Thw CSub, "No in seq.  CurNum should > LasNum", "LasNum CurNum", LasNum, CurNum
+End Select
+End Function
+

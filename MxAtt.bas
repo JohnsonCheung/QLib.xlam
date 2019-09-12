@@ -34,11 +34,11 @@ AttNm = A.TblRs!AttNm
 End Function
 
 Function AttSi&(D As Database, Att$)
-AttSi = VzSsk(D, "Att", "FilSz", Av(Att))
+AttSi = FvzSsk(D, "Att", "FilSz", Av(Att))
 End Function
 
 Function AttTim(D As Database, Att$) As Date
-AttTim = VzSsk(D, "Att", "FilTim", Av(Att))
+AttTim = FvzSsk(D, "Att", "FilTim", Av(Att))
 End Function
 
 Function DAttFld(A As Attd) As Drs
@@ -134,7 +134,7 @@ End Function
 
 Sub ImpAtt(D As Database, Att$, FmFfn$)
 Dim F2 As dao.Field2
-'Msg CSub, "[Att] is going to import [Ffn] with [Si] and [Tim]", VzFd(A.TblRs!AttNm), Ffn, S, T
+'Msg CSub, "[Att] is going to import [Ffn] with [Si] and [Tim]", Fv(A.TblRs!AttNm), Ffn, S, T
 Dim A As Attd: A = XAttd(D, Att)
 Dim T As dao.Recordset2: Set T = A.TblRs ' The Tbl-Rs of Tbl-Att
     T.Edit
@@ -248,7 +248,7 @@ QDao_Att:
 End Sub
 
 Private Sub Z_AttFnAy()
-D AttFnAy(SampDboShpCst, "AA")
+D AttFnAy(SampDbShpCst, "AA")
 End Sub
 
 Private Sub Z_EnsTblAtt()

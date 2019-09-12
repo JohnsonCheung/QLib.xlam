@@ -1,6 +1,7 @@
 Attribute VB_Name = "MxDoMdId"
 Option Explicit
 Option Compare Text
+Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxDoMdId."
 Public Const FFoMdId$ = "MdTy CLibv CNsv CModv Pjn Mdn IsCModvEr"
 

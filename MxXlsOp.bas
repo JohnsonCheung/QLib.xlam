@@ -904,7 +904,7 @@ Next
 Set WbzDs = O
 End Function
 Sub PutSeqDown(At As Range, FmNum&, ToNum&)
-PutAyV LngSeqzFT(FmNum, ToNum), At
+PutAyV LngSeq(FmNum, ToNum), At
 End Sub
 
 Sub DltSheet1(Wb As Workbook)

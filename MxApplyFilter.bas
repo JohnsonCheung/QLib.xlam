@@ -420,7 +420,7 @@ Private Function XVisI(CCol(), CCri()) As Long()
 If Si(CCol) <> Si(CCri) Then Stop
 Dim CCol0(): CCol0 = CCol(0) ' #Cri-Col-0 ! the fst col of %CCol #Cri-Col
 Dim URow&: URow = UB(CCol0)   '            ! same as @L-URow
-Dim O&(): O = LngSeqzFT(0, URow) ' ! assume all row are selected
+Dim O&(): O = LngSeq(0, URow) ' ! assume all row are selected
 Dim ICol, J%: For Each ICol In CCol
     Dim Col(): Col = ICol
     Dim CriAy(): CriAy = CCri(J)

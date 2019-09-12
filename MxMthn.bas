@@ -48,13 +48,17 @@ For Each Ix In MthIxItr(Src)
 Next
 End Function
 
-Function MthNyzMthLinAy(MthLinAy$()) As String()
-Const CSub$ = CMod & "MthNyzMthLinAy"
+Function MthnnzL$(MthLinAy$())
+MthnnzL = JnSpc(AySrt(MthNy(MthLinAy)))
+End Function
+
+Function MthNyzL(MthLinAy$()) As String()
+Const CSub$ = CMod & "MthNyzL"
 Dim I, Nm$, J%, MthLin
 For Each I In Itr(MthLinAy)
     Nm = MthnzLin(I)
     If Nm = "" Then Thw CSub, "Given MthLinAy does not have Mthn", "[MthLin with error] Ix MthLinAy", I, J, AddIxPfx(MthLinAy)
-    PushI MthNyzMthLinAy, Nm
+    PushI MthNyzL, Nm
     J = J + 1
 Next
 End Function

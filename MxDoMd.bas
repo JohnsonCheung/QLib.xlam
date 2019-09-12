@@ -1,8 +1,9 @@
 Attribute VB_Name = "MxDoMd"
 Option Explicit
 Option Compare Text
+Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxDoMd."
-Const FFoMd$ = "MdTy CLibv CNsv CModv Pjn Mdn NLin NMth NPub NPrv NFrd IsCModEr"
+Public Const FFoMd$ = "MdTy CLibv CNsv CModv Pjn Mdn IsCModEr NLin NMth NPub NPrv NFrd Mthnn"
 Function FoMd() As String()
 FoMd = SyzSS(FFoMd)
 End Function
@@ -12,28 +13,22 @@ DoMdP = DoMdzP(CPj)
 End Function
 
 Private Function DoMdzP(P As VBProject) As Drs
-DoMdzP = Drs(FoMd, DyoMdzP(P))
+Dim MdId As Drs: MdId = DoMdIdzP(P)
+DoMdzP = AddCol_MdSts_Mthnn(MdId, P)
 End Function
 
-Private Function DroMd(M As CodeModule) As Variant()
-Dim D(): D = DroMdn(M)
-Dim CMod$: CMod = CModv(M)
-Dim Pjn$: Pjn = D(0)
-Dim MdTy$: MdTy = D(1)
-Dim Mdn$: Mdn = D(2)
-Dim IsCModEr As Boolean: IsCModEr = CMod <> Mdn
-With MdSts(M)
-    Dim NMth%: NMth = .NPub + .NPrv + .NFrd
-    DroMd = Array(MdTy, CLibv(M), CNsv(M), CMod, Pjn, Mdn, .NLin, NMth, .NPub, .NPrv, .NFrd, IsCModEr)
-End With
-End Function
-
-Private Function DyoMdzP(P As VBProject) As Variant()
-Dim O()
-    Dim C As VBComponent: For Each C In P.VBComponents
-        Dim M As CodeModule: Set M = C.CodeModule
-        PushI O, DroMd(M)
+Private Function AddCol_MdSts_Mthnn(MdId As Drs, P As VBProject) As Drs
+Dim Dy()
+    Dim IxMdn%: IxMdn = IxzAy(MdId.Fny, "Mdn")
+    Dim Dr: For Each Dr In Itr(MdId.Dy)
+        Dim Mdn$: Mdn = Dr(IxMdn)
+        Dim M As CodeModule: Set M = P.VBComponents(Mdn).CodeModule
+        Dim S$(): S = Src(M)
+        Dim L$(): L = MthLinAy(S)
+        With MdStszL(L)
+            Dim NMth%: NMth = .NPub + .NPrv + .NFrd
+            PushI Dy, AddAy(Dr, Array(.NLin, NMth, .NPub, .NPrv, .NFrd, MthnnzL(L)))
+        End With
     Next
-DyoMdzP = O
+AddCol_MdSts_Mthnn = AddColzFFDy(MdId, "NLin NMth NPub NPrv NFrd Mthnn", Dy)
 End Function
-

@@ -1,6 +1,7 @@
 Attribute VB_Name = "MxSrcFfn"
 Option Explicit
 Option Compare Text
+Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxSrcFfn."
 
 Function SrcFfnM$()

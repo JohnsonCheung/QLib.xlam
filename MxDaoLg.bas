@@ -41,7 +41,7 @@ End Function
 
 Private Function CvSess&(A&)
 If A > 0 Then CvSess = A: Exit Function
-'CvSess = VzQ(L, "select Max(Sess) from Sess")
+'CvSess = FvzQ(L, "select Max(Sess) from Sess")
 End Function
 
 Sub DmpFei(A As Fei)
@@ -282,7 +282,7 @@ LgAy = SessLgAy(A)
 End Function
 
 Function SessNLg%(A&)
-'SessNLg = VzQ(L, "Select Count(*) from Lg where Sess=" & A)
+'SessNLg = FvzQ(L, "Select Count(*) from Lg where Sess=" & A)
 End Function
 
 Private Sub WrtLg(Fun$, MsgTxt$)

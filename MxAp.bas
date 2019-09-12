@@ -98,27 +98,6 @@ For Each I In Av
 Next
 End Function
 
-Function IntAyzFT(F%, T%) As Integer()
-Stop
-Dim O%(): ReDim O(Abs(T - F))
-IntAyzFT = IntozFT(O, F, T)
-End Function
-
-Private Function IntozFT(Into, F, T)
-Dim O: O = Into
-Dim S: S = IIf(T > F, 1, -1) ' Step
-Dim V, I&: For V = F To T Step S
-    O(I) = V
-    I = I + 1
-Next
-IntozFT = O
-End Function
-
-Function LngAyzFT(F&, T&) As Long()
-Dim O&(): ReDim O(T - F)
-LngAyzFT = IntozFT(O, F, T)
-End Function
-
 
 Function SyzAy(Ay) As String()
 SyzAy = IntozAy(EmpSy, Ay)

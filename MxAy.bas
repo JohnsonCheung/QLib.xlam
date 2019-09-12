@@ -749,15 +749,6 @@ Function SyzSS(SS) As String()
 SyzSS = SplitSpc(RplDblSpc(Trim(SS)))
 End Function
 
-Function IntSeq(N&, Optional Fm% = 0) As Integer()
-Dim O%(): ReDim O(N - 1)
-Dim J&
-    For J = 0 To N - 1
-        O(J) = J + Fm
-    Next
-IntSeq = O
-End Function
-
 Function ItrzTT(TT$)
 Asg Itr(TermAy(TT)), ItrzTT
 End Function

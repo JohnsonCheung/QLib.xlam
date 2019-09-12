@@ -1,6 +1,7 @@
 Attribute VB_Name = "MxTouchMd"
 Option Explicit
 Option Compare Text
+Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxTouchMd."
 Sub TouchMdM()
 TouchMdzM CMd

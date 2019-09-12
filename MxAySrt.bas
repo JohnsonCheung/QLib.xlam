@@ -83,7 +83,7 @@ End Function
 Function AySrtQ(Ay, Optional IsDes As Boolean)
 If Si(Ay) = 0 Then AySrtQ = Ay: Exit Function
 A_Ay = Ay  ' Put it is A_Ay, which is untouch, only sort the %Ixy
-Dim Ixy&(): Ixy = LngSeqzFT(0, UB(Ay))
+Dim Ixy&(): Ixy = LngSeq(0, UB(Ay))
 Ixy = AySrtQ__Srt(Ixy)  'Srt the %Ixy
 If IsDes Then
     Ixy = AyRevI(Ixy)

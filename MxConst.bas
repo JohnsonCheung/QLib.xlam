@@ -65,8 +65,8 @@ Public Const SampFbzShpRate$ _
                                     = H1 & "QFinalSln\StockShipRate (ver 1.0).accdb"
 Public Const SampFbzShpCst$ = "C:\Users\user\Documents\Projects\Vba\ShpCst\ShpCstApp.accdb"
 Public Const SampFx$ = SampFxzKE24
-Property Get SampDboShpCst() As Database
-Set SampDboShpCst = Db(SampFbzShpCst)
+Property Get SampDbShpCst() As Database
+Set SampDbShpCst = Db(SampFbzShpCst)
 End Property
 Property Get DbEng() As DBEngine
 Set DbEng = dao.DBEngine
@@ -83,8 +83,8 @@ End Property
 Property Get SampDb() As Database
 Set SampDb = Db(SampFb)
 End Property
-Property Get SampDboDutyDta() As Database
-Set SampDboDutyDta = Db(SampFbzDutyDta)
+Property Get SampDbDutyDta() As Database
+Set SampDbDutyDta = Db(SampFbzDutyDta)
 End Property
 
 Private Sub AAAAA()

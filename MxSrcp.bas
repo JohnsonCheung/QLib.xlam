@@ -1,6 +1,7 @@
 Attribute VB_Name = "MxSrcp"
 Option Explicit
 Option Compare Text
+Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxSrcp."
 Function SrcpPj$()
 SrcpPj = Srcp(CPj)

@@ -1,4 +1,6 @@
 Attribute VB_Name = "MxSampS12s"
+Const CLib$ = "QVb."
+Const CMod$ = CLib & "MxSampS12s."
 Private Sub X(O1$(), O2$())
 Erase O1
 Erase O2

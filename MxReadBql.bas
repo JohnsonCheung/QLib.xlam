@@ -33,7 +33,7 @@ End Function
 Private Sub Z_CrtTTzFbqlPth()
 Dim D As Database: Set D = TmpDb
 Dim P$: P = TmpPth
-WrtFbqlzDb P, SampDboDutyDta
+WrtFbqlzDb P, SampDbDutyDta
 CrtTTzFbqlPth D, P
 BrwDb D
 End Sub
@@ -53,7 +53,7 @@ End Sub
 
 Private Sub Z_CrtTblzFbql()
 Dim Fbql$: Fbql = TmpFt
-WrtFbql Fbql, SampDboDutyDta, "PermitD"
+WrtFbql Fbql, SampDbDutyDta, "PermitD"
 Dim D As Database: Set D = TmpDb
 CrtTblzFbql D, "PermitD", Fbql
 BrwDb D

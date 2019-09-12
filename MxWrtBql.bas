@@ -50,14 +50,14 @@ End Function
 
 Private Sub Z_WrtFbqlzDb()
 Dim P$: P = TmpPth
-WrtFbqlzDb P, SampDboDutyDta
+WrtFbqlzDb P, SampDbDutyDta
 BrwPth P
 Stop
 End Sub
 
 Private Sub Z_WrtFbqlzT()
 Dim T$: T = TmpFt
-WrtFbql T, SampDboDutyDta, "PermitD"
+WrtFbql T, SampDbDutyDta, "PermitD"
 BrwFt T
 End Sub
 

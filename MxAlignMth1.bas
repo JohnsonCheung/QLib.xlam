@@ -1,4 +1,4 @@
-Attribute VB_Name = "MxAlignMth"
+Attribute VB_Name = "MxAlignMth1"
 Option Explicit
 Option Compare Text
 Const CLib$ = "QIde."
@@ -52,7 +52,7 @@ Z:
     Return
 End Sub
 
-Sub AlignMthzLno(M As CodeModule, MthLno&, Optional Upd As EmUpd, Optional IsUpdSelf As Boolean)
+Sub AlignMthzLno1(M As CodeModule, MthLno&, Optional Upd As EmUpd, Optional IsUpdSelf As Boolean)
 Dim D1 As Drs, D2 As Drs
 '== Exit if parameter error ============================================================================================
 Dim IsErPm As Boolean: IsErPm = XIsErPm(M, MthLno)                 '        #Is-Parameter-er.     ! M-isnothg | MthLno<=0
@@ -65,11 +65,10 @@ Dim IsSelf As Boolean: IsSelf = XIsSelf(XUpd, IsUpdSelf, M, MlNm) '        #Is-S
 :                   If IsSelf Then Exit Sub        ' Exit=>                 ! If
 Dim Mc As Drs: Mc = DoMthCxtzML(M, MthLno)          ' L MthLin #Mth-Context.
 :                   If NoReczDrs(Mc) Then Exit Sub ' Exit=>                 ! If
-'== Align DblEqRmk (De) ================================================================================================
-'   When a rmk lin begins with '== or '-- or '.., expand it to 120 = or - or .
-Dim De      As Drs:      De = XDe(Mc)                         ' L MthLin    #Dbl-Eq | Dbl-Dash | Dbl-Dot
-Dim DeLNewO As Drs: DeLNewO = XDeLNewO(De)                    ' L NewL OldL
-:                             If XUpd Then RplLin M, DeLNewO ' <==
+
+Dim AlignRmkSepLNewO As Drs: AlignRmkSepLNewO = AlignRmkSep(XUpd, M, Mc)  '   When a rmk lin begins with '== or '-- or '.., expand it to 120 = or - or .
+
+
 '== Align Mth Cxt ======================================================================================================
 Dim McCln As Drs: McCln = XMcCln(Mc)                        ' L McLin                    #Mc-Cln. ! Incl those line is &XIsLinMc
 :                         If NoReczDrs(McCln) Then Exit Sub ' Exit=>                              ! if no mth-cxt
@@ -226,10 +225,10 @@ End If
 '== Upd <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 If IsRptU(Upd) Then
     Insp CSub, "Changes", _
-        "EmUpd DblEqRmk Align BrwStmt " & _
+        "EmUpd RmkSep Align BrwStmt " & _
         "Crt-Chd-Mth Rpl-Mth-Brw Crt-Mth-Brw Upd-Chd-MthLin Rfh-Chd-Mth-Rmk", _
         EmUpdStr(Upd), _
-        FmtCellDrs(DeLNewO), FmtCellDrs(McLNewO), FmtCellDrs(BsLNewO), _
+        FmtCellDrs(AlignRmkSepLNewO), FmtCellDrs(McLNewO), FmtCellDrs(BsLNewO), _
         CdNewCm, FmtCellDrs(MbLNewO), FmtCellDrs(MbNew), FmtCellDrs(CmlLNewO), FmtS12s(CrChg)
 End If
 'Insp CSub, "Cr", "CrVpr CrS12s", FmtCellDrs(CrVpr), FmtS12s(CrS12s): Stop
@@ -251,17 +250,17 @@ XCrInspAli = AddColzFFDy(CrAli, "WP W1 W2 W3", Dy)
 'Insp "QIde_B_AlignMth.XCrInspAli", "Inspect", "Oup(XCrInspAli) CrAli", FmtCellDrs(XCrInspAli), FmtCellDrs(CrAli): Stop
 End Function
 
-Sub AlignMth(Optional Upd As EmUpd)
+Sub AlignMth1(Optional Upd As EmUpd)
 Dim M As CodeModule: Set M = CMd
 If IsNothing(M) Then Exit Sub
-AlignMthzLno M, CMthLno, Upd:=Upd
+AlignMthzLno1 M, CMthLno, Upd:=Upd
 End Sub
 
-Sub AlignMthzNm(Mdn$, Mthn$, Optional Upd As EmUpd)
+Sub AlignMthzNm1(Mdn$, Mthn$, Optional Upd As EmUpd)
 If Not HasMd(CPj, Mdn) Then Debug.Print "[" & Mdn & "] not exist": Exit Sub
 Dim M As CodeModule: Set M = Md(Mdn)
 Dim L&: L = MthLnozMM(M, Mthn): If L = 0 Then Debug.Print "[" & Mthn & "] not exist": Exit Sub
-AlignMthzLno M, L, Upd:=Upd
+AlignMthzLno1 M, L, Upd:=Upd
 End Sub
 
 Private Function XAddColzF0(A As Drs) As Drs
@@ -286,41 +285,6 @@ Next
 XMcFill = O
 'Insp "QIde_B_AlignMth.XMcFill", "Inspect", "Oup(XMcFill) McR123", FmtCellDrs(XMcFill), FmtCellDrs(McR123): Stop
 End Function
-
-Private Function XDe(Mc As Drs) As Drs
-'Fm Mc : L MthLin #Mth-Context.
-'Ret   : L MthLin #Dbl-Eq | Dbl-Dash | Dbl-Dot @@
-Dim Dr, Dy(): For Each Dr In Itr(Mc.Dy)
-    Dim L$: L = LTrim(Dr(1))
-    If FstChr(L) = "'" Then
-        L = Left(RmvFstChr(L), 2)
-        Select Case L
-        Case "==", "--", "..": PushI Dy, Dr
-        End Select
-    End If
-Next
-XDe.Fny = Mc.Fny
-XDe.Dy = Dy
-'Insp "QIde_B_AlignMth.XDe", "Inspect", "Oup(XDe) Mc", FmtCellDrs(XDe), FmtCellDrs(Mc): Stop
-End Function
-
-Private Function XDeLNewO(De As Drs) As Drs
-'Fm De : L MthLin    #Dbl-Eq | Dbl-Dash | Dbl-Dot
-'Ret   : L NewL OldL @@
-Dim Dr, Dy(): For Each Dr In Itr(De.Dy)
-    Dim L&:       L = Dr(0)
-    Dim OldL$: OldL = Dr(1)
-    Dim C$:       C = Mid(LTrim(OldL), 2, 1)
-    Dim NewL$: NewL = Left(OldL, 120) & Dup(C, 120 - Len(OldL))
-    If OldL <> NewL Then
-        Push Dy, Array(L, NewL, OldL)
-    End If
-Next
-XDeLNewO = LNewO(Dy)
-'Insp "QIde_B_AlignMth.XDeLNewO", "Inspect", "Oup(XDeLNewO) De", FmtCellDrs(XDeLNewO), FmtCellDrs(De): Stop
-End Function
-
-
 
 Private Function XMcTRmk(McRmk As Drs) As Drs
 'Fm McRmk : L McLin Gpno IsColon IsRmk ! Add ^IsRmk   wh-LTrim-FstChr-^McLin='
@@ -591,7 +555,7 @@ Private Function XIsSelf(IsUpd As Boolean, IsUpdSelf As Boolean, M As CodeModule
 If Not IsUpd Then Exit Function
 If IsUpdSelf Then Exit Function
 Dim O As Boolean
-O = Mdn(M) = "MxAlignMth" And MlNm = "AlignMthzLno"
+O = Mdn(M) = "MxAlignMth1" And MlNm = "AlignMthzLno1"
 If O Then Inf CSub, "Self aligning"
 XIsSelf = O
 'Insp "QIde_B_AlignMth.XIsSelf", "Inspect", "Oup(XIsSelf) IsUpd IsUpdSelf M MlNm", XIsSelf, IsUpd, IsUpdSelf, Mdn(M), MlNm: Stop
@@ -1072,5 +1036,7 @@ XCrWiRmk = Drs(CrSel.Fny, Dy)
 End Function
 
 Private Sub Z()
-QIde_B_AlignMth:
+
 End Sub
+
+

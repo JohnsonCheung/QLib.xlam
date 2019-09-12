@@ -152,7 +152,7 @@ End Function
 
 Function VzPm(D As Database, PmNm$)
 Dim Q$: Q = FmtQQ("Select ? From Pm where CUsr='?'", PmNm, CUsr)
-VzPm = VzQ(D, Q)
+VzPm = FvzQ(D, Q)
 End Function
 
 Sub SetVzPm(D As Database, PmNm$, V)

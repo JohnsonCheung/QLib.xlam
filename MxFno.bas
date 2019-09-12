@@ -1,6 +1,8 @@
 Attribute VB_Name = "MxFno"
 Option Explicit
 Option Compare Text
+Const CLib$ = "QVb."
+Const CMod$ = CLib & "MxFno."
 Function FnoRnd128%(Ffn)
 FnoRnd128 = FnoRnd(Ffn, 128)
 End Function

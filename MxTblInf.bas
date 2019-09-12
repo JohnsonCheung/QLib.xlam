@@ -402,20 +402,20 @@ NColzT = D.TableDefs(T).Fields.Count
 End Function
 
 Function NReczFxw&(Fx, Wsn, Optional Bexp$)
-NReczFxw = VzCnq(CnzFx(Fx), SqlSelCnt_T_OB(CattnzWsn(Wsn), Bexp))
+NReczFxw = FvzCnq(CnzFx(Fx), SqlSelCnt_T_OB(CattnzWsn(Wsn), Bexp))
 End Function
 
 Function NReczT&(D As Database, T, Optional Bexp$)
-NReczT = VzQ(D, SqlSelCnt_T_OB(T, Bexp))
+NReczT = FvzQ(D, SqlSelCnt_T_OB(T, Bexp))
 End Function
 
 Function NReczTBexp&(D As Database, T, Bexp$)
-NReczTBexp = VzQ(D, SqlSelCnt_T_OB(T, Bexp))
+NReczTBexp = FvzQ(D, SqlSelCnt_T_OB(T, Bexp))
 End Function
 
 Function NxtId&(D As Database, T)
 Dim S$: S = FmtQQ("select Max(?Id) from [?]", T, T)
-NxtId = VzQ(D, S) + 1
+NxtId = FvzQ(D, S) + 1
 End Function
 
 Function PkFny(D As Database, T) As String()
@@ -515,21 +515,6 @@ End Function
 
 Function SrcTn$(D As Database, T)
 SrcTn = D.TableDefs(T).SourceTableName
-End Function
-
-Function VzArs(A As AdoDB.Recordset)
-If NoReczArs(A) Then Exit Function
-Dim V: V = A.Fields(0).Value
-If IsNull(V) Then Exit Function
-VzArs = V
-End Function
-
-Function VzCnq(A As AdoDB.Connection, Q)
-VzCnq = VzArs(A.Execute(Q))
-End Function
-
-Function VzTFRecId(D As Database, T, F$, RecId&) ' K is Pk value
-'VzTFRecId = VzQ(D, SqlSel_FF_T(F, T, BexpRecId(T, RecId)))
 End Function
 
 Private Sub Z()
