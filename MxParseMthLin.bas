@@ -6,7 +6,7 @@ Const CMod$ = CLib & "MxParseMthLin."
 Type MthLinRec
     ShtMdy As String
     ShtTy As String
-    Nm As String
+    NM As String
     TyChr As String
     RetTy As String
     Pm As String
@@ -45,7 +45,7 @@ Dim L$: L = MthLin
 With MthLinRec
     .ShtMdy = ShfShtMdy(L)
     .ShtTy = ShfShtMthTy(L): If .ShtTy = "" Then Exit Function
-    .Nm = ShfNm(L)
+    .NM = ShfNm(L)
     .TyChr = ShfTyChr(L)
     .Pm = ShfBktStr(L)
     .RetTy = ShfRetTyzAftPm(L)

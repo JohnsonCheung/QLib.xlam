@@ -90,7 +90,7 @@ End Function
 
 Function DrMthLin(MthLin) As Variant()
 With MthLinRec(MthLin)
-DrMthLin = Array(.ShtMdy, .ShtTy, .Nm, .ShtRetTy, FmtPm(.Pm, IsNoBkt:=True), .Rmk)
+DrMthLin = Array(.ShtMdy, .ShtTy, .NM, .ShtRetTy, FmtPm(.Pm, IsNoBkt:=True), .Rmk)
 End With
 End Function
 
@@ -207,6 +207,6 @@ Private Function DroMth(Ix, MthLin$, DroMd()) As Variant()
 Dim A As Mthn3:      A = Mthn3zL(MthLin)
 Dim Ty$:            Ty = A.ShtTy
 Dim Mdy$:          Mdy = A.ShtMdy
-Dim Mthn$:        Mthn = A.Nm
+Dim Mthn$:        Mthn = A.NM
                 DroMth = AddAy(DroMd, Array(Ix + 1, Mdy, Ty, Mthn, MthLin))
 End Function

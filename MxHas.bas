@@ -96,13 +96,7 @@ While P > 0
 Wend
 RmvBetDblQ = O
 End Function
-Function HasSngDblQ(S) As Boolean
-If HasSngQ(S) Then
-    If HasDblQ(S) Then
-        HasSngDblQ = True
-    End If
-End If
-End Function
+
 Function HasSubStr(S, SubStr, Optional Cpr As VbCompareMethod) As Boolean
 HasSubStr = InStr(1, S, SubStr, Cpr) > 0
 End Function

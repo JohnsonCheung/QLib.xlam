@@ -60,7 +60,7 @@ Function FstMthIxzSN&(Src$(), Mthn)
 Dim Ix&
 For Ix = 0 To UB(Src)
     With Mthn3zL(Src(Ix))
-        If .Nm = Mthn Then
+        If .NM = Mthn Then
             FstMthIxzSN = Ix
             Exit Function
         End If
@@ -152,7 +152,7 @@ Function MthIxzNmTy&(Src$(), Mthn, ShtMthTy$)
 Dim Ix&
 For Ix = 0 To UB(Src)
     With Mthn3zL(Src(Ix))
-        If .Nm = Mthn Then
+        If .NM = Mthn Then
             If .ShtTy = ShtMthTy Then
                 MthIxzNmTy = Ix
                 Exit Function

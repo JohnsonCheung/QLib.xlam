@@ -201,7 +201,7 @@ Private Function XDoArg__FmArgAy(ArgAy$()) As Drs
 'Ret       : :Drs-ArgItm ArgNm DclSfx ArgVar> <ArgNm DclSfx> are unique @@
 Dim Arg, ODy(): For Each Arg In Itr(ArgAy)
     Dim Itm$: Itm = ArgItm(Arg)
-    Dim ArgNm$: ArgNm = Nm(Itm)
+    Dim ArgNm$: ArgNm = NM(Itm)
     Dim DclSfx$: DclSfx = RmvPfx(Itm, ArgNm)
     PushI ODy, Array(Itm, ArgNm, DclSfx, Empty)
 Next

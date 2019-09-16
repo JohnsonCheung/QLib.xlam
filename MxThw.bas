@@ -109,7 +109,9 @@ BrwAy Sy(A, LyzNav(Nav))
 End Sub
 
 Sub ThwMsg(Fun$, Msg$)
-
+Dim A$(): A = BoxzS("Program error")
+BrwAy LyzFunMsg(Fun, Msg)
+Halt
 End Sub
 
 Sub ThwMsgNN(Fun$, Msg$, Nn$, ParamArray Ap())
@@ -237,4 +239,8 @@ End Sub
 
 Sub ThwEqObj(A, B, Fun$, Optional Msg$ = "Two given object cannot be same")
 If IsEqObj(A, B) Then ThwMsg Fun, Msg
+End Sub
+
+Sub ThwImpossible(Fun$)
+ThwMsg Fun, "Impossible to reach here"
 End Sub

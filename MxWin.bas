@@ -56,8 +56,8 @@ Function WinzM(M As CodeModule) As vbide.Window
 Set WinzM = M.CodePane.Window
 End Function
 
-Private Function MdzP(P As VBProject, Nm) As CodeModule
-Set MdzP = P.VBComponents(Nm).CodeModule
+Private Function MdzP(P As VBProject, NM) As CodeModule
+Set MdzP = P.VBComponents(NM).CodeModule
 End Function
 
 Sub ShwDbg()

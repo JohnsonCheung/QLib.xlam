@@ -1,8 +1,8 @@
-Attribute VB_Name = "MxTy"
+Attribute VB_Name = "MxVbTy"
 Option Compare Text
 Option Explicit
 Const CLib$ = "QDao."
-Const CMod$ = CLib & "MxTy."
+Const CMod$ = CLib & "MxVbTy."
 Public Const ShtTySS$ = " A Att B Bool Byt C Chr D Dbl Dte Dec I Int L Lng M Mem S T Tim Txt "
 Enum EmSimTy
     EiUnk
@@ -391,5 +391,4 @@ End Function
 
 Function VbTyzCol(Col()) As EmSimTy
 Stop
-
 End Function

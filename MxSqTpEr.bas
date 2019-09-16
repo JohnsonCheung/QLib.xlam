@@ -82,15 +82,15 @@ MsgzTermNotInSw = SwLinMsg(A, "Terms[" & JnSpc(TermAy) & "] begin with [?] must 
 End Function
 
 Private Function ErzDupNm(A() As SwLin, O() As SwLin) As String()
-Dim Ny$(), Nm$
+Dim Ny$(), NM$
 Dim J%, M As SwLin, Er() As SwLin
 'For J = 0 To UB(A)
     'Set M = A(J)
-    If HasEle(Ny, M.Nm) Then
+    If HasEle(Ny, M.NM) Then
         'PushObj Er, M
     Else
         'PushObj O, M
-        PushI Ny, M.Nm
+        PushI Ny, M.NM
     End If
 'Next
 'ErzDupNm = MsgzDupNm(Er)
@@ -136,7 +136,7 @@ End Function
 Private Function ErzLin1$(IO As SwLin)
 Dim SwLinMsg$
 With IO
-    If .Nm = "" Then ErzLin1 = MsgzNoNm(IO): Exit Function
+    If .NM = "" Then ErzLin1 = MsgzNoNm(IO): Exit Function
 '    Select Case .OpStr
 '    Case "OR", "AND": If Si(.TermAy) = 0 Then ErzLin1 = MsgzTermCntAndOr(IO): Exit Function
 '    Case "EQ", "NE":  If Si(.TermAy) <> 2 Then ErzLin1 = MsgzTermCntEqNe(IO): Exit Function

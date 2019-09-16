@@ -28,17 +28,6 @@ If XWrt Then WrtStr S, Ft
 EnsFt = XWrt
 End Function
 
-Sub BrwFt(Ft, Optional UseVc As Boolean)
-Dim CmdStr$: CmdStr = ""
-    Dim P$: P = IIf(UseVc, "code.cmd", "notepad.exe")
-    CmdStr = FmtQQ("? ""?""", P, Ft)
-If UseVc Then
-    ShellHid CmdStr
-Else
-    ShellMax CmdStr
-End If
-End Sub
-
 Private Function FstNBlk$(Fno%, N&)
 If N <= 0 Then Exit Function
 Dim O$(): ReDim O(N - 1)
@@ -71,5 +60,3 @@ Sub CrtFfn(Ffn)
 'Do : Crt-Empty-Ffn
 Close #FnoO(Ffn)
 End Sub
-
-

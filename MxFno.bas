@@ -30,4 +30,3 @@ Dim O%: O = FreeFile(1)
 Open Ft For Output As #O
 FnoO = O
 End Function
-

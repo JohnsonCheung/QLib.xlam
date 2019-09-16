@@ -89,8 +89,8 @@ Next
 Set FstzItrEq = Nothing
 End Function
 
-Function FstzItn(Itr, Nm$) 'Return first element in Itr with its PrpNm=Nm being true
-Set FstzItn = FstzItrEq(Itr, "Name", Nm)
+Function FstzItn(Itr, NM$) 'Return first element in Itr with its PrpNm=Nm being true
+Set FstzItn = FstzItrEq(Itr, "Name", NM)
 End Function
 
 Function FstzItrT(Itr, TruePrpPth$)
@@ -98,9 +98,9 @@ Function FstzItrT(Itr, TruePrpPth$)
 Set FstzItrT = FstzItrEq(Itr, TruePrpPth, True)
 End Function
 
-Function HasItn(Itr, Nm) As Boolean
+Function HasItn(Itr, NM) As Boolean
 Dim Obj: For Each Obj In Itr
-    If Obj.Name = Nm Then HasItn = True: Exit Function
+    If Obj.Name = NM Then HasItn = True: Exit Function
 Next
 End Function
 

@@ -1,4 +1,6 @@
 Attribute VB_Name = "MxSampS12s"
+Option Explicit
+Option Compare Text
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxSampS12s."
 Private Sub X(O1$(), O2$())
@@ -32,4 +34,3 @@ For J = 0 To UB(A1)
     PushS12 SampS12s, S12(A1(J), A2(J))
 Next
 End Function
-

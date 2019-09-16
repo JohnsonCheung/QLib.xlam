@@ -30,7 +30,7 @@ Type Sw
     FldSw As Dictionary
 End Type
 Type SwLin
-    Nm As String
+    NM As String
     Op As EmSwLinOp
     T1 As String
     T2 As String
@@ -48,7 +48,7 @@ For J = 0 To A.N - 1
     M = A.Ay(J)
     With EvlSwLin(M, SwDic, Pm)
         If .Som Then
-            SwDic.Add M.Nm, .Bool
+            SwDic.Add M.NM, .Bool
             HasEvl = True
         Else
             PushSwLin Remaining, M
@@ -74,7 +74,7 @@ Case .Op = EiOpEq, .Op = EiOpNe: O = EvlSwLinEqNe(A.Op, .T1, .T2, SwDic, Pm)
 End Select
 End With
 EvlSwLin = O
-If A.Nm = "?LvlY" And J = 3 Then Stop
+If A.NM = "?LvlY" And J = 3 Then Stop
 
 End Function
 Private Function EvlSwLinEqNe(Op As EmSwLinOp, T1$, T2$, SwDic As Dictionary, Pm As Dictionary) As BoolOpt
@@ -123,7 +123,7 @@ Select Case True
 Case .Op = EiOpAnd, .Op = EiOpOr: X = JnSpc(.TermAy)
 Case .Op = EiOpEq, .Op = EiOpNe: X = .T1 & " " & .T2
 End Select
-SwLinStr = JnSpcAp(.Nm, SwLinOpStr(.Op), X)
+SwLinStr = JnSpcAp(.NM, SwLinOpStr(.Op), X)
 End With
 End Function
 Private Function SwLinOpStr$(A As EmSwLinOp)
@@ -137,9 +137,9 @@ Case Else: ThwImpossible CSub
 End Select
 SwLinOpStr = O
 End Function
-Private Function SwLin(Nm$, Op As EmSwLinOp, T1$, T2$, TermAy$()) As SwLin
+Private Function SwLin(NM$, Op As EmSwLinOp, T1$, T2$, TermAy$()) As SwLin
 With SwLin
-    .Nm = Nm
+    .NM = NM
     .Op = Op
     Select Case True
     Case Op = EiOpNe, Op = EiOpEq: .T1 = T1: .T2 = T2
@@ -159,7 +159,7 @@ End Select
 End Function
 Private Function SwLinzLin(Lin) As SwLin
 Dim Ay$(): Ay = TermAy(Lin)
-Dim Nm$: Nm = Ay(0)
+Dim NM$: NM = Ay(0)
 Dim OpStr$: OpStr = Ay(1)
 Dim Op As EmSwLinOp: Op = SwLinOp(OpStr)
 Dim T1$, T2$
@@ -171,7 +171,7 @@ Case Op = EiOpAnd, Op = EiOpOr
     If Si(Ay) < 3 Then Thw CSub, "Lin should have at 3 terms And | Or", "Lin", Lin
     Ay = AeFstNEle(Ay, 2)
 End Select
-SwLinzLin = SwLin(Nm, Op, T1, T2, Ay)
+SwLinzLin = SwLin(NM, Op, T1, T2, Ay)
 End Function
 Private Sub PushSwLin(O As SwLins, M As SwLin)
 ReDim Preserve O.Ay(O.N)

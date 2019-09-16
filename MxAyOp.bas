@@ -268,20 +268,20 @@ Function TabN$(N%)
 TabN = Space(4 * N)
 End Function
 
-Function TabNmV$(Nm$, V, Optional NTab% = 1)
-TabNmV = TabN(NTab) & Nm & V
+Function TabNmV$(NM$, V, Optional NTab% = 1)
+TabNmV = TabN(NTab) & NM & V
 End Function
-Function TabNmLy(Nm$, Ly$(), Optional NTab% = 1, Optional Beg As EmIxCol = EiNoIx) As String()
+Function TabNmLy(NM$, Ly$(), Optional NTab% = 1, Optional Beg As EmIxCol = EiNoIx) As String()
 Stop
 If Si(Ly) = 0 Then
-    PushI TabNmLy, TabN(NTab) & Nm
+    PushI TabNmLy, TabN(NTab) & NM
     Exit Function
 End If
 Dim Ly1$(), L0$, S$, J&
 Ly1 = AddIxPfx(Ly, Beg)
-PushI TabNmLy, TabN(NTab) & Nm & Ly1(0)
+PushI TabNmLy, TabN(NTab) & NM & Ly1(0)
 '
-S = TabN(NTab) & Space(Len(Nm))
+S = TabN(NTab) & Space(Len(NM))
 For J = 1 To UB(Ly1)
     PushI TabNmLy, S & Ly1(J)
 Next

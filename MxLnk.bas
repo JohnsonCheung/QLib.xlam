@@ -9,23 +9,23 @@ LnkTblzDy D, DoTSCn.Dy
 End Sub
 
 Sub LnkTblzDy(D As Database, DyoTSCn())
-Dim Dr, T$, S$, Cn$
+Dim Dr, T$, S$, CN$
 For Each Dr In Itr(DyoTSCn)
     T = Dr(0)
     S = Dr(1)
-    Cn = Dr(2)
-    LnkTbl D, T, S, Cn
+    CN = Dr(2)
+    LnkTbl D, T, S, CN
 Next
 End Sub
 
-Sub LnkTbl(D As Database, T, S$, Cn$)
+Sub LnkTbl(D As Database, T, S$, CN$)
 On Error GoTo X
 DrpT D, T
-D.TableDefs.Append TdzCnStr(T, S, Cn)
+D.TableDefs.Append TdzCnStr(T, S, CN)
 Exit Sub
 X:
     Dim Er$: Er = Err.Description
-    Thw CSub, "Error in linking table", "Er Db T SrcTbl Cn", Er, D.Name, T, S, Cn
+    Thw CSub, "Error in linking table", "Er Db T SrcTbl Cn", Er, D.Name, T, S, CN
 End Sub
 
 Function ErzLnkFxw(D As Database, T, Fx, Optional Wsn = "Sheet1") As String()
@@ -44,10 +44,10 @@ Sub LnkFb(D As Database, T, Fb, Optional Fbt$)
 LnkTbl D, T, DftStr(Fbt, T), DaoCnStrzFb(Fb)
 End Sub
 
-Private Function TdzCnStr(T, Src$, Cn$) As dao.TableDef
+Private Function TdzCnStr(T, Src$, CN$) As dao.TableDef
 Set TdzCnStr = New dao.TableDef
 With TdzCnStr
-    .Connect = Cn
+    .Connect = CN
     .Name = T
     .SourceTableName = Src
 End With

@@ -70,4 +70,3 @@ For Each P In PrpPthSy
 Next
 Set DiczObjPrpPthSy = O
 End Function
-

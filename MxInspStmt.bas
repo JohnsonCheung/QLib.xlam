@@ -1,8 +1,8 @@
-Attribute VB_Name = "MxInspMth"
+Attribute VB_Name = "MxInspStmt"
 Option Explicit
 Option Compare Text
 Const CLib$ = "QIde."
-Const CMod$ = CLib & "MxInspMth."
+Const CMod$ = CLib & "MxInspStmt."
 Private Function InspExprLiszPm$(Pm$)
 If Pm = "" Then Exit Function
 Dim Ay$(): Ay = Split(Pm, ", ")
@@ -16,33 +16,33 @@ Next
 InspExprLiszPm = JnCommaSpc(O)
 End Function
 
-Private Sub Z_InspStmtzMthLin()
+Private Sub Z_InspStmtzL()
 Dim A As Drs: A = DoMthzM(CMd)
 Dim B$(): B = StrCol(A, "MthLin")
 Dim L, ODy()
 For Each L In B
-    PushI ODy, Array(L, InspStmtzMthLin(L, "Md"))
+    PushI ODy, Array(L, InspStmtzL(L, "Md"))
 Next
 Dim C As Drs: C = DrszFF("MthLin InspStmt", ODy)
 Brw LinzDrsR(C)
 End Sub
 
-Function InspStmtzMthLin$(MthLin, Mdn$)
+Function InspStmtzL$(MthLin, Mdn$)
 With MthLinRec(MthLin)
     If .Pm = "" And Not .IsRetVal Then Exit Function
     Dim Nn$: Nn = JnSpc(ArgNyzPm(.Pm))
     Dim Ee$: Ee = InspExprLiszPm(.Pm)
-    Dim IsN0$: IsN0 = XIsN0(.IsRetVal, .Nm)  '#Insp-Nm-0.
-    Dim IsE0$: IsE0 = XIsE0(.IsRetVal, .Nm, .TyChr, .RetTy) '#Insp-Expr-0
+    Dim IsN0$: IsN0 = XIsN0(.IsRetVal, .NM)  '#Insp-Nm-0.
+    Dim IsE0$: IsE0 = XIsE0(.IsRetVal, .NM, .TyChr, .RetTy) '#Insp-Expr-0
     Nn = IsN0 & Nn
     Ee = IsE0 & Ee
-    InspStmtzMthLin = InspStmt(Nn, Ee, Mdn, .Nm)
+    InspStmtzL = InspStmt(Nn, Ee, Mdn, .NM)
 End With
 End Function
 
-Function InspStmt$(Nn$, ExprLis$, Mdn$, Mthn$)
+Function InspStmt$(Varnn$, ExprLis$, Mdn$, Mthn$)
 Const C$ = "Insp ""?.?"", ""Inspect"", ""?"", ?"
-InspStmt = FmtQQ(C, Mdn, Mthn, Nn, ExprLis)
+InspStmt = FmtQQ(C, Mdn, Mthn, Varnn, ExprLis)
 End Function
 
 Private Function InspExpr$(V, VSfx As Dictionary)
@@ -52,6 +52,7 @@ If Not VSfx.Exists(V) Then
 End If
 InspExpr = InspExprzDclSfx(V, VSfx(V))
 End Function
+
 Private Function InspExprzDclSfx$(V, DclSfx$)
 Dim O$, S$
 S = RmvPfx(DclSfx, " As ")
@@ -68,15 +69,12 @@ End Select
 InspExprzDclSfx = O
 End Function
 
-Function InspExprLis$(PP$, VSfx As Dictionary)
-InspExprLis = Join(InspExprs(PP, VSfx), ", ")
-End Function
-
-Private Function InspExprs(PP$, VSfx As Dictionary) As String()
-Dim V
-For Each V In Itr(SyzSS(PP))
-    PushI InspExprs, InspExpr(V, VSfx)
-Next
+Function InspExprLis$(Varnn$, DiVarqDclSfx As Dictionary)
+Dim O$()
+    Dim V: For Each V In Itr(SyzSS(Varnn))
+        PushI O, InspExpr(V, DiVarqDclSfx)
+    Next
+InspExprLis = JnCommaSpc(O)
 End Function
 
 Private Function XIsN0$(IsRetVal As Boolean, Mthn$)
@@ -87,4 +85,9 @@ End Function
 Private Function XIsE0$(IsRetVal As Boolean, V, TyChr$, RetTy$)
 If Not IsRetVal Then Exit Function
 XIsE0 = InspExprzDclSfx(V, TyChr & RetTy) & ", "
+End Function
+
+Function InspStmtzDi$(Varnn$, DiVarnnqDclSfx As Dictionary, Mdn$, Mthn$)
+Dim E$: E = InspExprLis(Varnn, DiVarnnqDclSfx)
+InspStmtzDi = InspStmt(Varnn, E, Mdn, Mthn)
 End Function

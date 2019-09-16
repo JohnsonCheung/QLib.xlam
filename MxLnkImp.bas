@@ -150,17 +150,17 @@ End Function
 
 Private Function WLnkFb(Dic_Fbt_Fbn As Dictionary, Dic_Fbn_Fb As Dictionary) As Drs
 'Ret: *LnkFb::Drs{T S Cn)
-Dim Fbn$, A$, S$, Fbt, T$, Cn$, Fb$, Dy()
+Dim Fbn$, A$, S$, Fbt, T$, CN$, Fb$, Dy()
 For Each Fbt In Dic_Fbt_Fbn.Keys
     Fbn = Dic_Fbt_Fbn(Fbt)
     If Not Dic_Fbn_Fb.Exists(Fbn) Then
         Thw CSub, "Dic_Fbn_Fb does not contains Fbn", "Fbn Dic_Fbn_Fb", Fbn, Dic_Fbn_Fb
     End If
     Fb = Dic_Fbn_Fb(Fbn)
-    Cn = DaoCnStrzFb(Fb)
+    CN = DaoCnStrzFb(Fb)
     T = ">" & Fbt
     S = Fbt
-    PushI Dy, Array(T, S, Cn)
+    PushI Dy, Array(T, S, CN)
 Next
 WLnkFb = DrszFF("T S Cn", Dy)
 End Function
@@ -168,7 +168,7 @@ End Function
 Private Function WLnkFx(DFx As Drs, Dic_Fxn_Fx As Dictionary) As Drs
 'Fm : @DFx :: Drs{T Fxn Ws Stru}
 'Ret: *LnkFx::Drs{T S Cn}
-Dim Dy(), Dr, S$, Fx$, Ws$, Cn$, T$, Fxn$, IxT%, IxWs%, IxFxn%
+Dim Dy(), Dr, S$, Fx$, Ws$, CN$, T$, Fxn$, IxT%, IxWs%, IxFxn%
 AsgIx DFx, "T Ws Fxn", IxT, IxWs, IxFxn
 For Each Dr In Itr(DFx.Dy)
     T = Dr(IxT)
@@ -181,9 +181,9 @@ For Each Dr In Itr(DFx.Dy)
     Else
         S = Ws & "$"
     End If
-    Cn = DaoCnStrzFx(Fx)
+    CN = DaoCnStrzFx(Fx)
     T = ">" & T
-    PushI Dy, Array(T, S, Cn)
+    PushI Dy, Array(T, S, CN)
 Next
 WLnkFx = DrszFF("T S Cn", Dy)
 End Function

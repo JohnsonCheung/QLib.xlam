@@ -14,8 +14,8 @@ PushAy O, Av
 AddNNAv = O
 End Function
 
-Function AddNmV(Nav(), Nm$, V) As Variant()
-AddNmV = AddNNAv(Nav, Nm, Av(V))
+Function AddNmV(Nav(), NM$, V) As Variant()
+AddNmV = AddNNAv(Nav, NM, Av(V))
 End Function
 
 
@@ -105,7 +105,7 @@ Function SclzNyAv$(Ny$(), Av())
 SclzNyAv = JnSemi(LyzNyAv(Ny, Av))
 End Function
 
-Private Function LyzFunMsg(Fun$, Msg$) As String()
+Function LyzFunMsg(Fun$, Msg$) As String()
 Dim O$(), MsgL1$, MsgRst$
 AsgBrk1Dot Msg, MsgL1, MsgRst
 PushI LyzFunMsg, EnsSfxDot(MsgL1) & IIf(Fun = "", "", "  @" & Fun)
@@ -136,22 +136,22 @@ Function LyzFunMsgNNAv(Fun$, Msg$, Nn$, Av()) As String()
 LyzFunMsgNNAv = LyzFunMsgNyAv(Fun, Msg, SyzSS(Nn), Av)
 End Function
 
-Function LyzNv(Nm$, V, Optional Sep$ = ": ") As String()
+Function LyzNv(NM$, V, Optional Sep$ = ": ") As String()
 Dim Ly$(): Ly = FmtV(V)
 Dim J%, S$
 If Si(Ly) = 0 Then
-    PushI LyzNv, Nm & Sep
+    PushI LyzNv, NM & Sep
 Else
-    PushI LyzNv, Nm & Sep & Ly(0)
+    PushI LyzNv, NM & Sep & Ly(0)
 End If
-S = Space(Len(Nm) + Len(Sep))
+S = Space(Len(NM) + Len(Sep))
 For J = 1 To UB(Ly)
     PushI LyzNv, S & Ly(J)
 Next
 End Function
 
-Function LinzNv$(Nm$, V)
-LinzNv = Nm & "=[" & Cell(V) & "]"
+Function LinzNv$(NM$, V)
+LinzNv = NM & "=[" & Cell(V) & "]"
 End Function
 
 Function LyzMsgNap(Msg$, ParamArray Nap()) As String()
@@ -159,20 +159,20 @@ Dim Nav(): Nav = Nap
 LyzMsgNap = LyzMsgNav(Msg, Nav)
 End Function
 
-Function LyzNmDrs(Nm$, A As Drs, Optional MaxColWdt% = 100) As String()
-LyzNmDrs = LyzNmLy(Nm, FmtCellDrs(A, MaxColWdt), EiNoIx)
+Function LyzNmDrs(NM$, A As Drs, Optional MaxColWdt% = 100) As String()
+LyzNmDrs = LyzNmLy(NM, FmtCellDrs(A, MaxColWdt), EiNoIx)
 End Function
 
-Function LyzNmLy(Nm$, Ly$(), Optional B As EmIxCol = EiBeg1) As String()
+Function LyzNmLy(NM$, Ly$(), Optional B As EmIxCol = EiBeg1) As String()
 Dim L$(), J&, S$
 If Si(Ly) = 0 Then
-    PushI LyzNmLy, Nm & "(No Lin)"
+    PushI LyzNmLy, NM & "(No Lin)"
     Exit Function
 End If
 L = AddIxPfx(Ly, B)
 'Brw L:Stop
-S = Space(Len(Nm))
-PushI LyzNmLy, Nm & L(0)
+S = Space(Len(NM))
+PushI LyzNmLy, NM & L(0)
 For J = 1 To UB(L)
     PushI LyzNmLy, S & L(J)
 Next

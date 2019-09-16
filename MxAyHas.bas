@@ -122,4 +122,3 @@ A = Array(1, 2, 3, 4, 5, 6, 7, 8)
 B = Array(2, 4, 6)
 Debug.Assert HasEleAyInSeq(A, B) = True
 End Sub
-

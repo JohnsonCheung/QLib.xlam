@@ -563,9 +563,9 @@ End Sub
 Function FmtNumAy(SrtdNumAy, Optional CntCol As EmCntCol = EiWiCntCol) As String()
 FmtNumAy = FmtCellDrs(DrszFTnbr(SrtdNumAy, CntCol))
 End Function
-Function FmtFnyPair(A As RnyPair, Optional Nm$) As String()
+Function FmtFnyPair(A As RnyPair, Optional NM$) As String()
 Dim B As New Bfr
-B.Box Nm & ":RnyPair"
+B.Box NM & ":RnyPair"
 B.ULin "A-Rny"
 B.Var FmtNumAy(A.A)
 B.ULin "B-Rny"

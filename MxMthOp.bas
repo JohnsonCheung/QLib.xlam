@@ -4,17 +4,6 @@ Option Explicit
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxMthOp."
 
-Function IsLinAsg(L) As Boolean
-'Note: [Dr(NCol) = DicId(K)] is determined as Asg-lin
-Dim A$: A = LTrim(L)
-ShfPfxSpc A, "Set"
-If ShfDotNm(A) = "" Then Exit Function
-If FstChr(A) = "(" Then
-    A = AftBkt(A)
-End If
-IsLinAsg = T1(A) = "="
-End Function
-
 Function RplMth(M As CodeModule, Mthn, NewL$) As Boolean
 'Ret : True if Replaced.  Will dlt if NewL=''
 Dim Lno&: Lno = MthLnozMM(M, Mthn)

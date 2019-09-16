@@ -6,8 +6,8 @@ Const CNs$ = "Ado"
 Const CMod$ = CLib & "MxAdo."
 Public Const FFoFxwFld$ = "Fx Wsn T F Ty"
 
-Function ArszCnq(Cn As AdoDB.Connection, Q) As AdoDB.Recordset
-Set ArszCnq = Cn.Execute(Q)
+Function ArszCnq(CN As AdoDB.Connection, Q) As AdoDB.Recordset
+Set ArszCnq = CN.Execute(Q)
 End Function
 
 Function ArszFxw(Fx, Wsn) As AdoDB.Recordset
@@ -40,9 +40,9 @@ Function CatzFx(Fx) As Catalog
 Set CatzFx = Cat(CnzFx(Fx))
 End Function
 
-Function Cn(AdoCnStr) As AdoDB.Connection
-Set Cn = New AdoDB.Connection
-Cn.Open AdoCnStr
+Function CN(AdoCnStr) As AdoDB.Connection
+Set CN = New AdoDB.Connection
+CN.Open AdoCnStr
 End Function
 
 Function CnStrzDbt$(D As Database, T)
@@ -80,11 +80,11 @@ End Select
 End Function
 
 Function CnzFb(A) As AdoDB.Connection
-Set CnzFb = Cn(AdoCnStrzFb(A))
+Set CnzFb = CN(AdoCnStrzFb(A))
 End Function
 
 Function CnzFx(Fx) As AdoDB.Connection
-Set CnzFx = Cn(CnStrzFxAdo(Fx))
+Set CnzFx = CN(CnStrzFxAdo(Fx))
 End Function
 
 Function CvAdoTy(A) As AdoDB.DataTypeEnum
@@ -150,8 +150,8 @@ A = DoFTyzFxw(Fx, W)
 DoFxwFTy = InsColzDrsCC(A, "Fx W", Fx, W)
 End Function
 
-Function DrsCnq(Cn As AdoDB.Connection, Q) As Drs
-DrsCnq = DrszArs(ArszCnq(Cn, Q))
+Function DrsCnq(CN As AdoDB.Connection, Q) As Drs
+DrsCnq = DrszArs(ArszCnq(CN, Q))
 End Function
 
 Function DrsFbqAdo(Fb, Q) As Drs
@@ -173,8 +173,8 @@ For Each F In A
 Next
 End Function
 
-Function VzScvl(Scvl$, Nm$)
-VzScvl = Bet(EnsSfx(Scvl, ";"), Nm & "=", ";")
+Function VzScvl(Scvl$, NM$)
+VzScvl = Bet(EnsSfx(Scvl, ";"), NM & "=", ";")
 End Function
 
 Function DtaSrczScvl(Scvl$)
@@ -287,10 +287,10 @@ If Not A.BOF Then Exit Function
 NoReczArs = True
 End Function
 
-Sub RunCnSqy(Cn As AdoDB.Connection, Sqy$())
+Sub RunCnSqy(CN As AdoDB.Connection, Sqy$())
 Dim Q
 For Each Q In Itr(Sqy)
-   Cn.Execute Q
+   CN.Execute Q
 Next
 End Sub
 
@@ -347,7 +347,7 @@ End Sub
 
 Private Sub Z_Cn()
 Dim O As AdoDB.Connection
-Set O = Cn(GetCnStr_ADO_SampSQL_EXPR_NOT_WRK)
+Set O = CN(GetCnStr_ADO_SampSQL_EXPR_NOT_WRK)
 Stop
 End Sub
 
@@ -361,20 +361,20 @@ CnStr = AdoCnStrzFb(CurrentDb.Name)
 'GoSub Tst
 Exit Sub
 Tst:
-    Cn(CnStr).Close
+    CN(CnStr).Close
     Return
 End Sub
 
 Private Sub Z_CnzFb()
-Dim Cn
-Set Cn = CnzFb(SampFbzDutyDta)
+Dim CN
+Set CN = CnzFb(SampFbzDutyDta)
 Stop
 End Sub
 
 Private Sub Z_DrsCnq()
-Dim Cn As AdoDB.Connection: Set Cn = CnzFx(SampFxzKE24)
+Dim CN As AdoDB.Connection: Set CN = CnzFx(SampFxzKE24)
 Dim Q$: Q = "Select * from [Sheet1$]"
-WszDrs DrsCnq(Cn, Q)
+WszDrs DrsCnq(CN, Q)
 End Sub
 
 Private Sub Z_DrsFbqAdo()

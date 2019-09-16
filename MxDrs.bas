@@ -384,8 +384,8 @@ Dim V: For Each V In SyzSS(RenFF)
 Next
 End Function
 
-Sub DmpDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional Nm$, Optional IxCol As EmIxCol, Optional Fmt As EmTblFmt = EiTblFmt, Optional IsSum As Boolean)
-DmpAy FmtCellDrs(A, MaxColWdt, BrkColnn$, ShwZer, IxCol, Fmt, Nm)
+Sub DmpDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional NM$, Optional IxCol As EmIxCol, Optional Fmt As EmTblFmt = EiTblFmt, Optional IsSum As Boolean)
+DmpAy FmtCellDrs(A, MaxColWdt, BrkColnn$, ShwZer, IxCol, Fmt, NM)
 End Sub
 
 Function DrpColzFny(D As Drs, Fny$()) As Drs
@@ -981,4 +981,3 @@ Case Else
     Thw CSub, "No in seq.  CurNum should > LasNum", "LasNum CurNum", LasNum, CurNum
 End Select
 End Function
-

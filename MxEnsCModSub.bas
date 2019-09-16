@@ -140,19 +140,19 @@ Private Function XRpl(Dif As Drs) As Drs
 
 End Function
 
-Private Sub XPush(Nm$, Drs As Drs, ONy$(), OAv())
+Private Sub XPush(NM$, Drs As Drs, ONy$(), OAv())
 If HasReczDrs(Drs) Then
-    PushI ONy, Nm
+    PushI ONy, NM
     PushI OAv, FmtCellDrs(Drs)
 End If
 End Sub
 
-Private Function XMsgI$(A As Drs, Nm$)
+Private Function XMsgI$(A As Drs, NM$)
 Dim N%: N = NReczDrs(A)
 If N = 0 Then
-    XMsgI = "No" & Nm
+    XMsgI = "No" & NM
 Else
-    XMsgI = "N" & Nm & "(" & N & ")"
+    XMsgI = "N" & NM & "(" & N & ")"
 End If
 End Function
 

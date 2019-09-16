@@ -70,8 +70,8 @@ End Function
 Function IsLinMth(L) As Boolean
 IsLinMth = MthKd(L) <> ""
 End Function
-Function IsLinMthNm(L, Nm) As Boolean
-IsLinMthNm = Mthn(L) = Nm
+Function IsLinMthNm(L, NM) As Boolean
+IsLinMthNm = Mthn(L) = NM
 End Function
 
 Function IsLinEmn(A) As Boolean

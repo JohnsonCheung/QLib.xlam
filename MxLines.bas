@@ -65,39 +65,6 @@ Next
 End Function
 
 
-Private Sub Z_WrpLines()
-Dim A$, W%
-A = "lksjf lksdj flksdjf lskdjf lskdjf lksdjf lksdjf klsdjf klj skldfj lskdjf klsdjf klsdfj klsdfj lskdfj  sdlkfj lsdkfj lsdkjf klsdfj lskdjf lskdjf kldsfj lskdjf sdklf sdklfj dsfj "
-W = 80
-Ept = Sy("lksjf lksdj flksdjf lskdjf lskdjf lksdjf lksdjf klsdjf klj skldfj lskdjf klsdjf ", _
-"klsdfj klsdfj lskdfj  sdlkfj lsdkfj lsdkjf klsdfj lskdjf lskdjf kldsfj lskdjf", _
-"sdklf sdklfj dsfj ")
-GoSub Tst
-Exit Sub
-Tst:
-    Act = WrpLines(A, W)
-    C
-    Return
-End Sub
-Function WrpLines$(Lines$, Optional Wdt% = 80)
-WrpLines = Lines: Exit Function
-WrpLines = JnCrLf(WrpLy(SplitCrLf(Lines), Wdt))
-End Function
-
-Private Sub Z_WrpLy()
-Dim Ly$(), Wdt%
-GoSub T1
-Exit Sub
-T1:
-    Ly = Sy("a b c d")
-    Wdt = 80
-    Ept = Sy("a b c d")
-    GoTo Tst
-Tst:
-    Act = WrpLy(Ly, Wdt)
-    C
-    Return
-End Sub
 Function EnsBet%(I%, A%, B%)
 Select Case True
 Case I < A: EnsBet = A
@@ -106,46 +73,6 @@ Case Else: EnsBet = I
 End Select
 End Function
 
-Function WrpLy(Ly$(), Optional Wdt% = 80) As String()
-Dim W%, Lin, I
-W = EnsBet(Wdt, 10, 200)
-For Each I In Itr(Ly)
-    Lin = I
-    PushIAy WrpLy, LyzWrpLin(Lin, W)
-Next
-End Function
-
-Private Function ShfWrpgLin(OLin, W%, LasLinLasChr$)
-If OLin = "" Then Exit Function
-Dim O$, OL$, F$
-O = Left(OLin, W)
-OL = Mid(OLin, W + 1)
-F = FstChr(OL)
-Select Case True
-Case OL = "" Or F = " "
-Case LasLinLasChr = " ": OL = LTrim(OL)
-Case Else:
-    Dim P%: P = InStrRev(O, " ")
-    If P <> 0 Then
-        O = Left(O, P)
-        OL = Mid(O, P + 1) & OL
-    End If
-End Select
-ShfWrpgLin = Trim(O)
-OLin = OL
-End Function
-
-Private Function LyzWrpLin(Lin, W%) As String()
-If Len(Lin) > W Then LyzWrpLin = Sy(Lin): Exit Function
-Dim L$: L = RTrim(Lin)
-Dim J%
-Dim LasLinLasChr$
-While L <> ""
-    J = J + 1: If J > 1000 Then ThwLoopingTooMuch CSub
-    PushI LyzWrpLin, ShfWrpgLin(L, W, LasLinLasChr)
-    LasLinLasChr = LasChr(L)
-Wend
-End Function
 
 Private Sub Z_LineszRTrim()
 Dim Lines$: Lines = LineszVbl("lksdf|lsdfj|||")
@@ -260,4 +187,3 @@ Dim Col$(), ICol%, S$: For ICol = 0 To NCol - 1
 Next
 SqzLinesDr = O
 End Function
-

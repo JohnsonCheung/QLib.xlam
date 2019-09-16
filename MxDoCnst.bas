@@ -56,4 +56,3 @@ Dim TyChr$: TyChr = ShfTyChr(L)
 If Not ShfPfx(L, " = ") Then Exit Function
 DroCnst = Array(Mdn, IsPrv, Cnstn, TyChr, L)
 End Function
-

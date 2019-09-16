@@ -350,7 +350,6 @@ Dim S: For Each S In Itr(Sy)
 Next
 End Function
 
-
 Function AmBef(Sy$(), Sep$) As String()
 Dim S: For Each S In Itr(Sy)
     Push AmBef, Bef(S, Sep)
@@ -751,6 +750,16 @@ End Function
 
 Function ItrzTT(TT$)
 Asg Itr(TermAy(TT)), ItrzTT
+End Function
+
+Function IsEqSy(A$(), B$()) As Boolean
+If Not IsEqSi(A, B) Then Exit Function
+Dim J&, X
+For Each X In Itr(A)
+    If X <> B(J) Then Exit Function
+    J = J + 1
+Next
+IsEqSy = True
 End Function
 
 Function IsEqAy(A, B) As Boolean

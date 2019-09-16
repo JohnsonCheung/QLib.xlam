@@ -91,5 +91,3 @@ Dim C As VBComponent: For Each C In P.VBComponents
     DiMdnqSrtdSrcl.Add C.Name, SrtdSrcL(Src(C.CodeModule))
 Next
 End Function
-
-

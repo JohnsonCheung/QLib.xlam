@@ -10,9 +10,9 @@ Type MdSts
     NFrd As Integer
 End Type
 
-Function MdStszL(MthLinAy$()) As MdSts
+Function MdStszL(MthLinAy$(), NLin&) As MdSts
 With MdStszL
-    .NLin = Si(MthLinAy)
+    .NLin = NLin
     Dim L: For Each L In Itr(MthLinAy)
         Select Case MthMdy(L)
         Case "", "Public": .NPub = .NPub + 1
@@ -25,6 +25,5 @@ End With
 End Function
 
 Function MdSts(Src$()) As MdSts
-MdSts = MdStszL(MthLinAy(Src))
+MdSts = MdStszL(MthLinAy(Src), Si(Src))
 End Function
-

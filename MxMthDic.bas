@@ -104,4 +104,3 @@ A1 = Dcl(A)
 B1 = Dcl(B)
 Stop
 End Sub
-

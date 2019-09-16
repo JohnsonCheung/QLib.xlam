@@ -202,12 +202,12 @@ X:
     A = Dir
 Wend
 End Function
-Function IsInstNm(Nm) As Boolean
-If FstChr(Nm) <> "N" Then Exit Function      'FstChr = N
-If Len(Nm) <> 16 Then Exit Function          'Len    =16
-If Not IsYYYYMMDD(Mid(Nm, 2, 8)) Then Exit Function 'NYYYYMMDD_HHMMDD
-If Mid(Nm, 10, 1) <> "_" Then Exit Function
-If Not IsHHMMDD(Right(Nm, 6)) Then Exit Function
+Function IsInstNm(NM) As Boolean
+If FstChr(NM) <> "N" Then Exit Function      'FstChr = N
+If Len(NM) <> 16 Then Exit Function          'Len    =16
+If Not IsYYYYMMDD(Mid(NM, 2, 8)) Then Exit Function 'NYYYYMMDD_HHMMDD
+If Mid(NM, 10, 1) <> "_" Then Exit Function
+If Not IsHHMMDD(Right(NM, 6)) Then Exit Function
 IsInstNm = True
 End Function
 

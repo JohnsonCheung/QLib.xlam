@@ -31,7 +31,7 @@ FrfzSrcp = EnsPthSfx(Srcp) & "Rf.txt"
 End Function
 
 Function Frf$(P As VBProject)
-Frf = FrfzSrcp(Srcp(P))
+Frf = FrfzSrcp(SrcpzP(P))
 End Function
 
 Function FrfzDistPj$(DistPj As VBProject)

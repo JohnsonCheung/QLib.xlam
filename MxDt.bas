@@ -89,4 +89,3 @@ End Function
 Function NRowzDt&(A As Dt)
 NRowzDt = Si(A.Dy)
 End Function
-

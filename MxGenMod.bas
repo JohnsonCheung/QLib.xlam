@@ -678,13 +678,13 @@ End Function
 Private Function B_MPmLin$(MainPm As Drs)
 'Fm  : MainPm (MainDD) : Nm TyChr AsTy !
 'Ret : !
-Dim O$(), Arg$, Nm$, TyChr$, AsTy$, Dr, INm%, ITyChr%, IAsTy%
+Dim O$(), Arg$, NM$, TyChr$, AsTy$, Dr, INm%, ITyChr%, IAsTy%
 AsgIx MainPm, "Nm TyChr AsTy", INm, ITyChr, IAsTy
 For Each Dr In Itr(MainPm.Dy)
-    Nm = Dr(0)
+    NM = Dr(0)
     TyChr = Dr(1)
     AsTy = Dr(2)
-    Arg = Nm & TyChr & PpdIf(AsTy, " As ")
+    Arg = NM & TyChr & PpdIf(AsTy, " As ")
     PushI O, Arg
 Next
 B_MPmLin = JnCommaSpc(O)

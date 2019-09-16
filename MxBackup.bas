@@ -81,4 +81,3 @@ Function LasBkPjf$()
 ':FunAdj-Las: :FunAdj #Last#
 LasBkPjf = LasBkFfn(CPjf)
 End Function
-

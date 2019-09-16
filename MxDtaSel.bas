@@ -25,9 +25,9 @@ Next
 AddColzFst = O
 End Function
 
-Sub AsgAsFF(FFWiColon$, OFnyA$(), OFnyB$())
+Sub AsgColonFF(ColonFF$, OFnyA$(), OFnyB$())
 Erase OFnyA, OFnyB
-Dim F: For Each F In SyzSS(FFWiColon)
+Dim F: For Each F In SyzSS(ColonFF)
     With BrkBoth(F, ":")
         PushI OFnyA, .S1
         PushI OFnyB, .S2
@@ -262,8 +262,8 @@ Function JnDrs(A As Drs, B As Drs, Jn$, Add$, Optional IsLeftJn As Boolean, Opti
 '                                       ! If not @IsLeftJn, only those records fnd in both @A & @B
 Dim JnFnyA$(), JnFnyB$()
 Dim AddFnyFm$(), AddFnyAs$()
-    AsgAsFF Jn, JnFnyA, JnFnyB
-    AsgAsFF Add, AddFnyFm, AddFnyAs
+    AsgColonFF Jn, JnFnyA, JnFnyB
+    AsgColonFF Add, AddFnyFm, AddFnyAs
     
 Dim AddIxy&(): AddIxy = IxyzSubAy(B.Fny, AddFnyFm, ThwNFnd:=True)
 Dim BJnIxy&(): BJnIxy = IxyzSubAy(B.Fny, JnFnyB, ThwNFnd:=True)
@@ -399,7 +399,7 @@ SelDrsAlwEzFny = Drs(Fny, DyoSelAlwE(A.Dy, IxyzAlwE(A.Fny, Fny)))
 End Function
 
 Function SelDrsAs(A As Drs, AsFF$) As Drs
-Dim Fa$(), Fb$(): AsgAsFF AsFF, Fa, Fb
+Dim Fa$(), Fb$(): AsgColonFF AsFF, Fa, Fb
 SelDrsAs = Drs(Fb, SelDrsFny(A, Fa).Dy)
 End Function
 

@@ -18,4 +18,3 @@ End Sub
 Sub AUO()
 AlignMth Upd:=EiUpdOnly
 End Sub
-

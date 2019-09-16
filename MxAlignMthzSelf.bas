@@ -23,6 +23,6 @@ End Sub
 
 Sub AlignMthErzLnk()
 Dim M As CodeModule: Set M = Md("QDao_Lnk_ErzLnk")
-Dim L&: L = MthLnozMM(M, "ErzLnk")
-AlignMthzLno M, L
+Dim L&:                  L = MthLnozMM(M, "ErzLnk")
+:                            AlignMthzLno M, L
 End Sub

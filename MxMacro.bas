@@ -22,9 +22,9 @@ Function RplMacro(MacroVbl, Nn$, ParamArray ValAp())
 Dim O$
     O = RplVbl(MacroVbl)
     Dim J%
-    Dim Nm: For Each Nm In Itr(SyzSS(Nn))
+    Dim NM: For Each NM In Itr(SyzSS(Nn))
         Dim V: V = ValAp(J)
-        O = Replace(O, "{" & Nm & "}", V)
+        O = Replace(O, "{" & NM & "}", V)
         J = J + 1
     Next
 RplMacro = O

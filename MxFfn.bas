@@ -269,17 +269,9 @@ Function SiDotDTim$(Ffn)
 If HasFfn(Ffn) Then SiDotDTim = TimStr(DtezFfn(Ffn)) & "." & SizFfn(Ffn)
 End Function
 
-Sub AsgTimSi(Ffn, OTim As Date, OSz&)
-OTim = DtezFfn(Ffn)
-OSz = SizFfn(Ffn)
-End Sub
-
 Function TimStrzFfn$(Ffn)
 TimStrzFfn = TimStr(DtezFfn(Ffn))
 End Function
-
-
-
 
 Function AddTimSfxzFfn$(Ffn)
 AddTimSfxzFfn = AddFnSfx(Ffn, Format(Now, "(HHMMSS)"))
@@ -403,4 +395,3 @@ End Function
 Function Ffn$(Pth, Fn$)
 Ffn = EnsPthSfx(Pth) & Fn
 End Function
-

@@ -108,15 +108,15 @@ Dim D As Database: Set D = Db(Fb)
 Set WbzFb = ShwWb(WbzTny(D, Tny(D)))
 End Function
 
-Function SetWsn(Ws As Worksheet, Nm$) As Worksheet
+Function SetWsn(Ws As Worksheet, NM$) As Worksheet
 Set SetWsn = Ws
-If Nm = "" Then Exit Function
-If Ws.Name = Nm Then Exit Function
-If HasWs(WbzWs(Ws), Nm) Then
+If NM = "" Then Exit Function
+If Ws.Name = NM Then Exit Function
+If HasWs(WbzWs(Ws), NM) Then
     Dim Wb As Workbook: Set Wb = WbzWs(Ws)
-    Thw CSub, "Wsn exists in Wb", "Wsn Wbn Wny-in-Wb", Nm, Wbn(Wb), WnyzWb(Wb)
+    Thw CSub, "Wsn exists in Wb", "Wsn Wbn Wny-in-Wb", NM, Wbn(Wb), WnyzWb(Wb)
 End If
-Ws.Name = Nm
+Ws.Name = NM
 End Function
 Sub AddLozSamp()
 '    Application.CutCopyMode = False

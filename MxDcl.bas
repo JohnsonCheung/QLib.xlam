@@ -70,7 +70,7 @@ Dim J&, L, Lin$
 For Each L In Itr(Src)
     Lin = RmvMdy(L)
     If ShfTermEnm(Lin) Then
-        If Nm(Lin) = Enmn Then
+        If NM(Lin) = Enmn Then
             EnmFmIx = J
             Exit Function
         End If
@@ -97,10 +97,10 @@ For Each L In Itr(Src)
 Next
 End Function
 
-Function HasTyn(Src$(), Nm$) As Boolean
+Function HasTyn(Src$(), NM$) As Boolean
 Dim L
 For Each L In Itr(Src)
-    If Mtyn(L) = Nm Then HasTyn = True: Exit Function
+    If Mtyn(L) = NM Then HasTyn = True: Exit Function
 Next
 End Function
 
@@ -155,13 +155,13 @@ Next
 End Function
 Function Enmn(Lin)
 Dim L$: L = RmvMdy(Lin)
-If ShfPfx(L, "Enum ") Then Enmn = Nm(L)
+If ShfPfx(L, "Enum ") Then Enmn = NM(L)
 End Function
 
 Function Mtyn$(Lin)
 ':Mtyn: :Nm #Type-Name# ! Vb Type Name of @Lin
 Dim L$: L = RmvMdy(Lin)
-If ShfPfx(L, "Type ") Then Mtyn = Nm(L)
+If ShfPfx(L, "Type ") Then Mtyn = NM(L)
 End Function
 
 Function EnmLyzMN(M As CodeModule, Enmn) As String()

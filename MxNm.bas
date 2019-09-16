@@ -69,22 +69,22 @@ For J = Len(S) To 1 Step -1
 Next
 End Function
 
-Function NxtSeqNm$(Nm$, Optional NDig& = 3) _
+Function NxtSeqNm$(NM$, Optional NDig& = 3) _
 'Nm-Nm can be XXX or XXX_nn
 '   If XXX, return XXX_001   '<-- # of zero depends on NDig
 '   If XXX_nn, return XXX_mm '<-- mm is nn+1, # of digit of nn and mm depends on NDig
 If NDig = 0 Then Stop
 Dim R$
-    R = Right(Nm, NDig + 1)
+    R = Right(NM, NDig + 1)
 
 If Left(R, 1) <> "_" Then GoTo Case1
 If Not IsNumeric(Mid(R, 2)) Then GoTo Case1
 
-Dim L$: L = Left(Nm, Len(Nm) - NDig)
+Dim L$: L = Left(NM, Len(NM) - NDig)
 Dim Nxt&: Nxt = Val(Mid(R, 2)) + 1
-NxtSeqNm = Left(Nm, Len(Nm) - NDig) + Pad0(Nxt, NDig)
+NxtSeqNm = Left(NM, Len(NM) - NDig) + Pad0(Nxt, NDig)
 Exit Function
 
 Case1:
-    NxtSeqNm = Nm & "_" & Dup(NDig - 1, "0") & "1"
+    NxtSeqNm = NM & "_" & Dup(NDig - 1, "0") & "1"
 End Function

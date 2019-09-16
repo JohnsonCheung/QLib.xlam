@@ -53,6 +53,10 @@ C = Mid(S, P2 + Len(S2) - 1)
 RplBet = B & By & C
 End Function
 
+Function Rpl2DblQ$(S)
+'Ret :S #Rptl-2DblQ-To-Blnk#
+Rpl2DblQ = Replace(S, vb2DblQ, "")
+End Function
 Function RplDblSpc$(S)
 Dim O$: O = Trim(S)
 Dim J&

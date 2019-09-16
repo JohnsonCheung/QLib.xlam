@@ -16,4 +16,3 @@ Select Case A.Type
 Case vbext_ct_ClassModule, vbext_ct_StdModule: IsMd = True
 End Select
 End Function
-

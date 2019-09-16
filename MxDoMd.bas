@@ -4,12 +4,12 @@ Option Compare Text
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxDoMd."
 Public Const FFoMd$ = "MdTy CLibv CNsv CModv Pjn Mdn IsCModEr NLin NMth NPub NPrv NFrd Mthnn"
-Function FoMd() As String()
+Private Function FoMd() As String()
 FoMd = SyzSS(FFoMd)
 End Function
 
-Function DoMdP() As Drs
-DoMdP = DoMdzP(CPj)
+Function DoMd() As Drs
+DoMd = DoMdzP(CPj)
 End Function
 
 Private Function DoMdzP(P As VBProject) As Drs
@@ -25,7 +25,7 @@ Dim Dy()
         Dim M As CodeModule: Set M = P.VBComponents(Mdn).CodeModule
         Dim S$(): S = Src(M)
         Dim L$(): L = MthLinAy(S)
-        With MdStszL(L)
+        With MdStszL(L, Si(S))
             Dim NMth%: NMth = .NPub + .NPrv + .NFrd
             PushI Dy, AddAy(Dr, Array(.NLin, NMth, .NPub, .NPrv, .NFrd, MthnnzL(L)))
         End With

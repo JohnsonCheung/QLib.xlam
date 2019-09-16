@@ -26,17 +26,17 @@ Tst:
     Return
 End Sub
 
-Function CmlAy(Nm) As String()
+Function CmlAy(NM) As String()
 'Ret : :Cml-ay.  Cml-ay is fm :Nm.  Each cml start with UCas and rest is LCas|Dig|_, ept fst cml the start letter may be LCas.
 
-If Nm = "" Then Exit Function
+If NM = "" Then Exit Function
 #If PlaySav Then
-If Not IsNm(Nm) Then Thw CSub, "Given Nm is not a name", "Nm", Nm
+If Not IsNm(NM) Then Thw CSub, "Given Nm is not a name", "Nm", NM
 #End If
 Dim J&, Cml$, C$, A%, O$()
-Cml = FstChr(Nm)
-For J = 2 To Len(Nm)
-    C = Mid(Nm, J, 1)
+Cml = FstChr(NM)
+For J = 2 To Len(NM)
+    C = Mid(NM, J, 1)
     A = Asc(C)
     If IsAscUCas(A) Then
         PushNB O, Cml
@@ -58,16 +58,16 @@ Next
 End Function
 
 Function CmlAyzNy(Ny$()) As String()
-Dim I, Nm$
+Dim I, NM$
 For Each I In Itr(Ny)
-    Nm = I
-    PushI CmlAyzNy, CmlAy(Nm)
+    NM = I
+    PushI CmlAyzNy, CmlAy(NM)
 Next
 End Function
 
-Function CmlGp(Nm) As String()
+Function CmlGp(NM) As String()
 Dim M$(), I, Cml$, O$()
-For Each I In CmlAy(Nm)
+For Each I In CmlAy(NM)
     Cml = I
     Debug.Print Cml; "<--CmlQBlk"
     If IsCmlBRK(Cml) Then
@@ -86,9 +86,9 @@ For Each I In Itr(O)
 Next
 End Function
 
-Function Cmlss(Nm)
+Function Cmlss(NM)
 ':Cmlss: :SS
-Cmlss = Nm & " " & JnSpc(CmlAy(Nm))
+Cmlss = NM & " " & JnSpc(CmlAy(NM))
 End Function
 
 Function CmlssAy(Ny$()) As String()
@@ -98,9 +98,9 @@ For Each L In Itr(Ny)
 Next
 End Function
 
-Function CmlQBlk(Nm) As String()
+Function CmlQBlk(NM) As String()
 Dim IsVerbQted As Boolean, CmlQGp$, I, O$()
-For Each I In CmlGp(Nm)
+For Each I In CmlGp(NM)
     CmlQGp = I
     Debug.Print CmlQGp; "<-- CmlGp"
     Select Case True
@@ -120,16 +120,16 @@ Next
 Set CmlSetzNy = O
 End Function
 
-Function DotCml$(Nm)
-DotCml = QteJnDot(CmlAy(Nm))
+Function DotCml$(NM)
+DotCml = QteJnDot(CmlAy(NM))
 End Function
 
-Function DotCmlGp$(Nm) ' = QteJnDot . CmpBlk
-DotCmlGp = QteJnDot(CmlGp(Nm))
+Function DotCmlGp$(NM) ' = QteJnDot . CmpBlk
+DotCmlGp = QteJnDot(CmlGp(NM))
 End Function
 
-Function DotCmlQGp$(Nm) ' = QteJnDot . CmpGp1Ay
-Dim O$: O = QteJnDot(CmlQBlk(Nm))
+Function DotCmlQGp$(NM) ' = QteJnDot . CmpGp1Ay
+Dim O$: O = QteJnDot(CmlQBlk(NM))
 DotCmlQGp = O
 'If HasEle(Array(".z.EFSchm.", _
 ".z.FFFxw.", _

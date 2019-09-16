@@ -1,4 +1,8 @@
 Attribute VB_Name = "MxAlignRmkSep"
+Option Explicit
+Option Compare Text
+Const CLib$ = "QIde."
+Const CMod$ = CLib & "MxAlignRmkSep."
 Private Function SelRmkSep(Wi_MthLin As Drs) As Drs
 '@Wi_MthLin : MthLin #Mth-Context.
 'Ret : select where LTrim-*MthLin has pfx '-- '== or '..
@@ -12,7 +16,7 @@ Dim Dr, Dy(): For Each Dr In Itr(Wi_MthLin.Dy)
         End Select
     End If
 Next
-SelRmkSep.Fny = Mc.Fny
+SelRmkSep.Fny = Wi_MthLin.Fny
 SelRmkSep.Dy = Dy
 End Function
 
@@ -38,4 +42,3 @@ Dim D As Drs:   D = SelRmkSep(Wi_L_MthLin)
 Dim D1 As Drs: D1 = AlignRmkSepzD(D)
 :                    If Upd Then RplLin M, D ' <==
 End Function
-

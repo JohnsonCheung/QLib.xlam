@@ -28,7 +28,7 @@ End Function
 Private Function LetSetPrpNm$(Lin)
 With Mthn3zL(Lin)
     Select Case .ShtTy
-    Case "Set", "Let": LetSetPrpNm = .Nm: Exit Function
+    Case "Set", "Let": LetSetPrpNm = .NM: Exit Function
     End Select
 End With
 End Function

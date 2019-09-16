@@ -48,4 +48,3 @@ Dim P$: P = RmvPthSfx(Srcp)
 If Ext(P) <> ".src" Then Thw CSub, "Not source path", "CmitgPth", Srcp
 PjnzSrcp = RmvExt(Fn(P))
 End Function
-

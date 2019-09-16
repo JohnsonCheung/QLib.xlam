@@ -22,32 +22,32 @@ Next
 End Function
 
 Private Sub Z_T1zTkssLy()
-Dim A$(), Nm$
+Dim A$(), NM$
 GoSub T1
 GoSub T2
 Exit Sub
 T1:
     A = SplitVBar("a bb* *dd | c x y")
-    Nm = "x"
+    NM = "x"
     Ept = "c"
     GoTo Tst
 T2:
     A = SplitVBar("a bb* *dd | c x y")
-    Nm = "bb1"
+    NM = "bb1"
     Ept = "a"
     GoTo Tst
 Tst:
-    Act = T1zTkssLy(A, Nm)
+    Act = T1zTkssLy(A, NM)
     C
     Return
 End Sub
 
-Function T1zTkssLy$(TkssLy$(), Nm)
+Function T1zTkssLy$(TkssLy$(), NM)
 ':Tkss: :SS #T1-Likss# ! It is SS with T1 and Likss
 ':Kss:  :SS #Likss#    ! It is SS with each term is LikStr
 Dim L: For Each L In Itr(TkssLy)
     Dim T1$: T1 = ShfT1(L)
-    If IsLikzSS(Nm, L) Then
+    If IsLikzSS(NM, L) Then
         T1zTkssLy = T1
         Exit Function
     End If

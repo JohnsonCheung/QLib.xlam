@@ -158,8 +158,8 @@ Dim Act$
    Act = BetBkt(S)
    Ass Act = "1234()567"
 End Sub
-Function Nm$(S)
-Nm = TakNm(S)
+Function NM$(S)
+NM = TakNm(S)
 End Function
 Function TakDotNm$(S)
 Dim J%

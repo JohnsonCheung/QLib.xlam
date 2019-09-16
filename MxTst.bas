@@ -35,7 +35,7 @@ Static X$: If X = "" Then X = TstHomzP(CPj)
 TstHomP = X
 End Function
 Function TstHomzP$(P As VBProject)
-TstHomzP = AddFdrEns(Srcp(P), ".TstRes")
+TstHomzP = AddFdrEns(SrcpzP(P), ".TstRes")
 End Function
 
 Sub StopNE()

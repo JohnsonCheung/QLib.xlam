@@ -11,6 +11,7 @@ End Function
 Function SrcFfn$(A As VBComponent)
 SrcFfn = SrcpzCmp(A) & SrcFn(A)
 End Function
+
 Function SrcFn$(A As VBComponent)
 SrcFn = A.Name & ".bas"
 End Function
@@ -27,7 +28,10 @@ End Select
 ExtzCmpTy = O
 End Function
 
+Function SrcFfnzMdn$(Mdn$)
+SrcFfnzMdn = SrcFfn(Cmp(Mdn))
+End Function
+
 Function SrcFfnzM$(M As CodeModule)
 SrcFfnzM = SrcFfn(M.Parent)
 End Function
-

@@ -39,6 +39,10 @@ Function RmvFstChr$(S)
 RmvFstChr = Mid(S, 2)
 End Function
 
+Function RmvFst2Chr$(S)
+RmvFst2Chr = Mid(S, 3)
+End Function
+
 Function RmvFstLasChr$(S)
 RmvFstLasChr = RmvFstChr(RmvLasChr(S))
 End Function
@@ -166,13 +170,13 @@ End Sub
 
 
 Private Sub Z_RmvNm()
-Dim Nm$
-Nm = "lksdjfsd f"
+Dim NM$
+NM = "lksdjfsd f"
 Ept = " f"
 GoSub Tst
 Exit Sub
 Tst:
-    Act = RmvNm(Nm)
+    Act = RmvNm(NM)
     C
     Return
 End Sub

@@ -83,13 +83,13 @@ DrpTny D, Av
 End Sub
 
 Function DszDb(D As Database, Optional DsNm$) As Ds
-Dim Nm$
+Dim NM$
 If DsNm = "" Then
-    Nm = D.Name
+    NM = D.Name
 Else
-    Nm = DsNm
+    NM = DsNm
 End If
-DszDb = DszTny(D, Tny(D), Nm)
+DszDb = DszTny(D, Tny(D), NM)
 End Function
 
 Function DszTny(D As Database, Tny$(), Optional DsNm$) As Ds

@@ -3,12 +3,6 @@ Option Compare Text
 Option Explicit
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxVbe."
-Enum EmSrtLisMd
-    EiByMdn
-    EiByMdnDes
-    EiByNLines
-    EiByNLinesDes
-End Enum
 Function CvVbe(A) As Vbe
 Set CvVbe = A
 End Function
@@ -38,26 +32,6 @@ For Each I In Vbe.VBProjects
     If PjfzP(I) = Pjf Then Set PjzPjf = I: Exit Function
 Next
 End Function
-
-Sub BrwMd(Optional MdPatn$, Optional SrtBy As EmSrtLisMd)
-LisMd MdPatn, SrtBy, OupTy:=EiOtBrw, Top:=0
-End Sub
-
-Sub VcMd(Optional MdPatn$, Optional SrtBy As EmSrtLisMd)
-LisMd MdPatn, SrtBy, OupTy:=EiOtVc, Top:=0
-End Sub
-
-Sub LisMd(Optional MdPatn$, Optional SrtBy As EmSrtLisMd, Optional OupTy As EmOupTy = EmOupTy.EiOtDmp, Optional Top% = 50)
-Dim Srt$
-Select Case True
-Case SrtBy = EiByMdn:       Srt = "Mdn"
-Case SrtBy = EiByMdnDes:    Srt = "-Mdn"
-Case SrtBy = EiByNLines:    Srt = "Mdn"
-Case SrtBy = EiByNLinesDes: Srt = "-NLin"
-Case Else:                  Srt = "Mdn"
-End Select
-Brw FmtCellDrs(SrtDrs(DoMdP, Srt), , Fmt:=EiSSFmt), OupTy:=OupTy
-End Sub
 
 Sub SavVbe(A As Vbe)
 Dim P As VBProject

@@ -110,6 +110,10 @@ OB = B
 ResiMax OA, OB
 End Sub
 
-Sub ThwImpossible(Fun$)
-ThwMsg Fun, "Impossible to reach here"
-End Sub
+Function DyzAyab(A, B) As Variant()
+ThwIf_DifSi A, B, CSub
+Dim I, J&: For Each I In Itr(A)
+    PushI DyzAyab, Array(I, B(J))
+    J = J + 1
+Next
+End Function

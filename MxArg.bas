@@ -5,12 +5,10 @@ Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxArg."
 ':Arg:    :S ! ArgMdy Nm ArgSfx Dft
 ':Sset:   :Aset #Str-Set# ! each ele is str
-':ShtArg: :S ! ShtArg:: ShtArgMdy Nm DclShtSfx ShtDft
+':ShtArg: :S ! ShtArg:: ShtArgMdy Nm ShtDclSfx ShtDft
 '            ! :Mdy: :S ! ShtArgMdy(One-of-:ArgMdyAy)
 '            ! :Sfx: ::  TyChr[Bkt] | vbColon AsTy
 '            ! :Dft: :: [ChrEq DftStr] !
-':DclShtSfx: :Sfx
-':DclSfx:    :Sfx
 ':MthTyChr: :C #Mth-Ty-Chr# ! one of :MthTyChrLis
 ':MthTyChrLis: :S #Mth-Ty-Chr-List# ! !@#$%^&
 ':C:  :Chr #Char# ' One single char
@@ -103,7 +101,7 @@ ShfDotNm = O
 OLin = RmvPfx(OLin, O)
 End Function
 Function ShfNm$(OLin$)
-Dim O$: O = Nm(OLin): If O = "" Then Exit Function
+Dim O$: O = NM(OLin): If O = "" Then Exit Function
 ShfNm = O
 OLin = RmvPfx(OLin, O)
 End Function
@@ -250,18 +248,6 @@ Function RmvArgMdy$(Arg)
 RmvArgMdy = LTrim(RmvPfx(Arg, ArgMdy(Arg)))
 End Function
 
-Private Function DclShtSfx$(DclSfx$)
-If DclSfx = "" Then Exit Function
-Dim L$: L = DclSfx
-Select Case True
-Case L = " As Boolean":: DclShtSfx = "^"
-Case L = " As Boolean()": DclShtSfx = "^()"
-Case Else
-    ShfPfx L, " As "
-    DclShtSfx = L
-End Select
-End Function
-
 Function ArgNyP() As String()
 ArgNyP = ArgNyzP(CPj)
 End Function
@@ -333,16 +319,16 @@ BrwS12s O
 End Sub
 
 Function ArgNm$(Arg)
-ArgNm = Nm(RmvArgMdy(Arg))
+ArgNm = NM(RmvArgMdy(Arg))
 End Function
 
 Function Arg$(ShtArg$)
 Dim L$:     L = Arg
 Dim Mdy:  Mdy = ShfArgMdy(L)
-Dim Nm$:   Nm = ShfNm(L): If Nm = "" Then Exit Function
+Dim NM$:   NM = ShfNm(L): If NM = "" Then Exit Function
 Dim Sfx$: Sfx = ShfShtArgSfx(L)
 Dim Dft$: Dft = ShtDft(L)
-Arg = Mdy & Nm & Sfx & Dft
+Arg = Mdy & NM & Sfx & Dft
 End Function
 
 Function ShtPm$(MthPm)
@@ -359,10 +345,10 @@ End Function
 Function ShtArg$(Arg)
 Dim L$:     L = Arg
 Dim Mdy:  Mdy = ShtArgMdy(ShfArgMdy(L))
-Dim Nm$:   Nm = ShfNm(L): If Nm = "" Then Exit Function
+Dim NM$:   NM = ShfNm(L): If NM = "" Then Exit Function
 Dim Sfx$: Sfx = ShtArgSfx(ShfArgSfx(L))
 Dim Dft$: Dft = ShtDft(L)
-       ShtArg = Mdy & Nm & Sfx & Dft
+       ShtArg = Mdy & NM & Sfx & Dft
 End Function
 
 Private Function ShtDft$(Dft$)
@@ -407,17 +393,12 @@ Case Else
 End Select
 End Function
 
-Function DclSfx$(Dclitm$)
-If Dclitm = "" Then Exit Function
-DclSfx = DclShtSfx(RmvNm(Dclitm))
-End Function
-
 Function DclSfxzArg$(Arg$)
 DclSfxzArg = DclSfx(ArgItm(Arg))
 End Function
 
-Function DclShtSfxzArg$(Arg$)
-DclShtSfxzArg = DclShtSfx(DclSfx(ArgItm(Arg)))
+Function ShtDclSfxzArg$(Arg$)
+ShtDclSfxzArg = ShtDclSfx(DclSfx(ArgItm(Arg)))
 End Function
 
 Function ArgItm$(Arg)
@@ -599,7 +580,7 @@ Dim L$: L = Arg
 Dim IsOpt   As Boolean:   IsOpt = ShfPfxSpc(L, "Optional")
 Dim IsByVal As Boolean: IsByVal = ShfPfxSpc(L, "ByVal")
 Dim IsPmAy  As Boolean:  IsPmAy = ShfPfxSpc(L, "ParamArray")
-Dim Nm$:                     Nm = ShfNm(L)
+Dim NM$:                     NM = ShfNm(L)
 Dim TyChr$:               TyChr = ShfChr(L, "!@#$%^&")
 Dim IsAy    As Boolean:    IsAy = ShfBkt(L)
     If TyChr = "" Then
@@ -612,7 +593,7 @@ Dim IsAy    As Boolean:    IsAy = ShfBkt(L)
         If Not ShfPfx(L, " = ") Then Stop
         Dim DftVal$: DftVal = L
     End If
-DroArg = Array(Mthn, ArgNo, Nm, IsOpt, IsByVal, IsPmAy, IsAy, TyChr, AsTy, DftVal)
+DroArg = Array(Mthn, ArgNo, NM, IsOpt, IsByVal, IsPmAy, IsAy, TyChr, AsTy, DftVal)
 End Function
 
 Function DoArgV() As Drs
@@ -717,5 +698,3 @@ End Function
 Function NArg(MthLin) As Byte
 NArg = Si(SplitComma(BetBkt(MthLin)))
 End Function
-
-

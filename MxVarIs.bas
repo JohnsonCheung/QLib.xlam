@@ -129,7 +129,8 @@ IsNBStr = V <> ""
 End Function
 
 Function IsNothing(V) As Boolean
-IsNothing = TypeName(V) = "Nothing"
+If Not IsObject(V) Then Exit Function
+IsNothing = ObjPtr(V) = 0
 End Function
 
 Function IsObjAy(V) As Boolean

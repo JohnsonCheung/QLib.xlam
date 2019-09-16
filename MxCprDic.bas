@@ -87,16 +87,16 @@ Next
 FmtDif = FmtS12s(S, N1:="", N2:="")
 End Function
 
-Private Function FmtExcess(A As Dictionary, Nm$) As String()
+Private Function FmtExcess(A As Dictionary, NM$) As String()
 If A.Count = 0 Then Exit Function
 Dim K, S1$, S2$, S As S12s
-S2 = "!" & "Er Excess (" & Nm & ")"
+S2 = "!" & "Er Excess (" & NM & ")"
 For Each K In A.Keys
     S1 = ULinzLines(CStr(K))
     S2 = A(K)
     PushS12 S, S12(S1, S2)
 Next
-PushAy FmtExcess, FmtS12s(S, N1:="Exccess", N2:=Nm)
+PushAy FmtExcess, FmtS12s(S, N1:="Exccess", N2:=NM)
 End Function
 
 Private Function FmtSam(A As Dictionary) As String()

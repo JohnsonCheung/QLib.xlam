@@ -29,4 +29,3 @@ End Sub
 Sub SetFvzSsk(D As Database, T, F$, Sskv(), V)
 FvzRs(Rs(D, SqlSel_F_T_F_Ev(F, T, SskFld(D, T), Sskv))) = V
 End Sub
-

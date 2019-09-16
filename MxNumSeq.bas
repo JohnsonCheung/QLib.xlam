@@ -1,4 +1,6 @@
 Attribute VB_Name = "MxNumSeq"
+Option Explicit
+Option Compare Text
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxNumSeq."
 
@@ -38,4 +40,3 @@ End Function
 Function LngSeqzU(U&) As Long()
 LngSeqzU = LngSeq(0, U)
 End Function
-

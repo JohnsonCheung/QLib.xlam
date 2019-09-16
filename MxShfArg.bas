@@ -21,6 +21,3 @@ End Function
 Function ShfShtArgSfx$(OLin$)
 ShfShtArgSfx = ShtArgSfx(ShfArgSfx(OLin))
 End Function
-
-
-

@@ -21,9 +21,9 @@ Sub AddCmpSfxP(Sfx)
 AddCmpSfx CPj, Sfx
 End Sub
 
-Sub AddCmpzEmp(P As VBProject, Ty As vbext_ComponentType, Nm)
-If HasCmpzP(P, Nm) Then InfLin CSub, "Cmpn exist in Pj", "Cmpn Pjn", Nm, P.Name: Exit Sub
-P.VBComponents.Add(Ty).Name = Nm ' no CStr will break
+Sub AddCmpzEmp(P As VBProject, Ty As vbext_ComponentType, NM)
+If HasCmpzP(P, NM) Then InfLin CSub, "Cmpn exist in Pj", "Cmpn Pjn", NM, P.Name: Exit Sub
+P.VBComponents.Add(Ty).Name = NM ' no CStr will break
 End Sub
 
 Sub AddCmpzMul(P As VBProject, T As vbext_ComponentType, Cmpnn$)
@@ -32,9 +32,9 @@ Dim N: For Each N In ItrzSS(Cmpnn)
 Next
 End Sub
 
-Sub AddCmpzSrc(P As VBProject, Nm, SrcL$)
-AddCmpzEmp P, vbext_ct_StdModule, Nm
-ApdLines MdzPN(P, Nm), SrcL
+Sub AddCmpzSrc(P As VBProject, NM, SrcL$)
+AddCmpzEmp P, vbext_ct_StdModule, NM
+ApdLines MdzPN(P, NM), SrcL
 End Sub
 
 Sub AddMod(Modnn$)
@@ -102,8 +102,8 @@ EnsCls CPj, Clsn
 EnsModLines Md(Clsn), ClsLines
 End Sub
 
-Sub EnsCmpzPTN(P As VBProject, Ty As vbext_ComponentType, Nm)
-If Not HasCmpzP(P, Nm) Then AddCmpzEmp P, Ty, Nm
+Sub EnsCmpzPTN(P As VBProject, Ty As vbext_ComponentType, NM)
+If Not HasCmpzP(P, NM) Then AddCmpzEmp P, Ty, NM
 End Sub
 
 Sub EnsLines(Md As CodeModule, Mthn, Mthl$)
@@ -340,16 +340,16 @@ For Each C In Pj.VBComponents
 Next
 End Sub
 
-Function SetCmpNm(A As VBComponent, Nm, Optional Fun$ = "SetCmpNm") As VBComponent
+Function SetCmpNm(A As VBComponent, NM, Optional Fun$ = "SetCmpNm") As VBComponent
 Dim Pj As VBProject
 Set Pj = PjzC(A)
-If HasCmpzP(Pj, Nm) Then
-    Thw Fun, "Cmp already Has", "Cmp Has-in-Pj", Nm, Pj.Name
+If HasCmpzP(Pj, NM) Then
+    Thw Fun, "Cmp already Has", "Cmp Has-in-Pj", NM, Pj.Name
 End If
-If Pj.Name = Nm Then
-    Thw Fun, "Cmpn same as Pjn", "Cmpn", Nm
+If Pj.Name = NM Then
+    Thw Fun, "Cmpn same as Pjn", "Cmpn", NM
 End If
-A.Name = Nm
+A.Name = NM
 Set SetCmpNm = A
 End Function
 

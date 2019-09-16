@@ -91,8 +91,8 @@ Optional FnPfx$, Optional OupTy As EmOupTy = EmOupTy.EiOtBrw)
 Dim Ay$(), AyA$(), AyB$(), N1$, N2$, T$()
 N1 = DftStr(BefSpc(Nn), "Drs-A")
 N2 = DftStr(AftSpc(Nn), " Drs-B")
-AyA = FmtCellDrs(A, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Nm:=N1)
-AyB = FmtCellDrs(B, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Nm:=N2)
+AyA = FmtCellDrs(A, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, NM:=N1)
+AyB = FmtCellDrs(B, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, NM:=N2)
 T = Sy(Tit, ULinDbl(Tit))
 Ay = Sy(T, AyA, AyB)
 Brw Ay, FnPfx, OupTy:=OupTy
@@ -106,9 +106,9 @@ Dim Ay$(), AyA$(), AyB$(), AyC$(), N1$, N2$, N3$, T$()
 N1 = DftStr(T1(Nn), "Drs-A")
 N2 = DftStr(T2(Nn), " Drs-B")
 N3 = DftStr(RmvTT(Nn), " Drs-C")
-AyA = FmtCellDrs(A, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Nm:=N1)
-AyB = FmtCellDrs(B, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Nm:=N2)
-AyC = FmtCellDrs(C, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, Nm:=N3)
+AyA = FmtCellDrs(A, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, NM:=N1)
+AyB = FmtCellDrs(B, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, NM:=N2)
+AyC = FmtCellDrs(C, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt, NM:=N3)
 T = Sy(Tit, ULinDbl(Tit))
 Ay = Sy(T, AyA, AyB, AyC)
 Brw Ay, FnPfx, OupTy:=OupTy
@@ -226,10 +226,10 @@ End Function
 
 Function FmtCellDrs(D As Drs, _
 Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol = EmIxCol.EiBeg1, _
-Optional Fmt As EmTblFmt = EiTblFmt, Optional Nm$) As String()
+Optional Fmt As EmTblFmt = EiTblFmt, Optional NM$) As String()
 'Fm IsSum    : If true all num col will have a sum as las lin in the fmt
 'Fm BrkColnn : if changed, insert a break line if BrkColNm is given
-Dim NmBox$(): If Nm <> "" Then NmBox = Box(Nm)
+Dim NmBox$(): If NM <> "" Then NmBox = Box(NM)
 If NoReczDrs(D) Then FmtCellDrs = FmtCellDrs__NoRec(D, NmBox): Exit Function
 Dim IxD As Drs:    IxD = AddColzIx(D, IxCol)                     ' Add Col-Ix
 Dim IxyB&():      IxyB = Ixy(IxD.Fny, TermAy(BrkColnn))          ' Ixy-Of-BrkCol
@@ -273,7 +273,7 @@ Function LinzDr(Dr, Optional Sep$ = " ", Optional QteStr$)
 LinzDr = Qte(Jn(Dr, Sep), QteStr)
 End Function
 
-Function LinzDrsR(A As Drs, Optional Nm$) As String()
+Function LinzDrsR(A As Drs, Optional NM$) As String()
 If NoReczDrs(A) Then Exit Function
 Dim AFny$(): AFny = Sy("#", AlignAy(A.Fny))
 

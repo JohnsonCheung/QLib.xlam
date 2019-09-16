@@ -141,7 +141,7 @@ Private Sub GenFxazSrcp(Srcp$)
 End Sub
 
 Private Sub GenFxazP(Pj As VBProject)
-Dim SPth$:               SPth = Srcp(Pj)
+Dim SPth$:               SPth = SrcpzP(Pj)
 Dim OFxa$:               OFxa = FxazSrcp(SPth)
 :                               ExpPjzP Pj                                 ' <== Export
 :                               CrtFxa OFxa                              ' <== Crt

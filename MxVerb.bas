@@ -48,16 +48,16 @@ MthQVNyzV = QVNy(MthNyzV(A))
 End Function
 
 Function QVNy(Ny$()) As String()
-Dim Nm$, I
+Dim NM$, I
 For Each I In Itr(Ny)
-    Nm = I
-    PushI QVNy, QVNm(Nm)
+    NM = I
+    PushI QVNy, QVNm(NM)
 Next
 End Function
 
-Function QBNm$(Nm)
+Function QBNm$(NM)
 Dim Cml$, I, O$()
-For Each I In Itr(CmlAy(Nm))
+For Each I In Itr(CmlAy(NM))
     Cml = I
     If IsCmlBRK(Cml) Then
         PushI O, QteBkt(Cml)
@@ -68,22 +68,22 @@ Next
 QBNm = Jn(O)
 End Function
 
-Function QVBNm$(Nm) 'Qte-Verb-and-cmlBrk-Nm.
-Dim V$: V = Verb(Nm)
+Function QVBNm$(NM) 'Qte-Verb-and-cmlBrk-Nm.
+Dim V$: V = Verb(NM)
 If V = "" Then
-    QVBNm = "#" & QBNm(Nm)
+    QVBNm = "#" & QBNm(NM)
 Else
-    With Brk(Nm, V)
+    With Brk(NM, V)
     QVBNm = QBNm(.S1) & QteSq(V) & QBNm(.S2)
     End With
 End If
 End Function
-Function QVNm$(Nm)
-Dim V$: V = Verb(Nm)
+Function QVNm$(NM)
+Dim V$: V = Verb(NM)
 If V = "" Then
-    QVNm = "#" & Nm
+    QVNm = "#" & NM
 Else
-    QVNm = Replace(Nm, V, QteBkt(V), Count:=1)
+    QVNm = Replace(NM, V, QteBkt(V), Count:=1)
 End If
 End Function
 Function MthVNm$(Mthn)
@@ -112,36 +112,36 @@ Private Function NVTDNyzV(A As Vbe) As String()
 NVTDNyzV = NVTDNy(MthNyzV(A))
 End Function
 Private Function NVTDNy(Ny$()) As String()
-Dim Nm$, I
+Dim NM$, I
 For Each I In Itr(Ny)
-    Nm = I
-    PushI NVTDNy, NVTDNm(Nm)
+    NM = I
+    PushI NVTDNy, NVTDNm(NM)
 Next
 End Function
-Private Function NVTDNm$(Nm) 'Nm.Verb.Ty.Dot-Nm
-NVTDNm = NVTy(Nm) & "." & Nm
+Private Function NVTDNm$(NM) 'Nm.Verb.Ty.Dot-Nm
+NVTDNm = NVTy(NM) & "." & NM
 End Function
 Function FstVerbSubNyInVbe() As String()
 
 End Function
-Function NVTy$(Nm) 'Nm.Verb-Ty
+Function NVTy$(NM) 'Nm.Verb-Ty
 Select Case True
-Case IsNoVerbNm(Nm): NVTy = "NoVerb"
-Case IsFstVerbNm(Nm): NVTy = "FstVerb"
-Case IsMidVerbNm(Nm): NVTy = "MidVerb"
-Case Else: Thw CSub, "Program error: a Nm must be any of [NoVerb | FstVerb | MidVerb]", "Nm", Nm
+Case IsNoVerbNm(NM): NVTy = "NoVerb"
+Case IsFstVerbNm(NM): NVTy = "FstVerb"
+Case IsMidVerbNm(NM): NVTy = "MidVerb"
+Case Else: Thw CSub, "Program error: a Nm must be any of [NoVerb | FstVerb | MidVerb]", "Nm", NM
 End Select
 End Function
-Function IsNoVerbNm(Nm) As Boolean
-IsNoVerbNm = Verb(Nm) = ""
+Function IsNoVerbNm(NM) As Boolean
+IsNoVerbNm = Verb(NM) = ""
 End Function
-Function IsMidVerbNm(Nm) As Boolean
-Dim V$: V = Verb(Nm): If V = "" Then Exit Function
-IsMidVerbNm = Not HasPfx(Nm, Verb(Nm))
+Function IsMidVerbNm(NM) As Boolean
+Dim V$: V = Verb(NM): If V = "" Then Exit Function
+IsMidVerbNm = Not HasPfx(NM, Verb(NM))
 End Function
 
-Function IsFstVerbNm(Nm) As Boolean
-IsFstVerbNm = HasPfx(Nm, Verb(Nm))
+Function IsFstVerbNm(NM) As Boolean
+IsFstVerbNm = HasPfx(NM, Verb(NM))
 End Function
 Function IsVerb(S) As Boolean
 IsVerb = VerbAset.Has(RmvEndDig(S))
@@ -162,9 +162,9 @@ For J = Len(S) To 1 Step -1
 Next
 RmvEndDig = Left(S, J)
 End Function
-Function Verb$(Nm)
+Function Verb$(NM)
 Dim Cml$, I, LetterCml$
-For Each I In CmlAy(Nm)
+For Each I In CmlAy(NM)
     Cml = I
     LetterCml = RmvDigSfx(Cml)
     If VerbAset.Has(LetterCml) Then Verb = Cml: Exit Function
@@ -196,6 +196,6 @@ If Not IsNm(S) Then Thw Fun, "Verb must be a name", "Str", S
 If Not IsAscUCas(Asc(FstChr(S))) Then Thw Fun, "Verb must started with UCase", "Str", S
 End Sub
 
-Function QteVerb$(Nm)
+Function QteVerb$(NM)
 
 End Function

@@ -45,15 +45,15 @@ For Each K In Lpm.Keys
 Next
 End Function
 
-Private Sub LpmPushPm(Lpm As Dictionary, Nm$, Optional V$)
+Private Sub LpmPushPm(Lpm As Dictionary, NM$, Optional V$)
 Dim J%, S$()
-If Lpm.Exists(Nm) Then
+If Lpm.Exists(NM) Then
     If V = "" Then Exit Sub
-    S = Lpm(Nm)
+    S = Lpm(NM)
     PushI S, V
-    Lpm(Nm) = S
+    Lpm(NM) = S
 Else
-    Lpm.Add Nm, Sy(V)
+    Lpm.Add NM, Sy(V)
 End If
 End Sub
 Sub DmpLpm(Lpm As Dictionary)

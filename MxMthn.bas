@@ -40,25 +40,35 @@ Function PubMthNy(Src$()) As String()
 Dim Ix, N$, B As Mthn3
 For Each Ix In MthIxItr(Src)
     B = Mthn3zL(Src(Ix))
-    If B.Nm <> "" Then
+    If B.NM <> "" Then
         If B.ShtMdy = "" Or B.ShtMdy = "Pub" Then
-            PushI PubMthNy, B.Nm
+            PushI PubMthNy, B.NM
         End If
     End If
 Next
 End Function
 
+Function Mthnn$()
+Mthnn = MthnnzM(CMd)
+End Function
+Function MthnnzM$(M As CodeModule)
+MthnnzM = MthnnzS(Src(M))
+End Function
+
+Function MthnnzS$(Src$())
+MthnnzS = MthnnzL(MthLinAy(Src))
+End Function
 Function MthnnzL$(MthLinAy$())
 MthnnzL = JnSpc(AySrt(MthNy(MthLinAy)))
 End Function
 
 Function MthNyzL(MthLinAy$()) As String()
 Const CSub$ = CMod & "MthNyzL"
-Dim I, Nm$, J%, MthLin
+Dim I, NM$, J%, MthLin
 For Each I In Itr(MthLinAy)
-    Nm = MthnzLin(I)
-    If Nm = "" Then Thw CSub, "Given MthLinAy does not have Mthn", "[MthLin with error] Ix MthLinAy", I, J, AddIxPfx(MthLinAy)
-    PushI MthNyzL, Nm
+    NM = MthnzLin(I)
+    If NM = "" Then Thw CSub, "Given MthLinAy does not have Mthn", "[MthLin with error] Ix MthLinAy", I, J, AddIxPfx(MthLinAy)
+    PushI MthNyzL, NM
     J = J + 1
 Next
 End Function
@@ -76,7 +86,7 @@ End Function
 
 Function Dimn$(Lin)
 Dim L$: L = Lin
-If ShfTerm(L, "Dim") Then Dimn = Nm(LTrim(L))
+If ShfTerm(L, "Dim") Then Dimn = NM(LTrim(L))
 End Function
 
 Function DimNy(Ly$()) As String()
@@ -89,19 +99,19 @@ End Function
 Function Mthn$(Lin)
 Dim L$: L = RmvMdy(Lin)
 If ShfMthTy(L) = "" Then Exit Function
-Mthn = Nm(L)
+Mthn = NM(L)
 End Function
 
 Private Sub Z_MthDnzL()
 Debug.Print MthDnzL("Function MthnzMthDn$(MthDn$)")
 End Sub
 
-Function MthDn$(Nm$, ShtMdy$, ShtTy$)
-MthDn = JnDotAp(Nm, ShtMdy, ShtTy)
+Function MthDn$(NM$, ShtMdy$, ShtTy$)
+MthDn = JnDotAp(NM, ShtMdy, ShtTy)
 End Function
 
 Function MthDnzMthn3$(A As Mthn3)
-MthDnzMthn3 = MthDn(A.Nm, A.ShtMdy, A.ShtTy)
+MthDnzMthn3 = MthDn(A.NM, A.ShtMdy, A.ShtTy)
 End Function
 
 Function MthMdyChr$(ShtMdy$)
@@ -128,19 +138,19 @@ End Function
 Function PrpNm$(Lin)
 Dim L$: L = RmvMdy(Lin)
 If ShfKd(L) <> "Property" Then Exit Function
-PrpNm = Nm(L)
+PrpNm = NM(L)
 End Function
 
 Function MthnzDNm$(MthDn)
 Dim Ay$(): Ay = Split(MthDn, ".")
-Dim Nm$
+Dim NM$
 Select Case Si(Ay)
-Case 1: Nm = Ay(0)
-Case 2: Nm = Ay(1)
-Case 3: Nm = Ay(2)
+Case 1: NM = Ay(0)
+Case 2: NM = Ay(1)
+Case 3: NM = Ay(2)
 Case Else: Stop
 End Select
-MthnzDNm = Nm
+MthnzDNm = NM
 End Function
 Private Sub Z_Mthn()
 GoTo Z
@@ -201,7 +211,7 @@ Dim L
 For Each L In Itr(Src)
     With Mthn3zL(L)
         If .ShtMdy = "Pub" Then
-            If .Nm = PubMthn Then
+            If .NM = PubMthn Then
                 HasPubMth = True
                 Exit Function
             End If
@@ -277,8 +287,8 @@ For Each I In Itr(MthNyV)
 Next
 End Property
 
-Function HasVerb(Nm) As Boolean
-HasVerb = Verb(Nm) <> ""
+Function HasVerb(NM) As Boolean
+HasVerb = Verb(NM) <> ""
 End Function
 
 Property Get MthnsetoWiVerb() As Aset
@@ -296,7 +306,7 @@ End Function
 Function MthNyzSI(Src$(), MthIxy&()) As String()
 Dim Ix
 For Each Ix In Itr(MthIxy)
-    PushI MthNyzSI, Mthn3zL(Src(Ix)).Nm
+    PushI MthNyzSI, Mthn3zL(Src(Ix)).NM
 Next
 End Function
 

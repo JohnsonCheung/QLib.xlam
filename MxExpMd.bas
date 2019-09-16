@@ -1,16 +1,18 @@
-Attribute VB_Name = "MxExport"
+Attribute VB_Name = "MxExpMd"
 Option Compare Text
 Option Explicit
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxExport."
 
 Sub ExpMdM()
-ExpMd CMd
+ExpMdzM CMd
 End Sub
 
-Sub ExpMd(M As CodeModule)
+Sub ExpMdzM(M As CodeModule)
 EndTrimMd M
-M.Parent.Export SrcFfnzM(M)
+Dim F$: F = SrcFfnzM(M)
+M.Parent.Export F
+TrimLasEmpLinzFt F
 End Sub
 
 Private Sub ExpRf(P As VBProject)
@@ -20,10 +22,6 @@ End Sub
 Sub BrwSrcpP()
 BrwPth SrcpP
 End Sub
-
-Function SrcpzP$(P As VBProject)
-SrcpzP = EnsPth(Pjp(P) & ".Src\" & Pjfn(P))
-End Function
 
 Sub ExpPjf(Pjf, Optional Xls As Excel.Application, Optional Acs As Access.Application)
 Stamp "ExpPj: Begin"
@@ -53,7 +51,7 @@ ExpPjzP CPj
 End Sub
 
 Sub ExpPjzP(Pj As VBProject)
-Dim P$: P = Srcp(Pj)
+Dim P$: P = SrcpzP(Pj)
 InfLin CSub, "... Clr src pth":       EnsPthAll P
                                       ClrPthFil P
 InfLin CSub, "... Cpy pj to src pth": CpyFfnzToPth Pj.Filename, P
@@ -67,7 +65,7 @@ Private Sub ExpSrc(P As VBProject)
 Dim C As VBComponent
 For Each C In P.VBComponents
     DoEvents
-    C.Export SrcFfn(C)
+    ExpMdzM C.CodeModule
 Next
 End Sub
 

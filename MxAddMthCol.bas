@@ -56,4 +56,3 @@ Dim Dr, Dy(): For Each Dr In Itr(WiRetSfx.Dy)
 Next
 AddMthColIsRetObj = AddColzFFDy(WiRetSfx, "IsRetObj", Dy)
 End Function
-

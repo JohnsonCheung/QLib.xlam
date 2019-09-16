@@ -25,4 +25,3 @@ Dim IC%: For IC = 1 To UBound(Sq, 2)
 Next
 AlignSqzWy = O
 End Function
-

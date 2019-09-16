@@ -11,7 +11,7 @@ Option Compare Text
 Option Explicit
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "Rel."
-Public Nm$
+Public NM$
 Private Dic As New Dictionary    ' Key is Par, Val is Aset of chd
 
 Friend Function Init(RelLy$()) As Rel
@@ -130,8 +130,8 @@ Const CSub$ = CMod & "ThwIf_NE"
 If IsEq(A) Then Exit Sub
 Dim O$()
 PushI O, Msg
-PushI O, FmtQQ("?-ParCnt(?) / ?-ParCnt(?)", Nm, NPar, N1, A.NPar)
-PushI O, Nm & " --------------------"
+PushI O, FmtQQ("?-ParCnt(?) / ?-ParCnt(?)", NM, NPar, N1, A.NPar)
+PushI O, NM & " --------------------"
 PushIAy O, Fmt
 PushI O, N1 & " --------------------"
 PushIAy O, A.Fmt

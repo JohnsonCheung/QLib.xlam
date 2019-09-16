@@ -1,4 +1,6 @@
 Attribute VB_Name = "MxFv"
+Option Explicit
+Option Compare Text
 Const CLib$ = "QDao."
 Const CMod$ = CLib & "MxFv."
 Function FvzQ(D As Database, Q)
@@ -51,5 +53,3 @@ End Function
 Function FvzCnq(A As AdoDB.Connection, Q)
 FvzCnq = FvzArs(A.Execute(Q))
 End Function
-
-

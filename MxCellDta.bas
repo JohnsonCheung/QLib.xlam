@@ -1,4 +1,6 @@
 Attribute VB_Name = "MxCellDta"
+Option Explicit
+Option Compare Text
 Const CLib$ = "QDta."
 Const CMod$ = CLib & "MxCellDta."
 
@@ -64,4 +66,3 @@ Else
     WdtzCell = Len(Cell)
 End If
 End Function
-

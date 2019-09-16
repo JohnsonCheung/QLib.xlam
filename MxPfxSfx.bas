@@ -103,6 +103,11 @@ For Each V In Itr(Ay)
 Next
 HasPfxOfAllEle = True
 End Function
+
+Function NoPfx(S, Pfx, Optional C As VbCompareMethod = vbTextCompare) As Boolean
+NoPfx = Not HasPfx(S, Pfx, C)
+End Function
+
 Function HasPfx(S, Pfx, Optional C As VbCompareMethod = vbTextCompare) As Boolean
 HasPfx = StrComp(Left(S, Len(Pfx)), Pfx, C) = 0
 End Function

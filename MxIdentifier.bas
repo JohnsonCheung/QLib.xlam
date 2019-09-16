@@ -31,10 +31,10 @@ Set NsetzStr = AsetzAy(NyzStr(S))
 End Function
 
 Function AmNonNm(Sy$()) As String()
-Dim Nm$, I
+Dim NM$, I
 For Each I In Sy
-    Nm = I
-    If IsNm(Nm) Then PushI AmNonNm, Nm
+    NM = I
+    If IsNm(NM) Then PushI AmNonNm, NM
 Next
 End Function
 
@@ -87,13 +87,13 @@ End Function
 Function MthExtny(MthPjDotMdn, PubMthLy$(), PubMthn_To_PjDotModNy As Dictionary) As String()
 Dim Cxt$: Cxt = JnSpc(MthCxtLy(PubMthLy))
 Dim Ny$(): Ny = NyzStr(Cxt)
-Dim Nm
-For Each Nm In Itr(Ny)
-    If PubMthn_To_PjDotModNy.Exists(Nm) Then
+Dim NM
+For Each NM In Itr(Ny)
+    If PubMthn_To_PjDotModNy.Exists(NM) Then
         Dim PjDotModNy$():
-            PjDotModNy = AeEle(PubMthn_To_PjDotModNy(Nm), MthPjDotMdn)
-        If HasEle(PjDotModNy, Nm) Then
-            PushI MthExtny, Nm
+            PjDotModNy = AeEle(PubMthn_To_PjDotModNy(NM), MthPjDotMdn)
+        If HasEle(PjDotModNy, NM) Then
+            PushI MthExtny, NM
         End If
     End If
 Next

@@ -180,9 +180,9 @@ Sub SetWsCdNm(A As Worksheet, CdNm$)
 CmpzWs(A).Name = CdNm
 End Sub
 
-Sub SetWsCdNmAndLoNm(A As Worksheet, Nm$)
-CmpzWs(A).Name = Nm
-SetLoNm FstLo(A), Nm
+Sub SetWsCdNmAndLoNm(A As Worksheet, NM$)
+CmpzWs(A).Name = NM
+SetLoNm FstLo(A), NM
 End Sub
 Function RgzDbtzByWc(Db As Database, T, At As Range) As Range
 
@@ -745,17 +745,17 @@ End Sub
 
 Private Sub SetWczFb(A As WorkbookConnection, ToUseFb$)
 If IsNothing(A.OLEDBConnection) Then Exit Sub
-Dim Cn$
+Dim CN$
 #Const A = 2
 #If A = 1 Then
     Dim S$
     S = A.OLEDBConnection.Connection
-    Cn = RplBet(S, ToUseFb, "Data Source=", ";")
+    CN = RplBet(S, ToUseFb, "Data Source=", ";")
 #End If
 #If A = 2 Then
-    Cn = OleCnStrzFb(ToUseFb)
+    CN = OleCnStrzFb(ToUseFb)
 #End If
-A.OLEDBConnection.Connection = Cn
+A.OLEDBConnection.Connection = CN
 End Sub
 
 Private Sub RfhWc(A As WorkbookConnection, ToUseFb$)

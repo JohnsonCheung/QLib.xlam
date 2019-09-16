@@ -28,4 +28,3 @@ Else
     Rmv4ClassLines = XSrc
 End If
 End Function
-

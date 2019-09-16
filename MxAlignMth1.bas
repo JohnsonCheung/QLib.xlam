@@ -2,55 +2,7 @@ Attribute VB_Name = "MxAlignMth1"
 Option Explicit
 Option Compare Text
 Const CLib$ = "QIde."
-Const CMod$ = CLib & "MxAlignMth."
-Private Function IsLinSngDimColon(L) As Boolean
-'Ret true if L is Single-Dim-Colon: one V aft Dim and Colon aft DclSfx & not [For]
-Dim Lin$: Lin = L
-If Not ShfDim(Lin) Then Exit Function
-If ShfNm(Lin) = "" Then Exit Function
-ShfBkt Lin
-ShfDclSfx Lin
-'If HasSubStr(L, "For Each Dr In Itr(Dy") Then Stop
-If FstChr(Lin) <> ":" Then Exit Function
-If T1(RmvFstChr(Lin)) = "For" Then Exit Function '[Dim Dr: For ....] is False
-IsLinSngDimColon = True
-End Function
-
-Private Sub Z_IsLinSngDimColon()
-Dim L
-'GoSub T0
-'GoSub T1
-GoSub T3
-'GoSub Z
-Exit Sub
-T3:
-    L = "Dim Dr:       For JIsDesAy() As Boolean: IsDesAy = XIsDesAy(Ay)"
-    Ept = False
-    GoTo Tst
-T1:
-    L = "Dim IsDesAy() As Boolean: IsDesAy = XIsDesAy(Ay)"
-    Ept = True
-    GoTo Tst
-T0:
-    L = "Dim A As Access.Application: Set A = DftAcs(Acs)"
-    Ept = True
-    GoTo Tst
-Tst:
-    Act = IsLinSngDimColon(L)
-    If Act <> Ept Then Stop
-    Return
-Z:
-    Dim A As New Aset
-    For Each L In SrczP(CPj)
-        L = Trim(L)
-        If T1(L) = "Dim" Then
-            Dim S$: S = IIf(IsLinSngDimColon(L), "1", "0")
-            A.PushItm S & " " & L
-        End If
-    Next
-    A.Srt.Vc
-    Return
-End Sub
+Const CMod$ = CLib & "MxAlignMth1."
 
 Sub AlignMthzLno1(M As CodeModule, MthLno&, Optional Upd As EmUpd, Optional IsUpdSelf As Boolean)
 Dim D1 As Drs, D2 As Drs
@@ -58,19 +10,19 @@ Dim D1 As Drs, D2 As Drs
 Dim IsErPm As Boolean: IsErPm = XIsErPm(M, MthLno)                 '        #Is-Parameter-er.     ! M-isnothg | MthLno<=0
 :                               If IsErPm Then Exit Sub            ' Exit=>                       ! If
 Dim Ml$:                   Ml = ContLinzM(M, MthLno)
-Dim XUpd  As Boolean:  XUpd = IsUpd(Upd)
-Dim MlNm$:               MlNm = Mthn(Ml)                           '        #Ml-Name.
-Dim IsSelf As Boolean: IsSelf = XIsSelf(XUpd, IsUpdSelf, M, MlNm) '        #Is-Self-aligning-er. ! Mdn<>'QIde...' & MlNm<>'AlignMthzLno
-
-:                   If IsSelf Then Exit Sub        ' Exit=>                 ! If
-Dim Mc As Drs: Mc = DoMthCxtzML(M, MthLno)          ' L MthLin #Mth-Context.
-:                   If NoReczDrs(Mc) Then Exit Sub ' Exit=>                 ! If
+Dim Mdn$:                 Mdn = M.Name
+Dim XUpd  As Boolean:    XUpd = IsUpd(Upd)
+Dim Mthn1$:               Mthn1 = Mthn(Ml)                           '        #Ml-Name.
+Dim IsSelf As Boolean: IsSelf = XIsSelf(XUpd, IsUpdSelf, M, Mthn1) '        #Is-Self-aligning-er. ! Mdn<>'QIde...' & MlNm<>'AlignMthzLno
+:                               If IsSelf Then Exit Sub        ' Exit=>                 ! If
+Dim Mc As Drs:             Mc = DoMthCxtzML(M, MthLno)          ' L MthLin #Mth-Context.
+:                               If NoReczDrs(Mc) Then Exit Sub ' Exit=>                 ! If
 
 Dim AlignRmkSepLNewO As Drs: AlignRmkSepLNewO = AlignRmkSep(XUpd, M, Mc)  '   When a rmk lin begins with '== or '-- or '.., expand it to 120 = or - or .
 
 
 '== Align Mth Cxt ======================================================================================================
-Dim McCln As Drs: McCln = XMcCln(Mc)                        ' L McLin                    #Mc-Cln. ! Incl those line is &XIsLinMc
+Dim McCln As Drs: McCln = XMcCln(Mc)                        ' L McLin                    #Mc-Cln. ! Incl those line is &IsLinMthCxt
 :                         If NoReczDrs(McCln) Then Exit Sub ' Exit=>                              ! if no mth-cxt
 Dim McGp  As Drs:  McGp = XMcGp(McCln)                      ' L McLin Gpno                        ! Add ^Gpno: each ^L in seq is 1-gp.  ^Gpno starts fm 1
 Dim McRmk As Drs: McRmk = XMcRmk(McGp)                      ' L McLin Gpno IsColon IsRmk          ! Add ^IsRmk   wh-LTrim-FstChr-^McLin='
@@ -83,27 +35,24 @@ Dim McDcl   As Drs:   McDcl = XMcDcl(McVSfx)                  ' L *Rmk V Sfx Dcl
 Dim McLR    As Drs:    McLR = XMcLR(McDcl)                    ' L *Rmk *V LHS RHS IsColon Rst ! Add ^LHS-RHS-IsColon fm shifting ^Rst
                                                               '                               ! ^IsColon=True when fstchr-^Rst=: and there is Only RHS
 Dim McLREmp As Drs: McLREmp = XMcLREmp(McLR)                  ' L *Rmk *V LHS RHS IsColon Rst ! Set ^LHS=^V, ^RHS="X" & ^V if (^V<>"" and ^LHS="" and ^RHS=""
-Dim McR123  As Drs:  McR123 = XMcR123(McLREmp)                ' L *Rmk *V *LRC R1 R2 R3       ! Add ^R1-R2-R3 from ^Rst
+Dim McR123  As Drs:  'McR123 = XMcR123(McLREmp)                ' L *Rmk *V *LRC R1 R2 R3       ! Add ^R1-R2-R3 from ^Rst
 Dim McFill  As Drs:  McFill = XMcFill(McR123)                 ' L *Rmk *V *LRC *R *F          ! Add ^F*.  [F* F0 FSfx FRHS FR1 FR2] ^F0 is Len-of-front-spc.
 Dim McAlign As Drs: McAlign = XMcAlign(McFill)                ' L Align                       ! Add ^Align #Aligned-Lin
                          D1 = DeCeqC(McAlign, "McLin Align")  '                               ! RmvRec wh-Same-aft-align
                          D2 = SelDrs(D1, "L Align McLin")     '                               ! Sel ^L-Aling-McLin which is Lno NewL OldL
 Dim McLNewO As Drs: McLNewO = LNewO(D2.Dy)                    ' Lno NewL OldL                 ! This is req from &RplLin
 :                             If XUpd Then RplLin M, McLNewO ' <==                           ! Upd Md-M by std Do-Lno-NewL-OldL
-'== Gen Bs (Brw-Stmt) ==================================================================================================
-Dim Bs      As Drs:              Bs = XBs(McCln)                               ' L BsLin ! Fst2Chr = '@
-Dim Bs1     As Drs:             Bs1 = DwEqSel(McR123, "IsRmk", False, "V Sfx")
-Dim Bs2     As Drs:             Bs2 = DwNe(Bs1, "V", "")
-Dim VSfx    As Dictionary: Set VSfx = DiczDrsCC(Bs2)
-Dim Mdn$:                       Mdn = MdnzM(M)
-Dim BsLNewO As Drs:         BsLNewO = XBsLNewO(Bs, VSfx, Mdn, MlNm)
-:                                     If XUpd Then RplLin M, BsLNewO
+'-- Export McCln McR123 McLNewo
+
+'== Gen Bs (Insp-Stmt) ==================================================================================================
+Dim InspStmt As Drs: InspStmt = InspStmtLNewO(McCln, Mdn$, Mthn1$)
+:                             If XUpd Then RplLin M, InspStmt
 
 '== Crt Chd-Mth (Cm)====================================================================================================
 Dim CmSel  As Drs:   CmSel = DwEq(McR123, "IsRmk", False)
 Dim CmV    As Drs:     CmV = SelDrs(CmSel, "V Sfx LHS RHS")    ' V Sfx LHS RHS
 Dim CmDot  As Drs:   CmDot = XCmDot(CmV)                       ' V Sfx LHS RHS DotNm
-Dim CmNmDD As Drs:  CmNmDD = XCmNmDD(CmDot, MlNm)              ' V Sfx LHS RHS DotNm CmNmDD       ! DD : cm is DblDash xxx__xxx
+Dim CmNmDD As Drs:  CmNmDD = XCmNmDD(CmDot, Mthn1)              ' V Sfx LHS RHS DotNm CmNmDD       ! DD : cm is DblDash xxx__xxx
 Dim CmNmX  As Drs:   CmNmX = XCmNmX(CmNmDD)                    ' V Sfx LHS RHS DotNm CmNmDD CmNmX ! X  : cm is Xmmm
 Dim CmNm   As Drs:    CmNm = XCmNm(CmNmX)                      ' V Sfx LHS RHS CmNm
 Dim CmEpt  As Drs:   CmEpt = DwNe(CmNm, "CmNm", "")            ' Sfx CmNm
@@ -228,7 +177,7 @@ If IsRptU(Upd) Then
         "EmUpd RmkSep Align BrwStmt " & _
         "Crt-Chd-Mth Rpl-Mth-Brw Crt-Mth-Brw Upd-Chd-MthLin Rfh-Chd-Mth-Rmk", _
         EmUpdStr(Upd), _
-        FmtCellDrs(AlignRmkSepLNewO), FmtCellDrs(McLNewO), FmtCellDrs(BsLNewO), _
+        FmtCellDrs(AlignRmkSepLNewO), FmtCellDrs(McLNewO), FmtCellDrs(InspStmt), _
         CdNewCm, FmtCellDrs(MbLNewO), FmtCellDrs(MbNew), FmtCellDrs(CmlLNewO), FmtS12s(CrChg)
 End If
 'Insp CSub, "Cr", "CrVpr CrS12s", FmtCellDrs(CrVpr), FmtS12s(CrS12s): Stop
@@ -338,7 +287,7 @@ Fnd:
 End Function
 
 Private Function XMcGp(McCln As Drs) As Drs
-'Fm McCln : L McLin      #Mc-Cln. ! Incl those line is &XIsLinMc
+'Fm McCln : L McLin      #Mc-Cln. ! Incl those line is &IsLinMthCxt
 'Ret      : L McLin Gpno          ! Add ^Gpno: each ^L in seq is 1-gp.  ^Gpno starts fm 1 @@
 XMcGp = AddColzGpno(McCln, "L", "Gpno")
 'Insp "QIde_B_AlignMth.XMcGp", "Inspect", "Oup(XMcGp) McCln", FmtCellDrs(XMcGp), FmtCellDrs(McCln): Stop
@@ -378,17 +327,17 @@ Private Function XCmlEpt(CmlMthRet As Drs) As Drs
 'Fm CmlMthRet : V Sfx RHS CmNm Pm DclPm TyChr RetSfx
 'Ret          : V CmNm EptL
 '               L Mdy Ty Mthn MthLin @@
-Dim Dr, Dy(), Nm$, Ty$, Pm$, Ret$, V$, EptL$, INm%, ITy%, IPm%, IRet%, IV%
+Dim Dr, Dy(), NM$, Ty$, Pm$, Ret$, V$, EptL$, INm%, ITy%, IPm%, IRet%, IV%
 AsgIx CmlMthRet, "CmNm TyChr DclPm RetSfx V", INm, ITy, IPm, IRet, IV
 'BrwDrs CmlMthRet: Stop
 For Each Dr In Itr(CmlMthRet.Dy)
-    Nm = Dr(INm)
+    NM = Dr(INm)
     Ty = Dr(ITy)
     Pm = Dr(IPm)
     Ret = Dr(IRet)
     V = Dr(IV)
-    EptL = FmtQQ("Private Function ??(?)?", Nm, Ty, Pm, Ret)
-    PushI Dy, Array(V, Nm, EptL)
+    EptL = FmtQQ("Private Function ??(?)?", NM, Ty, Pm, Ret)
+    PushI Dy, Array(V, NM, EptL)
 Next
 XCmlEpt = DrszFF("V CmNm EptL", Dy)
 'BrwDrs CmlEpt: Stop
@@ -440,26 +389,6 @@ Dim O$()
 XMcNew = O
 End Function
 
-Private Function XBsLNewO(Bs As Drs, VSfx As Dictionary, Mdn$, MlNm$) As Drs
-'Fm Bs   : L BsLin           ! Fst2Chr = '@
-'Fm MlNm :         #Ml-Name. @@
-Dim Dr, Dy(), S$, Lin$, L&
-For Each Dr In Itr(Bs.Dy)
-    L = Dr(0)
-    Lin = Dr(1)
-    S = WBsStmt(Lin, VSfx, Mdn, MlNm)
-    PushI Dy, Array(L, S, Lin)
-Next
-XBsLNewO = DrszFF("L NewL OldL", Dy)
-'Insp "QIde_B_AlignMth.XBsLNewO", "Inspect", "Oup(XBsLNewO) Bs VSfx Mdn MlNm", FmtCellDrs(XBsLNewO), FmtCellDrs(Bs), VSfx, Mdn, MlNm: Stop
-End Function
-
-Private Function WBsStmt$(BsLin, VSfx As Dictionary, Mdn$, MlNm$)
-If Left(BsLin, 2) <> "'@" Then Thw CSub, "BsLin is always begin with '@", "BsLin", BsLin
-Dim Nn$: Nn = Trim(RmvPfx(BsLin, "'@"))
-Dim E$: E = InspExprLis(Nn, VSfx)
-WBsStmt = InspStmt(Nn, E, Mdn, MlNm)
-End Function
 Private Function XOCrtMb(M As CodeModule, MbNew As Drs)
 'Fm NewMb : Cm NewMbL @@
 Dim Dr: For Each Dr In Itr(MbNew.Dy)
@@ -480,7 +409,7 @@ Private Function XMbEpt(CmLis As Drs, Mdn$) As Drs
 Dim Dr, Dy()
 For Each Dr In Itr(CmLis.Dy)
     Dim MthLin$: MthLin = LasEle(Dr)
-    Dim MbStmt$: MbStmt = "'" & InspStmtzMthLin(MthLin, Mdn) & ": Stop"
+    Dim MbStmt$: MbStmt = "'" & InspStmtzL(MthLin, Mdn) & ": Stop"
     PushI Dr, MbStmt
     PushI Dy, Dr
 Next
@@ -505,17 +434,6 @@ Next
 XMbAct = DrszFF("L Mthn OldL", Dy)
 'BrwDrs MbAct: Stop
 'Insp "QIde_B_AlignMth.XMbAct", "Inspect", "Oup(XMbAct) Cm M", FmtCellDrs(XMbAct), Cm, Mdn(M): Stop
-End Function
-
-Private Function XBs(McCln As Drs) As Drs
-'Fm McCln : L McLin #Mc-Cln. ! Incl those line is &XIsLinMc
-'Ret      : L BsLin          ! Fst2Chr = '@ @@
-Dim Dr, Dy()
-For Each Dr In Itr(McCln.Dy)
-    If HasPfx(Dr(1), "'@") Then PushI Dy, Dr
-Next
-XBs = DrszFF("L BsLin", Dy)
-'Insp "QIde_B_AlignMth.XBs", "Inspect", "Oup(XBs) McCln", FmtCellDrs(XBs), FmtCellDrs(McCln): Stop
 End Function
 
 Private Function XMcAlign(McFill As Drs) As Drs
@@ -549,13 +467,13 @@ For Each Dr In Itr(CmDta.Dy)
 Next
 End Function
 
-Private Function XIsSelf(IsUpd As Boolean, IsUpdSelf As Boolean, M As CodeModule, MlNm$) As Boolean
+Private Function XIsSelf(IsUpd As Boolean, IsUpdSelf As Boolean, M As CodeModule, Mlnm$) As Boolean
 'Fm MlNm :  #Ml-Name.
 'Ret     :  #Is-Self-aligning-er. ! Mdn<>'QIde...' & MlNm<>'AlignMthzLno @@
 If Not IsUpd Then Exit Function
 If IsUpdSelf Then Exit Function
 Dim O As Boolean
-O = Mdn(M) = "MxAlignMth1" And MlNm = "AlignMthzLno1"
+O = Mdn(M) = "MxAlignMth1" And Mlnm = "AlignMthzLno1"
 If O Then Inf CSub, "Self aligning"
 XIsSelf = O
 'Insp "QIde_B_AlignMth.XIsSelf", "Inspect", "Oup(XIsSelf) IsUpd IsUpdSelf M MlNm", XIsSelf, IsUpd, IsUpdSelf, Mdn(M), MlNm: Stop
@@ -570,37 +488,13 @@ XIsErPm = False
 'Insp "QIde_B_AlignMth.XIsErPm", "Inspect", "Oup(XIsErPm) M MthLno", XIsErPm, Mdn(M), MthLno: Stop
 End Function
 
-Private Function XIsLinMc(Lin$) As Boolean
-'Ret : True ! if @Lin should be included as Mth-Context with one of is true
-'           ! #1 IsRmk and aft (rmv ' and trim) not pfx <If Stop Insp == -- .. Brw>
-'           ! #2 FstChr = :
-'           ! #3 SngDimColon (&IsSngDimColon)   ! a dim and only one var and aft is [:]
-'           ! #4 Is Asg stmt lin (&IsLinAsg) @@
-Dim L$: L = Trim(Lin)
-Select Case True
-Case HasPfx(L, "'")             ' Is Rmk
-    L = LTrim(RmvFstChr(L))
-    Select Case True
-    Case HasPfxss(L, "If Stop Insp == -- .. Brw")     ' Don't incl if one of %PfxAy
-    Case Else: XIsLinMc = True   ' <== Incl
-    End Select
-Case IsLinSngDimColon(L), IsLinAsg(L), FstChr(L) = ":"
-    XIsLinMc = True              ' <== Incl
-End Select
-'Ret : True ! if @Lin should be included as Mth-Context with one of is true
-'           ! #1 IsRmk and aft (rmv ' and trim) not pfx <If Stop Insp == -- .. Brw>
-'           ! #2 FstChr = :
-'           ! #3 SngDimColon (&IsSngDimColon)   ! a dim and only one var and aft is [:]
-'           ! #4 Is Asg stmt lin (&IsLinAsg)
-End Function
-
 Private Function XMcCln(Mc As Drs) As Drs
 'Fm Mc : L MthLin #Mth-Context.
-'Ret   : L McLin  #Mc-Cln.      ! Incl those line is &XIsLinMc @@
+'Ret   : L McLin  #Mc-Cln.      ! Incl those line is &IsLinMthCxt @@
 Dim Dr, Dy()
 For Each Dr In Itr(Mc.Dy)
     Dim Lin$: Lin = Dr(1)
-    Dim IsLinMc As Boolean: IsLinMc = XIsLinMc(Lin) '! aa
+    Dim IsLinMc As Boolean: IsLinMc = IsLinMthCxt(Lin) '! aa
     If IsLinMc Then PushI Dy, Dr '! aa
 Next
 XMcCln = DrszFF("L McLin", Dy)
@@ -617,11 +511,11 @@ For J = 0 To CrChg.N - 1
 Next
 End Sub
 
-Private Function XCmNmDD(CmDot As Drs, MlNm$) As Drs
+Private Function XCmNmDD(CmDot As Drs, Mlnm$) As Drs
 'Fm CmDot : V Sfx LHS RHS DotNm
 'Fm MlNm  :                            #Ml-Name.
 'Ret      : V Sfx LHS RHS DotNm CmNmDD           ! DD : cm is DblDash xxx_xxx @@
-Dim MlNmDD$: MlNmDD = MlNm & "__"
+Dim MlNmDD$: MlNmDD = Mlnm & "__"
 Dim Dr, Dy(): For Each Dr In Itr(CmDot.Dy)
     Dim DotNm$:       DotNm = Dr(3)
     Dim V$:               V = Dr(0)
@@ -680,12 +574,12 @@ Dim Dr, Dy(): For Each Dr In Itr(CmNmX.Dy)
     Dim Sfx$: Sfx = Dr(IxSfx)
     Dim DD$:   DD = Dr(IxDD)
     Dim X$:     X = Dr(IxX)
-    Dim Nm$: Nm = ""
+    Dim NM$: NM = ""
     Select Case True
-    Case DD <> "": Nm = DD
-    Case X <> "":  Nm = X
+    Case DD <> "": NM = DD
+    Case X <> "":  NM = X
     End Select
-    If Nm <> "" Then PushI Dy, Array(V, Sfx, LHS, RHS, Nm)
+    If NM <> "" Then PushI Dy, Array(V, Sfx, LHS, RHS, NM)
 Next
 XCmNm = DrszFF("V Sfx LHS RHS CmNm", Dy)
 'Insp "QIde_B_AlignMth.XCmNm", "Inspect", "Oup(XCmNm) CmNmX", FmtCellDrs(XCmNm), FmtCellDrs(CmNmX): Stop
@@ -1038,5 +932,3 @@ End Function
 Private Sub Z()
 
 End Sub
-
-
