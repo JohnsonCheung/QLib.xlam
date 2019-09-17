@@ -2,7 +2,7 @@ Attribute VB_Name = "MxMthLin"
 Option Compare Text
 Option Explicit
 Const CLib$ = "QIde."
-Const CMod$ = CLib & "MxParseMthLin."
+Const CMod$ = CLib & "MxMthLin."
 
 Function ShfRetTyzAftPm$(OAftPm$)
 Dim A$: A = ShfTermAftAs(OAftPm)

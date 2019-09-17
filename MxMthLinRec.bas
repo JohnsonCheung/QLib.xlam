@@ -1,4 +1,7 @@
 Attribute VB_Name = "MxMthLinRec"
+Option Explicit
+Option Compare Text
+Const CMod$ = CLib & "MxMthLinRec."
 Type MthLinRec
     ShtMdy As String
     ShtTy As String

@@ -1,4 +1,7 @@
 Attribute VB_Name = "MxRx"
+Option Explicit
+Option Compare Text
+Const CMod$ = CLib & "MxRx."
 Function MchzPatn(Patn$, S) As MatchCollection
 Set MchzPatn = Mch(Rx(Patn), S)
 End Function

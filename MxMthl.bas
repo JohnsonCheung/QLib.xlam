@@ -1,4 +1,7 @@
 Attribute VB_Name = "MxMthl"
+Option Explicit
+Option Compare Text
+Const CMod$ = CLib & "MxMthl."
 
 Function MthlyzM(M As CodeModule, Mthn) As String()
 MthlyzM = SplitCrLf(MthlzM(M, Mthn))
