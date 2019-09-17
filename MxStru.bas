@@ -1,6 +1,7 @@
 Attribute VB_Name = "MxStru"
 Option Compare Text
 Option Explicit
+Const CNs$ = "sdfsdf"
 Const CLib$ = "QDao."
 Const CMod$ = CLib & "MxStru."
 
@@ -48,8 +49,8 @@ For Each I In Itr(AySrtQ(Tny))
 Next
 End Function
 
-Function StruzRs$(A As dao.Recordset)
-Dim O$(), F As dao.Field2
+Function StruzRs$(A As DAO.Recordset)
+Dim O$(), F As DAO.Field2
 For Each F In A.Fields
     PushI O, FdStr(F)
 Next
@@ -73,7 +74,7 @@ Dim P$
 
 Dim R$
     Dim Rst$()
-    Rst = MinusAy(F, Pk)
+    Rst = AyMinus(F, Pk)
     R = " " & JnSpc(SyzQteSqIf(Rst))
 StruzT = T & P & R
 End Function

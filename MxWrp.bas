@@ -9,7 +9,7 @@ WrpLines = Lines: Exit Function
 WrpLines = JnCrLf(WrpLy(SplitCrLf(Lines), Wdt))
 End Function
 
-Private Sub Z_WrpLy()
+Sub Z_WrpLy()
 Dim Ly$(), Wdt%
 GoSub T1
 Exit Sub
@@ -25,7 +25,7 @@ Tst:
 End Sub
 
 
-Private Sub Z_WrpLines()
+Sub Z_WrpLines()
 Dim A$, W%
 A = "lksjf lksdj flksdjf lskdjf lskdjf lksdjf lksdjf klsdjf klj skldfj lskdjf klsdjf klsdfj klsdfj lskdfj  sdlkfj lsdkfj lsdkjf klsdfj lskdjf lskdjf kldsfj lskdjf sdklf sdklfj dsfj "
 W = 80
@@ -49,7 +49,7 @@ For Each I In Itr(Ly)
 Next
 End Function
 
-Private Function ShfWrpgLin(OLin$, W%)
+Function ShfWrpgLin(OLin$, W%)
 If OLin = "" Then Exit Function
 Dim O$, OL$, F$
 O = Left(OLin, W)
@@ -68,7 +68,7 @@ ShfWrpgLin = Trim(O)
 OLin = OL
 End Function
 
-Private Function WrpLin(Lin, W%) As String()
+Function WrpLin(Lin, W%) As String()
 If Len(Lin) > W Then WrpLin = Sy(Lin): Exit Function
 Dim L$: L = RTrim(Lin)
 Dim J%: While L <> ""

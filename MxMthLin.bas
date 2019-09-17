@@ -1,21 +1,10 @@
-Attribute VB_Name = "MxParseMthLin"
+Attribute VB_Name = "MxMthLin"
 Option Compare Text
 Option Explicit
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxParseMthLin."
-Type MthLinRec
-    ShtMdy As String
-    ShtTy As String
-    NM As String
-    TyChr As String
-    RetTy As String
-    Pm As String
-    Rmk As String
-    IsRetVal As Boolean
-    ShtRetTy As String
-End Type
 
-Private Function ShfRetTyzAftPm$(OAftPm$)
+Function ShfRetTyzAftPm$(OAftPm$)
 Dim A$: A = ShfTermAftAs(OAftPm)
 If LasChr(A) = ":" Then
     ShfRetTyzAftPm = RmvLasChr(A)
@@ -25,7 +14,7 @@ Else
 End If
 End Function
 
-Private Function MthLinRmkzAftRetTy$(AftRetTy$)
+Function MthLinRmkzAftRetTy$(AftRetTy$)
 Select Case True
 Case AftRetTy = "", FstChr(AftRetTy) = ":": Exit Function
 End Select
@@ -39,20 +28,6 @@ Dim I
 For Each I In Itr(Ay)
     PushI ArgNyzPm, TakNm(I)
 Next
-End Function
-Function MthLinRec(MthLin) As MthLinRec
-Dim L$: L = MthLin
-With MthLinRec
-    .ShtMdy = ShfShtMdy(L)
-    .ShtTy = ShfShtMthTy(L): If .ShtTy = "" Then Exit Function
-    .NM = ShfNm(L)
-    .TyChr = ShfTyChr(L)
-    .Pm = ShfBktStr(L)
-    .RetTy = ShfRetTyzAftPm(L)
-    .Rmk = MthLinRmkzAftRetTy(L)
-    .IsRetVal = HasEle(SyzSS("Get Fun"), .ShtTy)
-    .ShtRetTy = ShtRetTy(.TyChr, .RetTy, .IsRetVal)
-End With
 End Function
 
 
@@ -79,7 +54,7 @@ For Each Ix In Itr(MthIxyzN(Src, Mthn))
 Next
 End Function
 
-Private Sub Z_MthLinAy()
+Sub Z_MthLinAy()
 Dim MthNy$(), Src$()
 Src = CSrc
 MthNy = Sy("Src_MthDclDy", "Mth_MthDclLin")
@@ -121,39 +96,6 @@ For Each P In V.VBProjects
 Next
 End Function
 
-
-'aaa
-Private Property Get XX1()
-
-End Property
-
-'BB
-Private Sub SetXX1(V)
-
-End Sub
-Function PubMthNyzP(P As VBProject) As String()
-
-End Function
-Function MthLzPum(PubMthn)
-
-End Function
-
-Function MthLzPP$(P As VBProject, PubMthn)
-Dim B$(): B = ModNyzPubMth(PubMthn)
-If Si(B) <> 1 Then
-    Thw CSub, "Should be 1 module found", "PubMthn [#Mod having PubMthn] ModNy-Found", PubMthn, Si(B), B
-End If
-MthLzPP = MthLzSP(SrczMdn(B(0)), PubMthn)
-End Function
-'
-Function MthLzSP$(Src$(), PubMthn)
-
-End Function
-'
-Property Get CMthL$() 'Cur
-CMthL = MthLzM(CMd, CMthn)
-End Property
-
 Sub VcMthlAyP()
 Vc FmtLinesAy(MthlAyP)
 End Sub
@@ -177,7 +119,7 @@ End Function
 Function MthlAyzS(Src$()) As String()
 Dim Ix
 For Each Ix In Itr(MthIxy(Src))
-    PushI MthlAyzS, MthLzIx(Src, Ix)
+    PushI MthlAyzS, MthlzIx(Src, Ix)
 Next
 End Function
 Function MdzMthn(P As VBProject, Mthn) As CodeModule
@@ -191,50 +133,11 @@ Next
 If IsNothing(O) Then Thw CSub, "Mthn not fnd in any codemodule of given pj", "Pj Mthn", "P.Name,Mthn"
 End Function
 
-Function MthLzPN$(P As VBProject, Mthn)
-MthLzPN = MthLzM(MdzMthn(P, Mthn), Mthn)
-End Function
-
-Function MthLzN$(Mthn)
-MthLzN = MthLzPN(CPj, Mthn)
-End Function
-
-Function MthLzM$(M As CodeModule, Mthn)
-MthLzM = MthLzNm(Src(M), Mthn)
-End Function
-
-Function MthLyzM(M As CodeModule, Mthn) As String()
-MthLyzM = SplitCrLf(MthLzM(M, Mthn))
-End Function
-
-Function MthLzNmTy$(M As CodeModule, Mthn, ShtMthTy$)
-Dim S$(): S = Src(M)
-Dim Ix&: Ix = MthIxzNmTy(S, Mthn, ShtMthTy)
-MthLzNmTy = MthLzIx(S, Ix)
-End Function
-
-Function MthLzIx$(Src$(), MthIx)
-Dim EIx&:       EIx = EndLix(Src, MthIx)
-Dim MthLy$(): MthLy = AwFT(Src, MthIx, EIx)
-MthLzIx = JnCrLf(MthLy)
-End Function
 
 Function MthLinzNmTy$(Src$(), Mthn, ShtMthTy$)
 MthLinzNmTy = Src(MthIxzNmTy(Src, Mthn, ShtMthTy))
 End Function
 
-Function MthLzNm$(Src$(), Mthn)
-Dim Ix, O$()
-For Each Ix In Itr(MthIxyzN(Src, Mthn))
-    PushI O, MthLzIx(Src, Ix)
-Next
-MthLzNm = JnDblCrLf(O)
-End Function
-
-Function MthLzSTN$(Src$(), ShtMthTy$, Mthn)
-Dim Ix&: Ix = MthIxzNmTy(Src, Mthn, ShtMthTy)
-MthLzSTN = MthLzIx(Src, Ix)
-End Function
 
 
 Function PubMthLinAy(Src$()) As String()

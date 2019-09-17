@@ -1,6 +1,7 @@
 Attribute VB_Name = "MxCnStr"
 Option Compare Text
 Option Explicit
+Const CNs$ = "sdfsdf"
 Const CLib$ = "QDao."
 Const CMod$ = CLib & "MxCnStr."
 

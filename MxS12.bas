@@ -36,7 +36,7 @@ Next
 End Function
 
 Function S12szRes(ResFn$, Optional ResPseg$) As S12s
-S12szRes = S12szStr(ResStr(ResFn, ResPseg))
+S12szRes = S12szStr(Resl(ResFn, ResPseg))
 End Function
 
 Function S12sStr$(A As S12s)
@@ -74,7 +74,7 @@ O.Ay(0) = A
 O.Ay(1) = B
 AddS12 = O
 End Function
-Private Function Y_S12s() As S12s
+Function Y_S12s() As S12s
 Dim O As S12s
 PushS12 O, S12("sldjflsdkjf", "lksdjf")
 PushS12 O, S12("sldjflsdkjf", "lksdjf")
@@ -246,7 +246,7 @@ For J = 0 To U
 Next
 S12szSySep = O
 End Function
-Private Sub Z_S12szDic()
+Sub Z_S12szDic()
 Dim A As New Dictionary
 A.Add "A", "BB"
 A.Add "B", "CCC"
@@ -256,10 +256,6 @@ Stop
 End Sub
 
 
-Private Sub Z()
-Z_S12szDic
-MVb__S12:
-End Sub
 
 Function AddS1Pfx(A As S12s, S1Pfx$) As S12s
 Dim J&: For J = 0 To A.N - 1

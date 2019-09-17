@@ -4,7 +4,7 @@ Option Explicit
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxLines."
 Function WdtzLines%(Lines)
-WdtzLines = AyWdt(SplitCrLf(Lines))
+WdtzLines = WdtzAy(SplitCrLf(Lines))
 End Function
 
 Function WdtzLinesAy%(LinesAy)
@@ -28,7 +28,7 @@ Dim Ly$(): Ly = SplitCrLf(Lines)
 
 End Function
 
-Private Sub Z_FmtLinesAy()
+Sub Z_FmtLinesAy()
 Dim LinesAy
 GoSub Z
 Exit Sub
@@ -37,7 +37,7 @@ Z:
     Return
 End Sub
 
-Private Function Y_LinesAy() As String()
+Function Y_LinesAy() As String()
 Erase XX
 X RplVbl("sdklf|lskdjflsdf|lsdkjflsdkfjsdflsdf|skldfjdsf|dklfsjdlksjfsldkf")
 X RplVbl("sdklf2-49230  sdfjldf|lskdjflsdf|lsdkjflsdkfjsdflsdf|skldfjdsf|dklfsjdlksjfsldkf")
@@ -57,7 +57,7 @@ For Each Lines In Itr(LinesAy)
     PushI FmtLinesAy, LinzSep
 Next
 End Function
-Private Function AddIxPfxzLineszW(Lines, W%, Optional B As EmIxCol = EiBeg0) As String()
+Function AddIxPfxzLineszW(Lines, W%, Optional B As EmIxCol = EiBeg0) As String()
 Dim L
 For Each L In Itr(SplitCrLf(Lines))
     PushI AddIxPfxzLineszW, "| " & AlignL(L, W) & " |"
@@ -74,14 +74,14 @@ End Select
 End Function
 
 
-Private Sub Z_LineszRTrim()
+Sub Z_LineszRTrim()
 Dim Lines$: Lines = LineszVbl("lksdf|lsdfj|||")
 Dim Act$: Act = LineszRTrim(Lines)
 Debug.Print Act & "<"
 Stop
 End Sub
 
-Private Sub Z_LineszLasN()
+Sub Z_LineszLasN()
 Dim Ay$(), A$, J%
 For J = 0 To 9
 Push Ay, "Line " & J
@@ -99,7 +99,7 @@ If A = "" Then LinesApp = L: Exit Function
 LinesApp = A & vbCrLf & L
 End Function
 
-Private Sub Z_LineszRTrim1()
+Sub Z_LineszRTrim1()
 Dim Lines$: Lines = LineszVbl("lksdf|lsdfj|||")
 Dim Act$: Act = LineszRTrim(Lines)
 Debug.Print Act & "<"

@@ -20,10 +20,10 @@ Const CMod$ = CLib & "MxWrtBql."
 '!It has first line as ShtTyscfQBLin.
 '!It rest of lines are records."
 
-Sub InsRszBql(R As dao.Recordset, Bql$)
+Sub InsRszBql(R As DAO.Recordset, Bql$)
 R.AddNew
 Dim Ay$(): Ay = Split(Bql, "`")
-Dim F As dao.Field, J%
+Dim F As DAO.Field, J%
 For Each F In R.Fields
     If Ay(J) <> "" Then
         F.Value = Ay(J)
@@ -32,8 +32,8 @@ For Each F In R.Fields
 Next
 R.Update
 End Sub
-Function BqlzRs$(A As dao.Recordset)
-Dim O$(), F As dao.Field
+Function BqlzRs$(A As DAO.Recordset)
+Dim O$(), F As DAO.Field
 For Each F In A.Fields
     If IsNull(F.Value) Then
         PushI O, ""
@@ -48,14 +48,14 @@ BqlzRs = L
 End Function
 
 
-Private Sub Z_WrtFbqlzDb()
+Sub Z_WrtFbqlzDb()
 Dim P$: P = TmpPth
 WrtFbqlzDb P, SampDbDutyDta
 BrwPth P
 Stop
 End Sub
 
-Private Sub Z_WrtFbqlzT()
+Sub Z_WrtFbqlzT()
 Dim T$: T = TmpFt
 WrtFbql T, SampDbDutyDta, "PermitD"
 BrwFt T
@@ -78,7 +78,7 @@ Dim T$
     T = T0
     If T = "" Then T = TzFbql(Fbql)
 Dim F%: F = FnoO(Fbql)
-Dim R As dao.Recordset
+Dim R As DAO.Recordset
 Set R = RszT(D, T)
 Dim L$: L = ShtTyBqlzT(D, T)
 Print #F, L

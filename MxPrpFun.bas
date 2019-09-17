@@ -42,7 +42,7 @@ Sub EnsPrpFun()
 EnsPjFunzMd CMd
 End Sub
 
-Private Sub EnsPrpFunMdLno(M As CodeModule, Lno, Optional WhatIf As Boolean)
+Sub EnsPrpFunMdLno(M As CodeModule, Lno, Optional WhatIf As Boolean)
 Dim OldLin
 Dim NewLin
     OldLin = M.Lines(Lno, 1)

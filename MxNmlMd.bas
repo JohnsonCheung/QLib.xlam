@@ -8,7 +8,7 @@ Function NmlSrc(XSrc$()) As String() ' #Normaliz-XSrc#
 ':XSrc: :Src #Exported-Source# ! after :Cmp.Export, the file with have serval lines added.  This :Src is known as :XSrc
 NmlSrc = RmvAtrLines(Rmv4ClassLines(XSrc))
 End Function
-Private Function RmvAtrLines(Src$()) As String()
+Function RmvAtrLines(Src$()) As String()
 Dim Fm%
     Dim J%: For J = 0 To UB(Src)
         If Not HasPfx(Src(J), "Attribute ") Then
@@ -20,7 +20,7 @@ X:
 RmvAtrLines = AwFm(Src, Fm)
 End Function
 
-Private Function Rmv4ClassLines(XSrc$()) As String()
+Function Rmv4ClassLines(XSrc$()) As String()
 If Si(XSrc) = 0 Then Exit Function
 If XSrc(0) = "VERSION 1.0 CLASS" Then
     Rmv4ClassLines = AwFm(XSrc, 4)

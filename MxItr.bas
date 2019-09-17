@@ -1,31 +1,14 @@
 Attribute VB_Name = "MxItr"
 Option Compare Text
 Option Explicit
+Const CNs$ = "ObjPrp"
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxItr."
-Function ObjVyzItr(Itr) As Variant()
-Dim Obj: For Each Obj In Itr
-    PushI ObjVyzItr, Obj.Value
-Next
-End Function
 
 Function AvzItr(Itr) As Variant()
 AvzItr = IntozItr(Array(), Itr)
 End Function
 
-Function ItrAddSfx(Itr, Sfx$) As String()
-Dim X
-For Each X In Itr
-    Push ItrAddSfx, X & Sfx
-Next
-End Function
-
-Function ItrAddPfx(Itr, Pfx$) As String()
-Dim X
-For Each X In Itr
-    Push ItrAddPfx, Pfx & X
-Next
-End Function
 
 Function ItrClnAy(Itr)
 If Itr.Count = 0 Then Exit Function
@@ -81,39 +64,39 @@ For Each X In Ay
 Next
 End Function
 
-Function FstzItrEq(Itr, PrpPth, V)
-'Ret : fst ele in @Itr with its prpOf-@PrpPth eq to @V
+Function FstzItrEq(Itr, Prpc, V)
+'Ret : fst ele in @Itr with its prpOf-@Prpc eq to @V
 Dim Obj: For Each Obj In Itr
-    If Prp(Obj, PrpPth) = V Then Set FstzItrEq = Obj: Exit Function
+    If PvzC(Obj, Prpc) = V Then Set FstzItrEq = Obj: Exit Function
 Next
 Set FstzItrEq = Nothing
 End Function
 
-Function FstzItn(Itr, NM$) 'Return first element in Itr with its PrpNm=Nm being true
-Set FstzItn = FstzItrEq(Itr, "Name", NM)
+Function FstzItn(Itr, Nm$) 'Return first element in Itr with its PrpNm=Nm being true
+Set FstzItn = FstzItrEq(Itr, "Name", Nm)
 End Function
 
-Function FstzItrT(Itr, TruePrpPth$)
-'Ret : fst ele in @Itr wi its prp-of-@TruePrpPth being true
-Set FstzItrT = FstzItrEq(Itr, TruePrpPth, True)
+Function FstzItrT(Itr, TruePrpc$)
+'Ret : fst ele in @Itr wi its prp-of-@TruePrpc being true
+Set FstzItrT = FstzItrEq(Itr, TruePrpc, True)
 End Function
 
-Function HasItn(Itr, NM) As Boolean
+Function HasItn(Itr, Nm) As Boolean
 Dim Obj: For Each Obj In Itr
-    If Obj.Name = NM Then HasItn = True: Exit Function
+    If Obj.Name = Nm Then HasItn = True: Exit Function
 Next
 End Function
 
-Function HasItrEq(Itr, PrpPth, V) As Boolean
+Function HasItrEq(Itr, Prpc, V) As Boolean
 Dim Obj: For Each Obj In Itr
-    If Prp(Obj, PrpPth) = V Then HasItrEq = True: Exit Function
+    If PvzC(Obj, Prpc) = V Then HasItrEq = True: Exit Function
 Next
 End Function
 
-Function HasItrTruePrp(Itr, PrpPth) As Boolean
+Function HasItrTruePrp(Itr, Prpc) As Boolean
 Dim I
 For Each I In Itr
-    If Prp(CvObj(I), PrpPth) Then HasItrTruePrp = True: Exit Function
+    If PvzC(CvObj(I), Prpc) Then HasItrTruePrp = True: Exit Function
 Next
 End Function
 
@@ -139,19 +122,19 @@ Next
 IntozItrMap = O
 End Function
 
-Private Sub Z_PrpVy()
+Sub Z_PrpVy()
 Vc PrpVy(CPj.VBComponents, "CodeModule.CountOfLines")
 End Sub
 
-Function PrpVy(Itr, PrpPth) As Variant()
+Function PrpVy(Itr, Prpc) As Variant()
 Dim O As Object
 For Each O In Itr
-    Push PrpVy, Prp(O, PrpPth)
+    Push PrpVy, PvzC(O, Prpc)
 Next
 End Function
-Function MaxzItrPrp(Itr, PrpPth)
+Function MaxzItrPrp(Itr, Prpc)
 Dim O, Obj: For Each Obj In Itr
-    O = Max(O, Prp(Obj, PrpPth))
+    O = Max(O, PvzC(Obj, Prpc))
 Next
 MaxzItrPrp = O
 End Function
@@ -160,18 +143,18 @@ Function NyzItr(Itr) As String()
 NyzItr = Itn(Itr)
 End Function
 
-Function NyzItrEq(Itr, PrpPth, V) As String()
+Function NyzItrEq(Itr, Prpc, V) As String()
 Dim Obj: For Each Obj In Itr
-    If Prp(Obj, PrpPth) = V Then PushI NyzItrEq, ObjNm(Obj)
+    If PvzC(Obj, Prpc) = V Then PushI NyzItrEq, ObjNm(Obj)
 Next
 End Function
 Function NyzOy(Oy) As String()
 NyzOy = Itn(Itr(Oy))
 End Function
 
-Function VyzItrP(Itr, PrpPth) As Variant()
+Function VyzItrP(Itr, Prpc) As Variant()
 Dim Obj: For Each Obj In Itr
-    Push VyzItrP, Prp(Obj, PrpPth)
+    Push VyzItrP, PvzC(Obj, Prpc)
 Next
 End Function
 
@@ -195,9 +178,9 @@ Dim I: For Each I In Itr
 Next
 End Function
 
-Function HasTruePrp(Itr, PrpPth) As Boolean
+Function HasTruePrp(Itr, Prpc) As Boolean
 Dim I: For Each I In Itr
-    If Prp(I, PrpPth) Then HasTruePrp = True: Exit Function
+    If PvzC(I, Prpc) Then HasTruePrp = True: Exit Function
 Next
 End Function
 
@@ -224,10 +207,10 @@ Dim Obj: For Each Obj In Itr
 Next
 End Function
 
-Function IntozIwEq(Into, Itr, PrpPth, V)
+Function IntozIwEq(Into, Itr, Prpc, V)
 IntozIwEq = ResiU(Into)
 Dim Obj: For Each Obj In Itr
-    If Prp(Obj, PrpPth) = V Then PushObj IntozIwEq, Obj
+    If PvzC(Obj, Prpc) = V Then PushObj IntozIwEq, Obj
 Next
 End Function
 
@@ -238,25 +221,25 @@ For Each I In Itr
     Push Into, I
 Next
 End Function
-Function IntozItrPrp(Into, Itr, PrpPth)
+Function IntozItrPrp(Into, Itr, Prpc)
 IntozItrPrp = ResiU(Into)
 Dim Obj: For Each Obj In Itr
-    Push IntozItrPrp, Prp(Obj, PrpPth)
+    Push IntozItrPrp, PvzC(Obj, Prpc)
 Next
 End Function
 
-Function IwEq(Itr, PrpPth, V)
+Function IwEq(Itr, Prpc, V)
 IwEq = ItrClnAy(Itr)
 Dim Obj: For Each Obj In Itr
-    If Prp(Obj, PrpPth) = V Then PushObj IwEq, Obj
+    If PvzC(Obj, Prpc) = V Then PushObj IwEq, Obj
 Next
 IwEq = Obj
 End Function
 
-Function IwPrpTrue(Itr, TruePrpPth)
+Function IwPrpTrue(Itr, TruePrpc)
 IwPrpTrue = ItrClnAy(Itr)
 Dim Obj: For Each Obj In Itr
-    If Prp(Obj, TruePrpPth) Then
+    If PvzC(Obj, TruePrpc) Then
         Push IwPrpTrue, Obj
     End If
 Next
@@ -272,26 +255,10 @@ For Each O In Itr
 Next
 End Function
 
-Private Sub Z()
-Dim Itr As Variant
-Dim B$
-Dim C As RegExp
-Dim D$()
-Dim E As WhNm
-AvzItr Itr
-ItrClnAy Itr
-ForItrFun Itr, B
-ForItrFun Itr, B
-ForItrFunPX Itr, B, Itr
-ForItrFunXP Itr, B, Itr
-FstItm Itr
-FstItm Itr
-Itn Itr
-End Sub
 
-Function NIwEq&(Itr, PrpPth, V)
+Function NIwEq&(Itr, Prpc, V)
 Dim O&, Obj: For Each Obj In Itr
-    If Prp(Obj, PrpPth) = V Then O = O + 1
+    If PvzC(Obj, Prpc) = V Then O = O + 1
 Next
 NIwEq = O
 End Function
@@ -300,14 +267,14 @@ Function PrpNy(Itr) As String()
 PrpNy = Itn(Itr.Properties)
 End Function
 
-Function IntozItrP(OInto, Itr, PrpPth, Optional ThwEr As EmThw) As String()
+Function IntozItrP(OInto, Itr, Prpc, Optional ThwEr As EmThw) As String()
 Dim O: O = OInto
 Dim Obj As Object
 For Each Obj In Itr
-    Push O, Prp(Obj, PrpPth, ThwEr)
+    Push O, PvzC(Obj, Prpc)
 Next
 IntozItrP = O
 End Function
-Function SyzItrP(Itr, PrpPth) As String()
-SyzItrP = IntozItrP(EmpSy, Itr, PrpPth)
+Function SyzItrP(Itr, Prpc) As String()
+SyzItrP = IntozItrP(EmpSy, Itr, Prpc)
 End Function

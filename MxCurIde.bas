@@ -18,12 +18,16 @@ CMdn = CCmp.Name
 End Function
 
 Function CLno&()
-CLno = LnozM(CMd)
+CLno = CLnozM(CMd)
 End Function
 
 Function CMdDn$()
 CMdDn = MdDn(CMd)
 End Function
+
+Property Get CMthl$() 'Cur
+CMthl = MthlzM(CMd, CMthn)
+End Property
 
 Function CMthn$()
 Dim M As CodeModule: Set M = CMd

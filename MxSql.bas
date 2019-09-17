@@ -22,103 +22,103 @@ Const KwLeftJn$ = "left join"
 Type SelIntoPm: Fny() As String: Ey() As String: Into As String: T As String: Bexp As String: End Type
 Type SelIntoPms: N As Byte: Ay() As SelIntoPm: End Type
 
-Private Function AddPfxNLTT$(Sy$())
-AddPfxNLTT = Jn(AddPfxzAy(Sy, C_NLTT), "")
+Function AddPfxNLTT$(Sy$())
+AddPfxNLTT = Jn(AmAddPfx(Sy, C_NLTT), "")
 End Function
 
-Private Function Bexp_E_InLis$(Expr$, InLisStr$)
+Function Bexp_E_InLis$(Expr$, InLisStr$)
 If InLisStr = "" Then Exit Function
 Bexp_E_InLis = FmtQQ("? in (?)", Expr, InLisStr)
 End Function
 
-Private Function Bexp_F_Ev$(F$, Ev)
+Function Bexp_F_Ev$(F$, Ev)
 Bexp_F_Ev = QteSq(F) & "=" & SqlQte(Ev)
 End Function
 
-Private Function Bexp_Fny_Vy$(Fny$(), Vy())
+Function Bexp_Fny_Vy$(Fny$(), Vy())
 End Function
 
-Private Property Get C_And$()
-If Fmt Then
+Property Get C_And$()
+If IsFmt Then
     C_And = C_NLT & KwAnd & C_T
 Else
     C_And = " " & KwAnd & " "
 End If
 End Property
 
-Private Property Get C_CNL$()
+Property Get C_CNL$()
 C_CNL = "," & vbCrLf  'Comma-NewLin-Tab
 End Property
 
-Private Property Get C_CNLT$()
+Property Get C_CNLT$()
 C_CNLT = "," & vbCrLf & C_T  'Comma-NewLin-Tab
 End Property
 
-Private Property Get C_Comma$()
-If Fmt Then
+Property Get C_Comma$()
+If IsFmt Then
     C_Comma = "," & vbCrLf
 Else
     C_Comma = ", "
 End If
 End Property
 
-Private Property Get C_CommaSpc$()
-If Fmt Then
+Property Get C_CommaSpc$()
+If IsFmt Then
     C_CommaSpc = C_CNLT
 Else
     C_CommaSpc = ", "
 End If
 End Property
 
-Private Property Get C_Fm$()
+Property Get C_Fm$()
 C_Fm = C_NLT & KwFm & C_T
 End Property
 
-Private Property Get C_Into$()
+Property Get C_Into$()
 C_Into = C_NLT & KwInto & C_T
 End Property
 
-Private Property Get C_NL$() ' New Line
-If Fmt Then
+Property Get C_NL$() ' New Line
+If IsFmt Then
     C_NL = vbCrLf
 Else
     C_NL = " "
 End If
 End Property
 
-Private Property Get C_NLT$() ' New Line Tabe
-If Fmt Then
+Property Get C_NLT$() ' New Line Tabe
+If IsFmt Then
     C_NLT = C_NL & C_T
 Else
     C_NLT = " "
 End If
 End Property
 
-Private Property Get C_NLTT$() ' New Line Tabe
-If Fmt Then
+Property Get C_NLTT$() ' New Line Tabe
+If IsFmt Then
     C_NLTT = C_NLT & C_T
 Else
     C_NLTT = " "
 End If
 End Property
 
-Private Property Get C_T$()
-If Fmt Then
+Property Get C_T$()
+If IsFmt Then
     C_T = "    "
 Else
     C_T = " "
 End If
 End Property
 
-Private Property Get C_TT$()
+Property Get C_TT$()
 C_TT = C_T & C_T
 End Property
 
-Private Property Get C_Wh$()
+Property Get C_Wh$()
 C_Wh = C_NLT & KwWh & C_T
 End Property
 
-Private Sub FEs_AddAs_Or4Spc_ToExtNm(OE$())
+Sub FEs_AddAs_Or4Spc_ToExtNm(OE$())
 Dim J%, C$
 For J = 0 To UB(OE)
     
@@ -131,26 +131,26 @@ For J = 0 To UB(OE)
 Next
 End Sub
 
-Private Sub FEs_AddTab2Spc_ToExtNm(OE$())
-OE = AddPfxzAy(OE, C_T & "  ")
+Sub FEs_AddTab2Spc_ToExtNm(OE$())
+OE = AmAddPfx(OE, C_T & "  ")
 End Sub
 
-Private Sub FEs_AlignExtNm(OE$())
+Sub FEs_AlignExtNm(OE$())
 OE = AlignAy(OE)
 End Sub
 
-Private Sub FEs_AlignFld(OF$())
+Sub FEs_AlignFld(OF$())
 OF = AlignAy(OF)
 End Sub
 
-Private Sub FEs_SetExtNm_ToBlnk_IfEqToFld(F$(), OE$())
+Sub FEs_SetExtNm_ToBlnk_IfEqToFld(F$(), OE$())
 Dim J%
 For J = 0 To UB(OE)
     If OE(J) = F(J) Then OE(J) = ""
 Next
 End Sub
 
-Private Sub FEs_SqQteExtNm_IfNB(OE$())
+Sub FEs_SqQteExtNm_IfNB(OE$())
 Dim J%
 For J = 0 To UB(OE)
     If OE(J) <> "" Then
@@ -159,10 +159,10 @@ For J = 0 To UB(OE)
 Next
 End Sub
 
-Private Property Get Fmt() As Boolean
+Property Get IsFmt() As Boolean
 Static X As Boolean, Y As Boolean
 If Not X Then X = True: Y = Cfg.Sql.FmtSql
-Fmt = Y
+IsFmt = Y
 End Property
 
 Function FmtExprVblAy(ExprVblAy$(), Optional Pfx$, Optional IdentOpt%, Optional Sep$ = ",") As String()
@@ -197,28 +197,24 @@ For J = 1 To N
 Next
 End Function
 
-Private Function JnAnd$(Sy$())
-JnAnd = Jn(Sy, " " & KwAnd & " ")
-End Function
-
 Function JnCommaSpcFF$(FF$)
 JnCommaSpcFF = JnQSqCommaSpc(TermAy(FF))
 End Function
 
-Function NsetzNN(Nn$) As Aset
-Set NsetzNN = AsetzAy(SyzSS(Nn))
+Function NsetzNN(NN$) As Aset
+Set NsetzNN = AsetzAy(SyzSS(NN))
 End Function
 
-Private Function PAnd_Bexp$(Bexp$)
+Function PAnd_Bexp$(Bexp$)
 If Bexp = "" Then Exit Function
 'PAnd_Bexp = NxtLin & "and " & NxtLin_Tab & Bexp
 End Function
 
-Private Function PBexp_Fny_EqVy$(Fny$(), EqVy)
+Function PBexp_Fny_EqVy$(Fny$(), EqVy)
 
 End Function
 
-Private Function PBkt_Av$(Av())
+Function PBkt_Av$(Av())
 Dim O$(), I
 For Each I In Av
     PushI O, SqlQte(I)
@@ -226,23 +222,23 @@ Next
 PBkt_Av = QteBktJnComma(Av)
 End Function
 
-Private Function PBkt_FF$(FF$)
+Function PBkt_FF$(FF$)
 PBkt_FF = QteBkt(SyzSS(FF))
 End Function
 
-Private Function PDis$(Dis As Boolean)
+Function PDis$(Dis As Boolean)
 If Dis Then PDis = " " & KwDis & C_NLTT Else PDis = C_NLTT
 End Function
 
-Private Function PExpr_F_InAy$(F, InVy)
+Function PExpr_F_InAy$(F, InVy)
 
 End Function
 
-Private Function PExpr_T_RecId$(T, RecId)
+Function PExpr_T_RecId$(T, RecId)
 PExpr_T_RecId = FmtQQ("?Id=?", T, RecId)
 End Function
 
-Private Function PFldInX_F_InAset_Wdt(F, S As Aset, Wdt%) As String()
+Function PFldInX_F_InAset_Wdt(F, S As Aset, Wdt%) As String()
 Dim A$
     A = "[F] in ("
 Dim I
@@ -251,36 +247,36 @@ Dim I
 'Next
 End Function
 
-Private Function PFm$(Fm)
+Function PFm$(Fm)
 PFm = C_Fm & QteSq(Fm)
 End Function
 
-Private Function PFm_X$(X)
+Function PFm_X$(X)
 PFm_X = C_Fm & X
 End Function
 
-Private Function PFmzX$(FmX$)
+Function PFmzX$(FmX$)
 PFmzX = PFm(FmX) & " x"
 End Function
 
-Private Function PGp$(Gp$)
+Function PGp$(Gp$)
 If Gp = "" Then Exit Function
 PGp = C_T & KwGp & C_T & Gp
 End Function
 
-Private Function PGp_ExprVblAy$(ExprVblAy$())
+Function PGp_ExprVblAy$(ExprVblAy$())
 PGp_ExprVblAy = "|  Group By " & JnCrLf(FmtExprVblAy(ExprVblAy))
 End Function
 
-Private Function PIns_T$(T)
+Function PIns_T$(T)
 PIns_T = "Insert into [" & T & "]"
 End Function
 
-Private Function PInto_T$(T)
+Function PInto_T$(T)
 PInto_T = C_Into & "[" & T & "]"
 End Function
 
-Private Function POnzJnXA(JnFny$())
+Function POnzJnXA(JnFny$())
 Dim X$(): X = SyzQAy("x.[?]", JnFny)
 Dim A$(): A = SyzQAy("a.[?]", JnFny)
 Dim J$(): J = LyzAyab(X, A, " = ")
@@ -288,11 +284,11 @@ Dim S$: S = JnAnd(J)
 POnzJnXA = KwOn & " " & S
 End Function
 
-Private Function POrd$(Ord$)
+Function POrd$(Ord$)
 
 End Function
 
-Private Function POrd_MinusSfxFF$(OrdMinusSfxFF$)
+Function POrd_MinusSfxFF$(OrdMinusSfxFF$)
 If OrdMinusSfxFF = "" Then Exit Function
 Dim O$(): O = SyzSS(OrdMinusSfxFF)
 Dim I, J%
@@ -305,24 +301,24 @@ Next
 POrd_MinusSfxFF = C_NLT & "order by " & JnCommaSpc(O)
 End Function
 
-Private Function PSel_F$(F$)
+Function PSel_F$(F$)
 PSel_F = "Select [" & F & "]"
 End Function
 
-Private Function PSel_FF$(FF, Optional Dis As Boolean)
+Function PSel_FF$(FF, Optional Dis As Boolean)
 PSel_FF = PSel_Fny(SyzSS(FF), Dis)
 End Function
 
-Private Function PSel_FF_Extny$(FF$, Extny$())
+Function PSel_FF_Extny$(FF$, Extny$())
 PSel_FF_Extny = PSelzX(PSel_Fny_Extny(Ny(FF), Extny))
 End Function
 
-Private Function PSel_Fny$(Fny$(), Optional Dis As Boolean)
+Function PSel_Fny$(Fny$(), Optional Dis As Boolean)
 PSel_Fny = KwSel & PDis(Dis) & C_NLTT & JnCommaSpc(Fny)
 End Function
 
-Private Function PSel_Fny_Extny$(Fny$(), Extny$(), Optional IsDis As Boolean)
-If Not Fmt Then PSel_Fny_Extny = PSel_Fny_Extny_NOFMT(Fny, Extny): Exit Function
+Function PSel_Fny_Extny$(Fny$(), Extny$(), Optional IsDis As Boolean)
+If Not IsFmt Then PSel_Fny_Extny = PSel_Fny_Extny_NOFMT(Fny, Extny): Exit Function
 Dim E$(), F$()
 F = Fny
 E = Extny
@@ -335,7 +331,7 @@ FEs_AlignFld F
 PSel_Fny_Extny = KwSel & PDis(IsDis) & C_NL & Join(LyzAyab(E, F), C_CNL)
 End Function
 
-Private Function PSel_Fny_Extny_NOFMT(Fny$(), Extny$(), Optional IsDis As Boolean)
+Function PSel_Fny_Extny_NOFMT(Fny$(), Extny$(), Optional IsDis As Boolean)
 Dim O$(), J%, E$, F$
 For J = 0 To UB(Fny)
     F = Fny(J)
@@ -348,30 +344,30 @@ Next
 PSel_Fny_Extny_NOFMT = KwSel & PDis(IsDis) & " " & JnCommaSpc(O)
 End Function
 
-Private Function PSel_T$(T)
+Function PSel_T$(T)
 PSel_T = KwSel & C_T & "*" & PFm(T)
 End Function
 
-Private Function PSelzX$(X$, Optional Dis As Boolean)
+Function PSelzX$(X$, Optional Dis As Boolean)
 PSelzX = KwSel & PDis(Dis) & X
 End Function
 
-Private Function PSet_FF_EqDr$(FF$, EqDr)
+Function PSet_FF_EqDr$(FF$, EqDr)
 
 End Function
 
-Private Function PSet_FF_ExprAy$(FF, Ey$())
+Function PSet_FF_ExprAy$(FF, Ey$())
 Const CSub$ = CMod & "PSet_FF_Ey"
 Dim Fny$(): Fny = SyzSS(FF)
 Ass IsVblAy(Ey)
 If Si(Fny) <> Si(Ey) Then Thw CSub, "[FF-Sz} <> [Si-Ey], where [FF],[Ey]", Si(Fny), Si(Ey), FF, Ey
 Dim AFny$()
     AFny = AlignAy(Fny)
-    AFny = AddSfxzAy(AFny, " = ")
+    AFny = AmAddSfx(AFny, " = ")
 Dim W%
     'W = VblWdtAy(Ey)
 Dim Ident%
-    W = AyWdt(AFny)
+    W = WdtzAy(AFny)
 Dim Ay$()
     Dim J%, U%, S$
     U = UB(AFny)
@@ -394,28 +390,28 @@ Dim Vbl$
 PSet_FF_ExprAy = Vbl
 End Function
 
-Private Function PSet_FF_Ey$(FF$, Ey$())
+Function PSet_FF_Ey$(FF$, Ey$())
 PSet_FF_Ey = PSet_Fny_Ey(SyzSS(FF), Ey)
 End Function
 
-Private Function PSet_Fny_Evy$(Fny$(), EqVy)
+Function PSet_Fny_Evy$(Fny$(), EqVy)
 
 End Function
 
-Private Function PSet_Fny_Ey$(Fny$(), Ey$())
+Function PSet_Fny_Ey$(Fny$(), Ey$())
 Dim J$(): J = LyzAyab(SyzQteSq(Fny), Ey, " = ")
-Dim J1$(): J1 = AddPfxzAy(J, C_TT)
+Dim J1$(): J1 = AmAddPfx(J, C_TT)
 Dim S$: S = Jn(J, "," & C_NL)
 PSet_Fny_Ey = C_NLT & KwSet & C_NL & S
 End Function
 
-Private Function PSet_Fny_Vy$(Fny$(), Vy())
+Function PSet_Fny_Vy$(Fny$(), Vy())
 Dim F$(): F = SyzQteSq(Fny)
 Dim V$(): V = SqlQteVy(Vy)
 PSet_Fny_Vy = JnComma(LyzAyab(F, V, "="))
 End Function
 
-Private Function PSet_Fny_Vy1$(Fny$(), Vy())
+Function PSet_Fny_Vy1$(Fny$(), Vy())
 Dim A$: GoSub X_A
 PSet_Fny_Vy1 = "  Set " & A
 Exit Function
@@ -434,28 +430,28 @@ Function PSetzX$(SetX$)
 PSetzX = C_T & KwSet & C_NL & SetX
 End Function
 
-Private Function PSetzXA(FnyX$(), FnyA$())
-Dim X$(): X = AddPfxSzAy(FnyX, "x.[", "]")
-Dim A$(): A = AddPfxSzAy(FnyA, "a.[", "]")
+Function PSetzXA(FnyX$(), FnyA$())
+Dim X$(): X = AmAddPfxS(FnyX, "x.[", "]")
+Dim A$(): A = AmAddPfxS(FnyA, "a.[", "]")
 Dim J$(): J = LyzAyab(X, A, " = ")
-          J = AddPfxzAy(J, C_TT)
+          J = AmAddPfx(J, C_TT)
 Dim S$:   S = Jn(J, "," & C_NL)
 PSetzXA = PSetzX(S)
 End Function
 
-Private Function PSetzXAFny(Fny$())
+Function PSetzXAFny(Fny$())
 PSetzXAFny = PSetzXA(Fny, Fny)
 End Function
 
-Private Function PTblzXAJn$(TblX$, TblA$, JnFny$())
+Function PTblzXAJn$(TblX$, TblA$, JnFny$())
 PTblzXAJn = C_TT & "[" & TblX & "] x" & C_NLTT & KwIJn & " [" & TblA & "] a " & POnzJnXA(JnFny)
 End Function
 
-Private Function PUpd$(T)
+Function PUpd$(T)
 PUpd = KwUpd & C_T & QNm(T)
 End Function
 
-Private Function PUpdzX$(TblX$)
+Function PUpdzX$(TblX$)
 PUpdzX = KwUpd & C_NL & TblX
 End Function
 
@@ -470,44 +466,44 @@ O.Ay(O.N) = M
 O.N = O.N + 1
 End Sub
 
-Private Function PWh$(Bexp$)
+Function PWh$(Bexp$)
 If Bexp = "" Then Exit Function
 PWh = C_Wh & Bexp
 End Function
 
-Private Function PWh_F_Eqv(F$, EqVal) ' Ssk is single-Sk-value
+Function PWh_F_Eqv(F$, EqVal) ' Ssk is single-Sk-value
 PWh_F_Eqv = C_Wh & QNm(F) & "=" & QV(EqVal)
 End Function
 
-Private Function PWh_F_InVy$(F$, InVy)
+Function PWh_F_InVy$(F$, InVy)
 PWh_F_InVy = C_Wh & PExpr_F_InAy(F, InVy)
 End Function
 
-Private Function PWh_FF_Eqvy$(FF$, EqVy)
+Function PWh_FF_Eqvy$(FF$, EqVy)
 
 End Function
 
-Private Function PWh_Fny_EqVy$(Fny$(), EqVy)
+Function PWh_Fny_EqVy$(Fny$(), EqVy)
 PWh_Fny_EqVy = C_Wh & PBexp_Fny_EqVy(Fny, EqVy)
 End Function
 
-Private Function PWh_T_EqK$(T, K&)
+Function PWh_T_EqK$(T, K&)
 PWh_T_EqK = PWh_F_Eqv(T & "Id", K)
 End Function
 
-Private Function PWh_T_Id$(T, Id)
+Function PWh_T_Id$(T, Id)
 PWh_T_Id = PWh(FmtQQ("[?]Id=?", T, Id))
 End Function
 
-Private Function PWhBet_F_Fm_To$(F$, FmV, ToV)
+Function PWhBet_F_Fm_To$(F$, FmV, ToV)
 PWhBet_F_Fm_To = C_Wh & QNm(F) & " " & KwBet & QV(FmV) & " " & KwAnd & " " & QV(ToV)
 End Function
 
-Private Function QNm$(T)
+Function QNm$(T)
 QNm = QteSq(T)
 End Function
 
-Private Function QV$(V)
+Function QV$(V)
 QV = SqlQte(V)
 End Function
 
@@ -609,25 +605,25 @@ End Select
 SqlQteChr = O
 End Function
 
-Function SqlQteChrzT$(A As dao.DataTypeEnum)
+Function SqlQteChrzT$(A As DAO.DataTypeEnum)
 Select Case A
 Case _
-    dao.DataTypeEnum.dbBigInt, _
-    dao.DataTypeEnum.dbByte, _
-    dao.DataTypeEnum.dbCurrency, _
-    dao.DataTypeEnum.dbDecimal, _
-    dao.DataTypeEnum.dbDouble, _
-    dao.DataTypeEnum.dbFloat, _
-    dao.DataTypeEnum.dbInteger, _
-    dao.DataTypeEnum.dbLong, _
-    dao.DataTypeEnum.dbNumeric, _
-    dao.DataTypeEnum.dbSingle: Exit Function
+    DAO.DataTypeEnum.dbBigInt, _
+    DAO.DataTypeEnum.dbByte, _
+    DAO.DataTypeEnum.dbCurrency, _
+    DAO.DataTypeEnum.dbDecimal, _
+    DAO.DataTypeEnum.dbDouble, _
+    DAO.DataTypeEnum.dbFloat, _
+    DAO.DataTypeEnum.dbInteger, _
+    DAO.DataTypeEnum.dbLong, _
+    DAO.DataTypeEnum.dbNumeric, _
+    DAO.DataTypeEnum.dbSingle: Exit Function
 Case _
-    dao.DataTypeEnum.dbChar, _
-    dao.DataTypeEnum.dbMemo, _
-    dao.DataTypeEnum.dbText: SqlQteChrzT = "'"
+    DAO.DataTypeEnum.dbChar, _
+    DAO.DataTypeEnum.dbMemo, _
+    DAO.DataTypeEnum.dbText: SqlQteChrzT = "'"
 Case _
-    dao.DataTypeEnum.dbDate: SqlQteChrzT = "#"
+    DAO.DataTypeEnum.dbDate: SqlQteChrzT = "#"
 Case Else
     Thw CSub, "Invalid DaoTy", "DaoTy", A
 End Select
@@ -830,8 +826,8 @@ End Function
 Function SqpAEqB_Fny_AliasAB$(Fny$(), Optional AliasAB$ = "x a")
 Dim A1$: A1 = BefSpc(AliasAB) ' Alias1
 Dim A2$: A2 = BefSpc(AliasAB) ' Alias2
-Dim A$(): A = AddPfxzAy(Fny, A1 & ".")
-Dim B$(): B = AddPfxzAy(Fny, A2 & ".")
+Dim A$(): A = AmAddPfx(Fny, A1 & ".")
+Dim B$(): B = AmAddPfx(Fny, A2 & ".")
 Dim J$(): J = LyzAyab(A, B, " = ")
 SqpAEqB_Fny_AliasAB = JnCommaSpc(J)
 End Function
@@ -861,11 +857,8 @@ For J = 0 To A.N - 1
 Next
 End Function
 
-Private Sub Z()
 
-End Sub
-
-Private Sub Z_PGp_ExprVblAy()
+Sub Z_PGp_ExprVblAy()
 Dim ExprVblAy$()
     Push ExprVblAy, "1lskdf|sdlkfjsdfkl sldkjf sldkfj|lskdjf|lskdjfdf"
     Push ExprVblAy, "2dfkl sldkjf sldkdjf|lskdjfdf"
@@ -873,14 +866,14 @@ Dim ExprVblAy$()
 DmpAy SplitVBar(PGp_ExprVblAy(ExprVblAy))
 End Sub
 
-Private Sub Z_PSel()
+Sub Z_PSel()
 Dim Fny$(), ExprVblAy$()
 ExprVblAy = Sy("F1-Expr", "F2-Expr   AA|BB    X|DD       Y", "F3-Expr  x")
 Fny = SplitSpc("F1 F2 F3xxxxx")
 'Debug.Print LineszVbl(PSelFFFldLvs(Fny, ExprVblAy))
 End Sub
 
-Private Sub Z_PSel_Fny_Extny()
+Sub Z_PSel_Fny_Extny()
 Dim Fny$()
 Dim Extny$()
 GoSub Z
@@ -892,7 +885,7 @@ Z:
     Return
 End Sub
 
-Private Sub Z_PSet_Fny_VyFmt()
+Sub Z_PSet_Fny_VyFmt()
 Dim Fny$(), Vy()
 Ept = LineszVbl("|  Set|" & _
 "    [A xx] = 1                     ,|" & _
@@ -906,7 +899,7 @@ Tst:
     Return
 End Sub
 
-Private Sub Z_PSetFFEqvy()
+Sub Z_PSetFFEqvy()
 Dim Fny$(), ExprVblAy$()
 Fny = SyzSS("a b c d")
 Push ExprVblAy, "1sdfkl|lskdfj|skldfjskldfjs dflkjsdf| sdf"
@@ -917,7 +910,7 @@ Push ExprVblAy, "4sf| sdf"
 'Debug.Print LineszVbl(Act)
 End Sub
 
-Private Sub Z_PWh_F_InVy()
+Sub Z_PWh_F_InVy()
 Dim F$, Vy()
 F = "A"
 Vy = Array(1, "2", #2/1/2017#)
@@ -930,11 +923,11 @@ Tst:
     Return
 End Sub
 
-Private Sub Z_PWhFldInVy_StrPAy()
+Sub Z_PWhFldInVy_StrPAy()
 
 End Sub
 
-Private Sub Z_SqlSel_Fny_Ey_Into_T_OB()
+Sub Z_SqlSel_Fny_Ey_Into_T_OB()
 Dim Fny$(), Ey$(), Into$, T$, Bexp$
 GoSub Z
 Exit Sub

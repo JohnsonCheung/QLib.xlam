@@ -17,7 +17,7 @@ Function Fba$(FbaNm, Srcp)
 Fba = EnsPth(Srcp & "Dist") & FbaNm & ".accdb"
 End Function
 
-Private Sub Z_CompressFxa()
+Sub Z_CompressFxa()
 CompressFxa Pjf(CPj)
 End Sub
 
@@ -28,7 +28,7 @@ GenFxazSrcp Srcp
 'BackupFfn Fxa, Srcp
 End Sub
 
-Private Function SrcRoot$(Srcp$)
+Function SrcRoot$(Srcp$)
 'Ret: :SrcRoot @@
 SrcRoot = ParPth(Srcp)
 End Function
@@ -37,15 +37,15 @@ Function DistpP$() 'Distribution Path
 DistpP = Distp(SrcpP)
 End Function
 
-Private Function Distp$(Srcp) 'Distribution Path
+Function Distp$(Srcp) 'Distribution Path
 Distp = AddFdrEns(UpPth(Srcp, 2), ".Dist")
 End Function
 
-Private Function DistFba$(Srcp)
+Function DistFba$(Srcp)
 DistFba = PjfzSrcp(Srcp, ".accdb")
 End Function
 
-Private Function PjfzSrcp(Srcp, Ext) '
+Function PjfzSrcp(Srcp, Ext) '
 Dim P$:   P = Distp(Srcp)
 Dim F1$: F1 = RplExt(Fdr(ParPth(P)), Ext)
 Dim F2$: F2 = NxtFfnzNotIn(F1, PjfnAyV)
@@ -53,7 +53,7 @@ Dim F$:   F = NxtFfnzAva(P & F2)
    PjfzSrcp = F
 End Function
 
-Private Sub Z_FxazSrcp()
+Sub Z_FxazSrcp()
 Dim Srcp$
 GoSub T0
 Exit Sub
@@ -67,17 +67,17 @@ Tst:
     Return
 End Sub
 
-Private Function FxazSrcp$(Srcp)
+Function FxazSrcp$(Srcp)
 FxazSrcp = PjfzSrcp(Srcp, ".xlam")
 End Function
 
-Private Sub LoadBas(P As VBProject, Srcp$)
+Sub LoadBas(P As VBProject, Srcp$)
 Dim F$(): F = BasFfnAy(Srcp)
 Dim I: For Each I In Itr(F)
     P.VBComponents.Import I
 Next
 End Sub
-Private Sub LoadBas3(P As VBProject, Srcp$)
+Sub LoadBas3(P As VBProject, Srcp$)
 Dim F$(): F = BasFfnAy(Srcp)
 Dim J%, I: For Each I In Itr(F)
     P.VBComponents.Import I
@@ -86,7 +86,7 @@ Dim J%, I: For Each I In Itr(F)
 Next
 End Sub
 
-Private Function BasFfnAy(Srcp$) As String()
+Function BasFfnAy(Srcp$) As String()
 Dim F$(): F = FfnAy(Srcp)
 Dim I: For Each I In Itr(F)
     If IsBasFfn(I) Then
@@ -95,7 +95,7 @@ Dim I: For Each I In Itr(F)
 Next
 End Function
 
-Private Function IsBasFfn(Ffn) As Boolean
+Function IsBasFfn(Ffn) As Boolean
 IsBasFfn = HasSfx(Ffn, ".bas")
 End Function
 
@@ -103,7 +103,7 @@ Sub GenFbaP()
 GenFbazP CPj
 End Sub
 
-Private Sub GenFbazP(P As VBProject)
+Sub GenFbazP(P As VBProject)
 Dim Acs As New Access.Application, OPj As VBProject
 Dim SPth$:     SPth = SrcpzP(P)
 Dim OFba$:     OFba = DistFba(SPth)
@@ -136,21 +136,18 @@ End Sub
 Sub GenFxaP()
 GenFxazP CPj
 End Sub
-Private Sub GenFxazSrcp(Srcp$)
+Sub GenFxazSrcp(Srcp$)
 
 End Sub
 
-Private Sub GenFxazP(Pj As VBProject)
+Sub GenFxazP(Pj As VBProject)
 Dim SPth$:               SPth = SrcpzP(Pj)
 Dim OFxa$:               OFxa = FxazSrcp(SPth)
 :                               ExpPjzP Pj                                 ' <== Export
-:                               CrtFxa OFxa                              ' <== Crt
+:                               Crt_Fxa OFxa                              ' <== Crt
 Dim OPj As VBProject: Set OPj = PjzFxa(OFxa)
 :                               AddRfzS OPj, RfSrczSrcp(SPth)            ' <== Add Rf
 :                               LoadBas OPj, SPth                        ' <== Load Bas
 :                               Inf CSub, "Fxa is created", "Fxa", OFxa
 End Sub
 
-Private Sub Z()
-QIde_Gen_GenPj:
-End Sub

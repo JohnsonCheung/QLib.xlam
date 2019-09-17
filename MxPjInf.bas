@@ -24,11 +24,11 @@ End If
 Xls.Workbooks.Open Fxa
 End Sub
 
-Private Function PjnzFxa$(Fxa)
+Function PjnzFxa$(Fxa)
 PjnzFxa = Fnn(RmvNxtNo(Fxa))
 End Function
 
-Sub CrtFxa(Fxa$)
+Sub Crt_Fxa(Fxa$)
 'Do: crt an emp Fxa with pjn derived from @Fxa
 If Not IsFxa(Fxa) Then Thw CSub, "Not a Fxa", "Fxa", Fxa
 If HasFxa(Fxa) Then Thw CSub, "In Xls, there is Pjn = Fxa", "Fxa AllPj-In-Xls", Fxa, PjNyV
@@ -62,7 +62,7 @@ For Each C In P.VBComponents
 Next
 End Function
 
-Private Sub Z_CmpAyzP()
+Sub Z_CmpAyzP()
 Dim Act() As VBComponent
 Dim C, T As vbext_ComponentType
 For Each C In CmpAyzP(CPj)
@@ -150,7 +150,7 @@ End Function
 Function MdAyzNy(MdNy$()) As CodeModule()
 Dim N, P As VBProject
 For Each N In Itr(MdNy)
-    PushI MdAyzNy, MdzPN(P, N)
+    PushI MdAyzNy, MdzP(P, N)
 Next
 End Function
 
@@ -212,11 +212,11 @@ For Each C In P.VBComponents
 Next
 End Function
 
-Private Sub Z_ClsNyzP()
+Sub Z_ClsNyzP()
 DmpAy ClsNyzP(CPj)
 End Sub
 
-Private Sub Z_MdAy()
+Sub Z_MdAy()
 Dim O() As CodeModule
 O = MdAyzP(CPj)
 Dim I, Md As CodeModule
@@ -226,7 +226,7 @@ For Each I In O
 Next
 End Sub
 
-Private Sub Z_MdzPjny()
+Sub Z_MdzPjny()
 'DmpAy MdzPjny(CPj)
 End Sub
 
@@ -265,8 +265,9 @@ End Function
 
 Function DftPj(P As VBProject) As VBProject
 If IsNothing(P) Then
-   Set DftPj = CPj
+    Set DftPj = CPj
 Else
-   Set DftPj = P
+    Set DftPj = P
 End If
 End Function
+

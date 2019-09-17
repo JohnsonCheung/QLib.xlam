@@ -11,7 +11,7 @@ Enum EmSrtLisMd
 End Enum
 
 Sub BrwMdP()
-BrwDrs DoMd
+BrwDrs DoMdP
 End Sub
 
 Sub LisMd(Optional MdPatn$, Optional SrtBy As EmSrtLisMd, Optional OupTy As EmOupTy = EmOupTy.EiOtDmp, Optional Top% = 50)
@@ -23,11 +23,11 @@ Case SrtBy = EiByNLines:    Srt = "Mdn"
 Case SrtBy = EiByNLinesDes: Srt = "-NLin"
 Case Else:                  Srt = "Mdn"
 End Select
-Brw FmtCellDrs(SrtDrs(DwPatn(DoMd, "Mdn", MdPatn), Srt), , Fmt:=EiSSFmt), OupTy:=OupTy
+Brw FmtCellDrs(SrtDrs(DwPatn(DoMdP, "Mdn", MdPatn), Srt), , Fmt:=EiSSFmt), OupTy:=OupTy
 End Sub
 
 Sub BrwMd(Optional MdPatn$)
-BrwDrs SrtDrs(DwPatn(DoMd, "Mdn", MdPatn))
+BrwDrs SrtDrs(DwPatn(DoMdP, "Mdn", MdPatn))
 End Sub
 
 Sub VcMd(Optional MdPatn$, Optional SrtBy As EmSrtLisMd)

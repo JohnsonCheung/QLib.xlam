@@ -53,7 +53,7 @@ For J = 0 To NewRmk.N - 1
 Next
 End Sub
 
-Private Function MthRmkIx&(Src$(), MthIx)
+Function MthRmkIx&(Src$(), MthIx)
 If IsMthLinSngL(Src(MthIx)) Then Exit Function
 Dim ELin$: ELin = MthEndLin(Src, MthIx)
 Dim Ix&: For Ix = MthIx + 1 To UB(Src)
@@ -64,28 +64,28 @@ Next
 ThwImpossible CSub
 End Function
 
-Private Function MthRmkzMthIx$(Src$(), MthIx)
+Function MthRmkzMthIx$(Src$(), MthIx)
 Dim R&: R = MthRmkIx(Src, MthIx)
 MthRmkzMthIx = MthRmkLzRmkIx(Src, R)
 End Function
 
-Private Function MthRmkL$(M As CodeModule, MthLno&)
+Function MthRmkL$(M As CodeModule, MthLno&)
 MthRmkL = MthRmkLzRmkLno(M, MthRmkLno(M, MthLno))
 End Function
 
-Private Function MthRmkLzRmkIx$(Src$(), RmkIx&)
+Function MthRmkLzRmkIx$(Src$(), RmkIx&)
 Dim RBlk$(): RBlk = RmkBlkzS(Src, RmkIx)
 Dim Adj$(): Adj = RAdj(RBlk)
 MthRmkLzRmkIx = JnCrLf(Adj)
 End Function
 
-Private Function MthRmkLzRmkLno$(M As CodeModule, RLno&)
+Function MthRmkLzRmkLno$(M As CodeModule, RLno&)
 Dim RBlk$(): RBlk = RmkBlkzM(M, RLno)
 Dim Adj$(): Adj = RAdj(RBlk)
 MthRmkLzRmkLno = JnCrLf(Adj)
 End Function
 
-Private Function MthRmkLno&(M As CodeModule, MthLno&)
+Function MthRmkLno&(M As CodeModule, MthLno&)
 Dim ELin$: ELin = MthEndLinzM(M, MthLno)
 Dim Lno&: For Lno = MthLno + 1 To M.CountOfLines
     Dim L$: L = M.Lines(Lno, 1)
@@ -95,7 +95,7 @@ Next
 ThwImpossible CSub
 End Function
 
-Private Sub Z_MthRmkzM()
+Sub Z_MthRmkzM()
 Dim M As CodeModule: Set M = Md("QIde_B_MthOp__AlignMthzLno")
 BrwS12s MthRmkzM(M)
 End Sub
@@ -111,7 +111,7 @@ Dim MthIxy&(): MthIxy = MthIxyzSNy(S, MthNy)
 MthRmkzNy = MthRmkzMthIxy(Src(M), MthIxy)
 End Function
 
-Private Function MthRmkzMthIxy(Src$(), MthIxy&()) As S12s
+Function MthRmkzMthIxy(Src$(), MthIxy&()) As S12s
 Dim Ix, O As S12s: For Each Ix In Itr(MthIxy)
     Dim R$: R = MthRmkzMthIx(Src, Ix)
     If R <> "" Then
@@ -126,11 +126,11 @@ Function MthRmkP() As S12s
 MthRmkP = MthRmkzP(CPj)
 End Function
 
-Private Sub Z_MthRmkP()
+Sub Z_MthRmkP()
 BrwS12s MthRmkP
 End Sub
 
-Private Function MthRmkzP(P As VBProject) As S12s
+Function MthRmkzP(P As VBProject) As S12s
 Dim C As VBComponent
 For Each C In P.VBComponents
     Dim A As S12s: A = MthRmkzM(C.CodeModule)
@@ -139,13 +139,13 @@ For Each C In P.VBComponents
 Next
 End Function
 
-Private Function MthRmkzM(M As CodeModule) As S12s
+Function MthRmkzM(M As CodeModule) As S12s
 Dim S$(): S = Src(M)
 Dim Ixy&(): Ixy = MthIxy(S)
 MthRmkzM = MthRmkzMthIxy(S, Ixy)
 End Function
 
-Private Sub Z_EnsMthRmk()
+Sub Z_EnsMthRmk()
 'GoSub Z1
 Dim M As CodeModule
 GoSub Z1
@@ -171,14 +171,14 @@ Crt:
     Return
 End Sub
 
-Private Function RAdj(RBlk$()) As String()
+Function RAdj(RBlk$()) As String()
 Dim O$(), L: For Each L In Itr(RBlk)
     PushI O, L
     If Right(L, 2) = "@@" Then RAdj = O: Exit Function
 Next
 End Function
 
-Private Function RmkBlkzM(M As CodeModule, RLno&) As String()
+Function RmkBlkzM(M As CodeModule, RLno&) As String()
 If RLno = 0 Then Exit Function
 Dim J&, L$, O$()
 For J = RLno To M.CountOfLines
@@ -189,7 +189,7 @@ Next
 RmkBlkzM = O
 End Function
 
-Private Function RmkBlkzS(Src$(), RmkIx&) As String()
+Function RmkBlkzS(Src$(), RmkIx&) As String()
 If RmkIx = 0 Then Exit Function
 Dim J&, L$, O$()
 For J = RmkIx To UB(Src)
@@ -200,37 +200,3 @@ Next
 RmkBlkzS = O
 End Function
 
-Private Sub Z()
-QIde_B_MthRmk:
-Z_EnsMthRmk
-Z_MthRmkP
-Z_MthRmkzM
-Exit Sub
-
-'-- Dim -----
-Dim M As CodeModule, Mthn, NewRmk_1$, NewRmk_2 As S12s, Src$(), MthIx, MthLno&, RmkIx&, RLno&, MthNy$()
-Dim MthIxy&(), P As VBProject, RBlk$()
-
-'-- Pub -----
-    EnsMthRmk M, Mthn, NewRmk_1
-EnsMthRmkzS12 M, NewRmk_2
-      MthRmkP
-    MthRmkzNy M, MthNy
-
-'-- Prv -----
-      MthRmkIx Src, MthIx
-       MthRmkL M, MthLno
-     MthRmkLno M, MthLno
- MthRmkLzRmkIx Src, RmkIx
-MthRmkLzRmkLno M, RLno
-      MthRmkzM M
-  MthRmkzMthIx Src, MthIx
- MthRmkzMthIxy Src, MthIxy
-      MthRmkzP P
-          RAdj RBlk
-      RmkBlkzM M, RLno
-      RmkBlkzS Src, RmkIx
-   Z_EnsMthRmk
-     Z_MthRmkP
-    Z_MthRmkzM
-End Sub

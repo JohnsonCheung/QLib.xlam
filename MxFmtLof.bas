@@ -11,7 +11,7 @@ Public Const SSoAli$ = "Left Right Center"
 Public Const SSoLRBoth$ = "Left Right Both"
 Sub FmtLo(L As ListObject, Lof$())
 Dim F$(): F = FnyzLo(L)
-ThwIf_Er ErzLof(Lof, F), CSub
+ThwIf_Er EoLof(Lof, F), CSub
 Dim D As Dictionary: Set D = DiT1qLyItr(Lof, SSoLofT1)
 Dim I
 For Each I In D("Ali"): SetLoAli L, F, I: Next
@@ -24,7 +24,7 @@ For Each I In D("Lvl"): SetLoLvl L, F, I: Next
 For Each I In D("Tot"): SetLoTot L, F, I: Next
 For Each I In D("Wdt"): SetLoWdt L, F, I: Next
 SetLoTit L, LyzLyItr(D("Tit"))
-SetLoNm L, T2(FstElezT1(Lof, "Nm"))
+SetLon L, T2(FstElezT1(Lof, "Nm"))
 For Each I In D("Lbl"): SetLoLbl L, I: Next ' Must run Last
 End Sub
 
@@ -36,7 +36,7 @@ Dim Ali$:     Ali = T1(LinOf_Ali_FldKss)
 Dim Fny1$(): Fny1 = AwLikss(Fny, RmvT1(LinOf_Ali_FldKss))
 Dim H As XlHAlign: H = HAlign(Ali)
 Dim F: For Each F In Itr(Fny1)
-    LoColRg(L, F).HorizontalAlignment = H
+    EntColRgzLc(L, F).HorizontalAlignment = H
 Next
 End Sub
 
@@ -66,12 +66,9 @@ Dim F: For Each F In Itr(Fny)
 Next
 End Sub
 
-Function ColRgAy(L As ListObject, Fny$()) As Range()
-ColRgAy = ColRgAy(L, Fny)
-End Function
 Sub SetLoBet(L As ListObject, LinOf_Sum_Fm_To)
 Dim FSum$, FFm$, FTo$: AsgTTRst LinOf_Sum_Fm_To, FSum, FFm, FTo
-LoColRg(L, FSum).Formula = FmtQQ("=Sum([?]:[?])", FFm, FTo)
+EntColRgzLc(L, FSum).Formula = FmtQQ("=Sum([?]:[?])", FFm, FTo)
 End Sub
 
 Sub SetLoCor(L As ListObject, Fny$(), LinOf_Cor_FldKss)
@@ -79,20 +76,20 @@ Dim Cor$: Cor = T1(LinOf_Cor_FldKss)
 Dim Fny1$(): Fny1 = FnyzT1FldKss(Fny, LinOf_Cor_FldKss)
 Dim C&: C = Colr(Cor)
 Dim F: For Each F In Itr(Fny1)
-    LoColRg(L, F).Color = C
+    EntColRgzLc(L, F).Color = C
 Next
 End Sub
 
 Sub SetLoFml(L As ListObject, LinOf_Fld_Fml)
 Dim F$, Fml$: AsgTRst LinOf_Fld_Fml, F, Fml
-LoColRg(L, F).Formula = Fml
+EntColRgzLc(L, F).Formula = Fml
 End Sub
 
 Sub SetLoFmt(L As ListObject, Fny$(), LinOf_Fmt_FldKss)
 Dim Fmt$: Fmt = T1(LinOf_Fmt_FldKss)
 Dim Fny1$(): Fny1 = FnyzT1FldKss(Fny, LinOf_Fmt_FldKss)
 Dim F: For Each F In Itr(Fny1)
-    LoColRg(L, F).NumberFormat = Fmt
+    EntColRgzLc(L, F).NumberFormat = Fmt
 Next
 End Sub
 
@@ -103,9 +100,9 @@ Dim R1 As Range
 Dim R2 As Range
 Set R1 = LoHdrCell(L, Fld)
 Set R2 = CellAbove(R1)
-SwapVzRg R1, R2
+SwapCellVal R1, R2
 End Sub
-Private Sub AsgT1Fny(LinOf_T1_FldKss, Fny$(), OT1, OFny$())
+Sub AsgT1Fny(LinOf_T1_FldKss, Fny$(), OT1, OFny$())
 OFny = FnyzT1FldKss(Fny, LinOf_T1_FldKss)
 OT1 = T1(LinOf_T1_FldKss)
 
@@ -113,7 +110,7 @@ End Sub
 Sub SetLoLvl(L As ListObject, Fny$(), LinOf_Lvl_FldKss)
 Dim XFny$(), XLvl As Byte: AsgT1Fny LinOf_Lvl_FldKss, Fny, XLvl, XFny
 Dim F: For Each F In Itr(XFny)
-    LoColRg(L, F).OutlineLevel = XLvl
+    EntColRgzLc(L, F).OutlineLevel = XLvl
 Next
 End Sub
 
@@ -125,7 +122,7 @@ Dim F: For Each F In Itr(XFny)
 Next
 End Sub
 
-Private Function XTotCalc(SumAvgCnt$) As XlTotalsCalculation
+Function XTotCalc(SumAvgCnt$) As XlTotalsCalculation
 'Fm SACnt : "Sum | Avg | Cnt" @@
 Dim O As XlTotalsCalculation
 Select Case SumAvgCnt
@@ -148,7 +145,7 @@ Next
 End Sub
 
 'Tst-------------------------------------------------------------
-Private Sub Z_FmtLo()
+Sub Z_FmtLo()
 Dim Lo As ListObject, Fmtr() As String 'Lofr
 '------------
 Set Lo = SampLo
@@ -160,7 +157,7 @@ Tst:
     Return
 End Sub
 
-Private Sub Z_SetBdr()
+Sub Z_SetBdr()
 Dim Lin$, L As ListObject, Fny$()
 '--
 Set L = SampLo
@@ -179,13 +176,10 @@ Tst:
     Return
 End Sub
 
-Private Sub Z()
-QXls_B_FmtLo:
-End Sub
 
 'Fun===========================================================================
 Function LoHdrCell(L As ListObject, C) As Range
-Set LoHdrCell = RgA1(CellAbove(L.ListColumns(C).Range))
+Set LoHdrCell = A1zRg(CellAbove(L.ListColumns(C).Range))
 End Function
 
 Sub FmtLoBStd(B As Workbook)
@@ -208,7 +202,7 @@ Property Get StdLof() As String()
 
 End Property
 
-Sub AddFml(L As ListObject, ColNm$, Fml$)
+Sub AddLoFml(L As ListObject, ColNm$, Fml$)
 Dim O As ListColumn
 Set O = L.ListColumns.Add
 O.Name = ColNm
@@ -225,11 +219,11 @@ For J = 1 To C.Columns.Count
 Next
 End Sub
 
-Sub SetLoNmUgTbl(L As ListObject)
-SetLoNm L, L.QueryTable.CommandText
+Sub SetLonUgTbl(L As ListObject)
+SetLon L, L.QueryTable.CommandText
 End Sub
 
-Sub SetLoNm(L As ListObject, Lon$)
+Sub SetLon(L As ListObject, Lon$)
 If Lon <> "" Then
     If Not HasLo(WszLo(L), Lon) Then
         L.Name = Lon
@@ -245,7 +239,7 @@ Dim C: For Each C In TermAy(ColTermLin)
 Next
 End Sub
 
-Private Sub SetLcWrp_(L As ListObject, C, Optional Wrp As Boolean)
+Sub SetLcWrp_(L As ListObject, C, Optional Wrp As Boolean)
 L.ListColumns(C).DataBodyRange.WrapText = Wrp
 End Sub
 
@@ -255,7 +249,7 @@ Dim C: For Each C In TermAy(ColTermLin)
 Next
 End Sub
 
-Private Sub SetLcWdt_(L As ListObject, C, W)
+Sub SetLcWdt_(L As ListObject, C, W)
 EntColzLc(L, C).ColumnWidth = W
 End Sub
 
@@ -280,7 +274,7 @@ BdrInside R
 BdrAround R
 End Sub
 
-Private Sub XMgeTit(TitRg As Range)
+Sub XMgeTit(TitRg As Range)
 Dim J%
 For J = 1 To TitRg.Rows.Count
     XMgeTitH RgR(TitRg, J)
@@ -290,7 +284,7 @@ For J = 1 To TitRg.Columns.Count
 Next
 End Sub
 
-Private Sub XMgeTitH(TitRg As Range)
+Sub XMgeTitH(TitRg As Range)
 TitRg.Application.DisplayAlerts = False
 Dim J%, C1%, C2%, V, LasV
 LasV = RgRC(TitRg, 1, 1).Value
@@ -309,18 +303,18 @@ Next
 TitRg.Application.DisplayAlerts = True
 End Sub
 
-Private Sub XMgeTitV(A As Range)
+Sub XMgeTitV(A As Range)
 Dim J%
 For J = A.Rows.Count To 2 Step -1
     MgeCellAbove RgRC(A, J, 1)
 Next
 End Sub
 
-Private Function XTitAt(Lo As ListObject, NTitRow%) As Range
+Function XTitAt(Lo As ListObject, NTitRow%) As Range
 Set XTitAt = RgRC(Lo.DataBodyRange, 0 - NTitRow, 1)
 End Function
 
-Private Function XTitSq(TitLy$(), LofNy$()) As Variant()
+Function XTitSq(TitLy$(), LoFny$()) As Variant()
 Dim Fny$()
 Dim Col()
     Dim F$, I, Tit$
@@ -336,7 +330,7 @@ Dim Col()
 XTitSq = Transpose(SqzDy(Col))
 End Function
 
-Private Sub Z_XTitSq()
+Sub Z_XTitSq()
 Dim TitLy$(), Fny$()
 '----
 Dim A$(), Act(), Ept()
@@ -376,16 +370,16 @@ Brw FmtLof(SampLof)
 End Sub
 
 Function FmtLof(Lof$()) As String()
-Dim mT1Ay$():    mT1Ay = TermAy(LofT1nn)
+Dim mAmT1$():    mAmT1 = TermAy(LofT1nn)
 Dim O$()
     Dim T$, I
-    For Each I In mT1Ay
+    For Each I In mAmT1
         T = I
         PushIAy O, AwT1(Lof, T)
     Next
-    Dim M$(): M = SyeT1Sy(Lof, mT1Ay)
+    Dim M$(): M = SyeT1Sy(Lof, mAmT1)
     If Si(M) > 0 Then
-        PushI O, FmtQQ("# Error: in not T1Ay(?)", TLin(mT1Ay))
+        PushI O, FmtQQ("# Error: in not AmT1(?)", TLin(mAmT1))
         PushIAy O, M
     End If
 FmtLof = AlignLyzTTRst(O)

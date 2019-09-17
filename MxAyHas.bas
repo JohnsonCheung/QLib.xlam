@@ -30,6 +30,10 @@ Dim Ele: For Each Ele In Itr(Ay)
 Next
 End Function
 
+Function NoEle(Ay, Ele) As Boolean
+NoEle = Not HasEle(Ay, Ele)
+End Function
+
 Function HasEle(Ay, Ele) As Boolean
 Dim I
 For Each I In Itr(Ay)
@@ -66,7 +70,7 @@ End Function
 
 Function ThwNotSuperAy(SuperAy, SubAy) As String()
 If IsAySuper(SuperAy, SubAy) Then Exit Function
-Thw CSub, "Some element in SubAy are found in SuperAy", "Som-Ele-in-SubAy SubAy SuperAy", MinusAy(SubAy, SuperAy), SubAy, SuperAy
+Thw CSub, "Some element in SubAy are found in SuperAy", "Som-Ele-in-SubAy SubAy SuperAy", AyMinus(SubAy, SuperAy), SubAy, SuperAy
 End Function
 
 Function HasEleAyInSeq(A, B) As Boolean
@@ -116,7 +120,7 @@ For Each X In Itr(A)
 Next
 End Function
 
-Private Sub Z_HasEleAyInSeq()
+Sub Z_HasEleAyInSeq()
 Dim A, B
 A = Array(1, 2, 3, 4, 5, 6, 7, 8)
 B = Array(2, 4, 6)

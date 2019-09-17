@@ -20,7 +20,7 @@ Next
 IsSrtdzAy = True
 End Function
 
-Private Sub Z_AySrtQ()
+Sub Z_AySrtQ()
 Dim Ay, IsDes As Boolean
 GoSub T0
 GoSub T1
@@ -42,43 +42,6 @@ Tst:
 End Sub
 
 
-Function AwEQ(Ay, V)
-If Si(Ay) <= 1 Then AwEQ = Ay: Exit Function
-Dim O: O = Ay: Erase O
-Dim I
-For Each I In Ay
-    If I = V Then PushI O, I
-Next
-AwEQ = O
-End Function
-
-Function AwLE(Ay, V)
-If Si(Ay) <= 1 Then AwLE = Ay: Exit Function
-Dim O: O = Ay: Erase O
-Dim I
-For Each I In Ay
-    If I <= V Then PushI O, I
-Next
-AwLE = O
-End Function
-Function AwLT(Ay, V)
-If Si(Ay) = 1 Then AwLT = Ay: Exit Function
-Dim O: O = Ay: Erase O
-Dim I
-For Each I In Ay
-    If I < V Then PushI O, I
-Next
-AwLT = O
-End Function
-Function AwGT(Ay, V)
-If Si(Ay) = 1 Then AwGT = Ay: Exit Function
-Dim O: O = Ay: Erase O
-Dim I
-For Each I In Ay
-    If I > V Then PushI O, I
-Next
-AwGT = O
-End Function
 
 Function AySrtQ(Ay, Optional IsDes As Boolean)
 If Si(Ay) = 0 Then AySrtQ = Ay: Exit Function
@@ -91,7 +54,7 @@ End If
 AySrtQ = AwIxy(Ay, Ixy)
 End Function
 
-Private Function AySrtQ__Srt(Ixy&()) As Long()
+Function AySrtQ__Srt(Ixy&()) As Long()
 'Ret : a sorted ix of @Ixy
 Dim O&()
     Select Case Si(Ixy)
@@ -117,10 +80,10 @@ Dim O&()
     End Select
 AySrtQ__Srt = O
 End Function
-Private Function AySrtQ__IsLE(A, B&) As Boolean
+Function AySrtQ__IsLE(A, B&) As Boolean
 AySrtQ__IsLE = A_Ay(A) <= A_Ay(B)
 End Function
-Private Function AySrtQ__LE(Ixy&(), P&) As Long()
+Function AySrtQ__LE(Ixy&(), P&) As Long()
 '@Ixy : Ix to be selected
 '@P   : the Pivot-Ix to select those ix in @Ixy
 'Ret : a subset of @Ixy so that each the ret ix is LE than the Pivot-@P
@@ -128,7 +91,7 @@ Dim I: For Each I In Itr(Ixy)
     If AySrtQ__IsLE(I, P) Then PushI AySrtQ__LE, I  ' If the running-Ix-%I IsGT pivot-Ix-@P, push it to ret
 Next
 End Function
-Private Function AySrtQ__GT(Ixy&(), P&) As Long()
+Function AySrtQ__GT(Ixy&(), P&) As Long()
 '@Ixy : Ix to be selected
 '@P   : the Pivot-Ix to select those ix in @Ixy
 'Ret : a subset of @Ixy so that each the ret ix is GT than the Pivot-@P
@@ -144,7 +107,7 @@ End Function
     
 
 
-Private Sub Z_AySrtByAy()
+Sub Z_AySrtByAy()
 Dim Ay, ByAy
 Ay = Array(1, 2, 3, 4)
 ByAy = Array(3, 4)
@@ -163,7 +126,7 @@ Dim I
 For Each I In ByAy
     If HasEle(Ay, I) Then PushI O, I
 Next
-PushIAy O, MinusAy(Ay, O)
+PushIAy O, AyMinus(Ay, O)
 AySrtByAy = O
 End Function
 
@@ -182,7 +145,7 @@ Else
 End If
 End Function
 
-Private Function AySrt__Ix&(A, V)
+Function AySrt__Ix&(A, V)
 Dim I, O&
 For Each I In A
     If V < I Then AySrt__Ix = O: Exit Function
@@ -202,7 +165,7 @@ Next
 IxyzSrtAy = O
 End Function
 
-Private Sub Z_AySrt()
+Sub Z_AySrt()
 Dim Exp, Act
 Dim A
 A = Array(1, 2, 3, 4, 5): Exp = A:                   Act = AySrt(A):       ThwIf_AyabNE Exp, Act
@@ -231,7 +194,7 @@ Act = AySrtQ(A)
 ThwIf_AyabNE Exp, Act
 End Sub
 
-Private Function IxyzSrtAy_Ix&(Ix&(), A, V, Des As Boolean)
+Function IxyzSrtAy_Ix&(Ix&(), A, V, Des As Boolean)
 Dim I, O&
 If Des Then
     For Each I In Ix
@@ -248,13 +211,13 @@ Next
 IxyzSrtAy_Ix& = O
 End Function
 
-Private Sub Z_IxyzSrtAy()
+Sub Z_IxyzSrtAy()
 Dim A: A = Array("A", "B", "C", "D", "E")
 ThwIf_AyabNE Array(0, 1, 2, 3, 4), IxyzSrtAy(A)
 ThwIf_AyabNE Array(4, 3, 2, 1, 0), IxyzSrtAy(A, True)
 End Sub
 
-Private Function AySrtInEIxIxy&(Ix&(), A, V, Des As Boolean)
+Function AySrtInEIxIxy&(Ix&(), A, V, Des As Boolean)
 Dim I, O&
 If Des Then
     For Each I In Ix
@@ -290,7 +253,7 @@ Next
 Set SrtDic = O
 End Function
 
-Private Sub Z_AySrt4()
+Sub Z_AySrt4()
 Dim Exp, Act
 Dim A
 A = Array(1, 2, 3, 4, 5): Exp = A:                    Act = AySrt(A):        ThwIf_NE Exp, Act
@@ -319,15 +282,10 @@ Act = AySrt(A)
 ThwIf_NE Exp, Act
 End Sub
 
-Private Sub Z_IxyzSrtAy5()
+Sub Z_IxyzSrtAy5()
 Dim A: A = Array("A", "B", "C", "D", "E")
 ThwIf_NE Array(0, 1, 2, 3, 4), IxyzSrtAy(A)
 ThwIf_NE Array(4, 3, 2, 1, 0), IxyzSrtAy(A, True)
 End Sub
 
 
-Private Sub Z()
-Z_AySrt
-Z_IxyzSrtAy
-MVb__Srt:
-End Sub

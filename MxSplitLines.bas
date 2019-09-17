@@ -4,7 +4,7 @@ Option Explicit
 Const CLib$ = "QDta."
 Const CMod$ = CLib & "MxSplitLines."
 
-Private Function SplitLineszDr(Dr, LinesColIx%) As Variant()
+Function SplitLineszDr(Dr, LinesColIx%) As Variant()
 'Ret : a @Dy from @Dr & @LinesColIx.  The val of @Dr(@LinesColIx) is a Lines.  Split it as Ly.
 '      for each Lin in Ly, build IDr with all val from Dr and Dr(LinesColIx) is Lin.
 Dim IDr: IDr = Dr

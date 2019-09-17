@@ -41,7 +41,7 @@ Sub BrwMthFb()
 BrwFb MthFb
 End Sub
 
-Private Property Get LnoChm() As String()
+Property Get LnoChm() As String()
 Erase XX
 X "Fld Nm  Md Pj"
 X "Fld T50 MchStr"

@@ -12,7 +12,7 @@ Function SyzQ(D As Database, Q) As String()
 SyzQ = SyzRs(Rs(D, Q))
 End Function
 
-Private Sub Z_Rs()
+Sub Z_Rs()
 Shell "Subst N: c:\subst\users\user\desktop", vbHide
 Const S$ = "SELECT qSku.*" & _
 " FROM [N:\SAPAccessReports\DutyPrepay5\DutyPrepay5 (With Import).accdb].[qSku] AS qSku;"
@@ -41,7 +41,7 @@ Function FnyzQ(D As Database, Q) As String()
 FnyzQ = FnyzRs(Rs(D, Q))
 End Function
 
-Private Sub Z_FnyzQ()
+Sub Z_FnyzQ()
 Dim Db As Database
 Const S$ = "SELECT qSku.*" & _
 " FROM [N:\SAPAccessReports\DutyPrepay5\DutyPrepay5 (With Import).accdb].[qSku] AS qSku;"

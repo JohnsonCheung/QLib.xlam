@@ -80,14 +80,6 @@ WrtStr = Ft
 End Function
 
 
-Private Sub Z()
-Dim A As Variant
-Dim B$
-Dim C%
-Dim D As Boolean
-Dim E&
-Dim F$()
-End Sub
 
 Function Align$(V, W%)
 Dim S: S = V
@@ -107,7 +99,7 @@ Else
 End If
 End Function
 
-Function AlignR$(S, W%)
+Function AlignR$(S, W)
 Dim L%: L = Len(S)
 If W > L Then
     AlignR = Space(W - L) & S
@@ -118,7 +110,7 @@ End Function
 
 Function AlignRzT1(Ly$()) As String()
 Dim T1$(), Rst$()
-AsgT1AyRstAy Ly, T1, Rst
+AsgAmT1RstAy Ly, T1, Rst
 T1 = AlignRzAy(T1)
 Dim J&: For J = 0 To UB(T1)
     PushI AlignRzT1, T1(J) & " " & Rst(J)
@@ -146,3 +138,8 @@ Dim J%
     If J = 0 Then Exit Function
 TrimWhiteR = Mid(S, J)
 End Function
+Function TabN$(N%)
+TabN = Space(4 * N)
+End Function
+
+

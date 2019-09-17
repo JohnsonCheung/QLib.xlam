@@ -24,7 +24,7 @@ Function DiMdnqSrclzP(P As VBProject) As Dictionary
 Dim C As VBComponent
 Set DiMdnqSrclzP = New Dictionary
 For Each C In P.VBComponents
-    DiMdnqSrclzP.Add C.Name, SrcL(C.CodeModule)
+    DiMdnqSrclzP.Add C.Name, Srcl(C.CodeModule)
 Next
 End Function
 
@@ -65,12 +65,7 @@ Set PjzM = M.Parent.Collection.Parent
 End Function
 
 Function SizMd&(M As CodeModule)
-SizMd = Len(SrcL(M))
-End Function
-
-Function SrcL$(M As CodeModule)
-':SrcL: :Lines #Src-Lines#
-SrcL = JnCrLf(Src(M)) & vbCrLf
+SizMd = Len(Srcl(M))
 End Function
 
 Function RmvMthInSrc(Src$(), MthnSet As Aset) As String()
@@ -107,15 +102,16 @@ End Sub
 
 Function HasMod(P As VBProject, Modn) As Boolean
 If Not HasMd(P, Modn) Then Exit Function
-ThwIf_NotMod MdzPN(P, Modn), CSub
+ThwIf_NotMod MdzP(P, Modn), CSub
 End Function
+
 Function PjnyzX(X As Excel.Application) As String()
 PjnyzX = PjNyzV(X.Vbe)
 End Function
+
 Property Get PjnyX() As String()
 PjnyX = PjnyzX(Xls)
 End Property
-
 
 Sub SavCurVbe()
 SavVbe CVbe
@@ -129,15 +125,15 @@ Sub CprMd(M As CodeModule, B As CodeModule)
 'BrwCprDic DiMthnqLineszM(A), DiMthnqLineszMd(B), MdDn(A), MdDn(B)
 End Sub
 
-Private Function Y_Md() As CodeModule
+Function Y_Md() As CodeModule
 Set Y_Md = CVbe.VBProjects("StockShipRate").VBComponents("Schm").CodeModule
 End Function
 
-Private Sub Z_DroMds()
+Sub Z_DroMds()
 'BrwDrs DroMds(Md("IdeFeature_EnsZ_AsPrivate"))
 End Sub
 
-Private Sub Z_MthLnozMM()
+Sub Z_MthLnozMM()
 Dim O$()
     Dim Lno, L&(), M, A As CodeModule, Ny$(), J%
     Set A = Md("Fct")
@@ -157,7 +153,7 @@ Dim O$()
 BrwAy O
 End Sub
 
-Private Sub Z_CMd()
+Sub Z_CMd()
 Ass CMd.Parent.Name = "Cur_d"
 End Sub
 

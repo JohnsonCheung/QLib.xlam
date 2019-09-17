@@ -3,8 +3,8 @@ Option Compare Text
 Option Explicit
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxFmtDic."
-Private Sub Z_BrwDic()
-Dim R As dao.Recordset
+Sub Z_BrwDic()
+Dim R As DAO.Recordset
 Set R = Rs(SampDbDutyDta, "Select Sku,BchNo from PermitD where BchNo<>''")
 BrwDic JnStrDicTwoFldRs(R), True
 End Sub
@@ -27,7 +27,7 @@ End Function
 Function FmtDicTit(A As Dictionary, Tit$) As String()
 PushI FmtDicTit, Tit
 PushI FmtDicTit, vbTab & "Count=" & A.Count
-PushIAy FmtDicTit, AddPfxzAy(FmtDic(A, InclValTy:=True), vbTab)
+PushIAy FmtDicTit, AmAddPfx(FmtDic(A, InclValTy:=True), vbTab)
 End Function
 
 Function FmtDic(A As Dictionary, Optional InclValTy As Boolean, Optional Nm1$ = "Key", Optional Nm2$ = "Val", Optional IxCol As EmIxCol) As String()
@@ -39,7 +39,7 @@ Case Else:          FmtDic = FmtDiczLin(A, " ", InclValTy, Nm1, Nm2)
 End Select
 End Function
 
-Private Function FmtDiczLin(A As Dictionary, Optional Sep$ = " ", Optional InclValTy As Boolean, Optional Nm1$, Optional Nm2$) As String()
+Function FmtDiczLin(A As Dictionary, Optional Sep$ = " ", Optional InclValTy As Boolean, Optional Nm1$, Optional Nm2$) As String()
 If A.Count = 0 Then Exit Function
 Dim Key: Key = A.Keys
 Dim O$(): O = AlignAy(SyzItr(A.Keys))

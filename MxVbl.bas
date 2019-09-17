@@ -73,7 +73,7 @@ Dim SS: For Each SS In Itr(SplitVBar(SSVbl))
 Next
 End Function
 
-Private Sub Z_DyoVblLy()
+Sub Z_DyoVblLy()
 Dim VblLy$()
 GoSub T1
 Exit Sub
@@ -103,7 +103,3 @@ Tst:
     Return
 End Sub
 
-Private Sub Z()
-Z_DyoVblLy
-MVb_Lin_Vbl:
-End Sub

@@ -14,6 +14,15 @@ Type RRCC
     C1 As Long
     C2 As Long
 End Type
+Type RC
+    R As Long
+    C As Long
+End Type
+Function HasRC(A As RRCC, B As RC) As Boolean
+If NBet(B.R, A.R1, A.R2) Then Exit Function
+If NBet(B.C, A.C1, A.C2) Then Exit Function
+HasRC = True
+End Function
 Function RRCC(R1, R2, C1, C2) As RRCC
 If R1 < 0 Then Exit Function
 If R2 < 0 Then Exit Function

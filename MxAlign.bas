@@ -15,7 +15,7 @@ For Each L In Itr(Ay)
 Next
 End Function
 
-Private Function AlignLyzFstNTerm1$(Sy, W%())
+Function AlignLyzFstNTerm1$(Sy, W%())
 Dim Ay$(), J%, N%, O$(), I
 N = Si(W)
 Ay = NTermRst(Sy, N)
@@ -27,7 +27,7 @@ PushI O, Ay(N)
 AlignLyzFstNTerm1 = RTrim(JnSpc(O))
 End Function
 
-Private Function WdtAyNTermAy(NTerm%, Ay) As Integer()
+Function WdtAyNTermAy(NTerm%, Ay) As Integer()
 If Si(Ay) = 0 Then Exit Function
 Dim O%(), W%(), L
 ReDim O(NTerm - 1)
@@ -38,13 +38,13 @@ Next
 WdtAyNTermAy = O
 End Function
 
-Private Function WdtAyNTermLin(N%, Lin) As Integer()
+Function WdtAyNTermLin(N%, Lin) As Integer()
 Dim T
 For Each T In FstNTerm(Lin, N)
     PushI WdtAyNTermLin, Len(T)
 Next
 End Function
-Private Function WdtAyab(Sy%(), B%()) As Integer()
+Function WdtAyab(Sy%(), B%()) As Integer()
 Dim O%(), J%, I
 O = Sy
 For Each I In B
@@ -106,7 +106,7 @@ FmtSyT4 = AlignLyzFstNTerm(Sy, 4)
 End Function
 
 
-Private Sub Z_FmtSyz2Term()
+Sub Z_FmtSyz2Term()
 Dim Ly$()
 Ly = Sy("AAA B C D", "Sy BBB CCC")
 Ept = Sy("AAA B   C D", _
@@ -118,7 +118,7 @@ Tst:
     C
     Return
 End Sub
-Private Sub Z_FmtSy3Term()
+Sub Z_FmtSy3Term()
 Dim Ly$()
 Ly = Sy("AAA B C D", "Sy BBB CCC")
 Ept = Sy("AAA B   C   D", _
@@ -131,8 +131,3 @@ Tst:
     Return
 End Sub
 
-Private Sub Z()
-Z_FmtSyz2Term
-Z_FmtSy3Term
-MVb_Align_Ay:
-End Sub

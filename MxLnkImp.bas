@@ -18,7 +18,7 @@ Public Const StdETFLines$ = _
 "ETF Lng * Si           " & vbCrLf & _
 "ETF Mem * Lines *Ft *Fx"
 
-Private Property Get LnkSpecTp$()
+Property Get LnkSpecTp$()
 Const A_1$ = "E Mem | Mem Req AlwZLen" & _
 vbCrLf & "E Txt | Txt Req" & _
 vbCrLf & "E Crt | Dte Req Dft=Now" & _
@@ -40,7 +40,7 @@ vbCrLf & "D . Msg | ..."
 LnkSpecTp = A_1
 End Property
 
-Private Sub Z_LnkImp()
+Sub Z_LnkImp()
 Dim LnkImpSrc$(), Db As Database
 GoSub T0
 Exit Sub
@@ -54,7 +54,7 @@ Tst:
 End Sub
 
 Sub LnkImp(LnkImpSrc$(), Db As Database)
-'ThwIf_Er ErzLnk(InpFilSrc, LnkImpSrc), CSub
+'ThwIf_Er EoLnk(InpFilSrc, LnkImpSrc), CSub
 Dim Ip          As DoLTDH:                   Ip = DoLTDH(LnkImpSrc)
 Dim FbTblLy$():                        FbTblLy = IndentedLy(LnkImpSrc, "FbTbl")
 Dim Dic_Fbt_Fbn As Dictionary: Set Dic_Fbt_Fbn = DiczVkkLy(FbTblLy)
@@ -82,11 +82,11 @@ Dim OImp:                  RunSqy Db, ImpSqy
 Dim ODmpNRec:              DmpNRec Db
 End Sub
 
-Private Function WDStru(Ip As DoLTDH) As Drs
+Function WDStru(Ip As DoLTDH) As Drs
 'Fm Ip : L T1 Dta IsHdr}
 'Ret WDStru: Stru F Ty E
 Dim A As Drs, Dr, Dy(), B As Drs, T1$, Dta$
-A = DwEqSel(Ip.D, "IsHdr", False, "T1 Dta")
+A = F_SubDrs_ByC_EqSel(Ip.D, "IsHdr", False, "T1 Dta")
 B = ColPfx(A, "T1", "Stru.") 'T1 Dta
 For Each Dr In Itr(B.Dy)
     T1 = Dr(0)
@@ -96,7 +96,7 @@ Next
 WDStru = DrszFF("Stru F Ty E", Dy)
 End Function
 
-Private Function XDrOfStru(T1$, Dta$) As Variant()
+Function XDrOfStru(T1$, Dta$) As Variant()
 Dim F$, Ty$, E$, Stru$
 Stru = RmvPfx(T1, "Stru.")
 F = ShfT1(Dta)
@@ -105,7 +105,7 @@ E = RmvSqBkt(Dta)
 XDrOfStru = Array(Stru, F, Ty, E)
 End Function
 
-Private Function WDic_T_Stru(FbTny$(), DFx As Drs) As Dictionary
+Function WDic_T_Stru(FbTny$(), DFx As Drs) As Dictionary
 Dim Dr, IxT%, IxStru%, T
 Set WDic_T_Stru = New Dictionary
 For Each T In Itr(FbTny)
@@ -117,13 +117,13 @@ For Each Dr In Itr(DFx.Dy)
 Next
 End Function
 
-Private Function WImpSqy(Dic_T_Stru As Dictionary, DStru As Drs, Dic_T_Bexp As Dictionary) As String()
+Function WImpSqy(Dic_T_Stru As Dictionary, DStru As Drs, Dic_T_Bexp As Dictionary) As String()
 Dim I, Fny$(), Ix As Dictionary, Ey$(), T$, Into$, LnkColLy$(), Bexp$, A As Drs, Stru$
 For Each I In Dic_T_Stru.Keys
     Stru = Dic_T_Stru(I)
        T = ">" & I
     Into = "#I" & I
-       A = DwEqSel(DStru, "Stru", Stru, "F Ty E")
+       A = F_SubDrs_ByC_EqSel(DStru, "Stru", Stru, "F Ty E")
      Fny = StrCol(A, "F")
       Ey = RmvSqBktzSy(StrCol(A, "E"))
    Bexp = VzDicIf(Dic_T_Bexp, I)
@@ -131,7 +131,7 @@ For Each I In Dic_T_Stru.Keys
 Next
 End Function
 
-Private Function WDFx(FxTblLy$()) As Drs
+Function WDFx(FxTblLy$()) As Drs
 'Ret DFx : T Fxn Ws Stru
 Dim Lin, L$, A$, T$, Fxn$, Ws$, Stru$, Dy()
 For Each Lin In Itr(FxTblLy)
@@ -148,27 +148,27 @@ Next
 WDFx = DrszFF("T Fxn Ws Stru", Dy)
 End Function
 
-Private Function WLnkFb(Dic_Fbt_Fbn As Dictionary, Dic_Fbn_Fb As Dictionary) As Drs
+Function WLnkFb(Dic_Fbt_Fbn As Dictionary, Dic_Fbn_Fb As Dictionary) As Drs
 'Ret: *LnkFb::Drs{T S Cn)
-Dim Fbn$, A$, S$, Fbt, T$, CN$, Fb$, Dy()
+Dim Fbn$, A$, S$, Fbt, T$, Cn$, Fb$, Dy()
 For Each Fbt In Dic_Fbt_Fbn.Keys
     Fbn = Dic_Fbt_Fbn(Fbt)
     If Not Dic_Fbn_Fb.Exists(Fbn) Then
         Thw CSub, "Dic_Fbn_Fb does not contains Fbn", "Fbn Dic_Fbn_Fb", Fbn, Dic_Fbn_Fb
     End If
     Fb = Dic_Fbn_Fb(Fbn)
-    CN = DaoCnStrzFb(Fb)
+    Cn = DaoCnStrzFb(Fb)
     T = ">" & Fbt
     S = Fbt
-    PushI Dy, Array(T, S, CN)
+    PushI Dy, Array(T, S, Cn)
 Next
 WLnkFb = DrszFF("T S Cn", Dy)
 End Function
 
-Private Function WLnkFx(DFx As Drs, Dic_Fxn_Fx As Dictionary) As Drs
+Function WLnkFx(DFx As Drs, Dic_Fxn_Fx As Dictionary) As Drs
 'Fm : @DFx :: Drs{T Fxn Ws Stru}
 'Ret: *LnkFx::Drs{T S Cn}
-Dim Dy(), Dr, S$, Fx$, Ws$, CN$, T$, Fxn$, IxT%, IxWs%, IxFxn%
+Dim Dy(), Dr, S$, Fx$, Ws$, Cn$, T$, Fxn$, IxT%, IxWs%, IxFxn%
 AsgIx DFx, "T Ws Fxn", IxT, IxWs, IxFxn
 For Each Dr In Itr(DFx.Dy)
     T = Dr(IxT)
@@ -181,14 +181,14 @@ For Each Dr In Itr(DFx.Dy)
     Else
         S = Ws & "$"
     End If
-    CN = DaoCnStrzFx(Fx)
+    Cn = DaoCnStrzFx(Fx)
     T = ">" & T
-    PushI Dy, Array(T, S, CN)
+    PushI Dy, Array(T, S, Cn)
 Next
 WLnkFx = DrszFF("T S Cn", Dy)
 End Function
 
-Private Property Get Y_LnkImpSrc() As String()
+Property Get Y_LnkImpSrc() As String()
 Erase XX
 X "Inp"
 X " DutyPay C:\Users\User\Desktop\SAPAccessReports\DutyPrepay5\DutyPrepay5_Data.mdb"
@@ -274,6 +274,3 @@ Y_LnkImpSrc = XX
 Erase XX
 End Property
 
-Private Sub Z()
-QDao_Lnk_LnkImp:
-End Sub

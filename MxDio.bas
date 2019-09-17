@@ -90,7 +90,7 @@ For Each I In Itr(DotAy)
     PushI DyoDotAy, SplitDot(Lin)
 Next
 End Function
-Function DyoDic(A As Dictionary, Optional InclDicValOptTy As Boolean) As Variant()
+Function DyzDi(A As Dictionary, Optional InclDicValOptTy As Boolean) As Variant()
 Dim I, Dr
 If A.Count = 0 Then Exit Function
 Dim K(): K = A.Keys
@@ -101,7 +101,7 @@ For Each I In K
     Else
         Dr = Array(I, A(I))
     End If
-    Push DyoDic, Dr
+    Push DyzDi, Dr
 Next
 End Function
 
@@ -183,7 +183,7 @@ Function MgeDic(A As Dictionary, PfxSsl$, ParamArray DicAp()) As Dictionary
 Dim Av(): Av = DicAp
 Dim Ny$()
    Ny = SyzSS(PfxSsl)
-   Ny = AddSfxzAy(Ny, "@")
+   Ny = AmAddSfx(Ny, "@")
 If Si(Av) <> Si(Ny) Then Stop
 Dim Dy() As Dictionary
 Dim D As Dictionary
@@ -295,46 +295,13 @@ For Each K In A
 Next
 End Function
 
-Private Sub Z_MaxSizAyDic()
+Sub Z_MaxSizAyDic()
 Dim D As Dictionary, M%
 'Set D = PjDiMthnqLines(CPj)
 M = MaxSizAyDic(D)
 Stop
 End Sub
 
-Private Sub Z()
-Dim A As Variant
-Dim B As Dictionary
-Dim C() As Dictionary
-Dim D$
-Dim E$()
-Dim F As Boolean
-Dim G()
-CvDic A
-CvDicAy A
-AddDicAy B, C
-AddDicKeyPfx B, A
-DicAddOrUpd B, D, A, D
-IsDicKeyNm B
-DicAyKy C
-IsDicEmp B
-ThwIf_DifDic B, B, D, D, D
-IsDicLines B
-IsDicStr B
-VzDicIfKyJn B, A, D
-SyzDicKy B, E
-FmtDicTit B, D
-LineszDic B
-FmtDic2 B
-MaxSizAyDic B
-MgeDic B, D, G
-MinusDic B, B
-DicSelIntozAy B, E
-DicSelIntoSy B, E
-SyzDicKey B
-DiczSwapKV B
-DicTy B
-End Sub
 
 Function WbzNmzDiLines(NmzDiLines As Dictionary) As Workbook 'Assume each dic keys is name and each value is lines. _
 create a new Wb with worksheet as the dic key and the lines are break to each cell of the sheet
@@ -436,7 +403,7 @@ Next
 Set AddSfxzDic = O
 End Function
 
-Sub PushKqNBStr(ODic As Dictionary, K, S$)
+Sub PushNBlnkzDi(ODic As Dictionary, K, S$)
 If S = "" Then Exit Sub
 ODic.Add K, S
 End Sub

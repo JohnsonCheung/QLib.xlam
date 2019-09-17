@@ -12,14 +12,14 @@ Dim Av(): If UBound(Ap) >= 0 Then Av = Ap
 FvzQQ = FvzQ(D, FmtQQAv(QQSql, Av))
 End Function
 
-Function FvzRs(A As dao.Recordset)
+Function FvzRs(A As DAO.Recordset)
 If NoRec(A) Then Exit Function
 Dim V: V = A.Fields(0).Value
 If IsNull(V) Then Exit Function
 FvzRs = V
 End Function
 
-Function FvzRsF(Rs As dao.Recordset, Fld)
+Function FvzRsF(Rs As DAO.Recordset, Fld)
 With Rs
     If .EOF Then Exit Function
     If .BOF Then Exit Function
@@ -36,20 +36,20 @@ Function FvzTF(D As Database, T, F)
 FvzTF = D.TableDefs(T).OpenRecordset.Fields(F).Value
 End Function
 
-Private Sub Z_FvzQ()
+Sub Z_FvzQ()
 Dim D As Database
 Ept = CByte(18)
 Act = FvzQ(D, "Select Y from [^YM]")
 C
 End Sub
 
-Function FvzArs(A As AdoDB.Recordset)
+Function FvzArs(A As ADODB.Recordset)
 If NoReczArs(A) Then Exit Function
 Dim V: V = A.Fields(0).Value
 If IsNull(V) Then Exit Function
 FvzArs = V
 End Function
 
-Function FvzCnq(A As AdoDB.Connection, Q)
+Function FvzCnq(A As ADODB.Connection, Q)
 FvzCnq = FvzArs(A.Execute(Q))
 End Function

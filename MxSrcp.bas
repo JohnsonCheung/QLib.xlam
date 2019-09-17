@@ -28,3 +28,7 @@ End Function
 Function SrcpzP$(P As VBProject)
 SrcpzP = SrcpzPjf(Pjf(P))
 End Function
+Sub BrwSrcpP()
+BrwPth SrcpP
+End Sub
+

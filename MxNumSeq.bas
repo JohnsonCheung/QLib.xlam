@@ -8,7 +8,7 @@ Function IntSeq(F%, T%) As Integer()
 IntSeq = IntozFT(EmpIntAy, F, T)
 End Function
 
-Private Function IntozFT(Into, F, T)
+Function IntozFT(Into, F, T)
 Dim O: O = Into: ReDim O(Abs(T - F))
 Dim S: S = IIf(T > F, 1, -1) ' Step
 Dim V, I&: For V = F To T Step S

@@ -35,7 +35,7 @@ End Function
 
 Function ReSeqAy(Ay, SubAy)
 Dim HasSubAy: HasSubAy = AyIntersect(Ay, SubAy)
-Dim Rest: Rest = MinusAy(Ay, SubAy)
+Dim Rest: Rest = AyMinus(Ay, SubAy)
 ReSeqAy = AddAy(HasSubAy, Rest)
 End Function
 
@@ -74,7 +74,7 @@ With R
 End With
 End Sub
 
-Private Sub Y_FnyzReseqSpec()
+Sub Y_FnyzReseqSpec()
 BrwAy FnyzReseqSpec("*Flg RecTy Amt *Key *Uom MovTy Qty BchRateUX RateTy *Bch *Las *GL |" & _
 " *Flg IsAlert IsWithSku |" & _
 " *Key Sku PstMth PstDte |" & _
@@ -84,7 +84,7 @@ BrwAy FnyzReseqSpec("*Flg RecTy Amt *Key *Uom MovTy Qty BchRateUX RateTy *Bch *L
 " *Uom Des StkUom Ac_U")
 End Sub
 
-Private Sub Y_UpdSeqFld()
+Sub Y_UpdSeqFld()
 Dim Db As Database, T$
 Set Db = TmpDb
 Rq Db, "Select * into [#A] from [T] order by Sku,PermitDate"

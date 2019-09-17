@@ -59,7 +59,17 @@ AyabczAyFE = Ayabc( _
     AwFE(Ay, FmIx, EIx), _
     AwFm(Ay, EIx))
 End Function
-
+Function AyabJn(A, B, Sep$) As String()
+Dim J&: For J = 0 To Min(UB(A), UB(B))
+    PushI AyabJn, A(J) & Sep & B(J)
+Next
+End Function
+Function AyabJnDot(A, B) As String()
+AyabJnDot = AyabJn(A, B, ".")
+End Function
+Function AyabJnSngQ(A, B) As String()
+AyabJnSngQ = AyabJn(A, B, "'")
+End Function
 Function AyabczAyFei(Ay, B As Fei) As Ayabc
 AyabczAyFei = AyabczAyFE(Ay, B.FmIx, B.EIx)
 End Function

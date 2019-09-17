@@ -62,7 +62,7 @@ End Property
 
 Function AscSqAddLbl(AscSq()) As Variant()
 Const CSub$ = CMod & "AscSqAddLbl"
-If Not IsVdtAsc(AscSq) Then ThwMsg CSub, "Given AscSq is invalid.  Vdt-AscSq must 1-16 x 1-16"
+If Not IsVdtAsc(AscSq) Then Thw CSub, "Given AscSq is invalid.  Vdt-AscSq must 1-16 x 1-16"
 Dim O(1 To 17, 1 To 17)
 Dim R%, C%
 For R = 2 To 17: For C = 2 To 17

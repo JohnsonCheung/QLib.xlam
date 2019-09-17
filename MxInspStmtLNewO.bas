@@ -11,12 +11,12 @@ Dim Di As Dictionary:        Set Di = DiVarnnqDclSfx(Srcc(Src))
                       InspStmtLNewO = XBsLNewO(Bs, Di, Mdn, Mthn$)
 End Function
 
-Private Function DiVarnnqDclSfx(Src$()) As Dictionary
+Function DiVarnnqDclSfx(Src$()) As Dictionary
 Dim A() As Variant
-
+InspStmt
 End Function
 
-Private Function XBsLNewO(Bs As Drs, DiVarnnqDclSfx As Dictionary, Mdn$, Mthn$) As Drs
+Function XBsLNewO(Bs As Drs, DiVarnnqDclSfx As Dictionary, Mdn$, Mthn$) As Drs
 '@Bs   :Drs-L-BsLin ! Fst2Chr = '@
 Dim Dy()
     Dim S$, Lin$, L&
@@ -31,7 +31,7 @@ Dim Dy()
 XBsLNewO = DrszFF("L NewL OldL", Dy)
 End Function
 
-Private Function XBs(Wi_L_MthLin As Drs) As Drs
+Function XBs(Wi_L_MthLin As Drs) As Drs
 'Ret :Drs-L-BsLin ! Fst2Chr = '@ @@
 Dim Dy()
     Dim IxL%, IxMthLin%: AsgIx Wi_L_MthLin, "L MthLin", IxL, IxMthLin

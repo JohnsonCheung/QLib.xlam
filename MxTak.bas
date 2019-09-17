@@ -116,12 +116,12 @@ End Function
 Sub AsgP123(S, S1$, S2$, O1$, O2$, O3$)
 AsgAp P123(S, S1, S2), O1, O2, O3
 End Sub
-Private Sub Z_Tak_BefFstLas()
+Sub Z_Tak_BefFstLas()
 Dim S, Fst$, LAs$
-S = " A_1$ = ""Private Function ZChunk$(ConstLy$(), IChunk%)"" & _"
+S = " A_1$ = ""Function ZChunk$(ConstLy$(), IChunk%)"" & _"
 Fst = vbDblQ
 LAs = vbDblQ
-Ept = "Private Function ZChunk$(ConstLy$(), IChunk%)"
+Ept = "Function ZChunk$(ConstLy$(), IChunk%)"
 GoSub Tst
 Exit Sub
 Tst:
@@ -134,6 +134,10 @@ BetFstLas = BefRev(Aft(S, Fst), LAs)
 End Function
 Function BetLng(L&, A&, B&) As Boolean
 BetLng = A <= L And L <= B
+End Function
+
+Function NBet(X, A, B) As Boolean
+NBet = Not Bet(X, A, B)
 End Function
 
 Function Bet(X, A, B) As Boolean
@@ -151,15 +155,15 @@ With Brk1(S, S1, NoTrim)
 End With
 End Function
 
-Private Sub Z_BetBkt()
+Sub Z_BetBkt()
 Dim Act$
    Dim S
    S = "sdklfjdsf(1234()567)aaa("
    Act = BetBkt(S)
    Ass Act = "1234()567"
 End Sub
-Function NM$(S)
-NM = TakNm(S)
+Function Nm$(S)
+Nm = TakNm(S)
 End Function
 Function TakDotNm$(S)
 Dim J%
@@ -191,7 +195,7 @@ TakNm = S
 End Function
 
 
-Private Sub Z_AftBkt()
+Sub Z_AftBkt()
 Dim A$
 A = "(lsk(aa)df lsdkfj) A"
 Ept = " A"
@@ -203,7 +207,7 @@ Tst:
     Return
 End Sub
 
-Private Sub Z_Bet()
+Sub Z_Bet()
 Dim Lin
 Lin = "Excel 8.0;HDR=YES;IMEX=2;DATABASE=??       | DATABASE= | ; | ??":            GoSub Tst
 Lin = "Excel 8.0;HDR=YES;IMEX=2;DATABASE=??;AA=XX | DATABASE= | ; | ??":            GoSub Tst
@@ -217,7 +221,7 @@ Tst:
     Return
 End Sub
 
-Private Sub Z_Tak_BetBkt()
+Sub Z_Tak_BetBkt()
 Dim A$
 Ept = "1234()567": A = "sdklfjdsf(1234()567)aaa(": GoSub Tst
 Ept = "AA":        A = "XXX(AA)XX":   GoSub Tst
@@ -230,12 +234,6 @@ Tst:
     Return
 End Sub
 
-Private Sub Z()
-Z_AftBkt
-Z_Tak_BefFstLas
-Z_Bet
-MVb_Str_Tak:
-End Sub
 
 Function BefRevOrAll$(S, Sep$)
 Dim P%: P = InStrRev(S, Sep)

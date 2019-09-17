@@ -45,7 +45,7 @@ With BrkQte(QteStr)
     P = .S1
     S = .S2
 End With
-QteAy = AddPfxSzAy(Ay, P, S)
+QteAy = AmAddPfxS(Ay, P, S)
 End Function
 
 Function UnQteVb$(QteVb)

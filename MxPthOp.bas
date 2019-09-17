@@ -19,7 +19,7 @@ Sub ClrPth(Pth)
 DltFfnAyAyIf FfnAy(Pth)
 End Sub
 
-Private Sub Z_ClrPthFil()
+Sub Z_ClrPthFil()
 ClrPthFil TmpRoot
 End Sub
 
@@ -32,13 +32,6 @@ Next
 End Sub
 
 
-Private Sub Z_RmvEmpPthR()
-Debug.Print "Before-----"
-D EmpPthSyR(TmpRoot)
-RmvEmpPthR TmpRoot
-Debug.Print "After-----"
-D EmpPthSyR(TmpRoot)
-End Sub
 Sub RmvEmpPthR(Pth)
 Dim Ay$(), I, J%
 Lp:
@@ -72,6 +65,6 @@ End Sub
 
 
 
-Private Sub Z_RmvEmpSubDir()
+Sub Z_RmvEmpSubDir()
 RmvEmpSubDir TmpPth
 End Sub

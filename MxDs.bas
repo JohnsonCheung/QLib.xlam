@@ -71,6 +71,6 @@ End Function
 Function VzDicK(A As Dictionary, K, Optional Dicn$ = "Dic", Optional Kn$ = "Key", Optional Fun$)
 If A.Exists(K) Then VzDicK = A(K): Exit Function
 Dim M$: M = FmtQQ("[?] does not [?]", Dicn, Kn)
-Dim Nn$: Nn = FmtQQ("[?] [?]", Dicn, Kn)
-Thw Fun, M, Nn, A, K
+Dim NN$: NN = FmtQQ("[?] [?]", Dicn, Kn)
+Thw Fun, M, NN, A, K
 End Function

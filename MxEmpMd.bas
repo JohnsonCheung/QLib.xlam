@@ -34,7 +34,7 @@ For Each C In P.VBComponents
 Next
 End Function
 
-Private Sub Z_IsMdEmp()
+Sub Z_IsMdEmp()
 Dim M As CodeModule
 'GoSub T1
 'GoSub T2

@@ -6,11 +6,11 @@ Const CMod$ = CLib & "MxInstall."
 Function TreeWsMdLines$()
 Erase XX
 X "Option Explicit"
-X "Private Sub Worksheet_Change(ByVal Target As Range)"
+X "Sub Worksheet_Change(ByVal Target As Range)"
 X "MTreeWs.Change Target"
 X "End Sub"
 
-X "Private Sub Worksheet_SelectionChange(ByVal Target As Range)"
+X "Sub Worksheet_SelectionChange(ByVal Target As Range)"
 X "MTreeWs.SelectionChange Target"
 X "End Sub"
 TreeWsMdLines = JnCrLf(XX)

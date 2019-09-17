@@ -5,22 +5,27 @@ Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxRf."
 Type RfLin: Lin As String: End Type
 ':Frf$ = "It a file Rf.Txt in Srcp with RfLin"
-Public Const FFoRfLin$ = "Nm Guid Mjr Mnr Frfee"
+Public Const FFoRfLin$ = "Nm Guid Mjr Mnr Rff"
 Function RfLin(Lin) As RfLin
 RfLin.Lin = Lin
 End Function
+
 Function RfLinzRf(A As vbide.Reference) As RfLin
 With A
 RfLinzRf = RfLin(JnSpcAp(.Name, .GUID, .Major, .Minor, .FullPath))
 End With
 End Function
-Function FrfeezRfLin(A As RfLin)
+Function RffzRfLin(A As RfLin)
 Dim P%: P = InStr(Replace(A.Lin, " ", "-", Count:=3), " ")
-FrfeezRfLin = Mid(A.Lin, P + 1)
+RffzRfLin = Mid(A.Lin, P + 1)
 End Function
 
-Function HasFrfee(P As VBProject, Frfee) As Boolean
-HasFrfee = HasItrEq(P.References, "FullPath", Frfee)
+Function HasRf(P As VBProject, Rfn) As Boolean
+HasRf = HasItn(P.References, Rfn)
+End Function
+
+Function HasRff(P As VBProject, Rff) As Boolean
+HasRff = HasItrEq(P.References, "FullPath", Rff)
 End Function
 Property Get FrfC$()
 FrfC = Frf(CPj)
@@ -51,10 +56,11 @@ End Function
 Function CvRf(A) As vbide.Reference
 Set CvRf = A
 End Function
-Function HasRfNm(Pj As VBProject, RfNm$)
+
+Function HasRfn(Pj As VBProject, Rfn)
 Dim Rf As vbide.Reference
 For Each Rf In Pj.References
-    If Rf.Name = RfNm Then HasRfNm = True: Exit Function
+    If Rf.Name = Rfn Then HasRfn = True: Exit Function
 Next
 End Function
 
@@ -66,32 +72,51 @@ Function RffyzP(P As VBProject) As String()
 RffyzP = SyzItrPrp(P.References, "FullPath")
 End Function
 
-Function RffPjn$(P As VBProject, RfNm$)
-RffPjn = Pjp(P) & RfNm & ".xlam"
+Function RffPjn$(P As VBProject, Rfn$)
+RffPjn = Pjp(P) & Rfn & ".xlam"
 End Function
 
-Function PjRfNy(P As VBProject) As String()
-PjRfNy = Itn(P.References)
+Function Rf(Rfn) As vbide.Reference
+Set Rf = RfzP(CPj, Rfn)
 End Function
 
-Function Frfee$(A As vbide.Reference)
+Function RfzP(P As VBProject, Rfn) As vbide.Reference
+Set RfzP = ItwNm(P.References, Rfn)
+End Function
+Function RfNyP() As String()
+RfNyP = RfNyzP(CPj)
+End Function
+
+Function RfNyzP(P As VBProject) As String()
+RfNyzP = Itn(P.References)
+End Function
+
+Function Rff$(Rfn)
+':Rff: :Ffn #Rf-FileName# ! a .dll file or .mda or .fxa to be referred by a pj
+Rff = RffzP(CPj, Rfn)
+End Function
+
+Function RffzP$(P As VBProject, Rfn)
 On Error Resume Next
-Frfee = A.FullPath
+RffzP = RfzP(P, Rfn).FullPath
 End Function
 
-Private Sub Z()
-End Sub
 
 Sub DmpPjRfP()
 DmpDrs DoPjRfP
 End Sub
 
+Sub Z_DoPjRfP()
+BrwDrs DoPjRfP
+End Sub
+
 Function DoPjRfP() As Drs
 DoPjRfP = DoPjRfzP(CPj)
 End Function
+
 Function DoPjRfzP(P As VBProject) As Drs
-Dim FF$: FF = "Name GUID Major Minor FullPath Description BuiltIn Type IsBroken"
-Dim A As Drs: A = DrszItrPP(P.References, FF)
+Dim Prpcc$: Prpcc = "Name GUID Major Minor FullPath Description BuiltIn Type IsBroken"
+Dim A As Drs: A = DrszItrPrpcc(P.References, Prpcc)
 DoPjRfzP = InsCol(A, "Pj", P.Name)
 End Function
 

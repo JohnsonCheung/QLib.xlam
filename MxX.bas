@@ -24,7 +24,7 @@ PushIAy A, FmtCellDrs(Drs)
 End Sub
 Sub XTab(V)
 If IsArray(V) Then
-    X TabAy(V)
+    X AmTab(V)
 Else
     X vbTab & V
 End If

@@ -17,7 +17,7 @@ Function FmtCprDic(A As Dictionary, B As Dictionary, Optional Nm1$ = "Fst", Opti
 FmtCprDic = FmtCpr(Cpr(A, B, Nm1, Nm2), ExlSam)
 End Function
 
-Private Function FmtCpr(A As Cpr, Optional ExlSam As Boolean) As String()
+Function FmtCpr(A As Cpr, Optional ExlSam As Boolean) As String()
 Dim O$()
 With A
     O = AddAyAp( _
@@ -31,7 +31,7 @@ End If
 FmtCpr = O
 End Function
 
-Private Function Cpr(A As Dictionary, B As Dictionary, Nm1$, Nm2$) As Cpr
+Function Cpr(A As Dictionary, B As Dictionary, Nm1$, Nm2$) As Cpr
 With Cpr
     .Nm1 = Nm1
     .Nm2 = Nm2
@@ -46,7 +46,7 @@ Sub BrwCprDic(A As Dictionary, B As Dictionary, Optional Nm1$ = "Fst", Optional 
 BrwAy FmtCprDic(A, B, Nm1, Nm2)
 End Sub
 
-Private Function SamKV(A As Dictionary, B As Dictionary) As Dictionary
+Function SamKV(A As Dictionary, B As Dictionary) As Dictionary
 Set SamKV = New Dictionary
 If A.Count = 0 Or B.Count = 0 Then Exit Function
 Dim K
@@ -59,7 +59,7 @@ For Each K In A.Keys
 Next
 End Function
 
-Private Sub AsgADifBDif(A As Dictionary, B As Dictionary, _
+Sub AsgADifBDif(A As Dictionary, B As Dictionary, _
     OADif As Dictionary, OBDif As Dictionary)
 Dim K
 Set OADif = New Dictionary
@@ -74,7 +74,7 @@ For Each K In A.Keys
 Next
 End Sub
 
-Private Function FmtDif(A As Dictionary, B As Dictionary) As String()
+Function FmtDif(A As Dictionary, B As Dictionary) As String()
 If A.Count <> B.Count Then Thw CSub, "Dic A & B should have same size", "Dic-A-Si Dic-B-Si", A.Count, B.Count
 If A.Count = 0 Then Exit Function
 Dim O$(), K, S1$, S2$, S As S12s, KK$
@@ -87,19 +87,19 @@ Next
 FmtDif = FmtS12s(S, N1:="", N2:="")
 End Function
 
-Private Function FmtExcess(A As Dictionary, NM$) As String()
+Function FmtExcess(A As Dictionary, Nm$) As String()
 If A.Count = 0 Then Exit Function
 Dim K, S1$, S2$, S As S12s
-S2 = "!" & "Er Excess (" & NM & ")"
+S2 = "!" & "Er Excess (" & Nm & ")"
 For Each K In A.Keys
     S1 = ULinzLines(CStr(K))
     S2 = A(K)
     PushS12 S, S12(S1, S2)
 Next
-PushAy FmtExcess, FmtS12s(S, N1:="Exccess", N2:=NM)
+PushAy FmtExcess, FmtS12s(S, N1:="Exccess", N2:=Nm)
 End Function
 
-Private Function FmtSam(A As Dictionary) As String()
+Function FmtSam(A As Dictionary) As String()
 If A.Count = 0 Then Exit Function
 Dim O$(), K, S As S12s, KK$
 For Each K In A.Keys
@@ -109,13 +109,10 @@ Next
 FmtSam = FmtS12s(S)
 End Function
 
-Private Sub Z_BrwCprDic()
+Sub Z_BrwCprDic()
 Dim A As Dictionary, B As Dictionary
 Set A = DiczVbl("X AA|A BBB|A Lines1|A Line3|B Line1|B line2|B line3..")
 Set B = DiczVbl("X AA|C Line|D Line1|D line2|B Line1|B line2|B line3|B Line4")
 BrwCprDic A, B
 End Sub
 
-Private Sub Z()
-Z_BrwCprDic
-End Sub

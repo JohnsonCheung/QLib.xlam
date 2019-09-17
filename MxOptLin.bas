@@ -16,13 +16,13 @@ Sub EnsOptLinM()
 EnsOptLinzM CMd
 End Sub
 
-Private Sub EnsOptLinzP(P As VBProject)
+Sub EnsOptLinzP(P As VBProject)
 Dim C As VBComponent
 For Each C In P.VBComponents
     EnsOptLinzM C.CodeModule
 Next
 End Sub
-Private Sub Z_EnsOptLinzM()
+Sub Z_EnsOptLinzM()
 Dim M As CodeModule
 Const Mdn$ = "AA"
 GoSub Setup
@@ -36,14 +36,14 @@ Tst:
     EnsOptLinzM M
     Return
 Setup:
-    AddCls Mdn
+    Add_Clsnn_ToCurPj Mdn
     Return
 Clean:
     RmvMd Mdn
     Return
 End Sub
 
-Private Sub EnsOptLinzM(M As CodeModule)
+Sub EnsOptLinzM(M As CodeModule)
 If IsMdEmp(M) Then Exit Sub
 DltOptLin M, LCmpDb
 DltOptLin M, LCmpBin
@@ -51,7 +51,7 @@ EnsOptLin M, LCmpTxt
 EnsOptLin M, LExplicit
 End Sub
 
-Private Sub Z_LnoAftOptqImpl()
+Sub Z_LnoAftOptqImpl()
 Dim M As CodeModule
 GoSub T0
 Exit Sub
@@ -94,14 +94,14 @@ Next
 LnoAftOptqImpl = N + 1
 End Function
 
-Private Function OptLno%(M As CodeModule, OptLin)
+Function OptLno%(M As CodeModule, OptLin)
 Dim J&
 For J = 1 To M.CountOfDeclarationLines
    If M.Lines(J, 1) = OptLin Then OptLno = J: Exit Function
 Next
 End Function
 
-Private Sub EnsOptLin(M As CodeModule, OptLin)
+Sub EnsOptLin(M As CodeModule, OptLin)
 Const CSub$ = CMod & "EnsOptLin"
 If M.CountOfLines = 0 Then Exit Sub
 If OptLno(M, OptLin) > 0 Then Exit Sub
@@ -109,7 +109,7 @@ M.InsertLines 1, OptLin
 InfLin CSub, "[" & OptLin & "] is Inserted", "Md", Mdn(M)
 End Sub
 
-Private Sub DltOptLin(M As CodeModule, OptLin)
+Sub DltOptLin(M As CodeModule, OptLin)
 Const CSub$ = CMod & "DltOptLin"
 Dim I%: I = OptLno(M, OptLin)
 If I = 0 Then Exit Sub
@@ -117,6 +117,3 @@ M.DeleteLines I
 Inf CSub, "[" & OptLin & "] line is deleted", "Md Lno", Mdn(M), I
 End Sub
 
-Private Sub Z()
-QIde_Ens_EnsOptLin:
-End Sub

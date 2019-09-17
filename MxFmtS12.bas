@@ -4,7 +4,7 @@ Option Explicit
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxFmtS12."
 
-Private Function XDy(A As S12s) As Variant()
+Function XDy(A As S12s) As Variant()
 'Ret : a 2 col of dry with fst row is @N1..2 and snd row is ULin and rst from @A @@
 Dim J&: For J& = 0 To A.N - 1
     With A.Ay(J)
@@ -39,7 +39,7 @@ Dim O$():       O = Sy(SepL, Tit, SepL, M)
 FmtS12s = O
 End Function
 
-Private Function XIxFront$(Fst2Chr$, IsIxAdd As Boolean, Sep$, Ix&, W%)
+Function XIxFront$(Fst2Chr$, IsIxAdd As Boolean, Sep$, Ix&, W%)
 Dim O$
 Select Case True
 Case Fst2Chr = "|-":             O = Sep
@@ -50,7 +50,7 @@ End Select
 XIxFront = O
 End Function
 
-Private Function XAddIx(Fmt$(), N&, IxCol As EmIxCol) As String()
+Function XAddIx(Fmt$(), N&, IxCol As EmIxCol) As String()
 '@Fmt : ! a formatted S12s-Ly
 'Ret  : ! Add Ix column in front of @Fmt @@
 If IxCol = EiNoIx Then XAddIx = Fmt: Exit Function
@@ -73,7 +73,7 @@ Dim J&: For J = 2 To UB(Fmt)
 Next
 End Function
 
-Private Function XFmtzS12(A As S12, W2Ay%()) As String()
+Function XFmtzS12(A As S12, W2Ay%()) As String()
 '@A    : the :S12.S1-S2 may both have lines.  Wrap them as @W2Ay.
 '@W2Ay : S1-Wdt and S2-Wdt
 'Ret   : Ly aft fmt @A @@
@@ -91,7 +91,7 @@ Dim O$()
 XFmtzS12 = O
 End Function
 
-Private Function XMiddle(A As S12s, W2Ay%(), SepL$) As String()
+Function XMiddle(A As S12s, W2Ay%(), SepL$) As String()
 'Ret :  #Middle ! Middle part @@
 Dim J&: For J = 0 To A.N - 1
     PushIAy XMiddle, XFmtzS12(A.Ay(J), W2Ay)
@@ -115,7 +115,7 @@ AlignDrWy = O
 End Function
 
 
-Private Function XHasLines(A As S12s) As Boolean
+Function XHasLines(A As S12s) As Boolean
 Dim J&
 XHasLines = True
 For J = 0 To A.N - 1
@@ -127,7 +127,7 @@ Next
 XHasLines = False
 End Function
 
-Private Sub Z_FmtS12s()
+Sub Z_FmtS12s()
 Dim A As S12s, N1$, N2$, Pseg$
 'GoSub T0
 'GoSub T1
@@ -139,7 +139,7 @@ T3:
     N2 = "BB"
     Pseg = "Z_FmtS12s\Cas3"
     A = S12szRes("S12s.Txt", Pseg & "\Inp")
-    Ept = ResStr("Ept", Pseg)
+    Ept = Resl("Ept", Pseg)
     GoTo Tst
 T0:
     N1 = "AA"
@@ -154,7 +154,7 @@ T1:
 T2:
     N1 = "AA"
     N2 = "BB"
-    A = SampS12s_wiLines
+    A = SampS12s
     Brw FmtS12s(A, N1, N2)
     Stop
     GoTo Tst

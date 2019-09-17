@@ -1,10 +1,11 @@
 Attribute VB_Name = "MxFb"
 Option Compare Text
 Option Explicit
+Const CNs$ = "sw"
 Const CLib$ = "QDao."
 Const CMod$ = CLib & "MxFb."
 
-Function ArszFbq(Fb, Q) As AdoDB.Recordset
+Function ArszFbq(Fb, Q) As ADODB.Recordset
 Set ArszFbq = CnzFb(Fb).Execute(Q)
 End Function
 
@@ -29,7 +30,7 @@ Function CntrItmNyzFb(Fb) As String()
 Dim D As Database: Set D = Db(Fb)
 Dim CntrNm
 For Each CntrNm In Itn(D.Containers)
-    PushIAy CntrItmNyzFb, AddPfxzAy(Itn(D.Containers(CntrNm).Documents), CntrNm & ".")
+    PushIAy CntrItmNyzFb, AmAddPfx(Itn(D.Containers(CntrNm).Documents), CntrNm & ".")
 Next
 End Function
 
@@ -39,15 +40,15 @@ End Function
 
 Function CrtFb(Fb, Optional IsDltFst As Boolean) As Database
 If IsDltFst Then DltFfnIf Fb
-Set CrtFb = dao.DBEngine.CreateDatabase(Fb, dbLangGeneral)
+Set CrtFb = DAO.DBEngine.CreateDatabase(Fb, dbLangGeneral)
 End Function
 
 Function Db(Fb) As Database
-Set Db = dao.DBEngine.OpenDatabase(Fb)
+Set Db = DAO.DBEngine.OpenDatabase(Fb)
 End Function
 
 Function DbzFb(Fb) As Database
-Set DbzFb = dao.DBEngine.OpenDatabase(Fb)
+Set DbzFb = DAO.DBEngine.OpenDatabase(Fb)
 End Function
 
 Sub DrpFbt(Fb, T)
@@ -74,28 +75,24 @@ Function WszFbq(Fb, Q, Optional Wsn) As Worksheet
 'Set WszFbq = WszDrs(DrszFbq(Fb, Q), Wsn:=Wsn)
 End Function
 
-Private Sub Z()
-Z_BrwFb
-MDao_Fb:
-End Sub
 
-Private Sub Z_BrwFb()
+Sub Z_BrwFb()
 BrwFb SampFbzDutyDta
 End Sub
 
-Private Sub Z_HasFbt()
+Sub Z_HasFbt()
 Ass HasFbt(SampFbzDutyDta, "SkuB")
 End Sub
 
-Private Sub Z_OupTnyzFb()
+Sub Z_OupTnyzFb()
 Dim Fb$
 D OupTnyzFb(Fb)
 End Sub
 
-Private Sub Z_TnyzFb()
+Sub Z_TnyzFb()
 DmpAy TnyzFb(SampFbzDutyDta)
 End Sub
 
-Private Sub Z_WszFbq()
+Sub Z_WszFbq()
 ShwWs WszFbq(SampFbzDutyDta, "Select * from KE24")
 End Sub

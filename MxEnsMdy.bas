@@ -33,7 +33,7 @@ For Each C In P.VBComponents
     EnsPrvZ C.CodeModule
 Next
 End Sub
-Private Function Z_EnsPrv(A As Drs) As Drs
+Function Z_EnsPrv(A As Drs) As Drs
 
 End Function
 Sub EnsPrvZ(M As CodeModule, Optional Upd)
@@ -59,7 +59,7 @@ Function LnoItrOfPubZ(M As CodeModule)
 Asg Itr(LnoAyOfPubZ(M)), LnoItrOfPubZ
 End Function
 
-Private Function EnsMdy$(OldMthLin, ShtMdy$)
+Function EnsMdy$(OldMthLin, ShtMdy$)
 Const CSub$ = CMod & "EnsMdy"
 Dim L$: L = RmvMdy(OldMthLin)
     Select Case ShtMdy

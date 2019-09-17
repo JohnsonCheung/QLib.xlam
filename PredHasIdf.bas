@@ -19,6 +19,6 @@ End Sub
 Function Pred(V) As Boolean
 Pred = IPred_Pred(V)
 End Function
-Private Function IPred_Pred(V As Variant) As Boolean
+Function IPred_Pred(V As Variant) As Boolean
 IPred_Pred = HasIdf(V, I)
 End Function

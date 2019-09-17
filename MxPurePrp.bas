@@ -6,12 +6,12 @@ Const CMod$ = CLib & "MxPurePrp."
 
 Function DoPubPrpWiPm() As Drs
 Dim A As Drs: A = AddMthColHasPm(DoPubPrp)
-DoPubPrpWiPm = DwEqExl(A, "HasPm", True)
+DoPubPrpWiPm = F_SubDrs_ByC_EqExl(A, "HasPm", True)
 End Function
 
 Property Get DoPubPrpWoPm() As Drs
 Dim A As Drs: A = AddMthColHasPm(DoPubPrp)
-DoPubPrpWoPm = DwEqExl(A, "HasPm", False)
+DoPubPrpWoPm = F_SubDrs_ByC_EqExl(A, "HasPm", False)
 End Property
 
 Function LetSetPrpNset(MthLinAy$()) As Aset
@@ -25,10 +25,10 @@ Next
 Set LetSetPrpNset = O
 End Function
 
-Private Function LetSetPrpNm$(Lin)
+Function LetSetPrpNm$(Lin)
 With Mthn3zL(Lin)
     Select Case .ShtTy
-    Case "Set", "Let": LetSetPrpNm = .NM: Exit Function
+    Case "Set", "Let": LetSetPrpNm = .Nm: Exit Function
     End Select
 End With
 End Function

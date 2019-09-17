@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxTopRmk."
-Private Sub Z_MthFeiszSrcMth()
+Sub Z_MthFeiszSrcMth()
 Dim Src$(), Mthn
 Dim Ept As Feis, Act As Feis
 

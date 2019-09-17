@@ -11,7 +11,7 @@ Sub DmpIsPjSav()
 DmpDrs DoIsPjSav(CVbe)
 End Sub
 
-Private Function DyoIsPjSav(A As Vbe) As Variant()
+Function DyoIsPjSav(A As Vbe) As Variant()
 Dim I As VBProject
 For Each I In A.VBProjects
     PushI DyoIsPjSav, Array(I.Saved, I.Name, I.GenFileName)
@@ -88,20 +88,12 @@ For Each P In A.VBProjects
 Next
 End Function
 
-Private Sub Z_VbeFunPfx()
+Sub Z_VbeFunPfx()
 'D Vbe_MthPfx(CVbe)
 End Sub
 
-Private Sub Z_MthNyzV()
+Sub Z_MthNyzV()
 Brw MthNyzV(CVbe)
 End Sub
 
 
-Private Sub Z()
-Dim A
-Dim B As Vbe
-Dim C$
-Dim D As Boolean
-Dim XX
-CvVbe A
-End Sub

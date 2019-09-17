@@ -13,7 +13,7 @@ Implements IPred
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "PredPfx."
 Private A$
-Private Function IPred_Pred(V As Variant) As Boolean
+Function IPred_Pred(V As Variant) As Boolean
 If HasPfx(V, A) Then IPred_Pred = True
 End Function
 Sub Init(Pfx)

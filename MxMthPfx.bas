@@ -4,7 +4,7 @@ Option Explicit
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxMthPfx."
 
-Private Sub Z_MthPfx()
+Sub Z_MthPfx()
 Ass MthPfx("Add_Cls") = "Add"
 End Sub
 
@@ -49,7 +49,3 @@ MthPfx = Mthn
 End Function
 
 
-Private Sub Z()
-Z_MthPfx
-MIde_Mth_Pfx:
-End Sub

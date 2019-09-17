@@ -3,7 +3,7 @@ Option Explicit
 Option Compare Text
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxDimItm."
-Private Sub Z_DimItmAy()
+Sub Z_DimItmAy()
 Brw DimItmAy(SrczP(CPj))
 End Sub
 
@@ -11,7 +11,7 @@ Function DimItmAy(Src$()) As String()
 ':DimItm: :S #Dim-Itm#
 DimItmAy = DimItmAyzDimLinAy(DimLinAy(Src))
 End Function
-Private Sub Z_DimLinAy()
+Sub Z_DimLinAy()
 Brw DimLinAy(SrczP(CPj))
 End Sub
 
@@ -30,7 +30,7 @@ Dim L: For Each L In Itr(Src)
 Next
 End Function
 
-Private Function DimItmAyzDimLinAy(DimLinAy$()) As String()
+Function DimItmAyzDimLinAy(DimLinAy$()) As String()
 Dim DimLin: For Each DimLin In Itr(DimLinAy)
     If Left(DimLin, 4) <> "Dim " Then Stop
     PushIAy DimItmAyzDimLinAy, AmTrim(SplitComma(Mid(DimLin, 5)))

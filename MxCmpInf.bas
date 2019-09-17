@@ -18,7 +18,7 @@ Function CvCmp(A) As VBComponent
 Set CvCmp = A
 End Function
 
-Private Function HasCmpzPTN(P As VBProject, Ty As vbext_ComponentType, Cmpn) As Boolean
+Function HasCmpzPTN(P As VBProject, Ty As vbext_ComponentType, Cmpn) As Boolean
 Dim T As vbext_ComponentType
 If Not HasCmpzP(P, Cmpn) Then Exit Function
 T = CmpTyzPN(P, Cmpn)
@@ -35,7 +35,7 @@ End Function
 
 Function TmpMod() As CodeModule
 Dim T$: T = TmpNm("TmpMod")
-AddModzPj CPj, T
+AddModnzP CPj, T
 Set TmpMod = Md(T)
 End Function
 

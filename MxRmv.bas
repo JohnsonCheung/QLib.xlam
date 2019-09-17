@@ -164,28 +164,28 @@ Function RmvTT$(S)
 RmvTT = RmvT1(RmvT1(S))
 End Function
 
-Private Sub Z_RmvT1()
+Sub Z_RmvT1()
 Ass RmvT1("  df dfdf  ") = "dfdf"
 End Sub
 
 
-Private Sub Z_RmvNm()
-Dim NM$
-NM = "lksdjfsd f"
+Sub Z_RmvNm()
+Dim Nm$
+Nm = "lksdjfsd f"
 Ept = " f"
 GoSub Tst
 Exit Sub
 Tst:
-    Act = RmvNm(NM)
+    Act = RmvNm(Nm)
     C
     Return
 End Sub
 
-Private Sub Z_RmvPfx()
+Sub Z_RmvPfx()
 Ass RmvPfx("aaBB", "aa") = "BB"
 End Sub
 
-Private Sub Z_RmvPfxSy()
+Sub Z_RmvPfxSy()
 Dim S, PfxSy$()
 PfxSy = SyzSS("Z_ Z_"): Ept = "ABC"
 S = "Z_ABC": GoSub Tst
@@ -197,6 +197,3 @@ Tst:
     Return
 End Sub
 
-Private Sub Z()
-MVb_Str_Rmv:
-End Sub

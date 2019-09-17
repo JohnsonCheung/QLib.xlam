@@ -54,7 +54,7 @@ Function HasDblQ(S) As Boolean
 HasDblQ = InStr(S, vbDblQ)
 End Function
 
-Private Sub Z_RmvBetDblQ()
+Sub Z_RmvBetDblQ()
 Dim S$
 GoSub T1
 GoSub T2

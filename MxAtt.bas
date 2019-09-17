@@ -4,18 +4,18 @@ Option Explicit
 Const CLib$ = "QDao."
 Const CMod$ = CLib & "MxAtt."
 Private Type Attd
-    TblRs As dao.Recordset '..Att.. #Tbl-Rs ! It is the Tbl-Att recordset
-    AttRs As dao.Recordset '.       #Att-Rs2 !
+    TblRs As DAO.Recordset '..Att.. #Tbl-Rs ! It is the Tbl-Att recordset
+    AttRs As DAO.Recordset '.       #Att-Rs2 !
 End Type
 
-Private Function AttFn$(D As Database, Att$)
+Function AttFn$(D As Database, Att$)
 'Ret : fst attachment fn in the att fld of att tbl, if no fn, return blnk @@
 Const CSub$ = CMod & "AttFnzAttd"
 Dim A As Attd: A = XAttd(D, Att) ' if @Att in exist in Tbl-Att, a rec will created
 With A.AttRs
     If .EOF Then
         If .BOF Then
-            Inf CSub, "[AttNm] has no attachment files", "AttNm", AttNm(A)
+            Inf CSub, "[Attk] has no attachment files", "Attk", Attk(A)
             Exit Function
         End If
     End If
@@ -24,13 +24,13 @@ With A.AttRs
 End With
 End Function
 
-Private Function AttFnAy(D As Database, Att$) As String()
+Function AttFnAy(D As Database, Att$) As String()
 Dim R As Attd: R = XAttd(D, Att)
 AttFnAy = SyzRs(R.AttRs, "FileName")
 End Function
 
-Function AttNm$(A As Attd)
-AttNm = A.TblRs!AttNm
+Function Attk$(A As Attd)
+Attk = A.TblRs!Attk
 End Function
 
 Function AttSi&(D As Database, Att$)
@@ -51,9 +51,9 @@ Function DAttFldzDb(D As Database) As Drs
 DAttFldzDb = DAttFld(XAttd(D, "Sample"))
 End Function
 
-Function DFldzRs(R As dao.Recordset2) As Drs
+Function DFldzRs(R As DAO.Recordset2) As Drs
 'Ret : :Drs:Fldn DtaTy Si: the @R
-Dim Dy(), F As dao.Field2: For Each F In R.Fields
+Dim Dy(), F As DAO.Field2: For Each F In R.Fields
     Dim N$: N = F.Name
     Dim T$: T = DtaTy(F.Type)
     Dim S%: S = F.Size
@@ -63,22 +63,12 @@ DFldzRs = DrszFF("Fldn DtaTy Si", Dy)
 End Function
 
 Sub DltAtt(D As Database, Att$)
-D.Execute FmtQQ("Delete * from Att where AttNm='?'", Att)
+D.Execute FmtQQ("Delete * from Att where Attn='?'", Att)
 End Sub
 
 Function DoTblAtt(D As Database) As Drs
 DoTblAtt = DrszT(D, "Att")
 End Function
-
-Sub EnsTblAtt(D As Database)
-If HasTbl(D, "Att") Then
-    Dim FF$: FF = FFzT(D, "Att")
-    If FF <> "AttNm Att FilSi FilTim" Then Thw CSub, "Db has :Tbl:Att, but its FF is not [AttNm Att FilSi FilTim", "Dbn Tbl-Att-FF", D.Name, FF
-End If
-Dim PFld$: PFld = "AttNm Text(255), Att Attachment, FilSi Long,FilTim Date" ' #Sql-Fld-Phrase.  The fld spec of create table sql inside the bkt.
-CrtTblzPFld D, "Att", PFld
-DbzReOpn(D).Execute "Create Index PrimaryKey on Att (AttNm) with Primary"
-End Sub
 
 Function ExpAtt$(D As Database, Att$, ToFfn$)
 'Ret Exporting the first File in [Att] to [ToFfn] if Att is newer or ToFfn not exist.
@@ -97,20 +87,20 @@ Const CSub$ = CMod & "ExpAttzFn"
 If Ext(AttFn) <> Ext(ToFfn) Then
     Thw CSub, "AttFn & ToFfn are dif extEnsion|" & _
         "To export an AttFn to ToFfn, their file extEnsion should be same", _
-        "AttFn-Ext ToFfn-Ext D AttNm AttFn ToFfn", _
+        "AttFn-Ext ToFfn-Ext D Attk AttFn ToFfn", _
         Ext(AttFn), Ext(ToFfn), D.Name, Att, AttFn, ToFfn
 End If
 If HasFfn(ToFfn) Then
     Thw CSub, "ToFfn Has, no over write", _
-        "D AttNm AttFn ToFfn", _
+        "D Attk AttFn ToFfn", _
         D.Name, Att, AttFn, ToFfn
 End If
-Dim Fd2 As dao.Field2
+Dim Fd2 As DAO.Field2
     Set Fd2 = XF2zFn(D, Att, AttFn$)
 
 If IsNothing(Fd2) Then
-    Thw CSub, "In record of AttNm there is no given AttFn, but only Act-AttFnAy", _
-        "D Given-AttNm Given-AttFn Act-AttFny ToFfn", _
+    Thw CSub, "In record of Attk there is no given AttFn, but only Act-AttFnAy", _
+        "D Given-Attk Given-AttFn Act-AttFny ToFfn", _
         D.Name, Att, AttFn, AttFnAy(D, Att), ToFfn
 End If
 Fd2.SaveToFile ToFfn
@@ -123,8 +113,8 @@ Function FnyzAttFld(D As Database) As String()
 '      Assume there fld "Att" in tbl "Att"
 '      Assume the fld is Dao.Recordset2
 '      return the fny of such Recordset2 @@
-Dim T As dao.Recordset2: Set T = D.TableDefs("Att").OpenRecordset
-Dim A As dao.Recordset2: Set A = T!Att.Value
+Dim T As DAO.Recordset2: Set T = D.TableDefs("Att").OpenRecordset
+Dim A As DAO.Recordset2: Set A = T!Att.Value
 FnyzAttFld = Itn(A.Fields)
 End Function
 
@@ -133,10 +123,10 @@ FnyzAttTbl = Fny(D, "Att")
 End Function
 
 Sub ImpAtt(D As Database, Att$, FmFfn$)
-Dim F2 As dao.Field2
-'Msg CSub, "[Att] is going to import [Ffn] with [Si] and [Tim]", Fv(A.TblRs!AttNm), Ffn, S, T
+Dim F2 As DAO.Field2
+'Msg CSub, "[Att] is going to import [Ffn] with [Si] and [Tim]", Fv(A.TblRs!Attk), Ffn, S, T
 Dim A As Attd: A = XAttd(D, Att)
-Dim T As dao.Recordset2: Set T = A.TblRs ' The Tbl-Rs of Tbl-Att
+Dim T As DAO.Recordset2: Set T = A.TblRs ' The Tbl-Rs of Tbl-Att
     T.Edit
     With A.AttRs
         If HasReczFEv(A.AttRs, "FileName", Fn(FmFfn)) Then
@@ -184,17 +174,17 @@ EnsTblAtt O
 Set TmpAttDb = O
 End Function
 
-Private Function XAtt$(A As Attd)
+Function XAtt$(A As Attd)
 XAtt = A.TblRs!Att
 End Function
 
-Private Function XAttd(D As Database, Att$) As Attd
+Function XAttd(D As Database, Att$) As Attd
 'Ret: :Attd ! which keeps :TblRs and :AttRs opened,
-'           ! where :TblRs is poiting the rec in tbl-att, if fnd just point to it, if not fnd, add one rec with AttNm=@Att
+'           ! where :TblRs is poiting the rec in tbl-att, if fnd just point to it, if not fnd, add one rec with Attn=@Att
 '           ! and   :AttRs is pointing to the :FileData of the fld-Att of the tbl-Att
-Dim Q$: Q = FmtQQ("Select Att,FilTim,FilSi from Att where AttNm='?'", Att)
+Dim Q$: Q = FmtQQ("Select Att,FilTim,FilSi from Att where Attn='?'", Att)
 If Not HasReczQ(D, Q) Then
-    D.Execute FmtQQ("Insert into Att (AttNm) values('?')", Att) ' add rec to tbl-att with Att=@Att
+    D.Execute FmtQQ("Insert into Att (Attk) values('?')", Att) ' add rec to tbl-att with Att=@Att
 End If
 With XAttd
     Set .TblRs = Rs(D, Q)
@@ -202,19 +192,19 @@ With XAttd
 End With
 End Function
 
-Private Function XAttNm$(A As Attd)
-XAttNm = A.TblRs!AttNm
+Function XAttn$(A As Attd)
+XAttn = A.TblRs!Attk
 End Function
 
-Private Function XAttNy(D As Database) As String()
-XAttNy = SyzRs(Rs(D, "Select AttNm from Att order by AttNm"))
+Function XAttNy(D As Database) As String()
+XAttNy = SyzRs(Rs(D, "Select Attk from Att order by Attk"))
 End Function
 
-Private Function XF2(A As Attd) As dao.Field2
+Function XF2(A As Attd) As DAO.Field2
 Set XF2 = A.AttRs!FileData
 End Function
 
-Private Function XF2zFn(D As Database, Att$, AttFn$) As dao.Field2
+Function XF2zFn(D As Database, Att$, AttFn$) As DAO.Field2
 With XAttd(D, Att)
     With .AttRs
         .MoveFirst
@@ -228,35 +218,27 @@ With XAttd(D, Att)
 End With
 End Function
 
-Private Sub XThwIf_CntNe1(Fun$, D As Database, Att$)
+Sub XThwIf_CntNe1(Fun$, D As Database, Att$)
 Dim N%: N = NAtt(D, Att)
 If N <> 1 Then
-    Thw Fun, "AttNm should have only one file, no export.", _
-        "AttNm FilCnt D", _
+    Thw Fun, "Attk should have only one file, no export.", _
+        "Attk FilCnt D", _
         Att, N, D.Name
 End If
 End Sub
 
-Private Sub XThwIf_ExtDif(Fun$, A As Attd, ToFfn$)
+Sub XThwIf_ExtDif(Fun$, A As Attd, ToFfn$)
 With A.AttRs
     If Ext(!Filename) <> Ext(ToFfn) Then Thw Fun, "The Ext in the Att should be same", "Att-Ext ToFfn-Ext", Ext(!Filename), Ext(ToFfn)
 End With
 End Sub
 
-Private Sub Z()
-QDao_Att:
-End Sub
 
-Private Sub Z_AttFnAy()
+Sub Z_AttFnAy()
 D AttFnAy(SampDbShpCst, "AA")
 End Sub
 
-Private Sub Z_EnsTblAtt()
-Dim D As Database: Set D = TmpDb
-EnsTblAtt D
-End Sub
-
-Private Sub Z_ExpAtt()
+Sub Z_ExpAtt()
 Dim T$, D As Database
 T = TmpFx
 ExpAttzFn D, "Tp", "TaxRateAlert(Template).xlsm", T
@@ -264,7 +246,7 @@ Debug.Assert HasFfn(T)
 Kill T
 End Sub
 
-Private Sub Z_FnyzAttFld()
+Sub Z_FnyzAttFld()
 Dim D As Database: Set D = TmpDb
 EnsTblAtt D
 Dim Ft$: Ft = TmpFt
@@ -273,7 +255,7 @@ ImpAtt D, "Txt", Ft
 Dmp FnyzAttFld(D)
 End Sub
 
-Private Sub Z_ImpAtt()
+Sub Z_ImpAtt()
 Dim T$, D As Database
 T = TmpFt
 WrtStr "sdfdf", T
@@ -283,3 +265,4 @@ Kill T
 'ExpAttToFfn "AA", T
 'BrwFt T
 End Sub
+

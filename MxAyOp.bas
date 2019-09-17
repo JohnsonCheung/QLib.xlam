@@ -9,79 +9,17 @@ EiBeg0
 EiBegI
 EiNoIx
 End Enum
-Function DashLT1Ay(Ay) As String()
-Dim I
-For Each I In Itr(Ay)
-    PushNDup DashLT1Ay, BefOrAll(I, "_")
-Next
-End Function
 
-Function AeBlnkEleAtEnd(A$()) As String()
-If Si(A) = 0 Then Exit Function
-If LasEle(A) <> "" Then AeBlnkEleAtEnd = A: Exit Function
-Dim J%
-For J = UB(A) To 0 Step -1
-    If Trim(A(J)) <> "" Then
-        Dim O$()
-        O = A
-        ReDim Preserve O(J)
-        AeBlnkEleAtEnd = O
-        Exit Function
-    End If
-Next
-End Function
-
-Function AyIntersect(A, B)
-AyIntersect = ResiU(A)
-If Si(A) = 0 Then Exit Function
-If Si(A) = 0 Then Exit Function
-Dim V
-For Each V In A
-    If HasEle(B, V) Then PushI AyIntersect, V
-Next
-End Function
-Function MinusAyAp(Ay, ParamArray Ap())
+Function AyMinusAp(Ay, ParamArray Ap())
 Dim IAy, O
 O = Ay
 For Each IAy In Ap
-    O = MinusAy(Ay, IAy)
-    If Si(O) = 0 Then MinusAyAp = O: Exit Function
+    O = AyMinus(Ay, IAy)
+    If Si(O) = 0 Then AyMinusAp = O: Exit Function
 Next
-MinusAyAp = O
+AyMinusAp = O
 End Function
 
-Function MinusSy(A$(), B$()) As String()
-MinusSy = MinusAy(A, B)
-End Function
-
-
-Function MinusAy(A, B)
-If Si(B) = 0 Then MinusAy = A: Exit Function
-MinusAy = ResiU(A)
-If Si(A) = 0 Then Exit Function
-Dim V
-For Each V In A
-    If Not HasEle(B, V) Then
-        PushI MinusAy, V
-    End If
-Next
-End Function
-
-Function MinEle(Ay)
-Dim O: O = FstEle(Ay)
-Dim I: For Each I In Itr(Ay)
-    If I < O Then O = I
-Next
-MinEle = O
-End Function
-
-Function MaxEle(Ay)
-Dim O: O = FstEle(Ay)
-Dim I: For Each I In Itr(Ay)
-    If I > O Then O = I
-Next
-MaxEle = O
-End Function
 
 Function Ny(S) As String()
 Ny = WrdAy(S)
@@ -109,12 +47,9 @@ End Function
 Function CvObj(A) As Object
 Set CvObj = A
 End Function
-Function CvEr(A) As VBA.ErrObject
 
-End Function
-
-Function CvSy(Str_or_Sy_or_Ay_or_Emp) As String()
-Dim A: A = Str_or_Sy_or_Ay_or_Emp
+Function CvSy(Str_or_Sy_or_Ay_or_EmpMis_or_Oth) As String()
+Dim A: A = Str_or_Sy_or_Ay_or_EmpMis_or_Oth
 Select Case True
 Case IsStr(A): PushI CvSy, A
 Case IsSy(A): CvSy = A
@@ -139,93 +74,16 @@ End Select
 SyShow = O
 End Function
 
-Private Sub Z()
-Dim A
-Dim B()
-Dim C$
-Dim D$()
-Dim XX
-CvSy A
-Sy B
-SyShow C, D
+
+
+Sub ThwIf_Dup(Ay, Fun$)
+' If there are 2 ele with same string (IgnCas), throw error
+Dim Dup$()
+    Dup = AwDup(Ay)
+If Si(Dup) = 0 Then Exit Sub
+Thw Fun, "There are dup in array", "Dup Ay", Dup, Ay
 End Sub
 
-
-Function RmvFstChrzAy(Ay) As String()
-Dim I
-For Each I In Itr(Ay)
-    PushI RmvFstChrzAy, RmvFstChr(I)
-Next
-End Function
-
-Function RmvFstNonLetterzAy(Ay) As String() 'Gen:AyXXX
-Dim I
-For Each I In Itr(Ay)
-    PushI RmvFstNonLetterzAy, RmvFstNonLetter(I)
-Next
-End Function
-Function RmvLasChrzAy(Ay) As String()
-'Gen:AyFor RmvLasChr
-Dim I
-For Each I In Itr(Ay)
-    PushI RmvLasChrzAy, RmvLasChr(I)
-Next
-End Function
-
-Function RmvPfxzAy(Ay, Pfx$) As String()
-Dim I: For Each I In Itr(Ay)
-    PushI RmvPfxzAy, RmvPfx(I, Pfx)
-Next
-End Function
-
-Function AeSngQRmk(Ay) As String()
-Dim I, S$
-For Each I In Itr(Ay)
-    S = I
-    If Not IsSngQRmk(S) Then PushI AeSngQRmk, S
-Next
-End Function
-
-Function RmvSngQtezAy(Ay) As String()
-Dim I: For Each I In Itr(Ay)
-    PushI RmvSngQtezAy, RmvSngQte(I)
-Next
-End Function
-
-Function RmvT1zAy(Ay) As String()
-Dim I: For Each I In Itr(Ay)
-    PushI RmvT1zAy, RmvT1(I)
-Next
-End Function
-
-Function RmvTTzAy(Ay) As String()
-Dim I: For Each I In Itr(Ay)
-    PushI RmvTTzAy, RmvTT(I)
-Next
-End Function
-
-Function RplAy(Ay, Fm$, By$, Optional Cnt& = 1, Optional IgnCas As Boolean) As String()
-Dim I
-For Each I In Itr(Ay)
-    PushI RplAy, Replace(I, Fm, By, Count:=Cnt, Compare:=CprMth(IgnCas))
-Next
-End Function
-Function Rmv2DashzAy(Ay) As String()
-Dim I: For Each I In Itr(Ay)
-    PushI Rmv2DashzAy, Rmv2Dash(I)
-Next
-End Function
-
-Function RplStarzAy(Ay, By) As String()
-Dim I
-For Each I In Itr(Ay)
-    PushI RplStarzAy, Replace(I, By, "*")
-Next
-End Function
-
-Function RplT1zAy(Ay, NewT1) As String()
-RplT1zAy = AddPfxzAy(RmvT1zAy(Ay), NewT1 & " ")
-End Function
 
 Function OffsetzEmBeg(B As EmIxCol, Optional FmI&) As Byte
 Select Case True
@@ -247,47 +105,23 @@ For Each L In Itr(Ay)
 Next
 End Function
 
-Function T1Ay(Ay) As String()
-Dim I: For Each I In Itr(Ay)
-    PushI T1Ay, T1(I)
-Next
+Function TabNmV$(Nm$, V, Optional NTab% = 1)
+TabNmV = TabN(NTab) & Nm & V
 End Function
-
-Function T2Ay(Ay) As String()
-Dim L: For Each L In Itr(Ay)
-    PushI T2Ay, T2(L)
-Next
-End Function
-
-Function T3Ay(Ay) As String()
-Dim L: For Each L In Itr(Ay)
-    PushI T3Ay, T3(L)
-Next
-End Function
-Function TabN$(N%)
-TabN = Space(4 * N)
-End Function
-
-Function TabNmV$(NM$, V, Optional NTab% = 1)
-TabNmV = TabN(NTab) & NM & V
-End Function
-Function TabNmLy(NM$, Ly$(), Optional NTab% = 1, Optional Beg As EmIxCol = EiNoIx) As String()
+Function TabNmLy(Nm$, Ly$(), Optional NTab% = 1, Optional Beg As EmIxCol = EiNoIx) As String()
 Stop
 If Si(Ly) = 0 Then
-    PushI TabNmLy, TabN(NTab) & NM
+    PushI TabNmLy, TabN(NTab) & Nm
     Exit Function
 End If
 Dim Ly1$(), L0$, S$, J&
 Ly1 = AddIxPfx(Ly, Beg)
-PushI TabNmLy, TabN(NTab) & NM & Ly1(0)
+PushI TabNmLy, TabN(NTab) & Nm & Ly1(0)
 '
-S = TabN(NTab) & Space(Len(NM))
+S = TabN(NTab) & Space(Len(Nm))
 For J = 1 To UB(Ly1)
     PushI TabNmLy, S & Ly1(J)
 Next
-End Function
-Function TabAy(Ay, Optional NTab% = 1) As String()
-TabAy = AddPfxzAy(Ay, TabN(NTab))
 End Function
 
 Sub SplitAsgzAyPred(Ay, P As IPred, OTrueAy, OFalseAy)
@@ -300,10 +134,6 @@ Dim V: For Each V In Itr(Ay)
 Next
 End Sub
 
-Function AddSS(Sy$(), SS$) As String()
-AddSS = SyzAp(Sy, SyzSS(SS))
-End Function
-
 Function LookupT1$(Itm, TkssAy$())
 Dim L$, I, Kss$, T1$
 For Each I In TkssAy
@@ -312,3 +142,9 @@ For Each I In TkssAy
     If HitKss(Itm, Kss) Then LookupT1 = T1: Exit Function
 Next
 End Function
+
+Function AddSS(Sy$(), SS$) As String()
+AddSS = SyzAp(Sy, SyzSS(SS))
+End Function
+
+

@@ -8,7 +8,7 @@ Type NumPos
     Pos As Long
 End Type
 
-Private Sub Z_AsgIx()
+Sub Z_AsgIx()
 Dim Drs As Drs, FF$, A%, B%, C%, EA%, EB%, Ec%
 GoSub T1
 Exit Sub
@@ -84,7 +84,15 @@ For Each I In Itr(SubAy)
     PushI IxyzAlwE, Ix
 Next
 End Function
-
+Function CnyzSubFny(Fny$(), SubFny$()) As Integer()
+Dim F: For Each F In Itr(SubFny)
+    Dim I%: I = IxzAy(Fny, F)
+    If I = -1 Then
+        Thw CSub, "Ele in SubFny is not found in Fny", "Ele SubFny Fny", F, SubFny, Fny
+    End If
+    PushI CnyzSubFny, I + 1
+Next
+End Function
 Function Ixy(Ay, SubAy) As Long()
 Dim O&(): O = IxyzAlwE(Ay, SubAy)
 Dim Ix: For Each Ix In Itr(O)

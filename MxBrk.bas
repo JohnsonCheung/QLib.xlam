@@ -92,7 +92,7 @@ Dim P&: P = InStr(S, Sep)
 Brk2 = Brk2__(S, P, Sep, NoTrim)
 End Function
 
-Private Function Brk2__(S, P&, Sep, NoTrim As Boolean) As S12
+Function Brk2__(S, P&, Sep, NoTrim As Boolean) As S12
 If P = 0 Then
     If NoTrim Then
         Brk2__ = S12("", S)
@@ -117,7 +117,7 @@ Sub AsgBrk(S, Sep$, Optional O1, Optional O2, Optional NoTrim As Boolean)
 AsgBrkAt S, InStr(S, Sep), Sep, O1, O2, NoTrim
 End Sub
 
-Private Function BrkAtSep(S, P&, Sep, NoTrim As Boolean) As S12
+Function BrkAtSep(S, P&, Sep, NoTrim As Boolean) As S12
 Dim S1$, S2$
 S1 = Left(S, P - 1)
 S2 = Mid(S, P + Len(Sep))
@@ -179,7 +179,7 @@ If Not NoTrim Then
 End If
 End Sub
 
-Private Sub Z_Brk1Rev()
+Sub Z_Brk1Rev()
 Dim S1$, S2$, ExpS1$, ExpS2$, S
 S = "aa --- bb --- cc"
 ExpS1 = "aa --- bb"
@@ -192,7 +192,7 @@ Ass S1 = ExpS1
 Ass S2 = ExpS2
 End Sub
 
-Private Sub Z_Brk1Rev1()
+Sub Z_Brk1Rev1()
 Dim S1$, S2$, ExpS1$, ExpS2$, S
 S = "aa --- bb --- cc"
 ExpS1 = "aa --- bb"
@@ -205,7 +205,3 @@ Ass S1 = ExpS1
 Ass S2 = ExpS2
 End Sub
 
-Private Sub Z()
-Z_Brk1Rev
-MVb_Str_Brk:
-End Sub

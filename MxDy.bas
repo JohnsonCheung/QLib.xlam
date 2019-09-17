@@ -5,11 +5,11 @@ Const CLib$ = "QDta."
 Const CMod$ = CLib & "MxDy."
 
 Function AlignLyzTRst(Ly$()) As String()
-Dim T1Ay$(), RstAy$()
-    AsgT1AyRstAy Ly, T1Ay, RstAy
-T1Ay = AlignAy(T1Ay)
-Dim J&: For J = 0 To UB(T1Ay)
-    PushI AlignLyzTRst, T1Ay(J) & " " & RstAy(J)
+Dim AmT1$(), RstAy$()
+    AsgAmT1RstAy Ly, AmT1, RstAy
+AmT1 = AlignAy(AmT1)
+Dim J&: For J = 0 To UB(AmT1)
+    PushI AlignLyzTRst, AmT1(J) & " " & RstAy(J)
 Next
 End Function
 
@@ -150,7 +150,7 @@ Next
 DywDist = O
 End Function
 
-Private Function DywDup1(Dy(), C&) As Variant()
+Function DywDup1(Dy(), C&) As Variant()
 Dim Dup$(), Dr, O()
 Dup = CvSy(AwDup(StrColzDy(Dy, C)))
 For Each Dr In Itr(Dy)
@@ -210,11 +210,17 @@ Dim Dr: For Each Dr In Itr(Dy)
 Next
 End Function
 
-Function DyzSqc(Sq(), Cny) As Variant()
+Function DyzSqCny(Sq(), Cny) As Variant()
 'Fm Cny : :Cny ! selecting which col of @Sq
-Dim Ixy&(): Ixy = IxyzCny(Cny)
-Dim R&: For R = 1 To UBound(Sq(), 1)
-    PushI DyzSqc, AwIxy(DrzSqr(Sq(), R), Ixy)
+Dim R&: For R = 1 To UBound(Sq, 1)
+    PushI DyzSqCny, DrzSqrCny(Sq, R, Cny)
+Next
+End Function
+
+Function DyzSq(Sq()) As Variant()
+'Fm Cny : :Cny ! selecting which col of @Sq
+Dim R&: For R = 1 To UBound(Sq, 1)
+    PushI DyzSq, DrzSqr(Sq, R)
 Next
 End Function
 
@@ -326,7 +332,7 @@ Sub ThwIf_NEDy(Dy(), B())
 If Not IsEqDy(Dy, B) Then Stop
 End Sub
 
-Private Sub Z_DyJnFldKK()
+Sub Z_DyJnFldKK()
 Dim Dy(), KKIxy&(), JnFldIx&, Sep$
 Sep = " "
 Dy = Array(Array(1, 2, 3, 4, "Dy"), Array(1, 2, 3, 6, "B"), Array(1, 2, 2, 8, "C"), Array(1, 2, 2, 12, "DD"), _
@@ -343,6 +349,6 @@ Tst:
     Return
 End Sub
 
-Private Sub Z_FmtA()
-DmpAy JnDy(SampDy1)
+Sub Z_FmtA()
+DmpAy JnDy(SampDy2)
 End Sub

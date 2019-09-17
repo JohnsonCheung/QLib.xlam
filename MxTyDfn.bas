@@ -5,7 +5,7 @@ Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxTyDfn."
 Public Const FFoTyDfn$ = "Mdn Nm Ty Mem Rmk"
 
-Private Sub Z_DoTyDfnP()
+Sub Z_DoTyDfnP()
 BrwDrs DoTyDfn
 End Sub
 
@@ -19,10 +19,10 @@ Dim L: For Each L In VbRmk(SrczP(P))
 Next
 End Function
 
-Private Function IsLinOkTyDfn(L) As Boolean
-Dim NM$, Dfn$, T3$, Rst$
-Asg3TRst L, NM, Dfn, T3, Rst
-IsLinOkTyDfn = IsTyDfn(NM, Dfn, T3, Rst)
+Function IsLinOkTyDfn(L) As Boolean
+Dim Nm$, Dfn$, T3$, Rst$
+Asg3TRst L, Nm, Dfn, T3, Rst
+IsLinOkTyDfn = IsTyDfn(Nm, Dfn, T3, Rst)
 End Function
 
 Function IsLinTyDfn(L) As Boolean
@@ -61,10 +61,10 @@ If FstChr(LTrim(RmvFstChr(Lin))) <> "!" Then Exit Function
 IsLinTyDfnRmk = True
 End Function
 
-Function IsTyDfn(NM$, Dfn$, ThirdTerm$, Rst$) As Boolean
+Function IsTyDfn(Nm$, Dfn$, ThirdTerm$, Rst$) As Boolean
 Select Case True
-Case Fst2Chr(NM) <> "':"
-Case LasChr(NM) <> ":"
+Case Fst2Chr(Nm) <> "':"
+Case LasChr(Nm) <> ":"
 Case FstChr(Dfn) <> ":"
 Case ThirdTerm <> "" And Not HasPfxSfx(ThirdTerm, "#", "#") And FstChr(ThirdTerm) <> "!"
 Case Else: IsTyDfn = True

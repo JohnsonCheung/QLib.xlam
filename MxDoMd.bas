@@ -4,20 +4,20 @@ Option Compare Text
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxDoMd."
 Public Const FFoMd$ = "MdTy CLibv CNsv CModv Pjn Mdn IsCModEr NLin NMth NPub NPrv NFrd Mthnn"
-Private Function FoMd() As String()
+Function FoMd() As String()
 FoMd = SyzSS(FFoMd)
 End Function
 
-Function DoMd() As Drs
-DoMd = DoMdzP(CPj)
+Function DoMdP() As Drs
+DoMdP = DoMdzP(CPj)
 End Function
 
-Private Function DoMdzP(P As VBProject) As Drs
+Function DoMdzP(P As VBProject) As Drs
 Dim MdId As Drs: MdId = DoMdIdzP(P)
 DoMdzP = AddCol_MdSts_Mthnn(MdId, P)
 End Function
 
-Private Function AddCol_MdSts_Mthnn(MdId As Drs, P As VBProject) As Drs
+Function AddCol_MdSts_Mthnn(MdId As Drs, P As VBProject) As Drs
 Dim Dy()
     Dim IxMdn%: IxMdn = IxzAy(MdId.Fny, "Mdn")
     Dim Dr: For Each Dr In Itr(MdId.Dy)

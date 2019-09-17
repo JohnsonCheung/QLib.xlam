@@ -3,10 +3,6 @@ Option Compare Text
 Option Explicit
 Const CLib$ = "QDta."
 Const CMod$ = CLib & "MxDtaSel."
-Private Type GpCnt
-    Gp() As Variant ' Gp-Dy
-    Cnt() As Long
-End Type
 
 Function AddColzFst(D As Drs, Gpcc$) As Drs
 'Fm D    : ..@Gpcc.. ! a drs with col-@Gpcc
@@ -51,7 +47,7 @@ DeDup = DeDupzFF(A, JnSpc(A.Fny))
 End Function
 
 Function DeDupzFF(A As Drs, FF$) As Drs
-Dim Rxy&(): Rxy = RxyzDup(A, FF)
+Dim Rxy&(): Rxy = F_SubRxy_ByDupFF(A, FF)
 DeDupzFF = DeRxy(A, Rxy)
 End Function
 
@@ -134,31 +130,12 @@ Next
 End Function
 
 Function FnyzSelAtEnd(Fny$(), AtEndFny$())
-FnyzSelAtEnd = AddSy(MinusSy(Fny, AtEndFny), AtEndFny)
+FnyzSelAtEnd = AddSy(SyMinus(Fny, AtEndFny), AtEndFny)
 End Function
 
 Function FnyzSelInFront(Fny$(), InFrontFny$())
 Dim InFront$(): InFront = AyIntersect(InFrontFny, Fny)
-FnyzSelInFront = AddSy(InFront, MinusSy(Fny, InFront))
-End Function
-
-Private Function GpCnt(D As Drs, FF$) As GpCnt
-'Fm  D : ..{Gpcc}    ! it has columns-Gpcc
-'Ret   : Gp Cnt  ! each ele-of-@Gp is a dr with fld as desc by @FF.  Cnt is rec cnt of such gp
-Dim OGp(), OCnt&()
-    Dim A As Drs: A = SelDrs(D, FF)
-    Dim I%: I = Si(A.Fny)
-    Dim Dr: For Each Dr In Itr(A.Dy)
-        Dim Ix&: Ix = IxzDyDr(OGp, Dr)
-        If Ix = -1 Then
-            PushI OCnt, 1
-            PushI OGp, Dr
-        Else
-            OCnt(Ix) = OCnt(Ix) + 1
-        End If
-    Next
-GpCnt.Gp = OGp
-GpCnt.Cnt = OCnt
+FnyzSelInFront = AddSy(InFront, SyMinus(Fny, InFront))
 End Function
 
 Function GpRxy(Dy()) As Variant()
@@ -188,10 +165,10 @@ Function GRxyzCyCnt(Dy()) As Variant()
 #End If
 End Function
 
-Private Function GRxyzCyCntzQuick(Dy()) As Variant()
+Function GRxyzCyCntzQuick(Dy()) As Variant()
 End Function
 
-Private Function GRxyzCyCntzSlow(Dy()) As Variant()
+Function GRxyzCyCntzSlow(Dy()) As Variant()
 If Si(Dy) = 0 Then Exit Function
 Dim OKeyDy(), OCnt&(), Dr
     Dim LasIx&: LasIx = Si(Dy(0))
@@ -239,7 +216,7 @@ Function InsColzFront(A As Drs, C$, V) As Drs
 InsColzFront = DwInsFF(A, C, InsColzDyBef(A.Dy, V))
 End Function
 
-Private Function IxOptzDyDr(Dy(), Dr) As LngOpt
+Function IxOptzDyDr(Dy(), Dr) As LngOpt
 Dim IDr, Ix&
 For Each IDr In Itr(Dy)
     If IsEqAy(IDr, Dr) Then IxOptzDyDr = SomLng(Ix): Exit Function
@@ -276,24 +253,24 @@ Dim Emp() ' it is for LeftJn and for those rec when @B has no rec joined.  It is
         If AnyFld <> "" Then PushI Emp, False
     End If
 Dim ODy()                       ' Bld %ODy for each %ADr, that mean fld-Add & fld-Any
-    Dim ADr: For Each ADr In Itr(A.Dy)
-        Dim JnVy():            JnVy = AwIxy(ADr, AJnIxy)                     'JnFld-Vy-Fm-@A
+    Dim Adr: For Each Adr In Itr(A.Dy)
+        Dim JnVy():            JnVy = AwIxy(Adr, AJnIxy)                     'JnFld-Vy-Fm-@A
         Dim Bdy():            Bdy = DywKeySel(B.Dy, BJnIxy, JnVy, AddIxy) '@B-Dy-joined
         Dim NoRec As Boolean: NoRec = Si(Bdy) = 0                           'no rec joined
             
         Select Case True
-        Case NoRec And IsLeftJn: PushI ODy, AddAy(ADr, Emp) '<== ODy, Only for NoRec & LeftJn
+        Case NoRec And IsLeftJn: PushI ODy, AddAy(Adr, Emp) '<== ODy, Only for NoRec & LeftJn
         Case NoRec
         Case Else
             '
-            Dim BDr: For Each BDr In Bdy
+            Dim Bdr: For Each Bdr In Bdy
                 If AnyFld <> "" Then
-                    Push BDr, True
+                    Push Bdr, True
                 End If
-                PushI ODy, AddAy(ADr, BDr) '<== ODy, for each %BDr in %BDy, push to %ODy
+                PushI ODy, AddAy(Adr, Bdr) '<== ODy, for each %BDr in %BDy, push to %ODy
             Next
         End Select
-    Next ADr
+    Next Adr
 
 Dim O As Drs: O = Drs(SyNB(A.Fny, AddFnyAs, AnyFld), ODy)
 JnDrs = O
@@ -322,18 +299,18 @@ Function LDrszJn(A As Drs, B As Drs, Jn$, Add$, Optional AnyFld$) As Drs
 LDrszJn = JnDrs(A, B, Jn, Add, IsLeftJn:=True, AnyFld:=AnyFld)
 End Function
 
-Function RxyzDup(A As Drs, FF$) As Long()
+Function F_SubRxy_ByDupFF(A As Drs, FF$) As Long()
 Dim Fny$(): Fny = TermAy(FF)
 If Si(Fny) = 1 Then
-    RxyzDup = IxyzDup(ColzDrs(A, Fny(0)))
+    F_SubRxy_ByDupFF = IxyzDup(ColzDrs(A, Fny(0)))
     Exit Function
 End If
 Dim ColIxy&(): ColIxy = Ixy(A.Fny, Fny)
 Dim Dy(): Dy = SelDy(A.Dy, ColIxy)
-RxyzDup = RxyzDupDy(Dy)
+F_SubRxy_ByDupFF = F_SubRxy_ByDupFFDy(Dy)
 End Function
 
-Private Function RxyzDupDy(Dy()) As Long()
+Function F_SubRxy_ByDupFFDy(Dy()) As Long()
 Dim DupD(): DupD = DywDup(Dy)
 Dim Dr, Ix&, O&()
 For Each Dr In Dy
@@ -341,10 +318,10 @@ For Each Dr In Dy
     Ix = Ix + 1
 Next
 If Si(O) < Si(DupD) * 2 Then Stop
-RxyzDupDy = O
+F_SubRxy_ByDupFFDy = O
 End Function
 
-Private Function RxyzDupDyColIx(Dy(), ColIx&) As Long()
+Function F_SubRxy_ByDupFFDyColIx(Dy(), ColIx&) As Long()
 Dim D As New Dictionary, FstIx&, V, O As New Rel, Ix&, I
 For Ix = 0 To UB(Dy)
     V = Dy(Ix)(ColIx)
@@ -356,15 +333,24 @@ For Ix = 0 To UB(Dy)
     End If
 Next
 For Each I In O.SetOfPar.Itms
-    PushIAy RxyzDupDyColIx, O.ParChd(I).Av
+    PushIAy F_SubRxy_ByDupFFDyColIx, O.ParChd(I).Av
 Next
+End Function
+Function SelDistFny(D As Drs, Fny$()) As Drs
+With GpCntFny(D, Fny)
+    SelDistFny = Drs(Fny, .Gp)
+End With
+End Function
+Function SelDistAllCol(D As Drs) As Drs
+With GpCntAllCol(D)
+    SelDistAllCol = Drs(D.Fny, .Gp)
+End With
 End Function
 
 Function SelDist(D As Drs, FF$) As Drs
 With GpCnt(D, FF)
     SelDist = DrszFF(FF, .Gp)
 End With
-    
 End Function
 
 Function SelDistCnt(D As Drs, FF$) As Drs
@@ -385,8 +371,8 @@ Dim Fny$(): Fny = AddEleS(D.Fny, "Cnt")
 SelDistCnt = Drs(Fny, ODy)
 End Function
 
-Function SelDrs(A As Drs, InFrontFF$) As Drs
-SelDrs = SelDrsFny(A, SyzSS(InFrontFF))
+Function SelDrs(A As Drs, FF$) As Drs
+SelDrs = SelDrsFny(A, SyzSS(FF))
 End Function
 
 Function SelDrsAlwE(A As Drs, FF$) As Drs
@@ -416,7 +402,7 @@ End Function
 Function SelDrsExlCC(A As Drs, ExlCCLik$) As Drs
 Dim LikC
 For Each LikC In SyzSS(ExlCCLik)
-'    MinusAy(
+'    AyMinus(
 Next
 End Function
 
@@ -471,11 +457,8 @@ UpdDrs = O
 Stop
 End Function
 
-Private Sub Z()
-MDta_Sel:
-End Sub
 
-Private Sub Z_DwDup()
+Sub Z_F_SubDrs_ByDupFF()
 Dim A As Drs, FF$, Act As Drs
 GoSub T0
 Exit Sub
@@ -484,12 +467,12 @@ T0:
     FF = "A B"
     GoTo Tst
 Tst:
-    Act = DwDup(A, FF)
+    Act = F_SubDrs_ByDupFF(A, FF)
     DmpDrs Act
     Return
 End Sub
 
-Private Sub Z_RxyzDupDyColIx()
+Sub Z_F_SubRxy_ByDupFFDyColIx()
 Dim Dy(), ColIx&, Act&(), Ept&()
 GoSub T0
 Exit Sub
@@ -499,12 +482,12 @@ T0:
     Ept = LngAp(0, 1)
     GoTo Tst
 Tst:
-    Act = RxyzDupDyColIx(Dy, ColIx)
+    Act = F_SubRxy_ByDupFFDyColIx(Dy, ColIx)
     If Not IsEqAy(Act, Ept) Then Stop
     C
     Return
 End Sub
 
-Private Sub Z_SelDist()
-BrwDrs SelDistCnt(DoPubFunP, "Mdn Ty")
+Sub Z_SelDist()
+BrwDrs SelDistCnt(Drso_PubFun, "Mdn Ty")
 End Sub

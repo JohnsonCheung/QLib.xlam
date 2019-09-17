@@ -9,30 +9,30 @@ LnkTblzDy D, DoTSCn.Dy
 End Sub
 
 Sub LnkTblzDy(D As Database, DyoTSCn())
-Dim Dr, T$, S$, CN$
+Dim Dr, T$, S$, Cn$
 For Each Dr In Itr(DyoTSCn)
     T = Dr(0)
     S = Dr(1)
-    CN = Dr(2)
-    LnkTbl D, T, S, CN
+    Cn = Dr(2)
+    LnkTbl D, T, S, Cn
 Next
 End Sub
 
-Sub LnkTbl(D As Database, T, S$, CN$)
+Sub LnkTbl(D As Database, T, S$, Cn$)
 On Error GoTo X
 DrpT D, T
-D.TableDefs.Append TdzCnStr(T, S, CN)
+D.TableDefs.Append TdzCnStr(T, S, Cn)
 Exit Sub
 X:
     Dim Er$: Er = Err.Description
-    Thw CSub, "Error in linking table", "Er Db T SrcTbl Cn", Er, D.Name, T, S, CN
+    Thw CSub, "Error in linking table", "Er Db T SrcTbl Cn", Er, D.Name, T, S, Cn
 End Sub
 
-Function ErzLnkFxw(D As Database, T, Fx, Optional Wsn = "Sheet1") As String()
+Function EoLnkFxw(D As Database, T, Fx, Optional Wsn = "Sheet1") As String()
 On Error GoTo X
 LnkFxw D, T, Fx, Wsn
 Exit Function
-X: ErzLnkFxw = _
+X: EoLnkFxw = _
     LyzMsgNap("Error in linking Xls file", "Er LnkFx LnkWs ToDb AsTbl", Err.Description, Fx, Wsn, D.Name, T)
 End Function
 
@@ -44,10 +44,10 @@ Sub LnkFb(D As Database, T, Fb, Optional Fbt$)
 LnkTbl D, T, DftStr(Fbt, T), DaoCnStrzFb(Fb)
 End Sub
 
-Private Function TdzCnStr(T, Src$, CN$) As dao.TableDef
-Set TdzCnStr = New dao.TableDef
+Function TdzCnStr(T, Src$, Cn$) As DAO.TableDef
+Set TdzCnStr = New DAO.TableDef
 With TdzCnStr
-    .Connect = CN
+    .Connect = Cn
     .Name = T
     .SourceTableName = Src
 End With

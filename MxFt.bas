@@ -28,7 +28,7 @@ If XWrt Then WrtStr S, Ft
 EnsFt = XWrt
 End Function
 
-Private Function FstNBlk$(Fno%, N&)
+Function FstNBlk$(Fno%, N&)
 If N <= 0 Then Exit Function
 Dim O$(): ReDim O(N - 1)
 Dim A As String * C_BlkSi, J&: For J = 1 To N
@@ -38,7 +38,7 @@ Next
 FstNBlk = Join(O, "")
 End Function
 
-Private Function LasBlk$(Fno%, NCmplBlk&, LasBlkSi%)
+Function LasBlk$(Fno%, NCmplBlk&, LasBlkSi%)
 If LasBlkSi = 0 Then Exit Function
 Dim A As String * C_BlkSi: Get #Fno, NCmplBlk + 1, A
 LasBlk = Left(A, LasBlkSi)

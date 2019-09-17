@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxIdentifier."
-Private Sub Z_NyzStr()
+Sub Z_NyzStr()
 Dim S$
 GoSub Z
 'GoSub T0
@@ -23,23 +23,15 @@ Tst:
     C
     Return
 End Sub
-Private Sub Z_NsetzStr()
+Sub Z_NsetzStr()
 NsetzStr(SrcLP).Srt.Vc
 End Sub
 Function NsetzStr(S) As Aset
 Set NsetzStr = AsetzAy(NyzStr(S))
 End Function
 
-Function AmNonNm(Sy$()) As String()
-Dim NM$, I
-For Each I In Sy
-    NM = I
-    If IsNm(NM) Then PushI AmNonNm, NM
-Next
-End Function
-
 Function NyzStr(S) As String()
-NyzStr = AmNonNm(SyzSS(RplLf(RplCr(RplPun(S)))))
+NyzStr = AwNoNm(SyzSS(RplLf(RplCr(RplPun(S)))))
 End Function
 
 Function RelOfPubMthn_ToMdny_P() As Rel
@@ -84,16 +76,16 @@ Static O As Rel
 If IsNothing(O) Then Set O = RelOfMthn_ToMdny_zP(CPj)
 Set MthnzRlMdnP = O
 End Function
-Function MthExtny(MthPjDotMdn, PubMthLy$(), PubMthn_To_PjDotModNy As Dictionary) As String()
-Dim Cxt$: Cxt = JnSpc(MthCxtLy(PubMthLy))
+Function MthExtny(MthPjDotMdn, PubMthly$(), PubMthn_To_PjDotModNy As Dictionary) As String()
+Dim Cxt$: Cxt = JnSpc(MthCxtLy(PubMthly))
 Dim Ny$(): Ny = NyzStr(Cxt)
-Dim NM
-For Each NM In Itr(Ny)
-    If PubMthn_To_PjDotModNy.Exists(NM) Then
+Dim Nm
+For Each Nm In Itr(Ny)
+    If PubMthn_To_PjDotModNy.Exists(Nm) Then
         Dim PjDotModNy$():
-            PjDotModNy = AeEle(PubMthn_To_PjDotModNy(NM), MthPjDotMdn)
-        If HasEle(PjDotModNy, NM) Then
-            PushI MthExtny, NM
+            PjDotModNy = AeEle(PubMthn_To_PjDotModNy(Nm), MthPjDotMdn)
+        If HasEle(PjDotModNy, Nm) Then
+            PushI MthExtny, Nm
         End If
     End If
 Next

@@ -3,30 +3,21 @@ Option Compare Text
 Option Explicit
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxCpyCmp."
-Sub ThwNotCls(M As CodeModule, Fun$)
+Sub ThwIf_NotCls(M As CodeModule, Fun$)
 If M.Parent.Type = vbext_ct_ClassModule Then Thw Fun, "Should be a Cls", "ShtCmpTy", ShtCmpTy(M.Parent.Type)
 End Sub
-Private Sub CpyCls(M As CodeModule, ToPj As VBProject)
+
+Sub CpyCls(M As CodeModule, ToPj As VBProject)
 Const CSub$ = CMod & "CpyCls"
-ThwNotCls M, CSub
-ThwEqObj ToPj, PjzM(M), CSub, "From Md's Pj cannot eq to ToPj"
-Dim T$: T = TmpFt(Fnn:=M.Name)
+ThwIf_NotCls M, CSub
+If HasCmpzP(ToPj, M.Name) Then
+    InfLin CSub, "Cls is fnd in ToPj", "Cls ToPj", Mdn(M), ToPj.Name
+    Exit Sub
+End If
+Dim T$: T = TmpFt
 M.Parent.Export T
 ToPj.VBComponents.Import T
 Kill T
-End Sub
-Sub CpyModAyToPj(ModAy() As CodeModule, ToPj As VBProject)
-Dim I
-For Each I In Itr(ModAy)
-    CpyMod CvMd(I), ToPj
-Next
-End Sub
-
-Sub CpyClsAyToPj(ClsAy() As CodeModule, ToPj As VBProject)
-Dim I
-For Each I In Itr(ClsAy)
-    CpyCls CvMd(I), ToPj
-Next
 End Sub
 
 Sub CpyCmp(A As VBComponent, ToPj As VBProject)
@@ -36,18 +27,20 @@ Else
     CpyMod A.CodeModule, ToPj
 End If
 End Sub
-Sub ThwNotMod(M As CodeModule, Fun$)
-If M.Parent.Type <> vbext_ct_StdModule Then Thw Fun, "Should be Mod", "Type", ShtCmpTy(M.Parent.Type)
-End Sub
+Function NotMod(M As CodeModule, Fun$) As Boolean
+If M.Parent.Type <> vbext_ct_StdModule Then
+    NotMod = True
+    InfLin CSub, "Should be a mod", "Mdn", Mdn(M)
+End If
+End Function
 
 Sub CpyMod(M As CodeModule, ToPj As VBProject)
-AddCmpzSrc ToPj, M.Name, SrcLzM(M)
+AddCmpzL ToPj, M.Name, Srcl(M)
 End Sub
 
-Private Sub Z()
-Dim A As VBComponent
-Dim B As VBProject
-Dim D As CodeModule
-CpyCmp A, B
-CpyMod D, B
-End Sub
+
+Function CpyMd(M As CodeModule, ToM As CodeModule) As Boolean
+'Ret : Cpy @M to @ToM and  both must exist @@
+CpyMd = RplMd(ToM, Srcl(M))
+End Function
+

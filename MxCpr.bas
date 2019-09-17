@@ -9,7 +9,7 @@ Sub CprLines(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$)
 Brw FmtCprLines(A, B, N1, N2, Hdr)
 End Sub
 
-Private Function FmtCprLines(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$ = "Compare 2 Lines") As String()
+Function FmtCprLines(A$, B$, Optional N1$ = "A", Optional N2$ = "B", Optional Hdr$ = "Compare 2 Lines") As String()
 If A = B Then Exit Function
 Dim AA$(): AA = SplitCrLf(A)
 Dim BB$(): BB = SplitCrLf(B)
@@ -34,7 +34,7 @@ Dim O$()
 FmtCprLines = O
 End Function
 
-Private Function FmtCprLines__Rst(A$(), DifAt&, N1$) As String()
+Function FmtCprLines__Rst(A$(), DifAt&, N1$) As String()
 Dim O$()
 PushI O, FmtQQ("-- Rst-? (?-?) ----------", N1, DifAt + 1, UB(A))
 PushIAy O, AddIxPfx(AwFm(A, DifAt + 1), EiBegI, DifAt + 1)
@@ -71,7 +71,7 @@ Dim O$()
 FmtCprStr = O
 End Function
 
-Private Function DifAt&(A$, B$)
+Function DifAt&(A$, B$)
 Dim O&
 For O = 1 To Min(Len(A), Len(B))
     If Mid(A, O, 1) <> Mid(B, O, 1) Then DifAt = O: Exit Function
@@ -83,14 +83,14 @@ Else
 End If
 End Function
 
-Private Function DifAtIx&(A$(), B$())
+Function DifAtIx&(A$(), B$())
 Dim O&
 For O = 0 To Min(UB(A), UB(B))
     If A(O) <> B(O) Then DifAtIx = O: Exit Function
 Next
 'Thw_Never CSub
 End Function
-Private Sub Z_Lbl123()
+Sub Z_Lbl123()
 Dmp Lbl123(543)
 End Sub
 Function Lbl123(L) As String()
@@ -103,13 +103,13 @@ PushNB Lbl123, Lbl123__Ten(L)
 PushI Lbl123, Lbl123__Dig(L)
 End Function
 
-Private Function Lbl123__Dig$(L)
+Function Lbl123__Dig$(L)
 Const C$ = "1234567890"
 Dim N&: N = (L \ 10) + 1
 Lbl123__Dig = Left(Dup(C, N), L)
 End Function
 
-Private Function Lbl123__Ten$(L)
+Function Lbl123__Ten$(L)
 If L < 9 Then Exit Function
 Dim O$()
     PushI O, Space(9)
@@ -120,7 +120,7 @@ Dim O$()
 Lbl123__Ten = Left(Jn(O), L)
 End Function
 
-Private Function Lbl123__Hundred$(L)
+Function Lbl123__Hundred$(L)
 If L < 99 Then Exit Function
 Dim O$()
     PushI O, Space(99)
@@ -131,7 +131,7 @@ Dim O$()
 Lbl123__Hundred = Left(Jn(O), L)
 End Function
 
-Private Sub Z_FmtCprLines()
+Sub Z_FmtCprLines()
 Dim A$, B$
 A = LineszVbl("AAAAAAA|bbbbbbbb|cc|dd")
 B = LineszVbl("AAAAAAA|bbbbbbbb |cc")
@@ -144,5 +144,3 @@ Tst:
 
 End Sub
 
-Private Sub Z()
-End Sub

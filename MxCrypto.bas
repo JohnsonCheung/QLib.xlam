@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxCrypto."
-Private Sub Z_AsmAy()
+Sub Z_AsmAy()
 Dim O
 O = AsmAy
 Stop
@@ -15,7 +15,7 @@ AppDomain = CreateObject("System.AppDomain")
 Set CurDomain = AppDomain.CurrentDomain
 Stop
 End Property
-Private Sub XXX()
+Sub XXX()
 Dim A As Excel.Application
 Set A = GetObject(, "Excel.Application")
 A.Workbooks.Add
@@ -94,7 +94,7 @@ Debug.Print ToBase64String(SHA512.ComputeHash_2((text.GetBytes_4("mypassword")))
 Debug.Print ToAscString(SHA512.ComputeHash_2((text.GetBytes_4("mypassword"))))
 End Sub
 
-Private Sub XXXXX()
+Sub XXXXX()
 Dim X
 Set X = CreateObject("System.Collections.ArrayList")
 X.Add 1
@@ -107,11 +107,4 @@ For Each I In X
     Debug.Print I
 Next
 Stop
-End Sub
-Private Sub Z()
-Dim A As Variant
-ToBase64String A
-ToAscString A
-SHA256
-SHA512
 End Sub

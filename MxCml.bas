@@ -3,16 +3,16 @@ Option Compare Text
 Option Explicit
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxCml."
-':CmlAy: :
-Private Function MthDotCmlGpAsetzV(A As Vbe) As Aset
+':Cml: :Nm #Camel#       !Sub-Name of a Nm with Fst Chr and rest is :UCase and rest is :LCase|:Dig|:LDash
+Function MthDotCmlGpAsetzV(A As Vbe) As Aset
 Set MthDotCmlGpAsetzV = AsetzAy(MthDotCmlGpzV(A))
 End Function
 
-Private Sub Z_CmlAset()
+Sub Z_CmlAset()
 CmlAset(NyzStr(SrcLzP(CPj))).Srt.Brw
 End Sub
 
-Private Sub Z_ShfCml()
+Sub Z_ShfCml()
 Dim L$, EptL$
 Ept = "A"
 L = "AABcDD"
@@ -26,17 +26,17 @@ Tst:
     Return
 End Sub
 
-Function CmlAy(NM) As String()
+Function CmlAy(Nm) As String()
 'Ret : :Cml-ay.  Cml-ay is fm :Nm.  Each cml start with UCas and rest is LCas|Dig|_, ept fst cml the start letter may be LCas.
 
-If NM = "" Then Exit Function
+If Nm = "" Then Exit Function
 #If PlaySav Then
-If Not IsNm(NM) Then Thw CSub, "Given Nm is not a name", "Nm", NM
+If Not IsNm(Nm) Then Thw CSub, "Given Nm is not a name", "Nm", Nm
 #End If
 Dim J&, Cml$, C$, A%, O$()
-Cml = FstChr(NM)
-For J = 2 To Len(NM)
-    C = Mid(NM, J, 1)
+Cml = FstChr(Nm)
+For J = 2 To Len(Nm)
+    C = Mid(Nm, J, 1)
     A = Asc(C)
     If IsAscUCas(A) Then
         PushNB O, Cml
@@ -58,16 +58,16 @@ Next
 End Function
 
 Function CmlAyzNy(Ny$()) As String()
-Dim I, NM$
+Dim I, Nm$
 For Each I In Itr(Ny)
-    NM = I
-    PushI CmlAyzNy, CmlAy(NM)
+    Nm = I
+    PushI CmlAyzNy, CmlAy(Nm)
 Next
 End Function
 
-Function CmlGp(NM) As String()
+Function CmlGp(Nm) As String()
 Dim M$(), I, Cml$, O$()
-For Each I In CmlAy(NM)
+For Each I In CmlAy(Nm)
     Cml = I
     Debug.Print Cml; "<--CmlQBlk"
     If IsCmlBRK(Cml) Then
@@ -86,9 +86,9 @@ For Each I In Itr(O)
 Next
 End Function
 
-Function Cmlss(NM)
+Function Cmlss(Nm)
 ':Cmlss: :SS
-Cmlss = NM & " " & JnSpc(CmlAy(NM))
+Cmlss = Nm & " " & JnSpc(CmlAy(Nm))
 End Function
 
 Function CmlssAy(Ny$()) As String()
@@ -98,9 +98,9 @@ For Each L In Itr(Ny)
 Next
 End Function
 
-Function CmlQBlk(NM) As String()
+Function CmlQBlk(Nm) As String()
 Dim IsVerbQted As Boolean, CmlQGp$, I, O$()
-For Each I In CmlGp(NM)
+For Each I In CmlGp(Nm)
     CmlQGp = I
     Debug.Print CmlQGp; "<-- CmlGp"
     Select Case True
@@ -120,16 +120,16 @@ Next
 Set CmlSetzNy = O
 End Function
 
-Function DotCml$(NM)
-DotCml = QteJnDot(CmlAy(NM))
+Function DotCml$(Nm)
+DotCml = QteJnDot(CmlAy(Nm))
 End Function
 
-Function DotCmlGp$(NM) ' = QteJnDot . CmpBlk
-DotCmlGp = QteJnDot(CmlGp(NM))
+Function DotCmlGp$(Nm) ' = QteJnDot . CmpBlk
+DotCmlGp = QteJnDot(CmlGp(Nm))
 End Function
 
-Function DotCmlQGp$(NM) ' = QteJnDot . CmpGp1Ay
-Dim O$: O = QteJnDot(CmlQBlk(NM))
+Function DotCmlQGp$(Nm) ' = QteJnDot . CmpGp1Ay
+Dim O$: O = QteJnDot(CmlQBlk(Nm))
 DotCmlQGp = O
 'If HasEle(Array(".z.EFSchm.", _
 ".z.FFFxw.", _
@@ -175,6 +175,10 @@ While Lin <> ""
     End Select
 Wend
 FstCmlzSng = O
+End Function
+
+Function AscN%(S, N&)
+AscN = Asc(Mid(S, N, 1))
 End Function
 
 Function IsAscCmlChr(A%) As Boolean
@@ -340,7 +344,7 @@ Sub VcMthDotCmlGpAsetInVbe()
 MthDotCmlGpAsetInVbe.Srt.Vc
 End Sub
 
-Private Sub Z_CmlAy()
+Sub Z_CmlAy()
 Dim Ny$(): Ny = MthNyV
 Dim N
 For Each N In Ny

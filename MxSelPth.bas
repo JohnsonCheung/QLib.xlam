@@ -37,13 +37,9 @@ With Application.FileDialog(msoFileDialogFolderPicker)
 End With
 End Function
 
-Private Sub Z_SelPth()
+Sub Z_SelPth()
 GoTo Z
 Z:
 MsgBox SelFfn("C:\")
 End Sub
 
-Private Sub Z()
-Z_SelPth
-MVb_Fs_Sel:
-End Sub

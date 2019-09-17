@@ -84,7 +84,7 @@ If HitPfxSpc(OLin, Pfx) Then
 End If
 End Function
 
-Private Sub Z_ShfBktStr()
+Sub Z_ShfBktStr()
 Dim A$, Ept1$
 A$ = "(O$()) As X": Ept = "O$()": Ept1 = " As X": GoSub Tst
 Exit Sub
@@ -95,7 +95,7 @@ Tst:
     Return
 End Sub
 
-Private Property Get Z_ShfPfx()
+Property Get Z_ShfPfx()
 Dim O$: O = "AA{|}BB "
 Ass ShfPfx(O, "{|}") = "AA"
 Ass O = "BB "
@@ -103,8 +103,3 @@ End Property
 
 
 
-Private Sub Z()
-Z_ShfBktStr
-
-MVb_Lin_Shf:
-End Sub

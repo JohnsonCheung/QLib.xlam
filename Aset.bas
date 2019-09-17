@@ -44,7 +44,7 @@ End Sub
 
 Function FstItm()
 Const CSub$ = CMod & "FstItm"
-If IsEmp Then ThwMsg CSub, "Given Aset is empty"
+If IsEmp Then Thw CSub, "Given Aset is empty"
 Dim I
 For Each I In Itms
     Asg I, FstItm
@@ -144,9 +144,3 @@ Sub Vc()
 Brw OupTy:=EiOtVc
 End Sub
 
-Private Sub Z()
-Dim A As Variant
-Dim B As Aset
-Dim C$
-
-End Sub

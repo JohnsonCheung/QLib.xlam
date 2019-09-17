@@ -4,7 +4,7 @@ Option Compare Text
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxDoMdn."
 Public Const FFoMdn$ = "Pjn MdTy Mdn"
-Private Function FoMdn() As String(): FoMdn = SyzSS(FFoMdn): End Function
+Function FoMdn() As String(): FoMdn = SyzSS(FFoMdn): End Function
 Function DroMdn(M As CodeModule) As Variant()
 DroMdn = Array(PjnzM(M), ShtMdTy(M), Mdn(M))
 End Function

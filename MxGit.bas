@@ -8,9 +8,6 @@ Const FgitQ$ = vbDblQ & Fgit & vbDblQ
 Function Fcmd$(CmdPfx$, CmdStr$)
 Fcmd = WrtStr(CmdStr, TmpFcmd(CmdPfx))
 End Function
-Private Sub Z()
-Debug.Print Len(LineszFt(Fgit))
-End Sub
 Function GitCmitCmdStr$(Optional Msg$ = "Commit", Optional ReInit As Boolean)
 Dim X As New Bfr
     Dim P$:     P = SrcpP

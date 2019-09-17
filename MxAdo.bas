@@ -6,11 +6,11 @@ Const CNs$ = "Ado"
 Const CMod$ = CLib & "MxAdo."
 Public Const FFoFxwFld$ = "Fx Wsn T F Ty"
 
-Function ArszCnq(CN As AdoDB.Connection, Q) As AdoDB.Recordset
-Set ArszCnq = CN.Execute(Q)
+Function ArszCnq(Cn As ADODB.Connection, Q) As ADODB.Recordset
+Set ArszCnq = Cn.Execute(Q)
 End Function
 
-Function ArszFxw(Fx, Wsn) As AdoDB.Recordset
+Function ArszFxw(Fx, Wsn) As ADODB.Recordset
 Set ArszFxw = ArszCnq(CnzFx(Fx), SqlSel_T(CattnzWsn(Wsn)))
 End Function
 
@@ -18,7 +18,7 @@ Sub ArunzFbQ(Fb, Q)
 CnzFb(Fb).Execute Q
 End Sub
 
-Function Cat(A As AdoDB.Connection) As Catalog
+Function Cat(A As ADODB.Connection) As Catalog
 Dim O As New Catalog
 Set O.ActiveConnection = A
 Set Cat = O
@@ -40,9 +40,9 @@ Function CatzFx(Fx) As Catalog
 Set CatzFx = Cat(CnzFx(Fx))
 End Function
 
-Function CN(AdoCnStr) As AdoDB.Connection
-Set CN = New AdoDB.Connection
-CN.Open AdoCnStr
+Function Cn(AdoCnStr) As ADODB.Connection
+Set Cn = New ADODB.Connection
+Cn.Open AdoCnStr
 End Function
 
 Function CnStrzDbt$(D As Database, T)
@@ -79,19 +79,19 @@ Case Else: Thw CSub, "Must be either Fx or Fb", "Fx_or_Fb", A
 End Select
 End Function
 
-Function CnzFb(A) As AdoDB.Connection
-Set CnzFb = CN(AdoCnStrzFb(A))
+Function CnzFb(A) As ADODB.Connection
+Set CnzFb = Cn(AdoCnStrzFb(A))
 End Function
 
-Function CnzFx(Fx) As AdoDB.Connection
-Set CnzFx = CN(CnStrzFxAdo(Fx))
+Function CnzFx(Fx) As ADODB.Connection
+Set CnzFx = Cn(CnStrzFxAdo(Fx))
 End Function
 
-Function CvAdoTy(A) As AdoDB.DataTypeEnum
+Function CvAdoTy(A) As ADODB.DataTypeEnum
 CvAdoTy = A
 End Function
 
-Function CvAxt(A) As ADOX.Table
+Function CvAxt(A) As Adox.Table
 ':Axt: :Adox.Table #Catalog-Table#
 Set CvAxt = A
 End Function
@@ -104,77 +104,31 @@ Else
 End If
 End Function
 
-Function DftWny(Wny0, Fx) As String()
-If IsMissing(Wny0) Then
-    DftWny = Wny(Fx)
-Else
-    DftWny = CvSy(Wny0)
-End If
-End Function
 
-Function DftWsn$(Wsn0$, Fx)
-If Wsn0 = "" Then
-    DftWsn = FstWsn(Fx)
-    Exit Function
-End If
-DftWsn = Wsn0
-End Function
-
-Function DftWsny(Wsny0, Fx) As String()
-Dim O$()
-    O = CvSy(Wsny0)
-If Si(O) = 0 Then
-    DftWsny = Wny(Fx)
-Else
-    DftWsny = O
-End If
-End Function
-
-Function DoFTy(Cat As ADOX.Catalog, T) As Drs
-Dim Axt As ADOX.Table, ODy()
+Function DoFTy(Cat As Adox.Catalog, T) As Drs
+Dim Axt As Adox.Table, ODy()
 Set Axt = Cat.Tables(T)
 Dim C As Column
 For Each C In Cat.Tables(T).Columns
-    PushI ODy, Array(T, C.Name, ShtTyzAdo(C.Type))
+    PushI ODy, Array(T, C.Name, ShtAdoTy(C.Type))
 Next
 DoFTy = Drs(FoFxwFld, ODy)
 End Function
 
-Function DoFTyzFxw(Fx, W) As Drs
-DoFTyzFxw = DoFTy(CatzFx(Fx), CattnzWsn(W))
-End Function
-
-Function DoFxwFTy(Fx, W) As Drs
-Dim A As Drs
-A = DoFTyzFxw(Fx, W)
-DoFxwFTy = InsColzDrsCC(A, "Fx W", Fx, W)
-End Function
-
-Function DrsCnq(CN As AdoDB.Connection, Q) As Drs
-DrsCnq = DrszArs(ArszCnq(CN, Q))
-End Function
-
-Function DrsFbqAdo(Fb, Q) As Drs
-DrsFbqAdo = DrszArs(ArszFbq(Fb, Q))
-End Function
-
-Function DrszArs(A As AdoDB.Recordset) As Drs
-DrszArs = Drs(FnyzArs(A), DyoArs(A))
-End Function
 
 Function DrszFxw(Fx, Wsn) As Drs
 DrszFxw = DrszArs(ArszFxw(Fx, Wsn))
 End Function
 
-Function DrzAfds(A As AdoDB.Fields, Optional N%) As Variant()
-Dim F As AdoDB.Field
+Function DrzAfds(A As ADODB.Fields, Optional N%) As Variant()
+Dim F As ADODB.Field
 For Each F In A
    PushI DrzAfds, F.Value
 Next
 End Function
 
-Function VzScvl(Scvl$, NM$)
-VzScvl = Bet(EnsSfx(Scvl, ";"), NM & "=", ";")
+Function VzScvl(Scvl$, Nm$)
+VzScvl = Bet(EnsSfx(Scvl, ";"), Nm & "=", ";")
 End Function
 
 Function DtaSrczScvl(Scvl$)
@@ -185,10 +139,10 @@ Function DoFxwFld(Fx, W) As Drs
 DoFxwFld = Drs(FoFxwFld, DyoFxwFld(Fx, W))
 End Function
 
-Private Function DyoFxwFld(Fx, W) As Variant()
+Function DyoFxwFld(Fx, W) As Variant()
 
 End Function
-Function DyoArs(A As AdoDB.Recordset) As Variant()
+Function DyoArs(A As ADODB.Recordset) As Variant()
 While Not A.EOF
     PushI DyoArs, DrzAfds(A.Fields)
     A.MoveNext
@@ -199,17 +153,17 @@ Function FFzFxw$(Fx, Wsn)
 FFzFxw = TLin(FnyzFxw(Fx, Wsn))
 End Function
 
-Function FnyzAfds(A As AdoDB.Fields) As String()
+Function FnyzAfds(A As ADODB.Fields) As String()
 FnyzAfds = Itn(A)
 End Function
 
-Function FnyzArs(A As AdoDB.Recordset) As String()
+Function FnyzArs(A As ADODB.Recordset) As String()
 FnyzArs = FnyzAfds(A.Fields)
 End Function
 
-Function FnyzCatt(Cat As ADOX.Catalog, T) As String()
+Function FnyzCatt(Cat As Adox.Catalog, T) As String()
 ':Catt: :Cat,T
-Dim Axt As ADOX.Table
+Dim Axt As Adox.Table
 Set Axt = Cat.Tables(T)
 FnyzCatt = Itn(Cat.Tables(T).Columns)
 End Function
@@ -219,7 +173,7 @@ FnyzFbt = Fny(Db(Fb), T)
 End Function
 
 Function FnyzFbtAdo(Fb, T) As String()
-Dim C As ADOX.Catalog
+Dim C As Adox.Catalog
 Set C = CatzFb(Fb)
 FnyzFbtAdo = FnyzCatt(C, T)
 End Function
@@ -246,14 +200,14 @@ HasFbt = HasEle(TnyzFb(Fb), T)
 End Function
 
 Function HasFxw(Fx, Wsn) As Boolean
-HasFxw = HasEle(Wny(Fx), Wsn)
+HasFxw = HasEle(WnyzFx(Fx), Wsn)
 End Function
 
-Function HasReczArs(A As AdoDB.Recordset) As Boolean
+Function HasReczArs(A As ADODB.Recordset) As Boolean
 HasReczArs = Not NoReczArs(A)
 End Function
 
-Private Function HasTblzCT(A As Catalog, T) As Boolean
+Function HasTblzCT(A As Catalog, T) As Boolean
 HasTblzCT = HasItn(A.Tables, T)
 End Function
 
@@ -266,11 +220,11 @@ Case Else: Thw CSub, "Ffn must be Fx or Fb", "Ffn T", Ffn, T
 End Select
 End Function
 
-Function IntAyzArs(A As AdoDB.Recordset, Optional Col = 0) As Integer()
+Function IntAyzArs(A As ADODB.Recordset, Optional Col = 0) As Integer()
 IntAyzArs = IntoColzArs(EmpIntAy, A, Col)
 End Function
 
-Function IntoColzArs(IntoCol, A As AdoDB.Recordset, Optional Col = 0)
+Function IntoColzArs(IntoCol, A As ADODB.Recordset, Optional Col = 0)
 IntoColzArs = ResiU(IntoCol)
 With A
     While Not .EOF
@@ -281,20 +235,20 @@ With A
 End With
 End Function
 
-Function NoReczArs(A As AdoDB.Recordset) As Boolean
+Function NoReczArs(A As ADODB.Recordset) As Boolean
 If Not A.EOF Then Exit Function
 If Not A.BOF Then Exit Function
 NoReczArs = True
 End Function
 
-Sub RunCnSqy(CN As AdoDB.Connection, Sqy$())
+Sub RunCnSqy(Cn As ADODB.Connection, Sqy$())
 Dim Q
 For Each Q In Itr(Sqy)
-   CN.Execute Q
+   Cn.Execute Q
 Next
 End Sub
 
-Function SyzArs(A As AdoDB.Recordset, Optional Col = 0) As String()
+Function SyzArs(A As ADODB.Recordset, Optional Col = 0) As String()
 SyzArs = IntoColzArs(EmpSy, A, Col)
 End Function
 
@@ -307,24 +261,20 @@ TnyzFb = Tny(Db(Fb))
 End Function
 
 Function TnyzFbByAdo(Fb) As String()
-'TnyzAdoFb = TnyzCat(CatzFb(Fb))
 TnyzFbByAdo = AeKss(TnyzCat(CatzFb(Fb)), "MSys* f_*_Data")
 End Function
 
-Function Wny(Fx, Optional InclAllOtherTbl As Boolean) As String()
+Function WnyzFx(Fx, Optional InclAllOtherTbl As Boolean) As String()
+ThwIf_NoFfn Fx, CSub, "Fx"
 Dim Tny$(), T
 Tny = TnyzCat(CatzFx(Fx))
 If InclAllOtherTbl Then
-    Wny = Tny
+    WnyzFx = Tny
     Exit Function
 End If
 For Each T In Itr(Tny)
-    PushNB Wny, WsnzCattn(T)
+    PushNB WnyzFx, WsnzCattn(T)
 Next
-End Function
-
-Function WnyzWb(A As Workbook) As String()
-WnyzWb = Wny(A.FullName)
 End Function
 
 Function WsnzCattn$(Cattn)
@@ -332,26 +282,20 @@ If HasSfx(Cattn, "FilterDatabase") Then Exit Function
 WsnzCattn = RmvSfx(RmvSngQte(Cattn), "$")
 End Function
 
-Private Sub Z()
-Z_TnyzFb
-
-MAdoX_Cat:
-End Sub
-
-Private Sub Z_ArunzFbQ()
+Sub Z_ArunzFbQ()
 Const Fb$ = SampFbzDutyPgm
 Const Q$ = "Select * into [#a] from Permit"
 DrpFbt Fb, "#a"
 ArunzFbQ Fb, Q
 End Sub
 
-Private Sub Z_Cn()
-Dim O As AdoDB.Connection
-Set O = CN(GetCnStr_ADO_SampSQL_EXPR_NOT_WRK)
+Sub Z_Cn()
+Dim O As ADODB.Connection
+Set O = Cn(GetCnStr_ADO_SampSQL_EXPR_NOT_WRK)
 Stop
 End Sub
 
-Private Sub Z_AdoCnStrzFb()
+Sub Z_AdoCnStrzFb()
 Dim CnStr$
 '
 CnStr = AdoCnStrzFb(SampFbzDutyDta)
@@ -361,29 +305,29 @@ CnStr = AdoCnStrzFb(CurrentDb.Name)
 'GoSub Tst
 Exit Sub
 Tst:
-    CN(CnStr).Close
+    Cn(CnStr).Close
     Return
 End Sub
 
-Private Sub Z_CnzFb()
-Dim CN
-Set CN = CnzFb(SampFbzDutyDta)
+Sub Z_CnzFb()
+Dim Cn
+Set Cn = CnzFb(SampFbzDutyDta)
 Stop
 End Sub
 
-Private Sub Z_DrsCnq()
-Dim CN As AdoDB.Connection: Set CN = CnzFx(SampFxzKE24)
+Sub Z_DrsCnq()
+Dim Cn As ADODB.Connection: Set Cn = CnzFx(SampFxzKE24)
 Dim Q$: Q = "Select * from [Sheet1$]"
-WszDrs DrsCnq(CN, Q)
+WszDrs DrsCnq(Cn, Q)
 End Sub
 
-Private Sub Z_DrsFbqAdo()
+Sub Z_DrsFbqAdo()
 Const Fb$ = SampFbzDutyDta
 Const Q$ = "Select * from Permit"
 BrwDrs DrsFbqAdo(Fb, Q)
 End Sub
 
-Private Sub Z_DyArs()
+Sub Z_DyArs()
 Dim S$
 Const Q$ = "Select * from KE24"
 S = "GRANT SELECT ON MSysObjects TO Admin;"
@@ -391,18 +335,14 @@ S = "GRANT SELECT ON MSysObjects TO Admin;"
 BrwDy DyoArs(ArszCnq(CnzFb(SampFbzDutyDta), Q))
 End Sub
 
-Private Sub Z_TnyzFb()
-DmpAy TnyzFbByAdo(SampFbzDutyDta)
-End Sub
-
-Private Sub Z_Wny()
+Sub Z_WnyzFx()
 Dim Fx$
 GoSub Z
 'GoSub T1
 'GoSub T2
 Exit Sub
 Tst:
-    Act = Wny(Fx)
+    Act = WnyzFx(Fx)
     C
     Return
 T1:
@@ -414,6 +354,6 @@ T2:
     Ept = SyzSS("")
     GoTo Tst
 Z:
-    DmpAy Wny(SampFxzKE24)
+    DmpAy WnyzFx(SampFxzKE24)
     Return
 End Sub

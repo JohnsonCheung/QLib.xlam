@@ -7,7 +7,7 @@ Function IsLinPrp(L) As Boolean
 IsLinPrp = MthKd(L) = "Property"
 End Function
 
-Private Sub Z_IsLinMth()
+Sub Z_IsLinMth()
 GoTo Z
 Dim A$
 A = "Function IsLinMth(A) As Boolean"
@@ -70,8 +70,8 @@ End Function
 Function IsLinMth(L) As Boolean
 IsLinMth = MthKd(L) <> ""
 End Function
-Function IsLinMthNm(L, NM) As Boolean
-IsLinMthNm = Mthn(L) = NM
+Function IsLinMthNm(L, Nm) As Boolean
+IsLinMthNm = Mthn(L) = Nm
 End Function
 
 Function IsLinEmn(A) As Boolean

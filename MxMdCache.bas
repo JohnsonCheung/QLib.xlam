@@ -10,10 +10,10 @@ End Function
 
 Function IsCachedzM(M As CodeModule) As Boolean
 Dim CSrc$(): CSrc = CachedSrczM(M)
-Dim CN&: CN = Si(CSrc)
+Dim Cn&: Cn = Si(CSrc)
 Dim MN&: MN = M.CountOfLines
-If MN <> CN Then Exit Function
-If CN = 0 Then IsCachedzM = True: Exit Function
+If MN <> Cn Then Exit Function
+If Cn = 0 Then IsCachedzM = True
 Dim MSrc$(): MSrc = Src(M)
 IsCachedzM = IsEqSy(CSrc, MSrc)
 End Function
@@ -30,12 +30,12 @@ Dim S1$(): S1 = RmvClsSig(S)
 CachedSrczM = RmvAtrVB(S1)
 End Function
 
-Private Function RmvAtrVB(S$()) As String()
+Function RmvAtrVB(S$()) As String()
 Dim N&: N = AtrVBCnt(S$())
 RmvAtrVB = AeFstNEle(S, N)
 End Function
 
-Private Function AtrVBCnt%(S$())
+Function AtrVBCnt%(S$())
 Dim O%:
     Dim L: For Each L In Itr(S)
         If NoPfx(L, "Attribute VB") Then Exit For
@@ -44,7 +44,7 @@ Dim O%:
 AtrVBCnt = O
 End Function
 
-Private Function RmvClsSig(S$()) As String()
+Function RmvClsSig(S$()) As String()
 'VERSION 1.0 CLASS
 'BEGIN
 '  MultiUse = -1  'True
@@ -56,7 +56,7 @@ Else
 End If
 End Function
 
-Private Function HasClsSig(S$()) As Boolean
+Function HasClsSig(S$()) As Boolean
 'VERSION 1.0 CLASS
 'BEGIN
 '  MultiUse = -1  'True

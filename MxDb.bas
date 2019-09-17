@@ -1,6 +1,7 @@
 Attribute VB_Name = "MxDb"
 Option Compare Text
 Option Explicit
+Const CNs$ = "sdfsdf"
 Const CLib$ = "QDao."
 Const CMod$ = CLib & "MxDb."
 Public Const C_Des$ = "Description"
@@ -19,7 +20,7 @@ D.Close
 End Sub
 
 Sub CrtQry(D As Database, Qn$, S)
-Dim Q As New dao.QueryDef: Q.Name = Qn: Q.Sql = S
+Dim Q As New DAO.QueryDef: Q.Name = Qn: Q.Sql = S
 D.QueryDefs.Append Q
 End Sub
 
@@ -83,13 +84,13 @@ DrpTny D, Av
 End Sub
 
 Function DszDb(D As Database, Optional DsNm$) As Ds
-Dim NM$
+Dim Nm$
 If DsNm = "" Then
-    NM = D.Name
+    Nm = D.Name
 Else
-    NM = DsNm
+    Nm = DsNm
 End If
-DszDb = DszTny(D, Tny(D), NM)
+DszDb = DszTny(D, Tny(D), Nm)
 End Function
 
 Function DszTny(D As Database, Tny$(), Optional DsNm$) As Ds
@@ -206,8 +207,7 @@ For Each T In Ny(TT)
     RenTblzAddPfx D, CStr(T), Pfx
 Next
 End Sub
-
-Sub Rq(D As Database, Q)
+Sub RunSql(D As Database, Q)
 Const CSub$ = CMod & "Rq"
 On Error GoTo X
 D.Execute Q
@@ -215,8 +215,11 @@ Exit Sub
 X:
     CrtQry D, TmpNm, Q
     Dim N$: N = D.Name
-    Dim E$: E = Err.Description:
+    Dim E$: E = Err.Description
     Thw CSub, "Running Sql error", "Er Sql Db", E, Q, N
+End Sub
+Sub Rq(D As Database, Q)
+RunSql D, Q
 End Sub
 
 Sub Rqq(D As Database, QQ$, ParamArray Ap())
@@ -229,7 +232,7 @@ Sub RqqAv(D As Database, QQ$, Av())
 Rq D, FmtQQAv(QQ, Av)
 End Sub
 
-Function Rs(D As Database, Q) As dao.Recordset
+Function Rs(D As Database, Q) As DAO.Recordset
 Const CSub$ = CMod & "Rs"
 On Error GoTo X
 Set Rs = D.OpenRecordset(Q)
@@ -237,16 +240,16 @@ Exit Function
 X: Thw CSub, "Error in opening Rs", "Er Sql Db", Err.Description, Q, D.Name
 End Function
 
-Function RszQ(D As Database, Q) As dao.Recordset
+Function RszQ(D As Database, Q) As DAO.Recordset
 Set RszQ = Rs(D, Q)
 End Function
 
-Function RszQQ(D As Database, QQ$, ParamArray Ap()) As dao.Recordset
+Function RszQQ(D As Database, QQ$, ParamArray Ap()) As DAO.Recordset
 Dim Av(): If UBound(Ap) > 0 Then Av = Ap
 Set RszQQ = Rs(D, FmtQQAv(QQ, Av))
 End Function
 
-Function RszQry(D As Database, QryNm$) As dao.Recordset
+Function RszQry(D As Database, QryNm$) As DAO.Recordset
 Set RszQry = D.QueryDefs(QryNm).OpenRecordset
 End Function
 
@@ -270,17 +273,7 @@ Next
 End Sub
 
 Sub SetTblAttDes(D As Database, Des$)
-SetTblDes D, "Att", Des
-End Sub
-
-Sub SetTblDes(D As Database, T, Des$)
-VzOPrps(D.TableDefs(T), C_Des) = Des
-End Sub
-
-Sub SetTblDesDic(D As Database, Dic As Dictionary)
-Dim T: For Each T In Dic.Keys
-    SetTblDes D, T, Dic(T)
-Next
+SetTdDes D, "Att", Des
 End Sub
 
 Function SrcTny(D As Database) As String()
@@ -291,20 +284,9 @@ End Function
 
 
 Function TblAttDes$(D As Database)
-TblAttDes = TblDes(D, "Att")
+TblAttDes = TdDes(D, "Att")
 End Function
 
-Function TblDes$(D As Database, T)
-TblDes = VzOPrps(D.TableDefs(T), C_Des)
-End Function
-
-Function TblDesDic(D As Database) As Dictionary
-Dim T, O As New Dictionary
-For Each T In Tni(D)
-    PushKqNBStr O, T, TblDes(D, T)
-Next
-Set TblDesDic = O
-End Function
 
 Function TdStrAy(D As Database, TT$) As String()
 Dim T$, I
@@ -335,7 +317,7 @@ Tntt = Termss(Tny(D))
 End Function
 
 Function Tny(D As Database) As String()
-Set D = dao.DBEngine.OpenDatabase(D.Name)
+Set D = DAO.DBEngine.OpenDatabase(D.Name)
 Dim T As TableDef
 For Each T In D.TableDefs
     If Not IsTdSys(T) Then
@@ -348,8 +330,8 @@ End Function
 
 Function Tny1(D As Database) As String()
 Dim T As TableDef, O$()
-Dim X As dao.TableDefAttributeEnum
-X = dao.TableDefAttributeEnum.dbHiddenObject Or dao.TableDefAttributeEnum.dbSystemObject
+Dim X As DAO.TableDefAttributeEnum
+X = DAO.TableDefAttributeEnum.dbHiddenObject Or DAO.TableDefAttributeEnum.dbSystemObject
 For Each T In D.TableDefs
     Select Case True
     Case T.Attributes And X
@@ -371,27 +353,8 @@ Function TnyzMSysObj(D As Database) As String()
 TnyzMSysObj = SyzQ(D, "Select Name from MSysObjects where Type in (1,6) and Name not Like 'MSys*' and Name not Like 'f_*_Data'")
 End Function
 
-Private Sub Z()
-Dim Db As Database
-Dim B As dao.TableDef
-Dim C$()
-Dim D As Variant
-Dim E$
-Dim F As Drs
-Dim G As Dictionary
-'AddTd D, B
-'ChkPk D, C
-'ChkSk D, C
-'DbCnSy D
-'TblDesAy D
-'Db_Drp_Qry D, D
-'DsDb D, D, E
-'EnsTmp1TblDb D
-'HasQry D, D
-'HasDbt D, D
-End Sub
 
-Private Sub Z_BrwT()
+Sub Z_BrwT()
 Dim D As Database
 Stop
 DrpTT D, "#A #B"
@@ -399,7 +362,7 @@ Rq D, "Select Distinct Sku,BchNo,CLng(Rate) as RateRnd into [#A] from [#T]"
 BrwTT D, "#A #T #B"
 End Sub
 
-Private Sub Z_DszDb()
+Sub Z_DszDb()
 Dim D As Database, Tny0, Act As Ds, Ept As Ds
 Stop
 ZZ1:
@@ -413,6 +376,6 @@ ZZ2:
     Stop
 End Sub
 
-Private Sub Z_Qny()
+Sub Z_Qny()
 'DmpAy Qny(Db(SampFbzDutyDta))
 End Sub

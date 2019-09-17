@@ -18,7 +18,7 @@ Next
 End Function
 
 Function WdtzCol%(A As Drs, C$)
-WdtzCol = AyWdt(StrCol(A, C))
+WdtzCol = WdtzAy(StrCol(A, C))
 End Function
 
 Function JnDyCC(Dy(), CCIxy&(), Optional FldSep$ = vbFldSep) As String()
@@ -26,10 +26,6 @@ Dim Dr
 For Each Dr In Itr(Dy)
     PushI JnDyCC, Jn(AeIxy(Dr, CCIxy), FldSep)
 Next
-End Function
-
-Function SqzDy(Dy()) As Variant()
-SqzDy = SqzDySkip(Dy, 0)
 End Function
 
 Function StrColzDy(Dy(), C) As String()
@@ -52,9 +48,6 @@ Function BoolColzDy(Dy(), C&) As Boolean()
 BoolColzDy = IntozDyC(EmpBoolAy, Dy, C)
 End Function
 
-Function SqzDySkip(Dy(), Optional SkipNRow& = 1)
-SqzDySkip = SqzDy(CvAv(AwSkip(Dy, SkipNRow)))
-End Function
 
 Function IntCol(A As Drs, C) As Integer()
 IntCol = IntColzDy(A.Dy, IxzAy(A.Fny, C))
@@ -118,7 +111,7 @@ Next
 End Function
 
 Function LngAyzColEqSel(A As Drs, C$, V, Sel$) As Long()
-LngAyzColEqSel = LngAyzDrs(DwEqSel(A, C, V, Sel), Sel)
+LngAyzColEqSel = LngAyzDrs(F_SubDrs_ByC_EqSel(A, C, V, Sel), Sel)
 End Function
 
 Function LngAyzDrs(A As Drs, C$) As Long()

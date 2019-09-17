@@ -5,7 +5,7 @@ Const CLib$ = "QXls."
 Const CMod$ = CLib & "MxAddIn."
 
 Function DoAddin(A As Excel.Application) As Drs
-DoAddin = DrszItrPP(A.AddIns, "Name FullName Installed IsOpen ProgId CLSID")
+DoAddin = DrszItrPrpcc(A.AddIns, "Name FullName Installed IsOpen ProgId CLSID")
 End Function
 
 Sub DmpAddinX()

@@ -4,7 +4,7 @@ Option Explicit
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxBkt."
 
-Private Sub Z_AsgBktPos()
+Sub Z_AsgBktPos()
 Dim A$, EptFmPos%, EptToPos%
 '
 A = "(A(B)A)A"
@@ -31,7 +31,7 @@ Tst:
     Return
 End Sub
 
-Private Sub Z_Brk_Bkt()
+Sub Z_Brk_Bkt()
 Dim A$, OpnBkt$
 A = "aaaa((a),(b))xxx":    OpnBkt = "(":          Ept = Sy("aaaa", "(a),(b)", "xxx"): GoSub Tst
 Exit Sub
@@ -124,7 +124,3 @@ If P1 = 0 Then Exit Function
 BefBkt = Left(Lin, P1 - 1)
 End Function
 
-Private Sub Z()
-Z_Brk_Bkt
-Z_AsgBktPos
-End Sub

@@ -8,45 +8,24 @@ Sub BrwLo(A As ListObject)
 BrwDrs DrszLo(A)
 End Sub
 
-Sub MinxLo(A As ListObject)
-If Fst2Chr(A.Name) <> "T_" Then Exit Sub
-Dim R1 As Range
-Set R1 = A.DataBodyRange
-If R1.Rows.Count >= 2 Then
-    RgRR(R1, 2, R1.Rows.Count).EntireRow.Delete
-End If
+Sub InsLcBef(L As ListObject, C$, BefCol$)
+Dim Cno%: Cno = CnozLc(L, C)
+EntColRgzLc(L, C).Insert
+Lc(L, C).Name = C
 End Sub
 
-Private Sub MinxLozWs(A As Worksheet)
-If A.CodeName = "WsIdx" Then Exit Sub
-If Fst2Chr(A.CodeName) <> "Ws" Then Exit Sub
-Dim L As ListObject
-For Each L In A.ListObjects
-    MinxLo L
-Next
+Sub InsLcAft(L As ListObject, C$, AftCol$)
+'Do #Ins-ListObjectCol-AftCol#
 End Sub
 
-Function MinxLozWszWb(A As Workbook) As Workbook
-Dim Ws As Worksheet
-For Each Ws In A.Sheets
-    MinxLozWs Ws
-Next
-Set MinxLozWszWb = A
-End Function
-
-Sub MinxLozWszFx(Fx)
-ClsWbNoSav SavWb(MinxLozWszWb(WbzFx(Fx)))
-End Sub
-
-
-Sub KeepFstCol(A As ListObject)
+Sub KeepFstLc(L As ListObject)
 Dim J%
-For J = A.ListColumns.Count To 2 Step -1
-    A.ListColumns(J).Delete
+For J = L.ListColumns.Count To 2 Step -1
+    L.ListColumns(J).Delete
 Next
 End Sub
 
-Sub KeepFstRow(A As ListObject)
+Sub KeepFstLr(A As ListObject)
 Dim J%
 For J = A.ListRows.Count To 2 Step -1
     A.ListRows(J).Delete
@@ -99,16 +78,15 @@ Function WsCnozLc&(A As ListObject, Col)
 WsCnozLc = A.ListColumns(Col).Range.Column
 End Function
 
-Function LoNmzT$(T)
-LoNmzT = "T_" & RmvFstNonLetter(T)
+Function LonzT$(T)
+LonzT = "T_" & RmvFstNonLetter(T)
 End Function
 
-Private Sub Z_KeepFstCol()
-Dim Lo As ListObject
-KeepFstCol ShwLo(SampLo)
+Sub Z_KeepFc()
+KeepFstLc ShwLo(SampLo)
 End Sub
 
-Private Sub Z_AutoFitLo()
+Sub Z_AutoFitLo()
 Dim Ws As Worksheet: Set Ws = NewWs
 Dim Sq(1 To 2, 1 To 2)
 Sq(1, 1) = "A"
@@ -120,36 +98,15 @@ AutoFit LozWsDta(Ws)
 ClsWsNoSav Ws
 End Sub
 
-Private Sub Z_BrwLo()
+Sub Z_BrwLo()
 BrwLo SampLo
 Stop
 End Sub
 
-Private Sub Z_PtzLo()
+Sub Z_PtzLo()
 Dim At As Range, Lo As ListObject
 Set Lo = SampLo
 ShwPt PtzLo(Lo, At, "A B", "C D", "F", "E")
 Stop
 End Sub
 
-Private Sub Z()
-Dim A As Variant
-Dim B As ListObject
-Dim C As Boolean
-Dim D As Worksheet
-Dim E$
-Dim F&
-Dim G$()
-Dim H As Range
-CvLo A
-LoAllCol B
-LoAllEntCol B
-BdrLoAround B
-RgzLoCC B, A, A, C, C
-RgzLc B, A, C, C
-RgzLc B, A
-SqzLo B
-ShwLo B
-WbzLo B
-WszLo B
-End Sub

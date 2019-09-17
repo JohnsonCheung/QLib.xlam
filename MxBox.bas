@@ -10,7 +10,7 @@ End Function
 Function BoxLy(Ly$(), Optional C$ = "*") As String()
 If Si(Ly) = 0 Then Exit Function
 Dim W%, L$, I
-W = AyWdt(Ly)
+W = WdtzAy(Ly)
 L = Qte(Dup("-", W), "|-*-|")
 PushI BoxLy, L
 For Each I In Ly
@@ -55,7 +55,7 @@ End Function
 
 Function BoxAy(Ay) As String()
 If Si(Ay) = 0 Then Exit Function
-Dim W%: W = AyWdt(Ay)
+Dim W%: W = WdtzAy(Ay)
 Dim H$: H = "|" & Dup("-", W + 2) & "|"
 Push BoxAy, H
 Dim I

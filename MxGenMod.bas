@@ -5,7 +5,7 @@ Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxGenMod."
 
 Sub Cmd_SavGendMod()
-Const LoNm$ = "T_GenMod"
+Const Lon$ = "T_GenMod"
 Dim Lo As ListObject, FxaCell As Range, Fxa$, Pj As VBProject, MdnCell As Range
 Dim Mdn$, Md As CodeModule
 Dim NewSrc$(), OldL$, NewL$
@@ -13,8 +13,8 @@ Dim Ws As Worksheet
 Const C$ = "WsGenMod"
 :             If Not HasWsCd(C, IsInf:=True) Then Exit Sub          ' Exit=>
      Set Ws = WszCd(C)
-:             If Not HasLo(Ws, LoNm, IsInf:=True) Then Exit Sub
-     Set Lo = Ws.ListObjects(LoNm)
+:             If Not HasLo(Ws, Lon, IsInf:=True) Then Exit Sub
+     Set Lo = Ws.ListObjects(Lon)
 :             If Not IsEqCC(Lo, "SrcCd", IsInf:=True) Then Exit Sub ' Exit=>
 Set FxaCell = Ws.Range("A1")
         Fxa = FxaCell.Value
@@ -25,10 +25,10 @@ Set MdnCell = Ws.Range("A2")
         Mdn = MdnCell.Value
 :             If ChkMdn(Pj, Mdn) Then MdnCell.Activate: Exit Sub
 :             ActWs Ws
-     Set Md = MdzPN(Pj, Mdn)
+     Set Md = MdzP(Pj, Mdn)
      NewSrc = StrColzWsLC(Lo, "T_GenMod", "SrcCd")
 :             If Si(NewSrc) = 0 Then MsgBox "No source code is generated", vbCritical: Exit Sub
-       OldL = SrcL(Md)
+       OldL = Srcl(Md)
        NewL = JnCrLf(NewSrc)
 :             If OldL <> NewL Then MsgBox "The source in WsSrc <> the soruce from Mod", vbCritical: Exit Sub
 :             PutAyV NewSrc, A1zLo(Lo)                                                                       ' <== Save
@@ -37,7 +37,7 @@ End Sub
 
 Sub Cmd_LoadSrcCd()
 Const C$ = "WsSrcCd"
-Const LoNm$ = "T_SrcCd"
+Const Lon$ = "T_SrcCd"
 Dim Ws As Worksheet
 Dim Lo As ListObject
 Dim FxaCell As Range
@@ -49,8 +49,8 @@ Dim Md As CodeModule
 Dim SrcCd$()
 :             If Not HasWsCd(C, IsInf:=True) Then Exit Sub
      Set Ws = WszCd(C)
-:             If Not HasLo(Ws, LoNm, IsInf:=True) Then Exit Sub
-     Set Lo = Ws.ListObjects(LoNm)
+:             If Not HasLo(Ws, Lon, IsInf:=True) Then Exit Sub
+     Set Lo = Ws.ListObjects(Lon)
 :             If Not IsEqCC(Lo, "SrcCd", IsInf:=True) Then Exit Sub
 Set FxaCell = Ws.Range("A1")
         Fxa = FxaCell.Value
@@ -61,7 +61,7 @@ Set MdnCell = Ws.Range("A2")
         Mdn = MdnCell.Value
 :             If ChkMdn(Pj, Mdn) Then MdnCell.Activate: Exit Sub
 :             ActWs Ws
-     Set Md = MdzPN(Pj, Mdn)
+     Set Md = MdzP(Pj, Mdn)
       SrcCd = Src(Md)
 :             DltLoRow Lo                                                             ' <== Delete
 :             PutAyV SrcCd, A1zLo(Lo)                                                 ' <== Load
@@ -70,11 +70,11 @@ End Sub
 
 Sub VdtSrc(ISrc As Drs, IDes As Drs)
 Const C$ = "WsGenMod"
-Const LoNm$ = "T_SrcCd"
+Const Lon$ = "T_SrcCd"
 :                                        If Not HasWsCd(C, IsInf:=True) Then Exit Sub
 Dim Ws      As Worksheet:       Set Ws = WszCd(C)
-:                                        If Not HasLo(Ws, LoNm, IsInf:=True) Then Exit Sub
-Dim Lo      As ListObject:      Set Lo = Ws.ListObjects(LoNm)
+:                                        If Not HasLo(Ws, Lon, IsInf:=True) Then Exit Sub
+Dim Lo      As ListObject:      Set Lo = Ws.ListObjects(Lon)
 :                                        If Not IsEqCC(Lo, "SrcCd", IsInf:=True) Then Exit Sub
 Dim FxaCell As Range:      Set FxaCell = Ws.Range("A1")
 Dim Fxa$:                          Fxa = FxaCell.Value
@@ -107,17 +107,17 @@ Dim JSrcPm As Drs: JSrcPm = B_JSrcPm(Src) ' ! With Col-Pm added
 Dim RmkVer%:     RmkVer = 2
 Dim Rmk1 As Drs:   Rmk1 = SelDrs(JSrcPm, "Key Ret Fss Pm Id StpFor")
 Dim Rmk2 As Drs:   Rmk2 = B_Rmk2(RmkVer, Rmk1)
-Dim CdRmk$():     CdRmk = AddPfxzAy(JnDy(Rmk2.Dy), "                 ' ")
+Dim CdRmk$():     CdRmk = AmAddPfx(JnDy(Rmk2.Dy), "                 ' ")
 
 '== CdDes OK ===========================================================================================================
-Dim CdDes$(): CdDes = AddPfxzAy(JnDy(Des.Dy), " ' ")
+Dim CdDes$(): CdDes = AmAddPfx(JnDy(Des.Dy), " ' ")
 
 '== CdCnst OK ==========================================================================================================
 Dim JCnst As Drs:  JCnst = SelDrs(Src, "Key Fss")
 Dim CdCnst$():    CdCnst = B_CdCnst(JCnst)
 
 '== CdMain OK ==========================================================================================================
-Dim InpPm As Drs:    InpPm = DwEqSel(Src, "StpTy", "Inp", "Key Ret StpTy")
+Dim InpPm As Drs:    InpPm = F_SubDrs_ByC_EqSel(Src, "StpTy", "Inp", "Key Ret StpTy")
 Dim MMPm$:            MMPm = B_MPm(InpPm)
 Dim LAs():             LAs = SelDrs(LasRec(Src), "Key Ret StpTy").Dy(0)
 Dim MMthn$:          MMthn = LAs(0)
@@ -180,7 +180,7 @@ Dim BBRmkDes$()
 
 '-- BBCxt OK -----------------------------------------------------------------------------------------------------------
 Dim BKey$()
-Dim UsedMthn$(): UsedMthn = AddPfxzAy(BKey, "B_")
+Dim UsedMthn$(): UsedMthn = AmAddPfx(BKey, "B_")
 
 Dim MDic   As Dictionary:   Set MDic = DiMthnqLines(InpSrc, ExlDcl:=True)
 Dim MDic1  As Dictionary:  Set MDic1 = B_MDic1(MDic)
@@ -194,7 +194,7 @@ Dim MExtra As Dictionary: Set MExtra = MPair.B
 Dim BBExtra$:                BBExtra = JnDblCrLf(SyzItr(SrtDic(MExtra).Items))
 
 '-- BBELin  ------------------------------------------------------------------------------------------------------------
-Dim BBELin$(): BBELin = AddPfxzAy(BCSorF, "End ")
+Dim BBELin$(): BBELin = AmAddPfx(BCSorF, "End ")
 
 '-- CdB  ---------------------------------------------------------------------------------------------------------------
 CdB = B_CdB(BBMLin, BBRmkFm, BBRmkRet, BBRmkDes, BBCxt, BBELin, BBExtra)
@@ -205,7 +205,7 @@ Brw CdB
 Stop
 End Function
 
-Private Function B_CdB(MLin$(), RmkFm$(), RmkRet$(), RmkDes$(), Cxt$(), ELin$(), Extra$) As String()
+Function B_CdB(MLin$(), RmkFm$(), RmkRet$(), RmkDes$(), Cxt$(), ELin$(), Extra$) As String()
 Dim Lines$, O$(), J%
 For J = 0 To UB(MLin)
     Erase XX
@@ -221,7 +221,7 @@ Next
 Erase XX
 End Function
 
-Private Function B_BBRmkFm(Pm$(), Key$(), Fss$(), StpFor$()) As String()
+Function B_BBRmkFm(Pm$(), Key$(), Fss$(), StpFor$()) As String()
 Dim J%, ODy(), IPm, D1 As Dictionary, RmkFm$, D2 As Dictionary
 Set D1 = DiczAyab(Key, Fss)
 Set D2 = DiczAyab(Key, StpFor)
@@ -235,7 +235,7 @@ For J = 0 To UB(Pm)
 Next
 End Function
 
-Private Function B_BBRmkDes(K$(), CdDes$()) As String()
+Function B_BBRmkDes(K$(), CdDes$()) As String()
 Dim D As New Dictionary, I
 Set D = Dic(RmvFstChrzAy(CdDes), JnSep:=vbCrLf)
 For Each I In K
@@ -246,13 +246,13 @@ For Each I In K
     End If
 Next
 End Function
-Private Function B_BBRmkRet(Fss$(), StpFor$()) As String()
+Function B_BBRmkRet(Fss$(), StpFor$()) As String()
 Dim J%
 For J = 0 To UB(Fss)
     PushI B_BBRmkRet, "'Ret: " & Fss(J) & PpdIf(StpFor(J), " ! ")
 Next
 End Function
-Private Function B_MLines(BCKey$(), MExist As Dictionary) As String()
+Function B_MLines(BCKey$(), MExist As Dictionary) As String()
 Dim K
 For Each K In BCKey
     If MExist.Exists(K) Then
@@ -263,7 +263,7 @@ For Each K In BCKey
 Next
 End Function
 
-Private Function B_MDic1(MDic As Dictionary) As Dictionary
+Function B_MDic1(MDic As Dictionary) As Dictionary
 Set B_MDic1 = New Dictionary
 Dim K
 For Each K In MDic.Keys
@@ -271,14 +271,14 @@ For Each K In MDic.Keys
 Next
 End Function
 
-Private Function B_BCArgSfx(Ret$()) As String()
+Function B_BCArgSfx(Ret$()) As String()
 Dim R
 For Each R In Ret
     PushI B_BCArgSfx, ArgSfxzRet(R)
 Next
 End Function
 
-Private Function B_BCPmStr(Pm$(), DicArgNmToArgSfx As Dictionary) As String()
+Function B_BCPmStr(Pm$(), DicArgNmToArgSfx As Dictionary) As String()
 Dim D As New Dictionary
 Set D = DicArgNmToArgSfx
 Dim IPm, O$()
@@ -297,7 +297,7 @@ For Each IPm In Pm
 Next
 End Function
 
-Private Function B_BCRetAs(Ret$(), StpTy$()) As String()
+Function B_BCRetAs(Ret$(), StpTy$()) As String()
 Dim J%
 For J = 0 To UB(Ret)
     If StpTy(J) = "Sub" Then
@@ -308,7 +308,7 @@ For J = 0 To UB(Ret)
 Next
 End Function
 
-Private Function B_BCTyChr(Ret$(), StpTy$()) As String()
+Function B_BCTyChr(Ret$(), StpTy$()) As String()
 Dim J%, O$
 For J = 0 To UB(Ret)
     If StpTy(J) = "Fun" Then
@@ -320,13 +320,13 @@ For J = 0 To UB(Ret)
 Next
 End Function
 
-Private Function B_BCMLin(SorF$(), Mthn$(), TyChr$(), Pm$(), RetSfx$()) As String()
+Function B_BCMLin(SorF$(), Mthn$(), TyChr$(), Pm$(), RetSfx$()) As String()
 Dim J%
 For J = 0 To UB(SorF)
     PushI B_BCMLin, FmtQQ("Private ? ??(?)?", SorF(J), Mthn(J), TyChr(J), Pm(J), RetSfx(J))
 Next
 End Function
-Private Function B_BCSorF(StpTy$()) As String()
+Function B_BCSorF(StpTy$()) As String()
 Dim T
 For Each T In StpTy
     Select Case T
@@ -336,32 +336,32 @@ For Each T In StpTy
     End Select
 Next
 End Function
-Private Function B_BCMthn(Key$()) As String()
+Function B_BCMthn(Key$()) As String()
 Dim K
 For Each K In Key
     PushI B_BCMthn, "B_" & K
 Next
 End Function
 
-Private Function B_BBCxt(MLines$()) As String()
+Function B_BBCxt(MLines$()) As String()
 Dim Lines
 For Each Lines In Itr(MLines)
     PushI B_BBCxt, MthCxt(SplitCrLf(Lines))
 Next
 End Function
 
-Private Function B_BBLinesAy(MLin$(), Rmk$(), Cxt$(), ELin$()) As String()
+Function B_BBLinesAy(MLin$(), Rmk$(), Cxt$(), ELin$()) As String()
 Dim J%
 For J = 0 To UB(MLin)
     PushI B_BBLinesAy, JnCrLfAp(MLin(J), Rmk(J), Cxt(J), ELin(J))
 Next
 End Function
 
-Private Function B_CdY4Cola(CdYLisa As Drs) As Drs
+Function B_CdY4Cola(CdYLisa As Drs) As Drs
 B_CdY4Cola = B_CdY4Colb(CdYLisa)
 End Function
 
-Private Function B_CdY4Colb(CdYLisb As Drs) As Drs
+Function B_CdY4Colb(CdYLisb As Drs) As Drs
 'CdYLis  Key StpTy Expr Stmt Ret Pm
 'CdY4Col Fun YEq Callg End
 Dim ODy(), YEq$, Dr, Key$, TyChr$, RetSfx$, Ret$, Fun$, Callg$, StpTy$, Expr$, Pm$, Stmt$, MthEndLin$
@@ -372,15 +372,15 @@ For Each Dr In Itr(CdYLisb.Dy)
     Stmt = Dr(3)
     Ret = Dr(4)
     Pm = Dr(5)
-    Pm = JnCommaSpc(AddPfxzAy(SyzSS(Pm), "Y_"))
+    Pm = JnCommaSpc(AmAddPfx(SyzSS(Pm), "Y_"))
     RetSfx = RetAs(Ret)
     TyChrzRet (Ret)
     Select Case StpTy
     Case "Inp", "Fun", "Expr"
-        Fun = FmtQQ("Private Function Y_??()?:", Key, TyChr, RetSfx)
+        Fun = FmtQQ("Function Y_??()?:", Key, TyChr, RetSfx)
         MthEndLin = "End Function"
     Case "Stmt", "Sub"
-        Fun = FmtQQ("Private Sub Y_??()?:", Key, TyChr, RetSfx)
+        Fun = FmtQQ("Sub Y_??()?:", Key, TyChr, RetSfx)
         MthEndLin = "End Sub"
     Case Else
         Thw CSub, "StpTy Err:", "StpTy", StpTy
@@ -410,7 +410,7 @@ ODy = AlignRzDyC(ODy, 1)
 B_CdY4Colb = DrszFF("Fun YEq Callg End", ODy)
 End Function
 
-Private Function B_CdZZ4Col(CdZZLis As Drs) As Drs
+Function B_CdZZ4Col(CdZZLis As Drs) As Drs
 'CdZZLis  Key StpTy Stmt Expr Ret
 'CdZZ4Col Fun Brwg Y End
 Dim ODy(), Dr, Key$, TyChr$, RetSfx$, Ret$, Fun$, StpTy$, Expr$, Pm$, Stmt$, Y$, Brwg$
@@ -420,7 +420,7 @@ For Each Dr In Itr(CdZZLis.Dy)
     Stmt = Dr(2)
     Expr = Dr(3)
     Ret = Dr(4)
-    Fun = FmtQQ("Private Private Sub Z_?():", Key)
+    Fun = FmtQQ("Private Sub Z_?():", Key)
     Select Case StpTy
     Case "Inp", "Fun", "Expr"
         Y = "Y_" & Key
@@ -437,14 +437,14 @@ ODy = AlignRzDyC(ODy, 1)
 B_CdZZ4Col = DrszFF("Fun Brwg Y End", ODy)
 End Function
 
-Private Function Y_ISrc() As Drs
+Function Y_ISrc() As Drs
 Erase XX
 X ""
 Y_ISrc = DrszFmtg(XX)
 Erase XX
 End Function
 
-Private Function B_JSrcPm(ISrc As Drs) As Drs
+Function B_JSrcPm(ISrc As Drs) As Drs
 'Fm : ISrc ! From Xls Lo T_Src
 'Fm : CC   ! = Key Pfx Id StpTy StpFor Ret Fss Ret Stmt Expr BrkNm BrkChr Fm1..5
 'Ret: Key Pfx Id StpTy StpFor Ret Fss Ret Stmt Expr BrkNm BrkChr Pm
@@ -459,7 +459,7 @@ Next
 Stop '
 'B_JSrcPm = DeCC(Drs(Sy(ISrc.Fny, "Pm"), ODy), "Fm*")
 End Function
-Private Function B_MMCDcl(Key$(), StpTy$(), Ret$()) As String()
+Function B_MMCDcl(Key$(), StpTy$(), Ret$()) As String()
 Dim J%, O$, ArgSfx$
 For J = 0 To UB(Key)
     Select Case StpTy(J)
@@ -472,7 +472,7 @@ For J = 0 To UB(Key)
     PushI B_MMCDcl, O
 Next
 End Function
-Private Function B_MMCLHS(Key$(), StpTy$()) As String()
+Function B_MMCLHS(Key$(), StpTy$()) As String()
 Dim J%
 For J = 0 To UB(Key)
     Select Case StpTy(J)
@@ -482,7 +482,7 @@ For J = 0 To UB(Key)
     End Select
 Next
 End Function
-Private Function B_MMCCallg(Key$(), StpTy$(), Pm$(), Stmt$(), Expr$()) As String()
+Function B_MMCCallg(Key$(), StpTy$(), Pm$(), Stmt$(), Expr$()) As String()
 Dim J%, O$
 For J = 0 To UB(StpTy(J))
     Select Case StpTy(J)
@@ -496,7 +496,7 @@ For J = 0 To UB(StpTy(J))
     Push B_MMCCallg, O
 Next
 End Function
-Private Function B_MBdy3Col1(MBdy As Drs) As Drs
+Function B_MBdy3Col1(MBdy As Drs) As Drs
 'MBldPm   Key StpTy Stmt Expr Ret Pm
 'MBdy3Col Dcl LHS Calling
 Dim Key$(), StpTy$(), Ret$(), Pm$(), Stmt$(), Expr$()
@@ -548,7 +548,7 @@ Dim ODy()
 B_MBdy3Col1 = DrszFF("Dcl LHS Callg", ODy)
 End Function
 
-Private Function B_MBdy3Col(MBdy As Drs) As Drs
+Function B_MBdy3Col(MBdy As Drs) As Drs
 '         0   1     2    3    4   5
 'MBldPm   Key StpTy Stmt Expr Ret Pm
 'MBdy3Col Dcl LHS Calling
@@ -593,7 +593,7 @@ ODy = AlignRzDyC(ODy, 1)
 B_MBdy3Col = DrszFF("Dcl LHS Callg", ODy)
 End Function
 
-Private Function B_MMthSorF$(LasStpTy$)
+Function B_MMthSorF$(LasStpTy$)
 Select Case LasStpTy
 Case "Fun": B_MMthSorF = "Function"
 Case "Sub": B_MMthSorF = "Sub"
@@ -601,7 +601,7 @@ Case Else: Thw CSub, "The StpTy of Las Record of WsSrc must be Either Fun or Sub
 End Select
 End Function
 
-Private Function B_Rmk2(TRmkVer%, JRmk As Drs) As Drs
+Function B_Rmk2(TRmkVer%, JRmk As Drs) As Drs
 'JRmk Key Ret Fss Pm Id
 '     0   1   2   3  4
 Dim ODy(), JRmkDy()
@@ -643,7 +643,7 @@ Case Else: Thw CSub, "TRmkVer should 1 or 2", "TRmkVer", TRmkVer
 End Select
 End Function
 
-Private Function B_MPm$(InpPm As Drs)
+Function B_MPm$(InpPm As Drs)
 'InpPm Key Ret
 Dim O$(), Dr, Sfx$, Ret$
 For Each Dr In Itr(InpPm.Dy)
@@ -652,7 +652,7 @@ Next
 B_MPm = JnCommaSpc(O)
 End Function
 
-Private Sub Z_CdB()
+Sub Z_CdB()
 Dim Cd$(), ISrc As Drs, IDes As Drs, SrcCd$()
 GoSub Z
 Exit Sub
@@ -661,12 +661,12 @@ Z:
     Return
 End Sub
 
-Private Function B_CdOpt() As String()
+Function B_CdOpt() As String()
 PushI B_CdOpt, "Option Explicit"
 PushI B_CdOpt, "Option Compare Text"
 End Function
 
-Private Function B_CdCnst(JCnst As Drs) As String()
+Function B_CdCnst(JCnst As Drs) As String()
 'Fm : JCnst Key Fss
 'Ret: ! SrcCd for module constant
 Dim Dr
@@ -675,22 +675,22 @@ For Each Dr In Itr(JCnst.Dy)
 Next
 End Function
 
-Private Function B_MPmLin$(MainPm As Drs)
+Function B_MPmLin$(MainPm As Drs)
 'Fm  : MainPm (MainDD) : Nm TyChr AsTy !
 'Ret : !
-Dim O$(), Arg$, NM$, TyChr$, AsTy$, Dr, INm%, ITyChr%, IAsTy%
+Dim O$(), Arg$, Nm$, TyChr$, AsTy$, Dr, INm%, ITyChr%, IAsTy%
 AsgIx MainPm, "Nm TyChr AsTy", INm, ITyChr, IAsTy
 For Each Dr In Itr(MainPm.Dy)
-    NM = Dr(0)
+    Nm = Dr(0)
     TyChr = Dr(1)
     AsTy = Dr(2)
-    Arg = NM & TyChr & PpdIf(AsTy, " As ")
+    Arg = Nm & TyChr & PpdIf(AsTy, " As ")
     PushI O, Arg
 Next
 B_MPmLin = JnCommaSpc(O)
 End Function
 
-Private Function B_MMthLin$(MthTy$, Mthn$, Pm$, Ret$)
+Function B_MMthLin$(MthTy$, Mthn$, Pm$, Ret$)
 'MthTy is Either Function or Sub
 Dim TyChr$, RetSfx$
 If IsTyChr(Ret) Then
@@ -702,10 +702,7 @@ B_MMthLin = FmtQQ("? ??(?)?", MthTy, Mthn, TyChr, Pm, RetSfx)
 End Function
 
 
-Private Function XMBdy3Col() As Drs
+Function XMBdy3Col() As Drs
 'Insp "QIde_Gen_GenMod.XMBdy3Col", "Inspect", "Oup(XMBdy3Col) ", FmtCellDrs(XMBdy3Col), : Stop
 End Function
 
-Private Sub Z()
-QIde_Gen_GenMod:
-End Sub

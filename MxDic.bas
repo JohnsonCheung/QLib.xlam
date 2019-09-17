@@ -5,12 +5,12 @@ Const CLib$ = "QDta."
 Const CMod$ = CLib & "MxDic."
 
 Function DoDic(A As Dictionary, Optional InclDicValOptTy As Boolean, Optional Tit$ = "Key Val") As Drs
-DoDic = Drs(FoDic(InclDicValOptTy), DyoDic(A, InclDicValOptTy))
+DoDic = Drs(FoDic(InclDicValOptTy), DyzDi(A, InclDicValOptTy))
 End Function
 
 Function DtzDic(A As Dictionary, Optional DtNm$ = "Dic", Optional InclDicValOptTy As Boolean) As Dt
 Dim Dy()
-Dy = DyoDic(A, InclDicValOptTy)
+Dy = DyzDi(A, InclDicValOptTy)
 Dim F$
     If InclDicValOptTy Then
         F = "Key Val Ty"

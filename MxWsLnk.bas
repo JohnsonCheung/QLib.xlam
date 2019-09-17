@@ -12,7 +12,7 @@ Sub CrtWsnLnk()
 '      - fill 'go': all cell left to act cell down also need such emp cell to fill 'Go'
 '      - hyp lnk  : each go-cell, crt hyp lnk to A1 of each of the ws.  @@
 Dim At As Range: Set At = ActiveCell
-Dim W$():             W = AeEle(Wsny(WbzRg(At)), WszRg(At).Name) ' All other wsn ept the-ws-of-@At
+Dim W$():             W = AeEle(Wny(WbzRg(At)), WszRg(At).Name) ' All other wsn ept the-ws-of-@At
 
 '== Exit & Inf if cannot Crt ===========================================================================================
 If At.Column = 1 Then Debug.Print "Column cannot be 1": Exit Sub 'Exit=>
@@ -34,6 +34,3 @@ Dim Wsn: For Each Wsn In W
 Next
 End Sub
 
-Private Sub Z()
-QXls_F_WsLnk:
-End Sub

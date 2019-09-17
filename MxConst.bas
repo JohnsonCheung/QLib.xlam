@@ -68,13 +68,12 @@ Public Const SampFx$ = SampFxzKE24
 Property Get SampDbShpCst() As Database
 Set SampDbShpCst = Db(SampFbzShpCst)
 End Property
+
 Property Get DbEng() As DBEngine
-Set DbEng = dao.DBEngine
+Set DbEng = DAO.DBEngine
 End Property
-Private Function Db(A) As Database
-Set Db = DbEng.OpenDatabase(A)
-End Function
-Property Get SampCnzDutyDta() As AdoDB.Connection
+
+Property Get SampCnzDutyDta() As ADODB.Connection
 Set SampCnzDutyDta = CnzFb(SampFbzDutyDta)
 End Property
 Property Get SampFb$()
@@ -87,7 +86,7 @@ Property Get SampDbDutyDta() As Database
 Set SampDbDutyDta = Db(SampFbzDutyDta)
 End Property
 
-Private Sub AAAAA()
+Sub AAAAA()
 Dim A
 '{00024500-0000-0000-C000-000000000046}
 Set A = Interaction.CreateObject("{00024500-0000-0000-C000-000000000046}", "Excel.Application")

@@ -4,13 +4,13 @@ Option Explicit
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxWrd."
 Const WrdPatn$ = "[a-zA-Z][a-zA-Z0-9_]*"
-Private Sub Z_DiWrdqCnt()
+Sub Z_DiWrdqCnt()
 Dim A As Dictionary: Set A = DiWrdqCnt(JnCrLf(SrczP(CPj)))
 Set A = SrtDic(A)
 BrwDic A
 End Sub
 
-Private Sub Z_WrdStszL()
+Sub Z_WrdStszL()
 Debug.Print WrdSts(SrczP(CPj))
 End Sub
 
@@ -29,7 +29,7 @@ B = Len(S)
 WrdSts = WrdSts_(B, L, W, D)
 End Function
 
-Private Function WrdSts_$(B&, L&, W&, D&)
+Function WrdSts_$(B&, L&, W&, D&)
 Dim BB As String * 9: RSet BB = B
 Dim LL As String * 9: RSet LL = L
 Dim WW As String * 9: RSet WW = W
@@ -73,11 +73,25 @@ Case 0: Exit Function
 Case Else: FstWrd = CvMch(A(0)).Value
 End Select
 End Function
+Function NNmChrRx() As RegExp
+Dim O As New RegExp
+Set O = Rx("\W")
+End Function
 
+Function RplNNmChr$(S)
+'Ret :S #Rpl-Non-NmChr-To-Spc# @@
+RplNNmChr = NNmChrRx.Replace(S, " ")
+End Function
+Function AmRplNNmChr(Ay) As String()
+Dim L: For Each L In Itr(Ay)
+    PushI AmRplNNmChr, RplNNmChr(L)
+Next
+End Function
+Private Sub Z_AmRplNNmChr()
+Brw AmRplNNmChr(SrczP(CPj))
+End Sub
 Function WrdAy(S) As String()
-'Dim A$: A = RplCrLf(S)
-'Debug.Print InStr(A, vbCr)
-'Debug.Print InStr(A, vbLf)
+':Wrd: :S #Wrd# !Fst-Let is FstNmChr and Rest is NmChr.  All Non-NmChr will be replace to Spc and Take SyzSS
 Static X As RegExp
 If IsNothing(X) Then Set X = Rx(WrdPatn, IsGlobal:=True, MultiLine:=True)
 Dim I As Match: For Each I In X.Execute(S)
@@ -154,7 +168,7 @@ Next
 End Function
 
 
-Private Sub Z_WrdLblLin()
+Sub Z_WrdLblLin()
 Dim Lin, FmNo&
 GoSub T0
 Exit Sub
@@ -170,7 +184,7 @@ Tst:
     C
     Return
 End Sub
-Private Sub Z_WrdPosAy()
+Sub Z_WrdPosAy()
 Dim Lin
 GoSub T0
 Exit Sub
@@ -186,7 +200,7 @@ Tst:
     Return
 End Sub
 
-Private Sub Z_WrdLblLy()
+Sub Z_WrdLblLy()
 Dim Fm&: Fm = 1
 Brw WrdLblLy(SrczP(CPj), Fm)
 End Sub

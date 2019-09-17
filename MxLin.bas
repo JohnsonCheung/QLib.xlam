@@ -8,8 +8,8 @@ Function HasDDRmk(Lin) As Boolean
 HasDDRmk = HasSubStr(Lin, "--")
 End Function
 
-Function HitT1Ay(Lin, T1Ay$()) As Boolean
-HitT1Ay = HasEle(T1Ay, T1(Lin))
+Function HitAmT1(Lin, AmT1$()) As Boolean
+HitAmT1 = HasEle(AmT1, T1(Lin))
 End Function
 Function PfxzPfxSy$(S, PfxSy$())
 Dim Pfx$, I

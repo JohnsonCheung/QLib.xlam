@@ -22,7 +22,7 @@ Dim Msgi$:       Msgi = "#" & Tmpn & vbTab & Msg
 :                       InfLin CSub, "File is backuped", "As-file", TarFfn
 End Function
 
-Private Function BkPth$(Ffn)
+Function BkPth$(Ffn)
 ':BkPth: :Pth #Backup-Path# ! Backup path of a Ffn
 BkPth = AddFdrEns(BkHom(Ffn), TmpNm)
 End Function
@@ -33,15 +33,15 @@ Sub BackupP(Optional Msg$ = "Backup")
 BackupFfn Pjf(CPj), Msg
 End Sub
 
-Private Function BkFfn$(Ffn)
+Function BkFfn$(Ffn)
 BkFfn = BkPth(Ffn) & Fn(Ffn)
 End Function
 
-Private Function BkHomP$()
+Function BkHomP$()
 BkHomP = BkHom(CPjf)
 End Function
 
-Private Function BkHom$(Ffn)
+Function BkHom$(Ffn)
 BkHom = EnsPth(Ffn & ".backup")
 End Function
 

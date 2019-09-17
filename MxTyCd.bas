@@ -40,6 +40,3 @@ Function CdMty$(Mtyn)
 CdMty = FmtMacro(Tp, Mtyn)
 End Function
 
-Private Sub Z()
-Stop
-End Sub

@@ -7,12 +7,12 @@ Dim A_Dy()
 Dim A_IsDesAy() As Boolean
 Dim A_UC&
 
-Private Function SrtDrszAllCol(A As Drs) As Drs
+Function SrtDrszAllCol(A As Drs) As Drs
 Dim Ixy&(): Ixy = RxyzSrtDy(A.Dy)
-  SrtDrszAllCol = DwRxy(A, Ixy)
+  SrtDrszAllCol = F_SubDrs_BySubRxy(A, Ixy)
 End Function
 
-Private Sub Z_SrtDrs()
+Sub Z_SrtDrs()
 Dim Drs As Drs, Act As Drs, Ept As Drs, SrtByFF$
 GoSub T0
 Exit Sub
@@ -48,7 +48,7 @@ If SrtByDashFF = "" Then
     Exit Function
 End If
 Dim Ay$():                Ay = Ny(SrtByDashFF)           ' Each ele may have - as pfx, which mean descending
-Dim Fny$():              Fny = RmvPfxzAy(Ay, "-")
+Dim Fny$():              Fny = AmRmvPfx(Ay, "-")
 Dim Cxy&():              Cxy = Ixy(D.Fny, Fny)
 Dim Des() As Boolean:    Des = SrtDrs__IsDesAy(Ay)
 Dim Dy():                 Dy = SrtDyzCy(D.Dy, Cxy, Des)
@@ -66,7 +66,7 @@ End If
 ReDim BoolAyzDft(U)
 End Function
 
-Private Sub Z_RxyzSrtDy()
+Sub Z_RxyzSrtDy()
 Dim Dy(), IsDesAy() As Boolean
 GoSub T0
 GoSub T1
@@ -86,7 +86,7 @@ Tst:
     C
     Return
 End Sub
-Private Function RxyzSrtDy(Dy(), Optional IsDesAy) As Long()
+Function RxyzSrtDy(Dy(), Optional IsDesAy) As Long()
 If Si(Dy) = 0 Then Exit Function
                A_UC = UB(Dy(0))
           A_IsDesAy = BoolAyzDft(IsDesAy, A_UC)
@@ -99,7 +99,7 @@ Function SrtDyzCy(Dy(), SrtCxy&(), Optional IsDesAy) As Variant()
 SrtDyzCy = AwIxy(Dy, RxyzSrtDy(SelDy(Dy, SrtCxy), IsDesAy))
 End Function
 
-Private Function SrtDrs__IsDesAy(Ay$()) As Boolean()
+Function SrtDrs__IsDesAy(Ay$()) As Boolean()
 Dim I: For Each I In Ay
     PushI SrtDrs__IsDesAy, FstChr(I) = "-"
 Next
@@ -109,7 +109,7 @@ Function SrtDy(Dy(), Optional IsDesAy) As Variant()
 SrtDy = AwIxy(Dy, RxyzSrtDy(Dy, IsDesAy))
 End Function
 
-Private Function RxyzSrtDy__LE(Ixy&(), I&) As Long()
+Function RxyzSrtDy__LE(Ixy&(), I&) As Long()
 'Ret : sub-sub-of-Ixy which is LE than I
 Dim KeyB: KeyB = A_Dy(I)
 Dim J: For Each J In Ixy
@@ -117,7 +117,7 @@ Dim J: For Each J In Ixy
 Next
 End Function
 
-Private Function RxyzSrtDy__GT(Ixy&(), I&) As Long()
+Function RxyzSrtDy__GT(Ixy&(), I&) As Long()
 'Ret : sub-sub-of-Ixy which is GT than I
 Dim KeyB: KeyB = A_Dy(I)
 Dim J: For Each J In Ixy
@@ -125,7 +125,7 @@ Dim J: For Each J In Ixy
 Next
 End Function
 
-Private Function RxyzSrtDy__IsLE(IxA, KeyB) As Boolean
+Function RxyzSrtDy__IsLE(IxA, KeyB) As Boolean
 'Ret : true if @A is LE than @B
 Dim KeyA: KeyA = A_Dy(IxA)
 RxyzSrtDy__IsLE = IsLEzAy(KeyA, KeyB, A_IsDesAy)
@@ -150,7 +150,7 @@ Next
 IsGTzAy = True
 End Function
 
-Private Function RxyzSrtDy__Swap(Ixy2&()) As Long()
+Function RxyzSrtDy__Swap(Ixy2&()) As Long()
 Dim KeyB: KeyB = A_Dy(Ixy2(1))
 If RxyzSrtDy__IsLE(Ixy2(0), KeyB) Then
     RxyzSrtDy__Swap = Ixy2
@@ -160,7 +160,7 @@ Else
 End If
 End Function
 
-Private Function RxyzSrtDy___Srt(Ixy&()) As Long()
+Function RxyzSrtDy___Srt(Ixy&()) As Long()
 Dim O&()
     Select Case UB(Ixy)
     Case -1

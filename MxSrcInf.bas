@@ -3,21 +3,10 @@ Option Compare Text
 Option Explicit
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxSrcInf."
-Private P As VBProject
-Private C As VBComponent
-Private Sub Y__SrcDcl()
-BrwAy Dcl(Y_Src)
-End Sub
-
-Private Sub Y__FstMthIxzN()
-Dim Act%
-Act = FstMthIx(Y_Src)
-Ass Act = 2
-End Sub
 Function SrczMdn(Mdn) As String()
 SrczMdn = Src(Md(Mdn))
 End Function
-Private Sub Y__MthTopRmIx_SrcFm()
+Sub Y__MthTopRmIx_SrcFm()
 Dim ODy()
     Dim Src$(): Src = SrczMdn("IdeSrcLin")
     Dim Dr(), Lx&
@@ -38,20 +27,20 @@ Dim ODy()
 BrwDrs DrszFF("Mth RmkLx Lin", ODy)
 End Sub
 
-Private Property Get Y_Src() As String()
+Function Y_Src() As String()
 Y_Src = Src(Md("IdeSrc"))
-End Property
+End Function
 
-Private Property Get Y_SrcLin()
-Y_SrcLin = "Private Sub IsLinMth()"
+Property Get Y_SrcLin()
+Y_SrcLin = "Sub IsLinMth()"
 End Property
 
 Sub AsgMthDr(MthDr, OMdy$, OTy$, ONm$, OPrm$, ORet$, OLinRmk$, OLines$, OTopRmk$)
 AsgAp MthDr, OMdy, OTy, ONm, OPrm, ORet, OLinRmk, OLines, OTopRmk
 End Sub
 
-Function CSrcL$()
-CSrcL = SrcLzM(CMd)
+Function CSrcl$()
+CSrcl = Srcl(CMd)
 End Function
 
 Function SrcLP$()
@@ -69,7 +58,7 @@ Function CSrc() As String()
 ':CSrc: :Src #Cur-Src#
 CSrc = Src(CMd)
 End Function
-Private Sub Z_VbExmLy()
+Sub Z_VbExmLy()
 Vc VbExmLy(SrczP(CPj))
 End Sub
 Function VbExmLy(Src$()) As String()
@@ -116,11 +105,11 @@ Next
 End Function
 
 Function Src(M As CodeModule) As String()
-Src = SplitCrLf(SrcLzM(M))
+Src = SplitCrLf(Srcl(M))
 End Function
 
 Function SrczM(M As CodeModule) As String()
-SrczM = SplitCrLf(SrcLzM(M))
+SrczM = SplitCrLf(Srcl(M))
 End Function
 
 Function SrcV() As String()

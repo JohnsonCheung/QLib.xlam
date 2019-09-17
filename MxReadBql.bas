@@ -30,7 +30,7 @@ If IsNeedQte(F) Then O = QteSqBkt(O)
 ShtTyscfzCol = O
 End Function
 
-Private Sub Z_CrtTTzFbqlPth()
+Sub Z_CrtTTzFbqlPth()
 Dim D As Database: Set D = TmpDb
 Dim P$: P = TmpPth
 WrtFbqlzDb P, SampDbDutyDta
@@ -51,7 +51,7 @@ For Each T In FnnAy
 Next
 End Sub
 
-Private Sub Z_CrtTblzFbql()
+Sub Z_CrtTblzFbql()
 Dim Fbql$: Fbql = TmpFt
 WrtFbql Fbql, SampDbDutyDta, "PermitD"
 Dim D As Database: Set D = TmpDb
@@ -83,7 +83,7 @@ Dim T$
     T = T0
     If T = "" Then T = TzFbql(Fbql)
 
-Dim F%, L$, R As dao.Recordset
+Dim F%, L$, R As DAO.Recordset
 F = FnoI(Fbql)
 Line Input #F, L
 CrtTblzShtTyscfBql D, T, L
@@ -98,7 +98,7 @@ Close #F
 End Sub
 
 Sub CrtTblzShtTyscfBql(D As Database, T, ShtTyscfBql$)
-Dim Td As New dao.TableDef
+Dim Td As New DAO.TableDef
 Td.Name = T
 Dim I
 For Each I In Split(ShtTyscfBql, "`")
@@ -107,8 +107,8 @@ Next
 D.TableDefs.Append Td
 End Sub
 
-Private Function FdzShtTyscf(ShtTyscf) As dao.Field
-Dim T As dao.DataTypeEnum
+Function FdzShtTyscf(ShtTyscf) As DAO.Field
+Dim T As DAO.DataTypeEnum
 Dim S As Byte
 With Brk2(ShtTyscf, ":")
     Select Case True
@@ -122,15 +122,15 @@ End With
 End Function
 
 Function ShtTyBqlzT$(D As Database, T)
-Dim Ay$(), F As dao.Field
+Dim Ay$(), F As DAO.Field
 For Each F In D.TableDefs(T).Fields
     PushI Ay, ShtTyszFd(F) & ":" & F.Name
 Next
 ShtTyBqlzT = Jn(Ay, "`")
 End Function
 
-Private Function ShtTyszFd$(A As dao.Field)
-Dim B$: B = ShtTyzDao(A.Type)
+Function ShtTyszFd$(A As DAO.Field)
+Dim B$: B = ShtDaoTy(A.Type)
 If A.Type = dbText Then
     B = B & A.Size
 End If

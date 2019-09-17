@@ -11,11 +11,11 @@ For Each T1 In D
 Next
 End Function
 
-Private Function FmtAyPmzT1(Ay, T1, AlignNCol) As String()
+Function FmtAyPmzT1(Ay, T1, AlignNCol) As String()
 FmtAyPmzT1 = AlignLyzFstNTerm(AwT1(Ay, T1), CInt(AlignNCol))
 End Function
 
-Private Function T1ToAlignNColDic(PmStr$) As Dictionary
+Function T1ToAlignNColDic(PmStr$) As Dictionary
 Set T1ToAlignNColDic = New Dictionary
     Dim Ay$(), F, D As Dictionary
     Ay = TermAy(PmStr)
@@ -29,7 +29,7 @@ Set T1ToAlignNColDic = New Dictionary
     Next
 End Function
 
-Private Function T1ToAlignNColDiczNoSrt(PmLy$()) As Dictionary
+Function T1ToAlignNColDiczNoSrt(PmLy$()) As Dictionary
 Dim J%, W%, F
 Set T1ToAlignNColDiczNoSrt = New Dictionary
 For J = 2 To UB(PmLy)

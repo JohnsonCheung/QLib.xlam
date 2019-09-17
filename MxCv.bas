@@ -67,7 +67,7 @@ Case Else: O = "???"
 End Select
 ShtMthTy = O
 End Function
-Private Sub Z_ShtMthTyzLin()
+Sub Z_ShtMthTyzLin()
 GoSub Z
 Exit Sub
 Z:

@@ -4,6 +4,14 @@ Option Explicit
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxDupMth."
 Public Const FFoDupMth$ = FFoMthc
+Function DupMthly() As String()
+Dim D As Drs: D = DoDupMthP
+Dim Md$():   Md = AmAlignR(StrCol(D, "Mdn"))
+Dim Mth$(): Mth = AmAlign(StrCol(D, "Mthn"))
+Dim A$():     A = AyabJnDot(Md, Mth)
+Dim MthLin$(): MthLin = StrCol(D, "MthLin")
+                   DupMthly = AyabJnSngQ(A, MthLin)
+End Function
 
 Function DupMthWsP() As Worksheet
 Set DupMthWsP = DupMthWszP(CPj)
@@ -13,19 +21,19 @@ Function DoDupMthP(Optional InclPrv As Boolean, Optional IsExactDup As Boolean) 
 DoDupMthP = DoDupMthzP(CPj, InclPrv, IsExactDup)
 End Function
 
-Private Function DoDupMthzP(P As VBProject, Optional InclPrv As Boolean, Optional IsExactDup As Boolean) As Drs
-Dim A As Drs: A = DwEq(DoMthczP(P), "MdTy", "Std")
+Function DoDupMthzP(P As VBProject, Optional InclPrv As Boolean, Optional IsExactDup As Boolean) As Drs
+Dim A As Drs: A = F_SubDrs_ByC_Eq(DoMthczP(P), "MdTy", "Std")
 Dim A1 As Drs:
     If InclPrv Then
         A1 = A
     Else
         A1 = DwNe(A, "Mdy", "Prv")
     End If
-Dim B As Drs: B = DwDup(A1, "Mthn")
+Dim B As Drs: B = F_SubDrs_ByDupFF(A1, "Mthn")
 Dim C As Drs: C = SrtDrs(B, "Mthn")
 Dim D As Drs: D = AddColzValIdqCnt(C, "Mthl")
 If IsExactDup Then
-    DoDupMthzP = DwDup(D, "MthlId")
+    DoDupMthzP = F_SubDrs_ByDupFF(D, "MthlId")
 Else
     DoDupMthzP = D
 End If
@@ -41,11 +49,7 @@ Function DupMthWszP(P As VBProject) As Worksheet
 Set DupMthWszP = FmtDupMthWs(WszDrs(DoDupMthzP(P), "DupMth"))
 End Function
 
-Private Sub Z_DoDupMthP()
+Sub Z_DoDupMthP()
 BrwDrs DoDupMthP
 End Sub
 
-Private Sub Z()
-'Z_PjDupMthNyWithLinesId
-MIde_Mth_Dup:
-End Sub

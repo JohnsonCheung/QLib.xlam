@@ -23,7 +23,7 @@ End Function
 Sub IupTbl(D As Database, T, Drs As Drs)
 Dim Dy(): Dy = Drs.Dy
 If Si(Dy) = 0 Then Exit Sub
-Dim R As dao.Recordset, Q$, Sql$, Dr
+Dim R As DAO.Recordset, Q$, Sql$, Dr
 'Sql = SqlSel_T_Wh(T, BexpzFnyzSqlQPfxSy(SkFny(D, T), SkSqlQPfxSy(D, T)))
 For Each Dr In Dy
     Q = FmtQQAv(Sql, CvAv(Dr))

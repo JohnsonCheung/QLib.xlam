@@ -11,19 +11,15 @@ Private X_Msg&
 Private X_Lg&
 Private O$() ' Used by EntAyR
 
-Private Sub AsgRs(A As dao.Recordset, ParamArray OAp())
-
-End Sub
-
 Sub CurLgLis(Optional Sep$ = " ", Optional Top% = 50)
 D CurLgLy(Sep, Top)
 End Sub
 
 Function CurLgLy(Optional Sep$ = " ", Optional Top% = 50) As String()
-CurLgLy = RsLy(CurLgRs(Top), Sep)
+CurLgLy = RsMapJn(CurLgRs(Top), Sep)
 End Function
 
-Function CurLgRs(Optional Top% = 50) As dao.Recordset
+Function CurLgRs(Optional Top% = 50) As DAO.Recordset
 Set CurLgRs = L.OpenRecordset(FmtQQ("Select Top ? x.*,Fun,MsgTxt from Lg x left join Msg a on x.Msg=a.Msg order by Sess desc,Lg", Top))
 End Function
 
@@ -32,14 +28,14 @@ D CurSessLy(Sep, Top)
 End Sub
 
 Function CurSessLy(Optional Sep$, Optional Top% = 50) As String()
-CurSessLy = RsLy(CurSessRs(Top), Sep)
+CurSessLy = RsMapJn(CurSessRs(Top), Sep)
 End Function
 
-Function CurSessRs(Optional Top% = 50) As dao.Recordset
+Function CurSessRs(Optional Top% = 50) As DAO.Recordset
 Set CurSessRs = L.OpenRecordset(FmtQQ("Select Top ? * from sess order by Sess desc", Top))
 End Function
 
-Private Function CvSess&(A&)
+Function CvSess&(A&)
 If A > 0 Then CvSess = A: Exit Function
 'CvSess = FvzQ(L, "select Max(Sess) from Sess")
 End Function
@@ -48,7 +44,7 @@ Sub DmpFei(A As Fei)
 'Debug.Print A.ToStr
 End Sub
 
-Private Sub EnsMsg(Fun$, MsgTxt$)
+Sub EnsMsg(Fun$, MsgTxt$)
 With L.TableDefs("Msg").OpenRecordset
     .Index = "Msg"
     .Seek "=", Fun, MsgTxt
@@ -64,7 +60,7 @@ With L.TableDefs("Msg").OpenRecordset
 End With
 End Sub
 
-Private Sub EnsSess()
+Sub EnsSess()
 If X_Sess > 0 Then Exit Sub
 With L.TableDefs("Sess").OpenRecordset
     .AddNew
@@ -74,7 +70,7 @@ With L.TableDefs("Sess").OpenRecordset
 End With
 End Sub
 
-Private Property Get L() As Database
+Property Get L() As Database
 Const CSub$ = CMod & "L"
 On Error GoTo X
 If IsNothing(X_L) Then
@@ -139,30 +135,30 @@ End Sub
 
 Sub LgCrt()
 CrtFb LgFb
-Dim D As Database, T As dao.TableDef
+Dim D As Database, T As DAO.TableDef
 Set D = Db(LgFb)
 '
-Set T = New dao.TableDef
+Set T = New DAO.TableDef
 T.Name = "Sess"
 AddFldzId T
 AddFldzTimstmp T, "Dte"
 D.TableDefs.Append T
 '
-Set T = New dao.TableDef
+Set T = New DAO.TableDef
 T.Name = "Msg"
 AddFldzId T
 AddFldzTxt T, "Fun MsgTxt"
 AddFldzTimstmp T, "Dte"
 D.TableDefs.Append T
 '
-Set T = New dao.TableDef
+Set T = New DAO.TableDef
 T.Name = "Lg"
 AddFldzId T
 AddFldzLng T, "Sess Msg"
 AddFldzTimstmp T, "Dte"
 D.TableDefs.Append T
 '
-Set T = New dao.TableDef
+Set T = New DAO.TableDef
 T.Name = "LgV"
 AddFldzId T
 AddFldzLng T, "Lg Val"
@@ -223,7 +219,7 @@ Sfx = FmtQQ(" @? Sess(?) Lg(?)", TimStr, Sess, A)
 Stop '
 End Function
 
-Private Sub LgOpn()
+Sub LgOpn()
 Set X_L = Db(LgFb)
 End Sub
 
@@ -257,10 +253,6 @@ End If
 LgSchm = XSchm
 End Property
 
-Private Function RsLy(D As Database, Sep$) As String()
-
-End Function
-
 Sub SessBrw(Optional A&)
 BrwAy SessLy(CvSess(A))
 End Sub
@@ -285,7 +277,7 @@ Function SessNLg%(A&)
 'SessNLg = FvzQ(L, "Select Count(*) from Lg where Sess=" & A)
 End Function
 
-Private Sub WrtLg(Fun$, MsgTxt$)
+Sub WrtLg(Fun$, MsgTxt$)
 With L.TableDefs("Lg").OpenRecordset
     .AddNew
     !Sess = X_Sess
@@ -299,12 +291,8 @@ Private Sub X(A$)
 PushI XSchm, A
 End Sub
 
-Private Sub Z()
-Z_Lg
-MDao_Lg:
-End Sub
 
-Private Sub Z_Lg()
+Sub Z_Lg()
 LgKill
 Debug.Assert Dir(LgFb) = ""
 LgBeg

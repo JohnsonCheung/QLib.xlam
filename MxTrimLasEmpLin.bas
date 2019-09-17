@@ -1,8 +1,9 @@
 Attribute VB_Name = "MxTrimLasEmpLin"
 Option Explicit
 Option Compare Text
+Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxTrimLasEmpLin."
-Private Function HasLasEmpLin(Ly$()) As Boolean
+Function HasLasEmpLin(Ly$()) As Boolean
 Dim N&: N = Si(Ly)
 If N = 0 Then Exit Function
 Dim O As Boolean: O = Ly(N - 1) = ""

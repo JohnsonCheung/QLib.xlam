@@ -3,15 +3,8 @@ Option Explicit
 Option Compare Text
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxIdeTool."
-Function AAA(X)
-Dim Rg As Range
-Set Rg = CWs.Range("D5")
-Rg.Value = 123
-AAA = X + 1
-Exit Function
-X: Debug.Print Err.Description
-End Function
-Private Function Spec() As String()
+
+Function Spec() As String()
 Erase XX
 X "Bars"
 X " AA A1 A2 A3"
@@ -22,7 +15,7 @@ Spec = XX  '*Spec
 Erase XX
 End Function
 
-Private Function BtnSpec() As String()
+Function BtnSpec() As String()
 BtnSpec = IndentedLy(Spec, "Bars")
 End Function
 
@@ -31,17 +24,15 @@ EnsBtns BtnSpec
 EnsClsLines "IdeTool", ToolClsCd
 End Sub
 
-Private Function ToolClsCd$()
+Function ToolClsCd$()
 Stop
 End Function
 
-Private Function ToolBarNy() As String()
-ToolBarNy = T1Ay(BtnSpec)
+Function ToolBarNy() As String()
+ToolBarNy = AmT1(BtnSpec)
 End Function
 
 Sub RmvIdeTools()
 RmvBarByNy ToolBarNy
 End Sub
 
-Private Sub Z()
-End Sub

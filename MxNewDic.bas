@@ -62,6 +62,7 @@ Next
 End Function
 Function JnStrDic$(StrDic As Dictionary, Optional Sep$)
 ':StrDic: :Dic<Str,Str> #Str-Dic# ! Key is str and Val is str
+Stop
 JnStrDic = Join(SyzItr(StrDic.Items), Sep)
 End Function
 Function DiczDrsCC(A As Drs, Optional CC$) As Dictionary
@@ -119,11 +120,11 @@ Function DiT1qLyItr(TRstLy$(), T1ss$) As Dictionary
 'Ret       : DicOf T1 to LyItr ! it will have sam of keys as (@T1ss nitm + 1).
 '                              ! Each val is either :Ly or emp Vb.Collection if no such T1.  The :Ly will have T1 rmv.
 '                              ! The las key is '*Er' and the val is :Ly or emp-vb.Collection.  The :Ly will have T1 incl.
-Dim T1Ay$(): T1Ay = SyzSS(T1ss)
+Dim AmT1$(): AmT1 = SyzSS(T1ss)
 
 Dim O As New Dictionary
 Dim Er$()               ' The er lin of @TRstLy
-    Dim T1: For Each T1 In Itr(T1Ay)  ' Put all T1 in @T1Ay to @O
+    Dim T1: For Each T1 In Itr(AmT1)  ' Put all T1 in @AmT1 to @O
         O.Add T1, EmpSy
     Next
     Dim T$, Rst$, L, Ly$(): For Each L In Itr(TRstLy) ' For each @TRstLy lin put it to either @O or @Er

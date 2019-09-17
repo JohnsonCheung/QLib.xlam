@@ -8,12 +8,12 @@ Enum EmFixWdt
     EiFixWdt = 1
 End Enum
 Private Type X
-Wb As Workbook
-IxWs As Worksheet
-IxLo As ListObject
+    Wb As Workbook
+    IxWs As Worksheet
+    IxLo As ListObject
 End Type
 Private X As X
-Private Sub Init()
+Sub Init()
 EnsWb
 EnsIxWs
 End Sub
@@ -50,7 +50,7 @@ With X.IxLo.ListRows
     .Item(LAs).Range.Value = SqHzAp(LAs, N, DrsNo, "Drs", "Go", NRowzDrs(A), NColzDrs(A), IsSamDrEleCnt(A))
 End With
 Wsn = N & DrsNo
-Set R = DtaRgzWs(AddWszDrs(X.Wb, A, Wsn))
+Set R = DtaDtarg(AddWszDrs(X.Wb, A, Wsn))
 If Wdt = EmFixWdt.EiFixWdt Then
     R.Font.Name = "Courier New"
     R.Font.Size = 9
@@ -59,16 +59,16 @@ R.Columns.EntireColumn.AutoFit
 AddHypLnk LasRowCell(X.IxLo, "Val"), Wsn
 End Sub
 
-Private Function XNxtDrsNo%(DrsNm$)
+Function XNxtDrsNo%(DrsNm$)
 Dim A As Drs, B As Drs, C As Drs
 A = DrszLo(X.IxLo)
-B = DwEqSel(A, "Nm", DrsNm, "Nm Drs# ValTy")
-C = DwEqE(B, "ValTy", "Drs")
+B = F_SubDrs_ByC_EqSel(A, "Nm", DrsNm, "Nm Drs# ValTy")
+C = F_SubDrs_ByC_EqE(B, "ValTy", "Drs")
 If NoReczDrs(C) Then XNxtDrsNo = 1: Exit Function
 XNxtDrsNo = AyMax(IntCol(C, "Drs#")) + 1
 End Function
 
-Private Sub EnsIxWs()
+Sub EnsIxWs()
 Set X.IxWs = FstWs(X.Wb)
 If X.IxWs.Name <> "Index" Then
     X.IxWs.Name = "Index"
@@ -77,10 +77,7 @@ End If
 Set X.IxLo = X.IxWs.ListObjects(1)
 End Sub
 
-Private Sub EnsWb()
-Set X.Wb = EnsWbzXls(Xls, "Insp")
+Sub EnsWb()
+Set X.Wb = EnsWbn("Insp", Xls)
 End Sub
 
-Private Sub Z()
-QXls_B_XlsOp_InspDrs:
-End Sub

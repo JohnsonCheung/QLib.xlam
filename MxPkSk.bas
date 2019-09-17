@@ -1,6 +1,7 @@
 Attribute VB_Name = "MxPkSk"
 Option Compare Text
 Option Explicit
+Const CNs$ = "a"
 Const CLib$ = "QDao."
 Const CMod$ = CLib & "MxPkSk."
 
@@ -31,7 +32,7 @@ PushNB ChkPkSkzT, ChkSk(D, T)
 End Function
 
 Function ChkSk$(D As Database, T)
-Dim SkIdx As dao.Index, I As dao.Index
+Dim SkIdx As DAO.Index, I As DAO.Index
 If Not HasIdx(D, T, Skn) Then
     ChkSk = FmtQQ("Not SecondaryKey for Table[?] in Db[?]", T, D.Name)
     Exit Function

@@ -8,7 +8,7 @@ Sub SetFvzQ(D As Database, Q, V)
 FvzRs(D.OpenRecordset(Q)) = V
 End Sub
 
-Sub SetFvzRs(A As dao.Recordset, V)
+Sub SetFvzRs(A As DAO.Recordset, V)
 If NoRec(A) Then
     A.AddNew
 Else
@@ -18,7 +18,7 @@ A.Fields(0).Value = V
 A.Update
 End Sub
 
-Sub SetFvzRsF(Rs As dao.Recordset, Fld, V)
+Sub SetFvzRsF(Rs As DAO.Recordset, Fld, V)
 With Rs
     .Edit
     .Fields(Fld).Value = V

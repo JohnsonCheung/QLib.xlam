@@ -55,7 +55,7 @@ End If
 If Not W.KeepFcmd Then Kill Fcmdw
 End Function
 
-Private Function WaitFwaitg(Fwaitg$, Optional ChkSec% = 10, Optional TimOutSec% = 60, Optional Sty As VbAppWinStyle = VbAppWinStyle.vbMaximizedFocus) As Boolean _
+Function WaitFwaitg(Fwaitg$, Optional ChkSec% = 10, Optional TimOutSec% = 60, Optional Sty As VbAppWinStyle = VbAppWinStyle.vbMaximizedFocus) As Boolean _
 'Return True, if Fwaitg is found.
 Dim J%
 For J = 1 To TimOutSec \ ChkSec
@@ -67,7 +67,7 @@ For J = 1 To TimOutSec \ ChkSec
 Next
 End Function
 
-Private Sub Z_Fcmdw()
+Sub Z_Fcmdw()
 Debug.Print LineszFt(Fcmdw("Dir"))
 End Sub
 Function Fwaitg$(Fcmd$)
@@ -81,7 +81,7 @@ Dim S$: S = CmdLines & vbCrLf & EchoLin
 Fcmdw = WrtStr(S, T)
 End Function
 
-Private Sub Z_RunFcmd()
+Sub Z_RunFcmd()
 RunFcmd "Cmd"
 MsgBox "AA"
 End Sub
@@ -137,20 +137,20 @@ AddMthzCd N, CdLines
 Run N
 End Sub
 
-Private Function RunCdMd() As CodeModule
+Function RunCdMd() As CodeModule
 'EnsMd "ZTmpModForRun"
 End Function
-Private Sub AddMthzCd(Mthn, CdLines$)
+Sub AddMthzCd(Mthn, CdLines$)
 RunCdMd.AddFromString Mthl(Mthn, CdLines)
 End Sub
-Private Function Mthl$(Mthn, CdLines$)
+Function Mthl$(Mthn, CdLines$)
 Dim Lines$, L1$, L2$
-L1 = "Private Sub Z_" & Mthn & "()"
+L1 = "Sub Z_" & Mthn & "()"
 L2 = "End Sub"
 Mthl = L1 & vbCrLf & CdLines & vbCrLf & L2
 End Function
 
-Private Function Y_CdLines$()
+Function Y_CdLines$()
 Y_CdLines = "MsgBox Now"
 End Function
 
@@ -165,11 +165,11 @@ For Each F In TermAy(FunNN)
 Next
 End Sub
 
-Private Sub Z_TimFun()
+Sub Z_TimFun()
 TimFun "ZZA ZZB"
 End Sub
 
-Private Sub ZZA()
+Sub ZZA()
 Dim J&, I&
 For J = 0 To 100
     For I = 0 To 100
@@ -177,7 +177,7 @@ For J = 0 To 100
     Next
 Next
 End Sub
-Private Sub ZZB()
+Sub ZZB()
 Dim J&, I&
 For J = 0 To 100
     For I = 0 To 100

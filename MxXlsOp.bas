@@ -9,22 +9,22 @@ Enum EmWsPos
     EiRfWs
 End Enum
 
-Sub BrwFx(Fx)
+Sub Brw_Fx(Fx)
 If HasFfn(Fx) Then Debug.Print "No Fx:" & Fx
 ShwWb WbzFx(Fx)
 End Sub
 
-Sub CrtFx(Fx)
+Sub Crt_Fx(Fx)
 WbSavAs(NewWb, Fx).Close
 End Sub
 
-Function EnsFx$(Fx)
+Function Ens_Fx$(Fx)
 'Ret : crt an emp @Fx if not exist @@
-If NoFfn(Fx) Then CrtFx Fx
-EnsFx = Fx
+If NoFfn(Fx) Then Crt_Fx Fx
+Ens_Fx = Fx
 End Function
 
-Sub InsRow(OCell As Range, Optional N = 1)
+Sub Ins_Row_At(OCell As Range, Optional N = 1)
 'Fm OCell : due to xls ins row will the rg used to ins row, so @OCell will be rest to A1-of-original-@OCell.
 'Ret      : ins @N emp rows below the fst row of @OCell
 Dim Ws As Worksheet: Set Ws = WszRg(OCell)
@@ -34,23 +34,23 @@ Dim OIns:                     RgCRR(OCell, 1, 1, N).EntireRow.Insert ' @OCell wi
                   Set OCell = WsRC(Ws, R, C)                         ' reset @OCell to A1-of-orignal-@OCell ! <==
 End Sub
 
-Sub RmvRowEmp(ORg As Range)
-'Fm ORg : ! the rect may have emp row.  Aft rmv, @ORg will chg to pointing to the remaining rect.
-'Ret    : ! ##RmvRow-Wht:Emp-Fm:ORg Rmv all emp row ept keeping one emp row.  Rows rmv is ent row.
+Sub Rmv_EmpRow_InRg(OInRg As Range)
+'Fm OInRg : ! the rect may have emp row.  Aft rmv, @OInRg will chg to pointing to the remaining rect.
+'Ret    : ! ##Rmv_NRow_At-Wht:Emp-Fm:OInRg Rmv all emp row ept keeping one emp row.  Rows rmv is ent row.
 '         ! All non emp row will keep no chg and may shf up.
-'         ! set the @ORg pointing to
-Dim Ws As Worksheet: Set Ws = WszRg(ORg)     '                        ! <--
-Dim R&:                   R = ORg.Row        ' A1-Rno-of-@ORg         ! <--
-Dim C%:                   C = ORg.Column     ' A1-Cno-of-@ORg         ! <--
-Dim NR%:                 NR = ORg.Rows.Count
-Dim C2%:                 C2 = C2zRg(ORg)     ' N-Columns-of-@ORg      ! <--
-Dim Sq():                Sq = SqzRgNo(ORg)
+'         ! set the @OInRg pointing to
+Dim Ws As Worksheet: Set Ws = WszRg(OInRg)     '                        ! <--
+Dim R&:                   R = OInRg.Row        ' A1-Rno-of-@OInRg         ! <--
+Dim C%:                   C = OInRg.Column     ' A1-Cno-of-@OInRg         ! <--
+Dim NR%:                 NR = OInRg.Rows.Count
+Dim C2%:                 C2 = C2zRg(OInRg)     ' N-Columns-of-@OInRg      ! <--
+Dim Sq():                Sq = SqzRgNo(OInRg)
 Dim RRmv&():           RRmv = RxyzEmpRow(Sq) ' Rny to be rmv '        ! <--
 Dim NRLeft&:         NRLeft = NR - Si(R)     ' R2-of-the-remaining-rg
 Dim R2&:                 R2 = R + NRLeft - 1 '                        ! <--
 '=======================================================================================================================
 EntRows(Ws, RRmv).Remove
-Set ORg = WsRCRC(Ws, R, C, R2, C2)
+Set OInRg = WsRCRC(Ws, R, C, R2, C2)
 End Sub
 
 Function EntRowsStr$(Rny&())
@@ -65,13 +65,13 @@ Function EntRows(Ws As Worksheet, Rny&()) As Range
 Set EntRows = Ws.Range(EntRowsStr(Rny))
 End Function
 
-Sub RmvRow(OCell As Range, Optional N = 1)
-'Fm OCell : due the xls rmv row, the range used to rmv row will be changed, so @OCell will be rest to A1-of-original-@OCell.
-'Ret      : rmv the @N-rows fm the fst of @OCell.
-Dim Bef$: Bef = RgA1(OCell).Address    ' Original A1-of-@OCell
-RgCRR(OCell, 1, 1, N).EntireRow.Insert ' @OCell will be changed after insert
-Set OCell = RgRC(OCell, -N + 1, 1)     ' reset @OCell to A1-of-orignal-@OCell
-Dim Aft$: Aft = OCell.Address          ' Aft rmv row, the adr-of-@OCell
+Sub Rmv_NRow_At(OAt As Range, Optional N = 1)
+'Fm OAt : due the xls rmv row, the range used to rmv row will be changed, so @OAt will be rest to A1-of-original-@OAt.
+'Ret      : rmv the @N-rows fm the fst of @OAt.
+Dim Bef$: Bef = A1zRg(OAt).Address    ' Original A1-of-@OAt
+RgCRR(OAt, 1, 1, N).EntireRow.Insert ' @OAt will be changed after insert
+Set OAt = RgRC(OAt, -N + 1, 1)     ' reset @OAt to A1-of-orignal-@OAt
+Dim Aft$: Aft = OAt.Address          ' Aft rmv row, the adr-of-@OAt
 If Bef <> Aft Then Stop
 End Sub
 
@@ -91,7 +91,7 @@ For Each N In Itn(Ws.Names)
 Next
 End Sub
 
-Private Sub XEnsHyp(Cell As Range, W$())
+Sub XEnsHyp(Cell As Range, W$())
 'Fm W : Ws ny
 'Ret : Ens the @Cell is pointing of one of @W if the @cell val is in @W else rmv the hyp lnk @@
 Dim V:  V = Cell.Value
@@ -108,7 +108,7 @@ With Cell.Hyperlinks
     End If
 End With
 End Sub
-Private Sub Z_EnsHyp()
+Sub Z_EnsHyp()
 Dim Rg As Range
 GoSub Crt
 GoSub T0
@@ -134,7 +134,7 @@ Rmv:
 End Sub
 Sub EnsHyp(Rg As Range)
 'Ret: Ens the hyp lnk in @Rg is pointing ws A1 if the @Rg val is a ws name. @@
-Dim W$(): W = Wsny(WbzRg(Rg))   ' Ws ny
+Dim W$(): W = Wny(WbzRg(Rg))   ' Ws ny
 Dim Cell As Range: For Each Cell In Rg
     XEnsHyp Cell, W 'Ens the @Cell is pointing of one of @W if the @cell val is in @W else rmv the hyp lnk
 Next
@@ -151,10 +151,10 @@ End If
 End Sub
 
 Function LozAyH(Ay, Wb As Workbook, Optional Wsn$, Optional Lon$) As ListObject
-Set LozAyH = LozRg(RgzSq(SqH(Ay), A1zWb(Wb, Wsn)), Lon)
+Set LozAyH = CrtLo(RgzSq(SqH(Ay), A1zWb(Wb, Wsn)), Lon)
 End Function
 
-Private Sub Z_SetWsCdNm()
+Sub Z_SetWsCdNm()
 Dim A As Worksheet: Set A = NewWs
 SetWsCdNm A, "XX"
 ShwWs A
@@ -180,54 +180,15 @@ Sub SetWsCdNm(A As Worksheet, CdNm$)
 CmpzWs(A).Name = CdNm
 End Sub
 
-Sub SetWsCdNmAndLoNm(A As Worksheet, NM$)
-CmpzWs(A).Name = NM
-SetLoNm FstLo(A), NM
+Sub SetWsCdNmAndLon(A As Worksheet, Nm$)
+CmpzWs(A).Name = Nm
+SetLon FstLo(A), Nm
 End Sub
-Function RgzDbtzByWc(Db As Database, T, At As Range) As Range
+Function PutDbtAtzByWc(Db As Database, T, At As Range) As Range
 
 End Function
 
-Sub BdrRgAy(A() As Range, Ix As XlBordersIndex, Optional Wgt As XlBorderWeight = xlMedium)
-Dim I
-For Each I In Itr(A)
-    BDr CvRg(I), Ix, Wgt
-Next
-End Sub
 
-Function BdrLoAround(A As ListObject)
-Dim R As Range
-Set R = RgMoreTop(A.DataBodyRange)
-If A.ShowTotals Then Set R = RgMoreBelow(R)
-BdrAround R
-End Function
-
-Sub BdrEr(R As Range, Optional ColrNm$ = "Red")
-R.BorderAround xlContinuous, xlMedium, Color:=Colr(ColrNm)
-End Sub
-
-Sub BdrErzAy(RgAy() As Range, Optional ColrNm$ = "Red")
-Dim R: For Each R In Itr(RgAy)
-    BdrEr CvRg(R), ColrNm
-Next
-End Sub
-
-Sub BDr(A As Range, Ix As XlBordersIndex, Optional Wgt As XlBorderWeight = xlMedium)
-With A.Borders(Ix)
-  .LineStyle = xlContinuous
-  .Weight = Wgt
-End With
-End Sub
-Sub BdrNone(A As Range, Ix As XlBordersIndex)
-A.Borders(Ix).LineStyle = xlLineStyleNone
-End Sub
-
-Sub BdrAround(A As Range)
-BdrLeft A
-BdrRight A
-BdrTop A
-BdrBottom A
-End Sub
 Function CvCmt(A) As Comment
 Set CvCmt = A
 End Function
@@ -256,62 +217,7 @@ Dim I: For Each I In Itr(Cmt)
     CvCmt(I).Delete
 Next
 End Sub
-Sub BdrAroundNone(A As Range)
-BdrNone A, xlInsideHorizontal
-BdrNone A, xlInsideVertical
-BdrNone A, xlEdgeLeft
-BdrNone A, xlEdgeRight
-BdrNone A, xlEdgeBottom
-BdrNone A, xlEdgeTop
-End Sub
 
-Function RowzBelow(Rg As Range) As Range
-Dim R&: R = R2zRg(Rg) + 1
-Dim C1%: C1 = Rg.Column
-Dim C2%: C2 = C2zRg(Rg)
-Set RowzBelow = RgR(Rg, R)
-End Function
-
-Function RowzAbove(R As Range) As Range
-Set RowzAbove = RgR(R, R.Rows.Count + 1)
-End Function
-
-Function ColzLeft(R As Range) As Range
-Set ColzLeft = RgC(R, R.Column - 1)
-End Function
-
-Function ColzRight(R As Range) As Range
-Set ColzRight = RgC(R, R.Columns.Count + 1)
-End Function
-
-Sub BdrBottom(A As Range)
-BDr A, xlEdgeBottom
-BDr RowzBelow(A), xlEdgeTop
-End Sub
-
-Sub BdrInside(A As Range)
-BDr A, xlInsideHorizontal
-BDr A, xlInsideVertical
-End Sub
-
-Sub BdrLeft(A As Range)
-BDr A, xlEdgeLeft
-BDr ColzRight(A), xlEdgeRight
-End Sub
-
-Sub BdrRight(A As Range)
-BDr A, xlEdgeRight
-If A.Column < MaxWsCol Then
-    BDr RgC(A, A.Columns.Count + 1), xlEdgeLeft
-End If
-End Sub
-
-Sub BdrTop(A As Range)
-BDr A, xlEdgeTop
-If A.Row > 1 Then
-    BDr RgR(A, 0), xlEdgeBottom
-End If
-End Sub
 
 
 Sub MgeRg(A As Range)
@@ -320,35 +226,17 @@ A.HorizontalAlignment = XlHAlign.xlHAlignCenter
 A.VerticalAlignment = XlVAlign.xlVAlignCenter
 End Sub
 
-
-Function LozSq(Sq(), At As Range, Optional Lon$) As ListObject
-Set LozSq = LozRg(RgzSq(Sq(), At), Lon)
-End Function
-
-
-Function LozRg(Rg As Range, Optional Lon$) As ListObject
-Dim O As ListObject: Set O = WszRg(Rg).ListObjects.Add(xlSrcRange, Rg, , xlYes)
-BdrAround Rg
-Rg.EntireColumn.AutoFit
-SetLoNm O, Lon
-Set LozRg = O
-End Function
-
-Function RgzDbt(Db As Database, T, At As Range) As Range
-Set RgzDbt = RgzSq(SqzT(Db, T), At)
-End Function
-
 Function AddWszSq(A As Workbook, Sq(), Optional Wsn$) As Worksheet
 Dim A1 As Range: Set A1 = A1zWs(AddWs(A, Wsn))
-LozSq Sq, A1
+CrtLoAtzSq Sq, A1
 Set AddWszSq = WszRg(A1)
 End Function
 
-Function AddWszT1(A As Workbook, Db As Database, T, Optional Wsn$, Optional AddgWay As EmAddgWay) As Worksheet
+Function Add_Ws_ToWb_FmDbt1(A As Workbook, Db As Database, T, Optional Wsn$, Optional AddgWay As EmAddgWay) As Worksheet
 If AddgWay = EiSqWay Then
-    Set AddWszT1 = AddWszT(A, Db, T, Wsn, AddgWay)
+    Set Add_Ws_ToWb_FmDbt1 = Add_Ws_ToWb_FmDbt(A, Db, T, Wsn, AddgWay)
 Else
-    Set AddWszT1 = AddWszSq(A, SqzT(Db, T), Wsn)
+    Set Add_Ws_ToWb_FmDbt1 = AddWszSq(A, SqzT(Db, T), Wsn)
 End If
 End Function
 
@@ -358,17 +246,17 @@ End Function
 
 Sub PutTbl(D As Database, T, At As Range, Optional AddgWay As EmAddgWay)
 Select Case AddgWay
-Case EmAddgWay.EiSqWay: PutSq SqzT(D, T), At
-Case EmAddgWay.EiWcWay: AddLo At, D.Name, T
-Case Else: ThwMsg CSub, "Invalid AddgWay"
+Case EmAddgWay.EiSqWay: Put_Sq_At SqzT(D, T), At
+Case EmAddgWay.EiWcWay: Add_Lo_At_FmFbt At, D.Name, T
+Case Else: Thw CSub, "Invalid AddgWay"
 End Select
 End Sub
 
-Sub AddWszTny(A As Workbook, Db As Database, Tny$(), Optional AddgWay As EmAddgWay)
+Sub Add_Ws_ToWb_FmDbtny(A As Workbook, Db As Database, Tny$(), Optional AddgWay As EmAddgWay)
 Dim T$, I
 For Each I In Tny
     T = I
-    AddWszT A, Db, T, , AddgWay
+    Add_Ws_ToWb_FmDbt A, Db, T, , AddgWay
 Next
 End Sub
 
@@ -379,14 +267,11 @@ LozDrs DrszDt(Dt), A1zWs(O)
 Set AddWszDt = O
 End Function
 
-Function AddWc(ToWb As Workbook, FmFb, T) As WorkbookConnection
-Set AddWc = ToWb.Connections.Add2(T, T, WcCnStrzFb(FmFb), T, XlCmdType.xlCmdTable)
-End Function
 
 Sub ThwWbMisOupNy(A As Workbook, OupNy$())
 Dim O$(), N$, B$(), Wny$()
 Wny = WsCdNy(A)
-O = MinusAy(AddPfxzAy(OupNy, "WsO"), Wny)
+O = AyMinus(AmAddPfx(OupNy, "WsO"), Wny)
 If Si(O) > 0 Then
     N = "OupNy":  B = OupNy:  GoSub Dmp
     N = "WbCdNy": B = Wny: GoSub Dmp
@@ -403,30 +288,36 @@ DmpAy B
 Return
 End Sub
 
+Sub ClsAllWbNoSav()
+Dim X As Excel.Application: Set X = Xls
+While X.Workbooks.Count > 0
+    ClsWbNoSav X.Workbooks(1)
+Wend
+End Sub
+Sub ClsLasWbNoSav()
+ClsWbNoSav LasWb
+End Sub
 Sub ClsWbNoSav(A As Workbook)
 A.Close False
 End Sub
 
-Sub DltWc(A As Workbook)
-Dim WC As Excel.WorkbookConnection
-For Each WC In A.Connections
-    WC.Delete
-Next
-End Sub
 
-
-Function WbMax(A As Workbook) As Workbook
+Function MaxiWb(A As Workbook) As Workbook
 A.Application.WindowState = xlMaximized
-Set WbMax = A
+Set MaxiWb = A
 End Function
 
-Function NewA1Wb(A As Workbook, Optional Wsn$) As Range
-'Set NewA1Wb = A1zWs(AddWs(A, Wsn))
-End Function
-
-Sub WbQuit(A As Workbook)
+Sub QuitWb(A As Workbook)
 QuitXls A.Application
 End Sub
+
+Function SavWbCsv(A As Workbook, Fcsv$) As Workbook
+DltFfnIf Fcsv
+A.Application.DisplayAlerts = False
+A.SaveAs Fcsv, XlFileFormat.xlCSV
+A.Application.DisplayAlerts = True
+Set SavWbCsv = A
+End Function
 
 Function SavWb(A As Workbook) As Workbook
 Dim Y As Boolean
@@ -473,21 +364,21 @@ For Each Ws In A.Worksheets
 Next
 End Function
 
-Private Sub Z_WbWcsy()
+Sub Z_WbWcsy()
 'D WcStrAyWbOLE(WbzFx(TpFx))
 End Sub
 
-Private Sub Z_LozAyH()
+Sub Z_LozAyH()
 'D NyOy(LozAyH(TpWb))
 End Sub
 
-Private Sub Z_TxtWcCnt()
+Sub Z_TxtWcCnt()
 Dim O As Workbook: 'Set O = WbzFx(Vbe_MthFx)
 Ass TxtWcCnt(O) = 1
 O.Close
 End Sub
 
-Private Sub Z_SetWcFcsv()
+Sub Z_SetWcFcsv()
 Dim Wb As Workbook
 'Set Wb = WbzFx(Vbe_MthFx)
 Debug.Print TxtWcStr(Wb)
@@ -497,34 +388,6 @@ Wb.Close False
 Stop
 End Sub
 
-Private Sub Z()
-Dim A
-Dim B As WorkbookConnection
-Dim C As Workbook
-Dim D$
-Dim E As Database
-Dim F As Boolean
-Dim G As Dt
-Dim H$()
-Dim I()
-Dim XX
-CvWb A
-TxtCnzWc B
-FstWs C
-FxzWb C
-LasWs C
-MainWs C
-TxtWcCnt C
-TxtWcStr C
-Wsny C
-WszCdNm C, D
-ThwWbMisOupNy C, H
-ClsWbNoSav C
-DltWc C
-WbSavAs C, A
-ShwWb C
-XX = CWb()
-End Sub
 
 Function AddWs(A As Workbook, Optional Wsn$, Optional Pos As EmWsPos, Optional Aft$, Optional Bef$) As Worksheet
 Dim O As Worksheet
@@ -539,14 +402,14 @@ End Select
 SetWsn O, Wsn
 Set AddWs = O
 End Function
-Private Sub Z_ClrLoRow()
+Sub Z_Clr_LoRow()
 DltLoRow CWs.ListObjects("T_SrcCd")
 End Sub
 Sub DltLoRow(A As ListObject)
 Dim R As Range: Set R = A.DataBodyRange
 If IsNothing(R) Then Exit Sub
 R.ClearContents
-Set R = RgA1(A.ListColumns(1).Range)
+Set R = A1zRg(A.ListColumns(1).Range)
 Dim R1 As Range: Set R1 = RgRR(R, 1, 2)
 A.Resize R1
 End Sub
@@ -612,7 +475,7 @@ Dim R1, R2, C1, C2, NC, NR
 WsRCRC(WszPt(A), R1, C1, R2, C2).Copy
 At.PasteSpecial xlPasteValues
 
-Set PtCpyToLo = LozRg(RgRCRC(At, 1, 1, NR, NC))
+Set PtCpyToLo = CrtLo(RgRCRC(At, 1, 1, NR, NC))
 End Function
 
 Sub SetPtffOri(A As PivotTable, FF$, Ori As XlPivotFieldOrientation)
@@ -631,7 +494,7 @@ For Each F In Itr(SyzSS(FF))
 Next
 End Sub
 
-Private Sub FmtPt(Pt As PivotTable)
+Sub FmtPt(Pt As PivotTable)
 
 End Sub
 
@@ -673,25 +536,25 @@ If ChkCdLo(CdLo) Then Exit Sub
 DltLoRow CdLo
 PutAyV Cd, A1zLo(CdLo)
 End Sub
-Private Function ChkCdLo(Lo As ListObject) As Boolean
+Function ChkCdLo(Lo As ListObject) As Boolean
 If IsCdLo(Lo) Then Exit Function
 MsgBox "Given Lo is not CdLo", "Lo-Name", Lo.Name
 ChkCdLo = True
 End Function
-Private Function IsCdLo(A As ListObject) As Boolean
+Function IsCdLo(A As ListObject) As Boolean
 If A.ListColumns.Count <> 1 Then Exit Function
 If A.ListColumns(1).Name <> "SrcCd" Then Exit Function
 IsCdLo = True
 End Function
-Function PutSq(Sq(), At As Range) As Range
+Function Put_Sq_At(Sq(), At As Range) As Range
 Dim O As Range
 If NRowzSq(Sq) = 0 Then
-    Set PutSq = RgA1(At)
+    Set Put_Sq_At = A1zRg(At)
     Exit Function
 End If
 Set O = ResiRg(At, Sq)
 O.Value = Sq
-Set PutSq = O
+Set Put_Sq_At = O
 End Function
 
 Function NewA1(Optional Wsn$) As Range
@@ -712,7 +575,7 @@ Function NewXls() As Excel.Application
 Set NewXls = CreateObject("Excel.Application") ' Don't use New Excel.Application
 End Function
 
-Private Sub Z_NewXls()
+Sub Z_NewXls()
 Dim X As Excel.Application
 Set X = NewXls
 Stop
@@ -725,75 +588,16 @@ Stamp "QuitXls: Quit":        A.Quit
 Stamp "QuitXls: Set nothing": Set A = Nothing
 Stamp "QuitXls: Done"
 End Sub
+
 Sub ClsAllWb(A As Excel.Application)
 Dim W As Workbook
 For Each W In A.Workbooks
     W.Close False
 Next
 End Sub
-Private Sub ClsWc(A As WorkbookConnection)
-If IsNothing(A.OLEDBConnection) Then Exit Sub
-CvCn(A.ODBCConnection.Connection).Close
-End Sub
 
-Private Sub ClsWczWb(Wb As Workbook)
-Dim WC As WorkbookConnection
-For Each WC In Wb.Connections
-    ClsWc WC
-Next
-End Sub
 
-Private Sub SetWczFb(A As WorkbookConnection, ToUseFb$)
-If IsNothing(A.OLEDBConnection) Then Exit Sub
-Dim CN$
-#Const A = 2
-#If A = 1 Then
-    Dim S$
-    S = A.OLEDBConnection.Connection
-    CN = RplBet(S, ToUseFb, "Data Source=", ";")
-#End If
-#If A = 2 Then
-    CN = OleCnStrzFb(ToUseFb)
-#End If
-A.OLEDBConnection.Connection = CN
-End Sub
-
-Private Sub RfhWc(A As WorkbookConnection, ToUseFb$)
-If IsNothing(A.OLEDBConnection) Then Exit Sub
-SetWczFb A, ToUseFb
-A.OLEDBConnection.BackgroundQuery = False
-A.OLEDBConnection.Refresh
-End Sub
-
-Private Sub RfhPc(A As PivotCache)
-A.MissingItemsLimit = xlMissingItemsNone
-A.Refresh
-End Sub
-
-Sub RfhFx(Fx, Fb)
-RfhWb(WbzFx(Fx), Fb).Close SaveChanges:=True
-End Sub
-
-Private Sub RfhWs(A As Worksheet)
-Dim Q As QueryTable: For Each Q In A.QueryTables: Q.BackgroundQuery = False: Q.Refresh: Next
-Dim P As PivotTable: For Each P In A.PivotTables: P.Update: Next
-Dim L As ListObject: For Each L In A.ListObjects: L.Refresh: Next
-End Sub
-
-Function RfhWb(Wb As Workbook, Fb) As Workbook
-RplLozFb Wb, Fb
-Dim C As WorkbookConnection
-Dim P As PivotCache, W As Worksheet
-'For Each C In Wb.Connections: RfhWc C, Fb:                                          Next
-For Each P In Wb.PivotCaches: P.MissingItemsLimit = xlMissingItemsNone: P.Refresh:  Next
-For Each W In Wb.Sheets:      RfhWs W:                                              Next
-FmtLoBStd Wb
-ClsWczWb Wb
-DltWc Wb
-Set RfhWb = Wb
-End Function
-
-Private Sub RplLozFb(Wb As Workbook, Fb)
+Sub RplLozFb(Wb As Workbook, Fb)
 Dim Ws As Worksheet, D As Database
 Set D = Db(Fb)
 For Each Ws In Wb.Sheets
@@ -802,21 +606,21 @@ Next
 D.Close
 End Sub
 
-Private Sub RplLozWs(Ws As Worksheet, D As Database)
+Sub RplLozWs(Ws As Worksheet, D As Database)
 Dim Lo As ListObject
 For Each Lo In Ws.ListObjects
     RplLozT Lo, D, "@" & Mid(Lo.Name, 3)
 Next
 End Sub
 
-Private Sub RplLozT(A As ListObject, D As Database, T)
+Sub RplLozT(A As ListObject, D As Database, T)
 Dim Fny1$(): Fny1 = Fny(D, T)
 Dim Fny2$(): Fny2 = FnyzLo(A)
 If Not IsAySam(Fny1, Fny2) Then
     Thw CSub, "LoFny and TblFny are not same", "LoFny T TblFny Db", Fny2, T, Fny1, D.Name
 End If
 Dim Sq()
-    Dim R As dao.Recordset
+    Dim R As DAO.Recordset
     Set R = Rs(A, SqlSel_Fny_T(Fny2, T))
     Sq = AddSngQtezSq(SqzRs(R))
 MinxLo A
@@ -824,71 +628,16 @@ RgzSq Sq, A.DataBodyRange
 End Sub
 
 
-Sub PutWc(WC As WorkbookConnection, At As Range)
-Dim Lo As ListObject
-Set Lo = WszRg(At).ListObjects.Add(SourceType:=0, Source:=WC.OLEDBConnection.Connection, Destination:=At)
-With Lo.QueryTable
-    .CommandType = xlCmdTable
-    .CommandText = WC.Name
-    .RowNumbers = False
-    .FillAdjacentFormulas = False
-    .PreserveFormatting = True
-    .RefreshOnFileOpen = False
-    .BackgroundQuery = True
-    .RefreshStyle = xlInsertDeleteCells
-    .SavePassword = False
-    .SaveData = True
-    .AdjustColumnWidth = True
-    .RefreshPeriod = 0
-    .PreserveColumnINF = True
-    .ListObject.DisplayName = Lon(WC.Name)
-    .Refresh BackgroundQuery:=False
-End With
-End Sub
 
-Sub AddWczTT(ToWb As Workbook, FmFb, TT$)
-Dim T$, I
-For Each I In Ny(TT)
-    T = I
-    AddWc ToWb, FmFb, T
-Next
-End Sub
-
-Private Sub Z_CrtFxzOupTbl()
+Sub Z_Crt_FxzOupTbl()
 Dim Fx$: Fx = TmpFx
-CrtFxzOupTbl Fx, SampFbzDutyDta
+Crt_FxzOupTbl Fx, SampFbzDutyDta
 OpnFx Fx
 End Sub
 
-Sub CrtFxzOupTbl(Fx, Fb, Optional AddgWay As EmAddgWay)
-SavAsCls NewWbzOupTbl(Fb, AddgWay), Fx
+Sub Crt_FxzOupTbl(Fx, Fb, Optional AddgWay As EmAddgWay)
+SavAsCls Crt_Wb_FmFb_OupTbl(Fb, AddgWay), Fx
 End Sub
-
-Function ShwWb(A As Workbook) As Workbook
-ShwXls A.Application
-Set ShwWb = A
-End Function
-
-Function ShwXls(A As Excel.Application) As Excel.Application
-If Not A.Visible Then A.Visible = True
-Set ShwXls = A
-End Function
-
-Function ShwRg(A As Range) As Range
-ShwXls A.Application
-Set ShwRg = A
-End Function
-
-Function ShwLo(A As ListObject) As ListObject
-ShwXls A.Application
-Set ShwLo = A
-End Function
-
-Function ShwWs(A As Worksheet) As Worksheet
-ShwXls A.Application
-Set ShwWs = A
-End Function
-
 
 Function WbzDs(A As Ds) As Workbook
 Dim O As Workbook
@@ -949,10 +698,9 @@ Sq = SqHzN(VBar.Rows.Count)
 ResiRg(VBar, Sq).Value = Sq
 End Sub
 
-Sub FillWsny(At As Range)
-RgzAyV Wsny(WbzRg(At)), At
+Sub FillWny(At As Range)
+RgzAyV Wny(WbzRg(At)), At
 End Sub
-
 
 Sub FillAtV(At As Range, Ay)
 FillSq SqV(Ay), At
@@ -987,7 +735,7 @@ Dim K, Dy(): For Each K In KSet.Keys
 Next
 DKVzKSet = DrszFF("K V", Dy)
 End Function
-Private Sub Z_DKVzLoFilter()
+Sub Z_DKVzLoFilter()
 Dim Lo As ListObject: Set Lo = FstLo(CWs)
 BrwDrs DKVzLoFilter(Lo)
 End Sub
@@ -1022,19 +770,23 @@ Next
 Set KSetzLoFilter = O
 End Function
 
-Private Sub KSetzLoFilter__Add(OKSet As Dictionary, K$, F As Filter)
+Sub KSetzLoFilter__Add(OKSet As Dictionary, K$, F As Filter)
 If Not F.On Then Exit Sub
 If F.Operator <> xlFilterValues Then Exit Sub
-Dim S As Aset: Set S = AsetzAy(RmvPfxzAy(F.Criteria1, "="))
+Dim S As Aset: Set S = AsetzAy(AmRmvPfx(F.Criteria1, "="))
 OKSet.Add K, S
 End Sub
+
+Function NewWbzDrs(D As Drs) As Workbook
+Set NewWbzDrs = WbzRg(RgzDrs(D, NewA1))
+End Function
 
 Function RgzDrs(A As Drs, At As Range) As Range
 Set RgzDrs = RgzSq(SqzDrs(A), At)
 End Function
 
 Function LozDrs(A As Drs, At As Range, Optional Lon$) As ListObject
-Set LozDrs = LozRg(RgzDrs(A, At), Lon)
+Set LozDrs = CrtLo(RgzDrs(A, At), Lon)
 End Function
 
 Function WszAy(Ay, Optional Wsn$ = "Sheet1") As Worksheet
@@ -1042,7 +794,7 @@ Dim O As Worksheet, R As Range
 Set O = NewWs(Wsn)
 O.Range("A1").Value = "Array"
 Set R = RgzSq(SqV(Ay), O.Range("A2"))
-LozRg RgMoreTop(R)
+CrtLo RgMoreTop(R)
 Set WszAy = O
 End Function
 
@@ -1069,7 +821,6 @@ Dim O As Worksheet: Set O = NewWs(Wsn)
 RgzDy Dy, A1zWs(O)
 Set WszDy = O
 End Function
-
 
 Function WszDs(A As Ds) As Worksheet
 Dim O As Worksheet: Set O = NewWs
@@ -1104,10 +855,9 @@ Set LozDt = LozDrs(DrszDt(A), R)
 RgRC(R, 0, 1).Value = A.DtNm
 End Function
 
-
 Function RgzSq(Sq(), At As Range) As Range
 If Si(Sq) = 0 Then
-    Set RgzSq = RgA1(At)
+    Set RgzSq = A1zRg(At)
     Exit Function
 End If
 Dim O As Range
@@ -1117,22 +867,21 @@ O.Value = Sq
 Set RgzSq = O
 End Function
 
-Private Sub Z_WszDs()
+Sub Z_WszDs()
 ShwWs WszDs(SampDs)
 End Sub
 
-Function EnsWbzXls(Xls As Excel.Application, Wbn$) As Workbook
+Function EnsWbn(Wbn$, InXls As Excel.Application) As Workbook
 Dim O As Workbook
 Const FxFn$ = "Insp.xlsx"
-If HasWbn(Xls, FxFn) Then
-    Set O = Xls.Workbooks(FxFn)
+If HasWbn(InXls, FxFn) Then
+    Set O = InXls.Workbooks(FxFn)
 Else
-    Set O = Xls.Workbooks.Add
+    Set O = InXls.Workbooks.Add
     O.SaveAs InstFdr("Insp") & "Insp.xlsx"
 End If
-Set EnsWbzXls = ShwWb(O)
+Set EnsWbn = ShwWb(O)
 End Function
-
 
 Sub StopXls()
 Const Ps1Str$ = "Stop-Process -Id{try{(Get-Process -Name Excel).Id}finally{@()}}.invoke()"

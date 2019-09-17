@@ -3,7 +3,7 @@ Option Explicit
 Option Compare Text
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxSrtMd."
-Private Sub Z_SrtMd()
+Sub Z_SrtMd()
 Dim Md As CodeModule
 GoSub X0
 Exit Sub
@@ -36,8 +36,8 @@ Ass:
         End If
     End If
     Dim A$(), B$(), II
-    A = MinusAy(BefSrt, AftSrt)
-    B = MinusAy(AftSrt, BefSrt)
+    A = AyMinus(BefSrt, AftSrt)
+    B = AyMinus(AftSrt, BefSrt)
     Debug.Print
     If Si(A) = 0 And Si(B) = 0 Then Return
     If Si(AeEmpEle(A)) <> 0 Then
@@ -56,7 +56,7 @@ End Sub
 Sub SrtMdzSrcp(SrcPth)
 Dim P$: P = EnsPthSfx(SrcPth)
 Dim F: For Each F In FfnAy(P, "*.bas")
-    EnsFt F, SrtdSrcL(LyzFt(F))
+    EnsFt F, SrtdSrcl(LyzFt(F))
 Next
 End Sub
 
@@ -67,9 +67,9 @@ End Sub
 Sub SrtMd(M As CodeModule)
 RplMd M, SrtdSrclzM(M)
 End Sub
-Function SrtdSrcL$(Src$())
+Function SrtdSrcl$(Src$())
 ':SrtdSrcL :SrcL #Sorted-Srcl#
-SrtdSrcL = JnStrDic(SrtDic(DiMthnqLines(Src)), vb2CrLf)
+SrtdSrcl = JnStrDic(SrtDic(DiMthnqLines(Src)), vb2CrLf)
 End Function
 
 Function SrtdSrclM$()
@@ -77,7 +77,14 @@ SrtdSrclM = SrtdSrclzM(CMd)
 End Function
 
 Function SrtdSrclzM$(M As CodeModule)
-SrtdSrclzM = SrtdSrcL(Src(M))
+SrtdSrclzM = SrtdSrcl(Src(M))
+End Function
+
+Function Srcl$(M As CodeModule)
+':Srcl: :Lines #Src-Lines#
+If M.CountOfLines > 0 Then
+    Srcl = M.Lines(1, M.CountOfLines)
+End If
 End Function
 
 
@@ -88,6 +95,6 @@ End Sub
 Function DiMdnqSrtdSrcl(P As VBProject) As Dictionary
 Set DiMdnqSrtdSrcl = New Dictionary
 Dim C As VBComponent: For Each C In P.VBComponents
-    DiMdnqSrtdSrcl.Add C.Name, SrtdSrcL(Src(C.CodeModule))
+    DiMdnqSrtdSrcl.Add C.Name, SrtdSrcl(Src(C.CodeModule))
 Next
 End Function

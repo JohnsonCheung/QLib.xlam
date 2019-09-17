@@ -28,10 +28,10 @@ Sub AsgTT(Lin, O1, O2)
 AsgAp T2Rst(Lin), O1, O2
 End Sub
 
-Sub AsgT1AyRstAy(Ly$(), OT1Ay$(), ORstAy$())
-Erase OT1Ay, ORstAy
+Sub AsgAmT1RstAy(Ly$(), OAmT1$(), ORstAy$())
+Erase OAmT1, ORstAy
 Dim L: For Each L In Itr(Ly)
-    PushI OT1Ay, T1(L)
+    PushI OAmT1, T1(L)
     PushI ORstAy, RmvT1(L)
 Next
 End Sub
@@ -88,7 +88,7 @@ Next
 PushI NTermRst, L
 End Function
 
-Private Sub Z_NTermRst()
+Sub Z_NTermRst()
 Dim Lin
 Lin = "  [ksldfj ]":  Ept = "ksldfj ": GoSub Tst
 Lin = "  [ ksldfj ]": Ept = " ksldf ": GoSub Tst
@@ -100,8 +100,6 @@ Tst:
     Return
 End Sub
 
-Private Sub Z()
-End Sub
 Function SrcT1AsetP() As Aset
 Set SrcT1AsetP = T1Aset(SrczP(CPj))
 End Function
@@ -151,7 +149,7 @@ Next
 TermN = T1(L)
 End Function
 
-Private Sub Z_TermN()
+Sub Z_TermN()
 Dim N%, A$
 N = 1: A = "a b c": Ept = "a": GoSub Tst
 N = 2: A = "a b c": Ept = "b": GoSub Tst
@@ -169,7 +167,7 @@ End Sub
 ':NN: :SS ! spc-sep-str of :Nm
 
 Function RmvTerm$(Lin, Term$())
-RmvTerm = JnTerm(MinusAy(TermAy(Lin), Term))
+RmvTerm = JnTerm(AyMinus(TermAy(Lin), Term))
 End Function
 
 Function Termss(TermAy)
@@ -245,7 +243,7 @@ With Brk2Dot(OLin, NoTrim:=True)
 End With
 End Function
 
-Private Sub Z_ShfT1()
+Sub Z_ShfT1()
 Dim O$, OEpt$
 O = " S   DFKDF SLDF  "
 OEpt = "DFKDF SLDF  "

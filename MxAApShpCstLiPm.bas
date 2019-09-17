@@ -5,7 +5,7 @@ Const CLib$ = "QShpCst."
 Const CMod$ = CLib & "MxAApShpCstLiPm."
 Private Db As Database
 
-Private Property Get ShpCstLnkPmLy() As String()
+Property Get ShpCstLnkPmLy() As String()
 Const LnkColVblzZHT1$ = _
     " ZHT1   D Brand  |" & _
     " RateSc M Amount |" & _

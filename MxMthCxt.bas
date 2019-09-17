@@ -22,7 +22,7 @@ Fc.Cnt = Cnt
 End Function
 
 Sub RmkMdeszFc(M As CodeModule, Fc As Fc)
-RmkMdes M, Fc.FmLno, Fc.Cnt
+RmkNLin M, Fc.FmLno, Fc.Cnt
 End Sub
 
 Function MthCxtFcs(Src$(), Mthn) As Fcs
@@ -91,14 +91,14 @@ O.Ay(O.N) = M
 O.N = O.N + 1
 End Sub
 
-Sub RmkMdes(M As CodeModule, Lno&, N&)
+Sub RmkNLin(M As CodeModule, Lno&, N&)
 Dim J&
 For J = Lno To Lno + N - 1
-    RmkMd M, J
+    RmkLin M, J
 Next
 End Sub
 
-Sub RmkMd(M As CodeModule, Lno&)
+Sub RmkLin(M As CodeModule, Lno&)
 M.ReplaceLine M, "'" & M.Lines(Lno, 1)
 End Sub
 
@@ -106,7 +106,7 @@ Sub RmkMth()
 RmkMthzN CMd, CMthn
 End Sub
 
-Private Sub Z_RmkMth()
+Sub Z_RmkMth()
 Dim Md As CodeModule, Mthn
 '            Ass LineszVbl(MthL(M)) = "Property Get ZZA()|End Property||Sub SetYYA(V)||End Property"
 'RmkMth M:   Ass LineszVbl(MthL(M)) = "Property Get ZZA()|Stop '|End Property||Sub SetYYA(V)|Stop '|'|End Property"
@@ -164,17 +164,17 @@ DoMthCxt = DoMthCxtzML(CMd, CMthLno)
 End Function
 
 Function DoMthn(M As CodeModule) As Drs
-DoMthn = DwEq(SelDrs(DoMthnP, FFoMthn), "Mthn", Mdn(M))
+DoMthn = F_SubDrs_ByC_Eq(SelDrs(DoMthnP, FFoMthn), "Mthn", Mdn(M))
 End Function
 
-Private Sub Z_CrtTblMth()
+Sub Z_CrtTblMth()
 Dim D As Database: Set D = TmpDb
 CrtTblMth D
 BrwDb D
 End Sub
 
 Sub CrtTblMth(D As Database)
-CrtTblzDrs D, "Mth", DoPubFunP
+CrtTblzDrs D, "Mth", Drso_PubFun
 End Sub
 
 Function AddColzBetBkt(D As Drs, ColnAs$, Optional IsDrp As Boolean) As Drs
@@ -231,33 +231,33 @@ X:
 DoMthCxtzML = DrszFF("L MthLin", Dy)
 End Function
 
-Function IsRmkzMthLy(MthLy$()) As Boolean
-If Si(MthLy) = 0 Then Exit Function
-If Not HasPfx(MthLy(0), "Stop '") Then Exit Function
+Function IsRmkzMthly(Mthly$()) As Boolean
+If Si(Mthly) = 0 Then Exit Function
+If Not HasPfx(Mthly(0), "Stop '") Then Exit Function
 Dim L
-For Each L In MthLy
+For Each L In Mthly
     If Left(L, 1) <> "'" Then Exit Function
 Next
-IsRmkzMthLy = True
+IsRmkzMthly = True
 End Function
-Function MthCxtFe(MthLy$(), Fe As Fei) As Fei
-MthCxtFe = Fei(NxtIxzSrc(MthLy, Fe.FmIx), Fe.EIx - 1)
-End Function
-
-Function MthCxt$(MthLy$())
-MthCxt = JnCrLf(MthCxtLy(MthLy))
+Function MthCxtFe(Mthly$(), Fe As Fei) As Fei
+MthCxtFe = Fei(NxtIxzSrc(Mthly, Fe.FmIx), Fe.EIx - 1)
 End Function
 
-Function MthCxtLy(MthLy$()) As String()
-If Si(MthLy) = 0 Then Exit Function
-Dim L&: L = FstMthIx(MthLy): If L = -1 Then Thw CSub, "Given MthLy is not MthLy", "MthLy", MthLy
+Function MthCxt$(Mthly$())
+MthCxt = JnCrLf(MthCxtLy(Mthly))
+End Function
+
+Function MthCxtLy(Mthly$()) As String()
+If Si(Mthly) = 0 Then Exit Function
+Dim L&: L = FstMthIx(Mthly): If L = -1 Then Thw CSub, "Given Mthly is not Mthly", "Mthly", Mthly
 Dim J%
-For J = NxtIxzSrc(MthLy, L) To UB(MthLy) - 1
-    PushI MthCxtLy, MthLy(J)
+For J = NxtIxzSrc(Mthly, L) To UB(Mthly) - 1
+    PushI MthCxtLy, Mthly(J)
 Next
 End Function
 
-Private Sub Z_MthCxtFeis _
+Sub Z_MthCxtFeis _
  _
 ()
 Stop

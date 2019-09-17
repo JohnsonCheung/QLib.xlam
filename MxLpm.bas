@@ -20,10 +20,10 @@ Dim Ay$(): Ay = SyzSS(PmStr)
     Next
 ThwIf_LpmEr O, LpmSpec
 End Function
-Private Sub ThwIf_LpmEr(Lpm As Dictionary, LpmSpec$)
+Sub ThwIf_LpmEr(Lpm As Dictionary, LpmSpec$)
 
 End Sub
-Private Sub LpmPushPmNm(Lpm As Dictionary, PmNm$)
+Sub LpmPushPmNm(Lpm As Dictionary, PmNm$)
 If Lpm.Exists(PmNm) Then Exit Sub
 Lpm.Add PmNm, Sy()
 End Sub
@@ -45,15 +45,15 @@ For Each K In Lpm.Keys
 Next
 End Function
 
-Private Sub LpmPushPm(Lpm As Dictionary, NM$, Optional V$)
+Sub LpmPushPm(Lpm As Dictionary, Nm$, Optional V$)
 Dim J%, S$()
-If Lpm.Exists(NM) Then
+If Lpm.Exists(Nm) Then
     If V = "" Then Exit Sub
-    S = Lpm(NM)
+    S = Lpm(Nm)
     PushI S, V
-    Lpm(NM) = S
+    Lpm(Nm) = S
 Else
-    Lpm.Add NM, Sy(V)
+    Lpm.Add Nm, Sy(V)
 End If
 End Sub
 Sub DmpLpm(Lpm As Dictionary)
@@ -67,7 +67,7 @@ Next
 FmtLpm = AlignLyzSepss(O, "ValCnt Val(")
 End Function
 
-Private Function FmtzNmSy$(PmNm, Sy$())
+Function FmtzNmSy$(PmNm, Sy$())
 Select Case Si(Sy)
 Case 0:    FmtzNmSy = FmtQQ("PmSw(?)", PmNm)
 Case Else: FmtzNmSy = FmtQQ("Pm(?) ValCnt(?) Val(?)", PmNm, Si(Sy), JnSpc(Sy))

@@ -42,7 +42,7 @@ Dim J&: For J = 1 To M.CountOfDeclarationLines
 Next
 End Function
 
-Private Sub Z_HasCnstn()
+Sub Z_HasCnstn()
 Debug.Assert HasCnstn(CMd, "CMod")
 End Sub
 
@@ -77,15 +77,7 @@ If A(XiTyChr) <> "$" Then Exit Function
 CnstStrzN = UnQteVb(A(XiCnstv))
 End Function
 
-Private Function DoCnstzP(P As VBProject) As Drs
-Dim O As Drs
-Dim C As VBComponent: For Each C In P.VBComponents
-    O = AddDrs(O, DoCnstzM(C.CodeModule))
-Next
-DoCnstzP = O
-End Function
-
-Private Function DoCnstzM(M As CodeModule) As Drs
+Function DoCnstzM(M As CodeModule) As Drs
 DoCnstzM = DoCnst(Src(M), Mdn(M))
 End Function
 
@@ -99,7 +91,7 @@ Function IsLinCnst(L) As Boolean
 IsLinCnst = T1(RmvMdy(L)) = "Const"
 End Function
 
-Private Sub Z_CnstStr()
+Sub Z_CnstStr()
 Dim O$()
 Dim L: For Each L In SrczP(CPj)
     PushNB O, CnstStr(L)

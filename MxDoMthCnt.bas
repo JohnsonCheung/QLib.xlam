@@ -28,7 +28,7 @@ Function DoMthCntP(Optional MdnPatn$ = ".+", Optional SrtCol$ = "Mdn") As Drs
 DoMthCntP = DoMthCntzP(CPj, MdnPatn, SrtCol)
 End Function
 
-Private Function DoMthCntzP(P As VBProject, MdnPatn$, SrtCol$) As Drs
+Function DoMthCntzP(P As VBProject, MdnPatn$, SrtCol$) As Drs
 Dim R As RegExp: Set R = Rx(MdnPatn, IgnoreCase:=True)
 Dim C As VBComponent, Dy(): For Each C In P.VBComponents
     If R.Test(C.Name) Then
@@ -38,7 +38,7 @@ Next
 Dim D As Drs: D = Drs(FoMthCnt, Dy)
 DoMthCntzP = SrtDrs(D, SrtCol)
 End Function
-Private Function FoMthCnt() As String()
+Function FoMthCnt() As String()
 FoMthCnt = SyzSS("Lib Mdn NLines NMth NPubSub NPubFun NPubPrp NPrvSub NPrvFun NPrvPrp NFrdSub NFrdFun NFrdPrp")
 End Function
 Function NMth%(A As CntgMth)
@@ -74,7 +74,7 @@ Next
 NMthzP = O
 End Function
 
-Private Function DroMthCnt(M As CodeModule) As Variant()
+Function DroMthCnt(M As CodeModule) As Variant()
 Dim S$(): S = Src(M)
 Dim Mth$(): Mth = MthLinAy(S)
 Dim L: For Each L In Itr(Mth)
@@ -124,11 +124,11 @@ Sub LisMdP(Optional MdnPatn$ = ".+", Optional SrtCol$ = "Mdn", Optional OupTy As
 LisMdzP CPj, MdnPatn, SrtCol, OupTy
 End Sub
 
-Private Sub LisMdzM(M As CodeModule)
+Sub LisMdzM(M As CodeModule)
 DmpDrs DoMthCntzM(M)
 End Sub
 
-Private Function DoMthCntzM(M As CodeModule) As Drs
+Function DoMthCntzM(M As CodeModule) As Drs
 DoMthCntzM = Drs(FoMthCnt, Av(DroMthCnt(M)))
 End Function
 
@@ -140,7 +140,7 @@ Sub LisMdM()
 LisMdzM CMd
 End Sub
 
-Private Sub LisMdzP(P As VBProject, MdnPatn$, SrtCol$, OupTy As EmOupTy)
+Sub LisMdzP(P As VBProject, MdnPatn$, SrtCol$, OupTy As EmOupTy)
 Brw FmtCellDrs(DoMthCntzP(P, MdnPatn, SrtCol), Fmt:=EiSSFmt), OupTy:=OupTy
 End Sub
 
@@ -156,11 +156,11 @@ Next
 NSrcLinPj = O
 End Function
 
-Private Function NPubMthzS%(Src$())
+Function NPubMthzS%(Src$())
 NPubMthzS = NItr(PubMthLinItr(Src))
 End Function
 
-Private Function NPubMthzM%(M As CodeModule)
+Function NPubMthzM%(M As CodeModule)
 NPubMthzM = NPubMthzS(Src(M))
 End Function
 

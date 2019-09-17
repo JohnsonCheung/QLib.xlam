@@ -3,8 +3,8 @@ Option Compare Text
 Option Explicit
 Const CLib$ = "QItrObj."
 Const CMod$ = CLib & "MxObjPP."
-':PP: :PrpPth-PP$ #Spc-Separated-PrpPth# ! Each ele is a PrpPth
-':PrpPth: :Dotn   #Prp-Pth# ! Prp-Pth-of-an-Object
+':PP: :Prpc-PP$ #Spc-Separated-Prpc# ! Each ele is a Prpc
+':Prpc: :Dotn   #Prp-Pth# ! Prp-Pth-of-an-Object
 Function OyAdd(Oy1, Oy2)
 Dim O: O = Oy1
 PushObjAy O, Oy2
@@ -25,28 +25,29 @@ For Each Obj In Itr(Oy)
 Next
 End Sub
 
-Function FstzOyEq(Oy, PrpPth, V)
-Set FstzOyEq = FstzItrEq(Itr(Oy), PrpPth, V)
+Function FstzOyEq(Oy, Prpc, V)
+Set FstzOyEq = FstzItrEq(Itr(Oy), Prpc, V)
 End Function
 
-Function AvzOyP(Oy, PrpPth) As Variant()
-AvzOyP = IntozOyP(EmpAv, Oy, PrpPth)
+Function AvzOyP(Oy, Prpc) As Variant()
+AvzOyP = IntozOyP(EmpAv, Oy, Prpc)
 End Function
 
-Function IntozOyP(Into, Oy, PrpPth)
+Function IntozOyP(Into, Oy, Prpc)
 Dim O: O = Into: Erase O
 Dim Obj: For Each Obj In Itr(Oy)
-    Push O, Prp(Obj, PrpPth)
+    Push O, PvzC(Obj, Prpc)
 Next
 IntozOyP = O
 End Function
 
-Function IntAyzOyP(Oy, PrpPth) As Integer()
-IntAyzOyP = IntozOyP(EmpIntAy, Oy, PrpPth)
+Function IntAyzOyP(Oy, Prpc) As Integer()
+IntAyzOyP = IntozOyP(EmpIntAy, Oy, Prpc)
 End Function
 
-Function SyzOyP(Oy, PrpPth) As String()
-SyzOyP = IntozOyP(EmpSy, Oy, PrpPth)
+Function SyzOyP(Oy, Prpc) As String()
+Stop
+SyzOyP = IntozOyP(EmpSy, Oy, Prpc)
 End Function
 
 Function OyeNothing(Oy)
@@ -86,10 +87,10 @@ Next
 OywPredXPTrue = O
 End Function
 
-Function FstzObj(Oy, PrpPth$, V)
-'Ret : Fst Obj in @Oy having @PrpPth = @V
+Function FstzObj(Oy, Prpc$, V)
+'Ret : Fst Obj in @Oy having @Prpc = @V
 Dim Obj: For Each Obj In Itr(Oy)
-    If Prp(Obj, PrpPth) = V Then Asg Obj, FstzObj: Exit Function
+    If PvzC(Obj, Prpc) = V Then Asg Obj, FstzObj: Exit Function
 Next
 End Function
 Function OyzItr(Itr) As Variant()
@@ -98,30 +99,44 @@ For Each O In Itr
     PushObj OyzItr, O
 Next
 End Function
-Function OywIn(Oy, PrpPth, InAy)
+Function OywIn(Oy, Prpc, InAy)
 Dim Obj As Object, O
 If Si(Oy) = 0 Or Si(InAy) Then OywIn = Oy: Exit Function
 O = Oy
 Erase O
 For Each Obj In Itr(Oy)
-    If HasEle(InAy, Prp(Obj, PrpPth)) Then PushObj O, Obj
+    If HasEle(InAy, PvzC(Obj, Prpc)) Then PushObj O, Obj
 Next
 OywIn = O
 End Function
 
 Function LyzObjPP(Obj As Object, PP$) As String()
-Dim PrpPth: For Each PrpPth In SyzSS(PP)
-    PushI LyzObjPP, PrpPth & " " & Prp(Obj, PrpPth)
+Dim Prpc: For Each Prpc In SyzSS(PP)
+    PushI LyzObjPP, Prpc & " " & PvzC(Obj, Prpc)
 Next
 End Function
 
-Private Sub Z_OyDrs()
+Sub Z_OyDrs()
 'ShwWs DrsNewWs(OyDrs(CurrentDb.TableDefs("Z_UpdSeqFld").Fields, "Name Type OrdinalPosition"))
 End Sub
 
-Private Sub Z_OyP_Ay()
+Sub Z_OyP_Ay()
 Dim CdPanAy() As CodePane
 Stop
 'CdPanAy = Oy(CPj.MdAy).PrpVy("CodePane", CdPanAy)
 Stop
 End Sub
+Sub Z_LyzObjPP()
+Dim Obj As Object, PP$
+GoSub T0
+Exit Sub
+T0:
+    Set Obj = New DAO.Field
+    PP = "Name Type Size"
+    GoTo Tst
+Tst:
+    Act = LyzObjPP(Obj, PP)
+    C
+    Return
+End Sub
+

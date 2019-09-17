@@ -59,38 +59,6 @@ Dim O(): O = AddColzDyBy(Dy)
 AddColzDyC = O
 End Function
 
-Function AddColzDyC3(A(), C1, C2, C3) As Variant()
-Dim U%, R&, Dr, O()
-O = A
-U = NColzDy(A) + 2
-For Each Dr In Itr(A)
-    ReDim Preserve Dr(U)
-    Dr(U) = C3
-    Dr(U - 1) = C2
-    Dr(U - 2) = C1
-    O(R) = Dr
-    R = R + 1
-Next
-AddColzDyC3 = O
-End Function
-
-Private Function AddColzDyColVy(Dy(), ColVy, AtIx&) As Variant()
-Dim Dr, J&, O(), U&
-U = UB(ColVy)
-If U = -1 Then Exit Function
-If U <> UB(Dy) Then Thw CSub, "Row-in-Dy <> Si-ColVy", "Row-in-Dy Si-ColVy", Si(Dy), Si(ColVy)
-ReDim O(U)
-
-For Each Dr In Itr(Dy)
-    If Si(Dr) > AtIx Then Thw CSub, "Some Dr in Dy has bigger size than AtIx", "DrSz AtIx", Si(Dr), AtIx
-    ReDim Preserve Dr(AtIx)
-    Dr(AtIx) = ColVy(J)
-    O(J) = Dr
-    J = J + 1
-Next
-AddColzDyColVy = O
-End Function
-
 Function AddColzMap(A As Drs, NewFldEqFunQteFmFldSsl$) As Drs
 Dim NewColVy(), FmVy()
 Dim I, S$, NewFld$, Fun$, FmFld$
@@ -147,7 +115,7 @@ Function DrpCol(A As Drs, CC$) As Drs
 Dim C$(), Dr, Ixy&(), OFny$(), ODy()
 C = SyzSS(CC)
 Ixy = IxyzSubAy(A.Fny, C)
-OFny = MinusAy(A.Fny, C)
+OFny = AyMinus(A.Fny, C)
 ODy = DrpColzDy(A.Dy, CvLngAy(AySrt(Ixy)))
 DrpCol = Drs(OFny, ODy)
 End Function
@@ -171,7 +139,7 @@ FstDr = A.Dy(Ix)
 End Function
 
 Function FstDrSel(A As Drs, C$, V, Sel$) As Variant()
-FstDrSel = AwIxy(FstDr(A, C, V), IxyzAyCC(A.Fny, Sel))
+FstDrSel = AwIxy(FstDr(A, C, V), IxyzFF(A.Fny, Sel))
 End Function
 
 Function FstRec(A As Drs, C$, V) As Drs
@@ -298,6 +266,6 @@ End Function
 
 Function StrColzEq(A As Drs, Col$, V, ColNm$) As String()
 Dim B As Drs
-B = DwEqSel(A, Col, V, ColNm)
+B = F_SubDrs_ByC_EqSel(A, Col, V, ColNm)
 StrColzEq = StrCol(B, ColNm)
 End Function

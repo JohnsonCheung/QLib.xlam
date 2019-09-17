@@ -3,7 +3,7 @@ Option Explicit
 Option Compare Text
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxInspStmt."
-Private Function InspExprLiszPm$(Pm$)
+Function InspExprLiszPm$(Pm$)
 If Pm = "" Then Exit Function
 Dim Ay$(): Ay = Split(Pm, ", ")
 Dim O$(), P
@@ -16,7 +16,7 @@ Next
 InspExprLiszPm = JnCommaSpc(O)
 End Function
 
-Private Sub Z_InspStmtzL()
+Sub Z_InspStmtzL()
 Dim A As Drs: A = DoMthzM(CMd)
 Dim B$(): B = StrCol(A, "MthLin")
 Dim L, ODy()
@@ -30,13 +30,13 @@ End Sub
 Function InspStmtzL$(MthLin, Mdn$)
 With MthLinRec(MthLin)
     If .Pm = "" And Not .IsRetVal Then Exit Function
-    Dim Nn$: Nn = JnSpc(ArgNyzPm(.Pm))
+    Dim NN$: NN = JnSpc(ArgNyzPm(.Pm))
     Dim Ee$: Ee = InspExprLiszPm(.Pm)
-    Dim IsN0$: IsN0 = XIsN0(.IsRetVal, .NM)  '#Insp-Nm-0.
-    Dim IsE0$: IsE0 = XIsE0(.IsRetVal, .NM, .TyChr, .RetTy) '#Insp-Expr-0
-    Nn = IsN0 & Nn
+    Dim IsN0$: IsN0 = XIsN0(.IsRetVal, .Nm)  '#Insp-Nm-0.
+    Dim IsE0$: IsE0 = XIsE0(.IsRetVal, .Nm, .TyChr, .RetTy) '#Insp-Expr-0
+    NN = IsN0 & NN
     Ee = IsE0 & Ee
-    InspStmtzL = InspStmt(Nn, Ee, Mdn, .NM)
+    InspStmtzL = InspStmt(NN, Ee, Mdn, .Nm)
 End With
 End Function
 
@@ -45,7 +45,7 @@ Const C$ = "Insp ""?.?"", ""Inspect"", ""?"", ?"
 InspStmt = FmtQQ(C, Mdn, Mthn, Varnn, ExprLis)
 End Function
 
-Private Function InspExpr$(V, VSfx As Dictionary)
+Function InspExpr$(V, VSfx As Dictionary)
 If Not VSfx.Exists(V) Then
     InspExpr = FmtQQ("""V(?)-NFnd""", V)
     Exit Function
@@ -53,7 +53,7 @@ End If
 InspExpr = InspExprzDclSfx(V, VSfx(V))
 End Function
 
-Private Function InspExprzDclSfx$(V, DclSfx$)
+Function InspExprzDclSfx$(V, DclSfx$)
 Dim O$, S$
 S = RmvPfx(DclSfx, " As ")
 Select Case S
@@ -77,12 +77,12 @@ Dim O$()
 InspExprLis = JnCommaSpc(O)
 End Function
 
-Private Function XIsN0$(IsRetVal As Boolean, Mthn$)
+Function XIsN0$(IsRetVal As Boolean, Mthn$)
 If Not IsRetVal Then Exit Function
 XIsN0 = "Oup(" & Mthn & ") "
 End Function
 
-Private Function XIsE0$(IsRetVal As Boolean, V, TyChr$, RetTy$)
+Function XIsE0$(IsRetVal As Boolean, V, TyChr$, RetTy$)
 If Not IsRetVal Then Exit Function
 XIsE0 = InspExprzDclSfx(V, TyChr & RetTy) & ", "
 End Function

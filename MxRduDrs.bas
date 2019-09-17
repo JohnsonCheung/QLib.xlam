@@ -8,7 +8,7 @@ Private Type RduDrs  ' #Reduced-Drs ! if a drs col all val are sam, mov those co
     RduColDic As Dictionary '        ! one entry is one col.  Key is coln and val is coln val.
 End Type
 
-Private Function RduDrs(D As Drs) As RduDrs
+Function RduDrs(D As Drs) As RduDrs
 'Ret : @A as :t:RduDrs
 If NoReczDrs(D) Then GoTo X
 Dim C$(): C = ReducibleCny(D)
@@ -24,7 +24,7 @@ X:
 Set RduDrs.RduColDic = New Dictionary
 End Function
 
-Private Function ReducibleCny(A As Drs) As String() '
+Function ReducibleCny(A As Drs) As String() '
 'Ret : ColNy ! if any col in Drs-A has all sam val, this col is reduciable.  Return them
 Dim NCol%: NCol = NColzDrs(A)
 Dim J%, Dy(), Fny$()
@@ -46,7 +46,7 @@ Function FmtCellDrszRdu(A As Drs, Optional MaxColWdt% = 100, Optional BrkColnn$,
 FmtCellDrszRdu = FmtRduDrs(RduDrs(A), MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt)
 End Function
 
-Private Function FmtRduDrs(A As RduDrs, Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol, Optional Fmt As EmTblFmt = EiTblFmt) As String()
+Function FmtRduDrs(A As RduDrs, Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional IxCol As EmIxCol, Optional Fmt As EmTblFmt = EiTblFmt) As String()
 PushIAy FmtRduDrs, RmvLasEle(FmtDic(A.RduColDic))
 PushIAy FmtRduDrs, FmtCellDrs(A.Drs, MaxColWdt, BrkColnn, ShwZer, IxCol, Fmt)
 End Function

@@ -48,7 +48,7 @@ While P > 0
 Wend
 End Function
 
-Private Sub Z_SubStrCnt()
+Sub Z_SubStrCnt()
 Dim A$, SubStr$
 A = "aaaa":                 SubStr = "aa":  Ept = CLng(2): GoSub Tst
 A = "aaaa":                 SubStr = "a":   Ept = CLng(4): GoSub Tst

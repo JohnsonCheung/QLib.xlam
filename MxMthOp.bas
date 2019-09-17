@@ -14,25 +14,21 @@ If Not HasMthzM(M, Mthn) Then
     End If
     Exit Function
 End If
-Dim OldL$: OldL = MthLzM(M, Mthn)
+Dim OldL$: OldL = MthlzM(M, Mthn)
 If OldL = NewL Then Exit Function '<== no chg
 RplMth = True
 RmvMth M, Mthn '<== rmv
 M.InsertLines Lno, NewL '<== and ins
 End Function
 
-Sub RmvMthzMNn(M As CodeModule, Mthnn)
+Sub RmvMthzNN(M As CodeModule, Mthnn)
 Dim I
 For Each I In TermAy(Mthnn)
-    RmvMthzMN M, I
+    RmvMth M, I
 Next
 End Sub
 
 Sub RmvMth(M As CodeModule, Mthn)
-RmvMthzMN M, Mthn
-End Sub
-
-Sub RmvMthzMN(M As CodeModule, Mthn)
 With MthLnoC2(M, Mthn)
     If .S2 > 0 Then M.DeleteLines .S2, .C2
     If .S1 > 0 Then M.DeleteLines .S1, .C1
@@ -43,7 +39,7 @@ Sub CpyMthAs(M As CodeModule, Mthn, AsMthn)
 If HasMthzM(M, AsMthn) Then Inf CSub, "AsMth exist.", "Mdn FmMth AsMth", Mdn(M), Mthn, AsMthn: Exit Sub
 End Sub
 
-Private Sub Z_RmvMthzMN()
+Sub Z_RmvMth()
 Dim Md As CodeModule
 Const Mthn$ = "ZZRmv1"
 Dim Bef$(), Aft$()
@@ -52,7 +48,7 @@ Crt:
         ApdLines Md, LineszVbl("|'sdklfsdf||'dsklfj|Property Get ZZRmv1()||End Property||Function ZZRmv2()|End Function||'|Sub SetZZRmv1(V)|End Property")
 Tst:
         Bef = Src(Md)
-        RmvMthzMN Md, Mthn
+        RmvMth Md, Mthn
         Aft = Src(Md)
 
 Insp:   Insp CSub, "RmvMth Test", "Bef RmvMth Aft", Bef, Mthn, Aft
@@ -66,7 +62,7 @@ End Sub
 
 Sub MovMthzMNM(Md As CodeModule, Mthn, ToMd As CodeModule)
 CpyMth Mthn, Md, ToMd
-RmvMthzMN Md, Mthn
+RmvMth Md, Mthn
 End Sub
 
 Function CdzEmpFun$(FunNm)
@@ -82,6 +78,12 @@ ApdLines CMd, CdzEmpSub(Subn)
 JmpMth Subn
 End Sub
 
+Sub JmpMth(Mthn)
+Dim M As CodeModule: Set M = MdzMthn(CPj, Mthn)
+JmpMd M
+JmpLno MthLnozMM(M, Mthn)
+End Sub
+
 Sub AddFun(FunNm)
 ApdLines CMd, CdzEmpFun(FunNm)
 JmpMth FunNm
@@ -90,7 +92,7 @@ End Sub
 Function CpyMth(Mthn, FmM As CodeModule, ToM As CodeModule) As Boolean
 Dim NewL$
 'NewL
-    NewL = MthLzM(FmM, Mthn)
+    NewL = MthlzM(FmM, Mthn)
 'Rpl
     CpyMth = RplMth(ToM, Mthn, NewL)
 '
@@ -99,7 +101,7 @@ Dim NewL$
 'GoSub BldNav: ThwIf_ObjNE Md, ToMd, CSub, "Fm & To md cannot be same", Nav
 'If Not HasMthzM(Md, Mthn) Then GoSub BldNav: ThwNav CSub, "Fm Mth not Exist", Nav
 'If HasMthzM(ToMd, Mthn) Then GoSub BldNav: ThwNav CSub, "To Mth exist", Nav
-'ToMd.AddFromString MthLzM(Md, Mthn)
+'ToMd.AddFromString MthlzM(Md, Mthn)
 'RmvMth Md, Mthn
 'If Not IsSilent Then Inf CSub, FmtQQ("Mth[?] in Md[?] is copied ToMd[?]", Mthn, Mdn(Md), Mdn(ToMd))
 'Exit Sub
@@ -117,7 +119,7 @@ Dim VerMthn$, NewL$, L$, OldL$
 If Not HasMthzM(M, Mthn) Then Inf CSub, "No from-mthn", "Md Mthn", Mdn(M), Mthn: Exit Function
 VerMthn = Mthn & "_Ver" & Ver
 'NewL
-    L = MthLzM(M, Mthn)
+    L = MthlzM(M, Mthn)
     NewL = Replace(L, "Sub " & Mthn, "Sub " & VerMthn, Count:=1)
 'Rpl
     CpyMthAsVer = RplMth(M, VerMthn, NewL)

@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxPthR."
-Private O$(), A_Spec$ ' Used in PthPthSyR/FFnAyR
+Private O$(), A_Spec$ ' Used in PrpcAyR/FFnAyR
 Private XX$()
 
 Function EmpPthSyR(Pth) As String()
@@ -21,7 +21,7 @@ EntAyR = O
 Erase O
 End Function
 
-Private Sub EntAyR1(Pth)
+Sub EntAyR1(Pth)
 If Si(O) Mod 1000 = 0 Then Debug.Print "EntAyR1: (Each 1000): " & Pth
 PushI O, Pth
 PushIAy O, FfnAy(Pth, A_Spec)
@@ -31,8 +31,8 @@ For Each I In Itr(P)
     EntAyR1 I
 Next
 End Sub
-Private Sub Z_FfnAyR()
-Dim Pth, Spec$, Atr As FileAttribute
+Sub Z_FfnAyR()
+Dim Pth, Spec$, AtR As FileAttribute
 GoSub T0
 GoSub T1
 Exit Sub
@@ -55,7 +55,7 @@ FfnAyR1 Pth
 FfnAyR = O
 End Function
 
-Private Sub FfnAyR1(Pth)
+Sub FfnAyR1(Pth)
 PushIAy O, FfnAy(Pth, A_Spec)
 If Si(O) Mod 1000 = 0 Then InfLin CSub, "...Reading", "#Ffn-read", Si(O)
 Dim P$(): P = SubPthy(Pth)
@@ -65,30 +65,32 @@ Dim I: For Each I In P
 Next
 End Sub
 
-Private Sub Z_EntAyR()
+Sub Z_EntAyR()
 Dim A$(): A = EntAyR("C:\users\user\documents\")
 Debug.Print Si(A)
 Stop
 DmpAy A
 End Sub
 
-Private Sub Z_EmpPthSyR()
+Sub Z_EmpPthSyR()
 Brw EmpPthSyR(TmpRoot)
 End Sub
 
-Private Sub Z_EntAy()
+Sub Z_EntAy()
 BrwPth EntAy(TmpRoot)
 End Sub
 
-Private Sub Z_RmvEmpPthR()
-RmvEmpPthR TmpRoot
-End Sub
-
-Private Sub Z()
-'EmpPthSyR
-'EntAyR
-'FFnAyR
-'PthPthSyR
+Sub Z_RmvEmpPthR()
+Z:
+    RmvEmpPthR TmpRoot
+    Return
+Z1:
+    Debug.Print "Before-----"
+    D EmpPthSyR(TmpRoot)
+    RmvEmpPthR TmpRoot
+    Debug.Print "After-----"
+    D EmpPthSyR(TmpRoot)
+    Return
 End Sub
 
 Function SubPthSyR(Pth) As String()
@@ -97,6 +99,7 @@ X Pth
 SubPthSyR = XX
 Erase XX
 End Function
+
 Private Sub X(Pth)
 Dim O$(), P$, I
 O = SubPthy(Pth)

@@ -3,7 +3,7 @@ Option Explicit
 Option Compare Text
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxEndTrimMd."
-Private Function EndTrimMdLasLin(M As CodeModule) As Boolean
+Function EndTrimMdLasLin(M As CodeModule) As Boolean
 Dim N&: N = M.CountOfLines
     If N = 0 Then Exit Function
     If IsLinCd(M.Lines(N, 1)) Then Exit Function
@@ -24,7 +24,7 @@ Wend
 If Trimmed Then Debug.Print "EndTrimMd: Module is trimmed [" & Mdn(M) & "]"
 End Sub
 
-Private Sub EndTrimMdzP(P As VBProject)
+Sub EndTrimMdzP(P As VBProject)
 Dim C As VBComponent: For Each C In P.VBComponents
     EndTrimMd C.CodeModule
 Next

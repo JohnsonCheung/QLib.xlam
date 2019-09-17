@@ -4,9 +4,9 @@ Option Explicit
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxPush."
 
-Function Shf(Oay)
-Shf = Oay(0)
-Oay = AeFstNEle(Oay)
+Function Shf(OAy)
+Shf = OAy(0)
+OAy = AeFstNEle(OAy)
 End Function
 
 Sub Push(O, M)
@@ -60,9 +60,9 @@ For Each M In Itr(MAy)
 Next
 End Sub
 
-Sub PushSomSi(Oay, IAy)
+Sub PushSomSi(OAy, IAy)
 If Si(IAy) = 0 Then Exit Sub
-PushI Oay, IAy
+PushI OAy, IAy
 End Sub
 
 Sub PushItmAy(O, Itm, Ay)
@@ -115,7 +115,7 @@ Sub PushNonZSz(O, Ay)
 If Si(Ay) = 0 Then Exit Sub
 PushI O, Ay
 End Sub
-Sub PushObjzExlNothing(O, M)
+Sub PushExcNothing(O, M)
 If IsNothing(M) Then PushObj O, M
 End Sub
 

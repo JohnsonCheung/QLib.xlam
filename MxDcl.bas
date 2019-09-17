@@ -19,34 +19,9 @@ For Each Dcitm In Itr(DcitmAy)
 Next
 End Function
 
-Function MdPosStr$(A As MdPos)
-Dim B$
-With A
-    'With .LinPos.Pos
-        'If .Cno1 > 0 Then B = " " & .Cno1 & " " & .Cno2
-    'End With
-    'MdPosStr = "MdPos " & Mdn(A.Md) & A.LinPos.Lno & B
-End With
-End Function
-
-Function MdPoszMLCC(Md As CodeModule, L, Cno1, Cno2) As MdPos
-'MdPoszMLCC = MdPos(Md, LinPoszLCC(L, Cno1, Cno2))
-End Function
-
-Function MdPoszMLP(Md As CodeModule, Lno, P As Pos) As MdPos
-'MdPoszMLP = MdPos(Md, LinPos(Lno, P))
-End Function
-
-Function MdPos(Md As CodeModule, RRCC As RRCC) As MdPos
-Set MdPos.Md = Md
-MdPos.RRCC = RRCC
-End Function
-
-
 Function NTyMd%(M As CodeModule)
 NTyMd = NTySrc(DclzM(M))
 End Function
-
 
 Function EnmBdyLyzS(Src$(), Enmn) As String()
 EnmBdyLyzS = EnmBdyLy(EnmLy(Src, Enmn))
@@ -70,7 +45,7 @@ Dim J&, L, Lin$
 For Each L In Itr(Src)
     Lin = RmvMdy(L)
     If ShfTermEnm(Lin) Then
-        If NM(Lin) = Enmn Then
+        If Nm(Lin) = Enmn Then
             EnmFmIx = J
             Exit Function
         End If
@@ -97,10 +72,10 @@ For Each L In Itr(Src)
 Next
 End Function
 
-Function HasTyn(Src$(), NM$) As Boolean
+Function HasTyn(Src$(), Nm$) As Boolean
 Dim L
 For Each L In Itr(Src)
-    If Mtyn(L) = NM Then HasTyn = True: Exit Function
+    If Mtyn(L) = Nm Then HasTyn = True: Exit Function
 Next
 End Function
 
@@ -155,13 +130,13 @@ Next
 End Function
 Function Enmn(Lin)
 Dim L$: L = RmvMdy(Lin)
-If ShfPfx(L, "Enum ") Then Enmn = NM(L)
+If ShfPfx(L, "Enum ") Then Enmn = Nm(L)
 End Function
 
 Function Mtyn$(Lin)
 ':Mtyn: :Nm #Type-Name# ! Vb Type Name of @Lin
 Dim L$: L = RmvMdy(Lin)
-If ShfPfx(L, "Type ") Then Mtyn = NM(L)
+If ShfPfx(L, "Type ") Then Mtyn = Nm(L)
 End Function
 
 Function EnmLyzMN(M As CodeModule, Enmn) As String()
@@ -178,7 +153,7 @@ If L = "" Then Exit Function
 If FstChr(L) = "'" Then Exit Function
 CdLyzL = SyzTrim(Split(Lin, ":"))
 End Function
-Private Sub Z_Srcc()
+Sub Z_Srcc()
 Brw Srcc(SrczP(CPj))
 End Sub
 
@@ -214,15 +189,12 @@ Function ShfTermEnm(OLin$) As Boolean
 ShfTermEnm = ShfPfx(OLin, "Enum")
 End Function
 
-Private Sub Z()
-MIde_Dcl_EnmAndTy:
-End Sub
 
-Private Sub Z_NEnmMbrzMN()
+Sub Z_NEnmMbrzMN()
 Ass NEnmMbrzMN(Md("Ide"), "AA") = 1
 End Sub
 
-Private Sub Z_NDclLin()
+Sub Z_NDclLin()
 Dim B1$(): B1 = CSrc
 Dim B2$(): B2 = SrtSrc(B1)
 Dim A1%: A1 = NDclLin(B1)
@@ -299,7 +271,7 @@ If Lno > M.CountOfLines Then Exit Function
 MdLines = M.Lines(Lno, Cnt)
 End Function
 
-Private Sub Z_DclzM()
+Sub Z_DclzM()
 Dim O$(), C As VBComponent
 For Each C In CPj.VBComponents
     PushNB O, DclzM(C.CodeModule)

@@ -27,12 +27,12 @@ Property Get SampDr6() As Variant()
 SampDr6 = Array(63, 64, 65)
 End Property
 
-Property Get SampDrs1() As Drs
-SampDrs1 = DrszFF("A B C", SampDy1)
-End Property
-
 Property Get SampDrs2() As Drs
 SampDrs2 = DrszFF("A B C", SampDy2)
+End Property
+
+Property Get SampDrs1() As Drs
+SampDrs1 = DrszFF("A B C", SampDy1)
 End Property
 
 Property Get SampDrs() As Drs

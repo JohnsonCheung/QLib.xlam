@@ -29,7 +29,7 @@ Next
 FmtQQAv = O
 End Function
 
-Private Sub Z_FmtQQAv()
+Sub Z_FmtQQAv()
 Debug.Print FmtQQ("klsdf?sdf?dsklf", 2, 1)
 End Sub
 

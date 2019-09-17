@@ -39,6 +39,14 @@ Function ShfShtMthKd$(OLin$)
 ShfShtMthKd = ShtMthKdzShtMthTy(ShtMthTy(ShfMthTy(OLin)))
 End Function
 
+Function ShfSub(OLin$) As Boolean
+ShfSub = ShfPfx(OLin, "Sub ")
+End Function
+
+Function ShfPrv(OLin$) As Boolean
+ShfPrv = ShfPfx(OLin, "Private ")
+End Function
+
 Function ShfMdy$(OLin$)
 Dim O$
 O = MthMdy(OLin):
@@ -56,7 +64,7 @@ End Function
 Function ShfMthSfx$(OLin$)
 ShfMthSfx = ShfChr(OLin, MthTyChrLis)
 End Function
-Private Sub Z_ShfBef()
+Sub Z_ShfBef()
 Dim L$, Sep$, EptL$
 GoSub T0
 Exit Sub
@@ -101,7 +109,7 @@ ShfDotNm = O
 OLin = RmvPfx(OLin, O)
 End Function
 Function ShfNm$(OLin$)
-Dim O$: O = NM(OLin): If O = "" Then Exit Function
+Dim O$: O = Nm(OLin): If O = "" Then Exit Function
 ShfNm = O
 OLin = RmvPfx(OLin, O)
 End Function
@@ -261,7 +269,7 @@ O = AwDist(O)
 ArgNyzP = AySrt(O)
 End Function
 
-Private Sub Z_ShtArg()
+Sub Z_ShtArg()
 Dim Arg$
 GoSub Z
 'GoSub T0
@@ -283,7 +291,7 @@ Tst:
     Return
 End Sub
 
-Private Sub Z_ShtArgAy()
+Sub Z_ShtArgAy()
 Dim A As S12s
 Dim Arg: For Each Arg In AwDist(ArgAyP)
     PushS12 A, S12(Arg, ShtArg(Arg))
@@ -297,7 +305,7 @@ Dim Arg: For Each Arg In Itr(ArgAy)
 Next
 End Function
 
-Private Sub Z_ArgNm()
+Sub Z_ArgNm()
 Dim Arg
 'GoSub T1
 GoSub ZZ
@@ -319,16 +327,16 @@ BrwS12s O
 End Sub
 
 Function ArgNm$(Arg)
-ArgNm = NM(RmvArgMdy(Arg))
+ArgNm = Nm(RmvArgMdy(Arg))
 End Function
 
 Function Arg$(ShtArg$)
 Dim L$:     L = Arg
 Dim Mdy:  Mdy = ShfArgMdy(L)
-Dim NM$:   NM = ShfNm(L): If NM = "" Then Exit Function
+Dim Nm$:   Nm = ShfNm(L): If Nm = "" Then Exit Function
 Dim Sfx$: Sfx = ShfShtArgSfx(L)
 Dim Dft$: Dft = ShtDft(L)
-Arg = Mdy & NM & Sfx & Dft
+Arg = Mdy & Nm & Sfx & Dft
 End Function
 
 Function ShtPm$(MthPm)
@@ -338,26 +346,26 @@ Dim Arg: For Each Arg In Itr(SplitCommaSpc(MthPm))
 Next
 ShtPm = JnSpc(O)
 End Function
-Private Function ShtArgSfx1$(ArgSfx$, A() As Integer)
+Function ShtArgSfx1$(ArgSfx$, A() As Integer)
 
 End Function
 
 Function ShtArg$(Arg)
 Dim L$:     L = Arg
 Dim Mdy:  Mdy = ShtArgMdy(ShfArgMdy(L))
-Dim NM$:   NM = ShfNm(L): If NM = "" Then Exit Function
+Dim Nm$:   Nm = ShfNm(L): If Nm = "" Then Exit Function
 Dim Sfx$: Sfx = ShtArgSfx(ShfArgSfx(L))
 Dim Dft$: Dft = ShtDft(L)
-       ShtArg = Mdy & NM & Sfx & Dft
+       ShtArg = Mdy & Nm & Sfx & Dft
 End Function
 
-Private Function ShtDft$(Dft$)
+Function ShtDft$(Dft$)
 If Dft = "" Then Exit Function
 If Left(Dft, 3) <> " = " Then Stop
 ShtDft = "=" & Mid(Dft, 4)
 End Function
 
-Private Function ShtAsTy$(AsTy$)
+Function ShtAsTy$(AsTy$)
 ':AsTy: :DotNm ! The 'Ty' after 'As' in 'Arg' & 'Dim', not 'RetAs'.  That means, there is no () at end of 'AsTy'
 Dim O$
 Select Case AsTy
@@ -455,7 +463,7 @@ End Select
 ShtRetTy = O
 End Function
 
-Private Sub Z_RetSfx()
+Sub Z_RetSfx()
 Dim L, A As S12s: For Each L In MthLinAyP
     PushS12 A, S12(RetSfx(L), L)
 Next
@@ -513,7 +521,7 @@ Case Else: ArgSfxzRet = " As " & Ret
 End Select
 End Function
 
-Private Sub Z_DoArg()
+Sub Z_DoArg()
 Dim Mth$(): Mth = StrCol(DoMthP, "MthLin")
 Dim L, Dy(): For Each L In Itr(Mth)
     PushIAy Dy, DyoArg(L)
@@ -521,13 +529,13 @@ Next
 BrwDrs Drs(FoArg, Dy)
 End Sub
 
-Private Function DyoArgzMthL(MthLinAy$()) As Variant()
+Function DyoArgzMthL(MthLinAy$()) As Variant()
 Dim L: For Each L In Itr(MthLinAy)
     PushIAy DyoArgzMthL, DyoArg(L)
 Next
 End Function
 
-Private Function DyoArg(MthLin) As Variant()
+Function DyoArg(MthLin) As Variant()
 Dim Pm$: Pm = BetBkt(MthLin)
 Dim A$(): A = SplitCommaSpc(Pm)
 Dim Mthn$: Mthn = MthnzLin(MthLin)
@@ -536,7 +544,7 @@ Dim Arg$, Dy(), ArgNo%: For ArgNo = 1 To Si(A)
     PushI DyoArg, DroArg(Arg, ArgNo, Mthn)
 Next
 End Function
-Private Function FoArg() As String()
+Function FoArg() As String()
 FoArg = SyzSS(FFoArg)
 End Function
 
@@ -580,7 +588,7 @@ Dim L$: L = Arg
 Dim IsOpt   As Boolean:   IsOpt = ShfPfxSpc(L, "Optional")
 Dim IsByVal As Boolean: IsByVal = ShfPfxSpc(L, "ByVal")
 Dim IsPmAy  As Boolean:  IsPmAy = ShfPfxSpc(L, "ParamArray")
-Dim NM$:                     NM = ShfNm(L)
+Dim Nm$:                     Nm = ShfNm(L)
 Dim TyChr$:               TyChr = ShfChr(L, "!@#$%^&")
 Dim IsAy    As Boolean:    IsAy = ShfBkt(L)
     If TyChr = "" Then
@@ -593,14 +601,14 @@ Dim IsAy    As Boolean:    IsAy = ShfBkt(L)
         If Not ShfPfx(L, " = ") Then Stop
         Dim DftVal$: DftVal = L
     End If
-DroArg = Array(Mthn, ArgNo, NM, IsOpt, IsByVal, IsPmAy, IsAy, TyChr, AsTy, DftVal)
+DroArg = Array(Mthn, ArgNo, Nm, IsOpt, IsByVal, IsPmAy, IsAy, TyChr, AsTy, DftVal)
 End Function
 
 Function DoArgV() As Drs
 DoArgV = DoArgzMthL(MthLinAyV)
 End Function
 
-Private Sub Z_MthRetTy()
+Sub Z_MthRetTy()
 'Dim MthLin
 'Dim A$:
 'MthLin = "Function MthPm(MthPm$) As MthPm"

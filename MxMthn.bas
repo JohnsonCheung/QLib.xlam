@@ -40,9 +40,9 @@ Function PubMthNy(Src$()) As String()
 Dim Ix, N$, B As Mthn3
 For Each Ix In MthIxItr(Src)
     B = Mthn3zL(Src(Ix))
-    If B.NM <> "" Then
+    If B.Nm <> "" Then
         If B.ShtMdy = "" Or B.ShtMdy = "Pub" Then
-            PushI PubMthNy, B.NM
+            PushI PubMthNy, B.Nm
         End If
     End If
 Next
@@ -64,11 +64,11 @@ End Function
 
 Function MthNyzL(MthLinAy$()) As String()
 Const CSub$ = CMod & "MthNyzL"
-Dim I, NM$, J%, MthLin
+Dim I, Nm$, J%, MthLin
 For Each I In Itr(MthLinAy)
-    NM = MthnzLin(I)
-    If NM = "" Then Thw CSub, "Given MthLinAy does not have Mthn", "[MthLin with error] Ix MthLinAy", I, J, AddIxPfx(MthLinAy)
-    PushI MthNyzL, NM
+    Nm = MthnzLin(I)
+    If Nm = "" Then Thw CSub, "Given MthLinAy does not have Mthn", "[MthLin with error] Ix MthLinAy", I, J, AddIxPfx(MthLinAy)
+    PushI MthNyzL, Nm
     J = J + 1
 Next
 End Function
@@ -86,7 +86,7 @@ End Function
 
 Function Dimn$(Lin)
 Dim L$: L = Lin
-If ShfTerm(L, "Dim") Then Dimn = NM(LTrim(L))
+If ShfTerm(L, "Dim") Then Dimn = Nm(LTrim(L))
 End Function
 
 Function DimNy(Ly$()) As String()
@@ -99,19 +99,19 @@ End Function
 Function Mthn$(Lin)
 Dim L$: L = RmvMdy(Lin)
 If ShfMthTy(L) = "" Then Exit Function
-Mthn = NM(L)
+Mthn = Nm(L)
 End Function
 
-Private Sub Z_MthDnzL()
+Sub Z_MthDnzL()
 Debug.Print MthDnzL("Function MthnzMthDn$(MthDn$)")
 End Sub
 
-Function MthDn$(NM$, ShtMdy$, ShtTy$)
-MthDn = JnDotAp(NM, ShtMdy, ShtTy)
+Function MthDn$(Nm$, ShtMdy$, ShtTy$)
+MthDn = JnDotAp(Nm, ShtMdy, ShtTy)
 End Function
 
 Function MthDnzMthn3$(A As Mthn3)
-MthDnzMthn3 = MthDn(A.NM, A.ShtMdy, A.ShtTy)
+MthDnzMthn3 = MthDn(A.Nm, A.ShtMdy, A.ShtTy)
 End Function
 
 Function MthMdyChr$(ShtMdy$)
@@ -138,21 +138,21 @@ End Function
 Function PrpNm$(Lin)
 Dim L$: L = RmvMdy(Lin)
 If ShfKd(L) <> "Property" Then Exit Function
-PrpNm = NM(L)
+PrpNm = Nm(L)
 End Function
 
 Function MthnzDNm$(MthDn)
 Dim Ay$(): Ay = Split(MthDn, ".")
-Dim NM$
+Dim Nm$
 Select Case Si(Ay)
-Case 1: NM = Ay(0)
-Case 2: NM = Ay(1)
-Case 3: NM = Ay(2)
+Case 1: Nm = Ay(0)
+Case 2: Nm = Ay(1)
+Case 3: Nm = Ay(2)
 Case Else: Stop
 End Select
-MthnzDNm = NM
+MthnzDNm = Nm
 End Function
-Private Sub Z_Mthn()
+Sub Z_Mthn()
 GoTo Z
 Dim A$
 A = "Function Mthn(A)": Ept = "Mthn.Fun.": GoSub Tst
@@ -197,7 +197,7 @@ For Each L In Itr(Src)
 Next
 End Function
 
-Private Sub Z_ModNyzPjPubMth()
+Sub Z_ModNyzPjPubMth()
 Dim P As VBProject, PubMthn
 GoSub Z
 Exit Sub
@@ -211,7 +211,7 @@ Dim L
 For Each L In Itr(Src)
     With Mthn3zL(L)
         If .ShtMdy = "Pub" Then
-            If .NM = PubMthn Then
+            If .Nm = PubMthn Then
                 HasPubMth = True
                 Exit Function
             End If
@@ -236,7 +236,7 @@ Function MthTy$(Lin)
 MthTy = PfxzAyS(RmvMthMdy(Lin), MthTyAy)
 End Function
 
-Private Sub Z_MthTy()
+Sub Z_MthTy()
 Dim O$(), L
 For Each L In SrczMdn("Fct")
     Push O, MthTy(CStr(L)) & "." & L
@@ -244,9 +244,9 @@ Next
 BrwAy O
 End Sub
 
-Private Sub Z_MthKd()
+Sub Z_MthKd()
 Dim A$
-Ept = "Property": A = "Private Property Get": GoSub Tst
+Ept = "Property": A = "Property Get": GoSub Tst
 Ept = "Property": A = "Property Get":         GoSub Tst
 Ept = "Property": A = " Property Get":        GoSub Tst
 Ept = "Property": A = "Friend Property Get":  GoSub Tst
@@ -260,7 +260,7 @@ Tst:
 End Sub
 
 
-Private Sub Z_MthnsetoWiVerb()
+Sub Z_MthnsetoWiVerb()
 MthnsetoWiVerb.Srt.Vc
 End Sub
 
@@ -287,8 +287,8 @@ For Each I In Itr(MthNyV)
 Next
 End Property
 
-Function HasVerb(NM) As Boolean
-HasVerb = Verb(NM) <> ""
+Function HasVerb(Nm) As Boolean
+HasVerb = Verb(Nm) <> ""
 End Function
 
 Property Get MthnsetoWiVerb() As Aset
@@ -306,7 +306,7 @@ End Function
 Function MthNyzSI(Src$(), MthIxy&()) As String()
 Dim Ix
 For Each Ix In Itr(MthIxy)
-    PushI MthNyzSI, Mthn3zL(Src(Ix)).NM
+    PushI MthNyzSI, Mthn3zL(Src(Ix)).Nm
 Next
 End Function
 
@@ -334,7 +334,7 @@ ClsPjf Fb
 End Function
 
 
-Private Sub Z_MthNyzFb()
+Sub Z_MthNyzFb()
 GoSub X_BrwAll
 Exit Sub
 X_BrwAll:
@@ -360,16 +360,12 @@ Function PubMthNyzM(M As CodeModule) As String()
 PubMthNyzM = PubMthNyzS(Src(M))
 End Function
 
-Private Sub Z()
-Z_MthNyzFb
-MIde_Mth_Nm:
-End Sub
 
 Function MthNyzM(M As CodeModule) As String()
 MthNyzM = MthNy(Src(M))
 End Function
 
-Private Sub Z_MthnzS()
+Sub Z_MthnzS()
 GoSub Z
 Exit Sub
 Z:

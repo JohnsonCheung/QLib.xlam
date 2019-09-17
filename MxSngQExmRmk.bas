@@ -6,7 +6,7 @@ Const CMod$ = CLib & "MxSngQExmRmk."
 Function RmkzSngQExmLin$(Lin)
 
 End Function
-Private Function RmkzTyDfnRmkLy$(TyDfnRmkLy$())
+Function RmkzTyDfnRmkLy$(TyDfnRmkLy$())
 Dim R$, O$()
 Dim L: For Each L In Itr(TyDfnRmkLy)
     If FstChr(L) = "'" Then
@@ -18,7 +18,7 @@ Dim L: For Each L In Itr(TyDfnRmkLy)
 Next
 RmkzTyDfnRmkLy = JnCrLf(O)
 End Function
-Private Function SngQExmRe() As RegExp
+Function SngQExmRe() As RegExp
 Static O As RegExp
 If IsNothing(O) Then
 End If

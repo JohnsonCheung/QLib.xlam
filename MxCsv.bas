@@ -28,8 +28,22 @@ Dim Dr: For Each Dr In Itr(D.Dy)
 Next
 End Function
 
+
+Sub WrtDrsXls(D As Drs, Fcsv$)
+'Do Wrt @D to @Fcvs using Xls-Style @@
+DltFfnIf Fcsv
+PushXlsVisHid
+ClsWbNoSav SavWbCsv(NewWbzDrs(D), Fcsv)
+PopXlsVis
+End Sub
+
 Sub WrtDrs(D As Drs, Fcsv$)
-WrtAy CsvLyzDrs(D), Fcsv, OvrWrt:=True
+WrtStr CsvStrzDrs(D), Fcsv, OvrWrt:=True
+End Sub
+
+Sub WrtDrsRes(D As Drs, ResFnn$, Optional Pseg$)
+Dim F$: F = ResFfn(ResFnn & ".csv", Pseg)
+WrtDrs D, F
 End Sub
 
 Function CsvLinzDr$(Dr)

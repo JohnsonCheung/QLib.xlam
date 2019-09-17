@@ -4,7 +4,7 @@ Option Explicit
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxTst."
 Public Act, Ept, Dbg As Boolean, Trc As Boolean
-Private Sub Can_A_AyDic_To_Be_Pushed()
+Sub Can_A_AyDic_To_Be_Pushed()
 Dim A As Dictionary, Act, V
 GoSub T1
 Exit Sub
@@ -64,7 +64,7 @@ If IsNBet(TstId, 0, 9999) Then Thw CSub, "TstId should be 0 to 9999", "TstId", T
 TstPth = AddFdrEns(TstHom, Pad0(TstId, 4))
 End Function
 
-Private Function TstIdFt$(TstId&)
+Function TstIdFt$(TstId&)
 TstIdFt = TstPth(TstId) & "TstId.Txt"
 End Function
 Sub BrwTstIdPth(TstId&)
@@ -94,7 +94,7 @@ End Sub
 Function TstLy(TstId&, Fun$, Cas$, Itm$, Optional IsEdt As Boolean) As String()
 TstLy = SplitCrLf(TstTxt(TstId, Fun, Cas, Itm, IsEdt))
 End Function
-Private Function TstIdStr$(TstId&, Fun$)
+Function TstIdStr$(TstId&, Fun$)
 TstIdStr = "TstId=" & TstId & ";CSub=" & Fun
 End Function
 Sub WrtTstPth(TstId&, Fun$)
@@ -132,10 +132,10 @@ End Select
 TstTxt = LineszFt(F)
 End Function
 
-Private Function TstFt$(TstId&, Cas$, Itm$)
+Function TstFt$(TstId&, Cas$, Itm$)
 TstFt = TstFfn(TstId, Cas, Itm & ".Txt")
 End Function
 
-Private Function TstFfn$(TstId&, Cas$, Fn$)
+Function TstFfn$(TstId&, Cas$, Fn$)
 TstFfn = TstCasPth(TstId, Cas) & Fn
 End Function

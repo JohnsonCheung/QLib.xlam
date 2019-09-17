@@ -55,7 +55,7 @@ Sub RmvCModM()
 RmvCModzM CMd
 End Sub
 
-Private Sub RmvCModzM(M As CodeModule)
+Sub RmvCModzM(M As CodeModule)
 RmvCnstLin M, "CMod"
 End Sub
 
@@ -63,7 +63,7 @@ Sub RmvCLibM()
 RmvCLibzM CMd
 End Sub
 
-Private Sub RmvCLibzM(M As CodeModule)
+Sub RmvCLibzM(M As CodeModule)
 RmvCnstLin M, "CLib"
 End Sub
 
@@ -71,32 +71,33 @@ Sub RmvCLibP()
 RmvCLibzP CPj
 End Sub
 
-Private Sub RmvCLibzP(P As VBProject)
+Sub RmvCLibzP(P As VBProject)
 RmvCnstLinzP P, "CLib", IsPrvOnly:=True
 End Sub
 
 Sub EntCLibP()
 EntCLibzP CPj
 End Sub
-Private Sub EntCLibzP(P As VBProject)
+Sub EntCLibzP(P As VBProject)
+Dim A As New InpVal
 Dim C As VBComponent: For Each C In P.VBComponents
-    EntCLibzM C.CodeModule
+    EntCLibzM C.CodeModule, A
 Next
 End Sub
 
 Sub EntCLibM()
-EntCLibzM CMd
+Dim A As New InpVal
+A.Ini Tit:="Md[" & CMdn & "]", Prompt:="Enter CLib value"
+EntCLibzM CMd, A
 End Sub
 
-Private Sub EntCLibzM(M As CodeModule)
-Static LasCLibv$
+Sub EntCLibzM(M As CodeModule, A As ValInp)
 If Not IsMd(M.Parent) Then Exit Sub
 Dim V$
 V = CLibv(M): If V <> "" Then Exit Sub
-V = InputBox("What the CLib of Md[" & Mdn(M) & "]", , LasCLibv): If V = "" Then Stop
+V = A.Inp
 If FstChr(V) <> "Q" Then Exit Sub
 EnsCnstLin M, CLibLin(V)
-LasCLibv = V
 End Sub
 
 Sub EnsCLibzM(M As CodeModule, CLibv$)
@@ -104,21 +105,25 @@ If Not IsMd(M.Parent) Then Exit Sub
 EnsCnstLin M, CLibLin(CLibv)
 End Sub
 
-Sub EnsCNs(M As CodeModule, Ns$)
+Sub EnsCNsLin(M As CodeModule, Ns$)
 If Not IsMd(M.Parent) Then Exit Sub
 EnsCnstLin M, CNsLin(Ns)
 End Sub
 
-Private Function CNsLin$(Ns$)
+Sub EnsCNszM(M As CodeModule, Ns$)
+EnsCnstLin M, CNsLin(Ns)
+End Sub
+
+Function CNsLin$(Ns$)
 ':CLibLin: :PrvCnstLin ! Is a `Const CLib$ = "${Clibv}."`
 CNsLin = FmtQQ("Const CNs$ = ""?""", Ns)
 End Function
 
-Private Function CLibLin$(CLibv$)
+Function CLibLin$(CLibv$)
 ':CLibLin: :PrvCnstLin ! Is a `Const CLib$ = "${Clibv}."`
 CLibLin = FmtQQ("Const CLib$ = ""?.""", CLibv)
 End Function
-Private Function EnsCNzP(P As VBProject)
+Function EnsCNzP(P As VBProject)
 Stop '
 End Function
 
@@ -130,16 +135,17 @@ Sub EnsCModP()
 EnsCModzP CPj
 End Sub
 
-Private Sub EnsCModzM(M As CodeModule)
+Sub EnsCModzM(M As CodeModule)
 EnsCnstLinAft M, CModLin(M), "CLib", IsPrvOnly:=True
 End Sub
 
-Private Function CModLin$(M As CodeModule)
+
+Function CModLin$(M As CodeModule)
 ':CModLin: :CnstLin ! Is a Const CMod$ = CLib & "xxxx."
 CModLin = FmtQQ("Const CMod$ = CLib & ""?.""", Mdn(M))
 End Function
 
-Private Sub EnsCModzP(P As VBProject)
+Sub EnsCModzP(P As VBProject)
 Dim C As VBComponent: For Each C In P.VBComponents
     EnsCModzM C.CodeModule
 Next

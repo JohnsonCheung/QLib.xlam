@@ -43,36 +43,6 @@ CpyCol = AddColzCol(A, AsColn, Col1)
 Stop
 End Function
 
-Function AddCol(A As Drs, C$, V) As Drs
-Dim Dr, Dy()
-For Each Dr In Itr(A.Dy)
-    PushI Dr, V
-    PushI Dy, Dr
-Next
-AddCol = AddColzFFDy(A, C, Dy)
-End Function
-
-Private Function AddColzDyCC(Dy(), V1, V2) As Variant()
-AddColzDyCC = AddColzDyAv(Dy, Av(V1, V2))
-End Function
-
-Private Function AddColzDyC3(Dy(), V1, V2, V3) As Variant()
-AddColzDyC3 = AddColzDyAv(Dy, Av(V1, V2, V3))
-End Function
-
-Function AddColz2(A As Drs, FF2$, C1, C2) As Drs
-Dim Fny$(), Dy()
-Fny = AddAy(A.Fny, TermAy(FF2))
-Dy = AddColzDyCC(A.Dy, C1, C2)
-AddColz2 = Drs(Fny, Dy)
-End Function
-
-Function AddColz3(A As Drs, FF3$, C1, C2, C3) As Drs
-Dim Fny$(), Dy()
-Fny = AddAy(A.Fny, TermAy(FF3))
-Dy = AddColzDyC3(A.Dy, C1, C2, C3)
-AddColz3 = Drs(Fny, Dy)
-End Function
 
 Function AddColzExiB(A As Drs, B As Drs, Jn$, ExiB_FldNm$) As Drs
 Dim IA&(), IB&(), Dr, KA(), BKeyDy(), ODy()
@@ -104,12 +74,12 @@ Next
 AddColzFiller = O
 End Function
 
-Private Function AddColzFillerC(A As Drs, C) As Drs
+Function AddColzFillerC(A As Drs, C) As Drs
 'Fm   A : ..{C}.. ! @A should have col @C
 'Fm   C : #Coln.
 'Ret    : a new drs with addition col @F where F = "F" & C and value eq Len-of-Col-@C
 If NoReczDrs(A) Then Stop
-Dim W%: W = AyWdt(StrCol(A, C))
+Dim W%: W = WdtzAy(StrCol(A, C))
 Dim I%: I = IxzAy(A.Fny, C)
 Dim ODy(): ODy = A.Dy
 Dim Dr, J&
@@ -163,7 +133,7 @@ Dim O As Drs: O = AddDrs(A, B)
           AddDrs3 = AddDrs(O, C)
 End Function
 
-Private Function AgrCntzDy(Dy()) As Variant()
+Function AgrCntzDy(Dy()) As Variant()
 Dim Dr: For Each Dr In Itr(Dy)
     PushI Dr, Si(Pop(Dr))
     PushI AgrCntzDy, Dr
@@ -189,18 +159,10 @@ Dim Gix&(): Gix = IxyzCC(D, Gpcc)       ' The grouping col ix ay
 Dim Aix&(): Aix = IxyzCC(D, CC)         ' The aligning col ix ay
 Dim G(): G = GpAsAyDy(D, Gpcc)          ' each gp (an ele of #G) is a dry-of-@D with sam @Gpcc col val
 Dim Dy, ADy(), ODy(): For Each Dy In G  'For each data-gp (@Dy)
-    ADy = AlignDy(CvAv(Dy), Aix)  ' aligning it (@Dy) into (@ADy)
+    ADy = AlignDyzCix(CvAv(Dy), Aix)  ' aligning it (@Dy) into (@ADy)
     PushIAy ODy, ADy              ' pushing the rslt (@ADy-aligned-dry) to oup (@ODy)
 Next
 AlignDrs = Drs(D.Fny, ODy)
-End Function
-
-Private Function AlignDy(Dy(), Cix&()) As Variant()
-Dim O(): O = Dy
-Dim C: For Each C In Cix
-    AlignCol O, C
-Next
-AlignDy = O
 End Function
 
 Sub ApdDrs(O As Drs, M As Drs)
@@ -271,7 +233,7 @@ Case Else
 End Select
 End Function
 
-Private Function CntLyzDiKqCnt(DiKqCnt As Dictionary, CntWdt%) As String()
+Function CntLyzDiKqCnt(DiKqCnt As Dictionary, CntWdt%) As String()
 Dim K
 For Each K In DiKqCnt.Keys
     PushI CntLyzDiKqCnt, AlignR(DiKqCnt(K), CntWdt) & " " & K
@@ -290,7 +252,7 @@ For J = 0 To UB(Av)
 Next
 End Sub
 
-Private Function ColGp(Col(), RLvlGpIx&()) As Variant()
+Function ColGp(Col(), RLvlGpIx&()) As Variant()
 'Fm Col      : Col to gp
 'Fm RLvlGpIx : Each V in Col is mapped to GpIx by this RLvlGpix @@
 ThwIf_DifSi Col, RLvlGpIx, CSub
@@ -327,11 +289,11 @@ Dim FF$:           FF = Gpcc & " " & CC
 Dim WMFny$():   WMFny = AddSy(WFny, MFny)
 
 Dim WMFnySq$(): WMFnySq = AddSy(WFnySq, SyzQteSq(MFny))
-Dim ColAy$():     ColAy = AddSfxzAy(WMFnySq, " Integer")
+Dim ColAy$():     ColAy = AmAddSfx(WMFnySq, " Integer")
 
 Dim Ey$(): Ey = SyzQAy("Len(?)", CFny)
 
-Dim Eq0$():  Eq0 = AddSfxzAy(WFnySq, " = 0")
+Dim Eq0$():  Eq0 = AmAddSfx(WFnySq, " = 0")
 Dim Bexp$:  Bexp = JnAnd(Eq0)
 
 Dim TG$: TG = TmpNm("TGp_")
@@ -384,16 +346,16 @@ Dim V: For Each V In SyzSS(RenFF)
 Next
 End Function
 
-Sub DmpDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional NM$, Optional IxCol As EmIxCol, Optional Fmt As EmTblFmt = EiTblFmt, Optional IsSum As Boolean)
-DmpAy FmtCellDrs(A, MaxColWdt, BrkColnn$, ShwZer, IxCol, Fmt, NM)
+Sub DmpDrs(A As Drs, Optional MaxColWdt% = 100, Optional BrkColnn$, Optional ShwZer As Boolean, Optional Nm$, Optional IxCol As EmIxCol, Optional Fmt As EmTblFmt = EiTblFmt, Optional IsSum As Boolean)
+DmpAy FmtCellDrs(A, MaxColWdt, BrkColnn$, ShwZer, IxCol, Fmt, Nm)
 End Sub
 
 Function DrpColzFny(D As Drs, Fny$()) As Drs
 Dim IxAll&(): IxAll = LngSeqzU(UB(D.Fny))
 Dim IxToExl&():      IxToExl = Ixy(D.Fny, Fny)
-Dim IxSel&(): IxSel = MinusAy(IxAll, IxToExl)
+Dim IxSel&(): IxSel = AyMinus(IxAll, IxToExl)
 Dim ODy(): ODy = SelDy(D.Dy, IxSel)
-DrpColzFny = Drs(MinusSy(D.Fny, Fny), ODy)
+DrpColzFny = Drs(SyMinus(D.Fny, Fny), ODy)
 End Function
 
 Function EmpDrs() As Drs
@@ -418,7 +380,7 @@ Function DrsInsCVBef(A As Drs, C$, V, BefFldNm$) As Drs
 DrsInsCVBef = DrsInsCVIsAftFld(A, C, V, False, BefFldNm)
 End Function
 
-Private Function DrsInsCVIsAftFld(A As Drs, C$, V, IsAft As Boolean, FldNm$) As Drs
+Function DrsInsCVIsAftFld(A As Drs, C$, V, IsAft As Boolean, FldNm$) As Drs
 Dim Fny$(), Dy(), Ix&, Fny1$()
 Fny = A.Fny
 Ix = IxzAy(Fny, C): If Ix = -1 Then Stop
@@ -574,7 +536,7 @@ Dim OneG As Drs: OneG = FmtNewOneG(NLin)
 FmtLNewO = StrCol(OneG, "Lines")
 End Function
 
-Private Function FmtLNewOGpno(NewL As Drs) As Drs
+Function FmtLNewOGpno(NewL As Drs) As Drs
 'Fm  NewL: L Lin NewL ! NewL may empty, when non-Emp, NewL <> Lin
 'Ret D: L Lin NewL Gpno ! Gpno is running from 1:
 '                      !   all conseq Lin with Emp-NewL is one group
@@ -608,7 +570,7 @@ Next
 FmtLNewOGpno = DrszFF("L Lin NewL Gpno", Dy)
 End Function
 
-Private Function FmtLNewOLines(NLin As Drs) As Drs
+Function FmtLNewOLines(NLin As Drs) As Drs
 'Fm NLin: L Gpno NLin SNewL
 'Ret Lines: L Gpno Lines
 Dim Dr, L&, Gpno&, Lines$, NLin_$, SNewL
@@ -634,7 +596,7 @@ FmtLNewOLines = DrszFF("L Gpno Lines", Dy)
 'BrwDrs FmtLNewOLines: Stop
 End Function
 
-Private Function FmtLNewONLin(Gpno As Drs) As Drs
+Function FmtLNewONLin(Gpno As Drs) As Drs
 'Fm  Gpno: L Lin NewL Gpno
 'Ret E: L Gpno NLin SNewL ! NLin=L# is in front; SNewL = Spc is in front, only when nonEmp
 Dim MaxL&: MaxL = AyMax(LngAyzDrs(Gpno, "L"))
@@ -654,7 +616,7 @@ Next
 FmtLNewONLin = DrszFF("L Gpno NLin SNewL", Dy)
 End Function
 
-Private Function FmtNewOneG(NLin As Drs) As Drs
+Function FmtNewOneG(NLin As Drs) As Drs
 'Fm  D: L Gpno NLin SNewL !
 'Ret E: Gpno Lines ! Gpno now become uniq
 Dim O$(), L&, LasG&, Dr, Dy(), Gpno&, NLin_$, SNewL
@@ -741,7 +703,7 @@ Function IxdzDrs(A As Drs) As Dictionary
 Set IxdzDrs = DiKqIx(A.Fny)
 End Function
 
-Private Function IxyWiNegzSupSubAy(SupAy, SubAy) As Long()
+Function IxyWiNegzSupSubAy(SupAy, SubAy) As Long()
 If Not IsAySuper(SupAy, SubAy) Then Thw CSub, "SupAy & SubAy error", "SupAy SubAy", SupAy, SubAy
 Dim J%
 For J = 0 To UB(SupAy)
@@ -825,7 +787,7 @@ For Each Dr In Itr(Dy)
 Next
 End Function
 
-Private Function SelDr(Dr(), IxyWiNeg&()) As Variant()
+Function SelDr(Dr(), IxyWiNeg&()) As Variant()
 Dim Ix, U%: U = UB(IxyWiNeg)
 For Each Ix In IxyWiNeg
     If IsBet(Ix, 0, U) Then
@@ -843,8 +805,20 @@ Dim Dr: For Each Dr In Itr(Dy)
 Next
 End Function
 
+Function SqzFny(Fny$()) As Variant()
+Dim O()
+ReDim O(1 To 2, 1 To Si(Fny))
+Dim J%: For J = 0 To Si(Fny)
+    SetSqr O, Fny
+Next
+SqzFny = O
+End Function
+
 Function SqzDrs(A As Drs) As Variant()
-If NoReczDrs(A) Then Exit Function
+If NoReczDrs(A) Then
+    SqzDrs = SqzFny(A.Fny)
+    Exit Function
+End If
 Dim NC&, NR&, Dy(), Fny$()
     Fny = A.Fny
     Dy = A.Dy
@@ -895,36 +869,22 @@ If Si(A.Dy) = 0 Then Thw CSub, "No Rec", "Drs.Fny", A.Fny
 FstRecFldVal = A.Dy(0)(IxzAy(A.Fny, C))
 End Function
 
-Private Sub Z()
-Dim A As Variant
-Dim B()
-Dim C As Drs
-Dim D$
-Dim E%
-Dim F$()
-End Sub
 
-Private Sub Z_DiKqCntzDrs()
+Sub Z_DiKqCntzDrs()
 Dim Drs As Drs, Dic As Dictionary
 'Drs = Vbe_Mth12Drs(CVbe)
 Set Dic = DiKqCntzDrs(Drs, "Nm")
 BrwDic Dic
 End Sub
 
-Private Property Get Z_FmtCellDrs()
-GoTo Z
-Z:
-DmpAy FmtCellDrs(SampDrs1)
-End Property
-
-Private Sub Z_GpCol()
+Sub Z_GpCol()
 Dim Col():            Col = Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 Dim RLvlGpIx&(): RLvlGpIx = LngAp(1, 1, 1, 3, 3, 2, 2, 3, 0, 0)
 Dim G():                G = ColGp(Col, RLvlGpIx)
 Stop
 End Sub
 
-Private Sub Z_GpDicDKG()
+Sub Z_GpDicDKG()
 Dim Act As Dictionary, Dy(), Dr1, Dr2, Dr3
 Dr1 = Array("A", , 1)
 Dr2 = Array("A", , 2)
@@ -937,12 +897,8 @@ Ass IsEqAy(Act("B"), Array(3))
 Stop
 End Sub
 
-Private Sub Z_SelDistCnt()
-BrwDrs SelDistCnt(DoPubFunP, "Mdn")
-End Sub
-
-Private Sub Z_SelDrs()
-BrwDrs SelDrs(SampDrs1, "A B D")
+Sub Z_SelDistCnt()
+BrwDrs SelDistCnt(Drso_PubFun, "Mdn")
 End Sub
 
 Function AddColzGpno(D As Drs, NumColn$, GpnoColn$, Optional RunFmNum% = 1) As Drs

@@ -49,7 +49,7 @@ Dim Blks As Blks:              Blks = BlkszNoRmk(NoRmkLno, NoRmk, SepLinPfx) ' B
                        TpBrk.Excess = BlkswExcess(Blks, Mul)
 End Function
 
-Private Function RmkLy(TpLy$(), SepLinPfx$) As String()
+Function RmkLy(TpLy$(), SepLinPfx$) As String()
 'Ret : :RmkLy from @TpLy using @BlkTyAy @@
 ':RmkLy: :Ly ! Fst chr of :Ly is [']
 Dim L, O$(): For Each L In TpLy
@@ -63,15 +63,15 @@ RmkLy = O
 Stop
 End Function
 
-Private Function XDroBlks(BlkTy$, SepLin$, DyoLLin(), BlkIx%, SepLno%) As Variant()
+Function XDroBlks(BlkTy$, SepLin$, DyoLLin(), BlkIx%, SepLno%) As Variant()
 XDroBlks = Array(BlkTy, SepLin, DyoLLin, BlkIx, SepLno)
 End Function
 
-Private Function FoBlks() As String()
+Function FoBlks() As String()
 FoBlks = SyzSS(FFoBlks)
 End Function
 
-Private Function BlkszNoRmk(NoRmkLno%, NoRmk$(), SepLinPfx$) As Blks
+Function BlkszNoRmk(NoRmkLno%, NoRmk$(), SepLinPfx$) As Blks
 'Fm NoRmkLno : is the Lno of fst-ele-of-@NoRmk, which should be a :SepLin
 'Fm NoRmk    : is :TpLy after rmv :RmkLy
 'Ret         : :Blks<BlkTy SepLin DyoLLin:Dyo<Lno Lin> BlkIx SepLno
@@ -98,7 +98,7 @@ Next
 BlkszNoRmk = Blks(ODy)
 End Function
 
-Private Function BlkTyzSepLin$(SepLin$, SepLinPfx$)
+Function BlkTyzSepLin$(SepLin$, SepLinPfx$)
 'Ret : the xxx of [== xxxx ] is BlkTy.  ie, Aft @SepLinPfx Bet 2 spc
 Dim L$: L = RmvPfx(SepLin, SepLinPfx)
 If FstChr(L) <> " " Then Exit Function
@@ -107,7 +107,7 @@ Dim P%: P = InStr(L, " "): If P = 0 Then Exit Function
 BlkTyzSepLin = Left(L, P - 1)
 End Function
 
-Private Function BlkswEr(B As Blks, Mul$(), Sng$()) As Blks
+Function BlkswEr(B As Blks, Mul$(), Sng$()) As Blks
 'Fm Mul : :BlkTyAy which alw more than 1 blk
 'Fm Sng : only alw 1 blk
 'Ret    : those blk in @B not in neither
@@ -119,7 +119,7 @@ Next
 BlkswEr = Blks(ODy)
 End Function
 
-Private Function BlkswExcess(B As Blks, Sng$()) As Blks
+Function BlkswExcess(B As Blks, Sng$()) As Blks
 'Fm Sng : sng blk instance blk ty.
 'Ret : subset of @B which is excess blk.  For those blk type is @Sng, the 2nd and rest blk is treated as excess.
 Dim Dy(): Dy = B.D.Dy
@@ -137,7 +137,7 @@ Next
 BlkswExcess = Blks(ODy)
 End Function
 
-Private Function BlkswOk(B As Blks, BtoMul$(), BtoSng$()) As Blks
+Function BlkswOk(B As Blks, BtoMul$(), BtoSng$()) As Blks
 'Ret : subset of @B which is ok.  It is ok when the #BlkTy is :Mul or is (:Sng and fst blk)
 Dim Dy(): Dy = B.D.Dy
 Dim BtoSngDone$()
@@ -157,14 +157,11 @@ Next
 BlkswOk = Blks(ODy)
 End Function
 
-Private Function Blks(DyoBlk()) As Blks
+Function Blks(DyoBlk()) As Blks
 'Fm DyoBlk: Dyo<BlkTy SepLin Dyo<Lno Lin> BlkIx SepLno>
 Blks.D = Drs(FoBlks, DyoBlk)
 End Function
-Private Sub Z()
-Z_TpBrk
-End Sub
-Private Sub Z_TpBrk()
+Sub Z_TpBrk()
 Dim Tp$, SepLinPfx$
 GoSub Z
 Exit Sub
@@ -204,7 +201,7 @@ Sub VcBlks(B As Blks)
 Vc FmtBlks(B)
 End Sub
 
-Private Function CntBlk%(B As Blks, BlkTy$)
+Function CntBlk%(B As Blks, BlkTy$)
 Dim O&
 Dim DroBlk: For Each DroBlk In B.D.Dy
     If DroBlk(0) = BlkTy Then O = O + 1
@@ -212,43 +209,43 @@ Next
 CntBlk = O
 End Function
 
-Private Function DyoLLinzBlk(B As Blk) As Variant()
+Function DyoLLinzBlk(B As Blk) As Variant()
 DyoLLinzBlk = B.DroBlk(2)
 End Function
 
-Private Function FmtBlks(B As Blks) As String()
+Function FmtBlks(B As Blks) As String()
 Dim DroBlk, J&: For Each DroBlk In B.D.Dy
     PushIAy FmtBlks, FmtBlk(Blk(DroBlk), J)
 Next
 End Function
 
-Private Function Blk(DroBlk) As Blk
+Function Blk(DroBlk) As Blk
 'Fm DroBlk: Av<BlkTy SepLin Dyo<Lno Lin> BlkIx SepLno>
 If Si(DroBlk) <> 5 Then Stop
 Blk.DroBlk = DroBlk
 End Function
 
-Private Function FmtLLin(DyoLLin()) As String()
+Function FmtLLin(DyoLLin()) As String()
 FmtLLin = AmRTrim(AlignDyAsLy(DyoLLin))
 End Function
 
-Private Function RoBlkIx%(B As Blk)
+Function RoBlkIx%(B As Blk)
 RoBlkIx = B.DroBlk(3)
 End Function
 
-Private Function RoBlkTy%(B As Blk)
+Function RoBlkTy%(B As Blk)
 RoBlkTy = B.DroBlk(0)
 End Function
 
-Private Function RoBlkSepLin$(B As Blk)
+Function RoBlkSepLin$(B As Blk)
 RoBlkSepLin = B.DroBlk(1)
 End Function
 
-Private Function RoBlkSepLno&(B As Blk)
+Function RoBlkSepLno&(B As Blk)
 RoBlkSepLno = B.DroBlk(4)
 End Function
 
-Private Function RoBlk(B As Blk) As RoBlk
+Function RoBlk(B As Blk) As RoBlk
 Dim Dr(): Dr = B.DroBlk
 With RoBlk
     .BlkTy = Dr(0)
@@ -259,7 +256,7 @@ With RoBlk
 End With
 End Function
 
-Private Function FmtBlk(B As Blk, Optional BlkIx = -1) As String()
+Function FmtBlk(B As Blk, Optional BlkIx = -1) As String()
 'Fm Blk : Dro<BlkTy SepLin Dyo<L Lin>>
 Dim P$: If BlkIx >= 0 Then P = "(BlkIx:" & BlkIx & ") "
 Dim RoB As RoBlk: RoB = RoBlk(B)
@@ -269,7 +266,7 @@ PushIAy FmtBlk, FmtLLin(.DyoLLin)
 End With
 End Function
 
-Private Function BlkzTy(B As Blks, BlkTy$, Optional FmIx = 0) As Blk
+Function BlkzTy(B As Blks, BlkTy$, Optional FmIx = 0) As Blk
 Dim Dy(): Dy = B.D.Dy
 Dim Dr$(), Ix%: For Ix = FmIx To UB(Dy) ' Dro<BlkTy SepLin Dyo<Lno Lin> BlkIx>
     Dr = Dy(Ix)
@@ -284,7 +281,7 @@ LyzBlkTy = StrColzDySnd(DyoLLinzBlk(BlkzTy(B, BlkTy)))
 End Function
 
 Function LyAyzBlkTy(B As Blks, BlkTy$, Optional FmIx% = 0) As Variant()
-Dim D As Drs: D = DwEq(B.D, "BlkTy", BlkTy)
+Dim D As Drs: D = F_SubDrs_ByC_Eq(B.D, "BlkTy", BlkTy)
 Dim Dr: For Each Dr In D.Dy
     Dim DyoBlk(): DyoBlk = Dr(2)  ' Av<BlkTy SepLin Dyo<Lno Lin>>
     PushI LyAyzBlkTy, StrColzDySnd(DyoBlk)
@@ -295,24 +292,24 @@ Function IsBlkEmp(B As Blk) As Boolean
 IsBlkEmp = Si(B.DroBlk) = 0
 End Function
 
-Private Function ErzBlkTy(B As Blks, BlkTy$, Optional FmIx = 0) As String()
+Function EoBlkTy(B As Blks, BlkTy$, Optional FmIx = 0) As String()
 'Ret: Those Blk @FmIx and eq @BlkTy in @B are considered as error.  Upd them as :ErLy @@
 Dim Dy(): Dy = B.D.Dy
 Dim Ix%: For Ix = FmIx To UB(Dy)
-    PushIAy ErzBlkTy, ErzBlk(Blk(Dy(Ix)))
+    PushIAy EoBlkTy, EoBlk(Blk(Dy(Ix)))
 Next
 End Function
 
-Private Function ErzBlk(Er As Blk) As String()
+Function EoBlk(Er As Blk) As String()
 Stop
 End Function
 
-Private Function NxtBlk(B As Blks, M As Blk) As Blk
+Function NxtBlk(B As Blks, M As Blk) As Blk
 'Ret : Nxt :Blk of @M fm @B.  M.BlkIx
 NxtBlk = BlkzTy(B, RoBlkTy(M), BlkIx(M) + 1)
 End Function
 
-Private Function ErzAftBlk(B As Blks, Aft As Blk) As String()
+Function EoAftBlk(B As Blks, Aft As Blk) As String()
 'Ret : :ErLy of all :Blk @Aft in @B of-sam-ty-as-@Aft which are considered as er.  `Aft` means those blks in @B aft @Aft.BlkIx
 Dim Dy(): Dy = B.D.Dy
 Dim TyAft$: TyAft = RoBlkTy(Aft) ' The-Ty-of-@Aft
@@ -320,7 +317,7 @@ Dim Ix%: For Ix = BlkIx(Aft) + 1 To UB(Dy)
     Dim Dr: Dr = Dy(Ix)
     Dim TyCur$: TyCur = RoBlkTy(Blk(Dr))
     If TyAft = TyCur Then
-        PushIAy ErzAftBlk, ErzBlk(Blk(Dy(Ix)))
+        PushIAy EoAftBlk, EoBlk(Blk(Dy(Ix)))
     End If
 Next
 End Function

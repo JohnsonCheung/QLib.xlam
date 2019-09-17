@@ -55,7 +55,7 @@ If IsEmpty(A) Then Set CvNothing = Nothing: Exit Function
 Set CvNothing = A
 End Function
 
-Private Sub Z_InStrN()
+Sub Z_InStrN()
 Dim Act&, Exp&, S, SubStr, N%
 
 '    12345678901234
@@ -206,40 +206,7 @@ Dim M As Match: Set M = MchzPatnF(Patn, S)
 If IsNothing(M) Then Exit Function
 MchStr = M.Value
 End Function
-Function MchzPatn(Patn$, S) As MatchCollection
-Set MchzPatn = Mch(Rx(Patn), S)
-End Function
 
-Function MchzPatnF(Patn$, S) As Match
-Dim M As MatchCollection: Set M = MchzPatn(Patn, S)
-If M.Count = 0 Then Exit Function
-Set MchzPatnF = CvMch(M(0))
-End Function
-
-Function Mch(Re As RegExp, S) As MatchCollection
-Set Mch = Re.Execute(S)
-End Function
-
-Function CvRe(A) As RegExp
-Set CvRe = A
-End Function
-
-Function Rx(Patn$, Optional MultiLine As Boolean, Optional IgnoreCase As Boolean, Optional IsGlobal As Boolean) As RegExp
-If Patn = "" Or Patn = ".*" Then Exit Function
-Dim O As New RegExp
-With O
-   .Pattern = Patn
-   .MultiLine = MultiLine
-   .IgnoreCase = IgnoreCase
-   .Global = IsGlobal
-End With
-Set Rx = O
-End Function
-
-Private Sub Z()
-Z_InStrN
-MVb___Fun:
-End Sub
 
 Function SumLngAy@(A&())
 Dim L, O@
@@ -249,7 +216,7 @@ Next
 SumLngAy = O
 End Function
 
-Private Sub Z_SumLngAy()
+Sub Z_SumLngAy()
 Dim S$: S = LineszFt(PjfP)
 Debug.Assert SumLngAy(AscCntAy(S)) = Len(S)
 End Sub

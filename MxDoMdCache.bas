@@ -9,7 +9,7 @@ Function DoMdCacheP() As Drs
 DoMdCacheP = AddColIsCached(DoMdnP)
 End Function
 
-Private Function AddColIsCached(Wi_Mdn As Drs) As Drs
+Function AddColIsCached(Wi_Mdn As Drs) As Drs
 Dim Dy()
     Dim IxMdn%: IxMdn = IxzAy(Wi_Mdn.Fny, "Mdn")
     Dim Dr: For Each Dr In Itr(Wi_Mdn.Dy)

@@ -112,15 +112,15 @@ Dim Fny$(): Fny = AddSy(D.Fny, NewFny)
 Agr = Drs(Fny, Dy)
 End Function
 
-Private Sub Z_AgrWdt()
+Sub Z_AgrWdt()
 BrwDrs AgrWdt(DoPubFun, "Mdn Ty", "Mthn")
 End Sub
 
-Private Function AgrWdt(D As Drs, Gpcc$, C$) As Drs
+Function AgrWdt(D As Drs, Gpcc$, C$) As Drs
 Dim A As Drs: A = Gp(D, Gpcc, C)
 Dim Dr, Dy(): For Each Dr In Itr(A.Dy)
     Dim Col(): Col = Pop(Dr)
-    PushI Dr, AyWdt(Col)
+    PushI Dr, WdtzAy(Col)
     PushI Dy, Dr
 Next
 Dim Fny$(): Fny(UB(Fny)) = "W" & C

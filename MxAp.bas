@@ -34,7 +34,7 @@ Av = ApOf_Itm_Or_Ay
 AvzAp = AvzAyOfItmOrAy(Av)
 End Function
 
-Private Function SyzAv(AvOf_Itm_or_Ay()) As String()
+Function SyzAv(AvOf_Itm_or_Ay()) As String()
 Dim I: For Each I In Itr(AvOf_Itm_or_Ay)
     If IsArray(I) Then
         PushIAy SyzAv, I

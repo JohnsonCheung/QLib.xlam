@@ -14,7 +14,7 @@ Public Const FFoMthLis$ = "Pjn MdTy Mdn L Mdy Ty Mthn TyChr RetAs ShtPm"
 Sub LisPj()
 Dim A$()
     A = PjNyzV(CVbe)
-    D AddPfxzAy(A, "ShwPj """)
+    D AmAddPfx(A, "ShwPj """)
 D A
 End Sub
 
@@ -32,7 +32,7 @@ End Sub
 
 Sub LisPubZ()
 Dim A As Drs: A = DwPatn(DoPubSub, "Mthn", "^Z$")
-Dmp AddSfxzAy(StrCol(A, "Mdn"), ".Z")
+Dmp AmAddSfx(StrCol(A, "Mdn"), ".Z")
 End Sub
 
 Sub LisPubFun(MthPatn$)
@@ -40,7 +40,7 @@ DmpDrs DwPatn(DoPubFun, "Mthn", MthPatn)
 End Sub
 
 Function DoPubSub() As Drs
-DoPubSub = DwEq(DoPubFun, "Ty", "Sub")
+DoPubSub = F_SubDrs_ByC_Eq(DoPubFun, "Ty", "Sub")
 End Function
 
 Sub LisPubPatn(Patn$)
@@ -49,11 +49,11 @@ BrwDrs DwPatn(A, "Mthn", Patn)
 End Sub
 
 Function DoPubFun() As Drs
-DoPubFun = DwEqExl(DoPubFun, "Ty", "Fun")
+DoPubFun = F_SubDrs_ByC_EqExl(DoPubFun, "Ty", "Fun")
 End Function
 
-Function DoPubFunPatn(Patn$) As Drs
-DoPubFunPatn = DwPatn(DoPubFun, "Mthn", Patn)
+Function Drso_PubFunatn(Patn$) As Drs
+Drso_PubFunatn = DwPatn(DoPubFun, "Mthn", Patn)
 End Function
 
 Function DoPubPrp() As Drs
@@ -77,18 +77,18 @@ End Sub
 Sub LisPPrpRetAs(RetAsPatn$)
 Dim S As Drs: S = DoPubFun
 Dim RetSfx As Drs: RetSfx = AddColzRetAs(S)
-Dim Pub As Drs: Pub = DwEqExl(RetSfx, "Mdy", "Pub")
-Dim Fun As Drs: Fun = DwEqExl(Pub, "Ty", "Get")
+Dim Pub As Drs: Pub = F_SubDrs_ByC_EqExl(RetSfx, "Mdy", "Pub")
+Dim Fun As Drs: Fun = F_SubDrs_ByC_EqExl(Pub, "Ty", "Get")
 Dim Patn As Drs: Patn = DwPatn(Fun, "RetSfx", RetAsPatn)
 Dim T50 As Drs: T50 = DwTopN(Patn)
 BrwDrs T50
 End Sub
 
 Sub LisMthCntzQIde()
-DmpDrs SrtDrs(DwEq(DoMthCntP, "Lib", "QIde")), Fmt:=EiSSFmt, IsSum:=True
+DmpDrs SrtDrs(F_SubDrs_ByC_Eq(DoMthCntP, "Lib", "QIde")), Fmt:=EiSSFmt, IsSum:=True
 End Sub
 
-Private Function JSrc$(Mdn$, Lno&, C1%, C2%, Lin)
+Function JSrc$(Mdn$, Lno&, C1%, C2%, Lin)
 JSrc = FmtQQ("JmpLin""?:?:?:?"" '?", Mdn, Lno, C1, C2, Lin)
 End Function
 
@@ -112,15 +112,15 @@ Next
 JSrczPred = AlignLyzTRst(O)
 End Function
 
-Private Function JSrczIdf(Idf$) As String()
+Function JSrczIdf(Idf$) As String()
 JSrczIdf = JSrczPred(PredHasIdf(Idf))
 End Function
 
-Private Function JSrczPfx(LinPfx$) As String()
+Function JSrczPfx(LinPfx$) As String()
 JSrczPfx = JSrczPred(PredHasPfx(LinPfx))
 End Function
 
-Private Function JSrczPatn(LinPatn$, Optional AndPatn1$, Optional AndPatn2$) As String()
+Function JSrczPatn(LinPatn$, Optional AndPatn1$, Optional AndPatn2$) As String()
 JSrczPatn = JSrczPred(PredHasPatn(LinPatn, AndPatn1, AndPatn2))
 End Function
 
@@ -137,10 +137,16 @@ Sub LisSrc(LinPatn$, Optional AndPatn1$, Optional AndPatn2$, Optional OupTy As E
 Brw JSrczPatn(LinPatn, AndPatn1, AndPatn2), OupTy:=OupTy
 End Sub
 
-Sub LisMth(Optional Patn$, Optional Patn1$, Optional Patn2$, Optional ShtMdySS$, Optional ShtMthTySS$, Optional MdnPatn$, Optional TyChr$, Optional RetAsPatn$, _
+Sub LisMth(Optional Patn$, Optional Patn1$, Optional Patn2$, Optional ShtMdySS$, Optional ShtMthTySS$, _
+Optional TyChr$, Optional RetAsPatn$, _
 Optional NPm% = -1, Optional ShtPmPatn$, Optional HasAp As EmTriSte, Optional RetAy As EmTriSte, _
+Optional MdnPatn$, Optional ShtMdTySS$, _
 Optional OupTy As EmOupTy, Optional Top% = 50)
-Dim D As Drs: D = SelDoMthLis(DoMthLisP, Patn, Patn1, Patn2, ShtMdySS, ShtMthTySS, MdnPatn, TyChr, RetAsPatn, NPm, ShtPmPatn, HasAp, RetAy)
+Dim D As Drs:
+    D = DwDoMthLis(DoMthLisP, Patn, Patn1, Patn2, ShtMdySS, ShtMthTySS, _
+        TyChr, RetAsPatn, _
+        NPm, ShtPmPatn, HasAp, RetAy, _
+        MdnPatn, ShtMdTySS)
 Dim D1 As Drs: D1 = DwTopN(D, Top)
 Brw FmtCellDrszRdu(D1, , , , EiBeg1, EiSSFmt), OupTy:=OupTy
 End Sub
@@ -173,25 +179,28 @@ Dim IRetAs   As Drs:   IRetAs = AddColoRetAs(IShtPm)
 XX:                 DoMthLisP = Y
 End Function
 
-Private Function SelDoMthLis(DoMthLis As Drs, Patn$, Patn1$, Patn2$, ShtMdySS$, ShtMthTySS$, MdnPatn$, TyChr$, RetAsPatn$, _
-NPm%, ShtPmPatn$, HasAp As EmTriSte, RetAy As EmTriSte) As Drs
+Function DwDoMthLis(DoMthLis As Drs, Patn$, Patn1$, Patn2$, ShtMdySS$, ShtMthTySS$, _
+TyChr$, RetAsPatn$, _
+NPm%, ShtPmPatn$, HasAp As EmTriSte, RetAy As EmTriSte, _
+MdnPatn$, ShtMdTySS$) As Drs
+
 '- Pfx-Pn = Patn
 Dim PnMdy$:             PnMdy = PatnzSS(ShtMdySS, ShtMthMdyAy)
 Dim PnTy$:               PnTy = PatnzSS(ShtMthTySS, ShtMthTyAy)
 '- Pfx-I = Inp-Do-Fm-DoMthLis
 Dim IMdy     As Drs:     IMdy = DwPatn(DoMthLisP, "Mdy", PnMdy)
 Dim ITy      As Drs:      ITy = DwPatn(IMdy, "Ty", PnTy)
-Dim ITyChr As Drs:     ITyChr = DwEqStr(ITy, "TyChr", TyChr)
+Dim ITyChr As Drs:     ITyChr = F_SubDrs_ByC_EqStr(ITy, "TyChr", TyChr)
 Dim IPatn    As Drs:    IPatn = DwPatn(ITyChr, "Mthn", Patn, Patn1, Patn2)
 Dim IHasAp   As Drs:   IHasAp = DwHasAp(IPatn, HasAp)
 Dim INPm     As Drs:     INPm = DwNPm(IHasAp, NPm)
 Dim IMdn     As Drs:     IMdn = DwPatn(INPm, "Mdn", MdnPatn)
 Dim IRetAs   As Drs:   IRetAs = DwPatn(IMdn, "RetAs", RetAsPatn)
 Dim IRetAy   As Drs:   IRetAy = DwRetAy(IRetAs, RetAy)
-                  SelDoMthLis = DwPatn(IRetAy, "ShtPm", ShtPmPatn)
+                  DwDoMthLis = DwPatn(IRetAy, "ShtPm", ShtPmPatn)
 End Function
 
-Private Function DwRetAy(WiRetAs As Drs, RetAy As EmTriSte) As Drs
+Function DwRetAy(WiRetAs As Drs, RetAy As EmTriSte) As Drs
 If RetAy = EiTriOpn Then DwRetAy = WiRetAs: Exit Function
 Dim RetAy1 As Boolean: RetAy1 = BoolzTriSte(RetAy)
 Dim IRetAs%: IRetAs = IxzAy(WiRetAs.Fny, "RetAs")
@@ -203,7 +212,7 @@ Dim ODy()
 DwRetAy = Drs(WiRetAs.Fny, ODy)
 End Function
 
-Private Function HasAp(MthPm) As Boolean
+Function HasAp(MthPm) As Boolean
 Dim A$(): A = SplitCommaSpc(MthPm): If Si(A) = 0 Then Exit Function
 HasAp = HasPfx(LasEle(A), "ParamArray ")
 End Function
@@ -216,7 +225,7 @@ Case Else: Stop
 End Select
 End Function
 
-Private Function DwHasAp(WiMthPm As Drs, HasAp0 As EmTriSte) As Drs
+Function DwHasAp(WiMthPm As Drs, HasAp0 As EmTriSte) As Drs
 If HasAp0 = EiTriOpn Then DwHasAp = WiMthPm: Exit Function
 Dim HasAp1 As Boolean: HasAp1 = BoolzTriSte(HasAp0)
 Dim IMthPm%: IMthPm = IxzAy(WiMthPm.Fny, "MthPm")
@@ -228,7 +237,7 @@ Dim ODy()
 DwHasAp = Drs(WiMthPm.Fny, ODy)
 End Function
 
-Private Function DwNPm(D As Drs, NPm%) As Drs
+Function DwNPm(D As Drs, NPm%) As Drs
 If NPm < 0 Then DwNPm = D: Exit Function
 Dim Ix%: Ix = IxzAy(D.Fny, "MthPm")
 Dim ODy(), Dr, Pm$: For Each Dr In Itr(D.Dy)
@@ -238,7 +247,7 @@ Next
 DwNPm = Drs(D.Fny, ODy)
 End Function
 
-Private Function AddColoRetAs(WiMthLin As Drs) As Drs
+Function AddColoRetAs(WiMthLin As Drs) As Drs
 Dim I%: I = IxzAy(WiMthLin.Fny, "MthLin")
 Dim Dr, Dy(): For Each Dr In Itr(WiMthLin.Dy)
     Dim MthLin$: MthLin = Dr(I)

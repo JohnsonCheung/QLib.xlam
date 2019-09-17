@@ -37,31 +37,10 @@ For Each V In Itr(Ay)
 Next
 End Function
 
-Function AddPfxzAy(Ay, Pfx) As String()
-Dim I
-For Each I In Itr(Ay)
-    PushI AddPfxzAy, Pfx & I
-Next
-End Function
-
-Function AddPfxSzAy(Ay, Pfx, Sfx) As String()
-Dim I
-For Each I In Itr(Ay)
-    PushI AddPfxSzAy, Pfx & I & Sfx
-Next
-End Function
-
 Function AddNBSfxzAy(Ay, Sfx) As String()
 Dim I, S$
 For Each I In Itr(Ay)
     PushI AddNBSfxzAy, AddNBSfx(I, Sfx)
-Next
-End Function
-
-Function AddSfxzAy(Ay, Sfx) As String()
-Dim I
-For Each I In Itr(Ay)
-    PushI AddSfxzAy, I & Sfx
 Next
 End Function
 

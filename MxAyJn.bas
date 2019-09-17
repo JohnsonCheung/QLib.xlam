@@ -42,9 +42,3 @@ Dim Av(): If UBound(Ap) >= 0 Then Av = Ap
 JnSemiColonAp = JnSemi(AeEmpEle(Av))
 End Function
 
-Private Sub Z()
-Dim A()
-Dim B As Variant
-
-Sy A
-End Sub

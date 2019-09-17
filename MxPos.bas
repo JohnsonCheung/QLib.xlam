@@ -7,11 +7,7 @@ Type Pos
     Cno1 As Long
     Cno2 As Long
 End Type
-Type MdPos
-    Md As CodeModule
-    RRCC As RRCC
-End Type
-Type MdPoses: N As Long: Ay() As MdPos: End Type
+
 Function Pos(C1, C2) As Pos
 If C1 <= 0 Then Exit Function
 If C2 <= 0 Then Exit Function

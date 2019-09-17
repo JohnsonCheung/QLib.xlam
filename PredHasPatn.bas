@@ -30,7 +30,7 @@ Function Pred(V) As Boolean
 Pred = IPred_Pred(V)
 End Function
 
-Private Function IPred_Pred(V As Variant) As Boolean
+Function IPred_Pred(V As Variant) As Boolean
 If Re.Test(V) Then
     If HasAnd1 Then
         If Not AndRe1.Test(V) Then Exit Function

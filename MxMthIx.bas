@@ -60,7 +60,7 @@ Function FstMthIxzSN&(Src$(), Mthn)
 Dim Ix&
 For Ix = 0 To UB(Src)
     With Mthn3zL(Src(Ix))
-        If .NM = Mthn Then
+        If .Nm = Mthn Then
             FstMthIxzSN = Ix
             Exit Function
         End If
@@ -101,7 +101,7 @@ Function MthIxItr(Src$())
 Asg Itr(MthIxy(Src)), MthIxItr
 End Function
 
-Private Sub Z_MthIxy()
+Sub Z_MthIxy()
 Dim Src$()
 GoSub Z
 Exit Sub
@@ -152,7 +152,7 @@ Function MthIxzNmTy&(Src$(), Mthn, ShtMthTy$)
 Dim Ix&
 For Ix = 0 To UB(Src)
     With Mthn3zL(Src(Ix))
-        If .NM = Mthn Then
+        If .Nm = Mthn Then
             If .ShtTy = ShtMthTy Then
                 MthIxzNmTy = Ix
                 Exit Function
@@ -171,7 +171,7 @@ Next
 End Function
 
 Function MthLnoAy(M As CodeModule, Mthn) As Long()
-MthLnoAy = AyIncEle1(MthIxyzN(Src(M), Mthn))
+MthLnoAy = AmIncEleBy1(MthIxyzN(Src(M), Mthn))
 End Function
 
 Function MthLnozMM&(M As CodeModule, Mthn, Optional IsInf As Boolean)

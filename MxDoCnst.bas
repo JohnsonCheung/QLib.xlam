@@ -14,29 +14,24 @@ DoCnstP = DoCnstzP(CPj)
 End Function
 
 Function DoCnstzP(P As VBProject) As Drs
-Dim O()
-Dim C As VBComponent, M As CodeModule: For Each C In P.VBComponents
-    Set M = C.CodeModule
-    PushI O, DyoCnst(Src(M), M.Name)
+Dim O As Drs
+Dim C As VBComponent: For Each C In P.VBComponents
+    O = AddDrs(O, DoCnstzM(C.CodeModule))
 Next
-DoCnstzP = Drs(FoCnst, O)
+DoCnstzP = O
 End Function
-
-Sub LisCnst()
-
-End Sub
 
 Function DoCnst(Src$(), Mdn$) As Drs
 DoCnst = Drs(FoCnst, DyoCnst(Src, Mdn))
 End Function
 
-Private Function DyoCnst(Src$(), Mdn$) As Variant()
+Function DyoCnst(Src$(), Mdn$) As Variant()
 Dim L: For Each L In Itr(Src)
     PushSomSi DyoCnst, DroCnst(L, Mdn)
 Next
 End Function
 
-Private Sub Z_CnstLy()
+Sub Z_CnstLy()
 Brw CnstLy(SrczP(CPj))
 End Sub
 

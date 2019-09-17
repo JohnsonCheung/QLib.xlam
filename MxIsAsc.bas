@@ -101,15 +101,15 @@ Case IsAscPun1(A), IsAscPun2(A), IsAscPun3(A), IsAscPun4(A): IsAscPun = True
 End Select
 End Function
 
-Private Function IsAscPun1(A%) As Boolean
+Function IsAscPun1(A%) As Boolean
 IsAscPun1 = (&H21 <= A And A <= &H2F)
 End Function
 
-Private Function IsAscPun2(A%) As Boolean
+Function IsAscPun2(A%) As Boolean
 IsAscPun2 = (&H3A <= A And A <= &H40)
 End Function
 
-Private Function IsAscPun3(A%) As Boolean
+Function IsAscPun3(A%) As Boolean
 IsAscPun3 = (&H5B <= A And A <= &H60)
 End Function
 

@@ -16,6 +16,6 @@ Private A As New RegExp
 Friend Sub Init(Patn$)
 A.Pattern = Patn
 End Sub
-Private Function IPred_Pred(V As Variant) As Boolean
+Function IPred_Pred(V As Variant) As Boolean
 IPred_Pred = A.Test(V)
 End Function

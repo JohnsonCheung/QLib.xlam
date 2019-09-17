@@ -16,7 +16,7 @@ Attribute BoRunZ.VB_VarHelpID = -1
 Dim WithEvents BoAlignMth As CommandBarButton
 Attribute BoAlignMth.VB_VarHelpID = -1
 
-Private Property Get Y_BtnSpec() As String()
+Property Get Y_BtnSpec() As String()
 Erase XX
 X "Bars"
 X " XX AlignMth RunZ"
@@ -24,7 +24,7 @@ Y_BtnSpec = XX
 Erase XX
 End Property
 
-Private Sub BoAlignMth_Click(ByVal Ctrl As Office.CommandBarButton, CancelDefault As Boolean)
+Sub BoAlignMth_Click(ByVal Ctrl As Office.CommandBarButton, CancelDefault As Boolean)
 AlignMth
 End Sub
 
@@ -36,6 +36,6 @@ Set BoAlignMth = Bars("XX").Controls("AlignMth")
 'BoRunZ.ShortcutText = "Alt+Z"
 End Sub
 
-Private Sub Class_Terminate()
+Sub Class_Terminate()
 MsgBox "Class1 terminated"
 End Sub

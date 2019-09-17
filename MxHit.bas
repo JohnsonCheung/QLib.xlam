@@ -95,7 +95,7 @@ If Si(Ay) = 0 Then HitAy = True: Exit Function
 HitAy = HasEle(Ay, V)
 End Function
 
-Private Sub Z_HitPatn()
+Sub Z_HitPatn()
 Dim A$, Patn$
 Ept = True: A = "AA": Patn = "AA": GoSub Tst
 Ept = True: A = "AA": Patn = "^AA$": GoSub Tst
@@ -113,7 +113,3 @@ HitPatn = Re.Test(A)
 End Function
 
 
-Private Sub Z()
-Z_HitPatn
-MVb_Str_Mch:
-End Sub

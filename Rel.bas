@@ -11,7 +11,7 @@ Option Compare Text
 Option Explicit
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "Rel."
-Public NM$
+Public Nm$
 Private Dic As New Dictionary    ' Key is Par, Val is Aset of chd
 
 Friend Function Init(RelLy$()) As Rel
@@ -130,8 +130,8 @@ Const CSub$ = CMod & "ThwIf_NE"
 If IsEq(A) Then Exit Sub
 Dim O$()
 PushI O, Msg
-PushI O, FmtQQ("?-ParCnt(?) / ?-ParCnt(?)", NM, NPar, N1, A.NPar)
-PushI O, NM & " --------------------"
+PushI O, FmtQQ("?-ParCnt(?) / ?-ParCnt(?)", Nm, NPar, N1, A.NPar)
+PushI O, Nm & " --------------------"
 PushIAy O, Fmt
 PushI O, N1 & " --------------------"
 PushIAy O, A.Fmt
@@ -187,7 +187,7 @@ Const CSub$ = CMod & "InDpdOrdItms"
 Dim O As New Aset, J%, M As Rel, Leaves As Aset
 Set M = Clone
 Do
-    J = J + 1: If J > 1000 Then ThwMsg CSub, "looping to much"
+    J = J + 1: If J > 1000 Then Thw CSub, "looping to much"
     Set Leaves = M.SetOfLeaf
     If Leaves.IsEmp Then
         If M.NPar > 0 Then
@@ -313,7 +313,7 @@ Property Get SampRel() As Rel
 Set SampRel = RelVbl("B C D | D E | X")
 End Property
 
-Private Sub Z_Itms()
+Sub Z_Itms()
 Dim Act As Aset, Ept As Aset, A As Rel
 Set Ept = AsetzSsl("A B C D E")
 Set A = RelVbl("A B C | B D E | C D")
@@ -325,7 +325,7 @@ Tst:
     Return
 End Sub
 
-Private Sub Z_InDpdOrdItms()
+Sub Z_InDpdOrdItms()
 Dim Act As Aset, Ept As Aset
 Dim R As Rel
 GoSub T1
@@ -361,15 +361,6 @@ Tst:
     Return
 End Sub
 
-Private Sub Z()
-Dim A As Variant
-Dim B$()
-Dim C$
-Dim D As Rel
-
-CvRel A
-IsRel A
-End Sub
 
 Property Get SetOfSngChdPar() As Aset
 Set SetOfSngChdPar = New Aset

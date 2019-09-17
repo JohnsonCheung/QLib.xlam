@@ -12,6 +12,6 @@ Option Compare Text
 Implements IPred
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "PredIsNm."
-Private Function IPred_Pred(V As Variant) As Boolean
+Function IPred_Pred(V As Variant) As Boolean
 IPred_Pred = IsNm(V)
 End Function

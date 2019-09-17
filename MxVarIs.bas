@@ -38,10 +38,6 @@ Function IsBytAy(V) As Boolean
 IsBytAy = VarType(V) = vbByte + vbArray
 End Function
 
-Function IsDic(V) As Boolean
-IsDic = TypeName(V) = "Dictionary"
-End Function
-
 Function IsDigit(V) As Boolean
 IsDigit = "0" <= V And V <= "9"
 End Function
@@ -269,7 +265,7 @@ Case " ", vbCr, vbLf, vbTab: IsWhiteChr = True
 End Select
 End Function
 
-Private Sub ZIsSy()
+Sub ZIsSy()
 Dim V$()
 Dim B: B = V
 Dim C()
@@ -280,7 +276,7 @@ Ass IsSy(C) = False
 Ass IsSy(D) = False
 End Sub
 
-Private Sub Z_IsStrAy()
+Sub Z_IsStrAy()
 Dim V$()
 Dim B: B = V
 Dim C()
@@ -291,7 +287,7 @@ Ass IsStrAy(C) = False
 Ass IsStrAy(D) = False
 End Sub
 
-Private Sub Z_IsVdtLyDicStr()
+Sub Z_IsVdtLyDicStr()
 Ass IsVdtLyDicStr(LineszVbl("***ksdf|***ksdf1")) = True
 Ass IsVdtLyDicStr(LineszVbl("***ksdf|***ksdf")) = False
 Ass IsVdtLyDicStr(LineszVbl("**ksdf|***ksdf")) = False
@@ -299,10 +295,6 @@ Ass IsVdtLyDicStr(LineszVbl("***")) = True
 Ass IsVdtLyDicStr("**") = False
 End Sub
 
-Private Sub Z()
-Z_IsVdtLyDicStr
-MVb_IsVar:
-End Sub
 
 Function IsAllBlnkSy(V$()) As Boolean
 Dim I

@@ -32,10 +32,10 @@ Type DoLLin
 End Type
 Private Type FdRslt
     Som As Boolean
-    Fd As dao.Field2
+    Fd As DAO.Field2
 End Type
 
-Sub AppTdAy(D As Database, TdAy() As dao.TableDef)
+Sub AppTdAy(D As Database, TdAy() As DAO.TableDef)
 Dim T
 For Each T In Itr(TdAy)
     D.TableDefs.Append T
@@ -56,14 +56,14 @@ End Function
 
 Sub CrtSchm(D As Database, Schm$())
 Const CSub$ = CMod & "CrtSchm"
-ThwIf_ErMsg ErzSchm(Schm), CSub, "there is error in the Schm", "Schm Db", AddIxPfx(Schm, 1), D.Name
+ThwIf_ErMsg EoSchm(Schm), CSub, "there is error in the Schm", "Schm Db", AddIxPfx(Schm, 1), D.Name
 Dim X As DoLTDH:           X = DoLTDH(Schm)
 Dim TdLy$():            TdLy = FmtDoLTDH(X, C_Tbl)
 Dim E$():                  E = FmtDoLTDH(X, C_Ele)
 Dim F$():                  F = FmtDoLTDH(X, C_Fld)
 Dim DF$()
 Dim Dt$()
-Dim T() As dao.TableDef:   T = TdAy(TdLy, E, F)
+Dim T() As DAO.TableDef:   T = TdAy(TdLy, E, F)
 Dim P$():                  P = SqyCrtPkzTny(PkTny(TdLy))
 Dim S$():                  S = SqyCrtSk(TdLy)
 Dim DicT As Dictionary: Set DicT = Dic(AwRmvTT(Schm, C_Des, C_Tbl))
@@ -71,7 +71,7 @@ Dim DicF As Dictionary: Set DicF = Dic(AwRmvTT(Schm, C_Des, C_Fld))
                    AppTdAy D, T
                    RunSqy D, P
                    RunSqy D, S
-SetTblDesDic D, DicT
+SetTdDeszDic D, DicT
 SetFldDesDic D, DicF
 End Sub
 
@@ -91,14 +91,14 @@ Dim L, Lno&: For Each L In Itr(Ly)
 Next
 End Function
 
-Private Function EdEleDup(EleLLno As Drs, Eny$()) As String()
+Function EdEleDup(EleLLno As Drs, Eny$()) As String()
 Dim Ele
 For Each Ele In Itr(AwDup(Eny))
 '    Push EdEleDup, MeEleDup(LnoAyzEle(E, Ele), Ele)
 Next
 End Function
 
-Private Function EdfEr(A As Drs, T As Drs) As String() _
+Function EdfEr(A As Drs, T As Drs) As String() _
 'Given A is D-Lnx having fmt = $Tbl $Fld $D, _
 'This Sub checks if $Fld is in Fny
 Dim J%, Fld$, Tbl$, Tny$(), FnyAy$()
@@ -111,21 +111,21 @@ Dim J%, Fld$, Tbl$, Tny$(), FnyAy$()
 'Next
 End Function
 
-Private Function EdfEr1(A(), Tny$(), FnyAy$()) As String()
+Function EdfEr1(A(), Tny$(), FnyAy$()) As String()
 End Function
 
-Private Function EdFldEr(D As Drs, T As Drs) As String()
+Function EdFldEr(D As Drs, T As Drs) As String()
 
 End Function
 
-Private Function EdLinEr(A As Drs) As String()
+Function EdLinEr(A As Drs) As String()
 Dim I
 'For Each I In Itr(A)
 '    If RmvTT(CvLnx(I).Lin) = "" Then PushI EdLinEr, MdLin3T(CvLnx(I))
 'Next
 End Function
 
-Private Function EdtInvalidFld(D As Drs, T$, Fny$()) As String()
+Function EdtInvalidFld(D As Drs, T$, Fny$()) As String()
 'Fny$ is the fields in T$.
 'D-Lnx.Lin is Des $T $F $D.  For the T$=$T line, the $F not in Fny$(), it is error
 Dim I
@@ -134,7 +134,7 @@ Dim I
 'Next
 End Function
 
-Private Function EdtInvalidFld1$(D As LLin, T$, Fny$())
+Function EdtInvalidFld1$(D As LLin, T$, Fny$())
 Dim Tbl$, Fld$, Des$, X$
 Asg3TRst D.Lin, X, Tbl, Fld, Des
 If X <> "Des" Then Stop
@@ -145,7 +145,7 @@ If Not HasEle(Fny, Fld) Then
 End If
 End Function
 
-Private Function EdtTblNin(D As Drs, Tny$()) As String()
+Function EdtTblNin(D As Drs, Tny$()) As String()
 'D-Lnx.Lin is Des $T $F $D. If $T<>"." and not in Tny, it is error
 Dim J%
 'For J = 0 To UB(D)
@@ -153,15 +153,15 @@ Dim J%
 'Next
 End Function
 
-Private Function EdtTblNin1$(D(), Tny$())
+Function EdtTblNin1$(D(), Tny$())
 End Function
 
-Private Function Ee(E As Drs) As String()
+Function Ee(E As Drs) As String()
 Dim Eny$()
 Ee = AddAy(EeTermErs(E), EdEleDup(E, Eny))
 End Function
 
-Private Function EeTermEr(EleLLin As Drs) As String()
+Function EeTermEr(EleLLin As Drs) As String()
 Dim L$, Ty$
 Dim E$  ' EleNm of the Ele-Lin
 'L = A.Lin
@@ -177,26 +177,26 @@ Dim E$  ' EleNm of the Ele-Lin
 '    End If
 End Function
 
-Private Function EeTermErs(A As Drs) As String()
+Function EeTermErs(A As Drs) As String()
 
 End Function
 
-Private Function Ef(AllEny$(), F As Drs) As String()
+Function Ef(AllEny$(), F As Drs) As String()
 Ef = AddAy(Ef1_LinEr(F), EfEleHasNoDef(F, AllEny))
 End Function
 
-Private Function Ef1_LinEr(A As Drs) As String()
+Function Ef1_LinEr(A As Drs) As String()
 Dim J%
 'For J = 0 To UB(A)
 '    PushIAy Ef1_LinEr, Er_1_OneLiner(A(J))
 'Next
 End Function
 
-Private Function EfEleHasNoDef(F As Drs, AllEny$()) As String() _
+Function EfEleHasNoDef(F As Drs, AllEny$()) As String() _
 
 End Function
 
-Private Function EfEleNin(F As Drs, Eny$()) As String()
+Function EfEleNin(F As Drs, Eny$()) As String()
 Dim J%, O$(), Eless$, E$
 'For J = 0 To UB(F)
     'With F(J)
@@ -207,35 +207,35 @@ Dim J%, O$(), Eless$, E$
 EfEleNin = O
 End Function
 
-Private Function EFzSchm(Schm$()) As Ef
+Function EFzSchm(Schm$()) As Ef
 EFzSchm.EleLy = AwRmvT1(Schm, "Ele")
 EFzSchm.FldLy = AwRmvT1(Schm, "Fld")
 End Function
 
-Private Function EleStr$(EleLy$(), Ele)
+Function EleStr$(EleLy$(), Ele)
 EleStr = RmvT1(FstElezT1(EleLy, Ele))
 End Function
 
-Private Function EleStrzStd$(Ele)
+Function EleStrzStd$(Ele)
 End Function
 
 Sub EnsSchm(D As Database, Schm$())
 Stop
-ThwIf_ErMsg ErzSchm(Schm), CSub, "there is error in the Schm"
+ThwIf_ErMsg EoSchm(Schm), CSub, "there is error in the Schm"
 'AppDbTdAy A, TdAy(Smt, AwRmvT1(Schm, CCF), AwRmvT1(Schm, CCE))
 'RunSqy A, SqyCrtPk_Tny(PkTnySmt(Smt))
 'RunSqy A, SqyCrtSkSmt(Smt)
-'Set TblDesDic(A) = TblDesDicSmdt(AwRmvTT(Schm, CCD, CCT))
-'Set TblDesDicDb(A) = TblDesDicDbSmdf(AwRmvTT(Schm, CCD, CCF))
+'Set TdDesDic(A) = TdDesDicSmdt(AwRmvTT(Schm, CCD, CCT))
+'Set TdDesDicDb(A) = TdDesDicDbSmdf(AwRmvTT(Schm, CCD, CCF))
 End Sub
 
-Private Function Er_1_OneLiner(F()) As String()
+Function Er_1_OneLiner(F()) As String()
 Dim LikFF$, A$, V$
 '    AsgAp Sy4N3TRst(F.Lin), .E, .LikT, V, A
 '    .LikFny = SyzSS(LikFF)
 End Function
 
-Private Function ErD(Tny$(), T As Drs, D As Drs) As String()
+Function ErD(Tny$(), T As Drs, D As Drs) As String()
 ErD = AddAyAp( _
     EdLinEr(D), _
     EdFldEr(D, T))
@@ -243,31 +243,31 @@ ErD = AddAyAp( _
 
 End Function
 
-Function ErzLTDH(A As DoLTDH, T1ss$) As String()
+Function EoLTDH(A As DoLTDH, T1ss$) As String()
 
 End Function
 
-Function ErzSchm(Schm$()) As String()
+Function EoSchm(Schm$()) As String()
 Dim X As DoLTDH:    X = DoLTDH(Schm)
 Dim XD As Drs:     XD = X.D
-Dim E As Drs:       E = DwEqExl(XD, "T1", "Ele")
-Dim F As Drs:       F = DwEqExl(XD, "T1", "Fld")
-Dim D As Drs:       D = DwEqExl(XD, "T1", "Des")
-Dim T As Drs:       T = DwEqExl(XD, "T1", "Tbl")
+Dim E As Drs:       E = F_SubDrs_ByC_EqExl(XD, "T1", "Ele")
+Dim F As Drs:       F = F_SubDrs_ByC_EqExl(XD, "T1", "Fld")
+Dim D As Drs:       D = F_SubDrs_ByC_EqExl(XD, "T1", "Des")
+Dim T As Drs:       T = F_SubDrs_ByC_EqExl(XD, "T1", "Tbl")
 Dim Tny$():       Tny = FstStrCol(T)
 Dim Eny$():       Eny = FstStrCol(E)
 Dim AllFny$(): AllFny = FnyzTdLy(SndStrCol(T))
 Dim AllEny$(): AllEny = FstStrCol(E)
 '=======================================================================================================================
-ErzSchm = AddAyAp( _
-    ErzLTDH(X, "Des Ele Fld Tbl"), _
+EoSchm = AddAyAp( _
+    EoLTDH(X, "Des Ele Fld Tbl"), _
     Et(Tny, T, E), _
     Ef(AllFny, F), _
     Ee(E), _
     ErD(Tny, T, D))
 End Function
 
-Private Function Et(Tny$(), T As Drs, E As Drs) As String()
+Function Et(Tny$(), T As Drs, E As Drs) As String()
 'Et = AddAyAp( _
 EtLinEr(T), _
 EtNoTLin(T), _
@@ -275,7 +275,7 @@ EtFldNEle(T, E), _
 EtDupTbl(T, Tny))
 End Function
 
-Private Function EtDupTbl(T As Drs, Tny$()) As String()
+Function EtDupTbl(T As Drs, Tny$()) As String()
 Dim Tbl$, I
 For Each I In Itr(AwDup(Tny))
     Tbl = I
@@ -283,18 +283,18 @@ For Each I In Itr(AwDup(Tny))
 Next
 End Function
 
-Private Function EtFldNEle(T As Drs, E As Drs) As String()
+Function EtFldNEle(T As Drs, E As Drs) As String()
 
 End Function
 
-Private Function EtLinEr(T As DoLLin) As String()
+Function EtLinEr(T As DoLLin) As String()
 Dim I
 'For Each I In Itr(A)
 '    PushIAy EtLinEr zDr, EtLinEr_zLnx(CvLnx(I))
 'Next
 End Function
 
-Private Function EtLinErzDr(T_DroLLin()) As String()
+Function EtLinEoDr(T_DroLLin()) As String()
 Dim T
 Dim Lno&: Lno = T_DroLLin(0)
 Dim L$:     L = T_DroLLin(1)
@@ -305,12 +305,12 @@ Dim Tbl$
 '1
 Select Case SubStrCnt(L, "|")
 Case 0, 1
-Case Else: PushI EtLinErzDr, MtVbar_Cnt(T): Exit Function
+Case Else: PushI EtLinEoDr, MtVbar_Cnt(T): Exit Function
 End Select
 
 '2
 If Not IsNm(Tbl) Then
-    PushI EtLinErzDr, MtTblNNm(T)
+    PushI EtLinEoDr, MtTblNNm(T)
     Exit Function
 End If
 '
@@ -322,7 +322,7 @@ If HasSubStr(L, "|") Then
     Dim IdFld$
     IdFld = Trim(Bef(L, "|"))
     If IdFld <> Tbl & "Id" Then
-        PushI EtLinErzDr, MtIdMis(Lno)
+        PushI EtLinEoDr, MtIdMis(Lno)
         Exit Function
     End If
 End If
@@ -330,7 +330,7 @@ End If
     Dim Dup$()
     Dup = AwDup(Fny)
     If Si(Dup) > 0 Then
-'        PushI EtLinErzDr, MtFldDup(L, Tbl, Dup)
+'        PushI EtLinEoDr, MtFldDup(L, Tbl, Dup)
         Exit Function
     End If
 '6
@@ -348,29 +348,29 @@ For Each I In Itr(Fny)
 Next
 End Function
 
-Private Function EtNoTLin(T As Drs) As String()
+Function EtNoTLin(T As Drs) As String()
 'If Si(A) > 0 Then Exit Function
 PushI EtNoTLin, MtNoTLin
 End Function
 
-Private Function FdzEF(F, Ele$(), Fld$()) As dao.Field2
+Function FdzEF(F, Ele$(), Fld$()) As DAO.Field2
 If Left(F, 2) = "Id" Then Stop
 Dim E$: E = LookupT1(F, Fld)
-If E <> "" Then Set FdzEF = FdzEle(E, Ele, F): Exit Function
+If E <> "" Then Set FdzEF = FdzEleL(E, Ele, F): Exit Function
 Set FdzEF = FdzStdFldNm(F):                    If Not IsNothing(FdzEF) Then Exit Function
-Set FdzEF = FdzEle(CStr(F), Ele, F):  If Not IsNothing(FdzEF) Then Exit Function
-ThwMsg CSub, FmtQQ("Fld(?) not in EF and not StdFld", F)
+Set FdzEF = FdzEleL(CStr(F), Ele, F):  If Not IsNothing(FdzEF) Then Exit Function
+Thw CSub, FmtQQ("Fld(?) not in EF and not StdFld", F)
 End Function
 
-Private Function FdzEle(Ele$, EleLy$(), F) As dao.Field2
+Function FdzEleL(Ele$, EleLy$(), F) As DAO.Field2
 Dim EStr$: EStr = EleStr(EleLy, Ele)
-If EStr <> "" Then Set FdzEle = FdzFdStr(F & " " & EStr): Exit Function
-Set FdzEle = FdzShtTys(Ele, F): If Not IsNothing(FdzEle) Then Exit Function
+If EStr <> "" Then Set FdzEleL = FdzFdStr(F & " " & EStr): Exit Function
+Set FdzEleL = FdzShtTys(Ele, F): If Not IsNothing(FdzEleL) Then Exit Function
 EStr = EleStr(EleLy, F)
-If EStr <> "" Then Set FdzEle = FdzFdStr(F & " " & EStr): Exit Function
-Set FdzEle = FdzShtTys(F, F)
-Dim EleNy$(): EleNy = T1Ay(EleLy)
-ThwMsg CSub, FmtQQ("Fld(?) of Ele(?) not found in EleLy-of-EleAy(?) and not StdEle", F, Ele, TLin(EleNy))
+If EStr <> "" Then Set FdzEleL = FdzFdStr(F & " " & EStr): Exit Function
+Set FdzEleL = FdzShtTys(F, F)
+Dim EleNy$(): EleNy = AmT1(EleLy)
+Thw CSub, FmtQQ("Fld(?) of Ele(?) not found in EleLy-of-EleAy(?) and not StdEle", F, Ele, TLin(EleNy))
 End Function
 
 Function FnyzTdLin(TdLin) As String()
@@ -385,7 +385,7 @@ Rst = Replace(Rst, "|", " ")
 FnyzTdLin = SyzSS(Rst)
 End Function
 
-Private Function LnoAyzEle(E As Drs, Ele) As Long()
+Function LnoAyzEle(E As Drs, Ele) As Long()
 Dim J%
 'For J = 0 To UBound(E)
 '    If T1(E(J).Lin) = Ele Then
@@ -394,7 +394,7 @@ Dim J%
 'Next
 End Function
 
-Private Function LnoAyzTbl(A As Drs, T) As Long()
+Function LnoAyzTbl(A As Drs, T) As Long()
 Dim J%
 'For J = 0 To UB(A)
 '    If T1(A(J).Lin) = T Then
@@ -403,93 +403,93 @@ Dim J%
 'Next
 End Function
 
-Private Function MdfFldNin$(A(), T$, F$, Fssl$)
+Function MdfFldNin$(A(), T$, F$, Fssl$)
 'MdfFldNin = Msg(A, FmtQQ("F[?] is invalid in T[?].  Valid F[?]", F, T, Fssl))
 End Function
 
-Private Function MdfInvalidFld$(ErLin(), Efld$, VdtFny$())
+Function MdfInvalidFld$(ErLin(), Efld$, VdtFny$())
 'MdfInvalidFld = Msg(ErLin, FmtQQ(MdfInvalidFld, Efld, TLin(VdtFny)))
 End Function
 
-Private Function MdLin3T$(D())
+Function MdLin3T$(D())
 'MdLin3T = Msg(D, MDF_NTermShouldBe3OrMore)
 End Function
 
-Private Function MdtTblNin$(D As DoLLin, T, Tblss$)
+Function MdtTblNin$(D As DoLLin, T, Tblss$)
 'MdtTblNin = Msg(A, FmtQQ(CDT_Tbl_NotIn_Tny, T, Tblss))
 End Function
 
-Private Function MeEleDup$(LnoAy&(), E)
+Function MeEleDup$(LnoAy&(), E)
 'MeEleDup = MsgMultiLno(LnoAy, FmtQQ(M000, E))
 End Function
 
-Private Function MeEleExc$(A(), ExcessEle$)
+Function MeEleExc$(A(), ExcessEle$)
 'MeEleExc = Msg(A, FmtQQ("Excess Ele Item [?]", ExcessEle))
 End Function
 
-Private Function MeEleNin$(A(), E$, Eless$)
+Function MeEleNin$(A(), E$, Eless$)
 'MeEleNin = Msg(A, FmtQQ("E[?] is invalid.  Valid E is [?]", E, Eless))
 End Function
 
-Private Function MfEle_NotIn_Eny$(A(), E$, Eless$)
+Function MfEle_NotIn_Eny$(A(), E$, Eless$)
 'MfEle_NotIn_Eny = Msg(A, FmtQQ("Ele of is not in F-Lin not in Eny", E, Eless))
 End Function
 
-Private Function MfExcessTxtSz$(A())
+Function MfExcessTxtSz$(A())
 'MfExcessTxtSz = Msg(A, "Non-Txt-Ty should not have TxtSz")
 End Function
 
-Private Function Msg$(Lno&, M$)
+Function Msg$(Lno&, M$)
 Msg = FmtQQ("Lno#? ?", Lno, M)
 End Function
 
-Private Function MsgLinTyEr$(A(), Ty$)
+Function MsgLinTyEr$(A(), Ty$)
 'MsgLinTyEr = Msg(A, FmtQQ(CM_LinTyEr, Ty, FmtCellDrs(DShtTy)))
 End Function
 
-Private Function MsgMultiLno$(LnoAy&(), M$)
+Function MsgMultiLno$(LnoAy&(), M$)
 'MsgMultiLno = FmtQQ(M000, JnSpc(LnoAy), M)
 End Function
 
-Private Function MtDupT$(LnoAy&(), T)
+Function MtDupT$(LnoAy&(), T)
 MtDupT = MsgMultiLno(LnoAy, FmtQQ("This Tbl[?] is dup", T))
 End Function
 
-Private Function MtFldDup$(A(), T$, Fny$())
+Function MtFldDup$(A(), T$, Fny$())
 'MtFldDup = Msg(A, FmtQQ("F[?] is dup in T[?]", JnSpc(Fny), T))
 End Function
 
-Private Function MtFldEr$(A(), F$)
+Function MtFldEr$(A(), F$)
 'MtFldEr = Msg(A, FmtQQ("Fld[?] cannot be found in any Ele-Lines"))
 End Function
 
-Private Function MtFldIsNotANm$(A(), F)
+Function MtFldIsNotANm$(A(), F)
 'MtFldIsNotANm = Msg(A, FmtQQ("FldNm[?] is not a name", F))
 End Function
 
-Private Function MtFldMis(A())
+Function MtFldMis(A())
 'MtFldMis = Msg(A, "No field")
 End Function
 
-Private Function MtIdMis$(Lno&)
+Function MtIdMis$(Lno&)
 Const M$ = "The field before first | must be *Id field"
 'MtIdMis = Msg(A, M)
 End Function
 
-Private Property Get MtNoTLin()
+Property Get MtNoTLin()
 MtNoTLin = "No T-Line"
 End Property
 
-Private Function MtTblNNm$(A)
+Function MtTblNNm$(A)
 'MtTblNNm = Msg(A, "Tbl is not a name")
 End Function
 
-Private Function MtVbar_Cnt$(T)
+Function MtVbar_Cnt$(T)
 Const M$ = "The T-Lin should have 0 or 1 Vbar only"
 'MtVbar_Cnt = Msg(A, M)
 End Function
 
-Private Function PkTny(TdLy$()) As String()
+Function PkTny(TdLy$()) As String()
 Dim I, L$
 For Each I In TdLy
     L = I
@@ -515,7 +515,7 @@ SampSchm = XX
 Erase XX
 End Property
 
-Private Property Get Schm1() As String()
+Property Get Schm1() As String()
 Erase XX
 X "Tbl A *Id *Nm     | *Dte AATy Loc Expr Rmk"
 X "Tbl B *Id  AId *Nm | *Dte"
@@ -540,7 +540,7 @@ Rst = Replace(Rst, T, "*")
 SkFny = SyzSS(Rst)
 End Function
 
-Private Function SqyCrtSk(TdLy$()) As String()
+Function SqyCrtSk(TdLy$()) As String()
 Dim TdLin, I, Sk$()
 For Each I In Itr(TdLy)
     TdLin = I
@@ -558,17 +558,17 @@ Function StdSchmFldLy() As String()
 
 End Function
 
-Private Function TdAy(TdLy$(), E$(), F$()) As dao.TableDef()
+Function TdAy(TdLy$(), E$(), F$()) As DAO.TableDef()
 Dim I: For Each I In TdLy
     PushObj TdAy, TdzLin(I, E, F)
 Next
 End Function
 
-Private Function TdzLin(TdLin, Ele$(), Fld$()) As dao.TableDef
+Function TdzLin(TdLin, Ele$(), Fld$()) As DAO.TableDef
 Dim T: T = T1(TdLin)
-Dim O As dao.TableDef: Set O = New dao.TableDef
+Dim O As DAO.TableDef: Set O = New DAO.TableDef
 O.Name = T
-Dim F, Fd As dao.Field2
+Dim F, Fd As DAO.Field2
 For Each F In FnyzTdLin(TdLin)
     If F = T & "Id" Then
         Set Fd = FdzPk(F)
@@ -580,14 +580,8 @@ Next
 Set TdzLin = O
 End Function
 
-Private Sub Z()
-Z_EtLinEr_zLnx
-Exit Sub
-'AAAA
-'SchmLyEr
-End Sub
 
-Private Sub Z_CrtSchm()
+Sub Z_CrtSchm()
 Dim D As Database, Schm$()
 GoSub T1
 Exit Sub
@@ -602,7 +596,7 @@ Tst:
     Return
 End Sub
 
-Private Property Get Z_CrtSchm1() As String()
+Property Get Z_CrtSchm1() As String()
 Erase XX
 X "Tbl A *Id | *Nm     | *Dte AATy Loc Expr Rmk"
 X "Tbl B *Id | AId *Nm | *Dte"
@@ -620,7 +614,7 @@ Z_CrtSchm1 = XX
 Erase XX
 End Property
 
-Private Sub Z_EtLinEr_zLnx()
+Sub Z_EtLinEr_zLnx()
 Dim T(): ReDim T(1): T(0) = 999
 GoSub Cas0
 Stop
@@ -674,7 +668,7 @@ Cas6:
     Push EptEr, "should have fields after |"
     GoTo Tst
 Tst:
-    Act = EtLinErzDr(T)
+    Act = EtLinEoDr(T)
     C
     Return
 End Sub

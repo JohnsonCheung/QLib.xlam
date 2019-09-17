@@ -1,6 +1,7 @@
 Attribute VB_Name = "MxBrwFt"
 Option Explicit
 Option Compare Text
+Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxBrwFt."
 
 Sub VcFt(Ft)

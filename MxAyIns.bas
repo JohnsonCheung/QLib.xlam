@@ -16,18 +16,17 @@ Function InsEleAft(Ay, Optional Ele, Optional Aft&)
 InsEleAft = InsAy(Ay, Array(Ele), Aft + 1)
 End Function
 
-Private Sub Z_InsEle()
-Dim A(), M, At&
-'--
-A = Array(1, 2, 3, 4, 5)
-M = "a"
-At = 2
-Ept = Array(1, 2, "a", 3, 4, 5)
+Sub Z_InsEle()
+Dim Ay, M, At&
+'
+Ay = Array(1, 2, 3)
+M = "X"
+Ept = Array("X", 1, 2, 3)
 GoSub Tst
 '
 Exit Sub
 Tst:
-    Act = InsEle(A, M, At)
+    Act = InsEle(Ay, M, At)
     C
     Return
 End Sub
@@ -42,7 +41,7 @@ Next
 InsAy = O
 End Function
 
-Private Sub Z_ReBaseR()
+Sub Z_ReBaseR()
 Dim Ay&(): ReDim Ay(9)
 Dim J%: For J = 0 To 9: Ay(J) = J: Next
 Dim Act: Act = ReBase(Ay, 100)
@@ -81,7 +80,7 @@ Next
 ResiAt = O
 End Function
 
-Private Sub Z_Resi()
+Sub Z_Resi()
 Dim Ay(), At&, Cnt&
 Ay = Array(1, 2, 3)
 At = 1
@@ -94,7 +93,3 @@ Tst:
     Return
 End Sub
 
-Private Sub Z()
-Z_Resi
-MVb_AyIns:
-End Sub

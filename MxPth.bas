@@ -43,7 +43,7 @@ EnsPthAll O
 AddFdrApEns = O
 End Function
 
-Private Function AddFdrAv$(Pth, FdrAv())
+Function AddFdrAv$(Pth, FdrAv())
 Dim O$: O = Pth
 Dim I, Fdr$
 For Each I In FdrAv
@@ -97,17 +97,12 @@ Const C$ = "\/:<>"
 If HasChrList(Fdr, C) Then Thw CSub, "Fdr cannot has these char " & C, "Fdr Char", Fdr, C
 End Sub
 
-Function PthRmvFdr$(Pth)
-PthRmvFdr = BefRev(RmvPthSfx(Pth), PthSep) & PthSep
-End Function
-
-Function FfnUp$(Ffn)
-FfnUp = PthRmvFdr(Pth(Ffn))
+Function RmvFdr$(Pth)
+RmvFdr = BefRev(RmvPthSfx(Pth), PthSep) & PthSep
 End Function
 
 Function ParPth$(Pth) ' Return the ParPth of given Pth
-If Not HasSubStr(Pth, PthSep) Then Err.Raise 1, "ParPth", "No PthSep in Pth" & vbCrLf & Pth
-ParPth = BefRevOrAll(RmvLasChr(EnsPthSfx(Pth)), PthSep) & PthSep
+ParPth = RmvFdr(Pth)
 End Function
 
 Function ParFdr$(Pth)
@@ -145,7 +140,7 @@ HasPth = Fso.FolderExists(Pth)
 End Function
 
 Function NoPth(Pth) As Boolean
-If Not HasPth(Pth) Then Debug.Print "No such pth": NoPth = True
+If Not HasPth(Pth) Then Debug.Print "NoPth: "; Pth: NoPth = True
 End Function
 
 Function HasFdr(Pth, Fdr$) As Boolean
@@ -188,8 +183,8 @@ For Each F In Itr(EntAy(P, Spec))
 Next
 End Function
 
-Function EntAy(Pth, Optional Spec$ = "*.*", Optional Atr As FileAttribute = vbDirectory) As String()
-Dim A$: A$ = DirzPSA(EnsPthSfx(Pth), Spec, Atr)
+Function EntAy(Pth, Optional Spec$ = "*.*", Optional AtR As FileAttribute = vbDirectory) As String()
+Dim A$: A$ = DirzPSA(EnsPthSfx(Pth), Spec, AtR)
 While A <> ""
     If A = "." Then GoTo X
     If A = ".." Then GoTo X
@@ -202,12 +197,12 @@ X:
     A = Dir
 Wend
 End Function
-Function IsInstNm(NM) As Boolean
-If FstChr(NM) <> "N" Then Exit Function      'FstChr = N
-If Len(NM) <> 16 Then Exit Function          'Len    =16
-If Not IsYYYYMMDD(Mid(NM, 2, 8)) Then Exit Function 'NYYYYMMDD_HHMMDD
-If Mid(NM, 10, 1) <> "_" Then Exit Function
-If Not IsHHMMDD(Right(NM, 6)) Then Exit Function
+Function IsInstNm(Nm) As Boolean
+If FstChr(Nm) <> "N" Then Exit Function      'FstChr = N
+If Len(Nm) <> 16 Then Exit Function          'Len    =16
+If Not IsYYYYMMDD(Mid(Nm, 2, 8)) Then Exit Function 'NYYYYMMDD_HHMMDD
+If Mid(Nm, 10, 1) <> "_" Then Exit Function
+If Not IsHHMMDD(Right(Nm, 6)) Then Exit Function
 IsInstNm = True
 End Function
 
@@ -228,7 +223,7 @@ Asg Itr(FfnAy(Pth)), FfnItr
 End Function
 
 Function SubPthy(Pth) As String()
-SubPthy = AddPfxSzAy(FdrAy(Pth), EnsPthSfx(Pth), PthSep)
+SubPthy = AmAddPfxS(FdrAy(Pth), EnsPthSfx(Pth), PthSep)
 End Function
 
 Sub AsgEnt(OFdrAy$(), OFnAy$(), Pth)
@@ -278,10 +273,10 @@ Fxy = FfnAy(Pth, "*.xls*")
 End Function
 
 Function FfnAy(Pth, Optional Spec$ = "*.*") As String()
-FfnAy = AddPfxzAy(FnAy(Pth, Spec), EnsPthSfx(Pth))
+FfnAy = AmAddPfx(FnAy(Pth, Spec), EnsPthSfx(Pth))
 End Function
 
-Private Sub Z_SubPthy()
+Sub Z_SubPthy()
 Dim Pth
 Pth = "C:\Users\user\AppData\Local\Temp\"
 Ept = Sy()
@@ -293,7 +288,7 @@ Tst:
     Return
 End Sub
 
-Private Sub Z_Fxy()
+Sub Z_Fxy()
 Dim A$()
 A = Fxy(CurDir)
 DmpAy A

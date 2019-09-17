@@ -10,19 +10,16 @@ Type DoLDta: D As Drs: End Type 'Drs-L-Dta
 Type DoLTD:  D As Drs: End Type 'Drs-L-T1-Dta
 Type DoLTDH: D As Drs: End Type 'Drs-L-T1-Dta-IsHdr
 
-Private Property Get Y_LofT1nn$()
+Property Get Y_LofT1nn$()
 Y_LofT1nn = LofT1nn
 End Property
 
-Private Property Get Y_Lof() As String()
+Property Get Y_Lof() As String()
 Y_Lof = SampLof
 End Property
 
-Private Sub Z()
-QVb_Dta_IndentSrc:
-End Sub
 
-Private Sub Z_IndentSrcDy()
+Sub Z_IndentSrcDy()
 Dim IndentSrc$()
 GoSub Z
 GoSub T0
@@ -58,7 +55,7 @@ Z:
     DmpDy IndentSrcDy(IndentSrc)
     Return
 End Sub
-Private Sub Z_IndentedLy()
+Sub Z_IndentedLy()
 Dim IndentSrc$(), K$
 GoSub Z
 GoSub T0
@@ -181,19 +178,19 @@ Function DoLDtazT1Pfx(A As DoLTDH, T1Pfx$) As DoLDta
 Dim B As Drs, C As Drs
 B = ColPfx(A.D, "T1", T1Pfx)
 C = RmvPfxzDrs(B, "T1", T1Pfx)
-DoLDtazT1Pfx.D = DwEqE(C, "IsHdr", False)
+DoLDtazT1Pfx.D = F_SubDrs_ByC_EqE(C, "IsHdr", False)
 'BrwDrs2 A.D, DoLDta.D, NN:="LTDH LDta": Stop
 
 End Function
 
 Function DoLDta(A As DoLTDH, T1$) As DoLDta
 Dim B As Drs
-B = DwEqE(A.D, "T1", T1)
-DoLDta.D = DwEqE(B, "IsHdr", False)
+B = F_SubDrs_ByC_EqE(A.D, "T1", T1)
+DoLDta.D = F_SubDrs_ByC_EqE(B, "IsHdr", False)
 'BrwDrs2 A.D, DoLDta.D, NN:="LTDH LDta": Stop
 End Function
 
-Private Function DyoLTD(Src$()) As Variant()
+Function DyoLTD(Src$()) As Variant()
 'Ret:: Dy{L T1 Dta}
 Dim L&, Dta$, T1$, Lin
 For Each Lin In Itr(Src)
@@ -205,7 +202,7 @@ For Each Lin In Itr(Src)
 X:
 Next
 End Function
-Private Function DyoLTDH(IndentedSrc$()) As Variant()
+Function DyoLTDH(IndentedSrc$()) As Variant()
 Dim L&, Dta$, T1$, IsHdr As Boolean, Lin
 For Each Lin In Itr(IndentedSrc)
     L = L + 1

@@ -142,7 +142,7 @@ If Msg <> "" Then Push O, Msg
 MsgSamFfn = O
 End Function
 
-Private Sub Z_FfnBlk()
+Sub Z_FfnBlk()
 Dim T$, S$, A$
 S = "sllksdfj lsdkjf skldfj skldfj lk;asjdf lksjdf lsdkfjsdkflj "
 T = TmpFt
@@ -163,8 +163,6 @@ Dim F%: F = FnoRnd(Ffn, 128)
 FfnBlk = FnoBlk(F, IBlk)
 Close #F
 End Function
-
-
 Sub ThwIf_NotFxa(Ffn, Optional Fun$)
 If Not IsFxa(Ffn) Then Thw Fun, "Given Ffn is not Fxa", "Ffn", Ffn
 End Sub
@@ -222,7 +220,7 @@ HasFfn = Fso.FileExists(Ffn)
 End Function
 
 Function NoFfn(Ffn) As Boolean
-If Not HasFfn(Ffn) Then Debug.Print "file not found: " & Ffn: NoFfn = True
+If Not HasFfn(Ffn) Then Debug.Print "NoFfn: " & Ffn: NoFfn = True
 End Function
 
 Function ExiFfnAset(FfnAy$()) As Aset
@@ -243,6 +241,10 @@ Dim F: For Each F In Itr(FfnAy)
     If NoFfn(F) Then PushI FfnAywMis, F
 Next
 End Function
+
+Sub ThwIf_NoEle(Ay, Ele, Fun$)
+If NoEle(Ay, Ele) Then Thw Fun, "No @Ele in @Ay", "Ele Ay", Ele, Ay
+End Sub
 
 Sub ThwIf_NoFfn(Ffn, Fun$, Optional FilKind$)
 If NoFfn(Ffn) Then Thw Fun, "File not found", "File-Pth File-Name File-Kind", Pth(Ffn), Fn(Ffn), FilKind
@@ -301,7 +303,7 @@ Else
     RmvNxtNo = Ffn
 End If
 End Function
-Private Sub Z_NxtFfn()
+Sub Z_NxtFfn()
 Dim Ffn$
 'GoSub T0
 GoSub T1

@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxFmtMulLinSrc."
-Private Function DyoMulStmtSrc(MulStmtSrc$()) As Variant()
+Function DyoMulStmtSrc(MulStmtSrc$()) As Variant()
 Dim ODy(): ODy = DyoLyWithColon(MulStmtSrc)
 Dim Dr, J%, I&
 For Each Dr In ODy

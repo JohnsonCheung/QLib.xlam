@@ -19,7 +19,7 @@ AddSyItm = A
 PushI AddSyItm, Itm
 End Function
 
-Private Sub Z_GpAy()
+Sub Z_GpAy()
 Dim Ay(), N%
 GoSub T0
 Exit Sub
@@ -112,7 +112,7 @@ For Each X In Itr(Ay)
 Next
 End Function
 
-Private Sub Z_AddAy()
+Sub Z_AddAy()
 Dim Ay1(), Ay2()
 GoSub T1
 Exit Sub
@@ -127,7 +127,7 @@ Tst:
     Return
 End Sub
 
-Private Sub Z_AddPfxzAy()
+Sub Z_AmAddPfx()
 Dim Sy$(), Pfx$
 GoSub T1
 Exit Sub
@@ -137,12 +137,12 @@ T1:
     Ept = SyzAp("* 1", "* 2", "* 3", "* 4")
     GoTo Tst
 Tst:
-    Act = AddPfxzAy(Sy, Pfx)
+    Act = AmAddPfx(Sy, Pfx)
     C
     Return
 End Sub
 
-Private Sub Z_AddPfxSzAy()
+Sub Z_AmAddPfxS()
 Dim Sy$(), Act$(), Sfx$, Pfx$, Exp$()
 Sy = SyzAp(1, 2, 3, 4)
 Pfx = "* "
@@ -151,16 +151,16 @@ Exp = SyzAp("* 1#", "* 2#", "* 3#", "* 4#")
 GoSub Tst
 Exit Sub
 Tst:
-Act = AddPfxSzAy(Sy, Pfx, Sfx)
+Act = AmAddPfxS(Sy, Pfx, Sfx)
 Debug.Assert IsEqAy(Act, Exp)
 Return
 End Sub
 
 Function TabSy(Sy$()) As String()
-TabSy = AddPfxzAy(Sy, vbTab)
+TabSy = AmAddPfx(Sy, vbTab)
 End Function
 
-Private Sub Z_AddSfxzAy()
+Sub Z_AmAddSfx()
 Dim Sy$(), Sfx$
 Sy = SyzSS("1 2 3 4")
 Sfx = "#"
@@ -168,12 +168,9 @@ Ept = SyzSS("1# 2# 3# 4#")
 GoSub Tst
 Exit Sub
 Tst:
-    Act = AddSfxzAy(Sy, Sfx)
+    Act = AmAddSfx(Sy, Sfx)
     C
     Return
 End Sub
 
 
-Private Sub Z()
-MVb_AddAy:
-End Sub

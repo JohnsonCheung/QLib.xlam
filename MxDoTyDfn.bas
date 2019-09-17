@@ -9,7 +9,7 @@ Function DoTyDfn() As Drs
 DoTyDfn = DoTyDfnzP(CPj)
 End Function
 
-Private Function DoTyDfnzP(P As VBProject) As Drs
+Function DoTyDfnzP(P As VBProject) As Drs
 Dim O As Drs
 Dim C As VBComponent: For Each C In P.VBComponents
     O = AddDrs(O, DoTyDfnzCmp(C))
@@ -17,31 +17,31 @@ Next
 DoTyDfnzP = O
 End Function
 
-Private Function DoTyDfnzCmp(C As VBComponent) As Drs
+Function DoTyDfnzCmp(C As VBComponent) As Drs
 Dim S$(): S = Src(C.CodeModule)
 Dim Dy(): Dy = DyoTyDfn(VbRmk(S), C.Name)
 DoTyDfnzCmp = Drs(FoTyDfn, Dy)
 End Function
 
-Private Function FoTyDfn() As String()
+Function FoTyDfn() As String()
 FoTyDfn = SyzSS(FFoTyDfn)
 End Function
 
-Private Function SqoTyDfnzP(P As VBProject) As Variant()
+Function SqoTyDfnzP(P As VBProject) As Variant()
 SqoTyDfnzP = SqzDy(DyoTyDfnzP(P))
 End Function
 
-Private Function DyoTyDfnzP(P As VBProject) As Variant()
+Function DyoTyDfnzP(P As VBProject) As Variant()
 Dim C As VBComponent: For Each C In P.VBComponents
     PushIAy DyoTyDfnzP, DyoTyDfnzM(C.CodeModule)
 Next
 End Function
 
-Private Function DyoTyDfnzM(M As CodeModule) As Variant()
+Function DyoTyDfnzM(M As CodeModule) As Variant()
 DyoTyDfnzM = DyoTyDfn(VbRmk(Src(M)), Mdn(M))
 End Function
 
-Private Function DyoTyDfn(VbRmk$(), Mdn$) As Variant()
+Function DyoTyDfn(VbRmk$(), Mdn$) As Variant()
 ':DyoTyDfn: :Dyo-Nm-Ty-Mem-VbRmk #Dyo-TyDfn# ! Fst-Lin must be :nn: :dd #mm# !rr
 '                                          ! Rst-Lin is !rr
 '                                          ! must term: nn dd mm, all of them has no spc
@@ -53,7 +53,7 @@ Dim IGp: For Each IGp In Itr(Gp)
 Next
 End Function
 
-Private Function LygoTyDfn(RmkLy$()) As Variant()
+Function LygoTyDfn(RmkLy$()) As Variant()
 Dim O()
 Dim L: For Each L In Itr(RmkLy)
     Dim NFstLin%
@@ -76,7 +76,7 @@ Next
 LygoTyDfn = O
 End Function
 
-Private Sub Z_DroTyDfn()
+Sub Z_DroTyDfn()
 Dim VbRmk$()
 GoSub ZZ
 Exit Sub
@@ -86,14 +86,14 @@ ZZ:
     Return
 End Sub
 
-Private Function DroTyDfn(Rmk$(), Mdn$) As Variant()
+Function DroTyDfn(Rmk$(), Mdn$) As Variant()
 'Assume: Fst Lin is ':nn: :dd [#mm#] [!rr]
 '        Rst Lin is '                 !rr
 If Si(Rmk) = 0 Then Exit Function
-Dim NM$, Dfn$, Mem$, RmkLin$
+Dim Nm$, Dfn$, Mem$, RmkLin$
 Dim Dr(): Dr = DroTyDfnzL(Rmk(0))
 Dim Rmkl1$: Rmkl1 = AddNB(RmkLin, Rmkl(CvSy(RmvFstEle(Rmk))))
-DroTyDfn = Array(Mdn, NM, Dfn, Mem, Rmkl1)
+DroTyDfn = Array(Mdn, Nm, Dfn, Mem, Rmkl1)
 End Function
 
 Function DroTyDfnzL(FstTyDfnLin$) As Variant()

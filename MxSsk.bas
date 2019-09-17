@@ -43,15 +43,15 @@ Function SkFny(D As Database, T) As String()
 SkFny = SkFnyzTd(D.TableDefs(T))
 End Function
 
-Function SkFnyzTd(T As dao.TableDef) As String()
+Function SkFnyzTd(T As DAO.TableDef) As String()
 SkFnyzTd = FnyzIdx(SkIdxzTd(T))
 End Function
 
-Function SkIdx(D As Database, T) As dao.Index
+Function SkIdx(D As Database, T) As DAO.Index
 Set SkIdx = Idx(D, T, Skn)
 End Function
 
-Function SkIdxzTd(T As dao.TableDef) As dao.Index
+Function SkIdxzTd(T As DAO.TableDef) As DAO.Index
 Set SkIdxzTd = IdxzTd(T, Skn)
 End Function
 
@@ -74,6 +74,3 @@ Function SskVset(D As Database, T) As Aset
 Set SskVset = AsetzDbtf(D, T, SskFld(D, T))
 End Function
 
-Private Sub Z()
-MDao_DML_SngFldSkTbl_Operation:
-End Sub

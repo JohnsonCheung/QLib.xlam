@@ -37,15 +37,7 @@ Function JnGRxyzCyCntzAy(Ay) As String()
 JnGRxyzCyCntzAy = JnDy(GRxyzCyCntzAy(Ay))
 End Function
 
-Private Sub Z_CntDyoAy()
-Dim A$(): A = SplitSpc("a a a b c b")
-Dim Act(): Act = CntDyoAy(A)
-Dim Exp(): Exp = Array(Array("a", 3), Array("b", 2), Array("c", 1))
-Stop
-'AssEqDy Act, Exp
-End Sub
-
-Private Sub Z_JnGRxyzCyCntzAy()
+Sub Z_JnGRxyzCyCntzAy()
 Dim Ay()
 Brw JnGRxyzCyCntzAy(Ay)
 End Sub

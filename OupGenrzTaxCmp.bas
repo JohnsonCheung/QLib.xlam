@@ -16,5 +16,5 @@ Const A$ = "A"
 Sub GenOupTblFmTmpInp(D As Database)
 IOupGenr_GenOupTblFmTmpInp D
 End Sub
-Private Sub IOupGenr_GenOupTblFmTmpInp(D As Database)
+Sub IOupGenr_GenOupTblFmTmpInp(D As Database)
 End Sub

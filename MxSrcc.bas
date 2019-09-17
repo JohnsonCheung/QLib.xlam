@@ -12,7 +12,7 @@ Function SrcHasSngDblQP() As String()
 SrcHasSngDblQP = SrcHasSngDblQ(SrcczP(CPj))
 End Function
 
-Private Sub Z_SrcHasSngDblQP()
+Sub Z_SrcHasSngDblQP()
 Brw SrcHasSngDblQP
 End Sub
 
@@ -47,7 +47,7 @@ Dim L: For Each L In Itr(Srcc)
 Next
 End Function
 
-Private Function SrccsLin$(L)
+Function SrccsLin$(L)
 Dim O$: O = RplDblSpc(L)
 Dim J%
 X:

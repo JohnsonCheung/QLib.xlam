@@ -4,7 +4,7 @@ Option Explicit
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxRpl."
 ':Q: :S #Str-With-QuestionMark#
-Private Sub Z_RplBet()
+Sub Z_RplBet()
 Dim S$, Exp$, By$, S1$, S2$
 S1 = "Data Source="
 S2 = ";"
@@ -20,7 +20,7 @@ Debug.Assert Exp = Act
 Return
 End Sub
 
-Private Sub Z_RplPfx()
+Sub Z_RplPfx()
 Ass RplPfx("aaBB", "aa", "xx") = "xxBB"
 End Sub
 Function RmvCr$(S)
@@ -79,7 +79,7 @@ Else
 End If
 End Function
 
-Private Sub Z_RplPfx2()
+Sub Z_RplPfx2()
 Ass RplPfx("aaBB", "aa", "xx") = "xxBB"
 End Sub
 
@@ -153,7 +153,7 @@ Dim By: For Each By In Itr(ByAy)
 Next
 End Function
 
-Private Sub Z_RplBet3()
+Sub Z_RplBet3()
 Dim S$, Exp$, By$, S1$, S2$
 S1 = "Data Source="
 S2 = ";"
@@ -170,8 +170,3 @@ Return
 End Sub
 
 
-Private Sub Z()
-Z_RplBet
-Z_RplPfx
-MVb_Str_Rpl:
-End Sub

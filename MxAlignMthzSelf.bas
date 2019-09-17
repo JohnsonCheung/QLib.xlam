@@ -21,8 +21,8 @@ Sub AlignMthzSelf()
     'ATmp.AlignMthzLno M, MthLno, Upd:=EiUpdAndRpt, IsUpdSelf:=True
 End Sub
 
-Sub AlignMthErzLnk()
-Dim M As CodeModule: Set M = Md("QDao_Lnk_ErzLnk")
-Dim L&:                  L = MthLnozMM(M, "ErzLnk")
+Sub AlignMthEoLnk()
+Dim M As CodeModule: Set M = Md("QDao_Lnk_EoLnk")
+Dim L&:                  L = MthLnozMM(M, "EoLnk")
 :                            AlignMthzLno M, L
 End Sub

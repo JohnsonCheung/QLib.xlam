@@ -9,9 +9,9 @@ Public Const FFoMthe$ = "Pjn MdTy Mdn L E Mdy Ty Mthn MthLin"
 Public Const FFoMthc$ = "Pjn MdTy Mdn L E Mdy Ty Mthn MthLin Mthl"
 Public Const FFoPubFun$ = "Pjn MdTy Mdn L E Ty Mthn MthLin"
 
-Private Function FoMthe() As String(): FoMthe = SyzSS(FFoMthe):  End Function
-Private Function FoMthc() As String(): FoMthc = SyzSS(FFoMthc): End Function
-Private Function FoMth() As String():  FoMth = SyzSS(FFoMth):  End Function
+Function FoMthe() As String(): FoMthe = SyzSS(FFoMthe):  End Function
+Function FoMthc() As String(): FoMthc = SyzSS(FFoMthc): End Function
+Function FoMth() As String():  FoMth = SyzSS(FFoMth):  End Function
 
 Function DoMthczFxa(Fxa$, Optional Xls As Excel.Application) As Drs
 Dim A As Excel.Application: Set A = DftXls(Xls)
@@ -19,7 +19,7 @@ DoMthczFxa = DoMthczP(PjzFxa(Fxa))
 If IsNothing(Xls) Then QuitXls Xls
 End Function
 
-Private Function AddColMthl(DoWith_L_E As Drs, Src$()) As Drs
+Function AddColMthl(DoWith_L_E As Drs, Src$()) As Drs
 Dim Dy()
     Dim IxL&, IxE&: AsgIx DoWith_L_E, "L E", IxL, IxE
     Dim Dr: For Each Dr In Itr(DoWith_L_E.Dy)
@@ -41,7 +41,7 @@ Function DoMthcP() As Drs
 DoMthcP = DoMthczP(CPj)
 End Function
 
-Private Sub Z_DoMthczP()
+Sub Z_DoMthczP()
 BrwDrs DoMthczP(CPj)
 End Sub
 
@@ -90,7 +90,7 @@ End Function
 
 Function DrMthLin(MthLin) As Variant()
 With MthLinRec(MthLin)
-DrMthLin = Array(.ShtMdy, .ShtTy, .NM, .ShtRetTy, FmtPm(.Pm, IsNoBkt:=True), .Rmk)
+DrMthLin = Array(.ShtMdy, .ShtTy, .Nm, .ShtRetTy, FmtPm(.Pm, IsNoBkt:=True), .Rmk)
 End With
 End Function
 
@@ -103,8 +103,8 @@ SetLcWdt L, "Mthn", 20
 Set WsMthP = ShwWs(O)
 End Function
 
-Function DoPubFunP() As Drs
-DoPubFunP = DoPubFunzP(CPj)
+Function Drso_PubFun() As Drs
+Drso_PubFun = DoPubFunzP(CPj)
 End Function
 
 Function DoPubFunzP(P As VBProject) As Drs
@@ -112,7 +112,7 @@ DoPubFunzP = SelDrs(Dw2Eq(DoMthczP(P), "Mdy MdTy", "Pub", "Std"), FFoPubFun)
 End Function
 
 Function MthQnzMthn$(Mthn)
-Dim D As Drs: D = DwEq(DoMthP, "Mthn", Mthn)
+Dim D As Drs: D = F_SubDrs_ByC_Eq(DoMthP, "Mthn", Mthn)
 Select Case Si(D.Dy)
 Case 0: InfLin CSub, "No such Mthn[" & Mthn & "]"
 Case 1:
@@ -160,10 +160,10 @@ End Function
 Function DoMthc(Src$(), DroMd()) As Drs
 DoMthc = Drs(FoMthc, DyoMthc(Src, DroMd))
 End Function
-Private Function DyoMthc(Src$(), DroMd()) As Variant()
+Function DyoMthc(Src$(), DroMd()) As Variant()
 
 End Function
-Private Function DyoMthe(Src$(), DroMd()) As Variant()
+Function DyoMthe(Src$(), DroMd()) As Variant()
 
 End Function
 
@@ -179,7 +179,7 @@ Function DoMthcM() As Drs
 DoMthcM = DoMthczM(CMd)
 End Function
 
-Private Function AddColEzDy(DyWith_L_MthLin() As Variant, IxL&, IxMthLin&, Src$()) As Variant()
+Function AddColEzDy(DyWith_L_MthLin() As Variant, IxL&, IxMthLin&, Src$()) As Variant()
 Dim Dr: For Each Dr In Itr(DyWith_L_MthLin)
     Dim Fm&: Fm = Dr(IxL) - 1
     Dim E&: E = EndLix(Src, Fm) + 1
@@ -189,7 +189,7 @@ Dim Dr: For Each Dr In Itr(DyWith_L_MthLin)
 Next
 End Function
 
-Private Function AddColE(DoWith_L_MthLin As Drs, Src$()) As Drs
+Function AddColE(DoWith_L_MthLin As Drs, Src$()) As Drs
 Dim IxL&, IxMthLin&: AsgIx DoWith_L_MthLin, "L MthLin", IxL, IxMthLin
 Dim Fny$(): Fny = InsEleAft(DoWith_L_MthLin.Fny, "E", IxL)
 AddColE = Drs(Fny, AddColEzDy(DoWith_L_MthLin.Dy, IxL, IxMthLin, Src))
@@ -203,10 +203,10 @@ Next
 DoMth = DrszFF(FFoMth, Dy)
 End Function
 
-Private Function DroMth(Ix, MthLin$, DroMd()) As Variant()
+Function DroMth(Ix, MthLin$, DroMd()) As Variant()
 Dim A As Mthn3:      A = Mthn3zL(MthLin)
 Dim Ty$:            Ty = A.ShtTy
 Dim Mdy$:          Mdy = A.ShtMdy
-Dim Mthn$:        Mthn = A.NM
+Dim Mthn$:        Mthn = A.Nm
                 DroMth = AddAy(DroMd, Array(Ix + 1, Mdy, Ty, Mthn, MthLin))
 End Function

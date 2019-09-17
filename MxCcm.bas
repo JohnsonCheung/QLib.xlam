@@ -4,11 +4,11 @@ Option Explicit
 Const CLib$ = "QDao."
 Const CMod$ = CLib & "MxCcm."
 
-Private Function CcmTny(D As Database) As String()
+Function CcmTny(D As Database) As String()
 CcmTny = AwPfx(Tny(D), "^")
 End Function
 
-Private Sub Chk(D As Database, CcmTny$(), IsLcl As Boolean)
+Sub Chk(D As Database, CcmTny$(), IsLcl As Boolean)
 Const CSub$ = CMod & "Chk"
 If Not IsLcl Then Chk2 D, CcmTny: Exit Sub ' Asserting for TarFb is stored in CcmTny's description
 
@@ -18,13 +18,13 @@ If Si(Mis) = 0 Then Exit Sub
 Thw CSub, "[Some-Missing-Tar-Tbl] in [Db] cannot be found according to given [CcmTny] in [Db]", "Mis Dbn CcmTny", Mis, D.Name, CcmTny
 End Sub
 
-Private Function Chk1(D As Database, CcmTny$()) As String()
+Function Chk1(D As Database, CcmTny$()) As String()
 Dim N1$(): N1 = Tny(D)
 Dim N2$(): N2 = RmvFstChrzAy(CcmTny)
-Chk1 = MinusAy(N2, N1)
+Chk1 = AyMinus(N2, N1)
 End Function
 
-Private Sub Chk2(D As Database, CcmTny$())
+Sub Chk2(D As Database, CcmTny$())
 'Throw if any Corresponding-Table in TarFb is not found
 Dim O$(), T$, I
 For Each I In CcmTny
@@ -34,7 +34,7 @@ Next
 'ErThw O
 End Sub
 
-Private Function Chk3(D As Database, CcmTbl$) As String()
+Function Chk3(D As Database, CcmTbl$) As String()
 Dim TarFb$
 '    TarFb = Dbt_Des(Db, CcmTbl)
 Select Case True
@@ -70,7 +70,7 @@ Chk D, T, IsLcl ' Chk if all T after rmv ^ is in TarFb
 LnkCcmzTny D, T, IsLcl
 End Sub
 
-Private Sub LnkCcmzTny(D As Database, CcmTny$(), IsLcl As Boolean)
+Sub LnkCcmzTny(D As Database, CcmTny$(), IsLcl As Boolean)
 Const CSub$ = CMod & "LnkCcmzTny"
 Dim CcmTbl$, I, TarFb$
 TarFb = D.Name
@@ -81,13 +81,8 @@ For Each I In CcmTny
 Next
 End Sub
 
-Private Sub Z()
-Z_LnkCcm
-Z_CcmTny
-MDao__Ccm:
-End Sub
 
-Private Sub Z_CcmTny()
+Sub Z_CcmTny()
 Dim D As Database
 '
 Set D = Db(SampFbzShpRate)
@@ -100,7 +95,7 @@ Tst:
     Return
 End Sub
 
-Private Sub Z_LnkCcm()
+Sub Z_LnkCcm()
 Dim D As Database, IsLcl As Boolean
 Set D = Db(SampFbzShpRate)
 IsLcl = True

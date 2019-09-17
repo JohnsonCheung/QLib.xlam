@@ -28,7 +28,7 @@ Dim Av(): Av = StrAp
 Dim O$()
 Dim S: For Each S In Itr(Av)
     If S = "" Then Exit Function
-    Push O, S
+    PushI O, S
 Next
 AddNB = Jn(O)
 End Function

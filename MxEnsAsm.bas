@@ -51,7 +51,7 @@ End If
     End If
 End Function
 
-Private Function XMsg$(IsIns As Boolean, IsRpl As Boolean, Lno%, NewL$)
+Function XMsg$(IsIns As Boolean, IsRpl As Boolean, Lno%, NewL$)
 
 End Function
 
@@ -69,7 +69,7 @@ Brw XX
 Inf CSub, "Done", "Pj Mdyd Skpd Tot", P.Name, Mdyd, Skpd, Mdyd + Skpd
 End Sub
 
-Private Function XRpl(Lno&, LAct$, LEpt$) As Drs
+Function XRpl(Lno&, LAct$, LEpt$) As Drs
 If Lno = 0 Then Exit Function
 If LAct = LEpt Then Exit Function
 XRpl = LNewO(Av(Array(Lno, LEpt, LAct)))
@@ -104,7 +104,7 @@ Next
 
 End Function
 
-Private Sub Z_LnozDclConst()
+Sub Z_LnozDclConst()
 Dim Md As CodeModule, Cnstn$
 GoSub T0
 Exit Sub
@@ -119,10 +119,7 @@ Tst:
     Return
 End Sub
 
-Private Sub Z_NsNm()
+Sub Z_NsNm()
 BrwDrs DrszMapAy(Itn(CPj.VBComponents), "NsNm", , "Mdn")
 End Sub
 
-Private Sub Z()
-QIde_Ens_EnsNsNm:
-End Sub

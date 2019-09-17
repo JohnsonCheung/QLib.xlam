@@ -4,15 +4,14 @@ Option Explicit
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxMdOp."
 
-Private Sub ClrMd(M As CodeModule)
-With M
-    If .CountOfLines = 0 Then Exit Sub
-    .DeleteLines 1, .CountOfLines
-    If .CountOfLines <> 0 Then Stop
-End With
+Sub ClrMd(M As CodeModule)
+If M.CountOfLines > 0 Then
+    M.DeleteLines 1, M.CountOfLines
+End If
 End Sub
+
 Function CntSiStrzMd$(M As CodeModule)
-CntSiStrzMd = CntsiStrzLines(SrcL(M))
+CntSiStrzMd = CntsiStrzLines(Srcl(M))
 End Function
 
 Sub DltLin(M As CodeModule, Lno, OldLin)
@@ -112,6 +111,7 @@ Dim L: For Each L In Itr(Ly)
     M.InsertLines Lno, L
 Next
 End Sub
+
 Sub InsLin(M As CodeModule, L_NewL As Drs)
 Dim B As Drs: B = L_NewL
 If JnSpc(B.Fny) <> "L NewL" Then Stop: Exit Sub
@@ -141,7 +141,7 @@ DltLines M, Lno, OldLines
 M.InsertLines Lno, NewLines
 End Sub
 
-Private Sub Z_DltLinzFeis()
+Sub Z_DltLinzFeis()
 Dim A As Feis
 'A = MthFeiszMth(Md("Md_"), "XXX")
 DltLinzFeis Md("Md_"), A
@@ -154,13 +154,7 @@ End Sub
 Sub Ren(NewCmpn)
 CCmp.Name = NewCmpn
 End Sub
-Function DftPj(P As VBProject) As VBProject
-If IsNothing(P) Then
-    Set DftPj = CPj
-Else
-    Set DftPj = P
-End If
-End Function
+
 Sub RenMdzPfx(FmPfx$, ToPfx$, Optional Pj As VBProject)
 Dim P As VBProject: Set P = DftPj(Pj)
 Dim C As VBComponent
@@ -183,7 +177,7 @@ Sub MthKeyDrFny()
 
 End Sub
 
-Private Function IfUnRmkMd(M As CodeModule) As Boolean
+Function IfUnRmkMd(M As CodeModule) As Boolean
 Debug.Print "UnRmk " & M.Parent.Name,
 If Not IsRmkzMd(M) Then
     Debug.Print "No need"
@@ -238,7 +232,7 @@ Debug.Print "NRmk"; NRmk
 Debug.Print "SKip"; Skip
 End Sub
 
-Private Function RmkMd(M As CodeModule) As Boolean
+Function RmkMd(M As CodeModule) As Boolean
 Debug.Print "Rmk " & M.Parent.Name,
 If IsRmkzMd(M) Then
     Debug.Print " No need"

@@ -4,7 +4,7 @@ Option Compare Text
 Const CLib$ = "QDta."
 Const CMod$ = CLib & "MxFmtDy."
 
-Private Sub Z_FmtDy()
+Sub Z_FmtDy()
 Dim A$()
 A = FmtDy(SampDy3, Fmt:=EiSSFmt, BrkCCIxy0:=Array(0))
 A = FmtDy(SampDy3, Fmt:=EiSSFmt)
@@ -28,7 +28,7 @@ Dim Bdy1$():                Bdy1 = LyzLinesAy(BrkBdy)
                          FmtDy = Sy(Sep, Bdy1, Sep)
 End Function
 
-Private Function SepLin$(W%(), Fmt As EmTblFmt)
+Function SepLin$(W%(), Fmt As EmTblFmt)
 Dim Sep$():  Sep = SepDr(W)
 Dim S$:        S = IIf(Fmt = EiSSFmt, " ", "-|-")
 Dim Q$:        Q = IIf(Fmt = EiSSFmt, "", "|-*-|")
@@ -36,7 +36,7 @@ Dim Q$:        Q = IIf(Fmt = EiSSFmt, "", "|-*-|")
 'Insp "QDta_Fun_FmtDy.SepLin", "Inspect", "Oup(SepLin) W Fmt", SepLin, W, "NoFmtr(EmTblFmt)": Stop
 End Function
 
-Private Function ShouldBrkAy(Dy(), BrkCCIxy0) As Boolean()
+Function ShouldBrkAy(Dy(), BrkCCIxy0) As Boolean()
 'Ret : ! no or sam ele of @Dy.  Telling that row of @Dy should ins a brk aft the row.  The las ele is always false.  @@
 If Si(BrkCCIxy0) = 0 Then Exit Function
 Dim Ixy&(): Ixy = IntozAy(EmpLngAy, BrkCCIxy0)
@@ -50,7 +50,7 @@ Next
 'Insp "QDta_Fun_FmtDy.ShouldBrkAy", "Inspect", "Oup(ShouldBrkAy) Dy BrkCCIxy0", "NoFmtr(Boolean())", "NoFmtr(())", BrkCCIxy0: Stop
 End Function
 
-Private Function InsSepLin(Bdy$(), ShouldBrk() As Boolean, SepLin$) As String()
+Function InsSepLin(Bdy$(), ShouldBrk() As Boolean, SepLin$) As String()
 If Si(ShouldBrk) = 0 Then InsSepLin = Bdy: Exit Function
 Dim L, J&: For Each L In Bdy
     If ShouldBrk(J) Then PushI InsSepLin, SepLin

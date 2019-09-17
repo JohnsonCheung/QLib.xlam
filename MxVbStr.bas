@@ -9,13 +9,13 @@ Dim P%: P = EndPos(2, S, 0)
 If P = 0 Then Stop: Exit Function
 TakVbStr = Replace(Mid(S, 2, P - 2), """""", """")
 End Function
-Private Function EndPos%(Fm%, S, Lvl%)
+Function EndPos%(Fm%, S, Lvl%)
 If Lvl > 1000 Then ThwLoopingTooMuch CSub
 Dim P%: P = InStr(Fm, S, """"): If P = 0 Then Exit Function
 If Mid(S, P + 1, 1) <> """" Then EndPos = P: Exit Function
 EndPos = EndPos(P + 2, S, Lvl + 1)
 End Function
-Private Sub Z_TakVbStr()
+Sub Z_TakVbStr()
 Dim S$
 'GoSub T1
 GoSub T2

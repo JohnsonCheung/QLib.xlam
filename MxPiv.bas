@@ -13,11 +13,11 @@ Enum EmAgr
     EiCnt
     EiAvg
 End Enum
-Function DyBlk(A, KIx%, Gix%) As Variant()
+Function DyBlk(A, Kix%, Gix%) As Variant()
 If Si(A) = 0 Then Exit Function
 Dim J%, O, K, Blk(), O_Ix&, Gp, Dr, K_Ay()
 For Each Dr In A
-    K = Dr(KIx)
+    K = Dr(Kix)
     Gp = Dr(Gix)
     O_Ix = IxzAy(K_Ay, K)
     If O_Ix = -1 Then
@@ -29,7 +29,7 @@ For Each Dr In A
 Next
 DyBlk = O
 End Function
-Private Function KKDrIx&(KKDr, FstColIsKKDrDy)
+Function KKDrIx&(KKDr, FstColIsKKDrDy)
 Dim Ix&, CurKKDr
 For Each CurKKDr In Itr(FstColIsKKDrDy)
     If IsEqAy(KKDr, CurKKDr) Then
@@ -40,7 +40,7 @@ For Each CurKKDr In Itr(FstColIsKKDrDy)
 Next
 Ix = -1
 End Function
-Private Function KKDrToItmAyDualColDy(Dy(), KKColIx&(), ItmColIx&) As Variant()
+Function KKDrToItmAyDualColDy(Dy(), KKColIx&(), ItmColIx&) As Variant()
 Dim Dr, Ix&, KKDr(), Itm
 Dim O() 'KKDr_To_ItmAy_DualColDy
 For Each Dr In Itr(Dy)
@@ -59,7 +59,7 @@ Function KKCntMulItmColDy(Dy(), KKColIx&(), ItmColIx&) As Variant()
 Dim A(): A = KKDrToItmAyDualColDy(Dy, KKColIx, ItmColIx)
 KKCntMulItmColDy = KKCntMulItmColDyD(A)
 End Function
-Private Function KKCntMulItmColDyD(KKDrToItmAyDualColDy()) As Variant()
+Function KKCntMulItmColDyD(KKDrToItmAyDualColDy()) As Variant()
 
 End Function
 Function GpDic(A As Drs, KK$, G$) As Dictionary

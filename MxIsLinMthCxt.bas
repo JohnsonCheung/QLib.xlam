@@ -23,7 +23,7 @@ Case IsLinDimSngVarColon(Lin), IsLinAsg(Lin), FstChr(L) = ":"
 End Select
 End Function
 
-Private Function IsLinDimSngVarColon(L) As Boolean
+Function IsLinDimSngVarColon(L) As Boolean
 'Ret true if L is Single-Dim-Colon: one V aft Dim and Colon aft DclSfx & not [For]
 Dim Lin$: Lin = L
 If Not ShfDim(Lin) Then Exit Function
@@ -36,7 +36,7 @@ If T1(RmvFstChr(Lin)) = "For" Then Exit Function '[Dim Dr: For ....] is False
 IsLinDimSngVarColon = True
 End Function
 
-Private Sub Z_IsLinDimSngVarColon()
+Sub Z_IsLinDimSngVarColon()
 Dim L
 'GoSub T0
 'GoSub T1
@@ -72,7 +72,7 @@ Z:
     Return
 End Sub
 
-Private Function IsLinAsg(L) As Boolean
+Function IsLinAsg(L) As Boolean
 'Note: [Dr(NCol) = DicId(K)] is determined as Asg-lin
 Dim A$: A = LTrim(L)
 ShfPfxSpc A, "Set"

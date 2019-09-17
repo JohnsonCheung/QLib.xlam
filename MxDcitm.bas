@@ -15,11 +15,11 @@ Else
 End If
 End Function
 
-Private Function DcnoTyChr$(DimShtItm)
+Function DcnoTyChr$(DimShtItm)
 DcnoTyChr = RmvLasChrzzLis(RmvSfxzBkt(DimShtItm), MthTyChrLis)
 End Function
 
-Private Function DcnoAs$(DimAsItm)
+Function DcnoAs$(DimAsItm)
 DcnoAs = RmvSfxzBkt(Bef(DimAsItm, " As"))
 End Function
 

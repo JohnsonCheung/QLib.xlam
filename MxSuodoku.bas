@@ -27,7 +27,7 @@ With RRCC
 End With
 End Function
 
-Private Function SolveFstRound(Sq()) As Variant()
+Function SolveFstRound(Sq()) As Variant()
 Dim J%
 For J = 1 To 9
     SetNineEleRow Sq(), J, SolveNineEleFstRnd(NineEleRow(Sq(), J))
@@ -35,7 +35,7 @@ Next
 SolveFstRound = Sq
 End Function
 
-Private Function Solve(SudokuSq()) As Variant()
+Function Solve(SudokuSq()) As Variant()
 Dim O(), HasSolve As Boolean, J%
 O = SolveFstRound(SudokuSq)
 HasSolve = True
@@ -50,7 +50,7 @@ Wend
 Solve = O
 End Function
 
-Private Function SolveRow(Sq()) As SolveRslt
+Function SolveRow(Sq()) As SolveRslt
 Dim J%, O()
 O = Sq
 For J = 1 To 9
@@ -64,21 +64,21 @@ Next
 SolveRow.SudokuSq = O
 End Function
 
-Private Function NineEleRow(Sq(), Row%) As Variant()
+Function NineEleRow(Sq(), Row%) As Variant()
 Dim J%
 For J = 1 To 9
     PushI NineEleRow, Sq(Row, J)
 Next
 End Function
 
-Private Sub SetNineEleRow(Sq(), Row%, NineEle())
+Sub SetNineEleRow(Sq(), Row%, NineEle())
 Dim J%
 For J = 1 To 9
     Sq(Row, J) = NineEle(J - 1)
 Next
 End Sub
 
-Private Function SolveSmallSq(Sq()) As SolveRslt
+Function SolveSmallSq(Sq()) As SolveRslt
 Dim J%, O()
 O = Sq
 For J = 1 To 9
@@ -92,7 +92,7 @@ Next
 SolveSmallSq.SudokuSq = O
 End Function
 
-Private Function NineEleSmallSq(Sq(), J%) As Variant()
+Function NineEleSmallSq(Sq(), J%) As Variant()
 Dim R As Byte, C As Byte
 With RRCCzJ(J)
 For R = .R1 To .R2
@@ -103,7 +103,7 @@ Next
 End With
 End Function
 
-Private Function RRCCzJ(J%) As RRCC
+Function RRCCzJ(J%) As RRCC
 Select Case J
 Case 1: RRCCzJ = RRCC(1, 3, 1, 3)
 Case 2: RRCCzJ = RRCC(1, 3, 4, 6)
@@ -118,7 +118,7 @@ Case Else: Thw CSub, "Invalid J, should be 1 to 9", "J", J
 End Select
 End Function
 
-Private Sub SetNineEleSmallSq(Sq(), J%, NineEle())
+Sub SetNineEleSmallSq(Sq(), J%, NineEle())
 Dim R As Byte, C As Byte
 Dim I%
 With RRCCzJ(J)
@@ -131,7 +131,7 @@ Next
 End With
 End Sub
 
-Private Function SolveCol(Sq()) As SolveRslt
+Function SolveCol(Sq()) As SolveRslt
 Dim J%, O()
 O = Sq
 For J = 1 To 9
@@ -145,21 +145,21 @@ Next
 SolveCol.SudokuSq = O
 End Function
 
-Private Function NineEleCol(Sq(), Col%) As Variant()
+Function NineEleCol(Sq(), Col%) As Variant()
 Dim J%
 For J = 1 To 9
     PushI NineEleCol, Sq(J, Col)
 Next
 End Function
 
-Private Sub SetNineEleCol(Sq(), Col%, NineEle())
+Sub SetNineEleCol(Sq(), Col%, NineEle())
 Dim J%
 For J = 1 To 9
     Sq(J, Col) = NineEle(J - 1)
 Next
 End Sub
 
-Private Function SolveDiag(Sq()) As SolveRslt
+Function SolveDiag(Sq()) As SolveRslt
 Dim J%, O()
 O = Sq
 With SolveNineEle(NineEleDiag1(O))
@@ -177,35 +177,35 @@ End With
 SolveDiag.SudokuSq = O
 End Function
 
-Private Function NineEleDiag1(Sq()) As Variant()
+Function NineEleDiag1(Sq()) As Variant()
 Dim J%
 For J = 1 To 9
     PushI NineEleDiag1, Sq(J, J)
 Next
 End Function
 
-Private Sub SetNineEleDiag1(Sq(), NineEle())
+Sub SetNineEleDiag1(Sq(), NineEle())
 Dim J%
 For J = 1 To 9
     Sq(J, J) = NineEle(J - 1)
 Next
 End Sub
 
-Private Function NineEleDiag2(Sq()) As Variant()
+Function NineEleDiag2(Sq()) As Variant()
 Dim J%
 For J = 1 To 9
     PushI NineEleDiag2, Sq(10 - J, 10 - J)
 Next
 End Function
 
-Private Sub SetNineEleDiag2(Sq(), NineEle())
+Sub SetNineEleDiag2(Sq(), NineEle())
 Dim J%
 For J = 1 To 9
     Sq(10 - J, 10 - J) = NineEle(J - 1)
 Next
 End Sub
 
-Private Function SolveNineEleFstRnd(NineEle()) As Variant()
+Function SolveNineEleFstRnd(NineEle()) As Variant()
 Dim Should() As Byte: Should = ShouldBe(NineEle)
 Dim J%, I
 Dim O(): O = NineEle
@@ -218,7 +218,7 @@ Next
 SolveNineEleFstRnd = O
 End Function
 
-Private Function SolveNineEle(NineEle()) As NineEleRslt
+Function SolveNineEle(NineEle()) As NineEleRslt
 Dim Should() As Byte: Should = ShouldBe(NineEle)
 Dim O(): O = NineEle
 Dim M
@@ -238,12 +238,7 @@ Next
 SolveNineEle.NineEle = O
 End Function
 
-Private Function AyIntersect(A() As Byte, B() As Byte)
-Dim O: O = AyIntersect(A, B)
-AyIntersect = IIf(Si(O) = 1, O(0), O)
-End Function
-
-Private Function ShouldBe(NineEle()) As Byte()
+Function ShouldBe(NineEle()) As Byte()
 Dim Certain() As Byte
 Dim I
 For Each I In NineEle
@@ -259,7 +254,7 @@ Sub SolveSudoku(Ws As Worksheet)
 PutSudokuSolution Ws, Solve(SudokuSq(Ws))
 End Sub
 
-Private Function SudokuSq(Ws As Worksheet) As Variant()
+Function SudokuSq(Ws As Worksheet) As Variant()
 Dim O(): O = RgRCRC(A1zWs(Ws), 1, 1, 9, 9)
 Dim I%, J%
 For J = 1 To 9
@@ -272,15 +267,15 @@ Next
 SudokuSq = O
 End Function
 
-Private Sub PutSudokuSolution(Ws As Worksheet, Sq())
+Sub PutSudokuSolution(Ws As Worksheet, Sq())
 SolutionRg(Ws).Value = Sq
 End Sub
 
-Private Function SolutionRg(Ws As Worksheet) As Range
+Function SolutionRg(Ws As Worksheet) As Range
 Set SolutionRg = RgRCRC(A1zWs(Ws), 11, 1, 19, 9)
 End Function
 
-Private Property Get SampSudokuSq() As Variant()
+Property Get SampSudokuSq() As Variant()
 Dim E: E = Empty
 SampSudokuSq = SqzDy(Av( _
 Array(5, E, 7, 6, 9, E, E, E, 2), _
@@ -294,16 +289,16 @@ Array(3, E, E, E, E, 6, E, 5, 7), _
 Array(7, E, E, 1, 3, E, 9, 8, 4)))
 End Property
 
-Private Sub Z_PutSampSudoku()
+Sub Z_PutSampSudoku()
 PutSampSudoku WsRC(ActiveSheet, 1, "L")
 End Sub
 
-Private Sub PutSampSudoku(At As Range)
+Sub PutSampSudoku(At As Range)
 RgRCRC(At, 1, 1, 9, 9).Value = SampSudokuSq
 FmtSudoku At
 End Sub
 
-Private Sub FmtSudoku(At As Range)
+Sub FmtSudoku(At As Range)
 BdrAround RgRCRC(At, 1, 1, 3, 3)
 BdrAround RgRCRC(At, 1, 4, 3, 6)
 BdrAround RgRCRC(At, 1, 7, 3, 9)
@@ -316,7 +311,7 @@ BdrAround RgRCRC(At, 7, 7, 9, 9)
 RgCC(At, 1, 9).EntireColumn.ColumnWidth = 2
 End Sub
 
-Private Sub Z_SolveSudoku()
+Sub Z_SolveSudoku()
 Dim Ws As Worksheet
 GoSub T0
 Exit Sub
@@ -328,6 +323,3 @@ Tst:
     Return
 End Sub
 
-Private Sub Z()
-QSudoku:
-End Sub

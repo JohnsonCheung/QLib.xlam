@@ -52,20 +52,20 @@ Property Get BoXls() As Office.CommandBarControl
 Set BoXls = StdBar.Controls(1)
 End Property
 
-Private Sub Z_DbgPop()
+Sub Z_DbgPop()
 Dim A
 Set A = PopupOfDbg
 Stop
 End Sub
 
-Private Sub Z_BarOfMnu()
+Sub Z_BarOfMnu()
 Dim A As CommandBar
 Set A = BarOfMnu
 Stop
 End Sub
 
 
-Private Property Get EditPopup() As Office.CommandBarPopup
+Property Get EditPopup() As Office.CommandBarPopup
 Set EditPopup = FstCaption(BarOfMnu.Controls, "&Edit")
 End Property
 
@@ -110,7 +110,7 @@ Property Get PopupOfDbg() As CommandBarPopup
 Set PopupOfDbg = BarOfMnu.Controls("Debug")
 End Property
 
-Private Function FstCaption(Itr, Caption) 'Return FstItm with Caption-Prp = Caption$
+Function FstCaption(Itr, Caption) 'Return FstItm with Caption-Prp = Caption$
 FstCaption = FstzItrEq(Itr, "Caption", Caption)
 End Function
 
@@ -123,7 +123,7 @@ CapNy = SyzItrP(A, "Caption")
 End Function
 
 Property Get WinOfBrwObj() As vbide.Window
-Set WinOfBrwObj = FstWinTy(vbext_wt_Browser)
+Set WinOfBrwObj = FstWin(vbext_wt_Browser)
 End Property
 
 Property Get BoCompile() As CommandBarButton
@@ -140,6 +140,3 @@ Function Bar(BarNm) As Office.CommandBar
 Set Bar = Bars(BarNm)
 End Function
 
-Private Sub Z()
-MIde_CMdMov_Mth:
-End Sub

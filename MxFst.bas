@@ -5,16 +5,12 @@ Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxFst."
 
 Function RmvFstEle(Ay)
-If Si(Ay) = 0 Then ThwMsg CSub, "No FstEle"
+If Si(Ay) = 0 Then Thw CSub, "No FstEle"
 Dim O: O = Ay: Erase O
 Dim J&: For J = 1 To UB(Ay)
     PushI O, Ay(J)
 Next
 RmvFstEle = O
-End Function
-Function FstEle(Ay)
-If Si(Ay) = 0 Then Exit Function
-Asg Ay(0), FstEle
 End Function
 
 Function FstEleInAset(Ay, InAset As Aset)
@@ -106,7 +102,7 @@ Function FstNEle(Ay, N)
 FstNEle = AwFstUEle(Ay, N - 1)
 End Function
 
-Function ShfFstEle(Oay)
-ShfFstEle = FstEle(Oay)
-Oay = AeFstNEle(Oay)
+Function ShfFstEle(OAy)
+ShfFstEle = FstEle(OAy)
+OAy = AeFstNEle(OAy)
 End Function

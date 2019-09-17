@@ -109,8 +109,3 @@ End With
 IsEqFei = True
 End Function
 
-Private Sub Z()
-Dim A As Variant
-Dim C As Fei
-IsEqFei C, C
-End Sub

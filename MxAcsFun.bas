@@ -4,6 +4,10 @@ Option Explicit
 Const CLib$ = "QAcs."
 Const CMod$ = CLib & "MxAcsFun."
 
+Function AcszG() As Access.Application
+Set AcszG = GetObject(, "Access.Application")
+End Function
+
 Function Acs() As Access.Application
 Set Acs = Access.Application
 End Function

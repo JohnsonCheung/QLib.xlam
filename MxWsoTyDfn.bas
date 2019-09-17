@@ -17,6 +17,6 @@ FmtWsoTyDfn O
 Set WsoTyDfnzP = O
 End Function
 
-Private Sub FmtWsoTyDfn(WsoTyDfn As Worksheet)
+Sub FmtWsoTyDfn(WsoTyDfn As Worksheet)
 
 End Sub

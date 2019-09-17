@@ -33,7 +33,7 @@ Brw AddIxPfx(XX)
 Stop
 Erase XX
 End Function
-Private Function ExprLyzLin(Lin, W%) As String()
+Function ExprLyzLin(Lin, W%) As String()
 Dim J&
 Dim S$: S = Lin
 Dim CurLen&
@@ -56,7 +56,7 @@ While LasLen > 0
 Wend
 End Function
 
-Private Function ShfLin(Str$, OvrFlwTerm$, W%) As LinRslt
+Function ShfLin(Str$, OvrFlwTerm$, W%) As LinRslt
 Dim T$, OExprTermAy, TotW&
 If OvrFlwTerm <> "" Then
     PushI OExprTermAy, OvrFlwTerm
@@ -68,7 +68,7 @@ Dim J&, OStr$, OExprTerm$
 X:
 ShfLin = LinRslt(ExprLin:=Jn(OExprTermAy, " & "), OvrFlwTerm:=OvrFlwTerm, S:=OStr)
 End Function
-Private Function Z_ShfTermzPrintable()
+Function Z_ShfTermzPrintable()
 Dim S$: S = StrOfPjfP
 Dim LAs&, Cur&, O$()
 LAs = Len(S)
@@ -82,7 +82,7 @@ MsgBox Si(O)
 Stop
 Brw O
 End Function
-Private Function ShfTermzPrintable$(OStr$)
+Function ShfTermzPrintable$(OStr$)
 If OStr = "" Then Exit Function
 Dim IsPrintable As Boolean
 Dim J&
@@ -99,7 +99,7 @@ OStr = ""
 End Function
 
 'Fun=================================================
-Private Function LinRslt(ExprLin, OvrFlwTerm$, S$) As LinRslt
+Function LinRslt(ExprLin, OvrFlwTerm$, S$) As LinRslt
 With LinRslt
     .ExprLin = ExprLin
     .OvrFlwTerm = OvrFlwTerm
@@ -107,7 +107,7 @@ With LinRslt
 End With
 End Function
 
-Private Function ExprzQte$(BytAy() As Byte)
+Function ExprzQte$(BytAy() As Byte)
 Dim O$(), I
 For Each I In BytAy
     If I = vbDblQAsc Then PushI O, vb2DblQ Else PushI O, Chr(I)
@@ -115,7 +115,7 @@ Next
 ExprzQte = QteDbl(Jn(O))
 End Function
 
-Private Function ExprzAndChr$(BytAy() As Byte)
+Function ExprzAndChr$(BytAy() As Byte)
 Dim O$(), I
 For Each I In BytAy
     PushI O, "Chr(" & I & ")"
@@ -123,13 +123,13 @@ Next
 ExprzAndChr = Jn(O, " & ")
 End Function
 
-Private Function Term(ExprTerm$, S$) As Term
+Function Term(ExprTerm$, S$) As Term
 With Term
     .ExprTerm = ExprTerm
     .S = S
 End With
 End Function
-Private Sub Z_ExprLyzStr()
+Sub Z_ExprLyzStr()
 Dim S$
 GoSub ZZ1
 GoSub ZZ2
@@ -158,7 +158,7 @@ Tst:
     Return
 End Sub
 
-Private Sub Z_BrwRepeatedBytes()
+Sub Z_BrwRepeatedBytes()
 BrwRepeatedBytes StrOfPjfP
 End Sub
 
@@ -170,7 +170,7 @@ Next
 AscStr = JnSpc(O)
 End Function
 
-Private Sub Z_BrkAyzPrintable1()
+Sub Z_BrkAyzPrintable1()
 Dim T, O$(), J&
 'For Each T In BrkAyzPrintable(JnCrLf(Srcp))
     J = J + 1
@@ -190,11 +190,11 @@ Case Else
     Stop
 End Select
 End Function
-Private Sub Z_BrkAyzPrintable()
+Sub Z_BrkAyzPrintable()
 Brw BrkAyzPrintable(StrOfPjfP)
 End Sub
 
-Private Function BrkAyzRepeat(S) As String()
+Function BrkAyzRepeat(S) As String()
 Dim L$: L = S
 Dim T$, J&
 While Len(L) > 0
@@ -206,7 +206,7 @@ While Len(L) > 0
 '    Stop
 Wend
 End Function
-Private Function BrkAyzPrintable(S) As String()
+Function BrkAyzPrintable(S) As String()
 Dim L$: L = S
 #If True Then
     While Len(L) > 0
@@ -232,7 +232,7 @@ Dim L$: L = S
     Wend
 #End If
 End Function
-Private Function PrintableSts$(T)
+Function PrintableSts$(T)
 Dim IsPrintable As Boolean
 IsPrintable = IsAscPrintable(Asc(FstChr(T)))
 Dim J&
@@ -246,7 +246,7 @@ Next
 PrintableSts = IIf(IsPrintable, "Prt", "Non")
 End Function
 
-Private Function RepeatSts$(T)
+Function RepeatSts$(T)
 'If Len(T) = 199 Then Stop
 Select Case Len(T)
 Case 0: RepeatSts = "ZeroByt": Exit Function
@@ -269,7 +269,7 @@ Case Else
 End Select
 RepeatSts = IIf(IsRepeat, "Repated", "Dif")
 End Function
-Private Function ShfTermzRepeatedOrNot$(OStr$)
+Function ShfTermzRepeatedOrNot$(OStr$)
 If OStr = "" Then Exit Function
 Dim J&, C$, LAs$, IsSam As Boolean, IsRepeat As Boolean
 LAs = SndChr(OStr)
@@ -295,7 +295,7 @@ ShfTermzRepeatedOrNot = OStr
 OStr = ""
 End Function
 
-Private Sub BrwRepeatedBytes(S)
+Sub BrwRepeatedBytes(S)
 Dim J&, B%, B1%, RepeatCnt&, L&
 L = Len(S)
 If L = 0 Then Exit Sub

@@ -26,6 +26,6 @@ For Each Lik In A
 Next
 End Function
 
-Private Function IPred_Pred(V As Variant) As Boolean
+Function IPred_Pred(V As Variant) As Boolean
 IPred_Pred = Pred(V)
 End Function

@@ -13,6 +13,6 @@ Implements IPred
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "PredIsStr."
 
-Private Function IPred_Pred(V As Variant) As Boolean
+Function IPred_Pred(V As Variant) As Boolean
 IPred_Pred = IsStr(V)
 End Function

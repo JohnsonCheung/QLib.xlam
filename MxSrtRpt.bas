@@ -3,7 +3,7 @@ Option Compare Text
 Option Explicit
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxSrtRpt."
-Private Function SrtRpt(Src$(), Optional Mdn$) As String()
+Function SrtRpt(Src$(), Optional Mdn$) As String()
 Dim X As Dictionary
 Dim Y As Dictionary
 Set X = DiMthnqLines(Src, Mdn)
@@ -11,7 +11,7 @@ Set Y = SrtDic(X)
 SrtRpt = FmtCprDic(X, Y, "BefSrt", "AftSrt")
 End Function
 
-Private Sub Z_SrtRpt()
+Sub Z_SrtRpt()
 Brw SrtRptzM(CMd)
 End Sub
 

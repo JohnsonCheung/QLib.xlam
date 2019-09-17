@@ -4,17 +4,7 @@ Option Explicit
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxGenErMsg."
 
-#If False Then
-Private Sub Init(Src$())
-Dim D$(): D = Dcl(Src)
-Dim SrcLy$(): SrcLy = CvSy(AwBet(D, "'GenErMsg-Src-Beg.", "'GenErMsg-Src-End."))
-'Brw SrcLy, CSub
-Dim ErNy$(): ErNy = T1Ay(SrcLy)
-Dim ErMsgAy$(): ErMsgAy = RmvT1zAy(SrcLy)
-End Sub
-#End If
-
-Private Sub Z_GenErMsg()
+Sub Z_GenErMsg()
 Dim Src$(), Mdn, ErNy$(), ErMthSet As Aset
 'GoSub T1
 'GoSub ZZ1
@@ -23,7 +13,7 @@ Exit Sub
 T1:
 
 ZZ2:
-    Src = SrczMdn("MXls_Lof_ErzLof")
+    Src = SrczMdn("MXls_Lof_EoLof")
     GoSub Tst
     Brw Act
     Return
@@ -109,18 +99,18 @@ For J = F To U
 Next
 End Sub
 
-Private Function ErMthnSet(ErMthNy$()) As Aset
+Function ErMthnSet(ErMthNy$()) As Aset
 Set ErMthnSet = AsetzAy(ErMthNy)
 End Function
 
-Private Function ErMthNy(ErNy$()) As String()
+Function ErMthNy(ErNy$()) As String()
 Dim I
 For Each I In Itr(ErNy)
 '    PushI ErMthNy, ErMthn(I)
 Next
 End Function
 
-Private Function ErConstDic(ErMthn As Aset, ErMsgAy$()) As Dictionary
+Function ErConstDic(ErMthn As Aset, ErMsgAy$()) As Dictionary
 Const C$ = "Const  M_?$ = ""?"""
 Set ErConstDic = New Dictionary
 Dim ErNm, J%
@@ -130,11 +120,11 @@ For Each ErNm In ErMthn.Itms
 Next
 End Function
 
-Private Function ErCnstn$(ErNm)
+Function ErCnstn$(ErNm)
 ErCnstn = "M_" & ErNm
 End Function
 
-Private Sub Z_ErMthLinAy()
+Sub Z_ErMthLinAy()
 Dim ErNy$(), ErMsgAy$(), ErMthLinAy$()
 'GoSub Z
 GoSub T1
@@ -146,7 +136,7 @@ Z:
 T1:
     ErNy = Sy("Val_NotNum")
     ErMsgAy = Sy("Lno#{Lno} is [{T1$}] line having Val({Val$}) which should be a number")
-    Ept = Sy("Private Function MsgzVal_NotNum(Lno, T1, Val$) As String(): MsgzVal_NotNum = FmtMacro(M_Val_NotNum, Lno, T1, Val): End Function")
+    Ept = Sy("Function MsgzVal_NotNum(Lno, T1, Val$) As String(): MsgzVal_NotNum = FmtMacro(M_Val_NotNum, Lno, T1, Val): End Function")
     GoTo Tst
 Tst:
     Act = ErMthLinAy
@@ -154,18 +144,18 @@ Tst:
     Return
 End Sub
 
-Private Sub Z_Init()
-'Init Src(Md("MXls_Lof_ErzLof"))
+Sub Z_Init()
+'Init Src(Md("MXls_Lof_EoLof"))
 'If Not HasEle(ErNy, "Bet_FldSeq") Then Stop
 'Bet_FldSeq
 Stop
 End Sub
 
-Private Function Y_Src() As String()
-Y_Src = Src(Md("MXls_Lof_ErzLof"))
+Function Y_Src() As String()
+Y_Src = Src(Md("MXls_Lof_EoLof"))
 End Function
 
-Private Function ErMthLinAy(ErNy$(), ErMsgAy$()) As String() 'One ErMth is one-MulStmtLin
+Function ErMthLinAy(ErNy$(), ErMsgAy$()) As String() 'One ErMth is one-MulStmtLin
 Dim J%, O$()
 For J = 0 To UB(ErNy)
 '    PushI O, ErMthLByNm(ErNy(J), MsgAy(J))
@@ -173,12 +163,12 @@ Next
 ErMthLinAy = FmtMulStmtSrc(O)
 End Function
 
-Private Function ErMthLByNm$(ErNm$, ErMsg$)
+Function ErMthLByNm$(ErNm$, ErMsg$)
 Dim CNm$:         CNm = ErCnstn(ErNm)
 Dim ErNy$():     ErNy = NyzMacro(ErMsg)
 Dim Pm$:           Pm = JnCommaSpc(AwDist(ErNy))
-Dim Calling$: Calling = Jn(AddPfxzAy(DclNy(ErNy), ", "))
+Dim Calling$: Calling = Jn(AmAddPfx(DclNy(ErNy), ", "))
 Dim Mthn:     'Mthn = ErMthn(ErNm)
-ErMthLByNm = FmtQQ("Private Function ?(?) As String():? = FmtMacro(??):End Function", _
+ErMthLByNm = FmtQQ("Function ?(?) As String():? = FmtMacro(??):End Function", _
     Mthn, Pm, Mthn, CNm, Calling)
 End Function

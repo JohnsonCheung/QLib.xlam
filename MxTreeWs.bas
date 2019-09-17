@@ -31,30 +31,30 @@ ShwNxtCol Target
 WIP = False
 End Sub
 
-Private Sub ShwEntzHom(Hom$)
+Sub ShwEntzHom(Hom$)
 ShwEnt Hom, 1
 End Sub
 
-Private Sub ShwEnt(Pth, Cno%)
+Sub ShwEnt(Pth, Cno%)
 Dim FnAy$(), FdrAy$()
 AsgEnt FdrAy, FnAy, Pth
 ShwEntzPut Cno, FdrAy, FnAy
 End Sub
-Private Sub ShwEntzPut(Cno%, FdrAy$(), FnAy$())
+Sub ShwEntzPut(Cno%, FdrAy$(), FnAy$())
 
 End Sub
-Private Sub ShwFstHomFdr(Hom$)
+Sub ShwFstHomFdr(Hom$)
 
 End Sub
-Private Sub ShwCurCol(Cur As Range)
+Sub ShwCurCol(Cur As Range)
 ShwCurEnt Cur
 End Sub
 
-Private Sub ShwNxtEnt()
+Sub ShwNxtEnt()
 
 End Sub
 
-Private Sub ShwCurEnt(Cur As Range)
+Sub ShwCurEnt(Cur As Range)
 ClrCurCol Cur
 Dim SubPthy$(), FnAy$()
 AsgEnt SubPthy, FnAy, PthzCur(Cur)
@@ -63,59 +63,59 @@ MgeCurSubPthCol Si(SubPthy)
 MgeCurFnCol Si(SubPthy), Si(FnAy)
 End Sub
 
-Private Function PthzCur$(Cur As Range)
-PthzCur = EnsPthSfx(RgA1(Cur).Value)
+Function PthzCur$(Cur As Range)
+PthzCur = EnsPthSfx(A1zRg(Cur).Value)
 End Function
 
-Private Sub PutCurEnt(Cur As Range, SubPthy$(), FnAy$())
+Sub PutCurEnt(Cur As Range, SubPthy$(), FnAy$())
 EntRg(Cur, Si(SubPthy) + Si(FnAy)).Value = SqV(AddAy(SubPthy, FnAy))
 End Sub
-Private Function EntRg(Cur As Range, EntCnt%) As Range
+Function EntRg(Cur As Range, EntCnt%) As Range
 Dim Ws As Worksheet: Set Ws = WszRg(Cur)
 Set EntRg = WsCRR(Ws, Cur.Column, 2, EntCnt + 1)
 End Function
 
-Private Sub ClrCurCol(Cur As Range)
+Sub ClrCurCol(Cur As Range)
 Dim Ws As Worksheet: Set Ws = WszRg(Cur)
 WsCRR(Ws, Cur.Column, 2, LasCno(Ws)).Delete
 End Sub
 
-Private Function CurColCC() As Range
+Function CurColCC() As Range
 
 End Function
-Private Function MgeCurSubPthCol(SubPthSz&)
+Function MgeCurSubPthCol(SubPthSz&)
 
 End Function
-Private Function MgeCurFnCol(SubPthSz&, FnSz&)
+Function MgeCurFnCol(SubPthSz&, FnSz&)
 
 End Function
 
-Private Sub ShwNxtCol(Cur As Range)
+Sub ShwNxtCol(Cur As Range)
 ShwRow Cur
 End Sub
-Private Sub ShwRow(Cur As Range)
+Sub ShwRow(Cur As Range)
 Dim Ws As Worksheet: Set Ws = WszRg(Cur)
 Dim R%: R = MaxR(Ws)
 Dim LasR&: LasR = LasRno(Ws)
 WsRR(Ws, 1, R).Hidden = False
 WsRR(Ws, R + 1, LasR).Hidden = True
 End Sub
-Private Function MaxR%(Ws As Worksheet)
+Function MaxR%(Ws As Worksheet)
 Dim J%, O%
 For J% = 1 To MaxC(Ws)
     O = Max(O, WsRC(Ws, 2, J).End(xlDown).Row - 1)
 Next
 MaxR = O
 End Function
-Private Function MaxC%(Ws As Worksheet)
+Function MaxC%(Ws As Worksheet)
 MaxC = CnozBefFstHid(Ws)
 End Function
-Private Sub EnsA1(A1 As Range)
+Sub EnsA1(A1 As Range)
 If IsActionA1(A1) Then Exit Sub
 A1.Value = "Please enter a valid path here"
 Clear WszRg(A1)
 End Sub
-Private Sub Clear(Ws As Worksheet)
+Sub Clear(Ws As Worksheet)
 A1zWs(Ws).Activate
 DltColFm Ws, 2
 DltRowFm Ws, 2
@@ -123,17 +123,17 @@ HidColFm Ws, 2
 HidRowFm Ws, 2
 WsC(Ws, 1).AutoFit
 End Sub
-Private Function IsAction(Ws As Worksheet) As Boolean
+Function IsAction(Ws As Worksheet) As Boolean
 IsAction = True
 If IsActionWs(Ws) Then Exit Function
 If IsActionA1(A1(Ws)) Then Exit Function
 IsAction = False
 End Function
-Private Function IsActionWs(Ws As Worksheet) As Boolean
+Function IsActionWs(Ws As Worksheet) As Boolean
 IsActionWs = Ws.Name = "TreeWs"
 End Function
 
-Private Function IsActionA1(A1 As Range) As Boolean
+Function IsActionA1(A1 As Range) As Boolean
 Dim V: V = A1.Value
 If Not IsStr(V) Then Exit Function
 IsActionA1 = HasPth(V)

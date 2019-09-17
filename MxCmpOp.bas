@@ -4,12 +4,12 @@ Option Explicit
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxCmpOp."
 
-Sub AddCls(Clsnn$) 'To CPj
-AddCmpzMul CPj, vbext_ct_ClassModule, Clsnn
-JmpCmp T1(Clsnn)
+Sub Add_Clsnn_ToCurPj(Clsnn$) 'To CPj
+Add_Cmpnn_Ty_ToPj Clsnn, vbext_ct_ClassModule, CPj
+JmpCmpn T1(Clsnn)
 End Sub
 
-Sub AddCmpSfx(P As VBProject, Sfx)
+Sub Add_Sfx_ToAllCmp_InPj(Sfx, P As VBProject)
 If P.Protection = vbext_pp_locked Then Exit Sub
 Dim C As VBComponent
 For Each C In P.VBComponents
@@ -17,32 +17,32 @@ For Each C In P.VBComponents
 Next
 End Sub
 
-Sub AddCmpSfxP(Sfx)
-AddCmpSfx CPj, Sfx
+Sub Add_Sfx_ToAllCmp_InCurPj(Sfx)
+Add_Sfx_ToAllCmp_InPj Sfx, CPj
 End Sub
 
-Sub AddCmpzEmp(P As VBProject, Ty As vbext_ComponentType, NM)
-If HasCmpzP(P, NM) Then InfLin CSub, "Cmpn exist in Pj", "Cmpn Pjn", NM, P.Name: Exit Sub
-P.VBComponents.Add(Ty).Name = NM ' no CStr will break
+Sub AddCmpzEmp(P As VBProject, Ty As vbext_ComponentType, Nm)
+If HasCmpzP(P, Nm) Then InfLin CSub, "Cmpn exist in Pj", "Cmpn Pjn", Nm, P.Name: Exit Sub
+P.VBComponents.Add(Ty).Name = Nm ' no CStr will break
 End Sub
 
-Sub AddCmpzMul(P As VBProject, T As vbext_ComponentType, Cmpnn$)
+Sub Add_Cmpnn_Ty_ToPj(Cmpnn$, T As vbext_ComponentType, P As VBProject)
 Dim N: For Each N In ItrzSS(Cmpnn)
     AddCmpzEmp P, T, N
 Next
 End Sub
 
-Sub AddCmpzSrc(P As VBProject, NM, SrcL$)
-AddCmpzEmp P, vbext_ct_StdModule, NM
-ApdLines MdzPN(P, NM), SrcL
+Sub AddCmpzL(P As VBProject, Cmpn, Srcl$)
+AddCmpzEmp P, vbext_ct_StdModule, Cmpn
+ApdLines MdzP(P, Cmpn), Srcl
 End Sub
 
 Sub AddMod(Modnn$)
-AddCmpzMul CPj, vbext_ct_StdModule, Modnn
-JmpCmp T1(Modnn)
+Add_Cmpnn_Ty_ToPj Modnn, vbext_ct_StdModule, CPj
+JmpCmpn T1(Modnn)
 End Sub
 
-Sub AddModzPj(P As VBProject, Modn)
+Sub AddModnzP(P As VBProject, Modn)
 AddCmpzEmp P, vbext_ct_StdModule, Modn
 End Sub
 
@@ -50,6 +50,9 @@ Sub ApdLines(M As CodeModule, Lines$)
 If Lines = "" Then Exit Sub
 M.InsertLines M.CountOfLines + 1, Lines '<=====
 End Sub
+
+
+
 
 Sub ApdLineszoInf(M As CodeModule, Lines$)
 Dim Bef&, Aft&, Exp&, Cnt&
@@ -75,11 +78,6 @@ For Each N In TmpModNyzP(CPj)
 Next
 End Sub
 
-Function CpyMd(M As CodeModule, ToM As CodeModule) As Boolean
-'Ret : Cpy @M to @ToM and  both must exist @@
-CpyMd = RplMd(ToM, SrcL(M))
-End Function
-
 Function DftMd(M As CodeModule) As CodeModule
 If IsNothing(M) Then
    Set DftMd = CMd
@@ -102,16 +100,16 @@ EnsCls CPj, Clsn
 EnsModLines Md(Clsn), ClsLines
 End Sub
 
-Sub EnsCmpzPTN(P As VBProject, Ty As vbext_ComponentType, NM)
-If Not HasCmpzP(P, NM) Then AddCmpzEmp P, Ty, NM
+Sub EnsCmpzPTN(P As VBProject, Ty As vbext_ComponentType, Nm)
+If Not HasCmpzP(P, Nm) Then AddCmpzEmp P, Ty, Nm
 End Sub
 
 Sub EnsLines(Md As CodeModule, Mthn, Mthl$)
-Dim OldMthL$: OldMthL = MthLzM(Md, Mthn)
+Dim OldMthL$: OldMthL = MthlzM(Md, Mthn)
 If OldMthL = Mthl Then
     Debug.Print FmtQQ("EnsMd: Mth(?) in Md(?) is same", Mthn, Mdn(Md))
 End If
-RmvMthzMN Md, Mthn
+RmvMth Md, Mthn
 ApdLines Md, Mthl
 Debug.Print FmtQQ("EnsMd: Mth(?) in Md(?) is replaced <=========", Mthn, Mdn(Md))
 End Sub
@@ -121,7 +119,7 @@ EnsCmpzPTN P, vbext_ct_StdModule, Modn
 End Sub
 
 Sub EnsModLines(M As CodeModule, Lines$)
-If Lines = SrcL(M) Then Inf CSub, "Same module lines, no need to replace", "Mdn", Mdn(M): Exit Sub
+If Lines = Srcl(M) Then Inf CSub, "Same module lines, no need to replace", "Mdn", Mdn(M): Exit Sub
 RplMd M, Lines
 End Sub
 
@@ -198,43 +196,17 @@ For Each C In Pj.VBComponents
 Next
 End Sub
 
-Sub ClrMd(M As CodeModule)
-If M.CountOfLines > 0 Then
-    M.DeleteLines 1, M.CountOfLines
-End If
-End Sub
-
-Private Function SampDiMdnqSrcL() As Dictionary
+Function SampDiMdnqSrcL() As Dictionary
 Set SampDiMdnqSrcL = New Dictionary
 Dim C As VBComponent: For Each C In CPj.VBComponents
-    SampDiMdnqSrcL.Add C.Name, SrcL(C.CodeModule) & vbCrLf & "'"
+    SampDiMdnqSrcL.Add C.Name, Srcl(C.CodeModule) & vbCrLf & "'"
 Next
 End Function
 
-Private Sub Z_RplMdzD()
+Sub Z_RplMdzD()
 RplMdzD CPj, SampDiMdnqSrcL
 End Sub
 
-Private Function IsStrAtSpcCrLf(S, At) As Boolean
-IsStrAtSpcCrLf = IsAscSpcCrLf(AscAt(S, At))
-End Function
-
-Private Function AscAt%(S, At)
-AscAt = Asc(Mid(S, At, 1))
-End Function
-
-Private Function IsAscSpcCrLf(Asc%)
-Select Case True
-Case Asc = 13, Asc = 10, Asc = 32: IsAscSpcCrLf = True
-End Select
-End Function
-
-Private Function LineszRTrim$(Lines)
-Dim At&
-For At = Len(Lines) To 1 Step -1
-    If Not IsStrAtSpcCrLf(Lines, At) Then LineszRTrim = Left(Lines, At): Exit Function
-Next
-End Function
 
 Sub RplMdzD(P As VBProject, DiMdnqSrcL As Dictionary)
 'Ret : #Rpl-Md-By-Di-Mdn-SrcL# @@
@@ -243,64 +215,15 @@ Dim Mdn: For Each Mdn In DiMdnqSrcL.Keys
 Next
 End Sub
 
-Private Function Si&(A)
-On Error Resume Next
-Si = UBound(A) + 1
-End Function
-
-Private Function LinCnt&(Lines$)
-LinCnt = SubStrCnt(Lines, vbLf) + 1
-End Function
-
-Private Function SubStrCnt&(S, SubStr$)
-Dim P&: P = 1
-Dim O&, L%
-L = Len(SubStr)
-While P > 0
-    P = InStr(P, S, SubStr)
-    If P = 0 Then SubStrCnt = O: Exit Function
-    O = O + 1
-    P = P + L
-Wend
-End Function
-
-
-Private Sub Z_RplMd()
+Sub Z_RplMd()
 Dim M As CodeModule: Set M = Md("QDao_Def_NewTd")
-RplMd M, SrcL(M) & vbCrLf & "'"
+RplMd M, Srcl(M) & vbCrLf & "'"
 End Sub
-
-Private Function SrcL$(M As CodeModule)
-':SrcL: :Lines #Src-Lines#
-SrcL = Join(Src(M), vbCrLf) & vbCrLf
-End Function
-
-Private Function SrcLzM$(M As CodeModule)
-If M.CountOfLines > 0 Then
-    SrcLzM = M.Lines(1, M.CountOfLines)
-End If
-End Function
-
-Private Function Src(M As CodeModule) As String()
-Src = SplitCrLf(SrcLzM(M))
-End Function
-
-Private Function SplitCrLf(S) As String()
-SplitCrLf = Split(Replace(S, vbCr, ""), vbLf)
-End Function
-
 Function RTrimMd(M As CodeModule, Optional Upd As EmUpd, Optional Osy) As Boolean
 
 End Function
 
-Function RplMd(M As CodeModule, NewL$) As Boolean
-Dim Mdn$: Mdn = M.Parent.Name
-Select Case Mdn
-Case "QIde_B_CmpOp", "QVb_Dta_VbRpt", "QIde_B_Md", "QIde_Mth_CntMth": Exit Function
-End Select
-
-Dim OldL$: OldL = SrcL(M)
-Dim IsSam As Boolean: IsSam = LineszRTrim(OldL) = LineszRTrim(NewL)
+Sub RplMd__ShwMsg(IsSam As Boolean, OldL$, NewL$, Mdn$)
 Dim Msg$
     Dim OldC As String * 4: RSet OldC = LinCnt(OldL)
     Msg = Replace("RplMd: OldCnt(?) ", "?", OldC)
@@ -311,19 +234,19 @@ Dim Msg$
         Msg = Msg & Replace("NewCnt(?) ", "?", NewC) & Mdn
     End If
     Debug.Print Msg
+End Sub
+
+Function RplMd(M As CodeModule, NewL$) As Boolean
+Dim Mdn$: Mdn = M.Name
+Dim OldL$: OldL = Srcl(M)
+Dim IsSam As Boolean: IsSam = LineszRTrim(OldL) = LineszRTrim(NewL)
+RplMd__ShwMsg IsSam, OldL, NewL, Mdn
 If IsSam Then Exit Function
 
 ClrMd M:
 M.InsertLines 1, NewL
 RplMd = True
 End Function
-
-Private Sub PushI(O, M)
-Dim N&
-N = Si(O)
-ReDim Preserve O(N)
-O(N) = M
-End Sub
 
 Sub RenModPfx(FmPfx$, ToPfx$)
 RenModPfxzP CPj, FmPfx, ToPfx
@@ -340,29 +263,26 @@ For Each C In Pj.VBComponents
 Next
 End Sub
 
-Function SetCmpNm(A As VBComponent, NM, Optional Fun$ = "SetCmpNm") As VBComponent
+Function SetCmpNm(A As VBComponent, Nm, Optional Fun$ = "SetCmpNm") As VBComponent
 Dim Pj As VBProject
 Set Pj = PjzC(A)
-If HasCmpzP(Pj, NM) Then
-    Thw Fun, "Cmp already Has", "Cmp Has-in-Pj", NM, Pj.Name
+If HasCmpzP(Pj, Nm) Then
+    Thw Fun, "Cmp already Has", "Cmp Has-in-Pj", Nm, Pj.Name
 End If
-If Pj.Name = NM Then
-    Thw Fun, "Cmpn same as Pjn", "Cmpn", NM
+If Pj.Name = Nm Then
+    Thw Fun, "Cmpn same as Pjn", "Cmpn", Nm
 End If
-A.Name = NM
+A.Name = Nm
 Set SetCmpNm = A
 End Function
 
-Private Sub Z()
-MIde__Mth:
-End Sub
 
 Sub ChgToCls(FmModn$)
 If Not HasCmp(FmModn) Then InfLin CSub, "Mod not exist", "Mod", FmModn: Exit Sub
 If Not IsMod(Md(FmModn)) Then InfLin CSub, "It not Mod", "Mod", FmModn: Exit Sub
 Dim T$: T = Left(FmModn & "_" & Format(Now, "HHMMDD"), 31)
 Md(FmModn).Name = T
-AddCls FmModn
-Md(FmModn).AddFromString SrcL(Md(T))
+Add_Clsnn_ToCurPj FmModn
+Md(FmModn).AddFromString Srcl(Md(T))
 RmvCmpzN T
 End Sub

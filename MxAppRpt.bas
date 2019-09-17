@@ -1,6 +1,7 @@
 Attribute VB_Name = "MxAppRpt"
 Option Compare Text
 Option Explicit
+Const CNs$ = "dfd"
 Const CLib$ = "QApp."
 Const CMod$ = CLib & "MxAppRpt."
 Private Type CWs: FmWsn As String: End Type
@@ -18,25 +19,25 @@ Type RptPm
     IsCpyInp As Boolean
 End Type
 
-Private Function CFxSi%(A() As CFx)
+Function CFxSi%(A() As CFx)
 On Error Resume Next
 CFxSi = UBound(A) + 1
 End Function
 
-Private Function CFxUB%(A() As CFx)
+Function CFxUB%(A() As CFx)
 CFxUB = CFxSi(A) - 1
 End Function
 
-Private Function CWsSi%(A() As CWs)
+Function CWsSi%(A() As CWs)
 On Error Resume Next
 CWsSi = UBound(A) + 1
 End Function
 
-Private Function CWsUB%(A() As CWs)
+Function CWsUB%(A() As CWs)
 CWsUB = CWsSi(A) - 1
 End Function
 
-Private Sub PushCFx(O() As CFx, M As CFx)
+Sub PushCFx(O() As CFx, M As CFx)
 Dim N%: N = CFxSi(O)
 ReDim Preserve O(N)
 O(N) = M
@@ -61,7 +62,7 @@ Dim OWb As Workbook: Set OWb = WbzFx(.OupFx)
 End With
 End Sub
 
-Private Sub XCFx(P As CFx, ToWb As Workbook)
+Sub XCFx(P As CFx, ToWb As Workbook)
 Dim FmWb As Workbook: Set FmWb = Xls.Workbooks.Open(P.Fx)
 Dim J%: For J = 0 To CWsUB(P.CWs)
     XCpyWs P.CWs(J), FmWb, ToWb
@@ -69,26 +70,26 @@ Next
 FmWb.Close
 End Sub
 
-Private Function XCFxAy(P As RptPm) As CFx()
+Function XCFxAy(P As RptPm) As CFx()
 
 End Function
 
-Private Sub XCpyInp(P As RptPm, ToWb As Workbook)
+Sub XCpyInp(P As RptPm, ToWb As Workbook)
 Dim CFx() As CFx: CFx = XCFxAy(P)
 Dim J%: For J = 0 To CFxUB(CFx)
     XCFx CFx(J), ToWb
 Next
 End Sub
 
-Private Sub XCpyWs(P As CWs, Fm As Workbook, Tar As Workbook)
+Sub XCpyWs(P As CWs, Fm As Workbook, Tar As Workbook)
 Dim FmWs As Worksheet
 End Sub
 
-Private Sub XFmt(F As IWbFmtr, B As Workbook)
+Sub XFmt(F As IWbFmtr, B As Workbook)
 If Not IsNothing(F) Then F.FmtWb B
 End Sub
 
-Private Function XShouldOpnWb(P As RptPm) As Boolean
+Function XShouldOpnWb(P As RptPm) As Boolean
 XShouldOpnWb = True
 With P
     If Not IsNothing(.WbFmtr) Then Exit Function
@@ -98,7 +99,7 @@ End With
 XShouldOpnWb = False
 End Function
 
-Private Sub Z_Rpt()
+Sub Z_Rpt()
 Dim WDb As Database, B As IOupGenr
 GoSub Z
 Exit Sub

@@ -4,11 +4,11 @@ Option Explicit
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxScl."
 
-Sub AsgSclNN(Scl$, Nn$, ParamArray OAp())
+Sub AsgSclNN(Scl$, NN$, ParamArray OAp())
 Const CSub$ = CMod & "AsgSclNN"
 Dim Av(): Av = OAp
 Dim V, Ny$(), I, J%
-Ny = TermAy(Nn)
+Ny = TermAy(NN)
 If Si(Ny) <> Si(Av) Then Stop
 For Each I In Itr(AeEmpEle(AmTrim(SplitSemi(Scl))))
 '    V = SclItm_V(I, Ny)
@@ -58,12 +58,6 @@ Function ShfScl$(OStr$)
 AsgBrk1 OStr, ";", ShfScl, OStr
 End Function
 
-Private Sub Z()
-Dim A$
-Dim B As Variant
-Dim C()
-Dim D$()
-End Sub
 
 
 Function ShfVy(OLin, Lblss$) As Variant() ' _
@@ -97,37 +91,37 @@ Next
 ShfVy = O
 End Function
 
-Private Function ShfTxtOpt(Oay$(), Lbl) As StrOpt
-If Si(Oay) = 0 Then Exit Function
-Dim S$: S = ShfTxt(Oay, Lbl)
+Function ShfTxtOpt(OAy$(), Lbl) As StrOpt
+If Si(OAy) = 0 Then Exit Function
+Dim S$: S = ShfTxt(OAy, Lbl)
 If S = "" Then ShfTxtOpt = SomStr(S)
 End Function
 
-Private Function ShfBool(Oay$(), Lbl$)
-If Si(Oay) = 0 Then Exit Function
+Function ShfBool(OAy$(), Lbl$)
+If Si(OAy) = 0 Then Exit Function
 Dim J&, L$, Ay$()
-Ay = Oay
+Ay = OAy
 L = RmvFstChr(Lbl)
 For J = 0 To UB(Ay)
     If Ay(J) = L Then
         ShfBool = True
-        Oay = AeEleAt(Ay, J)
+        OAy = AeEleAt(Ay, J)
         Exit Function
     End If
 Next
 End Function
 
-Private Function ShfTxt(Oay$(), Lbl)
-If Si(Oay) = 0 Then Exit Function
+Function ShfTxt(OAy$(), Lbl)
+If Si(OAy) = 0 Then Exit Function
 'Return either string or ""
 Dim I, S$, J&, Ay$()
-Ay = Oay
+Ay = OAy
 For Each I In Itr(Ay)
     S = I
     With Brk2(S, "=")
         If .S1 = Lbl Then
             ShfTxt = .S2
-            Oay = AeEleAt(Ay, J)
+            OAy = AeEleAt(Ay, J)
             Exit Function
         End If
     End With
@@ -135,7 +129,7 @@ For Each I In Itr(Ay)
 Next
 End Function
 
-Private Sub Z_ShfVy()
+Sub Z_ShfVy()
 GoSub T0
 'GoSub T1
 'GoSub T2

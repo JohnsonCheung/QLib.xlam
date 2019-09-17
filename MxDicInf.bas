@@ -25,13 +25,6 @@ Next
 End Function
 
 
-Function IsDicKeyNm(A As Dictionary) As Boolean
-Dim K
-For Each K In A.Keys
-    If Not IsNm(K) Then Exit Function
-Next
-IsDicKeyNm = True
-End Function
 
 Function DicHasBlnkKey(A As Dictionary) As Boolean
 If A.Count = 0 Then Exit Function
@@ -77,11 +70,8 @@ For Each K In Ky
 Next
 End Sub
 
-Function IsDicKeyStr(A As Dictionary) As Boolean
-IsDicKeyStr = IsItrSy(A.Keys)
-End Function
 
-Private Sub Z_IsDicKeyStr()
+Sub Z_IsDicKeyStr()
 Dim A As Dictionary
 GoSub T1
 Exit Sub
@@ -103,9 +93,6 @@ Tst:
     Return
 End Sub
 
-Function IsDicEmp(A As Dictionary) As Boolean
-IsDicEmp = A.Count = 0
-End Function
 
 Function TyNmAy(Ay) As String()
 Dim V
@@ -137,47 +124,25 @@ End Function
 Function TyNmAyzDic(A As Dictionary) As String()
 TyNmAyzDic = TyNmAy(Vy(A))
 End Function
-Function IsDicLy(A As Dictionary) As Boolean
-Dim D As Dictionary, I, V
-If Not IsDic(A) Then Exit Function
-Dim Ly: For Each Ly In A.Items
-    If Not IsLy(Ly) Then Exit Function
-Next
-IsDicLy = True
-End Function
 
-Function IsDicSy(A As Dictionary) As Boolean
-Dim D As Dictionary, I, V
-If Not IsDic(A) Then Exit Function
-IsDicSy = IsItrSy(CvDic(A).Items)
-End Function
 
-Function IsDicLines(A As Dictionary) As Boolean
-IsDicLines = True
-If IsItrLines(A.Items) Then Exit Function
-If IsItrStr(A.Keys) Then Exit Function
-IsDicLines = False
-End Function
-Function IsDicPrim(A As Dictionary) As Boolean
-If Not IsItrPrim(A.Keys) Then Exit Function
-IsDicPrim = IsItrPrim(A.Items)
-End Function
-Function IsDicStr(A As Dictionary) As Boolean
-If Not IsItrStr(A.Keys) Then Exit Function
-IsDicStr = IsItrStr(A.Items)
-End Function
 
 Function DicTy$(A As Dictionary)
 Dim O$
 Select Case True
 Case IsDicEmp(A):   O = "EmpDic"
-Case IsDicStr(A):   O = "StrDic"
+Case IsStrDic(A):   O = "StrDic"
 Case IsDicLines(A): O = "LineszDic"
 Case IsDicSy(A):    O = "DiT1qLy"
 Case Else:           O = "Dic"
 End Select
 End Function
 
+Sub AddDicLin(ODic As Dictionary, DicLin$)
+With BrkSpc(DicLin)
+    ODic.Add .S1, .S2
+End With
+End Sub
 Function AddDic(A As Dictionary, B As Dictionary) As Dictionary
 Set AddDic = New Dictionary
 PushDic AddDic, A

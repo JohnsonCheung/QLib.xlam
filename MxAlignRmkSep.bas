@@ -3,7 +3,7 @@ Option Explicit
 Option Compare Text
 Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxAlignRmkSep."
-Private Function SelRmkSep(Wi_MthLin As Drs) As Drs
+Function SelRmkSep(Wi_MthLin As Drs) As Drs
 '@Wi_MthLin : MthLin #Mth-Context.
 'Ret : select where LTrim-*MthLin has pfx '-- '== or '..
 Dim IxMthLin%: IxMthLin = IxzAy(Wi_MthLin.Fny, "L")
@@ -20,7 +20,7 @@ SelRmkSep.Fny = Wi_MthLin.Fny
 SelRmkSep.Dy = Dy
 End Function
 
-Private Function AlignRmkSepzD(Wi_L_MthLin As Drs) As Drs
+Function AlignRmkSepzD(Wi_L_MthLin As Drs) As Drs
 '@Wi_L_MthLin De : L MthLin ! Where MthLin is {spc}'-- '== '..
 'Ret   : L NewL OldL        ! Where NewL is aligned with 120 @@
 Dim IxL%, IxMthLin%: AsgIx Wi_L_MthLin, "L MthLin", IxL, IxMthLin

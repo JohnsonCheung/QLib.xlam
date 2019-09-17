@@ -12,15 +12,15 @@ Option Compare Text
 Implements IPred
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "PredInT1Sy."
-Private A_T1Ay$()
-Friend Sub Init(T1Ay$())
-A_T1Ay = T1Ay
+Private A_AmT1$()
+Friend Sub Init(AmT1$())
+A_AmT1 = AmT1
 End Sub
 
-Private Function IPred_Pred(V As Variant) As Boolean
+Function IPred_Pred(V As Variant) As Boolean
 Dim I, Lin, T1$
 Lin = V
-For Each I In A_T1Ay
+For Each I In A_AmT1
     T1 = I
     If HasT1(Lin, T1) Then IPred_Pred = True: Exit Function
 Next

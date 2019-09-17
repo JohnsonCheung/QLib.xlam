@@ -9,11 +9,11 @@ LofVblzQt = LofVblzFbtStr(FbtStrzQt(A))
 End Function
 
 Function LofVblzT$(D As Database, T)
-LofVblzT = TblPrp(D, T, "LofVbl")
+LofVblzT = DbtPrp(D, T, "LofVbl")
 End Function
 
 Sub SetLofVblzT(D As Database, T, V$)
-TblPrp(D, T, "LofVbl") = V
+DbtPrp(D, T, "LofVbl") = V
 End Sub
 
 Function LofVblzLo$(A As ListObject)

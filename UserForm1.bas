@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} UserForm1 
    Caption         =   "UserForm1"
-   ClientHeight    =   3040
+   ClientHeight    =   3036
    ClientLeft      =   108
    ClientTop       =   456
    ClientWidth     =   4584
@@ -34,6 +34,7 @@ With A
     .Ix = .Ix + 1
 End With
 End Property
-Private Sub CmdNxt_Click()
+Sub CmdNxt_Click()
 JmpMdn NxtMdn
 End Sub
+

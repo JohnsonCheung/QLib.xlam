@@ -75,7 +75,7 @@ For J = Lno + 1 To M.CountOfLines
     End If
 Next
 'No need to throw error, just exit it returns -1
-'Thw CSub, "Cannot find Lno where to insert CSub of a given method", "Mthn MthLy", A.Mthn, AwFT(Src, A.FmIx, A.EIx)
+'Thw CSub, "Cannot find Lno where to insert CSub of a given method", "Mthn Mthly", A.Mthn, AwFT(Src, A.FmIx, A.EIx)
 End Function
 
 Function NxtIxzSrc&(Src$(), Optional FmIx&)
@@ -87,11 +87,11 @@ For J = FmIx + 1 To UB(Src)
     End If
 Next
 'No need to throw error, just exit it returns -1
-'Thw CSub, "Cannot find Lno where to insert CSub of a given method", "Mthn MthLy", A.Mthn, AwFT(Src, A.FmIx, A.EIx)
+'Thw CSub, "Cannot find Lno where to insert CSub of a given method", "Mthn Mthly", A.Mthn, AwFT(Src, A.FmIx, A.EIx)
 NxtIxzSrc = -1
 End Function
 
-Private Sub Z_ContLin()
+Sub Z_ContLin()
 Dim Src$(), MthIx
 MthIx = 0
 Dim O$(3)
@@ -141,7 +141,7 @@ For J = 1 To UB(ContLy) - 1
 Next
 End Function
 
-Private Function ContToLno(M As CodeModule, Lno)
+Function ContToLno(M As CodeModule, Lno)
 Dim J&
 For J = Lno To M.CountOfLines
    If Not HasSfx(M.Lines(J, 1), " _") Then

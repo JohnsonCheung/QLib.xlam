@@ -18,6 +18,6 @@ Sub Init(SubStr)
 A = SubStr
 End Sub
 
-Private Function IPred_Pred(V As Variant) As Boolean
+Function IPred_Pred(V As Variant) As Boolean
 IPred_Pred = HasSubStr(V, A)
 End Function

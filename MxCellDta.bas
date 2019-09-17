@@ -34,7 +34,7 @@ Next
 'Insp "QDta_Fun_FmtDy.CellDy", "Inspect", "Oup(CellDy) Dy ShwZer MaxColWdt", "NoFmtr(Variant())", "NoFmtr(())", ShwZer, "NoFmtr(% = 100)": Stop
 End Function
 
-Private Function CellDr(Dr, ShwZer As Boolean, MaxWdt%) As String()
+Function CellDr(Dr, ShwZer As Boolean, MaxWdt%) As String()
 Dim V, S$: For Each V In Itr(Dr)
     S = Cell(V, ShwZer, MaxWdt)
     PushI CellDr, S

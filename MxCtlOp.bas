@@ -9,7 +9,7 @@ Stop
 RmvRmkzVb = LeftIf(Lin, RmkPoszVb(Lin))
 End Function
 
-Private Sub Z_RmkPoszVb()
+Sub Z_RmkPoszVb()
 Dim I, O$(), L$, P%
 For Each I In AwSubStr(AwSubStr(SrczP(CPj), "'"), """")
     P = RmkPoszVb(I)
@@ -64,7 +64,7 @@ Ept = "Compi&le " & NEPjn
 If Act <> Ept Then Thw CSub, "Cur BoCompile.Caption <> Compi&le {Pjn}", "Compile-Btn-Caption Pjn Ept-Btn-Caption", Act, NEPjn, Ept
 End Sub
 
-Private Sub Z_PjCompile()
+Sub Z_PjCompile()
 CompilezP CPj
 End Sub
 
@@ -75,22 +75,13 @@ For Each I In Itr(OyzItr(A.Controls))
 Next
 End Sub
 
-Private Sub Z()
-Dim A As CommandBar
-Dim B As Variant
-Dim C As Vbe
-DltClr A
-IsBtn B
-BarNyzV C
-BarNyzV C
-End Sub
 
 Sub DltBar(BarNm$)
 If Not HasBar(BarNm) Then Debug.Print "Bar[" & BarNm & "] not found": Exit Sub
 Bars(BarNm).Delete
 End Sub
 
-Private Sub Z_EnsBtns()
+Sub Z_EnsBtns()
 Class1.Class_Initialize
 End Sub
 
@@ -101,7 +92,7 @@ For Each I In Itr(BarBtnccAy)
 Next
 End Sub
 
-Private Sub EnsBarBtncc(BarBtncc)
+Sub EnsBarBtncc(BarBtncc)
 Dim L$
 L = BarBtncc
 EnsBtnzCC EnsBar(ShfT1(L)), L
@@ -117,7 +108,7 @@ Dim IBar: For Each IBar In BarNy
 Next
 End Sub
 
-Private Function EnsBar(BarNm$) As CommandBar
+Function EnsBar(BarNm$) As CommandBar
 If HasBar(BarNm) Then
     Set EnsBar = Bars(BarNm)
 Else
@@ -126,14 +117,14 @@ End If
 EnsBar.Visible = True
 End Function
 
-Private Sub EnsBtnzCC(Bar As CommandBar, BtnCapcc$)
+Sub EnsBtnzCC(Bar As CommandBar, BtnCapcc$)
 Dim BtnCap
 For Each BtnCap In TermAy(BtnCapcc)
     EnsBtnzC Bar, BtnCap
 Next
 End Sub
 
-Private Function HasBtn(Bar As CommandBar, BtnCap) As Boolean
+Function HasBtn(Bar As CommandBar, BtnCap) As Boolean
 Dim C As CommandBarControl
 For Each C In Bar.Controls
     If C.Type = msoControlButton Then
@@ -142,7 +133,7 @@ For Each C In Bar.Controls
 Next
 End Function
 
-Private Sub EnsBtnzC(Bar As CommandBar, BtnCap)
+Sub EnsBtnzC(Bar As CommandBar, BtnCap)
 If HasBtn(Bar, BtnCap) Then Exit Sub
 Dim B As CommandBarButton
 Set B = Bar.Controls.Add(MsoControlType.msoControlButton)
@@ -150,14 +141,14 @@ B.Caption = BtnCap
 B.Style = msoButtonCaption
 End Sub
 
-Private Sub AddBtn(Bar As CommandBar, BtnCap)
+Sub AddBtn(Bar As CommandBar, BtnCap)
 Dim B As CommandBarButton
 Set B = Bar.Controls.Add(MsoControlType.msoControlButton)
 B.Caption = BtnCap
 B.Style = msoButtonCaption
 End Sub
 
-Private Sub ABtn_Click(ByVal Ctrl As Office.CommandBarButton, CancelDefault As Boolean)
+Sub ABtn_Click(ByVal Ctrl As Office.CommandBarButton, CancelDefault As Boolean)
 Stop
 End Sub
 

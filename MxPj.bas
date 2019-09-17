@@ -67,8 +67,8 @@ Function PjFnn$(P As VBProject)
 PjFnn = Fnn(Pjf(P))
 End Function
 
-Function MdzPN(P As VBProject, Mdn) As CodeModule
-Set MdzPN = P.VBComponents(Mdn).CodeModule
+Function MdzP(P As VBProject, Mdn) As CodeModule
+Set MdzP = P.VBComponents(Mdn).CodeModule
 End Function
 
 Sub ActPj(P As VBProject)
@@ -102,23 +102,11 @@ Else
 End If
 End Sub
 
-Private Sub Z_SavPj()
+Sub Z_SavPj()
 SavPj CPj
 End Sub
 
 
-Private Sub Z()
-Dim A$
-Dim B As Variant
-Dim C As VBProject
-Dim D As Dictionary
-Dim E As vbext_ComponentType
-ThwIf_BoCompile A
-CvPj B
-IsPjn B
-Pj B
-NModzP C
-End Sub
 Function IsProtectzvInf(P As VBProject) As Boolean
 If Not IsProtect(P) Then Exit Function
 InfLin CSub, FmtQQ("Skip protected Pj{?)", P.Name)

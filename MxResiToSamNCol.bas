@@ -14,7 +14,7 @@ If Si(Dy) = 0 Then Exit Function
 ResiToSamNColzDy = ResiToNCol(Dy, NColzDy(Dy) - 1)
 End Function
 
-Private Function ResiToNCol(Dy(), U%) As Variant()
+Function ResiToNCol(Dy(), U%) As Variant()
 Dim Dr, O(), J&
 O = Dy
 For Each Dr In Itr(O)

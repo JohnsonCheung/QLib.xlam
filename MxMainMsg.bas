@@ -13,17 +13,17 @@ Sub SetMainMsgzQnm(QryNm)
 SetMainMsg "Running query: (" & QryNm & ")...."
 End Sub
 
-Private Sub SetMainMsg(Msg$)
+Sub SetMainMsg(Msg$)
 On Error Resume Next
 SetTBox MainMsgBox, Msg
 End Sub
 
-Private Property Get MainMsgBox() As Access.TextBox
+Property Get MainMsgBox() As Access.TextBox
 On Error Resume Next
 Set MainMsgBox = MainFrm.Controls("Msg")
 End Property
 
-Private Property Get MainFrm() As Access.Form
+Property Get MainFrm() As Access.Form
 On Error Resume Next
 Set MainFrm = Access.Forms("Main")
 End Property
