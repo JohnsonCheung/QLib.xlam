@@ -87,7 +87,6 @@ If M.CountOfLines > 0 Then
 End If
 End Function
 
-
 Sub SrtMdM()
 SrtMd CMd
 End Sub

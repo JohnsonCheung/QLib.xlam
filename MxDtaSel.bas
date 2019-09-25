@@ -458,7 +458,7 @@ Stop
 End Function
 
 
-Sub Z_F_SubDrs_ByDupFF()
+Sub Z_DwDup()
 Dim A As Drs, FF$, Act As Drs
 GoSub T0
 Exit Sub
@@ -467,7 +467,7 @@ T0:
     FF = "A B"
     GoTo Tst
 Tst:
-    Act = F_SubDrs_ByDupFF(A, FF)
+    Act = DwDup(A, FF)
     DmpDrs Act
     Return
 End Sub

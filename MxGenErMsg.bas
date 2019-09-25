@@ -130,7 +130,6 @@ Dim ErNy$(), ErMsgAy$(), ErMthLinAy$()
 GoSub T1
 Exit Sub
 Z:
-    'Init Y_Src
     Brw ErMthLinAy
     Return
 T1:
@@ -172,3 +171,4 @@ Dim Mthn:     'Mthn = ErMthn(ErNm)
 ErMthLByNm = FmtQQ("Function ?(?) As String():? = FmtMacro(??):End Function", _
     Mthn, Pm, Mthn, CNm, Calling)
 End Function
+

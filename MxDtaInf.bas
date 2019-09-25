@@ -111,7 +111,7 @@ Next
 End Function
 
 Function LngAyzColEqSel(A As Drs, C$, V, Sel$) As Long()
-LngAyzColEqSel = LngAyzDrs(F_SubDrs_ByC_EqSel(A, C, V, Sel), Sel)
+LngAyzColEqSel = LngAyzDrs(DwEQSel(A, C, V, Sel), Sel)
 End Function
 
 Function LngAyzDrs(A As Drs, C$) As Long()

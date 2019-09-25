@@ -34,7 +34,10 @@ AddColMthl = Drs(Fny, Dy)
 End Function
 
 Function DoMthczM(M As CodeModule) As Drs
-DoMthczM = AddColMthl(DoMthezM(M), Src(M))
+Dim S$(): S = Src(M)
+Dim N(): N = DroMdn(M)
+Dim D As Drs: D = DoMthe(S, N)
+DoMthczM = AddColMthl(D, S)
 End Function
 
 Function DoMthcP() As Drs
@@ -49,7 +52,6 @@ Function DoMthczP(P As VBProject) As Drs
 Static P_ As VBProject, O As Drs
 If ObjPtr(P) <> ObjPtr(P_) Then
     Set P_ = P
-    O = EmpDrs
     Dim C As VBComponent: For Each C In P.VBComponents
         O = AddDrs(O, DoMthczM(C.CodeModule))
     Next
@@ -74,8 +76,7 @@ End If
 End Function
 
 Function DoMthczPjfy(Pjfy$()) As Drs
-Dim F
-For Each F In Pjfy
+Dim F: For Each F In Pjfy
     ApdDrs DoMthczPjfy, DoMthczPjf(F)
 Next
 End Function
@@ -88,9 +89,9 @@ Next
 DoMthczV = O
 End Function
 
-Function DrMthLin(MthLin) As Variant()
+Function DroMthLin(MthLin) As Variant()
 With MthLinRec(MthLin)
-DrMthLin = Array(.ShtMdy, .ShtTy, .Nm, .ShtRetTy, FmtPm(.Pm, IsNoBkt:=True), .Rmk)
+DroMthLin = Array(.ShtMdy, .ShtTy, .Nm, .ShtRetTy, FmtPm(.Pm, IsNoBkt:=True), .Rmk)
 End With
 End Function
 
@@ -112,7 +113,7 @@ DoPubFunzP = SelDrs(Dw2Eq(DoMthczP(P), "Mdy MdTy", "Pub", "Std"), FFoPubFun)
 End Function
 
 Function MthQnzMthn$(Mthn)
-Dim D As Drs: D = F_SubDrs_ByC_Eq(DoMthP, "Mthn", Mthn)
+Dim D As Drs: D = DwEQ(DoMthP, "Mthn", Mthn)
 Select Case Si(D.Dy)
 Case 0: InfLin CSub, "No such Mthn[" & Mthn & "]"
 Case 1:
@@ -135,7 +136,6 @@ Function DoMthzP(P As VBProject) As Drs
 Static O As Drs, X As Boolean
 If Not X Then
     X = True
-    O = EmpDrs
     Dim C As VBComponent: For Each C In P.VBComponents
         O = AddDrs(O, DoMthzM(C.CodeModule))
     Next
@@ -147,6 +147,9 @@ Function DoMthzM(M As CodeModule) As Drs
 DoMthzM = DoMth(Src(M), DroMdn(M))
 End Function
 
+Sub Z_DoMtheM()
+BrwDrs DoMtheM
+End Sub
 Function DoMtheM() As Drs
 DoMtheM = DoMthezM(CMd)
 End Function

@@ -25,7 +25,7 @@ Next
 End Function
 
 Function Pv(Obj, P)
-Asg CallByName(Obj, P, VbGet), P
+Asg CallByName(Obj, P, VbGet), Pv
 End Function
 
 Function PvzC(Obj, Prpc)

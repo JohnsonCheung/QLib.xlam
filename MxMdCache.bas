@@ -9,13 +9,19 @@ IsCachedM = IsCachedzM(CMd)
 End Function
 
 Function IsCachedzM(M As CodeModule) As Boolean
-Dim CSrc$(): CSrc = CachedSrczM(M)
-Dim Cn&: Cn = Si(CSrc)
-Dim MN&: MN = M.CountOfLines
-If MN <> Cn Then Exit Function
-If Cn = 0 Then IsCachedzM = True
-Dim MSrc$(): MSrc = Src(M)
-IsCachedzM = IsEqSy(CSrc, MSrc)
+Const CSub$ = CMod & "IsCachedzM"
+Const Trc As Boolean = False
+Dim Cs$(): Cs = CachedSrczM(M)
+Dim Clc&: Clc = Si(Cs)
+Dim Mlc&: Mlc = M.CountOfLines + 1
+If Mlc <> Clc Then
+    If Trc Then InfLin CSub, "LinCnt dif", "Md-LinCnt Src-LinCnt", Mlc, Clc
+    Exit Function
+End If
+If Clc = 0 Then IsCachedzM = True
+Dim Ms$(): Ms = Src(M)
+Push Ms, ""
+IsCachedzM = IsEqSy(Cs, Ms)
 End Function
 
 Function CachedSrcM() As String()
@@ -28,6 +34,7 @@ If NoFfn(F) Then Exit Function
 Dim S$(): S = LyzFt(F)
 Dim S1$(): S1 = RmvClsSig(S)
 CachedSrczM = RmvAtrVB(S1)
+
 End Function
 
 Function RmvAtrVB(S$()) As String()

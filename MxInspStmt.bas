@@ -45,12 +45,12 @@ Const C$ = "Insp ""?.?"", ""Inspect"", ""?"", ?"
 InspStmt = FmtQQ(C, Mdn, Mthn, Varnn, ExprLis)
 End Function
 
-Function InspExpr$(V, VSfx As Dictionary)
-If Not VSfx.Exists(V) Then
+Function InspExpr$(V, Vsfx As Dictionary)
+If Not Vsfx.Exists(V) Then
     InspExpr = FmtQQ("""V(?)-NFnd""", V)
     Exit Function
 End If
-InspExpr = InspExprzDclSfx(V, VSfx(V))
+InspExpr = InspExprzDclSfx(V, Vsfx(V))
 End Function
 
 Function InspExprzDclSfx$(V, DclSfx$)

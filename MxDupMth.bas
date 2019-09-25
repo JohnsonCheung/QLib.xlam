@@ -22,18 +22,18 @@ DoDupMthP = DoDupMthzP(CPj, InclPrv, IsExactDup)
 End Function
 
 Function DoDupMthzP(P As VBProject, Optional InclPrv As Boolean, Optional IsExactDup As Boolean) As Drs
-Dim A As Drs: A = F_SubDrs_ByC_Eq(DoMthczP(P), "MdTy", "Std")
+Dim A As Drs: A = DwEQ(DoMthczP(P), "MdTy", "Std")
 Dim A1 As Drs:
     If InclPrv Then
         A1 = A
     Else
         A1 = DwNe(A, "Mdy", "Prv")
     End If
-Dim B As Drs: B = F_SubDrs_ByDupFF(A1, "Mthn")
+Dim B As Drs: B = DwDup(A1, "Mthn")
 Dim C As Drs: C = SrtDrs(B, "Mthn")
 Dim D As Drs: D = AddColzValIdqCnt(C, "Mthl")
 If IsExactDup Then
-    DoDupMthzP = F_SubDrs_ByDupFF(D, "MthlId")
+    DoDupMthzP = DwDup(D, "MthlId")
 Else
     DoDupMthzP = D
 End If

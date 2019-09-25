@@ -5,7 +5,7 @@ Const CLib$ = "QIde."
 Const CMod$ = CLib & "MxLoc."
 
 Function Drso_PubFun_ByMthn(Mthn) As Drs
-Drso_PubFun_ByMthn = F_SubDrs_ByC_Eq(Drso_PubFun, "Mthn", Mthn)
+Drso_PubFun_ByMthn = DwEQ(Drso_PubFun, "Mthn", Mthn)
 End Function
 
 Sub JmpLin_InMd(M As CodeModule, Lno&)
@@ -102,7 +102,7 @@ JmpMd M
 JmpRRCC R
 End Sub
 
-Function WinyzMdAy(MdAy() As CodeModule) As vbide.Window()
+Function WinyzMdAy(MdAy() As CodeModule) As VBIDE.Window()
 
 End Function
 

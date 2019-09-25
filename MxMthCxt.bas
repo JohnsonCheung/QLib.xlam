@@ -8,7 +8,7 @@ Type Fc
     Cnt As Long
 End Type
 Type Fcs: N As Long: Ay() As Fc: End Type
-Public Const FFoMthn$ = "Mdn Mthn Mdy Ty"
+Public Const FFoMthn$ = "MdTy Mthn Mdn Mdy Ty"
 
 Sub UnRmkMth(M As CodeModule, Mthn)
 UnRmkMdzFcs M, MthCxtFcs(Src(M), Mthn)
@@ -163,8 +163,9 @@ Function DoMthCxt() As Drs
 DoMthCxt = DoMthCxtzML(CMd, CMthLno)
 End Function
 
-Function DoMthn(M As CodeModule) As Drs
-DoMthn = F_SubDrs_ByC_Eq(SelDrs(DoMthnP, FFoMthn), "Mthn", Mdn(M))
+
+Function DoMthnzM(M As CodeModule) As Drs
+DoMthnzM = DwEQ(SelDrs(DoMthnP, FFoMthn), "Mthn", Mdn(M))
 End Function
 
 Sub Z_CrtTblMth()

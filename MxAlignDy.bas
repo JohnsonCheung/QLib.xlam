@@ -15,7 +15,7 @@ Dim S, J&: For Each S In Ay
 Next
 End Function
 
-Function AlignSqzWy(Sq(), W%()) As Variant()
+Function AlignSqzW(Sq(), W%()) As Variant()
 Dim O(): O = Sq
 Dim IC%: For IC = 1 To UBound(Sq, 2)
     Dim Wdt%: Wdt = W(IC - 1)
@@ -23,5 +23,18 @@ Dim IC%: For IC = 1 To UBound(Sq, 2)
         O(IR, IC) = Align(O(IR, IC), Wdt)
     Next
 Next
-AlignSqzWy = O
+AlignSqzW = O
 End Function
+
+Function AlignSq(Sq()) As Variant()
+If Si(Sq) = 0 Then Exit Function
+Dim C&, O(), NR&, NC&
+NR = UBound(Sq, 1)
+NC = UBound(Sq, 2)
+ReDim O(1 To NR, 1 To NC)
+For C = 1 To UBound(O, 2)
+    AlignColzSq O, Sq, C, WdtzSqc(Sq, C)
+Next
+AlignSq = O
+End Function
+

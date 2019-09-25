@@ -4,6 +4,7 @@ Option Explicit
 Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxS12."
 Type S12: S1 As String: S2 As String: End Type
+Type S12Opt: Som As Boolean: S12 As S12: End Type
 Type S12s: N As Long: Ay() As S12: End Type
 Type S3: A As String: B As String: C As String: End Type
 Function MapS1(A As S12s, Dic As Dictionary) As S12s

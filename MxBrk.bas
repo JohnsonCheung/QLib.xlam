@@ -56,8 +56,16 @@ Function BrkDot(S, Optional NoTrim As Boolean) As S12
 BrkDot = Brk(S, ".", NoTrim)
 End Function
 
+Function BrkTRst(S) As S12
+BrkTRst = Brk1Spc(LTrim(S))
+End Function
+
 Function BrkSpc(S) As S12
 BrkSpc = Brk(S, " ")
+End Function
+
+Function Brk1Spc(S) As S12
+Brk1Spc = Brk1(S, " ")
 End Function
 
 Sub AsgDn1(Dn1, OA$, OB$)

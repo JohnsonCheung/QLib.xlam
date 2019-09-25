@@ -10,7 +10,7 @@ End Function
 
 Function DiRfnqRffzP(P As VBProject) As Dictionary
 ':Rfn: :Nm #Rf-Nm#
-Dim Rf As vbide.Reference: For Each Rf In P.References
+Dim Rf As VBIDE.Reference: For Each Rf In P.References
     DiRfnqRffzP.Add Rf.Name, RffzP(P, Rf)
 Next
 End Function

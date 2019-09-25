@@ -151,12 +151,20 @@ If Not IsSngQted(S) Then RmvSngQte = S: Exit Function
 RmvSngQte = RmvFstLasChr(S)
 End Function
 
+Function RmvTerm$(S, Term$)
+Dim T$: T = T1(S)
+If T = Term Then
+    RmvTerm = Mid(S, Len(T) + 1)
+End If
+    RmvTerm = S
+End Function
+
 Function RmvT1$(S)
-Dim L$: L = LTrim(S): If L = "" Then Exit Function
-If FstChr(L) = "[" Then
-    RmvT1 = Aft(L, "]")
+Dim T$: T = T1(S)
+If T = "" Then
+    RmvT1 = S
 Else
-    RmvT1 = Aft(L, " ")
+    RmvT1 = LTrim(Mid(S, Len(T) + 1))
 End If
 End Function
 

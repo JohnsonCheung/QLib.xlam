@@ -1,9 +1,38 @@
-Attribute VB_Name = "MxInspStmtLNewO"
+Attribute VB_Name = "MxBStmt"
 Option Explicit
 Option Compare Text
 Const CLib$ = "QIde."
-Const CMod$ = CLib & "MxInspStmtLNewO."
+Const CMod$ = CLib & "MxBStmt."
 Const CNs$ = "AlignMth"
+Public Const FFoBStmt$ = "L BStmtLin"
+Sub RfhBStmt(M As CodeModule)
+
+End Sub
+
+Function DoBStmt(DyoBStmt()) As Drs
+DoBStmt = Drs(FoBStmt, DyoBStmt)
+End Function
+
+Function FoBStmt() As String()
+FoBStmt = SyzSS(FFoBStmt)
+End Function
+
+Function DoBStmtzM(M As CodeModule)
+
+End Function
+Function DyoBStmt(Src$()) As Variant()
+Dim L, J&: For Each L In Itr(Src)
+    J = J + 1
+    If HasPfx(L, "'@") Then
+        PushI DyoBStmt, Array(J, L)
+    End If
+Next
+End Function
+
+Function DoBStmtzS(Src$()) As Drs
+DoBStmtzS = Drs(FoBStmt, DyoBStmt(Src))
+End Function
+
 Function InspStmtLNewO(Wi_L_MthLin As Drs, Mdn$, Mthn$) As Drs
 Dim Bs As Drs:                   Bs = XBs(Wi_L_MthLin)               ' L BsLin ! Fst2Chr = '@
 Dim Src$():                     Src = StrCol(Wi_L_MthLin, "MthLin")
@@ -13,7 +42,7 @@ End Function
 
 Function DiVarnnqDclSfx(Src$()) As Dictionary
 Dim A() As Variant
-InspStmt
+
 End Function
 
 Function XBsLNewO(Bs As Drs, DiVarnnqDclSfx As Dictionary, Mdn$, Mthn$) As Drs

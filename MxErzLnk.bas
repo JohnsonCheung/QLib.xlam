@@ -6,7 +6,7 @@ Const CMod$ = CLib & "MxErzLnk."
 Function XIpfExi(Ipf As Drs) As Drs
 'Fm  Ipf    : L Inpn Ffn IsFx HasFfn
 'Ret        : L Inpn Ffn IsFx @@
-XIpfExi = F_SubDrs_ByC_EqE(Ipf, "HasFfn", True)
+XIpfExi = DwEQE(Ipf, "HasFfn", True)
 'Insp "QDao_Lnk_EoLnk.EoLnk", "Inspect", "Oup(XIpfExi) IpfExi Ipf",FmtCellDrs(IpfExi), FmtCellDrs(IpfExi), FmtCellDrs(Ipf): Stop
 End Function
 
@@ -34,19 +34,19 @@ Const CmPfx$ = "X"
 Dim Ip  As DoLTDH:  Ip = DoLTDH(LnkImpSrc) ' L T1 Dta IsHdr
 Dim Ipf As Drs:   Ipf = XIpf(Ip)         ' L Inpn Ffn IsFx HasFfn
 Dim IpxHasFx As Drs:
-Dim IpfFx    As Drs:    IpfFx = F_SubDrs_ByC_EqE(Ipf, "IsFx", True)                ' L Inpn Ffn HasFfn
+Dim IpfFx    As Drs:    IpfFx = DwEQE(Ipf, "IsFx", True)                ' L Inpn Ffn HasFfn
 Dim IpfExi   As Drs:   IpfExi = XIpfExi(Ipf)                                    ' L Inpn Ffn IsFx
 Dim IpbFb$():           IpbFb = XIpbFb(Ipf)
 Dim Ipw      As Drs:      Ipw = XIpw(Ip)
-                           D1 = F_SubDrs_ByC_EqE(IpxHasFx, "IsFx", True)
-                           D2 = F_SubDrs_ByC_EqE(D1, "HasFx", True)
-                           D3 = F_SubDrs_ByC_EqE(D2, "HasInp", True)
+                           D1 = DwEQE(IpxHasFx, "IsFx", True)
+                           D2 = DwEQE(D1, "HasFx", True)
+                           D3 = DwEQE(D2, "HasInp", True)
 Dim Ipx      As Drs:      Ipx = XIpx(Ip)
 Dim IpxExiFx As Drs: IpxExiFx = D3                                              ' L T Fxn Ws Stru Fx
 Dim ActWs    As Drs:    ActWs = XActWs(IpxExiFx)                                ' Fxn Ws
 Dim IpxHasWs As Drs: IpxHasWs = AddColzExiB(IpxExiFx, ActWs, "Fxn Ws", "HasWs") ' T Fxn Ws Stru Fx HasFx HasWs
-Dim IpxExi   As Drs:   IpxExi = F_SubDrs_ByC_EqE(IpxHasWs, "HasWs", True)          ' IpxExi
-Dim IpxMis   As Drs:   IpxMis = F_SubDrs_ByC_EqE(IpxHasWs, "HasWs", False)
+Dim IpxExi   As Drs:   IpxExi = DwEQE(IpxHasWs, "HasWs", True)          ' IpxExi
+Dim IpxMis   As Drs:   IpxMis = DwEQE(IpxHasWs, "HasWs", False)
 
 Dim Ips As Drs:     Ips = XIps(Ip)                ' L Stru F Ty E
 Dim IpsStru$(): IpsStru = StrCol(Ips, "Stru")
@@ -238,7 +238,7 @@ Function XExWsMisFldTy(Ipxf As Drs, ActWsf As Drs) As String()
 'For J = 0 To UB(OFxn)
 '    Fxn = OFxn(J)
 '    Fx = VzColEqSel(IpXB, "Fxn", Fxn, "Fx")
-'    ActWsf = F_SubDrs_ByC_EqSel(IpXB, "Fxn", Fxn, "L Ws").Dy
+'    ActWsf = DwEQSel(IpXB, "Fxn", Fxn, "L Ws").Dy
 '    Lno = LngAyzDyC(ActWsf, 0)
 '    Ws = SyzDyC(ActWsf, 1)
 '
@@ -258,8 +258,8 @@ PushI O, "Some expected ws not found"
 For J = 0 To UB(OFxn)
     Fxn = OFxn(J)
     Fx = VzColEqSel(IpxMis, "Fxn", Fxn, "Fx")
-    IpxMisi = F_SubDrs_ByC_EqSel(IpxMis, "Fxn", Fxn, "L Ws")
-    ActWsnn = Termss(FstCol(F_SubDrs_ByC_EqE(ActWs, "Fxn", Fxn)))
+    IpxMisi = DwEQSel(IpxMis, "Fxn", Fxn, "L Ws")
+    ActWsnn = Termss(FstCol(DwEQE(ActWs, "Fxn", Fxn)))
     '-
     X "Fxn    : " & Fxn
     X "Fx pth : " & Pth(Fx)
@@ -320,7 +320,7 @@ End Function
 Function XEiFfnMis(Ipf As Drs) As String()
 'Fm  Ipf : L Inpn Ffn IsFx HasFfn @@
 If NoReczDrs(Ipf) Then Exit Function
-Dim A As Drs: A = F_SubDrs_ByC_Eq(Ipf, "HasFfn", True) '! L Inp Ffn IsFx HasFfn
+Dim A As Drs: A = DwEQ(Ipf, "HasFfn", True) '! L Inp Ffn IsFx HasFfn
 Dim B As Drs: B = XEi_AddCol_Pth_Fn(A)
 Dim C As Drs: C = SelDrs(B, "L Inpn Pth Fn")
       XEiFfnMis = LyzNmDrs("File missing: ", C, MaxColWdt:=200)
@@ -497,7 +497,7 @@ Function XIpxfMis(Ipxf As Drs, ActWsf As Drs) As Drs
 'Ret:*IpxfMis::Drs{}
 Dim A As Drs, B As Drs, O As Drs
 A = LDrszJn(Ipxf, ActWsf, "Fxn Ws E:F", "Ty:ActTy", "HasF")
-B = F_SubDrs_ByC_EqE(A, "HasF", False)
+B = DwEQE(A, "HasF", False)
 O = DrpCol(B, "ActTy")
 XIpxfMis = O
 'Insp "QDao_Lnk_EoLnk.EoLnk", "Inspect", "Oup(XIpxfMis) IpxfMis Ipxf ActWsf",FmtCellDrs(IpxfMis), FmtCellDrs(IpxfMis), FmtCellDrs(Ipxf), FmtCellDrs(ActWsf): Stop

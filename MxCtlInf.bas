@@ -122,10 +122,6 @@ Function CapNy(A As Controls) As String()
 CapNy = SyzItrP(A, "Caption")
 End Function
 
-Property Get WinOfBrwObj() As vbide.Window
-Set WinOfBrwObj = FstWin(vbext_wt_Browser)
-End Property
-
 Property Get BoCompile() As CommandBarButton
 Dim O As CommandBarButton
 Set O = PopupOfDbg.CommandBar.Controls(1)

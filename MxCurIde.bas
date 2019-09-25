@@ -35,13 +35,13 @@ If IsNothing(M) Then Exit Function
 CMthn = CMthnzM(CMd)
 End Function
 
-Function CWin() As vbide.Window
+Function CWin() As VBIDE.Window
 Dim A As CodePane: Set A = CPne
 If IsNothing(A) Then Exit Function
 Set CWin = A.Window
 End Function
 
-Function CPne() As vbide.CodePane
+Function CPne() As VBIDE.CodePane
 Set CPne = CVbe.ActiveCodePane
 End Function
 

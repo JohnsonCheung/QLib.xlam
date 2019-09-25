@@ -65,10 +65,13 @@ Dim L: For Each L In Itr(Src)
 Next
 End Function
 
-Function IsLinCd(Lin) As Boolean
-Dim L$: L = Trim(Lin)
-If L = "" Then Exit Function
-If FstChr(L) = "'" Then Exit Function
+Function IsLinNCd(L) As Boolean
+IsLinNCd = Not IsLinCd(L)
+End Function
+Function IsLinCd(L) As Boolean
+Dim A$: A = Trim(L)
+If A = "" Then Exit Function
+If FstChr(A) = "'" Then Exit Function
 IsLinCd = True
 End Function
 

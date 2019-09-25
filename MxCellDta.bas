@@ -15,7 +15,7 @@ Function FmtCellDr$(CellDr$(), W%(), S$, Q$)
 '@S :SepChr
 '@Q :QteChr
 Dim Sq(): Sq = SqzLinesDr(CellDr)
-Dim Sq1(): Sq1 = AlignSqzWy(Sq, W)
+Dim Sq1(): Sq1 = AlignSqzW(Sq, W)
 Dim Dr, Lin$, O$(), IR%: For IR = 1 To UBound(Sq, 1)
     Dr = DrzSq(Sq1, IR)
     Lin = LinzDr(Dr, S, Q)

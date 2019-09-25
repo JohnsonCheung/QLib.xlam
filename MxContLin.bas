@@ -18,7 +18,7 @@ Next
 ThwImpossible CSub
 End Function
 
-Function ContLy(Src$()) As String()
+Function Contly(Src$()) As String()
 Dim PushPrv As Boolean
 Dim O$()
     Dim L, J&: For Each L In Itr(Src)
@@ -33,20 +33,35 @@ Dim O$()
         End If
         J = J + 1
     Next
-ContLy = O
+Contly = O
 End Function
 
-Function ContLyzM(M As CodeModule, Lno&) As String()
+Private Sub Z_ContSrc()
+Brw ContSrc(SrczP(CPj))
+End Sub
+
+Function ContSrc(Src$()) As String()
+If Si(Src) = 0 Then Exit Function
 Dim O$()
-Dim J&: For J = Lno To M.CountOfLines
-    Dim L$: L = M.Lines(J, 1)
-    PushI ContLyzM, L
-    If LasChr(L) <> "_" Then Exit Function
+Dim Fst As Boolean: Fst = True
+Dim L: For Each L In Itr(Src)
+    If Fst Then
+        Fst = False
+        PushI O, Src(0)
+    Else
+        If LasChr(L) = "_" Then
+            Dim U&: U = UB(O)
+            O(U) = RmvLasChr(O(U)) & LTrim(L)
+        Else
+            PushI O, L
+        End If
+    End If
 Next
-ThwImpossible CSub
+ContSrc = O
 End Function
-Function JnContLy$(ContLy$())
-Dim O$(): O = ContLy
+
+Function JnContly$(Contly$())
+Dim O$(): O = Contly
 Dim J%, U%
     U = UB(O)
     For J = 0 To U - 1
@@ -55,11 +70,24 @@ Dim J%, U%
     For J = 1 To U
         O(J) = LTrim(O(J))
     Next
-JnContLy = Jn(O)
+JnContly = Jn(O)
 End Function
 
 Function ContLinzM$(M As CodeModule, Lno&)
-ContLinzM = JnContLy(ContLyzM(M, Lno))
+Dim O$
+Dim J&: For J = Lno To M.CountOfLines
+    Dim L$: L = M.Lines(J, 1)
+    If LasChr(L) <> "_" Then
+        If O = "" Then
+            ContLinzM = L
+        Else
+            ContLinzM = O & LTrim(L)
+        End If
+        Exit Function
+    End If
+    O = O & RmvLasChr(LTrim(L))
+Next
+ThwImpossible CSub
 End Function
 
 Function SrcLinzNxt$(M As CodeModule, Lno&)
@@ -132,12 +160,12 @@ For J = Ix To UB(Src)
 Next
 Thw CSub, "LasLin of Src cannot be end of [_]", "LasLin-Of-Src Src", LasEle(Src), Src
 End Function
-Function JnContLin$(ContLy)
+Function JnContLin$(Contly)
 Dim J%, L$, O$()
-PushI O, ContLy(0)
-For J = 1 To UB(ContLy) - 1
+PushI O, Contly(0)
+For J = 1 To UB(Contly) - 1
 
-    PushI O, ContLy(J)
+    PushI O, Contly(J)
 Next
 End Function
 

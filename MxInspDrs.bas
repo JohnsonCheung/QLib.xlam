@@ -62,8 +62,8 @@ End Sub
 Function XNxtDrsNo%(DrsNm$)
 Dim A As Drs, B As Drs, C As Drs
 A = DrszLo(X.IxLo)
-B = F_SubDrs_ByC_EqSel(A, "Nm", DrsNm, "Nm Drs# ValTy")
-C = F_SubDrs_ByC_EqE(B, "ValTy", "Drs")
+B = DwEQSel(A, "Nm", DrsNm, "Nm Drs# ValTy")
+C = DwEQE(B, "ValTy", "Drs")
 If NoReczDrs(C) Then XNxtDrsNo = 1: Exit Function
 XNxtDrsNo = AyMax(IntCol(C, "Drs#")) + 1
 End Function

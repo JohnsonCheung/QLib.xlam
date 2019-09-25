@@ -178,15 +178,15 @@ Function DoLDtazT1Pfx(A As DoLTDH, T1Pfx$) As DoLDta
 Dim B As Drs, C As Drs
 B = ColPfx(A.D, "T1", T1Pfx)
 C = RmvPfxzDrs(B, "T1", T1Pfx)
-DoLDtazT1Pfx.D = F_SubDrs_ByC_EqE(C, "IsHdr", False)
+DoLDtazT1Pfx.D = DwEQE(C, "IsHdr", False)
 'BrwDrs2 A.D, DoLDta.D, NN:="LTDH LDta": Stop
 
 End Function
 
 Function DoLDta(A As DoLTDH, T1$) As DoLDta
 Dim B As Drs
-B = F_SubDrs_ByC_EqE(A.D, "T1", T1)
-DoLDta.D = F_SubDrs_ByC_EqE(B, "IsHdr", False)
+B = DwEQE(A.D, "T1", T1)
+DoLDta.D = DwEQE(B, "IsHdr", False)
 'BrwDrs2 A.D, DoLDta.D, NN:="LTDH LDta": Stop
 End Function
 

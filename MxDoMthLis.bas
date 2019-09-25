@@ -40,7 +40,7 @@ DmpDrs DwPatn(DoPubFun, "Mthn", MthPatn)
 End Sub
 
 Function DoPubSub() As Drs
-DoPubSub = F_SubDrs_ByC_Eq(DoPubFun, "Ty", "Sub")
+DoPubSub = DwEQ(DoPubFun, "Ty", "Sub")
 End Function
 
 Sub LisPubPatn(Patn$)
@@ -49,7 +49,7 @@ BrwDrs DwPatn(A, "Mthn", Patn)
 End Sub
 
 Function DoPubFun() As Drs
-DoPubFun = F_SubDrs_ByC_EqExl(DoPubFun, "Ty", "Fun")
+DoPubFun = DwEQExl(DoPubFun, "Ty", "Fun")
 End Function
 
 Function Drso_PubFunatn(Patn$) As Drs
@@ -77,15 +77,15 @@ End Sub
 Sub LisPPrpRetAs(RetAsPatn$)
 Dim S As Drs: S = DoPubFun
 Dim RetSfx As Drs: RetSfx = AddColzRetAs(S)
-Dim Pub As Drs: Pub = F_SubDrs_ByC_EqExl(RetSfx, "Mdy", "Pub")
-Dim Fun As Drs: Fun = F_SubDrs_ByC_EqExl(Pub, "Ty", "Get")
+Dim Pub As Drs: Pub = DwEQExl(RetSfx, "Mdy", "Pub")
+Dim Fun As Drs: Fun = DwEQExl(Pub, "Ty", "Get")
 Dim Patn As Drs: Patn = DwPatn(Fun, "RetSfx", RetAsPatn)
 Dim T50 As Drs: T50 = DwTopN(Patn)
 BrwDrs T50
 End Sub
 
 Sub LisMthCntzQIde()
-DmpDrs SrtDrs(F_SubDrs_ByC_Eq(DoMthCntP, "Lib", "QIde")), Fmt:=EiSSFmt, IsSum:=True
+DmpDrs SrtDrs(DwEQ(DoMthCntP, "Lib", "QIde")), Fmt:=EiSSFmt, IsSum:=True
 End Sub
 
 Function JSrc$(Mdn$, Lno&, C1%, C2%, Lin)
@@ -190,7 +190,7 @@ Dim PnTy$:               PnTy = PatnzSS(ShtMthTySS, ShtMthTyAy)
 '- Pfx-I = Inp-Do-Fm-DoMthLis
 Dim IMdy     As Drs:     IMdy = DwPatn(DoMthLisP, "Mdy", PnMdy)
 Dim ITy      As Drs:      ITy = DwPatn(IMdy, "Ty", PnTy)
-Dim ITyChr As Drs:     ITyChr = F_SubDrs_ByC_EqStr(ITy, "TyChr", TyChr)
+Dim ITyChr As Drs:     ITyChr = DwEQStr(ITy, "TyChr", TyChr)
 Dim IPatn    As Drs:    IPatn = DwPatn(ITyChr, "Mthn", Patn, Patn1, Patn2)
 Dim IHasAp   As Drs:   IHasAp = DwHasAp(IPatn, HasAp)
 Dim INPm     As Drs:     INPm = DwNPm(IHasAp, NPm)

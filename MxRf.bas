@@ -10,7 +10,7 @@ Function RfLin(Lin) As RfLin
 RfLin.Lin = Lin
 End Function
 
-Function RfLinzRf(A As vbide.Reference) As RfLin
+Function RfLinzRf(A As VBIDE.Reference) As RfLin
 With A
 RfLinzRf = RfLin(JnSpcAp(.Name, .GUID, .Major, .Minor, .FullPath))
 End With
@@ -47,18 +47,18 @@ Function RfSrczSrcp(Srcp$) As String()
 RfSrczSrcp = LyzFt(FrfzSrcp(Srcp))
 End Function
 Function RfSrc(P As VBProject) As String()
-Dim R As vbide.Reference
+Dim R As VBIDE.Reference
 For Each R In P.References
     PushI RfSrc, RfLinzRf(R).Lin
 Next
 End Function
 
-Function CvRf(A) As vbide.Reference
+Function CvRf(A) As VBIDE.Reference
 Set CvRf = A
 End Function
 
 Function HasRfn(Pj As VBProject, Rfn)
-Dim Rf As vbide.Reference
+Dim Rf As VBIDE.Reference
 For Each Rf In Pj.References
     If Rf.Name = Rfn Then HasRfn = True: Exit Function
 Next
@@ -76,11 +76,11 @@ Function RffPjn$(P As VBProject, Rfn$)
 RffPjn = Pjp(P) & Rfn & ".xlam"
 End Function
 
-Function Rf(Rfn) As vbide.Reference
+Function Rf(Rfn) As VBIDE.Reference
 Set Rf = RfzP(CPj, Rfn)
 End Function
 
-Function RfzP(P As VBProject, Rfn) As vbide.Reference
+Function RfzP(P As VBProject, Rfn) As VBIDE.Reference
 Set RfzP = ItwNm(P.References, Rfn)
 End Function
 Function RfNyP() As String()

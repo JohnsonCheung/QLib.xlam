@@ -358,9 +358,6 @@ Dim ODy(): ODy = SelDy(D.Dy, IxSel)
 DrpColzFny = Drs(SyMinus(D.Fny, Fny), ODy)
 End Function
 
-Function EmpDrs() As Drs
-End Function
-
 Function Drs(Fny$(), Dy()) As Drs
 With Drs
     .Fny = Fny

@@ -281,7 +281,7 @@ LyzBlkTy = StrColzDySnd(DyoLLinzBlk(BlkzTy(B, BlkTy)))
 End Function
 
 Function LyAyzBlkTy(B As Blks, BlkTy$, Optional FmIx% = 0) As Variant()
-Dim D As Drs: D = F_SubDrs_ByC_Eq(B.D, "BlkTy", BlkTy)
+Dim D As Drs: D = DwEQ(B.D, "BlkTy", BlkTy)
 Dim Dr: For Each Dr In D.Dy
     Dim DyoBlk(): DyoBlk = Dr(2)  ' Av<BlkTy SepLin Dyo<Lno Lin>>
     PushI LyAyzBlkTy, StrColzDySnd(DyoBlk)

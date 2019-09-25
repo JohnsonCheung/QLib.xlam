@@ -46,7 +46,7 @@ DeVy = Drs(D.Fny, ODy)
 End Function
 Function Dw2Eq(D As Drs, C2$, V1, V2) As Drs
 Dim A$, B$: AsgTRst C2, A, B
-Dw2Eq = F_SubDrs_ByC_Eq(F_SubDrs_ByC_Eq(D, A, V1), B, V2)
+Dw2Eq = DwEQ(DwEQ(D, A, V1), B, V2)
 End Function
 Function DwNBlnk(D As Drs, C$) As Drs
 DwNBlnk = DwNe(D, C, "")
@@ -63,7 +63,7 @@ End Function
 
 Function Dw3Eq(D As Drs, C3$, V1, V2, V3) As Drs
 Dim A$, B$, C$: AsgTTRst C3, A, B, C
-Dw3Eq = F_SubDrs_ByC_Eq(F_SubDrs_ByC_Eq(F_SubDrs_ByC_Eq(D, A, V1), B, V2), C, V3)
+Dw3Eq = DwEQ(DwEQ(DwEQ(D, A, V1), B, V2), C, V3)
 End Function
 
 Function Dw3EqE(D As Drs, C3$, V1, V2, V3) As Drs
@@ -84,33 +84,33 @@ Ix = IxzAy(Fny, C)
 DwColNe = Drs(Fny, DywColNe(A.Dy, Ix, V))
 End Function
 
-Function F_SubDrs_ByDupFF(D As Drs, DupFF$) As Drs
-F_SubDrs_ByDupFF = F_SubDrs_BySubRxy(D, F_SubRxy_ByDupFF(D, DupFF))
+Function DwDup(D As Drs, DupFF$) As Drs
+DwDup = F_SubDrs_BySubRxy(D, F_SubRxy_ByDupFF(D, DupFF))
 End Function
 
-Function F_SubDrs_ByDupFFC(A As Drs, C$) As Drs
+Function DwDupC(A As Drs, C$) As Drs
 Dim Dup(): Dup = AwDup(ColzDrs(A, C))
-F_SubDrs_ByDupFFC = DwIn(A, C, Dup)
+DwDupC = DwIn(A, C, Dup)
 End Function
 
 Function DwBlnk(A As Drs, C$) As Drs
-DwBlnk = F_SubDrs_ByC_Eq(A, C, "")
+DwBlnk = DwEQ(A, C, "")
 End Function
 
 Function F_SubDrs_ByNBlnkC(A As Drs, NBlnkC$) As Drs
 F_SubDrs_ByNBlnkC = DwNe(A, NBlnkC, "")
 End Function
 
-Function F_SubDrs_ByC_Eq(A As Drs, ByC$, Eq) As Drs
+Function DwEQ(A As Drs, ByC$, Eq) As Drs
 Dim Ix&, Fny$()
 Fny = A.Fny
 Ix = IxzAy(Fny, ByC, ThwEr:=EiThwEr)
-F_SubDrs_ByC_Eq = Drs(Fny, DywEq(A.Dy, Ix, Eq))
+DwEQ = Drs(Fny, DywEq(A.Dy, Ix, Eq))
 End Function
 
-Function F_SubDrs_ByC_EqStr(A As Drs, C$, Str$) As Drs
-If Str = "" Then F_SubDrs_ByC_EqStr = A: Exit Function
-F_SubDrs_ByC_EqStr = F_SubDrs_ByC_Eq(A, C, Str)
+Function DwEQStr(A As Drs, C$, Str$) As Drs
+If Str = "" Then DwEQStr = A: Exit Function
+DwEQStr = DwEQ(A, C, Str)
 End Function
 
 Function F_SubDrs_ByC_SubStr(A As Drs, C$, SubStr) As Drs
@@ -127,18 +127,18 @@ Ix = IxzAy(Fny, C, ThwEr:=EiThwEr)
 F_SubDrs_ByC_Lik = Drs(Fny, DywLik(A.Dy, Ix, Lik))
 End Function
 
-Function F_SubDrs_ByC_EqE(A As Drs, C$, V) As Drs
+Function DwEQE(A As Drs, C$, V) As Drs
 Dim SelFny$()
 SelFny = AeEle(A.Fny, C)
-F_SubDrs_ByC_EqE = F_SubDrs_ByC_EqFny(A, C, V, SelFny)
+DwEQE = DwEQFny(A, C, V, SelFny)
 End Function
 
-Function F_SubDrs_ByC_EqExl(A As Drs, C$, V) As Drs
-F_SubDrs_ByC_EqExl = DrpCol(F_SubDrs_ByC_Eq(A, C, V), C)
+Function DwEQExl(A As Drs, C$, V) As Drs
+DwEQExl = DrpCol(DwEQ(A, C, V), C)
 End Function
 
-Function F_SubDrs_ByC_EqSel(A As Drs, C$, V, Sel$) As Drs
-F_SubDrs_ByC_EqSel = SelDrs(F_SubDrs_ByC_Eq(A, C, V), Sel)
+Function DwEQSel(A As Drs, C$, V, Sel$) As Drs
+DwEQSel = SelDrs(DwEQ(A, C, V), Sel)
 End Function
 
 Function DwFFNe(A As Drs, F1, F2) As Drs 'FFNe = Two Fld Not Eq
@@ -210,8 +210,8 @@ Dim ODy(): ODy = AwIxy(D.Dy, Rxy)
 DwVap = Drs(D.Fny, ODy)
 End Function
 
-Function F_SubDrs_ByC_EqFny(A As Drs, C$, V, SelFny$()) As Drs
-F_SubDrs_ByC_EqFny = SelDrsFny(F_SubDrs_ByC_Eq(A, C, V), SelFny)
+Function DwEQFny(A As Drs, C$, V, SelFny$()) As Drs
+DwEQFny = SelDrsFny(DwEQ(A, C, V), SelFny)
 End Function
 
 Function DwInSel(A As Drs, C, InVy, Sel$) As Drs

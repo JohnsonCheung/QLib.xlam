@@ -165,9 +165,30 @@ End Sub
 ':Term: :S ! No-spc-str or Sq-quoted-str
 ':Termss: :SS
 ':NN: :SS ! spc-sep-str of :Nm
+Function RmvT1XzA$(Lin, TermAy$())
+Dim T$: T = T1(Lin)
+If HasEle(TermAy, T) Then
+    RmvT1XzA = RmvT1x(Lin, T)
+Else
+    RmvT1XzA = Lin
+End If
+End Function
 
-Function RmvTerm$(Lin, Term$())
-RmvTerm = JnTerm(AyMinus(TermAy(Lin), Term))
+Function RmvT1x$(Lin, T1x$)
+Dim T$: T = T1(Lin)
+If T = T1x Then
+    RmvT1x = RmvT1(Lin)
+Else
+    RmvT1x = LTrim(Lin)
+End If
+End Function
+
+Function RplT1$(L, T1$, By$)
+If HasT1(L, T1) Then
+    RplT1 = By & Mid(L, Len(T1) + 1)
+Else
+    RplT1 = L
+End If
 End Function
 
 Function Termss(TermAy)
@@ -233,7 +254,7 @@ End Function
 
 Function ShfT1$(OLin)
 ShfT1 = T1(OLin)
-OLin = RmvT1(OLin)
+OLin = LTrim(RmvPfx(OLin, ShfT1))
 End Function
 
 Function ShfTermDot$(OLin$)

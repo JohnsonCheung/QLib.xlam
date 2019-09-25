@@ -81,7 +81,7 @@ End Select
 End Function
 
 Function RmvMthMdy$(Lin)
-RmvMthMdy = RmvTerm(Lin, MthMdyAy)
+RmvMthMdy = RmvT1XzA(Lin, MthMdyAy)
 End Function
 
 Function Dimn$(Lin)
@@ -400,9 +400,9 @@ Function MthnCmlSetVbe() As Aset
 Set MthnCmlSetVbe = CmlSetzNy(MthNyV)
 End Function
 
-Function DoMthnzM(M As CodeModule) As Drs
-DoMthnzM = DoMthn(M)
-End Function
+Sub BrwMthnP()
+BrwDrs SrtDrs(DoMthnP)
+End Sub
 
 Function DoMthnP() As Drs
 DoMthnP = SelDrs(DoMthcP, FFoMthn)

@@ -117,7 +117,7 @@ Dim JCnst As Drs:  JCnst = SelDrs(Src, "Key Fss")
 Dim CdCnst$():    CdCnst = B_CdCnst(JCnst)
 
 '== CdMain OK ==========================================================================================================
-Dim InpPm As Drs:    InpPm = F_SubDrs_ByC_EqSel(Src, "StpTy", "Inp", "Key Ret StpTy")
+Dim InpPm As Drs:    InpPm = DwEQSel(Src, "StpTy", "Inp", "Key Ret StpTy")
 Dim MMPm$:            MMPm = B_MPm(InpPm)
 Dim LAs():             LAs = SelDrs(LasRec(Src), "Key Ret StpTy").Dy(0)
 Dim MMthn$:          MMthn = LAs(0)

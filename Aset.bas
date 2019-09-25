@@ -143,4 +143,3 @@ End Property
 Sub Vc()
 Brw OupTy:=EiOtVc
 End Sub
-

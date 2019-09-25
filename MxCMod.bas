@@ -123,9 +123,6 @@ Function CLibLin$(CLibv$)
 ':CLibLin: :PrvCnstLin ! Is a `Const CLib$ = "${Clibv}."`
 CLibLin = FmtQQ("Const CLib$ = ""?.""", CLibv)
 End Function
-Function EnsCNzP(P As VBProject)
-Stop '
-End Function
 
 Sub EnsCModM()
 EnsCModzM CMd

@@ -14,4 +14,3 @@ Dim F$: F = SrcFfnzM(M)
 M.Parent.Export F
 'TrimLasEmpLinzFt F
 End Sub
-

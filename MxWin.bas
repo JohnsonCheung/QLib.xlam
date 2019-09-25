@@ -5,6 +5,7 @@ Const CLib$ = "QVb."
 Const CMod$ = CLib & "MxWin."
 
 Sub ClrImm()
+Dim W As VBIDE.Window
 DoEvents
 With ImmWin
     .SetFocus
@@ -18,9 +19,9 @@ End Sub
 
 Sub ClsWinE(Optional Mdn$)
 ' ! Cls win ept cur md @@
-Dim W1 As vbide.Window: Set W1 = CWin
-Dim W2 As vbide.Window: Set W2 = WinzMdn(Mdn)
-Dim W As vbide.Window: For Each W In CVbe.Windows
+Dim W1 As VBIDE.Window: Set W1 = CWin
+Dim W2 As VBIDE.Window: Set W2 = WinzMdn(Mdn)
+Dim W As VBIDE.Window: For Each W In CVbe.Windows
     If Not IsEqObj(W1, W) Then
         If Not IsEqObj(W2, W) Then
             If W.Visible Then W.Close
@@ -31,19 +32,24 @@ ImmWin.Close
 BoTileV.Execute
 End Sub
 
-Property Get ImmWin() As vbide.Window
+
+Property Get BrwObjWin() As VBIDE.Window
+Set BrwObjWin = FstWin(vbext_wt_Browser)
+End Property
+
+Property Get ImmWin() As VBIDE.Window
 Set ImmWin = FstWin(vbext_wt_Immediate)
 End Property
 
-Property Get LclWin() As vbide.Window
+Property Get LclWin() As VBIDE.Window
 Set LclWin = FstWin(vbext_wt_Locals)
 End Property
 
-Function WinzMdn(Mdn) As vbide.Window
+Function WinzMdn(Mdn) As VBIDE.Window
 If HasCmpzN(Mdn) Then Set WinzMdn = Md(Mdn).CodePane.Window
 End Function
 
-Function WinzM(M As CodeModule) As vbide.Window
+Function WinzM(M As CodeModule) As VBIDE.Window
 Set WinzM = M.CodePane.Window
 End Function
 
@@ -62,11 +68,11 @@ End Sub
 Property Get VisWinCnt&()
 VisWinCnt = NItrPrpTrue(CVbe.Windows, "Visible")
 End Property
-Function CvWin(A) As vbide.Window
+Function CvWin(A) As VBIDE.Window
 Set CvWin = A
 End Function
 
-Sub ClrWin(A As vbide.Window)
+Sub ClrWin(A As VBIDE.Window)
 DoEvents
 BoSelAll.Execute
 DoEvents
@@ -78,23 +84,24 @@ Property Get WinCnt&()
 WinCnt = CVbe.Windows.Count
 End Property
 
-Function MdnCdWin$(CdWin As vbide.Window)
+Function MdnCdWin$(CdWin As VBIDE.Window)
 MdnCdWin = Bet(CdWin.Caption, " - ", " (Code)")
 End Function
 
 Property Get WinNy() As String()
-Dim W As vbide.Window
+Dim W As VBIDE.Window
 For Each W In CVbe.Windows
     Debug.Print W.Caption, W.Type
     PushI WinNy, W.Caption
 Next
 End Property
 
-Function FstWin(A As vbext_WindowType) As vbide.Window
+Function FstWin(A As vbext_WindowType) As VBIDE.Window
+Dim X As VBIDE.Windows: Set X = CVbe.Windows
 Set FstWin = FstzItrEq(CVbe.Windows, "Type", A)
 End Function
 
-Function WinyWinTy(T As vbext_WindowType) As vbide.Window()
+Function WinyWinTy(T As vbext_WindowType) As VBIDE.Window()
 WinyWinTy = IwEq(CVbe.Windows, "Type", T)
 End Function
 
@@ -106,7 +113,7 @@ Function PnezCmpn(Cmpn$) As CodePane
 Set PnezCmpn = Md(Cmpn).CodePane
 End Function
 
-Function WinzCmpn(Cmpn$) As vbide.Window
+Function WinzCmpn(Cmpn$) As VBIDE.Window
 Set WinzCmpn = PnezCmpn(Cmpn).Window
 End Function
 
@@ -114,7 +121,7 @@ Sub ClsWinExlMdn(ExlMdn$)
 ClsWinExlAp ImmWin, WinzMdn(ExlMdn)
 End Sub
 
-Function WinyAv(Av()) As vbide.Window()
+Function WinyAv(Av()) As VBIDE.Window()
 Dim I
 For Each I In Itr(Av)
     PushObj WinyAv, I
@@ -125,8 +132,8 @@ Property Get VisWinCapAy() As String()
 VisWinCapAy = SyzOyP(VisWiny, "Caption")
 End Property
 
-Property Get VisWiny() As vbide.Window()
-Dim W As vbide.Window: For Each W In CVbe.Windows
+Property Get VisWiny() As VBIDE.Window()
+Dim W As VBIDE.Window: For Each W In CVbe.Windows
     If W.Visible Then PushObj VisWiny, W
 Next
 End Property

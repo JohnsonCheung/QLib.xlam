@@ -8,10 +8,6 @@ Function MthDotCmlGpAsetzV(A As Vbe) As Aset
 Set MthDotCmlGpAsetzV = AsetzAy(MthDotCmlGpzV(A))
 End Function
 
-Sub Z_CmlAset()
-CmlAset(NyzStr(SrcLzP(CPj))).Srt.Brw
-End Sub
-
 Sub Z_ShfCml()
 Dim L$, EptL$
 Ept = "A"
@@ -27,8 +23,7 @@ Tst:
 End Sub
 
 Function CmlAy(Nm) As String()
-'Ret : :Cml-ay.  Cml-ay is fm :Nm.  Each cml start with UCas and rest is LCas|Dig|_, ept fst cml the start letter may be LCas.
-
+'Ret : :CmlAy ! Cml-ay is fm :Nm.  Each cml start with UCas and rest is LCas|Dig|_, ept fst cml the start letter may be LCas.
 If Nm = "" Then Exit Function
 #If PlaySav Then
 If Not IsNm(Nm) Then Thw CSub, "Given Nm is not a name", "Nm", Nm
@@ -47,14 +42,6 @@ For J = 2 To Len(Nm)
 Next
 PushNB O, Cml
 CmlAy = O
-End Function
-
-Function CmlAset(Ny$()) As Aset
-Set CmlAset = New Aset
-Dim INm
-For Each INm In Itr(Ny)
-    CmlAset.PushAy CmlAy(CStr(INm))
-Next
 End Function
 
 Function CmlAyzNy(Ny$()) As String()
@@ -88,13 +75,12 @@ End Function
 
 Function Cmlss(Nm)
 ':Cmlss: :SS
-Cmlss = Nm & " " & JnSpc(CmlAy(Nm))
+Cmlss = JnSpc(CmlAy(Nm))
 End Function
 
 Function CmlssAy(Ny$()) As String()
-Dim L
-For Each L In Itr(Ny)
-    PushI CmlssAy, Cmlss(CStr(L))
+Dim N: For Each N In Itr(Ny)
+    PushI CmlssAy, Cmlss(N)
 Next
 End Function
 

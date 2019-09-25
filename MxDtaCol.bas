@@ -266,6 +266,6 @@ End Function
 
 Function StrColzEq(A As Drs, Col$, V, ColNm$) As String()
 Dim B As Drs
-B = F_SubDrs_ByC_EqSel(A, Col, V, ColNm)
+B = DwEQSel(A, Col, V, ColNm)
 StrColzEq = StrCol(B, ColNm)
 End Function

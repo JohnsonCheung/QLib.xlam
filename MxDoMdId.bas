@@ -11,7 +11,7 @@ End Function
 
 Function DoMdIdzP(P As VBProject) As Drs
 Dim DoMdn As Drs: DoMdn = DoMdnzP(P)
-Dim D1 As Drs: D1 = AddColFoCMod(DoMdn, P)
+Dim D1 As Drs: D1 = AddColCModv(DoMdn, P)
 Dim D2 As Drs: D2 = AddColIsCModEr(D1)
 DoMdIdzP = SelDrs(D2, FFoMdId)
 End Function
@@ -29,7 +29,7 @@ Dim Dy()
 AddColIsCModEr = AddColzFFDy(Wi_CModv_Mdn, "IsCModvEr", Dy)
 End Function
 
-Function AddColFoCMod(DoMdn As Drs, P As VBProject) As Drs
+Function AddColCModv(DoMdn As Drs, P As VBProject) As Drs
 Dim Dy()
     Dim IxMdn%: IxMdn = IxzAy(DoMdn.Fny, "Mdn")
     Dim Dr: For Each Dr In Itr(DoMdn.Dy)
@@ -37,7 +37,7 @@ Dim Dy()
         Dim M As CodeModule: Set M = P.VBComponents(Mdn).CodeModule
         PushI Dy, AddAy(Dr, DroCMod(M))
     Next
-AddColFoCMod = AddColzFFDy(DoMdn, "CLibv CNsv CModv", Dy)
+AddColCModv = AddColzFFDy(DoMdn, "CLibv CNsv CModv", Dy)
 End Function
 
 Function DoMdIdP() As Drs

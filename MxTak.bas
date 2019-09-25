@@ -16,6 +16,10 @@ Function Aft$(S, Sep$, Optional NoTrim As Boolean)
 Aft = Brk1(S, Sep, NoTrim).S2
 End Function
 
+Function AftzB$(S, Sep$, Optional NoTrim As Boolean)
+AftzB = Brk(S, Sep, NoTrim).S2
+End Function
+
 Function AftAt$(S, At&, Sep$)
 If At = 0 Then Exit Function
 AftAt = Mid(S, At + Len(Sep))
@@ -181,6 +185,9 @@ Dim S
 For Each S In Itr(Sy)
     PushI TakNmzSy, TakNm(S)
 Next
+End Function
+Function AftNm$(S)
+AftNm = Mid(S, Len(TakNm(S)) + 1)
 End Function
 Function TakNm$(S)
 Dim J%
